@@ -1,0 +1,1646 @@
+{
+  "schemaVersion": "documentation-source-snapshots.v1",
+  "qualification": "Hash-bound historical partial source/doc captures. Their original bytes and dated references are retained, not asserted to describe the current checkout. Links TO snapshots and every non-indexed report remain checked. No current source/case acceptance follows.",
+  "files": [
+    {
+      "path": "docs/review/evidence/buster-atomic-cancellation-independent-20260921/selected-source/docs/review/remediation/implementation/buster-atomic-cancellation-20260921.md",
+      "sha256": "739dc749289a172c764187eb9816ff1c8ba14337a09ad19e4fe60ecaec2213dd"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-ci2-proof-20260924/before-v2/docs/architecture/buster-cluster-configuration.md",
+      "sha256": "0f7707aa744d175433d9fdcae6ea558f9f86eb0e18b56f31f30b5de5ecd8cf48"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-ci2-proof-20260924/before/docs/architecture/buster-cluster-configuration.md",
+      "sha256": "e93ea82fdd3b024bf01d96fd45c976148148646e5e584907e32bfaab4adffab4"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-ci2-proof-20260924/files-v2/docs/architecture/buster-cluster-configuration.md",
+      "sha256": "d31e4fdd6d65dd9bd988373ce7d3ec52b977d78b297884e6a4b518c5476d1201"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-ci2-proof-20260924/files/docs/architecture/buster-cluster-configuration.md",
+      "sha256": "9b3481248d9ba8500106296b78835274078bf6d18cdc4cfc269b4191d97f2acb"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-invoker-policy-20260921/before/docs/architecture/pipeline-test-gate-kubernetes-fixture-operator-guide.md",
+      "sha256": "dff7f54c3321d1351fd496cd9fcd485f73451015c5c72d904ca473079291e785"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-invoker-policy-20260921/files/docs/architecture/buster-cluster-configuration.md",
+      "sha256": "e93ea82fdd3b024bf01d96fd45c976148148646e5e584907e32bfaab4adffab4"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-invoker-policy-20260921/files/docs/architecture/pipeline-test-gate-kubernetes-fixture-operator-guide.md",
+      "sha256": "85408643e05abf71cd6e163a026775b5486381ac972336343f266eef6b1a2155"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v1/docs/architecture/buster-cluster-configuration.md",
+      "sha256": "9ecf6233c05109c7ab2adbc19877fbc5fbd89d3fbb06d4587587a85f59ad3f34"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v1/docs/architecture/pipeline-test-gate-kubernetes-fixture-operator-guide.md",
+      "sha256": "85408643e05abf71cd6e163a026775b5486381ac972336343f266eef6b1a2155"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v2/docs/architecture/buster-cluster-configuration.md",
+      "sha256": "e93ea82fdd3b024bf01d96fd45c976148148646e5e584907e32bfaab4adffab4"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v2/docs/architecture/pipeline-test-gate-kubernetes-fixture-operator-guide.md",
+      "sha256": "85408643e05abf71cd6e163a026775b5486381ac972336343f266eef6b1a2155"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/docs/architecture/buster-cluster-configuration.md",
+      "sha256": "e93ea82fdd3b024bf01d96fd45c976148148646e5e584907e32bfaab4adffab4"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/docs/architecture/pipeline-test-gate-kubernetes-fixture-operator-guide.md",
+      "sha256": "85408643e05abf71cd6e163a026775b5486381ac972336343f266eef6b1a2155"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-runtime-20260924/integration-ci2-v2/before/docs/architecture/buster-cluster-configuration.md",
+      "sha256": "0f7707aa744d175433d9fdcae6ea558f9f86eb0e18b56f31f30b5de5ecd8cf48"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-runtime-20260924/integration-doc-v2/before/docs/architecture/buster-cluster-configuration.md",
+      "sha256": "d31e4fdd6d65dd9bd988373ce7d3ec52b977d78b297884e6a4b518c5476d1201"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-runtime-20260924/integration-doc-v2/before/docs/architecture/buster-runtime-security-configuration.md",
+      "sha256": "f8b02af9d4242a34b30d483842b13eab43c896688f075f87694283f9fa1f3537"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-runtime-20260924/integration-doc-v2/before/docs/architecture/pipeline-test-gate-security-error-reference.md",
+      "sha256": "2b2f88102906e784e9038168ee8f8ad5b1866f04e8aeea255db1da0c65f10863"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-runtime-20260924/integration-doc-v2/before/docs/review/remediation/implementation/config-buster-cluster-invokers-20260924.md",
+      "sha256": "1a14db0dc32723c9a66ae34afae27e9fcc02d3e93447c3395245f2687d59b36c"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-runtime-20260924/integration-doc-v2/before/docs/review/remediation/implementation/config-buster-runtime-security-20260924.md",
+      "sha256": "7d56f74725a675785d1c9d47de7a7069b10369485ca2886f4e81e76c9e0e9b71"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-runtime-20260924/integration-runtime-security-v3/before/docs/architecture/buster-cluster-configuration.md",
+      "sha256": "e93ea82fdd3b024bf01d96fd45c976148148646e5e584907e32bfaab4adffab4"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-runtime-20260924/integration-runtime-security-v3/before/docs/architecture/pipeline-test-gate-security-error-reference.md",
+      "sha256": "42acf722288e98cf3e3db7e90d46541b7e41981199323432c359f48b008bd577"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-runtime-20260924/integration-security-service-v4/before/docs/architecture/buster-runtime-security-configuration.md",
+      "sha256": "f46182c8f137ad0f8060d2386320babfb5032988ccdccf500356cb002fd18e48"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-runtime-20260924/integration-security-service-v4/before/docs/review/remediation/implementation/config-buster-runtime-security-20260924.md",
+      "sha256": "4db289648abaa8d022cb653fdecc051d54f0bef47d01cc62a2516b38a0327b14"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-runtime-20260924/integration-v3/before/docs/architecture/pipeline-test-gate-kubernetes-fixture-operator-guide.md",
+      "sha256": "dff7f54c3321d1351fd496cd9fcd485f73451015c5c72d904ca473079291e785"
+    },
+    {
+      "path": "docs/review/evidence/buster-compaction-fixture-migration-20260921/sources/docs/review/remediation/implementation/buster-compaction-fixture-migration-20260921.md",
+      "sha256": "0261e84e9dc07d746c265fb8a46b992f0b87fba767c8aa0f6655ff2a5e834427"
+    },
+    {
+      "path": "docs/review/evidence/buster-historical-authority-reader-design-20260921/sources/docs/review/remediation/implementation/buster-compaction-fixture-migration-20260921.md",
+      "sha256": "0261e84e9dc07d746c265fb8a46b992f0b87fba767c8aa0f6655ff2a5e834427"
+    },
+    {
+      "path": "docs/review/evidence/buster-historical-authority-reader-design-20260921/sources/docs/review/remediation/implementation/buster-historical-authority-reader-design-20260921.md",
+      "sha256": "bf6b016ec91c6fe6ac829a1146962391482ad08c0c58dfbb1eae5353f524ee5d"
+    },
+    {
+      "path": "docs/review/evidence/buster-historical-authority-reader-design-20260921/sources/docs/review/remediation/implementation/buster-legacy-stop-kernel-boundary-20260921.md",
+      "sha256": "419f20cae8cde8f8074c7928cc5b5df137ada4a326aa5cf434539dc87bad1bca"
+    },
+    {
+      "path": "docs/review/evidence/buster-historical-authority-reader-design-20260921/sources/docs/review/remediation/implementation/buster-legacy-stop-producer-contract-20260921.md",
+      "sha256": "1416e712c0b9ef7a00b459c401c87df2eab13f2bd4cc28d7fd4d5ca709cf9db5"
+    },
+    {
+      "path": "docs/review/evidence/buster-process-input-policy-20260921/before/docs/architecture/buster-execution-configuration.md",
+      "sha256": "f4f2c8c1cce8409352b002cb38b2160dc031381251a072d8a9f1460d5b755409"
+    },
+    {
+      "path": "docs/review/evidence/buster-process-input-policy-20260921/files-v2/docs/architecture/buster-execution-configuration.md",
+      "sha256": "96ace80a6e11ca27418a605b9ec19f3ab8c3eb0320e0571ed5e7b572d7d64a08"
+    },
+    {
+      "path": "docs/review/evidence/buster-process-input-policy-20260921/files/docs/architecture/buster-execution-configuration.md",
+      "sha256": "96ace80a6e11ca27418a605b9ec19f3ab8c3eb0320e0571ed5e7b572d7d64a08"
+    },
+    {
+      "path": "docs/review/evidence/buster-provider-cancellation-20260921/doc-final/after.md",
+      "sha256": "7732f3585cb7da6ddd86b497fd146f49f46c7e52f7d35e5191e3b6461fd478c9"
+    },
+    {
+      "path": "docs/review/evidence/buster-provider-cancellation-20260921/doc-final/before.md",
+      "sha256": "f6f200ee8f9cce36bf808f9b90835ee57743338e785c6dba6450f5fc5677cff6"
+    },
+    {
+      "path": "docs/review/evidence/buster-provider-session-policy-20260921/before/docs/architecture/buster-execution-configuration.md",
+      "sha256": "9fc57f8a89122232e27b0fb4dce604d8260099c5edf1088d97b720e10b8b9711"
+    },
+    {
+      "path": "docs/review/evidence/buster-provider-session-policy-20260921/before/skills/buster/engine/BOUNDARIES.md",
+      "sha256": "f0210ef19a9c09164f09f140f5dd7e83ed2aa32cca5fa24fe3667e6b0dec4e8c"
+    },
+    {
+      "path": "docs/review/evidence/buster-provider-session-policy-20260921/files/docs/architecture/buster-execution-configuration.md",
+      "sha256": "978aa2a5feb68e3cf5b9c94aa4077207e71c6a2cef804d063d40d8781b786d53"
+    },
+    {
+      "path": "docs/review/evidence/buster-provider-session-policy-20260921/files/skills/buster/engine/BOUNDARIES.md",
+      "sha256": "eaee99c11a7e10c93099ed52ca2d54c0bc745c9d78e3b7d9f3aea8b52b42f7dd"
+    },
+    {
+      "path": "docs/review/evidence/buster-provider-session-policy-20260921/snapshot-v3/docs/architecture/buster-execution-configuration.md",
+      "sha256": "978aa2a5feb68e3cf5b9c94aa4077207e71c6a2cef804d063d40d8781b786d53"
+    },
+    {
+      "path": "docs/review/evidence/buster-provider-session-policy-20260921/snapshot-v3/skills/buster/engine/BOUNDARIES.md",
+      "sha256": "eaee99c11a7e10c93099ed52ca2d54c0bc745c9d78e3b7d9f3aea8b52b42f7dd"
+    },
+    {
+      "path": "docs/review/evidence/buster-provider-session-policy-20260921/status-documentation/accepted-after-v1.md",
+      "sha256": "79b6475cc8545d87ac8ff3540a4dad12930dfb3f0105504675b4986f78878e7a"
+    },
+    {
+      "path": "docs/review/evidence/buster-provider-session-policy-20260921/status-documentation/after-report41-status.md",
+      "sha256": "a9a1125c7ae4904223a5276ccddfe9892ce5ef8f2135805647e30e86be023347"
+    },
+    {
+      "path": "docs/review/evidence/buster-provider-session-policy-20260921/status-documentation/after.md",
+      "sha256": "217e966b31ed686e19db42780641d4d6b8b41b200456c425a93324762b8c4289"
+    },
+    {
+      "path": "docs/review/evidence/buster-provider-session-policy-20260921/status-documentation/before-report41-status.md",
+      "sha256": "217e966b31ed686e19db42780641d4d6b8b41b200456c425a93324762b8c4289"
+    },
+    {
+      "path": "docs/review/evidence/buster-provider-session-policy-20260921/status-documentation/before.md",
+      "sha256": "5e068ea5bd7d531f9770772e6fea5a0cc76664bc5a72fc7d14be26f1fe826300"
+    },
+    {
+      "path": "docs/review/evidence/buster-report-runtime-policy-20260921/before/docs/architecture/buster-execution-configuration.md",
+      "sha256": "1a6e7e5f49841ecfe45cc7f62a6110da872fdaca2771bfd52ce8262ad7113f55"
+    },
+    {
+      "path": "docs/review/evidence/buster-report-runtime-policy-20260921/files/docs/architecture/buster-execution-configuration.md",
+      "sha256": "f4f2c8c1cce8409352b002cb38b2160dc031381251a072d8a9f1460d5b755409"
+    },
+    {
+      "path": "docs/review/evidence/buster-report-runtime-policy-20260921/snapshot-v1/docs/architecture/buster-execution-configuration.md",
+      "sha256": "7e96e6b56921337c8cff469b2ac1a89fee4495569a0ec254599dcd5d1f010881"
+    },
+    {
+      "path": "docs/review/evidence/buster-report-runtime-policy-20260921/snapshot-v2/docs/architecture/buster-execution-configuration.md",
+      "sha256": "f4f2c8c1cce8409352b002cb38b2160dc031381251a072d8a9f1460d5b755409"
+    },
+    {
+      "path": "docs/review/evidence/buster-runner-quality-20260921/integration-doc-status/after.md",
+      "sha256": "6de11c19ba7b1fb96b76a80f795afe64f54ae95759f57ca1ca803fb3b3507adf"
+    },
+    {
+      "path": "docs/review/evidence/buster-runner-quality-20260921/integration-doc-status/before.md",
+      "sha256": "727798037690cce15c2006878493b18f36806e28dbd4de4b01cba01881b5bf39"
+    },
+    {
+      "path": "docs/review/evidence/buster-runtime-security-policy-20260924/private-v1/before/docs/architecture/buster-cluster-configuration.md",
+      "sha256": "e93ea82fdd3b024bf01d96fd45c976148148646e5e584907e32bfaab4adffab4"
+    },
+    {
+      "path": "docs/review/evidence/buster-runtime-security-policy-20260924/private-v1/before/docs/architecture/pipeline-test-gate-security-error-reference.md",
+      "sha256": "42acf722288e98cf3e3db7e90d46541b7e41981199323432c359f48b008bd577"
+    },
+    {
+      "path": "docs/review/evidence/buster-runtime-security-policy-20260924/private-v1/files/docs/architecture/buster-cluster-configuration.md",
+      "sha256": "0f7707aa744d175433d9fdcae6ea558f9f86eb0e18b56f31f30b5de5ecd8cf48"
+    },
+    {
+      "path": "docs/review/evidence/buster-runtime-security-policy-20260924/private-v1/files/docs/architecture/buster-runtime-security-configuration.md",
+      "sha256": "e4cc659e0ea687563ac653a8eb61efabc013d52d9ef6e77ed1299428ee09fe93"
+    },
+    {
+      "path": "docs/review/evidence/buster-runtime-security-policy-20260924/private-v1/files/docs/architecture/pipeline-test-gate-security-error-reference.md",
+      "sha256": "2b2f88102906e784e9038168ee8f8ad5b1866f04e8aeea255db1da0c65f10863"
+    },
+    {
+      "path": "docs/review/evidence/buster-runtime-security-policy-20260924/private-v1/files/docs/review/remediation/implementation/config-buster-runtime-security-20260924.md",
+      "sha256": "9bf0e39b3fa38ec2eefbec6f2c210dadc552fa5cccb53f6a9475401797446bd8"
+    },
+    {
+      "path": "docs/review/evidence/buster-runtime-security-policy-20260924/private-v1/snapshot-v2/docs/architecture/buster-cluster-configuration.md",
+      "sha256": "0f7707aa744d175433d9fdcae6ea558f9f86eb0e18b56f31f30b5de5ecd8cf48"
+    },
+    {
+      "path": "docs/review/evidence/buster-runtime-security-policy-20260924/private-v1/snapshot-v2/docs/architecture/buster-runtime-security-configuration.md",
+      "sha256": "e4cc659e0ea687563ac653a8eb61efabc013d52d9ef6e77ed1299428ee09fe93"
+    },
+    {
+      "path": "docs/review/evidence/buster-runtime-security-policy-20260924/private-v1/snapshot-v2/docs/architecture/pipeline-test-gate-security-error-reference.md",
+      "sha256": "2b2f88102906e784e9038168ee8f8ad5b1866f04e8aeea255db1da0c65f10863"
+    },
+    {
+      "path": "docs/review/evidence/buster-runtime-security-policy-20260924/private-v1/snapshot-v2/docs/review/remediation/implementation/config-buster-runtime-security-20260924.md",
+      "sha256": "2b7b910c53d3fdd31d06e19237b1b1f46d01ee8a3eb34a06878422f43fbdc927"
+    },
+    {
+      "path": "docs/review/evidence/buster-runtime-security-policy-20260924/private-v1/snapshot-v3/docs/architecture/buster-cluster-configuration.md",
+      "sha256": "0f7707aa744d175433d9fdcae6ea558f9f86eb0e18b56f31f30b5de5ecd8cf48"
+    },
+    {
+      "path": "docs/review/evidence/buster-runtime-security-policy-20260924/private-v1/snapshot-v3/docs/architecture/buster-runtime-security-configuration.md",
+      "sha256": "f46182c8f137ad0f8060d2386320babfb5032988ccdccf500356cb002fd18e48"
+    },
+    {
+      "path": "docs/review/evidence/buster-runtime-security-policy-20260924/private-v1/snapshot-v3/docs/architecture/pipeline-test-gate-security-error-reference.md",
+      "sha256": "2b2f88102906e784e9038168ee8f8ad5b1866f04e8aeea255db1da0c65f10863"
+    },
+    {
+      "path": "docs/review/evidence/buster-runtime-security-policy-20260924/private-v1/snapshot-v3/docs/review/remediation/implementation/config-buster-runtime-security-20260924.md",
+      "sha256": "466cd14ad86a59eb602f8844e57d62579d594e2c611b09e2ddaf306b3108813c"
+    },
+    {
+      "path": "docs/review/evidence/buster-runtime-security-policy-20260924/private-v1/snapshot-v4-draft/docs/architecture/buster-cluster-configuration.md",
+      "sha256": "0f7707aa744d175433d9fdcae6ea558f9f86eb0e18b56f31f30b5de5ecd8cf48"
+    },
+    {
+      "path": "docs/review/evidence/buster-runtime-security-policy-20260924/private-v1/snapshot-v4-draft/docs/architecture/buster-runtime-security-configuration.md",
+      "sha256": "f46182c8f137ad0f8060d2386320babfb5032988ccdccf500356cb002fd18e48"
+    },
+    {
+      "path": "docs/review/evidence/buster-runtime-security-policy-20260924/private-v1/snapshot-v4-draft/docs/architecture/pipeline-test-gate-security-error-reference.md",
+      "sha256": "2b2f88102906e784e9038168ee8f8ad5b1866f04e8aeea255db1da0c65f10863"
+    },
+    {
+      "path": "docs/review/evidence/buster-runtime-security-policy-20260924/private-v1/snapshot-v4-draft/docs/review/remediation/implementation/config-buster-runtime-security-20260924.md",
+      "sha256": "466cd14ad86a59eb602f8844e57d62579d594e2c611b09e2ddaf306b3108813c"
+    },
+    {
+      "path": "docs/review/evidence/buster-runtime-security-policy-20260924/service-extension-v4/before/docs/architecture/buster-runtime-security-configuration.md",
+      "sha256": "f46182c8f137ad0f8060d2386320babfb5032988ccdccf500356cb002fd18e48"
+    },
+    {
+      "path": "docs/review/evidence/buster-runtime-security-policy-20260924/service-extension-v4/before/docs/review/remediation/implementation/config-buster-runtime-security-20260924.md",
+      "sha256": "4db289648abaa8d022cb653fdecc051d54f0bef47d01cc62a2516b38a0327b14"
+    },
+    {
+      "path": "docs/review/evidence/buster-runtime-security-policy-20260924/service-extension-v4/files/docs/architecture/buster-runtime-security-configuration.md",
+      "sha256": "f8b02af9d4242a34b30d483842b13eab43c896688f075f87694283f9fa1f3537"
+    },
+    {
+      "path": "docs/review/evidence/buster-runtime-security-policy-20260924/service-extension-v4/files/docs/review/remediation/implementation/config-buster-runtime-security-20260924.md",
+      "sha256": "eb9e26ac4a13726767d988062b24a25a85e9068046efc7fc6ba28d4ef61d2bd6"
+    },
+    {
+      "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/docs/architecture/pipeline-test-gate-security-configuration-reference.md",
+      "sha256": "4e017476552f21dc98208c0142cd3adf431bd618af35037e978a58106413157a"
+    },
+    {
+      "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/docs/architecture/pipeline-test-gate-security-operator-guide.md",
+      "sha256": "b64b13a053ceade7962f9289d2a2b9e95700f56cca2d4ad0a60e46e66d19e92e"
+    },
+    {
+      "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/docs/architecture/pipeline-test-gate-security-security-model.md",
+      "sha256": "2bb339930cb3df84d4779d945c19d5f7a150a1ff11d1682a91e52eaceac7965f"
+    },
+    {
+      "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/docs/operations/registry-clients.md",
+      "sha256": "46778fa3d1939ecb11dea2289ba789d98c04744d2ab1122502248ebf2fae4dde"
+    },
+    {
+      "path": "docs/review/evidence/cleanup-scheduler-final-docs-20260924/before/docs/review/remediation/implementation/kubernetes-cleanup-disposition-20260921.md",
+      "sha256": "8706f9529fd38cf37eaeecfe8df8c089c31891d85a05820b835db33676027de9"
+    },
+    {
+      "path": "docs/review/evidence/cleanup-scheduler-final-docs-20260924/before/docs/review/remediation/implementation/provider-disposal-confirmation-20260921.md",
+      "sha256": "83af647f827206ad1cd7aa7138a397e3a2e9fa1ac91fbcb16f97a815b731f8b1"
+    },
+    {
+      "path": "docs/review/evidence/cleanup-scheduler-final-docs-20260924/before/docs/review/remediation/implementation/runner-scheduler-drain-20260921.md",
+      "sha256": "0322993a243ff501d7200054f31fc1ab7abfbcec3f3cde1663abfc6c6c948019"
+    },
+    {
+      "path": "docs/review/evidence/cluster-security-doc-final-20260924/before/docs/architecture/buster-cluster-configuration.md",
+      "sha256": "d31e4fdd6d65dd9bd988373ce7d3ec52b977d78b297884e6a4b518c5476d1201"
+    },
+    {
+      "path": "docs/review/evidence/cluster-security-doc-final-20260924/before/docs/architecture/buster-runtime-security-configuration.md",
+      "sha256": "f8b02af9d4242a34b30d483842b13eab43c896688f075f87694283f9fa1f3537"
+    },
+    {
+      "path": "docs/review/evidence/cluster-security-doc-final-20260924/before/docs/architecture/pipeline-test-gate-security-error-reference.md",
+      "sha256": "2b2f88102906e784e9038168ee8f8ad5b1866f04e8aeea255db1da0c65f10863"
+    },
+    {
+      "path": "docs/review/evidence/cluster-security-doc-final-20260924/before/docs/review/remediation/implementation/config-buster-cluster-invokers-20260924.md",
+      "sha256": "1a14db0dc32723c9a66ae34afae27e9fcc02d3e93447c3395245f2687d59b36c"
+    },
+    {
+      "path": "docs/review/evidence/cluster-security-doc-final-20260924/before/docs/review/remediation/implementation/config-buster-runtime-security-20260924.md",
+      "sha256": "7d56f74725a675785d1c9d47de7a7069b10369485ca2886f4e81e76c9e0e9b71"
+    },
+    {
+      "path": "docs/review/evidence/cluster-security-doc-final-20260924/files/docs/architecture/buster-cluster-configuration.md",
+      "sha256": "13bf4962e4592e07e1313ad26ed14744b1b027ad7c8c7442fdcfeb5ac1acd20a"
+    },
+    {
+      "path": "docs/review/evidence/cluster-security-doc-final-20260924/files/docs/architecture/buster-runtime-security-configuration.md",
+      "sha256": "008b8380449b5fb0c53fe0e69c1234152974e435025e7988b9c560a6f6f6db8c"
+    },
+    {
+      "path": "docs/review/evidence/cluster-security-doc-final-20260924/files/docs/architecture/pipeline-test-gate-security-error-reference.md",
+      "sha256": "6282f331b991e6c9b21933138a98f3474d03e756655d46514a520a575dccdda1"
+    },
+    {
+      "path": "docs/review/evidence/cluster-security-doc-final-20260924/files/docs/review/remediation/implementation/config-buster-cluster-invokers-20260924.md",
+      "sha256": "2566c04a356fc3a9f750bce64b5b1705ff7715a4b44d62c4764e38d801a27db3"
+    },
+    {
+      "path": "docs/review/evidence/cluster-security-doc-final-20260924/files/docs/review/remediation/implementation/config-buster-runtime-security-20260924.md",
+      "sha256": "c8aede0670b6f7db455bd055e314cc7c93121f3afce3b7206844484b83286c77"
+    },
+    {
+      "path": "docs/review/evidence/cluster-security-doc-final-20260924/snapshot-v2/docs/architecture/buster-cluster-configuration.md",
+      "sha256": "13bf4962e4592e07e1313ad26ed14744b1b027ad7c8c7442fdcfeb5ac1acd20a"
+    },
+    {
+      "path": "docs/review/evidence/cluster-security-doc-final-20260924/snapshot-v2/docs/architecture/buster-runtime-security-configuration.md",
+      "sha256": "7551d656eda3cf7b72cf54289e075e652b4b2e1fad367244e723eff7f27d1d7e"
+    },
+    {
+      "path": "docs/review/evidence/cluster-security-doc-final-20260924/snapshot-v2/docs/architecture/pipeline-test-gate-security-error-reference.md",
+      "sha256": "6282f331b991e6c9b21933138a98f3474d03e756655d46514a520a575dccdda1"
+    },
+    {
+      "path": "docs/review/evidence/cluster-security-doc-final-20260924/snapshot-v2/docs/review/remediation/implementation/config-buster-cluster-invokers-20260924.md",
+      "sha256": "2566c04a356fc3a9f750bce64b5b1705ff7715a4b44d62c4764e38d801a27db3"
+    },
+    {
+      "path": "docs/review/evidence/cluster-security-doc-final-20260924/snapshot-v2/docs/review/remediation/implementation/config-buster-runtime-security-20260924.md",
+      "sha256": "c8aede0670b6f7db455bd055e314cc7c93121f3afce3b7206844484b83286c77"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/nova-carrier-before-nova-carrier-01-20261013/NOVA-MODULE-CARRIER-PROPOSAL-20261013.md",
+      "sha256": "293416f321fc421d62401aa872b538530b0fcb4a8b253fc564bcdf68d122b1f8"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/prism-temporal-before-20261013/PRISM-HANDOFF-TARGET-20261013.md",
+      "sha256": "192c7940230809b6e7219dddbb7bc7d2626868194c42c929d89ceebf0f0b5320"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-package-draft/history-before-author-layout-correction/config-c1-package-current.md",
+      "sha256": "e2da7f4063783d4c90b5712b94eed28f72a98cf99d48433d798eecff050a4382"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-package-draft/history-before-case-lifecycle-clarification/config-c1-package-current.md",
+      "sha256": "e938669f602d8399b4d5b9353e8c62253f8579041797460297ae925069c1f1e1"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-role-recipes-01/source-current/skills/nova/project_setup/SKILL.md",
+      "sha256": "bc04eb9c29902ae9ec9722afa96fe81faab002819e731d75225a49d6563ee426"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-case-phase-recheck-15/inputs/docs/review/remediation/OPENCLAW-CONFIG-GOAL.md",
+      "sha256": "fe9215a2674b95facef1d6fe0920eab2fa1f4830e765624692152a28b1731127"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-29/README.md",
+      "sha256": "9b461a3ce585d9f8dee51cd156e20017fa4dd0dc7b0a9f87fd27e5023683ce5c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-30/README.md",
+      "sha256": "7415e5c642a3dc799eb3e76a47eb7e91013c672a5deaef82c360d8f2b49f23d4"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-inventory-21/README.md",
+      "sha256": "0804cd2f16954556ef5fb2c7bcf4a362d01bebdc2d46c5e547b3712801c68837"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-inventory-21/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-29/README.md",
+      "sha256": "9b461a3ce585d9f8dee51cd156e20017fa4dd0dc7b0a9f87fd27e5023683ce5c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-inventory-21/inputs/docs/review/remediation/GOAL-START.md",
+      "sha256": "688334e1ccaa30fd9497e605ef0a9de1fb67fbeae51c4a312b15e15a12fa085b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-inventory-21/inputs/docs/review/remediation/OPENCLAW-CONFIG-GOAL.md",
+      "sha256": "fe9215a2674b95facef1d6fe0920eab2fa1f4830e765624692152a28b1731127"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/remediation/GOAL-START.md",
+      "sha256": "688334e1ccaa30fd9497e605ef0a9de1fb67fbeae51c4a312b15e15a12fa085b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/remediation/OPENCLAW-CONFIG-GOAL.md",
+      "sha256": "fe9215a2674b95facef1d6fe0920eab2fa1f4830e765624692152a28b1731127"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-inventory-21/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-29/README.md",
+      "sha256": "9b461a3ce585d9f8dee51cd156e20017fa4dd0dc7b0a9f87fd27e5023683ce5c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-inventory-21/inputs/docs/review/remediation/GOAL-START.md",
+      "sha256": "688334e1ccaa30fd9497e605ef0a9de1fb67fbeae51c4a312b15e15a12fa085b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-inventory-21/inputs/docs/review/remediation/OPENCLAW-CONFIG-GOAL.md",
+      "sha256": "fe9215a2674b95facef1d6fe0920eab2fa1f4830e765624692152a28b1731127"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-prism-schema-correction-26/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-33/README.md",
+      "sha256": "c1f215168f6744b7bdb0b76f79ee785ef92b37866a97e6266aa765bba1e260e3"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-prism-schema-correction-26/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-34/README.md",
+      "sha256": "2cc60a5cba15faf7c58baeb42fe6bcf67abaf185c9af2e174f187d759abc7a78"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-prism-schema-correction-26/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-prism-service-storage-network-25/README.md",
+      "sha256": "489f71519e0102f722cae44822edca7366a5f92d2ec7624b37126ccccd3a5007"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-prism-schema-correction-26/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-prism-service-storage-network-25/reviewed-package/README.md",
+      "sha256": "c1f215168f6744b7bdb0b76f79ee785ef92b37866a97e6266aa765bba1e260e3"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-prism-schema-correction-26/inputs/docs/review/remediation/GOAL-START.md",
+      "sha256": "688334e1ccaa30fd9497e605ef0a9de1fb67fbeae51c4a312b15e15a12fa085b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-prism-schema-correction-26/inputs/docs/review/remediation/OPENCLAW-CONFIG-GOAL.md",
+      "sha256": "fe9215a2674b95facef1d6fe0920eab2fa1f4830e765624692152a28b1731127"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-trust-readiness-23/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-31/README.md",
+      "sha256": "359bdcd06e8eb76b69659bdb095c5a34b8357323eea749b7a1fbef7f870039dc"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-trust-readiness-23/inputs/docs/review/remediation/GOAL-START.md",
+      "sha256": "688334e1ccaa30fd9497e605ef0a9de1fb67fbeae51c4a312b15e15a12fa085b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-trust-readiness-23/inputs/docs/review/remediation/OPENCLAW-CONFIG-GOAL.md",
+      "sha256": "fe9215a2674b95facef1d6fe0920eab2fa1f4830e765624692152a28b1731127"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/native-host-profile-01/source-current/scripts/install/README.md",
+      "sha256": "c04e1aabd8e5591034e7c36343759a869f4c72e863b99cea0ccd864be6adc6d7"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/architecture-validator/README.md",
+      "sha256": "1ea6563f1ca2b809d9cc3966ab11d6098caa39beb030bd907ed1aabf73ec4cf2"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/case-study/README.md",
+      "sha256": "d896e5e31a642289a86806abd984add82a969fd6377257ff39b864c1967aaa56"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/implementation-agent/README.md",
+      "sha256": "9f6b149f2994f44abeefc59e9e960f240f3c4947c1dceaf1d97806cc0255192a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/pipeline-review/README.md",
+      "sha256": "acdf524d2b206d0f6152b537375a69b07b0abf5ad3ce6e57942a5e64ebde9141"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/prism-design/README.md",
+      "sha256": "578e856a2dc1bec26227012406c610bca1ed9ce569778347b9d90355ed4f96ac"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/source/skills/nova/plugins/project-summary/README.md",
+      "sha256": "0e88232cfbabf90d094ca6f8de77c3828de288b81109f2d6239087f52dbe4ee9"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/stand/source-current/skills/buster/plugins/axe/README.md",
+      "sha256": "1ab2a74127ab6340c77b01a9dcca756486c4b9a9ecec19e03e88bab05cb44a6a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/stand/source-current/skills/buster/plugins/lighthouse/README.md",
+      "sha256": "747d7478d270fb9b8c2c9103ff0f10783627d4a619ce0206afd675c7eaca9bca"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/stand/source-current/skills/buster/plugins/playwright/README.md",
+      "sha256": "9b370d17fcf2a99824fe1506b703790bf149b26a73008a0f4fe628ce79b4e346"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/stand/source-current/skills/buster/plugins/visual/README.md",
+      "sha256": "dadded5f27a5006b797e701cbedb69778288f55014c64e36a115a749f6a70ba5"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/stand/source-current/skills/nova/plugins/architecture-validator/README.md",
+      "sha256": "1ea6563f1ca2b809d9cc3966ab11d6098caa39beb030bd907ed1aabf73ec4cf2"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/stand/source-current/skills/nova/plugins/case-study/README.md",
+      "sha256": "d896e5e31a642289a86806abd984add82a969fd6377257ff39b864c1967aaa56"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/stand/source-current/skills/nova/plugins/implementation-agent/README.md",
+      "sha256": "9f6b149f2994f44abeefc59e9e960f240f3c4947c1dceaf1d97806cc0255192a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/stand/source-current/skills/nova/plugins/pipeline-review/README.md",
+      "sha256": "acdf524d2b206d0f6152b537375a69b07b0abf5ad3ce6e57942a5e64ebde9141"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/stand/source-current/skills/nova/plugins/prism-design/README.md",
+      "sha256": "578e856a2dc1bec26227012406c610bca1ed9ce569778347b9d90355ed4f96ac"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/stand/source-current/skills/nova/plugins/project-summary/README.md",
+      "sha256": "0e88232cfbabf90d094ca6f8de77c3828de288b81109f2d6239087f52dbe4ee9"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/source-current/skills/buster/plugins/axe/README.md",
+      "sha256": "1ab2a74127ab6340c77b01a9dcca756486c4b9a9ecec19e03e88bab05cb44a6a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/source-current/skills/buster/plugins/lighthouse/README.md",
+      "sha256": "747d7478d270fb9b8c2c9103ff0f10783627d4a619ce0206afd675c7eaca9bca"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/source-current/skills/buster/plugins/playwright/README.md",
+      "sha256": "9b370d17fcf2a99824fe1506b703790bf149b26a73008a0f4fe628ce79b4e346"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/source-current/skills/buster/plugins/visual/README.md",
+      "sha256": "dadded5f27a5006b797e701cbedb69778288f55014c64e36a115a749f6a70ba5"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/author/PRISM-HANDOFF-TARGET-20261013.md",
+      "sha256": "ca84be429d093bdcffd19cec0ee9f233e719cc6363ad09659b900aef5dbc142f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/snapshots/before-gzip-qualification/README.md",
+      "sha256": "e04ac1b1136abf66bb8ba80e5e4f0a1dbb75a3c51a029a45e7f36ea130ffde45"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/snapshots/dls-correction-20261013-before/README.md",
+      "sha256": "4437cd21076d98e4489023073b825ce3c83bec8986c09e26033ef72b08ee46ca"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/snapshots/kubernetes-boundary-initial-observations/README.md",
+      "sha256": "bdd1597835ab86617b7e0a2986e1d8e1deefc533f12036ea7e518b3556b29160"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/snapshots/kubernetes-boundary-resource-comparison-initial/README.md",
+      "sha256": "7c02fa3ce6c894eecefd6765d7a0e2d37c6579408b348377e25f7a156eca5910"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/snapshots/kubernetes-boundary-second-observations/README.md",
+      "sha256": "c661a35cf5668c5079c9d20faa64ea5de9e078b25ac7e1aeac5fc26a6c2f7ec2"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr18-initial/README.md",
+      "sha256": "44e7329e1347c42ff269696e9ba278fdc4485c302d481bef54bf2ff2b3725c8a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/README.md",
+      "sha256": "3064c876e09f56a0913536db2d690f287e21a8ae483f38742465808c18b165b1"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/README.md",
+      "sha256": "c5f5702c44b99ef3646b18db547508eb715805e28dcb79a3523103ae863cba1d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/components/core-adjustability-current.md",
+      "sha256": "4cfcb52bff31787f70c8ede26377075b2db62bed708815ee15f74b475a1efa0a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/README.md",
+      "sha256": "36499e7f8fc2487f0edef98a443e9283efb790911dc79096bf068f6a7539c840"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/author/PRISM-HANDOFF-TARGET-20261013.md",
+      "sha256": "ca84be429d093bdcffd19cec0ee9f233e719cc6363ad09659b900aef5dbc142f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/README.md",
+      "sha256": "8c15f6a39f4fc3591da16f25f2727a4e1f9ec7952c523681b378ede66ff9eac0"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/README.md",
+      "sha256": "3912ccbb006bc54e01a0fc4a66caf477bac3d449354b3977ed70c629e7adcf43"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/provider-measurement-definition.md",
+      "sha256": "7586e786dc7f96088d84a51f41b610d3a803696e2e5bc3c89af9c78b0916e9fa"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/scaffold-c2-binding-definition.md",
+      "sha256": "b2f532258b861821864850065838d74cbadc321b10103ec44ce86dade2784f67"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/README.md",
+      "sha256": "b909f2214cc2366bce62e6634e1dd941d7d324b02210e8c16553880632cf6d2e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/README.md",
+      "sha256": "e6d8e84c2d7e759d08dd346a967170a811ca43ddb1f90c488831a161c6c75704"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/frozen/docs/review/evidence/config-acceptance/author/NOVA-MODULE-CARRIER-PROPOSAL-20261013.md",
+      "sha256": "293416f321fc421d62401aa872b538530b0fcb4a8b253fc564bcdf68d122b1f8"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/frozen/docs/review/evidence/config-acceptance/components/core-adjustability-current.md",
+      "sha256": "4cfcb52bff31787f70c8ede26377075b2db62bed708815ee15f74b475a1efa0a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/frozen/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/README.md",
+      "sha256": "36499e7f8fc2487f0edef98a443e9283efb790911dc79096bf068f6a7539c840"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/frozen/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/author/PRISM-HANDOFF-TARGET-20261013.md",
+      "sha256": "ca84be429d093bdcffd19cec0ee9f233e719cc6363ad09659b900aef5dbc142f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/frozen/docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/README.md",
+      "sha256": "8c15f6a39f4fc3591da16f25f2727a4e1f9ec7952c523681b378ede66ff9eac0"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/frozen/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/README.md",
+      "sha256": "3912ccbb006bc54e01a0fc4a66caf477bac3d449354b3977ed70c629e7adcf43"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/frozen/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/provider-measurement-definition.md",
+      "sha256": "7586e786dc7f96088d84a51f41b610d3a803696e2e5bc3c89af9c78b0916e9fa"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/frozen/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/scaffold-c2-binding-definition.md",
+      "sha256": "b2f532258b861821864850065838d74cbadc321b10103ec44ce86dade2784f67"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/frozen/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/README.md",
+      "sha256": "b909f2214cc2366bce62e6634e1dd941d7d324b02210e8c16553880632cf6d2e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/frozen/docs/review/remediation/OPENCLAW-CONFIG-GOAL.md",
+      "sha256": "1edfa9c0bcbc34f8e645b0e09c13f8e9df7f1e45d509a91b0ea256dc417f1231"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/replay-root/docs/review/evidence/config-acceptance/author/NOVA-MODULE-CARRIER-PROPOSAL-20261013.md",
+      "sha256": "293416f321fc421d62401aa872b538530b0fcb4a8b253fc564bcdf68d122b1f8"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/replay-root/docs/review/evidence/config-acceptance/components/core-adjustability-current.md",
+      "sha256": "4cfcb52bff31787f70c8ede26377075b2db62bed708815ee15f74b475a1efa0a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/replay-root/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/README.md",
+      "sha256": "36499e7f8fc2487f0edef98a443e9283efb790911dc79096bf068f6a7539c840"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/replay-root/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/author/PRISM-HANDOFF-TARGET-20261013.md",
+      "sha256": "ca84be429d093bdcffd19cec0ee9f233e719cc6363ad09659b900aef5dbc142f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/replay-root/docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/README.md",
+      "sha256": "8c15f6a39f4fc3591da16f25f2727a4e1f9ec7952c523681b378ede66ff9eac0"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/replay-root/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/README.md",
+      "sha256": "3912ccbb006bc54e01a0fc4a66caf477bac3d449354b3977ed70c629e7adcf43"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/replay-root/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/provider-measurement-definition.md",
+      "sha256": "7586e786dc7f96088d84a51f41b610d3a803696e2e5bc3c89af9c78b0916e9fa"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/replay-root/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/scaffold-c2-binding-definition.md",
+      "sha256": "b2f532258b861821864850065838d74cbadc321b10103ec44ce86dade2784f67"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/replay-root/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/README.md",
+      "sha256": "b909f2214cc2366bce62e6634e1dd941d7d324b02210e8c16553880632cf6d2e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/replay-root/docs/review/remediation/OPENCLAW-CONFIG-GOAL.md",
+      "sha256": "1edfa9c0bcbc34f8e645b0e09c13f8e9df7f1e45d509a91b0ea256dc417f1231"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-icq-material-recheck-20261013/frozen/docs/review/evidence/config-acceptance/components/core-adjustability-current.md",
+      "sha256": "4cfcb52bff31787f70c8ede26377075b2db62bed708815ee15f74b475a1efa0a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-icq-material-recheck-20261013/frozen/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/README.md",
+      "sha256": "36499e7f8fc2487f0edef98a443e9283efb790911dc79096bf068f6a7539c840"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-icq-material-recheck-20261013/frozen/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/author/PRISM-HANDOFF-TARGET-20261013.md",
+      "sha256": "ca84be429d093bdcffd19cec0ee9f233e719cc6363ad09659b900aef5dbc142f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-icq-material-recheck-20261013/frozen/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/README.md",
+      "sha256": "3912ccbb006bc54e01a0fc4a66caf477bac3d449354b3977ed70c629e7adcf43"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-icq-material-recheck-20261013/frozen/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/provider-measurement-definition.md",
+      "sha256": "7586e786dc7f96088d84a51f41b610d3a803696e2e5bc3c89af9c78b0916e9fa"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-icq-material-recheck-20261013/frozen/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/scaffold-c2-binding-definition.md",
+      "sha256": "b2f532258b861821864850065838d74cbadc321b10103ec44ce86dade2784f67"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-icq-material-recheck-20261013/frozen/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/README.md",
+      "sha256": "b909f2214cc2366bce62e6634e1dd941d7d324b02210e8c16553880632cf6d2e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-icq-material-recheck-20261013/frozen/docs/review/remediation/OPENCLAW-CONFIG-GOAL.md",
+      "sha256": "1edfa9c0bcbc34f8e645b0e09c13f8e9df7f1e45d509a91b0ea256dc417f1231"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-icq-material-recheck-20261013/replay-root/docs/review/evidence/config-acceptance/components/core-adjustability-current.md",
+      "sha256": "4cfcb52bff31787f70c8ede26377075b2db62bed708815ee15f74b475a1efa0a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-icq-material-recheck-20261013/replay-root/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/README.md",
+      "sha256": "36499e7f8fc2487f0edef98a443e9283efb790911dc79096bf068f6a7539c840"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-icq-material-recheck-20261013/replay-root/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/author/PRISM-HANDOFF-TARGET-20261013.md",
+      "sha256": "ca84be429d093bdcffd19cec0ee9f233e719cc6363ad09659b900aef5dbc142f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-icq-material-recheck-20261013/replay-root/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/README.md",
+      "sha256": "3912ccbb006bc54e01a0fc4a66caf477bac3d449354b3977ed70c629e7adcf43"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-icq-material-recheck-20261013/replay-root/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/provider-measurement-definition.md",
+      "sha256": "7586e786dc7f96088d84a51f41b610d3a803696e2e5bc3c89af9c78b0916e9fa"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-icq-material-recheck-20261013/replay-root/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/scaffold-c2-binding-definition.md",
+      "sha256": "b2f532258b861821864850065838d74cbadc321b10103ec44ce86dade2784f67"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-icq-material-recheck-20261013/replay-root/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/README.md",
+      "sha256": "b909f2214cc2366bce62e6634e1dd941d7d324b02210e8c16553880632cf6d2e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-icq-material-recheck-20261013/replay-root/docs/review/remediation/OPENCLAW-CONFIG-GOAL.md",
+      "sha256": "1edfa9c0bcbc34f8e645b0e09c13f8e9df7f1e45d509a91b0ea256dc417f1231"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/frozen/docs/review/evidence/config-acceptance/author/NOVA-MODULE-CARRIER-PROPOSAL-20261013.md",
+      "sha256": "293416f321fc421d62401aa872b538530b0fcb4a8b253fc564bcdf68d122b1f8"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/frozen/docs/review/evidence/config-acceptance/components/core-adjustability-current.md",
+      "sha256": "4cfcb52bff31787f70c8ede26377075b2db62bed708815ee15f74b475a1efa0a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/frozen/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/README.md",
+      "sha256": "36499e7f8fc2487f0edef98a443e9283efb790911dc79096bf068f6a7539c840"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/frozen/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/author/PRISM-HANDOFF-TARGET-20261013.md",
+      "sha256": "ca84be429d093bdcffd19cec0ee9f233e719cc6363ad09659b900aef5dbc142f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/frozen/docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/README.md",
+      "sha256": "8c15f6a39f4fc3591da16f25f2727a4e1f9ec7952c523681b378ede66ff9eac0"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/frozen/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/README.md",
+      "sha256": "3912ccbb006bc54e01a0fc4a66caf477bac3d449354b3977ed70c629e7adcf43"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/frozen/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/provider-measurement-definition.md",
+      "sha256": "7586e786dc7f96088d84a51f41b610d3a803696e2e5bc3c89af9c78b0916e9fa"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/frozen/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/scaffold-c2-binding-definition.md",
+      "sha256": "b2f532258b861821864850065838d74cbadc321b10103ec44ce86dade2784f67"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/frozen/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/README.md",
+      "sha256": "b909f2214cc2366bce62e6634e1dd941d7d324b02210e8c16553880632cf6d2e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/frozen/docs/review/remediation/OPENCLAW-CONFIG-GOAL.md",
+      "sha256": "1edfa9c0bcbc34f8e645b0e09c13f8e9df7f1e45d509a91b0ea256dc417f1231"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/replay-root/docs/review/evidence/config-acceptance/author/NOVA-MODULE-CARRIER-PROPOSAL-20261013.md",
+      "sha256": "293416f321fc421d62401aa872b538530b0fcb4a8b253fc564bcdf68d122b1f8"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/replay-root/docs/review/evidence/config-acceptance/components/core-adjustability-current.md",
+      "sha256": "4cfcb52bff31787f70c8ede26377075b2db62bed708815ee15f74b475a1efa0a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/replay-root/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/README.md",
+      "sha256": "36499e7f8fc2487f0edef98a443e9283efb790911dc79096bf068f6a7539c840"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/replay-root/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/author/PRISM-HANDOFF-TARGET-20261013.md",
+      "sha256": "ca84be429d093bdcffd19cec0ee9f233e719cc6363ad09659b900aef5dbc142f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/replay-root/docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/README.md",
+      "sha256": "8c15f6a39f4fc3591da16f25f2727a4e1f9ec7952c523681b378ede66ff9eac0"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/replay-root/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/README.md",
+      "sha256": "3912ccbb006bc54e01a0fc4a66caf477bac3d449354b3977ed70c629e7adcf43"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/replay-root/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/provider-measurement-definition.md",
+      "sha256": "7586e786dc7f96088d84a51f41b610d3a803696e2e5bc3c89af9c78b0916e9fa"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/replay-root/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/scaffold-c2-binding-definition.md",
+      "sha256": "b2f532258b861821864850065838d74cbadc321b10103ec44ce86dade2784f67"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/replay-root/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/README.md",
+      "sha256": "b909f2214cc2366bce62e6634e1dd941d7d324b02210e8c16553880632cf6d2e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/replay-root/docs/review/remediation/OPENCLAW-CONFIG-GOAL.md",
+      "sha256": "1edfa9c0bcbc34f8e645b0e09c13f8e9df7f1e45d509a91b0ea256dc417f1231"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-source-question-bce3f075-20261013/frozen/docs/review/evidence/config-acceptance/components/core-adjustability-current.md",
+      "sha256": "4cfcb52bff31787f70c8ede26377075b2db62bed708815ee15f74b475a1efa0a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-source-question-bce3f075-20261013/frozen/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/README.md",
+      "sha256": "3912ccbb006bc54e01a0fc4a66caf477bac3d449354b3977ed70c629e7adcf43"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-source-question-bce3f075-20261013/frozen/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/provider-measurement-definition.md",
+      "sha256": "7586e786dc7f96088d84a51f41b610d3a803696e2e5bc3c89af9c78b0916e9fa"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-source-question-bce3f075-20261013/frozen/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/scaffold-c2-binding-definition.md",
+      "sha256": "b2f532258b861821864850065838d74cbadc321b10103ec44ce86dade2784f67"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-source-question-bce3f075-20261013/frozen/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/README.md",
+      "sha256": "b909f2214cc2366bce62e6634e1dd941d7d324b02210e8c16553880632cf6d2e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-core-source-question-bce3f075-20261013/frozen/docs/review/remediation/OPENCLAW-CONFIG-GOAL.md",
+      "sha256": "1edfa9c0bcbc34f8e645b0e09c13f8e9df7f1e45d509a91b0ea256dc417f1231"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/inputs/docs/review/evidence/config-acceptance/delivery/DELIVERY-CONTROLLER-RESPONSE-EPOCH-6606AF9-20261013.md",
+      "sha256": "c89eb93324d395ebbf8d2a45dab36bd4e2093a7c6f1603595f398ca5206ba5b4"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-groot01-recheck-6606/inputs/docs/review/remediation/config-definition-current.md",
+      "sha256": "c282b510337226d5b79563967e68488eb37920724f07e5d6b0bfd8d6550f1950"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-groot01-recheck-6606/inputs/docs/review/remediation/independent-runtime-historical-links-6606.md",
+      "sha256": "5a99aff9cac9a448d8b08429831165cc16aca569b3d17177bd43db131d9bd749"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/remediation/config-definition-current.md",
+      "sha256": "c282b510337226d5b79563967e68488eb37920724f07e5d6b0bfd8d6550f1950"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/remediation/independent-runtime-historical-links-6606.md",
+      "sha256": "5a99aff9cac9a448d8b08429831165cc16aca569b3d17177bd43db131d9bd749"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-6606/inputs/docs/review/remediation/independent-runtime-historical-links-6606.md",
+      "sha256": "5a99aff9cac9a448d8b08429831165cc16aca569b3d17177bd43db131d9bd749"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/inputs/docs/review/remediation/independent-runtime-historical-links-6606.md",
+      "sha256": "5a99aff9cac9a448d8b08429831165cc16aca569b3d17177bd43db131d9bd749"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-projection-preparation-6606/inputs/docs/review/remediation/independent-runtime-historical-links-6606.md",
+      "sha256": "5a99aff9cac9a448d8b08429831165cc16aca569b3d17177bd43db131d9bd749"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/docs/review/evidence/config-acceptance/author/NOVA-MODULE-BINDING-CONSTRAINTS-20261013.md",
+      "sha256": "e71981f37555bcb12644ee3e7c15d42389fba510868fe9d5fce976e29e737038"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/docs/review/evidence/config-acceptance/author/NOVA-MODULE-CARRIER-PROPOSAL-20261013.md",
+      "sha256": "293416f321fc421d62401aa872b538530b0fcb4a8b253fc564bcdf68d122b1f8"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/docs/review/remediation/config-definition-current.md",
+      "sha256": "7316ca6af5a68de28cb56265ad4fa937f188c774882bb98c38744ba42c93ff51"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/docs/review/remediation/decisions.md",
+      "sha256": "b4d9b29911643d08fc6ef439b88dec4ef3e6a4f355ea591ff3f6db9e3f152d1b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-nova-carrier-recheck-20261013/inputs/docs/review/evidence/config-acceptance/author/NOVA-MODULE-BINDING-CONSTRAINTS-20261013.md",
+      "sha256": "e71981f37555bcb12644ee3e7c15d42389fba510868fe9d5fce976e29e737038"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-nova-carrier-recheck-20261013/inputs/docs/review/evidence/config-acceptance/author/NOVA-MODULE-CARRIER-PROPOSAL-20261013.md",
+      "sha256": "4d740674cf8ac876b8cc7cdf0c7566da2d7b26976ccfe31615b4c6defd95846f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-nova-carrier-recheck-20261013/inputs/docs/review/evidence/config-acceptance/author/nova-carrier-before-nova-carrier-01-20261013/NOVA-MODULE-CARRIER-PROPOSAL-20261013.md",
+      "sha256": "293416f321fc421d62401aa872b538530b0fcb4a8b253fc564bcdf68d122b1f8"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-nova-carrier-recheck-20261013/inputs/docs/review/remediation/config-definition-current.md",
+      "sha256": "dd145d5970745f9626144c5fe0d981b740182c2ba6fe34ce647afdbcfe207994"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-nova-carrier-recheck-20261013/inputs/docs/review/remediation/decisions.md",
+      "sha256": "b4d9b29911643d08fc6ef439b88dec4ef3e6a4f355ea591ff3f6db9e3f152d1b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-prism-handoff-recheck-20261013/inputs/docs/review/evidence/config-acceptance/author/PRISM-HANDOFF-TARGET-20261013.md",
+      "sha256": "192c7940230809b6e7219dddbb7bc7d2626868194c42c929d89ceebf0f0b5320"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-prism-handoff-recheck-20261013/inputs/docs/review/remediation/independent-config-c0-prism-handoff-bce3f075-20261013.md",
+      "sha256": "6f217d3eb728ac003fdad3a01e0cf5b50d6ae7ae9b89161200f8ac3bbce63362"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-prism-temporal-recheck-20261013/inputs/docs/review/evidence/config-acceptance/author/PRISM-HANDOFF-TARGET-20261013.md",
+      "sha256": "ca84be429d093bdcffd19cec0ee9f233e719cc6363ad09659b900aef5dbc142f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-prism-temporal-recheck-20261013/inputs/docs/review/evidence/config-acceptance/author/prism-temporal-before-20261013/PRISM-HANDOFF-TARGET-20261013.md",
+      "sha256": "192c7940230809b6e7219dddbb7bc7d2626868194c42c929d89ceebf0f0b5320"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-prism-temporal-recheck-20261013/inputs/docs/review/remediation/independent-config-c0-prism-handoff-recheck-bce3f075-20261013.md",
+      "sha256": "531f27bd97d08768b8beea7224eff75457021ca5ba3e1185ce705fe280432b1b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/frozen-inputs/runtime-README.md",
+      "sha256": "aa53358e40e10be543d39082755a55f0f75f9000ba15d145b09bd87cf716d0a1"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/frozen-inputs/sdk-README.md",
+      "sha256": "f6d1b12f144f97e4de165c3042534981c40cd0c5a78e6e7eed18d9d88b39a456"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/parent-NOVA-MODULE-CARRIER-PROPOSAL.snapshot.md",
+      "sha256": "293416f321fc421d62401aa872b538530b0fcb4a8b253fc564bcdf68d122b1f8"
+    },
+    {
+      "path": "docs/review/evidence/config-buster-admission-independent-20260921/final-docs/docs/operations/operator-configuration.md",
+      "sha256": "084a02de91bc2feaf92af099985775c51f8081703559c6f2ef7d94a7307930ac"
+    },
+    {
+      "path": "docs/review/evidence/config-buster-admission-independent-20260921/final-docs/docs/review/remediation/implementation/config-buster-admission-20260921.md",
+      "sha256": "d052b70c66fe36f00a26a0697334d405bee8ca8cbc1a6be27fc8b49c43ca926f"
+    },
+    {
+      "path": "docs/review/evidence/config-buster-admission-independent-20260921/final-docs/docs/review/remediation/implementation/config-inventory-20260920.md",
+      "sha256": "bda676bced09deca0b852459eb0f936501a5856cbf93eb242fa7d3799d970bfb"
+    },
+    {
+      "path": "docs/review/evidence/config-buster-admission-independent-20260921/final-docs/docs/review/remediation/implementation/independent-config-buster-admission-20260921.md",
+      "sha256": "9487fcc2d2ea2018175c53ecf118707fecf50cc4958a11a8632c66ce1aabf332"
+    },
+    {
+      "path": "docs/review/evidence/config-buster-readiness-20260921/author-checkpoint/docs/operations/operator-configuration.md",
+      "sha256": "c2242d7e8fb09e851903a4402ef230a2dd2039f699b7ee075ee823a22ea3e619"
+    },
+    {
+      "path": "docs/review/evidence/config-buster-readiness-20260921/author-checkpoint/docs/review/remediation/implementation/config-buster-readiness-20260921.md",
+      "sha256": "9046152c1f5266541752b5c59fb2253fd1d980632f6037ccb2c5ba72a6c32934"
+    },
+    {
+      "path": "docs/review/evidence/config-buster-readiness-20260921/author-freeze/docs/operations/operator-configuration.md",
+      "sha256": "c2242d7e8fb09e851903a4402ef230a2dd2039f699b7ee075ee823a22ea3e619"
+    },
+    {
+      "path": "docs/review/evidence/config-buster-readiness-20260921/author-freeze/docs/review/remediation/implementation/config-buster-readiness-20260921.md",
+      "sha256": "2102528a12635b0a6c465f4b1ccb509acb2d64274019aff2e35f748ff0185f51"
+    },
+    {
+      "path": "docs/review/evidence/config-buster-readiness-20260921/review-runner/author-report-before-execution-update.md",
+      "sha256": "d639d06cd36a494f668d4b580a1b40306c177227406ff942dace85f40c495723"
+    },
+    {
+      "path": "docs/review/evidence/config-buster-readiness-20260921/review-runner/author-run1/new-source/scripts/tests/docker-context/README.md",
+      "sha256": "56b4cb2ef8ddcc75adb5d35f7208c4427331f406ecd3abe76ab495779d6f8be0"
+    },
+    {
+      "path": "docs/review/evidence/config-buster-readiness-20260921/review-runner/author-run2/new-source/scripts/tests/docker-context/README.md",
+      "sha256": "56b4cb2ef8ddcc75adb5d35f7208c4427331f406ecd3abe76ab495779d6f8be0"
+    },
+    {
+      "path": "docs/review/evidence/config-buster-readiness-20260921/review-runner/author-run3/new-source/scripts/tests/docker-context/README.md",
+      "sha256": "56b4cb2ef8ddcc75adb5d35f7208c4427331f406ecd3abe76ab495779d6f8be0"
+    },
+    {
+      "path": "docs/review/evidence/config-buster-readiness-20260921/review-runner/author-run4/new-source/scripts/tests/docker-context/README.md",
+      "sha256": "56b4cb2ef8ddcc75adb5d35f7208c4427331f406ecd3abe76ab495779d6f8be0"
+    },
+    {
+      "path": "docs/review/evidence/config-buster-readiness-20260921/sources-v2/docs/review/remediation/implementation/config-buster-readiness-20260921.md",
+      "sha256": "d639d06cd36a494f668d4b580a1b40306c177227406ff942dace85f40c495723"
+    },
+    {
+      "path": "docs/review/evidence/config-buster-readiness-20260921/sources/docs/review/remediation/implementation/config-buster-readiness-20260921.md",
+      "sha256": "beb6c82af6eff6afc153eb57e65743b8a9ea8750635519f7b9277fe9f05a291f"
+    },
+    {
+      "path": "docs/review/evidence/config-buster-readiness-20260921/staging/before/docs/operations/operator-configuration.md",
+      "sha256": "08b9eebb134be85c0a941a56f711c958ea1c2916bc987d82345e8a906a574e4d"
+    },
+    {
+      "path": "docs/review/evidence/config-buster-readiness-20260921/staging/files/docs/operations/operator-configuration.md",
+      "sha256": "c2242d7e8fb09e851903a4402ef230a2dd2039f699b7ee075ee823a22ea3e619"
+    },
+    {
+      "path": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources-v2/docs/review/remediation/implementation/config-command-git-plugin-inventory-20260921.md",
+      "sha256": "a59144d32c87e5ea67c778cd7b4828ab6cd6f5a0157617ad50032faebf3589f9"
+    },
+    {
+      "path": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/docs/review/remediation/implementation/config-command-git-plugin-inventory-20260921.md",
+      "sha256": "80c52081f29fbd6d571c261f9623d58d60ba7a24dc812f5977ec2daf2616badd"
+    },
+    {
+      "path": "docs/review/evidence/config-final-four-adapter-inventory-20260921/sources/docs/review/remediation/implementation/config-final-four-adapter-inventory-20260921.md",
+      "sha256": "37e4445d35b4f29cb23df6d8aadcf3cedf8cf26551b035f652c5d96a31ec6ed6"
+    },
+    {
+      "path": "docs/review/evidence/config-final-four-adapter-inventory-20260921/sources/skills/nova/plugins/demo-handoff/README.md",
+      "sha256": "5a80c23923eecb0361cd60ae3eec9ee72560eaecc73ef4b99dc459e5448561e0"
+    },
+    {
+      "path": "docs/review/evidence/config-final-four-adapter-inventory-20260921/sources/skills/nova/plugins/lint/README.md",
+      "sha256": "95b6617ebe1ea090c7ac550f269ee82b17dfb82159eb777c6e25007fae95320c"
+    },
+    {
+      "path": "docs/review/evidence/config-final-four-adapter-inventory-20260921/sources/skills/nova/plugins/pipeline-review/README.md",
+      "sha256": "acdf524d2b206d0f6152b537375a69b07b0abf5ad3ce6e57942a5e64ebde9141"
+    },
+    {
+      "path": "docs/review/evidence/config-final-four-adapter-inventory-20260921/sources/skills/nova/plugins/repository-adapter/README.md",
+      "sha256": "e0d8e4885ec3f72abdeebf8f6d1b8f94618e7f4bb69bb24f91809195b9da8138"
+    },
+    {
+      "path": "docs/review/evidence/config-plugin-settings-inventory-20260921/review-addendum/report.before.md",
+      "sha256": "415c996fdb48f1e4cb198277f38255469ccf4e4c205814151d857f6bce5fd6c0"
+    },
+    {
+      "path": "docs/review/evidence/config-runtime-remote-plugin-inventory-20260921/accepted-status/after.md",
+      "sha256": "a9620138373b148aaa976ec797425687953777bf075c0d2e837fcd0a76fe8745"
+    },
+    {
+      "path": "docs/review/evidence/config-runtime-remote-plugin-inventory-20260921/accepted-status/before.md",
+      "sha256": "49db85ebd42763d913a44b982fd01d9f059b0dac5594f93aa994ef0d83c9247c"
+    },
+    {
+      "path": "docs/review/evidence/config-runtime-remote-plugin-inventory-20260921/sources-v2/docs/review/remediation/implementation/config-runtime-remote-plugin-inventory-20260921.md",
+      "sha256": "49db85ebd42763d913a44b982fd01d9f059b0dac5594f93aa994ef0d83c9247c"
+    },
+    {
+      "path": "docs/review/evidence/config-runtime-remote-plugin-inventory-20260921/sources/docs/review/remediation/implementation/config-runtime-remote-plugin-inventory-20260921.md",
+      "sha256": "7ef675c885584d3ef64574b025faab4652611f1fdde02e6c67c43763e966cf88"
+    },
+    {
+      "path": "docs/review/evidence/config-stage-report-plugin-inventory-20260921/lease-author-correction/docs/review/remediation/implementation/config-stage-report-plugin-inventory-20260921.md",
+      "sha256": "f8cedc9aacbc816e289e98fe5ccce98c392843ba71eb95886d1a3c0377694806"
+    },
+    {
+      "path": "docs/review/evidence/config-stage-report-plugin-inventory-20260921/sources-final/docs/review/remediation/implementation/config-stage-report-plugin-inventory-20260921.md",
+      "sha256": "71e6108a23865551962632c5dece51eb58fd4a7ee88a86a9d32f986efa347d17"
+    },
+    {
+      "path": "docs/review/evidence/config-stage-report-plugin-inventory-20260921/sources/docs/review/remediation/implementation/config-stage-report-plugin-inventory-20260921.md",
+      "sha256": "2aec1aa52ed584d7e08f45af9939879f0abfa45cc9af1e1d14c11edf76ebc889"
+    },
+    {
+      "path": "docs/review/evidence/config-stage-report-plugin-inventory-20260921/sources/skills/buster/plugins/junit-report-adapter/README.md",
+      "sha256": "012b7603d9ff50ed2299576c94031c9c69d7359bf05a40bc3811f9e3adfe5cdf"
+    },
+    {
+      "path": "docs/review/evidence/config-stage-report-plugin-inventory-20260921/sources/skills/nova/plugins/architecture-validator/README.md",
+      "sha256": "1ea6563f1ca2b809d9cc3966ab11d6098caa39beb030bd907ed1aabf73ec4cf2"
+    },
+    {
+      "path": "docs/review/evidence/config-stage-report-plugin-inventory-20260921/sources/skills/nova/plugins/blueprint-sync/README.md",
+      "sha256": "8d7826178378bd3fe2a9f368744f784e3003655eb48297e3b4782be57a94d9e4"
+    },
+    {
+      "path": "docs/review/evidence/config-stage-report-plugin-inventory-20260921/sources/skills/nova/plugins/buster-quality-gate/README.md",
+      "sha256": "81f3cf942b15fc8a091eb34b9009dadb14cb4c8211febfa391b23b13a19862f6"
+    },
+    {
+      "path": "docs/review/evidence/config-stage-report-plugin-inventory-20260921/sources/skills/nova/plugins/case-study/README.md",
+      "sha256": "d896e5e31a642289a86806abd984add82a969fd6377257ff39b864c1967aaa56"
+    },
+    {
+      "path": "docs/review/evidence/config-stage-report-plugin-inventory-20260921/sources/skills/nova/plugins/delivery-lint/README.md",
+      "sha256": "3fda4b5a47bb2f5112394453467d6b6ab91e2f8977c7b518b9dd0bdef789136f"
+    },
+    {
+      "path": "docs/review/evidence/config-stage-report-plugin-inventory-20260921/sources/skills/nova/plugins/demo-handoff/README.md",
+      "sha256": "5a80c23923eecb0361cd60ae3eec9ee72560eaecc73ef4b99dc459e5448561e0"
+    },
+    {
+      "path": "docs/review/evidence/config-stage-report-plugin-inventory-20260921/sources/skills/nova/plugins/human-approval/README.md",
+      "sha256": "39f9c6805d61be22d45bc3d5709499dae9977e7c4dee1fb1e75ac8e3dd6e537f"
+    },
+    {
+      "path": "docs/review/evidence/config-stage-report-plugin-inventory-20260921/sources/skills/nova/plugins/implementation-agent/README.md",
+      "sha256": "9f6b149f2994f44abeefc59e9e960f240f3c4947c1dceaf1d97806cc0255192a"
+    },
+    {
+      "path": "docs/review/evidence/config-stage-report-plugin-inventory-20260921/sources/skills/nova/plugins/lint/README.md",
+      "sha256": "95b6617ebe1ea090c7ac550f269ee82b17dfb82159eb777c6e25007fae95320c"
+    },
+    {
+      "path": "docs/review/evidence/config-stage-report-plugin-inventory-20260921/sources/skills/nova/plugins/pipeline-review/README.md",
+      "sha256": "acdf524d2b206d0f6152b537375a69b07b0abf5ad3ce6e57942a5e64ebde9141"
+    },
+    {
+      "path": "docs/review/evidence/config-stage-report-plugin-inventory-20260921/sources/skills/nova/plugins/preflight-contract/README.md",
+      "sha256": "59edb208e51d04f8c675d23583aab236c1ecd2d7e23938acb99424d4d6c48da6"
+    },
+    {
+      "path": "docs/review/evidence/config-stage-report-plugin-inventory-20260921/sources/skills/nova/plugins/prism-design/README.md",
+      "sha256": "578e856a2dc1bec26227012406c610bca1ed9ce569778347b9d90355ed4f96ac"
+    },
+    {
+      "path": "docs/review/evidence/config-stage-report-plugin-inventory-20260921/sources/skills/nova/plugins/project-summary/README.md",
+      "sha256": "0e88232cfbabf90d094ca6f8de77c3828de288b81109f2d6239087f52dbe4ee9"
+    },
+    {
+      "path": "docs/review/evidence/config-stage-report-plugin-inventory-20260921/sources/skills/nova/plugins/review/README.md",
+      "sha256": "643e1eb16117035d97d8856a89de766d10f39de3cc61f944e6ebd92eb1902f67"
+    },
+    {
+      "path": "docs/review/evidence/config-storage-plugin-independent-20260921/additional-source/docs/review/remediation/implementation/config-storage-plugin-inventory-20260921.md",
+      "sha256": "949c045e3f8fbde7a814c545ec379462fb41e70859937dad00fabbaaf36f9892"
+    },
+    {
+      "path": "docs/review/evidence/config-testprovider-authority-20260921/semantic-correction/docs/review/remediation/implementation/config-testprovider-authority-20260921.md",
+      "sha256": "1474af440789f5d2fa0f1b6daa56e6a8726b8a9c8b012ff519127fabda5fdb5a"
+    },
+    {
+      "path": "docs/review/evidence/config-testprovider-authority-20260921/sources-final/docs/review/remediation/implementation/config-testprovider-authority-20260921.md",
+      "sha256": "9e6b5efd2ea490fb1e6b23ba91c0644bc976619815f59ceb25082b2ff36f2e67"
+    },
+    {
+      "path": "docs/review/evidence/config-testprovider-authority-20260921/sources/docs/review/remediation/implementation/config-testprovider-authority-20260921.md",
+      "sha256": "fa97d2a9cf11b1f05686cd7e7891811b3bf5b13b66ba8d97b121ac6b1be11e6e"
+    },
+    {
+      "path": "docs/review/evidence/config-testprovider-authority-20260921/sources/skills/buster/plugins/api-flow/README.md",
+      "sha256": "fdb4520d8d9a12e25a79787a5f2dd219a5bbc98d95ef0c22c204ee82d668a55e"
+    },
+    {
+      "path": "docs/review/evidence/config-testprovider-authority-20260921/sources/skills/buster/plugins/axe/README.md",
+      "sha256": "1ab2a74127ab6340c77b01a9dcca756486c4b9a9ecec19e03e88bab05cb44a6a"
+    },
+    {
+      "path": "docs/review/evidence/config-testprovider-authority-20260921/sources/skills/buster/plugins/container-build/README.md",
+      "sha256": "9f717d5483450ff8aa9e01f95694bbe54165b6ee18f0014ece1fa6de77a892d3"
+    },
+    {
+      "path": "docs/review/evidence/config-testprovider-authority-20260921/sources/skills/buster/plugins/coverage-budget/README.md",
+      "sha256": "2a8f2e52e59f5ee7be788636a86a36a0fa37306d65fc273caacf84494e47c217"
+    },
+    {
+      "path": "docs/review/evidence/config-testprovider-authority-20260921/sources/skills/buster/plugins/demo-auth-smoke/README.md",
+      "sha256": "3230e842192813df317830d44228dae9836152ce7bddde9e65c2c4a7a9a37631"
+    },
+    {
+      "path": "docs/review/evidence/config-testprovider-authority-20260921/sources/skills/buster/plugins/direct-command/README.md",
+      "sha256": "3b5bb9c04b220b9979e57a95ff7c09b0d7d25c48e3104425f2c73fb3a7408e34"
+    },
+    {
+      "path": "docs/review/evidence/config-testprovider-authority-20260921/sources/skills/buster/plugins/http/README.md",
+      "sha256": "d1e5043fc7de143d939eac59d9472ccd230fbe54e745ceb628b820d7bd759105"
+    },
+    {
+      "path": "docs/review/evidence/config-testprovider-authority-20260921/sources/skills/buster/plugins/kubernetes-fixture/README.md",
+      "sha256": "30cbdad838949b74272a02f1712169a5c1ec4856015ab024ece60ad2cce10e37"
+    },
+    {
+      "path": "docs/review/evidence/config-testprovider-authority-20260921/sources/skills/buster/plugins/lighthouse/README.md",
+      "sha256": "747d7478d270fb9b8c2c9103ff0f10783627d4a619ce0206afd675c7eaca9bca"
+    },
+    {
+      "path": "docs/review/evidence/config-testprovider-authority-20260921/sources/skills/buster/plugins/openapi/README.md",
+      "sha256": "afc989c4127027ad0f66ec95dea04953020f688b231427a77dff0714c9b1159a"
+    },
+    {
+      "path": "docs/review/evidence/config-testprovider-authority-20260921/sources/skills/buster/plugins/playwright/README.md",
+      "sha256": "9b370d17fcf2a99824fe1506b703790bf149b26a73008a0f4fe628ce79b4e346"
+    },
+    {
+      "path": "docs/review/evidence/config-testprovider-authority-20260921/sources/skills/buster/plugins/security-providers/README.md",
+      "sha256": "97f0db9adda62d1b15cfa518816547b15ad66b1c38f35010c75d6d5797f5cd20"
+    },
+    {
+      "path": "docs/review/evidence/config-testprovider-authority-20260921/sources/skills/buster/plugins/size-budget/README.md",
+      "sha256": "9cab80aae3f14c2c1dac300c3875ffa561dda4e64bdec0bfcec530e1e1ceb7a4"
+    },
+    {
+      "path": "docs/review/evidence/config-testprovider-authority-20260921/sources/skills/buster/plugins/tailscale-exposure/README.md",
+      "sha256": "7fcb51b8fb8d22dddab78d9e5aa09abe37f547aa8385e0e9d22cfcfcf88db4df"
+    },
+    {
+      "path": "docs/review/evidence/config-testprovider-authority-20260921/sources/skills/buster/plugins/visual/README.md",
+      "sha256": "dadded5f27a5006b797e701cbedb69778288f55014c64e36a115a749f6a70ba5"
+    },
+    {
+      "path": "docs/review/evidence/config-transport-observers-plugin-inventory-20260921/accepted-status/after.md",
+      "sha256": "118d5a721c4a84a3773d6daf670712c71da968bb1857ff0dbf8ca3e5f7e9ab01"
+    },
+    {
+      "path": "docs/review/evidence/config-transport-observers-plugin-inventory-20260921/accepted-status/before.md",
+      "sha256": "8fbc319f39e3d1f2ed7e69b98c4424807bf3207e6f1342487c543e42bd5e1393"
+    },
+    {
+      "path": "docs/review/evidence/config-transport-observers-plugin-inventory-20260921/sources/docs/review/remediation/implementation/config-transport-observers-plugin-inventory-20260921.md",
+      "sha256": "8fbc319f39e3d1f2ed7e69b98c4424807bf3207e6f1342487c543e42bd5e1393"
+    },
+    {
+      "path": "docs/review/evidence/config-transport-observers-plugin-inventory-20260921/sources/skills/common/plugins/agent-observability/README.md",
+      "sha256": "587baf990dd55b551e27ea93cc923b5365445f6a38f306f9cb0fb0a7abbb365a"
+    },
+    {
+      "path": "docs/review/evidence/config-transport-observers-plugin-inventory-20260921/sources/skills/common/plugins/openclaw-agent-events/README.md",
+      "sha256": "72403574cdae0eedc8995e2ba75af81ca940effcd34a16e73425a60dbe45fb48"
+    },
+    {
+      "path": "docs/review/evidence/config-transport-observers-plugin-inventory-20260921/sources/skills/common/plugins/redis-transport/README.md",
+      "sha256": "6522f6dc211b28863facf7296a42e50cf8607e36c418e65e013e94a5b667bcc0"
+    },
+    {
+      "path": "docs/review/evidence/config-transport-observers-plugin-inventory-20260921/sources/skills/common/plugins/transport-publisher/README.md",
+      "sha256": "92a62894d0171bc3ea702f18fd4d7ae16d0842e8e7e8353401b6b4333a70b839"
+    },
+    {
+      "path": "docs/review/evidence/config-wait-history-design-20260921/source/docs/review/remediation/decisions.md",
+      "sha256": "02529859f4848939c03efd38ed50149c9cea978229d7d2e3da2ff812d0e5386e"
+    },
+    {
+      "path": "docs/review/evidence/config-wait-history-design-20260921/source/docs/review/remediation/implementation/config-plugin-settings-inventory-20260921.md",
+      "sha256": "d5e194683fd5877b5838e8907637549423cf026e9f4c35918ad03b83c277fcb7"
+    },
+    {
+      "path": "docs/review/evidence/config-wait-history-design-20260921/source/docs/review/remediation/implementation/config-wait-history-design-20260921.md",
+      "sha256": "f776b534b107230ae51e11846ff5abbd2d4d58686848d9091ebbf876dbb9fe86"
+    },
+    {
+      "path": "docs/review/evidence/config-worker-listener-20260921/before/docs/operations/operator-configuration.md",
+      "sha256": "f3af261fbec738becb7d378482fc437c8b05cd5764ae16838c4340809bb83085"
+    },
+    {
+      "path": "docs/review/evidence/config-worker-listener-20260921/before/docs/operations/prism-operator-guide.md",
+      "sha256": "83cc745fea8ee122dc2f9f98e19a042661871f2afb57dda1ab00909c6ef9c4c7"
+    },
+    {
+      "path": "docs/review/evidence/config-worker-listener-20260921/before/docs/review/remediation/implementation/config-inventory-20260920.md",
+      "sha256": "85b45443605d8b390e36c02c0c632fe7147e939e420b37e50f065c56d9433734"
+    },
+    {
+      "path": "docs/review/evidence/config-worker-listener-20260921/before/skills/common/plugin-runtime/foundation/config/README.md",
+      "sha256": "7b4e5e7fc1593eef086c61858c7a4d4b8bb995d43d7351ceaf8010d4026ecb69"
+    },
+    {
+      "path": "docs/review/evidence/config-worker-listener-20260921/final-source/docs/operations/operator-configuration.md",
+      "sha256": "f795518f3371f3235da779e1aac89420f0552e06d1a3b4258d8ed6b228c02238"
+    },
+    {
+      "path": "docs/review/evidence/config-worker-listener-20260921/final-source/docs/operations/prism-operator-guide.md",
+      "sha256": "2c5ea4a201ac3969328a55872cc33d5bc6177f9fcfa466b97e664ba31b6e09fc"
+    },
+    {
+      "path": "docs/review/evidence/config-worker-listener-20260921/final-source/docs/review/remediation/implementation/config-inventory-20260920.md",
+      "sha256": "a2f88fff4701f78a694a7fa1a0ff8ad5e59c54357384cb2c2fa6cea4ee10ff54"
+    },
+    {
+      "path": "docs/review/evidence/config-worker-listener-20260921/final-source/docs/review/remediation/implementation/config-worker-listener-20260921.md",
+      "sha256": "dc356d3a9e081f4855fc9507c1464170ec81ab4193ffddd38f5885c40c6ba41b"
+    },
+    {
+      "path": "docs/review/evidence/config-worker-listener-20260921/final-source/skills/common/plugin-runtime/foundation/config/README.md",
+      "sha256": "d42218741c4ccd57c753379e0f08cc16696fc4a903141c710fe042486e9a78ba"
+    },
+    {
+      "path": "docs/review/evidence/config-worker-listener-20260921/integration-before/docs/operations/operator-configuration.md",
+      "sha256": "f3af261fbec738becb7d378482fc437c8b05cd5764ae16838c4340809bb83085"
+    },
+    {
+      "path": "docs/review/evidence/config-worker-listener-20260921/integration-before/docs/operations/prism-operator-guide.md",
+      "sha256": "83cc745fea8ee122dc2f9f98e19a042661871f2afb57dda1ab00909c6ef9c4c7"
+    },
+    {
+      "path": "docs/review/evidence/config-worker-listener-20260921/integration-before/docs/review/remediation/implementation/config-inventory-20260920.md",
+      "sha256": "85b45443605d8b390e36c02c0c632fe7147e939e420b37e50f065c56d9433734"
+    },
+    {
+      "path": "docs/review/evidence/config-worker-listener-20260921/integration-before/skills/common/plugin-runtime/foundation/config/README.md",
+      "sha256": "7b4e5e7fc1593eef086c61858c7a4d4b8bb995d43d7351ceaf8010d4026ecb69"
+    },
+    {
+      "path": "docs/review/evidence/config-worker-listener-20260921/staging/files/docs/operations/operator-configuration.md",
+      "sha256": "f6bb72c4e10b2be71dbe7eb4e815a06774da6495493367d4c549b1fdf94a120b"
+    },
+    {
+      "path": "docs/review/evidence/config-worker-listener-20260921/staging/files/docs/operations/prism-operator-guide.md",
+      "sha256": "fc926792ae6842a93de13ed1bcbdbc19a90a95de6b3eb4320e7ba6f35860a98d"
+    },
+    {
+      "path": "docs/review/evidence/config-worker-listener-20260921/staging/files/docs/review/remediation/implementation/config-inventory-20260920.md",
+      "sha256": "24996b0a377eb216f7b359333a5e18f06e5fed0789f898da28bbae3b368f8122"
+    },
+    {
+      "path": "docs/review/evidence/config-worker-listener-20260921/staging/files/skills/common/plugin-runtime/foundation/config/README.md",
+      "sha256": "41110003c253e2fbefb20b6539f2f532e1694ea8a2ee9208ce56be265ca79ea6"
+    },
+    {
+      "path": "docs/review/evidence/config-worker-local-runtime-20260921/final1/new-source/scripts/tests/docker-context/README.md",
+      "sha256": "56b4cb2ef8ddcc75adb5d35f7208c4427331f406ecd3abe76ab495779d6f8be0"
+    },
+    {
+      "path": "docs/review/evidence/config-worker-local-runtime-20260921/run5/new-source/scripts/tests/docker-context/README.md",
+      "sha256": "56b4cb2ef8ddcc75adb5d35f7208c4427331f406ecd3abe76ab495779d6f8be0"
+    },
+    {
+      "path": "docs/review/evidence/config-worker-local-runtime-20260921/run6/new-source/scripts/tests/docker-context/README.md",
+      "sha256": "56b4cb2ef8ddcc75adb5d35f7208c4427331f406ecd3abe76ab495779d6f8be0"
+    },
+    {
+      "path": "docs/review/evidence/config-worker-local-runtime-20260921/run7/new-source/scripts/tests/docker-context/README.md",
+      "sha256": "56b4cb2ef8ddcc75adb5d35f7208c4427331f406ecd3abe76ab495779d6f8be0"
+    },
+    {
+      "path": "docs/review/evidence/config-worker-local-runtime-20260921/run8/new-source/scripts/tests/docker-context/README.md",
+      "sha256": "56b4cb2ef8ddcc75adb5d35f7208c4427331f406ecd3abe76ab495779d6f8be0"
+    },
+    {
+      "path": "docs/review/evidence/config-worker-local-runtime-20260921/run9/new-source/scripts/tests/docker-context/README.md",
+      "sha256": "56b4cb2ef8ddcc75adb5d35f7208c4427331f406ecd3abe76ab495779d6f8be0"
+    },
+    {
+      "path": "docs/review/evidence/config-worker-local-runtime-20260921/staging/before/docs/operations/operator-configuration.md",
+      "sha256": "f6bb72c4e10b2be71dbe7eb4e815a06774da6495493367d4c549b1fdf94a120b"
+    },
+    {
+      "path": "docs/review/evidence/config-worker-local-runtime-20260921/staging/before/docs/operations/prism-operator-guide.md",
+      "sha256": "2c5ea4a201ac3969328a55872cc33d5bc6177f9fcfa466b97e664ba31b6e09fc"
+    },
+    {
+      "path": "docs/review/evidence/config-worker-local-runtime-20260921/staging/files/docs/operations/operator-configuration.md",
+      "sha256": "08b9eebb134be85c0a941a56f711c958ea1c2916bc987d82345e8a906a574e4d"
+    },
+    {
+      "path": "docs/review/evidence/config-worker-local-runtime-20260921/staging/files/docs/operations/prism-operator-guide.md",
+      "sha256": "1c3fca34b5521ad8f0a02c91eadf07ca9016f8808b3734ce46395cf4c4497bb8"
+    },
+    {
+      "path": "docs/review/evidence/config-worker-local-runtime-20260921/staging/rebase-before/docs/operations/operator-configuration.md",
+      "sha256": "f795518f3371f3235da779e1aac89420f0552e06d1a3b4258d8ed6b228c02238"
+    },
+    {
+      "path": "docs/review/evidence/eslint-policy-module-split-20260921/before/skills/nova/plugins/lint/README.md",
+      "sha256": "95b6617ebe1ea090c7ac550f269ee82b17dfb82159eb777c6e25007fae95320c"
+    },
+    {
+      "path": "docs/review/evidence/eslint-policy-module-split-20260921/files/skills/nova/plugins/lint/README.md",
+      "sha256": "dcee7f5e346f1334379b0cd99a6c83f1beb1c87239bbe85592cd6b07eb0f3925"
+    },
+    {
+      "path": "docs/review/evidence/independent-buster-execution-configuration-doc-20260921/final-docs/docs/architecture/buster-execution-configuration.md",
+      "sha256": "9fc57f8a89122232e27b0fb4dce604d8260099c5edf1088d97b720e10b8b9711"
+    },
+    {
+      "path": "docs/review/evidence/independent-buster-execution-configuration-doc-20260921/final-docs/docs/architecture/buster-v2-runtime.md",
+      "sha256": "86f0ee84591fd1d8a5f1f31f37cf4de03c4dc88f63de8a5a720f4eafd2735b3a"
+    },
+    {
+      "path": "docs/review/evidence/independent-buster-execution-configuration-doc-20260921/sources/docs/architecture/buster-execution-configuration.md",
+      "sha256": "9fc57f8a89122232e27b0fb4dce604d8260099c5edf1088d97b720e10b8b9711"
+    },
+    {
+      "path": "docs/review/evidence/independent-buster-execution-configuration-doc-20260921/sources/docs/architecture/buster-v2-runtime.md",
+      "sha256": "86f0ee84591fd1d8a5f1f31f37cf4de03c4dc88f63de8a5a720f4eafd2735b3a"
+    },
+    {
+      "path": "docs/review/evidence/independent-buster-execution-doc37-20260921/sources/docs/architecture/buster-execution-configuration.md",
+      "sha256": "1a6e7e5f49841ecfe45cc7f62a6110da872fdaca2771bfd52ce8262ad7113f55"
+    },
+    {
+      "path": "docs/review/evidence/independent-buster-provider-session-policy-20260921/sources-v3/docs/architecture/buster-execution-configuration.md",
+      "sha256": "978aa2a5feb68e3cf5b9c94aa4077207e71c6a2cef804d063d40d8781b786d53"
+    },
+    {
+      "path": "docs/review/evidence/independent-buster-provider-session-policy-20260921/sources-v3/skills/buster/engine/BOUNDARIES.md",
+      "sha256": "eaee99c11a7e10c93099ed52ca2d54c0bc745c9d78e3b7d9f3aea8b52b42f7dd"
+    },
+    {
+      "path": "docs/review/evidence/independent-buster-provider-session-policy-20260921/sources-v4/docs/architecture/buster-execution-configuration.md",
+      "sha256": "978aa2a5feb68e3cf5b9c94aa4077207e71c6a2cef804d063d40d8781b786d53"
+    },
+    {
+      "path": "docs/review/evidence/independent-buster-provider-session-policy-20260921/sources-v4/skills/buster/engine/BOUNDARIES.md",
+      "sha256": "eaee99c11a7e10c93099ed52ca2d54c0bc745c9d78e3b7d9f3aea8b52b42f7dd"
+    },
+    {
+      "path": "docs/review/evidence/independent-buster-report-runtime-policy-20260921/sources-v1/docs/architecture/buster-execution-configuration.md",
+      "sha256": "7e96e6b56921337c8cff469b2ac1a89fee4495569a0ec254599dcd5d1f010881"
+    },
+    {
+      "path": "docs/review/evidence/independent-buster-report-runtime-policy-20260921/sources-v2/docs/architecture/buster-execution-configuration.md",
+      "sha256": "f4f2c8c1cce8409352b002cb38b2160dc031381251a072d8a9f1460d5b755409"
+    },
+    {
+      "path": "docs/review/evidence/independent-component-worker-listener-20260921/run2/new-source/scripts/tests/docker-context/README.md",
+      "sha256": "56b4cb2ef8ddcc75adb5d35f7208c4427331f406ecd3abe76ab495779d6f8be0"
+    },
+    {
+      "path": "docs/review/evidence/independent-component-worker-listener-20260921/run3/new-source/scripts/tests/docker-context/README.md",
+      "sha256": "56b4cb2ef8ddcc75adb5d35f7208c4427331f406ecd3abe76ab495779d6f8be0"
+    },
+    {
+      "path": "docs/review/evidence/independent-config-worker-local-runtime-20260921/reviewed-sources/docs/operations/operator-configuration.md",
+      "sha256": "08b9eebb134be85c0a941a56f711c958ea1c2916bc987d82345e8a906a574e4d"
+    },
+    {
+      "path": "docs/review/evidence/independent-config-worker-local-runtime-20260921/reviewed-sources/skills/buster/engine/BOUNDARIES.md",
+      "sha256": "f0210ef19a9c09164f09f140f5dd7e83ed2aa32cca5fa24fe3667e6b0dec4e8c"
+    },
+    {
+      "path": "docs/review/evidence/independent-eslint-policy-delivery-20260921/sources/skills/nova/plugins/lint/README.md",
+      "sha256": "dcee7f5e346f1334379b0cd99a6c83f1beb1c87239bbe85592cd6b07eb0f3925"
+    },
+    {
+      "path": "docs/review/evidence/independent-provider-child-protocol-tests-20260921/sources/docs/review/remediation/implementation/independent-provider-child-session-simplicity-20260921.md",
+      "sha256": "15e895ccdf60a2117c75dce5470d5fae8a8fec321d98462e9cd1d061061d4b94"
+    },
+    {
+      "path": "docs/review/evidence/independent-register-current-audit-20260921/sources/docs/review/remediation/README.md",
+      "sha256": "36cd1363120e157da3506ed6e84d4faf9459507940d64a83ec2a33fe3a247eee"
+    },
+    {
+      "path": "docs/review/evidence/independent-register-current-audit-20260921/sources/docs/review/remediation/acceptance-20260920.md",
+      "sha256": "27942ef3c0f04c0b325d98f4cd2d0f70cd6060fef47d941d2e7bef3ec92b5cda"
+    },
+    {
+      "path": "docs/review/evidence/independent-register-current-audit-20260921/sources/docs/review/remediation/handoff.md",
+      "sha256": "92d54f37c376b78d64746e9dd6ea6b5e4542dd5c71e177dc8857525b3d86f6fb"
+    },
+    {
+      "path": "docs/review/evidence/independent-register-current-audit-20260921/sources/docs/review/remediation/implementation/open-work-inventory-20260921.md",
+      "sha256": "62725dd776d5aa407e9ca354184dfb07635080e3567d8b21882a65c15292ecea"
+    },
+    {
+      "path": "docs/review/evidence/independent-register-current-audit-20260921/sources/docs/review/remediation/implementation/register-consistency-20260920.md",
+      "sha256": "429777e9481d13ba79a59e7bbdbefd461474d3e435889f86f43f23394d944fd7"
+    },
+    {
+      "path": "docs/review/evidence/independent-register-current-audit-20260921/sources/docs/review/remediation/progress.md",
+      "sha256": "b5c7b9005c6be2cda96b5f52e0335bc710b7a461af74938d8d221a114b12b7eb"
+    },
+    {
+      "path": "docs/review/evidence/independent-register-current-audit-20260921/sources/docs/review/remediation/register.md",
+      "sha256": "7f44049163a17d250f61aff7d01435ff354cb8658dff7ea630b692993ed0fdfa"
+    },
+    {
+      "path": "docs/review/evidence/independent-runner-completion-scheduler-20260921/decision-sources/docs/review/remediation/implementation/independent-runner-completion-scheduler-20260921.md",
+      "sha256": "24bbc4206fb04a6e3004432377e487b7707b2340d756574dd2ba98abc8ae3c66"
+    },
+    {
+      "path": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/files-v2/docs/architecture/buster-fixture-cleanup.md",
+      "sha256": "5ec0fe3c6e7997f4cd49c6c9db87b70088978db9f72f14a95db2e7d4833a578f"
+    },
+    {
+      "path": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/files/docs/architecture/buster-fixture-cleanup.md",
+      "sha256": "5ec0fe3c6e7997f4cd49c6c9db87b70088978db9f72f14a95db2e7d4833a578f"
+    },
+    {
+      "path": "docs/review/evidence/kubernetes-cleanup-disposition-independent-20260921/sources/docs/review/evidence/kubernetes-cleanup-disposition-20260921/contract-proposal.md",
+      "sha256": "29a6eaa8cfc52e4bcc4f90c4eafc201dc814a5a8c969eca2b4e560ca0d7421af"
+    },
+    {
+      "path": "docs/review/evidence/kubernetes-cleanup-runtime1-diagnosis-20260921/implementation-before.md",
+      "sha256": "30baa4f27aad271df739e5298bc34a4b442acfde377ceec9ce69bb0a33f58716"
+    },
+    {
+      "path": "docs/review/evidence/open-work-current-doc-audit-20260921/after.md",
+      "sha256": "11e90bcbf276f32e5a808d957632272f66e5de072b65ee94c7786af7f6f9ebca"
+    },
+    {
+      "path": "docs/review/evidence/open-work-current-doc-audit-20260921/before.md",
+      "sha256": "7f0c67f2315c08232b7929b1ee6100b58ef6b209033d5226db941a7874628256"
+    },
+    {
+      "path": "docs/review/evidence/open-work-current-doc-audit-20260921/sources/independent-buster-process-input-implementation-20260921.md",
+      "sha256": "7a57c8053924183c43c6e76b08d75de1e4c2dcc8b8e0a820821f73b96fdb5b35"
+    },
+    {
+      "path": "docs/review/evidence/open-work-current-doc-audit-20260921/sources/independent-buster-runner-execution-child-20260921.md",
+      "sha256": "ba3e46f17e4942972f321e5e26ca368b69edf8ed441d6d4b5efcacd64cd3eeff"
+    },
+    {
+      "path": "docs/review/evidence/open-work-current-doc-audit-20260921/sources/independent-config-buster-readiness-implementation-20260921.md",
+      "sha256": "b11f4e26d03c3df8e1ea7a9037affc1fdd169d02a705ab853922d175694b558e"
+    },
+    {
+      "path": "docs/review/evidence/open-work-current-doc-audit-20260921/sources/independent-config-worker-local-runtime-20260921.md",
+      "sha256": "4b65fbc89e40a6467264f7c06d532cd21b44259270cfacc9d469d96cdd2e6615"
+    },
+    {
+      "path": "docs/review/evidence/provider-disposal-confirmation-20260921/before/docs/architecture/buster-fixture-cleanup.md",
+      "sha256": "5ec0fe3c6e7997f4cd49c6c9db87b70088978db9f72f14a95db2e7d4833a578f"
+    },
+    {
+      "path": "docs/review/evidence/provider-disposal-confirmation-20260921/criteria-before-code.md",
+      "sha256": "0778836653bbb72af2be1854b5260bf74acdbb3e0b3fbfbc3baeeb4085ffd3c9"
+    },
+    {
+      "path": "docs/review/evidence/provider-disposal-confirmation-20260921/doc-followup-before.md",
+      "sha256": "dd455285522761c5c9f26251291a7f7325d404e53b0e8b220c92c0d5484d63c4"
+    },
+    {
+      "path": "docs/review/evidence/provider-disposal-confirmation-20260921/files-v3/docs/architecture/buster-fixture-cleanup.md",
+      "sha256": "dd455285522761c5c9f26251291a7f7325d404e53b0e8b220c92c0d5484d63c4"
+    },
+    {
+      "path": "docs/review/evidence/register-documentation-refresh-20260921/after-v2.md",
+      "sha256": "57be44d8996f1d4102f131e41825690335376d5112780b62fafd33f00df1255e"
+    },
+    {
+      "path": "docs/review/evidence/register-documentation-refresh-20260921/after.md",
+      "sha256": "04f39517913a1eacae39794260a3f8a52c22e04ca01c1d827f2afc6f53f3c6be"
+    },
+    {
+      "path": "docs/review/evidence/register-documentation-refresh-20260921/after/docs/review/remediation/implementation/register-consistency-20260920.md",
+      "sha256": "aca98d130b8722dbc70757c52053a8c60768ed0caf3cf5d6aee1cc188d619167"
+    },
+    {
+      "path": "docs/review/evidence/register-documentation-refresh-20260921/before.md",
+      "sha256": "36cd1363120e157da3506ed6e84d4faf9459507940d64a83ec2a33fe3a247eee"
+    },
+    {
+      "path": "docs/review/evidence/register-documentation-refresh-20260921/before/docs/review/remediation/implementation/register-consistency-20260920.md",
+      "sha256": "429777e9481d13ba79a59e7bbdbefd461474d3e435889f86f43f23394d944fd7"
+    },
+    {
+      "path": "docs/review/evidence/register-final-status-update-20260921/before/docs/review/remediation/implementation/open-work-inventory-20260921.md",
+      "sha256": "62725dd776d5aa407e9ca354184dfb07635080e3567d8b21882a65c15292ecea"
+    },
+    {
+      "path": "docs/review/evidence/register-final-status-update-20260921/before/docs/review/remediation/progress.md",
+      "sha256": "b5c7b9005c6be2cda96b5f52e0335bc710b7a461af74938d8d221a114b12b7eb"
+    },
+    {
+      "path": "docs/review/evidence/runner-scheduler-drain-20260921/criteria-addendum-before-code.md",
+      "sha256": "ac25103ab96c3f42de8fd817036eca2ee36c9bfb0799e78f9d775b417eb3887f"
+    },
+    {
+      "path": "docs/review/evidence/runner-scheduler-drain-20260921/criteria-before-code.md",
+      "sha256": "a6fd9fa32d39c45c76d7bca74e3947d49bc54234210b887febb6f13e73583c88"
+    },
+    {
+      "path": "docs/review/evidence/runner-scheduler-drain-20260921/doc-delivery/before/docs/architecture/buster-v2-runtime.md",
+      "sha256": "ea5125c01875a91bdb84bdfd1d0d267d0192a83586e7bcc4fd4c9910756530e3"
+    },
+    {
+      "path": "docs/review/evidence/wait-retirement-independent-20260921/final-document-snapshots/docs/operations/observability-retention.md",
+      "sha256": "002dd2e9994fbb993e974567ce34778f0cb0b5bc829b2507c008ecde0d410de8"
+    },
+    {
+      "path": "docs/review/evidence/wait-retirement-independent-20260921/final-document-snapshots/docs/review/remediation/implementation/observability-retirement-inventory-20260921.md",
+      "sha256": "fbf78664a65e69d5437119616d974cfc06707bc0cc23edafb8499e9c26ba4e00"
+    },
+    {
+      "path": "docs/review/evidence/wait-value-retirement-20260921/run1-source/skills/common/plugins/wait-store/README.md",
+      "sha256": "1e950161e573a8dfe0ae3700bce649c16e7935a833702d9032992bb75e6ea5f3"
+    },
+    {
+      "path": "docs/review/evidence/wait-value-retirement-20260921/run2-source/skills/common/plugins/wait-store/README.md",
+      "sha256": "a93449dcc3c49da7b3395a27dac1b39692f627934f472f30af32639e8c9c44d3"
+    },
+    {
+      "path": "docs/review/evidence/wait-value-retirement-20260921/run3-source/skills/common/plugins/wait-store/README.md",
+      "sha256": "efbba5dc1609722436a563c7d1463a0a99da2de57747bebe98947b278323e673"
+    },
+    {
+      "path": "docs/review/evidence/wait-value-retirement-20260921/run4-source/skills/common/plugins/wait-store/README.md",
+      "sha256": "494d0699d025d0fa280e4f741b70f0778f05bf918b0ea9eeebf27b5ee95c3022"
+    },
+    {
+      "path": "docs/review/evidence/wait-value-retirement-20260921/run5-source/skills/common/plugins/wait-store/README.md",
+      "sha256": "494d0699d025d0fa280e4f741b70f0778f05bf918b0ea9eeebf27b5ee95c3022"
+    }
+  ]
+}

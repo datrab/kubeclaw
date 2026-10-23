@@ -1,0 +1,2276 @@
+{
+  "sourceCommit": "bce3f075156a86be345821499c04628cb35c2762",
+  "sourceTree": "a8b0adf641de573565360b0c4eb577d6bc7545c3",
+  "entries": [
+    {
+      "setting": "RT-27e9026bdac33ece",
+      "provider": "coverage-budget",
+      "field": "minimumLinePercent",
+      "schemaPointer": "#/properties/minimumLinePercent",
+      "classification": "owned-business-budget-or-evidence-policy",
+      "currentSemantics": "business %finite0..100 inclusive measured>=minimum, undefined CURRENTpasses evenblocking; nullreject. Proposedcompleteowner explicitlyrequired0..100 (0 preservescurrentno-gate behavior but cannotoverride inputempty/malformedintegrityguards). Never drop files/lines to raisepercentage.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+          "line": 52,
+          "text": "    const minimum = config.minimumLinePercent;",
+          "sha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b"
+        },
+        {
+          "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+          "line": 53,
+          "text": "    if (minimum !== undefined && (typeof minimum !== 'number' || !Number.isFinite(minimum) || minimum < 0 || minimum > 100)) {",
+          "sha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b"
+        },
+        {
+          "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+          "line": 54,
+          "text": "      throw new Error('COVERAGE_BUDGET_MINIMUM_INVALID');",
+          "sha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b"
+        },
+        {
+          "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+          "line": 55,
+          "text": "    }",
+          "sha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b"
+        },
+        {
+          "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+          "line": 79,
+          "text": "    const useCombined = config.combine !== false;",
+          "sha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b"
+        },
+        {
+          "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+          "line": 80,
+          "text": "    const measured = useCombined ? combinedPercent : Math.min(...parsed.map((item) => item.percent));",
+          "sha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b"
+        },
+        {
+          "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+          "line": 81,
+          "text": "    const passed = minimum === undefined || measured >= minimum;",
+          "sha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b"
+        },
+        {
+          "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+          "line": 82,
+          "text": "    return {",
+          "sha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b"
+        },
+        {
+          "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+          "line": 83,
+          "text": "      schemaVersion: 'provider-result.v1', outcome: passed ? 'passed' : 'failed',",
+          "sha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b"
+        },
+        {
+          "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+          "line": 84,
+          "text": "      summary: passed ? `Line coverage is ${measured.toFixed(2)}%.`",
+          "sha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b"
+        }
+      ],
+      "completePreserved": {
+        "minimumLinePercent": 40,
+        "combine": true
+      },
+      "completeA": {
+        "minimumLinePercent": 40,
+        "combine": false
+      },
+      "completeB": {
+        "minimumLinePercent": 80,
+        "combine": false
+      },
+      "completeNegative": {
+        "minimumLinePercent": 101,
+        "combine": true
+      },
+      "targetAuthor": "one existing individual plugin-owned complete budget/rule/evidence profile with explicit nullable inactive fields, allrule.requireMatch and reportingcount explicit; exactauthor packaging/ref proposed/unapproved",
+      "externalRequired": "actual isolated registeredprovider/fullrole/registry/runner/grants/artifactStore/sourcebuild+genuinecoverage/baseline provenance; nativevalid localtar/LCOV fixtures source controls notrealbuild/coverage/effect acceptance."
+    },
+    {
+      "setting": "RT-ee4bd1b95c8e9049",
+      "provider": "coverage-budget",
+      "field": "combine",
+      "schemaPointer": "#/properties/combine",
+      "classification": "owned-business-budget-or-evidence-policy",
+      "currentSemantics": "business completeboolowner; CURRENT!==false =>union byexactLCOV SFpath+line withmaximumhitcount, false usesminimum perinputreport%. Sourceunknown/null/string accepted ascombined, schema rejects. Noncombinedcovered/totalmetrics SUMperreports (notdedup), measuredpercentage MIN; mustnotmislabel metricunits. Distinctinputdigestrequired, duplicatecontent rejected. Complementarysame2lines hits union100 versusindividual50. Sourcepathnormalization/build provenance/taskscope independentneeded.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+          "line": 71,
+          "text": "    const combinedFiles = new Map();",
+          "sha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b"
+        },
+        {
+          "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+          "line": 72,
+          "text": "    for (const item of parsed) for (const [file, lines] of item.files) {",
+          "sha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b"
+        },
+        {
+          "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+          "line": 73,
+          "text": "      const target = combinedFiles.get(file) ?? new Map(); combinedFiles.set(file, target);",
+          "sha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b"
+        },
+        {
+          "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+          "line": 74,
+          "text": "      for (const [line, hits] of lines) target.set(line, Math.max(target.get(line) ?? 0, hits));",
+          "sha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b"
+        },
+        {
+          "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+          "line": 75,
+          "text": "    }",
+          "sha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b"
+        },
+        {
+          "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+          "line": 76,
+          "text": "    let combinedTotal = 0; let combinedCovered = 0;",
+          "sha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b"
+        },
+        {
+          "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+          "line": 77,
+          "text": "    for (const lines of combinedFiles.values()) for (const hits of lines.values()) { combinedTotal += 1; if (hits > 0) combinedCovered += 1; }",
+          "sha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b"
+        },
+        {
+          "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+          "line": 78,
+          "text": "    const combinedPercent = combinedTotal === 0 ? 0 : combinedCovered / combinedTotal * 100;",
+          "sha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b"
+        },
+        {
+          "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+          "line": 79,
+          "text": "    const useCombined = config.combine !== false;",
+          "sha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b"
+        },
+        {
+          "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+          "line": 80,
+          "text": "    const measured = useCombined ? combinedPercent : Math.min(...parsed.map((item) => item.percent));",
+          "sha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b"
+        },
+        {
+          "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+          "line": 81,
+          "text": "    const passed = minimum === undefined || measured >= minimum;",
+          "sha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b"
+        },
+        {
+          "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+          "line": 82,
+          "text": "    return {",
+          "sha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b"
+        },
+        {
+          "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+          "line": 83,
+          "text": "      schemaVersion: 'provider-result.v1', outcome: passed ? 'passed' : 'failed',",
+          "sha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b"
+        },
+        {
+          "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+          "line": 84,
+          "text": "      summary: passed ? `Line coverage is ${measured.toFixed(2)}%.`",
+          "sha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b"
+        }
+      ],
+      "completePreserved": {
+        "minimumLinePercent": 40,
+        "combine": true
+      },
+      "completeA": {
+        "minimumLinePercent": 80,
+        "combine": true
+      },
+      "completeB": {
+        "minimumLinePercent": 80,
+        "combine": false
+      },
+      "completeNegative": {
+        "minimumLinePercent": 40,
+        "combine": "false"
+      },
+      "targetAuthor": "one existing individual plugin-owned complete budget/rule/evidence profile with explicit nullable inactive fields, allrule.requireMatch and reportingcount explicit; exactauthor packaging/ref proposed/unapproved",
+      "externalRequired": "actual isolated registeredprovider/fullrole/registry/runner/grants/artifactStore/sourcebuild+genuinecoverage/baseline provenance; nativevalid localtar/LCOV fixtures source controls notrealbuild/coverage/effect acceptance."
+    },
+    {
+      "setting": "RT-ab1106a4875e728b",
+      "provider": "size-budget",
+      "field": "format",
+      "schemaPointer": "#/properties/format",
+      "classification": "task-artifact-codec-selection",
+      "currentSemantics": "finite artifact codec selector auto/file/tar/tar-gzip, currentauto mediaMap inference, explicitformat mustmatch artifact media. Not business gate/modelselector; alternate format requires matchingrealartifact encoding anddigests, no inventedindependentpolicyB.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 55,
+          "text": "    format: value.format ?? 'auto',",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 220,
+          "text": "function formatFor(config, artifact) {",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 221,
+          "text": "  const inferred = MEDIA_FORMATS.get(artifact.mediaType);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 222,
+          "text": "  if (!inferred) throw new Error(`SIZE_BUDGET_INPUT_MEDIA_TYPE_INVALID:${String(artifact.mediaType)}`);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 223,
+          "text": "  if (config.format === 'auto') return inferred;",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 224,
+          "text": "  if (config.format !== inferred && !(config.format === 'file' && artifact.mediaType === 'application/octet-stream')) {",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 225,
+          "text": "    throw new Error('SIZE_BUDGET_FORMAT_MISMATCH');",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 226,
+          "text": "  }",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 227,
+          "text": "  return config.format;",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 228,
+          "text": "}",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 229,
+          "text": "",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        }
+      ],
+      "completePreserved": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "completeA": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "completeB": {
+        "format": "tar",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "completeNegative": {
+        "format": "file",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "targetAuthor": "existing registered taskartifact codec intent, not globalCONFIGsecondwriter",
+      "externalRequired": "actual isolated registeredprovider/fullrole/registry/runner/grants/artifactStore/sourcebuild+genuinecoverage/baseline provenance; nativevalid localtar/LCOV fixtures source controls notrealbuild/coverage/effect acceptance."
+    },
+    {
+      "setting": "RT-4bdd3187c110ade5",
+      "provider": "size-budget",
+      "field": "maximumTotalBytes",
+      "schemaPointer": "#/properties/maximumTotalBytes",
+      "classification": "owned-business-budget-or-evidence-policy",
+      "currentSemantics": "business maximumsum regulararchive entry payloadbytes, not storedcompressed/archiveframingbytes. undefinedinactive, nullreject, safeinteger>=0..MAX_SAFE; inclusive<=. Actual parserhardexpansion2GiB ceilingdistinct.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 56,
+          "text": "    maximumTotalBytes: value.maximumTotalBytes === undefined ? null : safeInteger(value.maximumTotalBytes, 'maximumTotalBytes'),",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 320,
+          "text": "    if (config.maximumTotalBytes !== null) checks.push({ id: 'total', passed: measured.totalBytes <= config.maximumTotalBytes,",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 321,
+          "text": "      message: `${measured.totalBytes} total bytes; maximum ${config.maximumTotalBytes}.` });",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        }
+      ],
+      "completePreserved": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "completeA": {
+        "format": "auto",
+        "maximumTotalBytes": 29,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "completeB": {
+        "format": "auto",
+        "maximumTotalBytes": 31,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "completeNegative": {
+        "format": "auto",
+        "maximumTotalBytes": -1,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "targetAuthor": "one existing individual plugin-owned complete budget/rule/evidence profile with explicit nullable inactive fields, allrule.requireMatch and reportingcount explicit; exactauthor packaging/ref proposed/unapproved",
+      "externalRequired": "actual isolated registeredprovider/fullrole/registry/runner/grants/artifactStore/sourcebuild+genuinecoverage/baseline provenance; nativevalid localtar/LCOV fixtures source controls notrealbuild/coverage/effect acceptance."
+    },
+    {
+      "setting": "RT-313716d959435f4e",
+      "provider": "size-budget",
+      "field": "maximumFileCount",
+      "schemaPointer": "#/properties/maximumFileCount",
+      "classification": "owned-business-budget-or-evidence-policy",
+      "currentSemantics": "business maxregularfilecount, directoryentries ignored; undefinedinactive/nullreject. Owning<=100000 but localparseranysafe nonnegative. Actualhardarchivefilecap100000distinct, targetaccepted <=100000.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 57,
+          "text": "    maximumFileCount: value.maximumFileCount === undefined ? null : safeInteger(value.maximumFileCount, 'maximumFileCount'),",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 322,
+          "text": "    if (config.maximumFileCount !== null) checks.push({ id: 'file-count', passed: measured.files.length <= config.maximumFileCount,",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 323,
+          "text": "      message: `${measured.files.length} files; maximum ${config.maximumFileCount}.` });",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        }
+      ],
+      "completePreserved": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "completeA": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 1,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "completeB": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 2,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "completeNegative": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": -1,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "targetAuthor": "one existing individual plugin-owned complete budget/rule/evidence profile with explicit nullable inactive fields, allrule.requireMatch and reportingcount explicit; exactauthor packaging/ref proposed/unapproved",
+      "externalRequired": "actual isolated registeredprovider/fullrole/registry/runner/grants/artifactStore/sourcebuild+genuinecoverage/baseline provenance; nativevalid localtar/LCOV fixtures source controls notrealbuild/coverage/effect acceptance."
+    },
+    {
+      "setting": "RT-91cea7a8490c1779",
+      "provider": "size-budget",
+      "field": "matchingFiles",
+      "schemaPointer": "#/properties/matchingFiles",
+      "classification": "owned-business-budget-or-evidence-policy",
+      "currentSemantics": "owned completebusinessrule array currentnull/absent[]; <=32 uniqueIDs, glob**/*/? anchoredfiles match, no regexuserinjection. Every matchingfile payloadbytes aggregatedrule inclusive<= andrequireMatch governszeromatches; allfiles measured before businesschecks. Per-rule scope not silentrawarchive trimming.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 41,
+          "text": "  const matchingFiles = value.matchingFiles ?? [];",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 42,
+          "text": "  if (!Array.isArray(matchingFiles) || matchingFiles.length > 32) throw new Error('SIZE_BUDGET_MATCHING_FILES_INVALID');",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 43,
+          "text": "  const ids = new Set();",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 44,
+          "text": "  const rules = matchingFiles.map((raw, index) => {",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 45,
+          "text": "    const rule = object(raw, `matchingFiles.${index}`);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 46,
+          "text": "    if (typeof rule.id !== 'string' || !NAME.test(rule.id) || ids.has(rule.id)) throw new Error(`SIZE_BUDGET_RULE_ID_INVALID:${String(rule.id)}`);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 47,
+          "text": "    ids.add(rule.id);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 48,
+          "text": "    if (typeof rule.pattern !== 'string' || rule.pattern.length < 1 || rule.pattern.length > 512 || rule.pattern.includes('\\0')) {",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 49,
+          "text": "      throw new Error(`SIZE_BUDGET_PATTERN_INVALID:${rule.id}`);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 50,
+          "text": "    }",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 51,
+          "text": "    return { id: rule.id, pattern: rule.pattern, matcher: glob(rule.pattern),",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 52,
+          "text": "      maximumBytes: safeInteger(rule.maximumBytes, `matchingFiles.${rule.id}.maximumBytes`), requireMatch: rule.requireMatch !== false };",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 53,
+          "text": "  });",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 324,
+          "text": "    const matches = config.matchingFiles.map((rule) => {",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 325,
+          "text": "      const selected = measured.files.filter((file) => rule.matcher.test(file.path));",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 326,
+          "text": "      const bytes = selected.reduce((sum, file) => sum + file.bytes, 0);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 327,
+          "text": "      const passed = (!rule.requireMatch || selected.length > 0) && bytes <= rule.maximumBytes;",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 328,
+          "text": "      checks.push({ id: `files:${rule.id}`, passed,",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 329,
+          "text": "        message: `${selected.length} files and ${bytes} bytes match ${rule.pattern}; maximum ${rule.maximumBytes}.` });",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 330,
+          "text": "      return { id: rule.id, pattern: rule.pattern, bytes, fileCount: selected.length, maximumBytes: rule.maximumBytes,",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 331,
+          "text": "        requireMatch: rule.requireMatch, passed };",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 332,
+          "text": "    });",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        }
+      ],
+      "completePreserved": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "completeA": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 9,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "completeB": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 10,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "completeNegative": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": -1,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "targetAuthor": "one existing individual plugin-owned complete budget/rule/evidence profile with explicit nullable inactive fields, allrule.requireMatch and reportingcount explicit; exactauthor packaging/ref proposed/unapproved",
+      "externalRequired": "actual isolated registeredprovider/fullrole/registry/runner/grants/artifactStore/sourcebuild+genuinecoverage/baseline provenance; nativevalid localtar/LCOV fixtures source controls notrealbuild/coverage/effect acceptance."
+    },
+    {
+      "setting": "RT-1b82f488dab26d1b",
+      "provider": "size-budget",
+      "field": "matchingFiles[]",
+      "schemaPointer": "#/properties/matchingFiles/items",
+      "classification": "owned-business-budget-or-evidence-policy",
+      "currentSemantics": "owned completebusinessrule array currentnull/absent[]; <=32 uniqueIDs, glob**/*/? anchoredfiles match, no regexuserinjection. Every matchingfile payloadbytes aggregatedrule inclusive<= andrequireMatch governszeromatches; allfiles measured before businesschecks. Per-rule scope not silentrawarchive trimming.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 41,
+          "text": "  const matchingFiles = value.matchingFiles ?? [];",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 42,
+          "text": "  if (!Array.isArray(matchingFiles) || matchingFiles.length > 32) throw new Error('SIZE_BUDGET_MATCHING_FILES_INVALID');",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 43,
+          "text": "  const ids = new Set();",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 44,
+          "text": "  const rules = matchingFiles.map((raw, index) => {",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 45,
+          "text": "    const rule = object(raw, `matchingFiles.${index}`);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 46,
+          "text": "    if (typeof rule.id !== 'string' || !NAME.test(rule.id) || ids.has(rule.id)) throw new Error(`SIZE_BUDGET_RULE_ID_INVALID:${String(rule.id)}`);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 47,
+          "text": "    ids.add(rule.id);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 48,
+          "text": "    if (typeof rule.pattern !== 'string' || rule.pattern.length < 1 || rule.pattern.length > 512 || rule.pattern.includes('\\0')) {",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 49,
+          "text": "      throw new Error(`SIZE_BUDGET_PATTERN_INVALID:${rule.id}`);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 50,
+          "text": "    }",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 51,
+          "text": "    return { id: rule.id, pattern: rule.pattern, matcher: glob(rule.pattern),",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 52,
+          "text": "      maximumBytes: safeInteger(rule.maximumBytes, `matchingFiles.${rule.id}.maximumBytes`), requireMatch: rule.requireMatch !== false };",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 53,
+          "text": "  });",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 324,
+          "text": "    const matches = config.matchingFiles.map((rule) => {",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 325,
+          "text": "      const selected = measured.files.filter((file) => rule.matcher.test(file.path));",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 326,
+          "text": "      const bytes = selected.reduce((sum, file) => sum + file.bytes, 0);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 327,
+          "text": "      const passed = (!rule.requireMatch || selected.length > 0) && bytes <= rule.maximumBytes;",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 328,
+          "text": "      checks.push({ id: `files:${rule.id}`, passed,",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 329,
+          "text": "        message: `${selected.length} files and ${bytes} bytes match ${rule.pattern}; maximum ${rule.maximumBytes}.` });",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 330,
+          "text": "      return { id: rule.id, pattern: rule.pattern, bytes, fileCount: selected.length, maximumBytes: rule.maximumBytes,",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 331,
+          "text": "        requireMatch: rule.requireMatch, passed };",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 332,
+          "text": "    });",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        }
+      ],
+      "completePreserved": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "completeA": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 9,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "completeB": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 10,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "completeNegative": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": -1,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "targetAuthor": "one existing individual plugin-owned complete budget/rule/evidence profile with explicit nullable inactive fields, allrule.requireMatch and reportingcount explicit; exactauthor packaging/ref proposed/unapproved",
+      "externalRequired": "actual isolated registeredprovider/fullrole/registry/runner/grants/artifactStore/sourcebuild+genuinecoverage/baseline provenance; nativevalid localtar/LCOV fixtures source controls notrealbuild/coverage/effect acceptance."
+    },
+    {
+      "setting": "RT-417c83b86ae40313",
+      "provider": "size-budget",
+      "field": "matchingFiles[].id",
+      "schemaPointer": "#/properties/matchingFiles/items/properties/id -> #/$defs/name",
+      "classification": "owned-business-budget-or-evidence-policy",
+      "currentSemantics": "owned completebusinessrule array currentnull/absent[]; <=32 uniqueIDs, glob**/*/? anchoredfiles match, no regexuserinjection. Every matchingfile payloadbytes aggregatedrule inclusive<= andrequireMatch governszeromatches; allfiles measured before businesschecks. Per-rule scope not silentrawarchive trimming.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 41,
+          "text": "  const matchingFiles = value.matchingFiles ?? [];",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 42,
+          "text": "  if (!Array.isArray(matchingFiles) || matchingFiles.length > 32) throw new Error('SIZE_BUDGET_MATCHING_FILES_INVALID');",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 43,
+          "text": "  const ids = new Set();",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 44,
+          "text": "  const rules = matchingFiles.map((raw, index) => {",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 45,
+          "text": "    const rule = object(raw, `matchingFiles.${index}`);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 46,
+          "text": "    if (typeof rule.id !== 'string' || !NAME.test(rule.id) || ids.has(rule.id)) throw new Error(`SIZE_BUDGET_RULE_ID_INVALID:${String(rule.id)}`);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 47,
+          "text": "    ids.add(rule.id);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 48,
+          "text": "    if (typeof rule.pattern !== 'string' || rule.pattern.length < 1 || rule.pattern.length > 512 || rule.pattern.includes('\\0')) {",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 49,
+          "text": "      throw new Error(`SIZE_BUDGET_PATTERN_INVALID:${rule.id}`);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 50,
+          "text": "    }",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 51,
+          "text": "    return { id: rule.id, pattern: rule.pattern, matcher: glob(rule.pattern),",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 52,
+          "text": "      maximumBytes: safeInteger(rule.maximumBytes, `matchingFiles.${rule.id}.maximumBytes`), requireMatch: rule.requireMatch !== false };",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 53,
+          "text": "  });",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 324,
+          "text": "    const matches = config.matchingFiles.map((rule) => {",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 325,
+          "text": "      const selected = measured.files.filter((file) => rule.matcher.test(file.path));",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 326,
+          "text": "      const bytes = selected.reduce((sum, file) => sum + file.bytes, 0);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 327,
+          "text": "      const passed = (!rule.requireMatch || selected.length > 0) && bytes <= rule.maximumBytes;",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 328,
+          "text": "      checks.push({ id: `files:${rule.id}`, passed,",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 329,
+          "text": "        message: `${selected.length} files and ${bytes} bytes match ${rule.pattern}; maximum ${rule.maximumBytes}.` });",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 330,
+          "text": "      return { id: rule.id, pattern: rule.pattern, bytes, fileCount: selected.length, maximumBytes: rule.maximumBytes,",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 331,
+          "text": "        requireMatch: rule.requireMatch, passed };",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 332,
+          "text": "    });",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        }
+      ],
+      "completePreserved": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "completeA": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "completeB": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-b",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "completeNegative": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "bad id",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "targetAuthor": "one existing individual plugin-owned complete budget/rule/evidence profile with explicit nullable inactive fields, allrule.requireMatch and reportingcount explicit; exactauthor packaging/ref proposed/unapproved",
+      "externalRequired": "actual isolated registeredprovider/fullrole/registry/runner/grants/artifactStore/sourcebuild+genuinecoverage/baseline provenance; nativevalid localtar/LCOV fixtures source controls notrealbuild/coverage/effect acceptance."
+    },
+    {
+      "setting": "RT-1d56ef14eb5ba3c9",
+      "provider": "size-budget",
+      "field": "matchingFiles[].pattern",
+      "schemaPointer": "#/properties/matchingFiles/items/properties/pattern",
+      "classification": "owned-business-budget-or-evidence-policy",
+      "currentSemantics": "owned completebusinessrule array currentnull/absent[]; <=32 uniqueIDs, glob**/*/? anchoredfiles match, no regexuserinjection. Every matchingfile payloadbytes aggregatedrule inclusive<= andrequireMatch governszeromatches; allfiles measured before businesschecks. Per-rule scope not silentrawarchive trimming.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 41,
+          "text": "  const matchingFiles = value.matchingFiles ?? [];",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 42,
+          "text": "  if (!Array.isArray(matchingFiles) || matchingFiles.length > 32) throw new Error('SIZE_BUDGET_MATCHING_FILES_INVALID');",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 43,
+          "text": "  const ids = new Set();",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 44,
+          "text": "  const rules = matchingFiles.map((raw, index) => {",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 45,
+          "text": "    const rule = object(raw, `matchingFiles.${index}`);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 46,
+          "text": "    if (typeof rule.id !== 'string' || !NAME.test(rule.id) || ids.has(rule.id)) throw new Error(`SIZE_BUDGET_RULE_ID_INVALID:${String(rule.id)}`);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 47,
+          "text": "    ids.add(rule.id);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 48,
+          "text": "    if (typeof rule.pattern !== 'string' || rule.pattern.length < 1 || rule.pattern.length > 512 || rule.pattern.includes('\\0')) {",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 49,
+          "text": "      throw new Error(`SIZE_BUDGET_PATTERN_INVALID:${rule.id}`);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 50,
+          "text": "    }",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 51,
+          "text": "    return { id: rule.id, pattern: rule.pattern, matcher: glob(rule.pattern),",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 52,
+          "text": "      maximumBytes: safeInteger(rule.maximumBytes, `matchingFiles.${rule.id}.maximumBytes`), requireMatch: rule.requireMatch !== false };",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 53,
+          "text": "  });",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 324,
+          "text": "    const matches = config.matchingFiles.map((rule) => {",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 325,
+          "text": "      const selected = measured.files.filter((file) => rule.matcher.test(file.path));",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 326,
+          "text": "      const bytes = selected.reduce((sum, file) => sum + file.bytes, 0);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 327,
+          "text": "      const passed = (!rule.requireMatch || selected.length > 0) && bytes <= rule.maximumBytes;",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 328,
+          "text": "      checks.push({ id: `files:${rule.id}`, passed,",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 329,
+          "text": "        message: `${selected.length} files and ${bytes} bytes match ${rule.pattern}; maximum ${rule.maximumBytes}.` });",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 330,
+          "text": "      return { id: rule.id, pattern: rule.pattern, bytes, fileCount: selected.length, maximumBytes: rule.maximumBytes,",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 331,
+          "text": "        requireMatch: rule.requireMatch, passed };",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 332,
+          "text": "    });",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        }
+      ],
+      "completePreserved": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "completeA": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 15,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "completeB": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.css",
+            "maximumBytes": 15,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "completeNegative": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "targetAuthor": "one existing individual plugin-owned complete budget/rule/evidence profile with explicit nullable inactive fields, allrule.requireMatch and reportingcount explicit; exactauthor packaging/ref proposed/unapproved",
+      "externalRequired": "actual isolated registeredprovider/fullrole/registry/runner/grants/artifactStore/sourcebuild+genuinecoverage/baseline provenance; nativevalid localtar/LCOV fixtures source controls notrealbuild/coverage/effect acceptance."
+    },
+    {
+      "setting": "RT-fa510e37b64c8b83",
+      "provider": "size-budget",
+      "field": "matchingFiles[].maximumBytes",
+      "schemaPointer": "#/properties/matchingFiles/items/properties/maximumBytes",
+      "classification": "owned-business-budget-or-evidence-policy",
+      "currentSemantics": "owned completebusinessrule array currentnull/absent[]; <=32 uniqueIDs, glob**/*/? anchoredfiles match, no regexuserinjection. Every matchingfile payloadbytes aggregatedrule inclusive<= andrequireMatch governszeromatches; allfiles measured before businesschecks. Per-rule scope not silentrawarchive trimming.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 41,
+          "text": "  const matchingFiles = value.matchingFiles ?? [];",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 42,
+          "text": "  if (!Array.isArray(matchingFiles) || matchingFiles.length > 32) throw new Error('SIZE_BUDGET_MATCHING_FILES_INVALID');",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 43,
+          "text": "  const ids = new Set();",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 44,
+          "text": "  const rules = matchingFiles.map((raw, index) => {",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 45,
+          "text": "    const rule = object(raw, `matchingFiles.${index}`);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 46,
+          "text": "    if (typeof rule.id !== 'string' || !NAME.test(rule.id) || ids.has(rule.id)) throw new Error(`SIZE_BUDGET_RULE_ID_INVALID:${String(rule.id)}`);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 47,
+          "text": "    ids.add(rule.id);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 48,
+          "text": "    if (typeof rule.pattern !== 'string' || rule.pattern.length < 1 || rule.pattern.length > 512 || rule.pattern.includes('\\0')) {",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 49,
+          "text": "      throw new Error(`SIZE_BUDGET_PATTERN_INVALID:${rule.id}`);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 50,
+          "text": "    }",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 51,
+          "text": "    return { id: rule.id, pattern: rule.pattern, matcher: glob(rule.pattern),",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 52,
+          "text": "      maximumBytes: safeInteger(rule.maximumBytes, `matchingFiles.${rule.id}.maximumBytes`), requireMatch: rule.requireMatch !== false };",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 53,
+          "text": "  });",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 324,
+          "text": "    const matches = config.matchingFiles.map((rule) => {",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 325,
+          "text": "      const selected = measured.files.filter((file) => rule.matcher.test(file.path));",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 326,
+          "text": "      const bytes = selected.reduce((sum, file) => sum + file.bytes, 0);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 327,
+          "text": "      const passed = (!rule.requireMatch || selected.length > 0) && bytes <= rule.maximumBytes;",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 328,
+          "text": "      checks.push({ id: `files:${rule.id}`, passed,",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 329,
+          "text": "        message: `${selected.length} files and ${bytes} bytes match ${rule.pattern}; maximum ${rule.maximumBytes}.` });",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 330,
+          "text": "      return { id: rule.id, pattern: rule.pattern, bytes, fileCount: selected.length, maximumBytes: rule.maximumBytes,",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 331,
+          "text": "        requireMatch: rule.requireMatch, passed };",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 332,
+          "text": "    });",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        }
+      ],
+      "completePreserved": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "completeA": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 9,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "completeB": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 10,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "completeNegative": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": -1,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "targetAuthor": "one existing individual plugin-owned complete budget/rule/evidence profile with explicit nullable inactive fields, allrule.requireMatch and reportingcount explicit; exactauthor packaging/ref proposed/unapproved",
+      "externalRequired": "actual isolated registeredprovider/fullrole/registry/runner/grants/artifactStore/sourcebuild+genuinecoverage/baseline provenance; nativevalid localtar/LCOV fixtures source controls notrealbuild/coverage/effect acceptance."
+    },
+    {
+      "setting": "RT-f09ca71ea0f869ea",
+      "provider": "size-budget",
+      "field": "matchingFiles[].requireMatch",
+      "schemaPointer": "#/properties/matchingFiles/items/properties/requireMatch",
+      "classification": "owned-business-budget-or-evidence-policy",
+      "currentSemantics": "owned completebusinessrule array currentnull/absent[]; <=32 uniqueIDs, glob**/*/? anchoredfiles match, no regexuserinjection. Every matchingfile payloadbytes aggregatedrule inclusive<= andrequireMatch governszeromatches; allfiles measured before businesschecks. Per-rule scope not silentrawarchive trimming.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 41,
+          "text": "  const matchingFiles = value.matchingFiles ?? [];",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 42,
+          "text": "  if (!Array.isArray(matchingFiles) || matchingFiles.length > 32) throw new Error('SIZE_BUDGET_MATCHING_FILES_INVALID');",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 43,
+          "text": "  const ids = new Set();",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 44,
+          "text": "  const rules = matchingFiles.map((raw, index) => {",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 45,
+          "text": "    const rule = object(raw, `matchingFiles.${index}`);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 46,
+          "text": "    if (typeof rule.id !== 'string' || !NAME.test(rule.id) || ids.has(rule.id)) throw new Error(`SIZE_BUDGET_RULE_ID_INVALID:${String(rule.id)}`);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 47,
+          "text": "    ids.add(rule.id);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 48,
+          "text": "    if (typeof rule.pattern !== 'string' || rule.pattern.length < 1 || rule.pattern.length > 512 || rule.pattern.includes('\\0')) {",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 49,
+          "text": "      throw new Error(`SIZE_BUDGET_PATTERN_INVALID:${rule.id}`);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 50,
+          "text": "    }",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 51,
+          "text": "    return { id: rule.id, pattern: rule.pattern, matcher: glob(rule.pattern),",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 52,
+          "text": "      maximumBytes: safeInteger(rule.maximumBytes, `matchingFiles.${rule.id}.maximumBytes`), requireMatch: rule.requireMatch !== false };",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 53,
+          "text": "  });",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 324,
+          "text": "    const matches = config.matchingFiles.map((rule) => {",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 325,
+          "text": "      const selected = measured.files.filter((file) => rule.matcher.test(file.path));",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 326,
+          "text": "      const bytes = selected.reduce((sum, file) => sum + file.bytes, 0);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 327,
+          "text": "      const passed = (!rule.requireMatch || selected.length > 0) && bytes <= rule.maximumBytes;",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 328,
+          "text": "      checks.push({ id: `files:${rule.id}`, passed,",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 329,
+          "text": "        message: `${selected.length} files and ${bytes} bytes match ${rule.pattern}; maximum ${rule.maximumBytes}.` });",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 330,
+          "text": "      return { id: rule.id, pattern: rule.pattern, bytes, fileCount: selected.length, maximumBytes: rule.maximumBytes,",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 331,
+          "text": "        requireMatch: rule.requireMatch, passed };",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 332,
+          "text": "    });",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        }
+      ],
+      "completePreserved": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "completeA": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "missing/**",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "completeB": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "missing/**",
+            "maximumBytes": 1000,
+            "requireMatch": false
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "completeNegative": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": "false"
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "targetAuthor": "one existing individual plugin-owned complete budget/rule/evidence profile with explicit nullable inactive fields, allrule.requireMatch and reportingcount explicit; exactauthor packaging/ref proposed/unapproved",
+      "externalRequired": "actual isolated registeredprovider/fullrole/registry/runner/grants/artifactStore/sourcebuild+genuinecoverage/baseline provenance; nativevalid localtar/LCOV fixtures source controls notrealbuild/coverage/effect acceptance."
+    },
+    {
+      "setting": "RT-ba7769d6b9828e8c",
+      "provider": "size-budget",
+      "field": "maximumGrowthBytes",
+      "schemaPointer": "#/properties/maximumGrowthBytes",
+      "classification": "owned-business-budget-or-evidence-policy",
+      "currentSemantics": "business inclusivecurrentTotal-previousTotal<=maxbytes nonnegative; shrinknegativepasses. Baseline mandatory whenconfigured; exact verified size-baseline JSON currentlyonlysourceDigest string type, not fullsource relationship validation; external genuine provenance field remains targetobligation.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 59,
+          "text": "    maximumGrowthBytes: value.maximumGrowthBytes === undefined ? null : safeInteger(value.maximumGrowthBytes, 'maximumGrowthBytes'),",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 268,
+          "text": "",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 269,
+          "text": "function growth(current, previous) {",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 270,
+          "text": "  const bytes = current - previous;",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 271,
+          "text": "  const percent = previous === 0 ? (current === 0 ? 0 : null) : bytes / previous * 100;",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 272,
+          "text": "  return { bytes, percent };",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 313,
+          "text": "      if ((config.maximumGrowthBytes !== null || config.maximumGrowthPercent !== null) && !previous) {",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 314,
+          "text": "        throw new Error('SIZE_BUDGET_BASELINE_REQUIRED');",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 315,
+          "text": "      }",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 316,
+          "text": "      measured = await measurements(config, artifact, source, context.signal);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 317,
+          "text": "    } finally { await source.close(); }",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 318,
+          "text": "    const change = previous ? growth(measured.totalBytes, previous.totalBytes) : null;",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 319,
+          "text": "    const checks = [];",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 333,
+          "text": "    if (config.maximumGrowthBytes !== null) checks.push({ id: 'growth-bytes', passed: change.bytes <= config.maximumGrowthBytes,",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 334,
+          "text": "      message: `Growth is ${change.bytes} bytes; maximum ${config.maximumGrowthBytes}.` });",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        }
+      ],
+      "completePreserved": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "completeA": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 19,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "completeB": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 20,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "completeNegative": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": -1,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "targetAuthor": "one existing individual plugin-owned complete budget/rule/evidence profile with explicit nullable inactive fields, allrule.requireMatch and reportingcount explicit; exactauthor packaging/ref proposed/unapproved",
+      "externalRequired": "actual isolated registeredprovider/fullrole/registry/runner/grants/artifactStore/sourcebuild+genuinecoverage/baseline provenance; nativevalid localtar/LCOV fixtures source controls notrealbuild/coverage/effect acceptance."
+    },
+    {
+      "setting": "RT-0641d8cbf57ca18e",
+      "provider": "size-budget",
+      "field": "maximumGrowthPercent",
+      "schemaPointer": "#/properties/maximumGrowthPercent",
+      "classification": "owned-business-budget-or-evidence-policy",
+      "currentSemantics": "business inclusive(current-prev)/prev*100<=maxpercent, schema<=1000000 but currentparseranyfinitenonnegative. prev0/current>0 =>percentnull ALWAYSFAIL evenmaxlarge, both0=>0. Shrinknegativepasses. Targetsame supported schema domain<=1000000, retain zero-baseline semantics.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 60,
+          "text": "    maximumGrowthPercent: value.maximumGrowthPercent === undefined ? null : finite(value.maximumGrowthPercent, 'maximumGrowthPercent'),",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 268,
+          "text": "",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 269,
+          "text": "function growth(current, previous) {",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 270,
+          "text": "  const bytes = current - previous;",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 271,
+          "text": "  const percent = previous === 0 ? (current === 0 ? 0 : null) : bytes / previous * 100;",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 272,
+          "text": "  return { bytes, percent };",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 313,
+          "text": "      if ((config.maximumGrowthBytes !== null || config.maximumGrowthPercent !== null) && !previous) {",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 314,
+          "text": "        throw new Error('SIZE_BUDGET_BASELINE_REQUIRED');",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 315,
+          "text": "      }",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 316,
+          "text": "      measured = await measurements(config, artifact, source, context.signal);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 317,
+          "text": "    } finally { await source.close(); }",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 318,
+          "text": "    const change = previous ? growth(measured.totalBytes, previous.totalBytes) : null;",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 319,
+          "text": "    const checks = [];",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 335,
+          "text": "    if (config.maximumGrowthPercent !== null) checks.push({ id: 'growth-percent',",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 336,
+          "text": "      passed: change.percent !== null ? change.percent <= config.maximumGrowthPercent : false,",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 337,
+          "text": "      message: change.percent === null ? 'Growth percent is unbounded because the baseline is zero bytes.'",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 338,
+          "text": "        : `Growth is ${change.percent.toFixed(2)}%; maximum ${config.maximumGrowthPercent}%.` });",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        }
+      ],
+      "completePreserved": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "completeA": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 199,
+        "largestFiles": 10
+      },
+      "completeB": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 200,
+        "largestFiles": 10
+      },
+      "completeNegative": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": -1,
+        "largestFiles": 10
+      },
+      "targetAuthor": "one existing individual plugin-owned complete budget/rule/evidence profile with explicit nullable inactive fields, allrule.requireMatch and reportingcount explicit; exactauthor packaging/ref proposed/unapproved",
+      "externalRequired": "actual isolated registeredprovider/fullrole/registry/runner/grants/artifactStore/sourcebuild+genuinecoverage/baseline provenance; nativevalid localtar/LCOV fixtures source controls notrealbuild/coverage/effect acceptance."
+    },
+    {
+      "setting": "RT-669087f7bbde7e87",
+      "provider": "size-budget",
+      "field": "largestFiles",
+      "schemaPointer": "#/properties/largestFiles",
+      "classification": "owned-business-budget-or-evidence-policy",
+      "currentSemantics": "business evidence-presentation count1..100 default10; descendingbytes andpath.localeCompare tie; doesNOTtrimmeasuredfiles/count/budget/matching/evidenceartifact. EnvironmentICU/tiecollation identity needed for stable recovery. Toplistnotfullsourceinventoryproof.",
+      "readers": [
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 61,
+          "text": "    largestFiles: value.largestFiles === undefined ? 10 : safeInteger(value.largestFiles, 'largestFiles'),",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 62,
+          "text": "  };",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 63,
+          "text": "  if (!['auto', 'file', 'tar', 'tar-gzip'].includes(config.format) || config.largestFiles < 1 || config.largestFiles > 100) {",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 64,
+          "text": "    throw new Error('SIZE_BUDGET_CONFIG_INVALID:format-or-largestFiles');",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 65,
+          "text": "  }",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 241,
+          "text": "  const largest = [...files].sort((left, right) => right.bytes - left.bytes || left.path.localeCompare(right.path))",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 242,
+          "text": "    .slice(0, config.largestFiles);",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 243,
+          "text": "  return { format, files, totalBytes, storedBytes: artifact.sizeBytes,",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 244,
+          "text": "    compressedBytes: format === 'tar-gzip' ? artifact.sizeBytes : null, largest };",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 361,
+          "text": "      providerDetails: details({ sourceDigest: artifact.contentDigest, format: measured.format,",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 362,
+          "text": "        totalBytes: measured.totalBytes, storedBytes: measured.storedBytes, compressedBytes: measured.compressedBytes,",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        },
+        {
+          "path": "skills/buster/plugins/size-budget/src/provider.js",
+          "line": 363,
+          "text": "        fileCount: measured.files.length, largestFiles: measured.largest, matchingFiles: matches, growth: change,",
+          "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+        }
+      ],
+      "completePreserved": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 10
+      },
+      "completeA": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 1
+      },
+      "completeB": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 2
+      },
+      "completeNegative": {
+        "format": "auto",
+        "maximumTotalBytes": 1000,
+        "maximumFileCount": 10,
+        "matchingFiles": [
+          {
+            "id": "rule-a",
+            "pattern": "**/*.js",
+            "maximumBytes": 1000,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 1000,
+        "maximumGrowthPercent": 1000,
+        "largestFiles": 0
+      },
+      "targetAuthor": "one existing individual plugin-owned complete budget/rule/evidence profile with explicit nullable inactive fields, allrule.requireMatch and reportingcount explicit; exactauthor packaging/ref proposed/unapproved",
+      "externalRequired": "actual isolated registeredprovider/fullrole/registry/runner/grants/artifactStore/sourcebuild+genuinecoverage/baseline provenance; nativevalid localtar/LCOV fixtures source controls notrealbuild/coverage/effect acceptance."
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "skills/common/plugins/runtime-dispatch": {
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-common-plugins-runtime-dispatch-test-final.txt"
+  },
+  "skills/nova/plugins/architecture-validator": {
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-architecture-validator-test-final.txt"
+  },
+  "skills/nova/plugins/buster-quality-gate": {
+    "exitCode": 1,
+    "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-buster-quality-gate-test-final.txt"
+  },
+  "skills/nova/plugins/delivery-lint": {
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-delivery-lint-test-final.txt"
+  },
+  "skills/nova/plugins/demo-handoff": {
+    "exitCode": 1,
+    "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-demo-handoff-test-final.txt"
+  },
+  "skills/nova/plugins/preflight-contract": {
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-preflight-contract-test-final.txt"
+  },
+  "skills/nova/plugins/remote-test-gate": {
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-compiler-closeout-20261016/skills-nova-plugins-remote-test-gate-test-final.txt"
+  }
+}

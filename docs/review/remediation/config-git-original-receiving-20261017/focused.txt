@@ -1,0 +1,19 @@
+✔ selected Git failure policy controls actual child stderr, captures A and restores positive (31.136915ms)
+✔ Git policy missing/invalid/competing authors reject before child execution (1.278242ms)
+✔ installed Git retained original run redispatch keeps A after current policy removal (2938.509211ms)
+✔ complete Git retained binding is private/frozen and rejects absent, mixed and incomplete registrations (1.738274ms)
+✔ real Nova v1 resume and authenticated admin retry/replay restore original Operator binding without current-source refill (8477.864197ms)
+✔ real Nova v3 resume and authenticated admin retry/replay restore original Operator binding without current-source refill (8332.261978ms)
+✔ operator original capture rejects incomplete/policy-mixed/foreign captures and preserves original legacy/current policies (1.767885ms)
+✔ current v3 original operator capture compares nested structure and version before reprojecting (3.52317ms)
+✔ real Nova v1 resume and authenticated admin retry/replay restore original Publisher binding without current-source refill (8427.857659ms)
+✔ real Nova v3 resume and authenticated admin retry/replay restore original Publisher binding without current-source refill (8360.578721ms)
+✔ publisher original capture rejects incomplete/policy-mixed/foreign captures and preserves original legacy/current policies (1.870638ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17802.092613

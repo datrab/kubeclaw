@@ -1,0 +1,85 @@
+{
+  "status": "finite C0 proposed ABI definition; NOT ACCEPTED/NOT IMPLEMENTED, full-root integration and independent review still required",
+  "physicalRoot": "config/pipeline.config.json",
+  "versionCoordination": {
+    "frozenProviderRoot": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/pipeline-entry.schema.json",
+      "sha256": "650dfba7c8030edfa1d3bf75dcf5820c6b1c88aefe50d1b01ef5c8267c062e23",
+      "bytes": 4058,
+      "snapshot": "frozen-inputs/650dfba7c8030edfa1d3bf75dcf5820c6b1c88aefe50d1b01ef5c8267c062e23.gz"
+    },
+    "currentVersion": "pipeline-entry.v5",
+    "candidateNewVersion": "pipeline-entry.v6-controller-proposal",
+    "meaning": "candidate coordinated next version only; never allow deploymentBindings through current closed v5 schema. This fragment is NOT a standalone runtime root. Parent must integrate all unchanged component/binding/plugin selections and whole v5 semantic refinements into one closed next root schema; freeze resulting full root before approval."
+  },
+  "soleAuthor": "charts/kubeclaw/values.yaml#/profiles/<explicitSelectedProfile>/settings/busterNamespaceBroker",
+  "readonlyBindingAuthority": "existing same-generation Buster CMP shared lease group/version and Control Product enable/signer/issuer/operators plus authenticated H/API/grants; no editable generated ENV or new writer",
+  "selection": {
+    "role": "buster",
+    "instanceId": "agent-buster",
+    "consumer": "namespace-controller",
+    "serviceInstanceId": "agent-buster-namespace-controller",
+    "profile": "exact explicit root selection, never inferred from root tuning/profile/ENV; fullname agent-buster from helper not release name"
+  },
+  "schemaFiles": {
+    "root": "coordinated closed next pipeline-entry schema incorporating unchanged frozen v5 and this fragment (local integration OPEN)",
+    "fragment": "deployment-binding-fragment.schema.json",
+    "controllerProfile": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/controller-role-profiles.schema.json",
+      "sha256": "745798dbf789c7789069fca891b11523c69df5bd054530ca9486768cc2257000"
+    }
+  },
+  "fileSet": {
+    "inputMembers": [
+      "config/pipeline.config.json",
+      "six exact selected components from unchanged components/bindings",
+      "exact plugin selections/owner profiles from unchanged v5",
+      "charts/kubeclaw/values.yaml selected full role profile",
+      "controller profile schema",
+      "root schema",
+      "authenticated image/build/compiler/source/grant/issuer/secret revision references"
+    ],
+    "generatedMembers": [
+      "/etc/kubeclaw/buster-namespace-controller/policy.json",
+      "existing Chart controller Deployment/ServiceAccount/RBAC/CRD/mount/ENV projections and enabled Ready route/client refs"
+    ],
+    "receiptFields": [
+      "relativePath",
+      "exactBytesSha256",
+      "schemaSha256",
+      "selectedProfile",
+      "sourceIdentity",
+      "role",
+      "instanceId",
+      "serviceInstanceId",
+      "immutableGenerationDigest"
+    ],
+    "closure": "all referenced members present in single authenticated generation; fixed relative input refs, no symlink/include/merge/Latest; generated members readonly and derived, never authors"
+  },
+  "materializerContract": {
+    "pipeline": "existing same-root pipeline materializer/Chart receiving path, not a controller-private entry/index",
+    "steps": [
+      "effect-free parse closed coordinated root and full selected owner profiles; unknown/duplicate/missing/retired ENV/Helm override rejected",
+      "join exact Buster shared API group/version and Control enable/signer/issuer/operator authority; reject mismatched role/instance/generation even equal values",
+      "check all source capability/quantity/domain/cross-field and native installed CRD preservation predicates before publishing generated members",
+      "materialize exact complete controller policy and same generation existing Chart projections including Ready port and conditional omitted roles",
+      "hash exact inputs/generated members and freeze manifest before managed startup; no defaults/coercion or mutable late lookup",
+      "future Go --config decoder verifies generation/file/schema/role/authority identities before token/CA/key/listener/API effects; this loader currently absent"
+    ],
+    "conditionalRoles": "broker-off omits controller/resources/RBAC/mounts/policy; ReadyProduct-off omits Ready/Product policy members/port/TLS/client route and grants; old active A receipts still require authenticated drain/preservation before omission",
+    "activeOriginalA": "publication never rewrites original epoch/UID/RV/CAS/config_epoch/expiry/cleanup budgets/grants/trust; installed old CRD TTL domain remains compatible or B publication rejected/drained"
+  },
+  "remainingLocalWork": [
+    "coordinate next root version and full closed root schema with frozen Provider03/C3 definitions; not completed by fragment",
+    "define same pipeline production materializer exact implementation/source and generated file-set receipts; no present support claimed",
+    "implement approved Go managed decoder/epoch readback and Chart/CRD/role/drain projection later C1-C6; no C0 implementation here"
+  ],
+  "externalActivationInputs": [
+    "genuine installed exact controller binary/OCI/Go stdlib+architecture/build/source receipt; current sources/mvalues use latest tag and no controller artifact digest proved",
+    "actual cluster/API/provider/namespaceUID/SAUID/Role/RBAC/grants/installedCRD/schema/status/UID/CAS/priorlease state",
+    "actual mounted CA/SAN/SA token provider issuer/audience/authorized rotating revision lineage; token read each request vs CA startup capture remains distinction",
+    "authentic NovaReady producer and distinct ControlProduct producer TokenReview tokens/audiences/grants; no metadatalabel authentication",
+    "genuine Ready TLS Secret/key/cert/access/revision and sameProduct signing private authority-derived public key32bytes/issuer/actors provenance; no invented key fingerprint",
+    "physical pod/process/sharedAPI/resource/accounting and full-list/findings/concurrentHTTP allocation measurements sufficient for requested profile; byte schema valid does not prove available512MiB memory"
+  ]
+}

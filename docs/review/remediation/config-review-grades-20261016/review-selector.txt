@@ -1,0 +1,7 @@
+autoreview findings: 1
+[P2] [P2] Trim the audit agent ID before selecting its runtime target
+skills/nova/core/execution/review-runtime-targets.ts:8
+The repository audit stage normalizes `config.agent` with `configText(...).trim()` before dispatch, but this new projection looks up the untrimmed value. An existing schema-valid configuration such as `agent: " echo "` previously dispatched to `echo`; with the selected v2 policy it now fails during runtime preparation with `REVIEW_ACTIVATED_TARGET_MISSING`. Normalize the agent selector using the audit stage's original trimming behavior before looking up the target.
+
+overall: patch is incorrect (0.94)
+The shared capacity and identity normalizers address the two accepted findings, and the supplied recovery code restores retained targets without merging current target values. However, target selection still misses the audit stage's original agent trimming behavior. Local inspection commands failed because the sandbox could not initialize, so this assessment is based on the supplied complete sources; no tests were run.

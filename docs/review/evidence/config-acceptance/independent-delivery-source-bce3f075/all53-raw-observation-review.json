@@ -1,0 +1,1991 @@
+[
+  {
+    "id": "DLV-C0-BCE3-RENDER-NOVA-A",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3-RENDER-NOVA-A",
+      "command": [
+        "helm",
+        "template",
+        "delivery-nova",
+        "charts/kubeclaw",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/NOVA-A.json"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-NOVA-A.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-NOVA-A.stderr"
+      ],
+      "result": "passed"
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-NOVA-A.stdout",
+        "exists": true,
+        "sha256": "77e19f9ba0b828e8e07e8b3a5844e5a9256e6e7fb32de11d3ce6575eab9bd9a8"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-NOVA-A.stderr",
+        "exists": true,
+        "sha256": "8ae11aa77e95ea1d4c88b750a66f9a008f643f38d26220d28e4cdb9a519731b7"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-SCHEMA-NOVA-A",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3-SCHEMA-NOVA-A",
+      "command": [
+        "kubeconform",
+        "-strict",
+        "-summary",
+        "-kubernetes-version",
+        "1.35.6",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-NOVA-A.yaml"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-SCHEMA-NOVA-A.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-SCHEMA-NOVA-A.stderr"
+      ],
+      "result": "passed",
+      "collection": {
+        "collected": 9,
+        "valid": 9,
+        "invalid": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-SCHEMA-NOVA-A.stdout",
+        "exists": true,
+        "sha256": "737f1218a2afa8481edb9f292f919f4af4d51dfd6ecae818db1b018bd7c8119d"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-SCHEMA-NOVA-A.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-OUTPUT-NOVA-A",
+    "result": "failed",
+    "observed": {
+      "id": "DLV-C0-BCE3-OUTPUT-NOVA-A",
+      "command": [
+        "node",
+        "-e",
+        "const fs=require('fs'),yaml=require('js-yaml'); const docs=yaml.loadAll(fs.readFileSync(process.argv[1],'utf8'));const c=docs.find(x=>x?.kind==='ConfigMap'&&x.data?.['openclaw.json']);const j=JSON.parse(c.data['openclaw.json']);const d=docs.find(x=>x?.kind==='Deployment'&&x.metadata.name==='kubeclaw-'+process.argv[2]);const main=d.spec.template.spec.containers.find(x=>x.name==='kubeclaw'); console.log(JSON.stringify({model:j.agents.defaults.model,gatewayPort:j.gateway.port,env:Object.fromEntries(main.env.filter(x=>x.value!==undefined).map(x=>[x.name,x.value]))}));",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-NOVA-A.yaml",
+        "nova"
+      ],
+      "exit": 1,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-OUTPUT-NOVA-A.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-OUTPUT-NOVA-A.stderr"
+      ],
+      "result": "failed"
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-OUTPUT-NOVA-A.stdout",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-OUTPUT-NOVA-A.stderr",
+        "exists": true,
+        "sha256": "ba2a5ac210ebc97a2f466ed11a0dd46bd64be3bd75a65a279d53aa2033430d55"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-RENDER-NOVA-B",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3-RENDER-NOVA-B",
+      "command": [
+        "helm",
+        "template",
+        "delivery-nova",
+        "charts/kubeclaw",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/NOVA-B.json"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-NOVA-B.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-NOVA-B.stderr"
+      ],
+      "result": "passed"
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-NOVA-B.stdout",
+        "exists": true,
+        "sha256": "7df6de45e636857094d580d986fb531f16b626456ca50fd3ef51224e83723a90"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-NOVA-B.stderr",
+        "exists": true,
+        "sha256": "8ae11aa77e95ea1d4c88b750a66f9a008f643f38d26220d28e4cdb9a519731b7"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-SCHEMA-NOVA-B",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3-SCHEMA-NOVA-B",
+      "command": [
+        "kubeconform",
+        "-strict",
+        "-summary",
+        "-kubernetes-version",
+        "1.35.6",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-NOVA-B.yaml"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-SCHEMA-NOVA-B.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-SCHEMA-NOVA-B.stderr"
+      ],
+      "result": "passed",
+      "collection": {
+        "collected": 9,
+        "valid": 9,
+        "invalid": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-SCHEMA-NOVA-B.stdout",
+        "exists": true,
+        "sha256": "737f1218a2afa8481edb9f292f919f4af4d51dfd6ecae818db1b018bd7c8119d"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-SCHEMA-NOVA-B.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-OUTPUT-NOVA-B",
+    "result": "failed",
+    "observed": {
+      "id": "DLV-C0-BCE3-OUTPUT-NOVA-B",
+      "command": [
+        "node",
+        "-e",
+        "const fs=require('fs'),yaml=require('js-yaml'); const docs=yaml.loadAll(fs.readFileSync(process.argv[1],'utf8'));const c=docs.find(x=>x?.kind==='ConfigMap'&&x.data?.['openclaw.json']);const j=JSON.parse(c.data['openclaw.json']);const d=docs.find(x=>x?.kind==='Deployment'&&x.metadata.name==='kubeclaw-'+process.argv[2]);const main=d.spec.template.spec.containers.find(x=>x.name==='kubeclaw'); console.log(JSON.stringify({model:j.agents.defaults.model,gatewayPort:j.gateway.port,env:Object.fromEntries(main.env.filter(x=>x.value!==undefined).map(x=>[x.name,x.value]))}));",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-NOVA-B.yaml",
+        "nova"
+      ],
+      "exit": 1,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-OUTPUT-NOVA-B.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-OUTPUT-NOVA-B.stderr"
+      ],
+      "result": "failed"
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-OUTPUT-NOVA-B.stdout",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-OUTPUT-NOVA-B.stderr",
+        "exists": true,
+        "sha256": "ba2a5ac210ebc97a2f466ed11a0dd46bd64be3bd75a65a279d53aa2033430d55"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-RENDER-BUSTER-A",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3-RENDER-BUSTER-A",
+      "command": [
+        "helm",
+        "template",
+        "delivery-buster",
+        "charts/kubeclaw",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/BUSTER-A.json"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-BUSTER-A.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-BUSTER-A.stderr"
+      ],
+      "result": "passed"
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-BUSTER-A.stdout",
+        "exists": true,
+        "sha256": "2330858ae616045039a9a2558d6fbcc53f398695fcf06dec7d73c92edb0b6530"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-BUSTER-A.stderr",
+        "exists": true,
+        "sha256": "8ae11aa77e95ea1d4c88b750a66f9a008f643f38d26220d28e4cdb9a519731b7"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-SCHEMA-BUSTER-A",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3-SCHEMA-BUSTER-A",
+      "command": [
+        "kubeconform",
+        "-strict",
+        "-summary",
+        "-kubernetes-version",
+        "1.35.6",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-BUSTER-A.yaml"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-SCHEMA-BUSTER-A.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-SCHEMA-BUSTER-A.stderr"
+      ],
+      "result": "passed",
+      "collection": {
+        "collected": 21,
+        "valid": 21,
+        "invalid": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-SCHEMA-BUSTER-A.stdout",
+        "exists": true,
+        "sha256": "05900185830a245d4c47042c78595acdd03f5623232b3f6cd3444870e4eea72e"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-SCHEMA-BUSTER-A.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-OUTPUT-BUSTER-A",
+    "result": "failed",
+    "observed": {
+      "id": "DLV-C0-BCE3-OUTPUT-BUSTER-A",
+      "command": [
+        "node",
+        "-e",
+        "const fs=require('fs'),yaml=require('js-yaml'); const docs=yaml.loadAll(fs.readFileSync(process.argv[1],'utf8'));const c=docs.find(x=>x?.kind==='ConfigMap'&&x.data?.['openclaw.json']);const j=JSON.parse(c.data['openclaw.json']);const d=docs.find(x=>x?.kind==='Deployment'&&x.metadata.name==='kubeclaw-'+process.argv[2]);const main=d.spec.template.spec.containers.find(x=>x.name==='kubeclaw'); console.log(JSON.stringify({model:j.agents.defaults.model,gatewayPort:j.gateway.port,env:Object.fromEntries(main.env.filter(x=>x.value!==undefined).map(x=>[x.name,x.value]))}));",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-BUSTER-A.yaml",
+        "buster"
+      ],
+      "exit": 1,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-OUTPUT-BUSTER-A.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-OUTPUT-BUSTER-A.stderr"
+      ],
+      "result": "failed"
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-OUTPUT-BUSTER-A.stdout",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-OUTPUT-BUSTER-A.stderr",
+        "exists": true,
+        "sha256": "ba2a5ac210ebc97a2f466ed11a0dd46bd64be3bd75a65a279d53aa2033430d55"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-RENDER-BUSTER-B",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3-RENDER-BUSTER-B",
+      "command": [
+        "helm",
+        "template",
+        "delivery-buster",
+        "charts/kubeclaw",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/BUSTER-B.json"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-BUSTER-B.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-BUSTER-B.stderr"
+      ],
+      "result": "passed"
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-BUSTER-B.stdout",
+        "exists": true,
+        "sha256": "c3f9af117737b134bdf41edf7fc26a6c637fb6dae5538dbb8897c0111c30d81f"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-BUSTER-B.stderr",
+        "exists": true,
+        "sha256": "8ae11aa77e95ea1d4c88b750a66f9a008f643f38d26220d28e4cdb9a519731b7"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-SCHEMA-BUSTER-B",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3-SCHEMA-BUSTER-B",
+      "command": [
+        "kubeconform",
+        "-strict",
+        "-summary",
+        "-kubernetes-version",
+        "1.35.6",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-BUSTER-B.yaml"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-SCHEMA-BUSTER-B.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-SCHEMA-BUSTER-B.stderr"
+      ],
+      "result": "passed",
+      "collection": {
+        "collected": 21,
+        "valid": 21,
+        "invalid": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-SCHEMA-BUSTER-B.stdout",
+        "exists": true,
+        "sha256": "05900185830a245d4c47042c78595acdd03f5623232b3f6cd3444870e4eea72e"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-SCHEMA-BUSTER-B.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-OUTPUT-BUSTER-B",
+    "result": "failed",
+    "observed": {
+      "id": "DLV-C0-BCE3-OUTPUT-BUSTER-B",
+      "command": [
+        "node",
+        "-e",
+        "const fs=require('fs'),yaml=require('js-yaml'); const docs=yaml.loadAll(fs.readFileSync(process.argv[1],'utf8'));const c=docs.find(x=>x?.kind==='ConfigMap'&&x.data?.['openclaw.json']);const j=JSON.parse(c.data['openclaw.json']);const d=docs.find(x=>x?.kind==='Deployment'&&x.metadata.name==='kubeclaw-'+process.argv[2]);const main=d.spec.template.spec.containers.find(x=>x.name==='kubeclaw'); console.log(JSON.stringify({model:j.agents.defaults.model,gatewayPort:j.gateway.port,env:Object.fromEntries(main.env.filter(x=>x.value!==undefined).map(x=>[x.name,x.value]))}));",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-BUSTER-B.yaml",
+        "buster"
+      ],
+      "exit": 1,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-OUTPUT-BUSTER-B.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-OUTPUT-BUSTER-B.stderr"
+      ],
+      "result": "failed"
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-OUTPUT-BUSTER-B.stdout",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-OUTPUT-BUSTER-B.stderr",
+        "exists": true,
+        "sha256": "ba2a5ac210ebc97a2f466ed11a0dd46bd64be3bd75a65a279d53aa2033430d55"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-RENDER-PRISM-A",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3-RENDER-PRISM-A",
+      "command": [
+        "helm",
+        "template",
+        "delivery-prism",
+        "charts/prism",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/PRISM-A.json"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-PRISM-A.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-PRISM-A.stderr"
+      ],
+      "result": "passed"
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-PRISM-A.stdout",
+        "exists": true,
+        "sha256": "ec531e1aa1c968658140a9a59407ef51fdc13abb07dcae4f4d94b86ecc848438"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-PRISM-A.stderr",
+        "exists": true,
+        "sha256": "90a2cd3a1ecc2c029ea240c2764836095c2a96922129d50f816946df155f2973"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-SCHEMA-PRISM-A",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3-SCHEMA-PRISM-A",
+      "command": [
+        "kubeconform",
+        "-strict",
+        "-summary",
+        "-kubernetes-version",
+        "1.35.6",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-PRISM-A.yaml"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-SCHEMA-PRISM-A.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-SCHEMA-PRISM-A.stderr"
+      ],
+      "result": "passed",
+      "collection": {
+        "collected": 45,
+        "valid": 45,
+        "invalid": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-SCHEMA-PRISM-A.stdout",
+        "exists": true,
+        "sha256": "faee9b25b90acd791aa289b038ccb93ade8ef198cd77f40adcdb7f931dba7cbd"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-SCHEMA-PRISM-A.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-RENDER-PRISM-B",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3-RENDER-PRISM-B",
+      "command": [
+        "helm",
+        "template",
+        "delivery-prism",
+        "charts/prism",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/PRISM-B.json"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-PRISM-B.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-PRISM-B.stderr"
+      ],
+      "result": "passed"
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-PRISM-B.stdout",
+        "exists": true,
+        "sha256": "339ca92bc41aae70878e87b4335a22ec8634f459f51d62ddea299adccfb9e488"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-PRISM-B.stderr",
+        "exists": true,
+        "sha256": "90a2cd3a1ecc2c029ea240c2764836095c2a96922129d50f816946df155f2973"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-SCHEMA-PRISM-B",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3-SCHEMA-PRISM-B",
+      "command": [
+        "kubeconform",
+        "-strict",
+        "-summary",
+        "-kubernetes-version",
+        "1.35.6",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-RENDER-PRISM-B.yaml"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-SCHEMA-PRISM-B.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-SCHEMA-PRISM-B.stderr"
+      ],
+      "result": "passed",
+      "collection": {
+        "collected": 45,
+        "valid": 45,
+        "invalid": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-SCHEMA-PRISM-B.stdout",
+        "exists": true,
+        "sha256": "faee9b25b90acd791aa289b038ccb93ade8ef198cd77f40adcdb7f931dba7cbd"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-SCHEMA-PRISM-B.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-PACKAGE-KUBECLAW",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3-PACKAGE-KUBECLAW",
+      "command": [
+        "helm",
+        "package",
+        "charts/kubeclaw",
+        "--destination",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-PACKAGE-KUBECLAW.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-PACKAGE-KUBECLAW.stderr"
+      ],
+      "result": "passed"
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-PACKAGE-KUBECLAW.stdout",
+        "exists": true,
+        "sha256": "39260fd681e40a78d5287fc7ef67b6027fe1beec05e5e8236990b7a2c8e71623"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-PACKAGE-KUBECLAW.stderr",
+        "exists": true,
+        "sha256": "8ae11aa77e95ea1d4c88b750a66f9a008f643f38d26220d28e4cdb9a519731b7"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-PACKAGE-PRISM",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3-PACKAGE-PRISM",
+      "command": [
+        "helm",
+        "package",
+        "charts/prism",
+        "--destination",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-PACKAGE-PRISM.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-PACKAGE-PRISM.stderr"
+      ],
+      "result": "passed"
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-PACKAGE-PRISM.stdout",
+        "exists": true,
+        "sha256": "4d52cd24e0524eba1fafa024588dcd107380a8f270fe37997b50916fd2d1ad5e"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/DLV-C0-BCE3-PACKAGE-PRISM.stderr",
+        "exists": true,
+        "sha256": "90a2cd3a1ecc2c029ea240c2764836095c2a96922129d50f816946df155f2973"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3R2-RENDER-NOVA-A",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3R2-RENDER-NOVA-A",
+      "command": [
+        "helm",
+        "template",
+        "delivery-nova",
+        "charts/kubeclaw",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/NOVA-A.json"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-NOVA-A.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-NOVA-A.stderr"
+      ],
+      "result": "passed"
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-NOVA-A.stdout",
+        "exists": true,
+        "sha256": "77e19f9ba0b828e8e07e8b3a5844e5a9256e6e7fb32de11d3ce6575eab9bd9a8"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-NOVA-A.stderr",
+        "exists": true,
+        "sha256": "8ae11aa77e95ea1d4c88b750a66f9a008f643f38d26220d28e4cdb9a519731b7"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3R2-SCHEMA-NOVA-A",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3R2-SCHEMA-NOVA-A",
+      "command": [
+        "kubeconform",
+        "-strict",
+        "-summary",
+        "-kubernetes-version",
+        "1.35.6",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-NOVA-A.yaml"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-SCHEMA-NOVA-A.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-SCHEMA-NOVA-A.stderr"
+      ],
+      "result": "passed",
+      "collection": {
+        "collected": 9,
+        "valid": 9,
+        "invalid": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-SCHEMA-NOVA-A.stdout",
+        "exists": true,
+        "sha256": "737f1218a2afa8481edb9f292f919f4af4d51dfd6ecae818db1b018bd7c8119d"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-SCHEMA-NOVA-A.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3R2-OUTPUT-NOVA-A",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3R2-OUTPUT-NOVA-A",
+      "command": [
+        "node",
+        "-e",
+        "const fs=require('fs'),yaml=require('js-yaml'); const docs=yaml.loadAll(fs.readFileSync(process.argv[1],'utf8'));const c=docs.find(x=>x?.kind==='ConfigMap'&&x.data?.['openclaw.json']);const j=JSON.parse(c.data['openclaw.json']);const d=docs.find(x=>x?.kind==='Deployment'&&x.metadata.name==='agent-'+process.argv[2]);const main=d.spec.template.spec.containers.find(x=>x.name==='kubeclaw'); console.log(JSON.stringify({model:j.agents.defaults.model,gatewayPort:j.gateway.port,env:Object.fromEntries(main.env.filter(x=>x.value!==undefined).map(x=>[x.name,x.value]))}));",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-NOVA-A.yaml",
+        "nova"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-OUTPUT-NOVA-A.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-OUTPUT-NOVA-A.stderr"
+      ],
+      "result": "passed",
+      "fieldWitnesses": {
+        "agent.model.primary": "openai/gpt-5.6-sol",
+        "agent.model.fallbacks": [
+          "openai/gpt-5.5"
+        ],
+        "gateway.port": 18781,
+        "gateway.url": "http://127.0.0.1:18781",
+        "shutdown.drainFile": "/tmp/dlv-a-draining",
+        "probes.dependencies.redisStream.maxLen": "500"
+      }
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-OUTPUT-NOVA-A.stdout",
+        "exists": true,
+        "sha256": "8490139c3fa15b5a6dc40b8bbf6c5306d02f9e70279ca562cb5c1411527aa2cc"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-OUTPUT-NOVA-A.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3R2-RENDER-NOVA-B",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3R2-RENDER-NOVA-B",
+      "command": [
+        "helm",
+        "template",
+        "delivery-nova",
+        "charts/kubeclaw",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/NOVA-B.json"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-NOVA-B.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-NOVA-B.stderr"
+      ],
+      "result": "passed"
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-NOVA-B.stdout",
+        "exists": true,
+        "sha256": "7df6de45e636857094d580d986fb531f16b626456ca50fd3ef51224e83723a90"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-NOVA-B.stderr",
+        "exists": true,
+        "sha256": "8ae11aa77e95ea1d4c88b750a66f9a008f643f38d26220d28e4cdb9a519731b7"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3R2-SCHEMA-NOVA-B",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3R2-SCHEMA-NOVA-B",
+      "command": [
+        "kubeconform",
+        "-strict",
+        "-summary",
+        "-kubernetes-version",
+        "1.35.6",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-NOVA-B.yaml"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-SCHEMA-NOVA-B.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-SCHEMA-NOVA-B.stderr"
+      ],
+      "result": "passed",
+      "collection": {
+        "collected": 9,
+        "valid": 9,
+        "invalid": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-SCHEMA-NOVA-B.stdout",
+        "exists": true,
+        "sha256": "737f1218a2afa8481edb9f292f919f4af4d51dfd6ecae818db1b018bd7c8119d"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-SCHEMA-NOVA-B.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3R2-OUTPUT-NOVA-B",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3R2-OUTPUT-NOVA-B",
+      "command": [
+        "node",
+        "-e",
+        "const fs=require('fs'),yaml=require('js-yaml'); const docs=yaml.loadAll(fs.readFileSync(process.argv[1],'utf8'));const c=docs.find(x=>x?.kind==='ConfigMap'&&x.data?.['openclaw.json']);const j=JSON.parse(c.data['openclaw.json']);const d=docs.find(x=>x?.kind==='Deployment'&&x.metadata.name==='agent-'+process.argv[2]);const main=d.spec.template.spec.containers.find(x=>x.name==='kubeclaw'); console.log(JSON.stringify({model:j.agents.defaults.model,gatewayPort:j.gateway.port,env:Object.fromEntries(main.env.filter(x=>x.value!==undefined).map(x=>[x.name,x.value]))}));",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-NOVA-B.yaml",
+        "nova"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-OUTPUT-NOVA-B.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-OUTPUT-NOVA-B.stderr"
+      ],
+      "result": "passed",
+      "fieldWitnesses": {
+        "agent.model.primary": "openai/gpt-5.5",
+        "agent.model.fallbacks": [
+          "openai/gpt-5.6-sol"
+        ],
+        "gateway.port": 18782,
+        "gateway.url": "http://127.0.0.1:18782",
+        "shutdown.drainFile": "/tmp/dlv-b-draining",
+        "probes.dependencies.redisStream.maxLen": "1000"
+      }
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-OUTPUT-NOVA-B.stdout",
+        "exists": true,
+        "sha256": "093e9c4ba744b4dc21877aabbdc27e3fce5d0b490c433ed30bf87befb4d7b672"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-OUTPUT-NOVA-B.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3R2-RENDER-BUSTER-A",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3R2-RENDER-BUSTER-A",
+      "command": [
+        "helm",
+        "template",
+        "delivery-buster",
+        "charts/kubeclaw",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/BUSTER-A.json"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-BUSTER-A.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-BUSTER-A.stderr"
+      ],
+      "result": "passed"
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-BUSTER-A.stdout",
+        "exists": true,
+        "sha256": "2330858ae616045039a9a2558d6fbcc53f398695fcf06dec7d73c92edb0b6530"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-BUSTER-A.stderr",
+        "exists": true,
+        "sha256": "8ae11aa77e95ea1d4c88b750a66f9a008f643f38d26220d28e4cdb9a519731b7"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3R2-SCHEMA-BUSTER-A",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3R2-SCHEMA-BUSTER-A",
+      "command": [
+        "kubeconform",
+        "-strict",
+        "-summary",
+        "-kubernetes-version",
+        "1.35.6",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-BUSTER-A.yaml"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-SCHEMA-BUSTER-A.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-SCHEMA-BUSTER-A.stderr"
+      ],
+      "result": "passed",
+      "collection": {
+        "collected": 21,
+        "valid": 21,
+        "invalid": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-SCHEMA-BUSTER-A.stdout",
+        "exists": true,
+        "sha256": "05900185830a245d4c47042c78595acdd03f5623232b3f6cd3444870e4eea72e"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-SCHEMA-BUSTER-A.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3R2-OUTPUT-BUSTER-A",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3R2-OUTPUT-BUSTER-A",
+      "command": [
+        "node",
+        "-e",
+        "const fs=require('fs'),yaml=require('js-yaml'); const docs=yaml.loadAll(fs.readFileSync(process.argv[1],'utf8'));const c=docs.find(x=>x?.kind==='ConfigMap'&&x.data?.['openclaw.json']);const j=JSON.parse(c.data['openclaw.json']);const d=docs.find(x=>x?.kind==='Deployment'&&x.metadata.name==='agent-'+process.argv[2]);const main=d.spec.template.spec.containers.find(x=>x.name==='kubeclaw'); console.log(JSON.stringify({model:j.agents.defaults.model,gatewayPort:j.gateway.port,env:Object.fromEntries(main.env.filter(x=>x.value!==undefined).map(x=>[x.name,x.value]))}));",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-BUSTER-A.yaml",
+        "buster"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-OUTPUT-BUSTER-A.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-OUTPUT-BUSTER-A.stderr"
+      ],
+      "result": "passed",
+      "fieldWitnesses": {
+        "agent.model.primary": "openai/gpt-5.6-sol",
+        "agent.model.fallbacks": [
+          "openai/gpt-5.5"
+        ],
+        "gateway.port": 18781,
+        "gateway.url": "http://127.0.0.1:18781",
+        "shutdown.drainFile": "/tmp/dlv-a-draining",
+        "probes.dependencies.redisStream.maxLen": "500"
+      }
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-OUTPUT-BUSTER-A.stdout",
+        "exists": true,
+        "sha256": "d7f33b6bbea125b5e7b41105f6f550a62fb7f0575af692ef9a387255a94b1593"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-OUTPUT-BUSTER-A.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3R2-RENDER-BUSTER-B",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3R2-RENDER-BUSTER-B",
+      "command": [
+        "helm",
+        "template",
+        "delivery-buster",
+        "charts/kubeclaw",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/BUSTER-B.json"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-BUSTER-B.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-BUSTER-B.stderr"
+      ],
+      "result": "passed"
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-BUSTER-B.stdout",
+        "exists": true,
+        "sha256": "c3f9af117737b134bdf41edf7fc26a6c637fb6dae5538dbb8897c0111c30d81f"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-BUSTER-B.stderr",
+        "exists": true,
+        "sha256": "8ae11aa77e95ea1d4c88b750a66f9a008f643f38d26220d28e4cdb9a519731b7"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3R2-SCHEMA-BUSTER-B",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3R2-SCHEMA-BUSTER-B",
+      "command": [
+        "kubeconform",
+        "-strict",
+        "-summary",
+        "-kubernetes-version",
+        "1.35.6",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-BUSTER-B.yaml"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-SCHEMA-BUSTER-B.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-SCHEMA-BUSTER-B.stderr"
+      ],
+      "result": "passed",
+      "collection": {
+        "collected": 21,
+        "valid": 21,
+        "invalid": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-SCHEMA-BUSTER-B.stdout",
+        "exists": true,
+        "sha256": "05900185830a245d4c47042c78595acdd03f5623232b3f6cd3444870e4eea72e"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-SCHEMA-BUSTER-B.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3R2-OUTPUT-BUSTER-B",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3R2-OUTPUT-BUSTER-B",
+      "command": [
+        "node",
+        "-e",
+        "const fs=require('fs'),yaml=require('js-yaml'); const docs=yaml.loadAll(fs.readFileSync(process.argv[1],'utf8'));const c=docs.find(x=>x?.kind==='ConfigMap'&&x.data?.['openclaw.json']);const j=JSON.parse(c.data['openclaw.json']);const d=docs.find(x=>x?.kind==='Deployment'&&x.metadata.name==='agent-'+process.argv[2]);const main=d.spec.template.spec.containers.find(x=>x.name==='kubeclaw'); console.log(JSON.stringify({model:j.agents.defaults.model,gatewayPort:j.gateway.port,env:Object.fromEntries(main.env.filter(x=>x.value!==undefined).map(x=>[x.name,x.value]))}));",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-BUSTER-B.yaml",
+        "buster"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-OUTPUT-BUSTER-B.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-OUTPUT-BUSTER-B.stderr"
+      ],
+      "result": "passed",
+      "fieldWitnesses": {
+        "agent.model.primary": "openai/gpt-5.5",
+        "agent.model.fallbacks": [
+          "openai/gpt-5.6-sol"
+        ],
+        "gateway.port": 18782,
+        "gateway.url": "http://127.0.0.1:18782",
+        "shutdown.drainFile": "/tmp/dlv-b-draining",
+        "probes.dependencies.redisStream.maxLen": "1000"
+      }
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-OUTPUT-BUSTER-B.stdout",
+        "exists": true,
+        "sha256": "2096f9f5454c6e6c35b0a3ac1384c56dbb31d3d0d01f3456291ebbe009aa76ff"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-OUTPUT-BUSTER-B.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3R2-RENDER-PRISM-A",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3R2-RENDER-PRISM-A",
+      "command": [
+        "helm",
+        "template",
+        "delivery-prism",
+        "charts/prism",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/PRISM-A.json"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-PRISM-A.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-PRISM-A.stderr"
+      ],
+      "result": "passed"
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-PRISM-A.stdout",
+        "exists": true,
+        "sha256": "ec531e1aa1c968658140a9a59407ef51fdc13abb07dcae4f4d94b86ecc848438"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-PRISM-A.stderr",
+        "exists": true,
+        "sha256": "90a2cd3a1ecc2c029ea240c2764836095c2a96922129d50f816946df155f2973"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3R2-SCHEMA-PRISM-A",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3R2-SCHEMA-PRISM-A",
+      "command": [
+        "kubeconform",
+        "-strict",
+        "-summary",
+        "-kubernetes-version",
+        "1.35.6",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-PRISM-A.yaml"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-SCHEMA-PRISM-A.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-SCHEMA-PRISM-A.stderr"
+      ],
+      "result": "passed",
+      "collection": {
+        "collected": 45,
+        "valid": 45,
+        "invalid": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-SCHEMA-PRISM-A.stdout",
+        "exists": true,
+        "sha256": "faee9b25b90acd791aa289b038ccb93ade8ef198cd77f40adcdb7f931dba7cbd"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-SCHEMA-PRISM-A.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3R2-RENDER-PRISM-B",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3R2-RENDER-PRISM-B",
+      "command": [
+        "helm",
+        "template",
+        "delivery-prism",
+        "charts/prism",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/PRISM-B.json"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-PRISM-B.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-PRISM-B.stderr"
+      ],
+      "result": "passed"
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-PRISM-B.stdout",
+        "exists": true,
+        "sha256": "339ca92bc41aae70878e87b4335a22ec8634f459f51d62ddea299adccfb9e488"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-PRISM-B.stderr",
+        "exists": true,
+        "sha256": "90a2cd3a1ecc2c029ea240c2764836095c2a96922129d50f816946df155f2973"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3R2-SCHEMA-PRISM-B",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3R2-SCHEMA-PRISM-B",
+      "command": [
+        "kubeconform",
+        "-strict",
+        "-summary",
+        "-kubernetes-version",
+        "1.35.6",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-RENDER-PRISM-B.yaml"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-SCHEMA-PRISM-B.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-SCHEMA-PRISM-B.stderr"
+      ],
+      "result": "passed",
+      "collection": {
+        "collected": 45,
+        "valid": 45,
+        "invalid": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-SCHEMA-PRISM-B.stdout",
+        "exists": true,
+        "sha256": "faee9b25b90acd791aa289b038ccb93ade8ef198cd77f40adcdb7f931dba7cbd"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-SCHEMA-PRISM-B.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3R2-PACKAGE-KUBECLAW",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3R2-PACKAGE-KUBECLAW",
+      "command": [
+        "helm",
+        "package",
+        "charts/kubeclaw",
+        "--destination",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-PACKAGE-KUBECLAW.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-PACKAGE-KUBECLAW.stderr"
+      ],
+      "result": "passed"
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-PACKAGE-KUBECLAW.stdout",
+        "exists": true,
+        "sha256": "fe70de8d73cf1ac79bc31ca8235c83128c0b7723ffe3d4a5699321d2b0865235"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-PACKAGE-KUBECLAW.stderr",
+        "exists": true,
+        "sha256": "8ae11aa77e95ea1d4c88b750a66f9a008f643f38d26220d28e4cdb9a519731b7"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3R2-PACKAGE-PRISM",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3R2-PACKAGE-PRISM",
+      "command": [
+        "helm",
+        "package",
+        "charts/prism",
+        "--destination",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-PACKAGE-PRISM.stdout",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-PACKAGE-PRISM.stderr"
+      ],
+      "result": "passed"
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-PACKAGE-PRISM.stdout",
+        "exists": true,
+        "sha256": "a7f8cb4eb390cc09d775e93f24e8b0707031139cc9cab7b16e760cafd0fd15ea"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/DLV-C0-BCE3R2-PACKAGE-PRISM.stderr",
+        "exists": true,
+        "sha256": "90a2cd3a1ecc2c029ea240c2764836095c2a96922129d50f816946df155f2973"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-SEMgrep-SCHEMA-A",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3-SEMgrep-SCHEMA-A",
+      "profile": "docs/review/evidence/config-acceptance/delivery/lint-definition-profiles-bce3f075/A.semgrep.yml",
+      "expected": true,
+      "valid": true,
+      "errors": null,
+      "result": "passed"
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/definition-syntax-bce3f075.stdout",
+        "exists": true,
+        "sha256": "5cebec35139116a5e19e1fdc1c4f16ddb5921b6d0e93b794d56f2775bd0328c7"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/definition-syntax-bce3f075.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-SEMgrep-SCHEMA-A-NO-PATTERN",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3-SEMgrep-SCHEMA-A-NO-PATTERN",
+      "expected": false,
+      "valid": false,
+      "errors": [
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/0/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "pattern"
+          },
+          "message": "must have required property 'pattern'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/1/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "patterns"
+          },
+          "message": "must have required property 'patterns'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/2/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "pattern-either"
+          },
+          "message": "must have required property 'pattern-either'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/3/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "pattern-regex"
+          },
+          "message": "must have required property 'pattern-regex'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/4/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "r2c-internal-project-depends-on"
+          },
+          "message": "must have required property 'r2c-internal-project-depends-on'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/5/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "match"
+          },
+          "message": "must have required property 'match'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf",
+          "keyword": "oneOf",
+          "params": {
+            "passingSchemas": null
+          },
+          "message": "must match exactly one schema in oneOf"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/if",
+          "keyword": "if",
+          "params": {
+            "failingKeyword": "else"
+          },
+          "message": "must match \"else\" schema"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/if",
+          "keyword": "if",
+          "params": {
+            "failingKeyword": "then"
+          },
+          "message": "must match \"then\" schema"
+        }
+      ],
+      "result": "passed"
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/definition-syntax-bce3f075.stdout",
+        "exists": true,
+        "sha256": "5cebec35139116a5e19e1fdc1c4f16ddb5921b6d0e93b794d56f2775bd0328c7"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/definition-syntax-bce3f075.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-SEMgrep-SCHEMA-A-INVALID-SEVERITY",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3-SEMgrep-SCHEMA-A-INVALID-SEVERITY",
+      "expected": false,
+      "valid": false,
+      "errors": [
+        {
+          "instancePath": "/rules/0/severity",
+          "schemaPath": "#/properties/rules/items/properties/severity/enum",
+          "keyword": "enum",
+          "params": {
+            "allowedValues": [
+              "ERROR",
+              "WARNING",
+              "INFO",
+              "INVENTORY",
+              "EXPERIMENT",
+              "CRITICAL",
+              "HIGH",
+              "MEDIUM",
+              "LOW"
+            ]
+          },
+          "message": "must be equal to one of the allowed values"
+        }
+      ],
+      "result": "passed"
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/definition-syntax-bce3f075.stdout",
+        "exists": true,
+        "sha256": "5cebec35139116a5e19e1fdc1c4f16ddb5921b6d0e93b794d56f2775bd0328c7"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/definition-syntax-bce3f075.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-SEMgrep-SCHEMA-B",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3-SEMgrep-SCHEMA-B",
+      "profile": "docs/review/evidence/config-acceptance/delivery/lint-definition-profiles-bce3f075/B.semgrep.yml",
+      "expected": true,
+      "valid": true,
+      "errors": null,
+      "result": "passed"
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/definition-syntax-bce3f075.stdout",
+        "exists": true,
+        "sha256": "5cebec35139116a5e19e1fdc1c4f16ddb5921b6d0e93b794d56f2775bd0328c7"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/definition-syntax-bce3f075.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-SEMgrep-SCHEMA-B-NO-PATTERN",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3-SEMgrep-SCHEMA-B-NO-PATTERN",
+      "expected": false,
+      "valid": false,
+      "errors": [
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/0/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "pattern"
+          },
+          "message": "must have required property 'pattern'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/1/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "patterns"
+          },
+          "message": "must have required property 'patterns'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/2/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "pattern-either"
+          },
+          "message": "must have required property 'pattern-either'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/3/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "pattern-regex"
+          },
+          "message": "must have required property 'pattern-regex'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/4/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "r2c-internal-project-depends-on"
+          },
+          "message": "must have required property 'r2c-internal-project-depends-on'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/5/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "match"
+          },
+          "message": "must have required property 'match'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf",
+          "keyword": "oneOf",
+          "params": {
+            "passingSchemas": null
+          },
+          "message": "must match exactly one schema in oneOf"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/if",
+          "keyword": "if",
+          "params": {
+            "failingKeyword": "else"
+          },
+          "message": "must match \"else\" schema"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/if",
+          "keyword": "if",
+          "params": {
+            "failingKeyword": "then"
+          },
+          "message": "must match \"then\" schema"
+        }
+      ],
+      "result": "passed"
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/definition-syntax-bce3f075.stdout",
+        "exists": true,
+        "sha256": "5cebec35139116a5e19e1fdc1c4f16ddb5921b6d0e93b794d56f2775bd0328c7"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/definition-syntax-bce3f075.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-SEMgrep-SCHEMA-B-INVALID-SEVERITY",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3-SEMgrep-SCHEMA-B-INVALID-SEVERITY",
+      "expected": false,
+      "valid": false,
+      "errors": [
+        {
+          "instancePath": "/rules/0/severity",
+          "schemaPath": "#/properties/rules/items/properties/severity/enum",
+          "keyword": "enum",
+          "params": {
+            "allowedValues": [
+              "ERROR",
+              "WARNING",
+              "INFO",
+              "INVENTORY",
+              "EXPERIMENT",
+              "CRITICAL",
+              "HIGH",
+              "MEDIUM",
+              "LOW"
+            ]
+          },
+          "message": "must be equal to one of the allowed values"
+        }
+      ],
+      "result": "passed"
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/definition-syntax-bce3f075.stdout",
+        "exists": true,
+        "sha256": "5cebec35139116a5e19e1fdc1c4f16ddb5921b6d0e93b794d56f2775bd0328c7"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/definition-syntax-bce3f075.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-NATIVE-HOST-RENDER-A",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3-NATIVE-HOST-RENDER-A",
+      "command": [
+        "node",
+        "scripts/render-native-worker-node.mjs",
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.yaml",
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A-bundle"
+      ],
+      "profile": "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.yaml",
+      "exit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.stdout",
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.stderr"
+      ],
+      "result": "passed",
+      "scope": "existing preparation-only renderer and output bindings; NOT installed selected node/API/cgroup/runtime receipt",
+      "fieldWitnesses": {
+        "samePolicyDigest": true,
+        "busterChartDigest": true,
+        "prismChartDigest": true,
+        "cpuQuotaPeriod": true,
+        "setupMembers": true,
+        "nriRuntime": true
+      },
+      "policyDigest": "614839c558e11a73e06221d1d42eb8454b7fa35b7f2462a1c0c3f256e2cc15b6"
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.stdout",
+        "exists": true,
+        "sha256": "b120a584c4c63f704fab3bab61a19df8b51c12f64944db4df1136fea7b0d88ee"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-NATIVE-HOST-RENDER-B",
+    "result": "passed",
+    "observed": {
+      "id": "DLV-C0-BCE3-NATIVE-HOST-RENDER-B",
+      "command": [
+        "node",
+        "scripts/render-native-worker-node.mjs",
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.yaml",
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B-bundle"
+      ],
+      "profile": "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.yaml",
+      "exit": 0,
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.stdout",
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.stderr"
+      ],
+      "result": "passed",
+      "scope": "existing preparation-only renderer and output bindings; NOT installed selected node/API/cgroup/runtime receipt",
+      "fieldWitnesses": {
+        "samePolicyDigest": true,
+        "busterChartDigest": true,
+        "prismChartDigest": true,
+        "cpuQuotaPeriod": true,
+        "setupMembers": true,
+        "nriRuntime": true
+      },
+      "policyDigest": "82a0eac48a8b3178120d43c4ea30259e424ade4260c632d0b8c1fb5d49aa7100"
+    },
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.stdout",
+        "exists": true,
+        "sha256": "88904826c3db7cc4e43fb78e1c20492a47f739aad0707a250db2062464f24918"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-TOML-SYNTAX-A",
+    "result": "passed",
+    "observed": null,
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/parser-profile-syntax-bce3f075-corrected.stdout",
+        "exists": true,
+        "sha256": "98e0f6da7ea4d18877eabbf51efd9d431345fa84c17a9b222857c3fa10ce2a29"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/parser-profile-syntax-bce3f075-corrected.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-TOML-SYNTAX-B-approval_policy",
+    "result": "passed",
+    "observed": null,
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/parser-profile-syntax-bce3f075-corrected.stdout",
+        "exists": true,
+        "sha256": "98e0f6da7ea4d18877eabbf51efd9d431345fa84c17a9b222857c3fa10ce2a29"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/parser-profile-syntax-bce3f075-corrected.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-TOML-SYNTAX-B-cli_auth_credentials_store",
+    "result": "passed",
+    "observed": null,
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/parser-profile-syntax-bce3f075-corrected.stdout",
+        "exists": true,
+        "sha256": "98e0f6da7ea4d18877eabbf51efd9d431345fa84c17a9b222857c3fa10ce2a29"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/parser-profile-syntax-bce3f075-corrected.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-TOML-SYNTAX-B-mcp_servers-kubeclaw_ops-bearer_token_env_var",
+    "result": "passed",
+    "observed": null,
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/parser-profile-syntax-bce3f075-corrected.stdout",
+        "exists": true,
+        "sha256": "98e0f6da7ea4d18877eabbf51efd9d431345fa84c17a9b222857c3fa10ce2a29"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/parser-profile-syntax-bce3f075-corrected.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-TOML-SYNTAX-B-mcp_servers-kubeclaw_ops-url",
+    "result": "passed",
+    "observed": null,
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/parser-profile-syntax-bce3f075-corrected.stdout",
+        "exists": true,
+        "sha256": "98e0f6da7ea4d18877eabbf51efd9d431345fa84c17a9b222857c3fa10ce2a29"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/parser-profile-syntax-bce3f075-corrected.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-TOML-SYNTAX-B-sandbox_mode",
+    "result": "passed",
+    "observed": null,
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/parser-profile-syntax-bce3f075-corrected.stdout",
+        "exists": true,
+        "sha256": "98e0f6da7ea4d18877eabbf51efd9d431345fa84c17a9b222857c3fa10ce2a29"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/parser-profile-syntax-bce3f075-corrected.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-TOML-SYNTAX-B",
+    "result": "passed",
+    "observed": null,
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/parser-profile-syntax-bce3f075-corrected.stdout",
+        "exists": true,
+        "sha256": "98e0f6da7ea4d18877eabbf51efd9d431345fa84c17a9b222857c3fa10ce2a29"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/parser-profile-syntax-bce3f075-corrected.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-ESLINT-MODULE-SYNTAX-A.eslint.config",
+    "result": "passed",
+    "observed": null,
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/parser-profile-syntax-bce3f075-corrected.stdout",
+        "exists": true,
+        "sha256": "98e0f6da7ea4d18877eabbf51efd9d431345fa84c17a9b222857c3fa10ce2a29"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/parser-profile-syntax-bce3f075-corrected.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "id": "DLV-C0-BCE3-ESLINT-MODULE-SYNTAX-B.eslint.config",
+    "result": "passed",
+    "observed": null,
+    "paths": [
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/parser-profile-syntax-bce3f075-corrected.stdout",
+        "exists": true,
+        "sha256": "98e0f6da7ea4d18877eabbf51efd9d431345fa84c17a9b222857c3fa10ce2a29"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/delivery/parser-profile-syntax-bce3f075-corrected.stderr",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  }
+]

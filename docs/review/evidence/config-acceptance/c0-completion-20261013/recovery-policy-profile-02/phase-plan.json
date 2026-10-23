@@ -1,0 +1,504 @@
+{
+  "status": "fixed source-specific future phase API/remaining budget protocol, no actual supervisor execution",
+  "phases": [
+    {
+      "phase": "CONFIG_ADMISSION",
+      "source": "scripts/postgresql-recovery.sh",
+      "coveredOriginalCandidates": [
+        {
+          "candidateId": "SRC-b1bffe9417fac280",
+          "originalBodySha256": "2f8f41d74aba4926d9914eab206a1f6def473209d6f43dd543f7da5f0253e1a5",
+          "line": 12
+        },
+        {
+          "candidateId": "SRC-07e60170641cef92",
+          "originalBodySha256": "b61c4be15fe3747580a93158d3d0939ecf3fcc4e9ed23049caade8b314678714",
+          "line": 16
+        },
+        {
+          "candidateId": "SRC-ac0cb519fc2a19e1",
+          "originalBodySha256": "da9d89aac77fbe7a634dc1bd306b62cbda66b2ad983b2374c9076846bc1e0e7d",
+          "line": 20
+        },
+        {
+          "candidateId": "SRC-1526476da09be460",
+          "originalBodySha256": "a40811f031b59895473fc118af73ed82996908f19420afe5a34d779eec464d21",
+          "line": 21
+        },
+        {
+          "candidateId": "SRC-b50fe9a568c67581",
+          "originalBodySha256": "3da8634290c62208cc4e5c15816a9210acae26578d20dd77bb6560a0ae08789d",
+          "line": 22
+        },
+        {
+          "candidateId": "SRC-e3332c8a75ad6cd7",
+          "originalBodySha256": "4ecfc85bbe5cc94a8339af908ec38e967a11748649aeab87f82e03855272d49a",
+          "line": 23
+        },
+        {
+          "candidateId": "SRC-735ca02ea38021c2",
+          "originalBodySha256": "77d8fc726e9d4dabd1d07e269750add19d6c3578357150d62c0045aa58df06d1",
+          "line": 24
+        },
+        {
+          "candidateId": "SRC-dcb04dba01d6251b",
+          "originalBodySha256": "aa81e715a964902426c7c0a5875422ce7df928b957f42d43eef2c5e71f8ea544",
+          "line": 25
+        },
+        {
+          "candidateId": "SRC-2f8e248500f09f2c",
+          "originalBodySha256": "bedcb11a51b54fe6fa49af8a3d3053ad5fb0fd04ee133674093239fe92e69859",
+          "line": 26
+        },
+        {
+          "candidateId": "SRC-88e68616d9679bfe",
+          "originalBodySha256": "79b1b992ef4e4dd163a9d864a4b72be8f3d0545db0f180bc2268b49c65a1268e",
+          "line": 27
+        },
+        {
+          "candidateId": "SRC-7f0cb736758934e3",
+          "originalBodySha256": "6ee51f29898bb9ed6e7a7f29d38c3e661995d61c77028bf54862e126d8340663",
+          "line": 28
+        },
+        {
+          "candidateId": "SRC-22c8ce8a9860718e",
+          "originalBodySha256": "4e95fa871d5d74425384575a3cc1360db09bb4e5b4299888036367e29ea8e769",
+          "line": 29
+        }
+      ],
+      "blockingCommands": [
+        "original-runtime/task/source capture",
+        "command-v",
+        "id/stat",
+        "mkdir"
+      ],
+      "remainingAuthority": "same original FD10 grant/anchor/expiry+FD11 runtime; before each command and entire bounded phase process group",
+      "expiryOutcome": "mutation only after admission",
+      "nativeResult": "not-run"
+    },
+    {
+      "phase": "SOURCE_IDENTITY",
+      "source": "scripts/postgresql-recovery.sh",
+      "coveredOriginalCandidates": [
+        {
+          "candidateId": "SRC-4d8c554cedefe7e3",
+          "originalBodySha256": "1bd660a06c105db895bc11cf8327618e9e02dde70824727e1c22038c6fde2909",
+          "line": 42
+        },
+        {
+          "candidateId": "SRC-2cc6ae187b1c4620",
+          "originalBodySha256": "9d3164770f4a63a91bacdcb74664fa00a01169444b55d93206b99757328ae5c6",
+          "line": 45
+        },
+        {
+          "candidateId": "SRC-e143e45ac9f8cf1a",
+          "originalBodySha256": "16cd4da5ed6766cc99b5ebe8ce8ceb63515b814c62a3bf68f2e32b9bdae1ae08",
+          "line": 52
+        },
+        {
+          "candidateId": "SRC-1bd94f9eb8109fb8",
+          "originalBodySha256": "d20f0e06d3fefba43a623643def0d849dfa62bc9e15d9620f1d0e1a7037fd1bb",
+          "line": 53
+        }
+      ],
+      "blockingCommands": [
+        "psql.show-version",
+        "psql.system-identity",
+        "pg_dump.version",
+        "pg_restore.version"
+      ],
+      "remainingAuthority": "same original FD10 grant/anchor/expiry+FD11 runtime; before each command and entire bounded phase process group",
+      "expiryOutcome": "read-only bound",
+      "nativeResult": "not-run"
+    },
+    {
+      "phase": "INITIAL_VERIFY",
+      "source": "scripts/postgresql-recovery.sh",
+      "coveredOriginalCandidates": [
+        {
+          "candidateId": "SRC-bc353b442b591d54",
+          "originalBodySha256": "5943141b836e3aa7dbc953cae5cc542a65f661b026de61b37f5195c79a0a0963",
+          "line": 103
+        },
+        {
+          "candidateId": "SRC-69c73b6869554ffb",
+          "originalBodySha256": "f51d8a0ee7b0e7a8e520a4e0886172d82cd153cfaaec87fb798a6b3a8639cd54",
+          "line": 104
+        },
+        {
+          "candidateId": "SRC-a409eeca2cea8dc8",
+          "originalBodySha256": "f75f41233337076d0241f92af73b743e56a42d1cc00b7d398978431115cb1074",
+          "line": 105
+        },
+        {
+          "candidateId": "SRC-3b41f4a9c95fa77f",
+          "originalBodySha256": "8f1cc67b68fca4567ce9842c4f243c5cd335c07210f71f27170f842f9204ba36",
+          "line": 106
+        },
+        {
+          "candidateId": "SRC-0cdaaeed65ae178c",
+          "originalBodySha256": "bbf0bc705991ffd6708663e7c6b9f31125d11906ed03382b740bd4e202f18413",
+          "line": 108
+        },
+        {
+          "candidateId": "SRC-6531b764a135ea0e",
+          "originalBodySha256": "7f45e9b289d4318742b65bc5d384570316cc0bf3e891f9601ef02aac1e303e6f",
+          "line": 109
+        },
+        {
+          "candidateId": "SRC-9c1504be3ba77b9b",
+          "originalBodySha256": "aa8efaca7c1b93ed10ca2172116467ac324a4a306623ba65c773a0d8bc57cd9d",
+          "line": 110
+        },
+        {
+          "candidateId": "SRC-d3ed8066c34b7cb2",
+          "originalBodySha256": "d33766844116a6eb5f888bb52897e918836eeb2f7a982fbb2578cd485a43b477",
+          "line": 112
+        },
+        {
+          "candidateId": "SRC-ddd9a725360d052d",
+          "originalBodySha256": "6bf8dd97ede4334d9952d496a352912443885935c8ff97817739445948c8a409",
+          "line": 115
+        },
+        {
+          "candidateId": "SRC-8555ba38df7bf98d",
+          "originalBodySha256": "a2dde0266b0efb5feb2a3c2a4be504fa4d5f3306f0a9a125f416ac273e371d19",
+          "line": 117
+        },
+        {
+          "candidateId": "SRC-2312c1a2937988a8",
+          "originalBodySha256": "d57634243799a2d2e7121a6ff472b74e32098346ce5b10cf029192680ca8ef80",
+          "line": 118
+        },
+        {
+          "candidateId": "SRC-a4c0248736f03728",
+          "originalBodySha256": "45a08f7f2d5cbf74cb3b486cee91e7ad28d90d5795ccf7cd5126065ec5316ad3",
+          "line": 119
+        },
+        {
+          "candidateId": "SRC-2e6cada8b5f2f927",
+          "originalBodySha256": "3b4586572e2dcfee305aba9054915002febfa0f9b57ed7fa69b0273469e65b49",
+          "line": 120
+        },
+        {
+          "candidateId": "SRC-c1379a7688011f88",
+          "originalBodySha256": "5d00d595bcaa7d1c3346eacd4307fb647cb02651dfd0fbb3e79ea6006cc3854b",
+          "line": 121
+        },
+        {
+          "candidateId": "SRC-eb5e9cf6e8c8dcb9",
+          "originalBodySha256": "039ecbede67b2db991304d1588326fa8e03c85dba7417bcef4fab91b801867ef",
+          "line": 122
+        },
+        {
+          "candidateId": "SRC-091a4feb13622f84",
+          "originalBodySha256": "b7f6186c123df06e6ec2b189d12928939386f605610aed8d1dfc22c8f189df67",
+          "line": 126
+        },
+        {
+          "candidateId": "SRC-cf05a9938c341d97",
+          "originalBodySha256": "4d7bc398fb758284fcfb9526116595ef6ef9a49eeb61c620af171006e5c6d022",
+          "line": 127
+        },
+        {
+          "candidateId": "SRC-518b8a2a0da00886",
+          "originalBodySha256": "8159a50c00fbd67911e7a2c96f24d7c6647788b0e4198ec154698bec4cbf7413",
+          "line": 133
+        },
+        {
+          "candidateId": "SRC-2fe46bba23f39cba",
+          "originalBodySha256": "ad74c03cc76a8dea414d20543481eeaa7f7834cf22bb08e5fba356583918c6dc",
+          "line": 134
+        },
+        {
+          "candidateId": "SRC-b1851f81d2d012d4",
+          "originalBodySha256": "95c88c41c5572641ddfec1362c850a54cca9ed6be430b2828e34da660e3506c2",
+          "line": 137
+        },
+        {
+          "candidateId": "SRC-08e68e7a6af91ab7",
+          "originalBodySha256": "a1e18318833cc5a6b82fda65c5bf771f83d1291824d2019c7afd3b7531236c66",
+          "line": 144
+        },
+        {
+          "candidateId": "SRC-74e008a2790c0d8e",
+          "originalBodySha256": "ecac0ea63272a5e11770b5ad4f8bec436d92571081a26c40802876fb320d8cce",
+          "line": 170
+        },
+        {
+          "candidateId": "SRC-7dcc343a4f45f583",
+          "originalBodySha256": "40cc227e89d4c48f08aac15c924a061ddeeefa24f01a92c4e8ca25fe55b8f258",
+          "line": 184
+        }
+      ],
+      "blockingCommands": [
+        "stat",
+        "wc",
+        "grep",
+        "sha256sum.check",
+        "awk.metadata",
+        "pg_restore.list"
+      ],
+      "remainingAuthority": "same original FD10 grant/anchor/expiry+FD11 runtime; before each command and entire bounded phase process group",
+      "expiryOutcome": "invalid\u2192backup only if remaining original grant live",
+      "nativeResult": "not-run"
+    },
+    {
+      "phase": "ACCOUNTING",
+      "source": "scripts/postgresql-recovery.sh",
+      "coveredOriginalCandidates": [
+        {
+          "candidateId": "SRC-dc2aa0ceab92d18c",
+          "originalBodySha256": "f348006554c68293f307fd6a287f8bc2856ef377cbaa8a4ca764b6ab4ebacfe9",
+          "line": 59
+        },
+        {
+          "candidateId": "SRC-865461bfc9850dcb",
+          "originalBodySha256": "2b94ef1456c9beddd56bee90e8620a1c122355b0e0dcc62739736e0c8f3b2bad",
+          "line": 60
+        },
+        {
+          "candidateId": "SRC-bae98e10a68c4921",
+          "originalBodySha256": "656efdb043413b88cf8a3c825a37a1d756e5730c4a961eb8f887d4fa6315089b",
+          "line": 62
+        },
+        {
+          "candidateId": "SRC-3becce028d299daa",
+          "originalBodySha256": "036600d203c0ca1fa6287c384459b1602db21db26502d9df1fe8258171b928d9",
+          "line": 63
+        },
+        {
+          "candidateId": "SRC-c7dac0ae577ca91f",
+          "originalBodySha256": "30c6bb9f695a1da50eab94c9d05ff9d44bf0cf82df8e67136a773b1525d75768",
+          "line": 64
+        }
+      ],
+      "blockingCommands": [
+        "du.bytes",
+        "cut",
+        "canonical/nonoverflow/retained compare"
+      ],
+      "remainingAuthority": "same original FD10 grant/anchor/expiry+FD11 runtime; before each command and entire bounded phase process group",
+      "expiryOutcome": "reject before arithmetic and staging",
+      "nativeResult": "not-run"
+    },
+    {
+      "phase": "DUMP",
+      "source": "scripts/postgresql-recovery.sh",
+      "coveredOriginalCandidates": [
+        {
+          "candidateId": "SRC-22e707e25624bbbb",
+          "originalBodySha256": "ea68ddfbb438fe0b7a1d7167e4b660d3c208ab720ea04b446c0381ed8ad6b939",
+          "line": 65
+        },
+        {
+          "candidateId": "SRC-c58e691b6958fd24",
+          "originalBodySha256": "60444f9548d911993b98a357e1936e5dca1c104024effda45c66754468bd4f08",
+          "line": 71
+        },
+        {
+          "candidateId": "SRC-c208a01d6410a6d1",
+          "originalBodySha256": "18675fb2d3ebadd3f0de77efb904d4760df45f71c3a5d883d1c13fb14fa11e75",
+          "line": 73
+        }
+      ],
+      "blockingCommands": [
+        "mktemp",
+        "date",
+        "ulimit",
+        "pg_dump"
+      ],
+      "remainingAuthority": "same original FD10 grant/anchor/expiry+FD11 runtime; before each command and entire bounded phase process group",
+      "expiryOutcome": "expired\u2192charged incomplete",
+      "nativeResult": "not-run"
+    },
+    {
+      "phase": "TOC_AND_SEAL",
+      "source": "scripts/postgresql-recovery.sh",
+      "coveredOriginalCandidates": [
+        {
+          "candidateId": "SRC-591a043efba571f6",
+          "originalBodySha256": "dd0d67b8c067596b8d27c8a3ac37d2d198c21dc3753196bc97f180ee4fbbbef5",
+          "line": 75
+        },
+        {
+          "candidateId": "SRC-6fb43eec3cb1376e",
+          "originalBodySha256": "76658c75b56aff12fa817a4e4df10ed74ac0df96026b893ca1a7eacf354b57da",
+          "line": 78
+        },
+        {
+          "candidateId": "SRC-573a7e376fa91689",
+          "originalBodySha256": "38765944e9c4d2000396cf51dd1ed0a625f2b2c4a667c7d05d781a183bbf3999",
+          "line": 80
+        },
+        {
+          "candidateId": "SRC-06237b68508a983e",
+          "originalBodySha256": "0d2a76cd5c72085066eab3fa313e3e3db2689e06c081d6afef4e15200cf08cc1",
+          "line": 82
+        },
+        {
+          "candidateId": "SRC-479a13f29af54508",
+          "originalBodySha256": "7cdf83db7c8a562d0d13c9ff3a4e25413f600a783e0fd33791c937da08d70b57",
+          "line": 83
+        },
+        {
+          "candidateId": "SRC-fa55b1e389e16f99",
+          "originalBodySha256": "01adc64674086fba490b384603f8f69ada231b0e2b436138855b5ec7db6bf835",
+          "line": 87
+        }
+      ],
+      "blockingCommands": [
+        "pg_restore.list",
+        "psql.system-identity",
+        "metadata.printf",
+        "sha256sum",
+        "sync.dump"
+      ],
+      "remainingAuthority": "same original FD10 grant/anchor/expiry+FD11 runtime; before each command and entire bounded phase process group",
+      "expiryOutcome": "caps and remaining grant before publication",
+      "nativeResult": "not-run"
+    },
+    {
+      "phase": "PUBLICATION",
+      "source": "scripts/postgresql-recovery.sh",
+      "coveredOriginalCandidates": [
+        {
+          "candidateId": "SRC-4e0f972de1f455c5",
+          "originalBodySha256": "f032b6f0cedee12192ac353e25da15e45221566d9639aee530564c8760ccde23",
+          "line": 89
+        },
+        {
+          "candidateId": "SRC-baff595666850340",
+          "originalBodySha256": "213b2c00efa9fe4323e7a1ab089805f56a3b8d07231675749cf4437ffa905c2d",
+          "line": 90
+        },
+        {
+          "candidateId": "SRC-f941d1df0b289d1c",
+          "originalBodySha256": "01a3d1893fd164803a44ccee0306edee3fc8834f5c1d090ededc12673fb08b5f",
+          "line": 92
+        },
+        {
+          "candidateId": "SRC-f81bf24a5b954742",
+          "originalBodySha256": "8273f9f7c26b92e8bc098b93137029d602842b1219a15cd77b296ee7e87fbec8",
+          "line": 93
+        }
+      ],
+      "blockingCommands": [
+        "mv.no-clobber",
+        "sync.root"
+      ],
+      "remainingAuthority": "same original FD10 grant/anchor/expiry+FD11 runtime; before each command and entire bounded phase process group",
+      "expiryOutcome": "guard before dispatch; late completion uncertain/noack",
+      "nativeResult": "not-run"
+    },
+    {
+      "phase": "POST_VERIFY",
+      "source": "scripts/postgresql-recovery.sh",
+      "coveredOriginalCandidates": [
+        {
+          "candidateId": "SRC-ec863eb798302cfb",
+          "originalBodySha256": "cba51b086f62c439a8d20d8ecf476220021e548c27b411e851658b38f7668d45",
+          "line": 175
+        }
+      ],
+      "blockingCommands": [
+        "full same verify chain"
+      ],
+      "remainingAuthority": "same original FD10 grant/anchor/expiry+FD11 runtime; before each command and entire bounded phase process group",
+      "expiryOutcome": "original budget notreset",
+      "nativeResult": "not-run"
+    },
+    {
+      "phase": "TARGET_ADMISSION_RESTORE",
+      "source": "scripts/postgresql-recovery.sh",
+      "coveredOriginalCandidates": [
+        {
+          "candidateId": "SRC-4e9360fb95f76fb4",
+          "originalBodySha256": "5c4b01d1e8033cbab933bd8ce716aa91040fb02427b3069b4072019f0951c6d9",
+          "line": 145
+        },
+        {
+          "candidateId": "SRC-f8c9c3db0d8dd8dd",
+          "originalBodySha256": "97c4740798786f1c9a88f0856c9fb92435ac5b3f55644b3c3e3eefcee761e5bf",
+          "line": 146
+        },
+        {
+          "candidateId": "SRC-af92651c4e651180",
+          "originalBodySha256": "8ae32a72bbf4cf7140b4d69016f42ebca9fe182c0eeae2d2740dae56ad53497c",
+          "line": 149
+        },
+        {
+          "candidateId": "SRC-86e89035cd4d6766",
+          "originalBodySha256": "a05fdf1e2b8b295e88f4f5bb7b857de63b3731c4f9ff902ec60a107b223fec50",
+          "line": 151
+        },
+        {
+          "candidateId": "SRC-a5370b639ba30b4d",
+          "originalBodySha256": "c5893d0e6e3dfbafef8a304ff5a70475eaeb5b18dba7370da2e105e7fd7e6857",
+          "line": 154
+        },
+        {
+          "candidateId": "SRC-123927521eb863e2",
+          "originalBodySha256": "36a169dafd3703bedc6da8107f7e599461e378c37ca10357ee36ca2aa1fa6339",
+          "line": 155
+        },
+        {
+          "candidateId": "SRC-f4abb1c717871125",
+          "originalBodySha256": "f1e03992b49704e54bcf8968f6154b313c4c516c91b6e7539b9879741559dee1",
+          "line": 162
+        }
+      ],
+      "blockingCommands": [
+        "psql.target-identity",
+        "psql.empty-target",
+        "pg_restore.single-transaction"
+      ],
+      "remainingAuthority": "same original FD10 grant/anchor/expiry+FD11 runtime; before each command and entire bounded phase process group",
+      "expiryOutcome": "beforeexpiry dispatch only; late/unknowncommit uncertain",
+      "nativeResult": "not-run"
+    },
+    {
+      "phase": "FINAL_RESPONSE",
+      "source": "scripts/postgresql-recovery.sh",
+      "coveredOriginalCandidates": [
+        {
+          "candidateId": "SRC-534f90586b701d11",
+          "originalBodySha256": "4cf3b0522a585bded0c82fa746f76050a7ec014f274a088ab63fe6c0fe4a9ccc",
+          "line": 183
+        },
+        {
+          "candidateId": "SRC-7dcc343a4f45f583",
+          "originalBodySha256": "40cc227e89d4c48f08aac15c924a061ddeeefa24f01a92c4e8ca25fe55b8f258",
+          "line": 184
+        },
+        {
+          "candidateId": "SRC-e37b407a298a90f1",
+          "originalBodySha256": "f654877111a68fcdd6f5a3d25585f981a9d0901eb65dd2fc12e9e22a4bfcdcd1",
+          "line": 191
+        },
+        {
+          "candidateId": "SRC-fd778743a7bc40ac",
+          "originalBodySha256": "c7ecc9d8bf069af12df308bc9d6d83058e0c57293f8562e577a9e653e1ff4ed6",
+          "line": 192
+        },
+        {
+          "candidateId": "SRC-f27b77f6a2f38b7e",
+          "originalBodySha256": "599b0bc95b7c6e18a3c38b85dafca118daf896bc4354b29258a364e016d3250b",
+          "line": 193
+        },
+        {
+          "candidateId": "SRC-12384df0dcc2708c",
+          "originalBodySha256": "92fac7edef8dbb046ec1497383139cea3ec3a556d445ee08339fd9c172d4ed8c",
+          "line": 194
+        }
+      ],
+      "blockingCommands": [
+        "final original-grant/source/clock guard",
+        "result acknowledgement"
+      ],
+      "remainingAuthority": "same original FD10 grant/anchor/expiry+FD11 runtime; before each command and entire bounded phase process group",
+      "expiryOutcome": "noack afterexpiry",
+      "nativeResult": "not-run"
+    }
+  ]
+}

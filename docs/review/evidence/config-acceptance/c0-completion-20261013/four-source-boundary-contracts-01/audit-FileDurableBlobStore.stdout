@@ -1,0 +1,53 @@
+tests/verification/reliability/blob-budget.test.mts:7:import { FileDurableBlobStore } from '@kubeclaw/plugin-foundation/observability/durable-records';
+tests/verification/reliability/blob-budget.test.mts:12:    const store = new FileDurableBlobStore(root, 40, 60);
+tests/verification/reliability/blob-budget.test.mts:14:    const reloaded = new FileDurableBlobStore(root, 40, 60);
+tests/verification/reliability/blob-budget.test.mts:18:      const code = `import { FileDurableBlobStore } from ${JSON.stringify(moduleUrl)};
+tests/verification/reliability/blob-budget.test.mts:19:        try { await new FileDurableBlobStore(${JSON.stringify(root)}, 40, 60).put(Buffer.alloc(40, ${JSON.stringify(letter)})); }
+tests/verification/reliability/blob-budget.test.mts:31:    await assert.rejects(() => new FileDurableBlobStore(root, 40, 60).put(Buffer.from('extra')), /STORE_LIMIT_EXCEEDED/);
+tests/verification/reliability/blob-read-boundary.test.mjs:9:import { FileDurableBlobStore } from '../../../skills/common/plugin-runtime/foundation/observability/durable-records.ts';
+tests/verification/reliability/blob-read-boundary.test.mjs:15:  const store = new FileDurableBlobStore(root, maximum, Math.max(maximum * 4, 1024));
+tests/verification/reliability/nova-store-boundaries.test.mts:15:import { FileDurableBlobStore } from '../../../skills/common/plugin-runtime/foundation/observability/durable-records.ts';
+tests/verification/reliability/nova-store-boundaries.test.mts:97:    const blob = new FileDurableBlobStore(storeRoot, 100_000);
+tests/verification/reliability/prism-reader-fixture.mjs:15:import { FileDurableBlobStore } from '../../../skills/common/plugin-runtime/foundation/observability/durable-records.ts';
+tests/verification/reliability/prism-reader-fixture.mjs:69:    const stored=await new FileDurableBlobStore(path.join(directory,'artifacts'),16*1024*1024,256*1024*1024).get(ref.digest);
+tests/verification/reliability/blob-read-independent.test.mjs:9:import { FileDurableBlobStore } from '../../../skills/common/plugin-runtime/foundation/observability/durable-records.ts';
+tests/verification/reliability/blob-read-independent.test.mjs:18:    const store = new FileDurableBlobStore(root, 16);
+tests/verification/e2e/real-run-evidence.mjs:1:import { FileDurableRecordStore, FileDurableBlobStore } from '@kubeclaw/plugin-foundation/observability/durable-records';
+tests/verification/e2e/real-run-evidence.mjs:140:  const blobs = new FileDurableBlobStore(root, 16 * 1024 * 1024);
+tests/verification/historical-branch-acceptance/run11-semantic-producer-child.mjs:8:import {FileDurableBlobStore, FileDurableRecordStore} from '@kubeclaw/plugin-foundation/observability/durable-records';
+tests/verification/historical-branch-acceptance/run11-semantic-producer-child.mjs:85:  const blobs = new FileDurableBlobStore(artifactRoot, 16 * 1024 * 1024);
+tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs:12:const { FileDurableBlobStore, FileDurableRecordStore } = await import(moduleUrl);
+tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs:52:  const blobs = new FileDurableBlobStore(root, 1024);
+tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs:54:    new FileDurableBlobStore(root, 1024).put(Buffer.from('durable evidence'))));
+tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs:57:  assert.equal((await new FileDurableBlobStore(root, 1024).get(stored.digest)).toString(), 'durable evidence');
+tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs:60:  await assert.rejects(new FileDurableBlobStore(root, 1024).get(stored.digest), /DURABLE_BLOB_INTEGRITY_FAILED/);
+tests/verification/contracts/check-pipeline-manifest-lint-vertical.mts:6:import { FileDurableBlobStore, FileDurableRecordStore } from '@kubeclaw/plugin-foundation/observability/durable-records';
+tests/verification/contracts/check-pipeline-manifest-lint-vertical.mts:166:  const blobs = new FileDurableBlobStore(artifacts, 16 * 1024 * 1024);
+skills/nova/core/test-gates/remote-dispatch-store.ts:4:import { FileDurableBlobStore, FileDurableRecordStore, type DurableRecordLimits } from '@kubeclaw/plugin-foundation/observability/durable-records';
+skills/nova/core/test-gates/remote-dispatch-store.ts:13:  readonly #blobs: FileDurableBlobStore;
+skills/nova/core/test-gates/remote-dispatch-store.ts:25:    this.#blobs = new FileDurableBlobStore(root, options.maximumArchiveBytes, options.maximumArchiveStoreBytes);
+skills/nova/core/test-gates/remote-result-import.ts:20:  FileDurableBlobStore,
+skills/nova/core/test-gates/remote-result-import.ts:98:  readonly #blobs: FileDurableBlobStore;
+skills/nova/core/test-gates/remote-result-import.ts:103:    this.#blobs = new FileDurableBlobStore(root, options.maximumEvidenceStoreBytes, options.maximumEvidenceStoreBytes);
+skills/nova/plugins/review/tests/repository-review-io.test.ts:5:import { FileDurableBlobStore, FileDurableRecordStore } from '@kubeclaw/plugin-foundation/observability/durable-records';
+skills/nova/plugins/review/tests/repository-review-io.test.ts:69:  const blobs = new FileDurableBlobStore(artifacts, 16 * 1024 * 1024, 256 * 1024 * 1024);
+skills/nova/plugins/review/tests/live-function.test.ts:12:  FileDurableBlobStore,
+skills/nova/plugins/review/tests/live-function.test.ts:184:const artifactBlobs = new FileDurableBlobStore(artifactRoot, 16 * 1024 * 1024);
+skills/worker/core/worker/native-attempt-journal.ts:3:import { FileDurableRecordStore, FileDurableBlobStore, type DurableRecord } from '@kubeclaw/plugin-foundation/observability/durable-records';
+skills/worker/core/worker/native-attempt-journal.ts:25:  readonly #blobs: FileDurableBlobStore;
+skills/worker/core/worker/native-attempt-journal.ts:35:    this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), Math.max(limits.maximumInputBytes, limits.maximumResultBytes), limits.maximumTotalBytes);
+skills/buster/engine/test-gates/prepared-plan-store.ts:9:import { FileDurableBlobStore, FileDurableRecordStore, type DurableRecord, type DurableRecordLimits }
+skills/buster/engine/test-gates/prepared-plan-store.ts:57:  readonly #results: FileDurableBlobStore;
+skills/buster/engine/test-gates/prepared-plan-store.ts:72:    this.#results = new FileDurableBlobStore(path.join(writableRoot, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);
+skills/buster/engine/test-gates/native-fixture-journal.ts:3:import { FileDurableBlobStore, FileDurableRecordStore, type DurableRecord } from '@kubeclaw/plugin-foundation/observability/durable-records';
+skills/buster/engine/test-gates/native-fixture-journal.ts:24:  readonly #blobs: FileDurableBlobStore;
+skills/buster/engine/test-gates/native-fixture-journal.ts:34:    this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), limits.maximumBlobBytes, limits.maximumTotalBytes);
+skills/common/plugins/wait-store/tests/package-boundary.test.mjs:11:assert.match(records, /export \{ FileDurableBlobStore, type DurableBlobStore \} from '\.\/durable-blobs\.ts'/);
+skills/common/plugins/artifact-store/src/adapter.ts:11:  FileDurableBlobStore,
+skills/common/plugins/artifact-store/src/adapter.ts:173:  const blobs = new FileDurableBlobStore(configured, Number(maximum), Number(maximumStoreBytes));
+skills/buster/engine/test-gates/historical-plan-store.ts:9:import { FileDurableBlobStore, FileDurableRecordStore, type DurableRecord, type DurableRecordLimits }
+skills/buster/engine/test-gates/historical-plan-store.ts:29:  readonly #results: FileDurableBlobStore;
+skills/buster/engine/test-gates/historical-plan-store.ts:47:    this.#results = new FileDurableBlobStore(path.join(root, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);
+skills/common/plugin-runtime/foundation/observability/durable-blobs.ts:26:export class FileDurableBlobStore implements DurableBlobStore {
+skills/common/plugin-runtime/foundation/observability/durable-records.ts:1:export { FileDurableBlobStore, type DurableBlobStore } from './durable-blobs.ts';
+skills/common/plugin-runtime/foundation/observability/durable-blob-read.ts:51:/** The original FileDurableBlobStore.get reader, factored only for readability. */

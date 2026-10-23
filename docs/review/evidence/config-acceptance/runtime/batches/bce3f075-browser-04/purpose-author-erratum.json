@@ -1,0 +1,10 @@
+{
+  "status": "proposed/unapproved correction; old draft preserved not accepted",
+  "currentSource": "skills/buster/plugins/lighthouse/src/provider.js",
+  "owningTaskSchema": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+  "registration": "skills/buster/plugins/lighthouse/plugin.json",
+  "finding": "single kubeclaw.lighthouse@1 contract purpose chooses workflow audit scope; not global business policy author",
+  "target": "task purpose validated enum selects complete existing plugin-owner byPurpose branch; all budgets/profile maps remain single author; purpose forbidden in CONFIG",
+  "history": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/history-purpose-author-draft",
+  "requirements": "original F-AUTH/F-VAL/F-EFFECT/A6 retained; future real task/owner/renderer cases notrun"
+}

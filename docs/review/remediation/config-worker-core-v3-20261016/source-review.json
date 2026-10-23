@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "No actionable defects were identified in the supplied change bundle. Source inspection covered selected-policy propagation, original journal and ownership captures, legacy decoding, routing admission locking, retention constraints, and publication history. Independent filesystem inspection was blocked by the shell sandbox; no tests or native integration checks were run.",
+  "overall_confidence": 0.74
+}

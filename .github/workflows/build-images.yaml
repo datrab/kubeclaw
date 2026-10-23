@@ -96,7 +96,7 @@ jobs:
           IMAGE_NAME: ${{ matrix.name }}
         run: |
           mkdir -p dist/image-receipts
-          node -e 'require("fs").writeFileSync(`dist/image-receipts/${process.env.IMAGE_NAME}.json`, JSON.stringify({name:process.env.IMAGE_NAME,image:process.env.IMAGE,commit:process.env.GITHUB_SHA})+"\n")'
+          node scripts/updates/write-image-receipt.mjs
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: image-receipt-${{ matrix.name }}

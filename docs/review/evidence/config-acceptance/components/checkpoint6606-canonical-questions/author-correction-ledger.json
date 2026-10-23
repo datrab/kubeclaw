@@ -1,0 +1,13 @@
+{
+  "finding": "author mapping initial B tar witness1024 disagreed with unchanged complete B profile2048",
+  "before": "author-attempt1-history/canonical-question-fragment.json",
+  "correction": "B tar witness2048 exactly reuses verified complete profile; no retuning or original input change",
+  "controls": "subsequent mapping integrity checks require every own adjustable witness to match actual complete owner profile pointer",
+  "status": "author correction only; independent semantic review pending",
+  "secondFinding": {
+    "before": "author-attempt2-history/secret-entry-complete-profiles.json",
+    "contradiction": "Profiles inherited empty allowlist but new binding witness requested allowed17; cap-only positive was not whole paired policy positive",
+    "correction": "Explicit same existing allowedSecretReferences selected c0-secret-ref identically A/B; input raw17 repeats that authorized name; all other original fields unchanged except new cap",
+    "status": "source-derived synthetic author proposal; no physicalsecret/gateway/API claim"
+  }
+}

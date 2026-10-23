@@ -1,0 +1,8 @@
+{
+  "result": "failed-local-definition-script-before-final-grouped-observation",
+  "exitCode": 1,
+  "nodeVersion": "v24.21.0",
+  "diagnostic": "Error: schema with key or id \"https://kubeclaw.invalid/proposed/pipeline-component.v2/prism-control\" already exists",
+  "cause": "Evidence script compiled same schema repeatedly into one Ajv instance; fix cache already compiled six validators, no schema/value/domain weakening",
+  "providerInvocationAndConfigChecks": "Completed before duplicate schema compilation; not accepted as final task observation until rerun"
+}

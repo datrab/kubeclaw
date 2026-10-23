@@ -1,0 +1,28 @@
+{
+  "verdict": "not-accepted-bounded-source-caller-attribution",
+  "findings": [
+    {
+      "id": "OPS27-001",
+      "blocking": true,
+      "scope": "batch-35 current source-definition/caller attribution only",
+      "path": "tools/ops-mcp/src/server.mjs",
+      "lines": [
+        107,
+        117,
+        119,
+        130,
+        301,
+        302,
+        303,
+        304,
+        313,
+        321,
+        396,
+        397
+      ],
+      "reason": "Kubernetes refs omit six unbounded namespace_overview calls and outer unbounded recentEvents pagination/callers; per-call maxPages1 resets deadline and does not bound whole scan."
+    }
+  ],
+  "globalC0Accepted": false,
+  "runtimeResult": "not-run"
+}

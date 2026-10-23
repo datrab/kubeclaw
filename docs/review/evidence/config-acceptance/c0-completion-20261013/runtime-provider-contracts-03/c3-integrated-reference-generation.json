@@ -1,0 +1,25 @@
+{
+  "status": "Explicit03 same-entry v5 receiving reference generation; BC3-R02-01 closed only at bounded source/reference seam, NOT whole C3/C0/native approval",
+  "basePolicyAndRoot": "C3v4 six owner/root/settings unchanged02\u219403; provider03 retains whole explicit provider-network-A clone",
+  "oldBase02RuntimeSchemaSha256": "04c9792b471810c1accaf9f3ec1684dd691fc428a784af2989fe0c35de557f6b",
+  "activeRuntimeSchema": {
+    "path": "schemas/c3-generated-runtime.schema.json",
+    "sha256": "af8e9bded1aef68ebe88e0ded835b202e0a4591099eda89fa4ea99a31b1b1740",
+    "source": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-03/schemas/generated-runtime.schema.json"
+  },
+  "activeReferenceContract": {
+    "path": "c3-registry-peer-reference-contract.json",
+    "sha256": "d1ba44788070a8300c6081fb448184d8cba8d3a38a6d20ff11583cb64bfd38c2",
+    "source": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-03/registry-peer-reference-contract.json"
+  },
+  "supersession": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-03/frozen-supersession.json",
+    "sha256": "6333028861c7bfa51963d7edce2c4b4ba52f74e38397a2f1fe2ce84d4304fb44"
+  },
+  "independentBoundedReview": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c3-buster-complete-profile-review-03/README.md",
+    "sha256": "78ac60f8a3e395360493cc42915570841e4623a0459a8dbb473fce7dac0b4d62",
+    "finding": "BC3-R02-01 CLOSED source/reference only"
+  },
+  "receivingDelta": "same captured producer optional worker registryCaFile and HTTPS paired name refs vs auth/trust-absent HTTP lab, repeated scanner/container references must equal original receipt. Node containerd CA separate; no invented Node fetch CA. Genuine applicable trust/role/grant/credential/provider/history receipts still gate activation."
+}

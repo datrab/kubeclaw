@@ -1,0 +1,223 @@
+✔ explicit entry required; old inline authorship is rejected (10.431398ms)
+✔ prism-control: missing file, wrong owner, unknown envelope and reference rejected (27.138237ms)
+✔ prism-studio: missing file, wrong owner, unknown envelope and reference rejected (9.843183ms)
+✔ prism-worker: missing file, wrong owner, unknown envelope and reference rejected (10.383627ms)
+✔ prism-execution: missing file, wrong owner, unknown envelope and reference rejected (18.968798ms)
+✔ buster-engine: missing file, wrong owner, unknown envelope and reference rejected (21.369429ms)
+✔ worker-core: missing file, wrong owner, unknown envelope and reference rejected (19.776688ms)
+✔ every authored setting is required, including explicit nullable values (670.639816ms)
+ℹ Required-leaf deletion obligations checked: 461
+✔ both domains validate before selecting either and nested snapshots stay frozen (13.895487ms)
+✔ physical generation never borrows sibling files; entry and component aliases reject (5.097481ms)
+✖ Studio selects only its authored tuple while all six owners are captured (20.659591ms)
+✖ whole selected profiles change actual loaded values; no first-profile fallback (2.649718ms)
+✖ duplicate root tuple rejects even when profile is identical (1.822617ms)
+✔ unrelated selected owner and wrong service identity reject (1.521819ms)
+✖ unselected invalid profile rejects before returning Studio (2.042122ms)
+✔ retired filename, legacy schema, escaping references and tree symlinks reject (2.262128ms)
+✔ caller-role mismatch and competing selection fields reject (1.358684ms)
+✖ components directory replacement during capture rejects (2.521354ms)
+✖ intrinsic relations on an unselected owner reject before Studio projection (1.752785ms)
+✖ generation receipt binds all raw files, profile values and reader assets (1.419797ms)
+✖ closed service receipt detects alteration and fixes caller/package/generation association (1.777415ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 13
+ℹ fail 8
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1340.757649
+
+✖ failing tests:
+
+test at tests/verification/reliability/pipeline-selection.test.mts:36:1
+✖ Studio selects only its authored tuple while all six owners are captured (20.659591ms)
+  Error: SWARM_CONFIG_INVALID:component:prism-control
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:384:15)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/pipeline-selection.test.mts:37:34)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at tests/verification/reliability/pipeline-selection.test.mts:47:1
+✖ whole selected profiles change actual loaded values; no first-profile fallback (2.649718ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /SELECTION_PROFILE_MISMATCH/. Input:
+  
+  'Error: SWARM_CONFIG_INVALID:component:prism-control'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/pipeline-selection.test.mts:54:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: SWARM_CONFIG_INVALID:component:prism-control
+        at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:384:15)
+        at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/pipeline-selection.test.mts:54:23
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/pipeline-selection.test.mts:54:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19)
+        at Test.run (node:internal/test_runner/test:1467:12),
+    expected: /SELECTION_PROFILE_MISMATCH/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/pipeline-selection.test.mts:61:1
+✖ duplicate root tuple rejects even when profile is identical (1.822617ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /DUPLICATE_BINDING/. Input:
+  
+  'Error: SWARM_CONFIG_INVALID:component:prism-control'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/pipeline-selection.test.mts:64:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: SWARM_CONFIG_INVALID:component:prism-control
+        at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:384:15)
+        at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/pipeline-selection.test.mts:64:23
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/pipeline-selection.test.mts:64:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19)
+        at Test.run (node:internal/test_runner/test:1467:12),
+    expected: /DUPLICATE_BINDING/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/pipeline-selection.test.mts:77:1
+✖ unselected invalid profile rejects before returning Studio (2.042122ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /SWARM_CONFIG_INVALID:component:buster-engine/. Input:
+  
+  'Error: SWARM_CONFIG_INVALID:component:prism-control'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/pipeline-selection.test.mts:83:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: SWARM_CONFIG_INVALID:component:prism-control
+        at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:384:15)
+        at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/pipeline-selection.test.mts:83:23
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/pipeline-selection.test.mts:83:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19)
+        at Test.run (node:internal/test_runner/test:1467:12),
+    expected: /SWARM_CONFIG_INVALID:component:buster-engine/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/pipeline-selection.test.mts:115:1
+✖ components directory replacement during capture rejects (2.521354ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /SWARM_CONFIG_CHANGED/. Input:
+  
+  'Error: SWARM_CONFIG_INVALID:component:prism-control'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/pipeline-selection.test.mts:129:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: SWARM_CONFIG_INVALID:component:prism-control
+        at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:384:15)
+        at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/pipeline-selection.test.mts:129:29
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/pipeline-selection.test.mts:129:16)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19)
+        at Test.run (node:internal/test_runner/test:1467:12),
+    expected: /SWARM_CONFIG_CHANGED/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/pipeline-selection.test.mts:134:1
+✖ intrinsic relations on an unselected owner reject before Studio projection (1.752785ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /CONNECTION_BUDGET_INVALID/. Input:
+  
+  'Error: SWARM_CONFIG_INVALID:component:prism-control'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/pipeline-selection.test.mts:140:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: SWARM_CONFIG_INVALID:component:prism-control
+        at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:384:15)
+        at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+        at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/pipeline-selection.test.mts:140:23
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/pipeline-selection.test.mts:140:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19),
+    expected: /CONNECTION_BUDGET_INVALID/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/pipeline-selection.test.mts:143:1
+✖ generation receipt binds all raw files, profile values and reader assets (1.419797ms)
+  Error: SWARM_CONFIG_INVALID:component:prism-control
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:384:15)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/pipeline-selection.test.mts:144:35)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/reliability/pipeline-selection.test.mts:158:1
+✖ closed service receipt detects alteration and fixes caller/package/generation association (1.777415ms)
+  Error: SWARM_CONFIG_INVALID:component:prism-control
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:384:15)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/pipeline-selection.test.mts:159:35)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

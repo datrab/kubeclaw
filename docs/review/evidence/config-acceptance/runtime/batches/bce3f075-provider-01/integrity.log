@@ -1,0 +1,42 @@
+{
+  "status": "not-accepted; narrow C0 evidence, future cases notrun",
+  "rows": 1222,
+  "cases": 4058,
+  "results": {
+    "not-run": 2983,
+    "passed": 1075
+  },
+  "provider01Rows": 50,
+  "provider01Definitions": 50,
+  "provider01FutureCases": 200,
+  "allC0ClosedFalse": true,
+  "remainingConsumerReviewRows": 282,
+  "remainingSupplementalSourceTracedRows": 197,
+  "candidateOriginalCount": 4642,
+  "candidateExplicitReviewedRecords": 64,
+  "candidateUnreviewed": 4578,
+  "candidateExplicitOpenGuards": 10,
+  "separateCurrentProductiveNumericGuardObligations": [
+    {
+      "path": "skills/buster/plugins/openapi/src/provider.js",
+      "lines": [
+        37,
+        69,
+        194,
+        203
+      ],
+      "member": "localref/schema depth64, spec file4194304bytes (readFile BEFORE check), selectedoperations128 count; adjustableprocessingquotas need one providerowner and completeparameterizedreader/bindingcases",
+      "sourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+    },
+    {
+      "path": "skills/buster/plugins/openapi/src/schema-support.js",
+      "lines": [
+        47
+      ],
+      "member": "assertSupportedSchema recursiondepth64 duplicated withprovider limits; singleeffectiveowner/derivedprojection, not independent duplicateauthor",
+      "sourceSha256": "05e27ae54dfd00cb9f1344eb171699a6e4fa87801f5c5f8ff97be18910377e4b"
+    }
+  ],
+  "integrityErrors": [],
+  "remaining": "282 schema consumers,197 supplemental rows,4578 unreviewed candidates plus10 precise guard/platform obligations and absent-syntax guards; all independent review, actual full productive boundary/effect/recovery/mutation cases unapproved and notrun. No numeric schema/processing ceiling silently classified protocol. Existing codec/context/A6 errata retained."
+}

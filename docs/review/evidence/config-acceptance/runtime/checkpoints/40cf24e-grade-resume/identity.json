@@ -1,0 +1,10 @@
+{
+  "commit": "40cf24e77388bced59475ece9651c9c94d848368",
+  "tree": "efe3b346df6ce0396f1187271863cf91564fcc1f",
+  "inputs": {
+    "inventory-fragment.json": "c200148b09f13440af64ca6c5f922476637ff74d6813821ce9fd599da64da8bf",
+    "case-proposals.json": "6acbd49e23b3b367dcce4cae76241ebd634c81a728c64686349efc48f45c9628",
+    "runtime-closure-summary.json": "d10806a5c97c088e5a0621dc9da648435c5469b65956d685682f04cdef7b2c94",
+    "runtime-closure-identities.json": "e8342e963fd480c81578e5ea2fced305beb31777dab9acced2aa4549785c1d94"
+  }
+}

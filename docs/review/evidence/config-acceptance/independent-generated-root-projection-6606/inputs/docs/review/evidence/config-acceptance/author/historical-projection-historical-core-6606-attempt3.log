@@ -1,0 +1,14 @@
+PASS positive: 269 inactive histories, 356 active successors; original bodies/results intact
+PASS rejection: omitted historical mapping / HISTORICAL_MAPPING:projection historical set omission/addition
+PASS rejection: changed mapping body / HISTORICAL_MAPPING:projection reviewed mapping drift: RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING
+PASS rejection: predecessor reactivation / HISTORICAL_MAPPING:projection reactivates predecessor: RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING
+PASS rejection: missing reverse reference / HISTORICAL_MAPPING:projection missing/duplicate/changed reverse link: RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING
+PASS rejection: duplicate reverse reference / HISTORICAL_MAPPING:projection missing/duplicate/changed reverse link: RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING
+PASS rejection: reverse source identity tamper / HISTORICAL_MAPPING:projection missing/duplicate/changed reverse link: RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING
+PASS rejection: reverse acceptance promotion / HISTORICAL_MAPPING:projection missing/duplicate/changed reverse link: RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING
+PASS rejection: wrong successor binding / HISTORICAL_MAPPING:projection reverse reference identity/binding drift: RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING
+PASS rejection: count tamper unlinkedNativeCaseCount / HISTORICAL_MAPPING:projection advertised count drift: unlinkedNativeCaseCount
+PASS rejection: count tamper historicallyMappedNativeCaseCount / HISTORICAL_MAPPING:projection advertised count drift: historicallyMappedNativeCaseCount
+PASS rejection: count tamper unresolvedNativeCaseCount / HISTORICAL_MAPPING:projection advertised count drift: unresolvedNativeCaseCount
+PASS positive: 269 inactive histories, 356 active successors; original bodies/results intact
+11 negative projection controls / 2 positives; root unchanged, independent projection review pending

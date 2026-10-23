@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "refine-chart-contracts-bce3f075.py", line 28, in <module>
+    domain=schemaField(field)
+  File "refine-chart-contracts-bce3f075.py", line 15, in schemaField
+    node=node['properties'][part]
+KeyError: 'properties'

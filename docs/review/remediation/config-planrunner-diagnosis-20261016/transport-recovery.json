@@ -1,0 +1,10 @@
+{
+  "initialBudgetSeconds": 50,
+  "probeBudgetSeconds": 40,
+  "probeExitCode": 124,
+  "firstWholeAttempt": "Reached final ok:true output; exec tool transport timed out90s and lost exit status. PID2442998 observed absent after completion. Not used as verified exit.",
+  "recovery": "Bounded detached receipt collector PID2445902 held SAME writer lock; child PID2445908 completed; terminal receipt saved atomically before lock release.",
+  "verifiedWholeReceipt": "verified-original-result.json",
+  "repeatReason": "Recover missing actual terminal exit, not replay unchanged green evidence as new source progress.",
+  "reviewer": "No native spawn tool; known same-surface EROFS reviewer initialization unchanged, not retried."
+}

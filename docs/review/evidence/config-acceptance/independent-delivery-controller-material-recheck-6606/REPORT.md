@@ -1,0 +1,35 @@
+# Independent Delivery controller material recheck — checkpoint6606
+
+## Bounded verdict
+
+**DCTRL-01, DCTRL-02 and DCTRL-03 are resolved at the proposed definition/preparation scope.** No current Go/CRD installation, native controller, authentication/grants, physical capacity, implementation or whole-C0 acceptance. One low/nonmaterial numeric prose clarification remains, detailed below. Root consolidation/projection, Chart49 draft and Runtime semantics are excluded; this is a non-authored Delivery material recheck only.
+
+Frozen author receipt SHA2568759725799049f8fc3aa176003d9f0b1e338256c0292013f85528fa7a6d868f7. Seventeen new primary artifacts,49exact selected controller rows,six canonical future containers and14selected source files were frozen before controls; no moving2064-file whole-directory copy. Prior independent review and all73 original decoded payload SHA+length (68plain/5gzip with distinct container hashes) were independently preserved. Historical raw-container qualification/failures remain history, not rewrites.
+
+## DCTRL-01 — persistence/preparation
+
+The physical mutable member is now status.deliveryLifecycle, with strict schema for epoch/lease/revision/authority receipt/phase/operation/cleanup/Ready/Product correlated digests, separate from immutable status.deliveryPolicyEpoch. Existing full status.demoReadiness and demoProduct.decisions remain the source-native authorities, not competing editable lifecycle policy copies. Epoch digest hashes frozen original blob bytes; API key order is structurally compared, never silently reserialized into a new identity.
+
+Exact proposed protocol resolves original A first, gets original UID/RV, CAS-patches coupled complete lifecycle/native statuses, reads back exact operation/epoch/revision/native fields and observes actual returned RV separately. Intent+original grant/preconditions/start/deadline are persisted/read back BEFORE namespace DELETE; lost response, failed uncertainty persistence, pruning/conflict restart reconcile the same operation, never renew timeout/currentB or delete replacement UID. Authoritative original namespace absence confirmation must be committed/read back before finalizer removal; cleanup intent/uncertainty fences Ready/Product admission. Current waitForNamespaceDeleted actually computes time.Now+120s per call; this is proposed repair, not a false current persistent timer claim.
+
+The old six wrappers are honestly templates, never complete native-positive fixtures. Twelve ordered preparation contracts resolve authentic source/proofs/native IDs/UID/RV/full lease/spec/status and exact Ready bytes/hash plus Product action:extend/domain signature/envelope/payload hash/linked receipt identities before baseline/initial effects. Genuine providers/grants/installed type schemas/clock seam remain explicit prerequisites; missing original proof blocks. The source constructor's24Ready and15top-level Product receipt fields are all present, and each deletion was independently rejected/restored. Product action extend matches real productDeadline; Ready v1 keeps fixed original604800 and schemaVersion immutability, no implicit v1→v2 rewrite.
+
+## DCTRL-02 — original versus fresh timestamps
+
+Retained original A cannot be shifted, reserialized, re-signed or redigested underB/latest. Exact Product receipt replay occurs before current freshness in current source; fresh requests still validate chosen issued/expires and native current clock. A new synthetic fixture may instantiate times and dependent identities once BEFORE its own baseline, distinct from reinterpreting old A. Independently built a public synthetic full structural Ready→linked Product→prior lifecycle hash→receipt/envelope chain with an ephemeral in-memory Ed25519 key, then captured its baseline. Changed timestamp/payload invalidated the old signature and changed Ready hashes; original retained object/bytes remained unchanged. Keys were never exported, logged or hashed. This does not provision genuine credentials/source proof or establish authentic issuer/native acceptance.
+
+Original cleanup UTC nanoseconds are retained without truncation; exact120seconds accepted and one-nanosecond drift rejected. Invalid calendar negative rejects, restored source values pass. No OS clock change or Go execution.
+
+## DCTRL-03 — source-grounded principal grammar
+
+Both required producer fields enforce exact system:serviceaccount:<namespace>:<serviceaccount>, namespace DNS1123label1..63 and SA DNS1123subdomain total1..253, with distinct Ready/Product. Primary pinned v1.35.6/v1.34.11 functions ValidateNamespaceName=NameIsDNSLabel and ValidateServiceAccountName=NameIsDNSSubdomain ground this domain; no invented per-label63 cap for SA. Independent component split/regex comparisons cover max bounds, long valid subdomain label, malformed/missing/trailing-dot/double-dot/underscore/uppercase/extra-component/newline and restore. Current Go readyName is broader for namespace, openly distinguished. Grammar/source schema are NOT TokenReview, UID, provider, CA/RBAC or installed API proof.
+
+## Low documentation follow-up
+
+DCTRL-RECHECK-DOC01: native-case-contracts.json cases/3/oracle says “exact27 state fields”; the actual current commitDemoReady constructor and both extractions contain24 fields. The template contains all24, so no missing source obligation or material fixture loss is present. Correct the count to24 or omit it through a separate authored addendum while preserving frozen inputs/mandatory members/original requirements. This is not a native implementation gate or global finding closure.
+
+## Reproduction, preservation and limits
+
+Author105 pure controls replayed through a captured derivative which changes ONLY input-directory location/output destination to reviewer-owned output; original script retained in frozen archive. Fresh independent62 pure checks verify schema/member negatives+restores, original cleanup/time relations, source-grounded principal domains and full public synthetic dependent raw/hash/signature baseline order. Exact12NOTRUN recipes have contiguous ordered steps, hash-pinned A/B/templates/sources and explicit absent future harness/native --config support. Allsix selected canonical containers remain NOTRUN; old requirements/results retained, no success promoted.
+
+After controls:17primary files,14selected sources,49selected rows/six containers, historical reviewer files/preservation payloads and four paused Runtime published inputs zero drift. No author/Delivery/Core/root/Runtime, production/tests edits; no Go/native/authentication/API/host/image/model actions, grants or commit. Current resource-list/findings accumulation/concurrent response/handler and combined-output capacity, actual installed/authentic role/provider/source/CA/UID/grant/compiler bridges, missing v1.34.11 whole schema404s,230missing-domain rows/602unaccepted domains/Chart draft and parent universal module/carrier/cleanup remain OPEN. Existing pure receipts do not establish these. Review counts are bookkeeping, not semantic acceptance.

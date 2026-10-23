@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "dlv-ops-client-definition.v1",
+  "mcp": {
+    "kubernetes": {
+      "api": "https://127.0.0.1:18443",
+      "tokenFile": "/run/dlv-ops-fixtures/a/api-token",
+      "caFile": "/run/dlv-ops-fixtures/a/api-ca.crt",
+      "timeoutMs": 10000,
+      "maxBytes": 8388608
+    },
+    "hubble": {
+      "binary": "/usr/local/bin/hubble",
+      "server": "127.0.0.1:14245",
+      "timeout": 12000
+    }
+  },
+  "fixtureBindings": {
+    "scope": "isolated future native constructor/service fixture; profile parameters below are not actualdeployed cluster/capacity claims",
+    "API": "Node HTTPS mock implementing namespace-approvedGET/list fixture, independent test CA+provider ephemeral token files and subject/issuer/audience/grants declared. Does not prove deployed Kubernetes/server schema/controller/CNI behavior. Ports18443/18444 must be available before positivecontrol; collision/setupnever semanticnegative.",
+    "credentials": "test-only scoped tokenprovider, allow atomic projectedKubernetes symlinks/reopen sameprovider; no inline bytes/tokenhash/output. ActualexternalSecretstore revision and grants remain liveinput, not manufactured.",
+    "hubble": "same actual selected Hubblebinary/version/platform/user ABI and dependencyreceipt, future selected Go GRPCrelay fixture with Cilium observer/flow protocol from that binary Go graph. Loopbackrelay address is declared fixture only, not currentcluster route/NetworkPolicygrant. Realactualrelay+CNIendpointpolicy/TLS/nativegrants required before productionnetwork proof.",
+    "PATH": "immutable selectedOps image runtime PATH captured once for child; HOME=/tmp actualcurrentgeneratedscratchlocator; no arbitrarytaskowned exepath or mutableambient source"
+  },
+  "priorState": "originalmoduleA/client/runtime/provider/CA/origin/namespacegrant recorded, actual in-flightArequest and retainedcursor/window; B createsnewselectedclient/service. Same-provider tokenrenewal permitted by declaredrotation; change of CA/server/provider/subject/grants requires new boundgeneration and no A retarget. Universalparent originalModule/cleanup/grantIDs pending."
+}

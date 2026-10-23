@@ -1,17 +1,22 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { test } from 'node:test';
 import { FileJournal } from '../../../skills/nova/core/state/journal.ts';
+import { graphSnapshot, writeRunSnapshots } from '../../../skills/nova/core/execution/engine-snapshots.ts';
 import { readPipelineAudit } from '../../../skills/nova/core/telemetry/audit.ts';
 import type { LifecycleEvent } from '@kubeclaw/plugin-sdk';
 
 test('audit rebuilds from real journal bytes, ignores unavailable projections and rejects corrupt history', () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'audit-projection-'));
   try {
+    const graph = graphSnapshot({ schemaVersion: 'pipeline-definition.v2', id: 'audit', maxConcurrency: 1,
+      stages: [{ id: 'one', type: 'test.one', dependsOn: [], config: {}, input: {}, execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 1000 } }] });
+    writeRunSnapshots(root, graph, { configuration: { corePolicy: TEST_CORE_POLICY } });
     const file = path.join(root, 'events.jsonl');
-    const journal = new FileJournal<LifecycleEvent>(file);
+    const journal = new FileJournal<LifecycleEvent>(file, TEST_CORE_POLICY.journalAppendLockTimeoutMs);
     journal.append({ schemaVersion: 'lifecycle-event.v2', eventId: 'event:1', sequence: 1, type: 'run.started',
       identity: { runId: 'audit:run' }, occurredAt: new Date().toISOString(), causationId: null,
       payload: { nested: { token: 'private-test-value' }, message: 'Actual durable event.' } });

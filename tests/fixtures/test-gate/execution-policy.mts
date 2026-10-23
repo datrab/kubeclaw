@@ -1,5 +1,13 @@
-import { canonicalSwarmEntry } from '../config/swarm-bundle.mjs';
-import { loadSwarmSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
+import { fileURLToPath } from 'node:url';
+import type { BusterSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
+import { captureSwarmSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
+import { declaredPipelineServices } from '../../../scripts/updates/pipeline-generation.mjs';
 
-/** Explicit test input read from the actual required component owner. Never fills omitted options. */
-export const runnerExecutionPolicy = loadSwarmSettings({ SWARM_CONFIG: canonicalSwarmEntry }).buster.execution;
+// Explicit source fixture selection, never an admitted native startup receipt.
+const authorRoot=fileURLToPath(new URL('../../../config',import.meta.url));
+const [selection]=declaredPipelineServices(authorRoot,{role:'buster',namespace:'kubeclaw',releaseName:'agent-buster'});
+if (!selection) throw new Error('TEST_BUSTER_SELECTION_REQUIRED');
+const component=captureSwarmSettings(`${authorRoot}/pipeline.config.json`,selection).components['buster-engine'];
+if (!component) throw new Error('TEST_BUSTER_COMPONENT_REQUIRED');
+export const runnerBusterSettings=component.settings as unknown as BusterSettings;
+export const runnerExecutionPolicy=runnerBusterSettings.execution;

@@ -1,0 +1,28 @@
+{
+  "scope": "Checkpoint6 bounded documentation integration verified; exhaustive C0 NOT ACCEPTED",
+  "rows": 2389,
+  "canonicalCaseIds": 6289,
+  "nativeCaseSpecifications": 5793,
+  "canonicalNativeLinks": 5524,
+  "unlinkedNativeCases": 269,
+  "registeredOpenGaps": 30,
+  "structuralErrors": 0,
+  "strictOpenObligations": 98805,
+  "canonicalCoreSpecificationsPreserved": 148,
+  "observationReferencesValidated": 2229,
+  "boundedReview": {
+    "path": "docs/review/evidence/config-acceptance/independent-checkpoint6-crosslink-recheck/independent-crosslink-recheck.json",
+    "sha256": "18fdd8e7fe80b732020709536caf8274a655074e19861c0b24b0b22f385b25b3",
+    "meaningfulNegativesRejected": 19,
+    "restoredPositivesPassed": 2,
+    "limits": "Named integration guards only, not fullsource/field/runtime acceptance"
+  },
+  "broadSuite": "Unchanged historical649collected644passed5failed0skips; not rerun",
+  "productionOrTestEdits": false,
+  "implementationApproval": null,
+  "whitespaceFinal": {
+    "path": "docs/review/evidence/config-acceptance/author/whitespace-checkpoint-6-attempt4.log",
+    "exit": 0,
+    "limits": "Exact raw-byte source/render/fixture paths retain recorded padding and whitespace; authored tools checked normally."
+  }
+}

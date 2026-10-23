@@ -1,0 +1,2 @@
+COMMAND: git diff --name-only -- skills contracts tests scripts charts
+(empty; productive/test tracked files unchanged)

@@ -1,3 +1,6 @@
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -12,7 +15,7 @@ const attempt = { runId: 'review:run', stageId: 'review', attemptId: 'review:att
 
 async function fixture(body) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'independent-checkpoint-'));
-  const adapter = activate({ config: { artifactRoot: path.join(root, 'artifacts') } });
+  const adapter = activate({ config: { ...TEST_ARTIFACT_STORE_POLICY, artifactRoot: path.join(root, 'artifacts') } });
   await adapter.ready();
   const request = { operation: 'put_json', capability: 'artifacts.write',
     resource: { type: 'artifact.object', canonicalId: 'review:artifact' },
@@ -51,16 +54,16 @@ test('independent genuine-store response still binds all owner and byte fields',
 test('independent completion-before-projection recovery preserves the portable original reference', async () => {
   await fixture(async ({ root, artifact }) => {
     const file = path.join(root, 'events.jsonl');
-    const journal = new FileJournal(file);
+    const journal = new FileJournal(file, TEST_CORE_POLICY.journalAppendLockTimeoutMs);
     appendTo(journal)('attempt.completed', { runId: attempt.runId, stageId: attempt.stageId },
       { result: { schemaVersion: 'stage-result.v2', outcome: 'passed', artifacts: [artifact] } });
-    const recoveredJournal = new FileJournal(file);
+    const recoveredJournal = new FileJournal(file, TEST_CORE_POLICY.journalAppendLockTimeoutMs);
     const recovered = new ArtifactCheckpointRecorder(recoveredJournal, appendTo(recoveredJournal));
     assert.deepEqual(recovered.artifacts(), [artifact]);
     assert.equal(recoveredJournal.records().length, 2);
     assert.equal(recoveredJournal.records()[1].entry.payload.artifact.encoding, PORTABLE_JSON_ENCODING);
     const bytes = fs.readFileSync(file);
-    const reopened = new FileJournal(file);
+    const reopened = new FileJournal(file, TEST_CORE_POLICY.journalAppendLockTimeoutMs);
     assert.deepEqual(new ArtifactCheckpointRecorder(reopened, appendTo(reopened)).artifacts(), [artifact]);
     assert.deepEqual(fs.readFileSync(file), bytes);
   });
@@ -69,11 +72,11 @@ test('independent completion-before-projection recovery preserves the portable o
 test('independent unknown-codec disk record rejects without mutating journal bytes', async () => {
   await fixture(async ({ root, artifact }) => {
     const file = path.join(root, 'events.jsonl');
-    const journal = new FileJournal(file);
+    const journal = new FileJournal(file, TEST_CORE_POLICY.journalAppendLockTimeoutMs);
     appendTo(journal)('artifact.created', { runId: attempt.runId, stageId: attempt.stageId },
       { artifact: { ...artifact, encoding: 'future-codec' } });
     const bytes = fs.readFileSync(file);
-    const reopened = new FileJournal(file);
+    const reopened = new FileJournal(file, TEST_CORE_POLICY.journalAppendLockTimeoutMs);
     assert.throws(() => new ArtifactCheckpointRecorder(reopened, appendTo(reopened)), /ARTIFACT_CHECKPOINT_ENCODING_INVALID/);
     assert.deepEqual(fs.readFileSync(file), bytes);
   });
@@ -81,7 +84,7 @@ test('independent unknown-codec disk record rejects without mutating journal byt
 
 test('independent unknown-codec recording rejects before journal append', async () => {
   await fixture(async ({ root, artifact }) => {
-    const journal = new FileJournal(path.join(root, 'events.jsonl'));
+    const journal = new FileJournal(path.join(root, 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs);
     const recorder = new ArtifactCheckpointRecorder(journal, appendTo(journal));
     for (const encoding of [null, 'future-codec']) {
       assert.throws(() => recorder.checkpoint({ ...artifact, encoding }), /ARTIFACT_CHECKPOINT_ENCODING_INVALID/);

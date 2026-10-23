@@ -1,0 +1,703 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Own exact C0 controller policy definition only, not native Go/Kubernetes schema substitute",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "settings",
+    "readonlyBindings",
+    "runtimeBinding",
+    "fixture",
+    "priorState"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "dlv-controller-policy.v2-proposal"
+    },
+    "settings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "BUSTER_ALLOWED_NAMESPACE_PREFIXES",
+        "BUSTER_DEFAULT_TTL_SECONDS",
+        "BUSTER_MAX_TTL_SECONDS",
+        "BUSTER_CONTROLLER_POLL_MS",
+        "BUSTER_ALLOWED_ACCESS_JSON",
+        "BUSTER_ALLOWED_SOURCE_SECRETS",
+        "BUSTER_PRODUCT_ENABLED",
+        "httpClientTimeoutSeconds",
+        "runtimeSecurityRefreshSeconds",
+        "runtimeSecurityFutureSkewSeconds",
+        "runtimeSecurityMaximumFindings",
+        "runtimeSecurityMaximumSerializedBytes",
+        "readyReadHeaderTimeoutSeconds",
+        "readyReadTimeoutSeconds",
+        "readyWriteTimeoutSeconds",
+        "readyIdleTimeoutSeconds",
+        "readyMaxHeaderBytes",
+        "readyHandlerTimeoutSeconds",
+        "readyMaximumBodyBytes",
+        "productHandlerTimeoutSeconds",
+        "productMaximumBodyBytes",
+        "defaultDemoRetentionSeconds",
+        "apiResponseMaximumBytes",
+        "apiRequestMaximumBytes",
+        "apiDiagnosticMaximumBytes",
+        "authorizationMaximumBytes",
+        "namespaceDeletionTimeoutSeconds",
+        "readyObservationMaximumAgeSeconds",
+        "productDecisionMaximumValiditySeconds"
+      ],
+      "properties": {
+        "BUSTER_ALLOWED_NAMESPACE_PREFIXES": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 63,
+            "pattern": "^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
+          }
+        },
+        "BUSTER_DEFAULT_TTL_SECONDS": {
+          "type": "integer",
+          "minimum": 60,
+          "maximum": 9223372036
+        },
+        "BUSTER_MAX_TTL_SECONDS": {
+          "type": "integer",
+          "minimum": 60,
+          "maximum": 9223372036
+        },
+        "BUSTER_CONTROLLER_POLL_MS": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9223372036854
+        },
+        "BUSTER_ALLOWED_ACCESS_JSON": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "subject",
+              "modes"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "subject": {
+                "type": "string",
+                "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?/[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$"
+              },
+              "modes": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "enum": [
+                    "tester",
+                    "deployer"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "BUSTER_ALLOWED_SOURCE_SECRETS": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 253,
+            "pattern": "^[a-z0-9](?:[-a-z0-9.]*[a-z0-9])?$"
+          }
+        },
+        "BUSTER_PRODUCT_ENABLED": {
+          "type": "boolean"
+        },
+        "httpClientTimeoutSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9223372036
+        },
+        "runtimeSecurityRefreshSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9223372036
+        },
+        "runtimeSecurityFutureSkewSeconds": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9223372036
+        },
+        "runtimeSecurityMaximumFindings": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "runtimeSecurityMaximumSerializedBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "readyReadHeaderTimeoutSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9223372036
+        },
+        "readyReadTimeoutSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9223372036
+        },
+        "readyWriteTimeoutSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9223372036
+        },
+        "readyIdleTimeoutSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9223372036
+        },
+        "readyMaxHeaderBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "readyHandlerTimeoutSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9223372036
+        },
+        "readyMaximumBodyBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "productHandlerTimeoutSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9223372036
+        },
+        "productMaximumBodyBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "defaultDemoRetentionSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9223372036
+        },
+        "apiResponseMaximumBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "apiRequestMaximumBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "apiDiagnosticMaximumBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "authorizationMaximumBytes": {
+          "type": "integer",
+          "minimum": 8,
+          "maximum": 9007199254740991
+        },
+        "namespaceDeletionTimeoutSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9223372036
+        },
+        "readyObservationMaximumAgeSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9223372036
+        },
+        "productDecisionMaximumValiditySeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9223372036
+        }
+      }
+    },
+    "readonlyBindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "KUBERNETES_SERVICE_HOST",
+        "KUBERNETES_SERVICE_PORT",
+        "BUSTER_LEASE_API_GROUP",
+        "BUSTER_LEASE_API_VERSION",
+        "KUBECLAW_NAMESPACE",
+        "BUSTER_CONTROLLER_SERVICE_ACCOUNT",
+        "BUSTER_SECRET_ROLE_NAME",
+        "BUSTER_DEPLOYER_ROLE_NAME",
+        "BUSTER_TESTER_ROLE_NAME",
+        "BUSTER_READY_LISTEN",
+        "BUSTER_READY_AUDIENCE",
+        "BUSTER_READY_PRODUCER",
+        "BUSTER_READY_TLS_CERT",
+        "BUSTER_READY_TLS_KEY",
+        "BUSTER_PRODUCT_AUDIENCE",
+        "BUSTER_PRODUCT_PRODUCER",
+        "BUSTER_PRODUCT_ISSUER",
+        "BUSTER_PRODUCT_VERIFY_KEY",
+        "BUSTER_PRODUCT_ACTORS_JSON",
+        "maximumDemoRetentionSeconds"
+      ],
+      "properties": {
+        "KUBERNETES_SERVICE_HOST": {
+          "type": "string",
+          "minLength": 1
+        },
+        "KUBERNETES_SERVICE_PORT": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{0,4}$"
+        },
+        "BUSTER_LEASE_API_GROUP": {
+          "type": "string",
+          "const": "kubeclaw.forgestack.ai"
+        },
+        "BUSTER_LEASE_API_VERSION": {
+          "type": "string",
+          "const": "v1alpha1"
+        },
+        "KUBECLAW_NAMESPACE": {
+          "type": "string",
+          "minLength": 1
+        },
+        "BUSTER_CONTROLLER_SERVICE_ACCOUNT": {
+          "type": "string",
+          "minLength": 1
+        },
+        "BUSTER_SECRET_ROLE_NAME": {
+          "type": "string",
+          "minLength": 1
+        },
+        "BUSTER_DEPLOYER_ROLE_NAME": {
+          "type": "string",
+          "minLength": 1
+        },
+        "BUSTER_TESTER_ROLE_NAME": {
+          "type": "string",
+          "minLength": 1
+        },
+        "BUSTER_READY_LISTEN": {
+          "type": "string",
+          "const": ":8443"
+        },
+        "BUSTER_READY_AUDIENCE": {
+          "type": "string",
+          "minLength": 1
+        },
+        "BUSTER_READY_PRODUCER": {
+          "type": "string"
+        },
+        "BUSTER_READY_TLS_CERT": {
+          "type": "object",
+          "required": [
+            "path",
+            "providerRef",
+            "kind"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "path": {
+              "type": "string",
+              "minLength": 1
+            },
+            "providerRef": {
+              "type": "string",
+              "minLength": 1
+            },
+            "kind": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "BUSTER_READY_TLS_KEY": {
+          "type": "object",
+          "required": [
+            "path",
+            "providerRef",
+            "kind"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "path": {
+              "type": "string",
+              "minLength": 1
+            },
+            "providerRef": {
+              "type": "string",
+              "minLength": 1
+            },
+            "kind": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "BUSTER_PRODUCT_AUDIENCE": {
+          "type": "string",
+          "minLength": 1
+        },
+        "BUSTER_PRODUCT_PRODUCER": {
+          "type": "string"
+        },
+        "BUSTER_PRODUCT_ISSUER": {
+          "type": "string",
+          "minLength": 1
+        },
+        "BUSTER_PRODUCT_VERIFY_KEY": {
+          "type": "object",
+          "required": [
+            "publicTrustRef",
+            "decodedBytes",
+            "encoding"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "publicTrustRef": {
+              "type": "string",
+              "minLength": 1
+            },
+            "decodedBytes": {
+              "type": "integer",
+              "const": 32
+            },
+            "encoding": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "BUSTER_PRODUCT_ACTORS_JSON": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "maximumDemoRetentionSeconds": {
+          "type": "integer",
+          "const": 9223372036
+        }
+      }
+    },
+    "runtimeBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "architecture",
+        "APIOrigin",
+        "credentialRoot",
+        "providerRef",
+        "sourceRevision",
+        "requiredBinaryReceiptRef",
+        "requiredOCIReceiptRef",
+        "requiredGoSourceReceiptRef",
+        "requiredGrantReceiptRef",
+        "requiredPhysicalCapacityReceiptRef",
+        "declaredResponseBufferBytes",
+        "declaredRequestBufferBytes",
+        "metadataAndPrettyOutput",
+        "componentReadOnlyAliases",
+        "oldLeaseEpochRef",
+        "redirectPolicy",
+        "bodyRepresentation",
+        "grantsStatus"
+      ],
+      "properties": {
+        "architecture": {
+          "const": "linux/amd64"
+        },
+        "APIOrigin": {
+          "type": "string",
+          "minLength": 1
+        },
+        "credentialRoot": {
+          "type": "string",
+          "minLength": 1
+        },
+        "providerRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceRevision": {
+          "const": "6606af9e590032f328f330ecb3d953b1eef027e3"
+        },
+        "requiredBinaryReceiptRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requiredOCIReceiptRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requiredGoSourceReceiptRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requiredGrantReceiptRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requiredPhysicalCapacityReceiptRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "declaredResponseBufferBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "declaredRequestBufferBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "metadataAndPrettyOutput": {
+          "type": "string",
+          "minLength": 1
+        },
+        "componentReadOnlyAliases": {
+          "const": {
+            "shared.leaseApiGroup": {
+              "settingId": "CMP-buster-engine-clusterInvokers.shared.leaseApiGroup",
+              "source": {
+                "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+                "field": "/settings/clusterInvokers/shared/leaseApiGroup",
+                "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+                "profileSources": {
+                  "base": {
+                    "source": "charts/kubeclaw/files/config/buster-engine.config.json",
+                    "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+                  },
+                  "runtime": {
+                    "source": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+                    "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+                  }
+                }
+              },
+              "caseIds": [
+                "CMP-C1-VAL-buster-engine",
+                "CMP-C1-EFFECT-buster-engine",
+                "CMP-C1-DELIVERY",
+                "CMP-C1-MUT",
+                "CMP-C5-BIND",
+                "CMP-C1-EFFECT-buster-engine-clusterInvokers.shared.leaseApiGroup"
+              ],
+              "mode": "typed read-only primary author alias; no delivery writer",
+              "selectedSourceValue": "kubeclaw.forgestack.ai"
+            },
+            "shared.leaseApiVersion": {
+              "settingId": "CMP-buster-engine-clusterInvokers.shared.leaseApiVersion",
+              "source": {
+                "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+                "field": "/settings/clusterInvokers/shared/leaseApiVersion",
+                "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+                "profileSources": {
+                  "base": {
+                    "source": "charts/kubeclaw/files/config/buster-engine.config.json",
+                    "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+                  },
+                  "runtime": {
+                    "source": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+                    "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+                  }
+                }
+              },
+              "caseIds": [
+                "CMP-C1-VAL-buster-engine",
+                "CMP-C1-EFFECT-buster-engine",
+                "CMP-C1-DELIVERY",
+                "CMP-C1-MUT",
+                "CMP-C5-BIND",
+                "CMP-C1-EFFECT-buster-engine-clusterInvokers.shared.leaseApiVersion"
+              ],
+              "mode": "typed read-only primary author alias; no delivery writer",
+              "selectedSourceValue": "v1alpha1"
+            },
+            "runtimeSecurity.maximumOutputBytes": {
+              "settingId": "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumOutputBytes",
+              "source": {
+                "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+                "field": "/settings/clusterInvokers/runtimeSecurity/maximumOutputBytes",
+                "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+                "profileSources": {
+                  "base": {
+                    "source": "charts/kubeclaw/files/config/buster-engine.config.json",
+                    "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+                  },
+                  "runtime": {
+                    "source": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+                    "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+                  }
+                }
+              },
+              "caseIds": [
+                "CMP-C1-VAL-buster-engine",
+                "CMP-C1-EFFECT-buster-engine",
+                "CMP-C1-DELIVERY",
+                "CMP-C1-MUT",
+                "CMP-C5-BIND",
+                "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.maximumOutputBytes"
+              ],
+              "mode": "typed read-only primary author alias; no delivery writer",
+              "selectedSourceValue": 16777216
+            },
+            "runtimeSecurity.maximumExecutionMs": {
+              "settingId": "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumExecutionMs",
+              "source": {
+                "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+                "field": "/settings/clusterInvokers/runtimeSecurity/maximumExecutionMs",
+                "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+                "profileSources": {
+                  "base": {
+                    "source": "charts/kubeclaw/files/config/buster-engine.config.json",
+                    "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+                  },
+                  "runtime": {
+                    "source": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+                    "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+                  }
+                }
+              },
+              "caseIds": [
+                "CMP-C1-VAL-buster-engine",
+                "CMP-C1-EFFECT-buster-engine",
+                "CMP-C1-DELIVERY",
+                "CMP-C1-MUT",
+                "CMP-C5-BIND",
+                "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.maximumExecutionMs"
+              ],
+              "mode": "typed read-only primary author alias; no delivery writer",
+              "selectedSourceValue": 300000
+            },
+            "runtimeSecurity.pollIntervalMs": {
+              "settingId": "CMP-buster-engine-clusterInvokers.runtimeSecurity.pollIntervalMs",
+              "source": {
+                "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+                "field": "/settings/clusterInvokers/runtimeSecurity/pollIntervalMs",
+                "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+                "profileSources": {
+                  "base": {
+                    "source": "charts/kubeclaw/files/config/buster-engine.config.json",
+                    "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+                  },
+                  "runtime": {
+                    "source": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+                    "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+                  }
+                }
+              },
+              "caseIds": [
+                "CMP-C1-VAL-buster-engine",
+                "CMP-C1-EFFECT-buster-engine",
+                "CMP-C1-DELIVERY",
+                "CMP-C1-MUT",
+                "CMP-C5-BIND",
+                "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.pollIntervalMs"
+              ],
+              "mode": "typed read-only primary author alias; no delivery writer",
+              "selectedSourceValue": 1000
+            },
+            "runtimeSecurity.maximumObservationAgeMs": {
+              "settingId": "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumObservationAgeMs",
+              "source": {
+                "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+                "field": "/settings/clusterInvokers/runtimeSecurity/maximumObservationAgeMs",
+                "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+                "profileSources": {
+                  "base": {
+                    "source": "charts/kubeclaw/files/config/buster-engine.config.json",
+                    "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+                  },
+                  "runtime": {
+                    "source": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+                    "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+                  }
+                }
+              },
+              "caseIds": [
+                "CMP-C1-VAL-buster-engine",
+                "CMP-C1-EFFECT-buster-engine",
+                "CMP-C1-DELIVERY",
+                "CMP-C1-MUT",
+                "CMP-C5-BIND",
+                "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.maximumObservationAgeMs"
+              ],
+              "mode": "typed read-only primary author alias; no delivery writer",
+              "selectedSourceValue": 10000
+            },
+            "runtimeSecurity.maximumFutureSkewMs": {
+              "settingId": "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumFutureSkewMs",
+              "source": {
+                "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+                "field": "/settings/clusterInvokers/runtimeSecurity/maximumFutureSkewMs",
+                "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+                "profileSources": {
+                  "base": {
+                    "source": "charts/kubeclaw/files/config/buster-engine.config.json",
+                    "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+                  },
+                  "runtime": {
+                    "source": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+                    "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+                  }
+                }
+              },
+              "caseIds": [
+                "CMP-C1-VAL-buster-engine",
+                "CMP-C1-EFFECT-buster-engine",
+                "CMP-C1-DELIVERY",
+                "CMP-C1-MUT",
+                "CMP-C5-BIND",
+                "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.maximumFutureSkewMs"
+              ],
+              "mode": "typed read-only primary author alias; no delivery writer",
+              "selectedSourceValue": 5000
+            }
+          }
+        },
+        "oldLeaseEpochRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "redirectPolicy": {
+          "const": "reject-all"
+        },
+        "bodyRepresentation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "grantsStatus": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "fixture": {
+      "type": "string",
+      "minLength": 1
+    },
+    "priorState": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

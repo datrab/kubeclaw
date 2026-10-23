@@ -1,0 +1,156 @@
+{
+  "status": "author proposed applicability; not implemented or accepted",
+  "project": {
+    "membershipAuthority": "actual ordered declared module IDs and exact producer emission authenticated by graph/membership digest; not prefix lookup",
+    "groups": [
+      {
+        "id": "foundation",
+        "source": {
+          "path": "skills/nova/project/source.ts",
+          "sha256": "f652f5bda01a9a39ea7015ddbf12867ff81f989b0fbe2e0cadcff1a4b4ae2cd0"
+        },
+        "producer": "sourceStages",
+        "members": [
+          "source-preflight",
+          "architecture-review iff declared architecture.review",
+          "architecture-approval iff declared architecture.review",
+          "blueprint-sync"
+        ],
+        "retention": "approval wait/resume never reselects B"
+      },
+      {
+        "id": "module:<original declared module.id>",
+        "source": {
+          "path": "skills/nova/project/compiler.ts",
+          "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+        },
+        "producer": "moduleStages",
+        "members": [
+          "implement-<declared module.id>",
+          "lint-<declared module.id>",
+          "review-<declared module.id> iff declared module.review",
+          "test-<declared module.id>"
+        ],
+        "repairs": "lint/review/test request_fix targets same original implementation; all stages/repairs/rechecks bind once before first dispatch, not once perstage"
+      },
+      {
+        "id": "integration",
+        "source": {
+          "path": "skills/nova/project/coverage.ts",
+          "sha256": "6ad22387d588ec783ddfd12a45d1aea735785f3a065254d0fc00b1820ee01f2b"
+        },
+        "producer": "cumulativeStages",
+        "members": [
+          "final-lint",
+          "final-review iff declared final.review",
+          "final-test"
+        ],
+        "retention": "all integrated checks and original scope stay one original group"
+      },
+      {
+        "id": "delivery",
+        "sources": [
+          {
+            "path": "skills/nova/project/coverage.ts",
+            "sha256": "6ad22387d588ec783ddfd12a45d1aea735785f3a065254d0fc00b1820ee01f2b"
+          },
+          {
+            "path": "skills/nova/project/demo.ts",
+            "sha256": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566"
+          }
+        ],
+        "producers": [
+          "cumulativeStages",
+          "demoStages"
+        ],
+        "members": [
+          "project-summary",
+          "demo-candidate iff valid declared demo",
+          "demo-delivery iff valid declared demo",
+          "demo-ready iff valid declared demo"
+        ],
+        "retention": "starts before summary, not before final-test; demo full plan/provider/fixture task remains exact original declared input"
+      }
+    ]
+  },
+  "freeGraph": {
+    "authority": "original authenticated explicit task graph; actual sources engine-run/pipeline-loop/stage-executor",
+    "sources": [
+      {
+        "path": "skills/nova/core/execution/engine-run.ts",
+        "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819"
+      },
+      {
+        "path": "skills/nova/core/execution/pipeline-loop.ts",
+        "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530"
+      },
+      {
+        "path": "skills/nova/core/execution/stage-executor.ts",
+        "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb"
+      }
+    ],
+    "mandatoryDeclaration": "every executable stage exactly once, all dependencies/remediation activation scopes and declared owner instance refs; duplicate/missing/unknown stages or request_fix cross-group association without explicit original membership rejects",
+    "targetBoundary": "new typed graph/membership and durable binding before stage.started/stage.skipped/observer notification/first dispatch; current v2 graph remains immutable historical wire, not rewritten",
+    "noFallback": "No prefix inference, current stage config spread, guessed legacy closure or reset started group from missing history"
+  },
+  "prismOrder": {
+    "sources": [
+      {
+        "path": "skills/prism/control/agent-jobs.ts",
+        "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334"
+      },
+      {
+        "path": "skills/prism/server/agent-job-runner.mjs",
+        "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb"
+      }
+    ],
+    "authority": "accepted exact original task/round/order and stored claim/attempt_envelope/fence/profile/source/count/tool/prompt refs; J survives all retry/result/finish/NeedsNova reconciliation",
+    "firstBoundary": "persist original accepted round/claim/attempt before external CLI/native launch; no main/timeout replacement after started claim",
+    "applicability": "M/J bounded render/design/prompt/attempt quotas only at original new intent acceptance; S listener/DB/session/query/transport and H issuer/native/grants immutable dependencies",
+    "block": "Unknown installed alternate agent/parser, unsupported tool domain or missing original authority prevents activation, not task/field definition"
+  },
+  "busterPlan": {
+    "source": {
+      "path": "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+      "sha256": "832631872e86addc6ae98516f63c191e403675b679c795ad3d47a2fdb8350dde"
+    },
+    "authority": "accepted authenticated prepared plan/task/suite/provider/registry/source digest/key/fixture/grants/claim/deadline/used counters; J covers whole TestPlanRunner and native capability final shutdown",
+    "current": "runPlan constructs capability runtime each J from S service options; constructor capture not future M/global authority proof",
+    "applicability": "per-unit provider processing/request/quality quotas may select B for genuinely unstarted compatible plan only beneath unchanged S provider ceilings and H/R grants; existing nodes/attempts/effects/retries/cleanup stay A"
+  },
+  "preparationCleanup": {
+    "sources": [
+      {
+        "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+        "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/preparation-cleanup.ts",
+        "sha256": "192c1954407e294483ea08389220eab128052ba57e9b7a72b26fcb768d608bc1"
+      }
+    ],
+    "authority": "separate admitted cleanup J/M when actually unstarted; original admission/source/archive/store/root/native/grant/lease/effect/receipt/reservation links remain exact A",
+    "noReset": "cleanup retry/reconciliation uses original cleanup acceptance and uncertain effect outcomes; no latest profile, source root relocation or free-budget claim; confirmed no reference/uncertain effect required before release"
+  },
+  "observerAdapter": {
+    "sources": [
+      {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613"
+      },
+      {
+        "path": "skills/nova/core/telemetry/observer-delivery.ts",
+        "sha256": "d80f67ca85cafee41eb41d228be7a8d3aff820b556ccf21efa6f0a9845afd1fc"
+      }
+    ],
+    "authority": "R adapter/observer registry/profile/package/subscriber/failure/replay/retention is foundation before first delivery; startup effects and nested confidential requests require same authentic current run guard but retain original request/effect/binding identities",
+    "applicability": "module view cannot retarget cached adapter endpoint/root/key or replace observer policy per-event; observer deliver failures keep accepted original binding and block required dispatch; cleanup retains original foundation"
+  },
+  "eval": {
+    "mode": "explicit fixed generation",
+    "rule": "All modules/orders/plans including genuinely unstarted ones remain selected explicit EvalA; publishB is another separately admitted Eval/run, no complete Evalrunner implementation inferred"
+  },
+  "sharedPhysicalAuthority": {
+    "rule": "S/H original roots/PVC/provider/writers/retention/key/access and R counted objects/metadata/inodes/reservations and absolute budgets survive B/loss/retry; H authentic capacity/grants required; no separate budget/epoch ledger invented"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "at": "2026-10-17T00:18:44.864809+00:00",
+  "status": "STUDIO_ORIGINAL_CONFIG_SOURCE_RECEIPTS_VERIFIED_AGGREGATE_NOT_PASSED",
+  "sourceCommit": "d7b5387cf956cb23baa7f8bc303ae7dbc96cce9c",
+  "sourceRemoteVerified": true,
+  "evidence": "docs/review/remediation/config-final-components-20261017",
+  "change": "Shared genuine Prism published fixture now passes actual checked-out Git HEAD and current build time to the real role builder and asserts both emitted manifest fields before publication. Replaces placeholder metadata; no production source/settings, boot trust, receipts or original behavioral assertions weakened. Local dirty worktree is NOT asserted equal to a clean commit.",
+  "checks": {
+    "originalStudioConfig": {
+      "passed": 12,
+      "total": 12,
+      "failed": 0,
+      "skipped": 0,
+      "log": "studio-config.txt",
+      "scope": "Whole original suite after actual revision/time change; before final two receipt assertions"
+    },
+    "finalReceiptAssertions": {
+      "passed": 1,
+      "total": 1,
+      "failed": 0,
+      "skipped": 0,
+      "log": "final-receipt-assertions.txt",
+      "scope": "Original A/B/captured-A case after adding both emitted receipt assertions; not subset global acceptance"
+    },
+    "syntax": true,
+    "originalComponentAggregate": {
+      "status": "TIMED_OUT_NOT_PASSED",
+      "exitCode": 124,
+      "timeoutSeconds": 55,
+      "passed": 0,
+      "cancelled": 17,
+      "log": "integrated-initial.txt",
+      "diagnosis": "55-second bound insufficient for genuine per-case role assembly. Whole Studio-only original command then completed in170.17seconds. No aggregate/native/UID1000 pass claimed."
+    },
+    "originalRoster": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50,
+      "integrityFailures": 0,
+      "originalResultsChanged": false
+    }
+  },
+  "independentReview": "OPEN; native spawn/reviewer discovery empty; CONFIG subagents0; no fresh output. Unchanged same-surface EROFS not retried. Author checks are not independent acceptance.",
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "QB_R02_constraint": "Actual original producer attempts and prepared source closures now exist, but TestPlanRunnerOptions still has no original inputStore-owned reservation/sealed-version API or authenticated build/baseline association. Existing FileEvidenceStore is output ownership, not input authority. Do not invent a second store/ledger or receipt-shaped task authority. BUDGET_SOURCE_RECEIPT_REQUIRED remains.",
+  "nextAction": "Complete genuine QB-R02 prepared producer/source/build/baseline association and existing inputStore reservation/accounting/sealed snapshot/publication, coordinated sole-root boot/Nova receiving. Diagnose remaining full component aggregate with adequate per-suite runtime; do not repeat unchanged Studio-only green suite. Preserve original independent/history/native/archive/fullC0-C6 gates.",
+  "externalOwner": "Raven",
+  "resumeCondition": "Suitable isolated Linux Docker UID1000/GID1000 delegated writable cgroup, sufficiently large genuinely root-trusted archive filesystem, isolated migrated PostgreSQL.",
+  "writerLock": "SAME nonblocking lock acquired per write/check/commit; released on command exit",
+  "noHistoricalFollowup": true,
+  "sourceHashes": {
+    "skills/prism/tests/fixtures/published-config.mjs": "337249b7c87d3f3a87a329c5612c072425487e62e97e9f8a6c1791ff15fa6df8"
+  }
+}

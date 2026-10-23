@@ -1,0 +1,71 @@
+{
+  "at": "2026-10-15T18:58:58.857034+00:00",
+  "change": "Original transport publisher fixture stageId now uses canonical local ID transport instead of stage:transport. Run/attempt/publication IDs and all existing business assertions unchanged; no production schema/authority relaxation. Preparatory original regression repair for pending payload profile migration.",
+  "verification": [
+    {
+      "command": [
+        "node",
+        "tests/config-validation.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-transport-original-recovery-20261015/check-0.txt"
+    },
+    {
+      "command": [
+        "node",
+        "tests/live-function.test.ts"
+      ],
+      "exitCode": 1,
+      "log": "docs/review/remediation/config-transport-original-recovery-20261015/check-1.txt"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "sourceSha256": "df356bb7519c35652665c225095384217aa5e4c910787399f64f01a3aa64d4b9",
+  "settingsSourceWired": 88,
+  "independentAcceptance": "OPEN; this fixture correction is not independently accepted",
+  "nextAction": "Centralize separate publisher/operator per-target payload profiles through selected Core and retained original snapshots; preserve defaults 262144/65536 and target-specific values.",
+  "finalVerification": [
+    {
+      "command": [
+        "node",
+        "tests/config-validation.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-transport-original-recovery-20261015/final-0.txt"
+    },
+    {
+      "command": [
+        "node",
+        "tests/live-function.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-transport-original-recovery-20261015/final-1.txt"
+    },
+    {
+      "command": [
+        "node",
+        "tests/package-boundary.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-transport-original-recovery-20261015/final-2.txt"
+    },
+    {
+      "command": [
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/.bin/tsc",
+        "--noEmit",
+        "-p",
+        "tsconfig.json"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-transport-original-recovery-20261015/final-3.txt"
+    }
+  ],
+  "cancellationOracle": "Pre-aborted calls fail before adapter dispatch in actual acquireResource with exact EFFECT_RESOURCE_WAIT_CANCELLED. Added receiver count unchanged proof; no broadening of accepted error classes. Initial newly reachable historical ADAPTER_CANCELLED mismatch retained in check-1.txt."
+}

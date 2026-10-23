@@ -1,3 +1,5 @@
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -9,7 +11,7 @@ import {storeReviewReport} from '../../../skills/nova/plugins/review/src/review-
 import {report} from './review-report-locale-fixture.mjs';
 
 test('report writer binds real CAS result mode and complete owner; invalid JSON never runs getters',async()=>{
- const root=fs.mkdtempSync(path.join(os.tmpdir(),'report-boundary-')),adapter=activate({config:{artifactRoot:root}});
+ const root=fs.mkdtempSync(path.join(os.tmpdir(),'report-boundary-')),adapter=activate({config:{ ...TEST_ARTIFACT_STORE_POLICY,artifactRoot:root}});
  const attempt={runId:'run:report-hex',stageId:'review',attemptId:'attempt-hex',attemptNumber:1};let result,calls=0;
  const original={contract:{lease:{attempt}},invoke:async(capability,request)=>{
   result=await adapter.invoke({confidential:true,signal:new AbortController().signal,request:{...request,capability,attempt,idempotencyKey:'report:boundary:1'}});return result;

@@ -1,0 +1,46 @@
+{
+  "qualification": "Direct source-specific physical/body/node/root comparisons only, not native or new generic validation",
+  "at": "2026-10-14T04:01:31.400480+00:00",
+  "originalPrimaryFieldOccurrences": 343,
+  "originalControllerFields": 49,
+  "originalCaseOccurrences": 1739,
+  "uniqueOriginalCases": 1738,
+  "currentFields": 261,
+  "BrowserCurrentTwelveArmFields": 105,
+  "currentMemberEdges": 1926,
+  "GatewaySchemaRecords": 140,
+  "GatewaySchemaLeafPairs": 137,
+  "GatewayOmissions": [
+    {
+      "id": "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-6-ASTRA-AGENTRUNTIME-ID",
+      "profileId": "local-A",
+      "disposition": "conditional model catalogue absent under selected primary, no ghost default runtime",
+      "noReceivingNode": true
+    },
+    {
+      "id": "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-INBOUNDWORKER-RUNTIMEOUTMS",
+      "profileId": "local-A",
+      "disposition": "excluded unsupported dormant field; never generated",
+      "noReceivingNode": true
+    },
+    {
+      "id": "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-INBOUNDWORKER-RUNTIMEOUTMS",
+      "profileId": "local-B",
+      "disposition": "excluded unsupported dormant field; never generated",
+      "noReceivingNode": true
+    }
+  ],
+  "GatewayOriginalFields": 70,
+  "GatewayMemberEdges": 279,
+  "fullEntries": 422,
+  "physicalRootSchemaEntryOutputMembers": 856,
+  "inputCodecMembers": 208,
+  "canonical": {
+    "inventoryRaw": "d113ff0289b6030afafb4c30d6d4b67115a7d7ee567e43fd851e7bff658399bf",
+    "matrixRaw": "397386f9a5d541664995fc0a5c008f74cbc9a5559c85924480ae403c5ae36020",
+    "proposedVersion": "pipeline-entry.v8",
+    "actualCurrentCanonicalVersion": "pipeline-entry.v7",
+    "sameCurrentMetadataBothRoots": true
+  },
+  "errors": []
+}

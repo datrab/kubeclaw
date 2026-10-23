@@ -65,12 +65,12 @@ No unresolved production defect was found within the locally exercised migration
 
 ## Evidence index
 
-- [Own plan and exact module/type/lint scope](/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-component-worker-listener-20260921/plan.json)
-- [Positive first block and preserved failure](/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-component-worker-listener-20260921/run2/results.json)
-- [Bound corrected continuation](/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-component-worker-listener-20260921/run3/results.json)
-- [Exact prior source delta](/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-component-worker-listener-20260921/run3/prior-source-delta.json)
-- [Twelve semantic controls](/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-component-worker-listener-20260921/controls/run1/results.json)
-- [Complete original-name audit](/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-component-worker-listener-20260921/complete-case-name-audit.json)
-- [Loaded temporary-source classification](/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-component-worker-listener-20260921/run2/loaded-closure-audit.json)
-- [Diagnostic guard controls](/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-component-worker-listener-20260921/guard-check.json)
-- [Preserved fixture finding](/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-component-worker-listener-20260921/run2-findings.json)
+- [Own plan and exact module/type/lint scope](../../evidence/independent-component-worker-listener-20260921/plan.json)
+- [Positive first block and preserved failure](../../evidence/independent-component-worker-listener-20260921/run2/results.json)
+- [Bound corrected continuation](../../evidence/independent-component-worker-listener-20260921/run3/results.json)
+- [Exact prior source delta](../../evidence/independent-component-worker-listener-20260921/run3/prior-source-delta.json)
+- [Twelve semantic controls](../../evidence/independent-component-worker-listener-20260921/controls/run1/results.json)
+- [Complete original-name audit](../../evidence/independent-component-worker-listener-20260921/complete-case-name-audit.json)
+- [Loaded temporary-source classification](../../evidence/independent-component-worker-listener-20260921/run2/loaded-closure-audit.json)
+- [Diagnostic guard controls](../../evidence/independent-component-worker-listener-20260921/guard-check.json)
+- [Preserved fixture finding](../../evidence/independent-component-worker-listener-20260921/run2-findings.json)

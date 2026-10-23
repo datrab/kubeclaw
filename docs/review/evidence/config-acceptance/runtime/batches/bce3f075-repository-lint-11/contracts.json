@@ -1,0 +1,995 @@
+{
+  "entries": [
+    {
+      "setting": "RT-861151f1c38043d9",
+      "field": "policyPath",
+      "registration": "kubeclaw.lint:pre-check",
+      "classification": "operator-policy-bundle-locator",
+      "current": "Stage requirednonempty no fallback -> payload -> adapter realpath containment against capturedallowedPolicyRoots -> engine loadLintPolicy fullpolicy+project+paths+governance. No ENV/CLI fieldfallback.",
+      "targetDomain": "Existing exact fullyvalidapprovedbundle file under currentcapturedcanonicalpolicyroots +source/digest/grants; no pathonlyvalidity/whole bundleknob claim. Nestedpolicy fields are separate unapportioned backlog.",
+      "completeAB": "A approved-A.json/B approved-B.json bothvalidsameproject/task; differentdeclared rulebaseline/toolregistry identity; concrete authentic complete bundle fixture prerequisite.",
+      "methodOracle": "stage requestexactpath; deniedoutsidepath rejectsbeforetools; bundleunknownproject/schema/governance rejects; retainedgeneration includes exactpolicybytes notfilenamecurrentcontents; no latestsubstitution.",
+      "source": {
+        "path": "skills/nova/plugins/lint/src/stage.ts",
+        "sha256": "6ba5172934f59d7b806e90ff1ce114feb8efe386a61ccedd8b86afc46b07d864"
+      },
+      "caller": "manifest exactregistration -> canonicalregistry/schema -> actual AdapterStarter.startAll/activate and AdapterRuntime invoke, or StageExecutor exactregistered executePreCheck/executeFull -> context.invoke lint.execute -> activated lint executor -> executeLintReport. No SDK codec selection inferred.",
+      "author": "Existing original row target author proposal preserved, not independently approved sole author. Adapter installation/root/grant policy vs stage task/bundle/report config remain distinct; systementry/profilepackaging/generationcarrier parentOPEN.",
+      "futureCases": [
+        {
+          "kind": "VAL",
+          "requirements": [
+            "F-VAL",
+            "F-AUTH"
+          ],
+          "input": "A approved-A.json/B approved-B.json bothvalidsameproject/task; differentdeclared rulebaseline/toolregistry identity; concrete authentic complete bundle fixture prerequisite.",
+          "action": "Full owning schema/selectedbundle before productiveeffects; missing/null/unknown/wrongtype/specific outofdomain; sameboundarycompletepositive andrestore",
+          "oracle": "stage requestexactpath; deniedoutsidepath rejectsbeforetools; bundleunknownproject/schema/governance rejects; retainedgeneration includes exactpolicybytes notfilenamecurrentcontents; no latestsubstitution.",
+          "result": "not-run"
+        },
+        {
+          "kind": "AB",
+          "requirements": [
+            "F-EFFECT"
+          ],
+          "input": "A approved-A.json/B approved-B.json bothvalidsameproject/task; differentdeclared rulebaseline/toolregistry identity; concrete authentic complete bundle fixture prerequisite.",
+          "action": "Same actualmethod/taskfixedsourceundercompleteA/B, with independently genuine task/coverage/grant identity; task-source expectedHead explicitlynot independentknob",
+          "oracle": "stage requestexactpath; deniedoutsidepath rejectsbeforetools; bundleunknownproject/schema/governance rejects; retainedgeneration includes exactpolicybytes notfilenamecurrentcontents; no latestsubstitution.",
+          "result": "not-run"
+        },
+        {
+          "kind": "RECOVERY",
+          "requirements": [
+            "F-BIND"
+          ],
+          "input": "A approved-A.json/B approved-B.json bothvalidsameproject/task; differentdeclared rulebaseline/toolregistry identity; concrete authentic complete bundle fixture prerequisite.",
+          "action": "Start logicalmoduleA, publishB, crash/repair/retry/alllaterstages+cleanupretainA; nextunstartedmoduleusesB accordingparentD20typedcarrier\u2014notstageprefix or latestfile",
+          "oracle": "stage requestexactpath; deniedoutsidepath rejectsbeforetools; bundleunknownproject/schema/governance rejects; retainedgeneration includes exactpolicybytes notfilenamecurrentcontents; no latestsubstitution.",
+          "result": "not-run"
+        },
+        {
+          "kind": "EVAL",
+          "requirements": [
+            "F-EVAL"
+          ],
+          "input": "A approved-A.json/B approved-B.json bothvalidsameproject/task; differentdeclared rulebaseline/toolregistry identity; concrete authentic complete bundle fixture prerequisite.",
+          "action": "Pin full source/input/role/grant/dependency/policy+retainedhistory; genuine methodoutputs and budgets underfixedeligibleprofiles; no substitutions or trimmedcoverage",
+          "oracle": "stage requestexactpath; deniedoutsidepath rejectsbeforetools; bundleunknownproject/schema/governance rejects; retainedgeneration includes exactpolicybytes notfilenamecurrentcontents; no latestsubstitution.",
+          "result": "not-run"
+        }
+      ]
+    },
+    {
+      "setting": "RT-3868555514538d7c",
+      "field": "policyProject",
+      "registration": "kubeclaw.lint:pre-check",
+      "classification": "policy-bundle-selector",
+      "current": "requirednonempty -> requestPayload string -> selectPolicyProject exactexistingid; task input.project onlylabelsreport/resource, not overridepolicyProject.",
+      "targetDomain": "Declared projectidpresentin selected completebundle; both A/B validselectedpolicyunderunchangedcoverage/grants. Differentproject maychange taskcoverage; no empty/unknown selection.",
+      "completeAB": "A approved/B approved-other bothrealdeclaredbundleprojectwith same task coverage; not mereidrenaming.",
+      "methodOracle": "unknown projectrejects beforetool registry/discovery; input.project cannotredirectselectedpolicy; samecoverage genuinefixture required.",
+      "source": {
+        "path": "skills/nova/plugins/lint/src/engine/index.ts",
+        "sha256": "b7c408dc76e87aada6047264734c766b259a24254d7a3bb59e5fb735229c5214"
+      },
+      "caller": "manifest exactregistration -> canonicalregistry/schema -> actual AdapterStarter.startAll/activate and AdapterRuntime invoke, or StageExecutor exactregistered executePreCheck/executeFull -> context.invoke lint.execute -> activated lint executor -> executeLintReport. No SDK codec selection inferred.",
+      "author": "Existing original row target author proposal preserved, not independently approved sole author. Adapter installation/root/grant policy vs stage task/bundle/report config remain distinct; systementry/profilepackaging/generationcarrier parentOPEN.",
+      "futureCases": [
+        {
+          "kind": "VAL",
+          "requirements": [
+            "F-VAL",
+            "F-AUTH"
+          ],
+          "input": "A approved/B approved-other bothrealdeclaredbundleprojectwith same task coverage; not mereidrenaming.",
+          "action": "Full owning schema/selectedbundle before productiveeffects; missing/null/unknown/wrongtype/specific outofdomain; sameboundarycompletepositive andrestore",
+          "oracle": "unknown projectrejects beforetool registry/discovery; input.project cannotredirectselectedpolicy; samecoverage genuinefixture required.",
+          "result": "not-run"
+        },
+        {
+          "kind": "AB",
+          "requirements": [
+            "F-EFFECT"
+          ],
+          "input": "A approved/B approved-other bothrealdeclaredbundleprojectwith same task coverage; not mereidrenaming.",
+          "action": "Same actualmethod/taskfixedsourceundercompleteA/B, with independently genuine task/coverage/grant identity; task-source expectedHead explicitlynot independentknob",
+          "oracle": "unknown projectrejects beforetool registry/discovery; input.project cannotredirectselectedpolicy; samecoverage genuinefixture required.",
+          "result": "not-run"
+        },
+        {
+          "kind": "RECOVERY",
+          "requirements": [
+            "F-BIND"
+          ],
+          "input": "A approved/B approved-other bothrealdeclaredbundleprojectwith same task coverage; not mereidrenaming.",
+          "action": "Start logicalmoduleA, publishB, crash/repair/retry/alllaterstages+cleanupretainA; nextunstartedmoduleusesB accordingparentD20typedcarrier\u2014notstageprefix or latestfile",
+          "oracle": "unknown projectrejects beforetool registry/discovery; input.project cannotredirectselectedpolicy; samecoverage genuinefixture required.",
+          "result": "not-run"
+        },
+        {
+          "kind": "EVAL",
+          "requirements": [
+            "F-EVAL"
+          ],
+          "input": "A approved/B approved-other bothrealdeclaredbundleprojectwith same task coverage; not mereidrenaming.",
+          "action": "Pin full source/input/role/grant/dependency/policy+retainedhistory; genuine methodoutputs and budgets underfixedeligibleprofiles; no substitutions or trimmedcoverage",
+          "oracle": "unknown projectrejects beforetool registry/discovery; input.project cannotredirectselectedpolicy; samecoverage genuinefixture required.",
+          "result": "not-run"
+        }
+      ]
+    },
+    {
+      "setting": "RT-d8ebf6f356c617b2",
+      "field": "includeDebt",
+      "registration": "kubeclaw.lint:pre-check",
+      "classification": "operator-report-policy",
+      "current": "Stage ===true defaultfalse semantic independentof Ajv default insertion; requestPayload keepsflagonlytrue; report includes allfindings iftrue vsactiveotherwise; baseline/blockingcalculation stillactive, notautomaticweakenblocking.",
+      "targetDomain": "Requiredboolean target no absentfallback. True allows baselined findingvisibility, notpermission tochange baselineor erase originalevidence.",
+      "completeAB": "Afalse/Btrue withsamevalidatedreporttoolfindings oneactive+oneauthenticatedbaseline.",
+      "methodOracle": "findings set differs bybaselineditem; activeerrors/warnings/blockingunchanged; reportmetadata debtflag exact. Unknown/type/missingrejectowningtarget beforetools; current directtruthy strings treatedfalse distinct.",
+      "source": {
+        "path": "skills/nova/plugins/lint/src/engine/report.ts",
+        "sha256": "62246dd40865be23329e9c0ba091cfb97b41fabb8e26981a52713c1006d1244b"
+      },
+      "caller": "manifest exactregistration -> canonicalregistry/schema -> actual AdapterStarter.startAll/activate and AdapterRuntime invoke, or StageExecutor exactregistered executePreCheck/executeFull -> context.invoke lint.execute -> activated lint executor -> executeLintReport. No SDK codec selection inferred.",
+      "author": "Existing original row target author proposal preserved, not independently approved sole author. Adapter installation/root/grant policy vs stage task/bundle/report config remain distinct; systementry/profilepackaging/generationcarrier parentOPEN.",
+      "futureCases": [
+        {
+          "kind": "VAL",
+          "requirements": [
+            "F-VAL",
+            "F-AUTH"
+          ],
+          "input": "Afalse/Btrue withsamevalidatedreporttoolfindings oneactive+oneauthenticatedbaseline.",
+          "action": "Full owning schema/selectedbundle before productiveeffects; missing/null/unknown/wrongtype/specific outofdomain; sameboundarycompletepositive andrestore",
+          "oracle": "findings set differs bybaselineditem; activeerrors/warnings/blockingunchanged; reportmetadata debtflag exact. Unknown/type/missingrejectowningtarget beforetools; current directtruthy strings treatedfalse distinct.",
+          "result": "not-run"
+        },
+        {
+          "kind": "AB",
+          "requirements": [
+            "F-EFFECT"
+          ],
+          "input": "Afalse/Btrue withsamevalidatedreporttoolfindings oneactive+oneauthenticatedbaseline.",
+          "action": "Same actualmethod/taskfixedsourceundercompleteA/B, with independently genuine task/coverage/grant identity; task-source expectedHead explicitlynot independentknob",
+          "oracle": "findings set differs bybaselineditem; activeerrors/warnings/blockingunchanged; reportmetadata debtflag exact. Unknown/type/missingrejectowningtarget beforetools; current directtruthy strings treatedfalse distinct.",
+          "result": "not-run"
+        },
+        {
+          "kind": "RECOVERY",
+          "requirements": [
+            "F-BIND"
+          ],
+          "input": "Afalse/Btrue withsamevalidatedreporttoolfindings oneactive+oneauthenticatedbaseline.",
+          "action": "Start logicalmoduleA, publishB, crash/repair/retry/alllaterstages+cleanupretainA; nextunstartedmoduleusesB accordingparentD20typedcarrier\u2014notstageprefix or latestfile",
+          "oracle": "findings set differs bybaselineditem; activeerrors/warnings/blockingunchanged; reportmetadata debtflag exact. Unknown/type/missingrejectowningtarget beforetools; current directtruthy strings treatedfalse distinct.",
+          "result": "not-run"
+        },
+        {
+          "kind": "EVAL",
+          "requirements": [
+            "F-EVAL"
+          ],
+          "input": "Afalse/Btrue withsamevalidatedreporttoolfindings oneactive+oneauthenticatedbaseline.",
+          "action": "Pin full source/input/role/grant/dependency/policy+retainedhistory; genuine methodoutputs and budgets underfixedeligibleprofiles; no substitutions or trimmedcoverage",
+          "oracle": "findings set differs bybaselineditem; activeerrors/warnings/blockingunchanged; reportmetadata debtflag exact. Unknown/type/missingrejectowningtarget beforetools; current directtruthy strings treatedfalse distinct.",
+          "result": "not-run"
+        }
+      ]
+    },
+    {
+      "setting": "RT-be07606dce452256",
+      "field": "includeExperimental",
+      "registration": "kubeclaw.lint:pre-check",
+      "classification": "operator-tool-selection-policy",
+      "current": "Stage ===true false absent; engine tool registry filters modeblocking OR flagtrue. This invokes additional nonblocking/exploratory tools, not justreport bit.",
+      "targetDomain": "Requiredboolean target; true onlywithapproved genuineexacttool executable/dependency/source/policy/grants and resourcecoverage; cannot claim alltoolsinstalled.",
+      "completeAB": "Afalse/Btrue samepolicyregistry includes actualblocking andexperimentaltool fixtures.",
+      "methodOracle": "A blocking only/B additional experimental; failures retaintool evidence/resultblockingsemantics; cancel/shutdowndisposes allrealtoolgroups; real tool effectsNOTRUN.",
+      "source": {
+        "path": "skills/nova/plugins/lint/src/engine/report.ts",
+        "sha256": "62246dd40865be23329e9c0ba091cfb97b41fabb8e26981a52713c1006d1244b"
+      },
+      "caller": "manifest exactregistration -> canonicalregistry/schema -> actual AdapterStarter.startAll/activate and AdapterRuntime invoke, or StageExecutor exactregistered executePreCheck/executeFull -> context.invoke lint.execute -> activated lint executor -> executeLintReport. No SDK codec selection inferred.",
+      "author": "Existing original row target author proposal preserved, not independently approved sole author. Adapter installation/root/grant policy vs stage task/bundle/report config remain distinct; systementry/profilepackaging/generationcarrier parentOPEN.",
+      "futureCases": [
+        {
+          "kind": "VAL",
+          "requirements": [
+            "F-VAL",
+            "F-AUTH"
+          ],
+          "input": "Afalse/Btrue samepolicyregistry includes actualblocking andexperimentaltool fixtures.",
+          "action": "Full owning schema/selectedbundle before productiveeffects; missing/null/unknown/wrongtype/specific outofdomain; sameboundarycompletepositive andrestore",
+          "oracle": "A blocking only/B additional experimental; failures retaintool evidence/resultblockingsemantics; cancel/shutdowndisposes allrealtoolgroups; real tool effectsNOTRUN.",
+          "result": "not-run"
+        },
+        {
+          "kind": "AB",
+          "requirements": [
+            "F-EFFECT"
+          ],
+          "input": "Afalse/Btrue samepolicyregistry includes actualblocking andexperimentaltool fixtures.",
+          "action": "Same actualmethod/taskfixedsourceundercompleteA/B, with independently genuine task/coverage/grant identity; task-source expectedHead explicitlynot independentknob",
+          "oracle": "A blocking only/B additional experimental; failures retaintool evidence/resultblockingsemantics; cancel/shutdowndisposes allrealtoolgroups; real tool effectsNOTRUN.",
+          "result": "not-run"
+        },
+        {
+          "kind": "RECOVERY",
+          "requirements": [
+            "F-BIND"
+          ],
+          "input": "Afalse/Btrue samepolicyregistry includes actualblocking andexperimentaltool fixtures.",
+          "action": "Start logicalmoduleA, publishB, crash/repair/retry/alllaterstages+cleanupretainA; nextunstartedmoduleusesB accordingparentD20typedcarrier\u2014notstageprefix or latestfile",
+          "oracle": "A blocking only/B additional experimental; failures retaintool evidence/resultblockingsemantics; cancel/shutdowndisposes allrealtoolgroups; real tool effectsNOTRUN.",
+          "result": "not-run"
+        },
+        {
+          "kind": "EVAL",
+          "requirements": [
+            "F-EVAL"
+          ],
+          "input": "Afalse/Btrue samepolicyregistry includes actualblocking andexperimentaltool fixtures.",
+          "action": "Pin full source/input/role/grant/dependency/policy+retainedhistory; genuine methodoutputs and budgets underfixedeligibleprofiles; no substitutions or trimmedcoverage",
+          "oracle": "A blocking only/B additional experimental; failures retaintool evidence/resultblockingsemantics; cancel/shutdowndisposes allrealtoolgroups; real tool effectsNOTRUN.",
+          "result": "not-run"
+        }
+      ]
+    },
+    {
+      "setting": "RT-cdfe9d6d2726e553",
+      "field": "policyPath",
+      "registration": "kubeclaw.lint:full",
+      "classification": "operator-policy-bundle-locator",
+      "current": "Stage requirednonempty no fallback -> payload -> adapter realpath containment against capturedallowedPolicyRoots -> engine loadLintPolicy fullpolicy+project+paths+governance. No ENV/CLI fieldfallback.",
+      "targetDomain": "Existing exact fullyvalidapprovedbundle file under currentcapturedcanonicalpolicyroots +source/digest/grants; no pathonlyvalidity/whole bundleknob claim. Nestedpolicy fields are separate unapportioned backlog.",
+      "completeAB": "A approved-A.json/B approved-B.json bothvalidsameproject/task; differentdeclared rulebaseline/toolregistry identity; concrete authentic complete bundle fixture prerequisite.",
+      "methodOracle": "stage requestexactpath; deniedoutsidepath rejectsbeforetools; bundleunknownproject/schema/governance rejects; retainedgeneration includes exactpolicybytes notfilenamecurrentcontents; no latestsubstitution.",
+      "source": {
+        "path": "skills/nova/plugins/lint/src/stage.ts",
+        "sha256": "6ba5172934f59d7b806e90ff1ce114feb8efe386a61ccedd8b86afc46b07d864"
+      },
+      "caller": "manifest exactregistration -> canonicalregistry/schema -> actual AdapterStarter.startAll/activate and AdapterRuntime invoke, or StageExecutor exactregistered executePreCheck/executeFull -> context.invoke lint.execute -> activated lint executor -> executeLintReport. No SDK codec selection inferred.",
+      "author": "Existing original row target author proposal preserved, not independently approved sole author. Adapter installation/root/grant policy vs stage task/bundle/report config remain distinct; systementry/profilepackaging/generationcarrier parentOPEN.",
+      "futureCases": [
+        {
+          "kind": "VAL",
+          "requirements": [
+            "F-VAL",
+            "F-AUTH"
+          ],
+          "input": "A approved-A.json/B approved-B.json bothvalidsameproject/task; differentdeclared rulebaseline/toolregistry identity; concrete authentic complete bundle fixture prerequisite.",
+          "action": "Full owning schema/selectedbundle before productiveeffects; missing/null/unknown/wrongtype/specific outofdomain; sameboundarycompletepositive andrestore",
+          "oracle": "stage requestexactpath; deniedoutsidepath rejectsbeforetools; bundleunknownproject/schema/governance rejects; retainedgeneration includes exactpolicybytes notfilenamecurrentcontents; no latestsubstitution.",
+          "result": "not-run"
+        },
+        {
+          "kind": "AB",
+          "requirements": [
+            "F-EFFECT"
+          ],
+          "input": "A approved-A.json/B approved-B.json bothvalidsameproject/task; differentdeclared rulebaseline/toolregistry identity; concrete authentic complete bundle fixture prerequisite.",
+          "action": "Same actualmethod/taskfixedsourceundercompleteA/B, with independently genuine task/coverage/grant identity; task-source expectedHead explicitlynot independentknob",
+          "oracle": "stage requestexactpath; deniedoutsidepath rejectsbeforetools; bundleunknownproject/schema/governance rejects; retainedgeneration includes exactpolicybytes notfilenamecurrentcontents; no latestsubstitution.",
+          "result": "not-run"
+        },
+        {
+          "kind": "RECOVERY",
+          "requirements": [
+            "F-BIND"
+          ],
+          "input": "A approved-A.json/B approved-B.json bothvalidsameproject/task; differentdeclared rulebaseline/toolregistry identity; concrete authentic complete bundle fixture prerequisite.",
+          "action": "Start logicalmoduleA, publishB, crash/repair/retry/alllaterstages+cleanupretainA; nextunstartedmoduleusesB accordingparentD20typedcarrier\u2014notstageprefix or latestfile",
+          "oracle": "stage requestexactpath; deniedoutsidepath rejectsbeforetools; bundleunknownproject/schema/governance rejects; retainedgeneration includes exactpolicybytes notfilenamecurrentcontents; no latestsubstitution.",
+          "result": "not-run"
+        },
+        {
+          "kind": "EVAL",
+          "requirements": [
+            "F-EVAL"
+          ],
+          "input": "A approved-A.json/B approved-B.json bothvalidsameproject/task; differentdeclared rulebaseline/toolregistry identity; concrete authentic complete bundle fixture prerequisite.",
+          "action": "Pin full source/input/role/grant/dependency/policy+retainedhistory; genuine methodoutputs and budgets underfixedeligibleprofiles; no substitutions or trimmedcoverage",
+          "oracle": "stage requestexactpath; deniedoutsidepath rejectsbeforetools; bundleunknownproject/schema/governance rejects; retainedgeneration includes exactpolicybytes notfilenamecurrentcontents; no latestsubstitution.",
+          "result": "not-run"
+        }
+      ]
+    },
+    {
+      "setting": "RT-36a194a799b00dd6",
+      "field": "policyProject",
+      "registration": "kubeclaw.lint:full",
+      "classification": "policy-bundle-selector",
+      "current": "requirednonempty -> requestPayload string -> selectPolicyProject exactexistingid; task input.project onlylabelsreport/resource, not overridepolicyProject.",
+      "targetDomain": "Declared projectidpresentin selected completebundle; both A/B validselectedpolicyunderunchangedcoverage/grants. Differentproject maychange taskcoverage; no empty/unknown selection.",
+      "completeAB": "A approved/B approved-other bothrealdeclaredbundleprojectwith same task coverage; not mereidrenaming.",
+      "methodOracle": "unknown projectrejects beforetool registry/discovery; input.project cannotredirectselectedpolicy; samecoverage genuinefixture required.",
+      "source": {
+        "path": "skills/nova/plugins/lint/src/engine/index.ts",
+        "sha256": "b7c408dc76e87aada6047264734c766b259a24254d7a3bb59e5fb735229c5214"
+      },
+      "caller": "manifest exactregistration -> canonicalregistry/schema -> actual AdapterStarter.startAll/activate and AdapterRuntime invoke, or StageExecutor exactregistered executePreCheck/executeFull -> context.invoke lint.execute -> activated lint executor -> executeLintReport. No SDK codec selection inferred.",
+      "author": "Existing original row target author proposal preserved, not independently approved sole author. Adapter installation/root/grant policy vs stage task/bundle/report config remain distinct; systementry/profilepackaging/generationcarrier parentOPEN.",
+      "futureCases": [
+        {
+          "kind": "VAL",
+          "requirements": [
+            "F-VAL",
+            "F-AUTH"
+          ],
+          "input": "A approved/B approved-other bothrealdeclaredbundleprojectwith same task coverage; not mereidrenaming.",
+          "action": "Full owning schema/selectedbundle before productiveeffects; missing/null/unknown/wrongtype/specific outofdomain; sameboundarycompletepositive andrestore",
+          "oracle": "unknown projectrejects beforetool registry/discovery; input.project cannotredirectselectedpolicy; samecoverage genuinefixture required.",
+          "result": "not-run"
+        },
+        {
+          "kind": "AB",
+          "requirements": [
+            "F-EFFECT"
+          ],
+          "input": "A approved/B approved-other bothrealdeclaredbundleprojectwith same task coverage; not mereidrenaming.",
+          "action": "Same actualmethod/taskfixedsourceundercompleteA/B, with independently genuine task/coverage/grant identity; task-source expectedHead explicitlynot independentknob",
+          "oracle": "unknown projectrejects beforetool registry/discovery; input.project cannotredirectselectedpolicy; samecoverage genuinefixture required.",
+          "result": "not-run"
+        },
+        {
+          "kind": "RECOVERY",
+          "requirements": [
+            "F-BIND"
+          ],
+          "input": "A approved/B approved-other bothrealdeclaredbundleprojectwith same task coverage; not mereidrenaming.",
+          "action": "Start logicalmoduleA, publishB, crash/repair/retry/alllaterstages+cleanupretainA; nextunstartedmoduleusesB accordingparentD20typedcarrier\u2014notstageprefix or latestfile",
+          "oracle": "unknown projectrejects beforetool registry/discovery; input.project cannotredirectselectedpolicy; samecoverage genuinefixture required.",
+          "result": "not-run"
+        },
+        {
+          "kind": "EVAL",
+          "requirements": [
+            "F-EVAL"
+          ],
+          "input": "A approved/B approved-other bothrealdeclaredbundleprojectwith same task coverage; not mereidrenaming.",
+          "action": "Pin full source/input/role/grant/dependency/policy+retainedhistory; genuine methodoutputs and budgets underfixedeligibleprofiles; no substitutions or trimmedcoverage",
+          "oracle": "unknown projectrejects beforetool registry/discovery; input.project cannotredirectselectedpolicy; samecoverage genuinefixture required.",
+          "result": "not-run"
+        }
+      ]
+    },
+    {
+      "setting": "RT-0962ccb55872fa4b",
+      "field": "includeDebt",
+      "registration": "kubeclaw.lint:full",
+      "classification": "operator-report-policy",
+      "current": "Stage ===true defaultfalse semantic independentof Ajv default insertion; requestPayload keepsflagonlytrue; report includes allfindings iftrue vsactiveotherwise; baseline/blockingcalculation stillactive, notautomaticweakenblocking.",
+      "targetDomain": "Requiredboolean target no absentfallback. True allows baselined findingvisibility, notpermission tochange baselineor erase originalevidence.",
+      "completeAB": "Afalse/Btrue withsamevalidatedreporttoolfindings oneactive+oneauthenticatedbaseline.",
+      "methodOracle": "findings set differs bybaselineditem; activeerrors/warnings/blockingunchanged; reportmetadata debtflag exact. Unknown/type/missingrejectowningtarget beforetools; current directtruthy strings treatedfalse distinct.",
+      "source": {
+        "path": "skills/nova/plugins/lint/src/engine/report.ts",
+        "sha256": "62246dd40865be23329e9c0ba091cfb97b41fabb8e26981a52713c1006d1244b"
+      },
+      "caller": "manifest exactregistration -> canonicalregistry/schema -> actual AdapterStarter.startAll/activate and AdapterRuntime invoke, or StageExecutor exactregistered executePreCheck/executeFull -> context.invoke lint.execute -> activated lint executor -> executeLintReport. No SDK codec selection inferred.",
+      "author": "Existing original row target author proposal preserved, not independently approved sole author. Adapter installation/root/grant policy vs stage task/bundle/report config remain distinct; systementry/profilepackaging/generationcarrier parentOPEN.",
+      "futureCases": [
+        {
+          "kind": "VAL",
+          "requirements": [
+            "F-VAL",
+            "F-AUTH"
+          ],
+          "input": "Afalse/Btrue withsamevalidatedreporttoolfindings oneactive+oneauthenticatedbaseline.",
+          "action": "Full owning schema/selectedbundle before productiveeffects; missing/null/unknown/wrongtype/specific outofdomain; sameboundarycompletepositive andrestore",
+          "oracle": "findings set differs bybaselineditem; activeerrors/warnings/blockingunchanged; reportmetadata debtflag exact. Unknown/type/missingrejectowningtarget beforetools; current directtruthy strings treatedfalse distinct.",
+          "result": "not-run"
+        },
+        {
+          "kind": "AB",
+          "requirements": [
+            "F-EFFECT"
+          ],
+          "input": "Afalse/Btrue withsamevalidatedreporttoolfindings oneactive+oneauthenticatedbaseline.",
+          "action": "Same actualmethod/taskfixedsourceundercompleteA/B, with independently genuine task/coverage/grant identity; task-source expectedHead explicitlynot independentknob",
+          "oracle": "findings set differs bybaselineditem; activeerrors/warnings/blockingunchanged; reportmetadata debtflag exact. Unknown/type/missingrejectowningtarget beforetools; current directtruthy strings treatedfalse distinct.",
+          "result": "not-run"
+        },
+        {
+          "kind": "RECOVERY",
+          "requirements": [
+            "F-BIND"
+          ],
+          "input": "Afalse/Btrue withsamevalidatedreporttoolfindings oneactive+oneauthenticatedbaseline.",
+          "action": "Start logicalmoduleA, publishB, crash/repair/retry/alllaterstages+cleanupretainA; nextunstartedmoduleusesB accordingparentD20typedcarrier\u2014notstageprefix or latestfile",
+          "oracle": "findings set differs bybaselineditem; activeerrors/warnings/blockingunchanged; reportmetadata debtflag exact. Unknown/type/missingrejectowningtarget beforetools; current directtruthy strings treatedfalse distinct.",
+          "result": "not-run"
+        },
+        {
+          "kind": "EVAL",
+          "requirements": [
+            "F-EVAL"
+          ],
+          "input": "Afalse/Btrue withsamevalidatedreporttoolfindings oneactive+oneauthenticatedbaseline.",
+          "action": "Pin full source/input/role/grant/dependency/policy+retainedhistory; genuine methodoutputs and budgets underfixedeligibleprofiles; no substitutions or trimmedcoverage",
+          "oracle": "findings set differs bybaselineditem; activeerrors/warnings/blockingunchanged; reportmetadata debtflag exact. Unknown/type/missingrejectowningtarget beforetools; current directtruthy strings treatedfalse distinct.",
+          "result": "not-run"
+        }
+      ]
+    },
+    {
+      "setting": "RT-6bcf520e0a029976",
+      "field": "includeExperimental",
+      "registration": "kubeclaw.lint:full",
+      "classification": "operator-tool-selection-policy",
+      "current": "Stage ===true false absent; engine tool registry filters modeblocking OR flagtrue. This invokes additional nonblocking/exploratory tools, not justreport bit.",
+      "targetDomain": "Requiredboolean target; true onlywithapproved genuineexacttool executable/dependency/source/policy/grants and resourcecoverage; cannot claim alltoolsinstalled.",
+      "completeAB": "Afalse/Btrue samepolicyregistry includes actualblocking andexperimentaltool fixtures.",
+      "methodOracle": "A blocking only/B additional experimental; failures retaintool evidence/resultblockingsemantics; cancel/shutdowndisposes allrealtoolgroups; real tool effectsNOTRUN.",
+      "source": {
+        "path": "skills/nova/plugins/lint/src/engine/report.ts",
+        "sha256": "62246dd40865be23329e9c0ba091cfb97b41fabb8e26981a52713c1006d1244b"
+      },
+      "caller": "manifest exactregistration -> canonicalregistry/schema -> actual AdapterStarter.startAll/activate and AdapterRuntime invoke, or StageExecutor exactregistered executePreCheck/executeFull -> context.invoke lint.execute -> activated lint executor -> executeLintReport. No SDK codec selection inferred.",
+      "author": "Existing original row target author proposal preserved, not independently approved sole author. Adapter installation/root/grant policy vs stage task/bundle/report config remain distinct; systementry/profilepackaging/generationcarrier parentOPEN.",
+      "futureCases": [
+        {
+          "kind": "VAL",
+          "requirements": [
+            "F-VAL",
+            "F-AUTH"
+          ],
+          "input": "Afalse/Btrue samepolicyregistry includes actualblocking andexperimentaltool fixtures.",
+          "action": "Full owning schema/selectedbundle before productiveeffects; missing/null/unknown/wrongtype/specific outofdomain; sameboundarycompletepositive andrestore",
+          "oracle": "A blocking only/B additional experimental; failures retaintool evidence/resultblockingsemantics; cancel/shutdowndisposes allrealtoolgroups; real tool effectsNOTRUN.",
+          "result": "not-run"
+        },
+        {
+          "kind": "AB",
+          "requirements": [
+            "F-EFFECT"
+          ],
+          "input": "Afalse/Btrue samepolicyregistry includes actualblocking andexperimentaltool fixtures.",
+          "action": "Same actualmethod/taskfixedsourceundercompleteA/B, with independently genuine task/coverage/grant identity; task-source expectedHead explicitlynot independentknob",
+          "oracle": "A blocking only/B additional experimental; failures retaintool evidence/resultblockingsemantics; cancel/shutdowndisposes allrealtoolgroups; real tool effectsNOTRUN.",
+          "result": "not-run"
+        },
+        {
+          "kind": "RECOVERY",
+          "requirements": [
+            "F-BIND"
+          ],
+          "input": "Afalse/Btrue samepolicyregistry includes actualblocking andexperimentaltool fixtures.",
+          "action": "Start logicalmoduleA, publishB, crash/repair/retry/alllaterstages+cleanupretainA; nextunstartedmoduleusesB accordingparentD20typedcarrier\u2014notstageprefix or latestfile",
+          "oracle": "A blocking only/B additional experimental; failures retaintool evidence/resultblockingsemantics; cancel/shutdowndisposes allrealtoolgroups; real tool effectsNOTRUN.",
+          "result": "not-run"
+        },
+        {
+          "kind": "EVAL",
+          "requirements": [
+            "F-EVAL"
+          ],
+          "input": "Afalse/Btrue samepolicyregistry includes actualblocking andexperimentaltool fixtures.",
+          "action": "Pin full source/input/role/grant/dependency/policy+retainedhistory; genuine methodoutputs and budgets underfixedeligibleprofiles; no substitutions or trimmedcoverage",
+          "oracle": "A blocking only/B additional experimental; failures retaintool evidence/resultblockingsemantics; cancel/shutdowndisposes allrealtoolgroups; real tool effectsNOTRUN.",
+          "result": "not-run"
+        }
+      ]
+    },
+    {
+      "setting": "RT-0fb54476343394c5",
+      "field": "allowedRepositoryRoots",
+      "registration": "kubeclaw.lint:executor",
+      "classification": "operator-authorized-root-set",
+      "current": "Requirednonemptystringarray in activate; schemaunique+minstring; directparsercanonicalrealpath resolves evenemptystringtocwd and duplicatecanonicalrootsaccepted. Invocation requires realpathcontainment onseparatorboundary, no lexicalprefixescape.",
+      "targetDomain": "Requirednonempty unique canonical authorized roots underexistinglint.execute grant; aliasduplicates rejected target; addingrootmustownauth/grant\u2014not taskpayload author.",
+      "completeAB": "A repo only/B repo+repo-B; same task rootA remains; legitimate new taskrootB onlyif grantapproved.",
+      "methodOracle": "A denies repo-B/B admitscontainment; siblingrepo-suffix rejected; symlink resolvesactualtarget andmustfitcapturedroots; startupempty/missing/duplicateinvalid rejected beforeeffects.",
+      "source": {
+        "path": "skills/nova/plugins/lint/src/adapter.ts",
+        "sha256": "7d525ef53fc8a187eba48e7ee15ca7f8f2df1d00a4e23823de15bae47a1b49e4"
+      },
+      "caller": "manifest exactregistration -> canonicalregistry/schema -> actual AdapterStarter.startAll/activate and AdapterRuntime invoke, or StageExecutor exactregistered executePreCheck/executeFull -> context.invoke lint.execute -> activated lint executor -> executeLintReport. No SDK codec selection inferred.",
+      "author": "Existing original row target author proposal preserved, not independently approved sole author. Adapter installation/root/grant policy vs stage task/bundle/report config remain distinct; systementry/profilepackaging/generationcarrier parentOPEN.",
+      "futureCases": [
+        {
+          "kind": "VAL",
+          "requirements": [
+            "F-VAL",
+            "F-AUTH"
+          ],
+          "input": "A repo only/B repo+repo-B; same task rootA remains; legitimate new taskrootB onlyif grantapproved.",
+          "action": "Full owning schema/selectedbundle before productiveeffects; missing/null/unknown/wrongtype/specific outofdomain; sameboundarycompletepositive andrestore",
+          "oracle": "A denies repo-B/B admitscontainment; siblingrepo-suffix rejected; symlink resolvesactualtarget andmustfitcapturedroots; startupempty/missing/duplicateinvalid rejected beforeeffects.",
+          "result": "not-run"
+        },
+        {
+          "kind": "AB",
+          "requirements": [
+            "F-EFFECT"
+          ],
+          "input": "A repo only/B repo+repo-B; same task rootA remains; legitimate new taskrootB onlyif grantapproved.",
+          "action": "Same actualmethod/taskfixedsourceundercompleteA/B, with independently genuine task/coverage/grant identity; task-source expectedHead explicitlynot independentknob",
+          "oracle": "A denies repo-B/B admitscontainment; siblingrepo-suffix rejected; symlink resolvesactualtarget andmustfitcapturedroots; startupempty/missing/duplicateinvalid rejected beforeeffects.",
+          "result": "not-run"
+        },
+        {
+          "kind": "RECOVERY",
+          "requirements": [
+            "F-BIND"
+          ],
+          "input": "A repo only/B repo+repo-B; same task rootA remains; legitimate new taskrootB onlyif grantapproved.",
+          "action": "Start logicalmoduleA, publishB, crash/repair/retry/alllaterstages+cleanupretainA; nextunstartedmoduleusesB accordingparentD20typedcarrier\u2014notstageprefix or latestfile",
+          "oracle": "A denies repo-B/B admitscontainment; siblingrepo-suffix rejected; symlink resolvesactualtarget andmustfitcapturedroots; startupempty/missing/duplicateinvalid rejected beforeeffects.",
+          "result": "not-run"
+        },
+        {
+          "kind": "EVAL",
+          "requirements": [
+            "F-EVAL"
+          ],
+          "input": "A repo only/B repo+repo-B; same task rootA remains; legitimate new taskrootB onlyif grantapproved.",
+          "action": "Pin full source/input/role/grant/dependency/policy+retainedhistory; genuine methodoutputs and budgets underfixedeligibleprofiles; no substitutions or trimmedcoverage",
+          "oracle": "A denies repo-B/B admitscontainment; siblingrepo-suffix rejected; symlink resolvesactualtarget andmustfitcapturedroots; startupempty/missing/duplicateinvalid rejected beforeeffects.",
+          "result": "not-run"
+        }
+      ]
+    },
+    {
+      "setting": "RT-c72d89a17baccb7b",
+      "field": "allowedRepositoryRoots[]",
+      "registration": "kubeclaw.lint:executor",
+      "classification": "operator-authorized-root-set",
+      "current": "Requirednonemptystringarray in activate; schemaunique+minstring; directparsercanonicalrealpath resolves evenemptystringtocwd and duplicatecanonicalrootsaccepted. Invocation requires realpathcontainment onseparatorboundary, no lexicalprefixescape.",
+      "targetDomain": "Requirednonempty unique canonical authorized roots underexistinglint.execute grant; aliasduplicates rejected target; addingrootmustownauth/grant\u2014not taskpayload author.",
+      "completeAB": "A repo only/B repo+repo-B; same task rootA remains; legitimate new taskrootB onlyif grantapproved.",
+      "methodOracle": "A denies repo-B/B admitscontainment; siblingrepo-suffix rejected; symlink resolvesactualtarget andmustfitcapturedroots; startupempty/missing/duplicateinvalid rejected beforeeffects.",
+      "source": {
+        "path": "skills/nova/plugins/lint/src/adapter.ts",
+        "sha256": "7d525ef53fc8a187eba48e7ee15ca7f8f2df1d00a4e23823de15bae47a1b49e4"
+      },
+      "caller": "manifest exactregistration -> canonicalregistry/schema -> actual AdapterStarter.startAll/activate and AdapterRuntime invoke, or StageExecutor exactregistered executePreCheck/executeFull -> context.invoke lint.execute -> activated lint executor -> executeLintReport. No SDK codec selection inferred.",
+      "author": "Existing original row target author proposal preserved, not independently approved sole author. Adapter installation/root/grant policy vs stage task/bundle/report config remain distinct; systementry/profilepackaging/generationcarrier parentOPEN.",
+      "futureCases": [
+        {
+          "kind": "VAL",
+          "requirements": [
+            "F-VAL",
+            "F-AUTH"
+          ],
+          "input": "A repo only/B repo+repo-B; same task rootA remains; legitimate new taskrootB onlyif grantapproved.",
+          "action": "Full owning schema/selectedbundle before productiveeffects; missing/null/unknown/wrongtype/specific outofdomain; sameboundarycompletepositive andrestore",
+          "oracle": "A denies repo-B/B admitscontainment; siblingrepo-suffix rejected; symlink resolvesactualtarget andmustfitcapturedroots; startupempty/missing/duplicateinvalid rejected beforeeffects.",
+          "result": "not-run"
+        },
+        {
+          "kind": "AB",
+          "requirements": [
+            "F-EFFECT"
+          ],
+          "input": "A repo only/B repo+repo-B; same task rootA remains; legitimate new taskrootB onlyif grantapproved.",
+          "action": "Same actualmethod/taskfixedsourceundercompleteA/B, with independently genuine task/coverage/grant identity; task-source expectedHead explicitlynot independentknob",
+          "oracle": "A denies repo-B/B admitscontainment; siblingrepo-suffix rejected; symlink resolvesactualtarget andmustfitcapturedroots; startupempty/missing/duplicateinvalid rejected beforeeffects.",
+          "result": "not-run"
+        },
+        {
+          "kind": "RECOVERY",
+          "requirements": [
+            "F-BIND"
+          ],
+          "input": "A repo only/B repo+repo-B; same task rootA remains; legitimate new taskrootB onlyif grantapproved.",
+          "action": "Start logicalmoduleA, publishB, crash/repair/retry/alllaterstages+cleanupretainA; nextunstartedmoduleusesB accordingparentD20typedcarrier\u2014notstageprefix or latestfile",
+          "oracle": "A denies repo-B/B admitscontainment; siblingrepo-suffix rejected; symlink resolvesactualtarget andmustfitcapturedroots; startupempty/missing/duplicateinvalid rejected beforeeffects.",
+          "result": "not-run"
+        },
+        {
+          "kind": "EVAL",
+          "requirements": [
+            "F-EVAL"
+          ],
+          "input": "A repo only/B repo+repo-B; same task rootA remains; legitimate new taskrootB onlyif grantapproved.",
+          "action": "Pin full source/input/role/grant/dependency/policy+retainedhistory; genuine methodoutputs and budgets underfixedeligibleprofiles; no substitutions or trimmedcoverage",
+          "oracle": "A denies repo-B/B admitscontainment; siblingrepo-suffix rejected; symlink resolvesactualtarget andmustfitcapturedroots; startupempty/missing/duplicateinvalid rejected beforeeffects.",
+          "result": "not-run"
+        }
+      ]
+    },
+    {
+      "setting": "RT-39db4fe31eda9428",
+      "field": "allowedPolicyRoots",
+      "registration": "kubeclaw.lint:executor",
+      "classification": "operator-authorized-policy-root-set",
+      "current": "Same configuredRoots capturedactivation, request policyPath realpath containment; policy file maybe symlinkonlyif canonicaltarget insideauthorizedroots. Current directparserallowsaliases/emptystrings unlike schema.",
+      "targetDomain": "Requirednonempty unique canonical authorizedpolicyroots; exactimmutablepolicybundle/sourceidentity prerequisite, notfilename sufficient.",
+      "completeAB": "A policy only/B policy+policy-B; existingA remainsowned; genuinegrantverifiedB.",
+      "methodOracle": "outsidepolicy canonicalpath denied beforeload/tools; siblingprefix rejected; duplicatealias rejected proposedcanonical domain; recoveredA retains originalroot+bundle identity.",
+      "source": {
+        "path": "skills/nova/plugins/lint/src/adapter.ts",
+        "sha256": "7d525ef53fc8a187eba48e7ee15ca7f8f2df1d00a4e23823de15bae47a1b49e4"
+      },
+      "caller": "manifest exactregistration -> canonicalregistry/schema -> actual AdapterStarter.startAll/activate and AdapterRuntime invoke, or StageExecutor exactregistered executePreCheck/executeFull -> context.invoke lint.execute -> activated lint executor -> executeLintReport. No SDK codec selection inferred.",
+      "author": "Existing original row target author proposal preserved, not independently approved sole author. Adapter installation/root/grant policy vs stage task/bundle/report config remain distinct; systementry/profilepackaging/generationcarrier parentOPEN.",
+      "futureCases": [
+        {
+          "kind": "VAL",
+          "requirements": [
+            "F-VAL",
+            "F-AUTH"
+          ],
+          "input": "A policy only/B policy+policy-B; existingA remainsowned; genuinegrantverifiedB.",
+          "action": "Full owning schema/selectedbundle before productiveeffects; missing/null/unknown/wrongtype/specific outofdomain; sameboundarycompletepositive andrestore",
+          "oracle": "outsidepolicy canonicalpath denied beforeload/tools; siblingprefix rejected; duplicatealias rejected proposedcanonical domain; recoveredA retains originalroot+bundle identity.",
+          "result": "not-run"
+        },
+        {
+          "kind": "AB",
+          "requirements": [
+            "F-EFFECT"
+          ],
+          "input": "A policy only/B policy+policy-B; existingA remainsowned; genuinegrantverifiedB.",
+          "action": "Same actualmethod/taskfixedsourceundercompleteA/B, with independently genuine task/coverage/grant identity; task-source expectedHead explicitlynot independentknob",
+          "oracle": "outsidepolicy canonicalpath denied beforeload/tools; siblingprefix rejected; duplicatealias rejected proposedcanonical domain; recoveredA retains originalroot+bundle identity.",
+          "result": "not-run"
+        },
+        {
+          "kind": "RECOVERY",
+          "requirements": [
+            "F-BIND"
+          ],
+          "input": "A policy only/B policy+policy-B; existingA remainsowned; genuinegrantverifiedB.",
+          "action": "Start logicalmoduleA, publishB, crash/repair/retry/alllaterstages+cleanupretainA; nextunstartedmoduleusesB accordingparentD20typedcarrier\u2014notstageprefix or latestfile",
+          "oracle": "outsidepolicy canonicalpath denied beforeload/tools; siblingprefix rejected; duplicatealias rejected proposedcanonical domain; recoveredA retains originalroot+bundle identity.",
+          "result": "not-run"
+        },
+        {
+          "kind": "EVAL",
+          "requirements": [
+            "F-EVAL"
+          ],
+          "input": "A policy only/B policy+policy-B; existingA remainsowned; genuinegrantverifiedB.",
+          "action": "Pin full source/input/role/grant/dependency/policy+retainedhistory; genuine methodoutputs and budgets underfixedeligibleprofiles; no substitutions or trimmedcoverage",
+          "oracle": "outsidepolicy canonicalpath denied beforeload/tools; siblingprefix rejected; duplicatealias rejected proposedcanonical domain; recoveredA retains originalroot+bundle identity.",
+          "result": "not-run"
+        }
+      ]
+    },
+    {
+      "setting": "RT-76791de9a633c9ce",
+      "field": "allowedPolicyRoots[]",
+      "registration": "kubeclaw.lint:executor",
+      "classification": "operator-authorized-policy-root-set",
+      "current": "Same configuredRoots capturedactivation, request policyPath realpath containment; policy file maybe symlinkonlyif canonicaltarget insideauthorizedroots. Current directparserallowsaliases/emptystrings unlike schema.",
+      "targetDomain": "Requirednonempty unique canonical authorizedpolicyroots; exactimmutablepolicybundle/sourceidentity prerequisite, notfilename sufficient.",
+      "completeAB": "A policy only/B policy+policy-B; existingA remainsowned; genuinegrantverifiedB.",
+      "methodOracle": "outsidepolicy canonicalpath denied beforeload/tools; siblingprefix rejected; duplicatealias rejected proposedcanonical domain; recoveredA retains originalroot+bundle identity.",
+      "source": {
+        "path": "skills/nova/plugins/lint/src/adapter.ts",
+        "sha256": "7d525ef53fc8a187eba48e7ee15ca7f8f2df1d00a4e23823de15bae47a1b49e4"
+      },
+      "caller": "manifest exactregistration -> canonicalregistry/schema -> actual AdapterStarter.startAll/activate and AdapterRuntime invoke, or StageExecutor exactregistered executePreCheck/executeFull -> context.invoke lint.execute -> activated lint executor -> executeLintReport. No SDK codec selection inferred.",
+      "author": "Existing original row target author proposal preserved, not independently approved sole author. Adapter installation/root/grant policy vs stage task/bundle/report config remain distinct; systementry/profilepackaging/generationcarrier parentOPEN.",
+      "futureCases": [
+        {
+          "kind": "VAL",
+          "requirements": [
+            "F-VAL",
+            "F-AUTH"
+          ],
+          "input": "A policy only/B policy+policy-B; existingA remainsowned; genuinegrantverifiedB.",
+          "action": "Full owning schema/selectedbundle before productiveeffects; missing/null/unknown/wrongtype/specific outofdomain; sameboundarycompletepositive andrestore",
+          "oracle": "outsidepolicy canonicalpath denied beforeload/tools; siblingprefix rejected; duplicatealias rejected proposedcanonical domain; recoveredA retains originalroot+bundle identity.",
+          "result": "not-run"
+        },
+        {
+          "kind": "AB",
+          "requirements": [
+            "F-EFFECT"
+          ],
+          "input": "A policy only/B policy+policy-B; existingA remainsowned; genuinegrantverifiedB.",
+          "action": "Same actualmethod/taskfixedsourceundercompleteA/B, with independently genuine task/coverage/grant identity; task-source expectedHead explicitlynot independentknob",
+          "oracle": "outsidepolicy canonicalpath denied beforeload/tools; siblingprefix rejected; duplicatealias rejected proposedcanonical domain; recoveredA retains originalroot+bundle identity.",
+          "result": "not-run"
+        },
+        {
+          "kind": "RECOVERY",
+          "requirements": [
+            "F-BIND"
+          ],
+          "input": "A policy only/B policy+policy-B; existingA remainsowned; genuinegrantverifiedB.",
+          "action": "Start logicalmoduleA, publishB, crash/repair/retry/alllaterstages+cleanupretainA; nextunstartedmoduleusesB accordingparentD20typedcarrier\u2014notstageprefix or latestfile",
+          "oracle": "outsidepolicy canonicalpath denied beforeload/tools; siblingprefix rejected; duplicatealias rejected proposedcanonical domain; recoveredA retains originalroot+bundle identity.",
+          "result": "not-run"
+        },
+        {
+          "kind": "EVAL",
+          "requirements": [
+            "F-EVAL"
+          ],
+          "input": "A policy only/B policy+policy-B; existingA remainsowned; genuinegrantverifiedB.",
+          "action": "Pin full source/input/role/grant/dependency/policy+retainedhistory; genuine methodoutputs and budgets underfixedeligibleprofiles; no substitutions or trimmedcoverage",
+          "oracle": "outsidepolicy canonicalpath denied beforeload/tools; siblingprefix rejected; duplicatealias rejected proposedcanonical domain; recoveredA retains originalroot+bundle identity.",
+          "result": "not-run"
+        }
+      ]
+    },
+    {
+      "setting": "RT-89d7ff67ced4d9b4",
+      "field": "repositoryRoot",
+      "registration": "kubeclaw.repository-adapter:repository",
+      "classification": "installation-locator",
+      "current": "Required nonempty; direct activation rejects symlink root and realpath!=resolve; ready checksdirectory. No ENV/CLI fallback. Adapter captures canonicalroot atactivate. read_text rejects traversal/escape and descriptors NOFOLLOW; revision requests assertpayloadroot onlyifpresent.",
+      "targetDomain": "Canonical existing authorized directory under unchanged adapter git.repository.read grant; directory/source identity not a content grant expansion. Symlink/existing relative lexical roots require explicit reject case.",
+      "completeAB": "A repo contains file note.txt=123456789abcdef (16 ASCII bytes), B additional existing repo-B with distinct content and same owned capability. Actual repositoryRoot change requires approved activation/package/grant instance; not payload override.",
+      "methodOracle": "read_text note.txt resolves exactcapturedroot/content; symlinkroot/escapinglink rejects; retainedA never follows publishedB.",
+      "source": {
+        "path": "skills/nova/plugins/repository-adapter/src/adapter.ts",
+        "sha256": "657ec9c38069eead03aa531e5d5b60041c8fe34b643e2bab838eb0a80e12afcd"
+      },
+      "caller": "manifest exactregistration -> canonicalregistry/schema -> actual AdapterStarter.startAll/activate and AdapterRuntime invoke, or StageExecutor exactregistered executePreCheck/executeFull -> context.invoke lint.execute -> activated lint executor -> executeLintReport. No SDK codec selection inferred.",
+      "author": "Existing original row target author proposal preserved, not independently approved sole author. Adapter installation/root/grant policy vs stage task/bundle/report config remain distinct; systementry/profilepackaging/generationcarrier parentOPEN.",
+      "futureCases": [
+        {
+          "kind": "VAL",
+          "requirements": [
+            "F-VAL",
+            "F-AUTH"
+          ],
+          "input": "A repo contains file note.txt=123456789abcdef (16 ASCII bytes), B additional existing repo-B with distinct content and same owned capability. Actual repositoryRoot change requires approved activation/package/grant instance; not payload override.",
+          "action": "Full owning schema/selectedbundle before productiveeffects; missing/null/unknown/wrongtype/specific outofdomain; sameboundarycompletepositive andrestore",
+          "oracle": "read_text note.txt resolves exactcapturedroot/content; symlinkroot/escapinglink rejects; retainedA never follows publishedB.",
+          "result": "not-run"
+        },
+        {
+          "kind": "AB",
+          "requirements": [
+            "F-EFFECT"
+          ],
+          "input": "A repo contains file note.txt=123456789abcdef (16 ASCII bytes), B additional existing repo-B with distinct content and same owned capability. Actual repositoryRoot change requires approved activation/package/grant instance; not payload override.",
+          "action": "Same actualmethod/taskfixedsourceundercompleteA/B, with independently genuine task/coverage/grant identity; task-source expectedHead explicitlynot independentknob",
+          "oracle": "read_text note.txt resolves exactcapturedroot/content; symlinkroot/escapinglink rejects; retainedA never follows publishedB.",
+          "result": "not-run"
+        },
+        {
+          "kind": "RECOVERY",
+          "requirements": [
+            "F-BIND"
+          ],
+          "input": "A repo contains file note.txt=123456789abcdef (16 ASCII bytes), B additional existing repo-B with distinct content and same owned capability. Actual repositoryRoot change requires approved activation/package/grant instance; not payload override.",
+          "action": "Start logicalmoduleA, publishB, crash/repair/retry/alllaterstages+cleanupretainA; nextunstartedmoduleusesB accordingparentD20typedcarrier\u2014notstageprefix or latestfile",
+          "oracle": "read_text note.txt resolves exactcapturedroot/content; symlinkroot/escapinglink rejects; retainedA never follows publishedB.",
+          "result": "not-run"
+        },
+        {
+          "kind": "EVAL",
+          "requirements": [
+            "F-EVAL"
+          ],
+          "input": "A repo contains file note.txt=123456789abcdef (16 ASCII bytes), B additional existing repo-B with distinct content and same owned capability. Actual repositoryRoot change requires approved activation/package/grant instance; not payload override.",
+          "action": "Pin full source/input/role/grant/dependency/policy+retainedhistory; genuine methodoutputs and budgets underfixedeligibleprofiles; no substitutions or trimmedcoverage",
+          "oracle": "read_text note.txt resolves exactcapturedroot/content; symlinkroot/escapinglink rejects; retainedA never follows publishedB.",
+          "result": "not-run"
+        }
+      ]
+    },
+    {
+      "setting": "RT-1e54fe8d9c58d3f7",
+      "field": "maxFileBytes",
+      "registration": "kubeclaw.repository-adapter:repository",
+      "classification": "operator-policy",
+      "current": "value??4194304, positive safeinteger; schema has no default. null direct parser fallsback while owning schema rejectsnull. read_text stat cap; revisionread payloadmaxBytes may reduce<=captured cap.",
+      "targetDomain": "Proposed requiredinteger1..4194304 retainedconfigured current default ceiling, notphysicalcapacity; actual buffers/UTF8 output separately accounted.",
+      "completeAB": "A8/B16; fixture note.txt 16ASCII bytes; exactly8bytes control and9bytes boundarynegative.",
+      "methodOracle": "A rejects16; B accepts16; payloadmaxBytes17 rejects underB; missing/null mustreject atowningschema before productive read; current directmissing fallback separatelyobserved.",
+      "source": {
+        "path": "skills/nova/plugins/repository-adapter/src/repository-file.ts",
+        "sha256": "a6d8442958b8d90132a23d69449058c6d146aa170ad5f63a11433e42fb73277e"
+      },
+      "caller": "manifest exactregistration -> canonicalregistry/schema -> actual AdapterStarter.startAll/activate and AdapterRuntime invoke, or StageExecutor exactregistered executePreCheck/executeFull -> context.invoke lint.execute -> activated lint executor -> executeLintReport. No SDK codec selection inferred.",
+      "author": "Existing original row target author proposal preserved, not independently approved sole author. Adapter installation/root/grant policy vs stage task/bundle/report config remain distinct; systementry/profilepackaging/generationcarrier parentOPEN.",
+      "futureCases": [
+        {
+          "kind": "VAL",
+          "requirements": [
+            "F-VAL",
+            "F-AUTH"
+          ],
+          "input": "A8/B16; fixture note.txt 16ASCII bytes; exactly8bytes control and9bytes boundarynegative.",
+          "action": "Full owning schema/selectedbundle before productiveeffects; missing/null/unknown/wrongtype/specific outofdomain; sameboundarycompletepositive andrestore",
+          "oracle": "A rejects16; B accepts16; payloadmaxBytes17 rejects underB; missing/null mustreject atowningschema before productive read; current directmissing fallback separatelyobserved.",
+          "result": "not-run"
+        },
+        {
+          "kind": "AB",
+          "requirements": [
+            "F-EFFECT"
+          ],
+          "input": "A8/B16; fixture note.txt 16ASCII bytes; exactly8bytes control and9bytes boundarynegative.",
+          "action": "Same actualmethod/taskfixedsourceundercompleteA/B, with independently genuine task/coverage/grant identity; task-source expectedHead explicitlynot independentknob",
+          "oracle": "A rejects16; B accepts16; payloadmaxBytes17 rejects underB; missing/null mustreject atowningschema before productive read; current directmissing fallback separatelyobserved.",
+          "result": "not-run"
+        },
+        {
+          "kind": "RECOVERY",
+          "requirements": [
+            "F-BIND"
+          ],
+          "input": "A8/B16; fixture note.txt 16ASCII bytes; exactly8bytes control and9bytes boundarynegative.",
+          "action": "Start logicalmoduleA, publishB, crash/repair/retry/alllaterstages+cleanupretainA; nextunstartedmoduleusesB accordingparentD20typedcarrier\u2014notstageprefix or latestfile",
+          "oracle": "A rejects16; B accepts16; payloadmaxBytes17 rejects underB; missing/null mustreject atowningschema before productive read; current directmissing fallback separatelyobserved.",
+          "result": "not-run"
+        },
+        {
+          "kind": "EVAL",
+          "requirements": [
+            "F-EVAL"
+          ],
+          "input": "A8/B16; fixture note.txt 16ASCII bytes; exactly8bytes control and9bytes boundarynegative.",
+          "action": "Pin full source/input/role/grant/dependency/policy+retainedhistory; genuine methodoutputs and budgets underfixedeligibleprofiles; no substitutions or trimmedcoverage",
+          "oracle": "A rejects16; B accepts16; payloadmaxBytes17 rejects underB; missing/null mustreject atowningschema before productive read; current directmissing fallback separatelyobserved.",
+          "result": "not-run"
+        }
+      ]
+    },
+    {
+      "setting": "RT-9e5898da0a8f1aa3",
+      "field": "maxChangedPaths",
+      "registration": "kubeclaw.repository-adapter:repository",
+      "classification": "operator-policy",
+      "current": "value??2048, positive safeinteger. changedManifest cap counts scoped changes; list paths/inventory default*8 (request overrides independently bounded65536/1000000); notglobalalloperations cap.",
+      "targetDomain": "Proposed requiredinteger1..2048 preserving configureddefault ceiling and safe*8; scope/path/inventory/reference representation limits separate source obligations.",
+      "completeAB": "A2/B4, fixed genuine repository base/head with three in-scope changedpaths and exact manifests.",
+      "methodOracle": "changed_manifest A rejects3/B returns3; list/inventory defaults16/32 and explicit requestmaximum validated separately; no claims all paths limitedby samecap. Authentic Git sourcefixture remainsNOTRUN.",
+      "source": {
+        "path": "skills/nova/plugins/repository-adapter/src/revision-reader.ts",
+        "sha256": "35aadab83485ed1dcf370ce2136a67d892b6026ba594d0d12d8c739dc3f0c71f"
+      },
+      "caller": "manifest exactregistration -> canonicalregistry/schema -> actual AdapterStarter.startAll/activate and AdapterRuntime invoke, or StageExecutor exactregistered executePreCheck/executeFull -> context.invoke lint.execute -> activated lint executor -> executeLintReport. No SDK codec selection inferred.",
+      "author": "Existing original row target author proposal preserved, not independently approved sole author. Adapter installation/root/grant policy vs stage task/bundle/report config remain distinct; systementry/profilepackaging/generationcarrier parentOPEN.",
+      "futureCases": [
+        {
+          "kind": "VAL",
+          "requirements": [
+            "F-VAL",
+            "F-AUTH"
+          ],
+          "input": "A2/B4, fixed genuine repository base/head with three in-scope changedpaths and exact manifests.",
+          "action": "Full owning schema/selectedbundle before productiveeffects; missing/null/unknown/wrongtype/specific outofdomain; sameboundarycompletepositive andrestore",
+          "oracle": "changed_manifest A rejects3/B returns3; list/inventory defaults16/32 and explicit requestmaximum validated separately; no claims all paths limitedby samecap. Authentic Git sourcefixture remainsNOTRUN.",
+          "result": "not-run"
+        },
+        {
+          "kind": "AB",
+          "requirements": [
+            "F-EFFECT"
+          ],
+          "input": "A2/B4, fixed genuine repository base/head with three in-scope changedpaths and exact manifests.",
+          "action": "Same actualmethod/taskfixedsourceundercompleteA/B, with independently genuine task/coverage/grant identity; task-source expectedHead explicitlynot independentknob",
+          "oracle": "changed_manifest A rejects3/B returns3; list/inventory defaults16/32 and explicit requestmaximum validated separately; no claims all paths limitedby samecap. Authentic Git sourcefixture remainsNOTRUN.",
+          "result": "not-run"
+        },
+        {
+          "kind": "RECOVERY",
+          "requirements": [
+            "F-BIND"
+          ],
+          "input": "A2/B4, fixed genuine repository base/head with three in-scope changedpaths and exact manifests.",
+          "action": "Start logicalmoduleA, publishB, crash/repair/retry/alllaterstages+cleanupretainA; nextunstartedmoduleusesB accordingparentD20typedcarrier\u2014notstageprefix or latestfile",
+          "oracle": "changed_manifest A rejects3/B returns3; list/inventory defaults16/32 and explicit requestmaximum validated separately; no claims all paths limitedby samecap. Authentic Git sourcefixture remainsNOTRUN.",
+          "result": "not-run"
+        },
+        {
+          "kind": "EVAL",
+          "requirements": [
+            "F-EVAL"
+          ],
+          "input": "A2/B4, fixed genuine repository base/head with three in-scope changedpaths and exact manifests.",
+          "action": "Pin full source/input/role/grant/dependency/policy+retainedhistory; genuine methodoutputs and budgets underfixedeligibleprofiles; no substitutions or trimmedcoverage",
+          "oracle": "changed_manifest A rejects3/B returns3; list/inventory defaults16/32 and explicit requestmaximum validated separately; no claims all paths limitedby samecap. Authentic Git sourcefixture remainsNOTRUN.",
+          "result": "not-run"
+        }
+      ]
+    },
+    {
+      "setting": "RT-5537565840bd0714",
+      "field": "expectedHead",
+      "registration": "kubeclaw.repository-adapter:repository",
+      "classification": "task-source-identity-assertion",
+      "current": "Optional exact40/64lowerhex; adapter firstchecksstring then RevisionReader fullObjectId. Only freeze_head compares actualselectedcommit to expectedHead; read_text doesnot compare it. HMAC proof randomperactivatedinstance+attempt protects subsequent revision operations; no durable proofbinding claim.",
+      "targetDomain": "Retain optionaltask/repositorypin\u2014not independent operator budget knob. Requiredselected revision assertion where business taskdemandsimmutable source, no arbitraryequal rename/F-EFFECT.",
+      "completeAB": "A actualfixtureHEAD; negativeactualdifferentvalidcommit; B differenttasksource notindependentlegalBforunchangedfreeze-head task.",
+      "methodOracle": "freeze_head matchingpositive/mismatchnegative; malformedpin rejectsconstructor; read_text currentdoesnot enforcepin; recoveredA proof/retainedsource needexplicitcurrentfoundation and targetcarrier, not assumed oldHMACpersisted.",
+      "source": {
+        "path": "skills/nova/plugins/repository-adapter/src/revision-reader.ts",
+        "sha256": "35aadab83485ed1dcf370ce2136a67d892b6026ba594d0d12d8c739dc3f0c71f"
+      },
+      "caller": "manifest exactregistration -> canonicalregistry/schema -> actual AdapterStarter.startAll/activate and AdapterRuntime invoke, or StageExecutor exactregistered executePreCheck/executeFull -> context.invoke lint.execute -> activated lint executor -> executeLintReport. No SDK codec selection inferred.",
+      "author": "Existing original row target author proposal preserved, not independently approved sole author. Adapter installation/root/grant policy vs stage task/bundle/report config remain distinct; systementry/profilepackaging/generationcarrier parentOPEN.",
+      "futureCases": [
+        {
+          "kind": "VAL",
+          "requirements": [
+            "F-VAL",
+            "F-AUTH"
+          ],
+          "input": "A actualfixtureHEAD; negativeactualdifferentvalidcommit; B differenttasksource notindependentlegalBforunchangedfreeze-head task.",
+          "action": "Full owning schema/selectedbundle before productiveeffects; missing/null/unknown/wrongtype/specific outofdomain; sameboundarycompletepositive andrestore",
+          "oracle": "freeze_head matchingpositive/mismatchnegative; malformedpin rejectsconstructor; read_text currentdoesnot enforcepin; recoveredA proof/retainedsource needexplicitcurrentfoundation and targetcarrier, not assumed oldHMACpersisted.",
+          "result": "not-run"
+        },
+        {
+          "kind": "AB",
+          "requirements": [
+            "F-EFFECT"
+          ],
+          "input": "A actualfixtureHEAD; negativeactualdifferentvalidcommit; B differenttasksource notindependentlegalBforunchangedfreeze-head task.",
+          "action": "Same actualmethod/taskfixedsourceundercompleteA/B, with independently genuine task/coverage/grant identity; task-source expectedHead explicitlynot independentknob",
+          "oracle": "freeze_head matchingpositive/mismatchnegative; malformedpin rejectsconstructor; read_text currentdoesnot enforcepin; recoveredA proof/retainedsource needexplicitcurrentfoundation and targetcarrier, not assumed oldHMACpersisted.",
+          "result": "not-run"
+        },
+        {
+          "kind": "RECOVERY",
+          "requirements": [
+            "F-BIND"
+          ],
+          "input": "A actualfixtureHEAD; negativeactualdifferentvalidcommit; B differenttasksource notindependentlegalBforunchangedfreeze-head task.",
+          "action": "Start logicalmoduleA, publishB, crash/repair/retry/alllaterstages+cleanupretainA; nextunstartedmoduleusesB accordingparentD20typedcarrier\u2014notstageprefix or latestfile",
+          "oracle": "freeze_head matchingpositive/mismatchnegative; malformedpin rejectsconstructor; read_text currentdoesnot enforcepin; recoveredA proof/retainedsource needexplicitcurrentfoundation and targetcarrier, not assumed oldHMACpersisted.",
+          "result": "not-run"
+        },
+        {
+          "kind": "EVAL",
+          "requirements": [
+            "F-EVAL"
+          ],
+          "input": "A actualfixtureHEAD; negativeactualdifferentvalidcommit; B differenttasksource notindependentlegalBforunchangedfreeze-head task.",
+          "action": "Pin full source/input/role/grant/dependency/policy+retainedhistory; genuine methodoutputs and budgets underfixedeligibleprofiles; no substitutions or trimmedcoverage",
+          "oracle": "freeze_head matchingpositive/mismatchnegative; malformedpin rejectsconstructor; read_text currentdoesnot enforcepin; recoveredA proof/retainedsource needexplicitcurrentfoundation and targetcarrier, not assumed oldHMACpersisted.",
+          "result": "not-run"
+        }
+      ]
+    }
+  ],
+  "profiles": {
+    "RepositoryA": {
+      "repositoryRoot": "${CASE_ROOT}/repo",
+      "maxFileBytes": 8,
+      "maxChangedPaths": 2,
+      "expectedHead": "${AUTHENTIC_FIXTURE_HEAD}"
+    },
+    "RepositoryB": {
+      "repositoryRoot": "${CASE_ROOT}/repo",
+      "maxFileBytes": 16,
+      "maxChangedPaths": 4,
+      "expectedHead": "${AUTHENTIC_FIXTURE_HEAD}"
+    },
+    "LintStageA": {
+      "policyPath": "${CASE_ROOT}/policy/approved-A.json",
+      "policyProject": "approved",
+      "includeDebt": false,
+      "includeExperimental": false
+    },
+    "LintStageB": {
+      "policyPath": "${CASE_ROOT}/policy/approved-B.json",
+      "policyProject": "approved",
+      "includeDebt": true,
+      "includeExperimental": true
+    },
+    "LintAdapterA": {
+      "allowedRepositoryRoots": [
+        "${CASE_ROOT}/repo"
+      ],
+      "allowedPolicyRoots": [
+        "${CASE_ROOT}/policy"
+      ]
+    },
+    "LintAdapterB": {
+      "allowedRepositoryRoots": [
+        "${CASE_ROOT}/repo",
+        "${CASE_ROOT}/repo-B"
+      ],
+      "allowedPolicyRoots": [
+        "${CASE_ROOT}/policy",
+        "${CASE_ROOT}/policy-B"
+      ]
+    },
+    "substitution": "CASE_ROOT fresh actual canonical directory. AUTHENTIC_FIXTURE_HEAD must be generated and authenticated from actual fixture repository, not invented digest. Paired policy fixtures must both pass complete actual loadLintPolicy schema/governance and share explicit project id; real approved tool dependencies/source/unchangedtask/fixedreports prerequisite. JSON profile validity alone not actual bundle/tool coverage.",
+    "isolation": "No adapter/model/provider/native executable execution now except safe repository localfile read and exported pure requestPayload controls. No Git commands within adapter probe."
+  },
+  "activationConstraint": "Current Nova v4registry config/package/grants+wholegraph exactpins, verifyPinnedGraph/packageconfig/equality/adminupgrades. runNew/recover/resume prepareRuntime+activateRegistry before runlock/equality. ParentD20firstmoduletypedcarrier/membership/view/legacyOPEN; adapters captureatactivation; no foundation compatibility solvedbyfilename."
+}

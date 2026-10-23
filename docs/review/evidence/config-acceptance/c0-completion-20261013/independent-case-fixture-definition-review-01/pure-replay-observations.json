@@ -1,0 +1,694 @@
+{
+  "qualification": "Existing local data replay through actual pure functions only; no provider.execute/browser/cluster/extraction/native dispatch",
+  "nodeVersion": "v24.21.0",
+  "rows": [
+    {
+      "kind": "manifest",
+      "label": "maximumNodes-original02-distinctionA",
+      "accepted": true,
+      "parserOpenEvents": 75002,
+      "parserMaxDepth": 10
+    },
+    {
+      "kind": "manifest",
+      "label": "maximumNodes-original02-distinctionB",
+      "accepted": false,
+      "error": "KUBERNETES_FIXTURE_MANIFEST_PARSE_FAILED: KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT",
+      "parserOpenEvents": 75002,
+      "parserMaxDepth": 10
+    },
+    {
+      "kind": "manifest",
+      "label": "maximumDepth-original02-distinctionA",
+      "accepted": true,
+      "parserOpenEvents": 193,
+      "parserMaxDepth": 49
+    },
+    {
+      "kind": "manifest",
+      "label": "maximumDepth-original02-distinctionB",
+      "accepted": false,
+      "error": "KUBERNETES_FIXTURE_MANIFEST_PARSE_FAILED: KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT",
+      "parserOpenEvents": 193,
+      "parserMaxDepth": 49
+    },
+    {
+      "kind": "manifest",
+      "label": "maximumAliases-original02-distinctionA",
+      "accepted": true,
+      "parserOpenEvents": 1569,
+      "parserMaxDepth": 10
+    },
+    {
+      "kind": "manifest",
+      "label": "maximumAliases-original02-distinctionB",
+      "accepted": false,
+      "error": "KUBERNETES_FIXTURE_MANIFEST_ALIAS_LIMIT",
+      "parserOpenEvents": 1569,
+      "parserMaxDepth": 10
+    },
+    {
+      "kind": "manifest",
+      "label": "maximumResources-original02-distinctionA",
+      "accepted": true,
+      "parserOpenEvents": 678,
+      "parserMaxDepth": 13
+    },
+    {
+      "kind": "manifest",
+      "label": "maximumResources-original02-distinctionB",
+      "accepted": false,
+      "error": "KUBERNETES_FIXTURE_RESOURCE_COUNT_INVALID",
+      "parserOpenEvents": 678,
+      "parserMaxDepth": 13
+    },
+    {
+      "kind": "manifest",
+      "label": "maximumFlattenVisits-original02-controlA",
+      "accepted": true,
+      "parserOpenEvents": 207,
+      "parserMaxDepth": 13
+    },
+    {
+      "kind": "manifest",
+      "label": "maximumFlattenVisits-original02-controlB",
+      "accepted": true,
+      "parserOpenEvents": 207,
+      "parserMaxDepth": 13
+    },
+    {
+      "kind": "manifest",
+      "label": "maximumFlattenVisits-supplemental-complete-pairA",
+      "accepted": true,
+      "parserOpenEvents": 207,
+      "parserMaxDepth": 13
+    },
+    {
+      "kind": "manifest",
+      "label": "maximumFlattenVisits-supplemental-complete-pairB",
+      "accepted": false,
+      "error": "KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT",
+      "parserOpenEvents": 207,
+      "parserMaxDepth": 13
+    },
+    {
+      "kind": "manifest",
+      "label": "maximumFlattenPending-original02-controlA",
+      "accepted": true,
+      "parserOpenEvents": 207,
+      "parserMaxDepth": 13
+    },
+    {
+      "kind": "manifest",
+      "label": "maximumFlattenPending-original02-controlB",
+      "accepted": true,
+      "parserOpenEvents": 207,
+      "parserMaxDepth": 13
+    },
+    {
+      "kind": "manifest",
+      "label": "maximumFlattenPending-supplemental-complete-pairA",
+      "accepted": true,
+      "parserOpenEvents": 207,
+      "parserMaxDepth": 13
+    },
+    {
+      "kind": "manifest",
+      "label": "maximumFlattenPending-supplemental-complete-pairB",
+      "accepted": false,
+      "error": "KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT",
+      "parserOpenEvents": 207,
+      "parserMaxDepth": 13
+    },
+    {
+      "kind": "manifest",
+      "label": "baseline-validA",
+      "accepted": true,
+      "parserOpenEvents": 60,
+      "parserMaxDepth": 10
+    },
+    {
+      "kind": "manifest",
+      "label": "baseline-validB",
+      "accepted": true,
+      "parserOpenEvents": 60,
+      "parserMaxDepth": 10
+    },
+    {
+      "kind": "manifest",
+      "label": "malformed-yamlA",
+      "accepted": false,
+      "error": "KUBERNETES_FIXTURE_MANIFEST_PARSE_FAILED: unexpected end of the stream within a flow collection (2:1)\n\n 1 | kind: [\n 2 | \n-----^",
+      "parserOpenEvents": 4,
+      "parserMaxDepth": 3
+    },
+    {
+      "kind": "manifest",
+      "label": "malformed-yamlB",
+      "accepted": false,
+      "error": "KUBERNETES_FIXTURE_MANIFEST_PARSE_FAILED: unexpected end of the stream within a flow collection (2:1)\n\n 1 | kind: [\n 2 | \n-----^",
+      "parserOpenEvents": 4,
+      "parserMaxDepth": 3
+    },
+    {
+      "kind": "manifest",
+      "label": "alias-cycleA",
+      "accepted": false,
+      "error": "KUBERNETES_FIXTURE_MANIFEST_ALIAS_CYCLE",
+      "parserOpenEvents": 8,
+      "parserMaxDepth": 3
+    },
+    {
+      "kind": "manifest",
+      "label": "alias-cycleB",
+      "accepted": false,
+      "error": "KUBERNETES_FIXTURE_MANIFEST_ALIAS_CYCLE",
+      "parserOpenEvents": 8,
+      "parserMaxDepth": 3
+    },
+    {
+      "kind": "manifest",
+      "label": "host-network-negativeA",
+      "accepted": false,
+      "error": "KUBERNETES_FIXTURE_HOST_NAMESPACE_DENIED",
+      "parserOpenEvents": 69,
+      "parserMaxDepth": 13
+    },
+    {
+      "kind": "manifest",
+      "label": "host-network-negativeB",
+      "accepted": false,
+      "error": "KUBERNETES_FIXTURE_HOST_NAMESPACE_DENIED",
+      "parserOpenEvents": 69,
+      "parserMaxDepth": 13
+    },
+    {
+      "kind": "manifest",
+      "label": "resource-exact-B48-positiveA",
+      "accepted": true,
+      "parserOpenEvents": 665,
+      "parserMaxDepth": 13
+    },
+    {
+      "kind": "manifest",
+      "label": "resource-exact-B48-positiveB",
+      "accepted": true,
+      "parserOpenEvents": 665,
+      "parserMaxDepth": 13
+    },
+    {
+      "kind": "manifest",
+      "label": "parser-exact-B75000-positiveA",
+      "accepted": true,
+      "parserOpenEvents": 75000,
+      "parserMaxDepth": 10
+    },
+    {
+      "kind": "manifest",
+      "label": "parser-exact-B75000-positiveB",
+      "accepted": true,
+      "parserOpenEvents": 75000,
+      "parserMaxDepth": 10
+    },
+    {
+      "kind": "manifest",
+      "label": "alias-exact-B750-positiveA",
+      "accepted": true,
+      "parserOpenEvents": 1567,
+      "parserMaxDepth": 10
+    },
+    {
+      "kind": "manifest",
+      "label": "alias-exact-B750-positiveB",
+      "accepted": true,
+      "parserOpenEvents": 1567,
+      "parserMaxDepth": 10
+    },
+    {
+      "kind": "manifest",
+      "label": "scalar-alias-not-object-alias-capA",
+      "accepted": true,
+      "parserOpenEvents": 3075,
+      "parserMaxDepth": 10
+    },
+    {
+      "kind": "manifest",
+      "label": "scalar-alias-not-object-alias-capB",
+      "accepted": true,
+      "parserOpenEvents": 3075,
+      "parserMaxDepth": 10
+    },
+    {
+      "kind": "provider",
+      "label": "below-BA",
+      "accepted": true,
+      "resultBytes": 12577880,
+      "pureAssessmentMatches": true
+    },
+    {
+      "kind": "provider",
+      "label": "below-BB",
+      "accepted": true,
+      "resultBytes": 12577880,
+      "pureAssessmentMatches": true
+    },
+    {
+      "kind": "provider",
+      "label": "above-BA",
+      "accepted": true,
+      "resultBytes": 12584327,
+      "pureAssessmentMatches": true
+    },
+    {
+      "kind": "provider",
+      "label": "above-BB",
+      "accepted": false,
+      "error": "TEST_PROVIDER_RESULT_LIMIT",
+      "resultBytes": 12584327,
+      "pureAssessmentMatches": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "grouped/maximumFlattenPendingAprism-control",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "grouped/maximumFlattenPendingAprism-studio",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "grouped/maximumFlattenPendingAprism-worker",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "grouped/maximumFlattenPendingAprism-execution",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "grouped/maximumFlattenPendingAbuster-engine",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "grouped/maximumFlattenPendingAworker-core",
+      "accepted": true
+    },
+    {
+      "kind": "current-loader",
+      "label": "grouped/maximumFlattenPendingA",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "grouped/maximumFlattenPendingBprism-control",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "grouped/maximumFlattenPendingBprism-studio",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "grouped/maximumFlattenPendingBprism-worker",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "grouped/maximumFlattenPendingBprism-execution",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "grouped/maximumFlattenPendingBbuster-engine",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "grouped/maximumFlattenPendingBworker-core",
+      "accepted": true
+    },
+    {
+      "kind": "current-loader",
+      "label": "grouped/maximumFlattenPendingB",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "grouped/maximumFlattenVisitsAprism-control",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "grouped/maximumFlattenVisitsAprism-studio",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "grouped/maximumFlattenVisitsAprism-worker",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "grouped/maximumFlattenVisitsAprism-execution",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "grouped/maximumFlattenVisitsAbuster-engine",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "grouped/maximumFlattenVisitsAworker-core",
+      "accepted": true
+    },
+    {
+      "kind": "current-loader",
+      "label": "grouped/maximumFlattenVisitsA",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "grouped/maximumFlattenVisitsBprism-control",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "grouped/maximumFlattenVisitsBprism-studio",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "grouped/maximumFlattenVisitsBprism-worker",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "grouped/maximumFlattenVisitsBprism-execution",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "grouped/maximumFlattenVisitsBbuster-engine",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "grouped/maximumFlattenVisitsBworker-core",
+      "accepted": true
+    },
+    {
+      "kind": "current-loader",
+      "label": "grouped/maximumFlattenVisitsB",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/minimum-plus-maximum-groupAprism-control",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/minimum-plus-maximum-groupAprism-studio",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/minimum-plus-maximum-groupAprism-worker",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/minimum-plus-maximum-groupAprism-execution",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/minimum-plus-maximum-groupAbuster-engine",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/minimum-plus-maximum-groupAworker-core",
+      "accepted": true
+    },
+    {
+      "kind": "current-loader",
+      "label": "guard-groups/minimum-plus-maximum-groupA",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/minimum-plus-maximum-groupBprism-control",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/minimum-plus-maximum-groupBprism-studio",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/minimum-plus-maximum-groupBprism-worker",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/minimum-plus-maximum-groupBprism-execution",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/minimum-plus-maximum-groupBbuster-engine",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/minimum-plus-maximum-groupBworker-core",
+      "accepted": true
+    },
+    {
+      "kind": "current-loader",
+      "label": "guard-groups/minimum-plus-maximum-groupB",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/minimumOpenFiles-relationAprism-control",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/minimumOpenFiles-relationAprism-studio",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/minimumOpenFiles-relationAprism-worker",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/minimumOpenFiles-relationAprism-execution",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/minimumOpenFiles-relationAbuster-engine",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/minimumOpenFiles-relationAworker-core",
+      "accepted": true
+    },
+    {
+      "kind": "current-loader",
+      "label": "guard-groups/minimumOpenFiles-relationA",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/minimumOpenFiles-relationBprism-control",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/minimumOpenFiles-relationBprism-studio",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/minimumOpenFiles-relationBprism-worker",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/minimumOpenFiles-relationBprism-execution",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/minimumOpenFiles-relationBbuster-engine",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/minimumOpenFiles-relationBworker-core",
+      "accepted": true
+    },
+    {
+      "kind": "current-loader",
+      "label": "guard-groups/minimumOpenFiles-relationB",
+      "accepted": false,
+      "error": "SWARM_CONFIG_BUSTER_REPORT_DESCRIPTOR_RANGE_INVALID"
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/reserve-memory-relationAprism-control",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/reserve-memory-relationAprism-studio",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/reserve-memory-relationAprism-worker",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/reserve-memory-relationAprism-execution",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/reserve-memory-relationAbuster-engine",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/reserve-memory-relationAworker-core",
+      "accepted": true
+    },
+    {
+      "kind": "current-loader",
+      "label": "guard-groups/reserve-memory-relationA",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/reserve-memory-relationBprism-control",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/reserve-memory-relationBprism-studio",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/reserve-memory-relationBprism-worker",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/reserve-memory-relationBprism-execution",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/reserve-memory-relationBbuster-engine",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/reserve-memory-relationBworker-core",
+      "accepted": true
+    },
+    {
+      "kind": "current-loader",
+      "label": "guard-groups/reserve-memory-relationB",
+      "accepted": false,
+      "error": "SWARM_CONFIG_BUSTER_EXECUTION_REPORT_MEMORY_INVALID"
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/reserve-plus-memory-groupAprism-control",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/reserve-plus-memory-groupAprism-studio",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/reserve-plus-memory-groupAprism-worker",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/reserve-plus-memory-groupAprism-execution",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/reserve-plus-memory-groupAbuster-engine",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/reserve-plus-memory-groupAworker-core",
+      "accepted": true
+    },
+    {
+      "kind": "current-loader",
+      "label": "guard-groups/reserve-plus-memory-groupA",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/reserve-plus-memory-groupBprism-control",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/reserve-plus-memory-groupBprism-studio",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/reserve-plus-memory-groupBprism-worker",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/reserve-plus-memory-groupBprism-execution",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/reserve-plus-memory-groupBbuster-engine",
+      "accepted": true
+    },
+    {
+      "kind": "owner-schema",
+      "label": "guard-groups/reserve-plus-memory-groupBworker-core",
+      "accepted": true
+    },
+    {
+      "kind": "current-loader",
+      "label": "guard-groups/reserve-plus-memory-groupB",
+      "accepted": true
+    }
+  ],
+  "allExpectedObservationsMatched": true
+}

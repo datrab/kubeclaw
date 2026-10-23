@@ -1,0 +1,287 @@
+{
+  "scope": "Actual generated parent projection/conservation and full checker only; own Core definitions identity/shape conservation not substantive selfreview",
+  "rawInputs": [
+    {
+      "path": "docs/review/evidence/config-acceptance/author/check-generated-projection-negatives-6606.py",
+      "logicalSha256": "b3ee56b215dce12da8092dabea1f4fcdba0356036b6474de4b0181a15e1879a1",
+      "logicalBytes": 3641,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/check-generated-projection-negatives-6606.py",
+      "snapshotEncoding": "identity",
+      "storedSha256": "b3ee56b215dce12da8092dabea1f4fcdba0356036b6474de4b0181a15e1879a1"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/check-historical-projection-guards.py",
+      "logicalSha256": "236e5034267e53e3de3f25e0c55415e1a51babbf7e04fba66ff5292e6207ff55",
+      "logicalBytes": 4343,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/check-historical-projection-guards.py",
+      "snapshotEncoding": "identity",
+      "storedSha256": "236e5034267e53e3de3f25e0c55415e1a51babbf7e04fba66ff5292e6207ff55"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "logicalSha256": "b231a86202b71684ebcb14056f4abf63a753f21f266e65c7c8541006559c91ad",
+      "logicalBytes": 19470,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "snapshotEncoding": "identity",
+      "storedSha256": "b231a86202b71684ebcb14056f4abf63a753f21f266e65c7c8541006559c91ad"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/check-native-case-integration.py",
+      "logicalSha256": "b7435c69cee3e10e9393b3db05d0a0d7a671ce34cb3e8e5883b2b9ef84ab41ca",
+      "logicalBytes": 4013,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/check-native-case-integration.py",
+      "snapshotEncoding": "identity",
+      "storedSha256": "b7435c69cee3e10e9393b3db05d0a0d7a671ce34cb3e8e5883b2b9ef84ab41ca"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/consolidate-historical-core-6606-attempt3.log",
+      "logicalSha256": "fe9773d2cd20893b797062d29c6b422fd846089ec4ee4d476ce7328e0af08063",
+      "logicalBytes": 63,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/consolidate-historical-core-6606-attempt3.log",
+      "snapshotEncoding": "identity",
+      "storedSha256": "fe9773d2cd20893b797062d29c6b422fd846089ec4ee4d476ce7328e0af08063"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/consolidate-historical-core-6606-attempt3.stderr.log",
+      "logicalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "logicalBytes": 0,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/consolidate-historical-core-6606-attempt3.stderr.log",
+      "snapshotEncoding": "identity",
+      "storedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/consolidate.py",
+      "logicalSha256": "7f537e66665abab02bfdc15a4fe76edb3bc203ff548d3f758eb403f8438ffac0",
+      "logicalBytes": 27293,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/consolidate.py",
+      "snapshotEncoding": "identity",
+      "storedSha256": "7f537e66665abab02bfdc15a4fe76edb3bc203ff548d3f758eb403f8438ffac0"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/core-canonical-question-projection-preparation-6606.json",
+      "logicalSha256": "2b33d595fac20b3a381271d4753d02273213b5a32ffd41e14b007976a9bd223a",
+      "logicalBytes": 1918,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/core-canonical-question-projection-preparation-6606.json",
+      "snapshotEncoding": "identity",
+      "storedSha256": "2b33d595fac20b3a381271d4753d02273213b5a32ffd41e14b007976a9bd223a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/full-controls-historical-core-6606-attempt3.log",
+      "logicalSha256": "5196edd1496b867b9a8040ecd68b131a42ab26a80a942f4ef95ccb9b74f6c28d",
+      "logicalBytes": 2659,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/full-controls-historical-core-6606-attempt3.log",
+      "snapshotEncoding": "identity",
+      "storedSha256": "5196edd1496b867b9a8040ecd68b131a42ab26a80a942f4ef95ccb9b74f6c28d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/full-controls-historical-core-6606-attempt3.stderr.log",
+      "logicalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "logicalBytes": 0,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/full-controls-historical-core-6606-attempt3.stderr.log",
+      "snapshotEncoding": "identity",
+      "storedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/generated-root-historical-core-6606-freeze.json",
+      "logicalSha256": "0c476582decbc4dd3674e2f298ab688cce2d3a20093fb2985b43e8525ba30272",
+      "logicalBytes": 12351,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/generated-root-historical-core-6606-freeze.json",
+      "snapshotEncoding": "identity",
+      "storedSha256": "0c476582decbc4dd3674e2f298ab688cce2d3a20093fb2985b43e8525ba30272"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/historical-projection-historical-core-6606-attempt3.log",
+      "logicalSha256": "52a3bd4a08fad04237a688dd11c5f4b409022a6dea1a58fb61aaa63b2e2f72e2",
+      "logicalBytes": 1946,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/historical-projection-historical-core-6606-attempt3.log",
+      "snapshotEncoding": "identity",
+      "storedSha256": "52a3bd4a08fad04237a688dd11c5f4b409022a6dea1a58fb61aaa63b2e2f72e2"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/historical-projection-historical-core-6606-attempt3.stderr.log",
+      "logicalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "logicalBytes": 0,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/historical-projection-historical-core-6606-attempt3.stderr.log",
+      "snapshotEncoding": "identity",
+      "storedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/historical_mapping.py",
+      "logicalSha256": "b027cc75b7b789be6ef5069d0611d9c36a0ad21fff0a7d3e57ea75ff83b1f2e2",
+      "logicalBytes": 7186,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/historical_mapping.py",
+      "snapshotEncoding": "identity",
+      "storedSha256": "b027cc75b7b789be6ef5069d0611d9c36a0ad21fff0a7d3e57ea75ff83b1f2e2"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/historical_projection.py",
+      "logicalSha256": "661fd8faa30069439139f8f0e421216d7898840fdcebfd608d4008495f60bdf0",
+      "logicalBytes": 4251,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/historical_projection.py",
+      "snapshotEncoding": "identity",
+      "storedSha256": "661fd8faa30069439139f8f0e421216d7898840fdcebfd608d4008495f60bdf0"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/native-historical-core-6606-attempt3.log",
+      "logicalSha256": "e232e91d5e5cf4901fde6e77ed433bcf9c03006f6c53f23ae3e726ec469416f3",
+      "logicalBytes": 625,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/native-historical-core-6606-attempt3.log",
+      "snapshotEncoding": "identity",
+      "storedSha256": "e232e91d5e5cf4901fde6e77ed433bcf9c03006f6c53f23ae3e726ec469416f3"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/native-historical-core-6606-attempt3.stderr.log",
+      "logicalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "logicalBytes": 0,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/native-historical-core-6606-attempt3.stderr.log",
+      "snapshotEncoding": "identity",
+      "storedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/observation_references.py",
+      "logicalSha256": "448c7931e5128deb7537a6d492ffed4a260fcfa19c8250f2a46cc49b914c422f",
+      "logicalBytes": 3809,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/observation_references.py",
+      "snapshotEncoding": "identity",
+      "storedSha256": "448c7931e5128deb7537a6d492ffed4a260fcfa19c8250f2a46cc49b914c422f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/preconsolidation-historical-core-6606-identities.json",
+      "logicalSha256": "0e845b3311653945bbf1ab22d3638002b498e768e8dfbcf534e32d4129f5b347",
+      "logicalBytes": 6114,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/preconsolidation-historical-core-6606-identities.json",
+      "snapshotEncoding": "identity",
+      "storedSha256": "0e845b3311653945bbf1ab22d3638002b498e768e8dfbcf534e32d4129f5b347"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/strict-historical-core-6606-attempt3.log",
+      "logicalSha256": "5069675d8e5674dadc41ba9ef6e26964a106bfcc8126f413b14dfe310b6bba25",
+      "logicalBytes": 11237248,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/strict-historical-core-6606-attempt3.log.gz",
+      "snapshotEncoding": "gzip",
+      "storedSha256": "e565d427dccf160ec0cdb72f8cf28b4097b9fd9abc7a2734dd1b3515452dbaa9"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/strict-historical-core-6606-attempt3.stderr.log",
+      "logicalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "logicalBytes": 0,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/strict-historical-core-6606-attempt3.stderr.log",
+      "snapshotEncoding": "identity",
+      "storedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/structural-historical-core-6606-attempt3.log",
+      "logicalSha256": "2a8ae41a6067d32600856120e5c18c6c51a1f789e08a46736747bf9ffcbbdb78",
+      "logicalBytes": 181,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/structural-historical-core-6606-attempt3.log",
+      "snapshotEncoding": "identity",
+      "storedSha256": "2a8ae41a6067d32600856120e5c18c6c51a1f789e08a46736747bf9ffcbbdb78"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/structural-historical-core-6606-attempt3.stderr.log",
+      "logicalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "logicalBytes": 0,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/author/structural-historical-core-6606-attempt3.stderr.log",
+      "snapshotEncoding": "identity",
+      "storedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/canonical-question-fragment.json",
+      "logicalSha256": "f4b51f0a738a51ae622de8af2b0db69282c25eb27a97b251bf0f1ed8f6c5344a",
+      "logicalBytes": 511406,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/canonical-question-fragment.json",
+      "snapshotEncoding": "identity",
+      "storedSha256": "f4b51f0a738a51ae622de8af2b0db69282c25eb27a97b251bf0f1ed8f6c5344a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/question-canonical-field-case-links.json",
+      "logicalSha256": "3cc4f63844170386a77647c8d43e3ff50f457351408931aa9b9320967fcf7ce2",
+      "logicalBytes": 183926,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/question-canonical-field-case-links.json",
+      "snapshotEncoding": "identity",
+      "storedSha256": "3cc4f63844170386a77647c8d43e3ff50f457351408931aa9b9320967fcf7ce2"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/c0-controller-material-correction-cases-6606-20261013.json",
+      "logicalSha256": "03be1df591838cc150259c164bb0b940a5241bb4f9b72f93bd448910e9781b52",
+      "logicalBytes": 855209,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/delivery/c0-controller-material-correction-cases-6606-20261013.json",
+      "snapshotEncoding": "identity",
+      "storedSha256": "03be1df591838cc150259c164bb0b940a5241bb4f9b72f93bd448910e9781b52"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/stable-independent-review-receipt.json",
+      "logicalSha256": "b6f59adce3b44c68edc2268c89fe24b47411c1771cc4680daeeba9c71e7e2787",
+      "logicalBytes": 4170,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/stable-independent-review-receipt.json",
+      "snapshotEncoding": "identity",
+      "storedSha256": "b6f59adce3b44c68edc2268c89fe24b47411c1771cc4680daeeba9c71e7e2787"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-historical-case-links-12/native-historical-successor-map.json",
+      "logicalSha256": "1c0cf5830f0c91a0c3a5000831fb7be98ce278255a44050673491923e2ca9ad3",
+      "logicalBytes": 1533647,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/runtime/batches/6606af9-historical-case-links-12/native-historical-successor-map.json.gz",
+      "snapshotEncoding": "gzip",
+      "storedSha256": "8004cda86abcc33d3fc6d9b98a0f82860421fbcb13ac23ab96cf4c84666d109f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/case-proposals.json",
+      "logicalSha256": "51feea1a4ca73511668255dd0e328581fe18be04c6494a739496e7ca124fc28f",
+      "logicalBytes": 63755114,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/runtime/case-proposals.json.gz",
+      "snapshotEncoding": "gzip",
+      "storedSha256": "847aec8cf8be00a3b4e23f22ffde6f0e4c182625e895fdc4c73b5351aea4ad7c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/inventory-fragment.json",
+      "logicalSha256": "9619343edf808fffaadbff775932b0e4f808daba31ad194324b154df374a46c3",
+      "logicalBytes": 21785300,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/runtime/inventory-fragment.json.gz",
+      "snapshotEncoding": "gzip",
+      "storedSha256": "ef57659d57d207e80b2569797b3d215adb55f0afed6919f7a00d7cc6f043e931"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/runtime-case-dispositions.json",
+      "logicalSha256": "a2b7134c8ff161fa89fdb008fb52907f1c818cdf246d2f4a7b6f760d52365c56",
+      "logicalBytes": 5591163,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/evidence/config-acceptance/runtime/runtime-case-dispositions.json.gz",
+      "snapshotEncoding": "gzip",
+      "storedSha256": "c2920915e8a6d6401877ee390e573e2f780bf1f7126c98d28cc3d6e4e9390559"
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "logicalSha256": "623462221f87371c23e0a0b8857a1c8563cd7dc6e1e76f457221b0ba63894a21",
+      "logicalBytes": 99612476,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/remediation/config-acceptance-matrix.json.gz",
+      "snapshotEncoding": "gzip",
+      "storedSha256": "129b1249aff2161d180b3956fe8c4b448b03e17a544dd58159282a28da83aaec"
+    },
+    {
+      "path": "docs/review/remediation/config-definition-current.md",
+      "logicalSha256": "c282b510337226d5b79563967e68488eb37920724f07e5d6b0bfd8d6550f1950",
+      "logicalBytes": 33961,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/remediation/config-definition-current.md",
+      "snapshotEncoding": "identity",
+      "storedSha256": "c282b510337226d5b79563967e68488eb37920724f07e5d6b0bfd8d6550f1950"
+    },
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "logicalSha256": "b1af942080285f5c7d97c50f2b30bc14a1a0850ffb77908cb73fb3f8c9f6b36c",
+      "logicalBytes": 37736297,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/remediation/config-semantic-inventory.json.gz",
+      "snapshotEncoding": "gzip",
+      "storedSha256": "432c329334ca21eb75165aee5b3bb7670097555c993e1f13ef888ce97a06e5b5"
+    },
+    {
+      "path": "docs/review/remediation/independent-runtime-historical-links-6606.md",
+      "logicalSha256": "5a99aff9cac9a448d8b08429831165cc16aca569b3d17177bd43db131d9bd749",
+      "logicalBytes": 9091,
+      "snapshot": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/inputs/docs/review/remediation/independent-runtime-historical-links-6606.md",
+      "snapshotEncoding": "identity",
+      "storedSha256": "5a99aff9cac9a448d8b08429831165cc16aca569b3d17177bd43db131d9bd749"
+    }
+  ],
+  "parentCurrentFrozenIdentitiesMatched": 24,
+  "limits": "Other checker dependencies will be captured immediately before their first actual open in baseline audit and rechecked after; no source/author/root writes."
+}

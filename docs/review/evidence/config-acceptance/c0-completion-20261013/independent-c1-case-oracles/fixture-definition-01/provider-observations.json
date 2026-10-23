@@ -1,0 +1,70 @@
+{
+  "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.maximumResultBytes",
+  "wholePairSource": "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-complete-profile-pairs-02/pairs.json",
+  "limits": {
+    "A": 16777216,
+    "B": 12582912
+  },
+  "registrationSource": "skills/buster/plugins/playwright/plugin.json",
+  "shapeSource": "assessPlaywrightReport plus explicit exact provider returned-result mapping at provider.js:85-96",
+  "observations": [
+    {
+      "label": "below-B",
+      "testCount": 1951,
+      "resultBytes": 12577880,
+      "rawReportBytes": 8255629,
+      "paths": {
+        "report": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/provider/below-B/playwright-report.json",
+        "result": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/provider/below-B/provider-result.json"
+      },
+      "sha256": {
+        "report": "9e8441aaacf9f3a2f6d0d63d81997aca7be905f3bb4fbc90a126735f3c977558",
+        "result": "66c872378ff1e1a4339baca9ceff82bad99c566fe83e719610dd9a4e79c8758a"
+      },
+      "sides": {
+        "A": {
+          "definitionResult": "accepted-actual-pure-result-schema-count-details-declaration-validator"
+        },
+        "B": {
+          "definitionResult": "accepted-actual-pure-result-schema-count-details-declaration-validator"
+        }
+      },
+      "unrestrictedSchema": "valid at upper productive pure boundary",
+      "outerWhitespaceDoesNotChangeJSONstringifyBytes": true,
+      "qualification": "Actual pure exported Playwright report-assessment and actual pure provider result validator. No provider.execute, browser/network/capability/native execution or installed/granted identity."
+    },
+    {
+      "label": "above-B",
+      "testCount": 1952,
+      "resultBytes": 12584327,
+      "rawReportBytes": 8259861,
+      "paths": {
+        "report": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/provider/above-B/playwright-report.json",
+        "result": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/provider/above-B/provider-result.json"
+      },
+      "sha256": {
+        "report": "91eb03e0dceb4d951fc05070549c97c68bb4189ecc0752d6b1750b059131862a",
+        "result": "092cee125a38e2abc9013f1a53b77cf7ea940602bc30e925aaa299c96301dd07"
+      },
+      "sides": {
+        "A": {
+          "definitionResult": "accepted-actual-pure-result-schema-count-details-declaration-validator"
+        },
+        "B": {
+          "definitionResult": "rejected-actual-pure-result-validator",
+          "error": "TEST_PROVIDER_RESULT_LIMIT"
+        }
+      },
+      "unrestrictedSchema": "valid at upper productive pure boundary",
+      "outerWhitespaceDoesNotChangeJSONstringifyBytes": true,
+      "qualification": "Actual pure exported Playwright report-assessment and actual pure provider result validator. No provider.execute, browser/network/capability/native execution or installed/granted identity."
+    }
+  ],
+  "futureImplementationResults": "not-run",
+  "neededActualInvocationBudgets": {
+    "artifactBytes": ">=largest raw report+any genuine attachments",
+    "artifactFiles": 1,
+    "protocolBytes": "actual initialize+execute envelope/stdout cumulative encoding below selected protocol budget; result-only byte measurement does not prove it",
+    "claimsAndCapabilities": "actual approved browser.playwright grant/claim and endpoint identity unavailable/not executed"
+  }
+}

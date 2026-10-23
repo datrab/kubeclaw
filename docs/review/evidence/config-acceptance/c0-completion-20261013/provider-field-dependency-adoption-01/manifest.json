@@ -1,0 +1,37 @@
+{
+  "status": "frozen author proposal; independent review required",
+  "inputsEndUnchanged": true,
+  "artifacts": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/provider-field-dependency-adoption-01/README.md",
+      "sha256": "96b036d6afd0d8cd94ac238f4c52c26f777e763b2fc38c115ad9b6b1723f1d7d",
+      "bytes": 4307
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/provider-field-dependency-adoption-01/additive-source-ownership.json",
+      "sha256": "82e3ab31259ef04806b776397238cd157e66ec5e321b4488d1248a8d1f5aa681",
+      "bytes": 24296
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/provider-field-dependency-adoption-01/author-observations.json",
+      "sha256": "afd50a66bffe0cb3d55f19903ecaa60e0557182710ec64cc0511c04545315577",
+      "bytes": 588
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/provider-field-dependency-adoption-01/dependency-adoption.json",
+      "sha256": "bdf2d54a2bdb40bae1afa68e9e04376d89214421e35ba0b8e89796c605ebf39b",
+      "bytes": 174467
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/provider-field-dependency-adoption-01/new-processing-policy-bindings.json",
+      "sha256": "7990705dcb3b6ba486d3a38bd582f5be5838b92c8cfc004f8db6a10700ecff30",
+      "bytes": 45276
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/provider-field-dependency-adoption-01/read-identities.json",
+      "sha256": "181e90fcec33526e559818887e42ad8e57a1a7552ae26f439b048008599bf152",
+      "bytes": 3867
+    }
+  ],
+  "implementationAuthorization": null
+}

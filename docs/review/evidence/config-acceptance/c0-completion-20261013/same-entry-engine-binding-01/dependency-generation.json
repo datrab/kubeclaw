@@ -1,0 +1,39 @@
+{
+  "current": "same-entry-engine-binding-01/pipeline-entry.v7",
+  "supersedesNewGenerationOnly": "same-entry-deployment-binding02 v6 plus Security02 historicalv5context; originalretained tasks stilldecodeoriginalexactgeneration",
+  "base": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/stand/config/pipeline.config.json",
+    "sha256": "0571c257b9bea46dcd4e43c40c60d34ad695921f193f1b3694a5a240b16604f4"
+  },
+  "baseReview": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-deployment-binding-review-02/README.md",
+    "sha256": "9c88a5d7f3bc0a984ccf02551b213f3275266baffc03df921dbda83ce0a224f8"
+  },
+  "PrismDefinition": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/manifest.json",
+    "sha256": "c77f3e65cc0f9f73bc64d62bec345188de878733f714a46b4b9fe701659a6261"
+  },
+  "PrismReview": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-prism-agent-launcher-profile-review-01/REPORT.md",
+    "sha256": "6f94534a83c11da3d7093bf67d35ad46471f144c8ef4d2a4f50e7661acce6b7a"
+  },
+  "SecurityNormativeSupplement": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-02/normative-correction-generation.json",
+    "sha256": "2a207000a5eda61157b69222c33c5878b0b80f3de762817c1bc01f4f6d2c1197"
+  },
+  "SecurityReview": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-security-provider-contract-review-02/README.md",
+    "sha256": "51f8dd13b0956c312cc60341193f4965ae576d1102f1c743d1a1312b08d5827d"
+  },
+  "Provider03C3": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/c3-integrated-reference-generation.json",
+    "sha256": "f8d9d08f60acfaf884c183b560398f018b5463b52a984214a4bbaa4d75dc993f"
+  },
+  "Security01C3": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/c3-integrated-reference-generation.json",
+    "sha256": "f8d9d08f60acfaf884c183b560398f018b5463b52a984214a4bbaa4d75dc993f"
+  },
+  "Gateway70": "Author pending; OUTOFSCOPE, no fields/registrations/rootselection adopted",
+  "sourceAuthorC1LabelCorrected": "Security158/163 is not finalC1tree; original8movements exact/concrete localABI in c1-physical-author-tree-contract.json",
+  "nativeEffects": "Alloriginal12/13Prism,89/587Security and67/408Provider lifecycles/requirements unmodified. Native/source/instance/grant/clock/issuer/model proofs future; no selfacceptance."
+}

@@ -1,0 +1,41 @@
+{
+  "scope": "Independent parent-only temporal definition recheck; Core authored batch excluded",
+  "verdict": "Temporal corrections verified at proposed-definition scope; global C0 remains open",
+  "dispositions": [
+    {
+      "id": "PPRISM004",
+      "status": "corrected-at-proposed-definition-scope",
+      "evidence": "PRISM-HANDOFF-TARGET-20261013.md:125-157; prelaunch import, Node/launcher and mutable-path future cases",
+      "reason": "Trusted verification precedes unverified exec/import/initializers and first new spool materialization; retained immutable runtime pin includes Node, launcher, bootstrap and complete transitive runtime through recovery/cleanup. OCI and installed bytes remain distinct genuine provider observations."
+    },
+    {
+      "id": "PPRISM005",
+      "status": "sequencing-corrected-at-proposed-definition-scope-quota-prerequisite-open",
+      "evidence": "PRISM-HANDOFF-TARGET-20261013.md:160-220; eight input-spool future cases",
+      "reason": "Pure planned identity precedes atomic original binding/reservation; terminal replay and conflict reject before put/new reservation; original reserved bytes, readiness, distinct logical/temp/shared accounting, crash/recovery and confirmed cleanup are explicit. Terminal branch in step3 is a no-new-reservation branch of step2, not an unconditional reservation before lookup."
+    }
+  ],
+  "remainingMandatoryPrerequisites": [
+    {
+      "id": "AUTH-PRISM-INPUT-SPOOL-QUOTA-DEFINITION",
+      "status": "open-global-C0-definition",
+      "reason": "Current standalone artifact store has no complete authentic store/quota/grant/physical-capacity/metadata reservation contract. Synthetic profile references cannot authorize production or fixed Eval and must block admission. Exact source-justified author/domain/provider and genuine positive fixtures still required. No Corpus/envelope/output cap substitution."
+    }
+  ],
+  "newScopedContradictions": [],
+  "observedControls": {
+    "passed": 15,
+    "failed": 0,
+    "futureCases": 37,
+    "futureCasesExecuted": 0,
+    "inputCount": 34,
+    "inputDrift": 0
+  },
+  "notEstablished": [
+    "future implementation or F-MUT",
+    "installed image/code identity",
+    "real quota grants or physical capacity",
+    "business A6 approval",
+    "whole C0 acceptance"
+  ]
+}

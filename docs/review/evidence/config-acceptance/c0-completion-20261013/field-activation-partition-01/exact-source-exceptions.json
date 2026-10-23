@@ -1,0 +1,4090 @@
+{
+  "qualification": "Finite actual source-specific tasks, no whole-C0 acceptance, no invented external caller/measurement/capacity",
+  "exceptions": [
+    {
+      "id": "CMP-API-OUTBOX-EXISTING-MAXIMUMBYTES-READBOUND",
+      "contract": "unresolved-actual-consumer",
+      "tasks": [
+        {
+          "task": "Enumerate the authentic productive callers of the four actual durable outbox read methods, associate each supplied maximumBytes with the original retained provider/store quota and accepted run/service scope, distinguish test-only direct calls; do not introduce editable readQuota default or infer whole-store capacity from a read cap.",
+          "proposedUntilResolved": "U; potential G projection of existing original R/S caller budget, never newly editable M",
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+            "field": "FileProducerOutbox.limits.maximumBytes",
+            "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+            "aliasSources": []
+          },
+          "originalCaseIds": [
+            "QC-OUTBOX-UNBOUNDED-READ-FOUR-METHODS",
+            "QC-OUTBOX-UNBOUNDED-READ-REPLAY"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CMP-API-BLOB-EXISTING-TOTALBYTES-REQUIRED",
+      "contract": "unresolved-actual-consumer",
+      "tasks": [
+        {
+          "task": "Bind the exported durable-blob constructor required totalBytes to its authentic productive provider/writer/PVC grant and pre-existing shared-object roster/retention/counters; complete original run/store caller association before assigning H/R projection; no Corpus/output alias or new private pool capacity.",
+          "proposedUntilResolved": "U; physical H grant and original R accounted projection expected, no guessed capacity",
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+            "field": "FileDurableBlobStore.maximumBytes/maximumTotalBytes",
+            "sha256": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea",
+            "aliasSources": []
+          },
+          "originalCaseIds": [
+            "QC-LATENT-UNBOUNDED-BLOB-API-API-AND-SEVEN",
+            "QC-LATENT-UNBOUNDED-BLOB-API-HISTORY"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CMP-BUSTER-FIXTURE-QUANTITY-QUOTA-REPRESENTATION",
+      "contract": "unresolved-actual-consumer",
+      "tasks": [
+        {
+          "task": "Resolve exact Kubernetes quantity representation/rounding/byte conversion and existing accepted fixture resource/quota producer at kubernetes-fixture-storage.ts; retain task resource requests versus native provider ceilings and authentic original grant; ensure actual parser/serialization is used, not a guessed integer ratio.",
+          "proposedUntilResolved": "U; task T resource request and H/R admitted ceiling projection expected; no independent operator capacity invented",
+          "source": {
+            "path": "skills/buster/engine/test-gates/kubernetes-fixture-storage.ts",
+            "field": "storageBytes representation",
+            "sha256": "da2858e192df14fc5d457ebd1f3414696c5a3be116f611216c214c0b6b194f1f",
+            "aliasSources": []
+          },
+          "originalCaseIds": [
+            "QC-FIXTURE-STORAGE-EXPONENT-REPRESENTATION",
+            "QC-FIXTURE-STORAGE-EXPONENT-POLICY-BIND"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CMP-BUSTER-PROVIDER-RESOURCE-MEASUREMENT-PROVENANCE",
+      "contract": "unresolved-actual-consumer",
+      "tasks": [
+        {
+          "task": "Associate actual provider-process-session resource measurement with original authentic producer/native attempt/cgroup/node/claim and existing accepted resource policy; document which measurement is returned task evidence versus which bound is original grant; no syntax-shaped policyDigest masquerading as H attestation.",
+          "proposedUntilResolved": "U; authentic H measurement/G returned evidence under retained R/J policy expected, not ghost M setting",
+          "source": {
+            "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+            "field": "ProviderProcessSession.resources provenance",
+            "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d",
+            "aliasSources": [
+              {
+                "path": "skills/buster/engine/test-gates/runner-provider-operation.ts",
+                "sha256": "332e73e5e35b28800ab7ad70331adf8c2ed683f819a0ea6504eea0abbb61645c"
+              }
+            ]
+          },
+          "originalCaseIds": [
+            "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-REAL-PROVENANCE",
+            "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-RECOVERY-EVAL"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "RT-351419f2c26e2696",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/api-flow/schemas/config.schema.json",
+            "field": "#/properties/flowFile",
+            "sha256": "8f22f22a553bc7d12daca18756c1394596e0f953de909ad4569aef77119e9ebc"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-ecc6714a5d1b8270",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/api-flow/schemas/config.schema.json",
+            "field": "#/properties/url",
+            "sha256": "8f22f22a553bc7d12daca18756c1394596e0f953de909ad4569aef77119e9ebc"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-98800e708ba4ebcc",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/api-flow/schemas/config.schema.json",
+            "field": "#/properties/endpointName",
+            "sha256": "8f22f22a553bc7d12daca18756c1394596e0f953de909ad4569aef77119e9ebc"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-b8eb5e344f496d7c",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/api-flow/schemas/config.schema.json",
+            "field": "#/properties/requestTimeoutMs",
+            "sha256": "8f22f22a553bc7d12daca18756c1394596e0f953de909ad4569aef77119e9ebc"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-98a5849759145124",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/api-flow/schemas/config.schema.json",
+            "field": "#/properties/maximumResponseBytes",
+            "sha256": "8f22f22a553bc7d12daca18756c1394596e0f953de909ad4569aef77119e9ebc"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-6e292c3c6f492f07",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/api-flow/schemas/config.schema.json",
+            "field": "#/properties/maximumSteps",
+            "sha256": "8f22f22a553bc7d12daca18756c1394596e0f953de909ad4569aef77119e9ebc"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-dab100380f6a024f",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+            "field": "#/properties/url",
+            "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-6776ec7160ea0036",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+            "field": "#/properties/endpointName",
+            "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-b6eb30fbf6be03e1",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+            "field": "#/properties/routes",
+            "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-0d37b61a9e8bc451",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+            "field": "#/properties/routes/items",
+            "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-ce85d1e95781cb1b",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+            "field": "#/properties/profiles",
+            "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-735e529045f176ca",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+            "field": "#/properties/profiles/items",
+            "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-6053515db8e5f294",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+            "field": "#/properties/profileFile",
+            "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-b523246a8e584359",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+            "field": "#/properties/tags",
+            "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-0f8819569bb41402",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+            "field": "#/properties/tags/items",
+            "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-bb8352234e6c6200",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+            "field": "#/properties/exclude",
+            "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-e32df097509e32fe",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+            "field": "#/properties/exclude/items",
+            "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-ea6c994234263250",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+            "field": "#/properties/acceptances",
+            "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-3d366b22c4baadb6",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+            "field": "#/properties/acceptances/items",
+            "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-ace0dff341a51674",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+            "field": "#/properties/acceptances/items/properties/rule",
+            "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-e2d010126067fa17",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+            "field": "#/properties/acceptances/items/properties/route",
+            "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-36d7d882e2bd6da2",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+            "field": "#/properties/acceptances/items/properties/selector",
+            "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-a31018709bf73a5c",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+            "field": "#/properties/acceptances/items/properties/reason",
+            "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-3eeda647e60d7d1b",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+            "field": "#/properties/acceptances/items/properties/expiresAt",
+            "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-28216d3eec81ad18",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+            "field": "#/properties/timeoutMs",
+            "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-b3b2f0374a518a17",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/container-build/schemas/config.schema.json",
+            "field": "#/properties/buildContext -> #/$defs/path",
+            "sha256": "2ee424bde723532cea47009ad63b3d59ae422cd60ac8a3ba375396abb1f6dae9"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-a2ede916c5f3a88f",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/container-build/schemas/config.schema.json",
+            "field": "#/properties/definition",
+            "sha256": "2ee424bde723532cea47009ad63b3d59ae422cd60ac8a3ba375396abb1f6dae9"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-789ceac52757ccbc",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/container-build/schemas/config.schema.json",
+            "field": "#/properties/definition/oneOf/0",
+            "sha256": "2ee424bde723532cea47009ad63b3d59ae422cd60ac8a3ba375396abb1f6dae9"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-eb6aa0fbaefdfbfc",
+      "contract": "generated-authority-ref",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/container-build/schemas/config.schema.json",
+            "field": "#/properties/definition/oneOf/0/properties/type",
+            "sha256": "2ee424bde723532cea47009ad63b3d59ae422cd60ac8a3ba375396abb1f6dae9"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-e2f994744ac26e00",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/container-build/schemas/config.schema.json",
+            "field": "#/properties/definition/oneOf/0/properties/dockerfile -> #/$defs/path",
+            "sha256": "2ee424bde723532cea47009ad63b3d59ae422cd60ac8a3ba375396abb1f6dae9"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-c41b8c07ceeaacf5",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/container-build/schemas/config.schema.json",
+            "field": "#/properties/definition/oneOf/0/properties/target -> #/$defs/name",
+            "sha256": "2ee424bde723532cea47009ad63b3d59ae422cd60ac8a3ba375396abb1f6dae9"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-93a6b376714825cf",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/container-build/schemas/config.schema.json",
+            "field": "#/properties/definition/oneOf/0/properties/buildArgs",
+            "sha256": "2ee424bde723532cea47009ad63b3d59ae422cd60ac8a3ba375396abb1f6dae9"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-9eb9d2cba21c2be1",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/container-build/schemas/config.schema.json",
+            "field": "#/properties/definition/oneOf/0/properties/buildArgs/additionalProperties",
+            "sha256": "2ee424bde723532cea47009ad63b3d59ae422cd60ac8a3ba375396abb1f6dae9"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-b36b8b81fcef0f78",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/container-build/schemas/config.schema.json",
+            "field": "#/properties/definition/oneOf/1",
+            "sha256": "2ee424bde723532cea47009ad63b3d59ae422cd60ac8a3ba375396abb1f6dae9"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-0e152ca9597094d8",
+      "contract": "generated-authority-ref",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/container-build/schemas/config.schema.json",
+            "field": "#/properties/definition/oneOf/1/properties/type",
+            "sha256": "2ee424bde723532cea47009ad63b3d59ae422cd60ac8a3ba375396abb1f6dae9"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-61257ff55ff06b04",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/container-build/schemas/config.schema.json",
+            "field": "#/properties/definition/oneOf/1/properties/template",
+            "sha256": "2ee424bde723532cea47009ad63b3d59ae422cd60ac8a3ba375396abb1f6dae9"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-f62121c4ef5a8d9b",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/container-build/schemas/config.schema.json",
+            "field": "#/properties/outputName -> #/$defs/name",
+            "sha256": "2ee424bde723532cea47009ad63b3d59ae422cd60ac8a3ba375396abb1f6dae9"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-417086b522da33d6",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/container-build/schemas/config.schema.json",
+            "field": "#/properties/platform",
+            "sha256": "2ee424bde723532cea47009ad63b3d59ae422cd60ac8a3ba375396abb1f6dae9"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-27e9026bdac33ece",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/coverage-budget/schemas/config.schema.json",
+            "field": "#/properties/minimumLinePercent",
+            "sha256": "72fc0422bb8f35b01b44405d217a3a1a4d62c4f875ddbe3bce1ddb814126025f"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-ee4bd1b95c8e9049",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/coverage-budget/schemas/config.schema.json",
+            "field": "#/properties/combine",
+            "sha256": "72fc0422bb8f35b01b44405d217a3a1a4d62c4f875ddbe3bce1ddb814126025f"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-374fc655646a9edc",
+      "contract": "protocol-software",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json",
+            "field": "#/properties/protocol",
+            "sha256": "5e0d5ea09c2070375cc558bca0f21484646c98b0de18023438cc29b830ad642e"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-6eb2a289d5ca31e7",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json",
+            "field": "#/properties/loginPath",
+            "sha256": "5e0d5ea09c2070375cc558bca0f21484646c98b0de18023438cc29b830ad642e"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-0a53494ecda4f6e6",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json",
+            "field": "#/properties/usernameKey",
+            "sha256": "5e0d5ea09c2070375cc558bca0f21484646c98b0de18023438cc29b830ad642e"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-32f46486cd6c0cae",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json",
+            "field": "#/properties/passwordKey",
+            "sha256": "5e0d5ea09c2070375cc558bca0f21484646c98b0de18023438cc29b830ad642e"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-dbe32a8d7d4a40b9",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json",
+            "field": "#/properties/cookieName",
+            "sha256": "5e0d5ea09c2070375cc558bca0f21484646c98b0de18023438cc29b830ad642e"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-851b2948e1590b2c",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json",
+            "field": "#/properties/protectedPath",
+            "sha256": "5e0d5ea09c2070375cc558bca0f21484646c98b0de18023438cc29b830ad642e"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-38cd6ae00ba2b1d6",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json",
+            "field": "#/properties/usernamePointer",
+            "sha256": "5e0d5ea09c2070375cc558bca0f21484646c98b0de18023438cc29b830ad642e"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-6e3380a34038a8f3",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json",
+            "field": "#/properties/assertions",
+            "sha256": "5e0d5ea09c2070375cc558bca0f21484646c98b0de18023438cc29b830ad642e"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-0bebcabef1e5db22",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json",
+            "field": "#/properties/assertions/items",
+            "sha256": "5e0d5ea09c2070375cc558bca0f21484646c98b0de18023438cc29b830ad642e"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-c6558fe1affde8f0",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json",
+            "field": "#/properties/assertions/items/properties/pointer",
+            "sha256": "5e0d5ea09c2070375cc558bca0f21484646c98b0de18023438cc29b830ad642e"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-a0cd7ed395eaca7e",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json",
+            "field": "#/properties/assertions/items/properties/equals",
+            "sha256": "5e0d5ea09c2070375cc558bca0f21484646c98b0de18023438cc29b830ad642e"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-a951ca501013f2bb",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json",
+            "field": "#/properties/assertions/items/properties/equals/oneOf/0",
+            "sha256": "5e0d5ea09c2070375cc558bca0f21484646c98b0de18023438cc29b830ad642e"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-9edb7cb283bb137b",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json",
+            "field": "#/properties/assertions/items/properties/equals/oneOf/1",
+            "sha256": "5e0d5ea09c2070375cc558bca0f21484646c98b0de18023438cc29b830ad642e"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-219d797be23e8434",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json",
+            "field": "#/properties/assertions/items/properties/equals/oneOf/2",
+            "sha256": "5e0d5ea09c2070375cc558bca0f21484646c98b0de18023438cc29b830ad642e"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-aff37e16b8a96dfb",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/direct-command/schemas/config.schema.json",
+            "field": "#/properties/executable",
+            "sha256": "8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-b66d71a53b598ee8",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/direct-command/schemas/config.schema.json",
+            "field": "#/properties/args",
+            "sha256": "8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-33e6442dd2c6323d",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/direct-command/schemas/config.schema.json",
+            "field": "#/properties/args/items",
+            "sha256": "8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-7de4b3069445487f",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/direct-command/schemas/config.schema.json",
+            "field": "#/properties/workingDirectory",
+            "sha256": "8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-b6fb4503ebc02dc5",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/direct-command/schemas/config.schema.json",
+            "field": "#/properties/environment",
+            "sha256": "8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-cbb699d40c1239eb",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/direct-command/schemas/config.schema.json",
+            "field": "#/properties/environment/additionalProperties",
+            "sha256": "8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-ee98119f35dc96d1",
+      "contract": "protocol-software",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/direct-command/schemas/config.schema.json",
+            "field": "#/properties/resultMode",
+            "sha256": "8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-866cc51d43812d41",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/direct-command/schemas/config.schema.json",
+            "field": "#/properties/reports",
+            "sha256": "8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-b5bbfe4cafcfe65f",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/direct-command/schemas/config.schema.json",
+            "field": "#/properties/reports/items -> #/$defs/report",
+            "sha256": "8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-13c87d1fa61aeb38",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/direct-command/schemas/config.schema.json",
+            "field": "#/properties/reports/items -> #/$defs/report/properties/id",
+            "sha256": "8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-e8f58d614243b254",
+      "contract": "protocol-software",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/direct-command/schemas/config.schema.json",
+            "field": "#/properties/reports/items -> #/$defs/report/properties/format",
+            "sha256": "8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-782a72bc24d55fe2",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/direct-command/schemas/config.schema.json",
+            "field": "#/properties/reports/items -> #/$defs/report/properties/path",
+            "sha256": "8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-d17d3e7a45e4a0c8",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/direct-command/schemas/config.schema.json",
+            "field": "#/properties/reports/items -> #/$defs/report/properties/mediaType",
+            "sha256": "8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-e7836625c9ace3c3",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/direct-command/schemas/config.schema.json",
+            "field": "#/properties/coverage",
+            "sha256": "8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-1db043d5c6d3a4ed",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/direct-command/schemas/config.schema.json",
+            "field": "#/properties/coverage/items -> #/$defs/coverage",
+            "sha256": "8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-be7f1b2f7970d6a8",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/direct-command/schemas/config.schema.json",
+            "field": "#/properties/coverage/items -> #/$defs/coverage/properties/id",
+            "sha256": "8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-f76399d441e23e8c",
+      "contract": "protocol-software",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/direct-command/schemas/config.schema.json",
+            "field": "#/properties/coverage/items -> #/$defs/coverage/properties/format",
+            "sha256": "8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-847a5cb47ae5adae",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/direct-command/schemas/config.schema.json",
+            "field": "#/properties/coverage/items -> #/$defs/coverage/properties/path",
+            "sha256": "8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-d601ae99ab08ed6e",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/direct-command/schemas/config.schema.json",
+            "field": "#/properties/coverage/items -> #/$defs/coverage/properties/mediaType",
+            "sha256": "8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-05edb56f36cc9aa9",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/direct-command/schemas/config.schema.json",
+            "field": "#/properties/artifacts",
+            "sha256": "8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-7f3bd9be31aa70ef",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/direct-command/schemas/config.schema.json",
+            "field": "#/properties/artifacts/items -> #/$defs/artifact",
+            "sha256": "8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-9ca7d7caced9c0ec",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/direct-command/schemas/config.schema.json",
+            "field": "#/properties/artifacts/items -> #/$defs/artifact/properties/id",
+            "sha256": "8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-f3368a4164a534a8",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/direct-command/schemas/config.schema.json",
+            "field": "#/properties/artifacts/items -> #/$defs/artifact/properties/path",
+            "sha256": "8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-bc4307b73fc31a54",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/direct-command/schemas/config.schema.json",
+            "field": "#/properties/artifacts/items -> #/$defs/artifact/properties/mediaType",
+            "sha256": "8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-2089ad1c8390909b",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/http/schemas/config.schema.json",
+            "field": "#/properties/url",
+            "sha256": "56553d307bebc7cc556ba66d35efeec08ba3d9825197df4b7cb0848db8b15e3f"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-e821665e0a2aedb9",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/http/schemas/config.schema.json",
+            "field": "#/properties/endpointName",
+            "sha256": "56553d307bebc7cc556ba66d35efeec08ba3d9825197df4b7cb0848db8b15e3f"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-c66db038b75b910a",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/http/schemas/config.schema.json",
+            "field": "#/properties/path",
+            "sha256": "56553d307bebc7cc556ba66d35efeec08ba3d9825197df4b7cb0848db8b15e3f"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-a6feb259112b5574",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/http/schemas/config.schema.json",
+            "field": "#/properties/method",
+            "sha256": "56553d307bebc7cc556ba66d35efeec08ba3d9825197df4b7cb0848db8b15e3f"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-d9e562dd50c1f9b3",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/http/schemas/config.schema.json",
+            "field": "#/properties/accept",
+            "sha256": "56553d307bebc7cc556ba66d35efeec08ba3d9825197df4b7cb0848db8b15e3f"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-fcc77b9c29ab0230",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/http/schemas/config.schema.json",
+            "field": "#/properties/expectedStatuses",
+            "sha256": "56553d307bebc7cc556ba66d35efeec08ba3d9825197df4b7cb0848db8b15e3f"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-259ec75a40f57a0b",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/http/schemas/config.schema.json",
+            "field": "#/properties/expectedStatuses/items",
+            "sha256": "56553d307bebc7cc556ba66d35efeec08ba3d9825197df4b7cb0848db8b15e3f"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-c7fdaab3e3e6c833",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/http/schemas/config.schema.json",
+            "field": "#/properties/expectedText",
+            "sha256": "56553d307bebc7cc556ba66d35efeec08ba3d9825197df4b7cb0848db8b15e3f"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-b2f5e06d53448731",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/http/schemas/config.schema.json",
+            "field": "#/properties/expectedContentType",
+            "sha256": "56553d307bebc7cc556ba66d35efeec08ba3d9825197df4b7cb0848db8b15e3f"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-6b6f0761a77de324",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/http/schemas/config.schema.json",
+            "field": "#/properties/maximumResponseBytes",
+            "sha256": "56553d307bebc7cc556ba66d35efeec08ba3d9825197df4b7cb0848db8b15e3f"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-6a3cdfc223a3c24b",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/http/schemas/config.schema.json",
+            "field": "#/properties/requestTimeoutMs",
+            "sha256": "56553d307bebc7cc556ba66d35efeec08ba3d9825197df4b7cb0848db8b15e3f"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-cf28691eea301584",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
+            "field": "#/properties/image",
+            "sha256": "b5bd127d9f7167d5cbb2c576f40ef6881fef16f12552a955e70576c7c730b443"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-5d82d8cd07793c3d",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
+            "field": "#/properties/image/properties/reference",
+            "sha256": "b5bd127d9f7167d5cbb2c576f40ef6881fef16f12552a955e70576c7c730b443"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-82c3b46b26e4c39d",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
+            "field": "#/properties/image/properties/digest",
+            "sha256": "b5bd127d9f7167d5cbb2c576f40ef6881fef16f12552a955e70576c7c730b443"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-2d3bd84c488588ec",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
+            "field": "#/properties/serviceName -> #/$defs/dnsLabel",
+            "sha256": "b5bd127d9f7167d5cbb2c576f40ef6881fef16f12552a955e70576c7c730b443"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-08d10b1dca5afa53",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
+            "field": "#/properties/servicePort",
+            "sha256": "b5bd127d9f7167d5cbb2c576f40ef6881fef16f12552a955e70576c7c730b443"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-85b1243b34cbf6df",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
+            "field": "#/properties/serviceTargetPort",
+            "sha256": "b5bd127d9f7167d5cbb2c576f40ef6881fef16f12552a955e70576c7c730b443"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-eb41e2cf5ad440a2",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
+            "field": "#/properties/namespacePrefix -> #/$defs/namespacePrefix",
+            "sha256": "b5bd127d9f7167d5cbb2c576f40ef6881fef16f12552a955e70576c7c730b443"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-1ee19ae5cf389f34",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
+            "field": "#/properties/retention",
+            "sha256": "b5bd127d9f7167d5cbb2c576f40ef6881fef16f12552a955e70576c7c730b443"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-0d9d1844afc64a69",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
+            "field": "#/properties/retention/properties/mode",
+            "sha256": "b5bd127d9f7167d5cbb2c576f40ef6881fef16f12552a955e70576c7c730b443"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-dc1999676fe1f2dc",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
+            "field": "#/properties/retention/properties/seconds",
+            "sha256": "b5bd127d9f7167d5cbb2c576f40ef6881fef16f12552a955e70576c7c730b443"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-b9c9d3bbf01598db",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
+            "field": "#/properties/readinessTimeoutSeconds",
+            "sha256": "b5bd127d9f7167d5cbb2c576f40ef6881fef16f12552a955e70576c7c730b443"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-de063770a9b7f161",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
+            "field": "#/properties/secretReferences",
+            "sha256": "b5bd127d9f7167d5cbb2c576f40ef6881fef16f12552a955e70576c7c730b443"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-201d60e7b7b19735",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
+            "field": "#/properties/secretReferences/items",
+            "sha256": "b5bd127d9f7167d5cbb2c576f40ef6881fef16f12552a955e70576c7c730b443"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-49dcddd1fe59408c",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
+            "field": "#/properties/testCredentials",
+            "sha256": "b5bd127d9f7167d5cbb2c576f40ef6881fef16f12552a955e70576c7c730b443"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-18785a40ca314d20",
+      "contract": "generated-authority-ref",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
+            "field": "#/properties/testCredentials/properties/mode",
+            "sha256": "b5bd127d9f7167d5cbb2c576f40ef6881fef16f12552a955e70576c7c730b443"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-0b6088c53bf3323f",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
+            "field": "#/properties/testCredentials/properties/secretName -> #/$defs/dnsLabel",
+            "sha256": "b5bd127d9f7167d5cbb2c576f40ef6881fef16f12552a955e70576c7c730b443"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-45cbcce6c9a8143a",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+            "field": "#/properties/purpose",
+            "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-c5c2b774e067d6c3",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+            "field": "#/properties/url",
+            "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-f513e45a2c34c183",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+            "field": "#/properties/endpointName",
+            "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-91356268eda2cde6",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+            "field": "#/properties/routes",
+            "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-9bca7a8727abb08f",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+            "field": "#/properties/routes/items",
+            "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-b8fe49d2862e13fe",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+            "field": "#/properties/settingsFile",
+            "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-c245ed3eed7a76c8",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+            "field": "#/properties/profile",
+            "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-858b7c0d83228aea",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+            "field": "#/properties/budget",
+            "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-d1ed31f756f931f4",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+            "field": "#/properties/runs",
+            "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-91b918f8698f70dd",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+            "field": "#/properties/acceptances",
+            "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-8138a8b093bfc06d",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+            "field": "#/properties/acceptances/items",
+            "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-323256cac3d5065d",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+            "field": "#/properties/acceptances/items/properties/audit",
+            "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-398b1cee6b5ad261",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+            "field": "#/properties/acceptances/items/properties/route",
+            "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-1412bca48fc1b08d",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+            "field": "#/properties/acceptances/items/properties/reason",
+            "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-bfc739d422a140ce",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+            "field": "#/properties/acceptances/items/properties/expiresAt",
+            "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-088d813a8d6ff7ca",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+            "field": "#/properties/timeoutMs",
+            "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-a8b0c90a7a729d20",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+            "field": "#/allOf/0/if/properties/purpose",
+            "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-14d3d815490102e1",
+      "contract": "generated-authority-ref",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+            "field": "#/allOf/0/then/properties/runs",
+            "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-97dfffc2083d51ea",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+            "field": "#/allOf/1/if/properties/purpose",
+            "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-480d76acac6850a9",
+      "contract": "generated-authority-ref",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+            "field": "#/allOf/1/then/properties/runs",
+            "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-10f3f03208806c98",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+            "field": "#/properties/specFile",
+            "sha256": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-1609b6ce9dfde15b",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+            "field": "#/properties/url",
+            "sha256": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-d2dfede67afe22ac",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+            "field": "#/properties/endpointName",
+            "sha256": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-396eb59b11141a9a",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+            "field": "#/properties/operations",
+            "sha256": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-1d1c5da45ebf7a59",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+            "field": "#/properties/operations/items",
+            "sha256": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-039cd17e18207028",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+            "field": "#/properties/operations/items/properties/operationId",
+            "sha256": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-4ad5dd8a7cfccc1c",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+            "field": "#/properties/operations/items/properties/pathParameters",
+            "sha256": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-496f09de742b998e",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+            "field": "#/properties/operations/items/properties/pathParameters/additionalProperties",
+            "sha256": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-d077dd499ce84e1c",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+            "field": "#/properties/operations/items/properties/pathParameters/additionalProperties/anyOf/0",
+            "sha256": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-9cec05672cab2d0d",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+            "field": "#/properties/operations/items/properties/pathParameters/additionalProperties/anyOf/1",
+            "sha256": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-148251b72f4d24e0",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+            "field": "#/properties/operations/items/properties/pathParameters/additionalProperties/anyOf/2",
+            "sha256": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-153e53cbf58a2c3b",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+            "field": "#/properties/operations/items/properties/query",
+            "sha256": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-03b79ef05f21760b",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+            "field": "#/properties/operations/items/properties/query/additionalProperties",
+            "sha256": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-9d2b7832df8521b8",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+            "field": "#/properties/operations/items/properties/query/additionalProperties/anyOf/0",
+            "sha256": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-88373ef30a584869",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+            "field": "#/properties/operations/items/properties/query/additionalProperties/anyOf/1",
+            "sha256": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-3168b8463b219872",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+            "field": "#/properties/operations/items/properties/query/additionalProperties/anyOf/2",
+            "sha256": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-6c40eb311c36aa18",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+            "field": "#/properties/operations/items/properties/headers",
+            "sha256": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-67427bf80b25f14f",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+            "field": "#/properties/operations/items/properties/headers/additionalProperties",
+            "sha256": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-da87e9da52e239b4",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+            "field": "#/properties/operations/items/properties/body",
+            "sha256": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-795b89c50339c532",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+            "field": "#/properties/operations/items/properties/cleanup",
+            "sha256": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-0dfdeb7fe789b20b",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+            "field": "#/properties/operations/items/properties/expectedStatuses",
+            "sha256": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-93fe557af6f46c3f",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+            "field": "#/properties/operations/items/properties/expectedStatuses/items",
+            "sha256": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-d67d1281071db148",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+            "field": "#/properties/tags",
+            "sha256": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-96b1400c6db325d0",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+            "field": "#/properties/tags/items",
+            "sha256": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-550d941bb663f8fc",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+            "field": "#/properties/requestTimeoutMs",
+            "sha256": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-63d5aafbda9b5281",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+            "field": "#/properties/maximumResponseBytes",
+            "sha256": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-f6fd1dec2d2c6b35",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/playwright/schemas/config.schema.json",
+            "field": "#/properties/url",
+            "sha256": "82f37247278e500d4a9e5d0c210fe135766a9417b64b9b595cc92385377cc977"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-d17ed366e09f9e72",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/playwright/schemas/config.schema.json",
+            "field": "#/properties/endpointName",
+            "sha256": "82f37247278e500d4a9e5d0c210fe135766a9417b64b9b595cc92385377cc977"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-0960971aa584ed2a",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/playwright/schemas/config.schema.json",
+            "field": "#/properties/projectDirectory",
+            "sha256": "82f37247278e500d4a9e5d0c210fe135766a9417b64b9b595cc92385377cc977"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-c226799a77c2da3b",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/playwright/schemas/config.schema.json",
+            "field": "#/properties/configFile",
+            "sha256": "82f37247278e500d4a9e5d0c210fe135766a9417b64b9b595cc92385377cc977"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-fbdecaab60720898",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/playwright/schemas/config.schema.json",
+            "field": "#/properties/workers",
+            "sha256": "82f37247278e500d4a9e5d0c210fe135766a9417b64b9b595cc92385377cc977"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-d46f4334df4967fa",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/playwright/schemas/config.schema.json",
+            "field": "#/properties/timeoutMs",
+            "sha256": "82f37247278e500d4a9e5d0c210fe135766a9417b64b9b595cc92385377cc977"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-e4dcfff9aa6b1ef0",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/playwright/schemas/config.schema.json",
+            "field": "#/properties/minimumExecutedTests",
+            "sha256": "82f37247278e500d4a9e5d0c210fe135766a9417b64b9b595cc92385377cc977"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-28f9b2da06d59a77",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/playwright/schemas/config.schema.json",
+            "field": "#/properties/requiredTests",
+            "sha256": "82f37247278e500d4a9e5d0c210fe135766a9417b64b9b595cc92385377cc977"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-d348d41c2ab35c8b",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/playwright/schemas/config.schema.json",
+            "field": "#/properties/requiredTests/items",
+            "sha256": "82f37247278e500d4a9e5d0c210fe135766a9417b64b9b595cc92385377cc977"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-163ebc138c768e21",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+            "field": "#/properties/profile",
+            "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-d233d3039be3adc4",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+            "field": "#/properties/paths",
+            "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-6eac87138fc57ac9",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+            "field": "#/properties/paths/items",
+            "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-6afb26eb1a7b7271",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+            "field": "#/properties/requestTimeoutMs",
+            "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-611f5b01895a7c90",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+            "field": "#/properties/rules",
+            "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-93c925a29f21dd8d",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+            "field": "#/properties/rules/properties/add",
+            "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-d852318fd5b15892",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+            "field": "#/properties/rules/properties/add/items -> #/$defs/rule",
+            "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-cd92cb7109a38c4a",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+            "field": "#/properties/rules/properties/add/items -> #/$defs/rule/properties/id",
+            "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-8a73cb4fa2939ad4",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+            "field": "#/properties/rules/properties/add/items -> #/$defs/rule/properties/header",
+            "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-ebb85facca8d1b1b",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+            "field": "#/properties/rules/properties/add/items -> #/$defs/rule/properties/severity",
+            "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-d87b67b33610f619",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+            "field": "#/properties/rules/properties/add/items -> #/$defs/rule/properties/kind",
+            "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-ef66623413223fef",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+            "field": "#/properties/rules/properties/add/items -> #/$defs/rule/properties/value",
+            "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-101f7a1f1f29236a",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+            "field": "#/properties/rules/properties/replace",
+            "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-5118b56e0742663b",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+            "field": "#/properties/rules/properties/replace/items -> #/$defs/rule",
+            "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-584baa9f0f15c058",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+            "field": "#/properties/rules/properties/replace/items -> #/$defs/rule/properties/id",
+            "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-6ecf22c1afd37e91",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+            "field": "#/properties/rules/properties/replace/items -> #/$defs/rule/properties/header",
+            "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-e702d189d1282e3b",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+            "field": "#/properties/rules/properties/replace/items -> #/$defs/rule/properties/severity",
+            "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-58a77efdd8cd5820",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+            "field": "#/properties/rules/properties/replace/items -> #/$defs/rule/properties/kind",
+            "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-95a1b17121581a49",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+            "field": "#/properties/rules/properties/replace/items -> #/$defs/rule/properties/value",
+            "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-f4e73c3bb3c19c65",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+            "field": "#/properties/rules/properties/remove",
+            "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-0da96fe7ba066ccb",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+            "field": "#/properties/rules/properties/remove/items",
+            "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-0c0b02b6fbc2160c",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy",
+            "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-c9bc44d00a7b9c90",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy/properties/profile",
+            "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-6b059c9d6ad52058",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy/properties/acceptances",
+            "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-cdfcefd44e87996b",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy/properties/acceptances/items -> #/$defs/acceptance",
+            "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-f365121af3c2af9e",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy/properties/acceptances/items -> #/$defs/acceptance/properties/findingId",
+            "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-3caa1e915a125dcd",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy/properties/acceptances/items -> #/$defs/acceptance/properties/reason",
+            "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-ea0bcd6957dbc556",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy/properties/acceptances/items -> #/$defs/acceptance/properties/expiresAt",
+            "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-4c38b23dda98be93",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/dependency.schema.json",
+            "field": "#/properties/projectDirectory",
+            "sha256": "e28b92a94df642a3527df914c9406a215684fb099bf98ded536d1e5743873ee4"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-0e050207e6faa65c",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/dependency.schema.json",
+            "field": "#/properties/timeoutMs",
+            "sha256": "e28b92a94df642a3527df914c9406a215684fb099bf98ded536d1e5743873ee4"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-ec0fc91072a8b630",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/dependency.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy",
+            "sha256": "e28b92a94df642a3527df914c9406a215684fb099bf98ded536d1e5743873ee4"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-1242f6b3245f130e",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/dependency.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy/properties/profile",
+            "sha256": "e28b92a94df642a3527df914c9406a215684fb099bf98ded536d1e5743873ee4"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-3f66e997ecc380c1",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/dependency.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy/properties/acceptances",
+            "sha256": "e28b92a94df642a3527df914c9406a215684fb099bf98ded536d1e5743873ee4"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-81f4bdf5f3872b9e",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/dependency.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy/properties/acceptances/items -> #/$defs/acceptance",
+            "sha256": "e28b92a94df642a3527df914c9406a215684fb099bf98ded536d1e5743873ee4"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-4a23015d6ca86669",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/dependency.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy/properties/acceptances/items -> #/$defs/acceptance/properties/findingId",
+            "sha256": "e28b92a94df642a3527df914c9406a215684fb099bf98ded536d1e5743873ee4"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-a3dc4204fd2dbc99",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/dependency.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy/properties/acceptances/items -> #/$defs/acceptance/properties/reason",
+            "sha256": "e28b92a94df642a3527df914c9406a215684fb099bf98ded536d1e5743873ee4"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-d912c283aeea31d8",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/dependency.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy/properties/acceptances/items -> #/$defs/acceptance/properties/expiresAt",
+            "sha256": "e28b92a94df642a3527df914c9406a215684fb099bf98ded536d1e5743873ee4"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-25155a8525353895",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/image.schema.json",
+            "field": "#/properties/timeoutMs",
+            "sha256": "1215ea1d598f31ebe569812962c66b1a75f506fd1d63eeecee5ec523beb1b9ca"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-513bbd46b45156b7",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/image.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy",
+            "sha256": "1215ea1d598f31ebe569812962c66b1a75f506fd1d63eeecee5ec523beb1b9ca"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-6d1bc088852536a7",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/image.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy/properties/profile",
+            "sha256": "1215ea1d598f31ebe569812962c66b1a75f506fd1d63eeecee5ec523beb1b9ca"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-2dc4f91b61e79184",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/image.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy/properties/acceptances",
+            "sha256": "1215ea1d598f31ebe569812962c66b1a75f506fd1d63eeecee5ec523beb1b9ca"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-bd7eee80bc8feca2",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/image.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy/properties/acceptances/items -> #/$defs/acceptance",
+            "sha256": "1215ea1d598f31ebe569812962c66b1a75f506fd1d63eeecee5ec523beb1b9ca"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-53653aa9d3f03c8f",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/image.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy/properties/acceptances/items -> #/$defs/acceptance/properties/findingId",
+            "sha256": "1215ea1d598f31ebe569812962c66b1a75f506fd1d63eeecee5ec523beb1b9ca"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-376a55c52779beed",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/image.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy/properties/acceptances/items -> #/$defs/acceptance/properties/reason",
+            "sha256": "1215ea1d598f31ebe569812962c66b1a75f506fd1d63eeecee5ec523beb1b9ca"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-e8358fe85c80d3d0",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/image.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy/properties/acceptances/items -> #/$defs/acceptance/properties/expiresAt",
+            "sha256": "1215ea1d598f31ebe569812962c66b1a75f506fd1d63eeecee5ec523beb1b9ca"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-2fe8190f12f15510",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json",
+            "field": "#/properties/timeoutMs",
+            "sha256": "8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-8de947a02be68652",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy",
+            "sha256": "8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-76d0d20d46b9a8e6",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy/properties/profile",
+            "sha256": "8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-773179d734f2eb77",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy/properties/acceptances",
+            "sha256": "8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-9370858078281283",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy/properties/acceptances/items -> #/$defs/acceptance",
+            "sha256": "8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-f036e66205a0fa61",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy/properties/acceptances/items -> #/$defs/acceptance/properties/findingId",
+            "sha256": "8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-ffc33c06d6b6a1c2",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy/properties/acceptances/items -> #/$defs/acceptance/properties/reason",
+            "sha256": "8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-0a39f16498c38979",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy/properties/acceptances/items -> #/$defs/acceptance/properties/expiresAt",
+            "sha256": "8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-c00914a2402f91bf",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json",
+            "field": "#/properties/timeoutMs",
+            "sha256": "8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-8d1e26bc5360c737",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy",
+            "sha256": "8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-ae78d041c3d0fbd6",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy/properties/profile",
+            "sha256": "8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-9941fbebdaea1c41",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy/properties/acceptances",
+            "sha256": "8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-2672b24a1df6464d",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy/properties/acceptances/items -> #/$defs/acceptance",
+            "sha256": "8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-52731740c2eb92d2",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy/properties/acceptances/items -> #/$defs/acceptance/properties/findingId",
+            "sha256": "8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-cc64dd898be55e05",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy/properties/acceptances/items -> #/$defs/acceptance/properties/reason",
+            "sha256": "8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-95d37d46c3d99337",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json",
+            "field": "#/properties/policy -> #/$defs/policy/properties/acceptances/items -> #/$defs/acceptance/properties/expiresAt",
+            "sha256": "8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-ab1106a4875e728b",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/size-budget/schemas/config.schema.json",
+            "field": "#/properties/format",
+            "sha256": "e20a56b4cb1bba2d69355a3da142db17bb9d254d8276b86809c8b32994dbd894"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-4bdd3187c110ade5",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/size-budget/schemas/config.schema.json",
+            "field": "#/properties/maximumTotalBytes",
+            "sha256": "e20a56b4cb1bba2d69355a3da142db17bb9d254d8276b86809c8b32994dbd894"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-313716d959435f4e",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/size-budget/schemas/config.schema.json",
+            "field": "#/properties/maximumFileCount",
+            "sha256": "e20a56b4cb1bba2d69355a3da142db17bb9d254d8276b86809c8b32994dbd894"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-91cea7a8490c1779",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/size-budget/schemas/config.schema.json",
+            "field": "#/properties/matchingFiles",
+            "sha256": "e20a56b4cb1bba2d69355a3da142db17bb9d254d8276b86809c8b32994dbd894"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-1b82f488dab26d1b",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/size-budget/schemas/config.schema.json",
+            "field": "#/properties/matchingFiles/items",
+            "sha256": "e20a56b4cb1bba2d69355a3da142db17bb9d254d8276b86809c8b32994dbd894"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-417c83b86ae40313",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/size-budget/schemas/config.schema.json",
+            "field": "#/properties/matchingFiles/items/properties/id -> #/$defs/name",
+            "sha256": "e20a56b4cb1bba2d69355a3da142db17bb9d254d8276b86809c8b32994dbd894"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-1d56ef14eb5ba3c9",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/size-budget/schemas/config.schema.json",
+            "field": "#/properties/matchingFiles/items/properties/pattern",
+            "sha256": "e20a56b4cb1bba2d69355a3da142db17bb9d254d8276b86809c8b32994dbd894"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-fa510e37b64c8b83",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/size-budget/schemas/config.schema.json",
+            "field": "#/properties/matchingFiles/items/properties/maximumBytes",
+            "sha256": "e20a56b4cb1bba2d69355a3da142db17bb9d254d8276b86809c8b32994dbd894"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-f09ca71ea0f869ea",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/size-budget/schemas/config.schema.json",
+            "field": "#/properties/matchingFiles/items/properties/requireMatch",
+            "sha256": "e20a56b4cb1bba2d69355a3da142db17bb9d254d8276b86809c8b32994dbd894"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-ba7769d6b9828e8c",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/size-budget/schemas/config.schema.json",
+            "field": "#/properties/maximumGrowthBytes",
+            "sha256": "e20a56b4cb1bba2d69355a3da142db17bb9d254d8276b86809c8b32994dbd894"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-0641d8cbf57ca18e",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/size-budget/schemas/config.schema.json",
+            "field": "#/properties/maximumGrowthPercent",
+            "sha256": "e20a56b4cb1bba2d69355a3da142db17bb9d254d8276b86809c8b32994dbd894"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-669087f7bbde7e87",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/size-budget/schemas/config.schema.json",
+            "field": "#/properties/largestFiles",
+            "sha256": "e20a56b4cb1bba2d69355a3da142db17bb9d254d8276b86809c8b32994dbd894"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-f1e7350413f49db3",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/tailscale-exposure/schemas/config.schema.json",
+            "field": "#/properties/retentionMode",
+            "sha256": "0ffe60c3f3b2ab2fa054a239892663c20bb59621b9e5fdbf05541d862a986ccd"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-acb2956bc0d67093",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/tailscale-exposure/schemas/config.schema.json",
+            "field": "#/properties/endpointName -> #/$defs/dnsLabel",
+            "sha256": "0ffe60c3f3b2ab2fa054a239892663c20bb59621b9e5fdbf05541d862a986ccd"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-46e7265d0dd6458d",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/tailscale-exposure/schemas/config.schema.json",
+            "field": "#/properties/hostname -> #/$defs/dnsLabel",
+            "sha256": "0ffe60c3f3b2ab2fa054a239892663c20bb59621b9e5fdbf05541d862a986ccd"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-b96960e386a14721",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/tailscale-exposure/schemas/config.schema.json",
+            "field": "#/properties/path",
+            "sha256": "0ffe60c3f3b2ab2fa054a239892663c20bb59621b9e5fdbf05541d862a986ccd"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-11582110acd39d2a",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/tailscale-exposure/schemas/config.schema.json",
+            "field": "#/properties/readinessTimeoutSeconds",
+            "sha256": "0ffe60c3f3b2ab2fa054a239892663c20bb59621b9e5fdbf05541d862a986ccd"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-42fd37c34f097e2d",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+            "field": "#/properties/url",
+            "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-4003eb10ed91148b",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+            "field": "#/properties/endpointName",
+            "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-7055bd224779ebc9",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+            "field": "#/properties/manifestFile",
+            "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-e044f6419f72c0e0",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+            "field": "#/properties/profileFile",
+            "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-bf905e47ed35863a",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+            "field": "#/properties/targets",
+            "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-165dd3d0da855565",
+      "contract": "task-input",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+            "field": "#/properties/targets/items",
+            "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-1ef5ab4a60156159",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+            "field": "#/properties/comparisonProfile",
+            "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-e747f65a9f069ccd",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+            "field": "#/properties/overrides",
+            "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-9bc4832efb4988b7",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+            "field": "#/properties/overrides/properties/maximumDifferencePercent",
+            "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-fe646415d23cc642",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+            "field": "#/properties/overrides/properties/pixelThreshold",
+            "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-6e3cc348f44734f5",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+            "field": "#/properties/overrides/properties/uncertaintyMarginPercent",
+            "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-be3717baf421a9dd",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+            "field": "#/properties/masks",
+            "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-fa24eda72114411c",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+            "field": "#/properties/masks/items",
+            "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-d57032dd890b6f18",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+            "field": "#/properties/masks/items/properties/target",
+            "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-3f0dfb808c23e5e0",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+            "field": "#/properties/masks/items/properties/selectors",
+            "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-086164702f20b582",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+            "field": "#/properties/masks/items/properties/selectors/items",
+            "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-b1bebfd3aa463e09",
+      "contract": "provider-per-unit-policy",
+      "tasks": [
+        {
+          "task": "authentic productive plan producer/loader must be specified; exported resolver/test control is not native caller",
+          "source": {
+            "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+            "field": "#/properties/timeoutMs",
+            "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-902a15996aa01b62",
+      "contract": "dormant-unused",
+      "tasks": [
+        {
+          "task": "deliverPreview reads only target; shared-schema presentation/labels/quota remain accepted-unused, no fake observer execute reader",
+          "source": {
+            "path": "skills/common/plugins/notification-observer/schemas/config.schema.json",
+            "field": "#/properties/pipelineLabel",
+            "sha256": "d1e51edc89a0ad7ef3cead4b4a769a2340c35d78cf501b3302c16740409860c3"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-bc3a135495bb2e7c",
+      "contract": "dormant-unused",
+      "tasks": [
+        {
+          "task": "deliverPreview reads only target; shared-schema presentation/labels/quota remain accepted-unused, no fake observer execute reader",
+          "source": {
+            "path": "skills/common/plugins/notification-observer/schemas/config.schema.json",
+            "field": "#/properties/modelLabel",
+            "sha256": "d1e51edc89a0ad7ef3cead4b4a769a2340c35d78cf501b3302c16740409860c3"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-a0b041868386ed82",
+      "contract": "dormant-unused",
+      "tasks": [
+        {
+          "task": "deliverPreview reads only target; shared-schema presentation/labels/quota remain accepted-unused, no fake observer execute reader",
+          "source": {
+            "path": "skills/common/plugins/notification-observer/schemas/config.schema.json",
+            "field": "#/properties/stageLabels",
+            "sha256": "d1e51edc89a0ad7ef3cead4b4a769a2340c35d78cf501b3302c16740409860c3"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-9a974af32353eda8",
+      "contract": "dormant-unused",
+      "tasks": [
+        {
+          "task": "deliverPreview reads only target; shared-schema presentation/labels/quota remain accepted-unused, no fake observer execute reader",
+          "source": {
+            "path": "skills/common/plugins/notification-observer/schemas/config.schema.json",
+            "field": "#/properties/stageLabels/additionalProperties",
+            "sha256": "d1e51edc89a0ad7ef3cead4b4a769a2340c35d78cf501b3302c16740409860c3"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-e1e4b669f3ea8bc7",
+      "contract": "dormant-unused",
+      "tasks": [
+        {
+          "task": "deliverPreview reads only target; shared-schema presentation/labels/quota remain accepted-unused, no fake observer execute reader",
+          "source": {
+            "path": "skills/common/plugins/notification-observer/schemas/config.schema.json",
+            "field": "#/properties/maxMessageChars",
+            "sha256": "d1e51edc89a0ad7ef3cead4b4a769a2340c35d78cf501b3302c16740409860c3"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-39808812ba08515c",
+      "contract": "dormant-unused",
+      "tasks": [
+        {
+          "task": "deliverPreview reads only target; shared-schema presentation/labels/quota remain accepted-unused, no fake observer execute reader",
+          "source": {
+            "path": "skills/common/plugins/notification-observer/schemas/config.schema.json",
+            "field": "#/properties/suppressEventTypes",
+            "sha256": "d1e51edc89a0ad7ef3cead4b4a769a2340c35d78cf501b3302c16740409860c3"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-90e39be06cd8373f",
+      "contract": "dormant-unused",
+      "tasks": [
+        {
+          "task": "deliverPreview reads only target; shared-schema presentation/labels/quota remain accepted-unused, no fake observer execute reader",
+          "source": {
+            "path": "skills/common/plugins/notification-observer/schemas/config.schema.json",
+            "field": "#/properties/suppressEventTypes/items",
+            "sha256": "d1e51edc89a0ad7ef3cead4b4a769a2340c35d78cf501b3302c16740409860c3"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-COMPILER-DEFINITION-MAXCONCURRENCY",
+      "contract": "protocol-software",
+      "tasks": [
+        {
+          "task": "project producer supported domain exactly[1]; explicit free graph concurrency distinct T/R input, no adjustable parallel-project policy",
+          "source": {
+            "path": "skills/nova/project/compiler.ts",
+            "field": "definition.maxConcurrency",
+            "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-PLATFORM-SCHEMAVERSION",
+      "contract": "protocol-software",
+      "tasks": [
+        {
+          "task": "Buster role reads installationRoots/trustedBuiltinRoots/externalTrust only; preserve distinct Core productive consumer for other fields, do not assert Buster effect",
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "field": "properties.schemaVersion",
+            "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-PLATFORM-INSTALLATIONROOTS",
+      "contract": "runtime-adapter-foundation",
+      "tasks": [
+        {
+          "task": "Buster role reads installationRoots/trustedBuiltinRoots/externalTrust only; preserve distinct Core productive consumer for other fields, do not assert Buster effect",
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "field": "properties.installationRoots",
+            "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-PLATFORM-TRUSTEDBUILTINROOTS",
+      "contract": "runtime-adapter-foundation",
+      "tasks": [
+        {
+          "task": "Buster role reads installationRoots/trustedBuiltinRoots/externalTrust only; preserve distinct Core productive consumer for other fields, do not assert Buster effect",
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "field": "properties.trustedBuiltinRoots",
+            "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-PLATFORM-EXTERNALTRUST",
+      "contract": "runtime-adapter-foundation",
+      "tasks": [
+        {
+          "task": "Buster role reads installationRoots/trustedBuiltinRoots/externalTrust only; preserve distinct Core productive consumer for other fields, do not assert Buster effect",
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "field": "properties.externalTrust",
+            "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-PLATFORM-PROVIDERS",
+      "contract": "runtime-adapter-foundation",
+      "tasks": [
+        {
+          "task": "Buster role reads installationRoots/trustedBuiltinRoots/externalTrust only; preserve distinct Core productive consumer for other fields, do not assert Buster effect",
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "field": "properties.providers",
+            "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-PLATFORM-GRANTS",
+      "contract": "runtime-adapter-foundation",
+      "tasks": [
+        {
+          "task": "Buster role reads installationRoots/trustedBuiltinRoots/externalTrust only; preserve distinct Core productive consumer for other fields, do not assert Buster effect",
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "field": "properties.grants",
+            "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-PLATFORM-ADAPTERS",
+      "contract": "runtime-adapter-foundation",
+      "tasks": [
+        {
+          "task": "Buster role reads installationRoots/trustedBuiltinRoots/externalTrust only; preserve distinct Core productive consumer for other fields, do not assert Buster effect",
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "field": "properties.adapters",
+            "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-PLATFORM-ACTIVEADAPTERS",
+      "contract": "runtime-adapter-foundation",
+      "tasks": [
+        {
+          "task": "Buster role reads installationRoots/trustedBuiltinRoots/externalTrust only; preserve distinct Core productive consumer for other fields, do not assert Buster effect",
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "field": "properties.activeAdapters",
+            "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-PLATFORM-OBSERVERS",
+      "contract": "runtime-adapter-foundation",
+      "tasks": [
+        {
+          "task": "Buster role reads installationRoots/trustedBuiltinRoots/externalTrust only; preserve distinct Core productive consumer for other fields, do not assert Buster effect",
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "field": "properties.observers",
+            "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-PLATFORM-ISOLATION",
+      "contract": "runtime-adapter-foundation",
+      "tasks": [
+        {
+          "task": "Buster role reads installationRoots/trustedBuiltinRoots/externalTrust only; preserve distinct Core productive consumer for other fields, do not assert Buster effect",
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "field": "properties.isolation",
+            "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-PLATFORM-STORAGEROOT",
+      "contract": "runtime-adapter-foundation",
+      "tasks": [
+        {
+          "task": "Buster role reads installationRoots/trustedBuiltinRoots/externalTrust only; preserve distinct Core productive consumer for other fields, do not assert Buster effect",
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "field": "properties.storageRoot",
+            "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-PLATFORM-SHUTDOWNTIMEOUTMS",
+      "contract": "runtime-adapter-foundation",
+      "tasks": [
+        {
+          "task": "Buster role reads installationRoots/trustedBuiltinRoots/externalTrust only; preserve distinct Core productive consumer for other fields, do not assert Buster effect",
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "field": "properties.shutdownTimeoutMs",
+            "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-PLATFORM-EFFECTLOCKTTLMS",
+      "contract": "runtime-adapter-foundation",
+      "tasks": [
+        {
+          "task": "Buster role reads installationRoots/trustedBuiltinRoots/externalTrust only; preserve distinct Core productive consumer for other fields, do not assert Buster effect",
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "field": "properties.effectLockTtlMs",
+            "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-PLATFORM-ORCHESTRATORISSUERID",
+      "contract": "runtime-adapter-foundation",
+      "tasks": [
+        {
+          "task": "Buster role reads installationRoots/trustedBuiltinRoots/externalTrust only; preserve distinct Core productive consumer for other fields, do not assert Buster effect",
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "field": "properties.orchestratorIssuerId",
+            "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RT-PLATFORM-ADMINISTRATIVEDECISIONISSUERS",
+      "contract": "runtime-adapter-foundation",
+      "tasks": [
+        {
+          "task": "Buster role reads installationRoots/trustedBuiltinRoots/externalTrust only; preserve distinct Core productive consumer for other fields, do not assert Buster effect",
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+            "field": "properties.administrativeDecisionIssuers",
+            "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AUTH-PRISM-CACHE-maximumInFlight",
+      "contract": "standalone-operation",
+      "tasks": [
+        {
+          "task": "one-operation dedicated host J only; retain original EFFECT IDs; no productive multi-key applicability or new shared-cache service claimed",
+          "source": {
+            "path": "skills/prism/engine/execution-cache.ts",
+            "field": "DEFAULT_ENGINE_CACHE_LIMITS.maximumInFlight",
+            "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a",
+            "lines": [
+              2,
+              7,
+              22,
+              49
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "AUTH-PRISM-CACHE-maximumCompletedEntries",
+      "contract": "standalone-operation",
+      "tasks": [
+        {
+          "task": "one-operation dedicated host J only; retain original EFFECT IDs; no productive multi-key applicability or new shared-cache service claimed",
+          "source": {
+            "path": "skills/prism/engine/execution-cache.ts",
+            "field": "DEFAULT_ENGINE_CACHE_LIMITS.maximumCompletedEntries",
+            "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a",
+            "lines": [
+              3,
+              8,
+              22,
+              73
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "AUTH-PRISM-CACHE-maximumCompletedBytes",
+      "contract": "standalone-operation",
+      "tasks": [
+        {
+          "task": "one-operation dedicated host J only; retain original EFFECT IDs; no productive multi-key applicability or new shared-cache service claimed",
+          "source": {
+            "path": "skills/prism/engine/execution-cache.ts",
+            "field": "DEFAULT_ENGINE_CACHE_LIMITS.maximumCompletedBytes",
+            "sha256": "13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a",
+            "lines": [
+              4,
+              9,
+              22,
+              72,
+              74
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "AUTH-PRISM-DESIGN-PROVIDER-TIMEOUT",
+      "contract": "dormant-unused",
+      "tasks": [
+        {
+          "task": "library OpenAI-compatible provider branch dormant under actual deterministic execution profile; activation requires actual productive caller/provider support and genuine credential/model identity; keep original EFFECT obligation pending supported migration",
+          "source": {
+            "path": "skills/prism/engine/design-providers.ts",
+            "field": "options.timeoutMs",
+            "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145",
+            "lines": [
+              44,
+              51,
+              78,
+              88,
+              89,
+              130,
+              131
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "AUTH-PRISM-DESIGN-SYSTEM-PROMPT",
+      "contract": "dormant-unused",
+      "tasks": [
+        {
+          "task": "library OpenAI-compatible provider branch dormant under actual deterministic execution profile; activation requires actual productive caller/provider support and genuine credential/model identity; keep original EFFECT obligation pending supported migration",
+          "source": {
+            "path": "skills/prism/engine/design-providers.ts",
+            "field": "messages.system.content",
+            "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145",
+            "lines": [
+              32,
+              92,
+              100,
+              103,
+              110,
+              112,
+              113,
+              134
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

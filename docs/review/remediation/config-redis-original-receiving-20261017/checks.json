@@ -1,0 +1,50 @@
+[
+  {
+    "name": "original-recovery",
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/reliability/nova-redis-original-recovery.test.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "redis-buffers",
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/reliability/nova-redis-policy.test.mts"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "nova-source-typecheck",
+    "command": [
+      "node_modules/.bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/nova/tsconfig.json"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "nonredis-original-recovery",
+    "command": [
+      "node",
+      "--test",
+      "--test-name-pattern",
+      "actual Nova timing-profile",
+      "tests/verification/reliability/nova-target-timing-policy.test.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "diff-check",
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0
+  }
+]

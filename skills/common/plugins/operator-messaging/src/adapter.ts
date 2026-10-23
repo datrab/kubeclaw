@@ -8,10 +8,6 @@ import { receiverReceipt } from './receiver.ts';
 import { isTargetId, parseConfig, type TargetConfig } from './config.ts';
 import { assertRequest, parsePayload, responseMessageId, secretValue } from './payload.ts';
 
-// One exact JSON transport body is stored as a JSON string: escaping can at most
-// double its admitted 1 MiB bytes. Metadata allowance and aggregate quotas stay unchanged.
-const DELIVERY_RECORD_MAX_BYTES = 2 * 1_048_576 + 65_536;
-
 function resolveSecretEndpoint(secret: string, target: TargetConfig): string {
   if (!target.endpointSecret) {
     if (!target.endpoint) throw new Error('OPERATOR_ENDPOINT_UNAVAILABLE');
@@ -32,9 +28,9 @@ function transportReceipt(invocation: AdapterInvocation, target: TargetConfig, p
   return { accepted: true, target: invocation.request.resource.canonicalId, status: Number(response.status), ...(messageId ? { messageId } : {}) };
 }
 
-async function deliver(context: AdapterActivationContext, invocation: AdapterInvocation, target: TargetConfig, records: FileDurableRecordStore): Promise<Readonly<Record<string, unknown>>> {
+async function deliver(context: AdapterActivationContext, invocation: AdapterInvocation, target: TargetConfig, records: FileDurableRecordStore, failureExcerptCharacters: number): Promise<Readonly<Record<string, unknown>>> {
   const { request, signal } = invocation;
-  const payload = parsePayload(request.payload, target.maxPayloadBytes);
+  const payload = parsePayload(request.payload, target.maxPayloadBytes, target.payloadStructure);
   const transportPayload = target.format === 'discord_webhook' ? discordWebhookPayload(payload) : payload;
   const reserved = await reserveDelivery(records, request, transportPayload, target.format === 'json' && Boolean(target.receiptEndpoint));
   if ('accepted' in reserved) return target.format === 'discord_webhook' ? validateDiscordReceipt(reserved, request, transportPayload) : reserved;
@@ -60,7 +56,7 @@ async function deliver(context: AdapterActivationContext, invocation: AdapterInv
     const response = target.endpointSecret ? await context.invokeConfidential('network.http', networkRequest) : await context.invoke('network.http', networkRequest);
     if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
     return await completeDelivery(records, request, reservation, transportReceipt(invocation, target, transportPayload, response));
-  } catch (error) { return failDelivery(records, request, reservation, sent, error); }
+  } catch (error) { return failDelivery(records, request, reservation, sent, error, failureExcerptCharacters); }
 }
 
 export function activate(context: AdapterActivationContext): AdapterInstance {
@@ -69,7 +65,7 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
   const records = new FileDurableRecordStore(config.deliveryRoot, {
     maximumRecords: config.maximumDeliveryRecords,
     maximumBytes: config.maximumDeliveryBytes,
-    maximumRecordBytes: DELIVERY_RECORD_MAX_BYTES,
+    maximumRecordBytes: config.maximumRecordBytes,
   });
   let shuttingDown = false;
   return {
@@ -87,14 +83,14 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
       assertRequest(request, isTargetId);
       const target = targets.get(request.resource.canonicalId);
       if (!target) throw new Error(`OPERATOR_TARGET_DENIED:${request.resource.canonicalId}`);
-      return deliver(context, invocation, target, records);
+      return deliver(context, invocation, target, records, config.failureExcerptCharacters);
     },
     async receipt(request) {
       if (request.capability === 'operator.receipt') return lookupReceipt(records, request, targets.get(request.resource.canonicalId));
       assertRequest(request, isTargetId);
       const target = targets.get(request.resource.canonicalId);
       if (!target) throw new Error(`OPERATOR_TARGET_DENIED:${request.resource.canonicalId}`);
-      const payload = parsePayload(request.payload, target.maxPayloadBytes);
+      const payload = parsePayload(request.payload, target.maxPayloadBytes, target.payloadStructure);
       const transportPayload = target.format === 'discord_webhook' ? discordWebhookPayload(payload) : payload;
       const receipt = await deliveryReceipt(records, request, transportPayload);
       return receipt && target.format === 'discord_webhook'
@@ -111,7 +107,7 @@ async function lookupReceipt(records:FileDurableRecordStore,request:EffectReques
   if (Object.keys(request.payload).some(key => !['deliveryId', 'stageId', 'payload'].includes(key))
     || typeof deliveryId !== 'string' || !deliveryId || deliveryId.length > 512 || typeof stageId !== 'string' || !stageId
     || !payload || typeof payload !== 'object' || Array.isArray(payload)) throw new Error('OPERATOR_RECEIPT_QUERY_INVALID');
-  const transport = discordWebhookPayload(parsePayload(payload as Readonly<Record<string, unknown>>, target.maxPayloadBytes));
+  const transport = discordWebhookPayload(parsePayload(payload as Readonly<Record<string, unknown>>, target.maxPayloadBytes, target.payloadStructure));
   const receipt = await lookupDelivery(records, request, deliveryId, stageId, transport);
   return validateDiscordReceipt(receipt, { ...request, deliveryId }, transport);
 }

@@ -1,0 +1,2978 @@
+{
+  "rows": [
+    {
+      "id": "CMP-CORE-ROOT-3db43c355af0790a",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerRegistration",
+      "field": "/schemaVersion",
+      "resolvedDomain": {
+        "const": "worker-registration.v1"
+      },
+      "semanticClass": "protocol-invariant",
+      "currentAuthorityReason": "Options supply workerId/type/coreVersion/protocolVersions/profiles, startedAt and sentAt actual clock; capacity.total options.capacity, active Map.size, available total-active; profiles digest/type/duplicate IDs and capacity sum/time order checked. These are trusted role identity and generated live state, not second CONFIG author.",
+      "exactProductiveBoundary": "Buster runner-setup\u2192LocalWorkerRuntime constructor/registration()/markReady",
+      "actualProducerAndConsumerChain": [
+        "skills/buster/engine/test-gates/runner-setup.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive Buster composition",
+      "aliasOfSettingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "skills/buster/engine/test-gates/runner-setup.ts": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-a1f785e11273a96b",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerRegistration",
+      "field": "/workerId",
+      "resolvedDomain": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+        "maxLength": 256
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Options supply workerId/type/coreVersion/protocolVersions/profiles, startedAt and sentAt actual clock; capacity.total options.capacity, active Map.size, available total-active; profiles digest/type/duplicate IDs and capacity sum/time order checked. These are trusted role identity and generated live state, not second CONFIG author.",
+      "exactProductiveBoundary": "Buster runner-setup\u2192LocalWorkerRuntime constructor/registration()/markReady",
+      "actualProducerAndConsumerChain": [
+        "skills/buster/engine/test-gates/runner-setup.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive Buster composition",
+      "aliasOfSettingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "skills/buster/engine/test-gates/runner-setup.ts": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-4719e0f1bc46e036",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerRegistration",
+      "field": "/workerType",
+      "resolvedDomain": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+        "maxLength": 256
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Options supply workerId/type/coreVersion/protocolVersions/profiles, startedAt and sentAt actual clock; capacity.total options.capacity, active Map.size, available total-active; profiles digest/type/duplicate IDs and capacity sum/time order checked. These are trusted role identity and generated live state, not second CONFIG author.",
+      "exactProductiveBoundary": "Buster runner-setup\u2192LocalWorkerRuntime constructor/registration()/markReady",
+      "actualProducerAndConsumerChain": [
+        "skills/buster/engine/test-gates/runner-setup.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive Buster composition",
+      "aliasOfSettingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "skills/buster/engine/test-gates/runner-setup.ts": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-908babc295715971",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerRegistration",
+      "field": "/coreVersion",
+      "resolvedDomain": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 4096
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Options supply workerId/type/coreVersion/protocolVersions/profiles, startedAt and sentAt actual clock; capacity.total options.capacity, active Map.size, available total-active; profiles digest/type/duplicate IDs and capacity sum/time order checked. These are trusted role identity and generated live state, not second CONFIG author.",
+      "exactProductiveBoundary": "Buster runner-setup\u2192LocalWorkerRuntime constructor/registration()/markReady",
+      "actualProducerAndConsumerChain": [
+        "skills/buster/engine/test-gates/runner-setup.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive Buster composition",
+      "aliasOfSettingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "skills/buster/engine/test-gates/runner-setup.ts": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-c8bf8c9a689dbf50",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerRegistration",
+      "field": "/protocolVersions/*",
+      "resolvedDomain": {
+        "type": "string",
+        "pattern": "^worker-protocol\\.v[1-9][0-9]*$",
+        "maxLength": 64
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Options supply workerId/type/coreVersion/protocolVersions/profiles, startedAt and sentAt actual clock; capacity.total options.capacity, active Map.size, available total-active; profiles digest/type/duplicate IDs and capacity sum/time order checked. These are trusted role identity and generated live state, not second CONFIG author.",
+      "exactProductiveBoundary": "Buster runner-setup\u2192LocalWorkerRuntime constructor/registration()/markReady",
+      "actualProducerAndConsumerChain": [
+        "skills/buster/engine/test-gates/runner-setup.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive Buster composition",
+      "aliasOfSettingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "skills/buster/engine/test-gates/runner-setup.ts": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-62ca9f0275e55dce",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerRegistration",
+      "field": "/profiles/*/schemaVersion",
+      "resolvedDomain": {
+        "const": "worker-profile.v1"
+      },
+      "semanticClass": "protocol-invariant",
+      "currentAuthorityReason": "Options supply workerId/type/coreVersion/protocolVersions/profiles, startedAt and sentAt actual clock; capacity.total options.capacity, active Map.size, available total-active; profiles digest/type/duplicate IDs and capacity sum/time order checked. These are trusted role identity and generated live state, not second CONFIG author.",
+      "exactProductiveBoundary": "Buster runner-setup\u2192LocalWorkerRuntime constructor/registration()/markReady",
+      "actualProducerAndConsumerChain": [
+        "skills/buster/engine/test-gates/runner-setup.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive Buster composition",
+      "aliasOfSettingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "skills/buster/engine/test-gates/runner-setup.ts": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-97afe0cdfc553646",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerRegistration",
+      "field": "/profiles/*/profileId",
+      "resolvedDomain": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+        "maxLength": 256
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Options supply workerId/type/coreVersion/protocolVersions/profiles, startedAt and sentAt actual clock; capacity.total options.capacity, active Map.size, available total-active; profiles digest/type/duplicate IDs and capacity sum/time order checked. These are trusted role identity and generated live state, not second CONFIG author.",
+      "exactProductiveBoundary": "Buster runner-setup\u2192LocalWorkerRuntime constructor/registration()/markReady",
+      "actualProducerAndConsumerChain": [
+        "skills/buster/engine/test-gates/runner-setup.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive Buster composition",
+      "aliasOfSettingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "skills/buster/engine/test-gates/runner-setup.ts": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-1a32d9e215ab492a",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerRegistration",
+      "field": "/profiles/*/profileDigest",
+      "resolvedDomain": {
+        "type": "string",
+        "pattern": "^sha256:[a-f0-9]{64}$"
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Options supply workerId/type/coreVersion/protocolVersions/profiles, startedAt and sentAt actual clock; capacity.total options.capacity, active Map.size, available total-active; profiles digest/type/duplicate IDs and capacity sum/time order checked. These are trusted role identity and generated live state, not second CONFIG author.",
+      "exactProductiveBoundary": "Buster runner-setup\u2192LocalWorkerRuntime constructor/registration()/markReady",
+      "actualProducerAndConsumerChain": [
+        "skills/buster/engine/test-gates/runner-setup.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive Buster composition",
+      "aliasOfSettingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "skills/buster/engine/test-gates/runner-setup.ts": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-c8f5792c9de6d5a7",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerRegistration",
+      "field": "/profiles/*/workerType",
+      "resolvedDomain": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+        "maxLength": 256
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Options supply workerId/type/coreVersion/protocolVersions/profiles, startedAt and sentAt actual clock; capacity.total options.capacity, active Map.size, available total-active; profiles digest/type/duplicate IDs and capacity sum/time order checked. These are trusted role identity and generated live state, not second CONFIG author.",
+      "exactProductiveBoundary": "Buster runner-setup\u2192LocalWorkerRuntime constructor/registration()/markReady",
+      "actualProducerAndConsumerChain": [
+        "skills/buster/engine/test-gates/runner-setup.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive Buster composition",
+      "aliasOfSettingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "skills/buster/engine/test-gates/runner-setup.ts": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-80e34f50932a1f19",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerRegistration",
+      "field": "/profiles/*/coreContractId",
+      "resolvedDomain": {
+        "type": "string",
+        "pattern": "^[a-z0-9][a-z0-9._/-]*@[1-9][0-9]*$",
+        "maxLength": 256
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Options supply workerId/type/coreVersion/protocolVersions/profiles, startedAt and sentAt actual clock; capacity.total options.capacity, active Map.size, available total-active; profiles digest/type/duplicate IDs and capacity sum/time order checked. These are trusted role identity and generated live state, not second CONFIG author.",
+      "exactProductiveBoundary": "Buster runner-setup\u2192LocalWorkerRuntime constructor/registration()/markReady",
+      "actualProducerAndConsumerChain": [
+        "skills/buster/engine/test-gates/runner-setup.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive Buster composition",
+      "aliasOfSettingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "skills/buster/engine/test-gates/runner-setup.ts": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-23a4bf69168227bc",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerRegistration",
+      "field": "/profiles/*/engine/engineId",
+      "resolvedDomain": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+        "maxLength": 256
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Options supply workerId/type/coreVersion/protocolVersions/profiles, startedAt and sentAt actual clock; capacity.total options.capacity, active Map.size, available total-active; profiles digest/type/duplicate IDs and capacity sum/time order checked. These are trusted role identity and generated live state, not second CONFIG author.",
+      "exactProductiveBoundary": "Buster runner-setup\u2192LocalWorkerRuntime constructor/registration()/markReady",
+      "actualProducerAndConsumerChain": [
+        "skills/buster/engine/test-gates/runner-setup.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive Buster composition",
+      "aliasOfSettingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "skills/buster/engine/test-gates/runner-setup.ts": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-dc068a5315cf01ea",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerRegistration",
+      "field": "/profiles/*/engine/contractId",
+      "resolvedDomain": {
+        "type": "string",
+        "pattern": "^[a-z0-9][a-z0-9._/-]*@[1-9][0-9]*$",
+        "maxLength": 256
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Options supply workerId/type/coreVersion/protocolVersions/profiles, startedAt and sentAt actual clock; capacity.total options.capacity, active Map.size, available total-active; profiles digest/type/duplicate IDs and capacity sum/time order checked. These are trusted role identity and generated live state, not second CONFIG author.",
+      "exactProductiveBoundary": "Buster runner-setup\u2192LocalWorkerRuntime constructor/registration()/markReady",
+      "actualProducerAndConsumerChain": [
+        "skills/buster/engine/test-gates/runner-setup.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive Buster composition",
+      "aliasOfSettingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "skills/buster/engine/test-gates/runner-setup.ts": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-1615688f8c3a86c0",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerRegistration",
+      "field": "/profiles/*/engine/engineVersion",
+      "resolvedDomain": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 4096
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Options supply workerId/type/coreVersion/protocolVersions/profiles, startedAt and sentAt actual clock; capacity.total options.capacity, active Map.size, available total-active; profiles digest/type/duplicate IDs and capacity sum/time order checked. These are trusted role identity and generated live state, not second CONFIG author.",
+      "exactProductiveBoundary": "Buster runner-setup\u2192LocalWorkerRuntime constructor/registration()/markReady",
+      "actualProducerAndConsumerChain": [
+        "skills/buster/engine/test-gates/runner-setup.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive Buster composition",
+      "aliasOfSettingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "skills/buster/engine/test-gates/runner-setup.ts": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-7d421e8619819057",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerRegistration",
+      "field": "/profiles/*/engine/contentDigest",
+      "resolvedDomain": {
+        "type": "string",
+        "pattern": "^sha256:[a-f0-9]{64}$"
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Options supply workerId/type/coreVersion/protocolVersions/profiles, startedAt and sentAt actual clock; capacity.total options.capacity, active Map.size, available total-active; profiles digest/type/duplicate IDs and capacity sum/time order checked. These are trusted role identity and generated live state, not second CONFIG author.",
+      "exactProductiveBoundary": "Buster runner-setup\u2192LocalWorkerRuntime constructor/registration()/markReady",
+      "actualProducerAndConsumerChain": [
+        "skills/buster/engine/test-gates/runner-setup.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive Buster composition",
+      "aliasOfSettingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "skills/buster/engine/test-gates/runner-setup.ts": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-cf4e8ab0fac1533e",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerRegistration",
+      "field": "/profiles/*/capabilities/*",
+      "resolvedDomain": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+        "maxLength": 256
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Options supply workerId/type/coreVersion/protocolVersions/profiles, startedAt and sentAt actual clock; capacity.total options.capacity, active Map.size, available total-active; profiles digest/type/duplicate IDs and capacity sum/time order checked. These are trusted role identity and generated live state, not second CONFIG author.",
+      "exactProductiveBoundary": "Buster runner-setup\u2192LocalWorkerRuntime constructor/registration()/markReady",
+      "actualProducerAndConsumerChain": [
+        "skills/buster/engine/test-gates/runner-setup.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive Buster composition",
+      "aliasOfSettingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "skills/buster/engine/test-gates/runner-setup.ts": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-dcd5d65c3c2cdccf",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerRegistration",
+      "field": "/capacity/total",
+      "resolvedDomain": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 4096
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Options supply workerId/type/coreVersion/protocolVersions/profiles, startedAt and sentAt actual clock; capacity.total options.capacity, active Map.size, available total-active; profiles digest/type/duplicate IDs and capacity sum/time order checked. These are trusted role identity and generated live state, not second CONFIG author.",
+      "exactProductiveBoundary": "Buster runner-setup\u2192LocalWorkerRuntime constructor/registration()/markReady",
+      "actualProducerAndConsumerChain": [
+        "skills/buster/engine/test-gates/runner-setup.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive Buster composition",
+      "aliasOfSettingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "skills/buster/engine/test-gates/runner-setup.ts": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-13b9685c7dfacad8",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerRegistration",
+      "field": "/capacity/available",
+      "resolvedDomain": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 4096
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Options supply workerId/type/coreVersion/protocolVersions/profiles, startedAt and sentAt actual clock; capacity.total options.capacity, active Map.size, available total-active; profiles digest/type/duplicate IDs and capacity sum/time order checked. These are trusted role identity and generated live state, not second CONFIG author.",
+      "exactProductiveBoundary": "Buster runner-setup\u2192LocalWorkerRuntime constructor/registration()/markReady",
+      "actualProducerAndConsumerChain": [
+        "skills/buster/engine/test-gates/runner-setup.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive Buster composition",
+      "aliasOfSettingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "skills/buster/engine/test-gates/runner-setup.ts": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-79879391a2fc52f6",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerRegistration",
+      "field": "/capacity/active",
+      "resolvedDomain": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 4096
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Options supply workerId/type/coreVersion/protocolVersions/profiles, startedAt and sentAt actual clock; capacity.total options.capacity, active Map.size, available total-active; profiles digest/type/duplicate IDs and capacity sum/time order checked. These are trusted role identity and generated live state, not second CONFIG author.",
+      "exactProductiveBoundary": "Buster runner-setup\u2192LocalWorkerRuntime constructor/registration()/markReady",
+      "actualProducerAndConsumerChain": [
+        "skills/buster/engine/test-gates/runner-setup.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive Buster composition",
+      "aliasOfSettingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "skills/buster/engine/test-gates/runner-setup.ts": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-c64d741d964e54f0",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerRegistration",
+      "field": "/lifecycleState",
+      "resolvedDomain": {
+        "enum": [
+          "starting",
+          "ready",
+          "draining",
+          "stopped",
+          "unhealthy"
+        ]
+      },
+      "semanticClass": "protocol-invariant",
+      "currentAuthorityReason": "Options supply workerId/type/coreVersion/protocolVersions/profiles, startedAt and sentAt actual clock; capacity.total options.capacity, active Map.size, available total-active; profiles digest/type/duplicate IDs and capacity sum/time order checked. These are trusted role identity and generated live state, not second CONFIG author.",
+      "exactProductiveBoundary": "Buster runner-setup\u2192LocalWorkerRuntime constructor/registration()/markReady",
+      "actualProducerAndConsumerChain": [
+        "skills/buster/engine/test-gates/runner-setup.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive Buster composition",
+      "aliasOfSettingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "skills/buster/engine/test-gates/runner-setup.ts": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-2244f8a75fc3b632",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerRegistration",
+      "field": "/startedAt",
+      "resolvedDomain": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Options supply workerId/type/coreVersion/protocolVersions/profiles, startedAt and sentAt actual clock; capacity.total options.capacity, active Map.size, available total-active; profiles digest/type/duplicate IDs and capacity sum/time order checked. These are trusted role identity and generated live state, not second CONFIG author.",
+      "exactProductiveBoundary": "Buster runner-setup\u2192LocalWorkerRuntime constructor/registration()/markReady",
+      "actualProducerAndConsumerChain": [
+        "skills/buster/engine/test-gates/runner-setup.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive Buster composition",
+      "aliasOfSettingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "skills/buster/engine/test-gates/runner-setup.ts": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-26c7308e8bc2ee12",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerRegistration",
+      "field": "/sentAt",
+      "resolvedDomain": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Options supply workerId/type/coreVersion/protocolVersions/profiles, startedAt and sentAt actual clock; capacity.total options.capacity, active Map.size, available total-active; profiles digest/type/duplicate IDs and capacity sum/time order checked. These are trusted role identity and generated live state, not second CONFIG author.",
+      "exactProductiveBoundary": "Buster runner-setup\u2192LocalWorkerRuntime constructor/registration()/markReady",
+      "actualProducerAndConsumerChain": [
+        "skills/buster/engine/test-gates/runner-setup.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive Buster composition",
+      "aliasOfSettingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "skills/buster/engine/test-gates/runner-setup.ts": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-6e4a7c553c791698",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerHealth",
+      "field": "/schemaVersion",
+      "resolvedDomain": {
+        "const": "worker-health.v1"
+      },
+      "semanticClass": "protocol-invariant",
+      "currentAuthorityReason": "workerId copied captured role identity, sequence incremented, lifecycle and activeAttemptIds from actual runtime; capacity relation and IDs length equal active enforced, sorted active IDs; sentAt clock. No configured synthetic healthy/zero capacity fallback.",
+      "exactProductiveBoundary": "LocalWorkerRuntime.health()/markUnhealthy()/stop()/drain",
+      "actualProducerAndConsumerChain": [
+        "skills/buster/engine/test-gates/runner-setup.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive Buster runtime",
+      "aliasOfSettingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "skills/buster/engine/test-gates/runner-setup.ts": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-41f57105aad411e7",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerHealth",
+      "field": "/workerId",
+      "resolvedDomain": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+        "maxLength": 256
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "workerId copied captured role identity, sequence incremented, lifecycle and activeAttemptIds from actual runtime; capacity relation and IDs length equal active enforced, sorted active IDs; sentAt clock. No configured synthetic healthy/zero capacity fallback.",
+      "exactProductiveBoundary": "LocalWorkerRuntime.health()/markUnhealthy()/stop()/drain",
+      "actualProducerAndConsumerChain": [
+        "skills/buster/engine/test-gates/runner-setup.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive Buster runtime",
+      "aliasOfSettingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "skills/buster/engine/test-gates/runner-setup.ts": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-b2c5dbba9c2d014f",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerHealth",
+      "field": "/sequence",
+      "resolvedDomain": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "workerId copied captured role identity, sequence incremented, lifecycle and activeAttemptIds from actual runtime; capacity relation and IDs length equal active enforced, sorted active IDs; sentAt clock. No configured synthetic healthy/zero capacity fallback.",
+      "exactProductiveBoundary": "LocalWorkerRuntime.health()/markUnhealthy()/stop()/drain",
+      "actualProducerAndConsumerChain": [
+        "skills/buster/engine/test-gates/runner-setup.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive Buster runtime",
+      "aliasOfSettingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "skills/buster/engine/test-gates/runner-setup.ts": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-319ed6c0a6783bac",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerHealth",
+      "field": "/lifecycleState",
+      "resolvedDomain": {
+        "enum": [
+          "starting",
+          "ready",
+          "draining",
+          "stopped",
+          "unhealthy"
+        ]
+      },
+      "semanticClass": "protocol-invariant",
+      "currentAuthorityReason": "workerId copied captured role identity, sequence incremented, lifecycle and activeAttemptIds from actual runtime; capacity relation and IDs length equal active enforced, sorted active IDs; sentAt clock. No configured synthetic healthy/zero capacity fallback.",
+      "exactProductiveBoundary": "LocalWorkerRuntime.health()/markUnhealthy()/stop()/drain",
+      "actualProducerAndConsumerChain": [
+        "skills/buster/engine/test-gates/runner-setup.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive Buster runtime",
+      "aliasOfSettingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "skills/buster/engine/test-gates/runner-setup.ts": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-d29d0cd4ad7378fa",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerHealth",
+      "field": "/capacity/total",
+      "resolvedDomain": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 4096
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "workerId copied captured role identity, sequence incremented, lifecycle and activeAttemptIds from actual runtime; capacity relation and IDs length equal active enforced, sorted active IDs; sentAt clock. No configured synthetic healthy/zero capacity fallback.",
+      "exactProductiveBoundary": "LocalWorkerRuntime.health()/markUnhealthy()/stop()/drain",
+      "actualProducerAndConsumerChain": [
+        "skills/buster/engine/test-gates/runner-setup.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive Buster runtime",
+      "aliasOfSettingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "skills/buster/engine/test-gates/runner-setup.ts": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-7173aab494acbd8d",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerHealth",
+      "field": "/capacity/available",
+      "resolvedDomain": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 4096
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "workerId copied captured role identity, sequence incremented, lifecycle and activeAttemptIds from actual runtime; capacity relation and IDs length equal active enforced, sorted active IDs; sentAt clock. No configured synthetic healthy/zero capacity fallback.",
+      "exactProductiveBoundary": "LocalWorkerRuntime.health()/markUnhealthy()/stop()/drain",
+      "actualProducerAndConsumerChain": [
+        "skills/buster/engine/test-gates/runner-setup.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive Buster runtime",
+      "aliasOfSettingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "skills/buster/engine/test-gates/runner-setup.ts": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-1668335f5b8ebaa6",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerHealth",
+      "field": "/capacity/active",
+      "resolvedDomain": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 4096
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "workerId copied captured role identity, sequence incremented, lifecycle and activeAttemptIds from actual runtime; capacity relation and IDs length equal active enforced, sorted active IDs; sentAt clock. No configured synthetic healthy/zero capacity fallback.",
+      "exactProductiveBoundary": "LocalWorkerRuntime.health()/markUnhealthy()/stop()/drain",
+      "actualProducerAndConsumerChain": [
+        "skills/buster/engine/test-gates/runner-setup.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive Buster runtime",
+      "aliasOfSettingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "skills/buster/engine/test-gates/runner-setup.ts": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-9e4d47b710a2c534",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerHealth",
+      "field": "/activeAttemptIds/*",
+      "resolvedDomain": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+        "maxLength": 256
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "workerId copied captured role identity, sequence incremented, lifecycle and activeAttemptIds from actual runtime; capacity relation and IDs length equal active enforced, sorted active IDs; sentAt clock. No configured synthetic healthy/zero capacity fallback.",
+      "exactProductiveBoundary": "LocalWorkerRuntime.health()/markUnhealthy()/stop()/drain",
+      "actualProducerAndConsumerChain": [
+        "skills/buster/engine/test-gates/runner-setup.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive Buster runtime",
+      "aliasOfSettingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "skills/buster/engine/test-gates/runner-setup.ts": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-438d9a88de261744",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerHealth",
+      "field": "/sentAt",
+      "resolvedDomain": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "workerId copied captured role identity, sequence incremented, lifecycle and activeAttemptIds from actual runtime; capacity relation and IDs length equal active enforced, sorted active IDs; sentAt clock. No configured synthetic healthy/zero capacity fallback.",
+      "exactProductiveBoundary": "LocalWorkerRuntime.health()/markUnhealthy()/stop()/drain",
+      "actualProducerAndConsumerChain": [
+        "skills/buster/engine/test-gates/runner-setup.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive Buster runtime",
+      "aliasOfSettingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "skills/buster/engine/test-gates/runner-setup.ts": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-919ea606a04abc10",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerTrustEnvelope",
+      "field": "/schemaVersion",
+      "resolvedDomain": {
+        "const": "worker-trust-envelope.v1"
+      },
+      "semanticClass": "protocol-invariant",
+      "currentAuthorityReason": "Signer supplied unsigned peer/task subject/context/nonce/key label and explicit key; canonical signed message includes all unsigned fields, fixed ed25519/version. Validator checks expires>issued. Verifier additionally expected issuer/audience/purpose, active absolute times and supplied key/signature, but does NOT itself invoke Ajv or select a key by keyId. No service producer/consumer of these helpers found; actual productive Prism SPIFFE/internal authentication is different contract.",
+      "exactProductiveBoundary": "public signWorkerTrustEnvelope/verifyWorkerTrustEnvelope plus strict contract validator",
+      "actualProducerAndConsumerChain": [
+        "contracts/pipeline-worker-core/v1/src/trust.ts",
+        "contracts/pipeline-worker-core/v1/src/trust.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "exported contract surface; verified no service invocation, test consumer only; no invented CONFIG/Secretstore key author",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "contracts/pipeline-worker-core/v1/src/trust.ts": "c650fdbe7f43b422f36d050df291d2a00fdd4bc694a1dae5d6236b4814743cd5"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-7723653017d4a870",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerTrustEnvelope",
+      "field": "/kind",
+      "resolvedDomain": {
+        "enum": [
+          "request",
+          "artifact"
+        ]
+      },
+      "semanticClass": "protocol-invariant",
+      "currentAuthorityReason": "Signer supplied unsigned peer/task subject/context/nonce/key label and explicit key; canonical signed message includes all unsigned fields, fixed ed25519/version. Validator checks expires>issued. Verifier additionally expected issuer/audience/purpose, active absolute times and supplied key/signature, but does NOT itself invoke Ajv or select a key by keyId. No service producer/consumer of these helpers found; actual productive Prism SPIFFE/internal authentication is different contract.",
+      "exactProductiveBoundary": "public signWorkerTrustEnvelope/verifyWorkerTrustEnvelope plus strict contract validator",
+      "actualProducerAndConsumerChain": [
+        "contracts/pipeline-worker-core/v1/src/trust.ts",
+        "contracts/pipeline-worker-core/v1/src/trust.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "exported contract surface; verified no service invocation, test consumer only; no invented CONFIG/Secretstore key author",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "contracts/pipeline-worker-core/v1/src/trust.ts": "c650fdbe7f43b422f36d050df291d2a00fdd4bc694a1dae5d6236b4814743cd5"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-449ef0a716d1efdd",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerTrustEnvelope",
+      "field": "/issuer",
+      "resolvedDomain": {
+        "type": "string",
+        "pattern": "^spiffe://[a-z0-9.-]+/[A-Za-z0-9._~!$&'()*+,;=:@%/-]+$",
+        "maxLength": 512
+      },
+      "semanticClass": "task-or-peer-contract-input",
+      "currentAuthorityReason": "Signer supplied unsigned peer/task subject/context/nonce/key label and explicit key; canonical signed message includes all unsigned fields, fixed ed25519/version. Validator checks expires>issued. Verifier additionally expected issuer/audience/purpose, active absolute times and supplied key/signature, but does NOT itself invoke Ajv or select a key by keyId. No service producer/consumer of these helpers found; actual productive Prism SPIFFE/internal authentication is different contract.",
+      "exactProductiveBoundary": "public signWorkerTrustEnvelope/verifyWorkerTrustEnvelope plus strict contract validator",
+      "actualProducerAndConsumerChain": [
+        "contracts/pipeline-worker-core/v1/src/trust.ts",
+        "contracts/pipeline-worker-core/v1/src/trust.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "exported contract surface; verified no service invocation, test consumer only; no invented CONFIG/Secretstore key author",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "contracts/pipeline-worker-core/v1/src/trust.ts": "c650fdbe7f43b422f36d050df291d2a00fdd4bc694a1dae5d6236b4814743cd5"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-854dba0d0139836d",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerTrustEnvelope",
+      "field": "/audience",
+      "resolvedDomain": {
+        "type": "string",
+        "pattern": "^spiffe://[a-z0-9.-]+/[A-Za-z0-9._~!$&'()*+,;=:@%/-]+$",
+        "maxLength": 512
+      },
+      "semanticClass": "task-or-peer-contract-input",
+      "currentAuthorityReason": "Signer supplied unsigned peer/task subject/context/nonce/key label and explicit key; canonical signed message includes all unsigned fields, fixed ed25519/version. Validator checks expires>issued. Verifier additionally expected issuer/audience/purpose, active absolute times and supplied key/signature, but does NOT itself invoke Ajv or select a key by keyId. No service producer/consumer of these helpers found; actual productive Prism SPIFFE/internal authentication is different contract.",
+      "exactProductiveBoundary": "public signWorkerTrustEnvelope/verifyWorkerTrustEnvelope plus strict contract validator",
+      "actualProducerAndConsumerChain": [
+        "contracts/pipeline-worker-core/v1/src/trust.ts",
+        "contracts/pipeline-worker-core/v1/src/trust.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "exported contract surface; verified no service invocation, test consumer only; no invented CONFIG/Secretstore key author",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "contracts/pipeline-worker-core/v1/src/trust.ts": "c650fdbe7f43b422f36d050df291d2a00fdd4bc694a1dae5d6236b4814743cd5"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-6bf6407bc37a0348",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerTrustEnvelope",
+      "field": "/purpose",
+      "resolvedDomain": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+        "maxLength": 256
+      },
+      "semanticClass": "task-or-peer-contract-input",
+      "currentAuthorityReason": "Signer supplied unsigned peer/task subject/context/nonce/key label and explicit key; canonical signed message includes all unsigned fields, fixed ed25519/version. Validator checks expires>issued. Verifier additionally expected issuer/audience/purpose, active absolute times and supplied key/signature, but does NOT itself invoke Ajv or select a key by keyId. No service producer/consumer of these helpers found; actual productive Prism SPIFFE/internal authentication is different contract.",
+      "exactProductiveBoundary": "public signWorkerTrustEnvelope/verifyWorkerTrustEnvelope plus strict contract validator",
+      "actualProducerAndConsumerChain": [
+        "contracts/pipeline-worker-core/v1/src/trust.ts",
+        "contracts/pipeline-worker-core/v1/src/trust.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "exported contract surface; verified no service invocation, test consumer only; no invented CONFIG/Secretstore key author",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "contracts/pipeline-worker-core/v1/src/trust.ts": "c650fdbe7f43b422f36d050df291d2a00fdd4bc694a1dae5d6236b4814743cd5"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-dfe4023274955ea7",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerTrustEnvelope",
+      "field": "/subjectDigest",
+      "resolvedDomain": {
+        "type": "string",
+        "pattern": "^sha256:[a-f0-9]{64}$"
+      },
+      "semanticClass": "task-or-peer-contract-input",
+      "currentAuthorityReason": "Signer supplied unsigned peer/task subject/context/nonce/key label and explicit key; canonical signed message includes all unsigned fields, fixed ed25519/version. Validator checks expires>issued. Verifier additionally expected issuer/audience/purpose, active absolute times and supplied key/signature, but does NOT itself invoke Ajv or select a key by keyId. No service producer/consumer of these helpers found; actual productive Prism SPIFFE/internal authentication is different contract.",
+      "exactProductiveBoundary": "public signWorkerTrustEnvelope/verifyWorkerTrustEnvelope plus strict contract validator",
+      "actualProducerAndConsumerChain": [
+        "contracts/pipeline-worker-core/v1/src/trust.ts",
+        "contracts/pipeline-worker-core/v1/src/trust.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "exported contract surface; verified no service invocation, test consumer only; no invented CONFIG/Secretstore key author",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "contracts/pipeline-worker-core/v1/src/trust.ts": "c650fdbe7f43b422f36d050df291d2a00fdd4bc694a1dae5d6236b4814743cd5"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-31017d30c9fae922",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerTrustEnvelope",
+      "field": "/contextDigest",
+      "resolvedDomain": {
+        "type": "string",
+        "pattern": "^sha256:[a-f0-9]{64}$"
+      },
+      "semanticClass": "task-or-peer-contract-input",
+      "currentAuthorityReason": "Signer supplied unsigned peer/task subject/context/nonce/key label and explicit key; canonical signed message includes all unsigned fields, fixed ed25519/version. Validator checks expires>issued. Verifier additionally expected issuer/audience/purpose, active absolute times and supplied key/signature, but does NOT itself invoke Ajv or select a key by keyId. No service producer/consumer of these helpers found; actual productive Prism SPIFFE/internal authentication is different contract.",
+      "exactProductiveBoundary": "public signWorkerTrustEnvelope/verifyWorkerTrustEnvelope plus strict contract validator",
+      "actualProducerAndConsumerChain": [
+        "contracts/pipeline-worker-core/v1/src/trust.ts",
+        "contracts/pipeline-worker-core/v1/src/trust.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "exported contract surface; verified no service invocation, test consumer only; no invented CONFIG/Secretstore key author",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "contracts/pipeline-worker-core/v1/src/trust.ts": "c650fdbe7f43b422f36d050df291d2a00fdd4bc694a1dae5d6236b4814743cd5"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-baaf5905505fa69c",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerTrustEnvelope",
+      "field": "/issuedAt",
+      "resolvedDomain": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "semanticClass": "task-or-peer-contract-input",
+      "currentAuthorityReason": "Signer supplied unsigned peer/task subject/context/nonce/key label and explicit key; canonical signed message includes all unsigned fields, fixed ed25519/version. Validator checks expires>issued. Verifier additionally expected issuer/audience/purpose, active absolute times and supplied key/signature, but does NOT itself invoke Ajv or select a key by keyId. No service producer/consumer of these helpers found; actual productive Prism SPIFFE/internal authentication is different contract.",
+      "exactProductiveBoundary": "public signWorkerTrustEnvelope/verifyWorkerTrustEnvelope plus strict contract validator",
+      "actualProducerAndConsumerChain": [
+        "contracts/pipeline-worker-core/v1/src/trust.ts",
+        "contracts/pipeline-worker-core/v1/src/trust.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "exported contract surface; verified no service invocation, test consumer only; no invented CONFIG/Secretstore key author",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "contracts/pipeline-worker-core/v1/src/trust.ts": "c650fdbe7f43b422f36d050df291d2a00fdd4bc694a1dae5d6236b4814743cd5"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-42171f78d9b3c4fe",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerTrustEnvelope",
+      "field": "/expiresAt",
+      "resolvedDomain": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "semanticClass": "task-or-peer-contract-input",
+      "currentAuthorityReason": "Signer supplied unsigned peer/task subject/context/nonce/key label and explicit key; canonical signed message includes all unsigned fields, fixed ed25519/version. Validator checks expires>issued. Verifier additionally expected issuer/audience/purpose, active absolute times and supplied key/signature, but does NOT itself invoke Ajv or select a key by keyId. No service producer/consumer of these helpers found; actual productive Prism SPIFFE/internal authentication is different contract.",
+      "exactProductiveBoundary": "public signWorkerTrustEnvelope/verifyWorkerTrustEnvelope plus strict contract validator",
+      "actualProducerAndConsumerChain": [
+        "contracts/pipeline-worker-core/v1/src/trust.ts",
+        "contracts/pipeline-worker-core/v1/src/trust.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "exported contract surface; verified no service invocation, test consumer only; no invented CONFIG/Secretstore key author",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "contracts/pipeline-worker-core/v1/src/trust.ts": "c650fdbe7f43b422f36d050df291d2a00fdd4bc694a1dae5d6236b4814743cd5"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-ba951b02e29c1bd2",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerTrustEnvelope",
+      "field": "/nonce",
+      "resolvedDomain": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9_-]{22,128}$"
+      },
+      "semanticClass": "task-or-peer-contract-input",
+      "currentAuthorityReason": "Signer supplied unsigned peer/task subject/context/nonce/key label and explicit key; canonical signed message includes all unsigned fields, fixed ed25519/version. Validator checks expires>issued. Verifier additionally expected issuer/audience/purpose, active absolute times and supplied key/signature, but does NOT itself invoke Ajv or select a key by keyId. No service producer/consumer of these helpers found; actual productive Prism SPIFFE/internal authentication is different contract.",
+      "exactProductiveBoundary": "public signWorkerTrustEnvelope/verifyWorkerTrustEnvelope plus strict contract validator",
+      "actualProducerAndConsumerChain": [
+        "contracts/pipeline-worker-core/v1/src/trust.ts",
+        "contracts/pipeline-worker-core/v1/src/trust.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "exported contract surface; verified no service invocation, test consumer only; no invented CONFIG/Secretstore key author",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "contracts/pipeline-worker-core/v1/src/trust.ts": "c650fdbe7f43b422f36d050df291d2a00fdd4bc694a1dae5d6236b4814743cd5"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-940b3805a6df4ebd",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerTrustEnvelope",
+      "field": "/keyId",
+      "resolvedDomain": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+        "maxLength": 256
+      },
+      "semanticClass": "secret-reference-label",
+      "currentAuthorityReason": "Signer supplied unsigned peer/task subject/context/nonce/key label and explicit key; canonical signed message includes all unsigned fields, fixed ed25519/version. Validator checks expires>issued. Verifier additionally expected issuer/audience/purpose, active absolute times and supplied key/signature, but does NOT itself invoke Ajv or select a key by keyId. No service producer/consumer of these helpers found; actual productive Prism SPIFFE/internal authentication is different contract.",
+      "exactProductiveBoundary": "public signWorkerTrustEnvelope/verifyWorkerTrustEnvelope plus strict contract validator",
+      "actualProducerAndConsumerChain": [
+        "contracts/pipeline-worker-core/v1/src/trust.ts",
+        "contracts/pipeline-worker-core/v1/src/trust.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "exported contract surface; verified no service invocation, test consumer only; no invented CONFIG/Secretstore key author",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "contracts/pipeline-worker-core/v1/src/trust.ts": "c650fdbe7f43b422f36d050df291d2a00fdd4bc694a1dae5d6236b4814743cd5"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-8758e64930af20a2",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerTrustEnvelope",
+      "field": "/algorithm",
+      "resolvedDomain": {
+        "const": "ed25519"
+      },
+      "semanticClass": "protocol-invariant",
+      "currentAuthorityReason": "Signer supplied unsigned peer/task subject/context/nonce/key label and explicit key; canonical signed message includes all unsigned fields, fixed ed25519/version. Validator checks expires>issued. Verifier additionally expected issuer/audience/purpose, active absolute times and supplied key/signature, but does NOT itself invoke Ajv or select a key by keyId. No service producer/consumer of these helpers found; actual productive Prism SPIFFE/internal authentication is different contract.",
+      "exactProductiveBoundary": "public signWorkerTrustEnvelope/verifyWorkerTrustEnvelope plus strict contract validator",
+      "actualProducerAndConsumerChain": [
+        "contracts/pipeline-worker-core/v1/src/trust.ts",
+        "contracts/pipeline-worker-core/v1/src/trust.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "exported contract surface; verified no service invocation, test consumer only; no invented CONFIG/Secretstore key author",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "contracts/pipeline-worker-core/v1/src/trust.ts": "c650fdbe7f43b422f36d050df291d2a00fdd4bc694a1dae5d6236b4814743cd5"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-32ef9c8a21f1d9d6",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerTrustEnvelope",
+      "field": "/signature",
+      "resolvedDomain": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9+/]{86}==$"
+      },
+      "semanticClass": "task-or-peer-contract-input",
+      "currentAuthorityReason": "Signer supplied unsigned peer/task subject/context/nonce/key label and explicit key; canonical signed message includes all unsigned fields, fixed ed25519/version. Validator checks expires>issued. Verifier additionally expected issuer/audience/purpose, active absolute times and supplied key/signature, but does NOT itself invoke Ajv or select a key by keyId. No service producer/consumer of these helpers found; actual productive Prism SPIFFE/internal authentication is different contract.",
+      "exactProductiveBoundary": "public signWorkerTrustEnvelope/verifyWorkerTrustEnvelope plus strict contract validator",
+      "actualProducerAndConsumerChain": [
+        "contracts/pipeline-worker-core/v1/src/trust.ts",
+        "contracts/pipeline-worker-core/v1/src/trust.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "exported contract surface; verified no service invocation, test consumer only; no invented CONFIG/Secretstore key author",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "contracts/pipeline-worker-core/v1/src/trust.ts": "c650fdbe7f43b422f36d050df291d2a00fdd4bc694a1dae5d6236b4814743cd5"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-29f9302221b4dd9a",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "attemptProgressEvent",
+      "field": "/schemaVersion",
+      "resolvedDomain": {
+        "const": "attempt-progress-event.v1"
+      },
+      "semanticClass": "protocol-invariant",
+      "currentAuthorityReason": "Accepted protocol/attempt/claim/worker copied, local sequence++, actual terminal/intermediate state/message, progressPercent null/details empty; strict validator before callback; callback failure isolated. Six production constructors currently omit onProgress: dormant callback projection, not configured progress values.",
+      "exactProductiveBoundary": "WorkerAttemptExecutor.#progress\u2192onProgress if explicitly supplied",
+      "actualProducerAndConsumerChain": [
+        "skills/worker/core/worker/attempt-executor.ts",
+        "skills/worker/core/worker/attempt-executor.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "actual executor generation branch when callback exists; production six constructors omit callback",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-fa126107cbce0002",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "attemptProgressEvent",
+      "field": "/protocolVersion",
+      "resolvedDomain": {
+        "const": "worker-protocol.v1"
+      },
+      "semanticClass": "protocol-invariant",
+      "currentAuthorityReason": "Accepted protocol/attempt/claim/worker copied, local sequence++, actual terminal/intermediate state/message, progressPercent null/details empty; strict validator before callback; callback failure isolated. Six production constructors currently omit onProgress: dormant callback projection, not configured progress values.",
+      "exactProductiveBoundary": "WorkerAttemptExecutor.#progress\u2192onProgress if explicitly supplied",
+      "actualProducerAndConsumerChain": [
+        "skills/worker/core/worker/attempt-executor.ts",
+        "skills/worker/core/worker/attempt-executor.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "actual executor generation branch when callback exists; production six constructors omit callback",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-e5b7e2bd0d31611f",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "attemptProgressEvent",
+      "field": "/attemptId",
+      "resolvedDomain": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+        "maxLength": 256
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Accepted protocol/attempt/claim/worker copied, local sequence++, actual terminal/intermediate state/message, progressPercent null/details empty; strict validator before callback; callback failure isolated. Six production constructors currently omit onProgress: dormant callback projection, not configured progress values.",
+      "exactProductiveBoundary": "WorkerAttemptExecutor.#progress\u2192onProgress if explicitly supplied",
+      "actualProducerAndConsumerChain": [
+        "skills/worker/core/worker/attempt-executor.ts",
+        "skills/worker/core/worker/attempt-executor.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "actual executor generation branch when callback exists; production six constructors omit callback",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-2edf5ec7ddacdea1",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "attemptProgressEvent",
+      "field": "/claimId",
+      "resolvedDomain": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+        "maxLength": 256
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Accepted protocol/attempt/claim/worker copied, local sequence++, actual terminal/intermediate state/message, progressPercent null/details empty; strict validator before callback; callback failure isolated. Six production constructors currently omit onProgress: dormant callback projection, not configured progress values.",
+      "exactProductiveBoundary": "WorkerAttemptExecutor.#progress\u2192onProgress if explicitly supplied",
+      "actualProducerAndConsumerChain": [
+        "skills/worker/core/worker/attempt-executor.ts",
+        "skills/worker/core/worker/attempt-executor.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "actual executor generation branch when callback exists; production six constructors omit callback",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-2102b1798807095f",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "attemptProgressEvent",
+      "field": "/claimGeneration",
+      "resolvedDomain": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Accepted protocol/attempt/claim/worker copied, local sequence++, actual terminal/intermediate state/message, progressPercent null/details empty; strict validator before callback; callback failure isolated. Six production constructors currently omit onProgress: dormant callback projection, not configured progress values.",
+      "exactProductiveBoundary": "WorkerAttemptExecutor.#progress\u2192onProgress if explicitly supplied",
+      "actualProducerAndConsumerChain": [
+        "skills/worker/core/worker/attempt-executor.ts",
+        "skills/worker/core/worker/attempt-executor.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "actual executor generation branch when callback exists; production six constructors omit callback",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-156c1bd8b69257f5",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "attemptProgressEvent",
+      "field": "/workerId",
+      "resolvedDomain": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+        "maxLength": 256
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Accepted protocol/attempt/claim/worker copied, local sequence++, actual terminal/intermediate state/message, progressPercent null/details empty; strict validator before callback; callback failure isolated. Six production constructors currently omit onProgress: dormant callback projection, not configured progress values.",
+      "exactProductiveBoundary": "WorkerAttemptExecutor.#progress\u2192onProgress if explicitly supplied",
+      "actualProducerAndConsumerChain": [
+        "skills/worker/core/worker/attempt-executor.ts",
+        "skills/worker/core/worker/attempt-executor.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "actual executor generation branch when callback exists; production six constructors omit callback",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-ce7d83e9f9543e42",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "attemptProgressEvent",
+      "field": "/sequence",
+      "resolvedDomain": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Accepted protocol/attempt/claim/worker copied, local sequence++, actual terminal/intermediate state/message, progressPercent null/details empty; strict validator before callback; callback failure isolated. Six production constructors currently omit onProgress: dormant callback projection, not configured progress values.",
+      "exactProductiveBoundary": "WorkerAttemptExecutor.#progress\u2192onProgress if explicitly supplied",
+      "actualProducerAndConsumerChain": [
+        "skills/worker/core/worker/attempt-executor.ts",
+        "skills/worker/core/worker/attempt-executor.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "actual executor generation branch when callback exists; production six constructors omit callback",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-05220f9ef88faeb2",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "attemptProgressEvent",
+      "field": "/state",
+      "resolvedDomain": {
+        "enum": [
+          "accepted",
+          "started",
+          "running",
+          "cleanup_started",
+          "cleanup_completed"
+        ]
+      },
+      "semanticClass": "protocol-invariant",
+      "currentAuthorityReason": "Accepted protocol/attempt/claim/worker copied, local sequence++, actual terminal/intermediate state/message, progressPercent null/details empty; strict validator before callback; callback failure isolated. Six production constructors currently omit onProgress: dormant callback projection, not configured progress values.",
+      "exactProductiveBoundary": "WorkerAttemptExecutor.#progress\u2192onProgress if explicitly supplied",
+      "actualProducerAndConsumerChain": [
+        "skills/worker/core/worker/attempt-executor.ts",
+        "skills/worker/core/worker/attempt-executor.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "actual executor generation branch when callback exists; production six constructors omit callback",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-f5c2c9aae92abc3c",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "attemptProgressEvent",
+      "field": "/message",
+      "resolvedDomain": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 4096
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Accepted protocol/attempt/claim/worker copied, local sequence++, actual terminal/intermediate state/message, progressPercent null/details empty; strict validator before callback; callback failure isolated. Six production constructors currently omit onProgress: dormant callback projection, not configured progress values.",
+      "exactProductiveBoundary": "WorkerAttemptExecutor.#progress\u2192onProgress if explicitly supplied",
+      "actualProducerAndConsumerChain": [
+        "skills/worker/core/worker/attempt-executor.ts",
+        "skills/worker/core/worker/attempt-executor.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "actual executor generation branch when callback exists; production six constructors omit callback",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-38678cc912e3081c",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "attemptProgressEvent",
+      "field": "/progressPercent/branch0",
+      "resolvedDomain": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 100
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Accepted protocol/attempt/claim/worker copied, local sequence++, actual terminal/intermediate state/message, progressPercent null/details empty; strict validator before callback; callback failure isolated. Six production constructors currently omit onProgress: dormant callback projection, not configured progress values.",
+      "exactProductiveBoundary": "WorkerAttemptExecutor.#progress\u2192onProgress if explicitly supplied",
+      "actualProducerAndConsumerChain": [
+        "skills/worker/core/worker/attempt-executor.ts",
+        "skills/worker/core/worker/attempt-executor.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "actual executor generation branch when callback exists; production six constructors omit callback",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-853f5cded4ce3e75",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "attemptProgressEvent",
+      "field": "/progressPercent/branch1",
+      "resolvedDomain": {
+        "type": "null"
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Accepted protocol/attempt/claim/worker copied, local sequence++, actual terminal/intermediate state/message, progressPercent null/details empty; strict validator before callback; callback failure isolated. Six production constructors currently omit onProgress: dormant callback projection, not configured progress values.",
+      "exactProductiveBoundary": "WorkerAttemptExecutor.#progress\u2192onProgress if explicitly supplied",
+      "actualProducerAndConsumerChain": [
+        "skills/worker/core/worker/attempt-executor.ts",
+        "skills/worker/core/worker/attempt-executor.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "actual executor generation branch when callback exists; production six constructors omit callback",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-f002162003700b06",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "attemptProgressEvent",
+      "field": "/details",
+      "resolvedDomain": {
+        "type": "object",
+        "maxProperties": 256,
+        "additionalProperties": {
+          "$ref": "#/$defs/jsonValue"
+        }
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Accepted protocol/attempt/claim/worker copied, local sequence++, actual terminal/intermediate state/message, progressPercent null/details empty; strict validator before callback; callback failure isolated. Six production constructors currently omit onProgress: dormant callback projection, not configured progress values.",
+      "exactProductiveBoundary": "WorkerAttemptExecutor.#progress\u2192onProgress if explicitly supplied",
+      "actualProducerAndConsumerChain": [
+        "skills/worker/core/worker/attempt-executor.ts",
+        "skills/worker/core/worker/attempt-executor.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "actual executor generation branch when callback exists; production six constructors omit callback",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-e3f4df536bcf1a21",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "attemptProgressEvent",
+      "field": "/sentAt",
+      "resolvedDomain": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Accepted protocol/attempt/claim/worker copied, local sequence++, actual terminal/intermediate state/message, progressPercent null/details empty; strict validator before callback; callback failure isolated. Six production constructors currently omit onProgress: dormant callback projection, not configured progress values.",
+      "exactProductiveBoundary": "WorkerAttemptExecutor.#progress\u2192onProgress if explicitly supplied",
+      "actualProducerAndConsumerChain": [
+        "skills/worker/core/worker/attempt-executor.ts",
+        "skills/worker/core/worker/attempt-executor.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "actual executor generation branch when callback exists; production six constructors omit callback",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-012c414d5e07ea63",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerLogPart",
+      "field": "/schemaVersion",
+      "resolvedDomain": {
+        "const": "worker-log-part.v1"
+      },
+      "semanticClass": "protocol-invariant",
+      "currentAuthorityReason": "Accepted identity copied, sequence++, stream/text split max65536 UTF16 units with surrogate adjustment; each split chunk (not log call) counted before retention false; hash text exact; final part distinct. UTF8 and framed byte limits independent. With retentiontrue validates each part and dispatches supplied callback/retains for fullLog, while false skips retained part construction but enforces decode/count/bytes.",
+      "exactProductiveBoundary": "Core split-wire log loop and final system terminator; Prism native/agent full log writer projections",
+      "actualProducerAndConsumerChain": [
+        "skills/worker/core/worker/attempt-executor.ts",
+        "skills/worker/core/worker/attempt-executor.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive shared Core and Prism full-log callers",
+      "aliasOfSettingIds": [
+        "CMP-WCORE-LOG-PARTS",
+        "CMP-WCORE-RETAIN-LOGS",
+        "CMP-WCORE-LOG-WIRE-BYTES",
+        "CMP-WCORE-LOG-PART-WIRE-UNITS",
+        "CMP-WCORE-UTF8-PROTOCOL"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-b961fc83a8440f2e",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerLogPart",
+      "field": "/protocolVersion",
+      "resolvedDomain": {
+        "const": "worker-protocol.v1"
+      },
+      "semanticClass": "protocol-invariant",
+      "currentAuthorityReason": "Accepted identity copied, sequence++, stream/text split max65536 UTF16 units with surrogate adjustment; each split chunk (not log call) counted before retention false; hash text exact; final part distinct. UTF8 and framed byte limits independent. With retentiontrue validates each part and dispatches supplied callback/retains for fullLog, while false skips retained part construction but enforces decode/count/bytes.",
+      "exactProductiveBoundary": "Core split-wire log loop and final system terminator; Prism native/agent full log writer projections",
+      "actualProducerAndConsumerChain": [
+        "skills/worker/core/worker/attempt-executor.ts",
+        "skills/worker/core/worker/attempt-executor.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive shared Core and Prism full-log callers",
+      "aliasOfSettingIds": [
+        "CMP-WCORE-LOG-PARTS",
+        "CMP-WCORE-RETAIN-LOGS",
+        "CMP-WCORE-LOG-WIRE-BYTES",
+        "CMP-WCORE-LOG-PART-WIRE-UNITS",
+        "CMP-WCORE-UTF8-PROTOCOL"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-9a66c4824bd67b64",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerLogPart",
+      "field": "/attemptId",
+      "resolvedDomain": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+        "maxLength": 256
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Accepted identity copied, sequence++, stream/text split max65536 UTF16 units with surrogate adjustment; each split chunk (not log call) counted before retention false; hash text exact; final part distinct. UTF8 and framed byte limits independent. With retentiontrue validates each part and dispatches supplied callback/retains for fullLog, while false skips retained part construction but enforces decode/count/bytes.",
+      "exactProductiveBoundary": "Core split-wire log loop and final system terminator; Prism native/agent full log writer projections",
+      "actualProducerAndConsumerChain": [
+        "skills/worker/core/worker/attempt-executor.ts",
+        "skills/worker/core/worker/attempt-executor.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive shared Core and Prism full-log callers",
+      "aliasOfSettingIds": [
+        "CMP-WCORE-LOG-PARTS",
+        "CMP-WCORE-RETAIN-LOGS",
+        "CMP-WCORE-LOG-WIRE-BYTES",
+        "CMP-WCORE-LOG-PART-WIRE-UNITS",
+        "CMP-WCORE-UTF8-PROTOCOL"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-9c8199cf3c2e9047",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerLogPart",
+      "field": "/claimId",
+      "resolvedDomain": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+        "maxLength": 256
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Accepted identity copied, sequence++, stream/text split max65536 UTF16 units with surrogate adjustment; each split chunk (not log call) counted before retention false; hash text exact; final part distinct. UTF8 and framed byte limits independent. With retentiontrue validates each part and dispatches supplied callback/retains for fullLog, while false skips retained part construction but enforces decode/count/bytes.",
+      "exactProductiveBoundary": "Core split-wire log loop and final system terminator; Prism native/agent full log writer projections",
+      "actualProducerAndConsumerChain": [
+        "skills/worker/core/worker/attempt-executor.ts",
+        "skills/worker/core/worker/attempt-executor.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive shared Core and Prism full-log callers",
+      "aliasOfSettingIds": [
+        "CMP-WCORE-LOG-PARTS",
+        "CMP-WCORE-RETAIN-LOGS",
+        "CMP-WCORE-LOG-WIRE-BYTES",
+        "CMP-WCORE-LOG-PART-WIRE-UNITS",
+        "CMP-WCORE-UTF8-PROTOCOL"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-7a7dd69f61421928",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerLogPart",
+      "field": "/claimGeneration",
+      "resolvedDomain": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Accepted identity copied, sequence++, stream/text split max65536 UTF16 units with surrogate adjustment; each split chunk (not log call) counted before retention false; hash text exact; final part distinct. UTF8 and framed byte limits independent. With retentiontrue validates each part and dispatches supplied callback/retains for fullLog, while false skips retained part construction but enforces decode/count/bytes.",
+      "exactProductiveBoundary": "Core split-wire log loop and final system terminator; Prism native/agent full log writer projections",
+      "actualProducerAndConsumerChain": [
+        "skills/worker/core/worker/attempt-executor.ts",
+        "skills/worker/core/worker/attempt-executor.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive shared Core and Prism full-log callers",
+      "aliasOfSettingIds": [
+        "CMP-WCORE-LOG-PARTS",
+        "CMP-WCORE-RETAIN-LOGS",
+        "CMP-WCORE-LOG-WIRE-BYTES",
+        "CMP-WCORE-LOG-PART-WIRE-UNITS",
+        "CMP-WCORE-UTF8-PROTOCOL"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-7d716f2fc2799a67",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerLogPart",
+      "field": "/workerId",
+      "resolvedDomain": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+        "maxLength": 256
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Accepted identity copied, sequence++, stream/text split max65536 UTF16 units with surrogate adjustment; each split chunk (not log call) counted before retention false; hash text exact; final part distinct. UTF8 and framed byte limits independent. With retentiontrue validates each part and dispatches supplied callback/retains for fullLog, while false skips retained part construction but enforces decode/count/bytes.",
+      "exactProductiveBoundary": "Core split-wire log loop and final system terminator; Prism native/agent full log writer projections",
+      "actualProducerAndConsumerChain": [
+        "skills/worker/core/worker/attempt-executor.ts",
+        "skills/worker/core/worker/attempt-executor.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive shared Core and Prism full-log callers",
+      "aliasOfSettingIds": [
+        "CMP-WCORE-LOG-PARTS",
+        "CMP-WCORE-RETAIN-LOGS",
+        "CMP-WCORE-LOG-WIRE-BYTES",
+        "CMP-WCORE-LOG-PART-WIRE-UNITS",
+        "CMP-WCORE-UTF8-PROTOCOL"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-f744f886827c0bf8",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerLogPart",
+      "field": "/sequence",
+      "resolvedDomain": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Accepted identity copied, sequence++, stream/text split max65536 UTF16 units with surrogate adjustment; each split chunk (not log call) counted before retention false; hash text exact; final part distinct. UTF8 and framed byte limits independent. With retentiontrue validates each part and dispatches supplied callback/retains for fullLog, while false skips retained part construction but enforces decode/count/bytes.",
+      "exactProductiveBoundary": "Core split-wire log loop and final system terminator; Prism native/agent full log writer projections",
+      "actualProducerAndConsumerChain": [
+        "skills/worker/core/worker/attempt-executor.ts",
+        "skills/worker/core/worker/attempt-executor.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive shared Core and Prism full-log callers",
+      "aliasOfSettingIds": [
+        "CMP-WCORE-LOG-PARTS",
+        "CMP-WCORE-RETAIN-LOGS",
+        "CMP-WCORE-LOG-WIRE-BYTES",
+        "CMP-WCORE-LOG-PART-WIRE-UNITS",
+        "CMP-WCORE-UTF8-PROTOCOL"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-c71a508ca9c9fd55",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerLogPart",
+      "field": "/stream",
+      "resolvedDomain": {
+        "enum": [
+          "stdout",
+          "stderr",
+          "system"
+        ]
+      },
+      "semanticClass": "protocol-invariant",
+      "currentAuthorityReason": "Accepted identity copied, sequence++, stream/text split max65536 UTF16 units with surrogate adjustment; each split chunk (not log call) counted before retention false; hash text exact; final part distinct. UTF8 and framed byte limits independent. With retentiontrue validates each part and dispatches supplied callback/retains for fullLog, while false skips retained part construction but enforces decode/count/bytes.",
+      "exactProductiveBoundary": "Core split-wire log loop and final system terminator; Prism native/agent full log writer projections",
+      "actualProducerAndConsumerChain": [
+        "skills/worker/core/worker/attempt-executor.ts",
+        "skills/worker/core/worker/attempt-executor.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive shared Core and Prism full-log callers",
+      "aliasOfSettingIds": [
+        "CMP-WCORE-LOG-PARTS",
+        "CMP-WCORE-RETAIN-LOGS",
+        "CMP-WCORE-LOG-WIRE-BYTES",
+        "CMP-WCORE-LOG-PART-WIRE-UNITS",
+        "CMP-WCORE-UTF8-PROTOCOL"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-9e5dab43f948fa7d",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerLogPart",
+      "field": "/text",
+      "resolvedDomain": {
+        "type": "string",
+        "maxLength": 65536
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Accepted identity copied, sequence++, stream/text split max65536 UTF16 units with surrogate adjustment; each split chunk (not log call) counted before retention false; hash text exact; final part distinct. UTF8 and framed byte limits independent. With retentiontrue validates each part and dispatches supplied callback/retains for fullLog, while false skips retained part construction but enforces decode/count/bytes.",
+      "exactProductiveBoundary": "Core split-wire log loop and final system terminator; Prism native/agent full log writer projections",
+      "actualProducerAndConsumerChain": [
+        "skills/worker/core/worker/attempt-executor.ts",
+        "skills/worker/core/worker/attempt-executor.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive shared Core and Prism full-log callers",
+      "aliasOfSettingIds": [
+        "CMP-WCORE-LOG-PARTS",
+        "CMP-WCORE-RETAIN-LOGS",
+        "CMP-WCORE-LOG-WIRE-BYTES",
+        "CMP-WCORE-LOG-PART-WIRE-UNITS",
+        "CMP-WCORE-UTF8-PROTOCOL"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-a940e78b835bbef9",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerLogPart",
+      "field": "/contentDigest",
+      "resolvedDomain": {
+        "type": "string",
+        "pattern": "^sha256:[a-f0-9]{64}$"
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Accepted identity copied, sequence++, stream/text split max65536 UTF16 units with surrogate adjustment; each split chunk (not log call) counted before retention false; hash text exact; final part distinct. UTF8 and framed byte limits independent. With retentiontrue validates each part and dispatches supplied callback/retains for fullLog, while false skips retained part construction but enforces decode/count/bytes.",
+      "exactProductiveBoundary": "Core split-wire log loop and final system terminator; Prism native/agent full log writer projections",
+      "actualProducerAndConsumerChain": [
+        "skills/worker/core/worker/attempt-executor.ts",
+        "skills/worker/core/worker/attempt-executor.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive shared Core and Prism full-log callers",
+      "aliasOfSettingIds": [
+        "CMP-WCORE-LOG-PARTS",
+        "CMP-WCORE-RETAIN-LOGS",
+        "CMP-WCORE-LOG-WIRE-BYTES",
+        "CMP-WCORE-LOG-PART-WIRE-UNITS",
+        "CMP-WCORE-UTF8-PROTOCOL"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-5d04ca1c6b896f9b",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerLogPart",
+      "field": "/final",
+      "resolvedDomain": {
+        "type": "boolean"
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Accepted identity copied, sequence++, stream/text split max65536 UTF16 units with surrogate adjustment; each split chunk (not log call) counted before retention false; hash text exact; final part distinct. UTF8 and framed byte limits independent. With retentiontrue validates each part and dispatches supplied callback/retains for fullLog, while false skips retained part construction but enforces decode/count/bytes.",
+      "exactProductiveBoundary": "Core split-wire log loop and final system terminator; Prism native/agent full log writer projections",
+      "actualProducerAndConsumerChain": [
+        "skills/worker/core/worker/attempt-executor.ts",
+        "skills/worker/core/worker/attempt-executor.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive shared Core and Prism full-log callers",
+      "aliasOfSettingIds": [
+        "CMP-WCORE-LOG-PARTS",
+        "CMP-WCORE-RETAIN-LOGS",
+        "CMP-WCORE-LOG-WIRE-BYTES",
+        "CMP-WCORE-LOG-PART-WIRE-UNITS",
+        "CMP-WCORE-UTF8-PROTOCOL"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-f897ad0e0f5097a2",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerLogPart",
+      "field": "/sentAt",
+      "resolvedDomain": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "semanticClass": "generated-binding",
+      "currentAuthorityReason": "Accepted identity copied, sequence++, stream/text split max65536 UTF16 units with surrogate adjustment; each split chunk (not log call) counted before retention false; hash text exact; final part distinct. UTF8 and framed byte limits independent. With retentiontrue validates each part and dispatches supplied callback/retains for fullLog, while false skips retained part construction but enforces decode/count/bytes.",
+      "exactProductiveBoundary": "Core split-wire log loop and final system terminator; Prism native/agent full log writer projections",
+      "actualProducerAndConsumerChain": [
+        "skills/worker/core/worker/attempt-executor.ts",
+        "skills/worker/core/worker/attempt-executor.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "productive shared Core and Prism full-log callers",
+      "aliasOfSettingIds": [
+        "CMP-WCORE-LOG-PARTS",
+        "CMP-WCORE-RETAIN-LOGS",
+        "CMP-WCORE-LOG-WIRE-BYTES",
+        "CMP-WCORE-LOG-PART-WIRE-UNITS",
+        "CMP-WCORE-UTF8-PROTOCOL"
+      ],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-6bbbb50ad2c43839",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerCancellationRequest",
+      "field": "/schemaVersion",
+      "resolvedDomain": {
+        "const": "worker-cancellation-request.v1"
+      },
+      "semanticClass": "protocol-invariant",
+      "currentAuthorityReason": "Caller supplies protocol/cancellation/attempt IDs, reason, absolute requestedAt and forceAfterMs; strict schema timer0..2147483647 and nonEmptyString; checkWorkerCancellationBinding compares only protocol/attempt/cancellation identity and does NOT first call schema validator. No productive request-wrapper caller found. LocalRuntime signal/drain/cancellationTimeoutMs is a separate actual API, not automatically forceAfterMs author.",
+      "exactProductiveBoundary": "public request schema/checkWorkerCancellationBinding only",
+      "actualProducerAndConsumerChain": [
+        "contracts/pipeline-worker-core/v1/src/types.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "exported contract-only boundary; verified no service caller, contract tests only",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "contracts/pipeline-worker-core/v1/src/types.ts": "399e42c696f561fbea8f38305252f873179f1b71115f7eacd961f7b5f899ec43"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-fb9ee3ff42920bbf",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerCancellationRequest",
+      "field": "/protocolVersion",
+      "resolvedDomain": {
+        "const": "worker-protocol.v1"
+      },
+      "semanticClass": "protocol-invariant",
+      "currentAuthorityReason": "Caller supplies protocol/cancellation/attempt IDs, reason, absolute requestedAt and forceAfterMs; strict schema timer0..2147483647 and nonEmptyString; checkWorkerCancellationBinding compares only protocol/attempt/cancellation identity and does NOT first call schema validator. No productive request-wrapper caller found. LocalRuntime signal/drain/cancellationTimeoutMs is a separate actual API, not automatically forceAfterMs author.",
+      "exactProductiveBoundary": "public request schema/checkWorkerCancellationBinding only",
+      "actualProducerAndConsumerChain": [
+        "contracts/pipeline-worker-core/v1/src/types.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "exported contract-only boundary; verified no service caller, contract tests only",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "contracts/pipeline-worker-core/v1/src/types.ts": "399e42c696f561fbea8f38305252f873179f1b71115f7eacd961f7b5f899ec43"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-7d5a632814b200f4",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerCancellationRequest",
+      "field": "/cancellationId",
+      "resolvedDomain": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+        "maxLength": 256
+      },
+      "semanticClass": "task-or-peer-contract-input",
+      "currentAuthorityReason": "Caller supplies protocol/cancellation/attempt IDs, reason, absolute requestedAt and forceAfterMs; strict schema timer0..2147483647 and nonEmptyString; checkWorkerCancellationBinding compares only protocol/attempt/cancellation identity and does NOT first call schema validator. No productive request-wrapper caller found. LocalRuntime signal/drain/cancellationTimeoutMs is a separate actual API, not automatically forceAfterMs author.",
+      "exactProductiveBoundary": "public request schema/checkWorkerCancellationBinding only",
+      "actualProducerAndConsumerChain": [
+        "contracts/pipeline-worker-core/v1/src/types.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "exported contract-only boundary; verified no service caller, contract tests only",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "contracts/pipeline-worker-core/v1/src/types.ts": "399e42c696f561fbea8f38305252f873179f1b71115f7eacd961f7b5f899ec43"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-8b53840e4a599e4f",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerCancellationRequest",
+      "field": "/attemptId",
+      "resolvedDomain": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+        "maxLength": 256
+      },
+      "semanticClass": "task-or-peer-contract-input",
+      "currentAuthorityReason": "Caller supplies protocol/cancellation/attempt IDs, reason, absolute requestedAt and forceAfterMs; strict schema timer0..2147483647 and nonEmptyString; checkWorkerCancellationBinding compares only protocol/attempt/cancellation identity and does NOT first call schema validator. No productive request-wrapper caller found. LocalRuntime signal/drain/cancellationTimeoutMs is a separate actual API, not automatically forceAfterMs author.",
+      "exactProductiveBoundary": "public request schema/checkWorkerCancellationBinding only",
+      "actualProducerAndConsumerChain": [
+        "contracts/pipeline-worker-core/v1/src/types.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "exported contract-only boundary; verified no service caller, contract tests only",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "contracts/pipeline-worker-core/v1/src/types.ts": "399e42c696f561fbea8f38305252f873179f1b71115f7eacd961f7b5f899ec43"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-49ea8d9fc8787d2d",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerCancellationRequest",
+      "field": "/requestedAt",
+      "resolvedDomain": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "semanticClass": "task-or-peer-contract-input",
+      "currentAuthorityReason": "Caller supplies protocol/cancellation/attempt IDs, reason, absolute requestedAt and forceAfterMs; strict schema timer0..2147483647 and nonEmptyString; checkWorkerCancellationBinding compares only protocol/attempt/cancellation identity and does NOT first call schema validator. No productive request-wrapper caller found. LocalRuntime signal/drain/cancellationTimeoutMs is a separate actual API, not automatically forceAfterMs author.",
+      "exactProductiveBoundary": "public request schema/checkWorkerCancellationBinding only",
+      "actualProducerAndConsumerChain": [
+        "contracts/pipeline-worker-core/v1/src/types.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "exported contract-only boundary; verified no service caller, contract tests only",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "contracts/pipeline-worker-core/v1/src/types.ts": "399e42c696f561fbea8f38305252f873179f1b71115f7eacd961f7b5f899ec43"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-aa3c438316c869e3",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerCancellationRequest",
+      "field": "/reason",
+      "resolvedDomain": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 4096
+      },
+      "semanticClass": "task-or-peer-contract-input",
+      "currentAuthorityReason": "Caller supplies protocol/cancellation/attempt IDs, reason, absolute requestedAt and forceAfterMs; strict schema timer0..2147483647 and nonEmptyString; checkWorkerCancellationBinding compares only protocol/attempt/cancellation identity and does NOT first call schema validator. No productive request-wrapper caller found. LocalRuntime signal/drain/cancellationTimeoutMs is a separate actual API, not automatically forceAfterMs author.",
+      "exactProductiveBoundary": "public request schema/checkWorkerCancellationBinding only",
+      "actualProducerAndConsumerChain": [
+        "contracts/pipeline-worker-core/v1/src/types.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "exported contract-only boundary; verified no service caller, contract tests only",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "contracts/pipeline-worker-core/v1/src/types.ts": "399e42c696f561fbea8f38305252f873179f1b71115f7eacd961f7b5f899ec43"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    },
+    {
+      "id": "CMP-CORE-ROOT-80cf65322545b2bb",
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "schemaSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "definition": "workerCancellationRequest",
+      "field": "/forceAfterMs",
+      "resolvedDomain": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 2147483647
+      },
+      "semanticClass": "task-or-peer-contract-input",
+      "currentAuthorityReason": "Caller supplies protocol/cancellation/attempt IDs, reason, absolute requestedAt and forceAfterMs; strict schema timer0..2147483647 and nonEmptyString; checkWorkerCancellationBinding compares only protocol/attempt/cancellation identity and does NOT first call schema validator. No productive request-wrapper caller found. LocalRuntime signal/drain/cancellationTimeoutMs is a separate actual API, not automatically forceAfterMs author.",
+      "exactProductiveBoundary": "public request schema/checkWorkerCancellationBinding only",
+      "actualProducerAndConsumerChain": [
+        "contracts/pipeline-worker-core/v1/src/types.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "reachability": "exported contract-only boundary; verified no service caller, contract tests only",
+      "aliasOfSettingIds": [],
+      "currentValueDefault": "Accepted/generated input/state or exact schema domain, no independent CONFIG default",
+      "activationRecovery": "Captured role/run identity and absolute claim/times remain stable; runtime health/telemetry state generated, never config-filled history",
+      "caseIds": [
+        "CMP-C0-CORE-ADDITIONAL-CONTRACTS"
+      ],
+      "sourceDigests": {
+        "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+        "contracts/pipeline-worker-core/v1/src/types.ts": "399e42c696f561fbea8f38305252f873179f1b71115f7eacd961f7b5f899ec43"
+      },
+      "status": "source-disposed; independent recheck pending; no service endpoint or runtime EFFECT invented"
+    }
+  ],
+  "roots": {
+    "workerRegistration": {
+      "producer": [
+        "skills/buster/engine/test-gates/runner-setup.ts",
+        "skills/worker/core/worker/local-runtime.ts"
+      ],
+      "consumer": [
+        "skills/worker/core/worker/local-runtime.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "role": "Buster runner-setup\u2192LocalWorkerRuntime constructor/registration()/markReady",
+      "reason": "Options supply workerId/type/coreVersion/protocolVersions/profiles, startedAt and sentAt actual clock; capacity.total options.capacity, active Map.size, available total-active; profiles digest/type/duplicate IDs and capacity sum/time order checked. These are trusted role identity and generated live state, not second CONFIG author.",
+      "aliases": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "reachability": "productive Buster composition"
+    },
+    "workerHealth": {
+      "producer": [
+        "skills/buster/engine/test-gates/runner-setup.ts",
+        "skills/worker/core/worker/local-runtime.ts"
+      ],
+      "consumer": [
+        "skills/worker/core/worker/local-runtime.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "role": "LocalWorkerRuntime.health()/markUnhealthy()/stop()/drain",
+      "reason": "workerId copied captured role identity, sequence incremented, lifecycle and activeAttemptIds from actual runtime; capacity relation and IDs length equal active enforced, sorted active IDs; sentAt clock. No configured synthetic healthy/zero capacity fallback.",
+      "aliases": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ],
+      "reachability": "productive Buster runtime"
+    },
+    "workerTrustEnvelope": {
+      "producer": [
+        "contracts/pipeline-worker-core/v1/src/trust.ts"
+      ],
+      "consumer": [
+        "contracts/pipeline-worker-core/v1/src/trust.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "role": "public signWorkerTrustEnvelope/verifyWorkerTrustEnvelope plus strict contract validator",
+      "reason": "Signer supplied unsigned peer/task subject/context/nonce/key label and explicit key; canonical signed message includes all unsigned fields, fixed ed25519/version. Validator checks expires>issued. Verifier additionally expected issuer/audience/purpose, active absolute times and supplied key/signature, but does NOT itself invoke Ajv or select a key by keyId. No service producer/consumer of these helpers found; actual productive Prism SPIFFE/internal authentication is different contract.",
+      "aliases": [],
+      "reachability": "exported contract surface; verified no service invocation, test consumer only; no invented CONFIG/Secretstore key author"
+    },
+    "attemptProgressEvent": {
+      "producer": [
+        "skills/worker/core/worker/attempt-executor.ts"
+      ],
+      "consumer": [
+        "skills/worker/core/worker/attempt-executor.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "role": "WorkerAttemptExecutor.#progress\u2192onProgress if explicitly supplied",
+      "reason": "Accepted protocol/attempt/claim/worker copied, local sequence++, actual terminal/intermediate state/message, progressPercent null/details empty; strict validator before callback; callback failure isolated. Six production constructors currently omit onProgress: dormant callback projection, not configured progress values.",
+      "aliases": [],
+      "reachability": "actual executor generation branch when callback exists; production six constructors omit callback"
+    },
+    "workerLogPart": {
+      "producer": [
+        "skills/worker/core/worker/attempt-executor.ts"
+      ],
+      "consumer": [
+        "skills/worker/core/worker/attempt-executor.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "role": "Core split-wire log loop and final system terminator; Prism native/agent full log writer projections",
+      "reason": "Accepted identity copied, sequence++, stream/text split max65536 UTF16 units with surrogate adjustment; each split chunk (not log call) counted before retention false; hash text exact; final part distinct. UTF8 and framed byte limits independent. With retentiontrue validates each part and dispatches supplied callback/retains for fullLog, while false skips retained part construction but enforces decode/count/bytes.",
+      "aliases": [
+        "CMP-WCORE-LOG-PARTS",
+        "CMP-WCORE-RETAIN-LOGS",
+        "CMP-WCORE-LOG-WIRE-BYTES",
+        "CMP-WCORE-LOG-PART-WIRE-UNITS",
+        "CMP-WCORE-UTF8-PROTOCOL"
+      ],
+      "reachability": "productive shared Core and Prism full-log callers"
+    },
+    "workerCancellationRequest": {
+      "producer": [
+        "contracts/pipeline-worker-core/v1/src/types.ts"
+      ],
+      "consumer": [
+        "contracts/pipeline-worker-core/v1/src/validation.ts"
+      ],
+      "role": "public request schema/checkWorkerCancellationBinding only",
+      "reason": "Caller supplies protocol/cancellation/attempt IDs, reason, absolute requestedAt and forceAfterMs; strict schema timer0..2147483647 and nonEmptyString; checkWorkerCancellationBinding compares only protocol/attempt/cancellation identity and does NOT first call schema validator. No productive request-wrapper caller found. LocalRuntime signal/drain/cancellationTimeoutMs is a separate actual API, not automatically forceAfterMs author.",
+      "aliases": [],
+      "reachability": "exported contract-only boundary; verified no service caller, contract tests only"
+    }
+  },
+  "sources": [
+    {
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "sha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/index.ts",
+      "sha256": "013609ae51e836644640820de878378c0cbc797d6c299f06d926925790676c72"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/trust.ts",
+      "sha256": "c650fdbe7f43b422f36d050df291d2a00fdd4bc694a1dae5d6236b4814743cd5"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/types.ts",
+      "sha256": "399e42c696f561fbea8f38305252f873179f1b71115f7eacd961f7b5f899ec43"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/validation.ts",
+      "sha256": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-setup.ts",
+      "sha256": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3"
+    },
+    {
+      "path": "skills/worker/core/worker/attempt-executor.ts",
+      "sha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42"
+    },
+    {
+      "path": "skills/worker/core/worker/local-runtime.ts",
+      "sha256": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-worker-core-contracts.mts",
+      "sha256": "a2eabfd0752ff2fcd6133277be19e8e68a7200b51cd6d1998ab72f21ee12a110"
+    }
+  ],
+  "case": {
+    "id": "CMP-C0-CORE-ADDITIONAL-CONTRACTS",
+    "settingIds": [
+      "CMP-WCORE-LOG-PART-WIRE-UNITS",
+      "CMP-WCORE-LOG-PARTS",
+      "CMP-WCORE-LOG-WIRE-BYTES",
+      "CMP-WCORE-RETAIN-LOGS",
+      "CMP-WCORE-UTF8-PROTOCOL",
+      "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+      "CMP-worker-core-localRuntime.drainTimeoutMs",
+      "CMP-worker-core-localRuntime.replayLimit"
+    ],
+    "schemaDispositionIds": [
+      "CMP-CORE-ROOT-3db43c355af0790a",
+      "CMP-CORE-ROOT-a1f785e11273a96b",
+      "CMP-CORE-ROOT-4719e0f1bc46e036",
+      "CMP-CORE-ROOT-908babc295715971",
+      "CMP-CORE-ROOT-c8bf8c9a689dbf50",
+      "CMP-CORE-ROOT-62ca9f0275e55dce",
+      "CMP-CORE-ROOT-97afe0cdfc553646",
+      "CMP-CORE-ROOT-1a32d9e215ab492a",
+      "CMP-CORE-ROOT-c8f5792c9de6d5a7",
+      "CMP-CORE-ROOT-80e34f50932a1f19",
+      "CMP-CORE-ROOT-23a4bf69168227bc",
+      "CMP-CORE-ROOT-dc068a5315cf01ea",
+      "CMP-CORE-ROOT-1615688f8c3a86c0",
+      "CMP-CORE-ROOT-7d421e8619819057",
+      "CMP-CORE-ROOT-cf4e8ab0fac1533e",
+      "CMP-CORE-ROOT-dcd5d65c3c2cdccf",
+      "CMP-CORE-ROOT-13b9685c7dfacad8",
+      "CMP-CORE-ROOT-79879391a2fc52f6",
+      "CMP-CORE-ROOT-c64d741d964e54f0",
+      "CMP-CORE-ROOT-2244f8a75fc3b632",
+      "CMP-CORE-ROOT-26c7308e8bc2ee12",
+      "CMP-CORE-ROOT-6e4a7c553c791698",
+      "CMP-CORE-ROOT-41f57105aad411e7",
+      "CMP-CORE-ROOT-b2c5dbba9c2d014f",
+      "CMP-CORE-ROOT-319ed6c0a6783bac",
+      "CMP-CORE-ROOT-d29d0cd4ad7378fa",
+      "CMP-CORE-ROOT-7173aab494acbd8d",
+      "CMP-CORE-ROOT-1668335f5b8ebaa6",
+      "CMP-CORE-ROOT-9e4d47b710a2c534",
+      "CMP-CORE-ROOT-438d9a88de261744",
+      "CMP-CORE-ROOT-919ea606a04abc10",
+      "CMP-CORE-ROOT-7723653017d4a870",
+      "CMP-CORE-ROOT-449ef0a716d1efdd",
+      "CMP-CORE-ROOT-854dba0d0139836d",
+      "CMP-CORE-ROOT-6bf6407bc37a0348",
+      "CMP-CORE-ROOT-dfe4023274955ea7",
+      "CMP-CORE-ROOT-31017d30c9fae922",
+      "CMP-CORE-ROOT-baaf5905505fa69c",
+      "CMP-CORE-ROOT-42171f78d9b3c4fe",
+      "CMP-CORE-ROOT-ba951b02e29c1bd2",
+      "CMP-CORE-ROOT-940b3805a6df4ebd",
+      "CMP-CORE-ROOT-8758e64930af20a2",
+      "CMP-CORE-ROOT-32ef9c8a21f1d9d6",
+      "CMP-CORE-ROOT-29f9302221b4dd9a",
+      "CMP-CORE-ROOT-fa126107cbce0002",
+      "CMP-CORE-ROOT-e5b7e2bd0d31611f",
+      "CMP-CORE-ROOT-2edf5ec7ddacdea1",
+      "CMP-CORE-ROOT-2102b1798807095f",
+      "CMP-CORE-ROOT-156c1bd8b69257f5",
+      "CMP-CORE-ROOT-ce7d83e9f9543e42",
+      "CMP-CORE-ROOT-05220f9ef88faeb2",
+      "CMP-CORE-ROOT-f5c2c9aae92abc3c",
+      "CMP-CORE-ROOT-38678cc912e3081c",
+      "CMP-CORE-ROOT-853f5cded4ce3e75",
+      "CMP-CORE-ROOT-f002162003700b06",
+      "CMP-CORE-ROOT-e3f4df536bcf1a21",
+      "CMP-CORE-ROOT-012c414d5e07ea63",
+      "CMP-CORE-ROOT-b961fc83a8440f2e",
+      "CMP-CORE-ROOT-9a66c4824bd67b64",
+      "CMP-CORE-ROOT-9c8199cf3c2e9047",
+      "CMP-CORE-ROOT-7a7dd69f61421928",
+      "CMP-CORE-ROOT-7d716f2fc2799a67",
+      "CMP-CORE-ROOT-f744f886827c0bf8",
+      "CMP-CORE-ROOT-c71a508ca9c9fd55",
+      "CMP-CORE-ROOT-9e5dab43f948fa7d",
+      "CMP-CORE-ROOT-a940e78b835bbef9",
+      "CMP-CORE-ROOT-5d04ca1c6b896f9b",
+      "CMP-CORE-ROOT-f897ad0e0f5097a2",
+      "CMP-CORE-ROOT-6bbbb50ad2c43839",
+      "CMP-CORE-ROOT-fb9ee3ff42920bbf",
+      "CMP-CORE-ROOT-7d5a632814b200f4",
+      "CMP-CORE-ROOT-8b53840e4a599e4f",
+      "CMP-CORE-ROOT-49ea8d9fc8787d2d",
+      "CMP-CORE-ROOT-aa3c438316c869e3",
+      "CMP-CORE-ROOT-80cf65322545b2bb"
+    ],
+    "requirementIds": [
+      "C0-A",
+      "C0-B",
+      "C0-C"
+    ],
+    "scope": "local C0 real contract/source checks, no business dispatch",
+    "productiveCaller": [
+      "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "contracts/pipeline-worker-core/v1/src/index.ts",
+      "contracts/pipeline-worker-core/v1/src/trust.ts",
+      "contracts/pipeline-worker-core/v1/src/types.ts",
+      "contracts/pipeline-worker-core/v1/src/validation.ts",
+      "skills/buster/engine/test-gates/runner-setup.ts",
+      "skills/worker/core/worker/attempt-executor.ts",
+      "skills/worker/core/worker/local-runtime.ts",
+      "tests/verification/contracts/check-pipeline-worker-core-contracts.mts"
+    ],
+    "inputConfigProfile": "Existing contract verification script explicit valid registration/health/trust/progress/log/cancellation fixtures and negatives; generated ephemeral signing keys not persisted",
+    "priorState": "Fresh in-process validators and synthetic schema/task fixtures; no service/kernel or Secretstore identity claim",
+    "expectedEffectOrRejectingBoundary": "Existing script verifies12 contract definitions including six additional roots, digest/trust/relations/binding and all-schema required-field cases; exact assertions retained",
+    "observerMethod": "Real Ajv/contract/digest/sign/verify and binding APIs through existing unchanged test; root consumers sourced separately",
+    "actualTestCommand": "node tests/verification/contracts/check-pipeline-worker-core-contracts.mts",
+    "sourceDigests": {
+      "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "contracts/pipeline-worker-core/v1/src/index.ts": "013609ae51e836644640820de878378c0cbc797d6c299f06d926925790676c72",
+      "contracts/pipeline-worker-core/v1/src/trust.ts": "c650fdbe7f43b422f36d050df291d2a00fdd4bc694a1dae5d6236b4814743cd5",
+      "contracts/pipeline-worker-core/v1/src/types.ts": "399e42c696f561fbea8f38305252f873179f1b71115f7eacd961f7b5f899ec43",
+      "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+      "skills/buster/engine/test-gates/runner-setup.ts": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+      "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+      "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4"
+    },
+    "testDigests": {
+      "tests/verification/contracts/check-pipeline-worker-core-contracts.mts": "a2eabfd0752ff2fcd6133277be19e8e68a7200b51cd6d1998ab72f21ee12a110"
+    },
+    "toolDependencyImageConfigIdentities": {
+      "head": "40cf24e77388bced59475ece9651c9c94d848368",
+      "node": "v24.21.0",
+      "packageLock": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+    },
+    "rawEvidencePath": "docs/review/evidence/config-acceptance/components/additional-contract-boundaries.log",
+    "actualResult": "passed",
+    "reason": "Actual existing unchanged verifier exited0 and reportedok:true/contracts12; no telemetry/service/cancellation endpoint runtime EFFECT PASS",
+    "reviewerConfirmation": "pending independent recheck",
+    "lifecycle": {
+      "state": "active",
+      "required": true,
+      "supersedes": [],
+      "supersededBy": []
+    }
+  },
+  "scope": {
+    "selectedEnvelopeProfileResultCoordinates": 565,
+    "additionalContractRootCoordinates": 75,
+    "totalDistinctDispositions": 640,
+    "reviewerCountDiscrepancy": {
+      "reported": 85,
+      "actualNamedRootSum": 75,
+      "reason": "21+9+13+13+12+7=75; exact own enumeration matches independent expected-schema coordinates, no extra10 invented"
+    },
+    "helperViews": "Remaining all-$defs helper coordinates are schema references/duplicate views, not extra settings. Trust/cancellation public-only reachability explicit."
+  }
+}

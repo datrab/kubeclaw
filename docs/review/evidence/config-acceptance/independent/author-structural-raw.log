@@ -1,0 +1,10 @@
+{
+  "mode": "draft-structural",
+  "scope": "integrity only; independent semantic review remains mandatory",
+  "settings": 1791,
+  "cases": 1067,
+  "errorCount": 1,
+  "errors": [
+    "fragment: content drift docs/review/evidence/config-acceptance/delivery/inventory-fragment.json"
+  ]
+}

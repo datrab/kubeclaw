@@ -1,0 +1,181 @@
+{
+  "scope": "official parser source pin, not OCI/binary equality or actual account/pairing",
+  "records": [
+    {
+      "url": "https://api.github.com/repos/openai/codex/git/ref/tags/rust-v0.153.4",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/tag.json",
+      "sha256": "4bb94b3faeff6a3cacafab9b2f9166481f5fc1c21aaed1f74f71b4554bf9010c",
+      "bytes": 343,
+      "result": "acquired"
+    },
+    {
+      "url": "https://api.github.com/repos/openai/codex/git/tags/042fb41b7c813ac7999105e886b2b7aa715b5081",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/annotated-tag.json",
+      "sha256": "40db5a1f84c9da87d47d91624e4799570f39773d4c23564d676c55917d027e21",
+      "bytes": 652,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/core/src/config/mod.rs",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/core/src/config/mod.rs",
+      "sha256": "b3eb0a9751522f7f6f7a7bd1b21253f2fcb4e669955819bfb6d0a7425e1fed9e",
+      "bytes": 192112,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/core/src/config/types.rs",
+      "status": 404,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/core/src/config/types.rs",
+      "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "bytes": 14,
+      "result": "failed"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/protocol/src/config_types.rs",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/protocol/src/config_types.rs",
+      "sha256": "96b4050a2498275ba5a11da0021bc75d5fb2fd2c50802f0930629aa7716a282a",
+      "bytes": 31582,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/core/src/mcp_connection_manager.rs",
+      "status": 404,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/core/src/mcp_connection_manager.rs",
+      "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "bytes": 14,
+      "result": "failed"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/core/src/auth.rs",
+      "status": 404,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/core/src/auth.rs",
+      "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "bytes": 14,
+      "result": "failed"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/config/src/types.rs",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/config/src/types.rs",
+      "sha256": "c5a81049a05861c6a8a4ca7384f410ebcd4438e3712d31a32a32f888e1bb1a7a",
+      "bytes": 36801,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/protocol/src/protocol.rs",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/protocol/src/protocol.rs",
+      "sha256": "3882ad06c5a6312e5ed80d8870c473b6c18d14f2352ff6774d146813db39f20b",
+      "bytes": 226541,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/rmcp-client/src/rmcp_client.rs",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/rmcp-client/src/rmcp_client.rs",
+      "sha256": "e199d5265e814ef80f64e85d3188ecb4ae58299fc3d0fe9622bb93447da478b0",
+      "bytes": 58634,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/auth/src/storage.rs",
+      "status": 404,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/auth/src/storage.rs",
+      "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "bytes": 14,
+      "result": "failed"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/config/src/mcp_types.rs",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/config/src/mcp_types.rs",
+      "sha256": "b9939666f02b5c818053f3127412204be0190d6d66cf395a896ff01a851e3aba",
+      "bytes": 21619,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/config/src/config_toml.rs",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/config/src/config_toml.rs",
+      "sha256": "5ff36c12287c453d9421483c62da3377bd3fb9bc7de80defb80e215e0ccf3633",
+      "bytes": 39454,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/config/src/loader/mod.rs",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/config/src/loader/mod.rs",
+      "sha256": "6fc44b60c64065994c9aa18df248eb521dba6b0e9917a8cf69fc60e0035ac56a",
+      "bytes": 76594,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/core/src/mcp_connection_manager/mod.rs",
+      "status": 404,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/core/src/mcp_connection_manager/mod.rs",
+      "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "bytes": 14,
+      "result": "failed"
+    },
+    {
+      "url": "https://api.github.com/repos/openai/codex/git/trees/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a?recursive=1",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/tree.json",
+      "sha256": "25c4511b26afa14e6c664db51c49a79b4f2357475bbbada7f362d3eceb319d18",
+      "bytes": 2018122,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/login/src/auth/storage.rs",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/login/src/auth/storage.rs",
+      "sha256": "2e95a8998687e926675d41b5d941c3c3546a652c03d9680e6c7385e59bf459af",
+      "bytes": 18076,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/codex-mcp/src/connection_manager.rs",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/codex-mcp/src/connection_manager.rs",
+      "sha256": "c06a910bf30d362b40511842edb62572ea41b2a5b7979393537e39de1f974a2d",
+      "bytes": 41997,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/codex-mcp/src/rmcp_client.rs",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/codex-mcp/src/rmcp_client.rs",
+      "sha256": "b7ac2a82e39194390f5a8cc921449e33953f2a3c399fd6cd57faeb5ec27d42dc",
+      "bytes": 51351,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/codex-mcp/src/connection_manager/startup.rs",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/codex-mcp/src/connection_manager/startup.rs",
+      "sha256": "1fbd2cc3ba7cf3fc4cb5131cbc98289a0e865fe7883434a83dae4678c8f7ed1c",
+      "bytes": 4818,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/rmcp-client/src/http_client_adapter.rs",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/rmcp-client/src/http_client_adapter.rs",
+      "sha256": "cd59ccc64eb0bd8c966b8fc45a7d5487c421beb8fb13b15ebe3e7d366af4650d",
+      "bytes": 39874,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/rmcp-client/src/http_client_redirect.rs",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/codex-rs/rmcp-client/src/http_client_redirect.rs",
+      "sha256": "b09c1a1b507619c8c904bb23d32e5cd8b89664a04c10ce417502c9a0b04c93b5",
+      "bytes": 8789,
+      "result": "acquired"
+    }
+  ]
+}

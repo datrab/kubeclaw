@@ -1,0 +1,57 @@
+{
+  "at": "2026-10-17T05:44:44.776912+00:00",
+  "status": "ORIGINAL_GIT_RECEIVING_SOURCE_IMPLEMENTED_FULL_ACCEPTANCE_OPEN",
+  "sourceCommit": "0316a57c36ea8654d3b88d94fde35988d1802a04",
+  "branch": "codex/config-c0-semantic-inventory-20261012",
+  "remoteHead": "0316a57c36ea8654d3b88d94fde35988d1802a04",
+  "verified": true,
+  "productionSourceChanged": true,
+  "evidence": "docs/review/remediation/config-git-original-receiving-20261017",
+  "change": "Actual recover/resume/admin retry now restore complete original Git repository/workspace roots, executable, author identity and process bounds before retained Core projection and unchanged schema/registry/grant/source admission. Private frozen capture, no new author/root/grant or snapshot wire format.",
+  "checks": {
+    "focusedPassed": 11,
+    "focusedTotal": 11,
+    "skipped": 0,
+    "strictNovaTypecheck": true,
+    "diffCheck": true,
+    "actualGitChildOnOriginalResume": true,
+    "currentBPathDenied": true,
+    "currentCoreDeletedBeforeResume": true,
+    "grantDriftRejected": true,
+    "snapshotUnchanged": true,
+    "incompleteMixedAbsentForeignBindingsRejected": true
+  },
+  "initialFailure": "Fixture expected nonexistent GIT_REPOSITORY_ROOT_DENIED; real unchanged adapter reports GIT_PATH_DENIED. Corrected exact diagnostic oracle, retained initial.txt, full corrected11/11.",
+  "sourceHashes": {
+    "skills/nova/core/execution/git-runtime-binding.ts": "6ff5bc70277fba0ede5e64ae0c94b5fd7500f2e641d9779acd6e812e517489d5",
+    "skills/nova/core/execution/engine-runtime.ts": "1c2ecd2e3d51686a3af9e66d87ce8ef9f2cfe5960e40856657649b8ec5ccaa1d",
+    "skills/nova/core/execution/engine-snapshots.ts": "b331efbd4f11c6d46bcf0a31c2d525509926dfe2cbd159ea21b0daf51eb0ebf0",
+    "skills/nova/core/execution/engine-run.ts": "fab0676e163a618c312727c7edd89912095f03341cf90e04c34e07a9dbb1e68e",
+    "skills/nova/core/execution/engine-admin.ts": "268c50f35d549da052db9faad44c6a66523f4c6a7159b7bb90dd679b702697d7",
+    "tests/verification/reliability/nova-git-failure-policy.test.mjs": "e56eaa006d1758ecf0d728fdeb53537af3685f966fcc1ef576dd9c9d45c45489"
+  },
+  "qualityBoundary": {
+    "currentRoot": "config/pipeline.config.json pipeline-entry.v3; createPipelineGenerationReceipt rootSchemaVersion pipeline-entry.v3; PipelineBootCapture/selectionReceipt contain six component captures, not authenticated selected plugin map",
+    "currentReceiver": "inspectPipelineV10QualityServiceSelection returns selectedProviderPolicies with installedSourceAuthorizationVerified=false, callerAuthorizationVerified=false, activationAllowed=false. Nova ResolveTestPlanInput selectedProviderPolicies remains optional historical ABI. No productive v3 caller supplies it.",
+    "neededImplementation": "Coordinate the SAME approved root/schema/all-profile/file-set/source closure/generation/service/image/package receipt/delivery and original reader, then derive complete policies from authenticated original boot into actual Nova resolver. Do not promote denied v10 or fake receipts.",
+    "inputStore": "runner-attempt-preparation.invocationInputs has ArtifactRefV1 from producer AttemptResultV1, no authenticated sourceRevision/buildDigest/originalInputReceiptDigest/baseline association/storeVersion or inputStore-owned reservations/validity/publication lifecycle. Need actual producer/result/source receipt joins and same original store accounting/sealed bytes/fences before provider execution. Keep BUDGET_SOURCE_RECEIPT_REQUIRED."
+  },
+  "remainingGitWork": "Sole central author/profile/schema/root/delivery and original full field-specific/native/history/independent acceptance remain OPEN. Original recovery receiving is not central externalization completion.",
+  "originalRoster": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50,
+    "sha256": "bce80841fbf205a69494cd9ecd4b5377787c61126e2c22ce0d7cd0d6e28cc1c9",
+    "originalResultsChanged": false
+  },
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "productiveQualityBootImplemented": false,
+  "sealedInputStoreImplemented": false,
+  "qualityActivationAllowed": false,
+  "independentReview": "OPEN: fresh native spawn/review/collaboration discovery empty, CONFIG subagents0, parent terminal failed, no productive repository writer. Existing same-engine HTTP429 attempts without report inspected; no unchanged retry. Author checks are not acceptance.",
+  "externalOwner": "Raven",
+  "resumeCondition": "Same-engine independent reviewer availability; suitable isolated Linux Docker actual UID/GID1000 delegated writable cgroup/native pool, sufficiently large genuinely root-trusted writable archive storage and isolated migrated PostgreSQL.",
+  "writerLock": "SAME shared exclusive nonblocking lock, released at bounded command exit",
+  "historicalFollowupDispatched": false
+}

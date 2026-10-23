@@ -1,0 +1,17 @@
+✔ real Nova v1 resume and authenticated admin retry/replay restore original Operator binding without current-source refill (9000.179209ms)
+✔ real Nova v3 resume and authenticated admin retry/replay restore original Operator binding without current-source refill (8028.21981ms)
+✔ operator original capture rejects incomplete/policy-mixed/foreign captures and preserves original legacy/current policies (0.995276ms)
+✔ current v3 original operator capture compares nested structure and version before reprojecting (1.889979ms)
+✔ real Nova v1 resume and authenticated admin retry/replay restore original Publisher binding without current-source refill (8947.348972ms)
+✔ real Nova v3 resume and authenticated admin retry/replay restore original Publisher binding without current-source refill (8137.799647ms)
+✔ publisher original capture rejects incomplete/policy-mixed/foreign captures and preserves original legacy/current policies (1.024347ms)
+✔ real Nova resume and authenticated admin retry/replay restore both original Redis targets without current-source refill (7966.759972ms)
+✔ original Redis capture rejects partial captures, policy disagreement and registration-set drift without refill (0.858672ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18223.74172

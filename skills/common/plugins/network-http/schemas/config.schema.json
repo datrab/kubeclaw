@@ -1,1 +1,73 @@
-{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","additionalProperties":false,"required":["allowedOrigins"],"properties":{"allowedOrigins":{"type":"array","minItems":1,"uniqueItems":true,"items":{"type":"string","format":"uri"}},"allowedMethods":{"type":"array","minItems":1,"uniqueItems":true,"items":{"enum":["GET","POST","PUT","PATCH","DELETE"]},"default":["GET"]},"allowedHeaders":{"type":"array","uniqueItems":true,"items":{"type":"string","pattern":"^[a-z0-9-]+$"},"default":["accept","content-type","idempotency-key"]},"maxRequestBytes":{"type":"integer","minimum":1,"default":1048576},"maxResponseBytes":{"type":"integer","minimum":1,"default":1048576},"timeoutMs":{"type":"integer","minimum":1,"default":30000}}}
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "allowedOrigins",
+    "errorExcerptCharacters",
+    "maxRequestBytes",
+    "maxResponseBytes",
+    "timeoutMs"
+  ],
+  "properties": {
+    "allowedOrigins": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "format": "uri"
+      }
+    },
+    "allowedMethods": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "GET",
+          "POST",
+          "PUT",
+          "PATCH",
+          "DELETE"
+        ]
+      },
+      "default": [
+        "GET"
+      ]
+    },
+    "allowedHeaders": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9-]+$"
+      },
+      "default": [
+        "accept",
+        "content-type",
+        "idempotency-key"
+      ]
+    },
+    "maxRequestBytes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "maxResponseBytes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "timeoutMs": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 4294967295
+    },
+    "errorExcerptCharacters": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    }
+  }
+}

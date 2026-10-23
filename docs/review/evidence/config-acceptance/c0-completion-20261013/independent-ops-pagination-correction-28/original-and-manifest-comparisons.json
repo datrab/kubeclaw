@@ -1,0 +1,198 @@
+[
+  {
+    "kind": "review27-original-input",
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "expected": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+    "actual": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+    "matched": true
+  },
+  {
+    "kind": "review27-original-input",
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/remaining-batches.json",
+    "expected": "c0fc9f0996ecdecab945ba7c8b9810d3211e8c418631fddc03ed91a71c4fefad",
+    "actual": "c0fc9f0996ecdecab945ba7c8b9810d3211e8c418631fddc03ed91a71c4fefad",
+    "matched": true
+  },
+  {
+    "kind": "review27-original-input",
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-35/README.md",
+    "expected": "18102569a185db533d0c60f9df94fb50ef6be19f304409684a30845c0e8642df",
+    "actual": "18102569a185db533d0c60f9df94fb50ef6be19f304409684a30845c0e8642df",
+    "matched": true
+  },
+  {
+    "kind": "review27-original-input",
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-35/define.py",
+    "expected": "8821dc9be1a0ef771de33a3df70e37d863af8da3cfb96b8a6cdabc7e5668ab31",
+    "actual": "8821dc9be1a0ef771de33a3df70e37d863af8da3cfb96b8a6cdabc7e5668ab31",
+    "matched": true
+  },
+  {
+    "kind": "review27-original-input",
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-35/local-check.json",
+    "expected": "f65b92b7b8e75679c0d76f72720e59397891f748909de7e9d3b2a06e3a2058ed",
+    "actual": "f65b92b7b8e75679c0d76f72720e59397891f748909de7e9d3b2a06e3a2058ed",
+    "matched": true
+  },
+  {
+    "kind": "review27-original-input",
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-35/package-manifest.json",
+    "expected": "82568b02cfc0aa759d0756bca4f33e144cbb592b6b838a09e9962286cc072baa",
+    "actual": "82568b02cfc0aa759d0756bca4f33e144cbb592b6b838a09e9962286cc072baa",
+    "matched": true
+  },
+  {
+    "kind": "review27-original-input",
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-35/source-field-definitions.json",
+    "expected": "cec9451d9e4644e2290ba0fe60464991118edc3c9628ecee42cfcd78015194b3",
+    "actual": "cec9451d9e4644e2290ba0fe60464991118edc3c9628ecee42cfcd78015194b3",
+    "matched": true
+  },
+  {
+    "kind": "review27-original-input",
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/candidate-dispositions.json",
+    "expected": "2d5267f5a7b0bbc80fd2ba8cf680011e59d7cbdb262e36c7e0031765dc0a2ad6",
+    "actual": "2d5267f5a7b0bbc80fd2ba8cf680011e59d7cbdb262e36c7e0031765dc0a2ad6",
+    "matched": true
+  },
+  {
+    "kind": "review27-original-input",
+    "path": "docs/review/remediation/GOAL-START.md",
+    "expected": "688334e1ccaa30fd9497e605ef0a9de1fb67fbeae51c4a312b15e15a12fa085b",
+    "actual": "688334e1ccaa30fd9497e605ef0a9de1fb67fbeae51c4a312b15e15a12fa085b",
+    "matched": true
+  },
+  {
+    "kind": "review27-original-input",
+    "path": "docs/review/remediation/OPENCLAW-CONFIG-GOAL.md",
+    "expected": "fe9215a2674b95facef1d6fe0920eab2fa1f4830e765624692152a28b1731127",
+    "actual": "fe9215a2674b95facef1d6fe0920eab2fa1f4830e765624692152a28b1731127",
+    "matched": true
+  },
+  {
+    "kind": "review27-original-input",
+    "path": "ops/pod/Dockerfile",
+    "expected": "d55888e701ea0798c7c2a109f17977cc615442828e010f56e4f17871f6483eb0",
+    "actual": "d55888e701ea0798c7c2a109f17977cc615442828e010f56e4f17871f6483eb0",
+    "matched": true
+  },
+  {
+    "kind": "review27-original-input",
+    "path": "ops/pod/bootstrap.py",
+    "expected": "f12b2fdf8b87c5a0ee1f6a643acfd6110a12698dfb908ea713a79f71f2bd990e",
+    "actual": "f12b2fdf8b87c5a0ee1f6a643acfd6110a12698dfb908ea713a79f71f2bd990e",
+    "matched": true
+  },
+  {
+    "kind": "review27-original-input",
+    "path": "ops/pod/supervisor.py",
+    "expected": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99",
+    "actual": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99",
+    "matched": true
+  },
+  {
+    "kind": "review27-original-input",
+    "path": "scripts/deploy-ops-pod.sh",
+    "expected": "b7b114e886142185732eb285a59f5b2f8a5b509ffedfd23de2d1fbf67ea3e73e",
+    "actual": "b7b114e886142185732eb285a59f5b2f8a5b509ffedfd23de2d1fbf67ea3e73e",
+    "matched": true
+  },
+  {
+    "kind": "review27-original-input",
+    "path": "tools/ops-mcp/src/authentication.mjs",
+    "expected": "d816c6dd9354166a009ffdfc5db423f030345b94a16c4009e2aec639d57d0049",
+    "actual": "d816c6dd9354166a009ffdfc5db423f030345b94a16c4009e2aec639d57d0049",
+    "matched": true
+  },
+  {
+    "kind": "review27-original-input",
+    "path": "tools/ops-mcp/src/config.mjs",
+    "expected": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c",
+    "actual": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c",
+    "matched": true
+  },
+  {
+    "kind": "review27-original-input",
+    "path": "tools/ops-mcp/src/hubble.mjs",
+    "expected": "d4e60f2801e3c66ded259f420c1a9faca0071fa084dc198a35433f8c9cb4f599",
+    "actual": "d4e60f2801e3c66ded259f420c1a9faca0071fa084dc198a35433f8c9cb4f599",
+    "matched": true
+  },
+  {
+    "kind": "review27-original-input",
+    "path": "tools/ops-mcp/src/kubernetes.mjs",
+    "expected": "449e55709e017f53790539a83936f0471915850180ec9b08fc589251ab5e987b",
+    "actual": "449e55709e017f53790539a83936f0471915850180ec9b08fc589251ab5e987b",
+    "matched": true
+  },
+  {
+    "kind": "review27-original-input",
+    "path": "tools/ops-mcp/src/server.mjs",
+    "expected": "a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d",
+    "actual": "a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d",
+    "matched": true
+  },
+  {
+    "kind": "batch-35-manifest",
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-35/README.md",
+    "expected": "18102569a185db533d0c60f9df94fb50ef6be19f304409684a30845c0e8642df",
+    "actual": "18102569a185db533d0c60f9df94fb50ef6be19f304409684a30845c0e8642df",
+    "matched": true
+  },
+  {
+    "kind": "batch-35-manifest",
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-35/define.py",
+    "expected": "8821dc9be1a0ef771de33a3df70e37d863af8da3cfb96b8a6cdabc7e5668ab31",
+    "actual": "8821dc9be1a0ef771de33a3df70e37d863af8da3cfb96b8a6cdabc7e5668ab31",
+    "matched": true
+  },
+  {
+    "kind": "batch-35-manifest",
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-35/local-check.json",
+    "expected": "f65b92b7b8e75679c0d76f72720e59397891f748909de7e9d3b2a06e3a2058ed",
+    "actual": "f65b92b7b8e75679c0d76f72720e59397891f748909de7e9d3b2a06e3a2058ed",
+    "matched": true
+  },
+  {
+    "kind": "batch-35-manifest",
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-35/source-field-definitions.json",
+    "expected": "cec9451d9e4644e2290ba0fe60464991118edc3c9628ecee42cfcd78015194b3",
+    "actual": "cec9451d9e4644e2290ba0fe60464991118edc3c9628ecee42cfcd78015194b3",
+    "matched": true
+  },
+  {
+    "kind": "batch-36-manifest",
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-36/README.md",
+    "expected": "128ed65acc4fb1a82f6c4be3af1e00db6104d4329380b66a241776c07e213790",
+    "actual": "128ed65acc4fb1a82f6c4be3af1e00db6104d4329380b66a241776c07e213790",
+    "matched": true
+  },
+  {
+    "kind": "batch-36-manifest",
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-36/local-check.json",
+    "expected": "94eac1ed39c285f148376772efd0e771751dec2630d9bfe3620742cd2768a486",
+    "actual": "94eac1ed39c285f148376772efd0e771751dec2630d9bfe3620742cd2768a486",
+    "matched": true
+  },
+  {
+    "kind": "batch-36-manifest",
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-36/source-field-definitions.json",
+    "expected": "1b259269e1f4e92bebcebccf71818cce6df5a088b9fce0daf9243b4fd7c44436",
+    "actual": "1b259269e1f4e92bebcebccf71818cce6df5a088b9fce0daf9243b4fd7c44436",
+    "matched": true
+  },
+  {
+    "kind": "priorQueueRef",
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/remaining-batches.json",
+    "expected": "c0fc9f0996ecdecab945ba7c8b9810d3211e8c418631fddc03ed91a71c4fefad",
+    "actual": "c0fc9f0996ecdecab945ba7c8b9810d3211e8c418631fddc03ed91a71c4fefad",
+    "matched": true
+  },
+  {
+    "kind": "supersedesDefinitionRef",
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-35/source-field-definitions.json",
+    "expected": "cec9451d9e4644e2290ba0fe60464991118edc3c9628ecee42cfcd78015194b3",
+    "actual": "cec9451d9e4644e2290ba0fe60464991118edc3c9628ecee42cfcd78015194b3",
+    "matched": true
+  }
+]

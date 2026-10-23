@@ -1,0 +1,42 @@
+✖ size file cancellation during final eof prevents baseline publication (18.523818ms)
+✖ size file cancellation during final close prevents baseline publication (10.695197ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 147.162592
+
+✖ failing tests:
+
+test at tests/verification/reliability/quality-input-snapshots.test.mts:97:45
+✖ size file cancellation during final eof prevents baseline publication (18.523818ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async file:///home/node/.openclaw/workspace/tmp/quality-input-guards-before-fix-20261016/tests/verification/reliability/quality-input-snapshots.test.mts:104:32
+      at async fixture (file:///home/node/.openclaw/workspace/tmp/quality-input-guards-before-fix-20261016/tests/verification/reliability/quality-input-snapshots.test.mts:18:147)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /SIZE_BUDGET_CANCELLED/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/quality-input-snapshots.test.mts:97:45
+✖ size file cancellation during final close prevents baseline publication (10.695197ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async file:///home/node/.openclaw/workspace/tmp/quality-input-guards-before-fix-20261016/tests/verification/reliability/quality-input-snapshots.test.mts:104:32
+      at async fixture (file:///home/node/.openclaw/workspace/tmp/quality-input-guards-before-fix-20261016/tests/verification/reliability/quality-input-snapshots.test.mts:18:147)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /SIZE_BUDGET_CANCELLED/,
+    operator: 'rejects',
+    diff: 'simple'
+  }

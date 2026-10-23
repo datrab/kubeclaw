@@ -1,3 +1,8 @@
+import { TEST_CORE_POLICY as DISPATCH_TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
+const TEST_OPENCLAW_DISPATCH_POLICY=DISPATCH_TEST_CORE_POLICY.openClawDispatch;
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -88,18 +93,17 @@ async function fixture(mode: Mode) {
   const activated=await core.activateRegistry(granted.snapshot,new Set(granted.grants.keys()));
   const secretName=`RUNTIME_CLEANUP_TOKEN_${process.pid}`;process.env[secretName]='local-cleanup-token';
   const configs=new Map<string,Record<string,unknown>>([
-    [runtimeId,{targets:{agent:{endpoint:`${origin}/tools/invoke`,tokenSecret:'runtime.token',runtime:mode.startsWith('acp')?'acp':'subagent',
-      agentId:'test',agentRole:'test',model:'test/model',cwd:root,repositoryRoot:root,resultPathPrefix:'results',spawnIntervalMs:0,
-      pollMs:10,maxPollMs:10,maxPolls:['poll-body','parent-abort'].includes(mode)?20:1,sessionTimeoutMs:80}}}],
-    ['kubeclaw.network-http:http',{allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['authorization','content-type'],timeoutMs:1000}],
+    [runtimeId,{ ...TEST_OPENCLAW_DISPATCH_POLICY,targetTimingProfiles:{fixture:{...TEST_OPENCLAW_DISPATCH_POLICY.targetTimingProfiles.standard,spawnIntervalMs:0,pollMs:10,maxPollMs:10,maxPolls:['poll-body','parent-abort'].includes(mode)?20:1,sessionTimeoutMs:80}},targets:{agent:{endpoint:`${origin}/tools/invoke`,tokenSecret:'runtime.token',runtime:mode.startsWith('acp')?'acp':'subagent',
+      agentId:'test',agentRole:'test',model:'test/model',cwd:root,repositoryRoot:root,resultPathPrefix:'results',timingProfile:'fixture'}}}],
+    ['kubeclaw.network-http:http',{...TEST_CORE_POLICY.networkHttp,allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['authorization','content-type'],timeoutMs:1000}],
     ['kubeclaw.secret-resolver:secrets',{environment:{'runtime.token':secretName}}],
-    ['kubeclaw.repository-adapter:repository',{repositoryRoot:root}],
-    ['kubeclaw.artifact-store:artifact-store',{artifactRoot:path.join(root,'artifacts')}],
+    ['kubeclaw.repository-adapter:repository',{...TEST_CORE_POLICY.repositoryRead,repositoryRoot:root}],
+    ['kubeclaw.artifact-store:artifact-store',{ ...TEST_ARTIFACT_STORE_POLICY,artifactRoot:path.join(root,'artifacts')}],
     ['kubeclaw.pipeline-review:evidence',{storageRoot:root,orchestratorIssuerId:'nova',maximumJournalBytes:1048576,maximumArtifactBytes:1048576,maximumBundleBytes:1048576}],
   ]);
   const journalPath=path.join(root,'effects.jsonl');
   const create=()=>new core.AdapterRuntime({granted,activated,configs,
-    effects:new core.EffectCoordinator(new core.FileEffectJournal(journalPath),undefined,undefined,new core.FileResourceLockManager(path.join(root,'locks')), 300_000),
+    effects:new core.EffectCoordinator(new core.FileEffectJournal(journalPath, TEST_CORE_POLICY),undefined,undefined,new core.FileResourceLockManager(path.join(root,'locks'), TEST_CORE_POLICY), 300_000, TEST_CORE_POLICY.resourceAcquisition),
     shutdownTimeoutMs:1000,async emitDomainEvent(){}});
   const runtime=create();await runtime.start();
   const attempt={runId:'run:cleanup',stageId:'runtime',attemptId:'attempt:cleanup',attemptNumber:1};
@@ -116,7 +120,7 @@ for(const mode of ['max-polls','poll-body','parent-abort','late-spawn','cancel-r
       await assert.rejects(f.runtime.invoke('runtime.dispatch',f.attempt,'dispatch:cleanup',f.request,f.owner.signal),
         unknown?/OPENCLAW_SESSION_CLEANUP_UNRESOLVED/u:/OPENCLAW_SESSION_TERMINAL_CONFIRMED:run:owned/u);
       assert.equal(f.spawned(),1);assert.equal(f.cancelled(),['lost-spawn','acp-lost','ambiguous-spawn','missing-task-alias','missing-task-records','missing-task-transitive'].includes(mode)?0:1);
-      const journal=new core.FileEffectJournal(f.journalPath);
+      const journal=new core.FileEffectJournal(f.journalPath, TEST_CORE_POLICY);
       const receipt=await journal.receipt('dispatch:cleanup');assert.equal(receipt?.status,'failed');
       assert.match(receipt?.error?.message??'',unknown?/CLEANUP_UNRESOLVED/u:/TERMINAL_CONFIRMED/u);
       assert.equal((await journal.request('dispatch:cleanup'))?.attempt.attemptId,'attempt:cleanup');
@@ -155,7 +159,7 @@ test('legacy colliding label never authorizes adoption, cancellation or respawn'
   try {
     await assert.rejects(f.runtime.invoke('runtime.dispatch',f.attempt,'collision:11329',f.request,f.owner.signal), /OPENCLAW_LEGACY_SESSION_BINDING_UNRESOLVED/u);
     assert.equal(f.spawned(),0); assert.equal(f.cancelled(),0);
-    assert.match((await new core.FileEffectJournal(f.journalPath).receipt('collision:11329'))?.error?.message??'', /CLEANUP_UNRESOLVED/u);
+    assert.match((await new core.FileEffectJournal(f.journalPath, TEST_CORE_POLICY).receipt('collision:11329'))?.error?.message??'', /CLEANUP_UNRESOLVED/u);
   } finally { await f.close(); }
 });
 

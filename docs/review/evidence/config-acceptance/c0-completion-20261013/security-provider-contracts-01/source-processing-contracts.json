@@ -1,0 +1,402 @@
+{
+  "members": [
+    {
+      "name": "maximumFindings",
+      "immutableSourceIdentity": {
+        "path": "skills/buster/plugins/security-providers/src/common.js",
+        "sourceSha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3",
+        "line": 48,
+        "text": "  if (!Array.isArray(rawFindings) || rawFindings.length > 4096) throw new Error('SECURITY_SCANNER_RESPONSE_INVALID');",
+        "selectedFieldPointer": "/profiles/<selected>/sharedProcessing/maximumFindings"
+      },
+      "exactOriginalCandidateRecords": [
+        {
+          "id": "SRC-0b8c25f6a191fbfd",
+          "source": "skills/buster/plugins/security-providers/src/common.js",
+          "line": 48,
+          "kinds": [
+            "fallback-or-expression"
+          ],
+          "sourceSha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3",
+          "disposition": "unresolved",
+          "settingIds": [],
+          "reason": null
+        }
+      ],
+      "candidateGap": null,
+      "sourceValues": {
+        "A": 4096,
+        "B": 1
+      },
+      "domain": "positive integer<=same current source safety ceiling",
+      "profiles": {
+        "A": "source-maximumFindings-A",
+        "B": "source-maximumFindings-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/source-maximumFindings-A.pipeline.config.json",
+        "B": "fixtures/entries/source-maximumFindings-B.pipeline.config.json"
+      },
+      "task": "task-fixtures/config/source-maximumFindings.task.json",
+      "associatedOriginalSettingIds": [
+        "RT-SECURITY-COMMON-BLOCKINGSEVERITIES"
+      ],
+      "originalCaseArtifactRefs": [
+        {
+          "id": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+          "pointer": "case-definitions.json#/cases/234"
+        },
+        {
+          "id": "RT-SECURITY-COMMON-BLOCKINGSEVERITIES-ALTERNATE",
+          "pointer": "case-definitions.json#/cases/445"
+        },
+        {
+          "id": "RT-SECURITY-COMMON-BLOCKINGSEVERITIES-BINDING",
+          "pointer": "case-definitions.json#/cases/446"
+        },
+        {
+          "id": "RT-SECURITY-COMMON-BLOCKINGSEVERITIES-CONTRACT",
+          "pointer": "case-definitions.json#/cases/447"
+        },
+        {
+          "id": "RT-SECURITY-COMMON-BLOCKINGSEVERITIES-MUTANT",
+          "pointer": "case-definitions.json#/cases/448"
+        },
+        {
+          "id": "RT-SECURITY-COMMON-BLOCKINGSEVERITIES-SOURCE",
+          "pointer": "case-definitions.json#/cases/449"
+        }
+      ],
+      "applicationBoundary": "common.result raw mapped findings length check BEFORE waiver clock/normalization; AFTER provider native invoke",
+      "errorOrFinding": "SECURITY_SCANNER_RESPONSE_INVALID",
+      "futureReaderDelta": "Pass captured selected budget/preset explicitly to exact same consumer; no literal/default fallback; current productive code still uses source constants/PROFILES",
+      "futureCases": "not-run",
+      "concreteReachableCaller": "headers",
+      "responseDefinition": "fixtures/header-oracles/source-maximumFindings.json",
+      "futureExpected": "Same source header predicates yield two: A captured4096 admits actual result with failed security verdict2; B captured1 rejects after native HTTP before waiver/result loop; CURRENT literal4096 still admits both until required receiver/consumer migration. No synthetic scanner output used for productive proof."
+    },
+    {
+      "name": "maximumPaths",
+      "immutableSourceIdentity": {
+        "path": "skills/buster/plugins/security-providers/src/headers.js",
+        "sourceSha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7",
+        "line": 73,
+        "text": "  if (!Array.isArray(value.paths) || value.paths.length < 1 || value.paths.length > 32",
+        "selectedFieldPointer": "/profiles/<selected>/registrations/headers/processing/maximumPaths"
+      },
+      "exactOriginalCandidateRecords": [
+        {
+          "id": "SRC-cda367e348ff9c4a",
+          "source": "skills/buster/plugins/security-providers/src/headers.js",
+          "line": 73,
+          "kinds": [
+            "fallback-or-expression"
+          ],
+          "sourceSha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7",
+          "disposition": "unresolved",
+          "settingIds": [],
+          "reason": null
+        }
+      ],
+      "candidateGap": null,
+      "sourceValues": {
+        "A": 32,
+        "B": 1
+      },
+      "domain": "positive integer<=same current source safety ceiling",
+      "profiles": {
+        "A": "source-maximumPaths-A",
+        "B": "source-maximumPaths-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/source-maximumPaths-A.pipeline.config.json",
+        "B": "fixtures/entries/source-maximumPaths-B.pipeline.config.json"
+      },
+      "task": "task-fixtures/config/source-maximumPaths.task.json",
+      "associatedOriginalSettingIds": [
+        "RT-d233d3039be3adc4"
+      ],
+      "originalCaseArtifactRefs": [
+        {
+          "id": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+          "pointer": "case-definitions.json#/cases/234"
+        },
+        {
+          "id": "RT-d233d3039be3adc4-BCE3F075-SECURITY-ALTERNATE",
+          "pointer": "case-definitions.json#/cases/503"
+        },
+        {
+          "id": "RT-d233d3039be3adc4-BCE3F075-SECURITY-BINDING",
+          "pointer": "case-definitions.json#/cases/504"
+        },
+        {
+          "id": "RT-d233d3039be3adc4-BCE3F075-SECURITY-CONTRACT",
+          "pointer": "case-definitions.json#/cases/505"
+        },
+        {
+          "id": "RT-d233d3039be3adc4-BCE3F075-SECURITY-DEFINITION",
+          "pointer": "case-definitions.json#/cases/506"
+        },
+        {
+          "id": "RT-d233d3039be3adc4-BCE3F075-SECURITY-MUTANT",
+          "pointer": "case-definitions.json#/cases/507"
+        },
+        {
+          "id": "RT-d233d3039be3adc4-CURRENT-SCHEMA-FIELD",
+          "pointer": "case-definitions.json#/cases/508"
+        }
+      ],
+      "applicationBoundary": "headers.configuration path count BEFORE deployment lookup/native invoke",
+      "errorOrFinding": "SECURITY_HEADERS_PATHS_INVALID",
+      "futureReaderDelta": "Pass captured selected budget/preset explicitly to exact same consumer; no literal/default fallback; current productive code still uses source constants/PROFILES",
+      "futureCases": "not-run"
+    },
+    {
+      "name": "maximumResponseBytes",
+      "immutableSourceIdentity": {
+        "path": "skills/buster/plugins/security-providers/src/headers.js",
+        "sourceSha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7",
+        "line": 104,
+        "text": "          maximumResponseBytes: 65_536, responseHeaders } }), 'SECURITY_HEADERS_RESPONSE_INVALID');",
+        "selectedFieldPointer": "/profiles/<selected>/registrations/headers/processing/maximumResponseBytes"
+      },
+      "exactOriginalCandidateRecords": [],
+      "candidateGap": "Exact literal coordinate omitted by old scanner; local owner/domain/consumer/application/cases adjudicated; global coverage not closed, no invented SRC/canonical ID",
+      "sourceValues": {
+        "A": 65536,
+        "B": 32768
+      },
+      "domain": "positive integer<=same current source safety ceiling",
+      "profiles": {
+        "A": "source-maximumResponseBytes-A",
+        "B": "source-maximumResponseBytes-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/source-maximumResponseBytes-A.pipeline.config.json",
+        "B": "fixtures/entries/source-maximumResponseBytes-B.pipeline.config.json"
+      },
+      "task": "task-fixtures/config/source-maximumResponseBytes.task.json",
+      "associatedOriginalSettingIds": [
+        "RT-6afb26eb1a7b7271"
+      ],
+      "originalCaseArtifactRefs": [
+        {
+          "id": "RT-6afb26eb1a7b7271-BCE3F075-SECURITY-ALTERNATE",
+          "pointer": "case-definitions.json#/cases/138"
+        },
+        {
+          "id": "RT-6afb26eb1a7b7271-BCE3F075-SECURITY-BINDING",
+          "pointer": "case-definitions.json#/cases/139"
+        },
+        {
+          "id": "RT-6afb26eb1a7b7271-BCE3F075-SECURITY-CONTRACT",
+          "pointer": "case-definitions.json#/cases/140"
+        },
+        {
+          "id": "RT-6afb26eb1a7b7271-BCE3F075-SECURITY-DEFINITION",
+          "pointer": "case-definitions.json#/cases/141"
+        },
+        {
+          "id": "RT-6afb26eb1a7b7271-BCE3F075-SECURITY-MUTANT",
+          "pointer": "case-definitions.json#/cases/142"
+        },
+        {
+          "id": "RT-6afb26eb1a7b7271-CURRENT-SCHEMA-FIELD",
+          "pointer": "case-definitions.json#/cases/143"
+        },
+        {
+          "id": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+          "pointer": "case-definitions.json#/cases/234"
+        }
+      ],
+      "applicationBoundary": "native decoded response bytes AFTER initial fetch, BEFORE provider header checks",
+      "errorOrFinding": "HTTP_RESPONSE_SIZE_EXCEEDED",
+      "futureReaderDelta": "Pass captured selected budget/preset explicitly to exact same consumer; no literal/default fallback; current productive code still uses source constants/PROFILES",
+      "futureCases": "not-run"
+    },
+    {
+      "name": "preset-nosniff",
+      "immutableSourceIdentity": {
+        "path": "skills/buster/plugins/security-providers/src/headers.js",
+        "sourceSha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7",
+        "line": 5,
+        "text": "    { id: 'content-type-nosniff', header: 'x-content-type-options', severity: 'high', kind: 'equals', value: 'nosniff' },",
+        "selectedFieldPointer": "/profiles/<selected>/registrations/headers/processing/presets/api-http-v1/0/value"
+      },
+      "exactOriginalCandidateRecords": [],
+      "candidateGap": "Exact literal coordinate omitted by old scanner; local owner/domain/consumer/application/cases adjudicated; global coverage not closed, no invented SRC/canonical ID",
+      "sourceValues": {
+        "A": "nosniff",
+        "B": "safe-alt"
+      },
+      "domain": "same implemented present/equals/contains/hsts-min-age rule grammar; complete source preset values editable, selector labels not substituted for full policy",
+      "profiles": {
+        "A": "source-preset-nosniff-A",
+        "B": "source-preset-nosniff-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/source-preset-nosniff-A.pipeline.config.json",
+        "B": "fixtures/entries/source-preset-nosniff-B.pipeline.config.json"
+      },
+      "task": "task-fixtures/config/source-preset-nosniff.task.json",
+      "associatedOriginalSettingIds": [
+        "RT-163ebc138c768e21",
+        "RT-611f5b01895a7c90"
+      ],
+      "originalCaseArtifactRefs": [
+        {
+          "id": "RT-163ebc138c768e21-BCE3F075-SECURITY-ALTERNATE",
+          "pointer": "case-definitions.json#/cases/36"
+        },
+        {
+          "id": "RT-163ebc138c768e21-BCE3F075-SECURITY-BINDING",
+          "pointer": "case-definitions.json#/cases/37"
+        },
+        {
+          "id": "RT-163ebc138c768e21-BCE3F075-SECURITY-CONTRACT",
+          "pointer": "case-definitions.json#/cases/38"
+        },
+        {
+          "id": "RT-163ebc138c768e21-BCE3F075-SECURITY-DEFINITION",
+          "pointer": "case-definitions.json#/cases/39"
+        },
+        {
+          "id": "RT-163ebc138c768e21-BCE3F075-SECURITY-MUTANT",
+          "pointer": "case-definitions.json#/cases/40"
+        },
+        {
+          "id": "RT-163ebc138c768e21-CURRENT-SCHEMA-FIELD",
+          "pointer": "case-definitions.json#/cases/41"
+        },
+        {
+          "id": "RT-611f5b01895a7c90-BCE3F075-SECURITY-ALTERNATE",
+          "pointer": "case-definitions.json#/cases/132"
+        },
+        {
+          "id": "RT-611f5b01895a7c90-BCE3F075-SECURITY-BINDING",
+          "pointer": "case-definitions.json#/cases/133"
+        },
+        {
+          "id": "RT-611f5b01895a7c90-BCE3F075-SECURITY-CONTRACT",
+          "pointer": "case-definitions.json#/cases/134"
+        },
+        {
+          "id": "RT-611f5b01895a7c90-BCE3F075-SECURITY-DEFINITION",
+          "pointer": "case-definitions.json#/cases/135"
+        },
+        {
+          "id": "RT-611f5b01895a7c90-BCE3F075-SECURITY-MUTANT",
+          "pointer": "case-definitions.json#/cases/136"
+        },
+        {
+          "id": "RT-611f5b01895a7c90-CURRENT-SCHEMA-FIELD",
+          "pointer": "case-definitions.json#/cases/137"
+        },
+        {
+          "id": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+          "pointer": "case-definitions.json#/cases/234"
+        }
+      ],
+      "applicationBoundary": "selected complete preset content-type equals case insensitive; A response nosniff passes B fails; actual HTTPS same deployment/path",
+      "errorOrFinding": "security finding header:content-type-nosniff:<path>",
+      "futureReaderDelta": "Pass captured selected budget/preset explicitly to exact same consumer; no literal/default fallback; current productive code still uses source constants/PROFILES",
+      "futureCases": "not-run"
+    },
+    {
+      "name": "preset-hsts-age",
+      "immutableSourceIdentity": {
+        "path": "skills/buster/plugins/security-providers/src/headers.js",
+        "sourceSha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7",
+        "line": 12,
+        "text": "    { id: 'content-type-nosniff', header: 'x-content-type-options', severity: 'high', kind: 'equals', value: 'nosniff' },",
+        "selectedFieldPointer": "/profiles/<selected>/registrations/headers/processing/presets/web-https-v1/0/value"
+      },
+      "exactOriginalCandidateRecords": [],
+      "candidateGap": "Exact literal coordinate omitted by old scanner; local owner/domain/consumer/application/cases adjudicated; global coverage not closed, no invented SRC/canonical ID",
+      "sourceValues": {
+        "A": "31536000",
+        "B": "15552000"
+      },
+      "domain": "same implemented present/equals/contains/hsts-min-age rule grammar; complete source preset values editable, selector labels not substituted for full policy",
+      "profiles": {
+        "A": "source-preset-hsts-age-A",
+        "B": "source-preset-hsts-age-B"
+      },
+      "entries": {
+        "A": "fixtures/entries/source-preset-hsts-age-A.pipeline.config.json",
+        "B": "fixtures/entries/source-preset-hsts-age-B.pipeline.config.json"
+      },
+      "task": "task-fixtures/config/source-preset-hsts-age.task.json",
+      "associatedOriginalSettingIds": [
+        "RT-163ebc138c768e21",
+        "RT-611f5b01895a7c90"
+      ],
+      "originalCaseArtifactRefs": [
+        {
+          "id": "RT-163ebc138c768e21-BCE3F075-SECURITY-ALTERNATE",
+          "pointer": "case-definitions.json#/cases/36"
+        },
+        {
+          "id": "RT-163ebc138c768e21-BCE3F075-SECURITY-BINDING",
+          "pointer": "case-definitions.json#/cases/37"
+        },
+        {
+          "id": "RT-163ebc138c768e21-BCE3F075-SECURITY-CONTRACT",
+          "pointer": "case-definitions.json#/cases/38"
+        },
+        {
+          "id": "RT-163ebc138c768e21-BCE3F075-SECURITY-DEFINITION",
+          "pointer": "case-definitions.json#/cases/39"
+        },
+        {
+          "id": "RT-163ebc138c768e21-BCE3F075-SECURITY-MUTANT",
+          "pointer": "case-definitions.json#/cases/40"
+        },
+        {
+          "id": "RT-163ebc138c768e21-CURRENT-SCHEMA-FIELD",
+          "pointer": "case-definitions.json#/cases/41"
+        },
+        {
+          "id": "RT-611f5b01895a7c90-BCE3F075-SECURITY-ALTERNATE",
+          "pointer": "case-definitions.json#/cases/132"
+        },
+        {
+          "id": "RT-611f5b01895a7c90-BCE3F075-SECURITY-BINDING",
+          "pointer": "case-definitions.json#/cases/133"
+        },
+        {
+          "id": "RT-611f5b01895a7c90-BCE3F075-SECURITY-CONTRACT",
+          "pointer": "case-definitions.json#/cases/134"
+        },
+        {
+          "id": "RT-611f5b01895a7c90-BCE3F075-SECURITY-DEFINITION",
+          "pointer": "case-definitions.json#/cases/135"
+        },
+        {
+          "id": "RT-611f5b01895a7c90-BCE3F075-SECURITY-MUTANT",
+          "pointer": "case-definitions.json#/cases/136"
+        },
+        {
+          "id": "RT-611f5b01895a7c90-CURRENT-SCHEMA-FIELD",
+          "pointer": "case-definitions.json#/cases/137"
+        },
+        {
+          "id": "RT-C0-BCE3F075-SECURITY02-OWNED-DOMAIN",
+          "pointer": "case-definitions.json#/cases/234"
+        }
+      ],
+      "applicationBoundary": "selected complete web preset hsts-min-age Number comparison; response max-age=15552000 A fails B passes; HTTPS source guard retained",
+      "errorOrFinding": "security finding header:hsts:<path>",
+      "futureReaderDelta": "Pass captured selected budget/preset explicitly to exact same consumer; no literal/default fallback; current productive code still uses source constants/PROFILES",
+      "futureCases": "not-run"
+    }
+  ],
+  "qualification": "Five concrete source-processing families; actual source SHA/pointer/case lineage, not invented canonical IDs or native output",
+  "fixedOrNativeOwnedConstraints": [
+    "scannerError: error source decoration is never read by result/provider; no tunable effect field created",
+    "ID grammar/truncation hashing/type/severity membership remain identity/schema invariants, no arbitrary hash policy introduced",
+    "databaseEvidence kind/version/digest accounting and current30-day/32GiB compatibility checks remain safety/source receipt validation; actual freshness/file budgets are C3 native trivy-database policy, no second provider author",
+    "manifestInput realpath/stat has no size guard; actual producer/claim/native checked-manifest/source integrity budgets belong to original C3; no fictional provider file-limit effect",
+    "current header rule remove unknown ID ignored; remove wins over replacement, add collision/base replacement applicability unchanged"
+  ]
+}

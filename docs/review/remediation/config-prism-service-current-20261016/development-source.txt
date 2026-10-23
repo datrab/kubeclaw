@@ -1,0 +1,117 @@
+✖ CR01 both selected consumer snapshots use authored {"maximumResultBytes":64,"dispatchTimeoutMs":100} (11.880286ms)
+✖ CR01 both selected consumer snapshots use authored {"maximumResultBytes":128,"dispatchTimeoutMs":2000} (29.230623ms)
+✔ CR01 both roles reject maximumResultBytes=undefined (4.869796ms)
+✔ CR01 both roles reject maximumResultBytes=null (5.457ms)
+✔ CR01 both roles reject maximumResultBytes=5 (4.480995ms)
+✔ CR01 both roles reject maximumResultBytes=0 (4.319091ms)
+✔ CR01 both roles reject maximumResultBytes=-1 (4.100725ms)
+✔ CR01 both roles reject maximumResultBytes=1.5 (4.589489ms)
+✔ CR01 both roles reject maximumResultBytes=2147483648 (4.433614ms)
+✔ CR01 both roles reject dispatchTimeoutMs=undefined (2.866554ms)
+✔ CR01 both roles reject dispatchTimeoutMs=null (3.019447ms)
+✔ CR01 both roles reject dispatchTimeoutMs=5 (2.73145ms)
+✔ CR01 both roles reject dispatchTimeoutMs=0 (2.826303ms)
+✔ CR01 both roles reject dispatchTimeoutMs=-1 (2.959967ms)
+✔ CR01 both roles reject dispatchTimeoutMs=1.5 (2.568136ms)
+✔ CR01 both roles reject dispatchTimeoutMs=2147483648 (2.821402ms)
+✔ CR01 both roles reject missing or unsupported native section (3.784347ms)
+✔ CR01 both roles reject missing or unsupported native section (4.415774ms)
+✔ CR01 both roles reject missing or unsupported native section (4.416214ms)
+✔ CR02 both roles reject PRISM_NATIVE_MAXIMUM_RESULT_BYTES (2.149105ms)
+✔ CR02 both roles reject PRISM_NATIVE_DISPATCH_TIMEOUT_MS (1.640192ms)
+✔ CR03 original HTTP transport enforces 8 UTF-8 bytes (39.317052ms)
+✔ CR03 original HTTP transport enforces 9 UTF-8 bytes (11.069265ms)
+✖ CR04 real headers deadline follows short and long author budgets (310.773701ms)
+✖ CR04 real body deadline follows short and long author budgets (313.084231ms)
+✔ CR05 real journal consumes authored 2053 byte result limit (116.435168ms)
+✔ CR05 real journal consumes authored 2054 byte result limit (138.016914ms)
+✔ only the admitted owner can cancel a pending original render; callers without cancellation still coalesce (8.062357ms)
+✔ real full-log upload aborts a stalled response body; persisted receiver bytes are not claimed rolled back (64.212183ms)
+✔ terminate aborts and drains the original artifact read before any engine operation starts (31.708646ms)
+✔ owner cancellation before retention rejects every coalesced original-render caller (2.271529ms)
+✔ native connection refusal retains its safe operator system code (9.627838ms)
+﹣ native PostgreSQL query cancellation settles and releases its actual pool client (0.173794ms) # REAL_POSTGRES_DATABASE_REQUIRED (isolated migrated test database)
+✔ current specialist renders through the original authenticated artifact service (85.726497ms)
+✔ original artifact service rejects actual full-log storage corruption (18.090396ms)
+✔ captured historical receipts and evidence retain their original validated digests (36.189042ms)
+✔ Control shared boundary rejects other real attempts and modified results before evidence I/O (22.634782ms)
+✔ historical real receipts remain readable and cannot be reinterpreted as native task receipts (38.298836ms)
+✔ actual Control artifact handler rejects unauthenticated reads and verifies upload URL digest (19.447671ms)
+ℹ tests 39
+ℹ suites 0
+ℹ pass 34
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 2524.816965
+
+✖ failing tests:
+
+test at skills/prism/tests/swarm-native-settings.test.mts:72:3
+✖ CR01 both selected consumer snapshots use authored {"maximumResultBytes":64,"dispatchTimeoutMs":100} (11.880286ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  900000 !== 100
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/tests/swarm-native-settings.test.mts:75:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 900000,
+    expected: 100,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/swarm-native-settings.test.mts:72:3
+✖ CR01 both selected consumer snapshots use authored {"maximumResultBytes":128,"dispatchTimeoutMs":2000} (29.230623ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  900000 !== 2000
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/tests/swarm-native-settings.test.mts:75:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 900000,
+    expected: 2000,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/swarm-native-settings.test.mts:111:41
+✖ CR04 real headers deadline follows short and long author budgets (310.773701ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/tests/swarm-native-settings.test.mts:120:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/swarm-native-settings.test.mts:111:41
+✖ CR04 real body deadline follows short and long author budgets (313.084231ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/tests/swarm-native-settings.test.mts:120:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }

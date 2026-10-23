@@ -1,0 +1,51 @@
+{
+  "scope": "Source-specific actual-root full-object/reference inspection only; existing structural checker deliberately not rerun",
+  "commands": [
+    {
+      "argv": [
+        "python",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-combined-generation-current-integration-review-01/inspect-root-integration.py"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "stdout": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-combined-generation-current-integration-review-01/inspection.stdout.json",
+      "stderr": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-combined-generation-current-integration-review-01/inspection.stderr",
+      "exitCode": 0,
+      "toolStartChunk": "304930",
+      "toolCompletionChunk": "2fe9c7",
+      "scriptSha256": "0ff8d24271fcfb60b1e6b27fd2bc568f6dcf0a37b26121e3ce03b973ec051c4d"
+    },
+    {
+      "command": "Python direct read/hash of original currentProviderFieldAdoption four refs and member-to-field receiving node equality",
+      "exitCode": 0,
+      "toolChunk": "b64b5f",
+      "output": "prior-source-and-member-field-joins.json"
+    },
+    {
+      "command": "Python fresh rehash of read-identities, integration manifest and git rev-parse HEAD",
+      "exitCode": 0,
+      "output": "end-input-stability.json"
+    }
+  ],
+  "navigationNotes": [
+    {
+      "toolChunk": "b758f0",
+      "note": "Guessed docs/review/remediation/WORKSTATE.md absent; not used as evidence"
+    },
+    {
+      "toolChunk": "7d3917",
+      "note": "SIGINT lookup targeted only own read inspection; no matching process existed and no signal sent. Inspection had completed exit0."
+    }
+  ],
+  "reviewerBookkeepingFailure": {
+    "toolChunk": "ac6d02",
+    "exitCode": 1,
+    "error": "KeyError: relativePath; this integration manifest uses path. Corrected fresh read uses actual path key; no input altered."
+  },
+  "beforeRetrieval": [
+    "git",
+    "show",
+    "e42dab0fa474d8bf7c726db2d100efff1c825a65:<each canonical root path>"
+  ],
+  "structuralCheckReexecuted": false,
+  "productiveCasesExecuted": 0
+}

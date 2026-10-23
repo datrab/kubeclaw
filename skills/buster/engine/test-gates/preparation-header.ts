@@ -40,7 +40,7 @@ interface ObjectSchema {
   [key: string]: unknown;
 }
 const wireSchema = JSON.parse(fs.readFileSync(new URL(
-  '../../../../contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json', import.meta.url,
+  import.meta.resolve('@kubeclaw/pipeline-test-gate-contract/schema'),
 ), 'utf8')) as { $id: string; $defs: Record<string, ObjectSchema> };
 const headerSchema = structuredClone(wireSchema);
 if (!headerSchema.$defs.remotePlanJob || !headerSchema.$defs.repositoryArchive) {

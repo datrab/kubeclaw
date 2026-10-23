@@ -2,25 +2,43 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { spawnSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
+import { prismChartProjection } from '../../../scripts/generate-prism-chart-config.mjs';
 import { test } from 'node:test';
 import yaml from 'js-yaml';
 
 const configured = {
-  enabled: true, issuer: 'prism:product-test', operators: ['user-0123456789abcdef01234567'],
+  issuer: 'prism:product-test', operators: ['user-0123456789abcdef01234567'],
   origin: 'https://studio.example.test', authorityRevision: 'test-key-1',
   signingSecretName: 'product-signing-test', signingSecretKey: 'private-key.pem',
   controllerUrl: 'https://controller.example.test:8443', controllerNamespace: 'workers',
   controllerRelease: 'buster-test', controllerCaSecretName: 'controller-ca-test',
   controllerCaSecretKey: 'ca.crt', tokenAudience: 'product-test', tokenExpirationSeconds: 600,
 };
-function render(config, extra = {}) {
+function render(config, extra = {}, enabled = true) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'product-chart-'));
   try {
+    // Preserve original authority cases while rendering the complete normal package.
+    // Synthetic CI image/native identities are render vectors, not native boot proof.
+    const author = path.join(root, 'config'); fs.cpSync('config', author, {recursive:true});
+    const ownerFile = path.join(author, 'components/prism-control.config.json');
+    const owner = JSON.parse(fs.readFileSync(ownerFile));
+    for (const profile of Object.values(owner.profiles)) profile.settings.productDecisionsEnabled = enabled;
+    fs.writeFileSync(ownerFile, JSON.stringify(owner));
+    const projection = prismChartProjection(author);
+    const chart = path.join(root, 'chart'), packaged = path.join(root, 'packaged');
+    fs.cpSync('charts/prism', chart, { recursive: true, dereference: true });
+    fs.writeFileSync(path.join(chart, 'files/pipeline/prism-topology.json'), JSON.stringify(projection));
+    fs.mkdirSync(packaged);
+    execFileSync('helm', ['package', chart, '--destination', packaged], { stdio: 'pipe' });
+    const archives = fs.readdirSync(packaged).filter(name => name.endsWith('.tgz'));
+    assert.equal(archives.length, 1);
+    const archive = path.join(packaged, archives[0]);
+    assert.deepEqual(JSON.parse(execFileSync('tar', ['-xOf', archive, 'prism/files/pipeline/prism-topology.json'], { encoding: 'utf8' })), projection);
     const file = path.join(root, 'values.yaml');
     fs.writeFileSync(file, yaml.dump({ control: { productDecisions: config }, ...extra }));
-    return spawnSync('helm', ['template', 'prism-test', 'charts/prism', '--namespace', 'prism-test',
-      '-f', 'charts/prism/ci-values.yaml', '--set', 'worker.native.namespace=prism-test', '-f', file], { encoding: 'utf8' });
+    return spawnSync('helm', ['template', projection.deployment.releaseName, archive, '--namespace', projection.deployment.namespace,
+      '-f', 'charts/prism/ci-values.yaml', '-f', file], { encoding: 'utf8' });
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 }
 function success(result) {
@@ -30,7 +48,7 @@ function success(result) {
 function role(docs, name) { return docs.find(doc => doc.kind === 'Deployment' && doc.metadata.name === `prism-${name}`); }
 
 test('disabled product authority creates no key mount, audience token, environment or network access', () => {
-  const docs = success(render({ enabled: false }));
+  const docs = success(render({}, {}, false));
   for (const name of ['control', 'studio', 'worker']) {
     const pod = role(docs, name).spec.template.spec;
     assert.equal(pod.automountServiceAccountToken, false);
@@ -47,6 +65,7 @@ test('explicit product authority belongs only to Control and uses separate signi
   assert.equal(pod.serviceAccountName, 'prism-control');
   assert.equal(pod.automountServiceAccountToken, false);
   const env = Object.fromEntries(pod.containers[0].env.map(item => [item.name, item.value]));
+  assert.equal(env.PRISM_PRODUCT_DECISIONS_ENABLED, undefined);
   assert.equal(env.PRISM_PRODUCT_ISSUER, configured.issuer);
   assert.deepEqual(JSON.parse(env.PRISM_PRODUCT_OPERATORS), configured.operators);
   assert.equal(env.PRISM_PRODUCT_CONTROLLER_URL, configured.controllerUrl);
@@ -74,7 +93,7 @@ test('explicit product authority belongs only to Control and uses separate signi
 });
 
 test('incomplete or ambiguous product authority fails actual Helm validation', () => {
-  const invalid = [{ enabled: true }, { ...configured, operators: [] },
+  const invalid = [{}, { ...configured, operators: [] },
     { ...configured, operators: ['same', 'same'] }, { ...configured, operators: [' padded '] },
     { ...configured, signingSecretName: 'prism-runtime' }, { ...configured, tokenAudience: '' },
     { ...configured, controllerNamespace: '' }, { ...configured, tokenExpirationSeconds: 0 },
@@ -85,4 +104,12 @@ test('incomplete or ambiguous product authority fails actual Helm validation', (
     { ...configured, origin: 'https://studio.example.test#fragment' }];
   for (const value of invalid) assert.notEqual(render(value).status, 0, JSON.stringify(value));
   assert.notEqual(render(configured, { tailscale: { enabled: false } }).status, 0);
+});
+
+test('Helm cannot supply a second product enable author, even equal to the central selection', () => {
+  for (const enabled of [false,true]) {
+    const result=render({...configured,enabled},{},enabled);
+    assert.notEqual(result.status,0);
+    assert.match(result.stderr,/enabled|Additional property/i);
+  }
 });

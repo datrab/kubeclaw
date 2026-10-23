@@ -1,0 +1,3980 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-15T05:29:48.429Z",
+  "scope": "current central entry/components and numeric candidates in production skills/scripts/contracts",
+  "qualification": "Discovery only. Numeric leaf count is not settings migrated; profiles may repeat values. Candidates are not all confirmed settings. Existing central files outside config/components, string/boolean/ENV settings, SQL/embedded code, dynamic expressions and deployment YAML need separate review. No completeness percentage or acceptance.",
+  "productionFilesScanned": 899,
+  "authoredNumericLeafCount": 235,
+  "candidateCount": 349,
+  "authoredNumericLeaves": [
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/preparation/resourcePolicy/cpuTimeMs",
+      "value": 120000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/preparation/resourcePolicy/memoryBytes",
+      "value": 8589934592
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/preparation/resourcePolicy/tasks",
+      "value": 64
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/preparation/timeoutMs",
+      "value": 300000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/preparation/cleanupTimeoutMs",
+      "value": 10000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/preparation/maximumActivePreparations",
+      "value": 2
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/preparation/maximumPendingAdmissions",
+      "value": 16
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/preparation/maximumRequestBytes",
+      "value": 100663296
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/preparation/maximumArchiveBytes",
+      "value": 67108864
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/preparation/maximumExtractedBytes",
+      "value": 536870912
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/preparation/maximumHeaderBytes",
+      "value": 3145728
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/preparation/maximumSourceBytes",
+      "value": 1073741824
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/preparation/maximumMetadataBytes",
+      "value": 67108864
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/preparation/maximumRecords",
+      "value": 10000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/preparation/maximumOwnershipBytes",
+      "value": 16777216
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/preparation/maximumJournalBytes",
+      "value": 268435456
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/preparation/maximumInputBytes",
+      "value": 65536
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/preparation/maximumOutputBytes",
+      "value": 8388608
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/preparation/maximumResultBytes",
+      "value": 4194304
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/preparation/pollIntervalMs",
+      "value": 25
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/preparation/drainTimeoutMs",
+      "value": 5000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/preparation/closeTimeoutMs",
+      "value": 10000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/preparation/tarTimeoutMs",
+      "value": 120000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/preparation/maximumArchiveEntries",
+      "value": 200000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/preparation/maximumListingLineBytes",
+      "value": 1048576
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/preparation/maximumTarStderrBytes",
+      "value": 65536
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/preparation/maximumSourceEntries",
+      "value": 400014
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/preparation/sourceEntryReservationBytes",
+      "value": 256
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/preparation/maximumOpenFiles",
+      "value": 64
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/admission/maximumActiveJobs",
+      "value": 2
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/admission/maximumQueuedJobs",
+      "value": 8
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/admission/maximumConcurrentAttempts",
+      "value": 64
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/dependencyReadiness/maximumExecutionMs",
+      "value": 1000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/dependencyReadiness/maximumOutputBytes",
+      "value": 65536
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/provider/cleanupTimeoutMs",
+      "value": 30000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/provider/maximumResultBytes",
+      "value": 16777216
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/provider/claimGraceMs",
+      "value": 60000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/provider/queueTimeoutMs",
+      "value": 60000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/provider/workerResultWrapperBytes",
+      "value": 4096
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/provider/maximumProtocolBytes",
+      "value": 16777216
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/provider/terminationGraceMs",
+      "value": 500
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/provider/terminationTimeoutMs",
+      "value": 1000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/provider/capabilityDrainTimeoutMs",
+      "value": 1000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/provider/minimumHeapMiB",
+      "value": 16
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/provider/heapFraction",
+      "value": 0.7
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/provider/maximumPendingCapabilities",
+      "value": 32
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/provider/minimumOpenFiles",
+      "value": 64
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/provider/artifactFileDescriptorReserve",
+      "value": 32
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/reports/maximumAggregateResultBytes",
+      "value": 16777216
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/reports/maximumSourceBytes",
+      "value": 67108864
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/reports/maximumCases",
+      "value": 5000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/reports/maximumFindings",
+      "value": 5000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/reports/maximumCaseFindings",
+      "value": 100
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/reports/maximumTimeoutMs",
+      "value": 300000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/reports/memoryBytes",
+      "value": 536870912
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/reports/minimumCpuTimeMs",
+      "value": 1000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/reports/maximumOpenFiles",
+      "value": 64
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/reports/minimumOpenFiles",
+      "value": 16
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/reports/minimumHeapMiB",
+      "value": 16
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/reports/heapFraction",
+      "value": 0.7
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/reports/runtimeMemoryReserveBytes",
+      "value": 67108864
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/observation/resourceSampleIntervalMs",
+      "value": 10
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/observation/processSampleIntervalMs",
+      "value": 50
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/stores/attempts/maximumEvidenceObjects",
+      "value": 10000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/stores/attempts/maximumEvidenceBytes",
+      "value": 10737418240
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/stores/attempts/maximumEvidenceObjectBytes",
+      "value": 1073741824
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/stores/attempts/maximumResults",
+      "value": 10000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/stores/attempts/maximumClosures",
+      "value": 10000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/stores/attempts/maximumMetadataBytes",
+      "value": 268435456
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/stores/attempts/maximumPendingEvidenceAgeMs",
+      "value": 3600000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/stores/admission/maximumIngressBytes",
+      "value": 16777216
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/stores/admission/maximumRecords",
+      "value": 10000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/stores/admission/maximumBytes",
+      "value": 268435456
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/stores/admission/maximumQuarantineRecords",
+      "value": 1000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/stores/admission/maximumQuarantineBytes",
+      "value": 67108864
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/processInput/cleanupTimeoutMs",
+      "value": 1500
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/processInput/terminationGraceMs",
+      "value": 250
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/execution/processInput/acknowledgementPollMs",
+      "value": 10
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/clusterInvokers/kubernetesFixture/maximumManifestBytes",
+      "value": 1048576
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/clusterInvokers/kubernetesFixture/maximumResources",
+      "value": 64
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/clusterInvokers/kubernetesFixture/maximumPersistentVolumeClaimBytes",
+      "value": 10737418240
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/clusterInvokers/kubernetesFixture/maximumPersistentVolumeTotalBytes",
+      "value": 21474836480
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/clusterInvokers/kubernetesFixture/maximumRetentionSeconds",
+      "value": 604800
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/clusterInvokers/kubernetesFixture/maximumExecutionMs",
+      "value": 900000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/clusterInvokers/kubernetesFixture/pollIntervalMs",
+      "value": 1000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/clusterInvokers/kubernetesFixture/shortCommandTimeoutMs",
+      "value": 15000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/clusterInvokers/kubernetesFixture/commandOutputManifestMultiplier",
+      "value": 2
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/clusterInvokers/kubernetesFixture/diagnosticCodeUnits",
+      "value": 4096
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/clusterInvokers/kubernetesFixture/manifest/maximumNodes",
+      "value": 100000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/clusterInvokers/kubernetesFixture/manifest/maximumDepth",
+      "value": 64
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/clusterInvokers/kubernetesFixture/manifest/maximumAliases",
+      "value": 1000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/clusterInvokers/kubernetesFixture/manifest/maximumFlattenVisits",
+      "value": 100000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/clusterInvokers/kubernetesFixture/manifest/maximumFlattenPending",
+      "value": 100000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/clusterInvokers/tailscaleExposure/maximumExecutionMs",
+      "value": 900000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/clusterInvokers/tailscaleExposure/pollIntervalMs",
+      "value": 1000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/clusterInvokers/tailscaleExposure/shortCommandTimeoutMs",
+      "value": 15000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/clusterInvokers/tailscaleExposure/maximumCommandOutputBytes",
+      "value": 1048576
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/clusterInvokers/runtimeSecurity/maximumExecutionMs",
+      "value": 300000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/clusterInvokers/runtimeSecurity/maximumOutputBytes",
+      "value": 16777216
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/clusterInvokers/runtimeSecurity/pollIntervalMs",
+      "value": 1000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/clusterInvokers/runtimeSecurity/maximumObservationAgeMs",
+      "value": 10000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/clusterInvokers/runtimeSecurity/maximumFutureSkewMs",
+      "value": 5000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/standard/settings/clusterInvokers/runtimeSecurity/diagnosticCodeUnits",
+      "value": 1024
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/preparation/resourcePolicy/cpuTimeMs",
+      "value": 120000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/preparation/resourcePolicy/memoryBytes",
+      "value": 8589934592
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/preparation/resourcePolicy/tasks",
+      "value": 64
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/preparation/timeoutMs",
+      "value": 300000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/preparation/cleanupTimeoutMs",
+      "value": 10000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/preparation/maximumActivePreparations",
+      "value": 2
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/preparation/maximumPendingAdmissions",
+      "value": 16
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/preparation/maximumRequestBytes",
+      "value": 100663296
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/preparation/maximumArchiveBytes",
+      "value": 67108864
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/preparation/maximumExtractedBytes",
+      "value": 536870912
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/preparation/maximumHeaderBytes",
+      "value": 3145728
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/preparation/maximumSourceBytes",
+      "value": 1073741824
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/preparation/maximumMetadataBytes",
+      "value": 67108864
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/preparation/maximumRecords",
+      "value": 10000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/preparation/maximumOwnershipBytes",
+      "value": 16777216
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/preparation/maximumJournalBytes",
+      "value": 268435456
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/preparation/maximumInputBytes",
+      "value": 65536
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/preparation/maximumOutputBytes",
+      "value": 8388608
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/preparation/maximumResultBytes",
+      "value": 4194304
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/preparation/pollIntervalMs",
+      "value": 25
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/preparation/drainTimeoutMs",
+      "value": 5000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/preparation/closeTimeoutMs",
+      "value": 10000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/preparation/tarTimeoutMs",
+      "value": 120000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/preparation/maximumArchiveEntries",
+      "value": 200000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/preparation/maximumListingLineBytes",
+      "value": 1048576
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/preparation/maximumTarStderrBytes",
+      "value": 65536
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/preparation/maximumSourceEntries",
+      "value": 400014
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/preparation/sourceEntryReservationBytes",
+      "value": 256
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/preparation/maximumOpenFiles",
+      "value": 64
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/admission/maximumActiveJobs",
+      "value": 2
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/admission/maximumQueuedJobs",
+      "value": 8
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/admission/maximumConcurrentAttempts",
+      "value": 64
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/dependencyReadiness/maximumExecutionMs",
+      "value": 1000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/dependencyReadiness/maximumOutputBytes",
+      "value": 65536
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/provider/cleanupTimeoutMs",
+      "value": 30000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/provider/maximumResultBytes",
+      "value": 16777216
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/provider/claimGraceMs",
+      "value": 60000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/provider/queueTimeoutMs",
+      "value": 60000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/provider/workerResultWrapperBytes",
+      "value": 4096
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/provider/maximumProtocolBytes",
+      "value": 16777216
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/provider/terminationGraceMs",
+      "value": 500
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/provider/terminationTimeoutMs",
+      "value": 1000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/provider/capabilityDrainTimeoutMs",
+      "value": 1000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/provider/minimumHeapMiB",
+      "value": 16
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/provider/heapFraction",
+      "value": 0.7
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/provider/maximumPendingCapabilities",
+      "value": 32
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/provider/minimumOpenFiles",
+      "value": 64
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/provider/artifactFileDescriptorReserve",
+      "value": 32
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/reports/maximumAggregateResultBytes",
+      "value": 16777216
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/reports/maximumSourceBytes",
+      "value": 67108864
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/reports/maximumCases",
+      "value": 5000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/reports/maximumFindings",
+      "value": 5000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/reports/maximumCaseFindings",
+      "value": 100
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/reports/maximumTimeoutMs",
+      "value": 300000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/reports/memoryBytes",
+      "value": 536870912
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/reports/minimumCpuTimeMs",
+      "value": 1000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/reports/maximumOpenFiles",
+      "value": 64
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/reports/minimumOpenFiles",
+      "value": 16
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/reports/minimumHeapMiB",
+      "value": 16
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/reports/heapFraction",
+      "value": 0.7
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/reports/runtimeMemoryReserveBytes",
+      "value": 67108864
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/observation/resourceSampleIntervalMs",
+      "value": 10
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/observation/processSampleIntervalMs",
+      "value": 50
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/stores/attempts/maximumEvidenceObjects",
+      "value": 10000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/stores/attempts/maximumEvidenceBytes",
+      "value": 10737418240
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/stores/attempts/maximumEvidenceObjectBytes",
+      "value": 1073741824
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/stores/attempts/maximumResults",
+      "value": 10000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/stores/attempts/maximumClosures",
+      "value": 10000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/stores/attempts/maximumMetadataBytes",
+      "value": 268435456
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/stores/attempts/maximumPendingEvidenceAgeMs",
+      "value": 3600000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/stores/admission/maximumIngressBytes",
+      "value": 16777216
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/stores/admission/maximumRecords",
+      "value": 10000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/stores/admission/maximumBytes",
+      "value": 268435456
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/stores/admission/maximumQuarantineRecords",
+      "value": 1000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/stores/admission/maximumQuarantineBytes",
+      "value": 67108864
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/processInput/cleanupTimeoutMs",
+      "value": 1500
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/processInput/terminationGraceMs",
+      "value": 250
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/execution/processInput/acknowledgementPollMs",
+      "value": 10
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/clusterInvokers/kubernetesFixture/maximumManifestBytes",
+      "value": 1048576
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/clusterInvokers/kubernetesFixture/maximumResources",
+      "value": 64
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/clusterInvokers/kubernetesFixture/maximumPersistentVolumeClaimBytes",
+      "value": 10737418240
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/clusterInvokers/kubernetesFixture/maximumPersistentVolumeTotalBytes",
+      "value": 21474836480
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/clusterInvokers/kubernetesFixture/maximumRetentionSeconds",
+      "value": 604800
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/clusterInvokers/kubernetesFixture/maximumExecutionMs",
+      "value": 900000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/clusterInvokers/kubernetesFixture/pollIntervalMs",
+      "value": 1000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/clusterInvokers/kubernetesFixture/shortCommandTimeoutMs",
+      "value": 15000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/clusterInvokers/kubernetesFixture/commandOutputManifestMultiplier",
+      "value": 2
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/clusterInvokers/kubernetesFixture/diagnosticCodeUnits",
+      "value": 4096
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/clusterInvokers/kubernetesFixture/manifest/maximumNodes",
+      "value": 100000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/clusterInvokers/kubernetesFixture/manifest/maximumDepth",
+      "value": 64
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/clusterInvokers/kubernetesFixture/manifest/maximumAliases",
+      "value": 1000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/clusterInvokers/kubernetesFixture/manifest/maximumFlattenVisits",
+      "value": 100000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/clusterInvokers/kubernetesFixture/manifest/maximumFlattenPending",
+      "value": 100000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/clusterInvokers/tailscaleExposure/maximumExecutionMs",
+      "value": 900000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/clusterInvokers/tailscaleExposure/pollIntervalMs",
+      "value": 1000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/clusterInvokers/tailscaleExposure/shortCommandTimeoutMs",
+      "value": 15000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/clusterInvokers/tailscaleExposure/maximumCommandOutputBytes",
+      "value": 1048576
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/clusterInvokers/runtimeSecurity/maximumExecutionMs",
+      "value": 300000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/clusterInvokers/runtimeSecurity/maximumOutputBytes",
+      "value": 16777216
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/clusterInvokers/runtimeSecurity/pollIntervalMs",
+      "value": 1000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/clusterInvokers/runtimeSecurity/maximumObservationAgeMs",
+      "value": 10000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/clusterInvokers/runtimeSecurity/maximumFutureSkewMs",
+      "value": 5000
+    },
+    {
+      "file": "config/components/buster-engine.config.json",
+      "pointer": "/profiles/runtime/settings/clusterInvokers/runtimeSecurity/diagnosticCodeUnits",
+      "value": 1024
+    },
+    {
+      "file": "config/components/prism-control.config.json",
+      "pointer": "/profiles/standard/settings/port",
+      "value": 8080
+    },
+    {
+      "file": "config/components/prism-control.config.json",
+      "pointer": "/profiles/standard/settings/dispatchTimeoutMs",
+      "value": 900000
+    },
+    {
+      "file": "config/components/prism-execution.config.json",
+      "pointer": "/profiles/standard/settings/resourcePolicy/cpuTimeMs",
+      "value": 60000
+    },
+    {
+      "file": "config/components/prism-execution.config.json",
+      "pointer": "/profiles/standard/settings/resourcePolicy/memoryBytes",
+      "value": 8589934592
+    },
+    {
+      "file": "config/components/prism-execution.config.json",
+      "pointer": "/profiles/standard/settings/resourcePolicy/tasks",
+      "value": 2048
+    },
+    {
+      "file": "config/components/prism-execution.config.json",
+      "pointer": "/profiles/standard/settings/maximumResultBytes",
+      "value": 67108864
+    },
+    {
+      "file": "config/components/prism-studio.config.json",
+      "pointer": "/profiles/standard/settings/port",
+      "value": 8080
+    },
+    {
+      "file": "config/components/prism-studio.config.json",
+      "pointer": "/profiles/standard/settings/controlTimeoutMs",
+      "value": 30000
+    },
+    {
+      "file": "config/components/prism-worker.config.json",
+      "pointer": "/profiles/standard/settings/ingress/port",
+      "value": 8080
+    },
+    {
+      "file": "config/components/prism-worker.config.json",
+      "pointer": "/profiles/standard/settings/ingress/maximumActiveRequests",
+      "value": 16
+    },
+    {
+      "file": "config/components/prism-worker.config.json",
+      "pointer": "/profiles/standard/settings/ingress/maximumProbeRequests",
+      "value": 4
+    },
+    {
+      "file": "config/components/prism-worker.config.json",
+      "pointer": "/profiles/standard/settings/ingress/maximumConnections",
+      "value": 128
+    },
+    {
+      "file": "config/components/prism-worker.config.json",
+      "pointer": "/profiles/standard/settings/ingress/requestTimeoutMs",
+      "value": 120000
+    },
+    {
+      "file": "config/components/prism-worker.config.json",
+      "pointer": "/profiles/standard/settings/ingress/shutdownTimeoutMs",
+      "value": 120000
+    },
+    {
+      "file": "config/components/prism-worker.config.json",
+      "pointer": "/profiles/standard/settings/ingress/maximumInputBytes",
+      "value": 16777216
+    },
+    {
+      "file": "config/components/prism-worker.config.json",
+      "pointer": "/profiles/standard/settings/supervisor/uid",
+      "value": 1000
+    },
+    {
+      "file": "config/components/prism-worker.config.json",
+      "pointer": "/profiles/standard/settings/supervisor/gid",
+      "value": 1000
+    },
+    {
+      "file": "config/components/prism-worker.config.json",
+      "pointer": "/profiles/standard/settings/supervisor/maximumOwnershipRecords",
+      "value": 65536
+    },
+    {
+      "file": "config/components/prism-worker.config.json",
+      "pointer": "/profiles/standard/settings/supervisor/maximumOwnershipBytes",
+      "value": 67108864
+    },
+    {
+      "file": "config/components/prism-worker.config.json",
+      "pointer": "/profiles/standard/settings/supervisor/maximumOutputBytes",
+      "value": 33554432
+    },
+    {
+      "file": "config/components/prism-worker.config.json",
+      "pointer": "/profiles/standard/settings/supervisor/maximumJournalBytes",
+      "value": 68719476736
+    },
+    {
+      "file": "config/components/prism-worker.config.json",
+      "pointer": "/profiles/standard/settings/supervisor/pollIntervalMs",
+      "value": 20
+    },
+    {
+      "file": "config/components/prism-worker.config.json",
+      "pointer": "/profiles/standard/settings/supervisor/drainTimeoutMs",
+      "value": 10000
+    },
+    {
+      "file": "config/components/prism-worker.config.json",
+      "pointer": "/profiles/standard/settings/supervisor/closeTimeoutMs",
+      "value": 105000
+    },
+    {
+      "file": "config/components/prism-worker.config.json",
+      "pointer": "/profiles/standard/settings/nonceDatabase/timeoutMs",
+      "value": 750
+    },
+    {
+      "file": "config/components/prism-worker.config.json",
+      "pointer": "/profiles/standard/settings/nonceDatabase/maximumConnections",
+      "value": 4
+    },
+    {
+      "file": "config/components/worker-core.config.json",
+      "pointer": "/profiles/standard/settings/localRuntime/drainTimeoutMs",
+      "value": 300000
+    },
+    {
+      "file": "config/components/worker-core.config.json",
+      "pointer": "/profiles/standard/settings/localRuntime/cancellationTimeoutMs",
+      "value": 30000
+    },
+    {
+      "file": "config/components/worker-core.config.json",
+      "pointer": "/profiles/standard/settings/localRuntime/replayLimit",
+      "value": 65536
+    }
+  ],
+  "candidates": [
+    {
+      "path": "contracts/agent-observability/v1/src/constants.ts",
+      "line": 11,
+      "name": "AGENT_OBSERVABILITY_ABSOLUTE_MAX_EVENT_BYTES",
+      "expression": "5 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "contracts/delivery-manifest/v3/src/index.ts",
+      "line": 68,
+      "name": "MAX_BYTES",
+      "expression": "8 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/browser-archive-lock.mjs",
+      "line": 12,
+      "name": "maximumArchiveBytes",
+      "expression": "1024 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/browser-archive-lock.mjs",
+      "line": 41,
+      "name": "AbortSignal.timeout",
+      "expression": "600_000",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/check-monitoring.mjs",
+      "line": 26,
+      "name": "maxBuffer",
+      "expression": "32 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/check-monitoring.mjs",
+      "line": 26,
+      "name": "timeout",
+      "expression": "180000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/check-monitoring.mjs",
+      "line": 84,
+      "name": "timeout",
+      "expression": "180000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/check-platform-services.mjs",
+      "line": 30,
+      "name": "maxBuffer",
+      "expression": "32 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/check-platform-services.mjs",
+      "line": 30,
+      "name": "timeout",
+      "expression": "180000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/format-repository-review-status.mjs",
+      "line": 23,
+      "name": "timeout",
+      "expression": "10_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/format-repository-review-status.mjs",
+      "line": 24,
+      "name": "maxBuffer",
+      "expression": "2 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/gitops-bundle.mjs",
+      "line": 80,
+      "name": "maxBuffer",
+      "expression": "32 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/gitops-bundle.mjs",
+      "line": 80,
+      "name": "timeout",
+      "expression": "120000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/gitops-continuous.mjs",
+      "line": 68,
+      "name": "maxBuffer",
+      "expression": "32 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/gitops-continuous.mjs",
+      "line": 104,
+      "name": "timeout",
+      "expression": "60000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/gitops-owner.mjs",
+      "line": 15,
+      "name": "timeout",
+      "expression": "30000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/gitops-rollback.mjs",
+      "line": 10,
+      "name": "maxBuffer",
+      "expression": "32 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/gitops.mjs",
+      "line": 15,
+      "name": "maxBuffer",
+      "expression": "32 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/gitops.mjs",
+      "line": 165,
+      "name": "timeout",
+      "expression": "30000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/gitops.mjs",
+      "line": 165,
+      "name": "maxBuffer",
+      "expression": "16 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/gitops.mjs",
+      "line": 199,
+      "name": "timeout",
+      "expression": "60000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/infrastructure-chart.mjs",
+      "line": 12,
+      "name": "maximumBytes",
+      "expression": "32 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/infrastructure-oci-chart.mjs",
+      "line": 9,
+      "name": "maximumBytes",
+      "expression": "32 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/infrastructure-oci-chart.mjs",
+      "line": 16,
+      "name": "maxBuffer",
+      "expression": "1048576",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/infrastructure-release.mjs",
+      "line": 15,
+      "name": "maxBuffer",
+      "expression": "64 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/install/register-runtime-argo.mjs",
+      "line": 30,
+      "name": "timeout",
+      "expression": "60000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/install/register-runtime-argo.mjs",
+      "line": 30,
+      "name": "maxBuffer",
+      "expression": "8 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/kubernetes-api-probe.mjs",
+      "line": 51,
+      "name": "AbortSignal.timeout",
+      "expression": "15000",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/lib/plugin-parity-evidence-paths.mjs",
+      "line": 4,
+      "name": "MAX_PARITY_EVIDENCE_BASENAME_LENGTH",
+      "expression": "54",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/lib/repository-review-run-root.mjs",
+      "line": 6,
+      "name": "MAX_LEGACY_EVENT_BYTES",
+      "expression": "256 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/lib/repository-review-supervisor-heartbeat.mjs",
+      "line": 40,
+      "name": "AbortSignal.timeout",
+      "expression": "2_000",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/native-worker-deployment-preflight.mjs",
+      "line": 38,
+      "name": "maxBuffer",
+      "expression": "32 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/native-worker-node-preflight.mjs",
+      "line": 14,
+      "name": "timeout",
+      "expression": "30000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/native-worker-node-preflight.mjs",
+      "line": 15,
+      "name": "maxBuffer",
+      "expression": "8 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/observability-retirement/files.mjs",
+      "line": 21,
+      "name": "maximumFiles",
+      "expression": "10000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/observability-retirement/files.mjs",
+      "line": 21,
+      "name": "maximumTotalBytes",
+      "expression": "256 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/observability-retirement/files.mjs",
+      "line": 21,
+      "name": "maximumSnapshotBytes",
+      "expression": "32 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/observability-retirement/operator-authority.mjs",
+      "line": 33,
+      "name": "delivery.maximumDeliveryRecords",
+      "expression": "100000",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/observability-retirement/operator-authority.mjs",
+      "line": 33,
+      "name": "delivery.maximumDeliveryBytes",
+      "expression": "268435456",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/observability-retirement/operator-authority.mjs",
+      "line": 34,
+      "name": "maximumRecordBytes",
+      "expression": "2 * 1048576 + 65536",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/observability-retirement/operator-authority.mjs",
+      "line": 35,
+      "name": "wait.maximumRecords",
+      "expression": "100000",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/observability-retirement/operator-authority.mjs",
+      "line": 35,
+      "name": "wait.maximumStoreBytes",
+      "expression": "268435456",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/observability-retirement/operator-authority.mjs",
+      "line": 36,
+      "name": "wait.maxEntryBytes",
+      "expression": "1048576",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/openclaw-concurrency-preflight.mjs",
+      "line": 49,
+      "name": "maxBuffer",
+      "expression": "1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/openclaw-concurrency-preflight.mjs",
+      "line": 159,
+      "name": "timeoutSeconds",
+      "expression": "15",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/openclaw-concurrency-preflight.mjs",
+      "line": 180,
+      "name": "setTimeout",
+      "expression": "500",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/postgresql-recovery-preflight.mjs",
+      "line": 20,
+      "name": "maxBuffer",
+      "expression": "1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/prepare-native-worker-pools.mjs",
+      "line": 164,
+      "name": "setInterval",
+      "expression": "60_000",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/render-kubernetes-api-probe.mjs",
+      "line": 22,
+      "name": "backoffLimit",
+      "expression": "0",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/render-kubernetes-api-probe.mjs",
+      "line": 22,
+      "name": "activeDeadlineSeconds",
+      "expression": "600",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/render-postgresql-recovery.mjs",
+      "line": 76,
+      "name": "backoffLimit",
+      "expression": "0",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/render-registry-local.mjs",
+      "line": 68,
+      "name": "backoffLimit",
+      "expression": "0",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/repository-review-status.mjs",
+      "line": 44,
+      "name": "maximumBytes",
+      "expression": "1024 * 1024",
+      "kind": "parameter-default",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/retire-nova-dispatch.mjs",
+      "line": 98,
+      "name": "maximumFiles",
+      "expression": "1",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/retire-nova-dispatch.mjs",
+      "line": 98,
+      "name": "maximumTotalBytes",
+      "expression": "1048576",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/retire-nova-dispatch.mjs",
+      "line": 98,
+      "name": "maximumSnapshotBytes",
+      "expression": "1048576",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/retire-operator-request.mjs",
+      "line": 83,
+      "name": "maximumFiles",
+      "expression": "1",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/retire-operator-request.mjs",
+      "line": 83,
+      "name": "maximumTotalBytes",
+      "expression": "1048576",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/retire-operator-request.mjs",
+      "line": 83,
+      "name": "maximumSnapshotBytes",
+      "expression": "1048576",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/runtime-tool-locks.mjs",
+      "line": 39,
+      "name": "timeout",
+      "expression": "600000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/runtime-tool-locks.mjs",
+      "line": 40,
+      "name": "maxBuffer",
+      "expression": "16 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/stateful-release-preflight.mjs",
+      "line": 58,
+      "name": "maxBuffer",
+      "expression": "8 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/supervise-repository-review.mjs",
+      "line": 9,
+      "name": "SAMPLE_INTERVAL_MS",
+      "expression": "15_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/supervise-repository-review.mjs",
+      "line": 56,
+      "name": "timeout",
+      "expression": "30_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/supervise-repository-review.mjs",
+      "line": 93,
+      "name": "timeout",
+      "expression": "240_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/supervise-repository-review.mjs",
+      "line": 94,
+      "name": "maxBuffer",
+      "expression": "1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/supervise-repository-review.mjs",
+      "line": 188,
+      "name": "setTimeout",
+      "expression": "5_000",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/trivy-database-lock.mjs",
+      "line": 42,
+      "name": "maxBuffer",
+      "expression": "1048576",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/trivy-database-lock.mjs",
+      "line": 69,
+      "name": "maxBuffer",
+      "expression": "1048576",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/updates/check-upstream-refresh.mjs",
+      "line": 23,
+      "name": "timeout",
+      "expression": "900000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/updates/deployment-release.mjs",
+      "line": 208,
+      "name": "maxBuffer",
+      "expression": "32 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/updates/refresh-versions.mjs",
+      "line": 45,
+      "name": "AbortSignal.timeout",
+      "expression": "60000",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/updates/release-configuration.mjs",
+      "line": 76,
+      "name": "maxBuffer",
+      "expression": "16 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/updates/runtime-inputs.mjs",
+      "line": 18,
+      "name": "maxBuffer",
+      "expression": "16 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/updates/select-runtime-deployment.mjs",
+      "line": 14,
+      "name": "AbortSignal.timeout",
+      "expression": "60000",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "scripts/updates/verify-release-source.mjs",
+      "line": 8,
+      "name": "AbortSignal.timeout",
+      "expression": "60000",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/browser-playwright-runtime.ts",
+      "line": 80,
+      "name": "memoryBytes",
+      "expression": "0",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/browser-playwright-runtime.ts",
+      "line": 87,
+      "name": "maximumMemoryBytes",
+      "expression": "0",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/browser-playwright-runtime.ts",
+      "line": 92,
+      "name": "setInterval",
+      "expression": "25",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+      "line": 32,
+      "name": "maximumRecordBytes",
+      "expression": "4096",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "line": 69,
+      "name": "maximumMemoryBytes",
+      "expression": "0",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-observation.ts",
+      "line": 42,
+      "name": "memoryBytes",
+      "expression": "0",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 71,
+      "name": "maximumMemoryBytes",
+      "expression": "0",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "line": 254,
+      "name": "reported.maximumMemoryBytes",
+      "expression": "0",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-compaction.ts",
+      "line": 100,
+      "name": "timeout",
+      "expression": "120000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-package.ts",
+      "line": 5,
+      "name": "MAXIMUM_PACKAGE_FILES",
+      "expression": "2_048",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-package.ts",
+      "line": 6,
+      "name": "MAXIMUM_PACKAGE_BYTES",
+      "expression": "64 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-package.ts",
+      "line": 7,
+      "name": "PACKAGE_SNAPSHOT_TIMEOUT_MS",
+      "expression": "30_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-provider-operation.ts",
+      "line": 104,
+      "name": "maximumMemoryBytes",
+      "expression": "0",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-provider-operation.ts",
+      "line": 106,
+      "name": "measured.maximumMemoryBytes",
+      "expression": "0",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-scheduler.ts",
+      "line": 98,
+      "name": "this.#groupUse.get(node.concurrencyGroup)",
+      "expression": "1",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-scheduler.ts",
+      "line": 108,
+      "name": "this.#groupUse.get(node.concurrencyGroup)",
+      "expression": "0",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-scheduler.ts",
+      "line": 109,
+      "name": "this.#groupUse.get(node.concurrencyGroup)",
+      "expression": "0",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/trivy-database.ts",
+      "line": 15,
+      "name": "maximumDatabaseBytes",
+      "expression": "8 * 1024 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/plugins/api-flow/src/provider.js",
+      "line": 137,
+      "name": "config.requestTimeoutMs",
+      "expression": "10_000",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/plugins/axe/src/provider.js",
+      "line": 76,
+      "name": "config.timeoutMs",
+      "expression": "30000",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+      "line": 5,
+      "name": "MAXIMUM_LCOV_BYTES",
+      "expression": "64 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+      "line": 39,
+      "name": "maximumResponseBytes",
+      "expression": "65536",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/plugins/junit-report-adapter/src/adapter.js",
+      "line": 4,
+      "name": "MAXIMUM_TAG_BYTES",
+      "expression": "64 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+      "line": 59,
+      "name": "retention.seconds",
+      "expression": "1800",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+      "line": 62,
+      "name": "value.readinessTimeoutSeconds",
+      "expression": "120",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/plugins/lighthouse/src/provider.js",
+      "line": 90,
+      "name": "config.timeoutMs",
+      "expression": "120000",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/plugins/openapi/src/provider.js",
+      "line": 235,
+      "name": "config.requestTimeoutMs",
+      "expression": "10_000",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/plugins/openapi/src/provider.js",
+      "line": 235,
+      "name": "config.maximumResponseBytes",
+      "expression": "1_048_576",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/src/headers.js",
+      "line": 104,
+      "name": "maximumResponseBytes",
+      "expression": "65_536",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/plugins/size-budget/src/provider.js",
+      "line": 7,
+      "name": "MAXIMUM_INPUT_BYTES",
+      "expression": "512 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/plugins/size-budget/src/provider.js",
+      "line": 8,
+      "name": "MAXIMUM_EXPANDED_BYTES",
+      "expression": "2 * 1024 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/plugins/size-budget/src/provider.js",
+      "line": 9,
+      "name": "MAXIMUM_FILES",
+      "expression": "100_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/plugins/size-budget/src/provider.js",
+      "line": 10,
+      "name": "MAXIMUM_BASELINE_BYTES",
+      "expression": "1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+      "line": 20,
+      "name": "value.readinessTimeoutSeconds",
+      "expression": "120",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/buster/plugins/visual/src/provider.js",
+      "line": 143,
+      "name": "config.timeoutMs",
+      "expression": "30000",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/memory-limit.ts",
+      "line": 7,
+      "name": "timeout",
+      "expression": "1000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/memory-limit.ts",
+      "line": 7,
+      "name": "maxBuffer",
+      "expression": "128",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/protocol.ts",
+      "line": 1,
+      "name": "MAX_PROTOCOL_LINE_BYTES",
+      "expression": "256 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/protocol.ts",
+      "line": 2,
+      "name": "MAX_PROTOCOL_BUFFER_BYTES",
+      "expression": "1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/session.ts",
+      "line": 155,
+      "name": "setTimeout",
+      "expression": "1000",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/session.ts",
+      "line": 159,
+      "name": "setTimeout",
+      "expression": "1000",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/packages/install.ts",
+      "line": 148,
+      "name": "timeout",
+      "expression": "30_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/packages/install.ts",
+      "line": 160,
+      "name": "request.policy.maxFiles",
+      "expression": "4096",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/packages/install.ts",
+      "line": 161,
+      "name": "request.policy.maxBytes",
+      "expression": "128 * 1024 * 1024",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/import-audit.ts",
+      "line": 54,
+      "name": "timeout",
+      "expression": "30_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/runtime-agent-task.ts",
+      "line": 1,
+      "name": "RUNTIME_RESULT_FILE_MAX_BYTES",
+      "expression": "2_048",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+      "line": 17,
+      "name": "DEFAULT_MAXIMUM_RECORDS",
+      "expression": "100_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+      "line": 18,
+      "name": "DEFAULT_MAXIMUM_STORE_BYTES",
+      "expression": "256 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+      "line": 162,
+      "name": "context.config.maxArtifactBytes",
+      "expression": "16 * 1024 * 1024",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+      "line": 171,
+      "name": "maximumRecordBytes",
+      "expression": "64 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/command-runner/src/execution.ts",
+      "line": 25,
+      "name": "MAXIMUM_OUTPUT_RECORDS",
+      "expression": "4096",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/command-runner/src/execution.ts",
+      "line": 33,
+      "name": "maximumMemoryBytes",
+      "expression": "0",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/command-runner/src/execution.ts",
+      "line": 51,
+      "name": "setInterval",
+      "expression": "25",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/command-runner/src/process-facts.ts",
+      "line": 46,
+      "name": "memoryBytes",
+      "expression": "0",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/command-runner/src/process-group.ts",
+      "line": 54,
+      "name": "setTimeout",
+      "expression": "10",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts",
+      "line": 4,
+      "name": "maxQueueBytes",
+      "expression": "1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts",
+      "line": 4,
+      "name": "drainTimeoutMs",
+      "expression": "5000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts",
+      "line": 5,
+      "name": "maxQueueBytes",
+      "expression": "16 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts",
+      "line": 5,
+      "name": "drainTimeoutMs",
+      "expression": "60_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+      "line": 39,
+      "name": "maxRetriesPerRequest",
+      "expression": "1",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+      "line": 173,
+      "name": "setTimeout",
+      "expression": "0",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/operator-messaging/src/adapter.ts",
+      "line": 13,
+      "name": "DELIVERY_RECORD_MAX_BYTES",
+      "expression": "2 * 1_048_576 + 65_536",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/operator-messaging/src/config.ts",
+      "line": 91,
+      "name": "config.maximumDeliveryRecords",
+      "expression": "100_000",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/operator-messaging/src/config.ts",
+      "line": 92,
+      "name": "config.maximumDeliveryBytes",
+      "expression": "256 * 1024 * 1024",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/src/resp.ts",
+      "line": 1,
+      "name": "MAX_BULK_BYTES",
+      "expression": "1_048_576",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/src/resp.ts",
+      "line": 2,
+      "name": "MAX_HEADER_BYTES",
+      "expression": "1_024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw-cleanup.ts",
+      "line": 20,
+      "name": "setTimeout",
+      "expression": "25",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+      "line": 212,
+      "name": "timeoutSeconds",
+      "expression": "15",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/result-persistence.ts",
+      "line": 45,
+      "name": "maximumBytes",
+      "expression": "1_048_576",
+      "kind": "parameter-default",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/state-store/src/adapter.ts",
+      "line": 16,
+      "name": "DEFAULT_MAXIMUM_RECORDS",
+      "expression": "100_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/state-store/src/adapter.ts",
+      "line": 17,
+      "name": "DEFAULT_MAXIMUM_STORE_BYTES",
+      "expression": "256 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/state-store/src/adapter.ts",
+      "line": 29,
+      "name": "context.config.maxEntryBytes",
+      "expression": "1_048_576",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/telemetry-store/src/adapter.ts",
+      "line": 8,
+      "name": "context.config.maxRecordBytes",
+      "expression": "1_048_576",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/telemetry-store/src/adapter.ts",
+      "line": 9,
+      "name": "context.config.maximumRecords",
+      "expression": "100_000",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/telemetry-store/src/adapter.ts",
+      "line": 10,
+      "name": "context.config.maximumStoreBytes",
+      "expression": "256 * 1024 * 1024",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "line": 13,
+      "name": "DEFAULT_MAX_PAYLOAD_BYTES",
+      "expression": "262_144",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "line": 14,
+      "name": "MAX_PAYLOAD_BYTES",
+      "expression": "1_048_576",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "line": 16,
+      "name": "TERMINAL_RESERVATION_BYTES",
+      "expression": "8_192",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/wait-store/src/adapter.ts",
+      "line": 201,
+      "name": "context.config.maxEntryBytes",
+      "expression": "1_048_576",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/wait-store/src/adapter.ts",
+      "line": 202,
+      "name": "context.config.maximumRecords",
+      "expression": "100_000",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/common/plugins/wait-store/src/adapter.ts",
+      "line": 203,
+      "name": "context.config.maximumStoreBytes",
+      "expression": "256 * 1024 * 1024",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/core/execution/run-mutation.ts",
+      "line": 15,
+      "name": "setInterval",
+      "expression": "20_000",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/core/execution/run-root.ts",
+      "line": 6,
+      "name": "MAX_LEGACY_EVENT_BYTES",
+      "expression": "256 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/core/execution/stage-executor.ts",
+      "line": 62,
+      "name": "memoryBytes",
+      "expression": "512 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/core/lifecycle/reducer.ts",
+      "line": 130,
+      "name": "current.technicalRetriesUsed",
+      "expression": "0",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/core/observability/reconciler.ts",
+      "line": 318,
+      "name": "maximumEvidenceObjects",
+      "expression": "100_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/core/observability/reconciler.ts",
+      "line": 319,
+      "name": "maximumEvidenceBytes",
+      "expression": "10 * 1024 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/core/observability/reconciler.ts",
+      "line": 320,
+      "name": "maximumEvidenceObjectBytes",
+      "expression": "1024 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/core/observability/reconciler.ts",
+      "line": 323,
+      "name": "maximumMetadataBytes",
+      "expression": "1024 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/core/observability/reconciler.ts",
+      "line": 324,
+      "name": "maximumPendingEvidenceAgeMs",
+      "expression": "60 * 60 * 1000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/core/observability/reconciler.ts",
+      "line": 327,
+      "name": "maximumIngressBytes",
+      "expression": "16 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/core/observability/reconciler.ts",
+      "line": 328,
+      "name": "maximumRecords",
+      "expression": "1_000_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/core/observability/reconciler.ts",
+      "line": 329,
+      "name": "maximumBytes",
+      "expression": "4 * 1024 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/core/observability/reconciler.ts",
+      "line": 330,
+      "name": "maximumQuarantineRecords",
+      "expression": "10_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/core/observability/reconciler.ts",
+      "line": 331,
+      "name": "maximumQuarantineBytes",
+      "expression": "1024 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/core/state/journal.ts",
+      "line": 30,
+      "name": "appendLockTimeoutMs",
+      "expression": "5_000",
+      "kind": "parameter-default",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/core/state/wait-projection-reader.ts",
+      "line": 35,
+      "name": "config.maxEntryBytes",
+      "expression": "1048576",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/core/telemetry/observer-delivery.ts",
+      "line": 23,
+      "name": "memoryBytes",
+      "expression": "256 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/core/test-gates/source-process-lifecycle.ts",
+      "line": 29,
+      "name": "setTimeout",
+      "expression": "250",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/core/test-gates/source-process-lifecycle.ts",
+      "line": 51,
+      "name": "setTimeout",
+      "expression": "10",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/core/test-gates/source-snapshot.ts",
+      "line": 28,
+      "name": "options.timeoutMs",
+      "expression": "30_000",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+      "line": 45,
+      "name": "maximumRecords",
+      "expression": "10000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+      "line": 45,
+      "name": "maximumBytes",
+      "expression": "64*1024**2",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+      "line": 45,
+      "name": "maximumRecordBytes",
+      "expression": "65536",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/src/approval.ts",
+      "line": 4,
+      "name": "DEFAULT_APPROVAL_TIMEOUT_MINUTES",
+      "expression": "60",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/src/approval.ts",
+      "line": 5,
+      "name": "MAX_APPROVAL_TIMEOUT_MINUTES",
+      "expression": "525_600",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/src/repair-evidence.ts",
+      "line": 5,
+      "name": "MAXIMUM_BYTES",
+      "expression": "256 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/candidate.ts",
+      "line": 14,
+      "name": "timeout",
+      "expression": "60000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/candidate.ts",
+      "line": 14,
+      "name": "maxBuffer",
+      "expression": "16 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/constants.ts",
+      "line": 2,
+      "name": "DEFAULT_TOOL_TIMEOUT",
+      "expression": "30000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/execution.ts",
+      "line": 91,
+      "name": "timeout",
+      "expression": "5000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/kubernetes-policy-pack.ts",
+      "line": 17,
+      "name": "MAX_PACK_BYTES",
+      "expression": "1_048_576",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/linux-process-group.ts",
+      "line": 57,
+      "name": "setTimeout",
+      "expression": "10",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/policy.ts",
+      "line": 32,
+      "name": "max_files",
+      "expression": "128",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/policy.ts",
+      "line": 32,
+      "name": "max_file_bytes",
+      "expression": "1_048_576",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/policy.ts",
+      "line": 32,
+      "name": "max_rendered_bytes",
+      "expression": "10_485_760",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/policy.ts",
+      "line": 32,
+      "name": "max_documents",
+      "expression": "2048",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/process-termination.ts",
+      "line": 39,
+      "name": "setTimeout",
+      "expression": "1500",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/process-termination.ts",
+      "line": 42,
+      "name": "setTimeout",
+      "expression": "250",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/process.ts",
+      "line": 35,
+      "name": "options.maxBuffer",
+      "expression": "10 * 1024 * 1024",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/prism-design/src/archive.ts",
+      "line": 6,
+      "name": "maximumBytes",
+      "expression": "32 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+      "line": 86,
+      "name": "maximumResponseBytes",
+      "expression": "64 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+      "line": 87,
+      "name": "maximumResultBytes",
+      "expression": "64 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+      "line": 87,
+      "name": "maximumArchiveBytes",
+      "expression": "64 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+      "line": 88,
+      "name": "maximumArchiveStoreBytes",
+      "expression": "1024 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+      "line": 88,
+      "name": "maximumEvidenceBytes",
+      "expression": "64 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+      "line": 89,
+      "name": "maximumEvidenceStoreBytes",
+      "expression": "1024 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+      "line": 90,
+      "name": "maximumRecords",
+      "expression": "10_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+      "line": 90,
+      "name": "maximumBytes",
+      "expression": "1024 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+      "line": 91,
+      "name": "maximumRecordBytes",
+      "expression": "64 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+      "line": 57,
+      "name": "maximumRecords",
+      "expression": "10000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+      "line": 57,
+      "name": "maximumBytes",
+      "expression": "1024**3",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+      "line": 57,
+      "name": "maximumRecordBytes",
+      "expression": "64*1024**2",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+      "line": 57,
+      "name": "maximumEvidenceStoreBytes",
+      "expression": "1024**3",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/repository-adapter/src/revision-reader.ts",
+      "line": 32,
+      "name": "maxBuffer",
+      "expression": "1024 * 1024",
+      "kind": "parameter-default",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/repository-adapter/src/revision-reader.ts",
+      "line": 161,
+      "name": "maxBuffer",
+      "expression": "32 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/scripts/evaluate-review-quality.mts",
+      "line": 140,
+      "name": "timeout",
+      "expression": "30 * 60 * 1_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/scripts/evaluate-review-quality.mts",
+      "line": 140,
+      "name": "maxBuffer",
+      "expression": "32 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/scripts/evaluate-scalable-review.mts",
+      "line": 16,
+      "name": "maxBuffer",
+      "expression": "256 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/scripts/evaluate-scalable-review.mts",
+      "line": 31,
+      "name": "maxBuffer",
+      "expression": "4 * 1024 * 1024 + 1",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
+      "line": 18,
+      "name": "MAX_BASELINE_BYTES",
+      "expression": "128 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 109,
+      "name": "maxFiles",
+      "expression": "60",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 109,
+      "name": "maxBytes",
+      "expression": "400_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 109,
+      "name": "maxTokens",
+      "expression": "86_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 110,
+      "name": "maxFiles",
+      "expression": "400",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 110,
+      "name": "maxBytes",
+      "expression": "900_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 110,
+      "name": "maxTokens",
+      "expression": "80_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 111,
+      "name": "maxPrimaryJobs",
+      "expression": "75",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 111,
+      "name": "maxContextExpansionJobs",
+      "expression": "12",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 111,
+      "name": "maxVerificationJobs",
+      "expression": "8",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 111,
+      "name": "maxInputTokensPerJob",
+      "expression": "120_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 112,
+      "name": "maxContextTokensPerJob",
+      "expression": "128_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 112,
+      "name": "maxPromptBytesPerJob",
+      "expression": "900_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 113,
+      "name": "maxInitialInputTokens",
+      "expression": "6_500_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 113,
+      "name": "maxContextExpansionInputTokens",
+      "expression": "750_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 114,
+      "name": "maxVerificationInputTokens",
+      "expression": "750_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 114,
+      "name": "maxTotalInputTokens",
+      "expression": "8_000_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 115,
+      "name": "maxOutputTokensPerJob",
+      "expression": "6_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 117,
+      "name": "concurrency",
+      "expression": "8",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 117,
+      "name": "maxRetries",
+      "expression": "1",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 118,
+      "name": "maxRetryAttemptsPerPhase",
+      "expression": "4",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 123,
+      "name": "maxFiles",
+      "expression": "60",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 123,
+      "name": "maxBytes",
+      "expression": "400_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 123,
+      "name": "maxTokens",
+      "expression": "86_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 124,
+      "name": "maxFiles",
+      "expression": "400",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 124,
+      "name": "maxBytes",
+      "expression": "900_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 124,
+      "name": "maxTokens",
+      "expression": "80_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 125,
+      "name": "maxPrimaryJobs",
+      "expression": "500",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 125,
+      "name": "maxContextExpansionJobs",
+      "expression": "100",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 125,
+      "name": "maxVerificationJobs",
+      "expression": "100",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 125,
+      "name": "maxInputTokensPerJob",
+      "expression": "120_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 126,
+      "name": "maxContextTokensPerJob",
+      "expression": "128_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 126,
+      "name": "maxPromptBytesPerJob",
+      "expression": "900_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 127,
+      "name": "maxInitialInputTokens",
+      "expression": "25_000_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 127,
+      "name": "maxContextExpansionInputTokens",
+      "expression": "50_000_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 128,
+      "name": "maxVerificationInputTokens",
+      "expression": "50_000_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 128,
+      "name": "maxTotalInputTokens",
+      "expression": "50_000_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 129,
+      "name": "maxOutputTokensPerJob",
+      "expression": "6_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 131,
+      "name": "concurrency",
+      "expression": "10",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 131,
+      "name": "maxRetries",
+      "expression": "2",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 132,
+      "name": "maxRetryAttemptsPerPhase",
+      "expression": "20",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 137,
+      "name": "maxFiles",
+      "expression": "30",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 137,
+      "name": "maxBytes",
+      "expression": "220_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 137,
+      "name": "maxTokens",
+      "expression": "90_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 138,
+      "name": "maxFiles",
+      "expression": "100",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 138,
+      "name": "maxBytes",
+      "expression": "480_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 138,
+      "name": "maxTokens",
+      "expression": "110_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 139,
+      "name": "maxPrimaryJobs",
+      "expression": "2_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 139,
+      "name": "maxContextExpansionJobs",
+      "expression": "250",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 139,
+      "name": "maxVerificationJobs",
+      "expression": "250",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 139,
+      "name": "maxInputTokensPerJob",
+      "expression": "120_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 140,
+      "name": "maxContextTokensPerJob",
+      "expression": "128_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 140,
+      "name": "maxPromptBytesPerJob",
+      "expression": "900_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 141,
+      "name": "maxInitialInputTokens",
+      "expression": "50_000_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 141,
+      "name": "maxContextExpansionInputTokens",
+      "expression": "100_000_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 142,
+      "name": "maxVerificationInputTokens",
+      "expression": "100_000_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 142,
+      "name": "maxTotalInputTokens",
+      "expression": "100_000_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 143,
+      "name": "maxOutputTokensPerJob",
+      "expression": "6_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 145,
+      "name": "concurrency",
+      "expression": "4",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 145,
+      "name": "maxRetries",
+      "expression": "2",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "line": 146,
+      "name": "maxRetryAttemptsPerPhase",
+      "expression": "40",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-content-cache.ts",
+      "line": 38,
+      "name": "CACHE_READ_CONCURRENCY",
+      "expression": "16",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-execution-settings.ts",
+      "line": 46,
+      "name": "maxRetries",
+      "expression": "0",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+      "line": 33,
+      "name": "maxBundleBytes",
+      "expression": "4 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+      "line": 34,
+      "name": "maxContextFiles",
+      "expression": "48",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+      "line": 34,
+      "name": "maxInitialContextFiles",
+      "expression": "40",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+      "line": 34,
+      "name": "maxContextFileBytes",
+      "expression": "512 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+      "line": 35,
+      "name": "maxContextBytes",
+      "expression": "3 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+      "line": 35,
+      "name": "maxInitialContextBytes",
+      "expression": "2 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+      "line": 36,
+      "name": "maxExpansionFiles",
+      "expression": "8",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+      "line": 70,
+      "name": "maxBundleBytes",
+      "expression": "6 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+      "line": 71,
+      "name": "maxContextFiles",
+      "expression": "64",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+      "line": 71,
+      "name": "maxInitialContextFiles",
+      "expression": "52",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+      "line": 71,
+      "name": "maxContextFileBytes",
+      "expression": "768 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+      "line": 72,
+      "name": "maxContextBytes",
+      "expression": "5 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+      "line": 72,
+      "name": "maxInitialContextBytes",
+      "expression": "4 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+      "line": 73,
+      "name": "maxExpansionFiles",
+      "expression": "12",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+      "line": 104,
+      "name": "maxBundleBytes",
+      "expression": "16 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+      "line": 105,
+      "name": "maxContextFiles",
+      "expression": "256",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+      "line": 105,
+      "name": "maxInitialContextFiles",
+      "expression": "240",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+      "line": 105,
+      "name": "maxContextFileBytes",
+      "expression": "2 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+      "line": 106,
+      "name": "maxContextBytes",
+      "expression": "14 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+      "line": 106,
+      "name": "maxInitialContextBytes",
+      "expression": "12 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+      "line": 107,
+      "name": "maxExpansionFiles",
+      "expression": "16",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/scalable-review-compiler.ts",
+      "line": 93,
+      "name": "sortedTokens[Math.max(0, Math.ceil(sortedTokens.length * ratio) - 1)]",
+      "expression": "0",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/scalable-review-jobs.ts",
+      "line": 416,
+      "name": "maxOutputTokensPerJob",
+      "expression": "0",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/project/compiler.ts",
+      "line": 55,
+      "name": "maxTechnicalRetries",
+      "expression": "1",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/project/compiler.ts",
+      "line": 58,
+      "name": "timeoutMs",
+      "expression": "1_800_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/project/compiler.ts",
+      "line": 254,
+      "name": "maxConcurrency",
+      "expression": "1",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/project/coverage.ts",
+      "line": 62,
+      "name": "maxAttempts",
+      "expression": "2",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/project/coverage.ts",
+      "line": 62,
+      "name": "maxTechnicalRetries",
+      "expression": "1",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/project/demo.ts",
+      "line": 49,
+      "name": "maxAttempts",
+      "expression": "2",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/project/demo.ts",
+      "line": 49,
+      "name": "maxTechnicalRetries",
+      "expression": "1",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/project/source.ts",
+      "line": 64,
+      "name": "maxAttempts",
+      "expression": "1",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/project/source.ts",
+      "line": 78,
+      "name": "maxAttempts",
+      "expression": "2",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/project_setup/tools/progress-scaffold-discovery.ts",
+      "line": 186,
+      "name": "retries",
+      "expression": "1",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/project_setup/tools/progress-scaffold-discovery.ts",
+      "line": 218,
+      "name": "retries",
+      "expression": "0",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/project_setup/tools/progress-scaffold-discovery.ts",
+      "line": 226,
+      "name": "retries",
+      "expression": "0",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/project_setup/tools/progress-scaffold-discovery.ts",
+      "line": 262,
+      "name": "retries",
+      "expression": "0",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/project_setup/tools/progress-scaffold-discovery.ts",
+      "line": 289,
+      "name": "retries",
+      "expression": "0",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/project_setup/tools/progress-scaffold-discovery.ts",
+      "line": 349,
+      "name": "retries",
+      "expression": "2",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/project_setup/tools/progress-scaffold-discovery.ts",
+      "line": 357,
+      "name": "retries",
+      "expression": "1",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/project_setup/tools/progress-scaffold-discovery.ts",
+      "line": 362,
+      "name": "retries",
+      "expression": "0",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/project_setup/tools/progress-scaffold-discovery.ts",
+      "line": 438,
+      "name": "retries",
+      "expression": "0",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/project_setup/tools/progress-scaffold-values.ts",
+      "line": 33,
+      "name": "module_timeout_minutes",
+      "expression": "300",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/project_setup/tools/progress-scaffold-values.ts",
+      "line": 38,
+      "name": "review_timeout_minutes",
+      "expression": "45",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/nova/project_setup/tools/progress-scaffold-values.ts",
+      "line": 42,
+      "name": "buster_timeout_minutes",
+      "expression": "90",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/prism/config/database-bootstrap.ts",
+      "line": 10,
+      "name": "connectionTimeoutMs",
+      "expression": "5000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/prism/config/database-bootstrap.ts",
+      "line": 10,
+      "name": "maximumAttempts",
+      "expression": "60",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/prism/engine/design-providers.ts",
+      "line": 78,
+      "name": "options.timeoutMs",
+      "expression": "60_000",
+      "kind": "inline-fallback",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/prism/engine/execution-cache.ts",
+      "line": 9,
+      "name": "maximumCompletedBytes",
+      "expression": "16 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/prism/engine/worker-envelope.ts",
+      "line": 43,
+      "name": "timeoutMs",
+      "expression": "300_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/prism/engine/worker-envelope.ts",
+      "line": 43,
+      "name": "cleanupTimeoutMs",
+      "expression": "10_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/prism/server/agent-attempt.ts",
+      "line": 24,
+      "name": "timeoutMs",
+      "expression": "900_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/prism/server/agent-attempt.ts",
+      "line": 24,
+      "name": "cleanupTimeoutMs",
+      "expression": "10_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/prism/server/agent-bridge.mjs",
+      "line": 14,
+      "name": "AbortSignal.timeout",
+      "expression": "30_000",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/prism/server/agent-bridge.mjs",
+      "line": 26,
+      "name": "AbortSignal.timeout",
+      "expression": "10_000",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/prism/server/agent-bridge.mjs",
+      "line": 33,
+      "name": "setInterval",
+      "expression": "1000",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/prism/server/agent-job-runner.mjs",
+      "line": 28,
+      "name": "AbortSignal.timeout",
+      "expression": "10_000",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/prism/server/agent-job-runner.mjs",
+      "line": 44,
+      "name": "AbortSignal.timeout",
+      "expression": "10_000",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/prism/server/agent-process.ts",
+      "line": 33,
+      "name": "setTimeout",
+      "expression": "1000",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/prism/server/control-http.ts",
+      "line": 5,
+      "name": "maxBytes",
+      "expression": "2_000_000",
+      "kind": "parameter-default",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/prism/server/corpus-routes.ts",
+      "line": 155,
+      "name": "AbortSignal.timeout",
+      "expression": "30_000",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/prism/server/corpus-routes.ts",
+      "line": 216,
+      "name": "AbortSignal.timeout",
+      "expression": "10_000",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/prism/server/database-roles.ts",
+      "line": 10,
+      "name": "connectionTimeoutMillis",
+      "expression": "5000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/prism/server/product-controller.ts",
+      "line": 18,
+      "name": "AbortSignal.timeout",
+      "expression": "15_000",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/prism/studio/agent-revision-client.ts",
+      "line": 31,
+      "name": "setTimeout",
+      "expression": "2000",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/prism/studio/design-round-client.ts",
+      "line": 47,
+      "name": "setTimeout",
+      "expression": "2000",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/prism/studio/preview-assets.ts",
+      "line": 4,
+      "name": "MAX_BYTES",
+      "expression": "6_000_000",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/prism/studio/preview-assets.ts",
+      "line": 45,
+      "name": "AbortSignal.timeout",
+      "expression": "30_000",
+      "kind": "timer-call",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/worker/core/worker/attempt-executor.ts",
+      "line": 24,
+      "name": "MAX_ATTEMPT_ENVELOPE_BYTES",
+      "expression": "16 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/worker/core/worker/attempt-executor.ts",
+      "line": 25,
+      "name": "MAX_ATTEMPT_LOG_BYTES",
+      "expression": "16 * 1024 * 1024",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-capacity.ts",
+      "line": 7,
+      "name": "nativeJournalMaximumRecordBytes",
+      "expression": "65536",
+      "kind": "named-literal",
+      "status": "requires-semantic-review"
+    }
+  ]
+}

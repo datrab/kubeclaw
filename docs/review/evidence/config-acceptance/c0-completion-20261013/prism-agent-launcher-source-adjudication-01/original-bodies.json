@@ -1,0 +1,1855 @@
+{
+  "fields": [
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-timeoutMs",
+      "owner": "prism-agent-launcher",
+      "scope": {
+        "instance": "prism-agent-launcher",
+        "profile": "explicit selected complete launcher policy"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+      "source": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "field": "limits.timeoutMs",
+        "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+        "lines": [
+          24
+        ]
+      },
+      "current": {
+        "valueOrDefault": 900000,
+        "precedence": "fixed producer literal; no existing operator override"
+      },
+      "typeUnitDomain": "milliseconds; exact target supported domain not yet frozen",
+      "unit": "milliseconds",
+      "reader": "WorkerAttemptExecutor",
+      "productiveCallerChain": [
+        "Control agent claim transaction",
+        "agentAttempt",
+        "persisted attempt_envelope",
+        "AgentJobRunner.runOne",
+        "WorkerAttemptExecutor"
+      ],
+      "validation": {
+        "schema": "no current central launcher author",
+        "semantic": "Core validates accepted envelope limits; launcher prepare ignores limits and local CPU/memory/process measurements remain unavailable. Envelope timeout bounds local launcher, not authoritative cancellation of remote gateway/model."
+      },
+      "targetAuthorRef": "config/engines/prism-agent.config.json#/profiles/<selected>/limits.timeoutMs",
+      "activationScope": {
+        "current": "J: accepted agent attempt; persisted before external launch",
+        "target": "J: accepted agent attempt; persisted before external launch"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Core validates accepted envelope limits; launcher prepare ignores limits and local CPU/memory/process measurements remain unavailable. Envelope timeout bounds local launcher, not authoritative cancellation of remote gateway/model.",
+      "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+      "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-AGENT-LIMIT-timeoutMs-EFFECT",
+        "AUTH-PRISM-AGENT-C0-DEFINITION"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-agent-source-read.log"
+      ],
+      "semanticStatus": "source-traced",
+      "fragment": "author",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs",
+      "owner": "prism-agent-launcher",
+      "scope": {
+        "instance": "prism-agent-launcher",
+        "profile": "explicit selected complete launcher policy"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+      "source": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "field": "limits.cleanupTimeoutMs",
+        "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+        "lines": [
+          24
+        ]
+      },
+      "current": {
+        "valueOrDefault": 10000,
+        "precedence": "fixed producer literal; no existing operator override"
+      },
+      "typeUnitDomain": "milliseconds; exact target supported domain not yet frozen",
+      "unit": "milliseconds",
+      "reader": "WorkerAttemptExecutor",
+      "productiveCallerChain": [
+        "Control agent claim transaction",
+        "agentAttempt",
+        "persisted attempt_envelope",
+        "AgentJobRunner.runOne",
+        "WorkerAttemptExecutor"
+      ],
+      "validation": {
+        "schema": "no current central launcher author",
+        "semantic": "Core validates accepted envelope limits; launcher prepare ignores limits and local CPU/memory/process measurements remain unavailable. Envelope timeout bounds local launcher, not authoritative cancellation of remote gateway/model."
+      },
+      "targetAuthorRef": "config/engines/prism-agent.config.json#/profiles/<selected>/limits.cleanupTimeoutMs",
+      "activationScope": {
+        "current": "J: accepted agent attempt; persisted before external launch",
+        "target": "J: accepted agent attempt; persisted before external launch"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Core validates accepted envelope limits; launcher prepare ignores limits and local CPU/memory/process measurements remain unavailable. Envelope timeout bounds local launcher, not authoritative cancellation of remote gateway/model.",
+      "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+      "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs-EFFECT",
+        "AUTH-PRISM-AGENT-C0-DEFINITION"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-agent-source-read.log"
+      ],
+      "semanticStatus": "source-traced",
+      "fragment": "author",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-logBytes",
+      "owner": "prism-agent-launcher",
+      "scope": {
+        "instance": "prism-agent-launcher",
+        "profile": "explicit selected complete launcher policy"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+      "source": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "field": "limits.logBytes",
+        "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+        "lines": [
+          24
+        ]
+      },
+      "current": {
+        "valueOrDefault": 1048576,
+        "precedence": "fixed producer literal; no existing operator override"
+      },
+      "typeUnitDomain": "bytes; exact target supported domain not yet frozen",
+      "unit": "bytes",
+      "reader": "WorkerAttemptExecutor",
+      "productiveCallerChain": [
+        "Control agent claim transaction",
+        "agentAttempt",
+        "persisted attempt_envelope",
+        "AgentJobRunner.runOne",
+        "WorkerAttemptExecutor"
+      ],
+      "validation": {
+        "schema": "no current central launcher author",
+        "semantic": "Core validates accepted envelope limits; launcher prepare ignores limits and local CPU/memory/process measurements remain unavailable. Envelope timeout bounds local launcher, not authoritative cancellation of remote gateway/model."
+      },
+      "targetAuthorRef": "config/engines/prism-agent.config.json#/profiles/<selected>/limits.logBytes",
+      "activationScope": {
+        "current": "J: accepted agent attempt; persisted before external launch",
+        "target": "J: accepted agent attempt; persisted before external launch"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Core validates accepted envelope limits; launcher prepare ignores limits and local CPU/memory/process measurements remain unavailable. Envelope timeout bounds local launcher, not authoritative cancellation of remote gateway/model.",
+      "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+      "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-AGENT-LIMIT-logBytes-EFFECT",
+        "AUTH-PRISM-AGENT-C0-DEFINITION"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-agent-source-read.log"
+      ],
+      "semanticStatus": "source-traced",
+      "fragment": "author",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-resultBytes",
+      "owner": "prism-agent-launcher",
+      "scope": {
+        "instance": "prism-agent-launcher",
+        "profile": "explicit selected complete launcher policy"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+      "source": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "field": "limits.resultBytes",
+        "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+        "lines": [
+          24
+        ]
+      },
+      "current": {
+        "valueOrDefault": 1048576,
+        "precedence": "fixed producer literal; no existing operator override"
+      },
+      "typeUnitDomain": "bytes; exact target supported domain not yet frozen",
+      "unit": "bytes",
+      "reader": "WorkerAttemptExecutor",
+      "productiveCallerChain": [
+        "Control agent claim transaction",
+        "agentAttempt",
+        "persisted attempt_envelope",
+        "AgentJobRunner.runOne",
+        "WorkerAttemptExecutor"
+      ],
+      "validation": {
+        "schema": "no current central launcher author",
+        "semantic": "Core validates accepted envelope limits; launcher prepare ignores limits and local CPU/memory/process measurements remain unavailable. Envelope timeout bounds local launcher, not authoritative cancellation of remote gateway/model."
+      },
+      "targetAuthorRef": "config/engines/prism-agent.config.json#/profiles/<selected>/limits.resultBytes",
+      "activationScope": {
+        "current": "J: accepted agent attempt; persisted before external launch",
+        "target": "J: accepted agent attempt; persisted before external launch"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Core validates accepted envelope limits; launcher prepare ignores limits and local CPU/memory/process measurements remain unavailable. Envelope timeout bounds local launcher, not authoritative cancellation of remote gateway/model.",
+      "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+      "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-AGENT-LIMIT-resultBytes-EFFECT",
+        "AUTH-PRISM-AGENT-C0-DEFINITION"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-agent-source-read.log"
+      ],
+      "semanticStatus": "source-traced",
+      "fragment": "author",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-evidenceBytes",
+      "owner": "prism-agent-launcher",
+      "scope": {
+        "instance": "prism-agent-launcher",
+        "profile": "explicit selected complete launcher policy"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+      "source": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "field": "limits.evidenceBytes",
+        "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+        "lines": [
+          24
+        ]
+      },
+      "current": {
+        "valueOrDefault": 2097152,
+        "precedence": "fixed producer literal; no existing operator override"
+      },
+      "typeUnitDomain": "bytes; exact target supported domain not yet frozen",
+      "unit": "bytes",
+      "reader": "WorkerAttemptExecutor",
+      "productiveCallerChain": [
+        "Control agent claim transaction",
+        "agentAttempt",
+        "persisted attempt_envelope",
+        "AgentJobRunner.runOne",
+        "WorkerAttemptExecutor"
+      ],
+      "validation": {
+        "schema": "no current central launcher author",
+        "semantic": "Core validates accepted envelope limits; launcher prepare ignores limits and local CPU/memory/process measurements remain unavailable. Envelope timeout bounds local launcher, not authoritative cancellation of remote gateway/model."
+      },
+      "targetAuthorRef": "config/engines/prism-agent.config.json#/profiles/<selected>/limits.evidenceBytes",
+      "activationScope": {
+        "current": "J: accepted agent attempt; persisted before external launch",
+        "target": "J: accepted agent attempt; persisted before external launch"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Core validates accepted envelope limits; launcher prepare ignores limits and local CPU/memory/process measurements remain unavailable. Envelope timeout bounds local launcher, not authoritative cancellation of remote gateway/model.",
+      "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+      "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-AGENT-LIMIT-evidenceBytes-EFFECT",
+        "AUTH-PRISM-AGENT-C0-DEFINITION"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-agent-source-read.log"
+      ],
+      "semanticStatus": "source-traced",
+      "fragment": "author",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-evidenceFiles",
+      "owner": "prism-agent-launcher",
+      "scope": {
+        "instance": "prism-agent-launcher",
+        "profile": "explicit selected complete launcher policy"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+      "source": {
+        "path": "skills/prism/server/agent-attempt.ts",
+        "field": "limits.evidenceFiles",
+        "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+        "lines": [
+          24
+        ]
+      },
+      "current": {
+        "valueOrDefault": 2,
+        "precedence": "fixed producer literal; no existing operator override"
+      },
+      "typeUnitDomain": "files; exact target supported domain not yet frozen",
+      "unit": "files",
+      "reader": "WorkerAttemptExecutor",
+      "productiveCallerChain": [
+        "Control agent claim transaction",
+        "agentAttempt",
+        "persisted attempt_envelope",
+        "AgentJobRunner.runOne",
+        "WorkerAttemptExecutor"
+      ],
+      "validation": {
+        "schema": "no current central launcher author",
+        "semantic": "Core validates accepted envelope limits; launcher prepare ignores limits and local CPU/memory/process measurements remain unavailable. Envelope timeout bounds local launcher, not authoritative cancellation of remote gateway/model."
+      },
+      "targetAuthorRef": "config/engines/prism-agent.config.json#/profiles/<selected>/limits.evidenceFiles",
+      "activationScope": {
+        "current": "J: accepted agent attempt; persisted before external launch",
+        "target": "J: accepted agent attempt; persisted before external launch"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Core validates accepted envelope limits; launcher prepare ignores limits and local CPU/memory/process measurements remain unavailable. Envelope timeout bounds local launcher, not authoritative cancellation of remote gateway/model.",
+      "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+      "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-AGENT-LIMIT-evidenceFiles-EFFECT",
+        "AUTH-PRISM-AGENT-C0-DEFINITION"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-agent-source-read.log"
+      ],
+      "semanticStatus": "source-traced",
+      "fragment": "author",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-CLAIM-LIFETIME",
+      "owner": "prism-agent-launcher",
+      "scope": {
+        "instance": "prism-agent-launcher",
+        "profile": "explicit selected complete launcher policy"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+      "source": {
+        "path": "skills/prism/control/agent-jobs.ts",
+        "field": "claimLifetimeMs",
+        "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334",
+        "lines": [
+          48
+        ]
+      },
+      "current": {
+        "valueOrDefault": 960000,
+        "precedence": "fixed producer literal; no existing operator override"
+      },
+      "typeUnitDomain": "milliseconds; exact target supported domain not yet frozen",
+      "unit": "milliseconds",
+      "reader": "lockAgentResult",
+      "productiveCallerChain": [
+        "authenticated agent-job-routes claim",
+        "claimAgentJob transaction",
+        "clock_timestamp + interval",
+        "agentAttempt claim/queueDeadline",
+        "lockAgentResult"
+      ],
+      "validation": {
+        "schema": "no current central launcher author",
+        "semantic": "Fixed SQL interval; expired running job becomes needs_nova, never accepted/requeued. Result commit requires live fenced claim."
+      },
+      "targetAuthorRef": "config/engines/prism-agent.config.json#/profiles/<selected>/claimLifetimeMs",
+      "activationScope": {
+        "current": "J: durable database claim; never reset by recovery/retry",
+        "target": "J: durable database claim; never reset by recovery/retry"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Fixed SQL interval; expired running job becomes needs_nova, never accepted/requeued. Result commit requires live fenced claim.",
+      "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+      "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-AGENT-CLAIM-LIFETIME-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-agent-source-read.log"
+      ],
+      "semanticStatus": "source-traced",
+      "fragment": "author",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-KILL-GRACE",
+      "owner": "prism-agent-launcher",
+      "scope": {
+        "instance": "prism-agent-launcher",
+        "profile": "explicit selected complete launcher policy"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+      "source": {
+        "path": "skills/prism/server/agent-process.ts",
+        "field": "terminationGraceMs",
+        "sha256": "1d3486c1ada0851150257a4ef197d62f523924e2c01da3e7a7c53ad06fb1102b",
+        "lines": [
+          33
+        ]
+      },
+      "current": {
+        "valueOrDefault": 1000,
+        "precedence": "fixed producer literal; no existing operator override"
+      },
+      "typeUnitDomain": "milliseconds; exact target supported domain not yet frozen",
+      "unit": "milliseconds",
+      "reader": "negative process-group PID signal",
+      "productiveCallerChain": [
+        "AgentJobRunner.runOne",
+        "WorkerAttemptExecutor termination",
+        "AgentProcess.terminate",
+        "negative process-group PID signal"
+      ],
+      "validation": {
+        "schema": "no current central launcher author",
+        "semantic": "Fixed delay, ESRCH ignored only; waits actual child close. This does not cancel remote gateway work."
+      },
+      "targetAuthorRef": "config/engines/prism-agent.config.json#/profiles/<selected>/terminationGraceMs",
+      "activationScope": {
+        "current": "J: launcher operation inherits accepted cleanup policy; SIGTERM-to-SIGKILL grace is currently independent",
+        "target": "J: launcher operation inherits accepted cleanup policy; SIGTERM-to-SIGKILL grace is currently independent"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Fixed delay, ESRCH ignored only; waits actual child close. This does not cancel remote gateway work.",
+      "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+      "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-AGENT-KILL-GRACE-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-agent-source-read.log"
+      ],
+      "semanticStatus": "source-traced",
+      "fragment": "author",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-CLI-TIMEOUT",
+      "owner": "prism-agent-launcher",
+      "scope": {
+        "instance": "prism-agent-launcher",
+        "profile": "explicit selected complete launcher policy"
+      },
+      "class": "generated-binding",
+      "classificationReason": "Target CLI seconds must be an exact validated projection of sole accepted launcher timeoutMs author, not a second independently editable timeout. Current fixed 900 seconds and 900000 ms are two code literals, not proven single authority.",
+      "source": {
+        "path": "skills/prism/server/agent-job-runner.mjs",
+        "field": "cliTimeoutSeconds",
+        "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+        "lines": [
+          38
+        ]
+      },
+      "current": {
+        "valueOrDefault": 900,
+        "precedence": "fixed producer literal; no existing operator override"
+      },
+      "typeUnitDomain": "seconds; exact target supported domain not yet frozen",
+      "unit": "seconds",
+      "reader": "spawn openclaw agent --timeout",
+      "productiveCallerChain": [
+        "AgentJobRunner.runOne",
+        "AgentProcess constructor",
+        "spawn openclaw agent --timeout"
+      ],
+      "validation": {
+        "schema": "no current central launcher author",
+        "semantic": "Current fixed CLI argument; external pinned OpenClaw parser owns supported domain. Must relate seconds to Core milliseconds and DB claim margin; no guessed domain."
+      },
+      "targetAuthorRef": "alias:AUTH-PRISM-AGENT-LIMIT-timeoutMs; validated milliseconds-to-seconds projection",
+      "activationScope": {
+        "current": "J: launch args bound to accepted agent policy",
+        "target": "J: launch args bound to accepted agent policy"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Current fixed CLI argument; external pinned OpenClaw parser owns supported domain. Must relate seconds to Core milliseconds and DB claim margin; no guessed domain.",
+      "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+      "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-AGENT-CLI-TIMEOUT-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-agent-source-read.log"
+      ],
+      "semanticStatus": "source-traced",
+      "sharedAuthoritySettingId": "AUTH-PRISM-AGENT-LIMIT-timeoutMs",
+      "fragment": "author",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-CLI-OWNER",
+      "owner": "prism-agent-launcher",
+      "scope": {
+        "instance": "prism-agent-launcher",
+        "profile": "explicit selected complete launcher policy"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+      "source": {
+        "path": "skills/prism/server/agent-job-runner.mjs",
+        "field": "agentId",
+        "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+        "lines": [
+          38
+        ]
+      },
+      "current": {
+        "valueOrDefault": "main",
+        "precedence": "fixed producer literal; no existing operator override"
+      },
+      "typeUnitDomain": "agent identity; exact target supported domain not yet frozen",
+      "unit": "agent identity",
+      "reader": "OpenClaw agent --agent",
+      "productiveCallerChain": [
+        "AgentJobRunner.runOne",
+        "AgentProcess spawn",
+        "OpenClaw agent --agent"
+      ],
+      "validation": {
+        "schema": "no current central launcher author",
+        "semantic": "Current fixed main; external installed agent roster required for alternate valid identity. Session key generated from namespace/project is task binding, not operator author."
+      },
+      "targetAuthorRef": "config/engines/prism-agent.config.json#/profiles/<selected>/agentId",
+      "activationScope": {
+        "current": "J: external gateway agent selection is fixed for accepted job/session",
+        "target": "J: external gateway agent selection is fixed for accepted job/session"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Current fixed main; external installed agent roster required for alternate valid identity. Session key generated from namespace/project is task binding, not operator author.",
+      "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+      "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-AGENT-CLI-OWNER-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-agent-source-read.log"
+      ],
+      "semanticStatus": "source-traced",
+      "fragment": "author",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-CLAIM-HTTP",
+      "owner": "prism-agent-launcher",
+      "scope": {
+        "instance": "prism-agent-launcher",
+        "profile": "explicit selected complete launcher policy"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+      "source": {
+        "path": "skills/prism/server/agent-job-runner.mjs",
+        "field": "claimHttpTimeoutMs",
+        "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+        "lines": [
+          28
+        ]
+      },
+      "current": {
+        "valueOrDefault": 10000,
+        "precedence": "fixed producer literal; no existing operator override"
+      },
+      "typeUnitDomain": "milliseconds; exact target supported domain not yet frozen",
+      "unit": "milliseconds",
+      "reader": "fetch AbortSignal.timeout",
+      "productiveCallerChain": [
+        "AgentJobRunner.tick/runOne",
+        "controlRequest claim",
+        "fetch AbortSignal.timeout"
+      ],
+      "validation": {
+        "schema": "no current central launcher author",
+        "semantic": "Fixed timeout; response must be ok JSON; claim may already be durable when transport fails. Next tick only obtains accepted unstarted work; running remains fenced."
+      },
+      "targetAuthorRef": "config/engines/prism-agent.config.json#/profiles/<selected>/claimHttpTimeoutMs",
+      "activationScope": {
+        "current": "S: runner transport policy; no retry may replay uncertain claim",
+        "target": "S: runner transport policy; no retry may replay uncertain claim"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Fixed timeout; response must be ok JSON; claim may already be durable when transport fails. Next tick only obtains accepted unstarted work; running remains fenced.",
+      "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+      "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-AGENT-CLAIM-HTTP-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-agent-source-read.log"
+      ],
+      "semanticStatus": "source-traced",
+      "fragment": "author",
+      "reviewerConfirmation": null
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-FINISH-HTTP",
+      "owner": "prism-agent-launcher",
+      "scope": {
+        "instance": "prism-agent-launcher",
+        "profile": "explicit selected complete launcher policy"
+      },
+      "class": "operator-setting",
+      "classificationReason": "Launcher-specific operator policy, not deterministic-engine quota or remote resource guarantee.",
+      "source": {
+        "path": "skills/prism/server/agent-job-runner.mjs",
+        "field": "finishHttpTimeoutMs",
+        "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+        "lines": [
+          44
+        ]
+      },
+      "current": {
+        "valueOrDefault": 10000,
+        "precedence": "fixed producer literal; no existing operator override"
+      },
+      "typeUnitDomain": "milliseconds; exact target supported domain not yet frozen",
+      "unit": "milliseconds",
+      "reader": "finishAgentRun fenced transaction",
+      "productiveCallerChain": [
+        "AgentJobRunner.runOne",
+        "controlRequest finish",
+        "finishAgentRun fenced transaction"
+      ],
+      "validation": {
+        "schema": "no current central launcher author",
+        "semantic": "Fixed timeout after local result; Control receipt validates against accepted envelope. Network failure cannot establish remote failure or authorize repeat launch."
+      },
+      "targetAuthorRef": "config/engines/prism-agent.config.json#/profiles/<selected>/finishHttpTimeoutMs",
+      "activationScope": {
+        "current": "S: runner transport policy; accepted attempt/claim not replaced",
+        "target": "S: runner transport policy; accepted attempt/claim not replaced"
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Fixed timeout after local result; Control receipt validates against accepted envelope. Network failure cannot establish remote failure or authorize repeat launch.",
+      "profileEvalSuitability": "fixed selected generation for Eval; no paid calls or complete Evalrunner claimed",
+      "migrationAction": "C3 explicit profile/real composition; C5 persist operation/parent-module closure without overwriting history",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F1",
+        "F3a",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-AGENT-FINISH-HTTP-EFFECT"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-agent-source-read.log"
+      ],
+      "semanticStatus": "source-traced",
+      "fragment": "author",
+      "reviewerConfirmation": null
+    }
+  ],
+  "cases": [
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-timeoutMs-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-AGENT-LIMIT-timeoutMs"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "C0-D",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "scope": "local",
+      "phase": "implementation-proposal",
+      "productiveCaller": [
+        "Control agent claim transaction",
+        "agentAttempt",
+        "persisted attempt_envelope",
+        "AgentJobRunner.runOne",
+        "WorkerAttemptExecutor"
+      ],
+      "inputProfile": {
+        "current": 900000,
+        "alternative": "complete launcher profile and supported domain pending"
+      },
+      "priorState": "accepted unstarted fenced job; no started job retargeted",
+      "expectedEffectOrRejectingBoundary": "Different complete selected limits reach accepted envelope and local Core enforcement. Observe bound V2 receipt and fenced Control result; local CLI close alone cannot prove external success.",
+      "observerMethod": "real Control transaction, launcher process and bound receipt; remote gateway observations only for live cases",
+      "command": null,
+      "sourceIdentity": {
+        "sources": [
+          {
+            "path": "skills/prism/server/agent-attempt.ts",
+            "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8"
+          },
+          {
+            "path": "skills/prism/control/agent-jobs.ts",
+            "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334"
+          },
+          {
+            "path": "skills/prism/server/agent-process.ts",
+            "sha256": "1d3486c1ada0851150257a4ef197d62f523924e2c01da3e7a7c53ad06fb1102b"
+          },
+          {
+            "path": "skills/prism/server/agent-job-runner.mjs",
+            "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb"
+          },
+          {
+            "path": "skills/prism/server/agent-bridge.mjs",
+            "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "C3/C4/C5 not approved; exact future harness/domain/profile pending",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-C0-DEFINITION",
+      "settingIds": [
+        "AUTH-PRISM-AGENT-LIMIT-timeoutMs",
+        "AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs",
+        "AUTH-PRISM-AGENT-LIMIT-logBytes",
+        "AUTH-PRISM-AGENT-LIMIT-resultBytes",
+        "AUTH-PRISM-AGENT-LIMIT-evidenceBytes",
+        "AUTH-PRISM-AGENT-LIMIT-evidenceFiles"
+      ],
+      "requirementIds": [
+        "C0-A",
+        "C0-C",
+        "A2",
+        "A5"
+      ],
+      "scope": "local",
+      "phase": "C0",
+      "productiveCaller": [
+        "agentAttempt real producer",
+        "checkWorkerResourceContractV2 real installed validator"
+      ],
+      "inputProfile": "fixed no-secret synthetic accepted job, current real launcher profile only",
+      "priorState": "no dispatch, empty job request; future expiry, generated issuedAt",
+      "expectedEffectOrRejectingBoundary": "14 exact current definition observations, including actual V2 positive, V1 negative, missing explicit budget and wrong-unit rejection; does not prove launch/effect",
+      "observerMethod": [
+        {
+          "id": "real-producer-v2-schema",
+          "result": "passed"
+        },
+        {
+          "id": "not-native-v1",
+          "result": "passed"
+        },
+        {
+          "id": "exact-six-local-limits",
+          "result": "passed"
+        },
+        {
+          "id": "claim-preserved-not-new-deadline",
+          "result": "passed"
+        },
+        {
+          "id": "queue-deadline-same-claim",
+          "result": "passed"
+        },
+        {
+          "id": "actual-profile-and-attempt-digests",
+          "result": "passed"
+        },
+        {
+          "id": "unavailable-not-fabricated-cpuTimeMs",
+          "result": "passed"
+        },
+        {
+          "id": "unrequested-not-zero-budget-cpuTimeMs",
+          "result": "passed"
+        },
+        {
+          "id": "unavailable-not-fabricated-maximumMemoryBytes",
+          "result": "passed"
+        },
+        {
+          "id": "unrequested-not-zero-budget-maximumMemoryBytes",
+          "result": "passed"
+        },
+        {
+          "id": "unavailable-not-fabricated-maximumProcesses",
+          "result": "passed"
+        },
+        {
+          "id": "unrequested-not-zero-budget-maximumProcesses",
+          "result": "passed"
+        },
+        {
+          "id": "missing-explicit-budget-rejected",
+          "result": "passed"
+        },
+        {
+          "id": "wrong-process-unit-rejected",
+          "result": "passed"
+        }
+      ],
+      "command": "node docs/review/evidence/config-acceptance/author/check-agent-definition.mjs",
+      "sourceIdentity": {
+        "kind": "identity",
+        "node": "v24.21.0",
+        "head": "a07de5673e24ba99109833120d94417ebb0fc407",
+        "tree": "583a342afd982242d17788fc2d64bbe8b7fca7ef",
+        "dirtyStand": {
+          "patchPath": "docs/review/evidence/config-acceptance/author/agent-definition-stand.patch",
+          "patchSha256": "d4e9c862232e927824da2fb4b53473e330d4e9e9119f6cd97c03ea43d12dc775",
+          "untrackedInputs": [
+            {
+              "path": "docs/review/evidence/config-acceptance/author/agent-definition-stand.patch",
+              "sha256": "d4e9c862232e927824da2fb4b53473e330d4e9e9119f6cd97c03ea43d12dc775"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/author/check-agent-definition.mjs",
+              "sha256": "3238097a066c7a348c53dc92e17ae2a394e6a7f10fb3fc0230d15f7bee55a311"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/author/extend-prism-agent.py",
+              "sha256": "80fbd54a08c019f37b43c069fe71bf7341dd6db52341415803b79ba66bf7ba15"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/components/RESIDUAL.md",
+              "sha256": "ffcededb1e0fcd5aa21d6afae043564b4ecc20bf62406b89b2aacb3e1529d052"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/components/check-residual.py",
+              "sha256": "54cfd7a68ddfe9f0c120a9971478f735f4fdfb2b2edbe29c465ae6e3842b90ce"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/components/complete-residual-links.py",
+              "sha256": "f6f4083677310470f9459a9cc508c7839357277b4c2a1bed57dac2cea57cdacd"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/components/refine-case-boundaries.py",
+              "sha256": "8d05e62088c91fff22ceab4c36a3aa067e714128dd4fa2c5f895f897860d2d5e"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/components/refined-case-profiles.json",
+              "sha256": "5e7aed5cfda6c010bfb2c27b4dd5ee20714d5993229928c048f231a45556a0da"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/components/residual-cases.py",
+              "sha256": "2dffd6f21a26d3c3839678cd31bb30d4a483194c114d5f2d8d3ff04adaa38cac"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/components/residual-collect.py",
+              "sha256": "130e17f94efb20e5d1ba434e1b56cacfe4f5f4742bb1b9359e83876fe0b0ce32"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/components/residual-fragment.json",
+              "sha256": "ff2449c6333aef2c5c8bbaec1ca3bee50e3c44be157c54f887e46a67c92fcca3"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/components/residual-policy-corrections.py",
+              "sha256": "6c60db792eb6f6bee41fc862b576897593c07737a244ec276da38d84000d2960"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/components/schema-semantic-closure.json",
+              "sha256": "97617a6fd58c6eed7bba6fe08ff994d52dd710315ccdca59a8ca2594202694a9"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/components/schema-semantics.py",
+              "sha256": "9454ad5f3ee43f7c7dfbdcda35776d3a826db961cf4d77eb84f667182bd13015"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/components/supported-domain-corrections.json",
+              "sha256": "89240eb9cf49e03faddcc43365188d61cc0880b19724547304f0a06a05a16ed7"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/components/validate-profile-definitions.mjs",
+              "sha256": "0c099cc571b1c206b30bc36d381a14d7a15af98afdff5d5254f480cf6f34c549"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/components/validate-refined-profile-definitions.mjs",
+              "sha256": "c68e6b7fae7d296c85a255c49b1e93b76c438d18b1ad0264b43f5fc9f5b6dddd"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/components/validate-schema-definitions.mjs",
+              "sha256": "1b48ff68f9eb0e218182b7b86c7782855d0a81ec0c8b9dc4b4446ed806d98521"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/components/worker-api-dispositions.json",
+              "sha256": "05fd802d66dfa6fca20a7dae50790976ace2a8ae21b08a0f1de3928ede496223"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/components/worker-api-dispositions.py",
+              "sha256": "a0e91a453e6bf548431f0df41d060b8bb7316b75cd40e817db3f938fe498fbb5"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/components/worker-api-roster.json",
+              "sha256": "758a0089452de8f743920a245af7022d9fd5b5f6ed35047c96912eda51f9cce4"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/components/worker-api-roster.mjs",
+              "sha256": "5d4a90538839cb7dfe25de01007e3d1d56422e1b4f552ae1d0d001857758a225"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/acpx-runtime-acquisition.json",
+              "sha256": "d088d70fdde723131b649c7b80837953c32a60e996b5ffefc7b6467c9f32fb8c"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/codex-pinned-package-metadata.json",
+              "sha256": "89c06faf45a7025b436d87cedb5b69f72f6f85669152cc39edc75ffa7a9b8aad"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/official-plugin-pinned-acquisitions.json",
+              "sha256": "0e3b294e55492aa8faf05bc6e63047e5af5276f6da3f27d64dfe7acdca17d203"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/openclaw-pinned-acquisition.json",
+              "sha256": "d62487aff4064c85a82b1dde785e4d43f5848bb885b9bbf556d5ddc7f7025be1"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/openclaw-pinned-observations.json",
+              "sha256": "2fb5a3ecde57e055c176452b5617dfa7fe164235e36dc5234c64cfd0c2b14dbe"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/openclaw-pinned-package-metadata.json",
+              "sha256": "95f6dd4a7d2393d83c35f3e72b262a48d9a334a62dd5f2bbff60a18cb45c8fef"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/ops-chart-existing-tests.txt",
+              "sha256": "c64c8a362dfba312cc83f38e78f441d809fd8faf5c3021facee2fb109b2b79b6"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/pinned-unused-inbound-worker-search.json",
+              "sha256": "ab4322245707608d9a920de4d94b59bb6c5246826e180a2a7b4f2a0c2fcabf5a"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/refine-ops-delivery.py",
+              "sha256": "1f53cb61ee9898b266225a0c84e9324d4e9bb2391aafc49a2e79d6f4f6cfc0a8"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/refine-pinned-openclaw.py",
+              "sha256": "94f019ec9cc50f2a2033bff90fa37021f842601aab59dde39bee91ed442fb907"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/refine-semantic-closure.py",
+              "sha256": "d7bfe38d49d1068eb6af9e10632e9b92645f224d502c82911a898fb256bb018d"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/delivery/semantic-closure-source-observations.json",
+              "sha256": "bcc001f2021f8f9a955ce7d675def527d0a2742f6d6365de4b0394701db54ed3"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/runtime/checkpoints/runtime-closure-input/case-proposals.json",
+              "sha256": "d53208ee94c4ad6dbdc3b0886c30730a8722117186b202f20aa8f6fb63c494d5"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/runtime/checkpoints/runtime-closure-input/common-field-case-proposals.json",
+              "sha256": "39b77ece1a7dbb2a0a0b83573295e3c5134684612d28185dcc34b60ff5e18432"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/runtime/checkpoints/runtime-closure-input/inventory-fragment.json",
+              "sha256": "e3705b52117ca828c5093016eb4faa610ef9b68d5a92f60807b7fc2e76ec3621"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/runtime/common-case-integration.json",
+              "sha256": "a64b09e9c50d8e9d4d3566aa7253cc012bc162455dfce2bb699e629b86ca8dbe"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/runtime/common-complete-profiles.json",
+              "sha256": "559b933f31f02ac6940ebaa1246037cae47a8a79fb67df313aa0c716cb75f0b8"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/runtime/common-current-schema-observations.json",
+              "sha256": "ca0dd85cf6087524fdb0ebbba8a3a70a46a1dd4d050b44c52d6d54112037a4da"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/runtime/common-current-schema-profiles.json",
+              "sha256": "5570fb0b228360abb92ab9f99cb38c7eecce89051a56dded8db2658319b024da"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/runtime/common-field-case-proposals.json",
+              "sha256": "5a95c14ab85be967aff1704a3c0a73a16c71159890af622d3d9228fb5799ae66"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/runtime/common-field-contract-table.json",
+              "sha256": "e861b2b8d54a4616a850e001dee3ea423da931359c3d52380651b380cbcb2f82"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/runtime/common-field-contracts.py",
+              "sha256": "1f93788e8dce8721912d084839ad676d54cc5bb990f88fc91f1d6532b7b29ea9"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/runtime/common-field-progress.json",
+              "sha256": "07f7a8e156f5fa556c5edc38a5a14d8a2035de229a4c590c7da2866d39a7cc38"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/runtime/common-profile-schema-observations.json",
+              "sha256": "f7339721d292099b3a6bfdee2cf1ab40111ae2e74ff62e2cc911d0b4d8d715de"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/runtime/common-rest.snippet",
+              "sha256": "1b3d1c78a97bee5b419e5c4fe13cfaa5e88759f7f49992d5f60b38267bd919fd"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/runtime/compiler-domain-observations.json",
+              "sha256": "a939577ff03455dd7766c08854779d1b6c587c951a23df9f8becf59c8f714767"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/runtime/compiler-domain-probes.mjs",
+              "sha256": "7f0ca68db43cc7f8565e76bf0697d3164d76e20823e00699dc052aca26845055"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/runtime/integrate-common-cases.py",
+              "sha256": "53b09b0743ee53c13f87a29db5e479ddf3ef4331931ea31196a7f4820c971333"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/runtime/validate-common-profiles.mjs",
+              "sha256": "614bbfa845fe9a647c8de11a18770dc43f3b88913151404ba26d8ce88b7f85be"
+            },
+            {
+              "path": "docs/review/evidence/config-acceptance/runtime/validate-current-common-profiles.mjs",
+              "sha256": "124a8ed3e3a0e72e6632eecd2eb403293e4e2a5ceb7aa1b7adbc5fac26532d3a"
+            }
+          ]
+        },
+        "sources": [
+          {
+            "path": "docs/review/evidence/config-acceptance/author/check-agent-definition.mjs",
+            "sha256": "3238097a066c7a348c53dc92e17ae2a394e6a7f10fb3fc0230d15f7bee55a311"
+          },
+          {
+            "path": "skills/prism/server/agent-attempt.ts",
+            "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8"
+          },
+          {
+            "path": "skills/prism/server/agent-process.ts",
+            "sha256": "1d3486c1ada0851150257a4ef197d62f523924e2c01da3e7a7c53ad06fb1102b"
+          },
+          {
+            "path": "skills/prism/server/agent-job-runner.mjs",
+            "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb"
+          },
+          {
+            "path": "skills/prism/server/agent-prompt.mjs",
+            "sha256": "3bcd6b4b2bb25d82c9ec767a03fd08ea1c17420eca3ce1742410359ed2d1aea9"
+          },
+          {
+            "path": "skills/prism/server/preference-prompt.mjs",
+            "sha256": "0a607949b4ae13bd5636cc02798e63bbcb8aae9f7b944f3bea9ea47a8f40e145"
+          },
+          {
+            "path": "skills/prism/control/agent-jobs.ts",
+            "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334"
+          },
+          {
+            "path": "package-lock.json",
+            "sha256": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+          }
+        ]
+      },
+      "testDigests": [
+        {
+          "path": "docs/review/evidence/config-acceptance/author/check-agent-definition.mjs",
+          "sha256": "3238097a066c7a348c53dc92e17ae2a394e6a7f10fb3fc0230d15f7bee55a311"
+        }
+      ],
+      "toolDependencyImageConfigIdentities": {
+        "node": "v24.21.0",
+        "packageLock": {
+          "path": "package-lock.json",
+          "sha256": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+        },
+        "profileDigest": "sha256:b9f17efc898888cfd75686688f1440a01ebdf7bea39fa038064ddaee3dd401da",
+        "attemptSpecDigest": "sha256:9903b053029747235dfa15c4939174fa6582cf0cc77cb640df8ad93ab7e80418"
+      },
+      "rawEvidencePath": "docs/review/evidence/config-acceptance/author/agent-definition.log",
+      "result": "passed",
+      "reason": "actual definition observation only; independent review pending",
+      "reviewerConfirmation": null,
+      "specificationStatus": "executed-definition-review-open",
+      "rawEvidenceSha256": "fbfd4c55c16e1c3f11c9fcc64f043f858aab59277f866143a98ebf169da524db"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "C0-D",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "scope": "local",
+      "phase": "implementation-proposal",
+      "productiveCaller": [
+        "Control agent claim transaction",
+        "agentAttempt",
+        "persisted attempt_envelope",
+        "AgentJobRunner.runOne",
+        "WorkerAttemptExecutor"
+      ],
+      "inputProfile": {
+        "current": 10000,
+        "alternative": "complete launcher profile and supported domain pending"
+      },
+      "priorState": "accepted unstarted fenced job; no started job retargeted",
+      "expectedEffectOrRejectingBoundary": "Different complete selected limits reach accepted envelope and local Core enforcement. Observe bound V2 receipt and fenced Control result; local CLI close alone cannot prove external success.",
+      "observerMethod": "real Control transaction, launcher process and bound receipt; remote gateway observations only for live cases",
+      "command": null,
+      "sourceIdentity": {
+        "sources": [
+          {
+            "path": "skills/prism/server/agent-attempt.ts",
+            "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8"
+          },
+          {
+            "path": "skills/prism/control/agent-jobs.ts",
+            "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334"
+          },
+          {
+            "path": "skills/prism/server/agent-process.ts",
+            "sha256": "1d3486c1ada0851150257a4ef197d62f523924e2c01da3e7a7c53ad06fb1102b"
+          },
+          {
+            "path": "skills/prism/server/agent-job-runner.mjs",
+            "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb"
+          },
+          {
+            "path": "skills/prism/server/agent-bridge.mjs",
+            "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "C3/C4/C5 not approved; exact future harness/domain/profile pending",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-logBytes-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-AGENT-LIMIT-logBytes"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "C0-D",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "scope": "local",
+      "phase": "implementation-proposal",
+      "productiveCaller": [
+        "Control agent claim transaction",
+        "agentAttempt",
+        "persisted attempt_envelope",
+        "AgentJobRunner.runOne",
+        "WorkerAttemptExecutor"
+      ],
+      "inputProfile": {
+        "current": 1048576,
+        "alternative": "complete launcher profile and supported domain pending"
+      },
+      "priorState": "accepted unstarted fenced job; no started job retargeted",
+      "expectedEffectOrRejectingBoundary": "Different complete selected limits reach accepted envelope and local Core enforcement. Observe bound V2 receipt and fenced Control result; local CLI close alone cannot prove external success.",
+      "observerMethod": "real Control transaction, launcher process and bound receipt; remote gateway observations only for live cases",
+      "command": null,
+      "sourceIdentity": {
+        "sources": [
+          {
+            "path": "skills/prism/server/agent-attempt.ts",
+            "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8"
+          },
+          {
+            "path": "skills/prism/control/agent-jobs.ts",
+            "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334"
+          },
+          {
+            "path": "skills/prism/server/agent-process.ts",
+            "sha256": "1d3486c1ada0851150257a4ef197d62f523924e2c01da3e7a7c53ad06fb1102b"
+          },
+          {
+            "path": "skills/prism/server/agent-job-runner.mjs",
+            "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb"
+          },
+          {
+            "path": "skills/prism/server/agent-bridge.mjs",
+            "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "C3/C4/C5 not approved; exact future harness/domain/profile pending",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-resultBytes-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-AGENT-LIMIT-resultBytes"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "C0-D",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "scope": "local",
+      "phase": "implementation-proposal",
+      "productiveCaller": [
+        "Control agent claim transaction",
+        "agentAttempt",
+        "persisted attempt_envelope",
+        "AgentJobRunner.runOne",
+        "WorkerAttemptExecutor"
+      ],
+      "inputProfile": {
+        "current": 1048576,
+        "alternative": "complete launcher profile and supported domain pending"
+      },
+      "priorState": "accepted unstarted fenced job; no started job retargeted",
+      "expectedEffectOrRejectingBoundary": "Different complete selected limits reach accepted envelope and local Core enforcement. Observe bound V2 receipt and fenced Control result; local CLI close alone cannot prove external success.",
+      "observerMethod": "real Control transaction, launcher process and bound receipt; remote gateway observations only for live cases",
+      "command": null,
+      "sourceIdentity": {
+        "sources": [
+          {
+            "path": "skills/prism/server/agent-attempt.ts",
+            "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8"
+          },
+          {
+            "path": "skills/prism/control/agent-jobs.ts",
+            "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334"
+          },
+          {
+            "path": "skills/prism/server/agent-process.ts",
+            "sha256": "1d3486c1ada0851150257a4ef197d62f523924e2c01da3e7a7c53ad06fb1102b"
+          },
+          {
+            "path": "skills/prism/server/agent-job-runner.mjs",
+            "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb"
+          },
+          {
+            "path": "skills/prism/server/agent-bridge.mjs",
+            "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "C3/C4/C5 not approved; exact future harness/domain/profile pending",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-evidenceBytes-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-AGENT-LIMIT-evidenceBytes"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "C0-D",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "scope": "local",
+      "phase": "implementation-proposal",
+      "productiveCaller": [
+        "Control agent claim transaction",
+        "agentAttempt",
+        "persisted attempt_envelope",
+        "AgentJobRunner.runOne",
+        "WorkerAttemptExecutor"
+      ],
+      "inputProfile": {
+        "current": 2097152,
+        "alternative": "complete launcher profile and supported domain pending"
+      },
+      "priorState": "accepted unstarted fenced job; no started job retargeted",
+      "expectedEffectOrRejectingBoundary": "Different complete selected limits reach accepted envelope and local Core enforcement. Observe bound V2 receipt and fenced Control result; local CLI close alone cannot prove external success.",
+      "observerMethod": "real Control transaction, launcher process and bound receipt; remote gateway observations only for live cases",
+      "command": null,
+      "sourceIdentity": {
+        "sources": [
+          {
+            "path": "skills/prism/server/agent-attempt.ts",
+            "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8"
+          },
+          {
+            "path": "skills/prism/control/agent-jobs.ts",
+            "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334"
+          },
+          {
+            "path": "skills/prism/server/agent-process.ts",
+            "sha256": "1d3486c1ada0851150257a4ef197d62f523924e2c01da3e7a7c53ad06fb1102b"
+          },
+          {
+            "path": "skills/prism/server/agent-job-runner.mjs",
+            "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb"
+          },
+          {
+            "path": "skills/prism/server/agent-bridge.mjs",
+            "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "C3/C4/C5 not approved; exact future harness/domain/profile pending",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-LIMIT-evidenceFiles-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-AGENT-LIMIT-evidenceFiles"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "C0-D",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "scope": "local",
+      "phase": "implementation-proposal",
+      "productiveCaller": [
+        "Control agent claim transaction",
+        "agentAttempt",
+        "persisted attempt_envelope",
+        "AgentJobRunner.runOne",
+        "WorkerAttemptExecutor"
+      ],
+      "inputProfile": {
+        "current": 2,
+        "alternative": "complete launcher profile and supported domain pending"
+      },
+      "priorState": "accepted unstarted fenced job; no started job retargeted",
+      "expectedEffectOrRejectingBoundary": "Different complete selected limits reach accepted envelope and local Core enforcement. Observe bound V2 receipt and fenced Control result; local CLI close alone cannot prove external success.",
+      "observerMethod": "real Control transaction, launcher process and bound receipt; remote gateway observations only for live cases",
+      "command": null,
+      "sourceIdentity": {
+        "sources": [
+          {
+            "path": "skills/prism/server/agent-attempt.ts",
+            "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8"
+          },
+          {
+            "path": "skills/prism/control/agent-jobs.ts",
+            "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334"
+          },
+          {
+            "path": "skills/prism/server/agent-process.ts",
+            "sha256": "1d3486c1ada0851150257a4ef197d62f523924e2c01da3e7a7c53ad06fb1102b"
+          },
+          {
+            "path": "skills/prism/server/agent-job-runner.mjs",
+            "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb"
+          },
+          {
+            "path": "skills/prism/server/agent-bridge.mjs",
+            "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "C3/C4/C5 not approved; exact future harness/domain/profile pending",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-CLAIM-LIFETIME-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-AGENT-CLAIM-LIFETIME"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "C0-D",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "scope": "local",
+      "phase": "implementation-proposal",
+      "productiveCaller": [
+        "authenticated agent-job-routes claim",
+        "claimAgentJob transaction",
+        "clock_timestamp + interval",
+        "agentAttempt claim/queueDeadline",
+        "lockAgentResult"
+      ],
+      "inputProfile": {
+        "current": 960000,
+        "alternative": "complete launcher profile and supported domain pending"
+      },
+      "priorState": "accepted unstarted fenced job; no started job retargeted",
+      "expectedEffectOrRejectingBoundary": "At identical DB time choose full A/B claim durations around completion time. A expires and rejects result with NeedsNova, B commits live fenced result; no replay of uncertain launch.",
+      "observerMethod": "real Control transaction, launcher process and bound receipt; remote gateway observations only for live cases",
+      "command": null,
+      "sourceIdentity": {
+        "sources": [
+          {
+            "path": "skills/prism/server/agent-attempt.ts",
+            "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8"
+          },
+          {
+            "path": "skills/prism/control/agent-jobs.ts",
+            "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334"
+          },
+          {
+            "path": "skills/prism/server/agent-process.ts",
+            "sha256": "1d3486c1ada0851150257a4ef197d62f523924e2c01da3e7a7c53ad06fb1102b"
+          },
+          {
+            "path": "skills/prism/server/agent-job-runner.mjs",
+            "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb"
+          },
+          {
+            "path": "skills/prism/server/agent-bridge.mjs",
+            "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "C3/C4/C5 not approved; exact future harness/domain/profile pending",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-KILL-GRACE-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-AGENT-KILL-GRACE"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "C0-D",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "scope": "local",
+      "phase": "implementation-proposal",
+      "productiveCaller": [
+        "AgentJobRunner.runOne",
+        "WorkerAttemptExecutor termination",
+        "AgentProcess.terminate",
+        "negative process-group PID signal"
+      ],
+      "inputProfile": {
+        "current": 1000,
+        "alternative": "complete launcher profile and supported domain pending"
+      },
+      "priorState": "accepted unstarted fenced job; no started job retargeted",
+      "expectedEffectOrRejectingBoundary": "Real detached local child trapping SIGTERM; A/B grace gives distinct SIGKILL timing and closed streams. Receipt still states external action unresolved when appropriate.",
+      "observerMethod": "real Control transaction, launcher process and bound receipt; remote gateway observations only for live cases",
+      "command": null,
+      "sourceIdentity": {
+        "sources": [
+          {
+            "path": "skills/prism/server/agent-attempt.ts",
+            "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8"
+          },
+          {
+            "path": "skills/prism/control/agent-jobs.ts",
+            "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334"
+          },
+          {
+            "path": "skills/prism/server/agent-process.ts",
+            "sha256": "1d3486c1ada0851150257a4ef197d62f523924e2c01da3e7a7c53ad06fb1102b"
+          },
+          {
+            "path": "skills/prism/server/agent-job-runner.mjs",
+            "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb"
+          },
+          {
+            "path": "skills/prism/server/agent-bridge.mjs",
+            "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "C3/C4/C5 not approved; exact future harness/domain/profile pending",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-CLI-TIMEOUT-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-AGENT-CLI-TIMEOUT"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "C0-D",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "scope": "live",
+      "phase": "implementation-proposal",
+      "productiveCaller": [
+        "AgentJobRunner.runOne",
+        "AgentProcess constructor",
+        "spawn openclaw agent --timeout"
+      ],
+      "inputProfile": {
+        "current": 900,
+        "alternative": "complete launcher profile and supported domain pending"
+      },
+      "priorState": "accepted unstarted fenced job; no started job retargeted",
+      "expectedEffectOrRejectingBoundary": "Two complete launcher profiles emit different real CLI timeout arguments and corresponding gateway timeout; external gateway availability is a live prerequisite.",
+      "observerMethod": "real Control transaction, launcher process and bound receipt; remote gateway observations only for live cases",
+      "command": null,
+      "sourceIdentity": {
+        "sources": [
+          {
+            "path": "skills/prism/server/agent-attempt.ts",
+            "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8"
+          },
+          {
+            "path": "skills/prism/control/agent-jobs.ts",
+            "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334"
+          },
+          {
+            "path": "skills/prism/server/agent-process.ts",
+            "sha256": "1d3486c1ada0851150257a4ef197d62f523924e2c01da3e7a7c53ad06fb1102b"
+          },
+          {
+            "path": "skills/prism/server/agent-job-runner.mjs",
+            "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb"
+          },
+          {
+            "path": "skills/prism/server/agent-bridge.mjs",
+            "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "C3/C4/C5 not approved; exact future harness/domain/profile pending",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-CLI-OWNER-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-AGENT-CLI-OWNER"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "C0-D",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "scope": "live",
+      "phase": "implementation-proposal",
+      "productiveCaller": [
+        "AgentJobRunner.runOne",
+        "AgentProcess spawn",
+        "OpenClaw agent --agent"
+      ],
+      "inputProfile": {
+        "current": "main",
+        "alternative": "complete launcher profile and supported domain pending"
+      },
+      "priorState": "accepted unstarted fenced job; no started job retargeted",
+      "expectedEffectOrRejectingBoundary": "Two explicitly installed allowed agent profiles select distinct real agents with same durable job/session constraints. Missing agent rejects before effect; no implicit main.",
+      "observerMethod": "real Control transaction, launcher process and bound receipt; remote gateway observations only for live cases",
+      "command": null,
+      "sourceIdentity": {
+        "sources": [
+          {
+            "path": "skills/prism/server/agent-attempt.ts",
+            "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8"
+          },
+          {
+            "path": "skills/prism/control/agent-jobs.ts",
+            "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334"
+          },
+          {
+            "path": "skills/prism/server/agent-process.ts",
+            "sha256": "1d3486c1ada0851150257a4ef197d62f523924e2c01da3e7a7c53ad06fb1102b"
+          },
+          {
+            "path": "skills/prism/server/agent-job-runner.mjs",
+            "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb"
+          },
+          {
+            "path": "skills/prism/server/agent-bridge.mjs",
+            "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "C3/C4/C5 not approved; exact future harness/domain/profile pending",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-CLAIM-HTTP-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-AGENT-CLAIM-HTTP"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "C0-D",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "scope": "local",
+      "phase": "implementation-proposal",
+      "productiveCaller": [
+        "AgentJobRunner.tick/runOne",
+        "controlRequest claim",
+        "fetch AbortSignal.timeout"
+      ],
+      "inputProfile": {
+        "current": 10000,
+        "alternative": "complete launcher profile and supported domain pending"
+      },
+      "priorState": "accepted unstarted fenced job; no started job retargeted",
+      "expectedEffectOrRejectingBoundary": "Delay real Control claim response between A/B timeout. A transport times out without replaying started job, B receives original fenced claim; inspect DB and runner outcome.",
+      "observerMethod": "real Control transaction, launcher process and bound receipt; remote gateway observations only for live cases",
+      "command": null,
+      "sourceIdentity": {
+        "sources": [
+          {
+            "path": "skills/prism/server/agent-attempt.ts",
+            "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8"
+          },
+          {
+            "path": "skills/prism/control/agent-jobs.ts",
+            "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334"
+          },
+          {
+            "path": "skills/prism/server/agent-process.ts",
+            "sha256": "1d3486c1ada0851150257a4ef197d62f523924e2c01da3e7a7c53ad06fb1102b"
+          },
+          {
+            "path": "skills/prism/server/agent-job-runner.mjs",
+            "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb"
+          },
+          {
+            "path": "skills/prism/server/agent-bridge.mjs",
+            "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "C3/C4/C5 not approved; exact future harness/domain/profile pending",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    },
+    {
+      "id": "AUTH-PRISM-AGENT-FINISH-HTTP-EFFECT",
+      "settingIds": [
+        "AUTH-PRISM-AGENT-FINISH-HTTP"
+      ],
+      "requirementIds": [
+        "C0-C",
+        "C0-D",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "scope": "local",
+      "phase": "implementation-proposal",
+      "productiveCaller": [
+        "AgentJobRunner.runOne",
+        "controlRequest finish",
+        "finishAgentRun fenced transaction"
+      ],
+      "inputProfile": {
+        "current": 10000,
+        "alternative": "complete launcher profile and supported domain pending"
+      },
+      "priorState": "accepted unstarted fenced job; no started job retargeted",
+      "expectedEffectOrRejectingBoundary": "Delay real finish response between A/B timeouts. Observe single committed fenced outcome and safe NeedsNova reconciliation, not duplicate external launch.",
+      "observerMethod": "real Control transaction, launcher process and bound receipt; remote gateway observations only for live cases",
+      "command": null,
+      "sourceIdentity": {
+        "sources": [
+          {
+            "path": "skills/prism/server/agent-attempt.ts",
+            "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8"
+          },
+          {
+            "path": "skills/prism/control/agent-jobs.ts",
+            "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334"
+          },
+          {
+            "path": "skills/prism/server/agent-process.ts",
+            "sha256": "1d3486c1ada0851150257a4ef197d62f523924e2c01da3e7a7c53ad06fb1102b"
+          },
+          {
+            "path": "skills/prism/server/agent-job-runner.mjs",
+            "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb"
+          },
+          {
+            "path": "skills/prism/server/agent-bridge.mjs",
+            "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "C3/C4/C5 not approved; exact future harness/domain/profile pending",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete"
+    }
+  ]
+}

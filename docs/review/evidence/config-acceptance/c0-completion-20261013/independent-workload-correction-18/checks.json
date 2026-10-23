@@ -1,0 +1,438 @@
+{
+  "expected23IdsUnique": true,
+  "idsExactlyPreserved": true,
+  "original23BodiesPreserved": true,
+  "sixOldManifestPinsMatch": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-25/README.md",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-25/define.py",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-25/define.stderr",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-25/define.stdout",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-25/source-field-definitions.json",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-25/source-identity-check.json",
+      "matches": true
+    }
+  ],
+  "oldManifestItselfUnchanged": true,
+  "review17FrozenPinsMatch": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-workload-inventory-17/reviewed-package/README.md",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-workload-inventory-17/reviewed-package/define.py",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-workload-inventory-17/reviewed-package/define.stderr",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-workload-inventory-17/reviewed-package/define.stdout",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-workload-inventory-17/reviewed-package/package-manifest.json",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-workload-inventory-17/reviewed-package/source-field-definitions.json",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-workload-inventory-17/reviewed-package/source-identity-check.json",
+      "matches": true
+    }
+  ],
+  "batch26ManifestPinsMatch": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-26/README.md",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-26/local-check.json",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-26/source-field-definitions.json",
+      "matches": true
+    }
+  ],
+  "supersedesDefinitionPinMatches": true,
+  "onlyFourExpectedRowsChanged": true,
+  "changedRows": [
+    "SRC-61a34b698eb6c0ba",
+    "SRC-4c6b76f7a12d287c",
+    "SRC-336010687eecb339",
+    "SRC-031d2d94167393f9"
+  ],
+  "chartSourceAndReaderRefs": [
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 14,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/_helpers.tpl",
+      "line": 2,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 22,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 3,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 31,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "line": 2,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 34,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 36,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 13,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 34,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 36,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 37,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 39,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 40,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 41,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 43,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 44,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 46,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 47,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 46,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "line": 9,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 91,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 97,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "line": 53,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 108,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 121,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 125,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 126,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "line": 67,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 129,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 130,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 131,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 132,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 133,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 135,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 138,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 138,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/values.yaml",
+      "line": 27,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 164,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 206,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 166,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 166,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/values.yaml",
+      "line": 82,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 167,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 167,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 166,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 206,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 185,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 209,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 187,
+      "wholeFileMatches": true,
+      "expressionMatches": true
+    }
+  ],
+  "correctReaderLines": true,
+  "runtimeResultsRemainNotRun": true,
+  "annotationEnvelopeTruthTable": [
+    {
+      "role": "control",
+      "spiffeEnabled": false,
+      "envelope": true,
+      "swarmChecksum": true,
+      "workerPolicy": false,
+      "trustChecksum": false
+    },
+    {
+      "role": "control",
+      "spiffeEnabled": true,
+      "envelope": true,
+      "swarmChecksum": true,
+      "workerPolicy": false,
+      "trustChecksum": true
+    },
+    {
+      "role": "studio",
+      "spiffeEnabled": false,
+      "envelope": true,
+      "swarmChecksum": true,
+      "workerPolicy": false,
+      "trustChecksum": false
+    },
+    {
+      "role": "studio",
+      "spiffeEnabled": true,
+      "envelope": true,
+      "swarmChecksum": true,
+      "workerPolicy": false,
+      "trustChecksum": false
+    },
+    {
+      "role": "worker",
+      "spiffeEnabled": false,
+      "envelope": true,
+      "swarmChecksum": true,
+      "workerPolicy": true,
+      "trustChecksum": false
+    },
+    {
+      "role": "worker",
+      "spiffeEnabled": true,
+      "envelope": true,
+      "swarmChecksum": true,
+      "workerPolicy": true,
+      "trustChecksum": true
+    }
+  ]
+}

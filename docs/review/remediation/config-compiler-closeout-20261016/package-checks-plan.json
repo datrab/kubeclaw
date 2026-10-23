@@ -1,0 +1,94 @@
+{
+  "skills/common/plugins/agent-observability": [
+    "build",
+    "test"
+  ],
+  "skills/common/plugins/command-runner": [
+    "build",
+    "test"
+  ],
+  "skills/common/plugins/git-workspace": [
+    "build",
+    "test"
+  ],
+  "skills/common/plugins/notification-observer": [
+    "build",
+    "test"
+  ],
+  "skills/common/plugins/openclaw-agent-events": [
+    "build",
+    "test"
+  ],
+  "skills/common/plugins/operator-messaging": [
+    "build",
+    "test"
+  ],
+  "skills/common/plugins/redis-transport": [
+    "build",
+    "test"
+  ],
+  "skills/common/plugins/runtime-dispatch": [
+    "build",
+    "test"
+  ],
+  "skills/common/plugins/transport-publisher": [
+    "build",
+    "test"
+  ],
+  "skills/nova/plugins/architecture-validator": [
+    "build",
+    "test"
+  ],
+  "skills/nova/plugins/blueprint-sync": [
+    "build",
+    "test"
+  ],
+  "skills/nova/plugins/buster-quality-gate": [
+    "build",
+    "test"
+  ],
+  "skills/nova/plugins/delivery-lint": [
+    "build",
+    "test"
+  ],
+  "skills/nova/plugins/demo-handoff": [
+    "build",
+    "test"
+  ],
+  "skills/nova/plugins/human-approval": [
+    "build",
+    "test"
+  ],
+  "skills/nova/plugins/implementation-agent": [
+    "build",
+    "test"
+  ],
+  "skills/nova/plugins/lint": [
+    "build",
+    "test"
+  ],
+  "skills/nova/plugins/preflight-contract": [
+    "build",
+    "test"
+  ],
+  "skills/nova/plugins/prism-design": [
+    "build",
+    "test"
+  ],
+  "skills/nova/plugins/project-summary": [
+    "build",
+    "test"
+  ],
+  "skills/nova/plugins/remote-test-gate": [
+    "build",
+    "test"
+  ],
+  "skills/nova/plugins/repository-adapter": [
+    "build",
+    "test"
+  ],
+  "skills/nova/plugins/review": [
+    "build",
+    "test"
+  ]
+}

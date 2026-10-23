@@ -1,0 +1,13 @@
+✔ runtime settings registry accepts authored buster-preparation (1.92619ms)
+✔ runtime settings registry accepts authored buster-admission (0.401481ms)
+✔ runtime settings registry accepts authored buster-dependency-readiness (0.277057ms)
+✔ runtime settings registry accepts authored buster-execution (2.024173ms)
+✔ actual execution and observation decoders accept unchanged canonical policy (1.179151ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 488.259225

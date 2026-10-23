@@ -1,11 +1,11 @@
 # Buster execution configuration
 
 The Buster engine owns `settings.execution` in
-[`buster-engine.config.json`](../../charts/kubeclaw/files/config/buster-engine.config.json).
+[`buster-engine.config.json`](../../config/components/buster-engine.config.json).
 That file contains the selected operator values. The
 [component schema](../../skills/common/plugin-runtime/foundation/config/swarm-components.schema.json)
 defines required fields and legal ranges; it does not supply missing values.
-All 44 execution fields are required. Forty-two are positive integers;
+The retained legacy execution format requires 44 fields. Forty-two are positive integers;
 `provider.heapFraction` and `reports.heapFraction` are numbers strictly greater than zero and at most one.
 Unknown fields, missing values, strings and out-of-range values are rejected.
 Fractions are rejected for integer fields.
@@ -215,3 +215,29 @@ The Tailscale caller's explicit 1 MiB output budget, Kubernetes manifestBytes*2
 output relationship and each invoker's separate polling configuration remain
 separate existing authorities. This focused migration does not close those D17
 items, the Foundation process-group capture deadline (250 ms), or the native C supervisor stop policy. No native/live acceptance is implied.
+
+
+## Selected report package snapshots
+
+The current `buster-engine` author uses `pipeline-component.v4`, execution
+`buster-execution.v3` and report policy `buster-reports.v2`. Every selected
+profile supplies `execution.reports.packageSnapshot`:
+
+| Field | Meaning |
+| --- | --- |
+| `maximumFiles` | File count ceiling for the adapter package, up to 2048. |
+| `maximumBytes` | Aggregate package content ceiling in bytes, up to 67108864. |
+| `timeoutMs` | Snapshot operation deadline in milliseconds, up to 30000. |
+
+All three fields are required positive integers. These settings are distinct
+from report artifact limits. They are captured once, frozen, and passed to the
+actual source read, snapshot copy, and copied-package read. The shipped values
+preserve the previous behavior. Missing or unknown selected values fail closed;
+no selected generation receives hidden defaults.
+
+`buster-original-execution.v3` retains the complete selected execution policy.
+Replay uses those original values even if the current generation changes.
+Original v1/v2 readers and their fixed historical package behavior remain
+available without adding selected values to historical captures. A version/policy
+mismatch is rejected before effects. This source integration does not establish
+full native, archive or CONFIG C0–C6 acceptance.

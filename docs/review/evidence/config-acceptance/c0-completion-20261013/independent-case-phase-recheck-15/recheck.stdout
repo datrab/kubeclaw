@@ -1,0 +1,241 @@
+{
+  "actualBaseline": {
+    "sourceRevision": "0bcaf85d192d031814554c590b1bfca5b3ba81dd",
+    "caseCount": 6845,
+    "phases": {
+      "C0": 96,
+      "implementation-proposal": 6722,
+      "current-source-definition": 2,
+      "proposed-after-approval": 25
+    },
+    "scopeCategories": {
+      "local": 6399,
+      "live": 4,
+      "descriptive": 439,
+      "absent": 3
+    },
+    "results": {
+      "passed": 86,
+      "not-run": 6759
+    }
+  }
+}
+{
+  "correctedScopeExample": {
+    "id": "AUTH-PRISM-ARTIFACT-ACK-BYTES-IMPLEMENTATION",
+    "phase": "implementation-proposal",
+    "scope": "local definitions plus genuine disposable service/host/API/Secretstore prerequisites for claimed effects",
+    "originalBodySha256": "b27bd1cf39dea79026b9d5892449a209d05c79a7f9495a50a711d10fb902e44d"
+  },
+  "absentScopeExample": {
+    "id": "CC-6606-SECRET-CURRENT-RAWCOUNT",
+    "originalBodySha256": "2c976b28c6f0b3e53e0959e822ccf7457128725a0b998ccefb26f75c12877703"
+  }
+}
+{
+  "controls": [
+    {
+      "id": "integration uses actual immutable original body",
+      "caseId": "AUTH-PRISM-AGENT-CLAIM-HTTP-EFFECT",
+      "originalBodySha256": "c9d7d431fbe39b794976577f68c6f935ef854008cad01c6ee0531d16b6319328",
+      "result": "passed"
+    },
+    {
+      "id": "integrated actual history phase cannot be forged",
+      "boundary": "DEFINITION_CASE_HISTORY_CHANGED",
+      "result": "passed"
+    },
+    {
+      "id": "integrated actual history result cannot be forged",
+      "boundary": "DEFINITION_CASE_HISTORY_CHANGED",
+      "result": "passed"
+    },
+    {
+      "id": "integrated actual local scope cannot become live",
+      "boundary": "DEFINITION_CASE_ORIGINAL_SCOPE_CHANGED",
+      "result": "passed"
+    },
+    {
+      "id": "actual implementation-proposal cannot become C0",
+      "boundary": "DEFINITION_CASE_ORIGINAL_RUNTIME_CASE_RECLASSIFIED",
+      "result": "passed"
+    },
+    {
+      "id": "actual C0 cannot become future implementation",
+      "boundary": "DEFINITION_CASE_ORIGINAL_DEFINITION_PHASE_LOST",
+      "result": "passed"
+    },
+    {
+      "id": "actual current-source-definition cannot become future implementation",
+      "boundary": "DEFINITION_CASE_ORIGINAL_DEFINITION_PHASE_LOST",
+      "result": "passed"
+    },
+    {
+      "id": "discovered null original accepted as metadata only",
+      "result": "passed"
+    },
+    {
+      "id": "discovered history cannot be fabricated",
+      "boundary": "DEFINITION_CASE_HISTORY_CHANGED",
+      "result": "passed"
+    },
+    {
+      "id": "discovered origin requirements conserved",
+      "boundary": "DEFINITION_CASE_DISCOVERY_REQUIREMENTS_LOST",
+      "result": "passed"
+    },
+    {
+      "id": "valid actual-original case metadata still cannot close unimplemented gates",
+      "boundary": "DEFINITION_GENERATION_SEMANTIC_ACCEPTANCE_NOT_IMPLEMENTED",
+      "result": "passed"
+    },
+    {
+      "id": "synthetic C1 failed/native history separated",
+      "result": "passed"
+    },
+    {
+      "id": "synthetic C1 slice conserved",
+      "boundary": "DEFINITION_CASE_ORIGINAL_IMPLEMENTATION_SLICE_CHANGED",
+      "result": "passed"
+    },
+    {
+      "id": "synthetic C1 native history conserved",
+      "boundary": "DEFINITION_CASE_HISTORY_CHANGED",
+      "result": "passed"
+    },
+    {
+      "id": "synthetic C2 failed/native history separated",
+      "result": "passed"
+    },
+    {
+      "id": "synthetic C2 slice conserved",
+      "boundary": "DEFINITION_CASE_ORIGINAL_IMPLEMENTATION_SLICE_CHANGED",
+      "result": "passed"
+    },
+    {
+      "id": "synthetic C2 native history conserved",
+      "boundary": "DEFINITION_CASE_HISTORY_CHANGED",
+      "result": "passed"
+    },
+    {
+      "id": "synthetic C3 failed/native history separated",
+      "result": "passed"
+    },
+    {
+      "id": "synthetic C3 slice conserved",
+      "boundary": "DEFINITION_CASE_ORIGINAL_IMPLEMENTATION_SLICE_CHANGED",
+      "result": "passed"
+    },
+    {
+      "id": "synthetic C3 native history conserved",
+      "boundary": "DEFINITION_CASE_HISTORY_CHANGED",
+      "result": "passed"
+    },
+    {
+      "id": "synthetic C4 failed/native history separated",
+      "result": "passed"
+    },
+    {
+      "id": "synthetic C4 slice conserved",
+      "boundary": "DEFINITION_CASE_ORIGINAL_IMPLEMENTATION_SLICE_CHANGED",
+      "result": "passed"
+    },
+    {
+      "id": "synthetic C4 native history conserved",
+      "boundary": "DEFINITION_CASE_HISTORY_CHANGED",
+      "result": "passed"
+    },
+    {
+      "id": "synthetic C5 failed/native history separated",
+      "result": "passed"
+    },
+    {
+      "id": "synthetic C5 slice conserved",
+      "boundary": "DEFINITION_CASE_ORIGINAL_IMPLEMENTATION_SLICE_CHANGED",
+      "result": "passed"
+    },
+    {
+      "id": "synthetic C5 native history conserved",
+      "boundary": "DEFINITION_CASE_HISTORY_CHANGED",
+      "result": "passed"
+    },
+    {
+      "id": "synthetic C6 failed/native history separated",
+      "result": "passed"
+    },
+    {
+      "id": "synthetic C6 slice conserved",
+      "boundary": "DEFINITION_CASE_ORIGINAL_IMPLEMENTATION_SLICE_CHANGED",
+      "result": "passed"
+    },
+    {
+      "id": "synthetic C6 native history conserved",
+      "boundary": "DEFINITION_CASE_HISTORY_CHANGED",
+      "result": "passed"
+    },
+    {
+      "id": "actual descriptive scope preserved plus explicit typed metadata derivation",
+      "result": "passed"
+    },
+    {
+      "id": "corrected scope wrong originalValue",
+      "boundary": "DEFINITION_CASE_SCOPE_HISTORY_CHANGED",
+      "result": "passed"
+    },
+    {
+      "id": "corrected scope missing pinned evidence",
+      "boundary": "DEFINITION_CASE_SCOPE_EVIDENCE_MISSING",
+      "result": "passed"
+    },
+    {
+      "id": "corrected scope empty reason",
+      "boundary": "DEFINITION_CASE_SCOPE_REASON_MISSING",
+      "result": "passed"
+    },
+    {
+      "id": "corrected scope descriptive scope cannot remain typed active discriminator",
+      "boundary": "DEFINITION_CASE_SCOPE_OR_REQUIREMENTS_INVALID",
+      "result": "passed"
+    },
+    {
+      "id": "corrected scope descriptive history cannot be rewritten",
+      "boundary": "DEFINITION_CASE_HISTORY_CHANGED",
+      "result": "passed"
+    },
+    {
+      "id": "actual absent scope explicitly derived with null historical value",
+      "result": "passed"
+    },
+    {
+      "id": "nonfinite JSON 1e309",
+      "boundary": "DEFINITION_JSON_NONFINITE:1e309",
+      "result": "passed"
+    },
+    {
+      "id": "nonfinite JSON -1e309",
+      "boundary": "DEFINITION_JSON_NONFINITE:-1e309",
+      "result": "passed"
+    },
+    {
+      "id": "nonfinite JSON NaN",
+      "boundary": "DEFINITION_JSON_NONFINITE:NaN",
+      "result": "passed"
+    },
+    {
+      "id": "nonfinite JSON Infinity",
+      "boundary": "DEFINITION_JSON_NONFINITE:Infinity",
+      "result": "passed"
+    },
+    {
+      "id": "nonfinite JSON -Infinity",
+      "boundary": "DEFINITION_JSON_NONFINITE:-Infinity",
+      "result": "passed"
+    }
+  ],
+  "passed": 41,
+  "failed": 0,
+  "blockingFindings": 0,
+  "correctedFindings": 1,
+  "globalC0Accepted": false,
+  "qualification": "Actual immutable baseline integration plus synthetic metadata controls; no consumer effects or whole C0 approval."
+}

@@ -2,7 +2,7 @@ import { validateBusterClusterInvokerSettings, type BusterClusterInvokerSettings
 import { validateBusterExecutionSettings, type BusterExecutionSettings } from './buster-execution.ts';
 export { validateBusterExecutionSettings, type BusterExecutionSettings } from './buster-execution.ts';
 import path from 'node:path';
-import { readSwarmBundle, validateComponentSettings, type SwarmBundleIdentity } from './swarm-bundle.ts';
+import { readSwarmBundle, validateComponentSettings, type SwarmBundleIdentity, type SwarmSelection } from './swarm-bundle.ts';
 
 export interface WorkerCoreSettings {
   readonly localRuntime: Readonly<{
@@ -59,6 +59,14 @@ export interface BusterPreparationSettings {
   readonly closeTimeoutMs: number;
 }
 
+export interface PrismNonceDatabaseSettings {
+  readonly authenticationWindowMs: number;
+  readonly idleTimeoutMs: number;
+  readonly maximumCleanupRows: number;
+  readonly timeoutMs: number;
+  readonly maximumConnections: number;
+}
+
 export interface PrismWorkerSettings {
   readonly port: number;
   readonly maximumActiveRequests: number;
@@ -84,19 +92,112 @@ export interface PrismSupervisorSettings {
   readonly drainTimeoutMs: number;
   readonly closeTimeoutMs: number;
 }
+export interface PrismRenderSettings {
+  readonly schemaVersion: 'prism-render-policy.v1';
+  readonly widths: Readonly<{ compact: number; regular: number; wide: number }>;
+  readonly height: number;
+  readonly locale: 'en-US' | 'de-DE';
+  readonly timezoneId: 'UTC' | 'Europe/Berlin';
+  readonly reducedMotion: 'reduce';
+}
+export interface PrismEngineSettings {
+  /** Absent only in the closed original component-v2 reader. */
+  readonly schemaVersion?: 'prism-engine-policy.v2';
+  readonly render?: PrismRenderSettings;
+  readonly cache: Readonly<{ maximumInFlight: number; maximumCompletedEntries: number; maximumCompletedBytes: number }>;
+  readonly maximumIngestTextCharacters: number;
+  readonly maximumAssetSourceCharacters: number;
+}
 export interface PrismNativeSettings {
+  readonly enginePolicy: PrismEngineSettings;
   readonly supervisor: PrismSupervisorSettings;
   readonly resourcePolicy: PrismResourcePolicy;
   readonly maximumResultBytes: number;
   readonly dispatchTimeoutMs: number;
 }
+export interface PrismIngestionSettings {
+  readonly port: number;
+  readonly quarantineRoot: string;
+  readonly quarantineTtlMs: number;
+  readonly reaperIntervalMs: number;
+  readonly maximumRequestBytes: number;
+  readonly maximumSourceBytes: number;
+  readonly sourceRequestTimeoutMs: number;
+  readonly maximumRedirects: number;
+  readonly allowedMediaTypes: readonly string[];
+}
+export interface PrismAgentLauncherSettings {
+  readonly terminationGraceMs: number;
+  readonly attemptLifetimeMs: number;
+  readonly limits: Readonly<{ timeoutMs: number; cleanupTimeoutMs: number; logBytes: number; resultBytes: number; evidenceBytes: number; evidenceFiles: number }>;
+}
+export interface PrismAgentBridgeSettings {
+  readonly port: number;
+  readonly controlUrl: string;
+  readonly maximumRequestBytes: number;
+  readonly dispatchTimeoutMs: number;
+  readonly controlRequestTimeoutMs: number;
+  readonly pollIntervalMs: number;
+}
 export interface PrismControlSettings {
+  /** Required in component-v4 only; older captures retain the original token writer. */
+  readonly sessionDefaultRoles?: readonly ['editor'];
+  /** Absent only on the original component-v2 reader. V3 requires all leaves. */
+  readonly corpusRanking?: import('./corpus-ranking.ts').CorpusRankingPolicy;
+  readonly agentToolControlUrl: string;
+  readonly agentBridge: PrismAgentBridgeSettings;
+  readonly databaseBootstrap: Readonly<{ connectionTimeoutMs: number; maximumAttempts: number; retryDelayMs: number }>;
+  readonly maximumArtifactAcknowledgmentBytes: number;
+  readonly agentLauncher: PrismAgentLauncherSettings;
+  readonly ingestionServer: PrismIngestionSettings;
+  readonly corpusSearchDefaultLimit: number;
+  readonly corpusSearchMaximumLimit: number;
+  readonly corpusSourceFamilyDefaultLimit: number;
+  readonly corpusSourceFamilyMaximumLimit: number;
+
+  readonly nativeAttemptLifetimeMs: number;
+  readonly nativeAttemptTimeoutMs: number;
+  readonly nativeAttemptCleanupTimeoutMs: number;
+  readonly nativeAttemptLogBytes: number;
+  readonly nativeAttemptResultBytes: number;
+  readonly nativeAttemptEvidenceBytes: number;
+  readonly nativeAttemptEvidenceFiles: number;
+  readonly controlInternalUrl: string;
+  readonly workerUrl: string;
+  readonly ingestionUrl: string;
+  readonly maximumInternalEvidenceBytes: number;
+  readonly maximumProductControllerTokenCharacters: number;
+  readonly productDecisionLifetimeMs: number;
+  /** Required on component-v5; historical component codecs retain their ENV switch. */
+  readonly productDecisionsEnabled?: boolean;
+  readonly productDecisionHistoryLimit: number;
+  readonly maximumProductInputBytes: number;
+  readonly productControllerTimeoutMs: number;
+  readonly maximumProductControllerResponseBytes: number;
+  readonly sessionLifetimeSeconds: number;
+  readonly ingestionAcquireTimeoutMs: number;
+  readonly ingestionCleanupTimeoutMs: number;
+
+  readonly maximumDispatchBodyBytes: number;
+  readonly maximumRenderAssetBytes: number;
+  readonly maximumArtifactBytes: number;
+  readonly maximumJsonBodyBytes: number;
+  readonly maximumArtifactUploadBodyBytes: number;
   readonly port: number;
   readonly pipelinePreferenceSubject: string | null;
   readonly artifactRoot: string;
   readonly studioPublicUrl: string;
 }
+export interface PrismStudioBrowserPolicy {
+  readonly maximumPreviewAssetBytes: number;
+  readonly previewAssetTimeoutMs: number;
+  readonly roundPolling: { readonly maximumAttempts: number; readonly intervalMs: number };
+  readonly revisionPolling: { readonly maximumAttempts: number; readonly intervalMs: number };
+  readonly initialDirectionPolling: { readonly maximumAttempts: number; readonly intervalMs: number };
+}
 export interface PrismStudioSettings {
+  readonly browserPolicy: PrismStudioBrowserPolicy;
+  readonly maximumRequestBodyBytes: number;
   readonly port: number;
   readonly controlTimeoutMs: number;
   readonly controlUrl: string;
@@ -114,7 +215,7 @@ const migratedEnvironmentKeys = [
   'PRISM_WORKER_MAXIMUM_ACTIVE_REQUESTS', 'PRISM_WORKER_MAXIMUM_PROBE_REQUESTS',
   'PRISM_WORKER_MAXIMUM_CONNECTIONS', 'PRISM_WORKER_REQUEST_BODY_TIMEOUT_MS',
   'PRISM_WORKER_SHUTDOWN_TIMEOUT_MS', 'PRISM_NATIVE_MAXIMUM_INPUT_BYTES',
-  'PRISM_NATIVE_ASSIGNED_INPUT_BYTES', 'PRISM_NATIVE_MAXIMUM_RESULT_BYTES',
+  'PRISM_NATIVE_ASSIGNED_INPUT_BYTES', 'PRISM_NATIVE_ASSIGNED_ENGINE_POLICY', 'PRISM_NATIVE_ASSIGNED_ARTIFACT_ACKNOWLEDGMENT_BYTES', 'PRISM_NATIVE_MAXIMUM_RESULT_BYTES',
   'PRISM_NATIVE_DISPATCH_TIMEOUT_MS', 'PRISM_NATIVE_CPU_TIME_MS',
   'PRISM_NATIVE_MEMORY_BYTES', 'PRISM_NATIVE_TASKS',
   'PRISM_NATIVE_UID', 'PRISM_NATIVE_GID', 'PRISM_NATIVE_MAXIMUM_OWNERSHIP_RECORDS',
@@ -132,25 +233,55 @@ export function loadPrismSettings(environment: NodeJS.ProcessEnv): PrismSettings
 /** Validate the authored document before selecting its operator-owned settings. */
 function prismSettingsFromConfig(value: unknown): PrismSettings {
   const control = (value as SwarmConfig).operator.prism.control;
+  validateControlProfile(control);
+  const studio = (value as SwarmConfig).operator.prism.studio;
+  validateStudioOrigin(studio.controlUrl);
+  const settings = (value as SwarmConfig).operator.prism.worker;
+  const supervisor = (value as SwarmConfig).operator.prism.native.supervisor;
+  validateWorkerProfile(settings, supervisor);
+  return Object.freeze({ studio: Object.freeze({ ...studio }), control: Object.freeze({ ...control }), worker: Object.freeze({ ...settings }),
+    native: Object.freeze({ ...(value as SwarmConfig).operator.prism.native,
+      supervisor: Object.freeze({ ...supervisor }),
+      resourcePolicy: Object.freeze({ ...(value as SwarmConfig).operator.prism.native.resourcePolicy }) }) });
+}
+
+function validateControlProfile(control: PrismControlSettings): void {
+  validateStudioOrigin(control.agentToolControlUrl);
+  if (control.agentLauncher.attemptLifetimeMs <= control.agentLauncher.limits.timeoutMs + control.agentLauncher.limits.cleanupTimeoutMs) throw new Error('SWARM_CONFIG_AGENT_LIFETIME_BUDGET_INVALID');
+  if (path.resolve(control.ingestionServer.quarantineRoot) !== control.ingestionServer.quarantineRoot || control.ingestionServer.quarantineRoot === '/') throw new Error('SWARM_CONFIG_INGESTION_ROOT_INVALID');
   if (path.resolve(control.artifactRoot) !== control.artifactRoot || control.artifactRoot === '/') {
     throw new Error('SWARM_CONFIG_INVALID:control.artifactRoot must be a normalized absolute non-root path');
   }
   try { new URL(control.studioPublicUrl); }
   catch { throw new Error('SWARM_CONFIG_INVALID:control.studioPublicUrl must be an absolute HTTP(S) URL'); }
-  const studio = (value as SwarmConfig).operator.prism.studio;
-  validateStudioOrigin(studio.controlUrl);
-  const settings = (value as SwarmConfig).operator.prism.worker;
+}
+
+function validateWorkerProfile(settings: PrismWorkerSettings, supervisor: PrismSupervisorSettings): void {
   if (settings.maximumActiveRequests + settings.maximumProbeRequests > settings.maximumConnections) {
     throw new Error('SWARM_CONFIG_WORKER_CONNECTION_BUDGET_INVALID');
   }
-  const supervisor = (value as SwarmConfig).operator.prism.native.supervisor;
   if (settings.shutdownTimeoutMs <= supervisor.closeTimeoutMs + supervisor.drainTimeoutMs) {
     throw new Error('SWARM_CONFIG_WORKER_SHUTDOWN_BUDGET_INVALID');
   }
-  return Object.freeze({ studio: Object.freeze({ ...studio }), control: Object.freeze({ ...control }), worker: Object.freeze({ ...settings }),
-    native: Object.freeze({ ...(value as SwarmConfig).operator.prism.native,
-      supervisor: Object.freeze({ ...supervisor }),
-      resourcePolicy: Object.freeze({ ...(value as SwarmConfig).operator.prism.native.resourcePolicy }) }) });
+}
+
+/** Validate all intrinsic policies, but select only the actual caller's consumed domains. */
+export function captureSwarmSettings(file: string | undefined, selection: SwarmSelection) {
+  const bundle = readSwarmBundle(file, selection);
+  for (const [owner, author] of Object.entries(bundle.authors)) {
+    for (const profile of Object.values(author.profiles)) {
+      const settings = profile.settings;
+      if (owner === 'prism-control') validateControlProfile(settings as unknown as PrismControlSettings);
+      else if (owner === 'prism-studio') validateStudioOrigin((settings as unknown as PrismStudioSettings).controlUrl);
+      else if (owner === 'prism-worker') {
+        const worker = settings as unknown as { ingress: PrismWorkerSettings; supervisor: PrismSupervisorSettings };
+        validateWorkerProfile(worker.ingress, worker.supervisor);
+      } else if (owner === 'buster-engine') {
+        busterSettingsFromConfig({ operator: { buster: settings } }, bundle.identity.generationDirectory);
+      }
+    }
+  }
+  return bundle;
 }
 
 function validateStudioOrigin(value: string): void {
@@ -243,28 +374,10 @@ export function loadSwarmSettings(environment: NodeJS.ProcessEnv): Readonly<{
   profile: Readonly<Record<string, unknown>>;
 }> {
   rejectLegacyAuthors(environment);
-  const bundle = readSwarmBundle(environment.SWARM_CONFIG);
-  const control = bundle.components['prism-control'].settings as unknown as PrismControlSettings & { dispatchTimeoutMs: number };
-  const worker = bundle.components['prism-worker'].settings as unknown as { ingress: PrismWorkerSettings; supervisor: PrismSupervisorSettings };
-  const execution = bundle.components['prism-execution'].settings as unknown as Pick<PrismNativeSettings, 'resourcePolicy' | 'maximumResultBytes'>;
-  const { dispatchTimeoutMs, ...controlSettings } = control;
-  const projection: SwarmConfig = { operator: {
-    prism: {
-      control: controlSettings,
-      studio: bundle.components['prism-studio'].settings as unknown as PrismStudioSettings,
-      worker: worker.ingress,
-      native: { ...execution, dispatchTimeoutMs, supervisor: worker.supervisor },
-    },
-    buster: bundle.components['buster-engine'].settings as unknown as BusterSettings,
-  } };
-  // Validate both domains before returning either: no partial bundle activation.
-  const prism = prismSettingsFromConfig(projection);
-  const buster = busterSettingsFromConfig(projection, bundle.identity.generationDirectory);
-  return Object.freeze({ prism, buster, workerCore: bundle.components['worker-core'].settings as unknown as WorkerCoreSettings,
-    profile: bundle.profile, identity: bundle.identity });
+  throw new Error('SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture');
 }
 
-function rejectLegacyAuthors(environment: NodeJS.ProcessEnv): void {
+export function rejectLegacyAuthors(environment: NodeJS.ProcessEnv): void {
   for (const key of [...migratedEnvironmentKeys,
     'BUSTER_V2_MAX_ARCHIVE_BYTES', 'BUSTER_V2_MAX_REQUEST_BYTES', 'BUSTER_V2_MAX_EXTRACTED_BYTES',
     'BUSTER_LEASE_API_GROUP', 'BUSTER_LEASE_API_VERSION', 'BUSTER_ALLOWED_SOURCE_SECRETS',

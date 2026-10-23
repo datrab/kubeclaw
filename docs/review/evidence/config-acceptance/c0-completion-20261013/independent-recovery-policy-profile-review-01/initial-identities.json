@@ -1,0 +1,442 @@
+{
+  "reviewerTask": "/root/delivery_module_contract_review",
+  "scope": "independent WCR05 recovery profile/source/receiving definition review; authorized narrow pure collector only",
+  "head": "19b1da7f75f51a05a16e25a7ce3d5421768f7c3a",
+  "tree": "4807ca1e9ac914b534c0831967d2bc7ac8fa75a9",
+  "frozenInputs": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-provisioning-source-review-01/README.md",
+      "sha256": "8febd988fd2153a0bf49ea448ac07bb1d70e30df4155c8eef157c2e28e36ca9f",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/8febd988fd2153a0bf49ea448ac07bb1d70e30df4155c8eef157c2e28e36ca9f.gz",
+      "bytes": 10531
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/README.md",
+      "sha256": "a226e9aafd4e85393ab5d043bf19f3da428bf3de48ee911944641c884960cf76",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/a226e9aafd4e85393ab5d043bf19f3da428bf3de48ee911944641c884960cf76.gz",
+      "bytes": 15066
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/case-definitions.json",
+      "sha256": "8e0cfc8c01f1f879beaf1b98a09e71ec08c2cb246ced60d8be29f03c1b16622e",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/8e0cfc8c01f1f879beaf1b98a09e71ec08c2cb246ced60d8be29f03c1b16622e.gz",
+      "bytes": 85529
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/collect-definition-checks.mjs",
+      "sha256": "d2d329571481133b510df803f948c4b4367e9612d9f8a47a8d3fe15b07394aff",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/d2d329571481133b510df803f948c4b4367e9612d9f8a47a8d3fe15b07394aff.gz",
+      "bytes": 21372
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/commands-and-exits.json",
+      "sha256": "3791e059011edc99941d79882aa67b5829575cbbb20fe5b156cda174986cbf7b",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/3791e059011edc99941d79882aa67b5829575cbbb20fe5b156cda174986cbf7b.gz",
+      "bytes": 2919
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/config/pipeline.config.json",
+      "sha256": "9acd5845d808effd7b5f2f04815620ab3a17459652b5561bdf4f17903af030ff",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/9acd5845d808effd7b5f2f04815620ab3a17459652b5561bdf4f17903af030ff.gz",
+      "bytes": 3643
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/conservation-receipt.json",
+      "sha256": "5a21c026555487f0fcf64246627d0381088b858c91a10762e0cd5989b71d5ec3",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/5a21c026555487f0fcf64246627d0381088b858c91a10762e0cd5989b71d5ec3.gz",
+      "bytes": 1650
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/entry-supersession.json",
+      "sha256": "472f4f62d9e9d27f42b0b98400b18b2014e5f600e5bd59d4d9ddbe3a25b3f6c3",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/472f4f62d9e9d27f42b0b98400b18b2014e5f600e5bd59d4d9ddbe3a25b3f6c3.gz",
+      "bytes": 1353
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/field-definitions.json",
+      "sha256": "adb871ea14bf84f2c24f73037fea8b358f9337a39f5fdb3f1d070962efcf78fe",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/adb871ea14bf84f2c24f73037fea8b358f9337a39f5fdb3f1d070962efcf78fe.gz",
+      "bytes": 25027
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/final-run.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.gz",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/final-run.stdout",
+      "sha256": "baccd7e9f99fdfc56a13e125b7afe867427692f7a785ab666882a4acaef44869",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/baccd7e9f99fdfc56a13e125b7afe867427692f7a785ab666882a4acaef44869.gz",
+      "bytes": 4638
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/final-run/definition-receipt.json",
+      "sha256": "9f3982984727a4ed1b6cf63bd9a4419ad7d5f76d0fbf3fce1c2eede8ba9f5eb6",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/9f3982984727a4ed1b6cf63bd9a4419ad7d5f76d0fbf3fce1c2eede8ba9f5eb6.gz",
+      "bytes": 15333
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/final-run/generated-public-projections.json",
+      "sha256": "12ba84000466f496ed712e61057e0945ccc78d26ee805c0965064b9ceba658a7",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/12ba84000466f496ed712e61057e0945ccc78d26ee805c0965064b9ceba658a7.gz",
+      "bytes": 179000
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/final-run/isolated-current-pure-functions.mjs",
+      "sha256": "2c5072d0f1d1b483d72808686db13cad49f405f31233121483c72229801e31ce",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/2c5072d0f1d1b483d72808686db13cad49f405f31233121483c72229801e31ce.gz",
+      "bytes": 6965
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/generated-handoff-definition.json",
+      "sha256": "a5705bfb3d671520afa2884a523bbc4dfe479544e82c6b593a5efd8a216c9d0e",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/a5705bfb3d671520afa2884a523bbc4dfe479544e82c6b593a5efd8a216c9d0e.gz",
+      "bytes": 1981
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/my-values/infra/postgresql-recovery.yaml",
+      "sha256": "ce029433a76e6e4edc5d67086ab1293277ea852ca83a2e9bdccadf15232acae7",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/ce029433a76e6e4edc5d67086ab1293277ea852ca83a2e9bdccadf15232acae7.gz",
+      "bytes": 25823
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/original-candidate-lineage.json",
+      "sha256": "ace11c5d6e0f04dcaec568962bedeb1005e7e3404267f424116931defec80c09",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/ace11c5d6e0f04dcaec568962bedeb1005e7e3404267f424116931defec80c09.gz",
+      "bytes": 96426
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/package-manifest.json",
+      "sha256": "3e6cd8ad0590fbb45f9bfa68a910c6b099959404aef3af89002cdcde6ffa34d7",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/3e6cd8ad0590fbb45f9bfa68a910c6b099959404aef3af89002cdcde6ffa34d7.gz",
+      "bytes": 6726
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/profile-index.json",
+      "sha256": "0c0cd57f3601f96e0889d25e971805c5314db7458c911f9e457cc8dac3007bf6",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/0c0cd57f3601f96e0889d25e971805c5314db7458c911f9e457cc8dac3007bf6.gz",
+      "bytes": 6067
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/public-fixtures/field-pair-input-stands.json",
+      "sha256": "fa5139150fd455ba831113f40147c53b76b2e6c573bb48b286a0e260aba24a2b",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/fa5139150fd455ba831113f40147c53b76b2e6c573bb48b286a0e260aba24a2b.gz",
+      "bytes": 17451
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/public-fixtures/runtime-A.env",
+      "sha256": "904282ccd6495d5a00fff6af7f24ce9e33c25e19dc43cd0bd3b066d7482cf20c",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/904282ccd6495d5a00fff6af7f24ce9e33c25e19dc43cd0bd3b066d7482cf20c.gz",
+      "bytes": 1123
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/public-fixtures/source-reference-stand.json",
+      "sha256": "b738b2095210cb8fcad4f69e7a906e2b2201330a6968a076dade7e5d8026c7ff",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/b738b2095210cb8fcad4f69e7a906e2b2201330a6968a076dade7e5d8026c7ff.gz",
+      "bytes": 2266
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/public-fixtures/task-stands.json",
+      "sha256": "7704b4d6a9f9b07615e712a424c5e91f89eae3a8003f8fdb3c6ab58e7a6ea606",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/7704b4d6a9f9b07615e712a424c5e91f89eae3a8003f8fdb3c6ab58e7a6ea606.gz",
+      "bytes": 827
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/receiving-abi.md",
+      "sha256": "cc2515bad09a6072151e6e91e5c2f8eb02d38043f7af9c3b9c1fd533a9d1db8f",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/cc2515bad09a6072151e6e91e5c2f8eb02d38043f7af9c3b9c1fd533a9d1db8f.gz",
+      "bytes": 10156
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/schemas/pipeline-entry.schema.json",
+      "sha256": "8fa961cfcf1e907d6b2c5fa67f83a441decc65852e6985414e01a45a570f2c1c",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/8fa961cfcf1e907d6b2c5fa67f83a441decc65852e6985414e01a45a570f2c1c.gz",
+      "bytes": 4952
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/schemas/postgresql-recovery-policy.schema.json",
+      "sha256": "36bfaba20ffe0e258f75a345873aacbbbccdb8fb710436d6e8b692101f97b34a",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/36bfaba20ffe0e258f75a345873aacbbbccdb8fb710436d6e8b692101f97b34a.gz",
+      "bytes": 7075
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/schemas/recovery-task.schema.json",
+      "sha256": "dc896fd0fd4a48875267c75d5c1c7ae09380819d0f759ac39b00d831d12cd794",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/dc896fd0fd4a48875267c75d5c1c7ae09380819d0f759ac39b00d831d12cd794.gz",
+      "bytes": 1680
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/source-pins.json",
+      "sha256": "16692731eac048cfbae3115c923937500d23982bf3becf72dc057ca899d73740",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/16692731eac048cfbae3115c923937500d23982bf3becf72dc057ca899d73740.gz",
+      "bytes": 3316
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-source-contracts-01/README.md",
+      "sha256": "15f0ecf19c9a804b01dff515dac42715249531d61b6c7db801fc013544ab643d",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/15f0ecf19c9a804b01dff515dac42715249531d61b6c7db801fc013544ab643d.gz",
+      "bytes": 3765
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-source-contracts-01/candidate-dispositions.json",
+      "sha256": "98893de074072657c6bb832f84fee88eefa9d35276c6ecaa5ac8fdbb1d814fc0",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/98893de074072657c6bb832f84fee88eefa9d35276c6ecaa5ac8fdbb1d814fc0.gz",
+      "bytes": 93054
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-source-contracts-01/source-identities.json",
+      "sha256": "9c52de0a1310f68717deb418171d60a2153adcbc31dd1fd157e510942330349b",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/9c52de0a1310f68717deb418171d60a2153adcbc31dd1fd157e510942330349b.gz",
+      "bytes": 1340
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/c3-dependency-transition-to03.json",
+      "sha256": "a753784296af94246501460c5653a8a81fddcfd153dba63904f3e0e17aa1ab84",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/a753784296af94246501460c5653a8a81fddcfd153dba63904f3e0e17aa1ab84.gz",
+      "bytes": 2263
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/config/pipeline.config.json",
+      "sha256": "355ea24016a9fec3ead3e845d28a95925f3fc7fd337f1a970d5a788bf1c5b0e5",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/355ea24016a9fec3ead3e845d28a95925f3fc7fd337f1a970d5a788bf1c5b0e5.gz",
+      "bytes": 3421
+    },
+    {
+      "path": "my-values/infra/litellm-config.yaml",
+      "sha256": "70356ac84fef937d6cfad5ea54583a16342784d8299406e155524128542baa6d",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/70356ac84fef937d6cfad5ea54583a16342784d8299406e155524128542baa6d.gz",
+      "bytes": 377
+    },
+    {
+      "path": "my-values/infra/litellm-deployment.yaml",
+      "sha256": "21136d7cc63b549db0d9e1f3a32d449c5bf3c2644790d144d47d476372c56bab",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/21136d7cc63b549db0d9e1f3a32d449c5bf3c2644790d144d47d476372c56bab.gz",
+      "bytes": 2700
+    },
+    {
+      "path": "my-values/infra/postgresql-recovery.yaml",
+      "sha256": "5f0ffb0cdf5acdbd814da726060d5125c5cae912554f27de57251ea90ae8d438",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/5f0ffb0cdf5acdbd814da726060d5125c5cae912554f27de57251ea90ae8d438.gz",
+      "bytes": 445
+    },
+    {
+      "path": "my-values/infra/postgresql-values.yaml",
+      "sha256": "b7c1445d47350c6fcae2fc7de901e930dec1f8309331bf0db69c70c1f3404994",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/b7c1445d47350c6fcae2fc7de901e930dec1f8309331bf0db69c70c1f3404994.gz",
+      "bytes": 502
+    },
+    {
+      "path": "scripts/deploy.sh",
+      "sha256": "c90cc9c082b3adba89c458a9e28853afa77682a6c7066a7641c70aac749d0960",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/c90cc9c082b3adba89c458a9e28853afa77682a6c7066a7641c70aac749d0960.gz",
+      "bytes": 150066
+    },
+    {
+      "path": "scripts/infrastructure-chart-lock.mjs",
+      "sha256": "8884d8e41166f9739ea8f5986cbd8a4c8ae66e8756f0fa3ccb8712e9124601e5",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/8884d8e41166f9739ea8f5986cbd8a4c8ae66e8756f0fa3ccb8712e9124601e5.gz",
+      "bytes": 1271
+    },
+    {
+      "path": "scripts/infrastructure-chart.mjs",
+      "sha256": "6a136a40cced70d63de028e635bd5b9e4fb30f1a632cd725175385faf9c57e25",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/6a136a40cced70d63de028e635bd5b9e4fb30f1a632cd725175385faf9c57e25.gz",
+      "bytes": 3579
+    },
+    {
+      "path": "scripts/infrastructure-release.mjs",
+      "sha256": "a03aa7721f871473effbb0f79de84bc7ebcb2877c68fa023675ea335e27936f8",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/a03aa7721f871473effbb0f79de84bc7ebcb2877c68fa023675ea335e27936f8.gz",
+      "bytes": 2675
+    },
+    {
+      "path": "scripts/postgresql-recovery-preflight.mjs",
+      "sha256": "fef2fed9b07fb7731c58d69c744a418130882cc5507d16616a3b516ff9485fd4",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/fef2fed9b07fb7731c58d69c744a418130882cc5507d16616a3b516ff9485fd4.gz",
+      "bytes": 1612
+    },
+    {
+      "path": "scripts/postgresql-recovery.sh",
+      "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b.gz",
+      "bytes": 10599
+    },
+    {
+      "path": "scripts/render-postgresql-recovery.mjs",
+      "sha256": "3e0d30b0c0888c4039f176ddb80d19e00b7b7064ead979d5bb9122d4df19e14f",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/3e0d30b0c0888c4039f176ddb80d19e00b7b7064ead979d5bb9122d4df19e14f.gz",
+      "bytes": 10576
+    },
+    {
+      "path": "scripts/stateful-database-service.mjs",
+      "sha256": "fd96f1a30f997d4a6a71a23b81cad2dc4ccca69b223e4945e22c9261819bbfa8",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/fd96f1a30f997d4a6a71a23b81cad2dc4ccca69b223e4945e22c9261819bbfa8.gz",
+      "bytes": 2764
+    },
+    {
+      "path": "versions.json",
+      "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d",
+      "frozenPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d.gz",
+      "bytes": 12594
+    }
+  ],
+  "packageArtifactChecks": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/README.md",
+      "sha256": "a226e9aafd4e85393ab5d043bf19f3da428bf3de48ee911944641c884960cf76",
+      "bytes": 15066,
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/case-definitions.json",
+      "sha256": "8e0cfc8c01f1f879beaf1b98a09e71ec08c2cb246ced60d8be29f03c1b16622e",
+      "bytes": 85529,
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/collect-definition-checks.mjs",
+      "sha256": "d2d329571481133b510df803f948c4b4367e9612d9f8a47a8d3fe15b07394aff",
+      "bytes": 21372,
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/commands-and-exits.json",
+      "sha256": "3791e059011edc99941d79882aa67b5829575cbbb20fe5b156cda174986cbf7b",
+      "bytes": 2919,
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/config/pipeline.config.json",
+      "sha256": "9acd5845d808effd7b5f2f04815620ab3a17459652b5561bdf4f17903af030ff",
+      "bytes": 3643,
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/conservation-receipt.json",
+      "sha256": "5a21c026555487f0fcf64246627d0381088b858c91a10762e0cd5989b71d5ec3",
+      "bytes": 1650,
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/entry-supersession.json",
+      "sha256": "472f4f62d9e9d27f42b0b98400b18b2014e5f600e5bd59d4d9ddbe3a25b3f6c3",
+      "bytes": 1353,
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/field-definitions.json",
+      "sha256": "adb871ea14bf84f2c24f73037fea8b358f9337a39f5fdb3f1d070962efcf78fe",
+      "bytes": 25027,
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/final-run/definition-receipt.json",
+      "sha256": "9f3982984727a4ed1b6cf63bd9a4419ad7d5f76d0fbf3fce1c2eede8ba9f5eb6",
+      "bytes": 15333,
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/final-run/generated-public-projections.json",
+      "sha256": "12ba84000466f496ed712e61057e0945ccc78d26ee805c0965064b9ceba658a7",
+      "bytes": 179000,
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/final-run/isolated-current-pure-functions.mjs",
+      "sha256": "2c5072d0f1d1b483d72808686db13cad49f405f31233121483c72229801e31ce",
+      "bytes": 6965,
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/final-run.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/final-run.stdout",
+      "sha256": "baccd7e9f99fdfc56a13e125b7afe867427692f7a785ab666882a4acaef44869",
+      "bytes": 4638,
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/generated-handoff-definition.json",
+      "sha256": "a5705bfb3d671520afa2884a523bbc4dfe479544e82c6b593a5efd8a216c9d0e",
+      "bytes": 1981,
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/my-values/infra/postgresql-recovery.yaml",
+      "sha256": "ce029433a76e6e4edc5d67086ab1293277ea852ca83a2e9bdccadf15232acae7",
+      "bytes": 25823,
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/original-candidate-lineage.json",
+      "sha256": "ace11c5d6e0f04dcaec568962bedeb1005e7e3404267f424116931defec80c09",
+      "bytes": 96426,
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/profile-index.json",
+      "sha256": "0c0cd57f3601f96e0889d25e971805c5314db7458c911f9e457cc8dac3007bf6",
+      "bytes": 6067,
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/public-fixtures/field-pair-input-stands.json",
+      "sha256": "fa5139150fd455ba831113f40147c53b76b2e6c573bb48b286a0e260aba24a2b",
+      "bytes": 17451,
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/public-fixtures/runtime-A.env",
+      "sha256": "904282ccd6495d5a00fff6af7f24ce9e33c25e19dc43cd0bd3b066d7482cf20c",
+      "bytes": 1123,
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/public-fixtures/source-reference-stand.json",
+      "sha256": "b738b2095210cb8fcad4f69e7a906e2b2201330a6968a076dade7e5d8026c7ff",
+      "bytes": 2266,
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/public-fixtures/task-stands.json",
+      "sha256": "7704b4d6a9f9b07615e712a424c5e91f89eae3a8003f8fdb3c6ab58e7a6ea606",
+      "bytes": 827,
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/receiving-abi.md",
+      "sha256": "cc2515bad09a6072151e6e91e5c2f8eb02d38043f7af9c3b9c1fd533a9d1db8f",
+      "bytes": 10156,
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/schemas/pipeline-entry.schema.json",
+      "sha256": "8fa961cfcf1e907d6b2c5fa67f83a441decc65852e6985414e01a45a570f2c1c",
+      "bytes": 4952,
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/schemas/postgresql-recovery-policy.schema.json",
+      "sha256": "36bfaba20ffe0e258f75a345873aacbbbccdb8fb710436d6e8b692101f97b34a",
+      "bytes": 7075,
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/schemas/recovery-task.schema.json",
+      "sha256": "dc896fd0fd4a48875267c75d5c1c7ae09380819d0f759ac39b00d831d12cd794",
+      "bytes": 1680,
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/source-pins.json",
+      "sha256": "16692731eac048cfbae3115c923937500d23982bf3becf72dc057ca899d73740",
+      "bytes": 3316,
+      "matches": true
+    }
+  ]
+}

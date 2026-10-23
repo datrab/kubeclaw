@@ -1,0 +1,46 @@
+{
+  "RepositoryA": {
+    "repositoryRoot": "${CASE_ROOT}/repo",
+    "maxFileBytes": 8,
+    "maxChangedPaths": 2,
+    "expectedHead": "${AUTHENTIC_FIXTURE_HEAD}"
+  },
+  "RepositoryB": {
+    "repositoryRoot": "${CASE_ROOT}/repo",
+    "maxFileBytes": 16,
+    "maxChangedPaths": 4,
+    "expectedHead": "${AUTHENTIC_FIXTURE_HEAD}"
+  },
+  "LintStageA": {
+    "policyPath": "${CASE_ROOT}/policy/approved-A.json",
+    "policyProject": "approved",
+    "includeDebt": false,
+    "includeExperimental": false
+  },
+  "LintStageB": {
+    "policyPath": "${CASE_ROOT}/policy/approved-B.json",
+    "policyProject": "approved",
+    "includeDebt": true,
+    "includeExperimental": true
+  },
+  "LintAdapterA": {
+    "allowedRepositoryRoots": [
+      "${CASE_ROOT}/repo"
+    ],
+    "allowedPolicyRoots": [
+      "${CASE_ROOT}/policy"
+    ]
+  },
+  "LintAdapterB": {
+    "allowedRepositoryRoots": [
+      "${CASE_ROOT}/repo",
+      "${CASE_ROOT}/repo-B"
+    ],
+    "allowedPolicyRoots": [
+      "${CASE_ROOT}/policy",
+      "${CASE_ROOT}/policy-B"
+    ]
+  },
+  "substitution": "CASE_ROOT fresh actual canonical directory. AUTHENTIC_FIXTURE_HEAD must be generated and authenticated from actual fixture repository, not invented digest. Paired policy fixtures must both pass complete actual loadLintPolicy schema/governance and share explicit project id; real approved tool dependencies/source/unchangedtask/fixedreports prerequisite. JSON profile validity alone not actual bundle/tool coverage.",
+  "isolation": "No adapter/model/provider/native executable execution now except safe repository localfile read and exported pure requestPayload controls. No Git commands within adapter probe."
+}

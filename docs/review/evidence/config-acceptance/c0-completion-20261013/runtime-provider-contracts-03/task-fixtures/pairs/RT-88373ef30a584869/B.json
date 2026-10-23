@@ -1,0 +1,22 @@
+{
+  "specFile": "spec-typed.json",
+  "url": "https://fixture.invalid",
+  "operations": [
+    {
+      "operationId": "typedParameters",
+      "pathParameters": {
+        "value": "alpha"
+      },
+      "query": {
+        "q": 2
+      },
+      "headers": {
+        "x-proof": "alpha"
+      },
+      "cleanup": false,
+      "expectedStatuses": [
+        200
+      ]
+    }
+  ]
+}

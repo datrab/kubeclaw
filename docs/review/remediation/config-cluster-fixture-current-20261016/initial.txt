@@ -1,0 +1,780 @@
+✖ captured file kubernetes.fixture namespace governs actual commands after mutation (4.061885ms)
+✖ captured file kubernetes.fixture registry governs actual commands after mutation (1.759256ms)
+✖ captured file kubernetes.fixture secret governs actual commands after mutation (1.92767ms)
+✖ captured file kubernetes.fixture storage governs actual commands after mutation (1.755475ms)
+✖ captured file kubernetes.fixture manifest governs actual commands after mutation (1.756415ms)
+✖ captured file kubernetes.exposure namespace governs actual commands after mutation (1.740425ms)
+✖ captured file kubernetes.exposure host governs actual commands after mutation (2.047543ms)
+✖ captured caller kubernetes.fixture namespace governs actual commands after mutation (1.741215ms)
+✖ captured caller kubernetes.fixture registry governs actual commands after mutation (1.686503ms)
+✖ captured caller kubernetes.fixture secret governs actual commands after mutation (1.669444ms)
+✖ captured caller kubernetes.fixture storage governs actual commands after mutation (1.610712ms)
+✖ captured caller kubernetes.fixture manifest governs actual commands after mutation (1.880278ms)
+✖ captured caller kubernetes.exposure namespace governs actual commands after mutation (1.882218ms)
+✖ captured caller kubernetes.exposure host governs actual commands after mutation (1.699154ms)
+✖ real kubernetes.fixture output limit profile false (3.669025ms)
+✖ real kubernetes.fixture output limit profile true (1.507939ms)
+✖ real kubernetes.exposure output limit profile false (1.946471ms)
+✖ real kubernetes.exposure output limit profile true (1.598421ms)
+✔ required RuntimeSecurity field allowedNamespacePrefixes before filesystem access (2.554546ms)
+✔ required RuntimeSecurity field maximumExecutionMs before filesystem access (0.38708ms)
+✔ required RuntimeSecurity field maximumOutputBytes before filesystem access (0.356109ms)
+✔ required RuntimeSecurity field pollIntervalMs before filesystem access (0.349789ms)
+✔ required RuntimeSecurity field maximumObservationAgeMs before filesystem access (0.361899ms)
+✔ required RuntimeSecurity field maximumFutureSkewMs before filesystem access (0.416791ms)
+✔ required RuntimeSecurity field diagnosticCodeUnits before filesystem access (0.39522ms)
+✔ required RuntimeSecurity field executableSearchPath before filesystem access (0.36518ms)
+✖ complete bundle requires allowedNamespacePrefixes even with route disabled (2.796813ms)
+✖ complete bundle requires maximumExecutionMs even with route disabled (1.334604ms)
+✖ complete bundle requires maximumOutputBytes even with route disabled (1.188751ms)
+✖ complete bundle requires pollIntervalMs even with route disabled (1.323624ms)
+✖ complete bundle requires maximumObservationAgeMs even with route disabled (1.123819ms)
+✖ complete bundle requires maximumFutureSkewMs even with route disabled (1.046937ms)
+✖ complete bundle requires diagnosticCodeUnits even with route disabled (1.120359ms)
+✖ complete bundle requires executableSearchPath even with route disabled (1.050097ms)
+✔ reject invalid RuntimeSecurity allowedNamespacePrefixes [] (0.435111ms)
+✔ reject invalid RuntimeSecurity allowedNamespacePrefixes [""] (0.344699ms)
+✔ reject invalid RuntimeSecurity allowedNamespacePrefixes [42] (0.295498ms)
+✔ reject invalid RuntimeSecurity maximumExecutionMs 0 (0.293748ms)
+✔ reject invalid RuntimeSecurity maximumExecutionMs 2147483648 (0.321438ms)
+✔ reject invalid RuntimeSecurity maximumExecutionMs 1.5 (0.301108ms)
+✔ reject invalid RuntimeSecurity maximumOutputBytes 1023 (0.286528ms)
+✔ reject invalid RuntimeSecurity maximumOutputBytes 9007199254740992 (0.306028ms)
+✔ reject invalid RuntimeSecurity pollIntervalMs 9 (0.299308ms)
+✔ reject invalid RuntimeSecurity pollIntervalMs 10001 (0.300938ms)
+✔ reject invalid RuntimeSecurity maximumObservationAgeMs 999 (0.293067ms)
+✔ reject invalid RuntimeSecurity maximumObservationAgeMs 60001 (0.330109ms)
+✔ reject invalid RuntimeSecurity maximumFutureSkewMs -1 (0.283508ms)
+✔ reject invalid RuntimeSecurity maximumFutureSkewMs 2147483648 (0.318499ms)
+✔ reject invalid RuntimeSecurity diagnosticCodeUnits 0 (0.277777ms)
+✔ reject invalid RuntimeSecurity diagnosticCodeUnits 1.5 (0.289878ms)
+✔ reject invalid RuntimeSecurity executableSearchPath [] (0.300458ms)
+✔ reject invalid RuntimeSecurity executableSearchPath ["relative"] (0.305577ms)
+✔ reject invalid RuntimeSecurity executableSearchPath ["/bin:/escape"] (0.287198ms)
+✔ reject invalid RuntimeSecurity executableSearchPath ["/bin\u0000"] (0.274897ms)
+✔ retired RuntimeSecurity object null (0.205225ms)
+✔ retired RuntimeSecurity object {} (0.087702ms)
+✔ retired RuntimeSecurity object {"allowedNamespacePrefixes":["test"],"maximumExecutionMs":300000,"maximumOutputBytes":16777216,"pollIntervalMs":1000,"maximumObservationAgeMs":10000,"maximumFutureSkewMs":5000,"diagnosticCodeUnits":1024,"executableSearchPath":["/usr/local/bin","/usr/bin","/bin"]} (0.084562ms)
+✔ retired RuntimeSecurity object "invalid" (0.067762ms)
+✔ disabled RuntimeSecurity route has no binding or implicit activation (0.809091ms)
+✖ real execution deadline profile false (3.361937ms)
+✖ real combined output profile false (1.690054ms)
+✖ real observation age profile false (1.706034ms)
+✖ real future skew profile false (1.704454ms)
+✖ real diagnostic code units profile false (1.601021ms)
+✖ real PATH helper profile false (1.52316ms)
+✖ real execution deadline profile true (1.453577ms)
+✖ real combined output profile true (1.54438ms)
+✖ real observation age profile true (1.523889ms)
+✖ real future skew profile true (1.53384ms)
+✖ real diagnostic code units profile true (1.433987ms)
+✖ real PATH helper profile true (1.55609ms)
+▶ real polling profile changes command cadence; selected arrays and scalars captured
+  ✖ poll interval 50 (1.512329ms)
+  ✖ poll interval 1200 (1.440637ms)
+✖ real polling profile changes command cadence; selected arrays and scalars captured (3.430858ms)
+✖ real namespace profile false (1.678953ms)
+✖ real namespace profile true (1.448638ms)
+✖ preserve inspected namespace prefix aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa (1.467087ms)
+✖ preserve inspected namespace prefix test- (1.423637ms)
+✖ reloaded file changes real PATH and diagnostic consumers; old captured consumer stays unchanged (1.648932ms)
+ℹ tests 79
+ℹ suites 0
+ℹ pass 33
+ℹ fail 46
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2789.352397
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-cluster-capture.test.mjs:41:3
+✖ captured file kubernetes.fixture namespace governs actual commands after mutation (4.061885ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-capture.test.mjs:53:22
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/cluster-test-ownership.mjs:43:45
+
+test at tests/verification/contracts/buster-cluster-capture.test.mjs:41:3
+✖ captured file kubernetes.fixture registry governs actual commands after mutation (1.759256ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-capture.test.mjs:53:22
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/cluster-test-ownership.mjs:43:45
+
+test at tests/verification/contracts/buster-cluster-capture.test.mjs:41:3
+✖ captured file kubernetes.fixture secret governs actual commands after mutation (1.92767ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-capture.test.mjs:53:22
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/cluster-test-ownership.mjs:43:45
+
+test at tests/verification/contracts/buster-cluster-capture.test.mjs:41:3
+✖ captured file kubernetes.fixture storage governs actual commands after mutation (1.755475ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-capture.test.mjs:53:22
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/cluster-test-ownership.mjs:43:45
+
+test at tests/verification/contracts/buster-cluster-capture.test.mjs:41:3
+✖ captured file kubernetes.fixture manifest governs actual commands after mutation (1.756415ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-capture.test.mjs:53:22
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/cluster-test-ownership.mjs:43:45
+
+test at tests/verification/contracts/buster-cluster-capture.test.mjs:41:3
+✖ captured file kubernetes.exposure namespace governs actual commands after mutation (1.740425ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-capture.test.mjs:53:22
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/cluster-test-ownership.mjs:43:45
+
+test at tests/verification/contracts/buster-cluster-capture.test.mjs:41:3
+✖ captured file kubernetes.exposure host governs actual commands after mutation (2.047543ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-capture.test.mjs:53:22
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/cluster-test-ownership.mjs:43:45
+
+test at tests/verification/contracts/buster-cluster-capture.test.mjs:41:3
+✖ captured caller kubernetes.fixture namespace governs actual commands after mutation (1.741215ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-capture.test.mjs:53:22
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/cluster-test-ownership.mjs:43:45
+
+test at tests/verification/contracts/buster-cluster-capture.test.mjs:41:3
+✖ captured caller kubernetes.fixture registry governs actual commands after mutation (1.686503ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-capture.test.mjs:53:22
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/cluster-test-ownership.mjs:43:45
+
+test at tests/verification/contracts/buster-cluster-capture.test.mjs:41:3
+✖ captured caller kubernetes.fixture secret governs actual commands after mutation (1.669444ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-capture.test.mjs:53:22
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/cluster-test-ownership.mjs:43:45
+
+test at tests/verification/contracts/buster-cluster-capture.test.mjs:41:3
+✖ captured caller kubernetes.fixture storage governs actual commands after mutation (1.610712ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-capture.test.mjs:53:22
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/cluster-test-ownership.mjs:43:45
+
+test at tests/verification/contracts/buster-cluster-capture.test.mjs:41:3
+✖ captured caller kubernetes.fixture manifest governs actual commands after mutation (1.880278ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-capture.test.mjs:53:22
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/cluster-test-ownership.mjs:43:45
+
+test at tests/verification/contracts/buster-cluster-capture.test.mjs:41:3
+✖ captured caller kubernetes.exposure namespace governs actual commands after mutation (1.882218ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-capture.test.mjs:53:22
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/cluster-test-ownership.mjs:43:45
+
+test at tests/verification/contracts/buster-cluster-capture.test.mjs:41:3
+✖ captured caller kubernetes.exposure host governs actual commands after mutation (1.699154ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-capture.test.mjs:53:22
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/cluster-test-ownership.mjs:43:45
+
+test at tests/verification/contracts/buster-cluster-output-consumers.test.mjs:53:38
+✖ real kubernetes.fixture output limit profile false (3.669025ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-output-consumers.test.mjs:63:22)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at tests/verification/contracts/buster-cluster-output-consumers.test.mjs:53:38
+✖ real kubernetes.fixture output limit profile true (1.507939ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-output-consumers.test.mjs:63:22)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at tests/verification/contracts/buster-cluster-output-consumers.test.mjs:53:38
+✖ real kubernetes.exposure output limit profile false (1.946471ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-output-consumers.test.mjs:63:22)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-cluster-output-consumers.test.mjs:53:38
+✖ real kubernetes.exposure output limit profile true (1.598421ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-output-consumers.test.mjs:63:22)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:146:46
+✖ complete bundle requires allowedNamespacePrefixes even with route disabled (2.796813ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /SWARM_CONFIG_INVALID:component:buster-engine/. Input:
+  
+  'Error: SWARM_CONFIG_RETIRED_ENTRY'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: SWARM_CONFIG_RETIRED_ENTRY
+        at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+        at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+        at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:23
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19),
+    expected: /SWARM_CONFIG_INVALID:component:buster-engine/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:146:46
+✖ complete bundle requires maximumExecutionMs even with route disabled (1.334604ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /SWARM_CONFIG_INVALID:component:buster-engine/. Input:
+  
+  'Error: SWARM_CONFIG_RETIRED_ENTRY'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: SWARM_CONFIG_RETIRED_ENTRY
+        at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+        at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+        at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:23
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19),
+    expected: /SWARM_CONFIG_INVALID:component:buster-engine/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:146:46
+✖ complete bundle requires maximumOutputBytes even with route disabled (1.188751ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /SWARM_CONFIG_INVALID:component:buster-engine/. Input:
+  
+  'Error: SWARM_CONFIG_RETIRED_ENTRY'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: SWARM_CONFIG_RETIRED_ENTRY
+        at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+        at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+        at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:23
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19),
+    expected: /SWARM_CONFIG_INVALID:component:buster-engine/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:146:46
+✖ complete bundle requires pollIntervalMs even with route disabled (1.323624ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /SWARM_CONFIG_INVALID:component:buster-engine/. Input:
+  
+  'Error: SWARM_CONFIG_RETIRED_ENTRY'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: SWARM_CONFIG_RETIRED_ENTRY
+        at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+        at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+        at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:23
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19),
+    expected: /SWARM_CONFIG_INVALID:component:buster-engine/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:146:46
+✖ complete bundle requires maximumObservationAgeMs even with route disabled (1.123819ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /SWARM_CONFIG_INVALID:component:buster-engine/. Input:
+  
+  'Error: SWARM_CONFIG_RETIRED_ENTRY'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: SWARM_CONFIG_RETIRED_ENTRY
+        at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+        at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+        at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:23
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19),
+    expected: /SWARM_CONFIG_INVALID:component:buster-engine/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:146:46
+✖ complete bundle requires maximumFutureSkewMs even with route disabled (1.046937ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /SWARM_CONFIG_INVALID:component:buster-engine/. Input:
+  
+  'Error: SWARM_CONFIG_RETIRED_ENTRY'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: SWARM_CONFIG_RETIRED_ENTRY
+        at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+        at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+        at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:23
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19),
+    expected: /SWARM_CONFIG_INVALID:component:buster-engine/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:146:46
+✖ complete bundle requires diagnosticCodeUnits even with route disabled (1.120359ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /SWARM_CONFIG_INVALID:component:buster-engine/. Input:
+  
+  'Error: SWARM_CONFIG_RETIRED_ENTRY'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: SWARM_CONFIG_RETIRED_ENTRY
+        at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+        at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+        at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:23
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19),
+    expected: /SWARM_CONFIG_INVALID:component:buster-engine/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:146:46
+✖ complete bundle requires executableSearchPath even with route disabled (1.050097ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /SWARM_CONFIG_INVALID:component:buster-engine/. Input:
+  
+  'Error: SWARM_CONFIG_RETIRED_ENTRY'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: SWARM_CONFIG_RETIRED_ENTRY
+        at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+        at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+        at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:23
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19),
+    expected: /SWARM_CONFIG_INVALID:component:buster-engine/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:179:3
+✖ real execution deadline profile false (3.361937ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:180:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:186:3
+✖ real combined output profile false (1.690054ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:187:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:197:3
+✖ real observation age profile false (1.706034ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:198:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:206:3
+✖ real future skew profile false (1.704454ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:207:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:215:3
+✖ real diagnostic code units profile false (1.601021ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:217:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:222:3
+✖ real PATH helper profile false (1.52316ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:223:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:179:3
+✖ real execution deadline profile true (1.453577ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:180:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:186:3
+✖ real combined output profile true (1.54438ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:187:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:197:3
+✖ real observation age profile true (1.523889ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:198:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:206:3
+✖ real future skew profile true (1.53384ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:207:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:215:3
+✖ real diagnostic code units profile true (1.433987ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:217:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:222:3
+✖ real PATH helper profile true (1.55609ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:223:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:237:13
+✖ poll interval 50 (1.512329ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:238:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at TestContext.test (node:internal/test_runner/test:400:20)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:237:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:237:13
+✖ poll interval 1200 (1.440637ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:238:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at TestContext.test (node:internal/test_runner/test:400:20)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:237:13)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:234:1
+✖ real polling profile changes command cadence; selected arrays and scalars captured (3.430858ms)
+  AssertionError [ERR_ASSERTION]: distinct authored poll effects: 
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:249:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:252:38
+✖ real namespace profile false (1.678953ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:253:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:252:38
+✖ real namespace profile true (1.448638ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:253:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:261:3
+✖ preserve inspected namespace prefix aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa (1.467087ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:262:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:261:3
+✖ preserve inspected namespace prefix test- (1.423637ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:262:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:268:1
+✖ reloaded file changes real PATH and diagnostic consumers; old captured consumer stays unchanged (1.648932ms)
+  Error: SWARM_CONFIG_RETIRED_ENTRY
+      at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:346:62)
+      at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:269:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

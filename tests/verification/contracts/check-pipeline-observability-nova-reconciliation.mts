@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import os from "node:os";
@@ -159,7 +160,7 @@ try {
   );
   const firstHalf = await reconcileNovaObservabilityOnRecovery(
     runRoot,
-    "run:scale",
+    "run:scale", TEST_CORE_POLICY,
     () => now,
   );
   assert.equal(
@@ -169,10 +170,10 @@ try {
   await persistNovaObservabilityPlan(runRoot, "run:scale", desired);
   const afterRestart = await reconcileNovaObservabilityOnRecovery(
     runRoot,
-    "run:scale",
+    "run:scale", TEST_CORE_POLICY,
     () => now,
   );
-  const restartedNova = new NovaObservabilityReconciler({
+  const restartedNova = new NovaObservabilityReconciler({journalAppendLockTimeoutMs: TEST_CORE_POLICY.journalAppendLockTimeoutMs,
     attemptStore: store,
     admissionStore: admission,
     journalFile: journal,

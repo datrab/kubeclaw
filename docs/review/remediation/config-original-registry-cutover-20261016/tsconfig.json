@@ -1,0 +1,12 @@
+{
+  "extends": "../../../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": [
+      "node"
+    ],
+    "resolveJsonModule": true
+  },
+  "files": [
+    "../../../../tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts"
+  ]
+}

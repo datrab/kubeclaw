@@ -1,3 +1,4 @@
+import type { CoreRuntimePolicy } from '@kubeclaw/plugin-foundation/config/core-runtime-policy';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -43,15 +44,16 @@ export class FileResourceLockManager {
   readonly #root: string;
   readonly #journal: FileJournal<ResourceLock>;
   readonly #now: () => Date;
-  readonly #provisionalTtlMs = 60_000;
+  readonly #provisionalTtlMs: number;
   readonly #metadataMutex: FileMutex;
 
-  constructor(root: string, now: () => Date = () => new Date()) {
+  constructor(root: string, policy: CoreRuntimePolicy, now: () => Date = () => new Date()) {
+    this.#provisionalTtlMs = policy.resourceLockProvisionalTtlMs;
     this.#root = path.resolve(root);
     this.#now = now;
     fs.mkdirSync(this.#root, { recursive: true });
-    this.#journal = new FileJournal(path.join(this.#root, 'locks.jsonl'));
-    this.#metadataMutex = new FileMutex(path.join(this.#root, 'metadata.guard'), 5_000, 'RESOURCE_LOCK_METADATA_TIMEOUT');
+    this.#journal = new FileJournal(path.join(this.#root, 'locks.jsonl'), policy.journalAppendLockTimeoutMs);
+    this.#metadataMutex = new FileMutex(path.join(this.#root, 'metadata.guard'), policy.resourceLockMetadataTimeoutMs, 'RESOURCE_LOCK_METADATA_TIMEOUT');
   }
 
   acquire(

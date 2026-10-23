@@ -1,0 +1,57 @@
+{
+  "at": "2026-10-16T22:00:04.143832+00:00",
+  "status": "ORIGINAL_COMPONENT_GENERATION_AND_PRISM_CHART_SUITES_PASS_NOT_FULL_ACCEPTANCE",
+  "sourceCommit": "b022bdb295841ca055e490ed44576aa18fa08ef5",
+  "branch": "codex/config-c0-semantic-inventory-20261012",
+  "verifiedRemoteHead": "b022bdb295841ca055e490ed44576aa18fa08ef5",
+  "matches": true,
+  "evidence": "docs/review/remediation/config-component-final-integration-20261016",
+  "productionSourceChanged": false,
+  "change": "All original Prism chart cases migrated from removed raw ConfigMap/legacy loader to complete actual selected central owner envelopes, real whole-profile topology generator, real immutable image generation/materializer/publisher and same-installed-module authenticated boot captures. Control/Worker/Studio actual consumers, both direct/SPIFFE profile selections, all topology edges, full seven-member author bytes and schemas, complete native policy and actual generation rollout verified. No new author/default/grant or productive activation.",
+  "checks": {
+    "integratedOriginalSuites": {
+      "passed": 358,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "total": 358,
+      "log": "docs/review/remediation/config-component-final-integration-20261016/final.txt",
+      "originalPrismChartTests": 343,
+      "addedRegressionTests": 2,
+      "originalComponentGenerationTests": 13
+    },
+    "requiredLeafDeletionObligations": 461,
+    "strictComponentTypecheck": true,
+    "diffCheck": true,
+    "originalRoster": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50,
+      "integrityFailures": 0,
+      "originalResultsChanged": false
+    }
+  },
+  "mutationControls": [
+    "Wrong rollout checksum rejected by exact real rendered projection hash oracle, restored positive accepted",
+    "Changed rendered generation provenance rejected, restored positive accepted",
+    "Missing actual immutable image member rejected by real installed boot, exact restored bytes accepted by actual Worker loader"
+  ],
+  "initialFailuresRetained": [
+    "before.txt:358 predecessor obligations not globally passed; combined356 tests with334 failures in original legacy chart fixtures;22 passed",
+    "current.txt:325/343; removed-envelope and diagnostic/selection migration errors",
+    "corrected.txt:336/343;7 local fixture ReferenceErrors",
+    "Source audit found two await/property-access precedence mistakes in migrated Studio negative assertions; fixed to await complete real result and assert exact failure plus diagnostic before authoritative final.txt."
+  ],
+  "independentReview": "OPEN: fresh ALL_TOOLS discovery exposes no native spawn/reviewer/collaboration tool; CONFIG active/recent subagents0, parent terminal. Unchanged same-surface EROFS not retried. Author tests are not independent review or native acceptance.",
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "nextAction": "Genuine QB-R02 original producer/source/build/baseline/inputStore reservation/accounting/sealed snapshot/publication plus coordinated sole-root/all-profile/schema/file-set/actual boot+Nova receiving. Keep BUDGET_SOURCE_RECEIPT_REQUIRED and denied-v10 activation. Required independent complete-source/original/history/native/fullC0-C6 gates OPEN. Original Buster admission CLI remains blocked by actual UID1000/setresuid; no subset full command PASS.",
+  "externalOwner": "Raven",
+  "resumeCondition": "Actual isolated Linux Docker/UID1000/GID1000/delegated writable cgroup, sufficiently large genuinely root-trusted archive storage and isolated migrated real PostgreSQL database. No UID/kernel/trust spoof or skipped native proof.",
+  "writerLock": "same nonblocking repository lock; released at bounded command exit",
+  "noHistoricalFollowup": true,
+  "sourceSha256": "9b949ea73a0466ea6d6809c05f8def257939dfd8981bea5458defc1c2c8b0b9a"
+}

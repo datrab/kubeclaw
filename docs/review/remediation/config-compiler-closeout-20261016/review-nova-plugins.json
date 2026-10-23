@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "No concrete actionable defects were identified in the supplied change bundle and adjacent configuration context. The changed consumers require explicit limits and preserve the original values through the supplied central policy projections. Review was limited to source inspection; shell inspection was unavailable, and no tests or historical acceptance checks were run.",
+  "overall_confidence": 0.83
+}

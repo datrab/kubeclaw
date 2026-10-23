@@ -1,0 +1,32 @@
+{
+  "sourceCommit": "b34610227527c1645d476ef95cc6353855aa2c64",
+  "bundle": "/home/node/.openclaw/workspace/tmp/config-quality-original-producer-buster-b346102275",
+  "normalRoleBuild": true,
+  "files": [
+    {
+      "source": "skills/buster/engine/test-gates/runner.ts",
+      "emitted": "/home/node/.openclaw/workspace/tmp/config-quality-original-producer-buster-b346102275/skills/packages/buster-engine/test-gates/runner.ts",
+      "sourceBytesEqual": true,
+      "sha256": "50435c0edfcc45e2d08248bfee2047c721d837e6f07613e1f3cdbd739004de6f"
+    },
+    {
+      "source": "skills/buster/engine/test-gates/runner-node.ts",
+      "emitted": "/home/node/.openclaw/workspace/tmp/config-quality-original-producer-buster-b346102275/skills/packages/buster-engine/test-gates/runner-node.ts",
+      "sourceBytesEqual": true,
+      "sha256": "6a4437e63eb406743be315567ed767e954b98a2bdf70a417b961cc9bbb85a490"
+    },
+    {
+      "source": "skills/buster/engine/test-gates/runner-scheduler.ts",
+      "emitted": "/home/node/.openclaw/workspace/tmp/config-quality-original-producer-buster-b346102275/skills/packages/buster-engine/test-gates/runner-scheduler.ts",
+      "sourceBytesEqual": true,
+      "sha256": "d865bfae638dc10f45a585ad3a98e75f7c5bbf7099bf7335186d44047887c167"
+    },
+    {
+      "source": "skills/buster/engine/test-gates/runner-attempt-preparation.ts",
+      "emitted": "/home/node/.openclaw/workspace/tmp/config-quality-original-producer-buster-b346102275/skills/packages/buster-engine/test-gates/runner-attempt-preparation.ts",
+      "sourceBytesEqual": true,
+      "sha256": "25255b13b2d221714e41948f80c57224010032e491773493872d122a609715f6"
+    }
+  ],
+  "actualImportsPassed": true
+}

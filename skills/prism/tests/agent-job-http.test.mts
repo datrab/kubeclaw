@@ -1,3 +1,4 @@
+import { nativeControlSettings } from './native/resource-policy.mts';
 import {WorkerAttemptExecutor,workerAttemptResultDigest} from '@kubeclaw/worker-core';
 import {AgentProcess} from '../server/agent-process.ts';
 import type {AgentJob} from '../control/agent-jobs.ts';
@@ -20,7 +21,7 @@ test('actual HTTP job routes authenticate before claim, persist one fence and re
  const preferences=await startDesignRound(db,{projectId:'http-project',subjectId:null,startKey:'initial',architectureDigest:'digest',architectureRevision:1});
  const queued=await enqueueAgentJob(db,'spiffe://test/control/main/v2','http-project','design-set',{projectId:'http-project',preferences});
  const server=createServer((request,response)=>{
-  void handleAgentJobs(request,response,new URL(request.url!,'http://localhost'),{db,spiffeEnabled:true,trustedAgentId:'spiffe://test/agent',readBody:async req=>{const chunks=[];for await(const chunk of req)chunks.push(chunk);return JSON.parse(Buffer.concat(chunks).toString());}}).catch(error=>{response.writeHead(422,{'content-type':'application/json'});response.end(JSON.stringify({error:String(error)}));});
+  void handleAgentJobs(request,response,new URL(request.url!,'http://localhost'),{...nativeControlSettings,db,spiffeEnabled:true,trustedAgentId:'spiffe://test/agent',readBody:async req=>{const chunks=[];for await(const chunk of req)chunks.push(chunk);return JSON.parse(Buffer.concat(chunks).toString());}}).catch(error=>{response.writeHead(422,{'content-type':'application/json'});response.end(JSON.stringify({error:String(error)}));});
  });
  await new Promise<void>(resolve=>server.listen(0,'127.0.0.1',resolve));const origin=`http://127.0.0.1:${(server.address() as {port:number}).port}`;
  const post=(path:string,input:unknown,peer='spiffe://test/agent')=>fetch(`${origin}${path}`,{method:'POST',headers:{'content-type':'application/json','x-forwarded-client-cert':`URI=${peer}`},body:JSON.stringify(input)});
@@ -32,12 +33,14 @@ test('actual HTTP job routes authenticate before claim, persist one fence and re
   const second=await post('/v1/agent/jobs/claim',{runnerId:'boot-two'});assert.equal((await second.json() as {job:unknown}).job,null);
   const stale=await post(`/v1/agent/jobs/${queued.id}/finish`,{fence:randomUUID(),outcome:{state:'completed'}});assert.equal(stale.status,422);assert.match(await stale.text(),/fence conflict/);
   assert.ok(claimed.fence);assert.ok(claimed.attempt_envelope);
+  assert.equal(claimed.attempt_envelope.operation.values.maximumArtifactAcknowledgmentBytes,nativeControlSettings.maximumArtifactAcknowledgmentBytes);
+  assert.deepEqual(claimed.attempt_envelope.limits,nativeControlSettings.agentLauncher.limits);
   const designs=['one','two','three'].map(key=>{const document=structuredClone(fixture) as PrismDocument;document.meta.projectId='http-project';return {key,title:key,summary:key,document};});
   await new RevisionRepository(db).createDirectionSet('http-project',queued.id,designs,{jobId:queued.id,fence:claimed.fence,payload:{designs}});
   const endpoint=`/v1/agent/jobs/${queued.id}/finish`;
   const forged=await post(endpoint,{fence:claimed.fence,outcome:{state:'completed'}});assert.equal(forged.status,422);assert.match(await forged.text(),/bound V2 receipt/);
   assert.equal((await agentJob(db,queued.id)).state,'running');
-  const genuine=await new WorkerAttemptExecutor({envelope:claimed.attempt_envelope,operation:new AgentProcess(process.execPath,['-e','process.exitCode=0']),retainLogs:false}).execute();
+  const genuine=await new WorkerAttemptExecutor({envelope:claimed.attempt_envelope,operation:new AgentProcess(process.execPath,['-e','process.exitCode=0'],nativeControlSettings.agentLauncher.terminationGraceMs),retainLogs:false}).execute();
   assert.equal(genuine.state,'completed');
   const changed=structuredClone(genuine);changed.resourceAccounting.budgets.cpuTimeMs={state:'requested',limit:1};changed.resultDigest=workerAttemptResultDigest(changed);
   const corrupt=await post(endpoint,{fence:claimed.fence,outcome:changed});assert.equal(corrupt.status,422);assert.match(await corrupt.text(),/binding failed/);

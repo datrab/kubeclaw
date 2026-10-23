@@ -21,7 +21,22 @@ export type ProductConfig = { issuer: string; operators: ReadonlySet<string>; or
   privateKey: KeyObject; controller: URL; caFile: string; tokenFile: string };
 export const productDigest = (value: string | Buffer): string => `sha256:${createHash('sha256').update(value).digest('hex')}`;
 export async function loadProductConfig(env: NodeJS.ProcessEnv): Promise<ProductConfig | undefined> {
+  // Historical component-v2/v3/v4 startup retains its original ENV codec.
   if (env.PRISM_PRODUCT_DECISIONS_ENABLED !== 'true') return undefined;
+  return readProductAuthority(env);
+}
+
+/** Component-v5 selects the switch from the retained Control owner, not ENV. */
+export async function loadSelectedProductConfig(enabled: boolean, env: NodeJS.ProcessEnv): Promise<ProductConfig | undefined> {
+  if (typeof enabled !== 'boolean') throw new Error('PRISM_PRODUCT_DECISIONS_SELECTION_REQUIRED');
+  if (Object.hasOwn(env, 'PRISM_PRODUCT_DECISIONS_ENABLED')) {
+    throw new Error('SWARM_CONFIG_LEGACY_OVERRIDE:PRISM_PRODUCT_DECISIONS_ENABLED:use prism-control.config.json settings.productDecisionsEnabled');
+  }
+  if (!enabled) return undefined;
+  return readProductAuthority(env);
+}
+
+async function readProductAuthority(env: NodeJS.ProcessEnv): Promise<ProductConfig> {
   const required = (name: string): string => { const value = env[name]?.trim(); if (!value) throw new Error(`${name} is required`); return value; };
   const origin = new URL(required('PRISM_PRODUCT_ORIGIN'));
   const controller = new URL(required('PRISM_PRODUCT_CONTROLLER_URL'));
@@ -57,8 +72,9 @@ export function parseProductIntent(value: unknown): ProductIntent {
   if (value.action === 'extend' ? !Number.isSafeInteger(value.extensionSeconds) || Number(value.extensionSeconds) < 1 || Number(value.extensionSeconds) > 9223372036 : Object.hasOwn(value, 'extensionSeconds')) throw new Error('invalid product extension');
   return value as unknown as ProductIntent;
 }
-export function signProductIntent(intent: ProductIntent, actor: {user: string; expiresAt: number}, config: ProductConfig, now = Date.now()): {envelope: ProductEnvelope; payload: ProductPayload; payloadDigest: string} {
-  const expiry = Math.floor(Math.min(now + 300_000, actor.expiresAt) / 1000) * 1000;
+export function signProductIntent(intent: ProductIntent, actor: {user: string; expiresAt: number}, config: ProductConfig, lifetimeMs: number, now = Date.now()): {envelope: ProductEnvelope; payload: ProductPayload; payloadDigest: string} {
+  if (!Number.isSafeInteger(lifetimeMs) || lifetimeMs < 1 || lifetimeMs > 2147483647) throw new Error('valid product decision lifetime required');
+  const expiry = Math.floor(Math.min(now + lifetimeMs, actor.expiresAt) / 1000) * 1000;
   if (expiry <= now) throw new Error('operator session expires before decision issuance');
   const {url: _url, runId: _runId, ...subject} = intent.subject;
   const payload: ProductPayload = {schemaVersion: 'demo-product-decision.v1', issuer: config.issuer,

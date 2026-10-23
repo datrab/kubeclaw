@@ -1,0 +1,886 @@
+{
+  "normativeProposedBase": "same-entry-engine-binding-01 full physicalv7 + independently closed supplement02 supplied-current Security semantics",
+  "baseFileset": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/file-set-stand.json",
+    "sha256": "b7b40aa7ed04e6d5876b4559afe44151d6314e9564e5f8e8a19ccd4bc111ee0c",
+    "bytes": 41162
+  },
+  "root": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/config/pipeline.config.json",
+    "sha256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011",
+    "bytes": 6751
+  },
+  "owner": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/config/components/buster-engine.config.json",
+    "sha256": "849d4848f2dccfe19d5d6c4a421b6001ee0f59ff4905b646b9dd3b93f3b0cc84",
+    "bytes": 1165082
+  },
+  "materialHelper": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-02/check-correction.mjs",
+    "sha256": "5b4d985620bdb662ef8f90e170fa7c7b201b0e5a3f23d008f8c13c2159712a67",
+    "bytes": 28407
+  },
+  "boundedReview": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-same-entry-engine-binding-review-02/README.md",
+    "sha256": "5d1b8afe6befdf800c93363139244793d31e616afc606a16edd9e7fe6f60e775",
+    "bytes": 10492
+  },
+  "registryCorrection": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-03/registry-peer-reference-contract.json",
+    "sha256": "d1ba44788070a8300c6081fb448184d8cba8d3a38a6d20ff11583cb64bfd38c2",
+    "bytes": 3889
+  },
+  "sameOriginalFileSet": {
+    "schemaVersion": "same-entry-file-set.v1",
+    "root": "config/pipeline.config.json",
+    "members": [
+      {
+        "relativePath": "charts/kubeclaw/values.yaml",
+        "sha256": "badc34136cd6c59eaaf5d2e43615489e1de805f9b9e3442613a4894ff460b40a",
+        "byteLength": 23646,
+        "transportClass": "image-baked-author-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "config/components/buster-engine.config.json",
+        "sha256": "849d4848f2dccfe19d5d6c4a421b6001ee0f59ff4905b646b9dd3b93f3b0cc84",
+        "byteLength": 1165082,
+        "transportClass": "image-baked-author-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "config/components/prism-control.config.json",
+        "sha256": "524ca90d6b62c656b5f279c27b8b49250d93869636aa71f73d5891429e01e1e4",
+        "byteLength": 4597,
+        "transportClass": "image-baked-author-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "config/components/prism-execution.config.json",
+        "sha256": "225d2d31235f0996196da2f2b7d25a0605d59087427b997ab487d648ddf89ce3",
+        "byteLength": 1606,
+        "transportClass": "image-baked-author-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "config/components/prism-studio.config.json",
+        "sha256": "b41a9113d26384ee0dd07d5defac180b8a52d67315c738d0a5459c49bead0fac",
+        "byteLength": 976,
+        "transportClass": "image-baked-author-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "config/components/prism-worker.config.json",
+        "sha256": "61da3c7b2b81033ed9c350f593cf1ab58f3630a39b109a9b251f1b2e0ba28220",
+        "byteLength": 1581,
+        "transportClass": "image-baked-author-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "config/components/worker-core.config.json",
+        "sha256": "f59c7ec6798e853f9fb87a494cdd245193c50d19f90275fe5b530706adcb8934",
+        "byteLength": 1270,
+        "transportClass": "image-baked-author-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "config/engines/prism-agent.config.json",
+        "sha256": "b6309c71d73c87a5598f00f2f16612c4b8bed2d705da84ca782459b4d5902f39",
+        "byteLength": 900,
+        "transportClass": "image-baked-author-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "config/pipeline.config.json",
+        "sha256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011",
+        "byteLength": 6751,
+        "transportClass": "image-baked-author-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "config/plugins/kubeclaw.api-flow.config.json",
+        "sha256": "6d0d39c516128aefb8e94edf6c8f68c43caa0bf9aade74628c6fc49d3c5fe917",
+        "byteLength": 7218,
+        "transportClass": "image-baked-author-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "config/plugins/kubeclaw.http.config.json",
+        "sha256": "e8eb48798dd3b126b32962b1e17882109a289420a3ad87d82f65b8aefbe87517",
+        "byteLength": 6020,
+        "transportClass": "image-baked-author-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "config/plugins/kubeclaw.network-http.config.json",
+        "sha256": "26b4fb9495edd6b6c60ff9acbfc866f43e953b9e013781950ff9c6708e4e64c4",
+        "byteLength": 6133,
+        "transportClass": "image-baked-author-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "config/plugins/kubeclaw.openapi.config.json",
+        "sha256": "f575e0431736bb0ff20cd6e6f615b3595ab366c45858dc1712436dabcafe98e3",
+        "byteLength": 17513,
+        "transportClass": "image-baked-author-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "config/plugins/kubeclaw.security-providers.config.json",
+        "sha256": "53bde50ac26c05328b7c09c3a855bfbf5e8aca7760646f5c2511f28b8d6eeb01",
+        "byteLength": 954479,
+        "transportClass": "image-baked-author-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "my-values/infra/postgresql-recovery.yaml",
+        "sha256": "ce029433a76e6e4edc5d67086ab1293277ea852ca83a2e9bdccadf15232acae7",
+        "byteLength": 25823,
+        "transportClass": "image-baked-author-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/controller-owner.schema.json",
+        "sha256": "3efc01d4693fe206d4f1d555ec321db40fdab912187a9ff9809811e38f3625ad",
+        "byteLength": 66294,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/controller-profile.schema.json",
+        "sha256": "745798dbf789c7789069fca891b11523c69df5bd054530ca9486768cc2257000",
+        "byteLength": 56810,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/generation-receipt.schema.json",
+        "sha256": "c9845a2d55963baf1c4c2ffeda2dc831966f17da0a543a870b09cebdffa6e3fe",
+        "byteLength": 12538,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/launcher-policy-binding.schema.json",
+        "sha256": "ef9b31532a3a4fc0b340996dd20fcb8933f9f050a7bb1a702c417caa07151918",
+        "byteLength": 4496,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/pipeline-entry.schema.json",
+        "sha256": "2e20ca68b88ae9b21741732630ffea5736d50db942c33b42a0b9403fee1d2228",
+        "byteLength": 8365,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/prism-agent-launcher.schema.json",
+        "sha256": "6515bd1a041dfb885c157e9b1ebcca4eee455c81fd01f4265cbb6930e666b97d",
+        "byteLength": 3213,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/prism-agent-service-policy.schema.json",
+        "sha256": "1d7442cc5613fbd54fc40d50bd7e9927eab6ecc662261563d4a59e31b684691a",
+        "byteLength": 5104,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/provider-configuration.v2.schema.json",
+        "sha256": "2f7826715c8360511f6cb528f238436bc309211c0ed56ef2613ee55fcfc7236b",
+        "byteLength": 94265,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/provider03/api-flow.target-task-file.schema.json",
+        "sha256": "5c95926961def5f457273595f6c56daa6f9fe0c15f46379473a514aa996cce45",
+        "byteLength": 3107,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/provider03/buster-network-resource.schema.json",
+        "sha256": "dab39fb1a420514c879ecb1722e31c84923e1bf08c41fa676a002a2a76b56fae",
+        "byteLength": 1982,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/provider03/c3-generated-runtime.schema.json",
+        "sha256": "af8e9bded1aef68ebe88e0ded835b202e0a4591099eda89fa4ea99a31b1b1740",
+        "byteLength": 66369,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/provider03/components/buster-engine.schema.json",
+        "sha256": "115982f18efb75f7ea5e2e05a5dee7a574707400469aaf5de4b88721d3b9cb97",
+        "byteLength": 97220,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/provider03/components/prism-control.schema.json",
+        "sha256": "235717a7621de85c3933b095b0724c53eb27afa791ed5f094bf47a53bee39d85",
+        "byteLength": 74117,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/provider03/components/prism-execution.schema.json",
+        "sha256": "c6dfe88a3518f6819f5840b7e6739796c6fc0e6a0711ab1fc42cf19df4e76cbe",
+        "byteLength": 48715,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/provider03/components/prism-studio.schema.json",
+        "sha256": "72921bb9de970f5eccec5b7889a26501c8614e96304179dc54a5eef0375abe7b",
+        "byteLength": 44639,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/provider03/components/prism-worker.schema.json",
+        "sha256": "5b7fca15563fb20ad2b5dcef67724b62c68648a67fa7e5b0d34276f5472faa5b",
+        "byteLength": 49101,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/provider03/components/worker-core.schema.json",
+        "sha256": "22c665a659ae8af436b642ef8959e3f2ca6aebcefd1e9858ff718386dbd65630",
+        "byteLength": 45730,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/provider03/kubeclaw.api-flow.evidence-override.schema.json",
+        "sha256": "831f8c25a87165080759fb805825d2e1a1fbcf13dd1171bcf7b9600d12ab8eda",
+        "byteLength": 1192,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/provider03/kubeclaw.api-flow.schema.json",
+        "sha256": "feda3e42ced475a7d1c7b4e86fb4750946d622d0e801bf6d279da3e7189e5b31",
+        "byteLength": 4959,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/provider03/kubeclaw.api-flow.task.schema.json",
+        "sha256": "64be3ae79bed9a97a4fe51615ab66a403413c0f0b09ddf3a2e922a67d6b80198",
+        "byteLength": 527,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/provider03/kubeclaw.http.evidence-override.schema.json",
+        "sha256": "03920b7906d96bc998f2423877daa88b9fc178481d509c7f4908c291fc576204",
+        "byteLength": 958,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/provider03/kubeclaw.http.schema.json",
+        "sha256": "dbe452c5aebf4fc3fbe7ce1dc68cb05f08193694df23b09f122461f4d87de10c",
+        "byteLength": 4231,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/provider03/kubeclaw.http.task.schema.json",
+        "sha256": "a6307a45ffea3b999575efe27ba11c28bc9bb47f82cdfeb71645bcb2706c1e44",
+        "byteLength": 1128,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/provider03/kubeclaw.network-http.schema.json",
+        "sha256": "dce2ee99d8e3bbaa073b8cfb5aee20715b96bb2e3838a259a7c05c5ccf982892",
+        "byteLength": 3193,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/provider03/kubeclaw.openapi.evidence-override.schema.json",
+        "sha256": "831f8c25a87165080759fb805825d2e1a1fbcf13dd1171bcf7b9600d12ab8eda",
+        "byteLength": 1192,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/provider03/kubeclaw.openapi.schema.json",
+        "sha256": "5a0a92ad66b8340579a9523854a8c8e5f4b4014ca72548702eb52a5526d52ac6",
+        "byteLength": 5944,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/provider03/kubeclaw.openapi.task.schema.json",
+        "sha256": "a97d83747a5319a85720d444c0c9aa836b4dfe37d01479a9fe4916e3b0c099d8",
+        "byteLength": 2832,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/provider03/nova-adapter-processing.schema.json",
+        "sha256": "09671db157edcd889a62c485f0083113c796cb2eca23d13b6c5ab5cc32d0fdf3",
+        "byteLength": 1739,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/provider03/pipeline-entry.schema.json",
+        "sha256": "650dfba7c8030edfa1d3bf75dcf5820c6b1c88aefe50d1b01ef5c8267c062e23",
+        "byteLength": 4058,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/provider03/provider-configuration.v2.schema.json",
+        "sha256": "2548f1b8edf8aa36cbccecfc5101aa2927718d1f0a03096f90fb59131f91bc58",
+        "byteLength": 31442,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/recovery02/pipeline-entry.schema.json",
+        "sha256": "2d9c7e5f11924f4ada516475bcec89c695edeced076343b332647d2b9b1ee6fb",
+        "byteLength": 4952,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/recovery02/postgresql-recovery-policy.schema.json",
+        "sha256": "36bfaba20ffe0e258f75a345873aacbbbccdb8fb710436d6e8b692101f97b34a",
+        "byteLength": 7075,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/recovery02/recovery-task-authority.schema.json",
+        "sha256": "3f249dee2776e5782f2c9531fba4b61db659a3f9f20625b9b071d9731b9aa635",
+        "byteLength": 4904,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/recovery02/recovery-task.schema.json",
+        "sha256": "1629b9c23a471e855d9b22f980fc71d1fc29082bea4ee0f72aaa6e7b25bdf57f",
+        "byteLength": 4673,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/security/c3-generated-runtime.schema.json",
+        "sha256": "af8e9bded1aef68ebe88e0ded835b202e0a4591099eda89fa4ea99a31b1b1740",
+        "byteLength": 66369,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/security/components/buster-engine.schema.json",
+        "sha256": "115982f18efb75f7ea5e2e05a5dee7a574707400469aaf5de4b88721d3b9cb97",
+        "byteLength": 97220,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/security/components/prism-control.schema.json",
+        "sha256": "235717a7621de85c3933b095b0724c53eb27afa791ed5f094bf47a53bee39d85",
+        "byteLength": 74117,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/security/components/prism-execution.schema.json",
+        "sha256": "c6dfe88a3518f6819f5840b7e6739796c6fc0e6a0711ab1fc42cf19df4e76cbe",
+        "byteLength": 48715,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/security/components/prism-studio.schema.json",
+        "sha256": "72921bb9de970f5eccec5b7889a26501c8614e96304179dc54a5eef0375abe7b",
+        "byteLength": 44639,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/security/components/prism-worker.schema.json",
+        "sha256": "5b7fca15563fb20ad2b5dcef67724b62c68648a67fa7e5b0d34276f5472faa5b",
+        "byteLength": 49101,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/security/components/worker-core.schema.json",
+        "sha256": "22c665a659ae8af436b642ef8959e3f2ca6aebcefd1e9858ff718386dbd65630",
+        "byteLength": 45730,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/security/dependency-trivy.evidence-override.schema.json",
+        "sha256": "0c498b79f74c154ad931ea5e98931a0c61f0f6ece948a7bc47039264935a8b82",
+        "byteLength": 568,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/security/dependency-trivy.task.schema.json",
+        "sha256": "45e1f5671f96b887ac58c43d2bfd5833339e48ae6a5c1f924a54ece66b5eeb01",
+        "byteLength": 225,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/security/headers.evidence-override.schema.json",
+        "sha256": "0c498b79f74c154ad931ea5e98931a0c61f0f6ece948a7bc47039264935a8b82",
+        "byteLength": 568,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/security/headers.task.schema.json",
+        "sha256": "038d08f7b9fd41bdf05b4ee30a5e0b02fb56d50a3b7a94040defe09e7bb4707c",
+        "byteLength": 333,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/security/image-trivy.evidence-override.schema.json",
+        "sha256": "0c498b79f74c154ad931ea5e98931a0c61f0f6ece948a7bc47039264935a8b82",
+        "byteLength": 568,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/security/image-trivy.task.schema.json",
+        "sha256": "a62b6116959321526dacde1d9e07e191dcd029af2bf5238be3eeac619818719a",
+        "byteLength": 94,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/security/kubeclaw.api-flow.evidence-override.schema.json",
+        "sha256": "831f8c25a87165080759fb805825d2e1a1fbcf13dd1171bcf7b9600d12ab8eda",
+        "byteLength": 1192,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/security/kubeclaw.api-flow.schema.json",
+        "sha256": "feda3e42ced475a7d1c7b4e86fb4750946d622d0e801bf6d279da3e7189e5b31",
+        "byteLength": 4959,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/security/kubeclaw.api-flow.task.schema.json",
+        "sha256": "64be3ae79bed9a97a4fe51615ab66a403413c0f0b09ddf3a2e922a67d6b80198",
+        "byteLength": 527,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/security/kubeclaw.http.evidence-override.schema.json",
+        "sha256": "03920b7906d96bc998f2423877daa88b9fc178481d509c7f4908c291fc576204",
+        "byteLength": 958,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/security/kubeclaw.http.schema.json",
+        "sha256": "dbe452c5aebf4fc3fbe7ce1dc68cb05f08193694df23b09f122461f4d87de10c",
+        "byteLength": 4231,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/security/kubeclaw.http.task.schema.json",
+        "sha256": "a6307a45ffea3b999575efe27ba11c28bc9bb47f82cdfeb71645bcb2706c1e44",
+        "byteLength": 1128,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/security/kubeclaw.network-http.schema.json",
+        "sha256": "dce2ee99d8e3bbaa073b8cfb5aee20715b96bb2e3838a259a7c05c5ccf982892",
+        "byteLength": 3193,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/security/kubeclaw.openapi.evidence-override.schema.json",
+        "sha256": "831f8c25a87165080759fb805825d2e1a1fbcf13dd1171bcf7b9600d12ab8eda",
+        "byteLength": 1192,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/security/kubeclaw.openapi.schema.json",
+        "sha256": "5a0a92ad66b8340579a9523854a8c8e5f4b4014ca72548702eb52a5526d52ac6",
+        "byteLength": 5944,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/security/kubeclaw.openapi.task.schema.json",
+        "sha256": "a97d83747a5319a85720d444c0c9aa836b4dfe37d01479a9fe4916e3b0c099d8",
+        "byteLength": 2832,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/security/kubeclaw.security-providers.schema.json",
+        "sha256": "26b0b332f24e7ce6610321be5a089a180057713650a9f1f92597d8af23be3129",
+        "byteLength": 42713,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/security/kubernetes-policy.evidence-override.schema.json",
+        "sha256": "0c498b79f74c154ad931ea5e98931a0c61f0f6ece948a7bc47039264935a8b82",
+        "byteLength": 568,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/security/kubernetes-policy.task.schema.json",
+        "sha256": "a62b6116959321526dacde1d9e07e191dcd029af2bf5238be3eeac619818719a",
+        "byteLength": 94,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/security/kubernetes-runtime.evidence-override.schema.json",
+        "sha256": "0c498b79f74c154ad931ea5e98931a0c61f0f6ece948a7bc47039264935a8b82",
+        "byteLength": 568,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/security/kubernetes-runtime.task.schema.json",
+        "sha256": "a62b6116959321526dacde1d9e07e191dcd029af2bf5238be3eeac619818719a",
+        "byteLength": 94,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "schemas/security/provider-configuration.v2.schema.json",
+        "sha256": "057d0b99a71c50642d294896b054c751d13817a84b28d11b3aac07c1dc879292",
+        "byteLength": 94265,
+        "transportClass": "captured-schema-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/.github/workflows/build-images.yaml",
+        "sha256": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc",
+        "byteLength": 10434,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/.github/workflows/promote-runtime.yaml",
+        "sha256": "22867f17cf940d7b1137068e308d3b8216714d8da37dff1fd257eb8664f69981",
+        "byteLength": 5633,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/charts/kubeclaw/templates/_swarm-config.tpl",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "byteLength": 26278,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/charts/kubeclaw/templates/configmap-swarm-config.yaml",
+        "sha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875",
+        "byteLength": 1954,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/charts/kubeclaw/templates/deployment.yaml",
+        "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+        "byteLength": 85514,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/charts/prism/templates/_swarm-bundle.tpl",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "byteLength": 26278,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/charts/prism/templates/configmap-swarm-config.yaml",
+        "sha256": "75886e7ddea3625d4fa3af7eb866cd63c46ede89d89ca3718d4a022d7304e5e6",
+        "byteLength": 308,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/charts/prism/templates/workloads.yaml",
+        "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+        "byteLength": 14944,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/docker/Dockerfile.buster-runtime",
+        "sha256": "c06483aca404d930853061f77537287f7855099d335a473a04475d5d88b7a8be",
+        "byteLength": 10474,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/docker/Dockerfile.prism-agent",
+        "sha256": "85209d0cb47ab3bca1e2a27acb50d4e554853adfa472fa7195c0468627a19a47",
+        "byteLength": 7225,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/docker/Dockerfile.prism-control",
+        "sha256": "ec29c4c71cbc374b4f15a100aeb7bb3181013b34a0ad9da6e07fcbee8227e853",
+        "byteLength": 1069,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/docker/buster-runtime-entrypoint.sh",
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+        "byteLength": 14866,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/my-values/prism-agent-values.yaml",
+        "sha256": "5ff81cee48e035c74e67694c57dea8a2ee66ce5ca5015c6b15cd6ae352c2936a",
+        "byteLength": 3981,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/releases/values/prism-agent.yaml",
+        "sha256": "b02bfe6b0d132edbfd8487b466da487680186cf139b721936bcc0adb4f1485a0",
+        "byteLength": 4207,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/scripts/check-role-image.sh",
+        "sha256": "bba4349b814730af42e05603ec6ef329afc33ce9423d4b7c929a15e1328f7a71",
+        "byteLength": 3875,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/scripts/deploy.sh",
+        "sha256": "c90cc9c082b3adba89c458a9e28853afa77682a6c7066a7641c70aac749d0960",
+        "byteLength": 150066,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/scripts/updates/runtime-inputs.mjs",
+        "sha256": "d846f387b74d9cd71cb7b4515eb99da238fb1ce54b072525a075ec0ed299232a",
+        "byteLength": 3485,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/skills/buster/engine/test-gates/capability-runtime.ts",
+        "sha256": "3615780a7c173fc3f43f0510e208378e276a9e34f71c8a7c1c643fde296ded11",
+        "byteLength": 5865,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/skills/buster/engine/test-gates/network-http-runtime.ts",
+        "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d",
+        "byteLength": 15726,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/skills/buster/engine/test-gates/production-cluster-options.ts",
+        "sha256": "eb4448a7250ed6e2adbff8ec47956ba5c4d253d198697c344f75274eb3d61bff",
+        "byteLength": 2913,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/skills/buster/engine/test-gates/production-command-options.ts",
+        "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81",
+        "byteLength": 6568,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/skills/buster/engine/test-gates/production.ts",
+        "sha256": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005",
+        "byteLength": 8076,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/skills/buster/engine/test-gates/provider-loader.ts",
+        "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e",
+        "byteLength": 8062,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/skills/buster/engine/test-gates/runner-worker-profile.ts",
+        "sha256": "4e7cc1f1206047bf768b1826d979fc5384fe1edc7e3e4fa9bb71e24e5d31a648",
+        "byteLength": 3032,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/skills/buster/plugins/security-providers/plugin.json",
+        "sha256": "14d1e66e0ee7a0063964555222332d7345bf172bfc8186f9a12fdca7d2c9d510",
+        "byteLength": 3239,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/skills/buster/plugins/security-providers/src/common.js",
+        "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3",
+        "byteLength": 6590,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/skills/buster/plugins/security-providers/src/dependency.js",
+        "sha256": "e44c6d32e9609c914493108ecbbe14de459d0eb57f917cdbe95c9ff81836af55",
+        "byteLength": 2639,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/skills/buster/plugins/security-providers/src/headers.js",
+        "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7",
+        "byteLength": 7515,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/skills/buster/plugins/security-providers/src/image.js",
+        "sha256": "7e54a7a0140628c26d2e81572ef8959fb0816cd5cd9cb663759c4b175bc71588",
+        "byteLength": 2674,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+        "sha256": "aac3c6388e4238df46b5cc9b59f62b6fd0df4192061d29ff5be6625f26f392fd",
+        "byteLength": 2689,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+        "sha256": "0694947eb3fcfb8637ad8a80be41e7b9985fae79df1b348a5279b9c6959203c5",
+        "byteLength": 3726,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+        "sha256": "8f29590beaa082f4bdb51741aebefca4f917c280e4fdbf153b7aca0f92d434b3",
+        "byteLength": 5814,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/skills/common/plugin-runtime/foundation/config/swarm.ts",
+        "sha256": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1",
+        "byteLength": 14008,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/skills/common/plugin-runtime/foundation/registry/configuration.ts",
+        "sha256": "94f711ce386148d0aa3e114512afb3fcf8b69ef41c14b7e5215d17881fe66a2f",
+        "byteLength": 4047,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/skills/common/plugin-runtime/foundation/registry/types.ts",
+        "sha256": "6667bd4389377d33ba41c2c7166f3488c40f0cad1fc0e7c067fb37a6f2eca291",
+        "byteLength": 2895,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/skills/prism/control/agent-jobs.ts",
+        "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334",
+        "byteLength": 8860,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/skills/prism/server/agent-attempt.ts",
+        "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+        "byteLength": 3188,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/skills/prism/server/agent-bridge.mjs",
+        "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c",
+        "byteLength": 2631,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/skills/prism/server/agent-job-routes.ts",
+        "sha256": "cf4dcb8dcd817106028b018453871accf46eec1c996fa940cac3315790abaaa0",
+        "byteLength": 1771,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/skills/prism/server/agent-job-runner.mjs",
+        "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+        "byteLength": 3187,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/skills/prism/server/agent-process.ts",
+        "sha256": "1d3486c1ada0851150257a4ef197d62f523924e2c01da3e7a7c53ad06fb1102b",
+        "byteLength": 2917,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      },
+      {
+        "relativePath": "source-current/skills/prism/server/control-config.ts",
+        "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+        "byteLength": 4047,
+        "transportClass": "captured-source-input",
+        "source": "public boundeddefinition; actual image/source/issuer receipts absent"
+      }
+    ],
+    "rootRawSha256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011",
+    "inputGenerationSha256": "cc926a7171db521180bd2628ff690f558b1cc81df64a00d5d2821fd92e043289",
+    "hashCodec": "same-entry-input-generation.v1",
+    "authenticSourceImageReceipts": "Absent; required sourceclosure contract actual immutable source/helper/native identity members mustbe addedby genuine finalcapture beforeactivation"
+  },
+  "samePhysicalOwnerBytes": true,
+  "pendingNotAdopted": "newer Gateway/Browserv8 author package not read as accepted input, no mutable latest/default fill",
+  "qualification": "readonly captured same generation; not new root/writer/7th component/installed authorization"
+}

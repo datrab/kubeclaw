@@ -1,0 +1,398 @@
+{
+  "reviewer": "/root/core_schema_closure; independent of these two parenttargets; NOT independent of Core, which is excluded",
+  "scope": [
+    "AUTH-PRISM-DESIGN-CARDINALITY",
+    "AUTH-PRISM-ENGINE-DEVELOPMENT-IDENTITY"
+  ],
+  "recordedAtUTC": "2026-10-13T00:15:52.689778+00:00",
+  "head": "bce3f075156a86be345821499c04628cb35c2762",
+  "tree": "a8b0adf641de573565360b0c4eb577d6bc7545c3",
+  "inputs": {
+    "docs/review/evidence/config-acceptance/author/main-fragment.json": {
+      "sha256": "314f4eb1cabe8a9d9d34346cb4ad779c88d3b1fab26971b4b2442ea9da1b7a47",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/docs/review/evidence/config-acceptance/author/main-fragment.json",
+      "currentAfterSnapshotSame": true
+    },
+    "docs/review/evidence/config-acceptance/author/prism-design-cardinality-proposal.json": {
+      "sha256": "027e32c78225a1c0afb8b7486477cf9f6d21d5e6393f454331b32cfdcc7bbaeb",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/docs/review/evidence/config-acceptance/author/prism-design-cardinality-proposal.json",
+      "currentAfterSnapshotSame": true
+    },
+    "docs/review/evidence/config-acceptance/author/prism-trust-surface-dispositions.json": {
+      "sha256": "d18f6869e634474f01c83470d8c9d36940d716f52f65d826b6538116277f4a91",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/docs/review/evidence/config-acceptance/author/prism-trust-surface-dispositions.json",
+      "currentAfterSnapshotSame": true
+    },
+    "docs/review/evidence/config-acceptance/author/prism-trust-source-current-receipt.json": {
+      "sha256": "1b807d217ed11908fc96113b4c36581261e10a17d09bfa0e184bf16f64c6eeec",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/docs/review/evidence/config-acceptance/author/prism-trust-source-current-receipt.json",
+      "currentAfterSnapshotSame": true
+    },
+    "docs/review/evidence/config-acceptance/author/check-prism-image-binding.mjs": {
+      "sha256": "5db339a9bb8f319c313321709ccdecf1ec0ccaa2613c799ed92fb6c811deeb63",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/docs/review/evidence/config-acceptance/author/check-prism-image-binding.mjs",
+      "currentAfterSnapshotSame": true
+    },
+    "docs/review/evidence/config-acceptance/author/prism-image-binding-current-bce3f075.log": {
+      "sha256": "62fd74b29c87dcd1fdf4d963ec9711be512dfb80b65c3c9060eb0cc4644493e0",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/docs/review/evidence/config-acceptance/author/prism-image-binding-current-bce3f075.log",
+      "currentAfterSnapshotSame": true
+    },
+    "docs/review/evidence/config-acceptance/author/prism-design-policy-current-bce3f075.log": {
+      "sha256": "e7b999d21c6fb46d97221f9c0323301cc06ec3c454dddf50ec39fa220929a3fd",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/docs/review/evidence/config-acceptance/author/prism-design-policy-current-bce3f075.log",
+      "currentAfterSnapshotSame": true
+    },
+    "docs/review/evidence/config-acceptance/author/check-prism-role-metadata.mjs": {
+      "sha256": "205634e6ca519281f9df16b82435036dab64d4ced865e38d9e97db9e16084bfe",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/docs/review/evidence/config-acceptance/author/check-prism-role-metadata.mjs",
+      "currentAfterSnapshotSame": true
+    },
+    "docs/review/evidence/config-acceptance/author/prism-role-metadata-before.json": {
+      "sha256": "aa0c2189ad22dde6893600a60fd327490048d99d01e92c72e178ff60701e99fc",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/docs/review/evidence/config-acceptance/author/prism-role-metadata-before.json",
+      "currentAfterSnapshotSame": true
+    },
+    "docs/review/evidence/config-acceptance/delivery/native-provisioning-contracts-bce3f075.json": {
+      "sha256": "ab4f6f4ee1b8d87e208770d9016cb7dceca5bafb3a4028781b9198387afb8433",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/docs/review/evidence/config-acceptance/delivery/native-provisioning-contracts-bce3f075.json",
+      "currentAfterSnapshotSame": true
+    },
+    "charts/kubeclaw/files/config/buster-engine.config.json": {
+      "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/charts/kubeclaw/files/config/buster-engine.config.json",
+      "currentAfterSnapshotSame": true
+    },
+    "charts/kubeclaw/files/config/jscpd-tests.json": {
+      "sha256": "ad5863319bfcde746150cdd37f36664d82a84e075b0bdc341ff151a81b9838b5",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/charts/kubeclaw/files/config/jscpd-tests.json",
+      "currentAfterSnapshotSame": true
+    },
+    "charts/kubeclaw/files/config/jscpd.json": {
+      "sha256": "0dc8789cd2cbf1341eed9bc43ae4991c60e80bb9825ecd843c0b6bc594fe6af9",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/charts/kubeclaw/files/config/jscpd.json",
+      "currentAfterSnapshotSame": true
+    },
+    "charts/kubeclaw/files/config/knip.json": {
+      "sha256": "f3b6ced7573925bf338b8d3c9789d794792af62364fae1f227c9c997624b5d23",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/charts/kubeclaw/files/config/knip.json",
+      "currentAfterSnapshotSame": true
+    },
+    "charts/kubeclaw/files/config/kubernetes-policy-pack-default.json": {
+      "sha256": "3c0e2815bc1154e89fdeca2623adbc5018a4b6348f966bdec6dadf82cbc32781",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/charts/kubeclaw/files/config/kubernetes-policy-pack-default.json",
+      "currentAfterSnapshotSame": true
+    },
+    "charts/kubeclaw/files/config/lint-baseline.json": {
+      "sha256": "de99dfe709e8779d55b1079334cea0415b661f3933cc32bd36260fb3bc393ed7",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/charts/kubeclaw/files/config/lint-baseline.json",
+      "currentAfterSnapshotSame": true
+    },
+    "charts/kubeclaw/files/config/lint-policy.json": {
+      "sha256": "2c3a9eb507d31524d8718febaed5df780e12438037e0e61fcedf438748802993",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/charts/kubeclaw/files/config/lint-policy.json",
+      "currentAfterSnapshotSame": true
+    },
+    "charts/kubeclaw/files/config/prism-control.config.json": {
+      "sha256": "5e41d7612926ce4d3bfad195d79649e106b54cd59c23de64afad1e9c43e1dcd0",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/charts/kubeclaw/files/config/prism-control.config.json",
+      "currentAfterSnapshotSame": true
+    },
+    "charts/kubeclaw/files/config/prism-execution.config.json": {
+      "sha256": "94f1a8eece3aa58db89907accd846d471d17263557c8e0925cc1caae6ec0034f",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/charts/kubeclaw/files/config/prism-execution.config.json",
+      "currentAfterSnapshotSame": true
+    },
+    "charts/kubeclaw/files/config/prism-studio.config.json": {
+      "sha256": "c38ba184a0dcbdd4b11c86f99eb39b2dd7c0ec72bd697fce7f7a1fa32f750fdb",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/charts/kubeclaw/files/config/prism-studio.config.json",
+      "currentAfterSnapshotSame": true
+    },
+    "charts/kubeclaw/files/config/prism-worker.config.json": {
+      "sha256": "6d263c2f1844e4bc117ec25504ccb9d6644a5272611de031a2027d5a55d7c834",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/charts/kubeclaw/files/config/prism-worker.config.json",
+      "currentAfterSnapshotSame": true
+    },
+    "charts/kubeclaw/files/config/swarm-components.schema.json": {
+      "sha256": "51e7bc64a25fd6cc67d465ebe46bab170a6c9b7215423147ab3f15777dc58968",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/charts/kubeclaw/files/config/swarm-components.schema.json",
+      "currentAfterSnapshotSame": true
+    },
+    "charts/kubeclaw/files/config/swarm.config.json": {
+      "sha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/charts/kubeclaw/files/config/swarm.config.json",
+      "currentAfterSnapshotSame": true
+    },
+    "charts/kubeclaw/files/config/swarm.schema.json": {
+      "sha256": "2269b97277a5a24ccd14434c942cdf4ea83c43d1c6a8e048083add782140ae20",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/charts/kubeclaw/files/config/swarm.schema.json",
+      "currentAfterSnapshotSame": true
+    },
+    "charts/kubeclaw/files/config/worker-core.config.json": {
+      "sha256": "08a6c89490442803c2d4178608832fb0a8147be1a83bb6027a7a00f3d81dc615",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/charts/kubeclaw/files/config/worker-core.config.json",
+      "currentAfterSnapshotSame": true
+    },
+    "charts/prism/templates/configmap-worker-trust.yaml": {
+      "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/charts/prism/templates/configmap-worker-trust.yaml",
+      "currentAfterSnapshotSame": true
+    },
+    "charts/prism/templates/workloads.yaml": {
+      "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/charts/prism/templates/workloads.yaml",
+      "currentAfterSnapshotSame": true
+    },
+    "charts/prism/values.yaml": {
+      "sha256": "8b13da5c725b9eff02d1e12dae6f799ca74a6b01a83cb714a2777a915e98cee8",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/charts/prism/values.yaml",
+      "currentAfterSnapshotSame": true
+    },
+    "contracts/prism/v1/fixtures/minimal-web.json": {
+      "sha256": "716e4beaf38dc49be48fdca6da5c2f0ca53e55692a3f1cbb7200879247e049e5",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/contracts/prism/v1/fixtures/minimal-web.json",
+      "currentAfterSnapshotSame": true
+    },
+    "docker/Dockerfile.prism-studio": {
+      "sha256": "a2acdc718f9becd23c4f90bfc361c26115f67363677665248cc96647e7180d2f",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/docker/Dockerfile.prism-studio",
+      "currentAfterSnapshotSame": true
+    },
+    "docker/Dockerfile.prism-worker": {
+      "sha256": "820d8c1b9cb0784113fbd4c2ceb206b40cb0e2381d3fad3df647d7dcc784bb80",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/docker/Dockerfile.prism-worker",
+      "currentAfterSnapshotSame": true
+    },
+    "package-lock.json": {
+      "sha256": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/package-lock.json",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json": {
+      "sha256": "51e7bc64a25fd6cc67d465ebe46bab170a6c9b7215423147ab3f15777dc58968",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/common/plugin-runtime/foundation/config/swarm.schema.json": {
+      "sha256": "2269b97277a5a24ccd14434c942cdf4ea83c43d1c6a8e048083add782140ae20",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/common/plugin-runtime/foundation/config/swarm.ts": {
+      "sha256": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/config/native-worker.ts": {
+      "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/config/native-worker.ts",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/control/agent-admission.ts": {
+      "sha256": "e54b1502044c54a674dffe22895b1530fdf415e292a984569f90ecafe07f99b5",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/control/agent-admission.ts",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/control/agent-jobs.ts": {
+      "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/control/agent-jobs.ts",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/control/design-generations.ts": {
+      "sha256": "cd32799fdb1eacbaf40c968b101badcfbedc0f8ce9b12ab045e82ae2e632cbfd",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/control/design-generations.ts",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/directions/index.ts": {
+      "sha256": "8f787b1ec48c8a0b876f754260d2702ae1c65bc8f2a031b897a989bcb8b973eb",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/directions/index.ts",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/engine/worker-envelope.ts": {
+      "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/engine/worker-envelope.ts",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/openclaw-plugin/index.mjs": {
+      "sha256": "97a30daa0a042f2cd9416746caffe9207828dd9a587e3a6c3e8de481f5d0640e",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/openclaw-plugin/index.mjs",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/openclaw-plugin/index.test.mjs": {
+      "sha256": "0c5f68f6ca9cbbbdec820d619392a3b489a1302dedd309cf0eff67e566923114",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/openclaw-plugin/index.test.mjs",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/openclaw-plugin/openclaw.plugin.json": {
+      "sha256": "1cf3f06268870973f2d7131cf64d469e516a62bf4b5f3a9d5b6d6a1c9bdd0588",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/openclaw-plugin/openclaw.plugin.json",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/server/agent-job-runner.mjs": {
+      "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/server/agent-job-runner.mjs",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/server/agent-prompt.mjs": {
+      "sha256": "3bcd6b4b2bb25d82c9ec767a03fd08ea1c17420eca3ce1742410359ed2d1aea9",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/server/agent-prompt.mjs",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/server/agent-routes.ts": {
+      "sha256": "55c4c77fc4ff7b981287c433c126d9754dffd3df1de464ec0d83bb0294caec17",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/server/agent-routes.ts",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/server/control-config.ts": {
+      "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/server/control-config.ts",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/server/control-context.ts": {
+      "sha256": "2444e6f0f22860aea6f109c984be4747a13421da2d33dd738ef7c29b71f04d02",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/server/control-context.ts",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/server/control-server.ts": {
+      "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/server/control-server.ts",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/server/control.ts": {
+      "sha256": "d723c04698afa8bd6306beca93dd9daf5cde75b710129975642591688ec0fcac",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/server/control.ts",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/server/direction-routes.ts": {
+      "sha256": "91e731766e8da39e82ce264dba3f9d904fdf77b211e480a3f56365aeef166812",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/server/direction-routes.ts",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/server/dispatch-route.ts": {
+      "sha256": "407b0befbe8cbf6009f2cef6fe80ab10a2213258d4be5bddc578f24abdb47382",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/server/dispatch-route.ts",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/server/internal-artifacts.ts": {
+      "sha256": "16750a5eecea51781dc67e271cfc331550f1a0a03460917133226cd9c975dab8",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/server/internal-artifacts.ts",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/server/native-worker-execution.ts": {
+      "sha256": "d87eb7d05cdc40f3eb353dba63236fa8c20a02adf1b70512c81944bb7cb71a56",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/server/native-worker-execution.ts",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/server/native-worker-host.ts": {
+      "sha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/server/native-worker-host.ts",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/server/preference-prompt.mjs": {
+      "sha256": "0a607949b4ae13bd5636cc02798e63bbcb8aae9f7b944f3bea9ea47a8f40e145",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/server/preference-prompt.mjs",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/server/studio-config.ts": {
+      "sha256": "c2a7d42ae65d68da876c2efc64194effc969d90a1132d8677ec2190260391465",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/server/studio-config.ts",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/server/studio-request.ts": {
+      "sha256": "efca0f821ef3da9f441e9c6c5458a33d8c525f8e7db3a63aea1a8e7f37e93bbb",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/server/studio-request.ts",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/server/worker-artifacts.ts": {
+      "sha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/server/worker-artifacts.ts",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/server/worker-config.ts": {
+      "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/server/worker-config.ts",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/server/worker-service.ts": {
+      "sha256": "90174f5edf19c85ef1642da95a51aac46854f9a1ce7172d876045a5bac1595e4",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/server/worker-service.ts",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/server/worker.ts": {
+      "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/server/worker.ts",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/storage/index.ts": {
+      "sha256": "e5105909e5f1abf1eb2178270dd63d1b8e2aa337177dcb620b6ae43199a3a199",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/storage/index.ts",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/studio/app.tsx": {
+      "sha256": "5ee08fa855120dfb53f44aa8a5aa48979674d3f4a0ba8c13c2f4717d2663c092",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/studio/app.tsx",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/studio/design-round-client.ts": {
+      "sha256": "0a37517165fad75fd049dafc9a3519cbd8a7c0f2351c6adaeaab4c4fc2281f46",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/studio/design-round-client.ts",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/tests/control-server-config.test.mts": {
+      "sha256": "81e0b5caae2b338bc7ab54c3619a1b2514a09f0edbf7862fbb838e69432aac5a",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/tests/control-server-config.test.mts",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/tests/directions.test.mts": {
+      "sha256": "29f1b9e783bea0b0a3cee331c021dfe039e9a9262461d27e4513feedf1bde7d6",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/tests/directions.test.mts",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/tests/fixtures/control-policy.mts": {
+      "sha256": "cf58dcbf260395a68fa626aa27c0f33bf74ace98d3744222c00a7b431501f3e4",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/tests/fixtures/control-policy.mts",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/tests/swarm-worker-config.test.mts": {
+      "sha256": "e17586a73f9df4a305d9f714eb07ef81367f0fd4f71188c15292baecdd4db8ee",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/tests/swarm-worker-config.test.mts",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/worker/core/worker/native-worker-launcher.c": {
+      "sha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/worker/core/worker/native-worker-launcher.c",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/worker/core/worker/trust.ts": {
+      "sha256": "722f48ca75fb8546dbc4f4c9cc8eab8e31dfdfeafec7ea7aab587045e78b23fe",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/worker/core/worker/trust.ts",
+      "currentAfterSnapshotSame": true
+    },
+    "contracts/prism/v1/schemas/prism-v1.schema.json": {
+      "sha256": "7e8e248ffbc3753ee462d8e4f1d8de98499c02df94f07f0bcfc28367886bf99b",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/contracts/prism/v1/schemas/prism-v1.schema.json",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/server/worker-operation.ts": {
+      "sha256": "1987bd75921ce43775dc43e0a83e776be7624d6a1dc510ed572fdfce02c57471",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/server/worker-operation.ts",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/control/native-operation.ts": {
+      "sha256": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/control/native-operation.ts",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/control/native-operation-store.ts": {
+      "sha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/control/native-operation-store.ts",
+      "currentAfterSnapshotSame": true
+    },
+    "skills/prism/control/worker-results.ts": {
+      "sha256": "6101bf105a8595e75eae682c9a1a479179480ef064da70fca8d691e0634a33c4",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-prism-handoff-20261013/inputs/skills/prism/control/worker-results.ts",
+      "currentAfterSnapshotSame": true
+    }
+  },
+  "concurrency": "Each exactbytes snapshot is reviewed. Other author dirs remain mutable; latercurrentdrift must be qualified. No globalC0 or Core selfreview."
+}

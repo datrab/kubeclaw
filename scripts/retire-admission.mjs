@@ -1,3 +1,4 @@
+import { retainedCoreRuntimePolicy } from '../skills/nova/core/execution/engine-snapshots.ts';
 import fs from 'node:fs';
 import path from 'node:path';
 import {pathToFileURL} from 'node:url';
@@ -48,7 +49,7 @@ export async function retireAdmission(input) {
   for(const file of [path.join(scope.attemptRoot,'attempt-store.json'),path.join(scope.admissionRoot,'admission.json')]) {
     if(!fs.lstatSync(file).isFile())throw new Error('ADMISSION_RETIREMENT_STORE_REQUIRED');
   }
-  return withRunMutationLock(root,async signal=>{
+  return withRunMutationLock(root, retainedCoreRuntimePolicy(root),async signal=>{
     signal.throwIfAborted();const initial=retainedRun(scope,root);
     const attempts=new FileDurableAttemptStore(scope.attemptRoot,scope.attemptLimits);
     const admission=new FileObservabilityAdmissionStore(scope.admissionRoot,scope.admissionLimits);

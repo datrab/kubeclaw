@@ -1,0 +1,13 @@
+Command: python3 docs/review/evidence/config-acceptance/delivery/verify-semantic-closure.py
+{
+  "method": "static JSON/reference/SHA256 consistency checks; no production/test/package/cluster/host execution",
+  "settingRows": 832,
+  "caseSpecifications": 204,
+  "issues": [],
+  "consistencyResult": "passed",
+  "c0Acceptance": "incomplete",
+  "implementationResults": {
+    "not-run": 204
+  }
+}
+Exit: 0

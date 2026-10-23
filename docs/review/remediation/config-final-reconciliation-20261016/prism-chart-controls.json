@@ -1,0 +1,402 @@
+{
+  "passed": 96,
+  "total": 96,
+  "negativeControls": [
+    {
+      "name": "alter id",
+      "rejected": true
+    },
+    {
+      "name": "alter original",
+      "rejected": true
+    },
+    {
+      "name": "alter originalObjectSha256",
+      "rejected": true
+    },
+    {
+      "name": "alter caseIds",
+      "rejected": true
+    },
+    {
+      "name": "alter class",
+      "rejected": true
+    },
+    {
+      "name": "alter owner",
+      "rejected": true
+    },
+    {
+      "name": "alter currentValuePath",
+      "rejected": true
+    },
+    {
+      "name": "alter centralPhysicalAuthor",
+      "rejected": true
+    },
+    {
+      "name": "alter runtimeAcceptance",
+      "rejected": true
+    },
+    {
+      "name": "alter actualProjections",
+      "rejected": true
+    },
+    {
+      "name": "alter status",
+      "rejected": true
+    },
+    {
+      "name": "missing row",
+      "rejected": true
+    },
+    {
+      "name": "duplicate row",
+      "rejected": true
+    },
+    {
+      "name": "false full acceptance",
+      "rejected": true
+    },
+    {
+      "name": "false original pass",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-IMAGES-CONTROL-PULLPOLICY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-IMAGES-STUDIO-PULLPOLICY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-IMAGES-WORKER-PULLPOLICY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-IMAGES-INGESTION-PULLPOLICY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-IMAGEPULLSECRETS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-CONTROL-PRODUCTDECISIONS-ENABLED",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-CONTROL-PRODUCTDECISIONS-ISSUER",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-CONTROL-PRODUCTDECISIONS-OPERATORS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-CONTROL-PRODUCTDECISIONS-ORIGIN",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-CONTROL-PRODUCTDECISIONS-AUTHORITYREVISION",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-CONTROL-PRODUCTDECISIONS-SIGNINGSECRETNAME",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-CONTROL-PRODUCTDECISIONS-SIGNINGSECRETKEY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-CONTROL-PRODUCTDECISIONS-CONTROLLERURL",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-CONTROL-PRODUCTDECISIONS-CONTROLLERNAMESPACE",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-CONTROL-PRODUCTDECISIONS-CONTROLLERRELEASE",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-CONTROL-PRODUCTDECISIONS-CONTROLLERCASECRETNAME",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-CONTROL-PRODUCTDECISIONS-CONTROLLERCASECRETKEY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-CONTROL-PRODUCTDECISIONS-TOKENAUDIENCE",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-CONTROL-PRODUCTDECISIONS-TOKENEXPIRATIONSECONDS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-CONTROL-REPLICAS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-CONTROL-RESOURCES-REQUESTS-CPU",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-CONTROL-RESOURCES-REQUESTS-MEMORY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-CONTROL-RESOURCES-LIMITS-CPU",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-CONTROL-RESOURCES-LIMITS-MEMORY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-STUDIO-REPLICAS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-STUDIO-RESOURCES-REQUESTS-CPU",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-STUDIO-RESOURCES-REQUESTS-MEMORY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-STUDIO-RESOURCES-LIMITS-CPU",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-STUDIO-RESOURCES-LIMITS-MEMORY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-WORKER-TERMINATIONGRACEPERIODSECONDS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-WORKER-REPLICAS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-WORKER-RESOURCES-REQUESTS-CPU",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-WORKER-RESOURCES-REQUESTS-MEMORY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-WORKER-RESOURCES-LIMITS-CPU",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-WORKER-RESOURCES-LIMITS-MEMORY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-INGESTION-ENABLED",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-INGESTION-REPLICAS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-INGESTION-RESOURCES-REQUESTS-CPU",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-INGESTION-RESOURCES-REQUESTS-MEMORY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-INGESTION-RESOURCES-LIMITS-CPU",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-INGESTION-RESOURCES-LIMITS-MEMORY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-INGESTION-QUARANTINETTLMS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-POSTGRESQL-ENABLED",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-POSTGRESQL-IMAGE",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-POSTGRESQL-STORAGE",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-POSTGRESQL-STORAGECLASS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-POSTGRESQL-EXISTINGSECRET",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-POSTGRESQL-RESOURCES-REQUESTS-CPU",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-POSTGRESQL-RESOURCES-REQUESTS-MEMORY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-POSTGRESQL-RESOURCES-LIMITS-CPU",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-POSTGRESQL-RESOURCES-LIMITS-MEMORY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-SECRETS-RUNTIME",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-SECRETS-DATABASE",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-ARTIFACTSTORAGE-STORAGE",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-ARTIFACTSTORAGE-STORAGECLASS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-BACKUP-SCHEDULE",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-BACKUP-VERIFICATIONSCHEDULE",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-BACKUP-DATABASEPROOFSCHEDULE",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-BACKUP-MAXIMUMBYTES",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-BACKUP-MAXIMUMRETAINEDBYTES",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-BACKUP-MAXIMUMDURATIONSECONDS",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-BACKUP-RESOURCES-REQUESTS-CPU",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-BACKUP-RESOURCES-REQUESTS-MEMORY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-BACKUP-RESOURCES-LIMITS-CPU",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-BACKUP-RESOURCES-LIMITS-MEMORY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-TAILSCALE-ENABLED",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-TAILSCALE-HOSTNAME",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-TAILSCALE-OPERATORNAMESPACE",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-WORKERTRUST-SPIFFE-ENABLED",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-WORKERTRUST-SPIFFE-TRUSTDOMAIN",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-WORKERTRUST-SPIFFE-NOVANAMESPACE",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-WORKERTRUST-SPIFFE-NOVASERVICEACCOUNT",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-WORKERTRUST-SPIFFE-AGENTNAMESPACE",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-WORKERTRUST-SPIFFE-AGENTSERVICEACCOUNT",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-WORKERTRUST-SPIFFE-SOCKETPATH",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-WORKERTRUST-SPIFFE-CSIDRIVER",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-WORKERTRUST-SPIFFE-ENVOY-PULLPOLICY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-WORKERTRUST-SPIFFE-ENVOY-RESOURCES-REQUESTS-CPU",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-WORKERTRUST-SPIFFE-ENVOY-RESOURCES-REQUESTS-MEMORY",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-WORKERTRUST-SPIFFE-ENVOY-RESOURCES-LIMITS-CPU",
+      "rejected": true
+    },
+    {
+      "name": "source identity DLV-CHART-PRISM-WORKERTRUST-SPIFFE-ENVOY-RESOURCES-LIMITS-MEMORY",
+      "rejected": true
+    }
+  ],
+  "restoredDeterministic": true,
+  "preservedCounts": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50
+  },
+  "fullC0C6Complete": false,
+  "originalCasesNewlyAccepted": 0,
+  "all44UnrelatedGroupsUnchanged": true,
+  "changedHistoricalGroups": [
+    "config/deployment/prism/<profile>.json"
+  ]
+}

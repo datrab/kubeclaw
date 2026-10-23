@@ -1,0 +1,101 @@
+[
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "exitCode": 0,
+    "stdout": "inspect-00.stdout",
+    "stderr": "inspect-00.stderr"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD^{tree}"
+    ],
+    "exitCode": 0,
+    "stdout": "inspect-01.stdout",
+    "stderr": "inspect-01.stderr"
+  },
+  {
+    "argv": [
+      "git",
+      "status",
+      "--short",
+      "--untracked-files=no"
+    ],
+    "exitCode": 0,
+    "stdout": "inspect-02.stdout",
+    "stderr": "inspect-02.stderr"
+  },
+  {
+    "argv": [
+      "nl",
+      "-ba",
+      "charts/prism/templates/workloads.yaml"
+    ],
+    "exitCode": 0,
+    "stdout": "inspect-03.stdout",
+    "stderr": "inspect-03.stderr"
+  },
+  {
+    "argv": [
+      "nl",
+      "-ba",
+      "charts/prism/templates/configmap-worker-trust.yaml"
+    ],
+    "exitCode": 0,
+    "stdout": "inspect-04.stdout",
+    "stderr": "inspect-04.stderr"
+  },
+  {
+    "argv": [
+      "nl",
+      "-ba",
+      "charts/prism/templates/_helpers.tpl"
+    ],
+    "exitCode": 0,
+    "stdout": "inspect-05.stdout",
+    "stderr": "inspect-05.stderr"
+  },
+  {
+    "argv": [
+      "cat",
+      "charts/prism/values.yaml"
+    ],
+    "exitCode": 0,
+    "stdout": "inspect-06.stdout",
+    "stderr": "inspect-06.stderr"
+  },
+  {
+    "argv": [
+      "cat",
+      "skills/prism/server/control-config.ts",
+      "skills/prism/server/worker-config.ts",
+      "skills/prism/server/worker-service.ts",
+      "skills/prism/server/dispatch-route.ts",
+      "skills/prism/server/internal-artifacts.ts",
+      "skills/prism/server/engine-route.ts",
+      "skills/worker/core/worker/trust.ts",
+      "skills/prism/server/worker.ts",
+      "skills/prism/server/control.ts"
+    ],
+    "exitCode": 0,
+    "stdout": "inspect-07.stdout",
+    "stderr": "inspect-07.stderr"
+  },
+  {
+    "argv": [
+      "rg",
+      "-n",
+      "SPIFFE_ENDPOINT_SOCKET",
+      "skills/prism",
+      "skills/worker/core"
+    ],
+    "exitCode": 1,
+    "stdout": "inspect-08.stdout",
+    "stderr": "inspect-08.stderr"
+  }
+]

@@ -124,7 +124,7 @@ async function authenticateDispatch(
   let size = 0;
   for await (const chunk of request) {
     size += chunk.length;
-    if (size > 2_000_000) throw new Error("request too large");
+    if (size > config.maximumDispatchBodyBytes) throw new Error("request too large");
     chunks.push(chunk);
   }
   const raw = Buffer.concat(chunks);

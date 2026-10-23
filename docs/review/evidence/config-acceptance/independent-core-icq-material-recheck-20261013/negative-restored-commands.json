@@ -1,0 +1,45 @@
+[
+  {
+    "id": "duplicate-case-negative",
+    "argv": [
+      "python3",
+      "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/check-icq-integrity.py",
+      "--cases",
+      "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/negative-duplicate-case.fixture.json"
+    ],
+    "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/independent-core-icq-material-recheck-20261013/replay-root",
+    "exit": 1,
+    "expected": 1,
+    "passed": true,
+    "stdoutSha256": "dc13008dca5286c8b01a370b9545bf4e47c400defb42dbc20f13c7d0e576cb05",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "id": "empty-env-negative",
+    "argv": [
+      "python3",
+      "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/check-icq-integrity.py",
+      "--environment",
+      "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/negative-empty-env-expansion.fixture.json"
+    ],
+    "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/independent-core-icq-material-recheck-20261013/replay-root",
+    "exit": 1,
+    "expected": 1,
+    "passed": true,
+    "stdoutSha256": "78bed30ccf3130f1816a8b38d534255badc6974bdc1fd67e67d4f5a9b3292c94",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "id": "restored",
+    "argv": [
+      "python3",
+      "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/check-icq-integrity.py"
+    ],
+    "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/independent-core-icq-material-recheck-20261013/replay-root",
+    "exit": 0,
+    "expected": 0,
+    "passed": true,
+    "stdoutSha256": "343b28148dc4504487c70646e7de06f4ac4b9c017ea90038da1d3d155ed388ee",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

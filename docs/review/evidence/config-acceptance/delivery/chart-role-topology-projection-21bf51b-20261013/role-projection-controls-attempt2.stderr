@@ -1,0 +1,12 @@
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/updates/deployment-release.mjs:139
+      throw new Error(`Unselected first-party image: ${slot}`);
+            ^
+
+Error: Unselected first-party image: Deployment/agent-buster-namespace-controller/containers/controller
+    at validateRenderedRelease (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/updates/deployment-release.mjs:139:13)
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/check-role-projections.mjs:8:591
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0

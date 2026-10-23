@@ -1,17 +1,20 @@
-import { loadProductConfig, type ProductConfig } from '../control/product-decisions.ts';
+import { loadProductConfig, loadSelectedProductConfig, type ProductConfig } from '../control/product-decisions.ts';
 import { authorizePipelinePreferenceSubject } from '../control/pipeline-preference-subject.ts';
-import { loadPrismSettings } from '../../common/plugin-runtime/foundation/config/swarm.ts';
+import { rejectLegacyAuthors, type PrismControlSettings } from '@kubeclaw/plugin-foundation/config/swarm';
+import { projectControlSettings } from '@kubeclaw/plugin-foundation/config/pipeline-composition';
+import type { PipelineBootCapture } from '@kubeclaw/plugin-foundation/config/pipeline-boot.mjs';
 
 export interface ControlConfig {
   readonly pipelinePreferenceSubject: string | undefined;
 }
 
 /** Load and validate platform-owned Control configuration once at startup. */
-export function loadControlConfig(environment: NodeJS.ProcessEnv = process.env): ControlConfig {
-  return controlPolicy(loadPrismSettings(environment).control);
+export function loadControlConfig(capture: PipelineBootCapture, environment: NodeJS.ProcessEnv = process.env): ControlConfig {
+  rejectLegacyAuthors(environment);
+  return controlPolicy(projectControlSettings(capture).control);
 }
 
-function controlPolicy(settings: ReturnType<typeof loadPrismSettings>['control']): ControlConfig {
+function controlPolicy(settings: PrismControlSettings): ControlConfig {
   const pipelinePreferenceSubject = settings.pipelinePreferenceSubject ?? undefined;
   authorizePipelinePreferenceSubject(undefined, pipelinePreferenceSubject);
   return Object.freeze({pipelinePreferenceSubject});
@@ -42,12 +45,50 @@ function loadTrustConfig(environment: NodeJS.ProcessEnv) {
 }
 
 /** Resolve authored native settings and service credentials once, at composition. */
-export function loadControlServerConfig(environment: NodeJS.ProcessEnv = process.env) {
+export function loadControlServerConfig(capture: PipelineBootCapture, environment: NodeJS.ProcessEnv = process.env) {
+  rejectLegacyAuthors(environment);
   if (environment.PORT !== undefined) throw new Error("SWARM_CONFIG_LEGACY_OVERRIDE:PORT:use prism-control.config.json settings.port");
-  const { native: settings, control } = loadPrismSettings(environment);
+  if (environment.PRISM_WORKER_URL !== undefined) throw new Error('SWARM_CONFIG_LEGACY_OVERRIDE:PRISM_WORKER_URL:use prism-control.config.json settings.workerUrl');
+  if (environment.PRISM_INGESTION_URL !== undefined) throw new Error('SWARM_CONFIG_LEGACY_OVERRIDE:PRISM_INGESTION_URL:use prism-control.config.json settings.ingestionUrl');
+  if (environment.PRISM_CONTROL_INTERNAL_URL !== undefined) throw new Error('SWARM_CONFIG_LEGACY_OVERRIDE:PRISM_CONTROL_INTERNAL_URL:use prism-control.config.json settings.controlInternalUrl');
+  const { native: settings, control, workerCore } = projectControlSettings(capture);
   return Object.freeze({
-    ...controlPolicy(control),
+    ...(workerCore ? {workerCore} : {}), ...controlPolicy(control),
+    ...(capture.components['prism-control']!.schemaVersion === 'pipeline-component.v5'
+      ? {productDecisionsEnabled: control.productDecisionsEnabled!} : {}),
     port: control.port,
+    maximumArtifactAcknowledgmentBytes: control.maximumArtifactAcknowledgmentBytes,
+    agentLauncher: control.agentLauncher,
+    ...(control.corpusRanking ? {corpusRanking: control.corpusRanking} : {}),
+    corpusSearchDefaultLimit: control.corpusSearchDefaultLimit,
+    corpusSearchMaximumLimit: control.corpusSearchMaximumLimit,
+    corpusSourceFamilyDefaultLimit: control.corpusSourceFamilyDefaultLimit,
+    corpusSourceFamilyMaximumLimit: control.corpusSourceFamilyMaximumLimit,
+
+    nativeAttemptLifetimeMs: control.nativeAttemptLifetimeMs,
+    nativeAttemptTimeoutMs: control.nativeAttemptTimeoutMs,
+    nativeAttemptCleanupTimeoutMs: control.nativeAttemptCleanupTimeoutMs,
+    nativeAttemptLogBytes: control.nativeAttemptLogBytes,
+    nativeAttemptResultBytes: control.nativeAttemptResultBytes,
+    nativeAttemptEvidenceBytes: control.nativeAttemptEvidenceBytes,
+    nativeAttemptEvidenceFiles: control.nativeAttemptEvidenceFiles,
+    sessionLifetimeSeconds: control.sessionLifetimeSeconds,
+    ...(control.sessionDefaultRoles ? {sessionDefaultRoles: control.sessionDefaultRoles} : {}),
+    ingestionAcquireTimeoutMs: control.ingestionAcquireTimeoutMs,
+    ingestionCleanupTimeoutMs: control.ingestionCleanupTimeoutMs,
+
+    maximumDispatchBodyBytes: control.maximumDispatchBodyBytes,
+    maximumRenderAssetBytes: control.maximumRenderAssetBytes,
+    maximumInternalEvidenceBytes: control.maximumInternalEvidenceBytes,
+    maximumProductControllerTokenCharacters: control.maximumProductControllerTokenCharacters,
+    productDecisionLifetimeMs: control.productDecisionLifetimeMs,
+    productDecisionHistoryLimit: control.productDecisionHistoryLimit,
+    maximumProductInputBytes: control.maximumProductInputBytes,
+    productControllerTimeoutMs: control.productControllerTimeoutMs,
+    maximumProductControllerResponseBytes: control.maximumProductControllerResponseBytes,
+    maximumArtifactBytes: control.maximumArtifactBytes,
+    maximumJsonBodyBytes: control.maximumJsonBodyBytes,
+    maximumArtifactUploadBodyBytes: control.maximumArtifactUploadBodyBytes,
     nativeResourcePolicy: settings.resourcePolicy,
     maximumWorkerResponseBytes: settings.maximumResultBytes,
     nativeWorkerDispatchTimeoutMs: settings.dispatchTimeoutMs,
@@ -56,9 +97,9 @@ export function loadControlServerConfig(environment: NodeJS.ProcessEnv = process
     ...loadTrustConfig(environment),
     ingestionSecret: required(environment, 'PRISM_INGESTION_SECRET'),
     artifactRoot: control.artifactRoot,
-    workerUrl: new URL(environment.PRISM_WORKER_URL ?? 'http://prism-worker:8080'),
-    ingestionUrl: new URL(environment.PRISM_INGESTION_URL ?? 'http://prism-ingestion:8080'),
-    controlInternalUrl: new URL(environment.PRISM_CONTROL_INTERNAL_URL ?? 'http://prism-control:8080'),
+    workerUrl: new URL(control.workerUrl),
+    ingestionUrl: new URL(control.ingestionUrl),
+    controlInternalUrl: new URL(control.controlInternalUrl),
     studioPublicUrl: control.studioPublicUrl,
   });
 }
@@ -68,9 +109,11 @@ export function loadProductAuthorityConfig(environment: NodeJS.ProcessEnv = proc
 }
 
 /** Capture one startup configuration before asynchronous signing-key I/O. */
-export async function loadControlCompositionConfig(environment: NodeJS.ProcessEnv = process.env) {
+export async function loadControlCompositionConfig(capture: PipelineBootCapture, environment: NodeJS.ProcessEnv = process.env) {
   const snapshot = {...environment};
-  const service = loadControlServerConfig(snapshot);
-  const product = await loadProductAuthorityConfig(snapshot);
+  const service = loadControlServerConfig(capture, snapshot);
+  const product = 'productDecisionsEnabled' in service
+    ? await loadSelectedProductConfig(service.productDecisionsEnabled!, snapshot)
+    : await loadProductAuthorityConfig(snapshot);
   return Object.freeze({service, product, listener: Object.freeze({port: service.port, databaseUrl: snapshot.DATABASE_URL})});
 }

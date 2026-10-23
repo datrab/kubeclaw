@@ -1,0 +1,29 @@
+{
+  "at": "2026-10-16T20:39:34.904835+00:00",
+  "sourceCommit": "f20fd98192d725281f21fe658173d459c70b13f5",
+  "sourceRemoteVerified": true,
+  "change": "Original generation-race fixture now reads actual complete selected authors via captureSwarmSettings. Physical old capture survives unrelated delivery alias switch; explicit new capture observes new studio port. Original component deletion and already-read-byte mutation controls retained. Real packaged boot transport now tests mid-read atomic-writer alias switch fails closed, subsequent selected wrong receipt denies, restored genuine receipt succeeds. No production trust/codec behavior changed.",
+  "checks": {
+    "integratedPassed": 34,
+    "integratedTotal": 34,
+    "failed": 0,
+    "skipped": 0,
+    "originalRoster": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50,
+      "integrityFailures": 0
+    },
+    "diffCheck": true
+  },
+  "initialFailure": "New boot race initially expected old capture success; genuine retained mount/alias observation rejects PIPELINE_PACKAGE_CHANGED. Corrected test to actual mandated fail-closed receipt contract, not production. New stale generation receipt denies PIPELINE_IMAGE_RECEIPT_INVALID before final generation check. Initial12/13 log preserved.",
+  "independentReview": "OPEN: discovery exposes no native spawn/review tool; active/recent CONFIG subagents0. Existing unchanged same-surface EROFS not retried. No independent acceptance claimed.",
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "qualitySealedInputStoreImplemented": false,
+  "qualityProductiveBootImplemented": false,
+  "qualityActivationAllowed": false,
+  "nextAction": "Genuine QB-R02 original producer/source/build/baseline/inputStore reservation/accounting/sealed snapshot/publication plus coordinated sole-root boot/Nova receiving. Required independent full original/history/native/C0-C6 gates OPEN.",
+  "externalInfrastructure": "UNCHANGED owner Raven: isolated Linux Docker/UID1000/delegated writable cgroup and sufficiently large genuinely root-trusted writable archive filesystem; resume when supplied.",
+  "writerLock": "same nonblocking repository lock; released at bounded command exit"
+}

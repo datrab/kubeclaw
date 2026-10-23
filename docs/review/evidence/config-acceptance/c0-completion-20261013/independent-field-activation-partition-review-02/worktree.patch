@@ -1,0 +1,73 @@
+diff --git a/docs/review/evidence/config-acceptance/c0-completion-20261013/WORK-STATE.json b/docs/review/evidence/config-acceptance/c0-completion-20261013/WORK-STATE.json
+index a661b370d..6169362ae 100644
+--- a/docs/review/evidence/config-acceptance/c0-completion-20261013/WORK-STATE.json
++++ b/docs/review/evidence/config-acceptance/c0-completion-20261013/WORK-STATE.json
+@@ -13,7 +13,7 @@
+     "binding": "initial frozen + boundaries02(10controls), membership03(11/16actualcompiledstage maps), codec04(6controls), journal-bound05(11genericactualjournal/finiteencodingcontrols). Original error retained; wholefield/standalone/provider/harness joins unfinished. Demo-membership06 observed unchanged existing compiler test1pass0fail, exactsource/testhashesmatchHEAD; no realprovider or targetbinding acceptance. Captured original sourceapproval/retentioncrossdomainobligation."
+   },
+   "next": [
+-    "Collect C3 profile02 and field partition01 final reviews; author additive material corrections and independently recheck provider02 after delivery.",
++    "Collect provider02/fieldpartition02 reviews, author additive material corrections including frozen C3profile03 receiving supersession; finish recovery complete profile then independently review.",
+     "Complete remaining WCR01-08 source/provider/operator/agent/case/package contracts, without new generic validation infrastructure.",
+     "Selective meaningful checkpoint20 push to existing draft PR18; final whole-C0 review and concrete C1-C6 approval package remain open."
+   ],
+@@ -46,8 +46,8 @@
+     "implementationAuthorized": false
+   },
+   "lastPushedCheckpoint": {
+-    "checkpoint": 19,
+-    "commit": "367b4f88698a3db3e595eadf44f40a8f973cc932",
++    "checkpoint": 20,
++    "commit": "d396d56ad1c92a82a3ebd8346eb6d4c5764db8da",
+     "pr": "https://github.com/datrab/kubeclaw/pull/18",
+     "pushed": true,
+     "remoteHeadVerified": true,
+@@ -78,19 +78,19 @@
+   "sourceSupplementIndex": "docs/review/remediation/config-source-supplement-current.md",
+   "activeNativeWork": [
+     {
+-      "task": "/root/source_concordance_layout_recheck",
+-      "scope": "C3 profile03 exact registryPeer CA/auth reference correction BC3-R02-01",
+-      "status": "running author; fresh recheck required"
++      "task": "/root/runtime_provider_contract_review",
++      "scope": "Provider02 independent recheck; invalid deadline B and stale active per-member schema/case refs found",
++      "status": "running reviewer"
+     },
+     {
+-      "task": "/root/c1_case_oracle_review",
+-      "scope": "Provider02 five RPR01 corrective contracts",
+-      "status": "running author; fresh recheck required"
++      "task": "/root/policy_family_contract_review",
++      "scope": "Fieldpartition02 independent FAPR01\u201303 recheck, frozen provider dependency drift disposition",
++      "status": "running reviewer"
+     },
+     {
+-      "task": "/root/whole_c0_readiness_review",
+-      "scope": "Field partition02 FAPR01\u201303 corrective source scopes and 84 exact case joins",
+-      "status": "running author; fresh recheck required"
++      "task": "/root/source_concordance_layout_recheck",
++      "scope": "Complete recovery sole-owner policy/profile/receiving ABI/domain/case definition for81source candidates",
++      "status": "running author; independent review required"
+     }
+   ],
+   "completedLatestReviews": [
+@@ -133,6 +133,10 @@
+     {
+       "report": "independent-field-activation-partition-review-01/README.md",
+       "verdict": "NOT ACCEPTED FAPR01\u201303; original2409/6845 bodies preserved"
++    },
++    {
++      "report": "independent-c3-buster-complete-profile-review-03/README.md",
++      "verdict": "BC3-R02-01 CLOSED bounded source/reference definition; independent32pure controls/96profiles/91pairs; no wholeC0/native acceptance"
+     }
+   ],
+   "checkpoint15Prepared": {
+@@ -186,7 +190,7 @@
+     "globalC0Accepted": false
+   },
+   "checkpoint20Prepared": {
+-    "pushed": false,
++    "pushed": true,
+     "scope": "Frozen C3/provider/whole-field proposals, substantive independent rejections, source318 bounded review and launcher source adjudication",
+     "globalC0Accepted": false,
+     "implementationAuthorization": null,

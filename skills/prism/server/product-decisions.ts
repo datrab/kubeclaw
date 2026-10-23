@@ -23,7 +23,7 @@ export function receiptFor(stored: StoredProductDecision, value: unknown): Recor
   if (Object.keys(receipt).length !== Object.keys(expected).length + 3 || Object.entries(expected).some(([key, field]) => receipt[key] !== field) || !isDeepStrictEqual(receipt.envelope, stored.envelope) || receipt.expiresAt !== expiresAt || typeof receipt.appliedAt !== 'string' || !Number.isFinite(Date.parse(receipt.appliedAt))) throw new Error('product receipt does not bind the recorded decision');
   return receipt;
 }
-async function reconcile(db: Queryable, config: ProductConfig, stored: StoredProductDecision): Promise<Record<string, unknown>> {
+async function reconcile(db: Queryable, config: ProductConfig, stored: StoredProductDecision, timeoutMs: number, maximumResponseBytes: number, maximumTokenCharacters: number): Promise<Record<string, unknown>> {
   if (stored.receipt) return {state: 'applied', decisionId: stored.decision_id, receipt: receiptFor(stored, stored.receipt)};
   // The immutable status key remains usable after signature expiration. A failed status
   // request is ambiguous: retry only the identical envelope; never issue another one.
@@ -31,47 +31,49 @@ async function reconcile(db: Queryable, config: ProductConfig, stored: StoredPro
     leaseName: stored.intent.subject.leaseName, leaseUID: stored.intent.subject.leaseUID, payloadDigest: stored.payload_digest};
   try {
     let receipt: Record<string, unknown>;
-    try { receipt = receiptFor(stored, await productController(config, '/v1/demo-product/status', status)); }
-    catch { receipt = receiptFor(stored, await productController(config, '/v1/demo-product/decisions', stored.envelope)); }
+    try { receipt = receiptFor(stored, await productController(config, '/v1/demo-product/status', status, timeoutMs, maximumResponseBytes, maximumTokenCharacters)); }
+    catch { receipt = receiptFor(stored, await productController(config, '/v1/demo-product/decisions', stored.envelope, timeoutMs, maximumResponseBytes, maximumTokenCharacters)); }
     await recordProductReceipt(db, stored.decision_id, receipt);
     return {state: 'applied', decisionId: stored.decision_id, receipt};
   } catch (error) {
     return {state: 'pending', decisionId: stored.decision_id, ...(error instanceof ProductControllerError && error.code ? {controllerCode: error.code} : {}), message: 'Outcome is unconfirmed. Recover this decision; do not create a replacement.'};
   }
 }
-async function input(request: IncomingMessage): Promise<unknown> {
+async function input(request: IncomingMessage, maximumBytes: number): Promise<unknown> {
+  if (!Number.isSafeInteger(maximumBytes) || maximumBytes < 1) throw new Error('valid product input limit required');
   if (request.headers['content-type']?.split(';')[0] !== 'application/json') throw new Error('application/json required');
   const chunks: Buffer[] = []; let size = 0;
-  for await (const chunk of request) { size += chunk.length; if (size > 32_000) throw new Error('product input too large'); chunks.push(chunk); }
+  for await (const chunk of request) { size += chunk.length; if (size > maximumBytes) throw new Error('product input too large'); chunks.push(chunk); }
   return JSON.parse(Buffer.concat(chunks).toString('utf8'));
 }
-async function authorizedProductRoute(request: IncomingMessage, url: URL, options: {db: Queryable; config: ProductConfig}, actor: {user: string; expiresAt: number}, json: (code: number, value: unknown) => void): Promise<void> {
+async function authorizedProductRoute(request: IncomingMessage, url: URL, options: {db: Queryable; config: ProductConfig; productDecisionLifetimeMs: number; productDecisionHistoryLimit: number; maximumProductInputBytes: number; productControllerTimeoutMs: number; maximumProductControllerResponseBytes: number; maximumProductControllerTokenCharacters: number}, actor: {user: string; expiresAt: number}, json: (code: number, value: unknown) => void): Promise<void> {
     if (url.pathname === '/v1/product-decisions/subjects' && request.method === 'GET') {
-      json(200, await productController(options.config, '/v1/demo-product/subjects', {schemaVersion: 'demo-product-subject-request.v1'})); return;
+      json(200, await productController(options.config, '/v1/demo-product/subjects', {schemaVersion: 'demo-product-subject-request.v1'}, options.productControllerTimeoutMs, options.maximumProductControllerResponseBytes, options.maximumProductControllerTokenCharacters)); return;
     }
     if (url.pathname === '/v1/product-decisions' && request.method === 'GET') {
-      const rows = await options.db.query('SELECT d.decision_id,d.intent,d.created_at,r.receipt FROM prism.product_decision d LEFT JOIN prism.product_decision_receipt r USING(decision_id) WHERE actor_id=$1 ORDER BY created_at DESC LIMIT 100', [actor.user]);
+      if (!Number.isSafeInteger(options.productDecisionHistoryLimit) || options.productDecisionHistoryLimit < 1) throw new Error('valid product decision history limit required');
+      const rows = await options.db.query('SELECT d.decision_id,d.intent,d.created_at,r.receipt FROM prism.product_decision d LEFT JOIN prism.product_decision_receipt r USING(decision_id) WHERE actor_id=$1 ORDER BY created_at DESC LIMIT $2', [actor.user, options.productDecisionHistoryLimit]);
       json(200, {decisions: rows.rows}); return;
     }
     if (url.pathname === '/v1/product-decisions' && request.method === 'POST') {
       let intent;
-      try { intent = parseProductIntent(await input(request)); }
+      try { intent = parseProductIntent(await input(request, options.maximumProductInputBytes)); }
       catch { json(400, {state: 'rejected-before-recording', error: 'Invalid decision input; no decision was recorded by this request.'}); return; }
-      const stored = await recordProductIntent(options.db, intent, actor, options.config);
-      const result = await reconcile(options.db, options.config, stored);
+      const stored = await recordProductIntent(options.db, intent, actor, options.config, options.productDecisionLifetimeMs);
+      const result = await reconcile(options.db, options.config, stored, options.productControllerTimeoutMs, options.maximumProductControllerResponseBytes, options.maximumProductControllerTokenCharacters);
       json(result.state === 'applied' ? 200 : 202, result); return;
     }
     const recovery = /^\/v1\/product-decisions\/([0-9a-f-]{36})\/recover$/u.exec(url.pathname);
     if (recovery && request.method === 'POST') {
       const stored = await storedProductDecision(options.db, recovery[1]!);
       if (!stored || stored.actor_id !== actor.user) throw new Error('product decision is not owned by this operator');
-      const result = await reconcile(options.db, options.config, stored);
+      const result = await reconcile(options.db, options.config, stored, options.productControllerTimeoutMs, options.maximumProductControllerResponseBytes, options.maximumProductControllerTokenCharacters);
       json(result.state === 'applied' ? 200 : 202, result); return;
     }
     json(404, {error: 'unknown product decision route'});
 }
 export async function handleProductDecisions(request: IncomingMessage, response: ServerResponse, url: URL,
-  options: {db: Queryable; config?: ProductConfig; sessionSecret: string}): Promise<boolean> {
+  options: {db: Queryable; config?: ProductConfig; sessionSecret: string; productDecisionLifetimeMs: number; productDecisionHistoryLimit: number; maximumProductInputBytes: number; productControllerTimeoutMs: number; maximumProductControllerResponseBytes: number; maximumProductControllerTokenCharacters: number}): Promise<boolean> {
   if (!url.pathname.startsWith('/v1/product-decisions')) return false;
   response.setHeader('cache-control', 'no-store');
   const json = (code: number, value: unknown): void => {response.writeHead(code, {'content-type': 'application/json'}); response.end(JSON.stringify(value));};
@@ -82,13 +84,13 @@ export async function handleProductDecisions(request: IncomingMessage, response:
   }
   try {
     const actor = productActor(request.headers, options.config, options.sessionSecret, request.method !== 'GET');
-    await authorizedProductRoute(request, url, {db: options.db, config: options.config}, actor, json);
+    await authorizedProductRoute(request, url, {db: options.db, config: options.config, productDecisionLifetimeMs: options.productDecisionLifetimeMs, productDecisionHistoryLimit: options.productDecisionHistoryLimit, maximumProductInputBytes: options.maximumProductInputBytes, productControllerTimeoutMs: options.productControllerTimeoutMs, maximumProductControllerResponseBytes: options.maximumProductControllerResponseBytes, maximumProductControllerTokenCharacters: options.maximumProductControllerTokenCharacters}, actor, json);
   } catch (error) { json(403, {error: error instanceof Error ? error.message : 'product decision rejected'}); }
   return true;
 }
 
 export function productAuthorityHandler(next: (request: IncomingMessage, response: ServerResponse) => Promise<unknown>,
-  options: {db: Queryable; config?: ProductConfig; sessionSecret: string}): (request: IncomingMessage, response: ServerResponse) => void {
+  options: {db: Queryable; config?: ProductConfig; sessionSecret: string; productDecisionLifetimeMs: number; productDecisionHistoryLimit: number; maximumProductInputBytes: number; productControllerTimeoutMs: number; maximumProductControllerResponseBytes: number; maximumProductControllerTokenCharacters: number}): (request: IncomingMessage, response: ServerResponse) => void {
   const dispatch = async (request: IncomingMessage, response: ServerResponse): Promise<void> => {
     const url = new URL(request.url ?? '/', 'http://prism-control');
     if (url.pathname === '/v1/session' && request.method === 'POST' && options.config && request.headers.origin !== options.config.origin) {

@@ -1,0 +1,2962 @@
+{
+  "source": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/metadata-correction-20/active-component-semantic-bodies.json",
+    "sha256": "247d91dceaa9fb8d0ec7cfb70290fdf71c887fcc253ce68a39d9f92bbd908b97"
+  },
+  "scope": "Proposed root selection wire supersedes original prospective one-profile-per-owner selectionRef locations, never original body/result/requirements. Complete setting author paths stay same owner.",
+  "rows": [
+    {
+      "fieldId": "AUTH-PRISM-AGENT-CLAIM-HTTP",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "ad931077dc2118cd3128fed135405dda6e67955400c74e8508d70a2608b5b40d",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-AGENT-CLAIM-LIFETIME",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "8151ac457d9ed0b5211c165db3947ec11156fe76be370409b45524dfbc8f47ff",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-AGENT-CLI-OWNER",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "93e69d712411c9a60ab191ca5bcc35dc8094fa850b3f6c88fafa9ea9f217f41a",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-AGENT-CLI-TIMEOUT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "6721d19599e55a2a541b50b057cb776d91acf9b9b28f862ff33485cdd293cb5e",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-AGENT-FINISH-HTTP",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "49baa29a9b10ca9e26215f798ad41ac98d966f87b3102c76b4a8897af5826013",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-AGENT-KILL-GRACE",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "1e792984ca4393207c9046d5849746e212815e6037e8299c7e3083ba992f3cfe",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "d469bc3088ae9d250d6e80d3606bd3642845888877f077ac68b7f9c2a59ecf06",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-AGENT-LIMIT-evidenceBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "26629420a35428cc1c0ad6d7e7098e543039cf405a75b5e55a7509d5b4eb6089",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-AGENT-LIMIT-evidenceFiles",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "aa41088b1b638d6ce158f44955280499fa852fe29fae7c0339520fc0e9324fc5",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-AGENT-LIMIT-logBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "d664ee08d788a9102aa2aa212a9bbfbab477841ba21a380fb8ae4d6e59c5a7b2",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-AGENT-LIMIT-resultBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "1c4b701b071a6af295046c796b094d289a09aaf3601818b1a224284440cc514f",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-AGENT-LIMIT-timeoutMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "abf82354ae0e81b4db6e087dc691b95b298bfa36a1307f32864d30cb2d3a11f6",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-ARTIFACT-ACK-BYTES",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-worker/profile",
+      "owner": "prism-worker",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "5c02a537d45fe3ba4263f92c8fa89d215e1e432e53ea3fe8aea798dd269c496d",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-ATTEMPT-cleanupTimeoutMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "11a2298d43b56b0f1783e7b6dd6051174b2c3c37a5b82a14215151dfb17eedcd",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-ATTEMPT-evidenceBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "c0e14caa18dc8f5f7130ebf426a3ab5ef01d7af6dfa24732162345b620668a0b",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-ATTEMPT-evidenceFiles",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "9edbc57f579e435539bd219d93520ba2618fa6f8d71d863a61b07226afd31f95",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-ATTEMPT-logBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "3d23b02d4056cc889feabe924be424542f9d318e04c1b45e64f53ca9945e80ff",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-ATTEMPT-resultBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "4ad11ea51a548231402a697776cf21852517652b808148ec555afbb941d21477",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-ATTEMPT-timeoutMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "3f630e7418ca328bf442d16bc82c0948ad79ad981b66aa20956ba79e35584ff9",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-BRIDGE-BODY",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "8d72820b812fb2f59c291febd6457a56337477f71f86741cfd21e541a4d5bf79",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-BRIDGE-CONTROL",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "37ee1649731045011d3e70a39bb5c750b11b39d584ca316275d3b1e827901507",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-BRIDGE-DISPATCH",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "5e5d3992ec40d784de93a2adeaa7a3b954e5511a114c250a57a86dbb151ed919",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-BRIDGE-JOB-LOOKUP",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "5e2db1c3ba5a4dffd561525142bdaa4d6e452b8fb479d00c8c248a10d708b84e",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-BRIDGE-POLL",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "be7c2dd49ac6c9e848fe8fc5aff493037c462bade40deec6feb4558eb046941e",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-BRIDGE-PORT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "ac0cafeef2ad2622fb21affcf1d435f6eb40c342e1f864a5e073508839c83183",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-BROWSER-ROOT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-worker/profile",
+      "owner": "prism-worker",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "ba74fc34d1a6a693478663fac98d2305b7d45bdb927b60e6a50428e7db4dda37",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-CACHE-maximumCompletedBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "e4ecd3ee3320fe1177024b23724c24f27bff73030074a10c7b7a0985aae1c1a3",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-CACHE-maximumCompletedEntries",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "03fe41032f79a0bbaf32b349bdc763f86eb4034caadcaf10e5157f9c6916051a",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-CACHE-maximumInFlight",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "b93d9390568051fd4318f181016df517e10ae1f4550b8ba0d96263654df0bd30",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-CLAIM-LIFETIME",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "4e90a8aba62ac3a04023f62053903d250c9bb46d80844085388d34a1c88b99f6",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-CONTROL-ARTIFACT-DECODED-BYTES",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "7fcca05669c51edfead3162dff76ff68d486c84e1b638116d0062f10d0aac732",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-CONTROL-ARTIFACT-WIRE-BYTES",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "5749a3bc21e3ec0b6c68badc81e929433712bb2f0d3079c28af9cd854cb3643e",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-CONTROL-CORPUS-ACQUIRE-TIMEOUT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "c99f4b53ae91c1d75b1cad633299993a48a70451a1c393ec5d3ae508017a253b",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-CONTROL-CORPUS-CLEANUP-TIMEOUT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "6d22480f4723a254cd4d3ab7a279308744e2223d19e32f0ad02de59d88ab9c7f",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-CONTROL-HMAC-WINDOW",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-worker/profile",
+      "owner": "prism-worker",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "243c5afbecdaac320205025108d8b147a8d08264264cd7ffed89e05dfbabaf61",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-CONTROL-HTTP-BODY-BYTES",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "9ac875bb82d79578ac13cc6428cbb4f3727905e5b4920c1a1a7cedf77cae8686",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-CONTROL-NONCE-CLEANUP-BATCH",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-worker/profile",
+      "owner": "prism-worker",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "23c66910e2b1517d2d33c71c21bb4c08feaa97ad7a6e41c17a05e6746ef47c87",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-CONTROL-SEARCH-CANDIDATE-FLOOR",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "e3f34a977745bbe9d578e07aabecb46fff4b81358f78eebfe4c3316691b6b0f0",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-CONTROL-SEARCH-CANDIDATE-MULTIPLIER",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "141ee752c2e0c03f89094f6a012e5ceb265d6c2688f8ac41764f046a89e33b0d",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-CONTROL-SEARCH-DEFAULT-LIMIT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "491b0bf746fbc66e21a1cc766c8e123e284d6b45788e9588b40a0e0ef51b03ce",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-CONTROL-SEARCH-FAMILY-DEFAULT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "df880150e7a7bac3508066e52df3901686e9a85085a6c02fe17c3402a186c34c",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-CONTROL-SEARCH-FAMILY-MAX",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "002985317e1a07c9f61eff21d0cd10a6a0bec261b50954a9d139556963625497",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-CONTROL-SEARCH-MAX-LIMIT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "290d6ad5442794f479d58f3e21bdb034a1914baa3c571c10b737b31ffb7d4d09",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-CONTROL-SEARCH-RRF-DAMPING",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "422cbc0577e81fb558801571fd9b2c795a17092353db2db24fe9d28c59f10254",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-CONTROL-SESSION-DEFAULT-ROLES",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "84da0c581d127e9af68599dd6d538585c16a7f3acadb87f0cfc117bd2d896c58",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-CONTROL-SESSION-TTL",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "78eeb6b7016b34252f48c4465c84560163d23d2724c06c654d6d8d5187fe48dc",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-DB-BOOTSTRAP-connectionTimeoutMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "f56737a74d4ecc5991b4df545075a9f993206549461ed1629b6e67b86d6cee12",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-DB-BOOTSTRAP-maximumAttempts",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "9d9757110b7004f708fe64df169241e8ca178423c116ea669531aebad641079e",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-DB-BOOTSTRAP-retryDelayMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "af9d7d2be4c262d053b864dfaeccd54c02cb38c37fa6c9cf0e35ef8d9fd7a34b",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-DESIGN-CARDINALITY",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "155bc97b81a4b052d774a72209d0cbe98aa9b30350f8c79ebc2a8961a67d436b",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-DESIGN-PROVIDER-TIMEOUT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "6139fae48409956c2d20cd4f76d02bf7000c57e949601d140614f8257ecd61e3",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-DESIGN-SYSTEM-PROMPT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "f12cbf3fd2dfea06da5baa683be0ec6d7a622d08c2e20c185ddd735828558198",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-INGEST-TEXT-LIMIT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "28d27441a6954b1518aa5548bbfaeb97784fa0d37993e5e24085d096be7fa33b",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-INGESTION-ACQUIRED-BYTES",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "80c43f20450854ea7e03828a0048e2feb33ed5be2fdfbbcb79c627204104920e",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-INGESTION-HTTP-TIMEOUT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "40759a54592c0b551bc4e003e7c17ae977f2e0e7f31528fc7cc6de4956ae747b",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-INGESTION-PORT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "6ec18066cd6d3b78fec425c2e76023e54a6725d854559ecd6e5e2e6925b32ea5",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-INGESTION-REDIRECTS",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "de1351c530a8c7d64720c257bf3058be5475ba4f9226dbde79351a2ea7064427",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-INGESTION-REQUEST-BYTES",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "3611fc462f69bd897fd3db77fa1f8970b176311ae9d6d31e2173e7f7b7cab9ab",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-INGESTION-ROOT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "c1a7aea53d3854b5f8ee66c4b693cff4f01609919b52ade08a16fcea46ed04fc",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-INGESTION-TTL",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "711276d214cf13ebfd3413a2333bdea1e01543cfa7930fb706cd6e51defae766",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-INTERNAL-ARTIFACT-UPLOAD-BYTES",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "f2c8bf0830cbf2a59bde26438248367c3abc9c5c7cc96299efa3497e019f0abf",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-NATIVE-ASSIGNED-INPUT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-worker/profile",
+      "owner": "prism-worker",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "bca653d61864115d85728cbf60cad7efa15de8fc4aa404c5fcece4ffd0af50d7",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-NATIVE-COMPLETION-PHASE-ALLOWANCE",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "57b2e6a0b7fffd16b15f0b3183669cf71ef4cdbc387434b64b1f05c82b865b09",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-PRODUCT-DECISION-TTL",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "db56ad7b80ca161b53a550470ca5ec539303b17dd8d67486db3be3701fabd62f",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-PRODUCT-ENABLE",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "d0b8943cbc2c843701234ce90ba7982c690dabf18c7201f3c502b11e47d9dd6e",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-RENDER-ASSET-LENGTH",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "9a938265a40495c7ab1c6eb471d131c8597333cd4f13a1edebde4ace60b85a92",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-RENDER-HEIGHT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "3e917189249372acd65a751abdf64cb9baee8b816c64fff2daeb5b1b1b15dfc0",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-RENDER-LOCALE",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "9de5ebdccc72a92c2d31bafe6f9955b5bb092efae4fb1ad3aeaa55a4c16cf3c6",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-RENDER-MOTION",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "efde1487ce8d837186fabb42050fdc4cebc7a7727097ebc852c9fdb64c454b24",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-RENDER-TIMEZONE",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "78048fed8cd48f51bedf3284f879e4c5973267f7a2cfe7943eab4203746996b3",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-RENDER-WIDTH-COMPACT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "2ea8c4bf098ec2d731b2e0432f89fa89dc2c1fd31884f22d055504586e561f7f",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-RENDER-WIDTH-REGULAR",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "9de1a644adb12defdda08333757a6baab2c5b05adc9145ba99de08f834099b69",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-RENDER-WIDTH-WIDE",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "65e41db66969ec3e0e4846408b63e9e74ac468e189e7bf20d3dc7ea34e10ff27",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-STUDIO-ASSET-ROOT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-studio/profile",
+      "owner": "prism-studio",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "deea8882971fc9f80bb101772b07dc53964062b88948e9e2e7aeacce1e6fb940",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "AUTH-PRISM-STUDIO-REQUEST-BYTES",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-studio/profile",
+      "owner": "prism-studio",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "6bd163290c308523a90feb0cd05e92121c6414cbfa0b6c3723077d9ae0475d58",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-WCORE-DRAIN-POLL-MS",
+      "originalSelectionRef": "config/pipeline.config.json#/components/worker-core/profile",
+      "owner": "worker-core",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "5678cadf3837a9d925457348d869dd2a8c697dab168337fb2d499dbdf2d99ef0",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-WCORE-INPUT-BYTES",
+      "originalSelectionRef": "config/pipeline.config.json#/components/worker-core/profile",
+      "owner": "worker-core",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "3fc4d30243cf916bd2de232766852a86842518e60d71f65948dc7e807859cd0a",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS",
+      "originalSelectionRef": "config/pipeline.config.json#/components/worker-core/profile",
+      "owner": "worker-core",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "9785ce0e6cd625af3b2b39c1c2707e46bb120990fabe3d005d0182a6ece2f4f8",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-WCORE-JOURNAL-RECORD-BYTES",
+      "originalSelectionRef": "config/pipeline.config.json#/components/worker-core/profile",
+      "owner": "worker-core",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "ac02b1ac4e15747524afcdaa6e2b1c5d2139befbe6a26ca8c38705a3e7038612",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-WCORE-JSON-DEPTH",
+      "originalSelectionRef": "config/pipeline.config.json#/components/worker-core/profile",
+      "owner": "worker-core",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "5243b5aa3ae79cf26e0c36ac4a31546eece7adcebb8e03ef2ec42ffcd8d010d7",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-WCORE-JSON-NODES",
+      "originalSelectionRef": "config/pipeline.config.json#/components/worker-core/profile",
+      "owner": "worker-core",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "c01b5e95524403ecfc36fed3cc90dcda6d102fd261c93c6b865f15fede5824b0",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-WCORE-LOCK-STRIPES",
+      "originalSelectionRef": "config/pipeline.config.json#/components/worker-core/profile",
+      "owner": "worker-core",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "0f738f60ca68c062c596da5b265f3d14d46d23a8c6d0269f2f98ae7eda7b76b7",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-WCORE-LOG-PARTS",
+      "originalSelectionRef": "config/pipeline.config.json#/components/worker-core/profile",
+      "owner": "worker-core",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "1c602c26fdfceaadbbfa8f990fd00865f3f47e7143776255c52c5c95d3477f30",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-WCORE-NODE-IDENTITY-FILE-BYTES",
+      "originalSelectionRef": "config/pipeline.config.json#/components/worker-core/profile",
+      "owner": "worker-core",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "fcdb7f5738b691eb5de545de056e7f0eb67e96dccfbb9908d9d24e4cce807a39",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS",
+      "originalSelectionRef": "config/pipeline.config.json#/components/worker-core/profile",
+      "owner": "worker-core",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "ff9e388e62f428a688c61ca41e5de536210e754fb50cc7b106e1c1cad2f45fec",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-WCORE-POOL-FILE-BYTES",
+      "originalSelectionRef": "config/pipeline.config.json#/components/worker-core/profile",
+      "owner": "worker-core",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "4da1f8d4264900e11b78a157be50d1f106483be38101163c35aacbdef770d89e",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-WCORE-RETAIN-LOGS",
+      "originalSelectionRef": "config/pipeline.config.json#/components/worker-core/profile",
+      "owner": "worker-core",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "2bdc01e90f80194e3340a89a854e9a3602a74b902bc6e48623a681a44410d9d2",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES",
+      "originalSelectionRef": "config/pipeline.config.json#/components/worker-core/profile",
+      "owner": "worker-core",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "c82fba9e325e5d34f7506cd714ffe044ac88fd0de86a920b70abd40e2d9825f2",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-admission.maximumActiveJobs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "50b00a3fa2ac3192a8ade882aeee086d9e95c18ff1dedc6e7197e997b083e600",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-admission.maximumConcurrentAttempts",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "afa665d835f5c964d492cb6f0ddbdec567c3cb64b43ff3ec342c3ddbfdedbe85",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-admission.maximumQueuedJobs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "e800cd8496a77854f0c7b04cad614e365dd8ba5e99aaee5d84274782ba30563e",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowDefaultStorageClass",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "3254f1211c301a412fd4cd2aa05680907e6f1b60672ff0104417739814a8a184",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedNamespacePrefixes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "68e47a949e7c1bb465dd60b4f8e373c0140e138bd27049e2e2520130a00cd519",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedSecretReferences",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "b3f4f0bf67ab19921d64c74c0679dd5c157a1afdcd54da618c47f2603e4815b6",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedStorageClasses",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "6f992c90ba2f1a5b90405494d8e751518ea4be0a7ee165b972ea3b3bdcb4d17c",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.commandOutputManifestMultiplier",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "c2bb741af1e245f81f5381a5d38712652f67967913c9e087a753407bc8a1568c",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.credentialReaderServiceAccount",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "fd6f71fc35a4a0b00595be290f0ff2c05c96b98640dc3bf2af518b5b3ae6950e",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.diagnosticCodeUnits",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "aa93b63ef7761551aeba0b1b7d2dd16e74ae3e6cbb7b8bacbbdc15c438250e02",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumAliases",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "c13f8e68ba2530fa6ca092f7077f55fc0fe44077e73f7116b49a7bd95e54c7dd",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumDepth",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "1a10cfa785712838da1658eca961dafc45528ee001ba1233ffbb348a3deca46c",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumFlattenPending",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "3038a49d3fd4e000a6f2ef5424d26cc1ce660ddb4fb6666e0a94e6927ae78648",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumFlattenVisits",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "45e564dee70a9579a41a55de7a12b50b99b7da389305aaeecff003ac2325c565",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumNodes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "b0372a2e4086ad25c3aea87e497307d550c6fd580d8996d745748905cdd3414d",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumExecutionMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "5f99211ea9393e65cbe4c556b1e57bb0754f4a1430561bd7237bed435f20836d",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumManifestBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "7a36513bee9b15cecd8aba13883889741844f19a2add9ded90d91d1b9bf0a247",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeClaimBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "5e1f04b2e9c18dd11c2238793db2870ddbe7c941ef3e6c37e84740f9a4764f22",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeTotalBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "633c4375c3fef2650f8b7c0e961f2b0447869211ca0f6af6a58b68e7f29035e6",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumResources",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "3652ad478b7f74dd67c566c848633676564238d23fa3be1b825a41f8a746fc51",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumRetentionSeconds",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "851b1f4a702c8b29a641a84ee5ff43fe533900652a1cad241a6afc573046c174",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumSecretReferenceEntries",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "e008840a81855e783a8a3f2ac33c1504bb9892a6940a4e269cd7ffa8886617c9",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.pollIntervalMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "365975e08511d4d3842a25f4e1d3a34eba778791e0333fdade91296aaba36e17",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.registryRepositoryPrefixes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "112cd493566d787bfdeafc64aa21a5d039e6ef73c3d3345162c573d970508def",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.runnerServiceAccount",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "506cc13e6be2eb6a408db86234a9cf316b76c1b8886cd24f118236b5d6f0d0c3",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.shortCommandTimeoutMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "9a05580bbc33059b269dc2f873381e72ce7b49edd613839a10d7cdfcc0bdd929",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.runtimeSecurity.allowedNamespacePrefixes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "1d8ac5e1b8b4fc2cb06c2ca08dcecaf29daa6e1d5072f46cea5a9148a2eac19c",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.runtimeSecurity.diagnosticCodeUnits",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "1a452787978d7d0fb6c48527055ff7ea63e7209b9814f37fc8b585e0029f0985",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.runtimeSecurity.executableSearchPath",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "16e1176fca5a3899fd65ceb97b54361eeceee37881abc77338b072dcac24cd3a",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumExecutionMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "91c33c091a1fe99645f386f4b29f153ffd56d6085d7ce00acf6f77d9377da598",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumFutureSkewMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "80e16f8edd2c620a57746eaec6cb7f65952facbf4942eec9ebd09cfc216ac592",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumObservationAgeMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "e68f9f8ab7604bfee4a0b88ba8341ab8b8ac11bd8626e0516a97fd12d047b3f6",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumOutputBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "6996de7bd0c35478b7cb31603530c8142089f13f28d46dc20132bbabfeb70786",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.runtimeSecurity.pollIntervalMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "4fd3be415a88a4f3971e2f58ff81890b4ddc6bfb19fab8de6a04993fccdc0f8b",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.shared.kubectlExecutable",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "82de7afe9e7c404748627ec77d0879b8c09b536168ed26f11294385b03535767",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.shared.leaseApiGroup",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "5987af48b79a32b7daccaac2d6bdc7c83667f740b082b1c0ca32047d8e6537cd",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.shared.leaseApiVersion",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "e9f925998c8f87a92d4454cddee8228baef74f1012c94cdfcd6aed8c7a470055",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.tailscaleExposure.allowedHostSuffixes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "d01531fc3abad4575295071d97812d78cce9d7b41b6e00280d4ecf67fddf52f1",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.tailscaleExposure.allowedNamespacePrefixes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "e0dd210aa3bbc8807fdecc72ed4e1eaa2e33bf1002fd9249b7e4892b538c378e",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.tailscaleExposure.maximumCommandOutputBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "a977c8b3d2bb266d3daaf1209ab34e9913d377a4b769febc5c0571175963e650",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.tailscaleExposure.maximumExecutionMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "1e727c0174a50939f8cc577da6db3295c81a7fae1ceaa178b17cf74fecff8ed1",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.tailscaleExposure.pollIntervalMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "97830655ea08ffe21c729de74532fa70d2dec6aa03d2af93877219edab4ee53e",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.tailscaleExposure.shortCommandTimeoutMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "9f479c637554234e95e0d4995e6b578d39c0946629809ddca8ff14502532459f",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-dependencyReadiness.maximumExecutionMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "97730729b9a0ca3e52c8dc85d6dfd3104eec95bc133172260a271ed7b898ace5",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-dependencyReadiness.maximumOutputBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "21a6c61a6bd563df055ac0044e48bba10ddeae6cee1149d529f67b277160711b",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.observation.processSampleIntervalMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "47f2c44b29f1b7b53fd58c967db1f235a05fa6032ef0a2ef0dbb97ba5bde2cec",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.observation.resourceSampleIntervalMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "5412dea0d838e873de0b0bc12d5c12c5737c0acb7b4f0b69270b51c4b7551993",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.processInput.acknowledgementPollMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "dc5ab45d50bab507c31d531bc7cc6a01d28f521ab43d955d84dd9d06331fa156",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.processInput.cleanupTimeoutMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "99c8e44a0c89638afd086ad33bdfa0764da49400b562fc185d109f3dd8296575",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.processInput.terminationGraceMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "c9c0b2a799b77d31abff787d0d44d436deb9666b733f0612c2b912436c6a35d9",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.provider.artifactFileDescriptorReserve",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "2b9a0c14bd90961ba3631e65b56a1419ddadf03ffc1017f5e46703d2b966d863",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.provider.capabilityDrainTimeoutMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "816764f9791c9d03e76c8a90079779e50a9d3190a1cdc67726e392946f9f27da",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.provider.claimGraceMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "ef2f737610990af402164a6ad9e9397739fe4922b172d13178e0b33d661bdc8a",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.provider.cleanupTimeoutMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "d3e18b7956ba4912216bf582d4ab9f388aec721fecd6c6e6f20d22a7918c64ba",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.provider.heapFraction",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "63bd73da1c6b48b6bb7b1f4c68403defa7aa62f354422ddb9c66427d1dc0962a",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.provider.maximumPendingCapabilities",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "54594d7954b60e16345e18283d27242a84cb9952e0c189f78d0226fcd64ae890",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.provider.maximumProtocolBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "8fcde0bc6d4d0ca6fab551ab48166111902bf6041c8256e35c3d8fc96c5aeb60",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.provider.maximumResultBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "90ee42c1a86604aa1460bfcf695e3f43f63af9860e47087d9964a95344f08cbd",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.provider.minimumHeapMiB",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "c16302e52852efde36d2861d54c1507266f2d3939dc93521f3e2e5e504a70c10",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.provider.minimumOpenFiles",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "99b8748e37d31ff73f3e4570cbddcfdaacbf276322d9b28cb2f13b4f73aa2480",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.provider.queueTimeoutMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "a73c211397e582735da0609366f765ca8fe3780f52e85b6621323ea2a5535ba7",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.provider.terminationGraceMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "7c73871079804e0fef3562ddec7afd4ef41063b0021377b2c95abd508d5a2e38",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.provider.terminationTimeoutMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "0f0dc409e9834bbe53d5cbb3cdcc8d487b493534c5bc428623c913a5d8fe55af",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.provider.workerResultWrapperBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "d00b7e9c4403d3bc0e03cf823f8cc187c6e0bb7a5f825568702696a337a896a9",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.reports.heapFraction",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "9a592385355a12de2fba9830abb13ed34170e3d342d0aca1c40e107149e84980",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.reports.maximumAggregateResultBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "547018bf9eed892d93f1ae1eb201b75248bc30defc04e0e36a920df789af3800",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.reports.maximumCaseFindings",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "5b96081f887937c5d0f1ef6a754ddb52b79bbf59db77443faa81b024ce7f2fa9",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.reports.maximumCases",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "bb2b365258fae4e607e620580227e216a79a29c4c00efd2128b8f20a7e6dfe37",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.reports.maximumFindings",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "e35a95459c60f96ee597c371e3468400af1ac6aa7760193ee9c63ce62fdfe365",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.reports.maximumOpenFiles",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "8902922127ff0d07ce25e2b554f5dfbaac681107191aa17528beeff857dc0117",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.reports.maximumSourceBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "8d1eabfae73741294143bdde1f067a4a60b9d3917946a77d66c3bd009aa3925e",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.reports.maximumTimeoutMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "c95ecb06fac088d5a3096ab7671d3d915fc4a862fd4eaf7e5992f455623de213",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.reports.memoryBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "6cc45c928976c9786c027ca885bd2417f51e2636c287723671fcce4ba1a9b8b7",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.reports.minimumCpuTimeMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "6afa3caeb8022f7644413ffbd1cac8399f1fdc91c935f439968350885964dfb7",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.reports.minimumHeapMiB",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "4d7634189bc0432dbb8cac66b3c91b98bf8e87c4fcb972ad7b37bcc7114c9a28",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.reports.minimumOpenFiles",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "b33e42ad9b1f7aa1987bf8b71138fa71a637df237e73627fcd0e8fe3e3d57815",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.reports.runtimeMemoryReserveBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "44b2c00dee2e1b17098942f5be4112a344d343db483a47f86a41c75b73001507",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.stores.admission.lockWaitSeconds",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "29ef448d9bc9d533a2ac6b249fc3883bc6019a9886bb2b17d3ee1d44569fa57c",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.stores.admission.maximumBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "c06052ed085d91fcbb19bb2cb70b82df272e1d02875b60dc9dc8b38602a768f5",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.stores.admission.maximumIngressBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "6ddb93dd4b51a967263a4d4f3582fe5c046525cc6cb0740980c242a1b9fe6182",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.stores.admission.maximumQuarantineBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "3066ac7f188aa7aae488b9f67f7a2d45b0380966b9a5541f2cc48c27812f36d8",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.stores.admission.maximumQuarantineRecords",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "b9e42f2c527fcde9454fd0646032790d9c6a7ee66a2dcf214103b4c7eba70ab9",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.stores.admission.maximumRecords",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "768e8120c2d1368da362d227fc34ccaedd4884fb3c9945bc7955adc9737b9ea7",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.stores.admission.metadataReserveBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "5448ae17c6ba1662848092f746f59d07e0246b040d9e789fb09e0baec854c500",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.stores.admission.reasonPrefixCodeUnits",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "136e0f8f36845d106129f11b39371f90c7cc9834b6ecd35a24dc144e6c32100a",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.stores.admission.reasonThresholdCodeUnits",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "a77773d5f5fe622902797403c58849d2218a4d738bc67c2779e90c7702e95e93",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.stores.attempts.lockWaitSeconds",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "f992d430279257e23a23e2a5cc8cf0e850ee6a14e7ad890e7bcc29a78071b33e",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.stores.attempts.maximumClosures",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "c69795280ce7ebc01b4391fe882756209816c9eddf5bcd934c9aa439219648be",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.stores.attempts.maximumEvidenceBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "a05d5b84e080cf4412a570111090f964b3d1a6c6c040c99c61bb8731a422f5e6",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.stores.attempts.maximumEvidenceObjectBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "7a2c1d9248c11518ee9c588a9becf53a6de217e52774d7ff4da230532e37c96f",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.stores.attempts.maximumEvidenceObjects",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "0dd01b0b25b3735660dcb10f621bbb0f2b5f2b5afde290690ed3100fbd9b35fc",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.stores.attempts.maximumMetadataBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "858232bd545aead007cdcd7f9f5d366228fb42ede90c0ed7002fcb097a25eea0",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.stores.attempts.maximumPendingEvidenceAgeMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "d1f042f8aa168bce3e0ec3b3dded23010c26563b828ddeb38ea091fbe5d2f5d6",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.stores.attempts.maximumResults",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "c2d4048d7279e4b80e6e64816b5f9034a73bad269c137e75bb6c24e4ef29b1b5",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-owner",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "6596ddbc43d998a46f26e40dbed519bdfaa407f940a9fcea25efc8a1369da030",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.attemptEvidenceBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "7043b553d6c5bd1b5874d8468667797b13efc3f58f5e7bb680e1d61fa4cfd24a",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.attemptEvidenceFiles",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "545877f4648a1620dcdfbdbce118e7912f09496a2d10cad526efc7e0825c30da",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.attemptLogBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "62e14fd6cf7169d240d1a6ca1fec3e7aa75ad8d8769b267ac8df98e2af017b2e",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.cleanupTimeoutMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "e01d0448002ca6c52bbc7fc00b618c9a59bcffeabbe11f83d6a3347a20e0bced",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.closeTimeoutMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "cd6a6f4f0412bb85e18661ed78844efdb71740b8986787471bfead1cfeefc8a9",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.completionPhaseAllowance",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "f502f59983f5968a7981ebd22d2f9b5010c10f2eee429186286483f1bfacc2b5",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.drainTimeoutMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "dd1d1352c6e4955b6b6973c73c448d3f3b1c0691bcde7ceac9cf509020bc3fc8",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.maximumActivePreparations",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "0c9e21fce9607e7664deb3b853fc80b73cc806c0806baf3eacdd4fb62eb0e4e7",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.maximumArchiveBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "7e099cb78efc49aa884ba8a0c8b3731c53304dadcf509189ecf6cd3ed90847f3",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.maximumArchiveEntries",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "85d3e760a1886f3f1acbe45ea6d3e3cb5180fbf606464f06c30bdf2028498b13",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.maximumExtractedBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "f751572274ff9a8153fe06181d24fe5c0e681972f06c7679b72a851551697565",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.maximumHeaderBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "98a7873a6caf0167b0d62f7eed947f7ecbc67e69e8c46bc5ffeedc01a6b9da97",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.maximumInputBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "3b9edc827fa0249ead6e9f47d2104ce4b8d84d34c6720efd3f2821270a985c9a",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.maximumJournalBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "e297b271c957f0deb4daf70ccfddef8339e619d3c47c25f6b416a0584b97bc00",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.maximumListingLineBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "3e25022ed39d625f7570b1076ac1254a827becbfacb997ce2eb5e29efe38791c",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.maximumMetadataBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "f33a95604bcec9c9906e1cfc31cf28e5b5c8ef197a9d966938d81cab5d542f64",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.maximumOpenFiles",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "293097d1e62137939ea587e5d667b8c4ca7ce5c9ba36253ea5a1773ce354640a",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.maximumOutputBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "df7041a462a4f1056572b68265169d6b054ce15d726fe3181c49365715d5a7a2",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.maximumOwnershipBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "541f8685247dddf98ee53ed514063d1d9b85c0b79bcb5bfbbd8172474ea9eef8",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.maximumPendingAdmissions",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "4005a44885402c0c9c3d8030771c3487943520f6643bb050ba9b61ad63389cf6",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.maximumRecords",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "8e1f791eeb3fc0404ae743d6fb2bd0a2ffc09f0ce768bfef45700d124e432abe",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.maximumRequestBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "57d8e8f087ea119d5b33b39b9678d4e2ff4504cc8342d7e1351e528b92e468bd",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.maximumResultBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "fcde0f5fedc31402241fcd387e5539a9e71fa5fe3d22e70121493f18ae59261c",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.maximumSourceBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "eac7c124f7d70db860a74382fa189f50f1bb20445b25aa8f0c84669df689745e",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.maximumSourceEntries",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "8eba8bf0e77c35764dc8bc63168d534a4f2481a73fe1bcea4f7dbf005d1b74aa",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.maximumTarStderrBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "8bc287d461da876c7310baba5f975ae69d5d4662e0804770d225f1f07a280538",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.pollIntervalMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "687273b3665b18b281bb6748d282b6e2641a61cca7b80a7f768a70753c1b41ca",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.resourcePolicy.cpuTimeMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "3e4011b6b5d7af539c18b7720cdc5f6b26a06434b44379f7c2fbc73df0fd0a20",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.resourcePolicy.memoryBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "a56aee286af7ae03944a645b9f30d808a7772240a27ea31d513843c6b2da2e36",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.resourcePolicy.tasks",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "5938b2ad3d46d978f0a3ea4fde512f8e5b8d4d856836cb8fd057909b45f0cf89",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.sourceEntryReservationBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "cbabdc603edcbb152b374d4e135bd6606dcd8eb3f457a9d9f3355919c79d529f",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.storeLockWaitSeconds",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "4ac7160e87378dc26e78fba501aa631f6501094abe2714f860f6be86f62f0304",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.tarDiagnosticCodeUnits",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "753453a19cbfaed7e20533694ed71d693316a0a980860d8a1d087d79acb1232e",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.tarTimeoutMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "58fc9b8ed970eab77bf7acf4785df9c0770d4ec6e400be1a3406587a6454bac3",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.timeoutMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "3f6bc20cdec9929d109b8ce52fc3419bdd9ba4665b63224815cfa5908594d80f",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-buster-engine-schemaVersion",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "5d261a06e9e5f9717749b096368d02e2c3d02d2b74c4877343983a156bbfc9ad",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-control-artifactRoot",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "e422ba44474f0ccef2ec6d78be295a766a0c541adc80b29e5c5eb1a65cfde254",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-control-dispatchTimeoutMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "20d49084b08d581bd93603dfb9119ab55d930e3300af861a33bed69fc448ed72",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-control-owner",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "23fa0f24e9aa54d9e90d22b58d66c22012fb7bc8257bd1dad2e234b183282649",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-control-pipelinePreferenceSubject",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "efee93672eb1626474797bbf7b3a18497b9316428f8e33ae529ff057af418fd5",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-control-port",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "aabb75b5d5b98f413a8935f317e2f49d5c2bb72532392a0163fad7e28ee63697",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-control-schemaVersion",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "d6e4b40eaafc08ff9f0a5cce66c2236725641ed22b68895c7ee4780cdeb92f18",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-control-studioPublicUrl",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "6df5e438de310816b32789c8bbd2795425987599e3ec318b4bd19ef6a5d7a843",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-execution-maximumResultBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "c60c3449c95dc4922a181aea0ca7c2457be64b638a28b31f454e0a94d7ed92ec",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-execution-owner",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "ee5d633e4fdaf36a6c9ce0763ac1ce5297bb87216ea8413ce983d1cb62f4926b",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-execution-resourcePolicy.cpuTimeMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "b154db7b25664b01b0b3ab4bf0e963b0238a3dbb93816a3e1e6678a6fc9eaa6d",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-execution-resourcePolicy.memoryBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "fb45655802525f46c66d87634e3acd162ce5c5ebe0e50d8877dadf581ae64ec4",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-execution-resourcePolicy.tasks",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "94fbb980ea696442ecbff625e72c7ff9fc602fcec61683b460b6b466bee8900d",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-execution-schemaVersion",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "e1d3c36c3029f322b9d2282877a5864f73d7f6cee08c3ee13e9658edd6a4a2cb",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-studio-controlTimeoutMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-studio/profile",
+      "owner": "prism-studio",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "d35b09e8909516cfeaae671ed8f03241ae7f2bff48feefb70673fb66da0d9ab8",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-studio-controlUrl",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-studio/profile",
+      "owner": "prism-studio",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "4be28dcce8724dfcad8ce7ef128c1269e95aa63064f4d0bcc7510877ef1dea0c",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-studio-owner",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-studio/profile",
+      "owner": "prism-studio",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "f98f46118a44f0a2f66e8cab32bad5d2a8482d227ac604a7adbda3ced1a69a74",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-studio-port",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-studio/profile",
+      "owner": "prism-studio",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "d1eaf1084e9bab93f586de6b86b27efda05af308bc07f1cd0d564ae1e207b908",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-studio-schemaVersion",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-studio/profile",
+      "owner": "prism-studio",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "d2d4dcebed554b8bafff27a5b67e8dad816dd3b9253c6e6696474053d274172b",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-worker-ingress.maximumActiveRequests",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-worker/profile",
+      "owner": "prism-worker",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "a201f8c83ba463525675dc06f8b8f4e6f63379745a1f29ab8c82a288a9549f42",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-worker-ingress.maximumConnections",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-worker/profile",
+      "owner": "prism-worker",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "7d11ce135e0d93d2a4773120e1f165511808decb0922b99b3457914c11ce092d",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-worker-ingress.maximumInputBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-worker/profile",
+      "owner": "prism-worker",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "34f47e3be5b64f6ed3124e36b595f735c9e43fb3c33ede08a9ee7d136dcc664e",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-worker-ingress.maximumProbeRequests",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-worker/profile",
+      "owner": "prism-worker",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "f410139f6ddc0bfaf6f561bbe9ca5a7c925e389074163b9f28c48e47fd588f17",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-worker-ingress.port",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-worker/profile",
+      "owner": "prism-worker",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "36f8bb3c9df861941d8342d4b9227b6736f788b3960a987336df0cdb96db4b62",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-worker-ingress.requestTimeoutMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-worker/profile",
+      "owner": "prism-worker",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "52fc498577c198dc8a78c44ac77c6e882af352bf67cf84f49370c6f9120cbb9f",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-worker-ingress.shutdownTimeoutMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-worker/profile",
+      "owner": "prism-worker",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "f0e92b3af0f58bf1bbda15f0397bdea6dc7372e620210f544cf97c6274aacbb8",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-worker-owner",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-worker/profile",
+      "owner": "prism-worker",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "09e967931a8899a780e61319255a1f847cb986813466c0b8527d56a091676300",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-worker-schemaVersion",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-worker/profile",
+      "owner": "prism-worker",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "fa5c0c06755d050e26ec26728356ee260c8a3503115f5f86819ab9bcb3f2ce1d",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-worker-supervisor.closeTimeoutMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-worker/profile",
+      "owner": "prism-worker",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "b0265caa5c081cb81f0d9897db35918ce5529d7f896e0ca48dadfd61b8a789c3",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-worker-supervisor.drainTimeoutMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-worker/profile",
+      "owner": "prism-worker",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "b3c0a8e0794bb5f3384ad42d75e53e46438c94916486f4c7ff245e72f0752ea2",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-worker-supervisor.gid",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-worker/profile",
+      "owner": "prism-worker",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "9bca0ff271d6b842bff28baa5e0d95f6153694f4a0f115a989bdd0033cf8ddfb",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-worker-supervisor.maximumJournalBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-worker/profile",
+      "owner": "prism-worker",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "bb51ca627daf81d3b1bb23263a87e1f21e154cc9df4ae3f0baa2c3aee1496f98",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-worker-supervisor.maximumOutputBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-worker/profile",
+      "owner": "prism-worker",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "57e00e2e9ec31e967c1adb215f153a56c14bc1a80ec0a2e16928873be62dfd9b",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-worker-supervisor.maximumOwnershipBytes",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-worker/profile",
+      "owner": "prism-worker",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "246799d6c52f637bf4f76ae7869a1a190aee9742953024caf292b7685bbe39a2",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-worker-supervisor.maximumOwnershipRecords",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-worker/profile",
+      "owner": "prism-worker",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "00b2224c79200a17eac570413df9472fbd8ccd814ddbe212f593c3799785ed37",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-worker-supervisor.pollIntervalMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-worker/profile",
+      "owner": "prism-worker",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "9b040226034578fa47a06b0f495dac3ce9e6a651b386a550505a9ed1656520e2",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-prism-worker-supervisor.uid",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-worker/profile",
+      "owner": "prism-worker",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "18ef8c56b434d9e1a5215845b5a79980a99fd8fbdd859b18f8bc212f75dc70be",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/worker-core/profile",
+      "owner": "worker-core",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "332cb80df8abd182627cab2720d8482fdc7227b284a46bc42a94ab1e6a606535",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-worker-core-localRuntime.drainTimeoutMs",
+      "originalSelectionRef": "config/pipeline.config.json#/components/worker-core/profile",
+      "owner": "worker-core",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "2ca25ccff46d2109bd700673e62ea1addf36813b902d8f1dd239bf7084934a9f",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-worker-core-localRuntime.replayLimit",
+      "originalSelectionRef": "config/pipeline.config.json#/components/worker-core/profile",
+      "owner": "worker-core",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "8d54491e187d2a965a9e85a98eb5ed1707b5933708b14573a95be1f7554ede05",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-worker-core-owner",
+      "originalSelectionRef": "config/pipeline.config.json#/components/worker-core/profile",
+      "owner": "worker-core",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "698c35e225cbee9897a5beff499de7bdacc294d7e73eb0fa63c5bd0506fd3741",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP-worker-core-schemaVersion",
+      "originalSelectionRef": "config/pipeline.config.json#/components/worker-core/profile",
+      "owner": "worker-core",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "fa97bc2cfdb8b25eb2280d99737ea9aa765962ed6b0a030e2ab53c47b2e04a23",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP11-PRISM-AGENT-PROMPT-TEMPLATES",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "6381c5d58eafa9e29ca574d0e949006bcf07c10f966cfb45ac1ce498228b2db7",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP11-PRISM-AGENT-RUNNER-CODEUNITS",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "a1535d9e0ce4ea1572d6eb613428286ecf482dc9546d086025e651a9cc34d2c7",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP11-PRISM-AGENT-START-KEY-CODEUNITS",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "8d8494cdb04b0cb063a754b26f5989f4e68a9fb7d12dce7887428959ab740d99",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP11-PRISM-DIRECTION-KEY-CODEUNITS",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "1ca3dd84f60babb16b7f0ffbc851222e0044b28f52b2a2074350ea507b421fe3",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP11-PRISM-DIRECTION-MINIMUM-DISTANCE",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "60b4596aa984cb0025bf0f89d9b33d7992a874d836b8f9619957518bf9c68706",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP11-PRISM-DIRECTION-OTHER-WEIGHT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "e2bf06e4b9eec3861a37b009fffd5325df7f83dbd34fa905c096253f0a831bcf",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP11-PRISM-DIRECTION-ROOT-WEIGHT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "283e3c5d2a79f173787633c26ccf4f0ca6dc3a5c4f18ef9bf04ecf552d60e3a4",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP11-PRISM-DIRECTION-TYPE-WEIGHT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "4af3a63644ce92a394864c41acb8ebb86f4e2fb0b4147086f6143b3fbbb2342e",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP11-PRISM-PREFERENCE-HALFLIFE-DAYS",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "5ef14be28a881ba4f260d14274af8ea14074f77d2be2a021ee37a77610ca0c1e",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP11-PRISM-PREFERENCE-NEGATIVE-WEIGHT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "c10c7b718f8f4361aeabc097be475e2eb24ca69601900bcb0c5ce84bd0f4ca90",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP11-PRISM-PREFERENCE-POSITIVE-WEIGHT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "201fc6e7fcd098bd1cfaea3c9b747542a6ca0705c372a9cc5fc05a971f043d4a",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP11-PRISM-PREFERENCE-RETAINED-WEIGHT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "4943a126190a40ca4874362911ef31eec6cf18c6568bfa1184878b7d1d8d6f41",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP11-PRISM-PREFERENCE-SCORE-DIGITS",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "5a8527271a65ab16e5e805addcd48181884fac09f7acc716cdaecb3e9bc5fea2",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP12-PRISM-PG-BOOTSTRAP-IDLE-TIMEOUT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "a979b009c0f3eb39d41e4c2793eb6ed6bd51f6a3df5a4fe0ae752722fdf96dce",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP12-PRISM-PG-BOOTSTRAP-LIFETIME",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "5e3c234aef33b101cb1343142e6fec17d701bfd88e1c014912f619755aa7d0f7",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP12-PRISM-PG-BOOTSTRAP-MAXIMUM-CONNECTIONS",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "f16175da9d0ec172620450c34a0216f55a9b2c99f175779e98845318bdf14788",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP12-PRISM-PG-BOOTSTRAP-MINIMUM-IDLE",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "46115880526c3f27eaf9f60e6132633924aeb8ef8900f9176c926a54f59142d9",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP12-PRISM-PG-BOOTSTRAP-REUSE",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "aa981a8f4d29cc02891121493f92f15bd1e4b424cd9fbac7c1469a938884f44d",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP12-PRISM-PG-CONTROL-IDLE-TIMEOUT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "963560cc55177ae1fedc2345dcbcef8c56259797da8fd1a7704dc35aea76e9d6",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP12-PRISM-PG-CONTROL-LIFETIME",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "58de08b17093fc0e83924517bdd2cc7d45c70d06dd01f184628dd22759721225",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP12-PRISM-PG-CONTROL-MAXIMUM-CONNECTIONS",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "4fa98215680381a59d28f232fada71653559c6d5769520797b0baf030cf8c699",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP12-PRISM-PG-CONTROL-MINIMUM-IDLE",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "e3a291c9d1ac35de4ec54002213c25d3a76ce7d6de1fae768c4113a2f859be03",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP12-PRISM-PG-CONTROL-REUSE",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "fd8b7596209c675058955900e96f69a88a159f429340c0590f29efab77bc192c",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP12-PRISM-PG-MIGRATOR-IDLE-TIMEOUT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "0a8280cd3eb705da70578ed268a2ca972fe53503e8937c9b1e5540b487145b64",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP12-PRISM-PG-MIGRATOR-LIFETIME",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "44c0436955e8242c072b9c27aac3119aea54c348d1c7b7bfe625620ff80c0197",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP12-PRISM-PG-MIGRATOR-MAXIMUM-CONNECTIONS",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "d955bcb646981d78f751f1aeccef0afa4901c0a7cb76cd8afab97dcd1172046b",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP12-PRISM-PG-MIGRATOR-MINIMUM-IDLE",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "8c1635019c99801225ded1a6b4a3e1b8162dd4d1c590200c7ab10e34b952ca63",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP12-PRISM-PG-MIGRATOR-REUSE",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "ce058933551aff3194a81db792a399230be5a097718a3d7d645bdfbe303d030b",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP12-PRISM-PG-NONCE-IDLE-TIMEOUT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-worker/profile",
+      "owner": "prism-worker",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "c276f15d4624f0886bb727bf644fbdecd7f201baa735a380f1d34092d577dbd0",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP12-PRISM-PG-NONCE-LIFETIME",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-worker/profile",
+      "owner": "prism-worker",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "907b331a594d17b731e0e847c0a777ac8649651a0587dedd5fe7f7f4ba8618e9",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP12-PRISM-PG-NONCE-MINIMUM-IDLE",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-worker/profile",
+      "owner": "prism-worker",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "bcf8f7b2b96f02cb23bab0934f7b10af5f0c737bfb80b816d4945f763d7811ce",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP12-PRISM-PG-NONCE-REUSE",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-worker/profile",
+      "owner": "prism-worker",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "49a4c92f7efabe76c613ddd372dde38e48bfb43de88723be32f3519b91cab72f",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP2-PRISM-CORPUS-EMBEDDING-DIMENSIONS",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "329bf08b59cdd8e83f8418ba836a8ee5e70b5a32992f1ad9b63bdacc910277b3",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP2-PRISM-PREFERENCE-MISSING-PERSONAL-DEFAULT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "9f7f32dc237b9817eb1478ef396588cbf430561e6f4fe82ea50c49cdc488d267",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP2-PRISM-PRODUCT-CONTROLLER-RESPONSE-BYTES",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "5c567e51495b6e65d533ce7bfca1d984280d88899de7c48e23dc09628d019843",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP2-PRISM-PRODUCT-CONTROLLER-TIMEOUT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "b2c7b8c249a971cbed4d140d09ae8871601fde24bf3b182e9fd08ff399e7c258",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP2-PRISM-PRODUCT-HISTORY-LIMIT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "d984643aca4c0cefd6101e3774790b9964372f33bff491ae8df04162ddfaea7f",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP2-PRISM-PRODUCT-INPUT-BYTES",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "330711a6cb0cdfc35e93292a5415c46ff770af668c15e0ec661d6a89214cb21e",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP2-PRISM-PRODUCT-SUBJECT-CODEUNITS",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "c80bfce6c8b5f88fb4a8c8045dfc2def19b010d48475a9eac62ea5fcc04736ba",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP2-PRISM-PRODUCT-TOKEN-CODEUNITS",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "5facaa3236f9f626dbbaa6b2aa2bb7d51903641b7bb9b4db4503db2db181b959",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP3-PRISM-NONCE-DATABASE-CONCURRENCY",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-worker/profile",
+      "owner": "prism-worker",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "be5059f990c7f38cbaa072402d88c1606730f5142bfeb13c0bfa3699b6374e93",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP3-PRISM-NONCE-DATABASE-TIMEOUT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-worker/profile",
+      "owner": "prism-worker",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "401204c0d1c0cffd2f0ced21cca93b735fcfb799bb18a581663f922b75271173",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP3-PRISM-RENDER-ASSET-DECODED-BYTES",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "164da09a0667648ed7fd39b2623f5f5569d94f553a1cfdc382ff1f7df5e4e1fd",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP4-PRISM-BASELINE-SPECIFICATION-TEMPLATE",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "9b0220ecca3c29617e0bba2d609dd35fc25baf39454746153876f63ad4ccd704",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP4-PRISM-INGESTION-LISTEN-ADDRESS",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-control/profile",
+      "owner": "prism-control",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "93f439ea7ee6b13ff6c8472ba022cecf1b3cac2152e22fd5f7ce7bc56062e9d6",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP4-PRISM-STUDIO-CONNECT-SOURCES",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-studio/profile",
+      "owner": "prism-studio",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "563e5b2ad198075825f2c5f2d7a3556b712df11f6bca14f74935196af25bcf62",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP5-PRISM-CAPTURE-CONTRAST-LARGE",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "be2c8d53089e1af2d5fd6d3264a7b0ce274d1683003ab78577705aa1388cc9ca",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP5-PRISM-CAPTURE-CONTRAST-NORMAL",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "cdda2a64dccd4c9f974f4b468507b70ca3b4436a2879ba56b2b0053011e79bb9",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP5-PRISM-CAPTURE-LARGE-BOLD-PX",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "3929e4c3903cac7ebbf1ffe6f255d5a57f038c5c88a959fd8b96e742be604fa3",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP5-PRISM-CAPTURE-LARGE-BOLD-WEIGHT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "3509eb6d5383ad4d6593db523437c2494217d030bd1a0488d0808f49f537428a",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP5-PRISM-CAPTURE-LARGE-NORMAL-PX",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "297be77e13cd2f8e9ae0622ea276e53086d590bf06e0a20950eac5a9105b3f93",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP5-PRISM-CAPTURE-MINIMUM-TARGET-PX",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "3fbbd280691ebba48043485443ff0367e9cdc0d9f4563487aaa36c2926fa03ff",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP5-PRISM-LIBRARY-EMBEDDING-ENDPOINT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "5e3ec4eb47f7094fc7aa5c4bbd968cb7b6c31242d4f32e06f31746a19cd90bfa",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP5-PRISM-LIBRARY-EMBEDDING-MODEL",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "b7fe439e87a362bf13ab4c6b084db12633da1c56489e8f96a07a1e3b9da32ed9",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP5-PRISM-LIBRARY-PROVIDER-CREDENTIAL",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "e02ef81c849fc00bb3f9da31ec7f1940563d9e5ab2faba104b308a91cfd36dc1",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP5-PRISM-LIBRARY-PROVIDER-ENDPOINT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "81897cf8082550e85c5e208b78da8e8e9c87b3d3a5300c02984a5cc78d6ec4d3",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP5-PRISM-LIBRARY-PROVIDER-MODEL",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-execution/profile",
+      "owner": "prism-execution",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "89478554ff8a9b4204d19e099f2addc0c07d939bc22dab2894ff48a6de6adfd1",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP7-CORE-SCAFFOLD-MAXIMUM-MEMBER-BYTES",
+      "originalSelectionRef": "config/pipeline.config.json#/components/worker-core/profile",
+      "owner": "worker-core",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "73df62026b10821991423590c1a9d5d3fa316b9cc60f2fa3f23f0516db96f057",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP7-CORE-SCAFFOLD-MAXIMUM-POINTER-BYTES",
+      "originalSelectionRef": "config/pipeline.config.json#/components/worker-core/profile",
+      "owner": "worker-core",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "a64ea31fd56aa8d0fc657088c69916b108175d249a144b7cfacaced99a46d7d3",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP7-PREPARATION-RESULT-RESERVE-MULTIPLIER",
+      "originalSelectionRef": "config/pipeline.config.json#/components/buster-engine/profile",
+      "owner": "buster-engine",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "5583e3d17241af13269b2186511ae4f5794e2d7a6edabd8bec8e047421c5ea6f",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP9-PRISM-STUDIO-BRIEF-FIELD-LIMIT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-studio/profile",
+      "owner": "prism-studio",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "13509231abba76cd994353bf4256e1aa3c85901eaea98a5dbc57b8a17ade2435",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP9-PRISM-STUDIO-EDITOR-WIDTH-COMPACT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-studio/profile",
+      "owner": "prism-studio",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "ebd9b27d9692e2110d4828959b7c7371dcd34ba94b0488cb0d39b8413d50eb1f",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP9-PRISM-STUDIO-EDITOR-WIDTH-REGULAR",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-studio/profile",
+      "owner": "prism-studio",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "bcd6a423f008dd532351656e73249201c2fbe41d443097fec342136a31eaae44",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP9-PRISM-STUDIO-EDITOR-WIDTH-WIDE",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-studio/profile",
+      "owner": "prism-studio",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "92f870fa2170c3ac5f3826f90b3475506ef218a14089ed609580d5c5294986fc",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP9-PRISM-STUDIO-INITIAL-ROUND-POLL-COUNT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-studio/profile",
+      "owner": "prism-studio",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "66301f14fb607285c9b6acb47bd21ba7d3c442c0b731e3812132aaac71001b47",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP9-PRISM-STUDIO-INITIAL-ROUND-POLL-INTERVAL",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-studio/profile",
+      "owner": "prism-studio",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "554606a9831f99d3f9e2381175ec89f2b0e6feb143cfbaa6e1e9b661af3b7d1f",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP9-PRISM-STUDIO-PREVIEW-ASSET-BYTES",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-studio/profile",
+      "owner": "prism-studio",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "7591859b88a9ff12f9bbb4693a22d2ab748ac4766211ef3215bb2773ca800c79",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    },
+    {
+      "fieldId": "CMP9-PRISM-STUDIO-PREVIEW-ASSET-TIMEOUT",
+      "originalSelectionRef": "config/pipeline.config.json#/components/prism-studio/profile",
+      "owner": "prism-studio",
+      "effectiveSelection": "Exact matching root binding (role,owner,instanceId) selects profileId; resolve selected owner file profiles[profileId].settings",
+      "originalBodySha256": "97e8bff01e7da1e87c3d7b75556e4aea4d9dc5b983133e3d6eba04483675d3cb",
+      "originalBodyUnchanged": true,
+      "semanticAcceptance": false
+    }
+  ],
+  "implementationAuthorization": null
+}

@@ -72,12 +72,12 @@ export async function completeDelivery(records: FileDurableRecordStore, request:
   return receipt;
 }
 
-export async function failDelivery(records: FileDurableRecordStore, request: EffectRequest, reservation: Reservation, sent: boolean, error: unknown): Promise<Payload> {
+export async function failDelivery(records: FileDurableRecordStore, request: EffectRequest, reservation: Reservation, sent: boolean, error: unknown, failureExcerptCharacters: number): Promise<Payload> {
   const reason = error instanceof Error ? error.message : String(error);
   try {
     await records.transition(reservation.stream, reservation.key, reservation.digest, {
       schemaVersion: 'notification-delivery-failure.v1', idempotencyKey: deliveryIdentity(request), target: request.resource.canonicalId,
-      attempt: request.attempt, outcome: sent ? 'possible' : 'not_sent', reasonId: hash(reason).slice(0, 16), error: reason.slice(0, 2048),
+      attempt: request.attempt, outcome: sent ? 'possible' : 'not_sent', reasonId: hash(reason).slice(0, 16), error: reason.slice(0, failureExcerptCharacters),
     });
   } catch (transitionError) {
     if (transitionError instanceof Error && transitionError.message === 'DURABLE_RECORD_TRANSITION_CONFLICT') {

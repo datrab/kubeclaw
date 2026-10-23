@@ -1,0 +1,17 @@
+{
+  "meaning": "Exact failed SyntaxError attempt retained before correction",
+  "files": [
+    {
+      "file": "update-dls-obligation-ledgers-20261013.py",
+      "sha256": "ba5746bf73bc2676069c595c39169af5edddd2994fc008ef2c2bca1811300beb"
+    },
+    {
+      "file": "dls-obligation-ledger-update-20261013-final-milestone.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "dls-obligation-ledger-update-20261013-final-milestone.stderr",
+      "sha256": "f9d8704c21ad822342aa1c513c362b69433045d7aab373a63ecb6d8f6e69d7fb"
+    }
+  ]
+}

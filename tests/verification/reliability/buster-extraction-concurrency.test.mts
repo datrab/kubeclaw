@@ -1,4 +1,4 @@
-import { canonicalSwarmEntry, readTestBundle } from '../../fixtures/config/swarm-bundle.mjs';
+import { canonicalPipelineEntry, readTestPipeline, busterRuntimeSelection } from '../../fixtures/config/pipeline-components.mjs';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs/promises';
@@ -8,15 +8,14 @@ import test from 'node:test';
 import { attestSourceSnapshot } from '@kubeclaw/pipeline-test-gate-contract';
 import { createRemotePlanJob } from '@kubeclaw/nova-core';
 import { plan } from '../../fixtures/test-gate/remote-plan.mts';
-import { loadBusterPreparationSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
+import { captureSwarmSettings, type BusterSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
 import { preparedPlanHeader, preparationDigest } from '../../../skills/buster/engine/test-gates/preparation-header.ts';
 import { PreparationSourceLedger } from '../../../skills/buster/engine/test-gates/preparation-ledger.ts';
 import { extractBusterPreparation } from '../../../skills/buster/engine/test-gates/preparation-extraction.ts';
 import type { PreparationExecutionOptions } from '../../../skills/buster/engine/test-gates/preparation-execution.ts';
 import type { StagedAdmission } from '../../../skills/buster/engine/test-gates/preparation-input.ts';
 
-const authored = readTestBundle(canonicalSwarmEntry);
-const settings = loadBusterPreparationSettings({ SWARM_CONFIG: canonicalSwarmEntry });
+const settings = (captureSwarmSettings(canonicalPipelineEntry, busterRuntimeSelection(readTestPipeline())).components['buster-engine']!.settings as unknown as BusterSettings).preparation;
 const digest = `sha256:${'f'.repeat(64)}`;
 const keys = crypto.generateKeyPairSync('ed25519');
 // Contract-valid identity only. Native execution is deliberately unreachable in

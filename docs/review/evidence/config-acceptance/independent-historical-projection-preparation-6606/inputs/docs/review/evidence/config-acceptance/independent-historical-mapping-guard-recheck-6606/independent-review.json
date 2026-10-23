@@ -1,0 +1,51 @@
+{
+  "scope": "Independent NONAUTHORED HMAP-GUARD-01 guard-only material correction recheck. No root projection or Core substantive selfreview.",
+  "verdict": "HMAP-GUARD-01_RESOLVED_AT_BOUNDED_GUARD_PREPARATION_SCOPE",
+  "materialFindings": [],
+  "globalC0Verdict": null,
+  "runtimeAcceptance": false,
+  "priorReport": {
+    "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-6606/independent-review.json",
+    "sha256": "1a417863e4f6fe0c33960f78f6a9ff85ee23cc2c68ef197ebccfdfb34c8a1613"
+  },
+  "resolution": {
+    "finding": "HMAP-GUARD-01",
+    "correctedSource": "docs/review/evidence/config-acceptance/author/historical_mapping.py:74",
+    "correctedSourceSha256": "b027cc75b7b789be6ef5069d0611d9c36a0ad21fff0a7d3e57ea75ff83b1f2e2",
+    "checkedContract": "Exact active state required. countsTowardAcceptance is False, evidenceResultPreserved equals hash-pinned native result, originalRequirementsPreserved equals native requirements, activeSettingLinks equals native settings, supersededBy empty. Original inactive mapping checks, result/scope/body hashes, requirement conservation, reviewed row/source identities and nonacceptance output remain intact.",
+    "originalEscapes": "quarantined/inactive/unknown each reject in both validate and public load_reviewed; no source/map/review hash change was used to cause those rejections.",
+    "additionalMetadata": "All four prior ignored metadata probes plus nonempty supersededBy now reject; public loader independently reproduces these guards with pinned map/review/report/source bytes.",
+    "reviewBoundary": "Canonical successor SHA pins the reviewed native input representation. Canonical root body projection/crosslink/full-case integrations deliberately remain separate, not certified here."
+  },
+  "evidence": {
+    "authorReplay": "23 intended negative controls /2 restored positives passed; matching attempt3 stdout",
+    "independentControls": "44 observations:42 intended rejections /2 restored positives; no escaped guard or ignored metadata probe",
+    "inputs": "23 raw inputs including7 preserved pre-correction originals; exact625 native cases/dispositions95 rows356 canonical root metadata and IDset. Selected slices equal original independent review, end drift0.",
+    "oldHistory": "Original reviewer32 controls/report/freeze and author attempts1/2 remain unchanged. All7 preserved old author inputs hash-match original independent freeze.",
+    "commands": [
+      "PYTHONDONTWRITEBYTECODE=1 python3 docs/review/evidence/config-acceptance/author/check-historical-mapping-guards.py",
+      "PYTHONDONTWRITEBYTECODE=1 python3 docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/check-independent-guards.py"
+    ],
+    "logs": [
+      "author-guard-replay.stdout",
+      "author-guard-replay.stderr",
+      "independent-controls-attempt1.stdout",
+      "independent-controls-attempt1.stderr",
+      "independent-controls.json",
+      "input-freeze.json",
+      "end-input-integrity.json"
+    ]
+  },
+  "remainingOutsideScope": [
+    "consolidate.py/check-matrix.py/root historical projection integration and independent material review",
+    "field/target/native/effect/full C0 completeness and acceptance",
+    "actual future case behavior, native/runtime/installed/host/API/authentic grants/quota/deployment proof"
+  ],
+  "actionsNotTaken": [
+    "author/root/Core/Runtime/Delivery/production/test edits",
+    "root projection or case reactivation",
+    "future behavior/native/controller/API/host/image/auth/model actions",
+    "commit/delegation",
+    "whole C0 or implementation acceptance"
+  ]
+}

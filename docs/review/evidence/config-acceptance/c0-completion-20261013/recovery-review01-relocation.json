@@ -1,0 +1,19 @@
+{
+  "qualification": "Exact byte copies only: reviewer wrote two files relative to workspace instead of repository. Original report/commands retained; existing review manifest unmodified. No semantic edits or retroactive manifest inclusion claimed.",
+  "copies": [
+    {
+      "originalReviewerPath": "/home/node/.openclaw/workspace/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/README.md",
+      "repoCopy": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/README.md",
+      "sha256": "d8c027f59db0bfd247b71eecd4db8a831e5ab4140ef539fa84af175eee5fc30a",
+      "bytes": 12256,
+      "originalRetained": true
+    },
+    {
+      "originalReviewerPath": "/home/node/.openclaw/workspace/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/commands-and-exits.json",
+      "repoCopy": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/commands-and-exits.json",
+      "sha256": "0e2d744f4a057d4e53fce383ddd1eac2005a408e2b0604dfae230774755ca802",
+      "bytes": 1001,
+      "originalRetained": true
+    }
+  ]
+}

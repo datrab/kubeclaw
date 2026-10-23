@@ -8,7 +8,6 @@
   },
   "dependencies": {
     "@kubeclaw/plugin-sdk": "*",
-    "@kubeclaw/plugin-foundation": "*",
-    "@kubeclaw/plugin-operator-messaging": "*"
+    "@kubeclaw/plugin-foundation": "*"
   }
 }

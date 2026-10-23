@@ -1,0 +1,111 @@
+{
+  "scope": "exactprimaryselectedtoolsource only; actualinstalledbytes/effects remainunrun",
+  "records": [
+    {
+      "url": "https://api.github.com/repos/semgrep/semgrep/git/ref/tags/v1.170.0",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-lint-reader-bce3f075/semgrep-tag.json",
+      "sha256": "81d2d0207d1e85e31e269cc78d558b66112c128469dcf4e4c9c83904b8db602b",
+      "bytes": 341,
+      "result": "acquired"
+    },
+    {
+      "url": "https://api.github.com/repos/semgrep/semgrep/git/tags/ebb842c9cbc9cfad8fb3e6f9ac6d81b8b6443cf6",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-lint-reader-bce3f075/semgrep-annotated-tag.json",
+      "sha256": "1bbbc5e0fa14866a0f9197a84fc354aad329450298ed1a5024a3cfed531dd349",
+      "bytes": 689,
+      "result": "acquired"
+    },
+    {
+      "url": "https://api.github.com/repos/semgrep/semgrep/git/trees/bd614accba811b407ae5c9ec6f1eecd3bdc29911?recursive=1",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-lint-reader-bce3f075/semgrep-source-tree.json",
+      "sha256": "6c0c3934e3e43492603e149e8d636b0e2bc375905dcb6232fe98432d8be5a93e",
+      "bytes": 3208424,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/semgrep/semgrep/bd614accba811b407ae5c9ec6f1eecd3bdc29911/cli/src/semgrep/semgrep_interfaces/rule_schema_v1.yaml",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-lint-reader-bce3f075/cli/src/semgrep/semgrep_interfaces/rule_schema_v1.yaml",
+      "sha256": "c89688567cbd6f964d0bfe9c032dc45b7318b8ed1e099e2a2ae021e9aacce416",
+      "bytes": 35772,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/semgrep/semgrep/bd614accba811b407ae5c9ec6f1eecd3bdc29911/cli/src/semgrep/semgrep_interfaces/rule_schema_v2.atd",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-lint-reader-bce3f075/cli/src/semgrep/semgrep_interfaces/rule_schema_v2.atd",
+      "sha256": "499ba5cdfc04f3ca37af588ffcecbc3bea400600e4fbfdba9a380499d6301b90",
+      "bytes": 23417,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/semgrep/semgrep/bd614accba811b407ae5c9ec6f1eecd3bdc29911/cli/src/semgrep/semgrep_interfaces/rule_schema_v2_adapter.ml",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-lint-reader-bce3f075/cli/src/semgrep/semgrep_interfaces/rule_schema_v2_adapter.ml",
+      "sha256": "6c0b725c2e1457ac38c52ca7147905ebd70c3e0cf55caf8e56ac6cccb35b4ae8",
+      "bytes": 5268,
+      "result": "acquired"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/semgrep/semgrep/bd614accba811b407ae5c9ec6f1eecd3bdc29911/src/rule/rule_schema_v2.atd",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-lint-reader-bce3f075/src/rule/rule_schema_v2.atd",
+      "sha256": "bf00e099f848da68b20c462d8da8a353d9545493f6b9b88ae496bb3178e9eebb",
+      "bytes": 54,
+      "result": "acquired"
+    },
+    {
+      "url": "https://registry.npmjs.org/eslint/-/eslint-10.7.0.tgz",
+      "status": 200,
+      "sha256": "e515c437bb6301d34880dd69d3b42337095f9bc629edb1b92b42f4e83055eea4",
+      "verifiedIntegrity": "sha512-GVTD7s1vdIl6UYvAfriOPeY1Df8LIZjfofLvHwde+erDHGGuHyuM6xoxRxmHiebhYuD2p1vN4wWh0XzPARSGDQ==",
+      "bytes": 620422,
+      "result": "verified-source-archive",
+      "sourceLock": "docker/nova-tools/package-lock.json",
+      "lifecycleScriptsExecuted": false
+    },
+    {
+      "url": "https://registry.npmjs.org/eslint/-/eslint-10.7.0.tgz#package/lib/config/flat-config-schema.js",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-lint-reader-bce3f075/eslint-10.7.0/lib/config/flat-config-schema.js",
+      "sha256": "0281f44f3c3f2c5f138db9918dec9f2c58669f812e598488b1cf69c7ad651e9d",
+      "bytes": 16018,
+      "result": "acquired-pinned-regular-source-file"
+    },
+    {
+      "url": "https://registry.npmjs.org/eslint/-/eslint-10.7.0.tgz#package/lib/config/config-loader.js",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-lint-reader-bce3f075/eslint-10.7.0/lib/config/config-loader.js",
+      "sha256": "e7af12b81621113b4ccdf13a87bb30a194a9f022f911b334f04aeb397c7678be",
+      "bytes": 23031,
+      "result": "acquired-pinned-regular-source-file"
+    },
+    {
+      "url": "https://registry.npmjs.org/eslint/-/eslint-10.7.0.tgz#package/lib/config/config.js",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-lint-reader-bce3f075/eslint-10.7.0/lib/config/config.js",
+      "sha256": "90807f44ffd3663d4882565c991e02e9c85c7ede3d4de77ff1f3168e9e521009",
+      "bytes": 22880,
+      "result": "acquired-pinned-regular-source-file"
+    },
+    {
+      "url": "https://registry.npmjs.org/eslint/-/eslint-10.7.0.tgz#package/lib/shared/ajv.js",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-lint-reader-bce3f075/eslint-10.7.0/lib/shared/ajv.js",
+      "sha256": "d2838eb53703f8b09d64b62f01a8c5f899a8c0912294123d69157da80e5a2f60",
+      "bytes": 931,
+      "result": "acquired-pinned-regular-source-file"
+    },
+    {
+      "url": "https://registry.npmjs.org/eslint/-/eslint-10.7.0.tgz#package/lib/rules/eqeqeq.js",
+      "status": 200,
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-lint-reader-bce3f075/eslint-10.7.0/lib/rules/eqeqeq.js",
+      "sha256": "4d7dc86f36ea7cbf0ebdb41843daf0d86835e5ee605904512d03adb0f844e02b",
+      "bytes": 5310,
+      "result": "acquired-pinned-regular-source-file"
+    }
+  ]
+}

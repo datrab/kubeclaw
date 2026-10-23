@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PROPOSED same-owner authored native host policy; software versions excluded",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "nodeName",
+    "systemReserve",
+    "kubernetesReserve",
+    "pools"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "nodeName": {
+      "type": "string",
+      "pattern": "^[a-z0-9](?:[a-z0-9.-]{0,251}[a-z0-9])?$"
+    },
+    "systemReserve": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cpuMillicores",
+        "memoryBytes",
+        "tasks"
+      ],
+      "properties": {
+        "cpuMillicores": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "memoryBytes": {
+          "type": "integer",
+          "minimum": 4096,
+          "maximum": 9007199254740991,
+          "multipleOf": 4096
+        },
+        "tasks": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      }
+    },
+    "kubernetesReserve": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cpuMillicores",
+        "memoryBytes",
+        "tasks"
+      ],
+      "properties": {
+        "cpuMillicores": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "memoryBytes": {
+          "type": "integer",
+          "minimum": 4096,
+          "maximum": 9007199254740991,
+          "multipleOf": 4096
+        },
+        "tasks": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      }
+    },
+    "pools": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "buster",
+        "prism"
+      ],
+      "properties": {
+        "buster": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "cpuMillicores",
+            "memoryBytes",
+            "tasks",
+            "namespace",
+            "maximumActiveScopes",
+            "cpuPeriodMicroseconds"
+          ],
+          "properties": {
+            "cpuMillicores": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 90071992547409
+            },
+            "memoryBytes": {
+              "type": "integer",
+              "minimum": 4096,
+              "maximum": 9007199254740991,
+              "multipleOf": 4096
+            },
+            "tasks": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "namespace": {
+              "type": "string",
+              "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$"
+            },
+            "maximumActiveScopes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "cpuPeriodMicroseconds": {
+              "type": "integer",
+              "minimum": 1000,
+              "maximum": 1000000
+            }
+          }
+        },
+        "prism": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "cpuMillicores",
+            "memoryBytes",
+            "tasks",
+            "namespace",
+            "maximumActiveScopes",
+            "cpuPeriodMicroseconds"
+          ],
+          "properties": {
+            "cpuMillicores": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 90071992547409
+            },
+            "memoryBytes": {
+              "type": "integer",
+              "minimum": 4096,
+              "maximum": 9007199254740991,
+              "multipleOf": 4096
+            },
+            "tasks": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "namespace": {
+              "type": "string",
+              "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$"
+            },
+            "maximumActiveScopes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "cpuPeriodMicroseconds": {
+              "type": "integer",
+              "minimum": 1000,
+              "maximum": 1000000
+            }
+          }
+        }
+      }
+    }
+  }
+}

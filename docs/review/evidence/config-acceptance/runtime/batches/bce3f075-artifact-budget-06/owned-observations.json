@@ -1,0 +1,112 @@
+{
+  "caseId": "RT-C0-BCE3F075-ARTIFACTBUDGET06-OWNED-DOMAIN",
+  "command": "node docs/review/evidence/config-acceptance/runtime/batches/bce3f075-artifact-budget-06/check-owned.mjs",
+  "node": "v24.21.0",
+  "sourceDigests": {
+    "skills/common/plugin-runtime/foundation/registry/schema.ts": "eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557"
+  },
+  "testDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-artifact-budget-06/check-owned.mjs": "5d3b24e2c22cdf3b362b682cac815c954e9122f4a8b1a0b2f879e44e7fc5740b"
+  },
+  "inputDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-artifact-budget-06/owned-policy-controls.json": "9069363cebf8b48a730f50d4728de138aa84da71f9207e944ac46780bf2efd7a",
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-artifact-budget-06/size-budget-owned.schema.json": "98f45ef3978ba91fb75bd95bcfec71d34fba9cb536175cd8cc4d9ea2d152e7b8",
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-artifact-budget-06/coverage-budget-owned.schema.json": "5ab843190f0c9547a9d707e7aaba39f8ae9c48b0959c61d6d7f2c262d460f53d"
+  },
+  "observations": [
+    {
+      "setting": "RT-27e9026bdac33ece",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "everyMissingUnknownTaskFieldAndNonNullableNullReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-ee4bd1b95c8e9049",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "everyMissingUnknownTaskFieldAndNonNullableNullReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-4bdd3187c110ade5",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "everyMissingUnknownTaskFieldAndNonNullableNullReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-313716d959435f4e",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "everyMissingUnknownTaskFieldAndNonNullableNullReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-91cea7a8490c1779",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "everyMissingUnknownTaskFieldAndNonNullableNullReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-1b82f488dab26d1b",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "everyMissingUnknownTaskFieldAndNonNullableNullReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-417c83b86ae40313",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "everyMissingUnknownTaskFieldAndNonNullableNullReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-1d56ef14eb5ba3c9",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "everyMissingUnknownTaskFieldAndNonNullableNullReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-fa510e37b64c8b83",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "everyMissingUnknownTaskFieldAndNonNullableNullReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-f09ca71ea0f869ea",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "everyMissingUnknownTaskFieldAndNonNullableNullReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-ba7769d6b9828e8c",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "everyMissingUnknownTaskFieldAndNonNullableNullReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-0641d8cbf57ca18e",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "everyMissingUnknownTaskFieldAndNonNullableNullReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-669087f7bbde7e87",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "everyMissingUnknownTaskFieldAndNonNullableNullReject": true,
+      "result": "passed"
+    }
+  ],
+  "result": "passed",
+  "scope": "proposed complete explicit businessbudget/rule/evidence policy definitions only; exactphysical author/loader/null migration/retiredtaskbudget/genuineproducer/Store/provenance beforeeffect enforcement unimplemented/unapproved, no acceptance",
+  "reviewerConfirmation": "pending"
+}

@@ -1,0 +1,29 @@
+{
+  "files": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-25/README.md",
+      "sha256": "d1eccf0f5b1fdfa06505db945258ab1c597b39c325ff49e58f1ab998aa9ff899"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-25/define.py",
+      "sha256": "7c77e37a6ed4970862cc9ff97e781953f2737dc2c0700505715711cd7d89589c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-25/define.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-25/define.stdout",
+      "sha256": "50880e8b4395156418a5f48e916dec2b0f3c860747b43bbc0958c9224977f5a5"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-25/source-field-definitions.json",
+      "sha256": "4d92bac3a16f03be5cac564dadde223f1becd8a7abdd77fa78618af275b56ddd"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-25/source-identity-check.json",
+      "sha256": "adf0897994b37a502b4d5393d7bec2e8bb6df5da67d759365ea843b44265d537"
+    }
+  ],
+  "acceptance": null
+}

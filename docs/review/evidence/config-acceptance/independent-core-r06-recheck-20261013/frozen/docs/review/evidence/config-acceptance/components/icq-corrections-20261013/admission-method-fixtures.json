@@ -1,0 +1,1040 @@
+{
+  "corrects": "ICQ-06",
+  "scope": "Exact captured current states/inputs plus proposed bound state projections; target consumers not executed",
+  "policy": {
+    "reserve": 8192,
+    "threshold": 256,
+    "prefix": 180,
+    "quarantineCount": 1,
+    "maximumRecords": 10,
+    "maximumIngressBytes": 10000
+  },
+  "rawRecord": {
+    "schemaVersion": "producer-record.v1",
+    "recordId": "record:1",
+    "producer": {
+      "producerId": "worker:1",
+      "bootId": "boot:1",
+      "producerType": "buster"
+    },
+    "sequence": 1,
+    "recordType": "attempt.started",
+    "occurredAt": "2026-08-09T12:00:00Z",
+    "correlation": {
+      "pipelineRunId": "run:1",
+      "moduleId": "api",
+      "gateId": "final",
+      "attemptId": "attempt:1",
+      "claimId": "claim:1",
+      "claimGeneration": 1,
+      "traceId": "trace:1",
+      "parentEventId": null
+    },
+    "payload": {
+      "state": "started"
+    },
+    "recordDigest": "sha256:e6e35abdea7c6c24a809c03d541bfce0aa0da1553973d87990c5b67d42d79576"
+  },
+  "exactRawCanonical": "{\"correlation\":{\"attemptId\":\"attempt:1\",\"claimGeneration\":1,\"claimId\":\"claim:1\",\"gateId\":\"final\",\"moduleId\":\"api\",\"parentEventId\":null,\"pipelineRunId\":\"run:1\",\"traceId\":\"trace:1\"},\"occurredAt\":\"2026-08-09T12:00:00Z\",\"payload\":{\"state\":\"started\"},\"producer\":{\"bootId\":\"boot:1\",\"producerId\":\"worker:1\",\"producerType\":\"buster\"},\"recordDigest\":\"sha256:e6e35abdea7c6c24a809c03d541bfce0aa0da1553973d87990c5b67d42d79576\",\"recordId\":\"record:1\",\"recordType\":\"attempt.started\",\"schemaVersion\":\"producer-record.v1\",\"sequence\":1}",
+  "gap": {
+    "schemaVersion": "producer-gap-report.v1",
+    "producer": {
+      "producerId": "worker:1",
+      "bootId": "boot:1",
+      "producerType": "buster"
+    },
+    "pipelineRunId": "run:1",
+    "fromSequence": 2,
+    "toSequence": 2,
+    "state": "missing",
+    "reportedAt": "2026-08-09T12:01:00Z",
+    "reasonCode": "delivery-gap"
+  },
+  "observedCurrentStates": {
+    "normal": {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-normal-current-state.json",
+      "sha256": "27791c560ba315d9d64e78ea00f82aa18c4c353f38746466e39b8a025c2db411",
+      "sizeBytes": 1409
+    },
+    "quarantine": {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-quarantine-current-state.json",
+      "sha256": "640bf5263e53a85548176b9925400b27562f40c8e18944a01c8f4aa3ab095dd9",
+      "sizeBytes": 2550
+    },
+    "overflow": {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-overflow-current-state.json",
+      "sha256": "63c5bd92bfb185d18b7cc8d0d8b77ff27f6c60d7984967b8485c1c48d3f990f6",
+      "sizeBytes": 3010
+    },
+    "gap": {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-gap-current-state.json",
+      "sha256": "7f896cc031b73df420deea14e4fd62a06ba1d99596f9e27e0994a64259315e8c",
+      "sizeBytes": 3269
+    }
+  },
+  "targetStates": {
+    "empty": {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-empty-bound-target-state.json",
+      "sha256": "07c5a0565325b940161a968460b17925cb15258c553ad51c5959ab0b5c75508c",
+      "sizeBytes": 707
+    },
+    "normal": {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-normal-bound-target-state.json",
+      "sha256": "655f7b6a28806b5a878853052a2471de49e81174fbd6b815bc247a07242edd5c",
+      "sizeBytes": 1934
+    },
+    "quarantine": {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-quarantine-bound-target-state.json",
+      "sha256": "d57c078efcf7ed50b7bf8fe003a8f9cb8f9c123f83eb8f69fc312c3da8913426",
+      "sizeBytes": 3075
+    },
+    "overflow": {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-overflow-bound-target-state.json",
+      "sha256": "6a3c7b0286b2fe47997fff366f7f81ed03d64b6e38615b6a67a5912b7e25ef06",
+      "sizeBytes": 3535
+    }
+  },
+  "subcases": [
+    {
+      "id": "normal-admit",
+      "method": "admit",
+      "prior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-empty-bound-target-state.json",
+        "sha256": "07c5a0565325b940161a968460b17925cb15258c553ad51c5959ab0b5c75508c",
+        "sizeBytes": 707
+      },
+      "input": "{\"correlation\":{\"attemptId\":\"attempt:1\",\"claimGeneration\":1,\"claimId\":\"claim:1\",\"gateId\":\"final\",\"moduleId\":\"api\",\"parentEventId\":null,\"pipelineRunId\":\"run:1\",\"traceId\":\"trace:1\"},\"occurredAt\":\"2026-08-09T12:00:00Z\",\"payload\":{\"state\":\"started\"},\"producer\":{\"bootId\":\"boot:1\",\"producerId\":\"worker:1\",\"producerType\":\"buster\"},\"recordDigest\":\"sha256:e6e35abdea7c6c24a809c03d541bfce0aa0da1553973d87990c5b67d42d79576\",\"recordId\":\"record:1\",\"recordType\":\"attempt.started\",\"schemaVersion\":\"producer-record.v1\",\"sequence\":1}",
+      "candidate": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-normal-bound-target-state.json",
+        "sha256": "655f7b6a28806b5a878853052a2471de49e81174fbd6b815bc247a07242edd5c",
+        "sizeBytes": 1934
+      },
+      "wholeCapFormula": "candidate.sizeBytes+8192",
+      "negativeCapFormula": "candidate.sizeBytes+8192-1",
+      "oracle": {
+        "cursor": 1,
+        "nextCursor": 2,
+        "entries": 1,
+        "quarantine": 0,
+        "bytes": 1940
+      },
+      "adjacentNegative": "FULL state/hash unchanged, no ack",
+      "completeOwningAuthor": {
+        "schemaVersion": "swarm-component.v1",
+        "owner": "buster-engine",
+        "settings": {
+          "preparation": {
+            "resourcePolicy": {
+              "cpuTimeMs": 120000,
+              "memoryBytes": 8589934592,
+              "tasks": 64
+            },
+            "timeoutMs": 300000,
+            "cleanupTimeoutMs": 10000,
+            "maximumActivePreparations": 2,
+            "maximumPendingAdmissions": 16,
+            "maximumRequestBytes": 100663296,
+            "maximumArchiveBytes": 67108864,
+            "maximumExtractedBytes": 536870912,
+            "maximumHeaderBytes": 3145728,
+            "maximumSourceBytes": 1073741824,
+            "maximumMetadataBytes": 67108864,
+            "maximumRecords": 10000,
+            "maximumOwnershipBytes": 16777216,
+            "maximumJournalBytes": 268435456,
+            "maximumInputBytes": 65536,
+            "maximumOutputBytes": 8388608,
+            "maximumResultBytes": 4194304,
+            "pollIntervalMs": 25,
+            "drainTimeoutMs": 5000,
+            "closeTimeoutMs": 10000,
+            "tarTimeoutMs": 120000,
+            "maximumArchiveEntries": 200000,
+            "maximumListingLineBytes": 1048576,
+            "maximumTarStderrBytes": 65536,
+            "maximumSourceEntries": 400014,
+            "sourceEntryReservationBytes": 256,
+            "maximumOpenFiles": 64,
+            "tarDiagnosticCodeUnits": 4096,
+            "storeLockWaitSeconds": 5
+          },
+          "admission": {
+            "maximumActiveJobs": 2,
+            "maximumQueuedJobs": 8,
+            "maximumConcurrentAttempts": 64
+          },
+          "dependencyReadiness": {
+            "maximumExecutionMs": 1000,
+            "maximumOutputBytes": 65536
+          },
+          "execution": {
+            "provider": {
+              "cleanupTimeoutMs": 30000,
+              "maximumResultBytes": 16777216,
+              "claimGraceMs": 60000,
+              "queueTimeoutMs": 60000,
+              "workerResultWrapperBytes": 4096,
+              "maximumProtocolBytes": 16777216,
+              "terminationGraceMs": 500,
+              "terminationTimeoutMs": 1000,
+              "capabilityDrainTimeoutMs": 1000,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "maximumPendingCapabilities": 32,
+              "minimumOpenFiles": 64,
+              "artifactFileDescriptorReserve": 32
+            },
+            "reports": {
+              "maximumAggregateResultBytes": 16777216,
+              "maximumSourceBytes": 67108864,
+              "maximumCases": 5000,
+              "maximumFindings": 5000,
+              "maximumCaseFindings": 100,
+              "maximumTimeoutMs": 300000,
+              "memoryBytes": 536870912,
+              "minimumCpuTimeMs": 1000,
+              "maximumOpenFiles": 64,
+              "minimumOpenFiles": 16,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "runtimeMemoryReserveBytes": 67108864
+            },
+            "observation": {
+              "resourceSampleIntervalMs": 10,
+              "processSampleIntervalMs": 50
+            },
+            "stores": {
+              "attempts": {
+                "maximumEvidenceObjects": 10000,
+                "maximumEvidenceBytes": 10737418240,
+                "maximumEvidenceObjectBytes": 1073741824,
+                "maximumResults": 10000,
+                "maximumClosures": 10000,
+                "maximumMetadataBytes": 268435456,
+                "maximumPendingEvidenceAgeMs": 3600000,
+                "lockWaitSeconds": 5
+              },
+              "admission": {
+                "maximumIngressBytes": 10000,
+                "maximumRecords": 10,
+                "maximumBytes": 10126,
+                "maximumQuarantineRecords": 1,
+                "maximumQuarantineBytes": 1933,
+                "reasonThresholdCodeUnits": 256,
+                "reasonPrefixCodeUnits": 180,
+                "metadataReserveBytes": 8192,
+                "lockWaitSeconds": 5
+              }
+            },
+            "processInput": {
+              "cleanupTimeoutMs": 1500,
+              "terminationGraceMs": 250,
+              "acknowledgementPollMs": 10
+            }
+          },
+          "clusterInvokers": {
+            "shared": {
+              "kubectlExecutable": "/usr/local/bin/kubectl",
+              "leaseApiGroup": "kubeclaw.forgestack.ai",
+              "leaseApiVersion": "v1alpha1"
+            },
+            "kubernetesFixture": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "registryRepositoryPrefixes": [
+                "kubeclaw"
+              ],
+              "allowedSecretReferences": [],
+              "allowedStorageClasses": [],
+              "allowDefaultStorageClass": true,
+              "runnerServiceAccount": "agent-buster",
+              "credentialReaderServiceAccount": "agent-nova",
+              "maximumManifestBytes": 1048576,
+              "maximumResources": 64,
+              "maximumPersistentVolumeClaimBytes": 10737418240,
+              "maximumPersistentVolumeTotalBytes": 21474836480,
+              "maximumRetentionSeconds": 604800,
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "commandOutputManifestMultiplier": 2,
+              "diagnosticCodeUnits": 4096,
+              "manifest": {
+                "maximumNodes": 100000,
+                "maximumDepth": 64,
+                "maximumAliases": 1000,
+                "maximumFlattenVisits": 100000,
+                "maximumFlattenPending": 100000
+              }
+            },
+            "tailscaleExposure": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "allowedHostSuffixes": [
+                ".ts.net"
+              ],
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "maximumCommandOutputBytes": 1048576
+            },
+            "runtimeSecurity": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "maximumExecutionMs": 300000,
+              "maximumOutputBytes": 16777216,
+              "pollIntervalMs": 1000,
+              "maximumObservationAgeMs": 10000,
+              "maximumFutureSkewMs": 5000,
+              "diagnosticCodeUnits": 1024,
+              "executableSearchPath": [
+                "/usr/local/bin",
+                "/usr/bin",
+                "/bin"
+              ]
+            }
+          }
+        }
+      },
+      "wholeCap": 10126,
+      "negativeWholeCap": 10125
+    },
+    {
+      "id": "normal-admitAndRead",
+      "method": "admitAndRead",
+      "prior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-empty-bound-target-state.json",
+        "sha256": "07c5a0565325b940161a968460b17925cb15258c553ad51c5959ab0b5c75508c",
+        "sizeBytes": 707
+      },
+      "input": "{\"correlation\":{\"attemptId\":\"attempt:1\",\"claimGeneration\":1,\"claimId\":\"claim:1\",\"gateId\":\"final\",\"moduleId\":\"api\",\"parentEventId\":null,\"pipelineRunId\":\"run:1\",\"traceId\":\"trace:1\"},\"occurredAt\":\"2026-08-09T12:00:00Z\",\"payload\":{\"state\":\"started\"},\"producer\":{\"bootId\":\"boot:1\",\"producerId\":\"worker:1\",\"producerType\":\"buster\"},\"recordDigest\":\"sha256:e6e35abdea7c6c24a809c03d541bfce0aa0da1553973d87990c5b67d42d79576\",\"recordId\":\"record:1\",\"recordType\":\"attempt.started\",\"schemaVersion\":\"producer-record.v1\",\"sequence\":1}",
+      "candidate": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-normal-bound-target-state.json",
+        "sha256": "655f7b6a28806b5a878853052a2471de49e81174fbd6b815bc247a07242edd5c",
+        "sizeBytes": 1934
+      },
+      "wholeCapFormula": "candidate.sizeBytes+8192",
+      "negativeCapFormula": "candidate.sizeBytes+8192-1",
+      "oracle": {
+        "records": [
+          {
+            "schemaVersion": "producer-record.v1",
+            "recordId": "record:1",
+            "producer": {
+              "producerId": "worker:1",
+              "bootId": "boot:1",
+              "producerType": "buster"
+            },
+            "sequence": 1,
+            "recordType": "attempt.started",
+            "occurredAt": "2026-08-09T12:00:00Z",
+            "correlation": {
+              "pipelineRunId": "run:1",
+              "moduleId": "api",
+              "gateId": "final",
+              "attemptId": "attempt:1",
+              "claimId": "claim:1",
+              "claimGeneration": 1,
+              "traceId": "trace:1",
+              "parentEventId": null
+            },
+            "payload": {
+              "state": "started"
+            },
+            "recordDigest": "sha256:e6e35abdea7c6c24a809c03d541bfce0aa0da1553973d87990c5b67d42d79576"
+          }
+        ],
+        "cursor": 1,
+        "bytes": 1940
+      },
+      "completeOwningAuthor": {
+        "schemaVersion": "swarm-component.v1",
+        "owner": "buster-engine",
+        "settings": {
+          "preparation": {
+            "resourcePolicy": {
+              "cpuTimeMs": 120000,
+              "memoryBytes": 8589934592,
+              "tasks": 64
+            },
+            "timeoutMs": 300000,
+            "cleanupTimeoutMs": 10000,
+            "maximumActivePreparations": 2,
+            "maximumPendingAdmissions": 16,
+            "maximumRequestBytes": 100663296,
+            "maximumArchiveBytes": 67108864,
+            "maximumExtractedBytes": 536870912,
+            "maximumHeaderBytes": 3145728,
+            "maximumSourceBytes": 1073741824,
+            "maximumMetadataBytes": 67108864,
+            "maximumRecords": 10000,
+            "maximumOwnershipBytes": 16777216,
+            "maximumJournalBytes": 268435456,
+            "maximumInputBytes": 65536,
+            "maximumOutputBytes": 8388608,
+            "maximumResultBytes": 4194304,
+            "pollIntervalMs": 25,
+            "drainTimeoutMs": 5000,
+            "closeTimeoutMs": 10000,
+            "tarTimeoutMs": 120000,
+            "maximumArchiveEntries": 200000,
+            "maximumListingLineBytes": 1048576,
+            "maximumTarStderrBytes": 65536,
+            "maximumSourceEntries": 400014,
+            "sourceEntryReservationBytes": 256,
+            "maximumOpenFiles": 64,
+            "tarDiagnosticCodeUnits": 4096,
+            "storeLockWaitSeconds": 5
+          },
+          "admission": {
+            "maximumActiveJobs": 2,
+            "maximumQueuedJobs": 8,
+            "maximumConcurrentAttempts": 64
+          },
+          "dependencyReadiness": {
+            "maximumExecutionMs": 1000,
+            "maximumOutputBytes": 65536
+          },
+          "execution": {
+            "provider": {
+              "cleanupTimeoutMs": 30000,
+              "maximumResultBytes": 16777216,
+              "claimGraceMs": 60000,
+              "queueTimeoutMs": 60000,
+              "workerResultWrapperBytes": 4096,
+              "maximumProtocolBytes": 16777216,
+              "terminationGraceMs": 500,
+              "terminationTimeoutMs": 1000,
+              "capabilityDrainTimeoutMs": 1000,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "maximumPendingCapabilities": 32,
+              "minimumOpenFiles": 64,
+              "artifactFileDescriptorReserve": 32
+            },
+            "reports": {
+              "maximumAggregateResultBytes": 16777216,
+              "maximumSourceBytes": 67108864,
+              "maximumCases": 5000,
+              "maximumFindings": 5000,
+              "maximumCaseFindings": 100,
+              "maximumTimeoutMs": 300000,
+              "memoryBytes": 536870912,
+              "minimumCpuTimeMs": 1000,
+              "maximumOpenFiles": 64,
+              "minimumOpenFiles": 16,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "runtimeMemoryReserveBytes": 67108864
+            },
+            "observation": {
+              "resourceSampleIntervalMs": 10,
+              "processSampleIntervalMs": 50
+            },
+            "stores": {
+              "attempts": {
+                "maximumEvidenceObjects": 10000,
+                "maximumEvidenceBytes": 10737418240,
+                "maximumEvidenceObjectBytes": 1073741824,
+                "maximumResults": 10000,
+                "maximumClosures": 10000,
+                "maximumMetadataBytes": 268435456,
+                "maximumPendingEvidenceAgeMs": 3600000,
+                "lockWaitSeconds": 5
+              },
+              "admission": {
+                "maximumIngressBytes": 10000,
+                "maximumRecords": 10,
+                "maximumBytes": 10126,
+                "maximumQuarantineRecords": 1,
+                "maximumQuarantineBytes": 1933,
+                "reasonThresholdCodeUnits": 256,
+                "reasonPrefixCodeUnits": 180,
+                "metadataReserveBytes": 8192,
+                "lockWaitSeconds": 5
+              }
+            },
+            "processInput": {
+              "cleanupTimeoutMs": 1500,
+              "terminationGraceMs": 250,
+              "acknowledgementPollMs": 10
+            }
+          },
+          "clusterInvokers": {
+            "shared": {
+              "kubectlExecutable": "/usr/local/bin/kubectl",
+              "leaseApiGroup": "kubeclaw.forgestack.ai",
+              "leaseApiVersion": "v1alpha1"
+            },
+            "kubernetesFixture": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "registryRepositoryPrefixes": [
+                "kubeclaw"
+              ],
+              "allowedSecretReferences": [],
+              "allowedStorageClasses": [],
+              "allowDefaultStorageClass": true,
+              "runnerServiceAccount": "agent-buster",
+              "credentialReaderServiceAccount": "agent-nova",
+              "maximumManifestBytes": 1048576,
+              "maximumResources": 64,
+              "maximumPersistentVolumeClaimBytes": 10737418240,
+              "maximumPersistentVolumeTotalBytes": 21474836480,
+              "maximumRetentionSeconds": 604800,
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "commandOutputManifestMultiplier": 2,
+              "diagnosticCodeUnits": 4096,
+              "manifest": {
+                "maximumNodes": 100000,
+                "maximumDepth": 64,
+                "maximumAliases": 1000,
+                "maximumFlattenVisits": 100000,
+                "maximumFlattenPending": 100000
+              }
+            },
+            "tailscaleExposure": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "allowedHostSuffixes": [
+                ".ts.net"
+              ],
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "maximumCommandOutputBytes": 1048576
+            },
+            "runtimeSecurity": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "maximumExecutionMs": 300000,
+              "maximumOutputBytes": 16777216,
+              "pollIntervalMs": 1000,
+              "maximumObservationAgeMs": 10000,
+              "maximumFutureSkewMs": 5000,
+              "diagnosticCodeUnits": 1024,
+              "executableSearchPath": [
+                "/usr/local/bin",
+                "/usr/bin",
+                "/bin"
+              ]
+            }
+          }
+        }
+      },
+      "wholeCap": 10126,
+      "negativeWholeCap": 10125
+    },
+    {
+      "id": "duplicate",
+      "method": "admit",
+      "prior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-normal-bound-target-state.json",
+        "sha256": "655f7b6a28806b5a878853052a2471de49e81174fbd6b815bc247a07242edd5c",
+        "sizeBytes": 1934
+      },
+      "input": "{\"correlation\":{\"attemptId\":\"attempt:1\",\"claimGeneration\":1,\"claimId\":\"claim:1\",\"gateId\":\"final\",\"moduleId\":\"api\",\"parentEventId\":null,\"pipelineRunId\":\"run:1\",\"traceId\":\"trace:1\"},\"occurredAt\":\"2026-08-09T12:00:00Z\",\"payload\":{\"state\":\"started\"},\"producer\":{\"bootId\":\"boot:1\",\"producerId\":\"worker:1\",\"producerType\":\"buster\"},\"recordDigest\":\"sha256:e6e35abdea7c6c24a809c03d541bfce0aa0da1553973d87990c5b67d42d79576\",\"recordId\":\"record:1\",\"recordType\":\"attempt.started\",\"schemaVersion\":\"producer-record.v1\",\"sequence\":1}",
+      "wholeCapFormula": "prior.sizeBytes+8192",
+      "oracle": "duplicate cursor1; whole state/hash exactunchanged; no entry/nextCursor increment"
+    },
+    {
+      "id": "quarantine",
+      "method": "admit",
+      "prior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-normal-bound-target-state.json",
+        "sha256": "655f7b6a28806b5a878853052a2471de49e81174fbd6b815bc247a07242edd5c",
+        "sizeBytes": 1934
+      },
+      "input": "{\"correlation\":{\"attemptId\":\"attempt:1\",\"claimGeneration\":1,\"claimId\":\"claim:1\",\"gateId\":\"final\",\"moduleId\":\"api\",\"parentEventId\":null,\"pipelineRunId\":\"run:1\",\"traceId\":\"trace:1\"},\"occurredAt\":\"2026-08-09T12:00:00Z\",\"payload\":{\"state\":\"started\"},\"producer\":{\"bootId\":\"boot:1\",\"producerId\":\"worker:1\",\"producerType\":\"buster\"},\"recordDigest\":\"sha256:e6e35abdea7c6c24a809c03d541bfce0aa0da1553973d87990c5b67d42d79576\",\"recordId\":\"record:1\",\"recordType\":\"attempt.started\",\"schemaVersion\":\"producer-record.v1\",\"sequence\":1}\n",
+      "candidate": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-quarantine-bound-target-state.json",
+        "sha256": "d57c078efcf7ed50b7bf8fe003a8f9cb8f9c123f83eb8f69fc312c3da8913426",
+        "sizeBytes": 3075
+      },
+      "wholeCapFormula": "candidate.sizeBytes+8192",
+      "negativeCapFormula": "candidate.sizeBytes+8192-1",
+      "oracle": "decodererror remains; accepted quarantine one attributed unresolved item; actual newUUID/time valid fixedwidth and computedbyteoracle, not injected clock; insufficient headroom falls into explicitly accounted overflow, not lostattribution",
+      "completeOwningAuthor": {
+        "schemaVersion": "swarm-component.v1",
+        "owner": "buster-engine",
+        "settings": {
+          "preparation": {
+            "resourcePolicy": {
+              "cpuTimeMs": 120000,
+              "memoryBytes": 8589934592,
+              "tasks": 64
+            },
+            "timeoutMs": 300000,
+            "cleanupTimeoutMs": 10000,
+            "maximumActivePreparations": 2,
+            "maximumPendingAdmissions": 16,
+            "maximumRequestBytes": 100663296,
+            "maximumArchiveBytes": 67108864,
+            "maximumExtractedBytes": 536870912,
+            "maximumHeaderBytes": 3145728,
+            "maximumSourceBytes": 1073741824,
+            "maximumMetadataBytes": 67108864,
+            "maximumRecords": 10000,
+            "maximumOwnershipBytes": 16777216,
+            "maximumJournalBytes": 268435456,
+            "maximumInputBytes": 65536,
+            "maximumOutputBytes": 8388608,
+            "maximumResultBytes": 4194304,
+            "pollIntervalMs": 25,
+            "drainTimeoutMs": 5000,
+            "closeTimeoutMs": 10000,
+            "tarTimeoutMs": 120000,
+            "maximumArchiveEntries": 200000,
+            "maximumListingLineBytes": 1048576,
+            "maximumTarStderrBytes": 65536,
+            "maximumSourceEntries": 400014,
+            "sourceEntryReservationBytes": 256,
+            "maximumOpenFiles": 64,
+            "tarDiagnosticCodeUnits": 4096,
+            "storeLockWaitSeconds": 5
+          },
+          "admission": {
+            "maximumActiveJobs": 2,
+            "maximumQueuedJobs": 8,
+            "maximumConcurrentAttempts": 64
+          },
+          "dependencyReadiness": {
+            "maximumExecutionMs": 1000,
+            "maximumOutputBytes": 65536
+          },
+          "execution": {
+            "provider": {
+              "cleanupTimeoutMs": 30000,
+              "maximumResultBytes": 16777216,
+              "claimGraceMs": 60000,
+              "queueTimeoutMs": 60000,
+              "workerResultWrapperBytes": 4096,
+              "maximumProtocolBytes": 16777216,
+              "terminationGraceMs": 500,
+              "terminationTimeoutMs": 1000,
+              "capabilityDrainTimeoutMs": 1000,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "maximumPendingCapabilities": 32,
+              "minimumOpenFiles": 64,
+              "artifactFileDescriptorReserve": 32
+            },
+            "reports": {
+              "maximumAggregateResultBytes": 16777216,
+              "maximumSourceBytes": 67108864,
+              "maximumCases": 5000,
+              "maximumFindings": 5000,
+              "maximumCaseFindings": 100,
+              "maximumTimeoutMs": 300000,
+              "memoryBytes": 536870912,
+              "minimumCpuTimeMs": 1000,
+              "maximumOpenFiles": 64,
+              "minimumOpenFiles": 16,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "runtimeMemoryReserveBytes": 67108864
+            },
+            "observation": {
+              "resourceSampleIntervalMs": 10,
+              "processSampleIntervalMs": 50
+            },
+            "stores": {
+              "attempts": {
+                "maximumEvidenceObjects": 10000,
+                "maximumEvidenceBytes": 10737418240,
+                "maximumEvidenceObjectBytes": 1073741824,
+                "maximumResults": 10000,
+                "maximumClosures": 10000,
+                "maximumMetadataBytes": 268435456,
+                "maximumPendingEvidenceAgeMs": 3600000,
+                "lockWaitSeconds": 5
+              },
+              "admission": {
+                "maximumIngressBytes": 10000,
+                "maximumRecords": 10,
+                "maximumBytes": 11267,
+                "maximumQuarantineRecords": 1,
+                "maximumQuarantineBytes": 3074,
+                "reasonThresholdCodeUnits": 256,
+                "reasonPrefixCodeUnits": 180,
+                "metadataReserveBytes": 8192,
+                "lockWaitSeconds": 5
+              }
+            },
+            "processInput": {
+              "cleanupTimeoutMs": 1500,
+              "terminationGraceMs": 250,
+              "acknowledgementPollMs": 10
+            }
+          },
+          "clusterInvokers": {
+            "shared": {
+              "kubectlExecutable": "/usr/local/bin/kubectl",
+              "leaseApiGroup": "kubeclaw.forgestack.ai",
+              "leaseApiVersion": "v1alpha1"
+            },
+            "kubernetesFixture": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "registryRepositoryPrefixes": [
+                "kubeclaw"
+              ],
+              "allowedSecretReferences": [],
+              "allowedStorageClasses": [],
+              "allowDefaultStorageClass": true,
+              "runnerServiceAccount": "agent-buster",
+              "credentialReaderServiceAccount": "agent-nova",
+              "maximumManifestBytes": 1048576,
+              "maximumResources": 64,
+              "maximumPersistentVolumeClaimBytes": 10737418240,
+              "maximumPersistentVolumeTotalBytes": 21474836480,
+              "maximumRetentionSeconds": 604800,
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "commandOutputManifestMultiplier": 2,
+              "diagnosticCodeUnits": 4096,
+              "manifest": {
+                "maximumNodes": 100000,
+                "maximumDepth": 64,
+                "maximumAliases": 1000,
+                "maximumFlattenVisits": 100000,
+                "maximumFlattenPending": 100000
+              }
+            },
+            "tailscaleExposure": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "allowedHostSuffixes": [
+                ".ts.net"
+              ],
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "maximumCommandOutputBytes": 1048576
+            },
+            "runtimeSecurity": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "maximumExecutionMs": 300000,
+              "maximumOutputBytes": 16777216,
+              "pollIntervalMs": 1000,
+              "maximumObservationAgeMs": 10000,
+              "maximumFutureSkewMs": 5000,
+              "diagnosticCodeUnits": 1024,
+              "executableSearchPath": [
+                "/usr/local/bin",
+                "/usr/bin",
+                "/bin"
+              ]
+            }
+          }
+        }
+      },
+      "wholeCap": 11267,
+      "negativeWholeCap": 11266
+    },
+    {
+      "id": "overflow",
+      "method": "admit",
+      "prior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-quarantine-bound-target-state.json",
+        "sha256": "d57c078efcf7ed50b7bf8fe003a8f9cb8f9c123f83eb8f69fc312c3da8913426",
+        "sizeBytes": 3075
+      },
+      "input": "{\"correlation\":{\"attemptId\":\"attempt:1\",\"claimGeneration\":1,\"claimId\":\"claim:1\",\"gateId\":\"final\",\"moduleId\":\"api\",\"parentEventId\":null,\"pipelineRunId\":\"run:1\",\"traceId\":\"trace:1\"},\"occurredAt\":\"2026-08-09T12:00:00Z\",\"payload\":{\"state\":\"started\"},\"producer\":{\"bootId\":\"boot:1\",\"producerId\":\"worker:1\",\"producerType\":\"buster\"},\"recordDigest\":\"sha256:e6e35abdea7c6c24a809c03d541bfce0aa0da1553973d87990c5b67d42d79576\",\"recordId\":\"record:1\",\"recordType\":\"attempt.started\",\"schemaVersion\":\"producer-record.v1\",\"sequence\":1}  ",
+      "candidate": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-overflow-bound-target-state.json",
+        "sha256": "6a3c7b0286b2fe47997fff366f7f81ed03d64b6e38615b6a67a5912b7e25ef06",
+        "sizeBytes": 3535
+      },
+      "oracle": "Existingquarantinecount1 routes tooverflow; decodererror retained; count1 andoneattributedoverflowitem, actual canonicalcandidate3535bytes under samecap100000. Negative same prior with overflowUnresolvedItems already tracking a different validrun at selectedcount1 rejects FULL unchanged; counterMAX_SAFE negative separatelyrequired. A cap candidateBytes-1 cannot be a valid ordinary-headroom history profile here and is NOT a genuine adjacentpositive/negative.",
+      "wholeCap": 100000,
+      "negativePrior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-overflow-full-other-run-bound-target-state.json",
+        "sizeBytes": 3547,
+        "sha256": "9abcbf37dd83415425de05bc199e632e32f472fb2f08be2b1ac531885ee75027"
+      },
+      "negativeInput": "{\"correlation\":{\"attemptId\":\"attempt:1\",\"claimGeneration\":1,\"claimId\":\"claim:1\",\"gateId\":\"final\",\"moduleId\":\"api\",\"parentEventId\":null,\"pipelineRunId\":\"run:1\",\"traceId\":\"trace:1\"},\"occurredAt\":\"2026-08-09T12:00:00Z\",\"payload\":{\"state\":\"started\"},\"producer\":{\"bootId\":\"boot:1\",\"producerId\":\"worker:1\",\"producerType\":\"buster\"},\"recordDigest\":\"sha256:e6e35abdea7c6c24a809c03d541bfce0aa0da1553973d87990c5b67d42d79576\",\"recordId\":\"record:1\",\"recordType\":\"attempt.started\",\"schemaVersion\":\"producer-record.v1\",\"sequence\":1}  ",
+      "negativeWholeCap": 100000,
+      "negativeOracle": "same selectedcount1 already tracks other validrun; attempting run:1 second distinctoverflow attribution FULL beforewrite; exact retainedbytes/hashunchanged"
+    },
+    {
+      "id": "recordGap",
+      "method": "recordGap",
+      "prior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-normal-bound-target-state.json",
+        "sha256": "655f7b6a28806b5a878853052a2471de49e81174fbd6b815bc247a07242edd5c",
+        "sizeBytes": 1934
+      },
+      "input": {
+        "schemaVersion": "producer-gap-report.v1",
+        "producer": {
+          "producerId": "worker:1",
+          "bootId": "boot:1",
+          "producerType": "buster"
+        },
+        "pipelineRunId": "run:1",
+        "fromSequence": 2,
+        "toSequence": 2,
+        "state": "missing",
+        "reportedAt": "2026-08-09T12:01:00Z",
+        "reasonCode": "delivery-gap"
+      },
+      "candidateFormula": "{...prior,gaps:[exact gap]} canonical bytes",
+      "wholeCapFormula": "candidate.sizeBytes+8192",
+      "negativeCapFormula": "candidate.sizeBytes+8192-1",
+      "oracle": "newgap consumes ordinary payload, must preserve8192 reserve under target; wholecap-only CURRENT guard insufficient; adjacent negative FULL unchanged",
+      "candidate": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-gap-bound-target-state.json",
+        "sha256": "3c49d23ed1caf396fb5b381a8b406135d3e6247fed92b62e54ebac9aff263c82",
+        "sizeBytes": 2193
+      },
+      "wholeCap": 10385,
+      "negativeWholeCap": 10384,
+      "completeOwningAuthor": {
+        "schemaVersion": "swarm-component.v1",
+        "owner": "buster-engine",
+        "settings": {
+          "preparation": {
+            "resourcePolicy": {
+              "cpuTimeMs": 120000,
+              "memoryBytes": 8589934592,
+              "tasks": 64
+            },
+            "timeoutMs": 300000,
+            "cleanupTimeoutMs": 10000,
+            "maximumActivePreparations": 2,
+            "maximumPendingAdmissions": 16,
+            "maximumRequestBytes": 100663296,
+            "maximumArchiveBytes": 67108864,
+            "maximumExtractedBytes": 536870912,
+            "maximumHeaderBytes": 3145728,
+            "maximumSourceBytes": 1073741824,
+            "maximumMetadataBytes": 67108864,
+            "maximumRecords": 10000,
+            "maximumOwnershipBytes": 16777216,
+            "maximumJournalBytes": 268435456,
+            "maximumInputBytes": 65536,
+            "maximumOutputBytes": 8388608,
+            "maximumResultBytes": 4194304,
+            "pollIntervalMs": 25,
+            "drainTimeoutMs": 5000,
+            "closeTimeoutMs": 10000,
+            "tarTimeoutMs": 120000,
+            "maximumArchiveEntries": 200000,
+            "maximumListingLineBytes": 1048576,
+            "maximumTarStderrBytes": 65536,
+            "maximumSourceEntries": 400014,
+            "sourceEntryReservationBytes": 256,
+            "maximumOpenFiles": 64,
+            "tarDiagnosticCodeUnits": 4096,
+            "storeLockWaitSeconds": 5
+          },
+          "admission": {
+            "maximumActiveJobs": 2,
+            "maximumQueuedJobs": 8,
+            "maximumConcurrentAttempts": 64
+          },
+          "dependencyReadiness": {
+            "maximumExecutionMs": 1000,
+            "maximumOutputBytes": 65536
+          },
+          "execution": {
+            "provider": {
+              "cleanupTimeoutMs": 30000,
+              "maximumResultBytes": 16777216,
+              "claimGraceMs": 60000,
+              "queueTimeoutMs": 60000,
+              "workerResultWrapperBytes": 4096,
+              "maximumProtocolBytes": 16777216,
+              "terminationGraceMs": 500,
+              "terminationTimeoutMs": 1000,
+              "capabilityDrainTimeoutMs": 1000,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "maximumPendingCapabilities": 32,
+              "minimumOpenFiles": 64,
+              "artifactFileDescriptorReserve": 32
+            },
+            "reports": {
+              "maximumAggregateResultBytes": 16777216,
+              "maximumSourceBytes": 67108864,
+              "maximumCases": 5000,
+              "maximumFindings": 5000,
+              "maximumCaseFindings": 100,
+              "maximumTimeoutMs": 300000,
+              "memoryBytes": 536870912,
+              "minimumCpuTimeMs": 1000,
+              "maximumOpenFiles": 64,
+              "minimumOpenFiles": 16,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "runtimeMemoryReserveBytes": 67108864
+            },
+            "observation": {
+              "resourceSampleIntervalMs": 10,
+              "processSampleIntervalMs": 50
+            },
+            "stores": {
+              "attempts": {
+                "maximumEvidenceObjects": 10000,
+                "maximumEvidenceBytes": 10737418240,
+                "maximumEvidenceObjectBytes": 1073741824,
+                "maximumResults": 10000,
+                "maximumClosures": 10000,
+                "maximumMetadataBytes": 268435456,
+                "maximumPendingEvidenceAgeMs": 3600000,
+                "lockWaitSeconds": 5
+              },
+              "admission": {
+                "maximumIngressBytes": 10000,
+                "maximumRecords": 10,
+                "maximumBytes": 10385,
+                "maximumQuarantineRecords": 1,
+                "maximumQuarantineBytes": 2192,
+                "reasonThresholdCodeUnits": 256,
+                "reasonPrefixCodeUnits": 180,
+                "metadataReserveBytes": 8192,
+                "lockWaitSeconds": 5
+              }
+            },
+            "processInput": {
+              "cleanupTimeoutMs": 1500,
+              "terminationGraceMs": 250,
+              "acknowledgementPollMs": 10
+            }
+          },
+          "clusterInvokers": {
+            "shared": {
+              "kubectlExecutable": "/usr/local/bin/kubectl",
+              "leaseApiGroup": "kubeclaw.forgestack.ai",
+              "leaseApiVersion": "v1alpha1"
+            },
+            "kubernetesFixture": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "registryRepositoryPrefixes": [
+                "kubeclaw"
+              ],
+              "allowedSecretReferences": [],
+              "allowedStorageClasses": [],
+              "allowDefaultStorageClass": true,
+              "runnerServiceAccount": "agent-buster",
+              "credentialReaderServiceAccount": "agent-nova",
+              "maximumManifestBytes": 1048576,
+              "maximumResources": 64,
+              "maximumPersistentVolumeClaimBytes": 10737418240,
+              "maximumPersistentVolumeTotalBytes": 21474836480,
+              "maximumRetentionSeconds": 604800,
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "commandOutputManifestMultiplier": 2,
+              "diagnosticCodeUnits": 4096,
+              "manifest": {
+                "maximumNodes": 100000,
+                "maximumDepth": 64,
+                "maximumAliases": 1000,
+                "maximumFlattenVisits": 100000,
+                "maximumFlattenPending": 100000
+              }
+            },
+            "tailscaleExposure": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "allowedHostSuffixes": [
+                ".ts.net"
+              ],
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "maximumCommandOutputBytes": 1048576
+            },
+            "runtimeSecurity": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "maximumExecutionMs": 300000,
+              "maximumOutputBytes": 16777216,
+              "pollIntervalMs": 1000,
+              "maximumObservationAgeMs": 10000,
+              "maximumFutureSkewMs": 5000,
+              "diagnosticCodeUnits": 1024,
+              "executableSearchPath": [
+                "/usr/local/bin",
+                "/usr/bin",
+                "/bin"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "gap-restoration-unproved",
+      "method": "recordGap",
+      "priorFormula": "{...normalBoundState,gaps:[exactgap]}",
+      "input": {
+        "schemaVersion": "producer-gap-report.v1",
+        "producer": {
+          "producerId": "worker:1",
+          "bootId": "boot:1",
+          "producerType": "buster"
+        },
+        "pipelineRunId": "run:1",
+        "fromSequence": 2,
+        "toSequence": 2,
+        "state": "restored",
+        "reportedAt": "2026-08-09T12:02:00Z",
+        "reasonCode": "delivery-gap"
+      },
+      "oracle": "GAP_RESTORATION_UNPROVED exactstateunchanged because sequence2 absent"
+    },
+    {
+      "id": "oversized-history",
+      "method": "snapshot/admittedRecords/admit/recordGap",
+      "prior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-normal-bound-target-state.json",
+        "sha256": "655f7b6a28806b5a878853052a2471de49e81174fbd6b815bc247a07242edd5c",
+        "sizeBytes": 1934
+      },
+      "mutation": "appendspaces to selected wholeCap+1, independently per method",
+      "oracle": "bounded replay snapshot-size rejects exactbytesunchanged; no shrink/latest substitution"
+    },
+    {
+      "id": "counter-overflow",
+      "method": "admit oversized ingress",
+      "priorFormula": "{...overflowBoundState,quarantineOverflow:{...original,count:9007199254740991}}",
+      "input": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "oracle": "target rejects safe increment before any rewrite; exactstateunchanged, original1024/history retained"
+    }
+  ],
+  "deltas": {
+    "normalDelta": 1227,
+    "quarantineDelta": 1141,
+    "overflowDelta": 460
+  },
+  "futureHeader": "inlineBinding v1 fixedschema accounted; newfield/version reject before allocation/write",
+  "retirement": "exact immutable source/argument generator and complete binding cases in retirement-method-fixtures.json",
+  "targetVariableOutputRule": "Frozen inputstatebytes exact; new admittedAt/receivedAt and quarantineUUID are actual consumer generated, not injectable measuredcounter/clock. Assert UTC24-byte format and UUID36; canonicalexpectedcandidate bytes recomputed including actualvalues; samefixed widths preserve specified byte/counter oracle. Retained inputfields must match exact priorbytes. No testhook in production.",
+  "targetHeaderField": "binding (7ASCII code units); exactly525growth with514byte object, not inlineBinding property531growth",
+  "bindingReferenceSpecimens": {
+    "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/immutable-owner-reference-specimens.json",
+    "sha256": "ce86318e766f933da38a83994b39e39f434ee13b00c24769b303bdfde24dc7c4"
+  },
+  "boundaryBindingRule": "Each complete methodboundaryauthor has its own canonicalgeneration/profile/policy digests computed exactlyasimmutable-owner-reference-specimens. Supplied priorstate binding must be that originalselectedboundaryprofile (not copiedlatest/global A); binding values have same fixedwidth525. Existingdata bytes unaffected except their explicit proposedbindingheader."
+}

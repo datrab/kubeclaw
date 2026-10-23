@@ -2,8 +2,10 @@ import { createHash } from "node:crypto";
 import type { IncomingMessage, ServerResponse } from "node:http";
 export async function body(
   request: IncomingMessage,
-  maxBytes = 2_000_000,
+  maxBytes: number,
 ): Promise<unknown> {
+  if (!Number.isSafeInteger(maxBytes) || maxBytes < 1)
+    throw new Error("valid request body limit is required");
   if (
     !(request.headers["content-type"] ?? "")
       .toString()

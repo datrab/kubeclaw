@@ -1,0 +1,3 @@
+docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-PRISM-A.yaml - PodDisruptionBudget prism-studio failed validation: could not find schema for PodDisruptionBudget
+docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-PRISM-A.yaml - PodDisruptionBudget prism-worker failed validation: could not find schema for PodDisruptionBudget
+Summary: 45 resources found in 1 file - Valid: 43, Invalid: 0, Errors: 2, Skipped: 0

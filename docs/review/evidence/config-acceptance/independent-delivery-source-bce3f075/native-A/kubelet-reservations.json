@@ -1,0 +1,17 @@
+{
+  "systemReserved": {
+    "cpu": "1100m",
+    "memory": "135266304",
+    "pid": "80"
+  },
+  "kubeReserved": {
+    "cpu": "100m",
+    "memory": "1048576",
+    "pid": "16"
+  },
+  "cgroupDriver": "systemd",
+  "cgroupsPerQOS": true,
+  "enforceNodeAllocatable": [
+    "pods"
+  ]
+}

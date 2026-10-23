@@ -1,0 +1,177 @@
+{
+  "checkedAtUTC": "2026-10-13T00:57:54.133072+00:00",
+  "checked": 34,
+  "drift": [],
+  "inputs": [
+    {
+      "path": "docs/review/evidence/config-acceptance/author/PRISM-HANDOFF-TARGET-20261013.md",
+      "expectedSha256": "ca84be429d093bdcffd19cec0ee9f233e719cc6363ad09659b900aef5dbc142f",
+      "actualSha256": "ca84be429d093bdcffd19cec0ee9f233e719cc6363ad09659b900aef5dbc142f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/prism-handoff-target-contracts-20261013.json",
+      "expectedSha256": "61fff54f52aec11efbff691db0ea2ca5c0215a80dcbe122d593c33532dd3b4b5",
+      "actualSha256": "61fff54f52aec11efbff691db0ea2ca5c0215a80dcbe122d593c33532dd3b4b5"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/check-prism-handoff-definitions.mjs",
+      "expectedSha256": "e1c3cf2ceb42e509907771c8a76b6a4db6f74d4a1cd018ac30be49483c6a7c08",
+      "actualSha256": "e1c3cf2ceb42e509907771c8a76b6a4db6f74d4a1cd018ac30be49483c6a7c08"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/prism-handoff-definition-controls-20261013.json",
+      "expectedSha256": "176431ed96f0a17a8a9fa22ffb50bdf0f8d8b5c5a0b30b2cac337ce9068bbaa8",
+      "actualSha256": "176431ed96f0a17a8a9fa22ffb50bdf0f8d8b5c5a0b30b2cac337ce9068bbaa8"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/prism-design-cardinality-proposal.json",
+      "expectedSha256": "097b4b8b84214746be3e55810f58bd5f0798b7e486d531239f95f4ed80c6d1ff",
+      "actualSha256": "097b4b8b84214746be3e55810f58bd5f0798b7e486d531239f95f4ed80c6d1ff"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/main-fragment.json",
+      "expectedSha256": "06b7f3ad00b4ebae40414c2d0747aeabda58285a062f4541119d7017e5d9b68f",
+      "actualSha256": "06b7f3ad00b4ebae40414c2d0747aeabda58285a062f4541119d7017e5d9b68f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/prism-temporal-before-20261013/PRISM-HANDOFF-TARGET-20261013.md",
+      "expectedSha256": "192c7940230809b6e7219dddbb7bc7d2626868194c42c929d89ceebf0f0b5320",
+      "actualSha256": "192c7940230809b6e7219dddbb7bc7d2626868194c42c929d89ceebf0f0b5320"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/prism-temporal-before-20261013/prism-handoff-target-contracts-20261013.json",
+      "expectedSha256": "2bdb5b4bb907076a1c435f5b893047f2a81086b345b84325f543919420a71e56",
+      "actualSha256": "2bdb5b4bb907076a1c435f5b893047f2a81086b345b84325f543919420a71e56"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/prism-temporal-before-20261013/prism-handoff-definition-controls-20261013.json",
+      "expectedSha256": "8ed697fd5df94862c9fc0a75d2216cd967c6f2f9d548f385ceac842c077010ac",
+      "actualSha256": "8ed697fd5df94862c9fc0a75d2216cd967c6f2f9d548f385ceac842c077010ac"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/prism-temporal-before-20261013/check-prism-handoff-definitions.mjs",
+      "expectedSha256": "a50191abcfaeb8617acd978d005d9cd70f390d7f08100453fdbf1c90edc62456",
+      "actualSha256": "a50191abcfaeb8617acd978d005d9cd70f390d7f08100453fdbf1c90edc62456"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/prism-temporal-before-20261013/identities.json",
+      "expectedSha256": "2fe149a33c64bb6dfcc083026e7a7704ec8c083360464c1b73b2809569f02ab5",
+      "actualSha256": "2fe149a33c64bb6dfcc083026e7a7704ec8c083360464c1b73b2809569f02ab5"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/prism-temporal-before-20261013/main-fragment.json",
+      "expectedSha256": "ce8984f68ab8537855cf4fe22f08b8eaab5b6836775fa9f0ac61eab20b21d0da",
+      "actualSha256": "ce8984f68ab8537855cf4fe22f08b8eaab5b6836775fa9f0ac61eab20b21d0da"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/prism-temporal-before-20261013/prism-design-cardinality-proposal.json",
+      "expectedSha256": "97327929bda4d5d954361433040aea9d5a4eafcfb9b4b2b3b8e66aaf62f751ec",
+      "actualSha256": "97327929bda4d5d954361433040aea9d5a4eafcfb9b4b2b3b8e66aaf62f751ec"
+    },
+    {
+      "path": "skills/prism/control/design-generations.ts",
+      "expectedSha256": "cd32799fdb1eacbaf40c968b101badcfbedc0f8ce9b12ab045e82ae2e632cbfd",
+      "actualSha256": "cd32799fdb1eacbaf40c968b101badcfbedc0f8ce9b12ab045e82ae2e632cbfd"
+    },
+    {
+      "path": "skills/prism/control/agent-admission.ts",
+      "expectedSha256": "e54b1502044c54a674dffe22895b1530fdf415e292a984569f90ecafe07f99b5",
+      "actualSha256": "e54b1502044c54a674dffe22895b1530fdf415e292a984569f90ecafe07f99b5"
+    },
+    {
+      "path": "skills/prism/control/agent-jobs.ts",
+      "expectedSha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334",
+      "actualSha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334"
+    },
+    {
+      "path": "skills/prism/server/dispatch-route.ts",
+      "expectedSha256": "407b0befbe8cbf6009f2cef6fe80ab10a2213258d4be5bddc578f24abdb47382",
+      "actualSha256": "407b0befbe8cbf6009f2cef6fe80ab10a2213258d4be5bddc578f24abdb47382"
+    },
+    {
+      "path": "skills/prism/server/direction-routes.ts",
+      "expectedSha256": "91e731766e8da39e82ce264dba3f9d904fdf77b211e480a3f56365aeef166812",
+      "actualSha256": "91e731766e8da39e82ce264dba3f9d904fdf77b211e480a3f56365aeef166812"
+    },
+    {
+      "path": "skills/prism/server/agent-routes.ts",
+      "expectedSha256": "55c4c77fc4ff7b981287c433c126d9754dffd3df1de464ec0d83bb0294caec17",
+      "actualSha256": "55c4c77fc4ff7b981287c433c126d9754dffd3df1de464ec0d83bb0294caec17"
+    },
+    {
+      "path": "skills/prism/storage/index.ts",
+      "expectedSha256": "e5105909e5f1abf1eb2178270dd63d1b8e2aa337177dcb620b6ae43199a3a199",
+      "actualSha256": "e5105909e5f1abf1eb2178270dd63d1b8e2aa337177dcb620b6ae43199a3a199"
+    },
+    {
+      "path": "skills/prism/studio/design-round-client.ts",
+      "expectedSha256": "0a37517165fad75fd049dafc9a3519cbd8a7c0f2351c6adaeaab4c4fc2281f46",
+      "actualSha256": "0a37517165fad75fd049dafc9a3519cbd8a7c0f2351c6adaeaab4c4fc2281f46"
+    },
+    {
+      "path": "skills/prism/studio/app.tsx",
+      "expectedSha256": "5ee08fa855120dfb53f44aa8a5aa48979674d3f4a0ba8c13c2f4717d2663c092",
+      "actualSha256": "5ee08fa855120dfb53f44aa8a5aa48979674d3f4a0ba8c13c2f4717d2663c092"
+    },
+    {
+      "path": "skills/prism/control/native-operation-store.ts",
+      "expectedSha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9",
+      "actualSha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9"
+    },
+    {
+      "path": "skills/prism/control/native-operation.ts",
+      "expectedSha256": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac",
+      "actualSha256": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac"
+    },
+    {
+      "path": "skills/prism/server/native-worker-execution.ts",
+      "expectedSha256": "d87eb7d05cdc40f3eb353dba63236fa8c20a02adf1b70512c81944bb7cb71a56",
+      "actualSha256": "d87eb7d05cdc40f3eb353dba63236fa8c20a02adf1b70512c81944bb7cb71a56"
+    },
+    {
+      "path": "skills/prism/server/native-worker-host.ts",
+      "expectedSha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34",
+      "actualSha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34"
+    },
+    {
+      "path": "skills/prism/server/worker-operation.ts",
+      "expectedSha256": "1987bd75921ce43775dc43e0a83e776be7624d6a1dc510ed572fdfce02c57471",
+      "actualSha256": "1987bd75921ce43775dc43e0a83e776be7624d6a1dc510ed572fdfce02c57471"
+    },
+    {
+      "path": "skills/prism/config/native-worker.ts",
+      "expectedSha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "actualSha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+    },
+    {
+      "path": "skills/prism/engine/worker-envelope.ts",
+      "expectedSha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+      "actualSha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941"
+    },
+    {
+      "path": "package-lock.json",
+      "expectedSha256": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b",
+      "actualSha256": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+    },
+    {
+      "path": "skills/prism/storage/artifacts.ts",
+      "expectedSha256": "8177fe9d5199d1af866a2ad7d5d7fdfa82b99b0fe6df5b7f0c3c04e96536ef1f",
+      "actualSha256": "8177fe9d5199d1af866a2ad7d5d7fdfa82b99b0fe6df5b7f0c3c04e96536ef1f"
+    },
+    {
+      "path": "skills/prism/engine/index.ts",
+      "expectedSha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16",
+      "actualSha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16"
+    },
+    {
+      "path": "skills/prism/engine/worker-binding.ts",
+      "expectedSha256": "c7480a44ddfcac32fea7c95a02560b4940dc86509b0463aea951584f6b8f659e",
+      "actualSha256": "c7480a44ddfcac32fea7c95a02560b4940dc86509b0463aea951584f6b8f659e"
+    },
+    {
+      "path": "docs/review/remediation/independent-config-c0-prism-handoff-recheck-bce3f075-20261013.md",
+      "expectedSha256": "531f27bd97d08768b8beea7224eff75457021ca5ba3e1185ce705fe280432b1b",
+      "actualSha256": "531f27bd97d08768b8beea7224eff75457021ca5ba3e1185ce705fe280432b1b"
+    }
+  ]
+}

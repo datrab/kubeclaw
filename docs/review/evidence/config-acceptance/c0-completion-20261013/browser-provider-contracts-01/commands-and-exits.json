@@ -1,0 +1,162 @@
+{
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/browser-provider-contracts-01/define.py"
+      ],
+      "exit": 1,
+      "tool": "ab3e8a",
+      "receipt": "failed-definition-01/command.json"
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/browser-provider-contracts-01/define.py"
+      ],
+      "exit": 0,
+      "tool": "349c90"
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/browser-provider-contracts-01/extend-definition.py"
+      ],
+      "exit": 1,
+      "tool": "3cb422",
+      "receipt": "failed-definition-02/command.json"
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/browser-provider-contracts-01/extend-definition.py"
+      ],
+      "exit": 0,
+      "tool": "79590c"
+    },
+    {
+      "argv": [
+        "node",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/browser-provider-contracts-01/check-definition.mjs"
+      ],
+      "exit": 1,
+      "stdout": "logs/replay-01.stdout",
+      "stderr": "logs/replay-01.stderr",
+      "toolOutput": "a01609"
+    },
+    {
+      "argv": [
+        "node",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/browser-provider-contracts-01/check-definition.mjs"
+      ],
+      "exit": 1,
+      "stdout": "logs/replay-02.stdout",
+      "stderr": "logs/replay-02.stderr",
+      "toolOutput": "36c64e"
+    },
+    {
+      "argv": [
+        "node",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/browser-provider-contracts-01/check-definition.mjs"
+      ],
+      "exit": 0,
+      "stdout": "logs/replay-03.stdout",
+      "stderr": "logs/replay-03.stderr",
+      "toolOutput": "53ce37"
+    },
+    {
+      "argv": [
+        "node",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/browser-provider-contracts-01/check-definition.mjs"
+      ],
+      "exit": 0,
+      "stdout": "logs/replay-04.stdout",
+      "stderr": "logs/replay-04.stderr",
+      "toolOutput": "9c47a0"
+    },
+    {
+      "argv": [
+        "node",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/browser-provider-contracts-01/check-definition.mjs"
+      ],
+      "exit": 0,
+      "stdout": "logs/replay-05.stdout",
+      "stderr": "logs/replay-05.stderr",
+      "toolOutput": "c400ae"
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/browser-provider-contracts-01/fixture-contracts.py"
+      ],
+      "exit": 0,
+      "tool": "d9eec6/9c47a0"
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/browser-provider-contracts-01/c3-projection-definition.py"
+      ],
+      "exit": 0,
+      "tool": "4b1210"
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/browser-provider-contracts-01/caller-contracts.py"
+      ],
+      "exit": 0,
+      "tool": "766869/22ce64"
+    },
+    {
+      "argv": [
+        "node",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/browser-provider-contracts-01/check-definition.mjs"
+      ],
+      "exit": 0,
+      "stdout": "logs/final-replay.stdout",
+      "stderr": "logs/final-replay.stderr",
+      "toolOutput": "22ce64",
+      "checks": 5070
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/browser-provider-contracts-01/preserve-axe-merged-domain.py"
+      ],
+      "exit": 1,
+      "toolOutput": "e5b2dc",
+      "receipt": "failed-definition-03/command.json"
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/browser-provider-contracts-01/preserve-axe-merged-domain.py"
+      ],
+      "exit": 0,
+      "toolOutput": "948412"
+    },
+    {
+      "argv": [
+        "node",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/browser-provider-contracts-01/check-definition.mjs"
+      ],
+      "exit": 0,
+      "stdout": "logs/final-replay-02.stdout",
+      "stderr": "logs/final-replay-02.stderr",
+      "toolOutput": "948412",
+      "checks": 5074
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/browser-provider-contracts-01/freeze-definition.py"
+      ],
+      "exit": 0,
+      "stdout": "logs/final-freeze.stdout"
+    }
+  ],
+  "definitionFailuresPreserved": true,
+  "qualification": "Raw collector receipts/tool references; local Python/Node/source-schema/type-erasure/bookkeeping ONLY. No browser/process/native/provider/CLI/API/network/credentials/Eval execution."
+}

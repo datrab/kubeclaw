@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
+import { constants as bufferConstants } from 'node:buffer';
+import { readBoundedSnapshot } from '../../../skills/common/plugin-runtime/foundation/observability/replay-validation.ts';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -77,4 +79,42 @@ test('actual concurrent parent replacement is rejected or returns only the exact
   await done; child.disconnect(); child.kill('SIGTERM'); await once(child, 'exit');
   assert.ok(rejected > 0, 'a real overlapping parent replacement must be observed');
   assert.deepEqual(await f.store.get(stored.digest), bytes);
+});
+
+
+test('oversize blob admission rejects before copying caller bytes and retains exact-limit behavior', async t => {
+  const f = fixture(t), input = new Uint8Array(17);
+  const original = Buffer.from;
+  let copies = 0;
+  t.mock.method(Buffer, 'from', function(value, ...args) {
+    if (value === input) copies++;
+    return Reflect.apply(original, this, [value, ...args]);
+  });
+  await assert.rejects(f.store.put(input), /DURABLE_BLOB_SIZE_EXCEEDED/);
+  assert.equal(copies, 0, 'rejected input must not allocate a full duplicate');
+  assert.deepEqual(fs.readdirSync(f.root), [], 'oversize input cannot create even a budget-lock directory');
+  const accepted = Buffer.alloc(16, 7), stored = await f.store.put(accepted);
+  assert.deepEqual(await f.store.get(stored.digest), accepted);
+});
+
+test('real sparse snapshot exceeding installed Node string limit rejects before allocation, then restores', async t => {
+  const f = fixture(t), file = path.join(f.root, 'snapshot.json');
+  fs.writeFileSync(file, '');
+  fs.truncateSync(file, bufferConstants.MAX_STRING_LENGTH + 1);
+  const original = Buffer.alloc;
+  let oversizedAllocations = 0;
+  t.mock.method(Buffer, 'alloc', function(size, ...args) {
+    if (size > bufferConstants.MAX_STRING_LENGTH) {
+      oversizedAllocations++;
+      assert.fail('unsupported snapshot must reject before native allocation');
+    }
+    return Reflect.apply(original, this, [size, ...args]);
+  });
+  await assert.rejects(readBoundedSnapshot(file, Number.MAX_SAFE_INTEGER), /OBSERVABILITY_REPLAY_INVALID:snapshot-size/);
+  assert.equal(oversizedAllocations, 0);
+  fs.writeFileSync(file, '{"original":"é"}');
+  const size = fs.statSync(file).size;
+  assert.equal(await readBoundedSnapshot(file, size), '{"original":"é"}');
+  await assert.rejects(readBoundedSnapshot(file, size - 1), /snapshot-size/);
+  assert.equal(await readBoundedSnapshot(file, size), '{"original":"é"}');
 });

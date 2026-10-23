@@ -1,0 +1,259 @@
+{
+  "scope": "Exact primary schema shape only; no native rule parser/language semantics or lint execution",
+  "results": [
+    {
+      "profile": "A",
+      "kind": "positive",
+      "valid": true,
+      "expectedValid": true,
+      "passed": true,
+      "errors": null
+    },
+    {
+      "profile": "A",
+      "kind": "missing-pattern",
+      "valid": false,
+      "expectedValid": false,
+      "passed": true,
+      "errors": [
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/0/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "pattern"
+          },
+          "message": "must have required property 'pattern'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/1/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "patterns"
+          },
+          "message": "must have required property 'patterns'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/2/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "pattern-either"
+          },
+          "message": "must have required property 'pattern-either'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/3/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "pattern-regex"
+          },
+          "message": "must have required property 'pattern-regex'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/4/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "r2c-internal-project-depends-on"
+          },
+          "message": "must have required property 'r2c-internal-project-depends-on'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/5/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "match"
+          },
+          "message": "must have required property 'match'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf",
+          "keyword": "oneOf",
+          "params": {
+            "passingSchemas": null
+          },
+          "message": "must match exactly one schema in oneOf"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/if",
+          "keyword": "if",
+          "params": {
+            "failingKeyword": "else"
+          },
+          "message": "must match \"else\" schema"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/if",
+          "keyword": "if",
+          "params": {
+            "failingKeyword": "then"
+          },
+          "message": "must match \"then\" schema"
+        }
+      ]
+    },
+    {
+      "profile": "A",
+      "kind": "invalid-severity",
+      "valid": false,
+      "expectedValid": false,
+      "passed": true,
+      "errors": [
+        {
+          "instancePath": "/rules/0/severity",
+          "schemaPath": "#/properties/rules/items/properties/severity/enum",
+          "keyword": "enum",
+          "params": {
+            "allowedValues": [
+              "ERROR",
+              "WARNING",
+              "INFO",
+              "INVENTORY",
+              "EXPERIMENT",
+              "CRITICAL",
+              "HIGH",
+              "MEDIUM",
+              "LOW"
+            ]
+          },
+          "message": "must be equal to one of the allowed values"
+        }
+      ]
+    },
+    {
+      "profile": "B",
+      "kind": "positive",
+      "valid": true,
+      "expectedValid": true,
+      "passed": true,
+      "errors": null
+    },
+    {
+      "profile": "B",
+      "kind": "missing-pattern",
+      "valid": false,
+      "expectedValid": false,
+      "passed": true,
+      "errors": [
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/0/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "pattern"
+          },
+          "message": "must have required property 'pattern'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/1/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "patterns"
+          },
+          "message": "must have required property 'patterns'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/2/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "pattern-either"
+          },
+          "message": "must have required property 'pattern-either'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/3/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "pattern-regex"
+          },
+          "message": "must have required property 'pattern-regex'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/4/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "r2c-internal-project-depends-on"
+          },
+          "message": "must have required property 'r2c-internal-project-depends-on'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/5/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "match"
+          },
+          "message": "must have required property 'match'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf",
+          "keyword": "oneOf",
+          "params": {
+            "passingSchemas": null
+          },
+          "message": "must match exactly one schema in oneOf"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/if",
+          "keyword": "if",
+          "params": {
+            "failingKeyword": "else"
+          },
+          "message": "must match \"else\" schema"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/if",
+          "keyword": "if",
+          "params": {
+            "failingKeyword": "then"
+          },
+          "message": "must match \"then\" schema"
+        }
+      ]
+    },
+    {
+      "profile": "B",
+      "kind": "invalid-severity",
+      "valid": false,
+      "expectedValid": false,
+      "passed": true,
+      "errors": [
+        {
+          "instancePath": "/rules/0/severity",
+          "schemaPath": "#/properties/rules/items/properties/severity/enum",
+          "keyword": "enum",
+          "params": {
+            "allowedValues": [
+              "ERROR",
+              "WARNING",
+              "INFO",
+              "INVENTORY",
+              "EXPERIMENT",
+              "CRITICAL",
+              "HIGH",
+              "MEDIUM",
+              "LOW"
+            ]
+          },
+          "message": "must be equal to one of the allowed values"
+        }
+      ]
+    }
+  ],
+  "passed": 6,
+  "failed": 0
+}

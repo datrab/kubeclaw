@@ -28,3 +28,11 @@ Core injects this narrow resolver only when its original Wait adapter is the sel
 The author verification includes real filesystem/Core/HTTP cases, competing writers, fixed quotas, process crashes, and unchanged original suites. Final source binding, omission controls and independent acceptance remain pending; these local results are not deployment or overall observability closure. See `docs/review/remediation/implementation/wait-value-retirement-20260921.md` for the bounded status.
 
 Physical byte savings do not reduce the logical `read` response or guarantee lower RAM use. `read` still returns all original Waits, each bounded by its original snapshot-pinned entry limit. Aggregate values can exceed the current physical Store-byte quota; record count and the applicable original entry bounds govern that logical size. Bounded source reads and retained Core history are additional costs. The retirement quota proof therefore concerns new physical Store writes only.
+
+
+Capacity config requires explicit `maxEntryBytes`, `maximumRecords` and
+`maximumStoreBytes` positive safe integers. No defaults or numeric strings are
+accepted. Nova selects these from `settings.waitStore` in the required Core policy,
+not from raw Platform adapter overrides. Installation `root` remains in the
+adapter entry. Direct callers supply the complete limits themselves. Existing
+store accounting/idempotency and cancellation behavior are unchanged.

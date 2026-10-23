@@ -1,7 +1,6 @@
 import assert from 'node:assert/strict';
 
 import {
-  DEFAULT_APPROVAL_TIMEOUT_MINUTES,
   calculateApprovalExpiresAt,
   parseApprovalConfig,
   parseApprovalGuidance,
@@ -23,10 +22,11 @@ assert.throws(
 assert.deepEqual(parseApprovalConfig({
   target: 'release-operators',
   issuerId: 'operator:release',
+  timeoutMinutes: 60,
 }), {
   target: 'release-operators',
   issuerId: 'operator:release',
-  timeoutMinutes: DEFAULT_APPROVAL_TIMEOUT_MINUTES,
+  timeoutMinutes: 60,
 });
 assert.throws(
   () => parseApprovalConfig({ target: 'release-operators', issuerId: 'operator:release', timeoutMinutes: 0 }),
@@ -113,3 +113,5 @@ assert.throws(
 );
 
 console.log(JSON.stringify({ ok: true, plugin: 'kubeclaw.human-approval', suite: 'unit' }));
+
+assert.throws(() => parseApprovalConfig({target:'release-operators',issuerId:'operator:release'}), /APPROVAL_TIMEOUT_MINUTES_INVALID/);

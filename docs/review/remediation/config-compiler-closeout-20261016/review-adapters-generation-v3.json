@@ -1,0 +1,18 @@
+{
+  "findings": [
+    {
+      "title": "[P1] Preserve previously valid v1/v2 policy captures",
+      "body": "The previous schema required `operatorMessagingPayload.payloadStructure`, including for v2 policies. This new equivalence check rejects every such previously valid capture because its version is not v3 while the field is present. Consequently, recovery through `inspectRuntimeConfiguration(..., retainedCorePolicy)` fails with `CORE_RUNTIME_POLICY_VERSION_MISMATCH`, and existing v1/v2 policy documents also stop loading. The compatibility test constructs a legacy capture by deleting this formerly required field, so it does not cover the actual previous contract. Accept the previously supported shapes and preserve their selected structure semantics rather than rejecting them.",
+      "priority": "P1",
+      "confidence": 1,
+      "category": "regression",
+      "code_location": {
+        "file_path": "skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts",
+        "line": 77
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "The version discriminator breaks loading and recovery of policies that satisfied the preceding schema. This conclusion follows from the supplied source and diff; no tests or native execution were performed.",
+  "overall_confidence": 0.99
+}

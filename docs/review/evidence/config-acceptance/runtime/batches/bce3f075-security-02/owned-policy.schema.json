@@ -1,0 +1,194 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "providerTimeoutMs",
+    "headerRules",
+    "verdictPolicy"
+  ],
+  "properties": {
+    "providerTimeoutMs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "headers",
+        "dependency",
+        "image",
+        "kubernetes-policy",
+        "kubernetes-runtime"
+      ],
+      "properties": {
+        "headers": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 300000
+        },
+        "dependency": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 900000
+        },
+        "image": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 900000
+        },
+        "kubernetes-policy": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 300000
+        },
+        "kubernetes-runtime": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 300000
+        }
+      }
+    },
+    "headerRules": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 64,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "header",
+          "severity",
+          "kind"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9.-]+$",
+            "maxLength": 128
+          },
+          "header": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$",
+            "maxLength": 128
+          },
+          "severity": {
+            "enum": [
+              "critical",
+              "high",
+              "medium",
+              "low",
+              "info"
+            ]
+          },
+          "kind": {
+            "enum": [
+              "present",
+              "equals",
+              "contains",
+              "hsts-min-age"
+            ]
+          },
+          "value": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "required": [
+                "kind"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "present"
+                }
+              }
+            },
+            "then": {
+              "not": {
+                "properties": {
+                  "value": {}
+                },
+                "required": [
+                  "value"
+                ]
+              }
+            },
+            "else": {
+              "properties": {
+                "value": {}
+              },
+              "required": [
+                "value"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "verdictPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "blockingSeverities",
+        "blockActiveThreats",
+        "blockMissingFixes",
+        "acceptances"
+      ],
+      "properties": {
+        "blockingSeverities": {
+          "type": "array",
+          "maxItems": 5,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "critical",
+              "high",
+              "medium",
+              "low",
+              "info"
+            ]
+          }
+        },
+        "blockActiveThreats": {
+          "type": "boolean"
+        },
+        "blockMissingFixes": {
+          "type": "boolean"
+        },
+        "acceptances": {
+          "type": "array",
+          "maxItems": 128,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "findingId",
+              "reason",
+              "expiresAt"
+            ],
+            "properties": {
+              "findingId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256,
+                "pattern": "^[A-Za-z0-9._:@/-]+$"
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 1024
+              },
+              "expiresAt": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "description": "Proposed single security-providers complete authored policy, no preset/business defaults. Existing source processing ceilings are compatibility guards currently, separate quota obligations not automatically excluded. Semantic rule/waiver-ID uniqueness and actual retained runtime/claim deadlines required; task paths/artifacts/deployment/image source remain separate task author. Not implemented productive loader."
+}

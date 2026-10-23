@@ -218,8 +218,11 @@ function parseWorkflowCommands(text) {
       commands.add(command.replace(/^['"]|['"]$/g, ''));
     }
   }
-  for (const match of text.matchAll(/^\s+(npm run [A-Za-z0-9:_-]+)/gm)) {
-    commands.add(match[1]);
+  // Shell continuation belongs to the same command; preserve workspace and
+  // other arguments, but not diagnostic redirections or pipeline consumers.
+  const logicalLines = text.replace(/\\\r?\n[ \t]*/g, ' ');
+  for (const match of logicalLines.matchAll(/^[ \t]+(npm run [A-Za-z0-9:_-]+[^\r\n]*)/gm)) {
+    commands.add(match[1].split(/\s+(?:\d*[<>]|\|\||&&|\|)/, 1)[0].trim());
   }
   for (const match of text.matchAll(/uses:\s*([^\s]+)/g)) {
     commands.add(`uses: ${match[1]}`);

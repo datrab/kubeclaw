@@ -1,0 +1,545 @@
+{
+  "caseId": "RT-C0-REPOSITORY-GRADE-COMPILER-CONTROL",
+  "command": "node docs/review/evidence/config-acceptance/runtime/repository-grade-compiler-control.mjs",
+  "node": "v24.21.0",
+  "sourceDigests": {
+    "skills/nova/plugins/review/src/scalable-review-compiler.ts": "9ab253c3605ac971385e4d4787da26669f9623ff50dcc30b6fe0a250301329a9",
+    "skills/nova/plugins/review/src/scalable-review-jobs.ts": "727d9042c598be9920c15c11e7c1aab20ca4bdfcb2f0a41f4b30860296fc9c90",
+    "skills/nova/plugins/review/src/repository-review-profile.ts": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b",
+    "skills/nova/plugins/review/src/review-prompt-budget.ts": "44b89cda9e7d2fa5269621841a8e1395f0c8bcaa9b77efbcaa7a12e66384613a"
+  },
+  "testDigests": {
+    "docs/review/evidence/config-acceptance/runtime/repository-grade-compiler-control.mjs": "8ea14ad9c1f67423e74c531a9e89f4acbf4e5e3b59a8ed8ebd0700292e766084"
+  },
+  "offlineFixture": {
+    "documents": [
+      {
+        "path": "src/a.ts",
+        "content": "export const a = 1;\n"
+      }
+    ],
+    "files": [
+      {
+        "path": "src/a.ts",
+        "objectId": "cc798ff50da9473effe8bdb31c8c120fe42b61e3",
+        "mode": "100644",
+        "sizeBytes": 20
+      }
+    ],
+    "head": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "limitation": "synthetic head with real content/blob hashes, actual snapshot/parser/compiler. No actual repository Git/head proof, registry/role/plugin dispatch or installed model claimed."
+  },
+  "observations": [
+    {
+      "grade": "fast",
+      "compilationDigest": "sha256:5592ba7ec006a18c483f5bab88778322b9200eb0f6fabcca19621887bbd69591",
+      "profile": {
+        "schemaVersion": "repository-review-profile.v1",
+        "grade": "fast",
+        "mode": "execute",
+        "scope": {
+          "kind": "repository"
+        },
+        "allowedPrefixes": [
+          "."
+        ],
+        "tokenizerEncoding": "o200k_base",
+        "componentBudget": {
+          "maxFiles": 60,
+          "maxBytes": 400000,
+          "maxTokens": 86000
+        },
+        "boundaryBudget": {
+          "maxFiles": 400,
+          "maxBytes": 900000,
+          "maxTokens": 80000,
+          "maxRelations": 600,
+          "maxSlices": 200
+        },
+        "maxPrimaryJobs": 75,
+        "maxContextExpansionJobs": 12,
+        "maxVerificationJobs": 8,
+        "maxInputTokensPerJob": 120000,
+        "maxContextTokensPerJob": 128000,
+        "maxPromptBytesPerJob": 900000,
+        "maxInitialInputTokens": 6500000,
+        "maxContextExpansionInputTokens": 750000,
+        "maxVerificationInputTokens": 750000,
+        "maxTotalInputTokens": 8000000,
+        "maxOutputTokensPerJob": 6000,
+        "maxEstimatedCostUsd": 100,
+        "maxWallTimeSeconds": 3600,
+        "estimatedSecondsPerJob": 120,
+        "inputUsdPerMillionTokens": 10,
+        "outputUsdPerMillionTokens": 30,
+        "concurrency": 8,
+        "maxRetries": 1,
+        "maxRetryAttemptsPerPhase": 4,
+        "enabledLenses": [
+          "contracts",
+          "security",
+          "lifecycle"
+        ],
+        "digest": "sha256:d1026cd33eab80fd096a372c8c4729a8f0b0212d967587789aa3d9af9359e319"
+      },
+      "jobAccounting": {
+        "schemaVersion": "scalable-review-job-accounting.v1",
+        "componentRecords": 1,
+        "boundaryRecords": 0,
+        "boundaryRelations": 0,
+        "sourceAssignments": 1,
+        "uniqueSourcePayloads": 1,
+        "repeatedSourceAssignments": 0,
+        "sourcePayloadTokens": 76,
+        "uniqueSourcePayloadTokens": 76,
+        "directRelationAssignments": 0,
+        "compactTopologyRelationAssignments": 0,
+        "aggregatePathRelationAssignments": 0,
+        "relationAssignments": 0,
+        "uniqueRelationAssignments": 0,
+        "repeatedRelationAssignments": 0,
+        "relationsWithoutLineProvenance": 0,
+        "componentJobs": 1,
+        "boundaryJobs": 0,
+        "systemPathJobs": 0,
+        "systemLensJobs": 0,
+        "primaryJobs": 1,
+        "serializedPromptBytes": 14615,
+        "serializedPayloadTokens": 3348,
+        "reservedPromptBytes": 17695,
+        "estimatedInputTokens": 5653,
+        "maximumJobBytes": 17695,
+        "maximumJobTokens": 5653,
+        "medianJobTokens": 5653,
+        "p95JobTokens": 5653,
+        "reservedOutputTokens": 6000,
+        "estimatedCostUsd": 0.24,
+        "estimatedWallTimeSeconds": 120,
+        "byKind": {
+          "component": {
+            "jobs": 1,
+            "bytes": 17695,
+            "tokens": 5653,
+            "maximumTokens": 5653
+          },
+          "boundary": {
+            "jobs": 0,
+            "bytes": 0,
+            "tokens": 0,
+            "maximumTokens": 0
+          },
+          "system-path": {
+            "jobs": 0,
+            "bytes": 0,
+            "tokens": 0,
+            "maximumTokens": 0
+          },
+          "system-lens": {
+            "jobs": 0,
+            "bytes": 0,
+            "tokens": 0,
+            "maximumTokens": 0
+          }
+        },
+        "digest": "sha256:c3041900e611fd9d1cc6861933d121e496b5c8749c678377d46d55376608b17c"
+      },
+      "result": "passed"
+    },
+    {
+      "grade": "standard",
+      "compilationDigest": "sha256:131a44e4c8fa75f927fceb54104224bf63e9f9145e968a0ed7ef07d907875c85",
+      "profile": {
+        "schemaVersion": "repository-review-profile.v1",
+        "grade": "standard",
+        "mode": "execute",
+        "scope": {
+          "kind": "repository"
+        },
+        "allowedPrefixes": [
+          "."
+        ],
+        "tokenizerEncoding": "o200k_base",
+        "componentBudget": {
+          "maxFiles": 60,
+          "maxBytes": 400000,
+          "maxTokens": 86000
+        },
+        "boundaryBudget": {
+          "maxFiles": 400,
+          "maxBytes": 900000,
+          "maxTokens": 80000,
+          "maxRelations": 600,
+          "maxSlices": 200
+        },
+        "maxPrimaryJobs": 500,
+        "maxContextExpansionJobs": 100,
+        "maxVerificationJobs": 100,
+        "maxInputTokensPerJob": 120000,
+        "maxContextTokensPerJob": 128000,
+        "maxPromptBytesPerJob": 900000,
+        "maxInitialInputTokens": 25000000,
+        "maxContextExpansionInputTokens": 50000000,
+        "maxVerificationInputTokens": 50000000,
+        "maxTotalInputTokens": 50000000,
+        "maxOutputTokensPerJob": 6000,
+        "maxEstimatedCostUsd": 650,
+        "maxWallTimeSeconds": 28800,
+        "estimatedSecondsPerJob": 120,
+        "inputUsdPerMillionTokens": 10,
+        "outputUsdPerMillionTokens": 30,
+        "concurrency": 10,
+        "maxRetries": 2,
+        "maxRetryAttemptsPerPhase": 20,
+        "enabledLenses": [
+          "architecture",
+          "contracts",
+          "security",
+          "lifecycle",
+          "resilience",
+          "deployment",
+          "simplification"
+        ],
+        "digest": "sha256:e95d4bd1a831d7e15054535680a60aea5fbc029b0f482648bb134f79acc878b5"
+      },
+      "jobAccounting": {
+        "schemaVersion": "scalable-review-job-accounting.v1",
+        "componentRecords": 1,
+        "boundaryRecords": 0,
+        "boundaryRelations": 0,
+        "sourceAssignments": 1,
+        "uniqueSourcePayloads": 1,
+        "repeatedSourceAssignments": 0,
+        "sourcePayloadTokens": 76,
+        "uniqueSourcePayloadTokens": 76,
+        "directRelationAssignments": 0,
+        "compactTopologyRelationAssignments": 0,
+        "aggregatePathRelationAssignments": 0,
+        "relationAssignments": 0,
+        "uniqueRelationAssignments": 0,
+        "repeatedRelationAssignments": 0,
+        "relationsWithoutLineProvenance": 0,
+        "componentJobs": 1,
+        "boundaryJobs": 0,
+        "systemPathJobs": 0,
+        "systemLensJobs": 0,
+        "primaryJobs": 1,
+        "serializedPromptBytes": 15327,
+        "serializedPayloadTokens": 3449,
+        "reservedPromptBytes": 18407,
+        "estimatedInputTokens": 5754,
+        "maximumJobBytes": 18407,
+        "maximumJobTokens": 5754,
+        "medianJobTokens": 5754,
+        "p95JobTokens": 5754,
+        "reservedOutputTokens": 6000,
+        "estimatedCostUsd": 0.24,
+        "estimatedWallTimeSeconds": 120,
+        "byKind": {
+          "component": {
+            "jobs": 1,
+            "bytes": 18407,
+            "tokens": 5754,
+            "maximumTokens": 5754
+          },
+          "boundary": {
+            "jobs": 0,
+            "bytes": 0,
+            "tokens": 0,
+            "maximumTokens": 0
+          },
+          "system-path": {
+            "jobs": 0,
+            "bytes": 0,
+            "tokens": 0,
+            "maximumTokens": 0
+          },
+          "system-lens": {
+            "jobs": 0,
+            "bytes": 0,
+            "tokens": 0,
+            "maximumTokens": 0
+          }
+        },
+        "digest": "sha256:bcdde5c25e47774c69c9c4b5cbbd393f32910c886a8d051ae81d07e7afa9d09f"
+      },
+      "result": "passed"
+    },
+    {
+      "grade": "deep",
+      "compilationDigest": "sha256:4265ea4976efcb3c3b3611438d532928c7bdb0a22528350adaaee9115abf7491",
+      "profile": {
+        "schemaVersion": "repository-review-profile.v1",
+        "grade": "deep",
+        "mode": "execute",
+        "scope": {
+          "kind": "repository"
+        },
+        "allowedPrefixes": [
+          "."
+        ],
+        "tokenizerEncoding": "o200k_base",
+        "componentBudget": {
+          "maxFiles": 30,
+          "maxBytes": 220000,
+          "maxTokens": 90000
+        },
+        "boundaryBudget": {
+          "maxFiles": 100,
+          "maxBytes": 480000,
+          "maxTokens": 110000,
+          "maxRelations": 100,
+          "maxSlices": 32
+        },
+        "maxPrimaryJobs": 2000,
+        "maxContextExpansionJobs": 250,
+        "maxVerificationJobs": 250,
+        "maxInputTokensPerJob": 120000,
+        "maxContextTokensPerJob": 128000,
+        "maxPromptBytesPerJob": 900000,
+        "maxInitialInputTokens": 50000000,
+        "maxContextExpansionInputTokens": 100000000,
+        "maxVerificationInputTokens": 100000000,
+        "maxTotalInputTokens": 100000000,
+        "maxOutputTokensPerJob": 6000,
+        "maxEstimatedCostUsd": 1300,
+        "maxWallTimeSeconds": 86400,
+        "estimatedSecondsPerJob": 150,
+        "inputUsdPerMillionTokens": 10,
+        "outputUsdPerMillionTokens": 30,
+        "concurrency": 4,
+        "maxRetries": 2,
+        "maxRetryAttemptsPerPhase": 40,
+        "enabledLenses": [
+          "architecture",
+          "contracts",
+          "security",
+          "lifecycle",
+          "resilience",
+          "deployment",
+          "simplification"
+        ],
+        "digest": "sha256:5ddd1208a1713dd18752bb6dcfc0b7cca32865e47782feb8d13932acd10404a3"
+      },
+      "jobAccounting": {
+        "schemaVersion": "scalable-review-job-accounting.v1",
+        "componentRecords": 1,
+        "boundaryRecords": 0,
+        "boundaryRelations": 0,
+        "sourceAssignments": 1,
+        "uniqueSourcePayloads": 1,
+        "repeatedSourceAssignments": 0,
+        "sourcePayloadTokens": 76,
+        "uniqueSourcePayloadTokens": 76,
+        "directRelationAssignments": 0,
+        "compactTopologyRelationAssignments": 0,
+        "aggregatePathRelationAssignments": 0,
+        "relationAssignments": 0,
+        "uniqueRelationAssignments": 0,
+        "repeatedRelationAssignments": 0,
+        "relationsWithoutLineProvenance": 0,
+        "componentJobs": 1,
+        "boundaryJobs": 0,
+        "systemPathJobs": 0,
+        "systemLensJobs": 0,
+        "primaryJobs": 1,
+        "serializedPromptBytes": 15327,
+        "serializedPayloadTokens": 3449,
+        "reservedPromptBytes": 18407,
+        "estimatedInputTokens": 5754,
+        "maximumJobBytes": 18407,
+        "maximumJobTokens": 5754,
+        "medianJobTokens": 5754,
+        "p95JobTokens": 5754,
+        "reservedOutputTokens": 6000,
+        "estimatedCostUsd": 0.24,
+        "estimatedWallTimeSeconds": 150,
+        "byKind": {
+          "component": {
+            "jobs": 1,
+            "bytes": 18407,
+            "tokens": 5754,
+            "maximumTokens": 5754
+          },
+          "boundary": {
+            "jobs": 0,
+            "bytes": 0,
+            "tokens": 0,
+            "maximumTokens": 0
+          },
+          "system-path": {
+            "jobs": 0,
+            "bytes": 0,
+            "tokens": 0,
+            "maximumTokens": 0
+          },
+          "system-lens": {
+            "jobs": 0,
+            "bytes": 0,
+            "tokens": 0,
+            "maximumTokens": 0
+          }
+        },
+        "digest": "sha256:322fe73d14a4f811fa2626e606bd9d76b9e1f8607571c56b5f6fe184009b60b3"
+      },
+      "result": "passed"
+    }
+  ],
+  "actualBudgetSourceControl": {
+    "largeMeasured": {
+      "payloadBytes": 15016,
+      "payloadTokens": 7508,
+      "bytes": 18096,
+      "tokens": 9813
+    },
+    "tinyMeasured": {
+      "payloadBytes": 23,
+      "payloadTokens": 9,
+      "bytes": 3103,
+      "tokens": 2314
+    },
+    "profileA": {
+      "schemaVersion": "repository-review-profile.v1",
+      "grade": "fast",
+      "mode": "execute",
+      "scope": {
+        "kind": "repository"
+      },
+      "allowedPrefixes": [
+        "."
+      ],
+      "tokenizerEncoding": "o200k_base",
+      "componentBudget": {
+        "maxFiles": 60,
+        "maxBytes": 400000,
+        "maxTokens": 86000
+      },
+      "boundaryBudget": {
+        "maxFiles": 400,
+        "maxBytes": 900000,
+        "maxTokens": 80000,
+        "maxRelations": 600,
+        "maxSlices": 200
+      },
+      "maxPrimaryJobs": 75,
+      "maxContextExpansionJobs": 12,
+      "maxVerificationJobs": 8,
+      "maxInputTokensPerJob": 8000,
+      "maxContextTokensPerJob": 128000,
+      "maxPromptBytesPerJob": 900000,
+      "maxInitialInputTokens": 6500000,
+      "maxContextExpansionInputTokens": 750000,
+      "maxVerificationInputTokens": 750000,
+      "maxTotalInputTokens": 8000000,
+      "maxOutputTokensPerJob": 6000,
+      "maxEstimatedCostUsd": 100,
+      "maxWallTimeSeconds": 3600,
+      "estimatedSecondsPerJob": 120,
+      "inputUsdPerMillionTokens": 10,
+      "outputUsdPerMillionTokens": 30,
+      "concurrency": 8,
+      "maxRetries": 1,
+      "maxRetryAttemptsPerPhase": 4,
+      "enabledLenses": [
+        "contracts",
+        "security",
+        "lifecycle"
+      ],
+      "digest": "sha256:f9581141dd3ccb6b018ee3bbc3cccbb64107a0027509fc3b096744b0727590df"
+    },
+    "profileB": {
+      "schemaVersion": "repository-review-profile.v1",
+      "grade": "fast",
+      "mode": "execute",
+      "scope": {
+        "kind": "repository"
+      },
+      "allowedPrefixes": [
+        "."
+      ],
+      "tokenizerEncoding": "o200k_base",
+      "componentBudget": {
+        "maxFiles": 60,
+        "maxBytes": 400000,
+        "maxTokens": 86000
+      },
+      "boundaryBudget": {
+        "maxFiles": 400,
+        "maxBytes": 900000,
+        "maxTokens": 80000,
+        "maxRelations": 600,
+        "maxSlices": 200
+      },
+      "maxPrimaryJobs": 75,
+      "maxContextExpansionJobs": 12,
+      "maxVerificationJobs": 8,
+      "maxInputTokensPerJob": 12000,
+      "maxContextTokensPerJob": 128000,
+      "maxPromptBytesPerJob": 900000,
+      "maxInitialInputTokens": 6500000,
+      "maxContextExpansionInputTokens": 750000,
+      "maxVerificationInputTokens": 750000,
+      "maxTotalInputTokens": 8000000,
+      "maxOutputTokensPerJob": 6000,
+      "maxEstimatedCostUsd": 100,
+      "maxWallTimeSeconds": 3600,
+      "estimatedSecondsPerJob": 120,
+      "inputUsdPerMillionTokens": 10,
+      "outputUsdPerMillionTokens": 30,
+      "concurrency": 8,
+      "maxRetries": 1,
+      "maxRetryAttemptsPerPhase": 4,
+      "enabledLenses": [
+        "contracts",
+        "security",
+        "lifecycle"
+      ],
+      "digest": "sha256:2d4e8e5366a2f5e30122902d052cd0f498e45585b80eb080fd19f446b6715453"
+    },
+    "ARejection": "review dispatch context budget exceeded",
+    "snapshots": {
+      "A": {
+        "calls": 1,
+        "reservedPromptBytes": 3103,
+        "modelPayloadBytes": 23,
+        "initialCalls": 1,
+        "contextExpansionCalls": 0,
+        "verificationCalls": 0,
+        "initialPromptBytes": 3103,
+        "contextExpansionPromptBytes": 0,
+        "verificationPromptBytes": 0,
+        "initialPayloadBytes": 23,
+        "contextExpansionPayloadBytes": 0,
+        "verificationPayloadBytes": 0,
+        "reservedInputTokens": 2314,
+        "reservedOutputTokens": 6000,
+        "initialInputTokens": 2314,
+        "contextExpansionInputTokens": 0,
+        "verificationInputTokens": 0,
+        "reservedEstimatedCostUsd": 0.21
+      },
+      "B": {
+        "calls": 1,
+        "reservedPromptBytes": 18096,
+        "modelPayloadBytes": 15016,
+        "initialCalls": 1,
+        "contextExpansionCalls": 0,
+        "verificationCalls": 0,
+        "initialPromptBytes": 18096,
+        "contextExpansionPromptBytes": 0,
+        "verificationPromptBytes": 0,
+        "initialPayloadBytes": 15016,
+        "contextExpansionPayloadBytes": 0,
+        "verificationPayloadBytes": 0,
+        "reservedInputTokens": 9813,
+        "reservedOutputTokens": 6000,
+        "initialInputTokens": 9813,
+        "contextExpansionInputTokens": 0,
+        "verificationInputTokens": 0,
+        "reservedEstimatedCostUsd": 0.28
+      }
+    },
+    "limitation": "actual selected budget class arithmetic/reservation only; large synthetic source control payload is NOT a complete real stage/job protocol. Full pipeline effect cases remain not-run."
+  },
+  "result": "passed",
+  "reviewerConfirmation": "pending"
+}

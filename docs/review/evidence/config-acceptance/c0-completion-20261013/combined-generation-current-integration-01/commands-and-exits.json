@@ -1,0 +1,15 @@
+{
+  "command": [
+    "python3",
+    "docs/review/evidence/config-acceptance/author/check-matrix.py",
+    "--structural"
+  ],
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "exitCode": 0,
+  "stdoutSha256": "ef549462af1b1397f61aeb2ccaab567cc67a62e4c22c18fc649906b87d4485e6",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "checkerSha256": "e165fd2d9837ac944e18100700e2630dc70893e38e5edfcb470376c2b114c7c5",
+  "pythonExecutable": "/usr/bin/python3",
+  "pythonVersion": "3.11.2 (main, Oct  7 2026, 12:35:07) [GCC 12.2.0]",
+  "qualification": "Actual existing structural check only; not source/domain/fullC0/native acceptance"
+}

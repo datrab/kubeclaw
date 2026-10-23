@@ -1,0 +1,7 @@
+{
+  "at": "2026-10-16T22:26:25.862950+00:00",
+  "error": "execution transport timed out after600000ms; original wrapper terminated but test process remains productive",
+  "samePid": 2563956,
+  "action": "reacquired SAME nonblocking writer lock; monitor existing original process, no duplicate or restart",
+  "originalExitCodeUnavailable": true
+}

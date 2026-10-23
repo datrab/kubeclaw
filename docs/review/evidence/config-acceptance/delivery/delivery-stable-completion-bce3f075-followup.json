@@ -1,0 +1,79 @@
+{
+  "status": "stable bounded delivery evidence batch; NOT ACCEPTED; no global closure",
+  "sourceStand": {
+    "head": "bce3f075156a86be345821499c04628cb35c2762",
+    "tree": "a8b0adf641de573565360b0c4eb577d6bc7545c3",
+    "branch": "codex/config-c0-semantic-inventory-20261012"
+  },
+  "ownedDirectory": "docs/review/evidence/config-acceptance/delivery",
+  "primaryArtifacts": [
+    "DELIVERY-CONTRACTS-BCE3F075.md",
+    "inventory-fragment.json",
+    "proposed-cases.json",
+    "c0-residual-definition-cases-bce3f075.json",
+    "delivery-source-candidate-dispositions-bce3f075.json",
+    "delivery-remaining-obligations-bce3f075.json",
+    "target-binding-proposals-bce3f075.json",
+    "native-host-definitions-bce3f075.json",
+    "native-provisioning-contracts-bce3f075.json",
+    "semantic-closure-verification.json"
+  ],
+  "originalResidualFieldTracing": "inspected exact current reader/constructor/producer contracts for original remaining392; no target completeness or native effect inferred",
+  "settingRows": 820,
+  "sourceRows": 312,
+  "implementationCaseResults": {
+    "not-run": 197
+  },
+  "newActualBoundedDefinitionResults": {
+    "passed": 49,
+    "failed": 4
+  },
+  "actualScopes": {
+    "initialHelm": {
+      "passed": 14,
+      "failed": 4,
+      "failure": "wrong Deployment-name observer setup; retained, not semantic negative"
+    },
+    "correctedHelm": {
+      "passed": 18,
+      "failed": 0,
+      "scope": "render/strict primary whole-document structural schema/rendered JSON+fields/package only"
+    },
+    "semgrepPrimarySchema": {
+      "passed": 6,
+      "scope": "shape and two kinds of structural reject controls only, not native pattern/language semantics"
+    },
+    "toml": {
+      "passed": 7,
+      "scope": "Python standard TOML syntax only, not native Codex"
+    },
+    "eslint": {
+      "passed": 2,
+      "scope": "node --check module syntax only; zero-file glob snapshot retained, not successful collection"
+    },
+    "nativeHostRenderer": {
+      "passed": 2,
+      "scope": "existing preparation-only YAML\u2192pool/NRI/Chart/setup/reservation output binding, never ran generated host setup/service"
+    }
+  },
+  "unchangedHistoricalEvidence": {
+    "pinnedKubernetesDefinitions": 29,
+    "resourceProjectionComparisons": 132,
+    "sourceVersionProjections": 44,
+    "limit": "earlier identities/raw bytes untouched, not deployed API/image/runtime proof"
+  },
+  "preservedFailureArtifacts": [
+    "residual-chart-definitions-bce3f075/",
+    "snapshots/bce3f075-chart-schema-ref-diagnostic/",
+    "snapshots/bce3f075-chart-opaque-object-diagnostic/",
+    "snapshots/bce3f075-buster-profile-native-root-counterexample/",
+    "snapshots/bce3f075-eslint-profile-empty-glob/",
+    "buster-refiner-repeat-bce3f075.stderr",
+    "collector-bce3f075.stdout",
+    "pinned-codex-reader-bce3f075/"
+  ],
+  "remainingExactObligations": "delivery-remaining-obligations-bce3f075.json; coordinates/case IDs/target-review field IDs are explicitly open; new definition records remain unreviewed. Source-traced status is not full C0 domain/profile/harness coverage.",
+  "restrictions": "No productive source/test edits, no native service/setup/host/API/account/image/build/paid run, no commit, acceptance or implementation approval. Parent owns consolidation/dirty full-source patch/independent reviewer/commit/push.",
+  "artifactIdentityManifest": "semantic-closure-artifact-digests.json (receipt included; manifest excluded from its own digest set)",
+  "handoff": "owned files stable after final artifact-integrity verification; resume only on parent continuation"
+}

@@ -1,0 +1,99 @@
+{
+  "sourceFindings": {
+    "path": "docs/review/evidence/config-acceptance/independent-core-source-question-bce3f075-20261013/findings.json",
+    "sha256": "c4e2cbd78597d2dd8e70a441bb3fb75181a199506aad6bd61525591b863bba61"
+  },
+  "findings": [
+    {
+      "id": "ICQ-01",
+      "authorDisposition": "material superseding proposal for independent challenge, NOT authorverified/accepted",
+      "changes": [
+        "tar-correlated-profiles.json",
+        "complete-profiles.json",
+        "QC-BUSTER-TAR-LOCATOR-UNUSED-PAIRED-PROVISION"
+      ],
+      "originalScopeAndRequirementsPreserved": true
+    },
+    {
+      "id": "ICQ-02",
+      "authorDisposition": "material superseding proposal for independent challenge, NOT authorverified/accepted",
+      "changes": [
+        "reserve-boundary-fixtures.json",
+        "serialization-envelope-contract.json",
+        "question-definitions.json",
+        "QC-ADMISSION-METADATA-RESERVE-VAL"
+      ],
+      "originalScopeAndRequirementsPreserved": true
+    },
+    {
+      "id": "ICQ-03",
+      "authorDisposition": "material superseding proposal for independent challenge, NOT authorverified/accepted",
+      "changes": [
+        "retirement-binding-contract.json",
+        "retirement-method-fixtures.json",
+        "immutable-owner-reference-specimens.json",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY",
+        "QC-ADMISSION-REASON-LIMITS-HISTORY"
+      ],
+      "originalScopeAndRequirementsPreserved": true
+    },
+    {
+      "id": "ICQ-04",
+      "authorDisposition": "material superseding proposal for independent challenge, NOT authorverified/accepted",
+      "changes": [
+        "outbox-method-fixtures.json",
+        "outbox-pending-state.json",
+        "outbox-acknowledged-state.json",
+        "outbox-oversized-2049.bytes",
+        "QC-OUTBOX-UNBOUNDED-READ-FOUR-METHODS",
+        "QC-OUTBOX-UNBOUNDED-READ-REPLAY"
+      ],
+      "originalScopeAndRequirementsPreserved": true
+    },
+    {
+      "id": "ICQ-05",
+      "authorDisposition": "material superseding proposal for independent challenge, NOT authorverified/accepted",
+      "changes": [
+        "computed-environment-supersession.json"
+      ],
+      "originalScopeAndRequirementsPreserved": true
+    },
+    {
+      "id": "ICQ-06",
+      "authorDisposition": "material superseding proposal for independent challenge, NOT authorverified/accepted",
+      "changes": [
+        "admission-method-fixtures.json",
+        "admission-*-bound-target-state.json",
+        "retirement-method-fixtures.json",
+        "lock-caller-contracts.json",
+        "provider-provenance.schema.json",
+        "provider-provenance-contract.json",
+        "provider-provenance-specimens.json",
+        "provider-serialization-bound-controls.json",
+        "QC-ADMISSION-METADATA-RESERVE-ALL-WRITES",
+        "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-REAL-PROVENANCE",
+        "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-RECOVERY-EVAL"
+      ],
+      "originalScopeAndRequirementsPreserved": true
+    }
+  ],
+  "historicalInputs": "historical-input-identities.json all145oldbatch/sourcefiles + exactprotectedCore13baseline unchanged",
+  "newFailuresRetained": [
+    "build-corrections-syntax-attempt1.py.snapshot",
+    "build-corrections-syntax-attempt1.log",
+    "freeze-method-fixtures-attempt1.mjs.snapshot",
+    "safe-current-method-controls-attempt1.log",
+    "corrected-definition-controls-attempt1.receipt.json",
+    "corrected-definition-controls-attempt2.receipt.json"
+  ],
+  "additionalSerializationCorrection": "exactbinding field makes525growth; conceptualinlineBinding persistedfield would531, failure retained andrepaired underfixedv1bindingname, no silent universalclaim",
+  "acceptance": false,
+  "additionalChanges": [
+    "retirement-complete-owner-profiles.json",
+    "immutable-owner-reference-specimens.json",
+    "proposed-additional-registered-lock.schema.json",
+    "overflow-full-current-control.json",
+    "crossauthor-handoffs.json"
+  ],
+  "allCaseCommands": "question-case-specs.json exact futureargv and case-input-contracts pointer"
+}

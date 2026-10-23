@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/define-controller-targets-20261013.py", line 18, in <module>
+    if not set(primary['caseIds']).issubset(allowed):raise RuntimeError('Primarycomponent unknowncase')
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Primarycomponent unknowncase

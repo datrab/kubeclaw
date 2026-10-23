@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY_SELECTION } from '../../fixtures/core-runtime-policy.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -13,7 +14,7 @@ import {readRunSnapshot} from '../../../skills/nova/core/execution/engine-snapsh
 const source=path.resolve('.'),self=fileURLToPath(import.meta.url),runId='run:cache-profile';
 function configuration(root){
   const roots=[path.join(source,'tests/fixtures/review-cache-stage'),path.join(source,'skills/common/plugins')];
-  return {schemaVersion:'pipeline-platform.v2',installationRoots:roots,trustedBuiltinRoots:roots,
+  return {corePolicySelection: TEST_CORE_POLICY_SELECTION,schemaVersion:'pipeline-platform.v2',installationRoots:roots,trustedBuiltinRoots:roots,
     externalTrust:{allowedSourceDigests:{},verifiedAttestations:{}},providers:{'artifacts.write':'kubeclaw.artifact-store:artifact-store','artifacts.read':'kubeclaw.artifact-store:artifact-store'},
     grants:{'test.review-cache:cache':{'artifacts.write':{allowedNamespaces:['kubeclaw.review']},'artifacts.read':{allowedNamespaces:['kubeclaw.review']}}},
     adapters:{'kubeclaw.artifact-store:artifact-store':{artifactRoot:path.join(root,'artifacts')}},

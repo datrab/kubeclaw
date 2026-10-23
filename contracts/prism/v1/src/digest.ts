@@ -7,10 +7,12 @@ export function schemaDigest(): string {
 }
 export function engineResultSchema(
   operation: "generate" | "render" | "evaluate" | "ingest" | "publish",
+  renderPolicyVersion?: unknown,
 ): { schemaId: string; schemaDigest: string } {
-  const resultSchema = engineResults.$defs[operation];
+  const key = operation === 'render' && renderPolicyVersion === 'prism-render-policy.v1' ? 'renderSelected' : operation;
+  const resultSchema = engineResults.$defs[key];
   return {
-    schemaId: `${engineResults.$id}#/$defs/${operation}`,
+    schemaId: `${engineResults.$id}#/$defs/${key}`,
     schemaDigest: `sha256:${createHash("sha256").update(JSON.stringify(resultSchema)).digest("hex")}`,
   };
 }

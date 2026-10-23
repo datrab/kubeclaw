@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import path from 'node:path';
 import { test } from 'node:test';
@@ -28,7 +29,7 @@ test('Core exposes retained Wait resolver only to the selected original built-in
     const root = path.join(f.root, `audience-${name}`);
     const runtime = createAdapterRuntime(f.platform, root, {
       ...prepared, activated: { ...prepared.activated, adapters }, granted: { ...prepared.granted, selectedProviders },
-    }, new FileJournal(path.join(root, 'events.jsonl')));
+    }, new FileJournal(path.join(root, 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs));
     await runtime.start();
     try {
       assert.ok(captured, 'the enabled original Wait adapter must actually activate in every selection state');

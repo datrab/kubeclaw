@@ -1,4 +1,4 @@
-import type { BusterPreparationSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+import type { BusterPreparationSettings } from '@kubeclaw/plugin-foundation/config/swarm';
 import type { NativeWorkerControlChannel } from '@kubeclaw/worker-core';
 import { decodePreparationMessage, encodePreparationMessage, preparationChunkBytes } from './preparation-channel.ts';
 import { assertHistoricalImportDescriptor, type HistoricalImportDescriptor } from './preparation-historical-reference.ts';

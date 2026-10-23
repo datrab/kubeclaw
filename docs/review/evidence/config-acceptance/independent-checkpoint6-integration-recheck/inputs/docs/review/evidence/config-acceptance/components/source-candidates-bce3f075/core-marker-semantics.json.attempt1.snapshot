@@ -1,0 +1,3296 @@
+{
+  "scope": "170 exact outstanding Core markers manually reviewed in explicit source/line groups; no regex classifier, no invented value limits",
+  "dispositions": [
+    {
+      "candidateId": "SRC-8ee72fbd2da1044a",
+      "source": "skills/worker/core/worker/attempt-executor.ts",
+      "line": 117,
+      "sourceSha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+      "exactText": "  if (!value || typeof value !== 'object') return value;",
+      "reader": {
+        "name": "freeze",
+        "parents": [],
+        "startLine": 116,
+        "endLine": 120
+      },
+      "classification": "protocol-invariant",
+      "reason": "freeze/escapedStringBytes/preflightJson: JSON primitive/type and enumerable data-property rules; escape codepoints are JSON serialization syntax. Exact canonical byte/traversal checks feed existing selected input/depth/nodes policies, not new limits.",
+      "settingIds": [
+        "CMP-WCORE-INPUT-BYTES",
+        "CMP-WCORE-JSON-NODES",
+        "CMP-WCORE-JSON-DEPTH"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-75d91ac1ad6b369d",
+      "source": "skills/worker/core/worker/attempt-executor.ts",
+      "line": 126,
+      "sourceSha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+      "exactText": "    if (unit === 0x22 || unit === 0x5c || unit === 0x08 || unit === 0x09 || unit === 0x0a",
+      "reader": {
+        "name": "jsonStringBytes",
+        "parents": [],
+        "startLine": 122,
+        "endLine": 142
+      },
+      "classification": "protocol-invariant",
+      "reason": "freeze/escapedStringBytes/preflightJson: JSON primitive/type and enumerable data-property rules; escape codepoints are JSON serialization syntax. Exact canonical byte/traversal checks feed existing selected input/depth/nodes policies, not new limits.",
+      "settingIds": [
+        "CMP-WCORE-INPUT-BYTES",
+        "CMP-WCORE-JSON-NODES",
+        "CMP-WCORE-JSON-DEPTH"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-7c73e4f4eb82d91d",
+      "source": "skills/worker/core/worker/attempt-executor.ts",
+      "line": 127,
+      "sourceSha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+      "exactText": "      || unit === 0x0c || unit === 0x0d) {",
+      "reader": {
+        "name": "jsonStringBytes",
+        "parents": [],
+        "startLine": 122,
+        "endLine": 142
+      },
+      "classification": "protocol-invariant",
+      "reason": "freeze/escapedStringBytes/preflightJson: JSON primitive/type and enumerable data-property rules; escape codepoints are JSON serialization syntax. Exact canonical byte/traversal checks feed existing selected input/depth/nodes policies, not new limits.",
+      "settingIds": [
+        "CMP-WCORE-INPUT-BYTES",
+        "CMP-WCORE-JSON-NODES",
+        "CMP-WCORE-JSON-DEPTH"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-bc142e1cb0168bef",
+      "source": "skills/worker/core/worker/attempt-executor.ts",
+      "line": 156,
+      "sourceSha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+      "exactText": "    else if (typeof current.value === 'number' || typeof current.value === 'boolean') {",
+      "reader": {
+        "name": "preflightJson",
+        "parents": [],
+        "startLine": 144,
+        "endLine": 185
+      },
+      "classification": "protocol-invariant",
+      "reason": "freeze/escapedStringBytes/preflightJson: JSON primitive/type and enumerable data-property rules; escape codepoints are JSON serialization syntax. Exact canonical byte/traversal checks feed existing selected input/depth/nodes policies, not new limits.",
+      "settingIds": [
+        "CMP-WCORE-INPUT-BYTES",
+        "CMP-WCORE-JSON-NODES",
+        "CMP-WCORE-JSON-DEPTH"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-a4674612383feaa7",
+      "source": "skills/worker/core/worker/attempt-executor.ts",
+      "line": 175,
+      "sourceSha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+      "exactText": "          if (!descriptor?.enumerable || !('value' in descriptor)) throw new Error(`${prefix}_TYPE_INVALID`);",
+      "reader": {
+        "name": "preflightJson",
+        "parents": [],
+        "startLine": 144,
+        "endLine": 185
+      },
+      "classification": "protocol-invariant",
+      "reason": "freeze/escapedStringBytes/preflightJson: JSON primitive/type and enumerable data-property rules; escape codepoints are JSON serialization syntax. Exact canonical byte/traversal checks feed existing selected input/depth/nodes policies, not new limits.",
+      "settingIds": [
+        "CMP-WCORE-INPUT-BYTES",
+        "CMP-WCORE-JSON-NODES",
+        "CMP-WCORE-JSON-DEPTH"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-b8101e70060e8760",
+      "source": "skills/worker/core/worker/attempt-executor.ts",
+      "line": 287,
+      "sourceSha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+      "exactText": "    let timer: NodeJS.Timeout | undefined;",
+      "reader": {
+        "name": "#executeOnce",
+        "parents": [],
+        "startLine": 242,
+        "endLine": 588
+      },
+      "classification": "nonsetting",
+      "reason": "Timer handle typed NodeJS.Timeout|undefined is local lifecycle state, not a fallback timeout value; later setTimeout uses accepted claim/phase duration.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-78f70821dd0eb5d7",
+      "source": "skills/worker/core/worker/attempt-executor.ts",
+      "line": 388,
+      "sourceSha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+      "exactText": "          || typeof preparationResult === 'function') {",
+      "reader": {
+        "name": "#executeOnce",
+        "parents": [],
+        "startLine": 242,
+        "endLine": 588
+      },
+      "classification": "task-data",
+      "reason": "prepare hook returned value may not be callable; checks operation preparation data before execution, no new operator budget.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-2ebf1385008a3412",
+      "source": "skills/worker/core/worker/attempt-executor.ts",
+      "line": 526,
+      "sourceSha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+      "exactText": "          || stored.artifact.sizeBytes !== fullLogBytes) {",
+      "reader": {
+        "name": "#executeOnce",
+        "parents": [],
+        "startLine": 242,
+        "endLine": 588
+      },
+      "classification": "generated-binding",
+      "reason": "Returned stored.artifact.sizeBytes must equal actual fullLogBytes; validates genuine writer output, not configured arbitrary observation.",
+      "settingIds": [
+        "CMP-WCORE-RETAIN-LOGS"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-826ea13ca5c2a207",
+      "source": "skills/worker/core/worker/attempt-executor.ts",
+      "line": 616,
+      "sourceSha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+      "exactText": "    let timer: NodeJS.Timeout | undefined;",
+      "reader": {
+        "name": "#terminate",
+        "parents": [],
+        "startLine": 615,
+        "endLine": 627
+      },
+      "classification": "nonsetting",
+      "reason": "Timer handle typed NodeJS.Timeout|undefined is local lifecycle state, not a fallback timeout value; later setTimeout uses accepted claim/phase duration.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-2d336ac26fd83c35",
+      "source": "skills/worker/core/worker/local-runtime.ts",
+      "line": 20,
+      "sourceSha256": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+      "exactText": "  if (options === null || typeof options !== 'object') throw new Error('WORKER_LOCAL_POLICY_REQUIRED');",
+      "reader": {
+        "name": "validateLocalWorkerRuntimePolicy",
+        "parents": [],
+        "startLine": 19,
+        "endLine": 29
+      },
+      "classification": "duplicate",
+      "reason": "Required supplied localRuntime policy and timer validation; actual startup values already owned by worker-core, no missing-value default.",
+      "settingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-WCORE-JS-TIMER-MAX"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-1f8dad4c6cfe9402",
+      "source": "skills/worker/core/worker/local-runtime.ts",
+      "line": 57,
+      "sourceSha256": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+      "exactText": "  if (!value || typeof value !== 'object') return value;",
+      "reader": {
+        "name": "freeze",
+        "parents": [],
+        "startLine": 56,
+        "endLine": 60
+      },
+      "classification": "protocol-invariant",
+      "reason": "Recursively freeze captured runtime registration/task state; immutable JSON object behavior, not a configurable branch.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-b7525edddba75347",
+      "source": "skills/worker/core/worker/local-runtime.ts",
+      "line": 63,
+      "sourceSha256": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+      "exactText": "  if (!Number.isSafeInteger(value) || value < 1 || value > MAX_TIMER_MS) throw new Error(code);",
+      "reader": {
+        "name": "positiveTimer",
+        "parents": [],
+        "startLine": 62,
+        "endLine": 65
+      },
+      "classification": "duplicate",
+      "reason": "Required supplied localRuntime policy and timer validation; actual startup values already owned by worker-core, no missing-value default.",
+      "settingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-WCORE-JS-TIMER-MAX"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-6ce434eb78a7e9d9",
+      "source": "skills/worker/core/worker/local-runtime.ts",
+      "line": 69,
+      "sourceSha256": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+      "exactText": "  let timer: NodeJS.Timeout | undefined;",
+      "reader": {
+        "name": "settleWithin",
+        "parents": [],
+        "startLine": 67,
+        "endLine": 78
+      },
+      "classification": "nonsetting",
+      "reason": "Timeout handle union declaration; no numeric/operator value synthesized.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-8e0dd8f148013216",
+      "source": "skills/worker/core/worker/local-runtime.ts",
+      "line": 81,
+      "sourceSha256": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+      "exactText": "  let timer: NodeJS.Timeout | undefined;",
+      "reader": {
+        "name": "armClaimExpiry",
+        "parents": [],
+        "startLine": 80,
+        "endLine": 89
+      },
+      "classification": "nonsetting",
+      "reason": "Timeout handle union declaration; no numeric/operator value synthesized.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-a8a7a9e50625d4ea",
+      "source": "skills/worker/core/worker/local-runtime.ts",
+      "line": 215,
+      "sourceSha256": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+      "exactText": "    this.#draining ??= this.#drainOnce();",
+      "reader": {
+        "name": "drain",
+        "parents": [],
+        "startLine": 214,
+        "endLine": 217
+      },
+      "classification": "nonsetting",
+      "reason": "Memoizes one drain promise; does not merge/replenish selected drain policy.",
+      "settingIds": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-d3d398392e9f26ff",
+      "source": "skills/worker/core/worker/log-decoder.ts",
+      "line": 17,
+      "sourceSha256": "7f777b5cd5f9544c6eb2f5933613d8d8379633742edf45cd235428805e7dea88",
+      "exactText": "    try { for (const decoder of this.#decoders.values()) decoder.decode(); }",
+      "reader": {
+        "name": "finish",
+        "parents": [],
+        "startLine": 16,
+        "endLine": 19
+      },
+      "classification": "protocol-invariant",
+      "reason": "finish flushes each actual fatal UTF8 stream decoder to reject incomplete trailing bytes; iteration not a budget.",
+      "settingIds": [
+        "CMP-WCORE-UTF8-PROTOCOL"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-3941932b5642b601",
+      "source": "skills/worker/core/worker/native-attempt-executor.ts",
+      "line": 56,
+      "sourceSha256": "bddc68aa370648c86e7b7301f4f31a083504217dd89bac7694c36c344a8e23a3",
+      "exactText": "    if (error instanceof NativeWorkerAttemptBusy || error instanceof NativeAdmissionRejected) throw error;",
+      "reader": {
+        "name": "executeNativeWorkerAttempt",
+        "parents": [],
+        "startLine": 21,
+        "endLine": 61
+      },
+      "classification": "protocol-invariant",
+      "reason": "Busy/admission-rejected remain pre-dispatch rejection rather than sealed successful result; exception classification only.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-f2b8774c5425b55c",
+      "source": "skills/worker/core/worker/native-attempt-executor.ts",
+      "line": 71,
+      "sourceSha256": "bddc68aa370648c86e7b7301f4f31a083504217dd89bac7694c36c344a8e23a3",
+      "exactText": "  for (const [metric, maximum] of Object.entries(accepted)) {",
+      "reader": {
+        "name": "acceptedLimits",
+        "parents": [],
+        "startLine": 68,
+        "endLine": 79
+      },
+      "classification": "generated-binding",
+      "reason": "Accepted cpu/memory/tasks native limits copied into metric map and must equal every requested envelope budget; no independent CONFIG metric author.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-4e37faedd20d2335",
+      "source": "skills/worker/core/worker/native-attempt-executor.ts",
+      "line": 73,
+      "sourceSha256": "bddc68aa370648c86e7b7301f4f31a083504217dd89bac7694c36c344a8e23a3",
+      "exactText": "    if (budget.state !== 'requested' || budget.limit !== maximum) throw new NativeAdmissionRejected('WORKER_NATIVE_ACCEPTED_LIMIT_MISMATCH');",
+      "reader": {
+        "name": "acceptedLimits",
+        "parents": [],
+        "startLine": 68,
+        "endLine": 79
+      },
+      "classification": "generated-binding",
+      "reason": "Accepted cpu/memory/tasks native limits copied into metric map and must equal every requested envelope budget; no independent CONFIG metric author.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-7d987be6ebbc7ef6",
+      "source": "skills/worker/core/worker/native-attempt-journal.ts",
+      "line": 28,
+      "sourceSha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+      "exactText": "    if (!path.isAbsolute(root) || Object.values(limits).some(value => !Number.isSafeInteger(value) || value < 1)) {",
+      "reader": {
+        "name": "constructor",
+        "parents": [],
+        "startLine": 27,
+        "endLine": 36
+      },
+      "classification": "duplicate",
+      "reason": "Required absolute journal root and positive safe supplied quotas; NativeAttemptJournalLimits API roster and actual Prism/Buster composition supply bounds; no constructor fallback.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-6e13e7fd4f3ae071",
+      "source": "skills/worker/core/worker/native-attempt-recovery.ts",
+      "line": 45,
+      "sourceSha256": "f6cef5767983497edd3865667a6b480e8ea75ed34b847bc4f44e8fae02d807bc",
+      "exactText": "    if (!owner || owner.phase !== 'disposed' || owner.finalObservation === null",
+      "reader": {
+        "name": "recoverNativeAttempt",
+        "parents": [],
+        "startLine": 40,
+        "endLine": 57
+      },
+      "classification": "generated-binding",
+      "reason": "Recovery disposition requires retained disposed ownership+finalObservation; notLaunched derived from actual missing owner/explicit retained failure codes. No synthetic zero observations or current policy refill.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-c99c67286dd7d23c",
+      "source": "skills/worker/core/worker/native-attempt-recovery.ts",
+      "line": 55,
+      "sourceSha256": "f6cef5767983497edd3865667a6b480e8ea75ed34b847bc4f44e8fae02d807bc",
+      "exactText": "  const notLaunched = !owner || ['WORKER_NATIVE_ALLOCATION_NOT_LAUNCHED', 'WORKER_NATIVE_RESERVATION_NOT_LAUNCHED'].includes(owner.diagnosis ?? '');",
+      "reader": {
+        "name": "recoverNativeAttempt",
+        "parents": [],
+        "startLine": 40,
+        "endLine": 57
+      },
+      "classification": "generated-binding",
+      "reason": "Recovery disposition requires retained disposed ownership+finalObservation; notLaunched derived from actual missing owner/explicit retained failure codes. No synthetic zero observations or current policy refill.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-d21f538a4da88478",
+      "source": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+      "line": 59,
+      "sourceSha256": "9cfc04ab25b0eecea23b75b9dcdbb4b87f87854c8b00b7346e7eafa33a0118f4",
+      "exactText": "  if (!record || canonicalJson(record.identity) !== canonicalJson(identity) || record.phase !== 'disposed'",
+      "reader": {
+        "name": "quiescentOwner",
+        "parents": [],
+        "startLine": 56,
+        "endLine": 64
+      },
+      "classification": "generated-binding",
+      "reason": "nativeSourceCleanupOperation/reconciliation: original accepted envelope/result/effects digest and genuine disposed ownership bind cleanup; fresh cleanup attempt/claim/spec must differ, successful result/process/observation/digest must match before retirement. Retry links prior cleanup and unchanged original effects. C5 preparation11-step binding proposal separately chooses selected immutable cleanup policy, never reconstructs original from current defaults.",
+      "settingIds": [
+        "CMP-C5-PREPARATION-CLEANUP-BINDING"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-aedb82b8db5dcc75",
+      "source": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+      "line": 60,
+      "sourceSha256": "9cfc04ab25b0eecea23b75b9dcdbb4b87f87854c8b00b7346e7eafa33a0118f4",
+      "exactText": "    || record.binding === null || record.finalObservation === null || record.finalObservation.populated) {",
+      "reader": {
+        "name": "quiescentOwner",
+        "parents": [],
+        "startLine": 56,
+        "endLine": 64
+      },
+      "classification": "generated-binding",
+      "reason": "nativeSourceCleanupOperation/reconciliation: original accepted envelope/result/effects digest and genuine disposed ownership bind cleanup; fresh cleanup attempt/claim/spec must differ, successful result/process/observation/digest must match before retirement. Retry links prior cleanup and unchanged original effects. C5 preparation11-step binding proposal separately chooses selected immutable cleanup policy, never reconstructs original from current defaults.",
+      "settingIds": [
+        "CMP-C5-PREPARATION-CLEANUP-BINDING"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-5cadb9587d36389e",
+      "source": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+      "line": 69,
+      "sourceSha256": "9cfc04ab25b0eecea23b75b9dcdbb4b87f87854c8b00b7346e7eafa33a0118f4",
+      "exactText": "  const effectsDigest = cleanup.operation.values.effectsDigest;",
+      "reader": {
+        "name": "validateCleanupEnvelope",
+        "parents": [],
+        "startLine": 66,
+        "endLine": 76
+      },
+      "classification": "generated-binding",
+      "reason": "nativeSourceCleanupOperation/reconciliation: original accepted envelope/result/effects digest and genuine disposed ownership bind cleanup; fresh cleanup attempt/claim/spec must differ, successful result/process/observation/digest must match before retirement. Retry links prior cleanup and unchanged original effects. C5 preparation11-step binding proposal separately chooses selected immutable cleanup policy, never reconstructs original from current defaults.",
+      "settingIds": [
+        "CMP-C5-PREPARATION-CLEANUP-BINDING"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-75532cc46b1776cb",
+      "source": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+      "line": 70,
+      "sourceSha256": "9cfc04ab25b0eecea23b75b9dcdbb4b87f87854c8b00b7346e7eafa33a0118f4",
+      "exactText": "  if (typeof effectsDigest !== 'string' || cleanup.profile.profileDigest !== profileDigest",
+      "reader": {
+        "name": "validateCleanupEnvelope",
+        "parents": [],
+        "startLine": 66,
+        "endLine": 76
+      },
+      "classification": "generated-binding",
+      "reason": "nativeSourceCleanupOperation/reconciliation: original accepted envelope/result/effects digest and genuine disposed ownership bind cleanup; fresh cleanup attempt/claim/spec must differ, successful result/process/observation/digest must match before retirement. Retry links prior cleanup and unchanged original effects. C5 preparation11-step binding proposal separately chooses selected immutable cleanup policy, never reconstructs original from current defaults.",
+      "settingIds": [
+        "CMP-C5-PREPARATION-CLEANUP-BINDING"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-e5cc854519bcce68",
+      "source": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+      "line": 71,
+      "sourceSha256": "9cfc04ab25b0eecea23b75b9dcdbb4b87f87854c8b00b7346e7eafa33a0118f4",
+      "exactText": "    || cleanup.attemptId === envelope.attemptId || cleanup.claim.claimId === envelope.claim.claimId",
+      "reader": {
+        "name": "validateCleanupEnvelope",
+        "parents": [],
+        "startLine": 66,
+        "endLine": 76
+      },
+      "classification": "generated-binding",
+      "reason": "nativeSourceCleanupOperation/reconciliation: original accepted envelope/result/effects digest and genuine disposed ownership bind cleanup; fresh cleanup attempt/claim/spec must differ, successful result/process/observation/digest must match before retirement. Retry links prior cleanup and unchanged original effects. C5 preparation11-step binding proposal separately chooses selected immutable cleanup policy, never reconstructs original from current defaults.",
+      "settingIds": [
+        "CMP-C5-PREPARATION-CLEANUP-BINDING"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-6c06740c15b07c29",
+      "source": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+      "line": 72,
+      "sourceSha256": "9cfc04ab25b0eecea23b75b9dcdbb4b87f87854c8b00b7346e7eafa33a0118f4",
+      "exactText": "    || cleanup.attemptSpecDigest === envelope.attemptSpecDigest",
+      "reader": {
+        "name": "validateCleanupEnvelope",
+        "parents": [],
+        "startLine": 66,
+        "endLine": 76
+      },
+      "classification": "generated-binding",
+      "reason": "nativeSourceCleanupOperation/reconciliation: original accepted envelope/result/effects digest and genuine disposed ownership bind cleanup; fresh cleanup attempt/claim/spec must differ, successful result/process/observation/digest must match before retirement. Retry links prior cleanup and unchanged original effects. C5 preparation11-step binding proposal separately chooses selected immutable cleanup policy, never reconstructs original from current defaults.",
+      "settingIds": [
+        "CMP-C5-PREPARATION-CLEANUP-BINDING"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-8407226c60f10d27",
+      "source": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+      "line": 73,
+      "sourceSha256": "9cfc04ab25b0eecea23b75b9dcdbb4b87f87854c8b00b7346e7eafa33a0118f4",
+      "exactText": "    || canonicalJson(cleanup.operation) !== canonicalJson(nativeSourceCleanupOperation(envelope, result, effectsDigest))) {",
+      "reader": {
+        "name": "validateCleanupEnvelope",
+        "parents": [],
+        "startLine": 66,
+        "endLine": 76
+      },
+      "classification": "generated-binding",
+      "reason": "nativeSourceCleanupOperation/reconciliation: original accepted envelope/result/effects digest and genuine disposed ownership bind cleanup; fresh cleanup attempt/claim/spec must differ, successful result/process/observation/digest must match before retirement. Retry links prior cleanup and unchanged original effects. C5 preparation11-step binding proposal separately chooses selected immutable cleanup policy, never reconstructs original from current defaults.",
+      "settingIds": [
+        "CMP-C5-PREPARATION-CLEANUP-BINDING"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-215e5e38a15bbd36",
+      "source": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+      "line": 84,
+      "sourceSha256": "9cfc04ab25b0eecea23b75b9dcdbb4b87f87854c8b00b7346e7eafa33a0118f4",
+      "exactText": "  if (!result || !archived || archived.process.fault !== null || archived.process.exitCode !== 0",
+      "reader": {
+        "name": "verifyNativeSourceCleanupResult",
+        "parents": [],
+        "startLine": 79,
+        "endLine": 104
+      },
+      "classification": "generated-binding",
+      "reason": "nativeSourceCleanupOperation/reconciliation: original accepted envelope/result/effects digest and genuine disposed ownership bind cleanup; fresh cleanup attempt/claim/spec must differ, successful result/process/observation/digest must match before retirement. Retry links prior cleanup and unchanged original effects. C5 preparation11-step binding proposal separately chooses selected immutable cleanup policy, never reconstructs original from current defaults.",
+      "settingIds": [
+        "CMP-C5-PREPARATION-CLEANUP-BINDING"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-20213ca646eae7bd",
+      "source": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+      "line": 85,
+      "sourceSha256": "9cfc04ab25b0eecea23b75b9dcdbb4b87f87854c8b00b7346e7eafa33a0118f4",
+      "exactText": "    || archived.process.signal !== null || result.state !== 'completed' || result.cleanup.state !== 'completed'",
+      "reader": {
+        "name": "verifyNativeSourceCleanupResult",
+        "parents": [],
+        "startLine": 79,
+        "endLine": 104
+      },
+      "classification": "generated-binding",
+      "reason": "nativeSourceCleanupOperation/reconciliation: original accepted envelope/result/effects digest and genuine disposed ownership bind cleanup; fresh cleanup attempt/claim/spec must differ, successful result/process/observation/digest must match before retirement. Retry links prior cleanup and unchanged original effects. C5 preparation11-step binding proposal separately chooses selected immutable cleanup policy, never reconstructs original from current defaults.",
+      "settingIds": [
+        "CMP-C5-PREPARATION-CLEANUP-BINDING"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-8cb60ba0bccab766",
+      "source": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+      "line": 86,
+      "sourceSha256": "9cfc04ab25b0eecea23b75b9dcdbb4b87f87854c8b00b7346e7eafa33a0118f4",
+      "exactText": "    || !checkWorkerNativeResultBinding(cleanup, result).ok",
+      "reader": {
+        "name": "verifyNativeSourceCleanupResult",
+        "parents": [],
+        "startLine": 79,
+        "endLine": 104
+      },
+      "classification": "generated-binding",
+      "reason": "nativeSourceCleanupOperation/reconciliation: original accepted envelope/result/effects digest and genuine disposed ownership bind cleanup; fresh cleanup attempt/claim/spec must differ, successful result/process/observation/digest must match before retirement. Retry links prior cleanup and unchanged original effects. C5 preparation11-step binding proposal separately chooses selected immutable cleanup policy, never reconstructs original from current defaults.",
+      "settingIds": [
+        "CMP-C5-PREPARATION-CLEANUP-BINDING"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-3783a6a4bbcdf099",
+      "source": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+      "line": 87,
+      "sourceSha256": "9cfc04ab25b0eecea23b75b9dcdbb4b87f87854c8b00b7346e7eafa33a0118f4",
+      "exactText": "    || canonicalJson(ownership.finalObservation) !== canonicalJson(archived.process.resources)) {",
+      "reader": {
+        "name": "verifyNativeSourceCleanupResult",
+        "parents": [],
+        "startLine": 79,
+        "endLine": 104
+      },
+      "classification": "generated-binding",
+      "reason": "nativeSourceCleanupOperation/reconciliation: original accepted envelope/result/effects digest and genuine disposed ownership bind cleanup; fresh cleanup attempt/claim/spec must differ, successful result/process/observation/digest must match before retirement. Retry links prior cleanup and unchanged original effects. C5 preparation11-step binding proposal separately chooses selected immutable cleanup policy, never reconstructs original from current defaults.",
+      "settingIds": [
+        "CMP-C5-PREPARATION-CLEANUP-BINDING"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-e3a776a5690f9105",
+      "source": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+      "line": 91,
+      "sourceSha256": "9cfc04ab25b0eecea23b75b9dcdbb4b87f87854c8b00b7346e7eafa33a0118f4",
+      "exactText": "    values: { reconciliationDigest: sha256Digest(cleanup.operation.values) } };",
+      "reader": {
+        "name": "verifyNativeSourceCleanupResult",
+        "parents": [],
+        "startLine": 79,
+        "endLine": 104
+      },
+      "classification": "generated-binding",
+      "reason": "nativeSourceCleanupOperation/reconciliation: original accepted envelope/result/effects digest and genuine disposed ownership bind cleanup; fresh cleanup attempt/claim/spec must differ, successful result/process/observation/digest must match before retirement. Retry links prior cleanup and unchanged original effects. C5 preparation11-step binding proposal separately chooses selected immutable cleanup policy, never reconstructs original from current defaults.",
+      "settingIds": [
+        "CMP-C5-PREPARATION-CLEANUP-BINDING"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-388092ab36fac805",
+      "source": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+      "line": 109,
+      "sourceSha256": "9cfc04ab25b0eecea23b75b9dcdbb4b87f87854c8b00b7346e7eafa33a0118f4",
+      "exactText": "  if (envelope.operation.contractId === contractId || result.cleanup.state !== 'failed'",
+      "reader": {
+        "name": "reconcileNativeCleanup",
+        "parents": [],
+        "startLine": 107,
+        "endLine": 122
+      },
+      "classification": "generated-binding",
+      "reason": "nativeSourceCleanupOperation/reconciliation: original accepted envelope/result/effects digest and genuine disposed ownership bind cleanup; fresh cleanup attempt/claim/spec must differ, successful result/process/observation/digest must match before retirement. Retry links prior cleanup and unchanged original effects. C5 preparation11-step binding proposal separately chooses selected immutable cleanup policy, never reconstructs original from current defaults.",
+      "settingIds": [
+        "CMP-C5-PREPARATION-CLEANUP-BINDING"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-9a9000f395f57ba1",
+      "source": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+      "line": 110,
+      "sourceSha256": "9cfc04ab25b0eecea23b75b9dcdbb4b87f87854c8b00b7346e7eafa33a0118f4",
+      "exactText": "    || !checkWorkerNativeResultBinding(envelope, result).ok) {",
+      "reader": {
+        "name": "reconcileNativeCleanup",
+        "parents": [],
+        "startLine": 107,
+        "endLine": 122
+      },
+      "classification": "generated-binding",
+      "reason": "nativeSourceCleanupOperation/reconciliation: original accepted envelope/result/effects digest and genuine disposed ownership bind cleanup; fresh cleanup attempt/claim/spec must differ, successful result/process/observation/digest must match before retirement. Retry links prior cleanup and unchanged original effects. C5 preparation11-step binding proposal separately chooses selected immutable cleanup policy, never reconstructs original from current defaults.",
+      "settingIds": [
+        "CMP-C5-PREPARATION-CLEANUP-BINDING"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-7e767e2528963a37",
+      "source": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+      "line": 129,
+      "sourceSha256": "9cfc04ab25b0eecea23b75b9dcdbb4b87f87854c8b00b7346e7eafa33a0118f4",
+      "exactText": "  if (failed.operation.contractId !== contractId || failedResult.cleanup.state !== 'failed'",
+      "reader": {
+        "name": "resolveFailedNativeCleanup",
+        "parents": [],
+        "startLine": 126,
+        "endLine": 154
+      },
+      "classification": "generated-binding",
+      "reason": "nativeSourceCleanupOperation/reconciliation: original accepted envelope/result/effects digest and genuine disposed ownership bind cleanup; fresh cleanup attempt/claim/spec must differ, successful result/process/observation/digest must match before retirement. Retry links prior cleanup and unchanged original effects. C5 preparation11-step binding proposal separately chooses selected immutable cleanup policy, never reconstructs original from current defaults.",
+      "settingIds": [
+        "CMP-C5-PREPARATION-CLEANUP-BINDING"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-8c7e556ab96d6c56",
+      "source": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+      "line": 130,
+      "sourceSha256": "9cfc04ab25b0eecea23b75b9dcdbb4b87f87854c8b00b7346e7eafa33a0118f4",
+      "exactText": "    || !checkWorkerNativeResultBinding(failed, failedResult).ok) {",
+      "reader": {
+        "name": "resolveFailedNativeCleanup",
+        "parents": [],
+        "startLine": 126,
+        "endLine": 154
+      },
+      "classification": "generated-binding",
+      "reason": "nativeSourceCleanupOperation/reconciliation: original accepted envelope/result/effects digest and genuine disposed ownership bind cleanup; fresh cleanup attempt/claim/spec must differ, successful result/process/observation/digest must match before retirement. Retry links prior cleanup and unchanged original effects. C5 preparation11-step binding proposal separately chooses selected immutable cleanup policy, never reconstructs original from current defaults.",
+      "settingIds": [
+        "CMP-C5-PREPARATION-CLEANUP-BINDING"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-900a37078b8fd2f1",
+      "source": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+      "line": 140,
+      "sourceSha256": "9cfc04ab25b0eecea23b75b9dcdbb4b87f87854c8b00b7346e7eafa33a0118f4",
+      "exactText": "  if (original.operation.contractId === contractId || !originalResult || originalResult.cleanup.state !== 'failed') {",
+      "reader": {
+        "name": "resolveFailedNativeCleanup",
+        "parents": [],
+        "startLine": 126,
+        "endLine": 154
+      },
+      "classification": "generated-binding",
+      "reason": "nativeSourceCleanupOperation/reconciliation: original accepted envelope/result/effects digest and genuine disposed ownership bind cleanup; fresh cleanup attempt/claim/spec must differ, successful result/process/observation/digest must match before retirement. Retry links prior cleanup and unchanged original effects. C5 preparation11-step binding proposal separately chooses selected immutable cleanup policy, never reconstructs original from current defaults.",
+      "settingIds": [
+        "CMP-C5-PREPARATION-CLEANUP-BINDING"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-bd7cc0c439f874b0",
+      "source": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+      "line": 145,
+      "sourceSha256": "9cfc04ab25b0eecea23b75b9dcdbb4b87f87854c8b00b7346e7eafa33a0118f4",
+      "exactText": "  if (failed.operation.values.effectsDigest !== successfulCleanup.operation.values.effectsDigest",
+      "reader": {
+        "name": "resolveFailedNativeCleanup",
+        "parents": [],
+        "startLine": 126,
+        "endLine": 154
+      },
+      "classification": "generated-binding",
+      "reason": "nativeSourceCleanupOperation/reconciliation: original accepted envelope/result/effects digest and genuine disposed ownership bind cleanup; fresh cleanup attempt/claim/spec must differ, successful result/process/observation/digest must match before retirement. Retry links prior cleanup and unchanged original effects. C5 preparation11-step binding proposal separately chooses selected immutable cleanup policy, never reconstructs original from current defaults.",
+      "settingIds": [
+        "CMP-C5-PREPARATION-CLEANUP-BINDING"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-4f11ee4b97dc4de6",
+      "source": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+      "line": 146,
+      "sourceSha256": "9cfc04ab25b0eecea23b75b9dcdbb4b87f87854c8b00b7346e7eafa33a0118f4",
+      "exactText": "    || failed.attemptId === successfulCleanup.attemptId",
+      "reader": {
+        "name": "resolveFailedNativeCleanup",
+        "parents": [],
+        "startLine": 126,
+        "endLine": 154
+      },
+      "classification": "generated-binding",
+      "reason": "nativeSourceCleanupOperation/reconciliation: original accepted envelope/result/effects digest and genuine disposed ownership bind cleanup; fresh cleanup attempt/claim/spec must differ, successful result/process/observation/digest must match before retirement. Retry links prior cleanup and unchanged original effects. C5 preparation11-step binding proposal separately chooses selected immutable cleanup policy, never reconstructs original from current defaults.",
+      "settingIds": [
+        "CMP-C5-PREPARATION-CLEANUP-BINDING"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-958880f59e300761",
+      "source": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+      "line": 147,
+      "sourceSha256": "9cfc04ab25b0eecea23b75b9dcdbb4b87f87854c8b00b7346e7eafa33a0118f4",
+      "exactText": "    || failed.claim.claimId === successfulCleanup.claim.claimId) {",
+      "reader": {
+        "name": "resolveFailedNativeCleanup",
+        "parents": [],
+        "startLine": 126,
+        "endLine": 154
+      },
+      "classification": "generated-binding",
+      "reason": "nativeSourceCleanupOperation/reconciliation: original accepted envelope/result/effects digest and genuine disposed ownership bind cleanup; fresh cleanup attempt/claim/spec must differ, successful result/process/observation/digest must match before retirement. Retry links prior cleanup and unchanged original effects. C5 preparation11-step binding proposal separately chooses selected immutable cleanup policy, never reconstructs original from current defaults.",
+      "settingIds": [
+        "CMP-C5-PREPARATION-CLEANUP-BINDING"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-0c8d45a2e9ea4201",
+      "source": "skills/worker/core/worker/native-hierarchy-events.ts",
+      "line": 9,
+      "sourceSha256": "de9626356ef4ffca272c1bb534b29e13c9a3845df0ff34b33783b71320e32aea",
+      "exactText": "    if (!fields || fields.length < 6 || !tail || tail.length < 3) throw new Error('WORKER_NATIVE_MOUNTINFO_INVALID');",
+      "reader": {
+        "name": "validateHierarchicalCgroupEvents",
+        "parents": [],
+        "startLine": 5,
+        "endLine": 21
+      },
+      "classification": "protocol-invariant",
+      "reason": "Linux mountinfo fixed format/path covering proof: require one cgroup2 mount and reject localevents hierarchy semantics; syntax6 fields/3tail fields are parser minima, not throughput policies.",
+      "settingIds": [
+        "CMP-WCORE-CGROUP2-MAGIC",
+        "CMP-WCORE-KERNEL-COUNTERS"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-e2dcb45f81850d52",
+      "source": "skills/worker/core/worker/native-hierarchy-events.ts",
+      "line": 12,
+      "sourceSha256": "de9626356ef4ffca272c1bb534b29e13c9a3845df0ff34b33783b71320e32aea",
+      "exactText": "  }).filter(mount => scope === mount.target || scope.startsWith(mount.target.endsWith('/') ? mount.target : mount.target + '/'));",
+      "reader": {
+        "name": "validateHierarchicalCgroupEvents",
+        "parents": [],
+        "startLine": 5,
+        "endLine": 21
+      },
+      "classification": "protocol-invariant",
+      "reason": "Linux mountinfo fixed format/path covering proof: require one cgroup2 mount and reject localevents hierarchy semantics; syntax6 fields/3tail fields are parser minima, not throughput policies.",
+      "settingIds": [
+        "CMP-WCORE-CGROUP2-MAGIC",
+        "CMP-WCORE-KERNEL-COUNTERS"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-0dceb36a65e26da1",
+      "source": "skills/worker/core/worker/native-hierarchy-events.ts",
+      "line": 15,
+      "sourceSha256": "de9626356ef4ffca272c1bb534b29e13c9a3845df0ff34b33783b71320e32aea",
+      "exactText": "  if (covering.length !== 1 || covering[0]!.type !== 'cgroup2' || !path.isAbsolute(scope)) {",
+      "reader": {
+        "name": "validateHierarchicalCgroupEvents",
+        "parents": [],
+        "startLine": 5,
+        "endLine": 21
+      },
+      "classification": "protocol-invariant",
+      "reason": "Linux mountinfo fixed format/path covering proof: require one cgroup2 mount and reject localevents hierarchy semantics; syntax6 fields/3tail fields are parser minima, not throughput policies.",
+      "settingIds": [
+        "CMP-WCORE-CGROUP2-MAGIC",
+        "CMP-WCORE-KERNEL-COUNTERS"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-7d305ee6a824a61f",
+      "source": "skills/worker/core/worker/native-hierarchy-events.ts",
+      "line": 18,
+      "sourceSha256": "de9626356ef4ffca272c1bb534b29e13c9a3845df0ff34b33783b71320e32aea",
+      "exactText": "  if (covering[0]!.options.some(option => option === 'memory_localevents' || option === 'pids_localevents')) {",
+      "reader": {
+        "name": "validateHierarchicalCgroupEvents",
+        "parents": [],
+        "startLine": 5,
+        "endLine": 21
+      },
+      "classification": "protocol-invariant",
+      "reason": "Linux mountinfo fixed format/path covering proof: require one cgroup2 mount and reject localevents hierarchy semantics; syntax6 fields/3tail fields are parser minima, not throughput policies.",
+      "settingIds": [
+        "CMP-WCORE-CGROUP2-MAGIC",
+        "CMP-WCORE-KERNEL-COUNTERS"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-198830d2cfc6cd78",
+      "source": "skills/worker/core/worker/native-journal-capacity.ts",
+      "line": 18,
+      "sourceSha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a",
+      "exactText": "  return { ...payload, process: payload.process ?? {",
+      "reader": {
+        "name": "futurePayload",
+        "parents": [],
+        "startLine": 13,
+        "endLine": 26
+      },
+      "classification": "duplicate",
+      "reason": "Future terminal projection uses pessimistic missing-process/date representation and existing retained tombstone/retirement counts (empty only absent historical optional arrays); synthetic reservation representation is never persisted as measurement. Same journal selected diagnostic/record quotas charged in actual projection.",
+      "settingIds": [
+        "CMP-WCORE-JOURNAL-RECORD-BYTES",
+        "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS",
+        "CMP-WCORE-JOURNAL-PROTOCOL"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-a99f1fe4f5febe9d",
+      "source": "skills/worker/core/worker/native-journal-capacity.ts",
+      "line": 24,
+      "sourceSha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a",
+      "exactText": "  }, processCompletedAt: payload.processCompletedAt ?? maximumDate,",
+      "reader": {
+        "name": "futurePayload",
+        "parents": [],
+        "startLine": 13,
+        "endLine": 26
+      },
+      "classification": "duplicate",
+      "reason": "Future terminal projection uses pessimistic missing-process/date representation and existing retained tombstone/retirement counts (empty only absent historical optional arrays); synthetic reservation representation is never persisted as measurement. Same journal selected diagnostic/record quotas charged in actual projection.",
+      "settingIds": [
+        "CMP-WCORE-JOURNAL-RECORD-BYTES",
+        "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS",
+        "CMP-WCORE-JOURNAL-PROTOCOL"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-797b919f3107b065",
+      "source": "skills/worker/core/worker/native-journal-capacity.ts",
+      "line": 63,
+      "sourceSha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a",
+      "exactText": "    + (state.tombstones?.filter(row => row.stream === nativeJournalStream).length ?? 0) + 1;",
+      "reader": {
+        "name": "reserveNativeJournalMetadata",
+        "parents": [],
+        "startLine": 57,
+        "endLine": 69
+      },
+      "classification": "duplicate",
+      "reason": "Future terminal projection uses pessimistic missing-process/date representation and existing retained tombstone/retirement counts (empty only absent historical optional arrays); synthetic reservation representation is never persisted as measurement. Same journal selected diagnostic/record quotas charged in actual projection.",
+      "settingIds": [
+        "CMP-WCORE-JOURNAL-RECORD-BYTES",
+        "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS",
+        "CMP-WCORE-JOURNAL-PROTOCOL"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-a16dbe661378007a",
+      "source": "skills/worker/core/worker/native-journal-capacity.ts",
+      "line": 68,
+      "sourceSha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a",
+      "exactText": "    records: [...state.records, record], tombstones: state.tombstones ?? [], retirements: state.retirements ?? [] }, limits);",
+      "reader": {
+        "name": "reserveNativeJournalMetadata",
+        "parents": [],
+        "startLine": 57,
+        "endLine": 69
+      },
+      "classification": "duplicate",
+      "reason": "Future terminal projection uses pessimistic missing-process/date representation and existing retained tombstone/retirement counts (empty only absent historical optional arrays); synthetic reservation representation is never persisted as measurement. Same journal selected diagnostic/record quotas charged in actual projection.",
+      "settingIds": [
+        "CMP-WCORE-JOURNAL-RECORD-BYTES",
+        "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS",
+        "CMP-WCORE-JOURNAL-PROTOCOL"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-ae06dd49ee053f68",
+      "source": "skills/worker/core/worker/native-journal-state.ts",
+      "line": 74,
+      "sourceSha256": "ae5cca21eb24261fa5389c7081bc3534e8e12b411d5bda0e97a69a94ead424d2",
+      "exactText": "    if (value[key] !== null && (typeof value[key] !== 'string' || value[key].length < 1 || value[key].length > nativeJournalMaximumDiagnosticUnits)) throw new Error('WORKER_NATIVE_JOURNAL_FAULT_INVALID');",
+      "reader": {
+        "name": "validateProcess",
+        "parents": [],
+        "startLine": 65,
+        "endLine": 76
+      },
+      "classification": "duplicate",
+      "reason": "Fault text positive/selected diagnostic bound; same diagnostic author used by state validator and future reservation.",
+      "settingIds": [
+        "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-c8e9ecb9e174b0a6",
+      "source": "skills/worker/core/worker/native-node-identity.ts",
+      "line": 10,
+      "sourceSha256": "6ea78a96f82fa25ad27b26a2a48911e1e7a625fe9c0b25db76af39f49f2394f3",
+      "exactText": "    if (!stat.isFile() || stat.uid !== 0 || (stat.mode & 0o022) !== 0 || stat.size < 1 || stat.size > 128) {",
+      "reader": {
+        "name": "readNativeWorkerNodeIdentity",
+        "parents": [],
+        "startLine": 5,
+        "endLine": 19
+      },
+      "classification": "duplicate",
+      "reason": "Root/mode/regular file domain and128-byte current cap; proposed64/128 tuned policy already verified.",
+      "settingIds": [
+        "CMP-WCORE-NODE-IDENTITY-FILE-BYTES",
+        "CMP-WCORE-LAUNCH-ROOT-AUTHORITY"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-1073e165faf71063",
+      "source": "skills/worker/core/worker/native-output-spool.ts",
+      "line": 28,
+      "sourceSha256": "da9b2bdd9f5b8f9418e98a451eb3275aadec117a9ee7ca733566e571870898c7",
+      "exactText": "    if (!path.isAbsolute(root) || !Number.isSafeInteger(maximumBytes) || maximumBytes < 1) throw new Error('WORKER_OUTPUT_SPOOL_CONFIG_INVALID');",
+      "reader": {
+        "name": "create",
+        "parents": [],
+        "startLine": 27,
+        "endLine": 42
+      },
+      "classification": "duplicate",
+      "reason": "Required absolute output root and positive supplied maximumBytes; actual cumulative stat.size<=maximumBytes-total reader. API NativeOutputSpool limits derive accepted native journal/output quotas, not an optional unbounded read.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-0a9754ebdb06446d",
+      "source": "skills/worker/core/worker/native-output-spool.ts",
+      "line": 65,
+      "sourceSha256": "da9b2bdd9f5b8f9418e98a451eb3275aadec117a9ee7ca733566e571870898c7",
+      "exactText": "    this.#closing ??= this.#queue.finally(async () => {",
+      "reader": {
+        "name": "close",
+        "parents": [],
+        "startLine": 63,
+        "endLine": 69
+      },
+      "classification": "nonsetting",
+      "reason": "Memoized closure of serialized writes and genuine handles; promise state not a timeout/default.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-569587422bab6d11",
+      "source": "skills/worker/core/worker/native-output-spool.ts",
+      "line": 80,
+      "sourceSha256": "da9b2bdd9f5b8f9418e98a451eb3275aadec117a9ee7ca733566e571870898c7",
+      "exactText": "  if (!path.isAbsolute(root) || !Number.isSafeInteger(maximumBytes) || maximumBytes < 1) throw new Error('WORKER_OUTPUT_SPOOL_CONFIG_INVALID');",
+      "reader": {
+        "name": "readNativeWorkerOutput",
+        "parents": [],
+        "startLine": 79,
+        "endLine": 96
+      },
+      "classification": "duplicate",
+      "reason": "Required absolute output root and positive supplied maximumBytes; actual cumulative stat.size<=maximumBytes-total reader. API NativeOutputSpool limits derive accepted native journal/output quotas, not an optional unbounded read.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-24d744e2cdebe023",
+      "source": "skills/worker/core/worker/native-output-spool.ts",
+      "line": 86,
+      "sourceSha256": "da9b2bdd9f5b8f9418e98a451eb3275aadec117a9ee7ca733566e571870898c7",
+      "exactText": "      if (!stat.isFile() || stat.nlink !== 1 || stat.size > maximumBytes - total) throw new Error('WORKER_OUTPUT_SPOOL_FILE_INVALID');",
+      "reader": {
+        "name": "readNativeWorkerOutput",
+        "parents": [],
+        "startLine": 79,
+        "endLine": 96
+      },
+      "classification": "duplicate",
+      "reason": "Required absolute output root and positive supplied maximumBytes; actual cumulative stat.size<=maximumBytes-total reader. API NativeOutputSpool limits derive accepted native journal/output quotas, not an optional unbounded read.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-cb8386944e14b6fc",
+      "source": "skills/worker/core/worker/native-owned-children.ts",
+      "line": 42,
+      "sourceSha256": "631594461634def759607c57e4a7407c062bd1d5e837a28d7f83c5fcde5e204d",
+      "exactText": "  if (!stat.isDirectory() || stat.dev !== parent.device || fs.statfsSync(target).type !== 0x63677270) {",
+      "reader": {
+        "name": "readChildBinding",
+        "parents": [],
+        "startLine": 40,
+        "endLine": 46
+      },
+      "classification": "protocol-invariant",
+      "reason": "Actual child path device/cgroup2 and no nested directories/symlinks verify captured aggregate ownership topology; no invented kernel counter.",
+      "settingIds": [
+        "CMP-WCORE-CGROUP2-MAGIC",
+        "CMP-WCORE-CHILD-LIMIT-INHERITANCE"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-53f735630a9d2c7e",
+      "source": "skills/worker/core/worker/native-owned-children.ts",
+      "line": 56,
+      "sourceSha256": "631594461634def759607c57e4a7407c062bd1d5e837a28d7f83c5fcde5e204d",
+      "exactText": "  if (fs.readdirSync(target, { withFileTypes: true }).some(entry => entry.isDirectory() || entry.isSymbolicLink())) {",
+      "reader": {
+        "name": "verifyNativeChild",
+        "parents": [],
+        "startLine": 48,
+        "endLine": 61
+      },
+      "classification": "protocol-invariant",
+      "reason": "Actual child path device/cgroup2 and no nested directories/symlinks verify captured aggregate ownership topology; no invented kernel counter.",
+      "settingIds": [
+        "CMP-WCORE-CGROUP2-MAGIC",
+        "CMP-WCORE-CHILD-LIMIT-INHERITANCE"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-4015dffb2dc28992",
+      "source": "skills/worker/core/worker/native-pool-policy.ts",
+      "line": 24,
+      "sourceSha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+      "exactText": "    if (!stat.isFile() || stat.uid !== 0 || (stat.mode & 0o022) !== 0 || stat.size < 1 || stat.size > 65536) {",
+      "reader": {
+        "name": "readNativeWorkerPoolPolicy",
+        "parents": [],
+        "startLine": 19,
+        "endLine": 31
+      },
+      "classification": "duplicate",
+      "reason": "Trusted pool file cap65536/root-owned mode, normalized non-root required absolute generated paths and positive safe actual host quotas. Host roles/limits remain delivery-generated selected bindings; no arbitrary caller path or second Core author.",
+      "settingIds": [
+        "CMP-WCORE-POOL-FILE-BYTES",
+        "CMP-WCORE-HOST-CGROUPROOT",
+        "CMP-WCORE-HOST-OWNERSHIPROOT",
+        "CMP-WCORE-HOST-MAXIMUMACTIVESCOPES"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-3bb1c0a2c0e021a9",
+      "source": "skills/worker/core/worker/native-pool-policy.ts",
+      "line": 42,
+      "sourceSha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+      "exactText": "    if (typeof location !== 'string' || !path.isAbsolute(location) || location === '/' || path.resolve(location) !== location) {",
+      "reader": {
+        "name": "validatePaths",
+        "parents": [],
+        "startLine": 40,
+        "endLine": 46
+      },
+      "classification": "duplicate",
+      "reason": "Trusted pool file cap65536/root-owned mode, normalized non-root required absolute generated paths and positive safe actual host quotas. Host roles/limits remain delivery-generated selected bindings; no arbitrary caller path or second Core author.",
+      "settingIds": [
+        "CMP-WCORE-POOL-FILE-BYTES",
+        "CMP-WCORE-HOST-CGROUPROOT",
+        "CMP-WCORE-HOST-OWNERSHIPROOT",
+        "CMP-WCORE-HOST-MAXIMUMACTIVESCOPES"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-7f597597ad03164a",
+      "source": "skills/worker/core/worker/native-pool-policy.ts",
+      "line": 51,
+      "sourceSha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+      "exactText": "    if (!Number.isSafeInteger(number) || number < 1) throw new Error('WORKER_NATIVE_POOL_POLICY_LIMIT_INVALID');",
+      "reader": {
+        "name": "validateLimits",
+        "parents": [],
+        "startLine": 48,
+        "endLine": 53
+      },
+      "classification": "duplicate",
+      "reason": "Trusted pool file cap65536/root-owned mode, normalized non-root required absolute generated paths and positive safe actual host quotas. Host roles/limits remain delivery-generated selected bindings; no arbitrary caller path or second Core author.",
+      "settingIds": [
+        "CMP-WCORE-POOL-FILE-BYTES",
+        "CMP-WCORE-HOST-CGROUPROOT",
+        "CMP-WCORE-HOST-OWNERSHIPROOT",
+        "CMP-WCORE-HOST-MAXIMUMACTIVESCOPES"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-2d20668940241d40",
+      "source": "skills/worker/core/worker/native-process-cancellation.ts",
+      "line": 7,
+      "sourceSha256": "1a3295c2220b82b3c06047151df0a6ca4e126f747f5eaabb57ddb5a753cd1bf5",
+      "exactText": "  if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 2_147_483_647) {",
+      "reader": {
+        "name": "cancelNativeProcess",
+        "parents": [],
+        "startLine": 6,
+        "endLine": 17
+      },
+      "classification": "duplicate",
+      "reason": "Supplied cancellation timer checked positive safe integer<=signed32 Node timer boundary.",
+      "settingIds": [
+        "CMP-WCORE-JS-TIMER-MAX"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-de4288f52db4cf5e",
+      "source": "skills/worker/core/worker/native-process-control.ts",
+      "line": 23,
+      "sourceSha256": "3cfd56d48a2f70fb80072692a133fb0c8490bd94ec79d5270b771dd2e2717d2e",
+      "exactText": "    let timer: NodeJS.Timeout | undefined;",
+      "reader": {
+        "name": "startNativeProcessControl",
+        "parents": [],
+        "startLine": 11,
+        "endLine": 31
+      },
+      "classification": "nonsetting",
+      "reason": "Timeout handle union and finish promise memoization; actual control timeout supplied, not defaulted.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-2d0625bbaff81d8a",
+      "source": "skills/worker/core/worker/native-process-control.ts",
+      "line": 30,
+      "sourceSha256": "3cfd56d48a2f70fb80072692a133fb0c8490bd94ec79d5270b771dd2e2717d2e",
+      "exactText": "  return { finish: () => completion ??= finish() };",
+      "reader": {
+        "name": "startNativeProcessControl",
+        "parents": [],
+        "startLine": 11,
+        "endLine": 31
+      },
+      "classification": "nonsetting",
+      "reason": "Timeout handle union and finish promise memoization; actual control timeout supplied, not defaulted.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-9816c0fd62766f70",
+      "source": "skills/worker/core/worker/native-process-launches.ts",
+      "line": 26,
+      "sourceSha256": "4b4ea9b64584e43f2f791d97872430f0d2dcf917d5ada11c0a8bb2ecd4456155",
+      "exactText": "    if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 2_147_483_647) {",
+      "reader": {
+        "name": "drain",
+        "parents": [],
+        "startLine": 25,
+        "endLine": 32
+      },
+      "classification": "duplicate",
+      "reason": "Caller-supplied child drain timeout checked real signed32 timer domain.",
+      "settingIds": [
+        "CMP-WCORE-JS-TIMER-MAX"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-354e8931ac9f6946",
+      "source": "skills/worker/core/worker/native-process-launches.ts",
+      "line": 30,
+      "sourceSha256": "4b4ea9b64584e43f2f791d97872430f0d2dcf917d5ada11c0a8bb2ecd4456155",
+      "exactText": "    this.#drain ??= this.#stop(timeoutMs);",
+      "reader": {
+        "name": "drain",
+        "parents": [],
+        "startLine": 25,
+        "endLine": 32
+      },
+      "classification": "nonsetting",
+      "reason": "Memoized drain operation and local timer handle; no alternate policy.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-36b384f1a5ed330a",
+      "source": "skills/worker/core/worker/native-process-launches.ts",
+      "line": 39,
+      "sourceSha256": "4b4ea9b64584e43f2f791d97872430f0d2dcf917d5ada11c0a8bb2ecd4456155",
+      "exactText": "    let timer: NodeJS.Timeout | undefined;",
+      "reader": {
+        "name": "#stop",
+        "parents": [],
+        "startLine": 34,
+        "endLine": 45
+      },
+      "classification": "nonsetting",
+      "reason": "Memoized drain operation and local timer handle; no alternate policy.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-11c2fd058da400f3",
+      "source": "skills/worker/core/worker/native-process-output.ts",
+      "line": 7,
+      "sourceSha256": "5f7a4e1cdd9424fefe249775886a34019da38f7a76c486b38005c5d727f14350",
+      "exactText": "  if (!Number.isSafeInteger(maximumBytes) || maximumBytes < 1) throw new Error('WORKER_NATIVE_OUTPUT_LIMIT_INVALID');",
+      "reader": {
+        "name": "captureNativeWorkerOutput",
+        "parents": [],
+        "startLine": 5,
+        "endLine": 27
+      },
+      "classification": "duplicate",
+      "reason": "Required safe positive maximumBytes provided by actual native limits; no fallback output quota.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-0a16516e5db99541",
+      "source": "skills/worker/core/worker/native-resource-accounting.ts",
+      "line": 8,
+      "sourceSha256": "c92b1246dd5b924b71147314257063eba2478838abe4ddcb3a9453a2e9abe448",
+      "exactText": "      if (!Number.isSafeInteger(item.value) || item.value < 0 || item.value < (previous[metric] ?? 0)) return false;",
+      "reader": {
+        "name": "validBatch",
+        "parents": [],
+        "startLine": 4,
+        "endLine": 12
+      },
+      "classification": "task-data",
+      "reason": "assessWorkerNativeResources: measured requested metrics must be nonnegative safe/monotonic from prior or initial0; unavailable reason is nonempty bounded4096; unrequested budget does not enforce, requested unavailable/errors/exceeded limit yield actual failure. Accepted envelope supplies budgets, kernel measurement supplies observed values. No CONFIG fabricated measurement;4096 current diagnostic domain distinct from journal diagnosis policy.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-1425378d7218792f",
+      "source": "skills/worker/core/worker/native-resource-accounting.ts",
+      "line": 9,
+      "sourceSha256": "c92b1246dd5b924b71147314257063eba2478838abe4ddcb3a9453a2e9abe448",
+      "exactText": "    } else if (item?.status !== 'unavailable' || typeof item.reason !== 'string' || !item.reason || item.reason.length > 4096) return false;",
+      "reader": {
+        "name": "validBatch",
+        "parents": [],
+        "startLine": 4,
+        "endLine": 12
+      },
+      "classification": "task-data",
+      "reason": "assessWorkerNativeResources: measured requested metrics must be nonnegative safe/monotonic from prior or initial0; unavailable reason is nonempty bounded4096; unrequested budget does not enforce, requested unavailable/errors/exceeded limit yield actual failure. Accepted envelope supplies budgets, kernel measurement supplies observed values. No CONFIG fabricated measurement;4096 current diagnostic domain distinct from journal diagnosis policy.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-21defc7a80048c57",
+      "source": "skills/worker/core/worker/native-resource-accounting.ts",
+      "line": 23,
+      "sourceSha256": "c92b1246dd5b924b71147314257063eba2478838abe4ddcb3a9453a2e9abe448",
+      "exactText": "  if (!measured || typeof measured !== 'object' || Array.isArray(measured)) return invalid();",
+      "reader": {
+        "name": "assessNativeWorkerResources",
+        "parents": [],
+        "startLine": 14,
+        "endLine": 38
+      },
+      "classification": "task-data",
+      "reason": "assessWorkerNativeResources: measured requested metrics must be nonnegative safe/monotonic from prior or initial0; unavailable reason is nonempty bounded4096; unrequested budget does not enforce, requested unavailable/errors/exceeded limit yield actual failure. Accepted envelope supplies budgets, kernel measurement supplies observed values. No CONFIG fabricated measurement;4096 current diagnostic domain distinct from journal diagnosis policy.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-cc133653d23629ea",
+      "source": "skills/worker/core/worker/native-resource-accounting.ts",
+      "line": 30,
+      "sourceSha256": "c92b1246dd5b924b71147314257063eba2478838abe4ddcb3a9453a2e9abe448",
+      "exactText": "    const item = batch[metric], budget = accounting.budgets[metric];",
+      "reader": {
+        "name": "assessNativeWorkerResources",
+        "parents": [],
+        "startLine": 14,
+        "endLine": 38
+      },
+      "classification": "task-data",
+      "reason": "assessWorkerNativeResources: measured requested metrics must be nonnegative safe/monotonic from prior or initial0; unavailable reason is nonempty bounded4096; unrequested budget does not enforce, requested unavailable/errors/exceeded limit yield actual failure. Accepted envelope supplies budgets, kernel measurement supplies observed values. No CONFIG fabricated measurement;4096 current diagnostic domain distinct from journal diagnosis policy.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-33b1381ddfb39718",
+      "source": "skills/worker/core/worker/native-resource-accounting.ts",
+      "line": 33,
+      "sourceSha256": "c92b1246dd5b924b71147314257063eba2478838abe4ddcb3a9453a2e9abe448",
+      "exactText": "    if (budget.state !== 'requested') continue;",
+      "reader": {
+        "name": "assessNativeWorkerResources",
+        "parents": [],
+        "startLine": 14,
+        "endLine": 38
+      },
+      "classification": "task-data",
+      "reason": "assessWorkerNativeResources: measured requested metrics must be nonnegative safe/monotonic from prior or initial0; unavailable reason is nonempty bounded4096; unrequested budget does not enforce, requested unavailable/errors/exceeded limit yield actual failure. Accepted envelope supplies budgets, kernel measurement supplies observed values. No CONFIG fabricated measurement;4096 current diagnostic domain distinct from journal diagnosis policy.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-3d5b037fe12a3f36",
+      "source": "skills/worker/core/worker/native-resource-accounting.ts",
+      "line": 34,
+      "sourceSha256": "c92b1246dd5b924b71147314257063eba2478838abe4ddcb3a9453a2e9abe448",
+      "exactText": "    if (item.status === 'unavailable') error ??= { code: 'WORKER_RESOURCE_MEASUREMENT_UNAVAILABLE', message: item.reason };",
+      "reader": {
+        "name": "assessNativeWorkerResources",
+        "parents": [],
+        "startLine": 14,
+        "endLine": 38
+      },
+      "classification": "task-data",
+      "reason": "assessWorkerNativeResources: measured requested metrics must be nonnegative safe/monotonic from prior or initial0; unavailable reason is nonempty bounded4096; unrequested budget does not enforce, requested unavailable/errors/exceeded limit yield actual failure. Accepted envelope supplies budgets, kernel measurement supplies observed values. No CONFIG fabricated measurement;4096 current diagnostic domain distinct from journal diagnosis policy.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-db9a41d556c75217",
+      "source": "skills/worker/core/worker/native-resource-accounting.ts",
+      "line": 35,
+      "sourceSha256": "c92b1246dd5b924b71147314257063eba2478838abe4ddcb3a9453a2e9abe448",
+      "exactText": "    else if (item.value > budget.limit) error ??= { code: codes[metric], message: codes[metric] };",
+      "reader": {
+        "name": "assessNativeWorkerResources",
+        "parents": [],
+        "startLine": 14,
+        "endLine": 38
+      },
+      "classification": "task-data",
+      "reason": "assessWorkerNativeResources: measured requested metrics must be nonnegative safe/monotonic from prior or initial0; unavailable reason is nonempty bounded4096; unrequested budget does not enforce, requested unavailable/errors/exceeded limit yield actual failure. Accepted envelope supplies budgets, kernel measurement supplies observed values. No CONFIG fabricated measurement;4096 current diagnostic domain distinct from journal diagnosis policy.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-26819396f57aedfe",
+      "source": "skills/worker/core/worker/native-resource-observation.ts",
+      "line": 16,
+      "sourceSha256": "903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c",
+      "exactText": "  if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('WORKER_NATIVE_OBSERVATION_INVALID');",
+      "reader": {
+        "name": "validateNativeWorkerResourceObservation",
+        "parents": [],
+        "startLine": 15,
+        "endLine": 23
+      },
+      "classification": "generated-binding",
+      "reason": "Validate exact kernel counter keys/nonnegative safe values; parse unique counter row, require actual absolute cgroup2 path then read real files. Parser key-count and magic are protocol/kernel identities.",
+      "settingIds": [
+        "CMP-WCORE-KERNEL-COUNTERS",
+        "CMP-WCORE-CGROUP2-MAGIC"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-36e10d8839204f9a",
+      "source": "skills/worker/core/worker/native-resource-observation.ts",
+      "line": 20,
+      "sourceSha256": "903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c",
+      "exactText": "    || counters.some(key => !Number.isSafeInteger(observation[key]) || Number(observation[key]) < 0)) {",
+      "reader": {
+        "name": "validateNativeWorkerResourceObservation",
+        "parents": [],
+        "startLine": 15,
+        "endLine": 23
+      },
+      "classification": "generated-binding",
+      "reason": "Validate exact kernel counter keys/nonnegative safe values; parse unique counter row, require actual absolute cgroup2 path then read real files. Parser key-count and magic are protocol/kernel identities.",
+      "settingIds": [
+        "CMP-WCORE-KERNEL-COUNTERS",
+        "CMP-WCORE-CGROUP2-MAGIC"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-ae30f25318321287",
+      "source": "skills/worker/core/worker/native-resource-observation.ts",
+      "line": 41,
+      "sourceSha256": "903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c",
+      "exactText": "  if (matches.length !== 1 || matches[0]?.length !== 2) {",
+      "reader": {
+        "name": "counter",
+        "parents": [],
+        "startLine": 38,
+        "endLine": 45
+      },
+      "classification": "generated-binding",
+      "reason": "Validate exact kernel counter keys/nonnegative safe values; parse unique counter row, require actual absolute cgroup2 path then read real files. Parser key-count and magic are protocol/kernel identities.",
+      "settingIds": [
+        "CMP-WCORE-KERNEL-COUNTERS",
+        "CMP-WCORE-CGROUP2-MAGIC"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-60fd59c512e6a934",
+      "source": "skills/worker/core/worker/native-resource-observation.ts",
+      "line": 53,
+      "sourceSha256": "903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c",
+      "exactText": "  if (!path.isAbsolute(scope) || fs.statfsSync(scope).type !== CGROUP2_SUPER_MAGIC) {",
+      "reader": {
+        "name": "observeNativeWorkerResources",
+        "parents": [],
+        "startLine": 52,
+        "endLine": 67
+      },
+      "classification": "generated-binding",
+      "reason": "Validate exact kernel counter keys/nonnegative safe values; parse unique counter row, require actual absolute cgroup2 path then read real files. Parser key-count and magic are protocol/kernel identities.",
+      "settingIds": [
+        "CMP-WCORE-KERNEL-COUNTERS",
+        "CMP-WCORE-CGROUP2-MAGIC"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-ae042c4250ee64dd",
+      "source": "skills/worker/core/worker/native-resource-pool.ts",
+      "line": 35,
+      "sourceSha256": "2a002b796bae216210186f258d32f5dd267ec10a4940f4d0fc2f12ea72bd93ee",
+      "exactText": "    if (stat.dev !== this.#device || stat.ino !== this.#inode || fs.statfsSync(this.#root).type !== 0x63677270) {",
+      "reader": {
+        "name": "verify",
+        "parents": [],
+        "startLine": 33,
+        "endLine": 58
+      },
+      "classification": "generated-binding",
+      "reason": "Pinned pool root device/inode/cgroup2 identity checked before and after writes; cannot replace root under admission.",
+      "settingIds": [
+        "CMP-WCORE-CGROUP2-MAGIC",
+        "CMP-WCORE-HOST-CGROUPROOT"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-a5b89e693c0b3754",
+      "source": "skills/worker/core/worker/native-resource-pool.ts",
+      "line": 57,
+      "sourceSha256": "2a002b796bae216210186f258d32f5dd267ec10a4940f4d0fc2f12ea72bd93ee",
+      "exactText": "    if (after.dev !== this.#device || after.ino !== this.#inode) throw new Error('WORKER_NATIVE_POOL_IDENTITY_CHANGED');",
+      "reader": {
+        "name": "verify",
+        "parents": [],
+        "startLine": 33,
+        "endLine": 58
+      },
+      "classification": "generated-binding",
+      "reason": "Pinned pool root device/inode/cgroup2 identity checked before and after writes; cannot replace root under admission.",
+      "settingIds": [
+        "CMP-WCORE-CGROUP2-MAGIC",
+        "CMP-WCORE-HOST-CGROUPROOT"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-6abf0b0a7d780c89",
+      "source": "skills/worker/core/worker/native-resource-scope.ts",
+      "line": 22,
+      "sourceSha256": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c",
+      "exactText": "  if (root === '/' || root === '/sys/fs/cgroup' || fs.statfsSync(root).type !== 0x63677270) {",
+      "reader": {
+        "name": "delegatedRoot",
+        "parents": [],
+        "startLine": 19,
+        "endLine": 33
+      },
+      "classification": "generated-binding",
+      "reason": "Disallow cgroup global roots, require actual cgroup2/positive native limits; quiescing and genuine empty observation precede scope mutation/disposal. No count/empty fabrication or new drain duration.",
+      "settingIds": [
+        "CMP-WCORE-CGROUP2-MAGIC",
+        "CMP-WCORE-HOST-CGROUPROOT"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-219d8b1c6f297f77",
+      "source": "skills/worker/core/worker/native-resource-scope.ts",
+      "line": 40,
+      "sourceSha256": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c",
+      "exactText": "  if (!Number.isSafeInteger(value) || value < 1) throw new Error('WORKER_NATIVE_LIMIT_INVALID');",
+      "reader": {
+        "name": "positive",
+        "parents": [],
+        "startLine": 39,
+        "endLine": 41
+      },
+      "classification": "generated-binding",
+      "reason": "Disallow cgroup global roots, require actual cgroup2/positive native limits; quiescing and genuine empty observation precede scope mutation/disposal. No count/empty fabrication or new drain duration.",
+      "settingIds": [
+        "CMP-WCORE-CGROUP2-MAGIC",
+        "CMP-WCORE-HOST-CGROUPROOT"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-109c2312875f3749",
+      "source": "skills/worker/core/worker/native-resource-scope.ts",
+      "line": 161,
+      "sourceSha256": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c",
+      "exactText": "    if (!this.#quiescing || this.observe().populated) throw new Error('WORKER_NATIVE_SCOPE_NOT_QUIESCENT');",
+      "reader": {
+        "name": "disposeChildren",
+        "parents": [],
+        "startLine": 159,
+        "endLine": 163
+      },
+      "classification": "generated-binding",
+      "reason": "Disallow cgroup global roots, require actual cgroup2/positive native limits; quiescing and genuine empty observation precede scope mutation/disposal. No count/empty fabrication or new drain duration.",
+      "settingIds": [
+        "CMP-WCORE-CGROUP2-MAGIC",
+        "CMP-WCORE-HOST-CGROUPROOT"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-ee75d63e9250872b",
+      "source": "skills/worker/core/worker/native-resource-scope.ts",
+      "line": 191,
+      "sourceSha256": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c",
+      "exactText": "    if (!this.#quiescing || this.observe().populated) throw new Error('WORKER_NATIVE_SCOPE_NOT_QUIESCENT');",
+      "reader": {
+        "name": "dispose",
+        "parents": [],
+        "startLine": 189,
+        "endLine": 194
+      },
+      "classification": "generated-binding",
+      "reason": "Disallow cgroup global roots, require actual cgroup2/positive native limits; quiescing and genuine empty observation precede scope mutation/disposal. No count/empty fabrication or new drain duration.",
+      "settingIds": [
+        "CMP-WCORE-CGROUP2-MAGIC",
+        "CMP-WCORE-HOST-CGROUPROOT"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-6dbf18163462e586",
+      "source": "skills/worker/core/worker/native-runtime-identity.ts",
+      "line": 16,
+      "sourceSha256": "4bb8600bf48477411e75148e6edbd0dae345809316d60a3d3cd4b8ad6f8a057e",
+      "exactText": "    if (!stat.isFile() || stat.uid !== 0 || (stat.mode & 0o022) !== 0 || stat.size < 1 || stat.size > 4096) {",
+      "reader": {
+        "name": "requireNativeWorkerRuntimeIdentity",
+        "parents": [],
+        "startLine": 11,
+        "endLine": 28
+      },
+      "classification": "duplicate",
+      "reason": "Trusted root-owned regular immutable runtime identity input file current4096 cap; existing verified policy2048..4096.",
+      "settingIds": [
+        "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-171dd27bf5ac541f",
+      "source": "skills/worker/core/worker/native-supervisor-authority.ts",
+      "line": 8,
+      "sourceSha256": "2a710c00d935777144fc2055e435f1610bc66a01976a002047de751862e18650",
+      "exactText": "  if (process.getuid?.() !== 0 || process.geteuid?.() !== 0 || !capabilities",
+      "reader": {
+        "name": "requireNativeWorkerSupervisorAuthority",
+        "parents": [],
+        "startLine": 5,
+        "endLine": 10
+      },
+      "classification": "protocol-invariant",
+      "reason": "Require actual root real/effective UID+capabilities; launcher absolute realpath/root-owned nonsetuid executable/domain. These are authority predicates, not configurable privilege bypass.",
+      "settingIds": [
+        "CMP-WCORE-LAUNCH-ROOT-AUTHORITY",
+        "CMP-WCORE-LAUNCH-NONSETUID"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-f19280245832bfc9",
+      "source": "skills/worker/core/worker/native-supervisor-authority.ts",
+      "line": 9,
+      "sourceSha256": "2a710c00d935777144fc2055e435f1610bc66a01976a002047de751862e18650",
+      "exactText": "    || (BigInt(`0x${capabilities}`) & required) !== required) throw new Error('WORKER_NATIVE_SUPERVISOR_AUTHORITY_REQUIRED');",
+      "reader": {
+        "name": "requireNativeWorkerSupervisorAuthority",
+        "parents": [],
+        "startLine": 5,
+        "endLine": 10
+      },
+      "classification": "protocol-invariant",
+      "reason": "Require actual root real/effective UID+capabilities; launcher absolute realpath/root-owned nonsetuid executable/domain. These are authority predicates, not configurable privilege bypass.",
+      "settingIds": [
+        "CMP-WCORE-LAUNCH-ROOT-AUTHORITY",
+        "CMP-WCORE-LAUNCH-NONSETUID"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-58ab125fc6655d66",
+      "source": "skills/worker/core/worker/native-supervisor-authority.ts",
+      "line": 14,
+      "sourceSha256": "2a710c00d935777144fc2055e435f1610bc66a01976a002047de751862e18650",
+      "exactText": "  if (!path.isAbsolute(file) || fs.realpathSync(file) !== file) throw new Error('WORKER_NATIVE_LAUNCHER_PATH_INVALID');",
+      "reader": {
+        "name": "requireNativeWorkerLauncher",
+        "parents": [],
+        "startLine": 13,
+        "endLine": 22
+      },
+      "classification": "protocol-invariant",
+      "reason": "Require actual root real/effective UID+capabilities; launcher absolute realpath/root-owned nonsetuid executable/domain. These are authority predicates, not configurable privilege bypass.",
+      "settingIds": [
+        "CMP-WCORE-LAUNCH-ROOT-AUTHORITY",
+        "CMP-WCORE-LAUNCH-NONSETUID"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-e13becf1c2b05618",
+      "source": "skills/worker/core/worker/native-supervisor-authority.ts",
+      "line": 18,
+      "sourceSha256": "2a710c00d935777144fc2055e435f1610bc66a01976a002047de751862e18650",
+      "exactText": "    if (!stat.isFile() || stat.uid !== 0 || (stat.mode & 0o6022) !== 0 || (stat.mode & 0o100) === 0) {",
+      "reader": {
+        "name": "requireNativeWorkerLauncher",
+        "parents": [],
+        "startLine": 13,
+        "endLine": 22
+      },
+      "classification": "protocol-invariant",
+      "reason": "Require actual root real/effective UID+capabilities; launcher absolute realpath/root-owned nonsetuid executable/domain. These are authority predicates, not configurable privilege bypass.",
+      "settingIds": [
+        "CMP-WCORE-LAUNCH-ROOT-AUTHORITY",
+        "CMP-WCORE-LAUNCH-NONSETUID"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-d25069a5549470ba",
+      "source": "skills/worker/core/worker/native-worker-launcher.c",
+      "line": 26,
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "exactText": "  if (errno || !*text || *end || value == 0 || value >= 4294967295UL || text[0] == '-') {",
+      "reader": null,
+      "classification": "generated-binding",
+      "reason": "Actual C CLI contract argv1scope,2device,3inode,4bootId,5supervisor PID,6uid,7gid,8executable checked by9 individual CLI dispositions. UID/GID positive below UINT32_MAX (reserved nobody excluded), supervisor<=INT_MAX, UUID/parser/path/domain checks; pinned descriptors and original parent/PDEATHSIG, setgroups0+selected gid/uid+NO_NEW_PRIVS enforced. Syscall bits/parser offsets not tunable policies; role-selected argv/genuine process identity remains generated, no request/ambient override.",
+      "settingIds": [
+        "CMP-WCORE-SUPERVISOR-PID",
+        "CMP-WCORE-LAUNCH-ROOT-AUTHORITY",
+        "CMP-WCORE-CGROUP2-MAGIC"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-874614a4b833e568",
+      "source": "skills/worker/core/worker/native-worker-launcher.c",
+      "line": 34,
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "exactText": "  if (strlen(name) != offset + 36 || strncmp(name, prefix, offset)) return 0;",
+      "reader": null,
+      "classification": "generated-binding",
+      "reason": "Actual C CLI contract argv1scope,2device,3inode,4bootId,5supervisor PID,6uid,7gid,8executable checked by9 individual CLI dispositions. UID/GID positive below UINT32_MAX (reserved nobody excluded), supervisor<=INT_MAX, UUID/parser/path/domain checks; pinned descriptors and original parent/PDEATHSIG, setgroups0+selected gid/uid+NO_NEW_PRIVS enforced. Syscall bits/parser offsets not tunable policies; role-selected argv/genuine process identity remains generated, no request/ambient override.",
+      "settingIds": [
+        "CMP-WCORE-SUPERVISOR-PID",
+        "CMP-WCORE-LAUNCH-ROOT-AUTHORITY",
+        "CMP-WCORE-CGROUP2-MAGIC"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-92b51410267d27ca",
+      "source": "skills/worker/core/worker/native-worker-launcher.c",
+      "line": 37,
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "exactText": "    if (index == 8 || index == 13 || index == 18 || index == 23) {",
+      "reader": null,
+      "classification": "generated-binding",
+      "reason": "Actual C CLI contract argv1scope,2device,3inode,4bootId,5supervisor PID,6uid,7gid,8executable checked by9 individual CLI dispositions. UID/GID positive below UINT32_MAX (reserved nobody excluded), supervisor<=INT_MAX, UUID/parser/path/domain checks; pinned descriptors and original parent/PDEATHSIG, setgroups0+selected gid/uid+NO_NEW_PRIVS enforced. Syscall bits/parser offsets not tunable policies; role-selected argv/genuine process identity remains generated, no request/ambient override.",
+      "settingIds": [
+        "CMP-WCORE-SUPERVISOR-PID",
+        "CMP-WCORE-LAUNCH-ROOT-AUTHORITY",
+        "CMP-WCORE-CGROUP2-MAGIC"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-9fd4b3a79065c9d5",
+      "source": "skills/worker/core/worker/native-worker-launcher.c",
+      "line": 39,
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "exactText": "    } else if (!((character >= '0' && character <= '9') || (character >= 'a' && character <= 'f'))) return 0;",
+      "reader": null,
+      "classification": "generated-binding",
+      "reason": "Actual C CLI contract argv1scope,2device,3inode,4bootId,5supervisor PID,6uid,7gid,8executable checked by9 individual CLI dispositions. UID/GID positive below UINT32_MAX (reserved nobody excluded), supervisor<=INT_MAX, UUID/parser/path/domain checks; pinned descriptors and original parent/PDEATHSIG, setgroups0+selected gid/uid+NO_NEW_PRIVS enforced. Syscall bits/parser offsets not tunable policies; role-selected argv/genuine process identity remains generated, no request/ambient override.",
+      "settingIds": [
+        "CMP-WCORE-SUPERVISOR-PID",
+        "CMP-WCORE-LAUNCH-ROOT-AUTHORITY",
+        "CMP-WCORE-CGROUP2-MAGIC"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-d595dab5f7f2a56c",
+      "source": "skills/worker/core/worker/native-worker-launcher.c",
+      "line": 46,
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "exactText": "  if (!realpath(value, canonical) || strcmp(value, canonical)) fail(\"WORKER_NATIVE_LAUNCH_SCOPE_INVALID\");",
+      "reader": null,
+      "classification": "generated-binding",
+      "reason": "Actual C CLI contract argv1scope,2device,3inode,4bootId,5supervisor PID,6uid,7gid,8executable checked by9 individual CLI dispositions. UID/GID positive below UINT32_MAX (reserved nobody excluded), supervisor<=INT_MAX, UUID/parser/path/domain checks; pinned descriptors and original parent/PDEATHSIG, setgroups0+selected gid/uid+NO_NEW_PRIVS enforced. Syscall bits/parser offsets not tunable policies; role-selected argv/genuine process identity remains generated, no request/ambient override.",
+      "settingIds": [
+        "CMP-WCORE-SUPERVISOR-PID",
+        "CMP-WCORE-LAUNCH-ROOT-AUTHORITY",
+        "CMP-WCORE-CGROUP2-MAGIC"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-d523264a6e9de848",
+      "source": "skills/worker/core/worker/native-worker-launcher.c",
+      "line": 48,
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "exactText": "  if (!leaf || (strcmp(leaf + 1, \"host\") && !uuid_name(leaf + 1, \"helper-\"))) fail(\"WORKER_NATIVE_LAUNCH_SCOPE_INVALID\");",
+      "reader": null,
+      "classification": "generated-binding",
+      "reason": "Actual C CLI contract argv1scope,2device,3inode,4bootId,5supervisor PID,6uid,7gid,8executable checked by9 individual CLI dispositions. UID/GID positive below UINT32_MAX (reserved nobody excluded), supervisor<=INT_MAX, UUID/parser/path/domain checks; pinned descriptors and original parent/PDEATHSIG, setgroups0+selected gid/uid+NO_NEW_PRIVS enforced. Syscall bits/parser offsets not tunable policies; role-selected argv/genuine process identity remains generated, no request/ambient override.",
+      "settingIds": [
+        "CMP-WCORE-SUPERVISOR-PID",
+        "CMP-WCORE-LAUNCH-ROOT-AUTHORITY",
+        "CMP-WCORE-CGROUP2-MAGIC"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-5113a0e908595d6b",
+      "source": "skills/worker/core/worker/native-worker-launcher.c",
+      "line": 51,
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "exactText": "  if (!name || !uuid_name(name + 1, \"worker-\")) fail(\"WORKER_NATIVE_LAUNCH_SCOPE_INVALID\");",
+      "reader": null,
+      "classification": "generated-binding",
+      "reason": "Actual C CLI contract argv1scope,2device,3inode,4bootId,5supervisor PID,6uid,7gid,8executable checked by9 individual CLI dispositions. UID/GID positive below UINT32_MAX (reserved nobody excluded), supervisor<=INT_MAX, UUID/parser/path/domain checks; pinned descriptors and original parent/PDEATHSIG, setgroups0+selected gid/uid+NO_NEW_PRIVS enforced. Syscall bits/parser offsets not tunable policies; role-selected argv/genuine process identity remains generated, no request/ambient override.",
+      "settingIds": [
+        "CMP-WCORE-SUPERVISOR-PID",
+        "CMP-WCORE-LAUNCH-ROOT-AUTHORITY",
+        "CMP-WCORE-CGROUP2-MAGIC"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-bb9449c42c3018aa",
+      "source": "skills/worker/core/worker/native-worker-launcher.c",
+      "line": 59,
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "exactText": "  if (errno || !*text || *end || text[0] < '0' || text[0] > '9') fail(\"WORKER_NATIVE_LAUNCH_BINDING_INVALID\");",
+      "reader": null,
+      "classification": "generated-binding",
+      "reason": "Actual C CLI contract argv1scope,2device,3inode,4bootId,5supervisor PID,6uid,7gid,8executable checked by9 individual CLI dispositions. UID/GID positive below UINT32_MAX (reserved nobody excluded), supervisor<=INT_MAX, UUID/parser/path/domain checks; pinned descriptors and original parent/PDEATHSIG, setgroups0+selected gid/uid+NO_NEW_PRIVS enforced. Syscall bits/parser offsets not tunable policies; role-selected argv/genuine process identity remains generated, no request/ambient override.",
+      "settingIds": [
+        "CMP-WCORE-SUPERVISOR-PID",
+        "CMP-WCORE-LAUNCH-ROOT-AUTHORITY",
+        "CMP-WCORE-CGROUP2-MAGIC"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-f3e9d19f47fb8682",
+      "source": "skills/worker/core/worker/native-worker-launcher.c",
+      "line": 67,
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "exactText": "  if (scope < 0 || fstatfs(scope, &filesystem) || filesystem.f_type != CGROUP2_SUPER_MAGIC",
+      "reader": null,
+      "classification": "generated-binding",
+      "reason": "Actual C CLI contract argv1scope,2device,3inode,4bootId,5supervisor PID,6uid,7gid,8executable checked by9 individual CLI dispositions. UID/GID positive below UINT32_MAX (reserved nobody excluded), supervisor<=INT_MAX, UUID/parser/path/domain checks; pinned descriptors and original parent/PDEATHSIG, setgroups0+selected gid/uid+NO_NEW_PRIVS enforced. Syscall bits/parser offsets not tunable policies; role-selected argv/genuine process identity remains generated, no request/ambient override.",
+      "settingIds": [
+        "CMP-WCORE-SUPERVISOR-PID",
+        "CMP-WCORE-LAUNCH-ROOT-AUTHORITY",
+        "CMP-WCORE-CGROUP2-MAGIC"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-384efef11fdeaa0b",
+      "source": "skills/worker/core/worker/native-worker-launcher.c",
+      "line": 68,
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "exactText": "      || fstat(scope, &info) || info.st_uid != 0 || (info.st_mode & 0022)) fail(\"WORKER_NATIVE_LAUNCH_SCOPE_INVALID\");",
+      "reader": null,
+      "classification": "generated-binding",
+      "reason": "Actual C CLI contract argv1scope,2device,3inode,4bootId,5supervisor PID,6uid,7gid,8executable checked by9 individual CLI dispositions. UID/GID positive below UINT32_MAX (reserved nobody excluded), supervisor<=INT_MAX, UUID/parser/path/domain checks; pinned descriptors and original parent/PDEATHSIG, setgroups0+selected gid/uid+NO_NEW_PRIVS enforced. Syscall bits/parser offsets not tunable policies; role-selected argv/genuine process identity remains generated, no request/ambient override.",
+      "settingIds": [
+        "CMP-WCORE-SUPERVISOR-PID",
+        "CMP-WCORE-LAUNCH-ROOT-AUTHORITY",
+        "CMP-WCORE-CGROUP2-MAGIC"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-e9ce48b4b613ad66",
+      "source": "skills/worker/core/worker/native-worker-launcher.c",
+      "line": 70,
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "exactText": "      || (unsigned long long)info.st_ino != binding_number(inode)) fail(\"WORKER_NATIVE_LAUNCH_BINDING_INVALID\");",
+      "reader": null,
+      "classification": "generated-binding",
+      "reason": "Actual C CLI contract argv1scope,2device,3inode,4bootId,5supervisor PID,6uid,7gid,8executable checked by9 individual CLI dispositions. UID/GID positive below UINT32_MAX (reserved nobody excluded), supervisor<=INT_MAX, UUID/parser/path/domain checks; pinned descriptors and original parent/PDEATHSIG, setgroups0+selected gid/uid+NO_NEW_PRIVS enforced. Syscall bits/parser offsets not tunable policies; role-selected argv/genuine process identity remains generated, no request/ambient override.",
+      "settingIds": [
+        "CMP-WCORE-SUPERVISOR-PID",
+        "CMP-WCORE-LAUNCH-ROOT-AUTHORITY",
+        "CMP-WCORE-CGROUP2-MAGIC"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-1b2830c83a29f1dd",
+      "source": "skills/worker/core/worker/native-worker-launcher.c",
+      "line": 75,
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "exactText": "  if (argc < 9 || argv[1][0] != '/' || argv[8][0] != '/') fail(\"WORKER_NATIVE_LAUNCH_ARGUMENTS_INVALID\");",
+      "reader": null,
+      "classification": "generated-binding",
+      "reason": "Actual C CLI contract argv1scope,2device,3inode,4bootId,5supervisor PID,6uid,7gid,8executable checked by9 individual CLI dispositions. UID/GID positive below UINT32_MAX (reserved nobody excluded), supervisor<=INT_MAX, UUID/parser/path/domain checks; pinned descriptors and original parent/PDEATHSIG, setgroups0+selected gid/uid+NO_NEW_PRIVS enforced. Syscall bits/parser offsets not tunable policies; role-selected argv/genuine process identity remains generated, no request/ambient override.",
+      "settingIds": [
+        "CMP-WCORE-SUPERVISOR-PID",
+        "CMP-WCORE-LAUNCH-ROOT-AUTHORITY",
+        "CMP-WCORE-CGROUP2-MAGIC"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-e437bdcc716850dd",
+      "source": "skills/worker/core/worker/native-worker-launcher.c",
+      "line": 76,
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "exactText": "  if (getuid() != 0 || geteuid() != 0) fail(\"WORKER_NATIVE_SUPERVISOR_IDENTITY_REQUIRED\");",
+      "reader": null,
+      "classification": "generated-binding",
+      "reason": "Actual C CLI contract argv1scope,2device,3inode,4bootId,5supervisor PID,6uid,7gid,8executable checked by9 individual CLI dispositions. UID/GID positive below UINT32_MAX (reserved nobody excluded), supervisor<=INT_MAX, UUID/parser/path/domain checks; pinned descriptors and original parent/PDEATHSIG, setgroups0+selected gid/uid+NO_NEW_PRIVS enforced. Syscall bits/parser offsets not tunable policies; role-selected argv/genuine process identity remains generated, no request/ambient override.",
+      "settingIds": [
+        "CMP-WCORE-SUPERVISOR-PID",
+        "CMP-WCORE-LAUNCH-ROOT-AUTHORITY",
+        "CMP-WCORE-CGROUP2-MAGIC"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-2c2cfddf5d7ef67f",
+      "source": "skills/worker/core/worker/native-worker-launcher.c",
+      "line": 80,
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "exactText": "  if (supervisor > INT_MAX || prctl(PR_SET_PDEATHSIG, SIGKILL) || getppid() != (pid_t)supervisor) {",
+      "reader": null,
+      "classification": "generated-binding",
+      "reason": "Actual C CLI contract argv1scope,2device,3inode,4bootId,5supervisor PID,6uid,7gid,8executable checked by9 individual CLI dispositions. UID/GID positive below UINT32_MAX (reserved nobody excluded), supervisor<=INT_MAX, UUID/parser/path/domain checks; pinned descriptors and original parent/PDEATHSIG, setgroups0+selected gid/uid+NO_NEW_PRIVS enforced. Syscall bits/parser offsets not tunable policies; role-selected argv/genuine process identity remains generated, no request/ambient override.",
+      "settingIds": [
+        "CMP-WCORE-SUPERVISOR-PID",
+        "CMP-WCORE-LAUNCH-ROOT-AUTHORITY",
+        "CMP-WCORE-CGROUP2-MAGIC"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-cfbea43680fbf6e5",
+      "source": "skills/worker/core/worker/native-worker-launcher.c",
+      "line": 93,
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "exactText": "  if (parent_fd < 0 || fstat(parent_fd, &parent_info) || fstat(aggregate, &info)",
+      "reader": null,
+      "classification": "generated-binding",
+      "reason": "Actual C CLI contract argv1scope,2device,3inode,4bootId,5supervisor PID,6uid,7gid,8executable checked by9 individual CLI dispositions. UID/GID positive below UINT32_MAX (reserved nobody excluded), supervisor<=INT_MAX, UUID/parser/path/domain checks; pinned descriptors and original parent/PDEATHSIG, setgroups0+selected gid/uid+NO_NEW_PRIVS enforced. Syscall bits/parser offsets not tunable policies; role-selected argv/genuine process identity remains generated, no request/ambient override.",
+      "settingIds": [
+        "CMP-WCORE-SUPERVISOR-PID",
+        "CMP-WCORE-LAUNCH-ROOT-AUTHORITY",
+        "CMP-WCORE-CGROUP2-MAGIC"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-66a9670d5e90235f",
+      "source": "skills/worker/core/worker/native-worker-launcher.c",
+      "line": 94,
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "exactText": "      || parent_info.st_dev != info.st_dev || parent_info.st_ino != info.st_ino) fail(\"WORKER_NATIVE_LAUNCH_BINDING_INVALID\");",
+      "reader": null,
+      "classification": "generated-binding",
+      "reason": "Actual C CLI contract argv1scope,2device,3inode,4bootId,5supervisor PID,6uid,7gid,8executable checked by9 individual CLI dispositions. UID/GID positive below UINT32_MAX (reserved nobody excluded), supervisor<=INT_MAX, UUID/parser/path/domain checks; pinned descriptors and original parent/PDEATHSIG, setgroups0+selected gid/uid+NO_NEW_PRIVS enforced. Syscall bits/parser offsets not tunable policies; role-selected argv/genuine process identity remains generated, no request/ambient override.",
+      "settingIds": [
+        "CMP-WCORE-SUPERVISOR-PID",
+        "CMP-WCORE-LAUNCH-ROOT-AUTHORITY",
+        "CMP-WCORE-CGROUP2-MAGIC"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-16e4f8830bdd09ab",
+      "source": "skills/worker/core/worker/native-worker-launcher.c",
+      "line": 95,
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "exactText": "  if (close(parent_fd) || close(aggregate)) fail(\"WORKER_NATIVE_LAUNCH_CLOSE_FAILED\");",
+      "reader": null,
+      "classification": "generated-binding",
+      "reason": "Actual C CLI contract argv1scope,2device,3inode,4bootId,5supervisor PID,6uid,7gid,8executable checked by9 individual CLI dispositions. UID/GID positive below UINT32_MAX (reserved nobody excluded), supervisor<=INT_MAX, UUID/parser/path/domain checks; pinned descriptors and original parent/PDEATHSIG, setgroups0+selected gid/uid+NO_NEW_PRIVS enforced. Syscall bits/parser offsets not tunable policies; role-selected argv/genuine process identity remains generated, no request/ambient override.",
+      "settingIds": [
+        "CMP-WCORE-SUPERVISOR-PID",
+        "CMP-WCORE-LAUNCH-ROOT-AUTHORITY",
+        "CMP-WCORE-CGROUP2-MAGIC"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-33ac63d9743333be",
+      "source": "skills/worker/core/worker/native-worker-launcher.c",
+      "line": 97,
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "exactText": "  if (membership < 0 || fstat(membership, &info) || info.st_uid != 0 || (info.st_mode & 0022)) {",
+      "reader": null,
+      "classification": "generated-binding",
+      "reason": "Actual C CLI contract argv1scope,2device,3inode,4bootId,5supervisor PID,6uid,7gid,8executable checked by9 individual CLI dispositions. UID/GID positive below UINT32_MAX (reserved nobody excluded), supervisor<=INT_MAX, UUID/parser/path/domain checks; pinned descriptors and original parent/PDEATHSIG, setgroups0+selected gid/uid+NO_NEW_PRIVS enforced. Syscall bits/parser offsets not tunable policies; role-selected argv/genuine process identity remains generated, no request/ambient override.",
+      "settingIds": [
+        "CMP-WCORE-SUPERVISOR-PID",
+        "CMP-WCORE-LAUNCH-ROOT-AUTHORITY",
+        "CMP-WCORE-CGROUP2-MAGIC"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-b06b41fe9dbf765a",
+      "source": "skills/worker/core/worker/native-worker-launcher.c",
+      "line": 102,
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "exactText": "  if (close(membership) || close(scope)) fail(\"WORKER_NATIVE_LAUNCH_CLOSE_FAILED\");",
+      "reader": null,
+      "classification": "generated-binding",
+      "reason": "Actual C CLI contract argv1scope,2device,3inode,4bootId,5supervisor PID,6uid,7gid,8executable checked by9 individual CLI dispositions. UID/GID positive below UINT32_MAX (reserved nobody excluded), supervisor<=INT_MAX, UUID/parser/path/domain checks; pinned descriptors and original parent/PDEATHSIG, setgroups0+selected gid/uid+NO_NEW_PRIVS enforced. Syscall bits/parser offsets not tunable policies; role-selected argv/genuine process identity remains generated, no request/ambient override.",
+      "settingIds": [
+        "CMP-WCORE-SUPERVISOR-PID",
+        "CMP-WCORE-LAUNCH-ROOT-AUTHORITY",
+        "CMP-WCORE-CGROUP2-MAGIC"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-f640087c6017b250",
+      "source": "skills/worker/core/worker/native-worker-launcher.c",
+      "line": 104,
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "exactText": "  if (setgroups(0, NULL) || setresgid(gid, gid, gid) || setresuid(uid, uid, uid)",
+      "reader": null,
+      "classification": "generated-binding",
+      "reason": "Actual C CLI contract argv1scope,2device,3inode,4bootId,5supervisor PID,6uid,7gid,8executable checked by9 individual CLI dispositions. UID/GID positive below UINT32_MAX (reserved nobody excluded), supervisor<=INT_MAX, UUID/parser/path/domain checks; pinned descriptors and original parent/PDEATHSIG, setgroups0+selected gid/uid+NO_NEW_PRIVS enforced. Syscall bits/parser offsets not tunable policies; role-selected argv/genuine process identity remains generated, no request/ambient override.",
+      "settingIds": [
+        "CMP-WCORE-SUPERVISOR-PID",
+        "CMP-WCORE-LAUNCH-ROOT-AUTHORITY",
+        "CMP-WCORE-CGROUP2-MAGIC"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-0cd71ac5a22c4793",
+      "source": "skills/worker/core/worker/native-worker-launcher.c",
+      "line": 105,
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "exactText": "      || prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0)) fail(\"WORKER_NATIVE_LAUNCH_DROP_PRIVILEGE_FAILED\");",
+      "reader": null,
+      "classification": "generated-binding",
+      "reason": "Actual C CLI contract argv1scope,2device,3inode,4bootId,5supervisor PID,6uid,7gid,8executable checked by9 individual CLI dispositions. UID/GID positive below UINT32_MAX (reserved nobody excluded), supervisor<=INT_MAX, UUID/parser/path/domain checks; pinned descriptors and original parent/PDEATHSIG, setgroups0+selected gid/uid+NO_NEW_PRIVS enforced. Syscall bits/parser offsets not tunable policies; role-selected argv/genuine process identity remains generated, no request/ambient override.",
+      "settingIds": [
+        "CMP-WCORE-SUPERVISOR-PID",
+        "CMP-WCORE-LAUNCH-ROOT-AUTHORITY",
+        "CMP-WCORE-CGROUP2-MAGIC"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-6a2943f3a77d3e2f",
+      "source": "skills/worker/core/worker/native-worker-launcher.c",
+      "line": 106,
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "exactText": "  if (getuid() != uid || geteuid() != uid || getgid() != gid || getegid() != gid) {",
+      "reader": null,
+      "classification": "generated-binding",
+      "reason": "Actual C CLI contract argv1scope,2device,3inode,4bootId,5supervisor PID,6uid,7gid,8executable checked by9 individual CLI dispositions. UID/GID positive below UINT32_MAX (reserved nobody excluded), supervisor<=INT_MAX, UUID/parser/path/domain checks; pinned descriptors and original parent/PDEATHSIG, setgroups0+selected gid/uid+NO_NEW_PRIVS enforced. Syscall bits/parser offsets not tunable policies; role-selected argv/genuine process identity remains generated, no request/ambient override.",
+      "settingIds": [
+        "CMP-WCORE-SUPERVISOR-PID",
+        "CMP-WCORE-LAUNCH-ROOT-AUTHORITY",
+        "CMP-WCORE-CGROUP2-MAGIC"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-02e24dac1f887cac",
+      "source": "skills/worker/core/worker/native-worker-launcher.c",
+      "line": 111,
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "exactText": "  if (prctl(PR_SET_PDEATHSIG, SIGKILL) || getppid() != (pid_t)supervisor) {",
+      "reader": null,
+      "classification": "generated-binding",
+      "reason": "Actual C CLI contract argv1scope,2device,3inode,4bootId,5supervisor PID,6uid,7gid,8executable checked by9 individual CLI dispositions. UID/GID positive below UINT32_MAX (reserved nobody excluded), supervisor<=INT_MAX, UUID/parser/path/domain checks; pinned descriptors and original parent/PDEATHSIG, setgroups0+selected gid/uid+NO_NEW_PRIVS enforced. Syscall bits/parser offsets not tunable policies; role-selected argv/genuine process identity remains generated, no request/ambient override.",
+      "settingIds": [
+        "CMP-WCORE-SUPERVISOR-PID",
+        "CMP-WCORE-LAUNCH-ROOT-AUTHORITY",
+        "CMP-WCORE-CGROUP2-MAGIC"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-52fa51083c04f642",
+      "source": "skills/worker/core/worker/native-worker-ownership.ts",
+      "line": 40,
+      "sourceSha256": "52f2f06fe2f18a8cabd8426d360d756d01d34471e2f0015e8fe148e753238350",
+      "exactText": "  return (error instanceof Error ? error.message : String(error)).slice(0, 4096).toWellFormed() || 'WORKER_NATIVE_UNKNOWN_FAILURE';",
+      "reader": {
+        "name": "diagnosis",
+        "parents": [],
+        "startLine": 39,
+        "endLine": 41
+      },
+      "classification": "duplicate",
+      "reason": "Productive diagnosis clipping4096/toWellFormed and failure-label fallback; existing single ownershipdiagnostic policy aliases producer,validator,terminal reservation.",
+      "settingIds": [
+        "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-3c41e1cc4c626ee7",
+      "source": "skills/worker/core/worker/native-worker-ownership.ts",
+      "line": 68,
+      "sourceSha256": "52f2f06fe2f18a8cabd8426d360d756d01d34471e2f0015e8fe148e753238350",
+      "exactText": "    if (this.#started || this.#closing) return Promise.reject(new Error('WORKER_NATIVE_LAUNCH_FENCED'));",
+      "reader": {
+        "name": "launch",
+        "parents": [],
+        "startLine": 66,
+        "endLine": 78
+      },
+      "classification": "generated-binding",
+      "reason": "Launch/admission state fences reject already started/closing/closed/duplicate key; finish memoization and absent record=null preserve actual retained lifecycle, not configured success.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-9d5a8c8121d9fcb9",
+      "source": "skills/worker/core/worker/native-worker-ownership.ts",
+      "line": 113,
+      "sourceSha256": "52f2f06fe2f18a8cabd8426d360d756d01d34471e2f0015e8fe148e753238350",
+      "exactText": "    this.#completion ??= this.#finish().then(observation => {",
+      "reader": {
+        "name": "finish",
+        "parents": [],
+        "startLine": 111,
+        "endLine": 121
+      },
+      "classification": "generated-binding",
+      "reason": "Launch/admission state fences reject already started/closing/closed/duplicate key; finish memoization and absent record=null preserve actual retained lifecycle, not configured success.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-b67be506e3dd1172",
+      "source": "skills/worker/core/worker/native-worker-ownership.ts",
+      "line": 206,
+      "sourceSha256": "52f2f06fe2f18a8cabd8426d360d756d01d34471e2f0015e8fe148e753238350",
+      "exactText": "    return record ?? null;",
+      "reader": {
+        "name": "record",
+        "parents": [],
+        "startLine": 201,
+        "endLine": 207
+      },
+      "classification": "generated-binding",
+      "reason": "Launch/admission state fences reject already started/closing/closed/duplicate key; finish memoization and absent record=null preserve actual retained lifecycle, not configured success.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-b9711b156605d972",
+      "source": "skills/worker/core/worker/native-worker-ownership.ts",
+      "line": 244,
+      "sourceSha256": "52f2f06fe2f18a8cabd8426d360d756d01d34471e2f0015e8fe148e753238350",
+      "exactText": "    if (this.#closed || this.#admitting.has(key)) throw new Error('WORKER_NATIVE_ADMISSION_FENCED');",
+      "reader": {
+        "name": "#allocate",
+        "parents": [],
+        "startLine": 240,
+        "endLine": 272
+      },
+      "classification": "generated-binding",
+      "reason": "Launch/admission state fences reject already started/closing/closed/duplicate key; finish memoization and absent record=null preserve actual retained lifecycle, not configured success.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-4e77aaa0c1f218ae",
+      "source": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 89,
+      "sourceSha256": "230bcb2eae21abc5d87187d682504155ef131a649b05f6662fb0d7a6db575182",
+      "exactText": "  let closeTimer: NodeJS.Timeout | undefined;",
+      "reader": {
+        "name": "collectProcess",
+        "parents": [],
+        "startLine": 85,
+        "endLine": 145
+      },
+      "classification": "nonsetting",
+      "reason": "Local timer/closing/control bookkeeping; setTimeout uses actual limits.cleanupTimeoutMs and closing lease. State memoization never replenishes original claim or cleanup window.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-610dbd522378850f",
+      "source": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 94,
+      "sourceSha256": "230bcb2eae21abc5d87187d682504155ef131a649b05f6662fb0d7a6db575182",
+      "exactText": "    closing ??= lease.finish();",
+      "reader": {
+        "name": "collectProcess",
+        "parents": [],
+        "startLine": 85,
+        "endLine": 145
+      },
+      "classification": "nonsetting",
+      "reason": "Local timer/closing/control bookkeeping; setTimeout uses actual limits.cleanupTimeoutMs and closing lease. State memoization never replenishes original claim or cleanup window.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-0e3baca631b3a1af",
+      "source": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 97,
+      "sourceSha256": "230bcb2eae21abc5d87187d682504155ef131a649b05f6662fb0d7a6db575182",
+      "exactText": "    closeTimer ??= setTimeout(() => {",
+      "reader": {
+        "name": "collectProcess",
+        "parents": [],
+        "startLine": 85,
+        "endLine": 145
+      },
+      "classification": "nonsetting",
+      "reason": "Local timer/closing/control bookkeeping; setTimeout uses actual limits.cleanupTimeoutMs and closing lease. State memoization never replenishes original claim or cleanup window.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-21bfb63ab048613a",
+      "source": "skills/worker/core/worker/native-worker-process.ts",
+      "line": 111,
+      "sourceSha256": "230bcb2eae21abc5d87187d682504155ef131a649b05f6662fb0d7a6db575182",
+      "exactText": "    if (closing || disposeCancellation) return;",
+      "reader": {
+        "name": "collectProcess",
+        "parents": [],
+        "startLine": 85,
+        "endLine": 145
+      },
+      "classification": "nonsetting",
+      "reason": "Local timer/closing/control bookkeeping; setTimeout uses actual limits.cleanupTimeoutMs and closing lease. State memoization never replenishes original claim or cleanup window.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-f64e8677ab0bd919",
+      "source": "skills/worker/core/worker/ownership-capacity.ts",
+      "line": 19,
+      "sourceSha256": "4ff8bec1986def8a064b10e5e3ab1d1f3d6a4af0871ec5135f49903670aff309",
+      "exactText": "  if (record.phase === 'disposed' || record.phase === 'abandoned') return record;",
+      "reader": {
+        "name": "terminalRepresentation",
+        "parents": [],
+        "startLine": 18,
+        "endLine": 27
+      },
+      "classification": "duplicate",
+      "reason": "Terminal-only records retain actual representation; nonterminal reservation computes future pessimistic binding/diagnosis/observation capped against required selected maximumBytes. Synthetic future representation is accounting only, never evidence.",
+      "settingIds": [
+        "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS",
+        "CMP-WCORE-OWNERSHIP-ID-DOMAIN"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-72f273036b54dd97",
+      "source": "skills/worker/core/worker/ownership-capacity.ts",
+      "line": 20,
+      "sourceSha256": "4ff8bec1986def8a064b10e5e3ab1d1f3d6a4af0871ec5135f49903670aff309",
+      "exactText": "  const binding = record.binding ?? futureBinding(record.scopeName);",
+      "reader": {
+        "name": "terminalRepresentation",
+        "parents": [],
+        "startLine": 18,
+        "endLine": 27
+      },
+      "classification": "duplicate",
+      "reason": "Terminal-only records retain actual representation; nonterminal reservation computes future pessimistic binding/diagnosis/observation capped against required selected maximumBytes. Synthetic future representation is accounting only, never evidence.",
+      "settingIds": [
+        "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS",
+        "CMP-WCORE-OWNERSHIP-ID-DOMAIN"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-a037be936f74f11f",
+      "source": "skills/worker/core/worker/ownership-capacity.ts",
+      "line": 22,
+      "sourceSha256": "4ff8bec1986def8a064b10e5e3ab1d1f3d6a4af0871ec5135f49903670aff309",
+      "exactText": "    diagnosis: maximumDiagnosis, finalObservation: record.finalObservation ?? maximumObservation,",
+      "reader": {
+        "name": "terminalRepresentation",
+        "parents": [],
+        "startLine": 18,
+        "endLine": 27
+      },
+      "classification": "duplicate",
+      "reason": "Terminal-only records retain actual representation; nonterminal reservation computes future pessimistic binding/diagnosis/observation capped against required selected maximumBytes. Synthetic future representation is accounting only, never evidence.",
+      "settingIds": [
+        "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS",
+        "CMP-WCORE-OWNERSHIP-ID-DOMAIN"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-52c20393f969aa50",
+      "source": "skills/worker/core/worker/ownership-capacity.ts",
+      "line": 24,
+      "sourceSha256": "4ff8bec1986def8a064b10e5e3ab1d1f3d6a4af0871ec5135f49903670aff309",
+      "exactText": "      binding: child.binding ?? { ...binding, scopeName: child.name,",
+      "reader": {
+        "name": "terminalRepresentation",
+        "parents": [],
+        "startLine": 18,
+        "endLine": 27
+      },
+      "classification": "duplicate",
+      "reason": "Terminal-only records retain actual representation; nonterminal reservation computes future pessimistic binding/diagnosis/observation capped against required selected maximumBytes. Synthetic future representation is accounting only, never evidence.",
+      "settingIds": [
+        "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS",
+        "CMP-WCORE-OWNERSHIP-ID-DOMAIN"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-fe75482a11e6d6d7",
+      "source": "skills/worker/core/worker/ownership-capacity.ts",
+      "line": 33,
+      "sourceSha256": "4ff8bec1986def8a064b10e5e3ab1d1f3d6a4af0871ec5135f49903670aff309",
+      "exactText": "  if (!Number.isSafeInteger(maximumBytes) || maximumBytes < 1) throw new Error('WORKER_OWNERSHIP_CAPACITY_EXCEEDED');",
+      "reader": {
+        "name": "ownershipTerminalCapacityBytes",
+        "parents": [],
+        "startLine": 32,
+        "endLine": 42
+      },
+      "classification": "duplicate",
+      "reason": "Terminal-only records retain actual representation; nonterminal reservation computes future pessimistic binding/diagnosis/observation capped against required selected maximumBytes. Synthetic future representation is accounting only, never evidence.",
+      "settingIds": [
+        "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS",
+        "CMP-WCORE-OWNERSHIP-ID-DOMAIN"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-1ddfb10658ba9501",
+      "source": "skills/worker/core/worker/ownership-children.ts",
+      "line": 20,
+      "sourceSha256": "cda8cec00dc6046b0204d72c7cdda342d3a23934a4c26d00129352dbc07535b1",
+      "exactText": "  if (!value || typeof value !== 'object' || Array.isArray(value)",
+      "reader": {
+        "name": "validateChildLimits",
+        "parents": [],
+        "startLine": 19,
+        "endLine": 27
+      },
+      "classification": "generated-binding",
+      "reason": "Exact memoryBytes/tasks child and topology shapes; safe positive copied limits, aggregate.v1 or legacy-leaf version, legacy/no-parent may not acquire children; fields originate real launch/retained topology, not profile alternatives.",
+      "settingIds": [
+        "CMP-WCORE-CHILD-LIMIT-INHERITANCE",
+        "CMP-WCORE-OWNERSHIP-PROTOCOL"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-535de768ea15db06",
+      "source": "skills/worker/core/worker/ownership-children.ts",
+      "line": 21,
+      "sourceSha256": "cda8cec00dc6046b0204d72c7cdda342d3a23934a4c26d00129352dbc07535b1",
+      "exactText": "    || Object.keys(value).sort().join(',') !== 'memoryBytes,tasks'",
+      "reader": {
+        "name": "validateChildLimits",
+        "parents": [],
+        "startLine": 19,
+        "endLine": 27
+      },
+      "classification": "generated-binding",
+      "reason": "Exact memoryBytes/tasks child and topology shapes; safe positive copied limits, aggregate.v1 or legacy-leaf version, legacy/no-parent may not acquire children; fields originate real launch/retained topology, not profile alternatives.",
+      "settingIds": [
+        "CMP-WCORE-CHILD-LIMIT-INHERITANCE",
+        "CMP-WCORE-OWNERSHIP-PROTOCOL"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-34e7103215dfd5a6",
+      "source": "skills/worker/core/worker/ownership-children.ts",
+      "line": 22,
+      "sourceSha256": "cda8cec00dc6046b0204d72c7cdda342d3a23934a4c26d00129352dbc07535b1",
+      "exactText": "    || !('memoryBytes' in value) || !('tasks' in value)",
+      "reader": {
+        "name": "validateChildLimits",
+        "parents": [],
+        "startLine": 19,
+        "endLine": 27
+      },
+      "classification": "generated-binding",
+      "reason": "Exact memoryBytes/tasks child and topology shapes; safe positive copied limits, aggregate.v1 or legacy-leaf version, legacy/no-parent may not acquire children; fields originate real launch/retained topology, not profile alternatives.",
+      "settingIds": [
+        "CMP-WCORE-CHILD-LIMIT-INHERITANCE",
+        "CMP-WCORE-OWNERSHIP-PROTOCOL"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-636761a5751dc704",
+      "source": "skills/worker/core/worker/ownership-children.ts",
+      "line": 23,
+      "sourceSha256": "cda8cec00dc6046b0204d72c7cdda342d3a23934a4c26d00129352dbc07535b1",
+      "exactText": "    || !Number.isSafeInteger(value.memoryBytes) || Number(value.memoryBytes) < 1",
+      "reader": {
+        "name": "validateChildLimits",
+        "parents": [],
+        "startLine": 19,
+        "endLine": 27
+      },
+      "classification": "generated-binding",
+      "reason": "Exact memoryBytes/tasks child and topology shapes; safe positive copied limits, aggregate.v1 or legacy-leaf version, legacy/no-parent may not acquire children; fields originate real launch/retained topology, not profile alternatives.",
+      "settingIds": [
+        "CMP-WCORE-CHILD-LIMIT-INHERITANCE",
+        "CMP-WCORE-OWNERSHIP-PROTOCOL"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-83e0caaf22697b7c",
+      "source": "skills/worker/core/worker/ownership-children.ts",
+      "line": 24,
+      "sourceSha256": "cda8cec00dc6046b0204d72c7cdda342d3a23934a4c26d00129352dbc07535b1",
+      "exactText": "    || !Number.isSafeInteger(value.tasks) || Number(value.tasks) < 1) {",
+      "reader": {
+        "name": "validateChildLimits",
+        "parents": [],
+        "startLine": 19,
+        "endLine": 27
+      },
+      "classification": "generated-binding",
+      "reason": "Exact memoryBytes/tasks child and topology shapes; safe positive copied limits, aggregate.v1 or legacy-leaf version, legacy/no-parent may not acquire children; fields originate real launch/retained topology, not profile alternatives.",
+      "settingIds": [
+        "CMP-WCORE-CHILD-LIMIT-INHERITANCE",
+        "CMP-WCORE-OWNERSHIP-PROTOCOL"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-58e706be34629cef",
+      "source": "skills/worker/core/worker/ownership-children.ts",
+      "line": 30,
+      "sourceSha256": "cda8cec00dc6046b0204d72c7cdda342d3a23934a4c26d00129352dbc07535b1",
+      "exactText": "  if (!value || typeof value !== 'object' || Array.isArray(value)",
+      "reader": {
+        "name": "validateTopology",
+        "parents": [],
+        "startLine": 29,
+        "endLine": 45
+      },
+      "classification": "generated-binding",
+      "reason": "Exact memoryBytes/tasks child and topology shapes; safe positive copied limits, aggregate.v1 or legacy-leaf version, legacy/no-parent may not acquire children; fields originate real launch/retained topology, not profile alternatives.",
+      "settingIds": [
+        "CMP-WCORE-CHILD-LIMIT-INHERITANCE",
+        "CMP-WCORE-OWNERSHIP-PROTOCOL"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-d9e3bd24e945b913",
+      "source": "skills/worker/core/worker/ownership-children.ts",
+      "line": 31,
+      "sourceSha256": "cda8cec00dc6046b0204d72c7cdda342d3a23934a4c26d00129352dbc07535b1",
+      "exactText": "    || Object.keys(value).sort().join(',') !== 'children,kind'",
+      "reader": {
+        "name": "validateTopology",
+        "parents": [],
+        "startLine": 29,
+        "endLine": 45
+      },
+      "classification": "generated-binding",
+      "reason": "Exact memoryBytes/tasks child and topology shapes; safe positive copied limits, aggregate.v1 or legacy-leaf version, legacy/no-parent may not acquire children; fields originate real launch/retained topology, not profile alternatives.",
+      "settingIds": [
+        "CMP-WCORE-CHILD-LIMIT-INHERITANCE",
+        "CMP-WCORE-OWNERSHIP-PROTOCOL"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-2e035dda834e8f54",
+      "source": "skills/worker/core/worker/ownership-children.ts",
+      "line": 32,
+      "sourceSha256": "cda8cec00dc6046b0204d72c7cdda342d3a23934a4c26d00129352dbc07535b1",
+      "exactText": "    || !('kind' in value) || !('children' in value) || !Array.isArray(value.children)",
+      "reader": {
+        "name": "validateTopology",
+        "parents": [],
+        "startLine": 29,
+        "endLine": 45
+      },
+      "classification": "generated-binding",
+      "reason": "Exact memoryBytes/tasks child and topology shapes; safe positive copied limits, aggregate.v1 or legacy-leaf version, legacy/no-parent may not acquire children; fields originate real launch/retained topology, not profile alternatives.",
+      "settingIds": [
+        "CMP-WCORE-CHILD-LIMIT-INHERITANCE",
+        "CMP-WCORE-OWNERSHIP-PROTOCOL"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-d3646dcdae7c434e",
+      "source": "skills/worker/core/worker/ownership-children.ts",
+      "line": 33,
+      "sourceSha256": "cda8cec00dc6046b0204d72c7cdda342d3a23934a4c26d00129352dbc07535b1",
+      "exactText": "    || !['aggregate.v1', 'legacy-leaf'].includes(String(value.kind))) {",
+      "reader": {
+        "name": "validateTopology",
+        "parents": [],
+        "startLine": 29,
+        "endLine": 45
+      },
+      "classification": "generated-binding",
+      "reason": "Exact memoryBytes/tasks child and topology shapes; safe positive copied limits, aggregate.v1 or legacy-leaf version, legacy/no-parent may not acquire children; fields originate real launch/retained topology, not profile alternatives.",
+      "settingIds": [
+        "CMP-WCORE-CHILD-LIMIT-INHERITANCE",
+        "CMP-WCORE-OWNERSHIP-PROTOCOL"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-e4c94cd65655d4f5",
+      "source": "skills/worker/core/worker/ownership-children.ts",
+      "line": 36,
+      "sourceSha256": "cda8cec00dc6046b0204d72c7cdda342d3a23934a4c26d00129352dbc07535b1",
+      "exactText": "  if ((value.kind === 'legacy-leaf' || parent === null) && value.children.length) {",
+      "reader": {
+        "name": "validateTopology",
+        "parents": [],
+        "startLine": 29,
+        "endLine": 45
+      },
+      "classification": "generated-binding",
+      "reason": "Exact memoryBytes/tasks child and topology shapes; safe positive copied limits, aggregate.v1 or legacy-leaf version, legacy/no-parent may not acquire children; fields originate real launch/retained topology, not profile alternatives.",
+      "settingIds": [
+        "CMP-WCORE-CHILD-LIMIT-INHERITANCE",
+        "CMP-WCORE-OWNERSHIP-PROTOCOL"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-89e079221adb36f9",
+      "source": "skills/worker/core/worker/ownership-children.ts",
+      "line": 48,
+      "sourceSha256": "cda8cec00dc6046b0204d72c7cdda342d3a23934a4c26d00129352dbc07535b1",
+      "exactText": "  if (!child || typeof child !== 'object' || Array.isArray(child)",
+      "reader": {
+        "name": "validateChild",
+        "parents": [],
+        "startLine": 47,
+        "endLine": 55
+      },
+      "classification": "generated-binding",
+      "reason": "Exact memoryBytes/tasks child and topology shapes; safe positive copied limits, aggregate.v1 or legacy-leaf version, legacy/no-parent may not acquire children; fields originate real launch/retained topology, not profile alternatives.",
+      "settingIds": [
+        "CMP-WCORE-CHILD-LIMIT-INHERITANCE",
+        "CMP-WCORE-OWNERSHIP-PROTOCOL"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-98e615b56e2a19c5",
+      "source": "skills/worker/core/worker/ownership-state.ts",
+      "line": 10,
+      "sourceSha256": "ef33d0452ca1c814430a4815d4bfa5fce85b8b2fa1217ccb171f6c942dc12f85",
+      "exactText": "  if (typeof value !== 'string' || value.length > maximumOwnershipHostIdentityCharacters",
+      "reader": {
+        "name": "validateOwnershipHostIdentity",
+        "parents": [],
+        "startLine": 9,
+        "endLine": 12
+      },
+      "classification": "duplicate",
+      "reason": "Exact ownership record shape and host identity grammar256 versus worker/attempt/claim ID wellformed1..512; current format domains already explicitly named, not operator policies.",
+      "settingIds": [
+        "CMP-WCORE-OWNERSHIP-ID-DOMAIN",
+        "CMP-WCORE-OWNERSHIP-PROTOCOL"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-030be52da9e39248",
+      "source": "skills/worker/core/worker/ownership-state.ts",
+      "line": 11,
+      "sourceSha256": "ef33d0452ca1c814430a4815d4bfa5fce85b8b2fa1217ccb171f6c942dc12f85",
+      "exactText": "    || !/^[A-Za-z0-9][A-Za-z0-9:._-]*$/u.test(value)) throw new Error('WORKER_OWNERSHIP_HOST_IDENTITY_INVALID');",
+      "reader": {
+        "name": "validateOwnershipHostIdentity",
+        "parents": [],
+        "startLine": 9,
+        "endLine": 12
+      },
+      "classification": "duplicate",
+      "reason": "Exact ownership record shape and host identity grammar256 versus worker/attempt/claim ID wellformed1..512; current format domains already explicitly named, not operator policies.",
+      "settingIds": [
+        "CMP-WCORE-OWNERSHIP-ID-DOMAIN",
+        "CMP-WCORE-OWNERSHIP-PROTOCOL"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-f7ae33a0e5c48f7d",
+      "source": "skills/worker/core/worker/ownership-state.ts",
+      "line": 32,
+      "sourceSha256": "ef33d0452ca1c814430a4815d4bfa5fce85b8b2fa1217ccb171f6c942dc12f85",
+      "exactText": "  if (!value || typeof value !== 'object' || Array.isArray(value)",
+      "reader": {
+        "name": "exact",
+        "parents": [],
+        "startLine": 31,
+        "endLine": 36
+      },
+      "classification": "duplicate",
+      "reason": "Exact ownership record shape and host identity grammar256 versus worker/attempt/claim ID wellformed1..512; current format domains already explicitly named, not operator policies.",
+      "settingIds": [
+        "CMP-WCORE-OWNERSHIP-ID-DOMAIN",
+        "CMP-WCORE-OWNERSHIP-PROTOCOL"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-299da044acf89e3f",
+      "source": "skills/worker/core/worker/ownership-state.ts",
+      "line": 33,
+      "sourceSha256": "ef33d0452ca1c814430a4815d4bfa5fce85b8b2fa1217ccb171f6c942dc12f85",
+      "exactText": "    || Object.keys(value).length !== keys.length || keys.some(key => !Object.hasOwn(value, key))) {",
+      "reader": {
+        "name": "exact",
+        "parents": [],
+        "startLine": 31,
+        "endLine": 36
+      },
+      "classification": "duplicate",
+      "reason": "Exact ownership record shape and host identity grammar256 versus worker/attempt/claim ID wellformed1..512; current format domains already explicitly named, not operator policies.",
+      "settingIds": [
+        "CMP-WCORE-OWNERSHIP-ID-DOMAIN",
+        "CMP-WCORE-OWNERSHIP-PROTOCOL"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-158086c57787dd2a",
+      "source": "skills/worker/core/worker/ownership-state.ts",
+      "line": 42,
+      "sourceSha256": "ef33d0452ca1c814430a4815d4bfa5fce85b8b2fa1217ccb171f6c942dc12f85",
+      "exactText": "    if (typeof value !== 'string' || value.length < 1 || value.length > 512 || value !== value.toWellFormed()) {",
+      "reader": {
+        "name": "identityValid",
+        "parents": [],
+        "startLine": 38,
+        "endLine": 54
+      },
+      "classification": "duplicate",
+      "reason": "Exact ownership record shape and host identity grammar256 versus worker/attempt/claim ID wellformed1..512; current format domains already explicitly named, not operator policies.",
+      "settingIds": [
+        "CMP-WCORE-OWNERSHIP-ID-DOMAIN",
+        "CMP-WCORE-OWNERSHIP-PROTOCOL"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-b3c75cbdb5b31212",
+      "source": "skills/worker/core/worker/ownership-store.ts",
+      "line": 65,
+      "sourceSha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "exactText": "    if (!path.isAbsolute(root) || !Number.isSafeInteger(limits.maximumRecords) || limits.maximumRecords < 1",
+      "reader": {
+        "name": "constructor",
+        "parents": [],
+        "startLine": 64,
+        "endLine": 72
+      },
+      "classification": "generated-binding",
+      "reason": "Required absolute store root/safe positive supplied record+byte caps; transition/child CAS compares actual captured record; bounded real file read enforces supplied maximumBytes. Quotas authored by actual Prism/Buster owners, no generic fallback.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-2f9273a912a76a99",
+      "source": "skills/worker/core/worker/ownership-store.ts",
+      "line": 66,
+      "sourceSha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "exactText": "      || !Number.isSafeInteger(limits.maximumBytes) || limits.maximumBytes < 1) {",
+      "reader": {
+        "name": "constructor",
+        "parents": [],
+        "startLine": 64,
+        "endLine": 72
+      },
+      "classification": "generated-binding",
+      "reason": "Required absolute store root/safe positive supplied record+byte caps; transition/child CAS compares actual captured record; bounded real file read enforces supplied maximumBytes. Quotas authored by actual Prism/Buster owners, no generic fallback.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-194fd9647e2bce6d",
+      "source": "skills/worker/core/worker/ownership-store.ts",
+      "line": 138,
+      "sourceSha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "exactText": "      if (!current || canonicalJson(current) !== canonicalJson(expected)) throw new Error('WORKER_OWNERSHIP_CAS_CONFLICT');",
+      "reader": {
+        "name": "transition",
+        "parents": [],
+        "startLine": 128,
+        "endLine": 151
+      },
+      "classification": "generated-binding",
+      "reason": "Required absolute store root/safe positive supplied record+byte caps; transition/child CAS compares actual captured record; bounded real file read enforces supplied maximumBytes. Quotas authored by actual Prism/Buster owners, no generic fallback.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-87e29fb6d732b32c",
+      "source": "skills/worker/core/worker/ownership-store.ts",
+      "line": 183,
+      "sourceSha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "exactText": "      if (!current || canonicalJson(current) !== canonicalJson(expected)) throw new Error('WORKER_OWNERSHIP_CAS_CONFLICT');",
+      "reader": {
+        "name": "#changeChildren",
+        "parents": [],
+        "startLine": 175,
+        "endLine": 193
+      },
+      "classification": "generated-binding",
+      "reason": "Required absolute store root/safe positive supplied record+byte caps; transition/child CAS compares actual captured record; bounded real file read enforces supplied maximumBytes. Quotas authored by actual Prism/Buster owners, no generic fallback.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-ff6f26c86cdbe7f6",
+      "source": "skills/worker/core/worker/ownership-store.ts",
+      "line": 205,
+      "sourceSha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "exactText": "      if (!stat.isFile() || stat.nlink !== 1 || stat.size > this.#maximumBytes) throw new Error('WORKER_OWNERSHIP_CAPACITY_EXCEEDED');",
+      "reader": {
+        "name": "#read",
+        "parents": [],
+        "startLine": 195,
+        "endLine": 211
+      },
+      "classification": "generated-binding",
+      "reason": "Required absolute store root/safe positive supplied record+byte caps; transition/child CAS compares actual captured record; bounded real file read enforces supplied maximumBytes. Quotas authored by actual Prism/Buster owners, no generic fallback.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-959ab2ebc19a4134",
+      "source": "skills/worker/core/worker/phase-deadline.ts",
+      "line": 1,
+      "sourceSha256": "13ead2817f0277f8bb7a45b09f42df228bc62e8a0d43e26eabbcbc4f2365e456",
+      "exactText": "/** A timeout cannot kill JavaScript. Unsettled hooks remain explicitly unresolved. */",
+      "reader": null,
+      "classification": "nonsetting",
+      "reason": "Cancellation reason fallback is error taxonomy, timer handles are unions; settled hooks and maintenance mode honor original accepted absolute phase/claim budgets. Comment states inability to kill JavaScript, not a timeout policy.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-cd1a800f5a847cc5",
+      "source": "skills/worker/core/worker/phase-deadline.ts",
+      "line": 22,
+      "sourceSha256": "13ead2817f0277f8bb7a45b09f42df228bc62e8a0d43e26eabbcbc4f2365e456",
+      "exactText": "    const abort = (): void => controller.abort(this.signal?.reason ?? new Error('WORKER_ATTEMPT_CANCELLED'));",
+      "reader": {
+        "name": "run",
+        "parents": [],
+        "startLine": 18,
+        "endLine": 46
+      },
+      "classification": "nonsetting",
+      "reason": "Cancellation reason fallback is error taxonomy, timer handles are unions; settled hooks and maintenance mode honor original accepted absolute phase/claim budgets. Comment states inability to kill JavaScript, not a timeout policy.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-61123d393b0f4172",
+      "source": "skills/worker/core/worker/phase-deadline.ts",
+      "line": 24,
+      "sourceSha256": "13ead2817f0277f8bb7a45b09f42df228bc62e8a0d43e26eabbcbc4f2365e456",
+      "exactText": "    let timer: NodeJS.Timeout | undefined;",
+      "reader": {
+        "name": "run",
+        "parents": [],
+        "startLine": 18,
+        "endLine": 46
+      },
+      "classification": "nonsetting",
+      "reason": "Cancellation reason fallback is error taxonomy, timer handles are unions; settled hooks and maintenance mode honor original accepted absolute phase/claim budgets. Comment states inability to kill JavaScript, not a timeout policy.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-75463b6d192f8305",
+      "source": "skills/worker/core/worker/phase-deadline.ts",
+      "line": 51,
+      "sourceSha256": "13ead2817f0277f8bb7a45b09f42df228bc62e8a0d43e26eabbcbc4f2365e456",
+      "exactText": "    if (!maintenance && this.signal?.aborted) throw this.signal.reason ?? new Error('WORKER_ATTEMPT_CANCELLED');",
+      "reader": {
+        "name": "#assertStart",
+        "parents": [],
+        "startLine": 48,
+        "endLine": 52
+      },
+      "classification": "nonsetting",
+      "reason": "Cancellation reason fallback is error taxonomy, timer handles are unions; settled hooks and maintenance mode honor original accepted absolute phase/claim budgets. Comment states inability to kill JavaScript, not a timeout policy.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-bce569d1de993f1f",
+      "source": "skills/worker/core/worker/phase-deadline.ts",
+      "line": 58,
+      "sourceSha256": "13ead2817f0277f8bb7a45b09f42df228bc62e8a0d43e26eabbcbc4f2365e456",
+      "exactText": "    let timer: NodeJS.Timeout | undefined;",
+      "reader": {
+        "name": "#drain",
+        "parents": [],
+        "startLine": 57,
+        "endLine": 62
+      },
+      "classification": "nonsetting",
+      "reason": "Cancellation reason fallback is error taxonomy, timer handles are unions; settled hooks and maintenance mode honor original accepted absolute phase/claim budgets. Comment states inability to kill JavaScript, not a timeout policy.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-f54a3c9bb76d6b0f",
+      "source": "skills/worker/core/worker/phase-deadline.ts",
+      "line": 66,
+      "sourceSha256": "13ead2817f0277f8bb7a45b09f42df228bc62e8a0d43e26eabbcbc4f2365e456",
+      "exactText": "  let timer: NodeJS.Timeout | undefined;",
+      "reader": {
+        "name": "settlesWithin",
+        "parents": [],
+        "startLine": 65,
+        "endLine": 70
+      },
+      "classification": "nonsetting",
+      "reason": "Cancellation reason fallback is error taxonomy, timer handles are unions; settled hooks and maintenance mode honor original accepted absolute phase/claim budgets. Comment states inability to kill JavaScript, not a timeout policy.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-fc865bdc6ab607dc",
+      "source": "skills/worker/core/worker/phase-deadline.ts",
+      "line": 73,
+      "sourceSha256": "13ead2817f0277f8bb7a45b09f42df228bc62e8a0d43e26eabbcbc4f2365e456",
+      "exactText": "  let timer: NodeJS.Timeout | undefined;",
+      "reader": {
+        "name": "armWorkerClaimDeadline",
+        "parents": [],
+        "startLine": 72,
+        "endLine": 80
+      },
+      "classification": "nonsetting",
+      "reason": "Cancellation reason fallback is error taxonomy, timer handles are unions; settled hooks and maintenance mode honor original accepted absolute phase/claim budgets. Comment states inability to kill JavaScript, not a timeout policy.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-bad55b3fd2b90e62",
+      "source": "skills/worker/core/worker/resource-accounting.ts",
+      "line": 19,
+      "sourceSha256": "eaed91f776bfdbf1daac4faa7b2e56848b5f1b1f83d2737622048cd4426837ef",
+      "exactText": "  if(!values || !workerResourceMetrics.every(metric=>positiveObservation(values[metric])))return invalid();",
+      "reader": {
+        "name": "assessWorkerResources",
+        "parents": [],
+        "startLine": 16,
+        "endLine": 34
+      },
+      "classification": "task-data",
+      "reason": "Actual measured CPU/memory/process resources validated, requested budgets copied from v1/v2 envelope; unavailable/excess errors and first-fault memoization preserve observations and task budgets, not synthesize CONFIG resources.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-3cead951e08b3f47",
+      "source": "skills/worker/core/worker/resource-accounting.ts",
+      "line": 32,
+      "sourceSha256": "eaed91f776bfdbf1daac4faa7b2e56848b5f1b1f83d2737622048cd4426837ef",
+      "exactText": " if(!accounting || !measured || typeof measured!=='object')return invalid(accounting);",
+      "reader": {
+        "name": "assessWorkerResources",
+        "parents": [],
+        "startLine": 16,
+        "endLine": 34
+      },
+      "classification": "task-data",
+      "reason": "Actual measured CPU/memory/process resources validated, requested budgets copied from v1/v2 envelope; unavailable/excess errors and first-fault memoization preserve observations and task budgets, not synthesize CONFIG resources.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-b98ff62482109013",
+      "source": "skills/worker/core/worker/resource-accounting.ts",
+      "line": 41,
+      "sourceSha256": "eaed91f776bfdbf1daac4faa7b2e56848b5f1b1f83d2737622048cd4426837ef",
+      "exactText": " if(budget.state==='unrequested')return undefined;",
+      "reader": {
+        "name": "budgetError",
+        "parents": [],
+        "startLine": 40,
+        "endLine": 45
+      },
+      "classification": "task-data",
+      "reason": "Actual measured CPU/memory/process resources validated, requested budgets copied from v1/v2 envelope; unavailable/excess errors and first-fault memoization preserve observations and task budgets, not synthesize CONFIG resources.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-9e9861a013b0b032",
+      "source": "skills/worker/core/worker/resource-accounting.ts",
+      "line": 42,
+      "sourceSha256": "eaed91f776bfdbf1daac4faa7b2e56848b5f1b1f83d2737622048cd4426837ef",
+      "exactText": " if(observation.status==='unavailable')return {code:'WORKER_RESOURCE_MEASUREMENT_UNAVAILABLE',message:`Requested ${metric} budget cannot be established: ${observation.reason}`};",
+      "reader": {
+        "name": "budgetError",
+        "parents": [],
+        "startLine": 40,
+        "endLine": 45
+      },
+      "classification": "task-data",
+      "reason": "Actual measured CPU/memory/process resources validated, requested budgets copied from v1/v2 envelope; unavailable/excess errors and first-fault memoization preserve observations and task budgets, not synthesize CONFIG resources.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-57ddcfd97bce02c6",
+      "source": "skills/worker/core/worker/resource-accounting.ts",
+      "line": 43,
+      "sourceSha256": "eaed91f776bfdbf1daac4faa7b2e56848b5f1b1f83d2737622048cd4426837ef",
+      "exactText": " if(observation.value>budget.limit)return {code:'WORKER_RESOURCE_LIMIT',message:`Requested ${metric} limit ${budget.limit} exceeded by ${observation.value}`};",
+      "reader": {
+        "name": "budgetError",
+        "parents": [],
+        "startLine": 40,
+        "endLine": 45
+      },
+      "classification": "task-data",
+      "reason": "Actual measured CPU/memory/process resources validated, requested budgets copied from v1/v2 envelope; unavailable/excess errors and first-fault memoization preserve observations and task budgets, not synthesize CONFIG resources.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-cd9b8d3ca039717d",
+      "source": "skills/worker/core/worker/resource-accounting.ts",
+      "line": 54,
+      "sourceSha256": "eaed91f776bfdbf1daac4faa7b2e56848b5f1b1f83d2737622048cd4426837ef",
+      "exactText": "  error??=budgetError(metric,observation,accounting.budgets[metric]);",
+      "reader": {
+        "name": "assessDeclaredResources",
+        "parents": [],
+        "startLine": 46,
+        "endLine": 58
+      },
+      "classification": "task-data",
+      "reason": "Actual measured CPU/memory/process resources validated, requested budgets copied from v1/v2 envelope; unavailable/excess errors and first-fault memoization preserve observations and task budgets, not synthesize CONFIG resources.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-63efefe5b4de10ab",
+      "source": "skills/worker/core/worker/resource-reservations.ts",
+      "line": 8,
+      "sourceSha256": "781ba82f68942a44ba3c40652adffb76d8ceb369c279909dc826fbc361fd63e9",
+      "exactText": "  if (!Number.isSafeInteger(value) || value < 1) throw new Error('WORKER_NATIVE_CAPACITY_INVALID');",
+      "reader": {
+        "name": "positive",
+        "parents": [],
+        "startLine": 7,
+        "endLine": 9
+      },
+      "classification": "generated-binding",
+      "reason": "Required positive actual host pool memory/tasks/scope counters, frozen capacity snapshot; productive NativeWorkerOwnership composition derives from trusted role pool document. No hardcoded capacity.",
+      "settingIds": [
+        "CMP-WCORE-HOST-MAXIMUMACTIVESCOPES",
+        "CMP-WCORE-HOST-LIMITS-MEMORYBYTES",
+        "CMP-WCORE-HOST-LIMITS-TASKS"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-57bc63bd0568efd5",
+      "source": "skills/worker/core/worker/resource-reservations.ts",
+      "line": 13,
+      "sourceSha256": "781ba82f68942a44ba3c40652adffb76d8ceb369c279909dc826fbc361fd63e9",
+      "exactText": "  readonly #maximum: NativeWorkerScopeLimits;",
+      "reader": null,
+      "classification": "generated-binding",
+      "reason": "Required positive actual host pool memory/tasks/scope counters, frozen capacity snapshot; productive NativeWorkerOwnership composition derives from trusted role pool document. No hardcoded capacity.",
+      "settingIds": [
+        "CMP-WCORE-HOST-MAXIMUMACTIVESCOPES",
+        "CMP-WCORE-HOST-LIMITS-MEMORYBYTES",
+        "CMP-WCORE-HOST-LIMITS-TASKS"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-f93e054d57030d35",
+      "source": "skills/worker/core/worker/resource-reservations.ts",
+      "line": 19,
+      "sourceSha256": "781ba82f68942a44ba3c40652adffb76d8ceb369c279909dc826fbc361fd63e9",
+      "exactText": "  constructor(maximum: NativeWorkerScopeLimits, maximumScopes: number) {",
+      "reader": {
+        "name": "constructor",
+        "parents": [],
+        "startLine": 19,
+        "endLine": 23
+      },
+      "classification": "generated-binding",
+      "reason": "Required positive actual host pool memory/tasks/scope counters, frozen capacity snapshot; productive NativeWorkerOwnership composition derives from trusted role pool document. No hardcoded capacity.",
+      "settingIds": [
+        "CMP-WCORE-HOST-MAXIMUMACTIVESCOPES",
+        "CMP-WCORE-HOST-LIMITS-MEMORYBYTES",
+        "CMP-WCORE-HOST-LIMITS-TASKS"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-5ce2e4ddfc6650df",
+      "source": "skills/worker/core/worker/resource-reservations.ts",
+      "line": 21,
+      "sourceSha256": "781ba82f68942a44ba3c40652adffb76d8ceb369c279909dc826fbc361fd63e9",
+      "exactText": "    this.#maximum = Object.freeze({ ...maximum });",
+      "reader": {
+        "name": "constructor",
+        "parents": [],
+        "startLine": 19,
+        "endLine": 23
+      },
+      "classification": "generated-binding",
+      "reason": "Required positive actual host pool memory/tasks/scope counters, frozen capacity snapshot; productive NativeWorkerOwnership composition derives from trusted role pool document. No hardcoded capacity.",
+      "settingIds": [
+        "CMP-WCORE-HOST-MAXIMUMACTIVESCOPES",
+        "CMP-WCORE-HOST-LIMITS-MEMORYBYTES",
+        "CMP-WCORE-HOST-LIMITS-TASKS"
+      ],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-fde3500376dc96d5",
+      "source": "skills/worker/core/worker/trust.ts",
+      "line": 12,
+      "sourceSha256": "722f48ca75fb8546dbc4f4c9cc8eab8e31dfdfeafec7ea7aab587045e78b23fe",
+      "exactText": "  const value = headers[name] ?? headers[name.toLowerCase()];",
+      "reader": {
+        "name": "headerValue",
+        "parents": [],
+        "startLine": 8,
+        "endLine": 15
+      },
+      "classification": "task-data",
+      "reason": "Headers case-normalized and absent=>empty so authentication rejects; XFCC missing/multiple peer rejected; actual loopback proxy IP allowset is local transport trust constraint, not a fallback peer or authorization policy.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-5ed684116bcd8afd",
+      "source": "skills/worker/core/worker/trust.ts",
+      "line": 14,
+      "sourceSha256": "722f48ca75fb8546dbc4f4c9cc8eab8e31dfdfeafec7ea7aab587045e78b23fe",
+      "exactText": "  return value ?? '';",
+      "reader": {
+        "name": "headerValue",
+        "parents": [],
+        "startLine": 8,
+        "endLine": 15
+      },
+      "classification": "task-data",
+      "reason": "Headers case-normalized and absent=>empty so authentication rejects; XFCC missing/multiple peer rejected; actual loopback proxy IP allowset is local transport trust constraint, not a fallback peer or authorization policy.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-2a9cd4caec38b012",
+      "source": "skills/worker/core/worker/trust.ts",
+      "line": 21,
+      "sourceSha256": "722f48ca75fb8546dbc4f4c9cc8eab8e31dfdfeafec7ea7aab587045e78b23fe",
+      "exactText": "  if (!forwarded || forwarded.includes(',')) throw new Error('WORKER_TRUST_PEER_MISSING');",
+      "reader": {
+        "name": "spiffePeerFromForwardedClientCertificate",
+        "parents": [],
+        "startLine": 17,
+        "endLine": 29
+      },
+      "classification": "task-data",
+      "reason": "Headers case-normalized and absent=>empty so authentication rejects; XFCC missing/multiple peer rejected; actual loopback proxy IP allowset is local transport trust constraint, not a fallback peer or authorization policy.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    },
+    {
+      "candidateId": "SRC-a6135fd2369e531e",
+      "source": "skills/worker/core/worker/trust.ts",
+      "line": 48,
+      "sourceSha256": "722f48ca75fb8546dbc4f4c9cc8eab8e31dfdfeafec7ea7aab587045e78b23fe",
+      "exactText": "  if (!remoteAddress || !['127.0.0.1', '::1', '::ffff:127.0.0.1'].includes(remoteAddress)) {",
+      "reader": {
+        "name": "authorizeProxiedSpiffePeer",
+        "parents": [],
+        "startLine": 43,
+        "endLine": 52
+      },
+      "classification": "task-data",
+      "reason": "Headers case-normalized and absent=>empty so authentication rejects; XFCC missing/multiple peer rejected; actual loopback proxy IP allowset is local transport trust constraint, not a fallback peer or authorization policy.",
+      "settingIds": [],
+      "status": "manually-source-disposed; independent full review pending",
+      "existingProofScope": "Actual current source semantics only; future adjustable consumer behavior not-run"
+    }
+  ],
+  "stillOpenCoreCandidates": [
+    {
+      "id": "SRC-82af9358a05f6604",
+      "source": "skills/worker/core/worker/trust.ts",
+      "line": 35,
+      "kinds": [
+        "fallback-or-expression"
+      ],
+      "sourceSha256": "722f48ca75fb8546dbc4f4c9cc8eab8e31dfdfeafec7ea7aab587045e78b23fe",
+      "disposition": "unresolved",
+      "settingIds": [],
+      "reason": "Exact source candidate has no previous individual line/member disposition. authorizeSpiffePeer must be classified from actual value origin/consumer; source-wide class, lexical kind and counts do not close it.",
+      "exactText": "  if (allowedSpiffeIds.size === 0 || [...allowedSpiffeIds].some((id) => !SPIFFE_ID.test(id))) {",
+      "enclosingReader": {
+        "name": "authorizeSpiffePeer",
+        "parents": [],
+        "startLine": 31,
+        "endLine": 41
+      },
+      "status": "open-semantic-disposition",
+      "existingReferences": [],
+      "scope": "Source/candidate definition only; links remain independently challengeable, never runtime acceptance"
+    }
+  ],
+  "remainingScope": "Core trust allowset author handoff + any uncovered source member remains explicit; not global acceptance"
+}

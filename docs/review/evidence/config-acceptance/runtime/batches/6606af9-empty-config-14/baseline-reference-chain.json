@@ -1,0 +1,35 @@
+{
+  "committedBaseline": "6606af9e590032f328f330ecb3d953b1eef027e3",
+  "baselineReferences": {
+    "docs/review/evidence/config-acceptance/runtime/inventory-fragment.json": {
+      "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "blob": "188c10cc8dd25afb162e8cc1cc793fce68ee5d4d",
+      "sha256": "0847f5fe3e8cf3ead350fe7daa6deffad35975c98cecda52888f46f0cd9ea23e"
+    },
+    "docs/review/evidence/config-acceptance/runtime/case-proposals.json": {
+      "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "blob": "454a20ee388a7813c03b80f81f120941a95df91b",
+      "sha256": "113c662242195c821e3a0d1623283f643b428e1126818126f9dd509aec8a493c"
+    },
+    "docs/review/evidence/config-acceptance/runtime/runtime-case-dispositions.json": {
+      "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "blob": "feb9c567e8d1d8549443fb4fb6ae485a014b2b51",
+      "sha256": "3b3a5f6c03a74619b737131d2ff3ff6eabe4d1d350629d250e7644958e4101d8"
+    }
+  },
+  "previousDeliveryReceipt": {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/stable-milestone-receipt.json",
+    "sha256": "f2b4ff7aa58de0b6e194dfb1c60f3a3555364c61a4b99f219453ba581180ca79"
+  },
+  "currentBeforeOwnedIdentities": {
+    "docs/review/evidence/config-acceptance/runtime/inventory-fragment.json": "3400874169b97587baa7418e8de86d1830417361765455e2c8611d1924e86f68",
+    "docs/review/evidence/config-acceptance/runtime/case-proposals.json": "27c59407e202cc54092c19a4ce1c11441975990dc2cf00976778560d71e1d2b0",
+    "docs/review/evidence/config-acceptance/runtime/runtime-case-dispositions.json": "64b32a229ace4a4c7c9feadf47ec53cb5e1576f574299c9591aa6a2fb8de58eb"
+  },
+  "caseDelta": {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/uncommitted-case-delta-before.json.gz",
+    "sha256": "7782a99ba74803b7c5ac99edc537dca12036c10dc1287d03a589e5defbe66607",
+    "count": 70
+  },
+  "noWholeFragmentCopies": true
+}

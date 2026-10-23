@@ -1,0 +1,17 @@
+{
+  "files": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-28/README.md",
+      "sha256": "c21dbfab7883c70ddb7cf7ddadc7ade8d891bd0692b89cc38b5682df0de3c598"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-28/local-check.json",
+      "sha256": "304074968be7e1346fed4a653a4f2fa0c2a837bc4e320f193391c34c2a68d6fd"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-28/source-field-definitions.json",
+      "sha256": "4bea930dfdf9746c3abff5e95acc7009e45bc0fb0e9a3d5bf23716b7d744fc75"
+    }
+  ],
+  "acceptance": null
+}

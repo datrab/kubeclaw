@@ -1,0 +1,4 @@
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/correct-definition.py", line 10
+    for p in P['BusterProfiles']:p['author']['settings']['execution']['stores']['admission']['metadataReserveBytes']=8192 if p['id']=='A' else16384;p['bindingEnvelope']=binding|{'owner':'buster-engine'}
+                                                                                                                     ^^^^^^^^^^^^^^^^^^^^
+SyntaxError: expected 'else' after 'if' expression

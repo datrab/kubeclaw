@@ -1,0 +1,74 @@
+{{- if .Values.postgresql.enabled }}
+{{- $postgresSecret := required "postgresql.existingSecret is required when postgresql.enabled=true" .Values.postgresql.existingSecret }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: prism-migrate
+  annotations:
+    "helm.sh/hook": post-install,pre-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+    # Argo treats every deployment as a sync. Run once, after the database is
+    # healthy and before application workloads, including the first sync.
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation,HookSucceeded
+spec:
+  backoffLimit: 3
+  template:
+    metadata: { labels: { app: prism-migrate } }
+    spec:
+      serviceAccountName: prism-control
+      imagePullSecrets: {{ toYaml .Values.imagePullSecrets | nindent 8 }}
+      automountServiceAccountToken: false
+      securityContext: { runAsNonRoot: true, runAsUser: 1000, runAsGroup: 1000, seccompProfile: { type: RuntimeDefault } }
+      restartPolicy: OnFailure
+      initContainers:
+        - name: bootstrap-database-roles
+          image: {{ include "prism.imageRef" .Values.images.control | quote }}
+          imagePullPolicy: {{ .Values.images.control.pullPolicy }}
+          command: ["node", "--experimental-strip-types", "skills/prism/server/bootstrap-database.ts"]
+          env:
+            - name: ADMIN_DATABASE_URL
+              valueFrom: { secretKeyRef: { name: {{ .Values.secrets.database }}, key: admin-url } }
+            - name: PRISM_RUNTIME_PASSWORD
+              valueFrom: { secretKeyRef: { name: {{ .Values.secrets.database }}, key: runtime-password } }
+            - name: PRISM_MIGRATOR_PASSWORD
+              valueFrom: { secretKeyRef: { name: {{ .Values.secrets.database }}, key: migrator-password } }
+            - name: PRISM_READONLY_PASSWORD
+              valueFrom: { secretKeyRef: { name: {{ .Values.secrets.database }}, key: readonly-password } }
+          securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: ["ALL"] } }
+          resources: { requests: { cpu: 100m, memory: 128Mi }, limits: { cpu: "1", memory: 512Mi } }
+          volumeMounts:
+            - { name: tmp, mountPath: /tmp }
+      containers:
+        - name: migrate
+          image: {{ include "prism.imageRef" .Values.images.control | quote }}
+          imagePullPolicy: {{ .Values.images.control.pullPolicy }}
+          command: ["node", "--experimental-strip-types", "skills/prism/server/migrate.ts"]
+          env:
+            - name: DATABASE_URL
+              valueFrom: { secretKeyRef: { name: {{ .Values.secrets.database }}, key: migrator-url } }
+          securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: ["ALL"] } }
+          resources: { requests: { cpu: 100m, memory: 128Mi }, limits: { cpu: "1", memory: 1Gi } }
+          volumeMounts:
+            - { name: tmp, mountPath: /tmp }
+      volumes:
+        - name: tmp
+          emptyDir:
+            sizeLimit: 256Mi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prism-backups
+  annotations:
+    helm.sh/resource-policy: keep
+    argocd.argoproj.io/sync-options: Prune=false,Delete=false
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  accessModes: [ReadWriteOnce]
+  {{- if .Values.artifactStorage.storageClass }}
+  storageClassName: {{ .Values.artifactStorage.storageClass | quote }}
+  {{- end }}
+  resources: { requests: { storage: 100Gi } }
+{{- end }}

@@ -1,0 +1,10 @@
+✔ actual Prism Helm render binds V3 producer, supervisor, NRI selection and only its role mounts (4820.405529ms)
+✔ original statically built NRI executable reads the actual generated root-owned policy (14043.109161ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 19419.767778

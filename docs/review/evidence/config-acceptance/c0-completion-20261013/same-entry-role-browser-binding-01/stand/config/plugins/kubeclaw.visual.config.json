@@ -1,0 +1,3176 @@
+{
+  "schemaVersion": "pipeline-package-policy.v1",
+  "packageId": "kubeclaw.visual",
+  "instanceId": "fixture.visual",
+  "profiles": {
+    "A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-42fd37c34f097e2d-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-42fd37c34f097e2d-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-4003eb10ed91148b-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-4003eb10ed91148b-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-7055bd224779ebc9-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-7055bd224779ebc9-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-e044f6419f72c0e0-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-e044f6419f72c0e0-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 800,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-bf905e47ed35863a-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-bf905e47ed35863a-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-165dd3d0da855565-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-165dd3d0da855565-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-1ef5ab4a60156159-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-1ef5ab4a60156159-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "balanced-v1",
+        "overrides": {},
+        "masks": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-e747f65a9f069ccd-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {
+          "maximumDifferencePercent": 0,
+          "pixelThreshold": 0.1,
+          "uncertaintyMarginPercent": 0
+        },
+        "masks": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-e747f65a9f069ccd-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {
+          "maximumDifferencePercent": 1,
+          "pixelThreshold": 0.1,
+          "uncertaintyMarginPercent": 0
+        },
+        "masks": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-9bc4832efb4988b7-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {
+          "maximumDifferencePercent": 0,
+          "pixelThreshold": 0.1,
+          "uncertaintyMarginPercent": 0
+        },
+        "masks": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-9bc4832efb4988b7-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {
+          "maximumDifferencePercent": 1,
+          "pixelThreshold": 0.1,
+          "uncertaintyMarginPercent": 0
+        },
+        "masks": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-fe646415d23cc642-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {
+          "maximumDifferencePercent": 0,
+          "pixelThreshold": 0.1,
+          "uncertaintyMarginPercent": 0
+        },
+        "masks": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-fe646415d23cc642-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {
+          "maximumDifferencePercent": 0,
+          "pixelThreshold": 0.5,
+          "uncertaintyMarginPercent": 0
+        },
+        "masks": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-6e3cc348f44734f5-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {
+          "maximumDifferencePercent": 0,
+          "pixelThreshold": 0.1,
+          "uncertaintyMarginPercent": 0
+        },
+        "masks": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-6e3cc348f44734f5-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {
+          "maximumDifferencePercent": 0,
+          "pixelThreshold": 0.1,
+          "uncertaintyMarginPercent": 1
+        },
+        "masks": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-be3717baf421a9dd-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [
+          {
+            "target": "target-a",
+            "selectors": [
+              "#a"
+            ]
+          }
+        ],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-be3717baf421a9dd-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [
+          {
+            "target": "target-a",
+            "selectors": [
+              "#b"
+            ]
+          }
+        ],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-fa24eda72114411c-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [
+          {
+            "target": "target-a",
+            "selectors": [
+              "#a"
+            ]
+          }
+        ],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-fa24eda72114411c-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [
+          {
+            "target": "target-a",
+            "selectors": [
+              "#b"
+            ]
+          }
+        ],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-d57032dd890b6f18-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [
+          {
+            "target": "target-a",
+            "selectors": [
+              "#a"
+            ]
+          }
+        ],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-d57032dd890b6f18-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [
+          {
+            "target": "target-b",
+            "selectors": [
+              "#a"
+            ]
+          }
+        ],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-3f0dfb808c23e5e0-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [
+          {
+            "target": "target-a",
+            "selectors": [
+              "#a"
+            ]
+          }
+        ],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-3f0dfb808c23e5e0-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [
+          {
+            "target": "target-a",
+            "selectors": [
+              "#b"
+            ]
+          }
+        ],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-086164702f20b582-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [
+          {
+            "target": "target-a",
+            "selectors": [
+              "#a"
+            ]
+          }
+        ],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-086164702f20b582-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [
+          {
+            "target": "target-a",
+            "selectors": [
+              "#b"
+            ]
+          }
+        ],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-b1bebfd3aa463e09-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [],
+        "timeoutMs": 1000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-b1bebfd3aa463e09-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [],
+        "timeoutMs": 2000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONPASS-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONFAIL-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONERROR-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-VISUAL-VISUAL-EVIDENCEDEFAULTS-ONERROR-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log",
+            "visual-baseline"
+          ]
+        }
+      }
+    },
+    "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-RETRYSAFE-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-RETRYSAFE-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": false,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-PROVIDER-CONTRACT-KUBECLAW-VISUAL-VISUAL-MATRIXFIELDS-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 640,
+              "height": 480
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "comparisonProfiles": {
+          "strict-v1": {
+            "maximumDifferencePercent": 0,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0
+          },
+          "balanced-v1": {
+            "maximumDifferencePercent": 0.5,
+            "pixelThreshold": 0.1,
+            "uncertaintyMarginPercent": 0.25
+          }
+        },
+        "selectedComparisonProfile": "strict-v1",
+        "overrides": {},
+        "masks": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    }
+  }
+}

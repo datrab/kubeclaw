@@ -1,0 +1,61 @@
+[
+  {
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/reliability/nova-target-timing-policy.test.mjs",
+      "tests/verification/reliability/nova-artifact-policy.test.mjs",
+      "tests/verification/reliability/nova-telemetry-policy.test.mjs",
+      "tests/verification/reliability/nova-delivery-policy.test.mjs",
+      "tests/verification/reliability/nova-dispatch-policy.test.mjs",
+      "tests/verification/reliability/nova-core-policy.test.mjs",
+      "tests/verification/reliability/nova-state-wait-policy.test.mjs",
+      "tests/verification/reliability/nova-http-policy.test.mjs"
+    ],
+    "exitCode": 0,
+    "log": "tmp/config-transport-payload-20261015/final-0.log"
+  },
+  {
+    "command": [
+      "node",
+      "tests/config-validation.test.mjs"
+    ],
+    "exitCode": 0,
+    "log": "tmp/config-transport-payload-20261015/final-1.log"
+  },
+  {
+    "command": [
+      "node",
+      "tests/live-function.test.ts"
+    ],
+    "exitCode": 0,
+    "log": "tmp/config-transport-payload-20261015/final-2.log"
+  },
+  {
+    "command": [
+      "node",
+      "tests/package-boundary.test.mjs"
+    ],
+    "exitCode": 0,
+    "log": "tmp/config-transport-payload-20261015/final-3.log"
+  },
+  {
+    "command": [
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "tsconfig.json"
+    ],
+    "exitCode": 0,
+    "log": "tmp/config-transport-payload-20261015/final-4.log"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "log": "tmp/config-transport-payload-20261015/final-5.log"
+  }
+]

@@ -1,0 +1,5 @@
+walk.go:75: found symbolic link in path: /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/files/config/swarm.schema.json resolves to /home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+Error: execution error at (kubeclaw/templates/rbac.yaml:1:23): busterComponentFile path invalid
+
+Use --debug flag to render out invalid YAML

@@ -1,3 +1,8 @@
+import { TEST_CORE_POLICY as DISPATCH_TEST_CORE_POLICY } from '../../../fixtures/core-runtime-policy.mjs';
+const TEST_OPENCLAW_DISPATCH_POLICY=DISPATCH_TEST_CORE_POLICY.openClawDispatch;
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../../fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
+import { TEST_CORE_POLICY } from '../../../fixtures/core-runtime-policy.mjs';
 import type {StageDefinition} from '@kubeclaw/plugin-sdk';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -72,7 +77,7 @@ export async function forgeFixture(mode: 'parallel' | 'locked-worktree' | 'branc
   const activated = await core.activateRegistry(granted.snapshot, new Set(granted.grants.keys()));
   const secret = `FORGE_WORKSPACE_TOKEN_${process.pid}`; process.env[secret] = 'local-gateway-token';
   const effectsPath = path.join(temporary, 'effects.jsonl');
-  const journal = new core.FileEffectJournal(effectsPath), locks = new core.FileResourceLockManager(path.join(temporary, 'locks'));
+  const journal = new core.FileEffectJournal(effectsPath, TEST_CORE_POLICY), locks = new core.FileResourceLockManager(path.join(temporary, 'locks'), TEST_CORE_POLICY);
   const retained: any[] = [];
   const audit = { requested() {}, accepted() {}, completed(request: any, receipt: any) {
     if (mode === 'parallel' || request.capability !== 'git.merge' || request.attempt.attemptNumber !== 1 || receipt.status !== 'completed') return;
@@ -81,15 +86,15 @@ export async function forgeFixture(mode: 'parallel' | 'locked-worktree' | 'branc
     else { const lock = path.join(repo, '.git/refs/heads', `${ref.branch}.lock`); fs.mkdirSync(path.dirname(lock), { recursive: true }); fs.writeFileSync(lock, 'held by native regression'); }
   } };
   const configs = new Map([
-    ['kubeclaw.runtime-dispatch:openclaw', { targets: { forge: { endpoint: `${origin}/tools/invoke`, tokenSecret: 'forge.token', runtime: 'acp', agentId: 'forge', agentRole: 'forge', model: 'test/declared', cwd: repo, repositoryRoot: repo, workspaceRoot: workspaces, resultPathPrefix: '.pipeline/results', spawnIntervalMs: 0, pollMs: 10, maxPollMs: 10 } } }],
-    ['kubeclaw.network-http:http', { allowedOrigins: [origin], allowedMethods: ['POST'], allowedHeaders: ['authorization', 'content-type'] }],
+    ['kubeclaw.runtime-dispatch:openclaw', { ...TEST_OPENCLAW_DISPATCH_POLICY, targetTimingProfiles:{fixture:{...TEST_OPENCLAW_DISPATCH_POLICY.targetTimingProfiles.standard,spawnIntervalMs:0,pollMs:10,maxPollMs:10}}, targets: { forge: { endpoint: `${origin}/tools/invoke`, tokenSecret: 'forge.token', runtime: 'acp', agentId: 'forge', agentRole: 'forge', model: 'test/declared', cwd: repo, repositoryRoot: repo, workspaceRoot: workspaces, resultPathPrefix: '.pipeline/results', timingProfile:'fixture' } } }],
+    ['kubeclaw.network-http:http', { ...TEST_CORE_POLICY.networkHttp, allowedOrigins: [origin], allowedMethods: ['POST'], allowedHeaders: ['authorization', 'content-type'] }],
     ['kubeclaw.secret-resolver:secrets', { environment: { 'forge.token': secret } }],
-    ['kubeclaw.artifact-store:artifact-store', { artifactRoot: path.join(temporary, 'artifacts') }],
-    ['kubeclaw.repository-adapter:repository', { repositoryRoot: repo }],
+    ['kubeclaw.artifact-store:artifact-store', { ...TEST_ARTIFACT_STORE_POLICY, artifactRoot: path.join(temporary, 'artifacts') }],
+    ['kubeclaw.repository-adapter:repository', { ...TEST_CORE_POLICY.repositoryRead, repositoryRoot: repo }],
     ['kubeclaw.lint:executor', { allowedRepositoryRoots: [repo], allowedPolicyRoots: [temporary] }],
-    ['kubeclaw.git-workspace:git', { allowedRepositoryRoots: [temporary], workspaceRoot: workspaces, gitExecutable: fs.realpathSync('/usr/bin/git'), authorName: 'Workspace Test', authorEmail: 'workspace@example.invalid', maxExecutionMs: 5000, maxOutputBytes: 65536, terminationGraceMs: 100 }],
+    ['kubeclaw.git-workspace:git', { allowedRepositoryRoots: [temporary], workspaceRoot: workspaces, gitExecutable: fs.realpathSync('/usr/bin/git'), errorExcerptCharacters: TEST_CORE_POLICY.gitWorkspaceFailure.errorExcerptCharacters, authorName: 'Workspace Test', authorEmail: 'workspace@example.invalid', maxExecutionMs: 5000, maxOutputBytes: 65536, terminationGraceMs: 100 }],
   ]);
-  const adapters = new core.AdapterRuntime({ granted, activated, configs, effects: new core.EffectCoordinator(journal, undefined, audit, locks, 300_000), shutdownTimeoutMs: 1000, async emitDomainEvent() {} });
+  const adapters = new core.AdapterRuntime({ granted, activated, configs, effects: new core.EffectCoordinator(journal, undefined, audit, locks, 300_000, TEST_CORE_POLICY.resourceAcquisition), shutdownTimeoutMs: 1000, async emitDomainEvent() {} });
   await adapters.start();
   const runId = `run:forge:${mode}`;
   // This standalone graph tests native parallel Git/worktree lifecycle and lint repair.
@@ -104,7 +109,7 @@ export async function forgeFixture(mode: 'parallel' | 'locked-worktree' | 'branc
       input:{workingDirectory:repo,project:'fixture',sourceStageId:`implement-${id}`},on:{request_fix:`implement-${id}`},execution:{...execution,repairCategory:'lint'}}])];
   });
   const eventsPath = path.join(temporary, 'events.jsonl');
-  const runner = new core.PipelineRunner({ definition: { schemaVersion:'pipeline-definition.v2',id:'forge-workspace-lifecycle', maxConcurrency: 2, stages: stages as [StageDefinition,...StageDefinition[]] }, registry: granted, activated, adapters, orchestratorIssuerId:'forge-workspace-test', journal: new core.FileJournal(eventsPath) });
+  const runner = new core.PipelineRunner({stageMemoryBytes: TEST_CORE_POLICY.stageMemoryBytes, definition: { schemaVersion:'pipeline-definition.v2',id:'forge-workspace-lifecycle', maxConcurrency: 2, stages: stages as [StageDefinition,...StageDefinition[]] }, registry: granted, activated, adapters, orchestratorIssuerId:'forge-workspace-test', journal: new core.FileJournal(eventsPath, TEST_CORE_POLICY.journalAppendLockTimeoutMs) });
   return { temporary, repo, workspaces, baseline, spawns, retained, effectsPath, eventsPath, configs, runId, runner, journal, locks,
     assertServer() { if (serverError) throw serverError; },
     async close() { await adapters.shutdown(); await new Promise<void>(resolve => server.close(() => resolve())); delete process.env[secret]; fs.rmSync(temporary, { recursive: true, force: true }); },

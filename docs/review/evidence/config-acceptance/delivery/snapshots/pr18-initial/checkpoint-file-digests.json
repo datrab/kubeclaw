@@ -1,0 +1,77 @@
+[
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/README.md",
+    "sha256": "44e7329e1347c42ff269696e9ba278fdc4485c302d481bef54bf2ff2b3725c8a",
+    "bytes": 9778
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/checkpoint-verification.json",
+    "sha256": "67dcc4f71a4caebb0158de291af764a5d64b0a5859c9088e4e60be2e785e33d1",
+    "bytes": 1104
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/collect-delivery.cjs",
+    "sha256": "c574937bbaac45a77ac3272f588928d781aaa1ea8dc672c4425fc86eb0731e76",
+    "bytes": 80199
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/docker-context-tool-blocked.txt",
+    "sha256": "3736b264f27b046d7ecc8376dcd4d12e4825c61a08a8e6c3cb5b809bb7ee433f",
+    "bytes": 96
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/extracted-kubeclaw-health.mjs",
+    "sha256": "2c0b6a27a8a4276b91895a14520de11511ad315166c5a6e004346c5d57787a26",
+    "bytes": 8992
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/fragment-status.json",
+    "sha256": "094cfe608da7a66546a52c9abfc97967b8a5f03d91dc7c2a7301e59baf35d7a8",
+    "bytes": 589
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/gateway-author-observations.txt",
+    "sha256": "56254fcee3f6df9d5b6c18c0655b43286942787e00e754869a5b8be7193ce661",
+    "bytes": 5320
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/health-source-checks.json",
+    "sha256": "ebc54327577d9f7ea43e9f902f69becaded50a524d88db1d5d957808ec3f3263",
+    "bytes": 2538
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/health-source-checks.txt",
+    "sha256": "d66209c16eb7744911ea3e44ec783d02f44e336386c0e19ab9023b49beea7cdd",
+    "bytes": 989
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/inventory-fragment.json",
+    "sha256": "f84e83410cb729bbfcc10f846dbb65b82a120cc32927f887556500c86c56bfe6",
+    "bytes": 2759522
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/open-row-backlog.json",
+    "sha256": "2cba5c66ed037d519ac6769a84a66054645e5afce3936de3e0935fde237f92d3",
+    "bytes": 679817
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/pending-source-candidates.json",
+    "sha256": "a66bb67f1b2b3402de0e8ad473139f30492f4fc518ff040ab8e96131cc5e80e2",
+    "bytes": 587284
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/proposed-cases.json",
+    "sha256": "fb0a6db0434eb59b1304c23274ec86ed6709ab414157339a57ffd86ce84d5fde",
+    "bytes": 20072
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/source-observations.txt",
+    "sha256": "c43678337fe4e4865450b82f9416eaffc2ced524b08612f582309cbd74b28214",
+    "bytes": 16424
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/tool-identities.json",
+    "sha256": "bc723790a9f72d463e8cd887318d27678d02725cd566df30347d44140f1638a1",
+    "bytes": 227
+  }
+]

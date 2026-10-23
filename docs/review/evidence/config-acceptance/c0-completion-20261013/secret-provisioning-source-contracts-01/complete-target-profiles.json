@@ -1,0 +1,502 @@
+{
+  "status": "proposed definition fixtures; no installed/configuration/credential authority",
+  "author": "my-values/infra/secret-provisioning.yaml#/profiles/<explicitSelectedProfile>/settings",
+  "profileShape": "Every profile is complete; source-derived literals are not code defaults. sops installationRef is an unresolved public locator, not a usable credential/source receipt.",
+  "profiles": {
+    "current-source-A": {
+      "schemaVersion": "secret-provisioning-policy.v1",
+      "namespace": "kubeclaw",
+      "sourceNamespace": "default",
+      "operatorNamespace": "tailscale",
+      "operatorSecretName": "operator-oauth",
+      "setupMode": "auto",
+      "overwrite": false,
+      "components": {
+        "postgresql": true,
+        "litellm": true,
+        "tailscale": true
+      },
+      "sops": {
+        "mode": "selected-installation-ref",
+        "installationRef": "sops-default-installation"
+      },
+      "genericGeneration": {
+        "entropyBytes": 32,
+        "encoding": "hex"
+      },
+      "attestationGeneration": "Ed25519",
+      "fixtureProofBytes": 32,
+      "ghcr": {
+        "server": "ghcr.io",
+        "email": "noreply@example.com"
+      },
+      "databaseNamespaceRewrite": "parsed-exact-postgresql-host-only",
+      "completion": "all-enabled-required-targets-verified"
+    },
+    "noninteractive-B": {
+      "schemaVersion": "secret-provisioning-policy.v1",
+      "namespace": "kubeclaw",
+      "sourceNamespace": "default",
+      "operatorNamespace": "tailscale",
+      "operatorSecretName": "operator-oauth",
+      "setupMode": "noninteractive",
+      "overwrite": false,
+      "components": {
+        "postgresql": true,
+        "litellm": true,
+        "tailscale": true
+      },
+      "sops": {
+        "mode": "selected-installation-ref",
+        "installationRef": "sops-default-installation"
+      },
+      "genericGeneration": {
+        "entropyBytes": 32,
+        "encoding": "hex"
+      },
+      "attestationGeneration": "Ed25519",
+      "fixtureProofBytes": 32,
+      "ghcr": {
+        "server": "ghcr.io",
+        "email": "noreply@example.com"
+      },
+      "databaseNamespaceRewrite": "parsed-exact-postgresql-host-only",
+      "completion": "all-enabled-required-targets-verified"
+    },
+    "authorized-repair-C": {
+      "schemaVersion": "secret-provisioning-policy.v1",
+      "namespace": "kubeclaw",
+      "sourceNamespace": "default",
+      "operatorNamespace": "tailscale",
+      "operatorSecretName": "operator-oauth",
+      "setupMode": "interactive",
+      "overwrite": true,
+      "components": {
+        "postgresql": true,
+        "litellm": true,
+        "tailscale": true
+      },
+      "sops": {
+        "mode": "selected-installation-ref",
+        "installationRef": "sops-default-installation"
+      },
+      "genericGeneration": {
+        "entropyBytes": 32,
+        "encoding": "hex"
+      },
+      "attestationGeneration": "Ed25519",
+      "fixtureProofBytes": 32,
+      "ghcr": {
+        "server": "ghcr.io",
+        "email": "noreply@example.com"
+      },
+      "databaseNamespaceRewrite": "parsed-exact-postgresql-host-only",
+      "completion": "all-enabled-required-targets-verified"
+    },
+    "optional-disabled-D": {
+      "schemaVersion": "secret-provisioning-policy.v1",
+      "namespace": "kubeclaw",
+      "sourceNamespace": "default",
+      "operatorNamespace": "tailscale",
+      "operatorSecretName": "operator-oauth",
+      "setupMode": "noninteractive",
+      "overwrite": false,
+      "components": {
+        "postgresql": false,
+        "litellm": false,
+        "tailscale": false
+      },
+      "sops": {
+        "mode": "disabled"
+      },
+      "genericGeneration": {
+        "entropyBytes": 32,
+        "encoding": "hex"
+      },
+      "attestationGeneration": "Ed25519",
+      "fixtureProofBytes": 32,
+      "ghcr": {
+        "server": "ghcr.io",
+        "email": "noreply@example.com"
+      },
+      "databaseNamespaceRewrite": "parsed-exact-postgresql-host-only",
+      "completion": "all-enabled-required-targets-verified"
+    },
+    "source-target-swap-E": {
+      "schemaVersion": "secret-provisioning-policy.v1",
+      "namespace": "default",
+      "sourceNamespace": "kubeclaw",
+      "operatorNamespace": "tailscale",
+      "operatorSecretName": "operator-oauth",
+      "setupMode": "auto",
+      "overwrite": false,
+      "components": {
+        "postgresql": true,
+        "litellm": true,
+        "tailscale": true
+      },
+      "sops": {
+        "mode": "disabled"
+      },
+      "genericGeneration": {
+        "entropyBytes": 32,
+        "encoding": "base64"
+      },
+      "attestationGeneration": "Ed25519",
+      "fixtureProofBytes": 32,
+      "ghcr": {
+        "server": "ghcr.io",
+        "email": "noreply@example.com"
+      },
+      "databaseNamespaceRewrite": "parsed-exact-postgresql-host-only",
+      "completion": "all-enabled-required-targets-verified"
+    },
+    "external-db-F": {
+      "schemaVersion": "secret-provisioning-policy.v1",
+      "namespace": "kubeclaw",
+      "sourceNamespace": "default",
+      "operatorNamespace": "tailscale",
+      "operatorSecretName": "operator-oauth",
+      "setupMode": "auto",
+      "overwrite": false,
+      "components": {
+        "postgresql": false,
+        "litellm": true,
+        "tailscale": true
+      },
+      "sops": {
+        "mode": "selected-installation-ref",
+        "installationRef": "sops-default-installation"
+      },
+      "genericGeneration": {
+        "entropyBytes": 32,
+        "encoding": "hex"
+      },
+      "attestationGeneration": "Ed25519",
+      "fixtureProofBytes": 32,
+      "ghcr": {
+        "server": "ghcr.io",
+        "email": "noreply@example.com"
+      },
+      "databaseNamespaceRewrite": "parsed-exact-postgresql-host-only",
+      "completion": "all-enabled-required-targets-verified"
+    },
+    "no-litellm-G": {
+      "schemaVersion": "secret-provisioning-policy.v1",
+      "namespace": "kubeclaw",
+      "sourceNamespace": "default",
+      "operatorNamespace": "tailscale",
+      "operatorSecretName": "operator-oauth",
+      "setupMode": "auto",
+      "overwrite": false,
+      "components": {
+        "postgresql": true,
+        "litellm": false,
+        "tailscale": true
+      },
+      "sops": {
+        "mode": "selected-installation-ref",
+        "installationRef": "sops-default-installation"
+      },
+      "genericGeneration": {
+        "entropyBytes": 32,
+        "encoding": "hex"
+      },
+      "attestationGeneration": "Ed25519",
+      "fixtureProofBytes": 32,
+      "ghcr": {
+        "server": "ghcr.io",
+        "email": "noreply@example.com"
+      },
+      "databaseNamespaceRewrite": "parsed-exact-postgresql-host-only",
+      "completion": "all-enabled-required-targets-verified"
+    },
+    "no-tailscale-H": {
+      "schemaVersion": "secret-provisioning-policy.v1",
+      "namespace": "kubeclaw",
+      "sourceNamespace": "default",
+      "operatorNamespace": "tailscale",
+      "operatorSecretName": "operator-oauth",
+      "setupMode": "auto",
+      "overwrite": false,
+      "components": {
+        "postgresql": true,
+        "litellm": true,
+        "tailscale": false
+      },
+      "sops": {
+        "mode": "selected-installation-ref",
+        "installationRef": "sops-default-installation"
+      },
+      "genericGeneration": {
+        "entropyBytes": 32,
+        "encoding": "hex"
+      },
+      "attestationGeneration": "Ed25519",
+      "fixtureProofBytes": 32,
+      "ghcr": {
+        "server": "ghcr.io",
+        "email": "noreply@example.com"
+      },
+      "databaseNamespaceRewrite": "parsed-exact-postgresql-host-only",
+      "completion": "all-enabled-required-targets-verified"
+    },
+    "no-sops-I": {
+      "schemaVersion": "secret-provisioning-policy.v1",
+      "namespace": "kubeclaw",
+      "sourceNamespace": "default",
+      "operatorNamespace": "tailscale",
+      "operatorSecretName": "operator-oauth",
+      "setupMode": "auto",
+      "overwrite": false,
+      "components": {
+        "postgresql": true,
+        "litellm": true,
+        "tailscale": true
+      },
+      "sops": {
+        "mode": "disabled"
+      },
+      "genericGeneration": {
+        "entropyBytes": 32,
+        "encoding": "hex"
+      },
+      "attestationGeneration": "Ed25519",
+      "fixtureProofBytes": 32,
+      "ghcr": {
+        "server": "ghcr.io",
+        "email": "noreply@example.com"
+      },
+      "databaseNamespaceRewrite": "parsed-exact-postgresql-host-only",
+      "completion": "all-enabled-required-targets-verified"
+    },
+    "base64-J": {
+      "schemaVersion": "secret-provisioning-policy.v1",
+      "namespace": "kubeclaw",
+      "sourceNamespace": "default",
+      "operatorNamespace": "tailscale",
+      "operatorSecretName": "operator-oauth",
+      "setupMode": "auto",
+      "overwrite": false,
+      "components": {
+        "postgresql": true,
+        "litellm": true,
+        "tailscale": true
+      },
+      "sops": {
+        "mode": "selected-installation-ref",
+        "installationRef": "sops-default-installation"
+      },
+      "genericGeneration": {
+        "entropyBytes": 32,
+        "encoding": "base64"
+      },
+      "attestationGeneration": "Ed25519",
+      "fixtureProofBytes": 32,
+      "ghcr": {
+        "server": "ghcr.io",
+        "email": "noreply@example.com"
+      },
+      "databaseNamespaceRewrite": "parsed-exact-postgresql-host-only",
+      "completion": "all-enabled-required-targets-verified"
+    },
+    "overwrite-K": {
+      "schemaVersion": "secret-provisioning-policy.v1",
+      "namespace": "kubeclaw",
+      "sourceNamespace": "default",
+      "operatorNamespace": "tailscale",
+      "operatorSecretName": "operator-oauth",
+      "setupMode": "auto",
+      "overwrite": true,
+      "components": {
+        "postgresql": true,
+        "litellm": true,
+        "tailscale": true
+      },
+      "sops": {
+        "mode": "selected-installation-ref",
+        "installationRef": "sops-default-installation"
+      },
+      "genericGeneration": {
+        "entropyBytes": 32,
+        "encoding": "hex"
+      },
+      "attestationGeneration": "Ed25519",
+      "fixtureProofBytes": 32,
+      "ghcr": {
+        "server": "ghcr.io",
+        "email": "noreply@example.com"
+      },
+      "databaseNamespaceRewrite": "parsed-exact-postgresql-host-only",
+      "completion": "all-enabled-required-targets-verified"
+    },
+    "namespace-L": {
+      "schemaVersion": "secret-provisioning-policy.v1",
+      "namespace": "default",
+      "sourceNamespace": "default",
+      "operatorNamespace": "tailscale",
+      "operatorSecretName": "operator-oauth",
+      "setupMode": "auto",
+      "overwrite": false,
+      "components": {
+        "postgresql": true,
+        "litellm": true,
+        "tailscale": true
+      },
+      "sops": {
+        "mode": "selected-installation-ref",
+        "installationRef": "sops-default-installation"
+      },
+      "genericGeneration": {
+        "entropyBytes": 32,
+        "encoding": "hex"
+      },
+      "attestationGeneration": "Ed25519",
+      "fixtureProofBytes": 32,
+      "ghcr": {
+        "server": "ghcr.io",
+        "email": "noreply@example.com"
+      },
+      "databaseNamespaceRewrite": "parsed-exact-postgresql-host-only",
+      "completion": "all-enabled-required-targets-verified"
+    },
+    "source-namespace-M": {
+      "schemaVersion": "secret-provisioning-policy.v1",
+      "namespace": "kubeclaw",
+      "sourceNamespace": "kubeclaw",
+      "operatorNamespace": "tailscale",
+      "operatorSecretName": "operator-oauth",
+      "setupMode": "auto",
+      "overwrite": false,
+      "components": {
+        "postgresql": true,
+        "litellm": true,
+        "tailscale": true
+      },
+      "sops": {
+        "mode": "selected-installation-ref",
+        "installationRef": "sops-default-installation"
+      },
+      "genericGeneration": {
+        "entropyBytes": 32,
+        "encoding": "hex"
+      },
+      "attestationGeneration": "Ed25519",
+      "fixtureProofBytes": 32,
+      "ghcr": {
+        "server": "ghcr.io",
+        "email": "noreply@example.com"
+      },
+      "databaseNamespaceRewrite": "parsed-exact-postgresql-host-only",
+      "completion": "all-enabled-required-targets-verified"
+    },
+    "operator-namespace-N": {
+      "schemaVersion": "secret-provisioning-policy.v1",
+      "namespace": "kubeclaw",
+      "sourceNamespace": "default",
+      "operatorNamespace": "default",
+      "operatorSecretName": "operator-oauth",
+      "setupMode": "auto",
+      "overwrite": false,
+      "components": {
+        "postgresql": true,
+        "litellm": true,
+        "tailscale": true
+      },
+      "sops": {
+        "mode": "selected-installation-ref",
+        "installationRef": "sops-default-installation"
+      },
+      "genericGeneration": {
+        "entropyBytes": 32,
+        "encoding": "hex"
+      },
+      "attestationGeneration": "Ed25519",
+      "fixtureProofBytes": 32,
+      "ghcr": {
+        "server": "ghcr.io",
+        "email": "noreply@example.com"
+      },
+      "databaseNamespaceRewrite": "parsed-exact-postgresql-host-only",
+      "completion": "all-enabled-required-targets-verified"
+    },
+    "operator-name-O": {
+      "schemaVersion": "secret-provisioning-policy.v1",
+      "namespace": "kubeclaw",
+      "sourceNamespace": "default",
+      "operatorNamespace": "tailscale",
+      "operatorSecretName": "operator-oauth-preview",
+      "setupMode": "auto",
+      "overwrite": false,
+      "components": {
+        "postgresql": true,
+        "litellm": true,
+        "tailscale": true
+      },
+      "sops": {
+        "mode": "selected-installation-ref",
+        "installationRef": "sops-default-installation"
+      },
+      "genericGeneration": {
+        "entropyBytes": 32,
+        "encoding": "hex"
+      },
+      "attestationGeneration": "Ed25519",
+      "fixtureProofBytes": 32,
+      "ghcr": {
+        "server": "ghcr.io",
+        "email": "noreply@example.com"
+      },
+      "databaseNamespaceRewrite": "parsed-exact-postgresql-host-only",
+      "completion": "all-enabled-required-targets-verified"
+    },
+    "ghcr-email-P": {
+      "schemaVersion": "secret-provisioning-policy.v1",
+      "namespace": "kubeclaw",
+      "sourceNamespace": "default",
+      "operatorNamespace": "tailscale",
+      "operatorSecretName": "operator-oauth",
+      "setupMode": "auto",
+      "overwrite": false,
+      "components": {
+        "postgresql": true,
+        "litellm": true,
+        "tailscale": true
+      },
+      "sops": {
+        "mode": "selected-installation-ref",
+        "installationRef": "sops-default-installation"
+      },
+      "genericGeneration": {
+        "entropyBytes": 32,
+        "encoding": "hex"
+      },
+      "attestationGeneration": "Ed25519",
+      "fixtureProofBytes": 32,
+      "ghcr": {
+        "server": "ghcr.io",
+        "email": "fixture@example.com"
+      },
+      "databaseNamespaceRewrite": "parsed-exact-postgresql-host-only",
+      "completion": "all-enabled-required-targets-verified"
+    }
+  },
+  "sourceRecipes": {
+    "current-source-A": "source28\u201338,342\u2013349,610\u2013646,898\u2013910,1028\u20131037; HOME-derived SOPS path moved to original installed reference",
+    "noninteractive-B": "source104 and source-supported noninteractive mode",
+    "authorized-repair-C": "source35 overwrite true + interactive supported mode; TASK MUST separately authorize each replacement",
+    "optional-disabled-D": "source component flags false and missing SOPS-file branch; required always-on targets unchanged",
+    "source-target-swap-E": "both source literals kubeclaw/default are namespace inputs; source342\u2013349 base64 branch. Role/namespace grants and downstream projections are required, not proved by names.",
+    "external-db-F": "source36 false,37 true; external confidential DATABASE_URL required",
+    "no-litellm-G": "source37 false; PG remains enabled; Google+LiteLLM excluded only",
+    "no-tailscale-H": "source38 false; app families unchanged",
+    "no-sops-I": "source583 absent-file branch now explicit selection, not ambient existence",
+    "base64-J": "source347 base64 branch independent from namespace",
+    "overwrite-K": "source35 true with same mode; separate original per-object grant required",
+    "namespace-L": "source-supported namespace input28; literal default already source29; exact target original grants required",
+    "source-namespace-M": "source-supported source namespace input29; literal kubeclaw already source28",
+    "operator-namespace-N": "source30 namespace input, literal default already source29",
+    "operator-name-O": "public disposable alternate of source31 explicit Secret-name input, not installed Secret/provider assertion; coupled selected actual operator projection required",
+    "ghcr-email-P": "public disposable email metadata input source903,916; no token/provider fact"
+  }
+}

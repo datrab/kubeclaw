@@ -1,0 +1,14 @@
+{
+  "boundedVerdict": "clean",
+  "reviewedFinding": "IFOUR-ROOT-001",
+  "correctionVerified": true,
+  "findings": [],
+  "initialFindingAndProofPreserved": true,
+  "allFourOriginalFixesRemainVerified": true,
+  "scope": "Runtime root normalized row-set/full-body conservation including provenance, obligations and acceptance boundary only",
+  "globalC0Accepted": false,
+  "nativeAccepted": false,
+  "moduleBindingAccepted": false,
+  "productionChanged": false,
+  "C1Approved": false
+}

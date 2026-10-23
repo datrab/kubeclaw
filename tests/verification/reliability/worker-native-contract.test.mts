@@ -1,4 +1,4 @@
-import { nativeResourcePolicy } from '../../../skills/prism/tests/native/resource-policy.mts';
+import { nativeResourcePolicy, nativeControlSettings } from '../../../skills/prism/tests/native/resource-policy.mts';
 import { currentTestCgroup } from './native-test-cgroup.mts';
 import assert from 'node:assert/strict';
 import test from 'node:test';
@@ -19,7 +19,7 @@ test('V3 explicitly names Linux tasks while the original V1 envelope remains ind
   validatePipelineWorkerCoreContract('workerAttemptEnvelope', legacy);
   assert.equal(workerAttemptSpecDigest(legacy), legacy.attemptSpecDigest);
   assert.equal(legacy.limits.processes, 256);
-  const native = prismNativeAttempt('render', artifact, 'version-test', nativeResourcePolicy);
+  const native = prismNativeAttempt('render', artifact, 'version-test', nativeResourcePolicy, nativeControlSettings.nativeAttemptLifetimeMs, nativeControlSettings.nativeAttemptTimeoutMs, nativeControlSettings.nativeAttemptCleanupTimeoutMs, nativeControlSettings.nativeAttemptLogBytes, nativeControlSettings.nativeAttemptResultBytes, nativeControlSettings.nativeAttemptEvidenceBytes, nativeControlSettings.nativeAttemptEvidenceFiles);
   assert.deepEqual(checkWorkerResourceContractV3('workerAttemptEnvelope', native), { ok: true, errors: [] });
   assert.equal(native.profile.resourceCapabilities.maximumTasks.unit, 'linux-tasks');
   assert.equal('maximumProcesses' in native.resourceBudgets, false);
@@ -29,7 +29,7 @@ test('V3 explicitly names Linux tasks while the original V1 envelope remains ind
 
 test('native contract rejects relabelled process budgets, task units and unsafe integers even with recomputed digests', () => {
   for (const mutation of ['old-field', 'old-unit', 'unsafe-integer']) {
-    const native = prismNativeAttempt('render', artifact, `version-${mutation}`, nativeResourcePolicy);
+    const native = prismNativeAttempt('render', artifact, `version-${mutation}`, nativeResourcePolicy, nativeControlSettings.nativeAttemptLifetimeMs, nativeControlSettings.nativeAttemptTimeoutMs, nativeControlSettings.nativeAttemptCleanupTimeoutMs, nativeControlSettings.nativeAttemptLogBytes, nativeControlSettings.nativeAttemptResultBytes, nativeControlSettings.nativeAttemptEvidenceBytes, nativeControlSettings.nativeAttemptEvidenceFiles);
     const untrusted = JSON.parse(JSON.stringify(native));
     if (mutation === 'old-field') untrusted.resourceBudgets.maximumProcesses = untrusted.resourceBudgets.maximumTasks;
     if (mutation === 'old-unit') untrusted.profile.resourceCapabilities.maximumTasks.unit = 'processes';
@@ -45,7 +45,7 @@ test('resource assessment compares real kernel task observations without manufac
   // It does not assert that the container is an isolated production attempt.
   const observation = observeNativeWorkerResources(currentTestCgroup());
   assert.ok(observation.maximumTasks > 1);
-  const native = prismNativeAttempt('render', artifact, 'task-policy', nativeResourcePolicy);
+  const native = prismNativeAttempt('render', artifact, 'task-policy', nativeResourcePolicy, nativeControlSettings.nativeAttemptLifetimeMs, nativeControlSettings.nativeAttemptTimeoutMs, nativeControlSettings.nativeAttemptCleanupTimeoutMs, nativeControlSettings.nativeAttemptLogBytes, nativeControlSettings.nativeAttemptResultBytes, nativeControlSettings.nativeAttemptEvidenceBytes, nativeControlSettings.nativeAttemptEvidenceFiles);
   native.resourceBudgets.cpuTimeMs = { state: 'unrequested' };
   native.resourceBudgets.maximumMemoryBytes = { state: 'unrequested' };
   native.resourceBudgets.maximumTasks = { state: 'requested', limit: observation.maximumTasks - 1 };

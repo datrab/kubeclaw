@@ -1,4 +1,4 @@
-import type { AttemptResultV1, NodeResultV1, ProducedOutputV1, ResolvedPlanNodeV1 } from '@kubeclaw/pipeline-test-gate-contract';
+import type { AttemptResultV1, NodeResultV1, ResolvedPlanNodeV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import type { AttemptExecution, NodeExecution, TestPlanRunResult, TestPlanRunnerOptions } from './runner-types.ts';
 import { compareText, finalNodeResult, freeze, terminalResult } from './runner-values.ts';
 
@@ -7,7 +7,7 @@ interface SchedulerOwner {
   readonly authorityId: string;
   readonly id: () => string;
   readonly cleanupErrors: readonly { nodeId: string; message: string }[];
-  executeNode(node: ResolvedPlanNodeV1, outputs: ReadonlyMap<string, readonly ProducedOutputV1[]>): Promise<NodeExecution>;
+  executeNode(node: ResolvedPlanNodeV1, producerAttempts: readonly AttemptResultV1[]): Promise<NodeExecution>;
   retainFixture(node: ResolvedPlanNodeV1, execution: AttemptExecution): void;
   cleanupFixtures(): Promise<void>;
 }
@@ -17,7 +17,6 @@ export class RunnerScheduler {
   readonly #owner: SchedulerOwner;
   readonly #attempts: AttemptResultV1[] = [];
   readonly #results = new Map<string, NodeResultV1>();
-  readonly #outputs = new Map<string, readonly ProducedOutputV1[]>();
   readonly #running = new Map<string, Promise<NodeExecution>>();
   readonly #groupUse = new Map<string, number>();
   readonly #pending: Map<string, ResolvedPlanNodeV1>;
@@ -93,7 +92,7 @@ export class RunnerScheduler {
     if (this.#running.size >= this.#owner.options.maximumConcurrency) return false;
     if (!this.#reserveGroup(node)) return false;
     this.#pending.delete(node.id);
-    const task = this.#owner.executeNode(node, this.#outputs).finally(() => {
+    const task = this.#owner.executeNode(node, Object.freeze([...this.#attempts])).finally(() => {
       if (node.concurrencyGroup !== null) this.#groupUse.set(
         node.concurrencyGroup, (this.#groupUse.get(node.concurrencyGroup) ?? 1) - 1);
     });
@@ -135,7 +134,6 @@ export class RunnerScheduler {
   #recordExecution(id: string, execution: NodeExecution): void {
     this.#results.set(id, execution.result);
     this.#attempts.push(...execution.attempts);
-    this.#outputs.set(id, execution.outputs);
     if (execution.retainedFixture) this.#owner.retainFixture(
       this.#owner.options.plan.nodes.find(item => item.id === id)!,
       execution.retainedFixture,

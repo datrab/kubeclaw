@@ -1,0 +1,8 @@
+{
+  "scope": "exact failed initial syntax collector before any fragment mutation",
+  "files": {
+    "chart-topology-storage-definition-6606af9-20261013-attempt1.stderr": "b6bd3179589c79e0587c6f6d752849f437df44ae59057f820f72d40095d35e50",
+    "define-chart-topology-storage-6606af9-20261013.py": "3225751ec8ba879e6f26413a9291d45749a3e966d0d09854b66c11622f4d3889",
+    "chart-topology-storage-definition-6606af9-20261013-attempt1.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

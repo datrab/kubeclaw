@@ -1,0 +1,26 @@
+{
+  "status": "first failed structural generation preserved exactly; all21 findings dangling F-RECOVERY; no semantic waiver",
+  "entries": [
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "originalSha256": "b1af942080285f5c7d97c50f2b30bc14a1a0850ffb77908cb73fb3f8c9f6b36c",
+      "snapshot": "docs/review/evidence/config-acceptance/author/historical-core-before-f-recovery-registration-6606/config-semantic-inventory.json.gz",
+      "encoding": "gzip",
+      "containerSha256": "432c329334ca21eb75165aee5b3bb7670097555c993e1f13ef888ce97a06e5b5"
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "originalSha256": "d98da597e101bc49c643ee021b40810497e69c427d7486ab884bc7425a26b6a1",
+      "snapshot": "docs/review/evidence/config-acceptance/author/historical-core-before-f-recovery-registration-6606/config-acceptance-matrix.json.gz",
+      "encoding": "gzip",
+      "containerSha256": "13e634d694ff5316a72348f8d4b10a05d8180be78f3306e764192090835393d2"
+    },
+    {
+      "path": "docs/review/remediation/config-definition-current.md",
+      "originalSha256": "c282b510337226d5b79563967e68488eb37920724f07e5d6b0bfd8d6550f1950",
+      "snapshot": "docs/review/evidence/config-acceptance/author/historical-core-before-f-recovery-registration-6606/config-definition-current.md.gz",
+      "encoding": "gzip",
+      "containerSha256": "628bb087cefe2398474b599663eddd6fab837776add1665e65afdb7e79d00c53"
+    }
+  ]
+}

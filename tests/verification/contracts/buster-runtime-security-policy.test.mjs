@@ -6,8 +6,8 @@ import os from 'node:os';
 import path from 'node:path';
 import { syncBuiltinESMExports } from 'node:module';
 import test from 'node:test';
-import { readTestBundle, writeTestBundle, canonicalSwarmEntry } from '../../fixtures/config/swarm-bundle.mjs';
-import { loadSwarmSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
+import { busterRuntimeSelection, readTestPipeline, writeTestPipeline, canonicalPipelineEntry } from '../../fixtures/config/pipeline-components.mjs';
+import { captureSwarmSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
 import { validateBusterRuntimeSecuritySettings } from '../../../skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts';
 import { clusterRuntimeBinding, kubernetesRuntimeSecurityOptions } from '../../../skills/buster/engine/test-gates/production-cluster-options.ts';
 import { capabilitySources } from '../../../skills/buster/engine/test-gates/production-capability-sources.ts';
@@ -16,7 +16,7 @@ import { createBusterCapabilityRuntime } from '../../../skills/buster/engine/tes
 import { KubernetesRuntimeSecurityCapabilityInvoker, runtimeSecurityResultDigest } from '../../../skills/buster/engine/test-gates/kubernetes-runtime-security.ts';
 
 const capability = 'kubernetes.runtime-security';
-const defaults = () => structuredClone(readTestBundle(canonicalSwarmEntry)['buster-engine'].settings.clusterInvokers.runtimeSecurity);
+const defaults = () => structuredClone(readTestPipeline(canonicalPipelineEntry)['buster-engine'].profiles.runtime.settings.clusterInvokers.runtimeSecurity);
 
 function fixture(t, program, settings, namespace = 'test-one') {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'runtime-security-policy-'));
@@ -77,8 +77,8 @@ function fixture(t, program, settings, namespace = 'test-one') {
     children.push(owned); return child;
   });
   syncBuiltinESMExports();
-  const documents = readTestBundle(canonicalSwarmEntry);
-  const selected = documents['buster-engine'].settings.clusterInvokers;
+  const documents = readTestPipeline(canonicalPipelineEntry);
+  const selected = documents['buster-engine'].profiles.runtime.settings.clusterInvokers;
   selected.shared.kubectlExecutable = binary;
   Object.assign(selected.runtimeSecurity, settings);
   if (settings.executableSearchPath === 'fixture') {
@@ -86,40 +86,40 @@ function fixture(t, program, settings, namespace = 'test-one') {
     fs.writeFileSync(path.join(helperDirectory, 'policy-helper'), `#!${process.execPath}\nprocess.stdout.write('selected-helper');`, { mode: 0o700 });
     selected.runtimeSecurity.executableSearchPath = [helperDirectory];
   }
-  const entry = path.join(root, 'bundle/swarm.config.json'); writeTestBundle(entry, documents);
-  const loaded = loadSwarmSettings({ SWARM_CONFIG: entry });
-  const policy = loaded.buster.clusterInvokers;
-  const sources = capabilitySources({}, new Set([capability]), {});
+  const entry = path.join(root, 'bundle/pipeline.config.json'); writeTestPipeline(entry, documents);
+  const loaded = captureSwarmSettings(entry, busterRuntimeSelection(documents));
+  const policy = loaded.components['buster-engine'].settings.clusterInvokers;
+  const sources = capabilitySources({ clusterBindings: { controllerNamespace: 'controller' } }, new Set([capability]), {});
   const options = { allowedCapabilities: new Set([capability]), ...kubernetesRuntimeSecurityOptions(
     sources.kubernetesRuntimeSecurityEnabled, policy, clusterRuntimeBinding({ controllerNamespace: 'controller' }, policy)) };
   options.kubernetesRuntimeSecurity.allowedNamespacePrefixes = [...options.kubernetesRuntimeSecurity.allowedNamespacePrefixes];
   options.kubernetesRuntimeSecurity.executableSearchPath = [...options.kubernetesRuntimeSecurity.executableSearchPath];
   const authoredPath = [...options.kubernetesRuntimeSecurity.executableSearchPath];
-  const runtime = createBusterCapabilityRuntime(options, { jobRoot: root, workspaceRoot: root }, loaded.buster.execution.processInput);
+  const runtime = createBusterCapabilityRuntime(options, { jobRoot: root, workspaceRoot: root }, loaded.components['buster-engine'].settings.execution.processInput);
   t.after(() => runtime.shutdown());
   // Replace on-disk policy after the real loader/factory captured this generation.
   // Each subsequent positive/negative invokes the old selected policy, never the replacement.
-  documents['buster-engine'].settings.clusterInvokers.runtimeSecurity = {
+  documents['buster-engine'].profiles.runtime.settings.clusterInvokers.runtimeSecurity = {
     allowedNamespacePrefixes: ['replacement'], maximumExecutionMs: 1, maximumOutputBytes: 1024,
     pollIntervalMs: 10000, maximumObservationAgeMs: 60000, maximumFutureSkewMs: 0,
     diagnosticCodeUnits: 1, executableSearchPath: ['/replacement-helper-path'],
   };
-  writeTestBundle(entry, documents);
-  assert.equal(JSON.parse(fs.readFileSync(path.join(path.dirname(entry), 'buster-engine.config.json'), 'utf8'))
-    .settings.clusterInvokers.runtimeSecurity.maximumExecutionMs, 1);
+  writeTestPipeline(entry, documents);
+  assert.equal(JSON.parse(fs.readFileSync(path.join(path.dirname(entry), 'components/buster-engine.config.json'), 'utf8'))
+    .profiles.runtime.settings.clusterInvokers.runtimeSecurity.maximumExecutionMs, 1);
 
   const request = { operation: 'inspect', payload: { leaseName: 'test-lease', namespace,
     manifestPath: manifest, manifestDigest: digest, immutableImage } };
   return { root, children, options, request, authoredPath,
     reload(changes) {
-      const nextDocuments = readTestBundle(entry);
-      nextDocuments['buster-engine'].settings.clusterInvokers.runtimeSecurity = { ...policy.runtimeSecurity, ...changes };
-      writeTestBundle(entry, nextDocuments);
-      const next = loadSwarmSettings({ SWARM_CONFIG: entry });
-      const nextPolicy = next.buster.clusterInvokers;
+      const nextDocuments = readTestPipeline(entry);
+      nextDocuments['buster-engine'].profiles.runtime.settings.clusterInvokers.runtimeSecurity = { ...policy.runtimeSecurity, ...changes };
+      writeTestPipeline(entry, nextDocuments);
+      const next = captureSwarmSettings(entry, busterRuntimeSelection(documents));
+      const nextPolicy = next.components['buster-engine'].settings.clusterInvokers;
       const nextOptions = { allowedCapabilities: new Set([capability]), ...kubernetesRuntimeSecurityOptions(true,
         nextPolicy, clusterRuntimeBinding({ controllerNamespace: 'controller' }, nextPolicy)) };
-      const nextRuntime = createBusterCapabilityRuntime(nextOptions, { jobRoot: root, workspaceRoot: root }, next.buster.execution.processInput);
+      const nextRuntime = createBusterCapabilityRuntime(nextOptions, { jobRoot: root, workspaceRoot: root }, next.components['buster-engine'].settings.execution.processInput);
       t.after(() => nextRuntime.shutdown());
       return () => invoke(nextRuntime, request);
     },
@@ -146,10 +146,10 @@ for (const field of Object.keys(defaults())) test(`required RuntimeSecurity fiel
 for (const field of Object.keys(defaults())) test(`complete bundle requires ${field} even with route disabled`, t => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'runtime-security-required-'));
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
-  const documents = readTestBundle(canonicalSwarmEntry);
-  delete documents['buster-engine'].settings.clusterInvokers.runtimeSecurity[field];
-  const entry = path.join(root, 'swarm.config.json'); writeTestBundle(entry, documents);
-  assert.throws(() => loadSwarmSettings({ SWARM_CONFIG: entry }), /SWARM_CONFIG_INVALID:component:buster-engine/);
+  const documents = readTestPipeline(canonicalPipelineEntry);
+  delete documents['buster-engine'].profiles.runtime.settings.clusterInvokers.runtimeSecurity[field];
+  const entry = path.join(root, 'pipeline.config.json'); writeTestPipeline(entry, documents);
+  assert.throws(() => captureSwarmSettings(entry, busterRuntimeSelection(documents)), /SWARM_CONFIG_INVALID:component:buster-engine/);
 });
 
 const invalid = {
@@ -165,12 +165,12 @@ for (const [field, values] of Object.entries(invalid)) for (const value of value
   });
 }
 for (const legacy of [null, {}, defaults(), 'invalid']) test(`retired RuntimeSecurity object ${JSON.stringify(legacy)}`, () => {
-  assert.throws(() => validateRuntimeRoot({ schemaVersion: 'buster-remote-plan-runtime.v1', kubernetesRuntimeSecurity: legacy }),
+  assert.throws(() => validateRuntimeRoot({ schemaVersion: 'buster-remote-plan-runtime.v1', tarExecutable: '/usr/bin/tar', kubernetesRuntimeSecurity: legacy }),
     { message: 'SWARM_CONFIG_LEGACY_OVERRIDE:kubernetesRuntimeSecurity' });
 });
 
 test('disabled RuntimeSecurity route has no binding or implicit activation', () => {
-  const policy = readTestBundle(canonicalSwarmEntry)['buster-engine'].settings.clusterInvokers;
+  const policy = readTestPipeline(canonicalPipelineEntry)['buster-engine'].profiles.runtime.settings.clusterInvokers;
   assert.equal(capabilitySources({}, new Set(), {}).kubernetesRuntimeSecurityEnabled, false);
   assert.deepEqual(kubernetesRuntimeSecurityOptions(false, policy, undefined), {});
 });
@@ -277,3 +277,23 @@ test('reloaded file changes real PATH and diagnostic consumers; old captured con
   assert.deepEqual(f.observations().map(item => item.path),
     [f.authoredPath.join(path.delimiter), '/absent-reloaded-helper-directory', f.authoredPath.join(path.delimiter)]);
 });
+
+const originalExecutableSearchPath = defaults().executableSearchPath;
+for (const [index, member] of originalExecutableSearchPath.entries()) {
+  test(`authored RuntimeSecurity PATH member ${index} ${member} reaches child across reload`, { timeout: 15000 }, async t => {
+    const f = fixture(t, 'process.stdout.write(JSON.stringify(lease));', {});
+    assert.deepEqual(f.authoredPath, originalExecutableSearchPath, 'no substitution of original authored members');
+    assert.equal((await f.invoke()).namespace, 'test-one');
+    const changedPath = [...originalExecutableSearchPath];
+    changedPath[index] = path.join(f.root, `replacement-path-${index}`);
+    const changed = f.reload({ executableSearchPath: changedPath });
+    // Mutating the original caller after construction cannot change its captured PATH.
+    f.options.kubernetesRuntimeSecurity.executableSearchPath[index] = '/caller-mutated-path';
+    assert.equal((await changed()).namespace, 'test-one');
+    assert.equal((await f.invoke()).namespace, 'test-one');
+    await f.confirmClosed();
+    assert.equal(f.children.length, 3);
+    assert.deepEqual(f.observations().map(item => item.path.split(path.delimiter)),
+      [originalExecutableSearchPath, changedPath, originalExecutableSearchPath]);
+  });
+}

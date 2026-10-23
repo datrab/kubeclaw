@@ -1,0 +1,44 @@
+{
+  "checks": 120,
+  "issues": [],
+  "repeatRenders": [
+    {
+      "file": "prism-B-chart-supported.render.yaml",
+      "same": true,
+      "originalSha256": "7b18ef837e27d13bdd4d848143da1b5bf6f9e7c47f767a14aa5d27f1ad2c7cba",
+      "repeatSha256": "7b18ef837e27d13bdd4d848143da1b5bf6f9e7c47f767a14aa5d27f1ad2c7cba"
+    },
+    {
+      "file": "prism-A-chart-supported.render.yaml",
+      "same": true,
+      "originalSha256": "f702502be82b535976d412e5afac3e6bc537252070083d968c8a5fcadb28c884",
+      "repeatSha256": "f702502be82b535976d412e5afac3e6bc537252070083d968c8a5fcadb28c884"
+    },
+    {
+      "file": "buster-B-chart-supported.render.yaml",
+      "same": true,
+      "originalSha256": "7b9eaf8459991050d9ecf27bb08c3c8c0e2fee02e7d8a8482b661b5c44892c97",
+      "repeatSha256": "7b9eaf8459991050d9ecf27bb08c3c8c0e2fee02e7d8a8482b661b5c44892c97"
+    },
+    {
+      "file": "buster-A-chart-supported.render.yaml",
+      "same": true,
+      "originalSha256": "9a6a8ab1617974f69b24cabd9a5e6dd59ef0065bc015128ab175f2bc19c0b03e",
+      "repeatSha256": "9a6a8ab1617974f69b24cabd9a5e6dd59ef0065bc015128ab175f2bc19c0b03e"
+    },
+    {
+      "file": "nova-B-chart-supported.render.yaml",
+      "same": true,
+      "originalSha256": "9431fb3bfce4b3ca7980b0ecc376a9cbb5afddb7757604682a23d8cb12060ec2",
+      "repeatSha256": "9431fb3bfce4b3ca7980b0ecc376a9cbb5afddb7757604682a23d8cb12060ec2"
+    },
+    {
+      "file": "nova-A-chart-supported.render.yaml",
+      "same": true,
+      "originalSha256": "254452c54e03d0964c762c010dec9e168e82baf364ab24a6b5e8a694b07bb67f",
+      "repeatSha256": "254452c54e03d0964c762c010dec9e168e82baf364ab24a6b5e8a694b07bb67f"
+    }
+  ],
+  "upstreamPathNote": "primaryAliasIdentity.source.path is upstream; checked localPath instead",
+  "primaryAliasSourceLocalShaMatches": true
+}

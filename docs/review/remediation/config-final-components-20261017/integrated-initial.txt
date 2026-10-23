@@ -1,0 +1,101 @@
+npm notice run verify:config:components
+npm notice run tsc --noEmit -p tests/verification/reliability/tsconfig.config-components.json && node --test --test-concurrency=1 tests/verification/reliability/config-component-bundle.test.mts tests/verification/reliability/config-component-generation.test.mjs tests/verification/deployment/config-component-packaging.test.mjs tests/verification/deployment/prism-swarm-config.test.mjs tests/verification/deployment/buster-admission-render.test.mjs skills/prism/tests/swarm-*.test.mts skills/prism/tests/studio-config.test.mts skills/prism/tests/studio-service.test.mts
+
+Interrupted while running:
+
+⚠ skills/prism/tests/studio-config.test.mts (skills/prism/tests/studio-config.test.mts:1:1)
+✖ skills/prism/tests/studio-config.test.mts (53117.602145ms)
+✖ skills/prism/tests/studio-service.test.mts
+✖ skills/prism/tests/swarm-control-policy.test.mts
+✖ skills/prism/tests/swarm-input-limit.test.mts
+✖ skills/prism/tests/swarm-native-settings.test.mts
+✖ skills/prism/tests/swarm-resource-operation.test.mts
+✖ skills/prism/tests/swarm-resource-policy.test.mts
+✖ skills/prism/tests/swarm-result-journal.test.mts
+✖ skills/prism/tests/swarm-supervisor-config.test.mts
+✖ skills/prism/tests/swarm-supervisor-consumers.test.mts
+✖ skills/prism/tests/swarm-worker-behavior.test.mts
+✖ skills/prism/tests/swarm-worker-config.test.mts
+✖ tests/verification/deployment/buster-admission-render.test.mjs
+✖ tests/verification/deployment/config-component-packaging.test.mjs
+✖ tests/verification/deployment/prism-swarm-config.test.mjs
+✖ tests/verification/reliability/config-component-bundle.test.mts
+✖ tests/verification/reliability/config-component-generation.test.mjs
+ℹ tests 17
+ℹ suites 0
+ℹ pass 0
+ℹ fail 0
+ℹ cancelled 17
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 53127.231282
+
+✖ failing tests:
+
+test at skills/prism/tests/studio-config.test.mts:1:1
+✖ skills/prism/tests/studio-config.test.mts (53117.602145ms)
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at skills/prism/tests/studio-service.test.mts:1:1
+✖ skills/prism/tests/studio-service.test.mts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at skills/prism/tests/swarm-control-policy.test.mts:1:1
+✖ skills/prism/tests/swarm-control-policy.test.mts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at skills/prism/tests/swarm-input-limit.test.mts:1:1
+✖ skills/prism/tests/swarm-input-limit.test.mts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at skills/prism/tests/swarm-native-settings.test.mts:1:1
+✖ skills/prism/tests/swarm-native-settings.test.mts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at skills/prism/tests/swarm-resource-operation.test.mts:1:1
+✖ skills/prism/tests/swarm-resource-operation.test.mts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at skills/prism/tests/swarm-resource-policy.test.mts:1:1
+✖ skills/prism/tests/swarm-resource-policy.test.mts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at skills/prism/tests/swarm-result-journal.test.mts:1:1
+✖ skills/prism/tests/swarm-result-journal.test.mts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at skills/prism/tests/swarm-supervisor-config.test.mts:1:1
+✖ skills/prism/tests/swarm-supervisor-config.test.mts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at skills/prism/tests/swarm-supervisor-consumers.test.mts:1:1
+✖ skills/prism/tests/swarm-supervisor-consumers.test.mts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at skills/prism/tests/swarm-worker-behavior.test.mts:1:1
+✖ skills/prism/tests/swarm-worker-behavior.test.mts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at skills/prism/tests/swarm-worker-config.test.mts:1:1
+✖ skills/prism/tests/swarm-worker-config.test.mts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/verification/deployment/buster-admission-render.test.mjs:1:1
+✖ tests/verification/deployment/buster-admission-render.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/verification/deployment/config-component-packaging.test.mjs:1:1
+✖ tests/verification/deployment/config-component-packaging.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:1:1
+✖ tests/verification/deployment/prism-swarm-config.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/verification/reliability/config-component-bundle.test.mts:1:1
+✖ tests/verification/reliability/config-component-bundle.test.mts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/verification/reliability/config-component-generation.test.mjs:1:1
+✖ tests/verification/reliability/config-component-generation.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'

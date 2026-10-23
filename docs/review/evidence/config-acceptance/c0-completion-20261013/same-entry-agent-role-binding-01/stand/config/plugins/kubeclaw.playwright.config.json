@@ -1,0 +1,883 @@
+{
+  "schemaVersion": "pipeline-package-policy.v1",
+  "packageId": "kubeclaw.playwright",
+  "instanceId": "fixture.playwright",
+  "profiles": {
+    "A": {
+      "processing": {
+        "workers": 1,
+        "timeoutMs": 600000,
+        "minimumExecutedTests": 2,
+        "requiredTests": [
+          "home.spec.ts > project-owned assertion > real-chromium"
+        ]
+      },
+      "declarations": {
+        "retrySafe": false,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-f6fd1dec2d2c6b35-A": {
+      "processing": {
+        "workers": 1,
+        "timeoutMs": 600000,
+        "minimumExecutedTests": 2,
+        "requiredTests": [
+          "home.spec.ts > project-owned assertion > real-chromium"
+        ]
+      },
+      "declarations": {
+        "retrySafe": false,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-f6fd1dec2d2c6b35-B": {
+      "processing": {
+        "workers": 1,
+        "timeoutMs": 600000,
+        "minimumExecutedTests": 2,
+        "requiredTests": [
+          "home.spec.ts > project-owned assertion > real-chromium"
+        ]
+      },
+      "declarations": {
+        "retrySafe": false,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-d17ed366e09f9e72-A": {
+      "processing": {
+        "workers": 1,
+        "timeoutMs": 600000,
+        "minimumExecutedTests": 2,
+        "requiredTests": [
+          "home.spec.ts > project-owned assertion > real-chromium"
+        ]
+      },
+      "declarations": {
+        "retrySafe": false,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-d17ed366e09f9e72-B": {
+      "processing": {
+        "workers": 1,
+        "timeoutMs": 600000,
+        "minimumExecutedTests": 2,
+        "requiredTests": [
+          "home.spec.ts > project-owned assertion > real-chromium"
+        ]
+      },
+      "declarations": {
+        "retrySafe": false,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-0960971aa584ed2a-A": {
+      "processing": {
+        "workers": 1,
+        "timeoutMs": 600000,
+        "minimumExecutedTests": 2,
+        "requiredTests": [
+          "home.spec.ts > project-owned assertion > real-chromium"
+        ]
+      },
+      "declarations": {
+        "retrySafe": false,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-0960971aa584ed2a-B": {
+      "processing": {
+        "workers": 1,
+        "timeoutMs": 600000,
+        "minimumExecutedTests": 2,
+        "requiredTests": [
+          "home.spec.ts > project-owned assertion > real-chromium"
+        ]
+      },
+      "declarations": {
+        "retrySafe": false,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-c226799a77c2da3b-A": {
+      "processing": {
+        "workers": 1,
+        "timeoutMs": 600000,
+        "minimumExecutedTests": 2,
+        "requiredTests": [
+          "home.spec.ts > project-owned assertion > real-chromium"
+        ]
+      },
+      "declarations": {
+        "retrySafe": false,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-c226799a77c2da3b-B": {
+      "processing": {
+        "workers": 1,
+        "timeoutMs": 600000,
+        "minimumExecutedTests": 2,
+        "requiredTests": [
+          "home.spec.ts > project-owned assertion > real-chromium"
+        ]
+      },
+      "declarations": {
+        "retrySafe": false,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-fbdecaab60720898-A": {
+      "processing": {
+        "workers": 1,
+        "timeoutMs": 600000,
+        "minimumExecutedTests": 2,
+        "requiredTests": [
+          "home.spec.ts > project-owned assertion > real-chromium"
+        ]
+      },
+      "declarations": {
+        "retrySafe": false,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-fbdecaab60720898-B": {
+      "processing": {
+        "workers": 2,
+        "timeoutMs": 600000,
+        "minimumExecutedTests": 2,
+        "requiredTests": [
+          "home.spec.ts > project-owned assertion > real-chromium"
+        ]
+      },
+      "declarations": {
+        "retrySafe": false,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-d46f4334df4967fa-A": {
+      "processing": {
+        "workers": 1,
+        "timeoutMs": 1000,
+        "minimumExecutedTests": 2,
+        "requiredTests": [
+          "home.spec.ts > project-owned assertion > real-chromium"
+        ]
+      },
+      "declarations": {
+        "retrySafe": false,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-d46f4334df4967fa-B": {
+      "processing": {
+        "workers": 1,
+        "timeoutMs": 2000,
+        "minimumExecutedTests": 2,
+        "requiredTests": [
+          "home.spec.ts > project-owned assertion > real-chromium"
+        ]
+      },
+      "declarations": {
+        "retrySafe": false,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-e4dcfff9aa6b1ef0-A": {
+      "processing": {
+        "workers": 1,
+        "timeoutMs": 600000,
+        "minimumExecutedTests": 2,
+        "requiredTests": [
+          "home.spec.ts > project-owned assertion > real-chromium"
+        ]
+      },
+      "declarations": {
+        "retrySafe": false,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-e4dcfff9aa6b1ef0-B": {
+      "processing": {
+        "workers": 1,
+        "timeoutMs": 600000,
+        "minimumExecutedTests": 3,
+        "requiredTests": [
+          "home.spec.ts > project-owned assertion > real-chromium"
+        ]
+      },
+      "declarations": {
+        "retrySafe": false,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-28f9b2da06d59a77-A": {
+      "processing": {
+        "workers": 1,
+        "timeoutMs": 600000,
+        "minimumExecutedTests": 2,
+        "requiredTests": [
+          "home.spec.ts > project-owned assertion > real-chromium"
+        ]
+      },
+      "declarations": {
+        "retrySafe": false,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-28f9b2da06d59a77-B": {
+      "processing": {
+        "workers": 1,
+        "timeoutMs": 600000,
+        "minimumExecutedTests": 2,
+        "requiredTests": [
+          "home.spec.ts > project-owned skip > real-chromium"
+        ]
+      },
+      "declarations": {
+        "retrySafe": false,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-d348d41c2ab35c8b-A": {
+      "processing": {
+        "workers": 1,
+        "timeoutMs": 600000,
+        "minimumExecutedTests": 2,
+        "requiredTests": [
+          "home.spec.ts > project-owned assertion > real-chromium"
+        ]
+      },
+      "declarations": {
+        "retrySafe": false,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-d348d41c2ab35c8b-B": {
+      "processing": {
+        "workers": 1,
+        "timeoutMs": 600000,
+        "minimumExecutedTests": 2,
+        "requiredTests": [
+          "home.spec.ts > project-owned skip > real-chromium"
+        ]
+      },
+      "declarations": {
+        "retrySafe": false,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONPASS-A": {
+      "processing": {
+        "workers": 1,
+        "timeoutMs": 600000,
+        "minimumExecutedTests": 2,
+        "requiredTests": [
+          "home.spec.ts > project-owned assertion > real-chromium"
+        ]
+      },
+      "declarations": {
+        "retrySafe": false,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONFAIL-A": {
+      "processing": {
+        "workers": 1,
+        "timeoutMs": 600000,
+        "minimumExecutedTests": 2,
+        "requiredTests": [
+          "home.spec.ts > project-owned assertion > real-chromium"
+        ]
+      },
+      "declarations": {
+        "retrySafe": false,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONERROR-A": {
+      "processing": {
+        "workers": 1,
+        "timeoutMs": 600000,
+        "minimumExecutedTests": 2,
+        "requiredTests": [
+          "home.spec.ts > project-owned assertion > real-chromium"
+        ]
+      },
+      "declarations": {
+        "retrySafe": false,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-EVIDENCEDEFAULTS-ONERROR-B": {
+      "processing": {
+        "workers": 1,
+        "timeoutMs": 600000,
+        "minimumExecutedTests": 2,
+        "requiredTests": [
+          "home.spec.ts > project-owned assertion > real-chromium"
+        ]
+      },
+      "declarations": {
+        "retrySafe": false,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onError": [
+            "log",
+            "test-report"
+          ]
+        }
+      }
+    },
+    "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-RETRYSAFE-A": {
+      "processing": {
+        "workers": 1,
+        "timeoutMs": 600000,
+        "minimumExecutedTests": 2,
+        "requiredTests": [
+          "home.spec.ts > project-owned assertion > real-chromium"
+        ]
+      },
+      "declarations": {
+        "retrySafe": false,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-PROVIDER-CONTRACT-KUBECLAW-PLAYWRIGHT-PLAYWRIGHT-MATRIXFIELDS-A": {
+      "processing": {
+        "workers": 1,
+        "timeoutMs": 600000,
+        "minimumExecutedTests": 2,
+        "requiredTests": [
+          "home.spec.ts > project-owned assertion > real-chromium"
+        ]
+      },
+      "declarations": {
+        "retrySafe": false,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    }
+  }
+}

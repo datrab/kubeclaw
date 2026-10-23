@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { readTestBundle, canonicalSwarmEntry } from '../../fixtures/config/swarm-bundle.mjs';
+import { readTestPipeline, canonicalPipelineEntry, busterRuntimeSelection } from '../../fixtures/config/pipeline-components.mjs';
+import { captureSwarmSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
 import { clusterCommand } from '../../fixtures/test-gate/cluster-command.mjs';
 import { request } from '../../fixtures/test-gate/kubernetes-cleanup-fixture.mjs';
 import { clusterRuntimeBinding, kubernetesFixtureOptions, tailscaleExposureOptions } from '../../../skills/buster/engine/test-gates/production-cluster-options.ts';
@@ -8,7 +9,7 @@ import { createBusterCapabilityRuntime } from '../../../skills/buster/engine/tes
 import { validateBusterClusterInvokerSettings } from '../../../skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts';
 
 function create(t, command, capability, timeout) {
-  const settings = readTestBundle(canonicalSwarmEntry)['buster-engine'].settings;
+  const settings = structuredClone(captureSwarmSettings(canonicalPipelineEntry, busterRuntimeSelection(readTestPipeline())).components['buster-engine'].settings);
   settings.clusterInvokers.shared.kubectlExecutable = command.binary;
   settings.clusterInvokers.kubernetesFixture.registryRepositoryPrefixes = ['app'];
   settings.clusterInvokers.kubernetesFixture.shortCommandTimeoutMs = timeout;

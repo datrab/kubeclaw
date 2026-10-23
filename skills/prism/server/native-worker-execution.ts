@@ -9,13 +9,16 @@ import type { loadWorkerConfig } from './worker-config.ts';
 
 /** Only serializable trusted configuration crosses into the per-attempt host. */
 export async function nativePrismExecution(owner: NativeWorkerOwnership, native: ReturnType<typeof nativePrismSupervisorConfig>,
-  config: ReturnType<typeof loadWorkerConfig>) {
+  config: ReturnType<typeof loadWorkerConfig>, captureGeneration?: string) {
+  if (config.workerCore && (!captureGeneration || !/^sha256:[a-f0-9]{64}$/u.test(captureGeneration))) throw new Error('WORKER_CORE_GENERATION_REQUIRED');
   const journal = new NativeAttemptJournal(path.join(native.ownershipRoot, 'attempt-journal'), {
     maximumRecords: native.maximumRecords, maximumStateBytes: native.maximumBytes,
     maximumTotalBytes: native.maximumJournalBytes, maximumInputBytes: native.maximumInputBytes,
     maximumOutputBytes: native.maximumOutputBytes, maximumResultBytes: native.maximumResultBytes,
-  });
+  }, undefined, config.workerCore);
+  if (config.workerCore) await owner.withJournalRoutingFence(authority => journal.configureRouting(authority, captureGeneration!));
   await recoverNativeWorkerAttempts(journal, owner);
+  if (config.workerCore) await owner.withJournalRoutingFence(authority => journal.configureRouting(authority, captureGeneration!, true));
   const command = nativePrismCommand(native, config);
   return {
     ready: () => owner.isReady(),
@@ -35,13 +38,15 @@ export async function nativePrismExecution(owner: NativeWorkerOwnership, native:
 }
 
 /** Build a closed child environment from the startup snapshot, never process.env. */
-export function nativePrismCommand(native: ReturnType<typeof nativePrismSupervisorConfig>, config: ReturnType<typeof loadWorkerConfig>) {
+export function nativePrismCommand(native: ReturnType<typeof nativePrismSupervisorConfig>, config: Pick<ReturnType<typeof loadWorkerConfig>, 'controlInternalUrl' | 'workerSecret' | 'spiffeEnabled' | 'maximumArtifactAcknowledgmentBytes'> & { readonly native: Pick<ReturnType<typeof loadWorkerConfig>['native'], 'enginePolicy'> }) {
   return { launcher: native.launcher, uid: native.uid, gid: native.gid, executable: process.execPath,
     arguments: [fileURLToPath(new URL('./native-worker-host.ts', import.meta.url))], cwd: process.cwd(),
     environment: { PATH: '/usr/local/bin:/usr/bin:/bin', HOME: '/tmp', NODE_ENV: 'production',
       PRISM_ENGINE_CONTENT_DIGEST: native.engineContentDigest,
       PLAYWRIGHT_BROWSERS_PATH: native.browserPath, PRISM_CONTROL_INTERNAL_URL: config.controlInternalUrl.toString(),
       PRISM_WORKER_SECRET: config.workerSecret, WORKER_TRUST_SPIFFE_ENABLED: String(config.spiffeEnabled),
+      PRISM_NATIVE_ASSIGNED_ENGINE_POLICY: JSON.stringify(config.native.enginePolicy),
+      PRISM_NATIVE_ASSIGNED_ARTIFACT_ACKNOWLEDGMENT_BYTES: String(config.maximumArtifactAcknowledgmentBytes),
       PRISM_NATIVE_ASSIGNED_INPUT_BYTES: String(native.maximumInputBytes) },
   };
 }

@@ -1,6 +1,8 @@
-import { validateBusterExecutionSettings, type BusterExecutionSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
+import { readBusterOriginalExecution, type BusterOriginalExecution } from './original-execution.ts';
+import { readWorkerCorePolicyCapture, type WorkerCorePolicyCapture } from '@kubeclaw/plugin-foundation/config/worker-core-policy';
+import { validateBusterExecutionSettings, type BusterExecutionSettings } from '@kubeclaw/plugin-foundation/config/buster-execution';
 import { validateLocalWorkerRuntimePolicy, type LocalWorkerRuntimePolicy } from "@kubeclaw/worker-core";
-import { validateBusterAdmissionSettings, validateBusterDependencyReadinessSettings, type BusterAdmissionSettings, type BusterDependencyReadinessSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+import { validateBusterAdmissionSettings, validateBusterDependencyReadinessSettings, type BusterAdmissionSettings, type BusterDependencyReadinessSettings } from '@kubeclaw/plugin-foundation/config/swarm';
 import { executeBusterPreparedJob } from './remote-prepared-execution.ts';
 import { preparedPlanRuntimeRoot } from './prepared-plan-paths.ts';
 import type { BusterStagedAdmission } from './preparation-input.ts';
@@ -29,7 +31,9 @@ export interface BusterRemotePlanServiceOptions extends BusterCapabilityRuntimeO
   readonly runtimeRoot: string;
   readonly admission: BusterAdmissionSettings;
   readonly workerLocalRuntime: LocalWorkerRuntimePolicy;
+  readonly workerCore?: WorkerCorePolicyCapture;
   readonly executionPolicy: BusterExecutionSettings;
+  readonly originalExecution?: BusterOriginalExecution;
   readonly dependencyReadiness: BusterDependencyReadinessSettings;
   readonly now?: () => Date;
   readonly execute?: (
@@ -69,7 +73,7 @@ export class BusterRemotePlanService {
     const workerLocalRuntime = validateLocalWorkerRuntimePolicy(options.workerLocalRuntime);
     const dependencyReadiness = validateBusterDependencyReadinessSettings(options.dependencyReadiness);
     if (!/^[a-f0-9]{40,64}$/u.test(options.workerRevision)) throw new Error('BUSTER_REMOTE_WORKER_REVISION_INVALID');
-    this.#options = { ...options, workerLocalRuntime, dependencyReadiness, executionPolicy };
+    this.#options = { ...options, ...(options.originalExecution ? {originalExecution: readBusterOriginalExecution(options.originalExecution)} : {}), ...(options.workerCore ? {workerCore: readWorkerCorePolicyCapture(options.workerCore)} : {}), workerLocalRuntime, dependencyReadiness, executionPolicy };
     this.#buildkitReadiness = configuredBuildkitReadiness(this.#options);
     this.#now = options.now ?? (() => new Date());
     const admission = validateBusterAdmissionSettings(options.admission);
@@ -147,8 +151,12 @@ export class BusterRemotePlanService {
         return replay;
       }
       if (this.#stopping) throw new Error('BUSTER_REMOTE_SHUTTING_DOWN');
-      const status = await this.#options.store.accept(staged, this.#now().toISOString());
-      if (status.state === 'accepted' && !this.#active.has(staged.job.jobId)) this.#start(staged);
+      const status = await this.#options.store.accept(staged, this.#now().toISOString(), this.#options.originalExecution);
+      if (status.state === 'accepted' && !this.#active.has(staged.job.jobId)) {
+        const retained = (await this.#options.store.get(staged.job.jobId)).payload;
+        if (retained.input === null) throw new Error('BUSTER_JOB_RECORD_INVALID');
+        this.#start(retained);
+      }
       return status;
     } finally { release(); }
   }
@@ -214,7 +222,7 @@ export class BusterRemotePlanService {
   }
 
   async shutdown(timeoutMs: number): Promise<void> {
-    if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1) {
+    if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 0x7fffffff) {
       throw new Error('BUSTER_REMOTE_SHUTDOWN_TIMEOUT_INVALID');
     }
     this.#stopping = true; this.#queue.clear();

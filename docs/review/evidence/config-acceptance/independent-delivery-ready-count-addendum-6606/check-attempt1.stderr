@@ -1,0 +1,4 @@
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/independent-delivery-ready-count-addendum-6606/check.py", line 10
+    assert 'Nested receipt and exposureSpec'have(s['memberScope']);assert s['acceptance'].startswith('NOT ACCEPTED')
+                                            ^^^^
+SyntaxError: invalid syntax

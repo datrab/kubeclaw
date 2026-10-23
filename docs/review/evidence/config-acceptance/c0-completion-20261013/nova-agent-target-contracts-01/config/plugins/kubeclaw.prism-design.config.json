@@ -1,0 +1,97 @@
+{
+  "schemaVersion": "pipeline-package-policy.v1",
+  "packageId": "kubeclaw.prism-design",
+  "instanceId": "fixture.prism-design",
+  "profiles": {
+    "A": {
+      "processing": {
+        "kubeclaw.prism-design:design": {
+          "agent": "prism",
+          "target": "case-operator-a",
+          "issuerId": "case-issuer-a",
+          "timeoutMinutes": 60
+        }
+      }
+    },
+    "RT-8e39db110874a9d6-A": {
+      "processing": {
+        "kubeclaw.prism-design:design": {
+          "agent": "prism",
+          "target": "case-operator-a",
+          "issuerId": "case-issuer-a",
+          "timeoutMinutes": 60
+        }
+      }
+    },
+    "RT-8e39db110874a9d6-B": {
+      "processing": {
+        "kubeclaw.prism-design:design": {
+          "agent": "prism",
+          "target": "case-operator-a",
+          "issuerId": "case-issuer-a",
+          "timeoutMinutes": 60
+        }
+      }
+    },
+    "RT-03fda24ef110ef33-A": {
+      "processing": {
+        "kubeclaw.prism-design:design": {
+          "agent": "prism",
+          "target": "case-operator-a",
+          "issuerId": "case-issuer-a",
+          "timeoutMinutes": 60
+        }
+      }
+    },
+    "RT-03fda24ef110ef33-B": {
+      "processing": {
+        "kubeclaw.prism-design:design": {
+          "agent": "prism",
+          "target": "case-operator-b",
+          "issuerId": "case-issuer-a",
+          "timeoutMinutes": 60
+        }
+      }
+    },
+    "RT-94d352d99db6b92d-A": {
+      "processing": {
+        "kubeclaw.prism-design:design": {
+          "agent": "prism",
+          "target": "case-operator-a",
+          "issuerId": "case-issuer-a",
+          "timeoutMinutes": 60
+        }
+      }
+    },
+    "RT-94d352d99db6b92d-B": {
+      "processing": {
+        "kubeclaw.prism-design:design": {
+          "agent": "prism",
+          "target": "case-operator-a",
+          "issuerId": "case-issuer-b",
+          "timeoutMinutes": 60
+        }
+      }
+    },
+    "RT-afddbf26c06e75cf-A": {
+      "processing": {
+        "kubeclaw.prism-design:design": {
+          "agent": "prism",
+          "target": "case-operator-a",
+          "issuerId": "case-issuer-a",
+          "timeoutMinutes": 60
+        }
+      }
+    },
+    "RT-afddbf26c06e75cf-B": {
+      "processing": {
+        "kubeclaw.prism-design:design": {
+          "agent": "prism",
+          "target": "case-operator-a",
+          "issuerId": "case-issuer-a",
+          "timeoutMinutes": 30
+        }
+      }
+    }
+  }
+}

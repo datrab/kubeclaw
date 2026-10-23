@@ -1,0 +1,28 @@
+{
+  "status": "reference integrity only, not semantic or runtime acceptance",
+  "caseProposalsSha256": "ee6bbe152d5d5c65b49669d9441a5fff2405603f546646c36f3a752298d6828b",
+  "cases": 5194,
+  "resolverSha256": "448c7931e5128deb7537a6d492ffed4a260fcfa19c8250f2a46cc49b914c422f",
+  "references": {
+    "referenceOccurrencesValidated": 1094,
+    "artifacts": [
+      {
+        "path": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-artifact-budget-06/observations.json",
+        "sha256": "83cc6904fd0aa62078c07f0c2cee7f5396f1ebc1c773b89dc5cc94e370a48a43"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+        "sha256": "eb6aad6748b119c42123d0decb61516bc7177eb6c856238f4fc698af7f7a975d"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+        "sha256": "3de73701ff6809f698b97425df23d5c0b556b384f0fdb1ee8ade48ccde262601"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+        "sha256": "a66c02f3b610bd7e9f859e90adb7b180bb3f9d55ce03a35111acd6611fc01175"
+      }
+    ],
+    "limits": "Document observation integrity only; no runtime/config interpretation or semantic acceptance"
+  }
+}

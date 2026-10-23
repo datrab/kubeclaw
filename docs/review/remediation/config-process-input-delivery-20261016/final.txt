@@ -1,0 +1,25 @@
+✔ real kubernetes.fixture factory command consumes grace 50 (568.596206ms)
+✔ real kubernetes.fixture factory command consumes grace 400 (913.670323ms)
+✔ real kubernetes.exposure factory command consumes grace 50 (576.212825ms)
+✔ real kubernetes.exposure factory command consumes grace 400 (916.487616ms)
+✔ required process-input policy and explicit command bounds fail before spawn (2.768252ms)
+✔ actual escalation consumes 50ms (569.679814ms)
+✔ actual escalation consumes 400ms (921.382304ms)
+✔ cleanup close bound consumes 100ms (132.863629ms)
+✔ cleanup close bound consumes 600ms (231.339514ms)
+✔ actual group scan intervals consume 10ms (1121.3605ms)
+✔ actual group scan intervals consume 100ms (1170.238293ms)
+✔ failed TERM still waits for real forced close and retains the signal error (567.827296ms)
+✔ failed timed KILL remains visible after independent actual close (678.502138ms)
+✔ cleanup deadline retains the final KILL error as well as its timeout (134.887473ms)
+✔ group observation failure survives a later close deadline (608.048163ms)
+{"originalMalformedPoliciesRejected":28,"chartGeneratorsPerNegative":2,"actualPackagedRoleBoots":3,"chartsPerDelivery":2,"nativeExecution":false}
+✔ both actual charts, packaged role boot and loader enforce shared process-input policy (28672.895781ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 40234.433455

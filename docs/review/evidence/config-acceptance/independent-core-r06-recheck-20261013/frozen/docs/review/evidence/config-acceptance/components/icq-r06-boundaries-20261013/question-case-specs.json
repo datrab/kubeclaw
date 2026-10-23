@@ -1,0 +1,1476 @@
+{
+  "activeCases": [
+    {
+      "stage": "C0-proposed-definition",
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "invocation": {
+        "executable": "node",
+        "argv": [
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+          "--case",
+          "QC-FOUNDATION-FLOCK-WAIT-VAL",
+          "--profiles",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+          "--stand",
+          "APPROVED_IMPLEMENTATION_COMMIT",
+          "--case-contracts",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+        ],
+        "availability": "Exact proposed harness contract; file is deliberately not implemented before approval. Current-reader-controls.mjs is separately runnable now."
+      },
+      "requirements": [
+        "F-VAL"
+      ],
+      "environment": {
+        "ambientConfig": "forbidden",
+        "disposableRoot": "fresh mkdtemp per case",
+        "productionServices": "none"
+      },
+      "priorState": {
+        "generation": "A",
+        "root": "fresh unless case explicitly retained",
+        "unacknowledgedWork": "preserve; no clearing"
+      },
+      "generationContract": "Select complete immutable owner profile; capture owner/profile/generation/source/schema digests before first effect. Started/claimed/recovery/retry/Eval keeps captured generation; new work may select B only after atomic publish. Same physical root may not be opened under a conflicting author or incompatible state policy. Compatible new operation may select B without changing originalA holder; exact retainedhistory compatibility required, no latest substitution. Missing fields fail; no literal/ENV fallback.",
+      "id": "QC-FOUNDATION-FLOCK-WAIT-VAL",
+      "questionId": "CMP-SOURCE-FOUNDATION-FLOCK-WAIT",
+      "boundary": "strict caller-owner schema",
+      "input": {
+        "profiles": [
+          "A",
+          "B"
+        ],
+        "invalidSeconds": [
+          0,
+          -1,
+          1.5,
+          6
+        ],
+        "missing": "reject",
+        "scaffoldBinding": "scaffold-c2-binding-definition.md --config soleentry/--platform checkedgeneratedlocator"
+      },
+      "oracle": [
+        "A5 andB1 complete profiles admitted; invalid/missing rejected before opening root",
+        "Independent editedplatformlocatorevenvalidrejects; compatibleBcontender neveraltersAholder; no permanentwait-generation prohibition"
+      ],
+      "supersedesCase": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+        "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+        "id": "QC-FOUNDATION-FLOCK-WAIT-VAL"
+      },
+      "lifecycle": {
+        "status": "active-superseding-proposed-not-run",
+        "originalRequirementsPreserved": true,
+        "historicalOriginalCase": {
+          "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+          "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+          "id": "QC-FOUNDATION-FLOCK-WAIT-VAL"
+        }
+      }
+    },
+    {
+      "stage": "C0-proposed-definition",
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "invocation": {
+        "executable": "node",
+        "argv": [
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+          "--case",
+          "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+          "--profiles",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+          "--stand",
+          "APPROVED_IMPLEMENTATION_COMMIT",
+          "--case-contracts",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+        ],
+        "availability": "Exact proposed harness contract; file is deliberately not implemented before approval. Current-reader-controls.mjs is separately runnable now."
+      },
+      "requirements": [
+        "F-VAL",
+        "F-BIND",
+        "F-EFFECT"
+      ],
+      "environment": {
+        "ambientConfig": "forbidden",
+        "disposableRoot": "fresh mkdtemp per case",
+        "productionServices": "none"
+      },
+      "priorState": {
+        "generation": "A",
+        "root": "fresh unless case explicitly retained",
+        "unacknowledgedWork": "preserve; no clearing"
+      },
+      "generationContract": "Select complete immutable owner profile; capture owner/profile/generation/source/schema digests before first effect. Started/claimed/recovery/retry/Eval keeps captured generation; new work may select B only after atomic publish. Same physical root may not be opened under a conflicting author or incompatible state policy. Compatible new operation may select B without changing originalA holder; exact retainedhistory compatibility required, no latest substitution. Missing fields fail; no literal/ENV fallback.",
+      "id": "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+      "questionId": "CMP-SOURCE-FOUNDATION-FLOCK-WAIT",
+      "boundary": "withDurableStoreLock->acquireKernelLock->actual /usr/bin/flock",
+      "input": {
+        "holder": "first genuine same-root operation holds gate",
+        "contender": "second same-root operation",
+        "profiles": {
+          "A": 5,
+          "B": 1
+        },
+        "scaffoldBinding": "scaffold-c2-binding-definition.md --config soleentry/--platform checkedgeneratedlocator"
+      },
+      "oracle": [
+        "Capture exact argv --timeout5/1 and measured monotonic elapsed without strict scheduler upper-bound assertion; both contend/fail while holder persists; uncontended A/B enter once; release leaves durable state intact",
+        "Independent editedplatformlocatorevenvalidrejects; compatibleBcontender neveraltersAholder; no permanentwait-generation prohibition"
+      ],
+      "supersedesCase": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+        "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+        "id": "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK"
+      },
+      "lifecycle": {
+        "status": "active-superseding-proposed-not-run",
+        "originalRequirementsPreserved": true,
+        "historicalOriginalCase": {
+          "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+          "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+          "id": "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK"
+        }
+      }
+    },
+    {
+      "stage": "C0-proposed-definition",
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "invocation": {
+        "executable": "node",
+        "argv": [
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+          "--case",
+          "QC-FOUNDATION-FLOCK-WAIT-HISTORY",
+          "--profiles",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+          "--stand",
+          "APPROVED_IMPLEMENTATION_COMMIT",
+          "--case-contracts",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+        ],
+        "availability": "Exact proposed harness contract; file is deliberately not implemented before approval. Current-reader-controls.mjs is separately runnable now."
+      },
+      "requirements": [
+        "F-BIND",
+        "F-RECOVERY",
+        "F-EVAL"
+      ],
+      "environment": {
+        "ambientConfig": "forbidden",
+        "disposableRoot": "fresh mkdtemp per case",
+        "productionServices": "none"
+      },
+      "priorState": {
+        "exactCallerMatrix": "lock-caller-contracts.json#/callerMatrix",
+        "completeA/B": "#/completeCompanions",
+        "operationOriginalA": 5,
+        "newB": 1
+      },
+      "generationContract": "Select complete immutable owner profile; capture owner/profile/generation/source/schema digests before first effect. Started/claimed/recovery/retry/Eval keeps captured generation; new work may select B only after atomic publish. Same physical root may not be opened under a conflicting author or incompatible state policy. Compatible new operation may select B without changing originalA holder; exact retainedhistory compatibility required, no latest substitution. Missing fields fail; no literal/ENV fallback.",
+      "id": "QC-FOUNDATION-FLOCK-WAIT-HISTORY",
+      "questionId": "CMP-SOURCE-FOUNDATION-FLOCK-WAIT",
+      "boundary": "all-storage-and-lock-callers.json every owning row",
+      "input": {
+        "contract": {
+          "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+          "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64"
+        },
+        "retirement": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/retirement-binding-contract.json",
+          "sha256": "d75046e7e3a78501033c28a60fa2f18d1b7afaa9b49728440291c0943d776ac4"
+        }
+      },
+      "oracle": [
+        "Active/recovered A never adoptsB; same path different author rejected; each listed direct/indirect caller receives sole owning field, including retirement and scaffold",
+        "Independent editedplatformlocatorevenvalidrejects; compatibleBcontender neveraltersAholder; no permanentwait-generation prohibition"
+      ],
+      "supersedesCase": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+        "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+        "id": "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      },
+      "lifecycle": {
+        "status": "active-superseding-proposed-not-run",
+        "originalRequirementsPreserved": true,
+        "historicalOriginalCase": {
+          "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+          "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+          "id": "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+        }
+      }
+    },
+    {
+      "stage": "C0-proposed-definition",
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "invocation": {
+        "executable": "node",
+        "argv": [
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+          "--case",
+          "QC-ADMISSION-REASON-LIMITS-VAL",
+          "--profiles",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+          "--stand",
+          "APPROVED_IMPLEMENTATION_COMMIT",
+          "--case-contracts",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+        ],
+        "availability": "Exact proposed harness contract; file is deliberately not implemented before approval. Current-reader-controls.mjs is separately runnable now."
+      },
+      "requirements": [
+        "F-VAL"
+      ],
+      "environment": {
+        "ambientConfig": "forbidden",
+        "disposableRoot": "fresh mkdtemp per case",
+        "productionServices": "none"
+      },
+      "priorState": {
+        "generation": "A",
+        "root": "fresh unless case explicitly retained",
+        "unacknowledgedWork": "preserve; no clearing"
+      },
+      "generationContract": "Select complete immutable owner profile; capture owner/profile/generation/source/schema digests before first effect. Started/claimed/recovery/retry/Eval keeps captured generation; new work may select B only after atomic publish. Same physical root may not be opened under a conflicting author or incompatible state policy. Compatible new operation may select B without changing originalA holder; exact retainedhistory compatibility required, no latest substitution. Missing fields fail; no literal/ENV fallback.",
+      "id": "QC-ADMISSION-REASON-LIMITS-VAL",
+      "questionId": "CMP-SOURCE-ADMISSION-REASON-LIMITS",
+      "boundary": "strict admission policy schema + semantic validation",
+      "input": {
+        "A": {
+          "threshold": 256,
+          "prefix": 180
+        },
+        "B": {
+          "threshold": 128,
+          "prefix": 56
+        },
+        "invalid": [
+          {
+            "threshold": 71,
+            "prefix": 0
+          },
+          {
+            "threshold": 128,
+            "prefix": 57
+          },
+          {
+            "threshold": 257,
+            "prefix": 180
+          },
+          {
+            "threshold": 128,
+            "prefix": -1
+          }
+        ]
+      },
+      "oracle": [
+        "Both complete owner profiles admitted; every broken relation/type/missing field rejects pre-store"
+      ],
+      "supersedesCase": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+        "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+        "id": "QC-ADMISSION-REASON-LIMITS-VAL"
+      },
+      "lifecycle": {
+        "status": "active-superseding-proposed-not-run",
+        "originalRequirementsPreserved": true,
+        "historicalOriginalCase": {
+          "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+          "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+          "id": "QC-ADMISSION-REASON-LIMITS-VAL"
+        }
+      }
+    },
+    {
+      "stage": "C0-proposed-definition",
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "invocation": {
+        "executable": "node",
+        "argv": [
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+          "--case",
+          "QC-ADMISSION-REASON-LIMITS-FORMAT",
+          "--profiles",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+          "--stand",
+          "APPROVED_IMPLEMENTATION_COMMIT",
+          "--case-contracts",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+        ],
+        "availability": "Exact proposed harness contract; file is deliberately not implemented before approval. Current-reader-controls.mjs is separately runnable now."
+      },
+      "requirements": [
+        "F-VAL",
+        "F-BIND",
+        "F-EFFECT"
+      ],
+      "environment": {
+        "ambientConfig": "forbidden",
+        "disposableRoot": "fresh mkdtemp per case",
+        "productionServices": "none"
+      },
+      "priorState": {
+        "generation": "A",
+        "root": "fresh unless case explicitly retained",
+        "unacknowledgedWork": "preserve; no clearing"
+      },
+      "generationContract": "Select complete immutable owner profile; capture owner/profile/generation/source/schema digests before first effect. Started/claimed/recovery/retry/Eval keeps captured generation; new work may select B only after atomic publish. Same physical root may not be opened under a conflicting author or incompatible state policy. Compatible new operation may select B without changing originalA holder; exact retainedhistory compatibility required, no latest substitution. Missing fields fail; no literal/ENV fallback.",
+      "id": "QC-ADMISSION-REASON-LIMITS-FORMAT",
+      "questionId": "CMP-SOURCE-ADMISSION-REASON-LIMITS",
+      "boundary": "FileObservabilityAdmissionStore #reason via genuine malformed-contract ingress",
+      "input": {
+        "reasons": [
+          "short schema failure",
+          "schema failure containing >256 units",
+          "control escapes/lone surrogate and astral data"
+        ],
+        "A": {
+          "threshold": 256,
+          "prefix": 180
+        },
+        "B": {
+          "threshold": 128,
+          "prefix": 56
+        }
+      },
+      "oracle": [
+        "Actual admitted/quarantined state reasons obey selected bounds, unchanged full original hash suffix; exact full serialized state <=selected maximumBytes; A/B materially different long failure clipping; no private method/mock formatter"
+      ],
+      "supersedesCase": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+        "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+        "id": "QC-ADMISSION-REASON-LIMITS-FORMAT"
+      },
+      "lifecycle": {
+        "status": "active-superseding-proposed-not-run",
+        "originalRequirementsPreserved": true,
+        "historicalOriginalCase": {
+          "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+          "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+          "id": "QC-ADMISSION-REASON-LIMITS-FORMAT"
+        }
+      }
+    },
+    {
+      "stage": "C0-proposed-definition",
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "invocation": {
+        "executable": "node",
+        "argv": [
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+          "--case",
+          "QC-ADMISSION-REASON-LIMITS-HISTORY",
+          "--profiles",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+          "--stand",
+          "APPROVED_IMPLEMENTATION_COMMIT",
+          "--case-contracts",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+        ],
+        "availability": "Exact proposed harness contract; file is deliberately not implemented before approval. Current-reader-controls.mjs is separately runnable now."
+      },
+      "requirements": [
+        "F-BIND",
+        "F-RECOVERY",
+        "F-EVAL"
+      ],
+      "environment": {
+        "ambientConfig": "forbidden",
+        "disposableRoot": "fresh mkdtemp per case",
+        "productionServices": "none"
+      },
+      "priorState": {
+        "fixture": "admission-quarantine-bound-target-state.json and admission-overflow-bound-target-state.json",
+        "generation": "originalA",
+        "publish": "completeB, capturedreferenceunchanged"
+      },
+      "generationContract": "Select complete immutable owner profile; capture owner/profile/generation/source/schema digests before first effect. Started/claimed/recovery/retry/Eval keeps captured generation; new work may select B only after atomic publish. Same physical root may not be opened under a conflicting author or incompatible state policy. Compatible new operation may select B without changing originalA holder; exact retainedhistory compatibility required, no latest substitution. Missing fields fail; no literal/ENV fallback.",
+      "id": "QC-ADMISSION-REASON-LIMITS-HISTORY",
+      "questionId": "CMP-SOURCE-ADMISSION-REASON-LIMITS",
+      "boundary": "admission replay/recovery/Eval",
+      "input": {
+        "retirementContract": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/retirement-binding-contract.json",
+          "sha256": "d75046e7e3a78501033c28a60fa2f18d1b7afaa9b49728440291c0943d776ac4"
+        },
+        "exactHistoryStates": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-method-fixtures.json",
+          "sha256": "d672235916533b74c9dbcc4733b2c3b630196d3036ce51ed5bc94b0ef053ab59"
+        },
+        "A": {
+          "threshold": 256,
+          "prefix": 180
+        },
+        "B": {
+          "threshold": 128,
+          "prefix": 56
+        }
+      },
+      "oracle": [
+        "Read history under original capturedA policy; no silent reformat/redigest or clearing underB; new B root usesB; compatibility check for existing root explicitly required"
+      ],
+      "supersedesCase": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+        "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+        "id": "QC-ADMISSION-REASON-LIMITS-HISTORY"
+      },
+      "lifecycle": {
+        "status": "active-superseding-proposed-not-run",
+        "originalRequirementsPreserved": true,
+        "historicalOriginalCase": {
+          "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+          "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+          "id": "QC-ADMISSION-REASON-LIMITS-HISTORY"
+        }
+      }
+    },
+    {
+      "stage": "C0-proposed-definition",
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "invocation": {
+        "executable": "node",
+        "argv": [
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+          "--case",
+          "QC-ADMISSION-METADATA-RESERVE-VAL",
+          "--profiles",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+          "--stand",
+          "APPROVED_IMPLEMENTATION_COMMIT",
+          "--case-contracts",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+        ],
+        "availability": "Exact proposed harness contract; file is deliberately not implemented before approval. Current-reader-controls.mjs is separately runnable now."
+      },
+      "requirements": [
+        "F-VAL"
+      ],
+      "environment": {
+        "ambientConfig": "forbidden",
+        "disposableRoot": "fresh mkdtemp per case",
+        "productionServices": "none"
+      },
+      "priorState": {
+        "generation": "A",
+        "root": "fresh unless case explicitly retained",
+        "unacknowledgedWork": "preserve; no clearing"
+      },
+      "generationContract": "Select complete immutable owner profile; capture owner/profile/generation/source/schema digests before first effect. Started/claimed/recovery/retry/Eval keeps captured generation; new work may select B only after atomic publish. Same physical root may not be opened under a conflicting author or incompatible state policy. Compatible new operation may select B without changing originalA holder; exact retainedhistory compatibility required, no latest substitution. Missing fields fail; no literal/ENV fallback.",
+      "id": "QC-ADMISSION-METADATA-RESERVE-VAL",
+      "questionId": "CMP-SOURCE-ADMISSION-METADATA-RESERVE",
+      "boundary": "same owning admission strict schema/serialized-domain validator",
+      "input": {
+        "completeBoundaryProfiles": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/reserve-boundary-fixtures.json",
+          "sha256": "e1fb9bd749780fe2cd7bdf12e409bab8c12a9bdfcac50b9171b5c90d35682288"
+        }
+      },
+      "oracle": [
+        "CompleteA/B admitted; below computedfloor and inconsistent headroom reject; reason relation participates; no constructor-only operational proof",
+        "Fullcandidateheader bytes counted againstunchangedwholecap; reserve includesfixedcanonicalfloor; original1024fails worstcase, unsupportedheader rejectsbeforeeffect; no currenthistoryshrink"
+      ],
+      "supersedesCase": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+        "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+        "id": "QC-ADMISSION-METADATA-RESERVE-VAL"
+      },
+      "lifecycle": {
+        "status": "active-superseding-proposed-not-run",
+        "originalRequirementsPreserved": true,
+        "historicalOriginalCase": {
+          "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+          "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+          "id": "QC-ADMISSION-METADATA-RESERVE-VAL"
+        }
+      }
+    },
+    {
+      "stage": "C0-proposed-definition",
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "invocation": {
+        "executable": "node",
+        "argv": [
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+          "--case",
+          "QC-ADMISSION-METADATA-RESERVE-OVERFLOW",
+          "--profiles",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+          "--stand",
+          "APPROVED_IMPLEMENTATION_COMMIT",
+          "--case-contracts",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+        ],
+        "availability": "Exact proposed harness contract; file is deliberately not implemented before approval. Current-reader-controls.mjs is separately runnable now."
+      },
+      "requirements": [
+        "F-VAL",
+        "F-BIND",
+        "F-EFFECT"
+      ],
+      "environment": {
+        "ambientConfig": "forbidden",
+        "disposableRoot": "fresh mkdtemp per case",
+        "productionServices": "none"
+      },
+      "priorState": {
+        "generation": "A",
+        "root": "fresh unless case explicitly retained",
+        "unacknowledgedWork": "preserve; no clearing"
+      },
+      "generationContract": "Select complete immutable owner profile; capture owner/profile/generation/source/schema digests before first effect. Started/claimed/recovery/retry/Eval keeps captured generation; new work may select B only after atomic publish. Same physical root may not be opened under a conflicting author or incompatible state policy. Compatible new operation may select B without changing originalA holder; exact retainedhistory compatibility required, no latest substitution. Missing fields fail; no literal/ENV fallback.",
+      "id": "QC-ADMISSION-METADATA-RESERVE-OVERFLOW",
+      "questionId": "CMP-SOURCE-ADMISSION-METADATA-RESERVE",
+      "boundary": "actual admission decoder->quarantine->recordOverflow->canonicalJson->durable write",
+      "input": {
+        "prior": "seed valid at most maximumBytes-reserve state with all256ASCII identity parts; one new valid attributed malformed ingress; reason worstescapes and count nearMAX_SAFE",
+        "A": 8192,
+        "B": 16384,
+        "inlineBinding": "serialization-envelope-contract.json strictheader; extra/unbounded/newversion rejects"
+      },
+      "oracle": [
+        "Each target profile retains correct one-new-overflow item/reason/hash and exactbytes<=max; difference in usable normal-state boundary observed; overflow countMAX_SAFE rejects without writing; no state deletion",
+        "Fullcandidateheader bytes counted againstunchangedwholecap; reserve includesfixedcanonicalfloor; original1024fails worstcase, unsupportedheader rejectsbeforeeffect; no currenthistoryshrink"
+      ],
+      "supersedesCase": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+        "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+        "id": "QC-ADMISSION-METADATA-RESERVE-OVERFLOW"
+      },
+      "lifecycle": {
+        "status": "active-superseding-proposed-not-run",
+        "originalRequirementsPreserved": true,
+        "historicalOriginalCase": {
+          "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+          "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+          "id": "QC-ADMISSION-METADATA-RESERVE-OVERFLOW"
+        }
+      }
+    },
+    {
+      "stage": "C0-proposed-definition",
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "invocation": {
+        "executable": "node",
+        "argv": [
+          "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/future-question-harness.mjs",
+          "--case",
+          "QC-ADMISSION-METADATA-RESERVE-ALL-WRITES",
+          "--profiles",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+          "--stand",
+          "APPROVED_IMPLEMENTATION_COMMIT",
+          "--case-contracts",
+          "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/case-input-contracts.json"
+        ],
+        "availability": "Exact proposed harness contract; file is deliberately not implemented before approval. Current-reader-controls.mjs is separately runnable now."
+      },
+      "requirements": [
+        "F-VAL",
+        "F-BIND",
+        "F-EFFECT",
+        "F-RECOVERY",
+        "F-EVAL"
+      ],
+      "environment": {
+        "ambientConfig": "forbidden",
+        "disposableRoot": "fresh mkdtemp per case",
+        "productionServices": "none"
+      },
+      "priorState": {
+        "concreteBoundaries": {
+          "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/boundary-owner-reference-specimens.json",
+          "sha256": "099c1c68e44a0931d854a4c4fd2e574450b1c63f5a8ebc310c0541f1488f5dfc",
+          "sizeBytes": 120620
+        },
+        "exactSnapshots": "Each method prior/candidate in superseding admission-method-fixtures.json; same original selection through setup/baseline/operation/recovery, separate fresh negativeoriginal policy"
+      },
+      "generationContract": "Select complete immutable owner profile; capture owner/profile/generation/source/schema digests before first effect. Started/claimed/recovery/retry/Eval keeps captured generation; new work may select B only after atomic publish. Same physical root may not be opened under a conflicting author or incompatible state policy. Compatible new operation may select B without changing originalA holder; exact retainedhistory compatibility required, no latest substitution. Missing fields fail; no literal/ENV fallback.",
+      "id": "QC-ADMISSION-METADATA-RESERVE-ALL-WRITES",
+      "questionId": "CMP-SOURCE-ADMISSION-METADATA-RESERVE",
+      "boundary": "FileObservabilityAdmissionStore normaladmit/duplicate/quarantine/gap/retirement/replay writes",
+      "input": {
+        "methods": {
+          "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/admission-method-fixtures.json",
+          "sha256": "888185a65f1baf15d99106d61d6ad5562874cb58c72c3bf1315a187d87a9f698",
+          "sizeBytes": 151244
+        },
+        "retirement": {
+          "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/retirement-method-fixtures.json",
+          "sha256": "eb15e1c3c0b0cdaac0b74e88a5e2c3d66af8184d752ec53a46b9ffa3f6921036"
+        }
+      },
+      "oracle": [
+        "No write bypasses selected headroom/wholecap; oversized historical snapshot fail-closed retained unchanged; pending originalA survivesB; retirement may release only verified closed references",
+        "Fullcandidateheader bytes counted againstunchangedwholecap; reserve includesfixedcanonicalfloor; original1024fails worstcase, unsupportedheader rejectsbeforeeffect; no currenthistoryshrink"
+      ],
+      "supersedesCase": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+        "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+        "id": "QC-ADMISSION-METADATA-RESERVE-ALL-WRITES"
+      },
+      "lifecycle": {
+        "status": "active-superseding-proposed-not-run",
+        "originalRequirementsPreserved": true,
+        "historicalOriginalCase": {
+          "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+          "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+          "id": "QC-ADMISSION-METADATA-RESERVE-ALL-WRITES"
+        }
+      },
+      "materialSupersession": {
+        "findings": [
+          "ICQ-R06-01",
+          "ICQ-R06-02"
+        ],
+        "originalCaseInput": {
+          "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/question-case-specs.json",
+          "sha256": "6a780cc922481322fe671cc9511a0fefbf403f167ed3b6b40444ab08053ec409",
+          "sizeBytes": 79926
+        },
+        "requirementsPreserved": true
+      }
+    },
+    {
+      "stage": "C0-proposed-definition",
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "invocation": {
+        "executable": "node",
+        "argv": [
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+          "--case",
+          "QC-OUTBOX-UNBOUNDED-READ-FOUR-METHODS",
+          "--profiles",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+          "--stand",
+          "APPROVED_IMPLEMENTATION_COMMIT",
+          "--case-contracts",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+        ],
+        "availability": "Exact proposed harness contract; file is deliberately not implemented before approval. Current-reader-controls.mjs is separately runnable now."
+      },
+      "requirements": [
+        "F-VAL",
+        "F-EFFECT"
+      ],
+      "environment": {
+        "ambientConfig": "forbidden",
+        "disposableRoot": "fresh mkdtemp per case",
+        "productionServices": "none"
+      },
+      "priorState": {
+        "exactPositive": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-pending-state.json",
+          "sha256": "4bcbc555fec72bec1dd15f963ba8da00d08642e14c37072ddb879fa4f635ee79"
+        },
+        "independentNegative": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-oversized-2049.bytes",
+          "sha256": "4b7787594928d92fd11386a9210a7322cd2d1d30bddcabb4611274f547272101"
+        }
+      },
+      "generationContract": "Select complete immutable owner profile; capture owner/profile/generation/source/schema digests before first effect. Started/claimed/recovery/retry/Eval keeps captured generation; new work may select B only after atomic publish. Same physical root may not be opened under a conflicting author or incompatible state policy. Compatible new operation may select B without changing originalA holder; exact retainedhistory compatibility required, no latest substitution. Missing fields fail; no literal/ENV fallback.",
+      "id": "QC-OUTBOX-UNBOUNDED-READ-FOUR-METHODS",
+      "questionId": "CMP-SOURCE-OUTBOX-UNBOUNDED-READ",
+      "boundary": "FileProducerOutbox append/pending/acknowledge/compact (four independent subcases)",
+      "input": {
+        "fourMethodContracts": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-method-fixtures.json",
+          "sha256": "77cfd0a74b6e737236ce1e5ee260e8ff47dccd17d34c1481e71ac82390bfef22"
+        },
+        "selectedExistingMaximumBytes": 2048
+      },
+      "oracle": [
+        "Allfour target boundedreaders reject independentlycopied2049bytes againstselected2048 beforeparse/write, hashunchanged; exact1223byte recordstate append/pending/ack/compact positives. Current positives executed only."
+      ],
+      "supersedesCase": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+        "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+        "id": "QC-OUTBOX-UNBOUNDED-READ-FOUR-METHODS"
+      },
+      "lifecycle": {
+        "status": "active-superseding-proposed-not-run",
+        "originalRequirementsPreserved": true,
+        "historicalOriginalCase": {
+          "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+          "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+          "id": "QC-OUTBOX-UNBOUNDED-READ-FOUR-METHODS"
+        }
+      }
+    },
+    {
+      "stage": "C0-proposed-definition",
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "invocation": {
+        "executable": "node",
+        "argv": [
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+          "--case",
+          "QC-OUTBOX-UNBOUNDED-READ-REPLAY",
+          "--profiles",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+          "--stand",
+          "APPROVED_IMPLEMENTATION_COMMIT",
+          "--case-contracts",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+        ],
+        "availability": "Exact proposed harness contract; file is deliberately not implemented before approval. Current-reader-controls.mjs is separately runnable now."
+      },
+      "requirements": [
+        "F-BIND",
+        "F-RECOVERY",
+        "F-EVAL"
+      ],
+      "environment": {
+        "ambientConfig": "forbidden",
+        "disposableRoot": "fresh mkdtemp per case",
+        "productionServices": "none"
+      },
+      "priorState": {
+        "generation": "A",
+        "root": "fresh unless case explicitly retained",
+        "unacknowledgedWork": "preserve; no clearing"
+      },
+      "generationContract": "Select complete immutable owner profile; capture owner/profile/generation/source/schema digests before first effect. Started/claimed/recovery/retry/Eval keeps captured generation; new work may select B only after atomic publish. Same physical root may not be opened under a conflicting author or incompatible state policy. Compatible new operation may select B without changing originalA holder; exact retainedhistory compatibility required, no latest substitution. Missing fields fail; no literal/ENV fallback.",
+      "id": "QC-OUTBOX-UNBOUNDED-READ-REPLAY",
+      "questionId": "CMP-SOURCE-OUTBOX-UNBOUNDED-READ",
+      "boundary": "deliverPending(outbox,admission)+retained state restart",
+      "input": {
+        "originalExistingMaximumBytes": 2048,
+        "newIndependentB": 4096,
+        "pendingFixture": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-pending-state.json",
+          "sha256": "4bcbc555fec72bec1dd15f963ba8da00d08642e14c37072ddb879fa4f635ee79"
+        },
+        "oversizedOriginal": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-oversized-2049.bytes",
+          "sha256": "4b7787594928d92fd11386a9210a7322cd2d1d30bddcabb4611274f547272101"
+        },
+        "ackFixture": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-method-fixtures.json",
+          "sha256": "77cfd0a74b6e737236ce1e5ee260e8ff47dccd17d34c1481e71ac82390bfef22"
+        }
+      },
+      "oracle": [
+        "OriginalA2049bytehistory rejects unchanged even currentB4096 permits; exactA1223byte record repeateddeliver/ack/compact preserves originalidentities/cursor; no latestB fallback."
+      ],
+      "supersedesCase": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+        "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+        "id": "QC-OUTBOX-UNBOUNDED-READ-REPLAY"
+      },
+      "lifecycle": {
+        "status": "active-superseding-proposed-not-run",
+        "originalRequirementsPreserved": true,
+        "historicalOriginalCase": {
+          "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+          "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+          "id": "QC-OUTBOX-UNBOUNDED-READ-REPLAY"
+        }
+      }
+    },
+    {
+      "stage": "C0-proposed-definition",
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "invocation": {
+        "executable": "node",
+        "argv": [
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+          "--case",
+          "QC-LATENT-UNBOUNDED-BLOB-API-API-AND-SEVEN",
+          "--profiles",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+          "--stand",
+          "APPROVED_IMPLEMENTATION_COMMIT",
+          "--case-contracts",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+        ],
+        "availability": "Exact proposed harness contract; file is deliberately not implemented before approval. Current-reader-controls.mjs is separately runnable now."
+      },
+      "requirements": [
+        "F-VAL",
+        "F-BIND",
+        "F-EFFECT",
+        "F-RECOVERY",
+        "F-EVAL"
+      ],
+      "environment": {
+        "ambientConfig": "forbidden",
+        "disposableRoot": "fresh mkdtemp per case",
+        "productionServices": "none"
+      },
+      "priorState": {
+        "generation": "A",
+        "root": "fresh unless case explicitly retained",
+        "unacknowledgedWork": "preserve; no clearing"
+      },
+      "generationContract": "Select complete immutable owner profile; capture owner/profile/generation/source/schema digests before first effect. Started/claimed/recovery/retry/Eval keeps captured generation; new work may select B only after atomic publish. Same physical root may not be opened under a conflicting author or incompatible state policy. Compatible new operation may select B without changing originalA holder; exact retainedhistory compatibility required, no latest substitution. Missing fields fail; no literal/ENV fallback.",
+      "id": "QC-LATENT-UNBOUNDED-BLOB-API-API-AND-SEVEN",
+      "questionId": "CMP-SOURCE-LATENT-UNBOUNDED-BLOB-API",
+      "boundary": "FileDurableBlobStore constructor/put/get + seven exact constructor projections",
+      "input": {
+        "apiProfiles": {
+          "A": {
+            "maximumBytes": 8,
+            "maximumTotalBytes": 16
+          },
+          "B": {
+            "maximumBytes": 8,
+            "maximumTotalBytes": 8
+          }
+        },
+        "invalid": "omitTotal/zero/fraction/unsafe/moreperBlobThanTotal",
+        "callers": "blob-owner-map.json ALL7"
+      },
+      "oracle": [
+        "Omission/invalid rejectsbeforeIO; real first8byte blob succeeds both; second distinct8byte Aadmits Brejects; duplicate both succeeds; each7 caller still passes ORIGINALown total; no duplicate setting author"
+      ],
+      "supersedesCase": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+        "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+        "id": "QC-LATENT-UNBOUNDED-BLOB-API-API-AND-SEVEN"
+      },
+      "lifecycle": {
+        "status": "active-superseding-proposed-not-run",
+        "originalRequirementsPreserved": true,
+        "historicalOriginalCase": {
+          "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+          "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+          "id": "QC-LATENT-UNBOUNDED-BLOB-API-API-AND-SEVEN"
+        }
+      }
+    },
+    {
+      "stage": "C0-proposed-definition",
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "invocation": {
+        "executable": "node",
+        "argv": [
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+          "--case",
+          "QC-LATENT-UNBOUNDED-BLOB-API-HISTORY",
+          "--profiles",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+          "--stand",
+          "APPROVED_IMPLEMENTATION_COMMIT",
+          "--case-contracts",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+        ],
+        "availability": "Exact proposed harness contract; file is deliberately not implemented before approval. Current-reader-controls.mjs is separately runnable now."
+      },
+      "requirements": [
+        "F-BIND",
+        "F-RECOVERY",
+        "F-EVAL"
+      ],
+      "environment": {
+        "ambientConfig": "forbidden",
+        "disposableRoot": "fresh mkdtemp per case",
+        "productionServices": "none"
+      },
+      "priorState": {
+        "generation": "A",
+        "root": "fresh unless case explicitly retained",
+        "unacknowledgedWork": "preserve; no clearing"
+      },
+      "generationContract": "Select complete immutable owner profile; capture owner/profile/generation/source/schema digests before first effect. Started/claimed/recovery/retry/Eval keeps captured generation; new work may select B only after atomic publish. Same physical root may not be opened under a conflicting author or incompatible state policy. Compatible new operation may select B without changing originalA holder; exact retainedhistory compatibility required, no latest substitution. Missing fields fail; no literal/ENV fallback.",
+      "id": "QC-LATENT-UNBOUNDED-BLOB-API-HISTORY",
+      "questionId": "CMP-SOURCE-LATENT-UNBOUNDED-BLOB-API",
+      "boundary": "blob-budget lock cumulative scan/restart",
+      "input": {
+        "prior": "two distinct8byte blobs originalA total16; publishB total8",
+        "new": "new B root one8byte blob",
+        "Eval": "fixedA"
+      },
+      "oracle": [
+        "OriginalA recovery reads retained16bytes without adoptingB; incompatible openunderB rejects untouched; rootowner generation/eval persists; no deletion/quotareset"
+      ],
+      "supersedesCase": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+        "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+        "id": "QC-LATENT-UNBOUNDED-BLOB-API-HISTORY"
+      },
+      "lifecycle": {
+        "status": "active-superseding-proposed-not-run",
+        "originalRequirementsPreserved": true,
+        "historicalOriginalCase": {
+          "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+          "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+          "id": "QC-LATENT-UNBOUNDED-BLOB-API-HISTORY"
+        }
+      }
+    },
+    {
+      "stage": "C0-proposed-definition",
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "invocation": {
+        "executable": "node",
+        "argv": [
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+          "--case",
+          "QC-BUSTER-TAR-DIAGNOSTIC-VAL",
+          "--profiles",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+          "--stand",
+          "APPROVED_IMPLEMENTATION_COMMIT",
+          "--case-contracts",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+        ],
+        "availability": "Exact proposed harness contract; file is deliberately not implemented before approval. Current-reader-controls.mjs is separately runnable now."
+      },
+      "requirements": [
+        "F-VAL"
+      ],
+      "environment": {
+        "ambientConfig": "forbidden",
+        "disposableRoot": "fresh mkdtemp per case",
+        "productionServices": "none"
+      },
+      "priorState": {
+        "generation": "A",
+        "root": "fresh unless case explicitly retained",
+        "unacknowledgedWork": "preserve; no clearing"
+      },
+      "generationContract": "Select complete immutable owner profile; capture owner/profile/generation/source/schema digests before first effect. Started/claimed/recovery/retry/Eval keeps captured generation; new work may select B only after atomic publish. Same physical root may not be opened under a conflicting author or incompatible state policy. Compatible new operation may select B without changing originalA holder; exact retainedhistory compatibility required, no latest substitution. Missing fields fail; no literal/ENV fallback.",
+      "id": "QC-BUSTER-TAR-DIAGNOSTIC-VAL",
+      "questionId": "CMP-SOURCE-BUSTER-TAR-DIAGNOSTIC",
+      "boundary": "Buster strictowner schema/preparation loader",
+      "input": {
+        "A": 4096,
+        "B": 2048,
+        "invalid": [
+          0,
+          -1,
+          4097,
+          1.5
+        ],
+        "maximumTarStderrBytes": 16384
+      },
+      "oracle": [
+        "A/B full owner valid; missing/invalid reject before spawn"
+      ],
+      "supersedesCase": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+        "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+        "id": "QC-BUSTER-TAR-DIAGNOSTIC-VAL"
+      },
+      "lifecycle": {
+        "status": "active-superseding-proposed-not-run",
+        "originalRequirementsPreserved": true,
+        "historicalOriginalCase": {
+          "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+          "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+          "id": "QC-BUSTER-TAR-DIAGNOSTIC-VAL"
+        }
+      }
+    },
+    {
+      "stage": "C0-proposed-definition",
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "invocation": {
+        "executable": "node",
+        "argv": [
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+          "--case",
+          "QC-BUSTER-TAR-DIAGNOSTIC-REAL-TAR",
+          "--profiles",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+          "--stand",
+          "APPROVED_IMPLEMENTATION_COMMIT",
+          "--case-contracts",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+        ],
+        "availability": "Exact proposed harness contract; file is deliberately not implemented before approval. Current-reader-controls.mjs is separately runnable now."
+      },
+      "requirements": [
+        "F-VAL",
+        "F-BIND",
+        "F-EFFECT"
+      ],
+      "environment": {
+        "ambientConfig": "forbidden",
+        "disposableRoot": "fresh mkdtemp per case",
+        "productionServices": "none"
+      },
+      "priorState": {
+        "generation": "A",
+        "root": "fresh unless case explicitly retained",
+        "unacknowledgedWork": "preserve; no clearing"
+      },
+      "generationContract": "Select complete immutable owner profile; capture owner/profile/generation/source/schema digests before first effect. Started/claimed/recovery/retry/Eval keeps captured generation; new work may select B only after atomic publish. Same physical root may not be opened under a conflicting author or incompatible state policy. Compatible new operation may select B without changing originalA holder; exact retainedhistory compatibility required, no latest substitution. Missing fields fail; no literal/ENV fallback.",
+      "id": "QC-BUSTER-TAR-DIAGNOSTIC-REAL-TAR",
+      "questionId": "CMP-SOURCE-BUSTER-TAR-DIAGNOSTIC",
+      "boundary": "safeExtract->runTar->genuine /usr/bin/tar",
+      "input": {
+        "archive": "/ plus6000 a characters",
+        "maxStderrBytes": 16384,
+        "A": 4096,
+        "B": 2048
+      },
+      "oracle": [
+        "Actual GNUtar exits nonzero, selected suffix length A4096/B2048; exact prefix/exit/signal preserved; no extraction/write; within selectedrawbytecap"
+      ],
+      "supersedesCase": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+        "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+        "id": "QC-BUSTER-TAR-DIAGNOSTIC-REAL-TAR"
+      },
+      "lifecycle": {
+        "status": "active-superseding-proposed-not-run",
+        "originalRequirementsPreserved": true,
+        "historicalOriginalCase": {
+          "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+          "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+          "id": "QC-BUSTER-TAR-DIAGNOSTIC-REAL-TAR"
+        }
+      }
+    },
+    {
+      "stage": "C0-proposed-definition",
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "invocation": {
+        "executable": "node",
+        "argv": [
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+          "--case",
+          "QC-BUSTER-TAR-DIAGNOSTIC-BIND",
+          "--profiles",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+          "--stand",
+          "APPROVED_IMPLEMENTATION_COMMIT",
+          "--case-contracts",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+        ],
+        "availability": "Exact proposed harness contract; file is deliberately not implemented before approval. Current-reader-controls.mjs is separately runnable now."
+      },
+      "requirements": [
+        "F-BIND",
+        "F-RECOVERY",
+        "F-EVAL"
+      ],
+      "environment": {
+        "ambientConfig": "forbidden",
+        "disposableRoot": "fresh mkdtemp per case",
+        "productionServices": "none"
+      },
+      "priorState": {
+        "generation": "A",
+        "root": "fresh unless case explicitly retained",
+        "unacknowledgedWork": "preserve; no clearing"
+      },
+      "generationContract": "Select complete immutable owner profile; capture owner/profile/generation/source/schema digests before first effect. Started/claimed/recovery/retry/Eval keeps captured generation; new work may select B only after atomic publish. Same physical root may not be opened under a conflicting author or incompatible state policy. Compatible new operation may select B without changing originalA holder; exact retainedhistory compatibility required, no latest substitution. Missing fields fail; no literal/ENV fallback.",
+      "id": "QC-BUSTER-TAR-DIAGNOSTIC-BIND",
+      "questionId": "CMP-SOURCE-BUSTER-TAR-DIAGNOSTIC",
+      "boundary": "preparation command selectedimmutable policy -> host/source/archive",
+      "input": {
+        "prior": "claimedA then publishB",
+        "Eval": "fixedA"
+      },
+      "oracle": [
+        "Started/recoveredA4096 unchanged, newB2048; policy and originalfullenvelope binding preserve actual source cleanup references"
+      ],
+      "supersedesCase": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+        "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+        "id": "QC-BUSTER-TAR-DIAGNOSTIC-BIND"
+      },
+      "lifecycle": {
+        "status": "active-superseding-proposed-not-run",
+        "originalRequirementsPreserved": true,
+        "historicalOriginalCase": {
+          "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+          "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+          "id": "QC-BUSTER-TAR-DIAGNOSTIC-BIND"
+        }
+      }
+    },
+    {
+      "stage": "C0-proposed-definition",
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "invocation": {
+        "executable": "node",
+        "argv": [
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+          "--case",
+          "QC-BUSTER-TAR-LOCATOR-UNUSED-PAIRED-PROVISION",
+          "--profiles",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+          "--stand",
+          "APPROVED_IMPLEMENTATION_COMMIT",
+          "--case-contracts",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+        ],
+        "availability": "Exact proposed harness contract; file is deliberately not implemented before approval. Current-reader-controls.mjs is separately runnable now."
+      },
+      "requirements": [
+        "F-VAL",
+        "F-BIND",
+        "F-EFFECT"
+      ],
+      "environment": {
+        "ambientConfig": "forbidden",
+        "disposableRoot": "fresh mkdtemp per case",
+        "productionServices": "none"
+      },
+      "priorState": {
+        "generation": "A",
+        "root": "fresh unless case explicitly retained",
+        "unacknowledgedWork": "preserve; no clearing"
+      },
+      "generationContract": "Select complete immutable owner profile; capture owner/profile/generation/source/schema digests before first effect. Started/claimed/recovery/retry/Eval keeps captured generation; new work may select B only after atomic publish. Same physical root may not be opened under a conflicting author or incompatible state policy. Compatible new operation may select B without changing originalA holder; exact retainedhistory compatibility required, no latest substitution. Missing fields fail; no literal/ENV fallback.",
+      "id": "QC-BUSTER-TAR-LOCATOR-UNUSED-PAIRED-PROVISION",
+      "questionId": "CMP-SOURCE-BUSTER-TAR-LOCATOR-UNUSED",
+      "boundary": "nativeBusterPreparationConfig->preparation supervisor/command->host/source/archive->GNUtar spawn",
+      "input": {
+        "completeCorrelatedProfiles": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/tar-correlated-profiles.json",
+          "sha256": "8ea2f054ce6604e75b76d78b94ebf655af95724616ed6a790e70d5e21d6d3e49"
+        }
+      },
+      "oracle": [
+        "Currentreadexecute /usr grants cover bothselectedpaths onlyaftergenuinepairedimageidentityvalidation; actualbenignextraction future. Outside/root/symlink/sourceancestornegative no grantswaiver."
+      ],
+      "supersedesCase": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+        "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+        "id": "QC-BUSTER-TAR-LOCATOR-UNUSED-PAIRED-PROVISION"
+      },
+      "lifecycle": {
+        "status": "active-superseding-proposed-not-run",
+        "originalRequirementsPreserved": true,
+        "historicalOriginalCase": {
+          "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+          "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+          "id": "QC-BUSTER-TAR-LOCATOR-UNUSED-PAIRED-PROVISION"
+        }
+      }
+    },
+    {
+      "stage": "C0-proposed-definition",
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "invocation": {
+        "executable": "node",
+        "argv": [
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+          "--case",
+          "QC-BUSTER-TAR-LOCATOR-UNUSED-HISTORY",
+          "--profiles",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+          "--stand",
+          "APPROVED_IMPLEMENTATION_COMMIT",
+          "--case-contracts",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+        ],
+        "availability": "Exact proposed harness contract; file is deliberately not implemented before approval. Current-reader-controls.mjs is separately runnable now."
+      },
+      "requirements": [
+        "F-BIND",
+        "F-RECOVERY",
+        "F-EVAL"
+      ],
+      "environment": {
+        "ambientConfig": "forbidden",
+        "disposableRoot": "fresh mkdtemp per case",
+        "productionServices": "none"
+      },
+      "priorState": {
+        "generation": "A",
+        "root": "fresh unless case explicitly retained",
+        "unacknowledgedWork": "preserve; no clearing"
+      },
+      "generationContract": "Select complete immutable owner profile; capture owner/profile/generation/source/schema digests before first effect. Started/claimed/recovery/retry/Eval keeps captured generation; new work may select B only after atomic publish. Same physical root may not be opened under a conflicting author or incompatible state policy. Compatible new operation may select B without changing originalA holder; exact retainedhistory compatibility required, no latest substitution. Missing fields fail; no literal/ENV fallback.",
+      "id": "QC-BUSTER-TAR-LOCATOR-UNUSED-HISTORY",
+      "questionId": "CMP-SOURCE-BUSTER-TAR-LOCATOR-UNUSED",
+      "boundary": "prepared immutable runtime/source cleanup policy and launcher ownership",
+      "input": {
+        "claimed": "A then publishB",
+        "recovery": "originalA",
+        "Eval": "fixedA"
+      },
+      "oracle": [
+        "OriginalA runtime/executable digest and originaleffect binding retained; Bonlynewclaims; recovery cannot silently take latestpath"
+      ],
+      "supersedesCase": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+        "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+        "id": "QC-BUSTER-TAR-LOCATOR-UNUSED-HISTORY"
+      },
+      "lifecycle": {
+        "status": "active-superseding-proposed-not-run",
+        "originalRequirementsPreserved": true,
+        "historicalOriginalCase": {
+          "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+          "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+          "id": "QC-BUSTER-TAR-LOCATOR-UNUSED-HISTORY"
+        }
+      }
+    },
+    {
+      "stage": "C0-proposed-definition",
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "invocation": {
+        "executable": "node",
+        "argv": [
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+          "--case",
+          "QC-FIXTURE-STORAGE-EXPONENT-REPRESENTATION",
+          "--profiles",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+          "--stand",
+          "APPROVED_IMPLEMENTATION_COMMIT",
+          "--case-contracts",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+        ],
+        "availability": "Exact proposed harness contract; file is deliberately not implemented before approval. Current-reader-controls.mjs is separately runnable now."
+      },
+      "requirements": [
+        "F-VAL",
+        "F-EFFECT"
+      ],
+      "environment": {
+        "ambientConfig": "forbidden",
+        "disposableRoot": "fresh mkdtemp per case",
+        "productionServices": "none"
+      },
+      "priorState": {
+        "generation": "A",
+        "root": "fresh unless case explicitly retained",
+        "unacknowledgedWork": "preserve; no clearing"
+      },
+      "generationContract": "Select complete immutable owner profile; capture owner/profile/generation/source/schema digests before first effect. Started/claimed/recovery/retry/Eval keeps captured generation; new work may select B only after atomic publish. Same physical root may not be opened under a conflicting author or incompatible state policy. Compatible new operation may select B without changing originalA holder; exact retainedhistory compatibility required, no latest substitution. Missing fields fail; no literal/ENV fallback.",
+      "id": "QC-FIXTURE-STORAGE-EXPONENT-REPRESENTATION",
+      "questionId": "CMP-SOURCE-FIXTURE-STORAGE-EXPONENT",
+      "boundary": "validatePersistentVolumeClaim->storageBytes->existing maximumClaimBytes; persistentVolumeClaims copies + total aggregation",
+      "input": {
+        "policy": {
+          "maximumClaimBytes": "1073741824",
+          "maximumTotalBytes": "2147483648",
+          "allowedStorageClasses": [
+            "test"
+          ],
+          "allowDefaultStorageClass": false
+        },
+        "quantities": [
+          "100000000",
+          ".00000000000000000000000000000000000000000000000000000001e64",
+          "1Gi",
+          "1e63",
+          "1e999999999999999999999",
+          "0.1",
+          "0",
+          "-1"
+        ]
+      },
+      "oracle": [
+        "Equivalent100000000 andfractione64 both exact100000000 admitted;1Giadmitted; beyondquota/hugelexexp rejected withoutlargepower; fraction/zero/negative rejected; replicas3*1Gi denies total; no parser toggle"
+      ],
+      "supersedesCase": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+        "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+        "id": "QC-FIXTURE-STORAGE-EXPONENT-REPRESENTATION"
+      },
+      "lifecycle": {
+        "status": "active-superseding-proposed-not-run",
+        "originalRequirementsPreserved": true,
+        "historicalOriginalCase": {
+          "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+          "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+          "id": "QC-FIXTURE-STORAGE-EXPONENT-REPRESENTATION"
+        }
+      }
+    },
+    {
+      "stage": "C0-proposed-definition",
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "invocation": {
+        "executable": "node",
+        "argv": [
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+          "--case",
+          "QC-FIXTURE-STORAGE-EXPONENT-POLICY-BIND",
+          "--profiles",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+          "--stand",
+          "APPROVED_IMPLEMENTATION_COMMIT",
+          "--case-contracts",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+        ],
+        "availability": "Exact proposed harness contract; file is deliberately not implemented before approval. Current-reader-controls.mjs is separately runnable now."
+      },
+      "requirements": [
+        "F-BIND",
+        "F-RECOVERY",
+        "F-EVAL"
+      ],
+      "environment": {
+        "ambientConfig": "forbidden",
+        "disposableRoot": "fresh mkdtemp per case",
+        "productionServices": "none"
+      },
+      "priorState": {
+        "generation": "A",
+        "root": "fresh unless case explicitly retained",
+        "unacknowledgedWork": "preserve; no clearing"
+      },
+      "generationContract": "Select complete immutable owner profile; capture owner/profile/generation/source/schema digests before first effect. Started/claimed/recovery/retry/Eval keeps captured generation; new work may select B only after atomic publish. Same physical root may not be opened under a conflicting author or incompatible state policy. Compatible new operation may select B without changing originalA holder; exact retainedhistory compatibility required, no latest substitution. Missing fields fail; no literal/ENV fallback.",
+      "id": "QC-FIXTURE-STORAGE-EXPONENT-POLICY-BIND",
+      "questionId": "CMP-SOURCE-FIXTURE-STORAGE-EXPONENT",
+      "boundary": "selected Kubernetes fixture policy + request spec original/recovery/Eval",
+      "input": {
+        "AmaximumClaimBytes": "1073741824",
+        "BmaximumClaimBytes": "67108864",
+        "sameQuantity": "100000000",
+        "claimed": "A then publishB",
+        "Eval": "A"
+      },
+      "oracle": [
+        "Existing quota Aadmits Bdenies; originalcapturedA retry unchanged; representation change not hidden policyedit; target preserves exact manifests/sourceidentity"
+      ],
+      "supersedesCase": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+        "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+        "id": "QC-FIXTURE-STORAGE-EXPONENT-POLICY-BIND"
+      },
+      "lifecycle": {
+        "status": "active-superseding-proposed-not-run",
+        "originalRequirementsPreserved": true,
+        "historicalOriginalCase": {
+          "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+          "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+          "id": "QC-FIXTURE-STORAGE-EXPONENT-POLICY-BIND"
+        }
+      }
+    },
+    {
+      "stage": "C0-proposed-definition",
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "invocation": {
+        "executable": "node",
+        "argv": [
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+          "--case",
+          "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-REAL-PROVENANCE",
+          "--profiles",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+          "--stand",
+          "APPROVED_IMPLEMENTATION_COMMIT",
+          "--case-contracts",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+        ],
+        "availability": "Exact proposed harness contract; file is deliberately not implemented before approval. Current-reader-controls.mjs is separately runnable now."
+      },
+      "requirements": [
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "environment": {
+        "ambientConfig": "forbidden",
+        "disposableRoot": "fresh mkdtemp per case",
+        "productionServices": "none"
+      },
+      "priorState": {
+        "schema": "provider-provenance.schema.json",
+        "caseMatrix": "provider-provenance-contract.json#/cases",
+        "originalA": "complete-profiles.json BusterA, all original quotas preserved; physical PID measurements are required futureobservations"
+      },
+      "generationContract": "Select complete immutable owner profile; capture owner/profile/generation/source/schema digests before first effect. Started/claimed/recovery/retry/Eval keeps captured generation; new work may select B only after atomic publish. Same physical root may not be opened under a conflicting author or incompatible state policy. Compatible new operation may select B without changing originalA holder; exact retainedhistory compatibility required, no latest substitution. Missing fields fail; no literal/ENV fallback.",
+      "id": "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-REAL-PROVENANCE",
+      "questionId": "CMP-SOURCE-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS",
+      "boundary": "RegisteredTestProviderLoader->ProviderProcessSession actualsandbox/providerchild->runner.measure->worker budget result",
+      "input": {
+        "exactTypedContract": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/provider-provenance-contract.json",
+          "sha256": "43b34f676dacb4534381a20fefb02b3773c8649c72629860f3c2e6f8d47c621d"
+        },
+        "specimens": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/provider-provenance-specimens.json",
+          "sha256": "69fec151a304efabdcc90e601933d3d3f906355e73f42c1cf1c575d81787b78e"
+        }
+      },
+      "oracle": [
+        "Everycase exact receipt/snapshotstates/inputs and source provenance per typedcontract; source-real successfulpositive notsynthetic numbers; strictunavailableV1 rejection; whole encodedoriginalmetadatacap charged preeffect; no new toggle/quota."
+      ],
+      "supersedesCase": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+        "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+        "id": "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-REAL-PROVENANCE"
+      },
+      "lifecycle": {
+        "status": "active-superseding-proposed-not-run",
+        "originalRequirementsPreserved": true,
+        "historicalOriginalCase": {
+          "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+          "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+          "id": "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-REAL-PROVENANCE"
+        }
+      }
+    },
+    {
+      "stage": "C0-proposed-definition",
+      "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+      "invocation": {
+        "executable": "node",
+        "argv": [
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+          "--case",
+          "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-RECOVERY-EVAL",
+          "--profiles",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+          "--stand",
+          "APPROVED_IMPLEMENTATION_COMMIT",
+          "--case-contracts",
+          "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+        ],
+        "availability": "Exact proposed harness contract; file is deliberately not implemented before approval. Current-reader-controls.mjs is separately runnable now."
+      },
+      "requirements": [
+        "F-BIND",
+        "F-RECOVERY",
+        "F-EVAL"
+      ],
+      "environment": {
+        "ambientConfig": "forbidden",
+        "disposableRoot": "fresh mkdtemp per case",
+        "productionServices": "none"
+      },
+      "priorState": {
+        "schema": "provider-provenance.schema.json",
+        "caseMatrix": "provider-provenance-contract.json#/cases",
+        "originalA": "complete-profiles.json BusterA, all original quotas preserved; physical PID measurements are required futureobservations"
+      },
+      "generationContract": "Select complete immutable owner profile; capture owner/profile/generation/source/schema digests before first effect. Started/claimed/recovery/retry/Eval keeps captured generation; new work may select B only after atomic publish. Same physical root may not be opened under a conflicting author or incompatible state policy. Compatible new operation may select B without changing originalA holder; exact retainedhistory compatibility required, no latest substitution. Missing fields fail; no literal/ENV fallback.",
+      "id": "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-RECOVERY-EVAL",
+      "questionId": "CMP-SOURCE-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS",
+      "boundary": "owned launchmeasurement journal and result/claimbinding",
+      "input": {
+        "exactTypedContract": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/provider-provenance-contract.json",
+          "sha256": "43b34f676dacb4534381a20fefb02b3773c8649c72629860f3c2e6f8d47c621d"
+        },
+        "specimens": {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/provider-provenance-specimens.json",
+          "sha256": "69fec151a304efabdcc90e601933d3d3f906355e73f42c1cf1c575d81787b78e"
+        }
+      },
+      "oracle": [
+        "Everycase exact receipt/snapshotstates/inputs and source provenance per typedcontract; source-real successfulpositive notsynthetic numbers; strictunavailableV1 rejection; whole encodedoriginalmetadatacap charged preeffect; no new toggle/quota."
+      ],
+      "supersedesCase": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+        "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+        "id": "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-RECOVERY-EVAL"
+      },
+      "lifecycle": {
+        "status": "active-superseding-proposed-not-run",
+        "originalRequirementsPreserved": true,
+        "historicalOriginalCase": {
+          "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+          "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+          "id": "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-RECOVERY-EVAL"
+        }
+      }
+    }
+  ],
+  "scope": "proposed exact approved-stand harness commands; not future PASS. Existing current-reader-controls command is runnable now. Full case runner implementation is in approval package, not authored tests.",
+  "historicalCasesUnchanged": true,
+  "activeCasesLifecycle": "All22 original requirements retained bycaseID, new immutablecase-input projections supersede original placeholders; independentrecheckrequired"
+}

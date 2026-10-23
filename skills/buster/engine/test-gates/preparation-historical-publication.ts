@@ -78,7 +78,8 @@ async function candidatePath(source: string, target: string, intentFile: string,
 
 export function historicalResultReceipt(result: WorkerAttemptResultV3): HistoricalImportReceipt {
   if (result.state !== 'completed' || result.cleanup.state !== 'completed'
-    || result.specialistResult?.schemaId !== 'buster-historical-import-result.v1') {
+    || result.specialistResult?.schemaId !== 'buster-historical-import-result.v1'
+    || result.specialistResult.schemaDigest !== preparationDigest({ schemaVersion: 'buster-historical-import-result.v1' })) {
     throw new Error('BUSTER_HISTORICAL_RESULT_INVALID');
   }
   const receipt = { ...result.specialistResult.values, schemaVersion: 'buster-historical-import-receipt.v1',
@@ -128,10 +129,18 @@ export async function publishHistoricalImport(options: PreparationExecutionOptio
   const receipt = historicalResultReceipt(result);
   const reservations = await options.ledger.reservations();
   const reservation = reservations.find(item => item.admissionId === receipt.importId);
-  if (!reservation || reservation.attemptSpecDigest !== receipt.attemptSpecDigest
+  if (!reservation || !['historical-reserved', 'retained-historical'].includes(reservation.phase)
+    || reservation.attemptSpecDigest !== receipt.attemptSpecDigest
     || reservation.slot !== receipt.preparationUid || preparationDigest(reservation.historicalDescriptor) !== preparationDigest(receipt.descriptor)
     || preparationDigest(reservation.gate) !== preparationDigest(binding)) throw new Error('BUSTER_HISTORICAL_RESULT_UNBOUND');
   const envelope = reservation.envelope;
+  // The reservation and a caller-supplied result are not the journal's sealed
+  // original. readResult validates the native envelope/result binding before
+  // returning the retained bytes; join that exact result before gate mutation.
+  const original = await options.journal.readResult(envelope);
+  if (!original || preparationDigest(original) !== receipt.nativeResultDigest) {
+    throw new Error('BUSTER_HISTORICAL_JOURNAL_RESULT_REQUIRED');
+  }
   const owner = await options.owner.record({ workerId: envelope.claim.workerId, attemptId: envelope.attemptId,
     claimId: envelope.claim.claimId, generation: envelope.claim.generation, profileDigest: envelope.profile.profileDigest,
     attemptSpecDigest: envelope.attemptSpecDigest });

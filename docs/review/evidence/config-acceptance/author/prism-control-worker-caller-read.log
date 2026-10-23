@@ -1,0 +1,108 @@
+SOURCE skills/prism/server/worker-service.ts sha256:90174f5edf19c85ef1642da95a51aac46854f9a1ce7172d876045a5bac1595e4
+    1 import { type IncomingMessage, type ServerResponse } from "node:http";
+    2 import {
+    3   validateWorkerResourceContractV3,
+    4   type WorkerAttemptEnvelopeV3, type WorkerAttemptResultV3,
+    5 } from "@kubeclaw/pipeline-worker-core-contract";
+    6 import { type WorkerNonceDatabase, WorkerDependencyUnavailable } from "./worker-readiness.ts";
+    7 import { createManagedWorkerServer } from "./worker-lifecycle.ts";
+    8 import { authorizeProxiedSpiffePeer, NativeWorkerAttemptBusy } from "@kubeclaw/worker-core";
+    9 import { workerIngressLimits } from './worker-config.ts';
+   10 
+   11 export type WorkerAuthentication =
+   12   | { mode: "hmac"; secret: string; database: WorkerNonceDatabase }
+   13   | { mode: "spiffe"; trustedControlSpiffeId: string };
+   14 
+   15 export interface NativePrismWorkerExecution {
+   16   ready(): boolean;
+   17   execute(envelope: WorkerAttemptEnvelopeV3, signal: AbortSignal): Promise<WorkerAttemptResultV3>;
+   18 }
+   19 
+   20 export function createWorkerServer(auth: WorkerAuthentication, execution: NativePrismWorkerExecution, limits = workerIngressLimits()) {
+   21   return createManagedWorkerServer(
+   22     (request, response, signal) => handleWorkerRequest(auth, request, response, signal, { maximumInputBytes: limits.maximumInputBytes, native: execution }),
+   23     () => auth.mode === 'hmac' ? auth.database.close() : Promise.resolve(),
+   24     limits,
+   25   );
+   26 }
+   27 
+   28 async function handleWorkerRequest(auth: WorkerAuthentication,
+   29   request: IncomingMessage, response: ServerResponse, signal: AbortSignal,
+   30   { maximumInputBytes, native }: { maximumInputBytes: number; native: NativePrismWorkerExecution }): Promise<WorkerAttemptResultV3 | void> {
+   31   if (serveLocalHealth(request, response, native)) return;
+   32   if (request.url === '/ready') return serveReadiness(auth, response, signal, native);
+   33   if (request.url !== "/v1/attempts" || request.method !== "POST") {
+   34     response.writeHead(404);
+   35     return void response.end();
+   36   }
+   37   try {
+   38     if (
+   39       !(request.headers["content-type"] ?? "")
+   40         .toString()
+   41         .toLowerCase()
+   42         .startsWith("application/json")
+   43     ) {
+   44       response.writeHead(415);
+   45       return void response.end();
+   46     }
+   47     const chunks: Buffer[] = [];
+   48     let size = 0;
+   49     for await (const chunk of request) {
+   50       size += chunk.length;
+   51       if (size > maximumInputBytes)
+   52         throw new Error("Prism attempt request is too large");
+   53       chunks.push(chunk);
+   54     }
+   55     const raw = Buffer.concat(chunks);
+   56     if (auth.mode === "spiffe") authorizeProxiedSpiffePeer(request.headers, request.socket.remoteAddress, new Set([auth.trustedControlSpiffeId]));
+   57     else await auth.database.authenticate(auth.secret, raw, request.headers, signal);
+   58     const result = await dispatchAttempt(JSON.parse(raw.toString('utf8')), signal, native);
+   59     response.writeHead(200, { "content-type": "application/json" });
+   60     response.end(JSON.stringify(result));
+   61     return result;
+   62   } catch (error) {
+   63     response.writeHead(error instanceof WorkerDependencyUnavailable || error instanceof NativeWorkerAttemptBusy ? 503 : 422, { "content-type": "application/json" });
+   64     response.end(
+   65       JSON.stringify({
+   66         error: error instanceof Error ? error.message : "failed",
+   67       }),
+   68     );
+   69   }
+   70 }
+   71 
+   72 async function serveReadiness(auth: WorkerAuthentication, response: ServerResponse, signal: AbortSignal,
+   73   native: NativePrismWorkerExecution): Promise<void> {
+   74   if (!native.ready()) {
+   75     response.writeHead(503, { 'content-type': 'application/json' });
+   76     response.end('{"status":"not-ready","error":"PRISM_NATIVE_RECONCILIATION_REQUIRED"}');
+   77     return;
+   78   }
+   79   try {
+   80     if (auth.mode === 'hmac') await auth.database.check(signal);
+   81     response.writeHead(200, { 'content-type': 'application/json' });
+   82     response.end('{"status":"ready"}');
+   83   } catch {
+   84     response.writeHead(503, { 'content-type': 'application/json' });
+   85     response.end('{"status":"not-ready","error":"PRISM_NONCE_DATABASE_UNAVAILABLE"}');
+   86   }
+   87 }
+   88 
+   89 async function dispatchAttempt(input: unknown, signal: AbortSignal, native: NativePrismWorkerExecution): Promise<WorkerAttemptResultV3> {
+   90   validateWorkerResourceContractV3('workerAttemptEnvelope', input);
+   91   if (!native.ready()) throw new Error('PRISM_NATIVE_RECONCILIATION_REQUIRED');
+   92   return native.execute(input as WorkerAttemptEnvelopeV3, signal);
+   93 }
+   94 
+   95 function serveLocalHealth(request: IncomingMessage, response: ServerResponse, native: NativePrismWorkerExecution): boolean {
+   96   if (request.url === "/health" || request.url === "/bootstrap") {
+   97     if (request.url === '/bootstrap' && !native.ready()) {
+   98       response.writeHead(503, { 'content-type': 'application/json' });
+   99       response.end('{"status":"not-ready","error":"PRISM_NATIVE_RECONCILIATION_REQUIRED"}');
+  100       return true;
+  101     }
+  102     response.writeHead(200, { "content-type": "application/json" });
+  103     response.end(JSON.stringify({ status: request.url === "/health" ? "alive" : "initialized" }));
+  104     return true;
+  105   }
+  106   return false;
+  107 }

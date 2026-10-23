@@ -1,0 +1,89 @@
+{
+  "command": "node docs/review/evidence/config-acceptance/independent-core-source-question-bce3f075-20261013/retirement-scope-reader.mjs",
+  "node": "v24.21.0",
+  "identities": {
+    "scripts/retire-attempt-result.mjs": "c84c13e778070012ca005b272f0bc0875b3a587e8623ddf5aee827f9b90ae61a",
+    "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts": "5e59b793e4682e68a780952b2d15da28f9477611cd5041295517a111e21f6793",
+    "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/independent-core-source-question-bce3f075-20261013/retirement-scope-reader.mjs": "fd50fbe117de850a0ee19f1337c05cdc6546a7c1a77dca11a78cce955b321be6",
+    "package-lock.json": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+  },
+  "inputs": {
+    "A": {
+      "schemaVersion": "attempt-result-retirement-scope.v1",
+      "action": "compact-imported-result",
+      "novaStorageRoot": "/tmp/c0-independent-core-no-created-state",
+      "attemptRoot": "/tmp/c0-independent-core-no-created-state/run/observability/attempts",
+      "inventoryLimits": {
+        "maximumFiles": 100,
+        "maximumSnapshotBytes": 65536,
+        "maximumTotalBytes": 1048576
+      },
+      "attemptLimits": {
+        "maximumClosures": 10,
+        "maximumEvidenceBytes": 65536,
+        "maximumEvidenceObjectBytes": 1024,
+        "maximumEvidenceObjects": 10,
+        "maximumMetadataBytes": 65536,
+        "maximumPendingEvidenceAgeMs": 1000,
+        "maximumResults": 10
+      },
+      "intent": {
+        "pipelineRunId": "run",
+        "attemptId": "attempt",
+        "claimGeneration": 1,
+        "resultDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "recordDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "operationId": "operation",
+        "actor": "operator",
+        "runRoot": "/tmp/c0-independent-core-no-created-state/run",
+        "runJournalHead": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "snapshotDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expectedStoreDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "journalSequence": 1,
+        "journalHash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    },
+    "B": {
+      "schemaVersion": "attempt-result-retirement-scope.v1",
+      "action": "compact-imported-result",
+      "novaStorageRoot": "/tmp/c0-independent-core-no-created-state",
+      "attemptRoot": "/tmp/c0-independent-core-no-created-state/run/observability/attempts",
+      "inventoryLimits": {
+        "maximumFiles": 100,
+        "maximumSnapshotBytes": 65536,
+        "maximumTotalBytes": 1048576
+      },
+      "attemptLimits": {
+        "maximumClosures": 10,
+        "maximumEvidenceBytes": 65536,
+        "maximumEvidenceObjectBytes": 1024,
+        "maximumEvidenceObjects": 10,
+        "maximumMetadataBytes": 131072,
+        "maximumPendingEvidenceAgeMs": 1000,
+        "maximumResults": 10
+      },
+      "intent": {
+        "pipelineRunId": "run",
+        "attemptId": "attempt",
+        "claimGeneration": 1,
+        "resultDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "recordDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "operationId": "operation",
+        "actor": "operator",
+        "runRoot": "/tmp/c0-independent-core-no-created-state/run",
+        "runJournalHead": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "snapshotDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expectedStoreDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "journalSequence": 1,
+        "journalHash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    }
+  },
+  "results": {
+    "bothAccepted": true,
+    "sameRetainedIntent": true,
+    "A": 65536,
+    "B": 131072
+  },
+  "scope": "Actual exported current scope parser only. No files created, no retire operation invoked, no productive mutation/readback/generation acceptance. Source code does not compare command-supplied quota to captured original policy; target needs explicit generation manifest/policy equality before effect."
+}

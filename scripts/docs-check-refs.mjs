@@ -1,10 +1,12 @@
 #!/usr/bin/env node
+import {reviewSnapshotPaths} from './docs-review-snapshots.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const docsRoot = path.join(root, 'docs');
+const snapshots = reviewSnapshotPaths(root);
 
 const repoPathPrefixes = [
   '.github/',
@@ -60,7 +62,12 @@ function walk(dir, predicate = () => true) {
 
 function docsToScan() {
   return walk(docsRoot, (filePath) => filePath.endsWith('.md')).filter((filePath) => {
-    return !rel(filePath).startsWith('docs/archive/');
+    // Nested docs/ inside an evidence source tree are immutable, often partial
+    // source snapshots. Check links TO them, not their historical inner prose.
+    // Standalone review reports/README links are still checked below.
+    const relative = rel(filePath);
+    return !relative.startsWith('docs/archive/')
+      && !snapshots.has(relative);
   });
 }
 

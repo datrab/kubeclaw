@@ -1,0 +1,15 @@
+{
+  "parse-duration-DBWI377R.mjs": {
+    "sourcePath": "docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-role-recipes-01/duration-source/dist/parse-duration-DBWI377R.mjs",
+    "sha256": "1090c987bb219e1cf966eb508856a202c6b7737534186af7b3f6eace6c3709d9"
+  },
+  "string-coerce-CIXf7egm.mjs": {
+    "sourcePath": "docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-role-recipes-01/duration-source/dist/string-coerce-CIXf7egm.mjs",
+    "sha256": "db70aa59f984a63935d147b6ac11b50a90f21b726998853ef3455451f1e622e7"
+  },
+  "ms": {
+    "sourcePath": "docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-role-recipes-01/duration-source/ms/index.js",
+    "sha256": "e5f0b6a946a9b2b356a28557728410717df54ea2f599edb619f9839df6b7b0e9",
+    "version": "2.1.3"
+  }
+}

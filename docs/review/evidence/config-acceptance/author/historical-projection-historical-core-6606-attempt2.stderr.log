@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-historical-projection-guards.py", line 45, in <module>
+    positive()
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-historical-projection-guards.py", line 30, in positive
+    verify(package, canonical, histories, advertisement)
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/historical_projection.py", line 58, in verify
+    require(selected == [expected], 'projection missing/duplicate/changed reverse link: ' + cid)
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/historical_mapping.py", line 25, in require
+    raise ValueError('HISTORICAL_MAPPING:' + reason)
+ValueError: HISTORICAL_MAPPING:projection missing/duplicate/changed reverse link: RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING

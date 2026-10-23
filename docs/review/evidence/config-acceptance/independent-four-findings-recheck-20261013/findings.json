@@ -1,0 +1,46 @@
+{
+  "head": "a996917f72e84753a94d6214f685e64ef3b1c4a7",
+  "originalFindings": [
+    {
+      "id": "UCORE-001",
+      "boundedFixVerified": true
+    },
+    {
+      "id": "URUNTIME-001",
+      "boundedFixVerified": true
+    },
+    {
+      "id": "IR21BF-DC-001",
+      "boundedFixVerified": true
+    },
+    {
+      "id": "IR21BF-DC-002",
+      "boundedFixVerified": true
+    }
+  ],
+  "findings": [
+    {
+      "id": "IFOUR-ROOT-001",
+      "severity": "P2",
+      "status": "verified-independent",
+      "title": "Structural root checker accepts corrupted Runtime original-row provenance",
+      "path": "docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "line": 52,
+      "description": "Fragment registrations verify source hashes; normalized body comparison is implemented only for Core canonical-question rows. In isolated serialized root inventory, change sourceDefinitionHistory[0].oldRowSHA256 for RT-NOVA-REMOTE-SCHEMAVERSION to 64 zeroes, leaving the immutable runtime fragment and its advertised digest unchanged. Full --structural checker returns exit 0 / errorCount 0. The new focused Runtime verifier checks the fragment, not the root projection. Current actual root is exact and correct: this is a persisted-root conservation guard false positive, not observed evidence loss or production bug.",
+      "proof": [
+        "runtime-history-drift.inventory.json.gz",
+        "runtime-history-drift.stdout",
+        "runtime-history-drift.stderr",
+        "attempt1/harness-failure.txt"
+      ],
+      "recommendedCorrection": "Extend normalized full-row conservation to current Runtime fragment rows at root structural boundary; preserve every original property including sourceDefinitionHistory and correction provenance. Require persisted root-provenance and non-provenance mutations to reject, with unchanged positive controls.",
+      "introducedByCandidate": false,
+      "scope": "Bounded root Runtime integrity guard; no global semantic/runtime acceptance inferred"
+    }
+  ],
+  "globalC0Accepted": false,
+  "nativeAccepted": false,
+  "moduleBindingAccepted": false,
+  "productionChanged": false,
+  "autoreviewHelper": "unavailable Codex CLI; native independent review is separate"
+}

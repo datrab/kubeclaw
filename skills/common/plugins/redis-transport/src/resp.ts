@@ -1,6 +1,10 @@
-const MAX_BULK_BYTES = 1_048_576;
-const MAX_HEADER_BYTES = 1_024;
-const MAX_EXCHANGE_BYTES = MAX_BULK_BYTES + 2 * MAX_HEADER_BYTES + 6;
+export interface ReplyLimits { readonly maximumReplyBulkBytes: number; readonly maximumReplyHeaderBytes: number; }
+export function captureReplyLimits(value: ReplyLimits): ReplyLimits {
+  for (const key of ['maximumReplyBulkBytes', 'maximumReplyHeaderBytes'] as const) {
+    if (!Number.isSafeInteger(value?.[key]) || value[key] < 1 || value[key] > 16_777_216) throw new Error(`REDIS_CONFIG_INVALID:${key}`);
+  }
+  return Object.freeze({maximumReplyBulkBytes: value.maximumReplyBulkBytes, maximumReplyHeaderBytes: value.maximumReplyHeaderBytes});
+}
 type Reply = string | number | null;
 
 function text(buffer: Buffer): string {
@@ -8,13 +12,13 @@ function text(buffer: Buffer): string {
   catch (cause) { throw new Error('REDIS_RESPONSE_UTF8_INVALID', { cause }); }
 }
 
-function parseReply(buffer: Buffer): { value: Reply; bytes: number } | undefined {
+function parseReply(buffer: Buffer, limits: ReplyLimits): { value: Reply; bytes: number } | undefined {
   const lineEnd = buffer.indexOf('\r\n');
   if (lineEnd < 0) {
-    if (buffer.length > MAX_HEADER_BYTES + 1) throw new Error('REDIS_RESPONSE_HEADER_LIMIT');
+    if (buffer.length > limits.maximumReplyHeaderBytes + 1) throw new Error('REDIS_RESPONSE_HEADER_LIMIT');
     return undefined;
   }
-  if (lineEnd > MAX_HEADER_BYTES) throw new Error('REDIS_RESPONSE_HEADER_LIMIT');
+  if (lineEnd > limits.maximumReplyHeaderBytes) throw new Error('REDIS_RESPONSE_HEADER_LIMIT');
   const prefix = buffer[0];
   const header = text(buffer.subarray(1, lineEnd));
   if (/[\u0000-\u001f\u007f]/u.test(header)) throw new Error('REDIS_RESPONSE_INVALID');
@@ -25,14 +29,14 @@ function parseReply(buffer: Buffer): { value: Reply; bytes: number } | undefined
     return { value: Number(header), bytes: lineEnd + 2 };
   }
   if (prefix !== 36) throw new Error('REDIS_RESPONSE_INVALID');
-  return parseBulk(buffer, header, lineEnd);
+  return parseBulk(buffer, header, lineEnd, limits);
 }
 
-function parseBulk(buffer: Buffer, header: string, lineEnd: number): { value: Reply; bytes: number } | undefined {
+function parseBulk(buffer: Buffer, header: string, lineEnd: number, limits: ReplyLimits): { value: Reply; bytes: number } | undefined {
   if (!/^(?:-1|0|[1-9][0-9]*)$/u.test(header)) throw new Error('REDIS_RESPONSE_INVALID');
   const length = Number(header);
   if (length === -1) return { value: null, bytes: lineEnd + 2 };
-  if (!Number.isSafeInteger(length) || length > MAX_BULK_BYTES) throw new Error('REDIS_RESPONSE_INVALID');
+  if (!Number.isSafeInteger(length) || length > limits.maximumReplyBulkBytes) throw new Error('REDIS_RESPONSE_INVALID');
   const end = lineEnd + 2 + length;
   if (buffer.length < end + 2) return undefined;
   if (buffer[end] !== 13 || buffer[end + 1] !== 10) throw new Error('REDIS_RESPONSE_INVALID');
@@ -41,22 +45,29 @@ function parseBulk(buffer: Buffer, header: string, lineEnd: number): { value: Re
 
 /** Two replies only: AUTH and command. Growth and lifetime bytes are bounded. */
 export class ReplyDecoder {
-  #buffer = Buffer.alloc(1_024);
+  readonly #limits: ReplyLimits;
+  readonly #maximumExchangeBytes: number;
+  #buffer: Buffer;
+  constructor(limits: ReplyLimits) {
+    this.#limits = captureReplyLimits(limits);
+    this.#maximumExchangeBytes = this.#limits.maximumReplyBulkBytes + 2 * this.#limits.maximumReplyHeaderBytes + 6;
+    this.#buffer = Buffer.alloc(Math.min(1024, this.#maximumExchangeBytes));
+  }
   #length = 0;
   #received = 0;
   #replies = 0;
   push(chunk: Buffer): { value: Reply } | undefined {
-    if (chunk.length > MAX_EXCHANGE_BYTES - this.#received) throw new Error('REDIS_RESPONSE_SIZE_EXCEEDED');
+    if (chunk.length > this.#maximumExchangeBytes - this.#received) throw new Error('REDIS_RESPONSE_SIZE_EXCEEDED');
     this.#received += chunk.length;
     const required = this.#length + chunk.length;
     if (required > this.#buffer.length) {
-      const grown = Buffer.alloc(Math.min(MAX_EXCHANGE_BYTES, Math.max(required, this.#buffer.length * 2)));
+      const grown = Buffer.alloc(Math.min(this.#maximumExchangeBytes, Math.max(required, this.#buffer.length * 2)));
       this.#buffer.copy(grown, 0, 0, this.#length); this.#buffer = grown;
     }
     chunk.copy(this.#buffer, this.#length); this.#length = required;
     let consumed = 0;
     for (;;) {
-      const parsed = parseReply(this.#buffer.subarray(consumed, this.#length));
+      const parsed = parseReply(this.#buffer.subarray(consumed, this.#length), this.#limits);
       if (!parsed) break;
       consumed += parsed.bytes; this.#replies += 1;
       if (this.#replies === 1 && parsed.value !== 'OK') throw new Error('REDIS_AUTH_RESPONSE_INVALID');

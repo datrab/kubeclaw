@@ -1,3 +1,4 @@
+import { nativeControlSettings } from './native/resource-policy.mts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {randomUUID} from 'node:crypto';
@@ -10,12 +11,12 @@ import {agentAttempt} from '../server/agent-attempt.ts';
 import {assessWorkerResources} from '../../worker/core/worker/resource-accounting.ts';
 import {AgentProcess} from '../server/agent-process.ts';
 async function envelope(){
- const value=await agentAttempt({id:randomUUID(),fence:randomUUID(),expires_at:new Date(Date.now()+60000),request_digest:sha256Digest({}),request:{}},'resource-test');
+ const value=await agentAttempt({id:randomUUID(),fence:randomUUID(),expires_at:new Date(Date.now()+60000),request_digest:sha256Digest({}),request:{}},'resource-test',nativeControlSettings);
  value.limits={...value.limits,timeoutMs:5000,cleanupTimeoutMs:1000};value.attemptSpecDigest=workerAttemptSpecDigest(value);return value;
 }
 test('real CPU-consuming child has explicit V2 unavailable observations and no parent resource claims',async()=>{
  const attempt=await envelope();
- const result=await new WorkerAttemptExecutor({envelope:attempt,operation:new AgentProcess(process.execPath,['-e',"const start=process.cpuUsage();while(process.cpuUsage(start).user<250000){}"]),retainLogs:false}).execute();
+ const result=await new WorkerAttemptExecutor({envelope:attempt,operation:new AgentProcess(process.execPath,['-e',"const start=process.cpuUsage();while(process.cpuUsage(start).user<250000){}"],nativeControlSettings.agentLauncher.terminationGraceMs),retainLogs:false}).execute();
  assert.equal(result.state,'completed',JSON.stringify(result));assert.equal(result.schemaVersion,'worker-attempt-result.v2');
  for(const metric of ['cpuTimeMs','maximumMemoryBytes','maximumProcesses'] as const){assert.equal(result.resources[metric],undefined);assert.equal(result.resourceAccounting.observations[metric].status,'unavailable');assert.equal(result.resourceAccounting.budgets[metric].state,'unrequested');}
  assert.equal(checkWorkerResourceResultBinding(attempt,result).ok,true);
@@ -26,7 +27,7 @@ test('real CPU-consuming child has explicit V2 unavailable observations and no p
 test('requested unsupported child budget fails before actual process launch',async()=>{
  const root=await mkdtemp(join(tmpdir(),'resource-preflight-'));try{
  const marker=join(root,'launched');const attempt=await envelope();attempt.resourceBudgets.cpuTimeMs={state:'requested',limit:200};attempt.attemptSpecDigest=workerAttemptSpecDigest(attempt);
- const result=await new WorkerAttemptExecutor({envelope:attempt,operation:new AgentProcess(process.execPath,['-e',`require('node:fs').writeFileSync(${JSON.stringify(marker)},'started')`]),retainLogs:false}).execute();
+ const result=await new WorkerAttemptExecutor({envelope:attempt,operation:new AgentProcess(process.execPath,['-e',`require('node:fs').writeFileSync(${JSON.stringify(marker)},'started')`],nativeControlSettings.agentLauncher.terminationGraceMs),retainLogs:false}).execute();
  assert.equal(result.state,'errored');assert.equal(result.error?.code,'WORKER_RESOURCE_MEASUREMENT_UNAVAILABLE');await assert.rejects(access(marker));
  assert.equal(checkWorkerResourceResultBinding(attempt,result).ok,true);
  }finally{await rm(root,{recursive:true,force:true});}
@@ -40,7 +41,7 @@ test('V2 requires explicit policy and correct units; V1 refuses the opt-in envel
 test('requested runtime measurement unavailable fails even when profile advertised measurement',async()=>{
  const attempt=await envelope();attempt.profile.resourceCapabilities.cpuTimeMs={scope:'local-cli-process-tree',unit:'milliseconds',measurement:'sampled',sampleIntervalMs:10};
  attempt.profile.profileDigest=workerProfileDigest(attempt.profile);attempt.resourceBudgets.cpuTimeMs={state:'requested',limit:1000};attempt.attemptSpecDigest=workerAttemptSpecDigest(attempt);
- const result=await new WorkerAttemptExecutor({envelope:attempt,operation:new AgentProcess(process.execPath,['-e','process.stdout.write("ran")']),retainLogs:false}).execute();
+ const result=await new WorkerAttemptExecutor({envelope:attempt,operation:new AgentProcess(process.execPath,['-e','process.stdout.write("ran")'],nativeControlSettings.agentLauncher.terminationGraceMs),retainLogs:false}).execute();
  assert.equal(result.error?.code,'WORKER_RESOURCE_MEASUREMENT_UNAVAILABLE');assert.equal(result.resources.cpuTimeMs,undefined);assert.equal(checkWorkerResourceResultBinding(attempt,result).ok,true);
 });
 test('original generic assessor rejects requested real observed overrun and V1 missing metrics',async()=>{

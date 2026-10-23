@@ -1,0 +1,41 @@
+{
+  "status": "stable-independent-R06-only-bounded-material-findings-resolved-NOT-GLOBAL-ACCEPTANCE",
+  "UTC": "2026-10-13T02:19:16.806532+00:00",
+  "head": "bce3f075156a86be345821499c04628cb35c2762",
+  "tree": "a8b0adf641de573565360b0c4eb577d6bc7545c3",
+  "frozen328NoDrift": true,
+  "preserved247NoDrift": true,
+  "RuntimePublished4NoDrift": true,
+  "findings": {
+    "ICQ-R06-01": "bounded material definition resolved",
+    "ICQ-R06-02": "bounded material definition resolved"
+  },
+  "futureCasesRun": 0,
+  "all22RequirementsConserved": true,
+  "artifacts": {
+    "freeze-attempt2.log": "266e47cdcafe4c14c9766a512755c678dfa9d00f6e973c8a7bd0801a9cf50f80",
+    "independent-boundary-controls-attempt2.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "README.md": "e6d8e84c2d7e759d08dd346a967170a811ca43ddb1f90c488831a161c6c75704",
+    "replayed-commands.json": "b937d52f7b36d235deb39151d25010386a2ea64bc0225716c32ce5c02fa2cb28",
+    "freeze-attempt2.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "independent-boundary-controls-attempt2.log": "0f994ecba18ec19bdf88d1a174564ef10527a26903ff8f3add0decb18c04d124",
+    "check-current-api-return.replayed.log": "d0eb1ee007cd51a301aca4673e9d6922a0e3c63a24f5a86d146d188a4db300c8",
+    "check-boundary-materials.replayed.log": "750e00ffab0f7c3a17b19c18bc330851de5d7780bd7f81bdfcc5f9c8517f0f40",
+    "check-boundary-materials.replayed.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "independent-boundary-controls-attempt1.stderr.log": "b96b4bca483af3820f15df7cb4ca678be5bd0f0b928bc3dc1475e6f1d7704ff7",
+    "dirty-input.patch.gz": "ac4a36e23140572c67a3d1837af3848d0b46fb2ce13d1f9b9ab1eefb474c4ad9",
+    "independent-boundary-controls-attempt1.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "replay-layout.json": "1adf8a2a71c646131bf8714e7797d8a55c1924ebf39e7b2e46529ec861478436",
+    "full-numbered-current-observability-sources.log": "56376898681e52721a894db6a85a91c1aa755e1aa6ffb794e09d8b696199488a",
+    "freeze-attempt1.py.snapshot": "547cb4fa305fb65bb721c538bf12c727f0b088e21c60724b72d003f667100c18",
+    "freeze-attempt1-failure.json": "3875d3895c21e37a191a40de7ee8f7d117a2d1dec9f5956c32ffa64e105632dc",
+    "check-current-api-return.replayed.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "independent-r06-review.json": "2253cfa1cfc01715dbee947e8f21f7ec42a7294596d1d10a72f279835917f8ab",
+    "independent-boundary-controls.py": "f96a2a88cce589e12e6c70947546afb8c2f40cc3c37df804d4ad8781a12c332b",
+    "independent-boundary-controls.json": "0f994ecba18ec19bdf88d1a174564ef10527a26903ff8f3add0decb18c04d124",
+    "independent-boundary-controls-attempt1.py.snapshot": "1284bf91c2d83f224f81b06e5ef012337e6f4fba45a333bc8983f90c715e062f",
+    "frozen-input-receipt.json": "26eba8c881cee9a2d20faaee39b3a5179a9a4a4cb9545d9ee28410b0b77692cc",
+    "freeze.py": "22b1f0080ab882997cf751b710741ce959b6694a8ee934f45fc5c0b4667d349b"
+  },
+  "remaining": "Global C0/source/default/domain/authority/metadata payload/nativeprovider/tool fixture and parent Nova modulecarrier compatibility remain open. No C1 prerequisite falselyrequiredfornamedC0resolution."
+}

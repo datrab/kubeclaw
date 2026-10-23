@@ -26,7 +26,7 @@ try {
     let leaderStderr = '';
     leader.stderr.setEncoding('utf8');
     leader.stderr.on('data', (chunk) => { leaderStderr += chunk; });
-    const processGroup = new CommandProcessGroup(leader, 25);
+    const processGroup = new CommandProcessGroup(leader, 25, undefined, { cleanupPollIntervalMs: 10, exitAcknowledgementMs: 1000, sandboxMinimumGraceMs: 250 });
     try {
       const [exitCode] = await once(leader, 'close');
       await processGroup.cleanup();

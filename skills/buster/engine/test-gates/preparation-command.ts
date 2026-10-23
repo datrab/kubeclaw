@@ -2,7 +2,7 @@ import { assertPreparationSlot, type PreparationSlot } from './preparation-slots
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import type { BusterPreparationSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+import type { BusterPreparationSettings } from '@kubeclaw/plugin-foundation/config/swarm';
 import { preparationSourceDirectory } from './preparation-source.ts';
 
 export interface PreparationCommandConfig {

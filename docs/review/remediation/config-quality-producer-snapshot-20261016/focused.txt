@@ -1,0 +1,21 @@
+✔ store: exact-cap multi-chunk producer bytes retained unchanged (7.252569ms)
+✔ store: rejects actual producer grow during descriptor read without publishing (2.516936ms)
+✔ store: rejects actual producer rewrite during descriptor read without publishing (1.471028ms)
+✔ store: rejects actual producer truncate during descriptor read without publishing (1.379245ms)
+✔ staging: exact-cap multi-chunk producer bytes retained unchanged (2.203497ms)
+✔ staging: rejects actual producer grow during descriptor read without publishing (1.983472ms)
+✔ staging: rejects actual producer rewrite during descriptor read without publishing (1.932611ms)
+✔ staging: rejects actual producer truncate during descriptor read without publishing (2.356702ms)
+✔ precap rejects before any source read; zero-byte exact-cap source remains supported (1.676974ms)
+✔ original cancellation at chunk prevents publication (1.313335ms)
+✔ original cancellation at eof prevents publication (1.109089ms)
+✔ original cancellation at close prevents publication (1.14429ms)
+✔ staging total uses the original remaining-byte allowance; no second file on overflow (1.487419ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 138.136682

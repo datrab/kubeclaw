@@ -1,0 +1,147 @@
+✖ CR01 both selected consumer snapshots use authored {"maximumResultBytes":64,"dispatchTimeoutMs":100} (43.587352ms)
+✖ CR01 both selected consumer snapshots use authored {"maximumResultBytes":128,"dispatchTimeoutMs":2000} (8.702574ms)
+✔ CR01 both roles reject maximumResultBytes=undefined (4.969527ms)
+✔ CR01 both roles reject maximumResultBytes=null (5.132772ms)
+✔ CR01 both roles reject maximumResultBytes=5 (4.732441ms)
+✔ CR01 both roles reject maximumResultBytes=0 (4.346922ms)
+✔ CR01 both roles reject maximumResultBytes=-1 (4.032354ms)
+✔ CR01 both roles reject maximumResultBytes=1.5 (5.775859ms)
+✔ CR01 both roles reject maximumResultBytes=2147483648 (4.950877ms)
+✔ CR01 both roles reject dispatchTimeoutMs=undefined (4.043374ms)
+✔ CR01 both roles reject dispatchTimeoutMs=null (3.566632ms)
+✔ CR01 both roles reject dispatchTimeoutMs=5 (3.015717ms)
+✔ CR01 both roles reject dispatchTimeoutMs=0 (3.383787ms)
+✔ CR01 both roles reject dispatchTimeoutMs=-1 (3.268774ms)
+✔ CR01 both roles reject dispatchTimeoutMs=1.5 (2.696819ms)
+✔ CR01 both roles reject dispatchTimeoutMs=2147483648 (2.746681ms)
+✔ CR01 both roles reject missing or unsupported native section (4.748023ms)
+✔ CR01 both roles reject missing or unsupported native section (3.964682ms)
+✔ CR01 both roles reject missing or unsupported native section (21.551245ms)
+✔ CR02 both roles reject PRISM_NATIVE_MAXIMUM_RESULT_BYTES (2.255138ms)
+✔ CR02 both roles reject PRISM_NATIVE_DISPATCH_TIMEOUT_MS (1.890799ms)
+✔ CR03 original HTTP transport enforces 8 UTF-8 bytes (39.874336ms)
+✔ CR03 original HTTP transport enforces 9 UTF-8 bytes (14.200356ms)
+✔ CR04 real headers deadline follows short and long author budgets (391.12495ms)
+✔ CR04 real body deadline follows short and long author budgets (387.143857ms)
+✔ CR05 real journal consumes authored 2053 byte result limit (164.68271ms)
+✔ CR05 real journal consumes authored 2054 byte result limit (179.241415ms)
+✔ only the admitted owner can cancel a pending original render; callers without cancellation still coalesce (8.314794ms)
+✔ real full-log upload aborts a stalled response body; persisted receiver bytes are not claimed rolled back (72.375944ms)
+✔ terminate aborts and drains the original artifact read before any engine operation starts (27.873348ms)
+✔ owner cancellation before retention rejects every coalesced original-render caller (2.200446ms)
+✔ native connection refusal retains its safe operator system code (11.008723ms)
+﹣ native PostgreSQL query cancellation settles and releases its actual pool client (0.203385ms) # REAL_POSTGRES_DATABASE_REQUIRED (isolated migrated test database)
+✔ current specialist renders through the original authenticated artifact service (77.973408ms)
+✔ original artifact service rejects actual full-log storage corruption (15.580091ms)
+✔ captured historical receipts and evidence retain their original validated digests (36.202642ms)
+✔ Control shared boundary rejects other real attempts and modified results before evidence I/O (23.200997ms)
+✔ historical real receipts remain readable and cannot be reinterpreted as native task receipts (39.768444ms)
+✔ actual Control artifact handler rejects unauthenticated reads and verifies upload URL digest (19.304857ms)
+ℹ tests 39
+ℹ suites 0
+ℹ pass 36
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 2876.212011
+
+✖ failing tests:
+
+test at skills/prism/tests/swarm-native-settings.test.mts:83:3
+✖ CR01 both selected consumer snapshots use authored {"maximumResultBytes":64,"dispatchTimeoutMs":100} (43.587352ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      dispatchTimeoutMs: 100,
+  +   enginePolicy: {
+  +     cache: {
+  +       maximumCompletedBytes: 16777216,
+  +       maximumCompletedEntries: 32,
+  +       maximumInFlight: 4
+  +     },
+  +     maximumAssetSourceCharacters: 16000000,
+  +     maximumIngestTextCharacters: 200000,
+  +     render: {
+  +       height: 1000,
+  +       locale: 'en-US',
+  +       reducedMotion: 'reduce',
+  +       schemaVersion: 'prism-render-policy.v1',
+  +       timezoneId: 'UTC',
+  +       widths: {
+  +         compact: 390,
+  +         regular: 768,
+  +         wide: 1440
+  +       }
+  +     },
+  +     schemaVersion: 'prism-engine-policy.v2'
+  +   },
+      maximumResultBytes: 64,
+      resourcePolicy: {
+        cpuTimeMs: 60000,
+        memoryBytes: 8589934592,
+        tasks: 2048
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/tests/swarm-native-settings.test.mts:87:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { resourcePolicy: { cpuTimeMs: 60000, memoryBytes: 8589934592, tasks: 2048 }, maximumResultBytes: 64, enginePolicy: { cache: [Object], maximumIngestTextCharacters: 200000, maximumAssetSourceCharacters: 16000000, render: [Object], schemaVersion: 'prism-engine-policy.v2' }, dispatchTimeoutMs: 100, supervisor: { uid: 1000, gid: 1000, maximumOwnershipRecords: 65536, maximumOwnershipBytes: 67108864, maximumOutputBytes: 33554432, maximumJournalBytes: 68719476736, pollIntervalMs: 20, drainTimeoutMs: 10000, closeTimeoutMs: 105000 } },
+    expected: { resourcePolicy: { cpuTimeMs: 60000, memoryBytes: 8589934592, tasks: 2048 }, supervisor: { uid: 1000, gid: 1000, maximumOwnershipRecords: 65536, maximumOwnershipBytes: 67108864, maximumOutputBytes: 33554432, maximumJournalBytes: 68719476736, pollIntervalMs: 20, drainTimeoutMs: 10000, closeTimeoutMs: 105000 }, maximumResultBytes: 64, dispatchTimeoutMs: 100 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/swarm-native-settings.test.mts:83:3
+✖ CR01 both selected consumer snapshots use authored {"maximumResultBytes":128,"dispatchTimeoutMs":2000} (8.702574ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      dispatchTimeoutMs: 2000,
+  +   enginePolicy: {
+  +     cache: {
+  +       maximumCompletedBytes: 16777216,
+  +       maximumCompletedEntries: 32,
+  +       maximumInFlight: 4
+  +     },
+  +     maximumAssetSourceCharacters: 16000000,
+  +     maximumIngestTextCharacters: 200000,
+  +     render: {
+  +       height: 1000,
+  +       locale: 'en-US',
+  +       reducedMotion: 'reduce',
+  +       schemaVersion: 'prism-render-policy.v1',
+  +       timezoneId: 'UTC',
+  +       widths: {
+  +         compact: 390,
+  +         regular: 768,
+  +         wide: 1440
+  +       }
+  +     },
+  +     schemaVersion: 'prism-engine-policy.v2'
+  +   },
+      maximumResultBytes: 128,
+      resourcePolicy: {
+        cpuTimeMs: 60000,
+        memoryBytes: 8589934592,
+        tasks: 2048
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/tests/swarm-native-settings.test.mts:87:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { resourcePolicy: { cpuTimeMs: 60000, memoryBytes: 8589934592, tasks: 2048 }, maximumResultBytes: 128, enginePolicy: { cache: [Object], maximumIngestTextCharacters: 200000, maximumAssetSourceCharacters: 16000000, render: [Object], schemaVersion: 'prism-engine-policy.v2' }, dispatchTimeoutMs: 2000, supervisor: { uid: 1000, gid: 1000, maximumOwnershipRecords: 65536, maximumOwnershipBytes: 67108864, maximumOutputBytes: 33554432, maximumJournalBytes: 68719476736, pollIntervalMs: 20, drainTimeoutMs: 10000, closeTimeoutMs: 105000 } },
+    expected: { resourcePolicy: { cpuTimeMs: 60000, memoryBytes: 8589934592, tasks: 2048 }, supervisor: { uid: 1000, gid: 1000, maximumOwnershipRecords: 65536, maximumOwnershipBytes: 67108864, maximumOutputBytes: 33554432, maximumJournalBytes: 68719476736, pollIntervalMs: 20, drainTimeoutMs: 10000, closeTimeoutMs: 105000 }, maximumResultBytes: 128, dispatchTimeoutMs: 2000 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

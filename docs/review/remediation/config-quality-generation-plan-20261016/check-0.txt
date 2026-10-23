@@ -1,0 +1,29 @@
+✔ Quality same-file-set policies reach real registry resolver frozen; old v1 task digest/profile substitutions reject (1390.967832ms)
+✔ Quality rejects invalid unselected original profiles without accepting a partial author (691.804736ms)
+✖ Quality complete physical A/B generation reaches Nova plan and retained A without current B refill (326.686675ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 2
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3218.82901
+
+✖ failing tests:
+
+test at tests/verification/reliability/pipeline-v10-input-set.test.mts:777:1
+✖ Quality complete physical A/B generation reaches Nova plan and retained A without current B refill (326.686675ms)
+  Error [TestPlanResolutionError]: TEST_PLAN_PROVIDER_MISSING:kubeclaw.direct-command@1
+      at fail (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/test-gates/resolver.ts:65:9)
+      at expandNodes (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/test-gates/resolver.ts:549:20)
+      at resolveTestPlan (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core/test-gates/resolver.ts:745:32)
+      at resolve (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/pipeline-v10-input-set.test.mts:800:23)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/pipeline-v10-input-set.test.mts:801:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12) {
+    code: 'TEST_PLAN_PROVIDER_MISSING'
+  }

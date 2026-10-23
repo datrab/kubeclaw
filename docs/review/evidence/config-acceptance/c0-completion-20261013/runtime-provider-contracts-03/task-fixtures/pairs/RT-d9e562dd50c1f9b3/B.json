@@ -1,0 +1,11 @@
+{
+  "url": "https://fixture.invalid",
+  "path": "/ok",
+  "method": "GET",
+  "accept": "text/plain",
+  "expectedStatuses": [
+    200
+  ],
+  "expectedText": "C0-local",
+  "expectedContentType": "application/json"
+}

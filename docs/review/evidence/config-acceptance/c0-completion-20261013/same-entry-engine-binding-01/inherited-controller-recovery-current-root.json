@@ -1,0 +1,107 @@
+[
+  {
+    "source": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/controller-receiver-rejoin.json",
+      "sha256": "8c1641b580fd58148da0df84129c61818306d7955c7840be1d650a9b642c4d13"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "2e20ca68b88ae9b21741732630ffea5736d50db942c33b42a0b9403fee1d2228"
+    },
+    "currentRootRawSHA256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011",
+    "originalAllPropertiesPreservedByExactReference": true,
+    "rootContext": "Old01/02 rootrefs decodeoriginalgenerations/history ONLY; newselectedgeneration uses physicalv7root/schema. Exact selectedController/infra/member leaf nodes remain inheritedbyteidentical schemas and unchangedoldroot tuples.",
+    "selectionEquality": {
+      "deploymentSelections": [
+        {
+          "role": "buster",
+          "deploymentInstanceId": "agent-buster",
+          "ownerPath": "charts/kubeclaw/values.yaml",
+          "profileId": "local-A",
+          "consumer": "namespace-controller",
+          "serviceInstanceId": "agent-buster-namespace-controller",
+          "busterComponentInstanceId": "fixture.service.buster-runtime",
+          "controlComponentInstanceId": "fixture.service.prism-control"
+        }
+      ],
+      "infrastructureSelections": [
+        {
+          "role": "postgresql-recovery",
+          "deploymentInstanceId": "fixture.recovery",
+          "ownerPath": "my-values/infra/postgresql-recovery.yaml",
+          "profileId": "A"
+        }
+      ]
+    }
+  },
+  {
+    "source": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/recovery-receiver-rejoin.json",
+      "sha256": "1b8d5bce4289ded1401894e908d6160532c49078ef2b113df006090aebc90ffb"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "2e20ca68b88ae9b21741732630ffea5736d50db942c33b42a0b9403fee1d2228"
+    },
+    "currentRootRawSHA256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011",
+    "originalAllPropertiesPreservedByExactReference": true,
+    "rootContext": "Old01/02 rootrefs decodeoriginalgenerations/history ONLY; newselectedgeneration uses physicalv7root/schema. Exact selectedController/infra/member leaf nodes remain inheritedbyteidentical schemas and unchangedoldroot tuples.",
+    "selectionEquality": {
+      "deploymentSelections": [
+        {
+          "role": "buster",
+          "deploymentInstanceId": "agent-buster",
+          "ownerPath": "charts/kubeclaw/values.yaml",
+          "profileId": "local-A",
+          "consumer": "namespace-controller",
+          "serviceInstanceId": "agent-buster-namespace-controller",
+          "busterComponentInstanceId": "fixture.service.buster-runtime",
+          "controlComponentInstanceId": "fixture.service.prism-control"
+        }
+      ],
+      "infrastructureSelections": [
+        {
+          "role": "postgresql-recovery",
+          "deploymentInstanceId": "fixture.recovery",
+          "ownerPath": "my-values/infra/postgresql-recovery.yaml",
+          "profileId": "A"
+        }
+      ]
+    }
+  },
+  {
+    "source": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/root-dependency-rejoin.json",
+      "sha256": "47dda0d831702bfd94751af788fefa14f3ec328d810a9a3b07a106d932f1d780"
+    },
+    "currentRootSchema": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "2e20ca68b88ae9b21741732630ffea5736d50db942c33b42a0b9403fee1d2228"
+    },
+    "currentRootRawSHA256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011",
+    "originalAllPropertiesPreservedByExactReference": true,
+    "rootContext": "Old01/02 rootrefs decodeoriginalgenerations/history ONLY; newselectedgeneration uses physicalv7root/schema. Exact selectedController/infra/member leaf nodes remain inheritedbyteidentical schemas and unchangedoldroot tuples.",
+    "selectionEquality": {
+      "deploymentSelections": [
+        {
+          "role": "buster",
+          "deploymentInstanceId": "agent-buster",
+          "ownerPath": "charts/kubeclaw/values.yaml",
+          "profileId": "local-A",
+          "consumer": "namespace-controller",
+          "serviceInstanceId": "agent-buster-namespace-controller",
+          "busterComponentInstanceId": "fixture.service.buster-runtime",
+          "controlComponentInstanceId": "fixture.service.prism-control"
+        }
+      ],
+      "infrastructureSelections": [
+        {
+          "role": "postgresql-recovery",
+          "deploymentInstanceId": "fixture.recovery",
+          "ownerPath": "my-values/infra/postgresql-recovery.yaml",
+          "profileId": "A"
+        }
+      ]
+    }
+  }
+]

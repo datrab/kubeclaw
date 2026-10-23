@@ -1,0 +1,524 @@
+{
+  "scope": "Actual local data/source-definition fixture artifacts, never runtime acceptance",
+  "artifacts": {
+    "guard-group-definitions.mjs": {
+      "bytes": 4575,
+      "sha256": "196498c93a905652a9d3117e2523923165f4fdab748d13a6bb8a0fe6f75b31c7"
+    },
+    "manifest-observations.json": {
+      "bytes": 14878,
+      "sha256": "7dcd3be3643dd5d26d6cb57f358862bee1164af9ea2604fda6d417ecc844904e"
+    },
+    "README.md": {
+      "bytes": 12078,
+      "sha256": "44f0313c7afaae9ebc94402efefda19f76f36fa282a9254a506a7563c6969cc5"
+    },
+    "guard-group-observations.json": {
+      "bytes": 19792,
+      "sha256": "5eed0e1a0cf777d56d62c609e06051839e07b4356b3cdd3c0244ca27a3fdf1b2"
+    },
+    "manifest-definitions.mjs": {
+      "bytes": 9165,
+      "sha256": "9407c4c790bc59bed1f62da22068626dc69ddf7c013f1e9ec872aacd3b27d80d"
+    },
+    "archive-observations.json": {
+      "bytes": 4936,
+      "sha256": "1692aecbb0eb36f43f0bf27e518922475901db7f13efa4bcaac2c4c890bc633a"
+    },
+    "archive-generate.py": {
+      "bytes": 1866,
+      "sha256": "0643b56b853d7ced8499510dbc3ea0cd969d4fe9291903a1125452455f648d87"
+    },
+    "negative-control-observations.json": {
+      "bytes": 7515,
+      "sha256": "42ce3461a0eb8c8c2ee4ab125a387ce3b043862ffc477cd0dac9976a31b04560"
+    },
+    "provider-observations.json": {
+      "bytes": 3614,
+      "sha256": "815aad8d66b966b8ddf90d80865bdbc30a2ebd1be4970f3623989aa1948d22d2"
+    },
+    "archive-listing-only-source.ts": {
+      "bytes": 3925,
+      "sha256": "af73e21de1c3e66d85ce30ac7892a93dc25367786e9dce01702164d1a7d83db8"
+    },
+    "task-prior-attempt.json": {
+      "bytes": 566,
+      "sha256": "a1610d29e3fd6b045a9082e33fdb832835058902e6ccb0c8ea975bcd77179788"
+    },
+    "task-definition.mjs": {
+      "bytes": 4334,
+      "sha256": "37e6581c3f960645e30832f8cce2b4dbb3fb510733d45d304e60f8ee8b74c662"
+    },
+    "archive-generation.json": {
+      "bytes": 1663,
+      "sha256": "dab3b8c2f3887e15ff220d4f798d9d6279c1457b0c3ed308ad63d6995973db1e"
+    },
+    "provider-result-definitions.mjs": {
+      "bytes": 5268,
+      "sha256": "f485f1c4a421eef975465eaf4ee6bccdb8bd6ac4fe235278ddc873459985de6d"
+    },
+    "archive-definitions.mjs": {
+      "bytes": 2240,
+      "sha256": "96a397d14d61c157ad458d870e885d88ac29e8c78f99e69f3ed198d173836b72"
+    },
+    "source-identities.json": {
+      "bytes": 5330,
+      "sha256": "18fe1bdd31735288904cb72cef81242783e2aa96f11a0b05d321ecece89a78a5"
+    },
+    "task-observations.json": {
+      "bytes": 4326,
+      "sha256": "542b8632b32bc4fd2327884050823ee8cef14cba67ca039d02c75ea5d82a7a02"
+    },
+    "negative-controls.mjs": {
+      "bytes": 4306,
+      "sha256": "759cf76b879c1b35af10803c1cbd034b5c5926d2a4b3c03637b49412c361d7a3"
+    },
+    "archive-slice-identity.json": {
+      "bytes": 539,
+      "sha256": "6de03b6f4f27b806f701feb7c4a8411faa33597b89de3f90f27c8085fe215311"
+    },
+    "provider/task-invocation-definition.json": {
+      "bytes": 1902,
+      "sha256": "ee16e502f9f0ab9a9ecfc1d3670afc0dffae4a7342edea2514bbcc3f843002fb"
+    },
+    "provider/below-B/playwright-report.json": {
+      "bytes": 8255629,
+      "sha256": "9e8441aaacf9f3a2f6d0d63d81997aca7be905f3bb4fbc90a126735f3c977558"
+    },
+    "provider/below-B/provider-result.json": {
+      "bytes": 12577880,
+      "sha256": "66c872378ff1e1a4339baca9ceff82bad99c566fe83e719610dd9a4e79c8758a"
+    },
+    "provider/above-B/playwright-report.json": {
+      "bytes": 8259861,
+      "sha256": "91eb03e0dceb4d951fc05070549c97c68bb4189ecc0752d6b1750b059131862a"
+    },
+    "provider/above-B/provider-result.json": {
+      "bytes": 12584327,
+      "sha256": "092cee125a38e2abc9013f1a53b77cf7ea940602bc30e925aaa299c96301dd07"
+    },
+    "grouped/maximumFlattenPending/B/pipeline.config.json": {
+      "bytes": 1617,
+      "sha256": "6852652c5ab3d164b8b7f77105e7da5e35cfffbdae2ae164d2c2574f365e19b4"
+    },
+    "grouped/maximumFlattenPending/B/components/prism-worker.config.json": {
+      "bytes": 792,
+      "sha256": "57c405faa2367935a597273f8ff6f36efce073f4457337536263cb09b2b5c401"
+    },
+    "grouped/maximumFlattenPending/B/components/worker-core.config.json": {
+      "bytes": 291,
+      "sha256": "e321f554fedfa86448c50488fba43a332621e3673d45eb80e8725140c1d6db0c"
+    },
+    "grouped/maximumFlattenPending/B/components/prism-studio.config.json": {
+      "bytes": 254,
+      "sha256": "9915112c8b389cd3a0cabec4cb0f2e34f75a253aa58ee444f4848388feba55ce"
+    },
+    "grouped/maximumFlattenPending/B/components/buster-engine.config.json": {
+      "bytes": 6038,
+      "sha256": "4ad783f7199099e65a38518f3efb24e537c6c97883ec0b1259fe56a40a6f238a"
+    },
+    "grouped/maximumFlattenPending/B/components/prism-control.config.json": {
+      "bytes": 352,
+      "sha256": "ae842a3c909b7d2ac72b5a8d7579e0b2791bfbdb43538288d3ef6b13e0dc67ec"
+    },
+    "grouped/maximumFlattenPending/B/components/prism-execution.config.json": {
+      "bytes": 319,
+      "sha256": "af9a3e4a0337125f2ae551b0d68390975ccd0e762035c5c228af6b93a99fd4b9"
+    },
+    "grouped/maximumFlattenPending/A/pipeline.config.json": {
+      "bytes": 1617,
+      "sha256": "0d27001b8023c0963de0aac7f692c9307fc87197245ea68d74f2ed5298680729"
+    },
+    "grouped/maximumFlattenPending/A/components/prism-worker.config.json": {
+      "bytes": 792,
+      "sha256": "65ab36fd2d950f96c3e4d502715d9235412b29ccfa97abd28eb06c792eabf5e4"
+    },
+    "grouped/maximumFlattenPending/A/components/worker-core.config.json": {
+      "bytes": 291,
+      "sha256": "f7f2f7f8d9262ae22077904f0531f001a0a76cafb2dcbaf4cb1eda6cfc424bc2"
+    },
+    "grouped/maximumFlattenPending/A/components/prism-studio.config.json": {
+      "bytes": 254,
+      "sha256": "c181c81632ed9fd97d368f568e460ec805a076d87195b17e9b092331d9d77520"
+    },
+    "grouped/maximumFlattenPending/A/components/buster-engine.config.json": {
+      "bytes": 6038,
+      "sha256": "0f9d49c711a0ba82c173bedd8627bf58f20659a88847fed667e5f2dcbe3f3d2c"
+    },
+    "grouped/maximumFlattenPending/A/components/prism-control.config.json": {
+      "bytes": 352,
+      "sha256": "dae56fd589972710ad9b592b0b6ca3dceca0a1d5ea59ef23216dd70f7a0265bf"
+    },
+    "grouped/maximumFlattenPending/A/components/prism-execution.config.json": {
+      "bytes": 319,
+      "sha256": "18ea8a62652d8d9b87a0a304bed3fe0feb53595de6e0d0f9934142be5b77a16b"
+    },
+    "grouped/maximumFlattenVisits/B/pipeline.config.json": {
+      "bytes": 1617,
+      "sha256": "6852652c5ab3d164b8b7f77105e7da5e35cfffbdae2ae164d2c2574f365e19b4"
+    },
+    "grouped/maximumFlattenVisits/B/components/prism-worker.config.json": {
+      "bytes": 792,
+      "sha256": "57c405faa2367935a597273f8ff6f36efce073f4457337536263cb09b2b5c401"
+    },
+    "grouped/maximumFlattenVisits/B/components/worker-core.config.json": {
+      "bytes": 291,
+      "sha256": "e321f554fedfa86448c50488fba43a332621e3673d45eb80e8725140c1d6db0c"
+    },
+    "grouped/maximumFlattenVisits/B/components/prism-studio.config.json": {
+      "bytes": 254,
+      "sha256": "9915112c8b389cd3a0cabec4cb0f2e34f75a253aa58ee444f4848388feba55ce"
+    },
+    "grouped/maximumFlattenVisits/B/components/buster-engine.config.json": {
+      "bytes": 6038,
+      "sha256": "df643ec1b1a9c3a0b3c1fda4dfee65aef38448c0763d5b1728eac5e0e3cadc23"
+    },
+    "grouped/maximumFlattenVisits/B/components/prism-control.config.json": {
+      "bytes": 352,
+      "sha256": "ae842a3c909b7d2ac72b5a8d7579e0b2791bfbdb43538288d3ef6b13e0dc67ec"
+    },
+    "grouped/maximumFlattenVisits/B/components/prism-execution.config.json": {
+      "bytes": 319,
+      "sha256": "af9a3e4a0337125f2ae551b0d68390975ccd0e762035c5c228af6b93a99fd4b9"
+    },
+    "grouped/maximumFlattenVisits/A/pipeline.config.json": {
+      "bytes": 1617,
+      "sha256": "0d27001b8023c0963de0aac7f692c9307fc87197245ea68d74f2ed5298680729"
+    },
+    "grouped/maximumFlattenVisits/A/components/prism-worker.config.json": {
+      "bytes": 792,
+      "sha256": "65ab36fd2d950f96c3e4d502715d9235412b29ccfa97abd28eb06c792eabf5e4"
+    },
+    "grouped/maximumFlattenVisits/A/components/worker-core.config.json": {
+      "bytes": 291,
+      "sha256": "f7f2f7f8d9262ae22077904f0531f001a0a76cafb2dcbaf4cb1eda6cfc424bc2"
+    },
+    "grouped/maximumFlattenVisits/A/components/prism-studio.config.json": {
+      "bytes": 254,
+      "sha256": "c181c81632ed9fd97d368f568e460ec805a076d87195b17e9b092331d9d77520"
+    },
+    "grouped/maximumFlattenVisits/A/components/buster-engine.config.json": {
+      "bytes": 6038,
+      "sha256": "1ae08e48dcabc0384fedbca057450b59f72f3cf6041c5025b34a82d708dc0a44"
+    },
+    "grouped/maximumFlattenVisits/A/components/prism-control.config.json": {
+      "bytes": 352,
+      "sha256": "dae56fd589972710ad9b592b0b6ca3dceca0a1d5ea59ef23216dd70f7a0265bf"
+    },
+    "grouped/maximumFlattenVisits/A/components/prism-execution.config.json": {
+      "bytes": 319,
+      "sha256": "18ea8a62652d8d9b87a0a304bed3fe0feb53595de6e0d0f9934142be5b77a16b"
+    },
+    "guard-groups/reserve-memory-relation/B/pipeline.config.json": {
+      "bytes": 1605,
+      "sha256": "1dc0c0de3eeeadd7e072994c0c33edf18b375a8f43fe8bbaddafb71dd6da704e"
+    },
+    "guard-groups/reserve-memory-relation/B/components/prism-worker.config.json": {
+      "bytes": 790,
+      "sha256": "937f9faae398fab416d5ec361264a4f813f5a6ac8ca264d60df4387b801537aa"
+    },
+    "guard-groups/reserve-memory-relation/B/components/worker-core.config.json": {
+      "bytes": 289,
+      "sha256": "ba46f0448b50265b16e67807d61a6e9e3ffd760773a6c72be92fb82f3b571384"
+    },
+    "guard-groups/reserve-memory-relation/B/components/prism-studio.config.json": {
+      "bytes": 252,
+      "sha256": "d891fbdee3064e2287360852cb9a1a9d8df487ca37d1b176822c3ec1d287ecb5"
+    },
+    "guard-groups/reserve-memory-relation/B/components/buster-engine.config.json": {
+      "bytes": 6040,
+      "sha256": "050377e2cd8c3de9842faf7f9fa78f335ade5bdd48d5690cc8be41bbc14bfdbe"
+    },
+    "guard-groups/reserve-memory-relation/B/components/prism-control.config.json": {
+      "bytes": 350,
+      "sha256": "8745bbc9742f87a9b66e8cd35434467119cc1ae85e5c5acf9311d73b84376c96"
+    },
+    "guard-groups/reserve-memory-relation/B/components/prism-execution.config.json": {
+      "bytes": 317,
+      "sha256": "449806608639179ee0af7ad07949f082a776de7ea69de27c326c87bff05e7ba0"
+    },
+    "guard-groups/reserve-memory-relation/A/pipeline.config.json": {
+      "bytes": 1605,
+      "sha256": "21a8114a1bc1d4ff376989bd01f9710e78c483e0d041df4fd8b2add67f2f7c09"
+    },
+    "guard-groups/reserve-memory-relation/A/components/prism-worker.config.json": {
+      "bytes": 790,
+      "sha256": "d9415be5fcc02fbda2c980f9ce6c05f646c960af85708154392a27d5b6d2b038"
+    },
+    "guard-groups/reserve-memory-relation/A/components/worker-core.config.json": {
+      "bytes": 289,
+      "sha256": "5710a4e3cd6ce5c17048f04c33b4b4f874949f8e50a944daed0fde9b229a3874"
+    },
+    "guard-groups/reserve-memory-relation/A/components/prism-studio.config.json": {
+      "bytes": 252,
+      "sha256": "d5af3d07c0f40400d85897dc4957b58c878d07d91b892791bfce4b3e0195de34"
+    },
+    "guard-groups/reserve-memory-relation/A/components/buster-engine.config.json": {
+      "bytes": 6040,
+      "sha256": "b6ab271bf54d0e799198a6f9bf5e5dfabdd118a99a7b910f57027a978b130cfd"
+    },
+    "guard-groups/reserve-memory-relation/A/components/prism-control.config.json": {
+      "bytes": 350,
+      "sha256": "a97991fe58b60a31c35b5f1d7206bb05bf708d4fc70986f792d6796bb3c7dd4c"
+    },
+    "guard-groups/reserve-memory-relation/A/components/prism-execution.config.json": {
+      "bytes": 317,
+      "sha256": "0a40faec28e0bba0d2bb617b80a0c0b16ee0dc3a0bad96051904f36334093742"
+    },
+    "guard-groups/minimumOpenFiles-relation/B/pipeline.config.json": {
+      "bytes": 1605,
+      "sha256": "1dc0c0de3eeeadd7e072994c0c33edf18b375a8f43fe8bbaddafb71dd6da704e"
+    },
+    "guard-groups/minimumOpenFiles-relation/B/components/prism-worker.config.json": {
+      "bytes": 790,
+      "sha256": "937f9faae398fab416d5ec361264a4f813f5a6ac8ca264d60df4387b801537aa"
+    },
+    "guard-groups/minimumOpenFiles-relation/B/components/worker-core.config.json": {
+      "bytes": 289,
+      "sha256": "ba46f0448b50265b16e67807d61a6e9e3ffd760773a6c72be92fb82f3b571384"
+    },
+    "guard-groups/minimumOpenFiles-relation/B/components/prism-studio.config.json": {
+      "bytes": 252,
+      "sha256": "d891fbdee3064e2287360852cb9a1a9d8df487ca37d1b176822c3ec1d287ecb5"
+    },
+    "guard-groups/minimumOpenFiles-relation/B/components/buster-engine.config.json": {
+      "bytes": 6040,
+      "sha256": "9288957126ff656ba74d02b04cd99d3a735095ffeea253d79107da8b322076ff"
+    },
+    "guard-groups/minimumOpenFiles-relation/B/components/prism-control.config.json": {
+      "bytes": 350,
+      "sha256": "8745bbc9742f87a9b66e8cd35434467119cc1ae85e5c5acf9311d73b84376c96"
+    },
+    "guard-groups/minimumOpenFiles-relation/B/components/prism-execution.config.json": {
+      "bytes": 317,
+      "sha256": "449806608639179ee0af7ad07949f082a776de7ea69de27c326c87bff05e7ba0"
+    },
+    "guard-groups/minimumOpenFiles-relation/A/pipeline.config.json": {
+      "bytes": 1605,
+      "sha256": "21a8114a1bc1d4ff376989bd01f9710e78c483e0d041df4fd8b2add67f2f7c09"
+    },
+    "guard-groups/minimumOpenFiles-relation/A/components/prism-worker.config.json": {
+      "bytes": 790,
+      "sha256": "d9415be5fcc02fbda2c980f9ce6c05f646c960af85708154392a27d5b6d2b038"
+    },
+    "guard-groups/minimumOpenFiles-relation/A/components/worker-core.config.json": {
+      "bytes": 289,
+      "sha256": "5710a4e3cd6ce5c17048f04c33b4b4f874949f8e50a944daed0fde9b229a3874"
+    },
+    "guard-groups/minimumOpenFiles-relation/A/components/prism-studio.config.json": {
+      "bytes": 252,
+      "sha256": "d5af3d07c0f40400d85897dc4957b58c878d07d91b892791bfce4b3e0195de34"
+    },
+    "guard-groups/minimumOpenFiles-relation/A/components/buster-engine.config.json": {
+      "bytes": 6040,
+      "sha256": "51f9024d89f5c899335ca52e069ab0cb6735a0eb4d59cb5a929ad0d2718d1ad4"
+    },
+    "guard-groups/minimumOpenFiles-relation/A/components/prism-control.config.json": {
+      "bytes": 350,
+      "sha256": "a97991fe58b60a31c35b5f1d7206bb05bf708d4fc70986f792d6796bb3c7dd4c"
+    },
+    "guard-groups/minimumOpenFiles-relation/A/components/prism-execution.config.json": {
+      "bytes": 317,
+      "sha256": "0a40faec28e0bba0d2bb617b80a0c0b16ee0dc3a0bad96051904f36334093742"
+    },
+    "guard-groups/reserve-plus-memory-group/B/pipeline.config.json": {
+      "bytes": 1605,
+      "sha256": "1dc0c0de3eeeadd7e072994c0c33edf18b375a8f43fe8bbaddafb71dd6da704e"
+    },
+    "guard-groups/reserve-plus-memory-group/B/components/prism-worker.config.json": {
+      "bytes": 790,
+      "sha256": "937f9faae398fab416d5ec361264a4f813f5a6ac8ca264d60df4387b801537aa"
+    },
+    "guard-groups/reserve-plus-memory-group/B/components/worker-core.config.json": {
+      "bytes": 289,
+      "sha256": "ba46f0448b50265b16e67807d61a6e9e3ffd760773a6c72be92fb82f3b571384"
+    },
+    "guard-groups/reserve-plus-memory-group/B/components/prism-studio.config.json": {
+      "bytes": 252,
+      "sha256": "d891fbdee3064e2287360852cb9a1a9d8df487ca37d1b176822c3ec1d287ecb5"
+    },
+    "guard-groups/reserve-plus-memory-group/B/components/buster-engine.config.json": {
+      "bytes": 6040,
+      "sha256": "690b59a666da7873f366b2d0b44d28e46012af6ca91ee469ec1bee661ec6c2cf"
+    },
+    "guard-groups/reserve-plus-memory-group/B/components/prism-control.config.json": {
+      "bytes": 350,
+      "sha256": "8745bbc9742f87a9b66e8cd35434467119cc1ae85e5c5acf9311d73b84376c96"
+    },
+    "guard-groups/reserve-plus-memory-group/B/components/prism-execution.config.json": {
+      "bytes": 317,
+      "sha256": "449806608639179ee0af7ad07949f082a776de7ea69de27c326c87bff05e7ba0"
+    },
+    "guard-groups/reserve-plus-memory-group/A/pipeline.config.json": {
+      "bytes": 1605,
+      "sha256": "21a8114a1bc1d4ff376989bd01f9710e78c483e0d041df4fd8b2add67f2f7c09"
+    },
+    "guard-groups/reserve-plus-memory-group/A/components/prism-worker.config.json": {
+      "bytes": 790,
+      "sha256": "d9415be5fcc02fbda2c980f9ce6c05f646c960af85708154392a27d5b6d2b038"
+    },
+    "guard-groups/reserve-plus-memory-group/A/components/worker-core.config.json": {
+      "bytes": 289,
+      "sha256": "5710a4e3cd6ce5c17048f04c33b4b4f874949f8e50a944daed0fde9b229a3874"
+    },
+    "guard-groups/reserve-plus-memory-group/A/components/prism-studio.config.json": {
+      "bytes": 252,
+      "sha256": "d5af3d07c0f40400d85897dc4957b58c878d07d91b892791bfce4b3e0195de34"
+    },
+    "guard-groups/reserve-plus-memory-group/A/components/buster-engine.config.json": {
+      "bytes": 6040,
+      "sha256": "8ad9667f9deab16481f2cae614ff28ed7e860461c285cc554678cc3a5b5cf2c3"
+    },
+    "guard-groups/reserve-plus-memory-group/A/components/prism-control.config.json": {
+      "bytes": 350,
+      "sha256": "a97991fe58b60a31c35b5f1d7206bb05bf708d4fc70986f792d6796bb3c7dd4c"
+    },
+    "guard-groups/reserve-plus-memory-group/A/components/prism-execution.config.json": {
+      "bytes": 317,
+      "sha256": "0a40faec28e0bba0d2bb617b80a0c0b16ee0dc3a0bad96051904f36334093742"
+    },
+    "guard-groups/minimum-plus-maximum-group/B/pipeline.config.json": {
+      "bytes": 1605,
+      "sha256": "1dc0c0de3eeeadd7e072994c0c33edf18b375a8f43fe8bbaddafb71dd6da704e"
+    },
+    "guard-groups/minimum-plus-maximum-group/B/components/prism-worker.config.json": {
+      "bytes": 790,
+      "sha256": "937f9faae398fab416d5ec361264a4f813f5a6ac8ca264d60df4387b801537aa"
+    },
+    "guard-groups/minimum-plus-maximum-group/B/components/worker-core.config.json": {
+      "bytes": 289,
+      "sha256": "ba46f0448b50265b16e67807d61a6e9e3ffd760773a6c72be92fb82f3b571384"
+    },
+    "guard-groups/minimum-plus-maximum-group/B/components/prism-studio.config.json": {
+      "bytes": 252,
+      "sha256": "d891fbdee3064e2287360852cb9a1a9d8df487ca37d1b176822c3ec1d287ecb5"
+    },
+    "guard-groups/minimum-plus-maximum-group/B/components/buster-engine.config.json": {
+      "bytes": 6040,
+      "sha256": "eec60256349b6f92fa0a41a4ffa829154391719d6d12ba8b7d069bce08fc4fbd"
+    },
+    "guard-groups/minimum-plus-maximum-group/B/components/prism-control.config.json": {
+      "bytes": 350,
+      "sha256": "8745bbc9742f87a9b66e8cd35434467119cc1ae85e5c5acf9311d73b84376c96"
+    },
+    "guard-groups/minimum-plus-maximum-group/B/components/prism-execution.config.json": {
+      "bytes": 317,
+      "sha256": "449806608639179ee0af7ad07949f082a776de7ea69de27c326c87bff05e7ba0"
+    },
+    "guard-groups/minimum-plus-maximum-group/A/pipeline.config.json": {
+      "bytes": 1605,
+      "sha256": "21a8114a1bc1d4ff376989bd01f9710e78c483e0d041df4fd8b2add67f2f7c09"
+    },
+    "guard-groups/minimum-plus-maximum-group/A/components/prism-worker.config.json": {
+      "bytes": 790,
+      "sha256": "d9415be5fcc02fbda2c980f9ce6c05f646c960af85708154392a27d5b6d2b038"
+    },
+    "guard-groups/minimum-plus-maximum-group/A/components/worker-core.config.json": {
+      "bytes": 289,
+      "sha256": "5710a4e3cd6ce5c17048f04c33b4b4f874949f8e50a944daed0fde9b229a3874"
+    },
+    "guard-groups/minimum-plus-maximum-group/A/components/prism-studio.config.json": {
+      "bytes": 252,
+      "sha256": "d5af3d07c0f40400d85897dc4957b58c878d07d91b892791bfce4b3e0195de34"
+    },
+    "guard-groups/minimum-plus-maximum-group/A/components/buster-engine.config.json": {
+      "bytes": 6040,
+      "sha256": "8ad9667f9deab16481f2cae614ff28ed7e860461c285cc554678cc3a5b5cf2c3"
+    },
+    "guard-groups/minimum-plus-maximum-group/A/components/prism-control.config.json": {
+      "bytes": 350,
+      "sha256": "a97991fe58b60a31c35b5f1d7206bb05bf708d4fc70986f792d6796bb3c7dd4c"
+    },
+    "guard-groups/minimum-plus-maximum-group/A/components/prism-execution.config.json": {
+      "bytes": 317,
+      "sha256": "0a40faec28e0bba0d2bb617b80a0c0b16ee0dc3a0bad96051904f36334093742"
+    },
+    "archives/listing-long-name-810000.tar.gz": {
+      "bytes": 5897,
+      "sha256": "1e3e528b53ce4c75a74e4b560603d8759d6eae0532c929e8280c2e5a5b552504"
+    },
+    "archives/entries-150001.tar.gz": {
+      "bytes": 1431727,
+      "sha256": "480e3dd92e03ef87b658f324e778f5b9617b8c4f565f876073e979bdee062902"
+    },
+    "archives/expanded-402653185.tar.gz": {
+      "bytes": 1757157,
+      "sha256": "e8472e772882bc85095c65d4f013e108ddbe09f466bc84a22bde3b762144cd04"
+    },
+    "archives/archive-bytes-50335744-body.tar.gz": {
+      "bytes": 50351267,
+      "sha256": "dadd6d625fab14a876b9fc3ec40d1deca8b615f4ed0da69745ee84b109ea7d14"
+    },
+    "yaml/maximumFlattenPending-original02-control.yaml": {
+      "bytes": 1487,
+      "sha256": "3ea27e07c7e65c732b2055ee026289a0e5d150c5091265b5e5b584540b1ba4cb"
+    },
+    "yaml/maximumResources-original02-distinction.yaml": {
+      "bytes": 4807,
+      "sha256": "5930fd3714e5881324ffd9ff319046baa0579089362074e20ecb0c3a1a0eaf5c"
+    },
+    "yaml/host-network-negative.yaml": {
+      "bytes": 606,
+      "sha256": "e88350b370c3538f86272642e8d34a52d93463afbe66eb960888dae5eb057f53"
+    },
+    "yaml/maximumAliases-original02-distinction.yaml": {
+      "bytes": 17946,
+      "sha256": "bc055c70b442be0f7f53bcb48839b5f8cee8107114e62bb436a7e8c120ee0cdb"
+    },
+    "yaml/alias-exact-B750-positive.yaml": {
+      "bytes": 17923,
+      "sha256": "902dc7e7fd2428999665cac4e692867f02f533cd0cdc6e8ac90dc1a6be299450"
+    },
+    "yaml/scalar-alias-not-object-alias-cap.yaml": {
+      "bytes": 25096,
+      "sha256": "3900ee614242ab2464ada3291119ce222da03c4326c047e7341a657e2c17a70a"
+    },
+    "yaml/maximumFlattenPending-supplemental-complete-pair.yaml": {
+      "bytes": 1487,
+      "sha256": "3ea27e07c7e65c732b2055ee026289a0e5d150c5091265b5e5b584540b1ba4cb"
+    },
+    "yaml/baseline.yaml": {
+      "bytes": 611,
+      "sha256": "4d28c5476efc3ae7cece07dd5cca8c59368b60f8631edfa5e8c13576c2b30828"
+    },
+    "yaml/malformed-yaml.yaml": {
+      "bytes": 8,
+      "sha256": "7c9007b5053b21f0622b10beceaa8178315485a13758daa31961d8d238d5a3d1"
+    },
+    "yaml/maximumFlattenVisits-original02-control.yaml": {
+      "bytes": 1487,
+      "sha256": "3ea27e07c7e65c732b2055ee026289a0e5d150c5091265b5e5b584540b1ba4cb"
+    },
+    "yaml/resource-exact-B48-positive.yaml": {
+      "bytes": 4579,
+      "sha256": "537a292da430b63b9bf581283a9ecf0de0e18e23ac7246b268dcccc630766fb3"
+    },
+    "yaml/parser-exact-B75000-positive.yaml": {
+      "bytes": 439133,
+      "sha256": "4ba24a0b45e556d6e3fd842032980dc392e75d2b1226c565367a3bb86b33dce1"
+    },
+    "yaml/maximumFlattenVisits-supplemental-complete-pair.yaml": {
+      "bytes": 1487,
+      "sha256": "3ea27e07c7e65c732b2055ee026289a0e5d150c5091265b5e5b584540b1ba4cb"
+    },
+    "yaml/baseline-valid.yaml": {
+      "bytes": 611,
+      "sha256": "4d28c5476efc3ae7cece07dd5cca8c59368b60f8631edfa5e8c13576c2b30828"
+    },
+    "yaml/maximumNodes-original02-distinction.yaml": {
+      "bytes": 439145,
+      "sha256": "d2636796baa87c8b6e0e6accc218b7022f88c03ece8028128560407aac46b3ed"
+    },
+    "yaml/alias-cycle.yaml": {
+      "bytes": 47,
+      "sha256": "ef9e7c6f4a7afb59521de8cc8fc3366678e39ef64d8847c16118dfad4aefe4c9"
+    },
+    "yaml/maximumDepth-original02-distinction.yaml": {
+      "bytes": 1379,
+      "sha256": "333449251503b695f3d2f4225515deeb7f568d5500144d07412931dbace5e91f"
+    }
+  },
+  "canonicalOriginal229LifecycleConserved": true,
+  "historicalPassed": 28,
+  "futureNotRun": 201
+}

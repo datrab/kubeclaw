@@ -1,0 +1,15 @@
+{
+  "command": [
+    "python3",
+    "/home/node/.openclaw/agents/main/agent/codex-home/skills/autoreview/scripts/autoreview",
+    "--mode",
+    "local",
+    "--engine",
+    "codex",
+    "--no-web-search"
+  ],
+  "exitCode": 1,
+  "status": "unavailable",
+  "nativeReviewSeparate": true,
+  "helperClean": false
+}

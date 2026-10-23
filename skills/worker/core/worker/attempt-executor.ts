@@ -1,3 +1,4 @@
+import { readWorkerCorePolicyCapture, type WorkerCorePolicyCapture, type WorkerCoreInstance } from '@kubeclaw/plugin-foundation/config/worker-core-policy';
 import { assessWorkerResources, unsupportedWorkerBudget } from './resource-accounting.ts';
 import { resourceResultFields } from './resource-result-fields.ts';
 import crypto from 'node:crypto';
@@ -85,6 +86,7 @@ export interface WorkerAttemptExecutorOptions<E extends WorkerAttemptEnvelope = 
   readonly onProgress?: (event: AttemptProgressEventV1) => void | Promise<void>;
   readonly onLogPart?: (part: WorkerLogPartV1) => void | Promise<void>;
   readonly retainLogs?: boolean;
+  readonly workerCore?: Readonly<{capture: WorkerCorePolicyCapture; instance: WorkerCoreInstance}>;
   readonly storeFullLog?: (attemptId: string, content: string, context: { readonly signal: AbortSignal }) => Promise<WorkerEvidenceRefV1 | null>;
   readonly now?: () => Date;
   readonly id?: () => string;
@@ -141,7 +143,7 @@ function jsonStringBytes(value: string): number {
   return bytes;
 }
 
-function preflightJson(value: unknown, byteLimit: number, prefix: string): void {
+function preflightJson(value: unknown, byteLimit: number, prefix: string, nodesLimit = MAX_ATTEMPT_VALUE_NODES, depthLimit = MAX_ATTEMPT_VALUE_DEPTH): void {
   const pending: Array<{ value: unknown; depth: number }> = [{ value, depth: 0 }];
   const seen = new WeakSet<object>();
   let bytes = 0;
@@ -149,8 +151,8 @@ function preflightJson(value: unknown, byteLimit: number, prefix: string): void 
   while (pending.length > 0) {
     const current = pending.pop()!;
     nodes += 1;
-    if (nodes > MAX_ATTEMPT_VALUE_NODES) throw new Error(`${prefix}_NODE_LIMIT`);
-    if (current.depth > MAX_ATTEMPT_VALUE_DEPTH) throw new Error(`${prefix}_DEPTH_LIMIT`);
+    if (nodes > nodesLimit) throw new Error(`${prefix}_NODE_LIMIT`);
+    if (current.depth > depthLimit) throw new Error(`${prefix}_DEPTH_LIMIT`);
     if (typeof current.value === 'string') bytes += jsonStringBytes(current.value);
     else if (current.value === null) bytes += 4;
     else if (typeof current.value === 'number' || typeof current.value === 'boolean') {
@@ -218,7 +220,13 @@ export class WorkerAttemptExecutor<E extends WorkerAttemptEnvelope = WorkerAttem
   #execution: Promise<WorkerAttemptResult> | null = null;
 
   constructor(options: WorkerAttemptExecutorOptions<E>) {
-    preflightJson(options.envelope, MAX_ATTEMPT_ENVELOPE_BYTES, 'WORKER_ATTEMPT_INPUT');
+    const workerCore = options.workerCore === undefined ? undefined : Object.freeze({
+      capture: readWorkerCorePolicyCapture(options.workerCore.capture), instance: options.workerCore.instance,
+    });
+    if (workerCore && !Object.hasOwn(workerCore.capture.settings.runtime.retain_logs, workerCore.instance)) throw new Error('WORKER_CORE_INSTANCE_INVALID');
+    if (workerCore && options.retainLogs !== undefined) throw new Error('WORKER_CORE_DUPLICATE_RETENTION_AUTHOR');
+    const policy = workerCore?.capture.settings.runtime;
+    preflightJson(options.envelope, policy?.input_bytes ?? MAX_ATTEMPT_ENVELOPE_BYTES, 'WORKER_ATTEMPT_INPUT', policy?.json_nodes, policy?.json_depth);
     const envelope = freeze(structuredClone(options.envelope));
     validateEnvelopeDigests(envelope);
     if (envelope.limits.logBytes > MAX_ATTEMPT_LOG_BYTES) throw new Error('WORKER_LOG_LIMIT_INVALID');
@@ -227,7 +235,8 @@ export class WorkerAttemptExecutor<E extends WorkerAttemptEnvelope = WorkerAttem
         || options.receiptNamespace !== options.receiptNamespace.toWellFormed())) {
       throw new Error('WORKER_RECEIPT_NAMESPACE_INVALID');
     }
-    this.#options = { ...options, envelope };
+    this.#options = { ...options, envelope, ...(workerCore ? {workerCore,
+      retainLogs: workerCore.capture.settings.runtime.retain_logs[workerCore.instance]} : {}) };
     this.#accounting=envelope.schemaVersion==='worker-attempt-envelope.v3'?initialWorkerNativeResourceAccounting(envelope)
       :envelope.schemaVersion==='worker-attempt-envelope.v2'?initialWorkerResourceAccounting(envelope):undefined;
     this.#now = options.now ?? (() => new Date());
@@ -304,7 +313,7 @@ export class WorkerAttemptExecutor<E extends WorkerAttemptEnvelope = WorkerAttem
       if (!text && typeof value !== 'string') return;
       let offset = 0;
       do {
-        if (logPartCount >= MAX_ATTEMPT_LOG_PARTS) {
+        if (logPartCount >= (this.#options.workerCore?.capture.settings.runtime.log_parts ?? MAX_ATTEMPT_LOG_PARTS)) {
           logFault = new AttemptFault('errored', 'WORKER_LOG_LIMIT');
           controller.abort(logFault);
           void terminate();
@@ -420,7 +429,7 @@ export class WorkerAttemptExecutor<E extends WorkerAttemptEnvelope = WorkerAttem
       }
       if (operationCompletedAt >= timeoutAt) throw new AttemptFault('timed_out', 'WORKER_ATTEMPT_TIMEOUT');
       if (logFault) throw logFault;
-      preflightJson(operationResult.specialistResult, envelope.limits.resultBytes, 'WORKER_RESULT');
+      preflightJson(operationResult.specialistResult, envelope.limits.resultBytes, 'WORKER_RESULT', this.#options.workerCore?.capture.settings.runtime.json_nodes, this.#options.workerCore?.capture.settings.runtime.json_depth);
       const resultBytes = Buffer.byteLength(JSON.stringify(operationResult.specialistResult));
       if (resultBytes > envelope.limits.resultBytes) throw new AttemptFault('errored', 'WORKER_RESULT_LIMIT');
       checkEvidence(operationResult.evidence, envelope);
@@ -538,7 +547,7 @@ export class WorkerAttemptExecutor<E extends WorkerAttemptEnvelope = WorkerAttem
         const specialistResult = await phases.run('WORKER_RESULT_FINALIZATION', signal => operation.finalizeResult!({
           attempt: envelope, evidence: freeze(structuredClone(evidence)), specialistResult: operationResult!.specialistResult, signal,
         }));
-        preflightJson(specialistResult, envelope.limits.resultBytes, 'WORKER_RESULT');
+        preflightJson(specialistResult, envelope.limits.resultBytes, 'WORKER_RESULT', this.#options.workerCore?.capture.settings.runtime.json_nodes, this.#options.workerCore?.capture.settings.runtime.json_depth);
         const finalizedBytes = Buffer.byteLength(JSON.stringify(specialistResult));
         if (finalizedBytes > envelope.limits.resultBytes) throw new Error('WORKER_RESULT_LIMIT');
         operationResult = freeze({ ...operationResult, specialistResult: structuredClone(specialistResult) });

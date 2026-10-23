@@ -1,0 +1,54 @@
+{
+  "reviewerTask": "/root/case_phase_independent_15",
+  "python": "3.11.2 (main, Oct  7 2026, 12:35:07) [GCC 12.2.0]",
+  "gitHead": "0bcaf85d192d031814554c590b1bfca5b3ba81dd",
+  "gitTree": "a42e57276685d526d8c966e14a57ae85a3e0a1ca",
+  "commands": [
+    {
+      "command": [
+        "/tmp/kubeclaw-c0-validator-venv/bin/python",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/active-definition-generation-01/check-generation.py"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-case-phase-recheck-15/inputs",
+      "exitCode": 0,
+      "seconds": 0.445,
+      "stdoutSha256": "7b4be5d3e26ab25d9db428a31472a0e5e7d20bb901bfd23e5ab062d5c0a72cda",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/tmp/kubeclaw-c0-validator-venv/bin/python",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/active-definition-generation-01/check-case-contract.py"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-case-phase-recheck-15/inputs",
+      "exitCode": 0,
+      "seconds": 0.051,
+      "stdoutSha256": "b9def36444c8eaafce9a56e4b4f57b28c5e6482ddd5d31966d6cee5919743d1c",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/tmp/kubeclaw-c0-validator-venv/bin/python",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/active-definition-generation-01/check-baseline.py"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-case-phase-recheck-15/inputs",
+      "exitCode": 0,
+      "seconds": 4.571,
+      "stdoutSha256": "832c2648866e86c475b816deaa3a643513e6669f7a19a84b69240d5145391155",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/tmp/kubeclaw-c0-validator-venv/bin/python",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-case-phase-recheck-15/recheck.py"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-case-phase-recheck-15/inputs",
+      "exitCode": 1,
+      "seconds": 4.648,
+      "stdoutSha256": "5e17549e3d1635a6194867e3ed9c55083ca29c4042c242b278a080471963165f",
+      "stderrSha256": "8e274094c794c489a94f623763acfe812f8e07c6bab36890a1be962b383c858b"
+    }
+  ],
+  "frozenEndHashesUnchanged": true,
+  "liveEndHashesUnchanged": true
+}

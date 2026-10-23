@@ -1,0 +1,10 @@
+{
+  "passed": 8,
+  "failed": 0,
+  "actualConsumer": "FileProducerOutbox four methods + FileObservabilityAdmissionStore normal/quarantine/overflow/gap",
+  "outputs": [
+    "outbox-method-fixtures.json",
+    "admission-method-fixtures.json"
+  ],
+  "claim": "Current local disposable fixture observations only; not proposed reserve/header/readcap projection or F-MUT/F-EFFECT"
+}

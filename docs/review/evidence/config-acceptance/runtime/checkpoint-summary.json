@@ -1,0 +1,56 @@
+{
+  "identity": {
+    "commit": "9452d35524192f8665bc87254b3c63a361e7bd4a",
+    "tree": "89fa8e4d683cf442deb189d60ce8b7cc1ff05327"
+  },
+  "rows": 1221,
+  "closedRows": 0,
+  "sources": 903,
+  "schemaCount": 57,
+  "plugins": 48,
+  "candidates": 4642,
+  "groups": [
+    {
+      "id": "runtime-buster-plan-callers",
+      "rowCount": 0,
+      "candidateCount": 1138
+    },
+    {
+      "id": "runtime-buster-test-provider-plugins",
+      "rowCount": 350,
+      "candidateCount": 533
+    },
+    {
+      "id": "runtime-common-adapters-observers",
+      "rowCount": 174,
+      "candidateCount": 591
+    },
+    {
+      "id": "runtime-core-orchestrator-resolver",
+      "rowCount": 23,
+      "candidateCount": 572
+    },
+    {
+      "id": "runtime-foundation-sdk-registry-contracts",
+      "rowCount": 52,
+      "candidateCount": 348
+    },
+    {
+      "id": "runtime-nova-stage-plugins",
+      "rowCount": 74,
+      "candidateCount": 568
+    },
+    {
+      "id": "runtime-project-compiler",
+      "rowCount": 22,
+      "candidateCount": 213
+    },
+    {
+      "id": "runtime-review-agent-model-prompt-policy",
+      "rowCount": 526,
+      "candidateCount": 679
+    }
+  ],
+  "status": "NOT ACCEPTED / checkpoint paused",
+  "backlog": "continuation-backlog.json"
+}

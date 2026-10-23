@@ -1,0 +1,320 @@
+{
+  "scope": "fresh independent frozen Core canonical definition mapping/source audit only; no global C0, no Runtime self-review",
+  "observations": [
+    {
+      "id": "all13-fields-27-cases-original22-requirement-body-preservation",
+      "result": "passed",
+      "scope": "independent frozen source/definition integrity, not behavioral acceptance"
+    },
+    {
+      "id": "negative-lost-original-case",
+      "result": "passed",
+      "scope": "documentation negative, not F-MUT"
+    },
+    {
+      "id": "negative-lost-required-requirement",
+      "result": "passed",
+      "scope": "documentation negative, not F-MUT"
+    },
+    {
+      "id": "negative-changed-original-oracle",
+      "result": "passed",
+      "scope": "documentation negative, not F-MUT"
+    },
+    {
+      "id": "negative-false-acceptance",
+      "result": "passed",
+      "scope": "documentation negative, not F-MUT"
+    },
+    {
+      "id": "negative-second-owning-id",
+      "result": "passed",
+      "scope": "documentation negative, not F-MUT"
+    },
+    {
+      "id": "restored-frozen-fields-cases",
+      "result": "passed",
+      "scope": "independent frozen source/definition integrity, not behavioral acceptance"
+    },
+    {
+      "id": "all14-question-mappings-retain60-unresolved-aliases",
+      "result": "passed"
+    },
+    {
+      "id": "173-exactsource-memberships1353-markers-including339-memberrefs",
+      "result": "passed",
+      "notSemanticClosure": true
+    },
+    {
+      "id": "all50-default-source-members-preserved-classification-mechanism-inherited-or-explicit-open",
+      "result": "passed",
+      "notSemanticClosure": true
+    },
+    {
+      "id": "sixcomputedENV-exactreader-and-realproducer-notambient-writer",
+      "result": "passed"
+    },
+    {
+      "id": "15frozen-crossauthor-handoffs-existing-row-not-reacceptance",
+      "result": "passed"
+    },
+    {
+      "id": "image2048-exactproducer-wire-Go-copy-Core-lines-versusReady1024",
+      "result": "passed",
+      "notInstalledOrPullableProof": true
+    }
+  ],
+  "questionDispositions": [
+    {
+      "question": "CMP-SOURCE-FOUNDATION-FLOCK-WAIT",
+      "newFields": [
+        "CMP-buster-engine-preparation.storeLockWaitSeconds",
+        "CMP-buster-engine-execution.stores.admission.lockWaitSeconds",
+        "CMP-buster-engine-execution.stores.attempts.lockWaitSeconds"
+      ],
+      "existingFields": [],
+      "unresolvedAliases": 54,
+      "caseIDs": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ],
+      "disposition": "bounded own-field/source/case mapping supported; unresolved cross-owner inputs remain open, no field closure"
+    },
+    {
+      "question": "CMP-SOURCE-ADMISSION-REASON-LIMITS",
+      "newFields": [
+        "CMP-buster-engine-execution.stores.admission.reasonThresholdCodeUnits",
+        "CMP-buster-engine-execution.stores.admission.reasonPrefixCodeUnits"
+      ],
+      "existingFields": [
+        "CMP-buster-engine-execution.stores.admission.maximumBytes"
+      ],
+      "unresolvedAliases": 1,
+      "caseIDs": [
+        "QC-ADMISSION-REASON-LIMITS-VAL",
+        "QC-ADMISSION-REASON-LIMITS-FORMAT",
+        "QC-ADMISSION-REASON-LIMITS-HISTORY"
+      ],
+      "disposition": "bounded own-field/source/case mapping supported; unresolved cross-owner inputs remain open, no field closure"
+    },
+    {
+      "question": "CMP-SOURCE-ADMISSION-METADATA-RESERVE",
+      "newFields": [
+        "CMP-buster-engine-execution.stores.admission.metadataReserveBytes"
+      ],
+      "existingFields": [
+        "CMP-buster-engine-execution.stores.admission.maximumBytes"
+      ],
+      "unresolvedAliases": 1,
+      "caseIDs": [
+        "QC-ADMISSION-METADATA-RESERVE-VAL",
+        "QC-ADMISSION-METADATA-RESERVE-OVERFLOW",
+        "QC-ADMISSION-METADATA-RESERVE-ALL-WRITES"
+      ],
+      "disposition": "bounded own-field/source/case mapping supported; unresolved cross-owner inputs remain open, no field closure"
+    },
+    {
+      "question": "CMP-SOURCE-OUTBOX-UNBOUNDED-READ",
+      "newFields": [
+        "CMP-API-OUTBOX-EXISTING-MAXIMUMBYTES-READBOUND"
+      ],
+      "existingFields": [],
+      "unresolvedAliases": 0,
+      "caseIDs": [
+        "QC-OUTBOX-UNBOUNDED-READ-FOUR-METHODS",
+        "QC-OUTBOX-UNBOUNDED-READ-REPLAY"
+      ],
+      "disposition": "bounded own-field/source/case mapping supported; unresolved cross-owner inputs remain open, no field closure"
+    },
+    {
+      "question": "CMP-SOURCE-LATENT-UNBOUNDED-BLOB-API",
+      "newFields": [
+        "CMP-API-BLOB-EXISTING-TOTALBYTES-REQUIRED"
+      ],
+      "existingFields": [],
+      "unresolvedAliases": 0,
+      "caseIDs": [
+        "QC-LATENT-UNBOUNDED-BLOB-API-API-AND-SEVEN",
+        "QC-LATENT-UNBOUNDED-BLOB-API-HISTORY"
+      ],
+      "disposition": "bounded own-field/source/case mapping supported; unresolved cross-owner inputs remain open, no field closure"
+    },
+    {
+      "question": "CMP-SOURCE-BUSTER-TAR-DIAGNOSTIC",
+      "newFields": [
+        "CMP-buster-engine-preparation.tarDiagnosticCodeUnits"
+      ],
+      "existingFields": [
+        "CMP-buster-engine-preparation.maximumTarStderrBytes"
+      ],
+      "unresolvedAliases": 0,
+      "caseIDs": [
+        "QC-BUSTER-TAR-DIAGNOSTIC-VAL",
+        "QC-BUSTER-TAR-DIAGNOSTIC-REAL-TAR",
+        "QC-BUSTER-TAR-DIAGNOSTIC-BIND"
+      ],
+      "disposition": "bounded own-field/source/case mapping supported; unresolved cross-owner inputs remain open, no field closure"
+    },
+    {
+      "question": "CMP-SOURCE-BUSTER-TAR-LOCATOR-UNUSED",
+      "newFields": [],
+      "existingFields": [
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-TAREXECUTABLE"
+      ],
+      "unresolvedAliases": 0,
+      "caseIDs": [
+        "QC-BUSTER-TAR-LOCATOR-UNUSED-PAIRED-PROVISION",
+        "QC-BUSTER-TAR-LOCATOR-UNUSED-HISTORY"
+      ],
+      "disposition": "bounded own-field/source/case mapping supported; unresolved cross-owner inputs remain open, no field closure"
+    },
+    {
+      "question": "CMP-SOURCE-FIXTURE-STORAGE-EXPONENT",
+      "newFields": [
+        "CMP-BUSTER-FIXTURE-QUANTITY-QUOTA-REPRESENTATION"
+      ],
+      "existingFields": [
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeClaimBytes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeTotalBytes"
+      ],
+      "unresolvedAliases": 0,
+      "caseIDs": [
+        "QC-FIXTURE-STORAGE-EXPONENT-REPRESENTATION",
+        "QC-FIXTURE-STORAGE-EXPONENT-POLICY-BIND"
+      ],
+      "disposition": "bounded own-field/source/case mapping supported; unresolved cross-owner inputs remain open, no field closure"
+    },
+    {
+      "question": "CMP-SOURCE-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS",
+      "newFields": [
+        "CMP-BUSTER-PROVIDER-RESOURCE-MEASUREMENT-PROVENANCE"
+      ],
+      "existingFields": [],
+      "unresolvedAliases": 0,
+      "caseIDs": [
+        "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-REAL-PROVENANCE",
+        "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-RECOVERY-EVAL"
+      ],
+      "disposition": "bounded own-field/source/case mapping supported; unresolved cross-owner inputs remain open, no field closure"
+    },
+    {
+      "question": "CMP-SOURCE-FIXTURE-SECRET-REFERENCE-CARDINALITY",
+      "newFields": [
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumSecretReferenceEntries"
+      ],
+      "existingFields": [
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedSecretReferences"
+      ],
+      "unresolvedAliases": 0,
+      "caseIDs": [
+        "QC-FIXTURE-SECRET-ENTRY-CAP-VAL",
+        "QC-FIXTURE-SECRET-ENTRY-CAP-BIND"
+      ],
+      "disposition": "bounded own-field/source/case mapping supported; unresolved cross-owner inputs remain open, no field closure"
+    },
+    {
+      "question": "CMP-SOURCE-PRISM-DESIGN-CARDINALITY",
+      "newFields": [],
+      "existingFields": [
+        "AUTH-PRISM-DESIGN-CARDINALITY"
+      ],
+      "unresolvedAliases": 1,
+      "caseIDs": [
+        "AUTH-PRISM-DESIGN-CARDINALITY-FUTURE",
+        "AUTH-PRISM-C0-CURRENT-DESIGN-DEFINITIONS",
+        "AUTH-PRISM-DESIGN-ROUND-A3",
+        "AUTH-PRISM-DESIGN-ROUND-B2",
+        "AUTH-PRISM-DESIGN-SAME-KEY-PUBLISH-B",
+        "AUTH-PRISM-DESIGN-CRASH-BETWEEN-TRANSACTIONS",
+        "AUTH-PRISM-DESIGN-PRELEDGER-COMPLETED",
+        "AUTH-PRISM-DESIGN-MISSING-ORIGINAL",
+        "AUTH-PRISM-DESIGN-EXACT-THREE-INTENT-B",
+        "AUTH-PRISM-DESIGN-INTENT-REFERENCE-MISMATCH",
+        "AUTH-PRISM-DESIGN-R-THREE-ONLY",
+        "AUTH-PRISM-DESIGN-CLIENT-ALL-COMPLETION-PATHS",
+        "AUTH-PRISM-DESIGN-CLIENT-MIXED-GENERATION",
+        "AUTH-PRISM-DESIGN-RETAINED-UNCERTAINTY",
+        "AUTH-PRISM-DESIGN-COUNT-NEGATIVES",
+        "AUTH-PRISM-DESIGN-FIXED-EVAL-A"
+      ],
+      "disposition": "bounded own-field/source/case mapping supported; unresolved cross-owner inputs remain open, no field closure"
+    },
+    {
+      "question": "CMP-SOURCE-PRISM-DEVELOPMENT-IDENTITY",
+      "newFields": [],
+      "existingFields": [
+        "AUTH-PRISM-ENGINE-DEVELOPMENT-IDENTITY",
+        "DLV-NATIVE-PRISM-ENGINE-DIGEST-PROJECTION"
+      ],
+      "unresolvedAliases": 1,
+      "caseIDs": [
+        "AUTH-PRISM-C0-IMAGE-BINDING-SYNTAX",
+        "AUTH-PRISM-NATIVE-PROVENANCE-A-B",
+        "AUTH-PRISM-NATIVE-PROVENANCE-CODE-MISMATCH",
+        "AUTH-PRISM-NATIVE-PROVENANCE-OCI-MISMATCH",
+        "AUTH-PRISM-NATIVE-PROVENANCE-CONFIG-MISMATCH",
+        "AUTH-PRISM-NATIVE-PROVENANCE-ROLE-GRANT-MISMATCH",
+        "AUTH-PRISM-NATIVE-PROVENANCE-SAME-KEY",
+        "AUTH-PRISM-NATIVE-PROVENANCE-RECOVERY-A",
+        "AUTH-PRISM-NATIVE-PROVENANCE-MISSING-HISTORY",
+        "AUTH-PRISM-NATIVE-PROVENANCE-RESULT-REPLAY",
+        "AUTH-PRISM-NATIVE-PROVENANCE-UNCERTAIN-RETRY",
+        "AUTH-PRISM-NATIVE-PROVENANCE-DEV-NOT-PRODUCTION",
+        "AUTH-PRISM-NATIVE-PROVENANCE-FIXED-EVAL",
+        "AUTH-PRISM-NATIVE-PRELAUNCH-IMPORT-PIN",
+        "AUTH-PRISM-NATIVE-PRELAUNCH-NODE-LAUNCHER",
+        "AUTH-PRISM-NATIVE-PRELAUNCH-MUTABLE-PATH",
+        "AUTH-PRISM-NATIVE-INPUT-REPLAY-NO-WRITE",
+        "AUTH-PRISM-NATIVE-INPUT-RESERVE-BEFORE-WRITE",
+        "AUTH-PRISM-NATIVE-INPUT-CONFLICT-NO-WRITE",
+        "AUTH-PRISM-NATIVE-INPUT-QUOTA-REJECT",
+        "AUTH-PRISM-NATIVE-INPUT-CRASH-RESERVED",
+        "AUTH-PRISM-NATIVE-INPUT-CRASH-READY",
+        "AUTH-PRISM-NATIVE-INPUT-SHARED-CLEANUP",
+        "AUTH-PRISM-NATIVE-INPUT-UNCERTAIN-RETAINED",
+        "DLV-CASE-NATIVE-PROVISIONING-IDENTITY-CLOSURE"
+      ],
+      "disposition": "bounded own-field/source/case mapping supported; unresolved cross-owner inputs remain open, no field closure"
+    },
+    {
+      "question": "CMP-SOURCE-BUSTER-KUBE-CREDENTIAL-ENV",
+      "newFields": [],
+      "existingFields": [
+        "DLV-BUSTER-KUBERNETES-CAPTURE-PATH",
+        "DLV-BUSTER-KUBERNETES-CAPTURE-KUBECONFIG",
+        "DLV-BUSTER-KUBERNETES-CAPTURE-KUBERNETES-SERVICE-HOST",
+        "DLV-BUSTER-KUBERNETES-CAPTURE-KUBERNETES-SERVICE-PORT"
+      ],
+      "unresolvedAliases": 1,
+      "caseIDs": [
+        "DLV-CASE-BUSTER-KUBERNETES-RUNTIME-CAPTURE"
+      ],
+      "disposition": "bounded own-field/source/case mapping supported; unresolved cross-owner inputs remain open, no field closure"
+    },
+    {
+      "question": "CMP-SOURCE-GENERATED-HOST-SOURCE-PROVENANCE",
+      "newFields": [],
+      "existingFields": [
+        "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS",
+        "DLV-NATIVE-SETUP-POLICY-DOCUMENT-BYTES",
+        "DLV-NATIVE-SETUP-RUNTIME-IDENTITY-BYTES",
+        "DLV-NATIVE-HOST-POOL-CPU-PERIOD-PROJECTION"
+      ],
+      "unresolvedAliases": 1,
+      "caseIDs": [
+        "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS-VAL",
+        "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS-CONTRACT",
+        "DLV-CASE-NATIVE-PROVISIONING-IDENTITY-CLOSURE"
+      ],
+      "disposition": "bounded own-field/source/case mapping supported; unresolved cross-owner inputs remain open, no field closure"
+    }
+  ],
+  "futureCaseResults": {
+    "not-run": 25,
+    "passed": 2
+  },
+  "noNewMaterialFindingAtBoundedMappedScope": true,
+  "remainingSourceLinkObligations": 808,
+  "unresolvedCrossOwnerAliases": 60
+}

@@ -1,0 +1,188 @@
+{
+  "status": "generated root structural PASS only; fresh independent root projection review pending; C0 NOT ACCEPTED",
+  "inputIdentities": {
+    "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/README.md": "6db31b19b41934b4ef0f11ab4f6c566477972ba70ea2846e162491a2516e023c",
+    "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/correction-contracts.json": "0f5e665fc9147dff1c6c98583905459286324600f83325967fab44bc976c363f",
+    "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/lifecycle-definition-schema.json": "f81230dfcadccad98065d2a2fdbb1d1a83c073b1520b2167ea1f6b0369c25519",
+    "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/policy-definition-schema.json": "2041d1ddbab97a1922babf3c54e39cf77fdd854abaac5fb1f80288437f31a8c3",
+    "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/policy-A.json": "dbaffde17d18c220c237216cfccdc335d33d572a0b9973b8bc8d0fd15ef61a4d",
+    "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/policy-B.json": "67f26310eb5a89cd4ec736d9a690a50dd0f50ac359e89b651a449aae9b0f3a94",
+    "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/native-case-contracts.json": "a41ea5adcbe3d3857b9b05c657836c1eca55eb8a1b2232773566353e611e8f2c",
+    "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/actual-pure-controls.json": "0077ed5f1ca6c137b5319a96c8337503c3fda03bb44e357ac53b417dd541bd23",
+    "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/reviewed-input-preservation.json": "d4d76b0000aaab7b5a151059883f0381982342cec24e7f4d02e64cfd7f150685",
+    "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/current-consistency-and-freeze.json": "e7d140184afb2d430a92c5eb7ce1359023100ed1f090d8cd7460fca49da5ae79",
+    "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/current-integration.json": "2706e4ec5bf203f5f6448c5975065944f3d981742d123784b401919f22a6778c",
+    "docs/review/evidence/config-acceptance/delivery/inventory-fragment.json": "9d339998171fc352cda8199123ca3a0c2e0c41c2e0692084d2b1cc9c42e588a8",
+    "docs/review/evidence/config-acceptance/delivery/proposed-cases.json": "746fe7ed15c113da3d6e07613f4b9eace83275a493efb1f6df8c4bd7580c9d57",
+    "docs/review/evidence/config-acceptance/delivery/fragment-status.json": "a49539aec415978f8eb9c6ce9dc6d034a268e71a657f4009b6c192b4910d5102",
+    "docs/review/evidence/config-acceptance/delivery/open-row-backlog.json": "6fb5733195f7abaec5169b28ac3c81de2ae7f40e436241975d10349ffadeec35",
+    "docs/review/evidence/config-acceptance/delivery/delivery-specification-obligations-20261013.json": "ca538f4bd691a10f7020d7e0ca09d69944c576fded61d2d45c98a7046adfad0e",
+    "docs/review/evidence/config-acceptance/delivery/future-case-invocation-specifications-20261013.json": "adde1ed53196df4fefdff4f79c38f7935d5b6bb0174e3f0ff43995a50e010f1a",
+    "docs/review/evidence/config-acceptance/delivery/delivery-surface-dispositions.json": "933d81485c2ec1a2fdaa7e3a76fb1cbcc15e0db91969a8dedad41da4b5460dd4",
+    "docs/review/evidence/config-acceptance/delivery/semantic-closure-verification.json": "84ab18786bd87c34a46e7b6153f6b24073aa265e61969dcd377b8e5934a82811",
+    "docs/review/evidence/config-acceptance/delivery/c0-controller-material-correction-cases-6606-20261013.json": "03be1df591838cc150259c164bb0b940a5241bb4f9b72f93bd448910e9781b52",
+    "docs/review/evidence/config-acceptance/delivery/controller-material-correction-current-artifact-manifest-6606-20261013.json": "73270becbf255f9e3c4ce552f4aa463361034d5b52c9853f863524bf2824961c",
+    "docs/review/evidence/config-acceptance/runtime/README.md": "80461b5244921aa8cc3601c6b42d540789097ad3324f8dcbe70dc47031bf0f30",
+    "docs/review/evidence/config-acceptance/runtime/inventory-fragment.json": "9619343edf808fffaadbff775932b0e4f808daba31ad194324b154df374a46c3",
+    "docs/review/evidence/config-acceptance/runtime/case-proposals.json": "51feea1a4ca73511668255dd0e328581fe18be04c6494a739496e7ca124fc28f",
+    "docs/review/evidence/config-acceptance/runtime/runtime-case-dispositions.json": "a2b7134c8ff161fa89fdb008fb52907f1c818cdf246d2f4a7b6f760d52365c56",
+    "docs/review/evidence/config-acceptance/components/semantic-fragment.json": "8375d00031f7cdc46099f30d459cf9f3b9830a4a788aa2d56b5061633f7140d1",
+    "docs/review/evidence/config-acceptance/components/residual-fragment.json": "25ca9b453586600cb1bd3fe168fc5c6bb24304330e647a356d957929cb80ee8e",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/canonical-question-fragment.json": "f4b51f0a738a51ae622de8af2b0db69282c25eb27a97b251bf0f1ed8f6c5344a",
+    "docs/review/evidence/config-acceptance/author/main-fragment.json": "9fbd3c36d1b7fb0afc59b43c5ecbfc243c00bbe786739768a252a74da6ece199",
+    "docs/review/evidence/config-acceptance/author/consolidate.py": "6f173cd4159a731ee2400f8c951397f397cc1b52ce77b52c4dddbf2bcb05cdad",
+    "docs/review/evidence/config-acceptance/author/check-matrix.py": "4bcbb50e034911864f8b46657e642dc9d6dab0068eda0fdef7d6b2ea94ec6f49",
+    "docs/review/evidence/config-acceptance/author/historical_mapping.py": "b027cc75b7b789be6ef5069d0611d9c36a0ad21fff0a7d3e57ea75ff83b1f2e2",
+    "docs/review/evidence/config-acceptance/author/historical_projection.py": "661fd8faa30069439139f8f0e421216d7898840fdcebfd608d4008495f60bdf0"
+  },
+  "currentFrozenFiles": [
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "sha256": "b1af942080285f5c7d97c50f2b30bc14a1a0850ffb77908cb73fb3f8c9f6b36c",
+      "bytes": 37736297
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "sha256": "623462221f87371c23e0a0b8857a1c8563cd7dc6e1e76f457221b0ba63894a21",
+      "bytes": 99612476
+    },
+    {
+      "path": "docs/review/remediation/config-definition-current.md",
+      "sha256": "c282b510337226d5b79563967e68488eb37920724f07e5d6b0bfd8d6550f1950",
+      "bytes": 33961
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/consolidate.py",
+      "sha256": "7f537e66665abab02bfdc15a4fe76edb3bc203ff548d3f758eb403f8438ffac0",
+      "bytes": 27293
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "sha256": "b231a86202b71684ebcb14056f4abf63a753f21f266e65c7c8541006559c91ad",
+      "bytes": 19470
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/check-native-case-integration.py",
+      "sha256": "b7435c69cee3e10e9393b3db05d0a0d7a671ce34cb3e8e5883b2b9ef84ab41ca",
+      "bytes": 4013
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/historical_mapping.py",
+      "sha256": "b027cc75b7b789be6ef5069d0611d9c36a0ad21fff0a7d3e57ea75ff83b1f2e2",
+      "bytes": 7186
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/historical_projection.py",
+      "sha256": "661fd8faa30069439139f8f0e421216d7898840fdcebfd608d4008495f60bdf0",
+      "bytes": 4251
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/check-historical-projection-guards.py",
+      "sha256": "236e5034267e53e3de3f25e0c55415e1a51babbf7e04fba66ff5292e6207ff55",
+      "bytes": 4343
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/check-generated-projection-negatives-6606.py",
+      "sha256": "b3ee56b215dce12da8092dabea1f4fcdba0356036b6474de4b0181a15e1879a1",
+      "bytes": 3641
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/core-canonical-question-projection-preparation-6606.json",
+      "sha256": "2b33d595fac20b3a381271d4753d02273213b5a32ffd41e14b007976a9bd223a",
+      "bytes": 1918
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/preconsolidation-historical-core-6606-identities.json",
+      "sha256": "0e845b3311653945bbf1ab22d3638002b498e768e8dfbcf534e32d4129f5b347",
+      "bytes": 6114
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/consolidate-historical-core-6606-attempt3.log",
+      "sha256": "fe9773d2cd20893b797062d29c6b422fd846089ec4ee4d476ce7328e0af08063",
+      "bytes": 63
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/consolidate-historical-core-6606-attempt3.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/structural-historical-core-6606-attempt3.log",
+      "sha256": "2a8ae41a6067d32600856120e5c18c6c51a1f789e08a46736747bf9ffcbbdb78",
+      "bytes": 181
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/structural-historical-core-6606-attempt3.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/strict-historical-core-6606-attempt3.log",
+      "sha256": "5069675d8e5674dadc41ba9ef6e26964a106bfcc8126f413b14dfe310b6bba25",
+      "bytes": 11237248
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/strict-historical-core-6606-attempt3.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/native-historical-core-6606-attempt3.log",
+      "sha256": "e232e91d5e5cf4901fde6e77ed433bcf9c03006f6c53f23ae3e726ec469416f3",
+      "bytes": 625
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/native-historical-core-6606-attempt3.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/full-controls-historical-core-6606-attempt3.log",
+      "sha256": "5196edd1496b867b9a8040ecd68b131a42ab26a80a942f4ef95ccb9b74f6c28d",
+      "bytes": 2659
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/full-controls-historical-core-6606-attempt3.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/historical-projection-historical-core-6606-attempt3.log",
+      "sha256": "52a3bd4a08fad04237a688dd11c5f4b409022a6dea1a58fb61aaa63b2e2f72e2",
+      "bytes": 1946
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/historical-projection-historical-core-6606-attempt3.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ],
+  "counts": {
+    "rows": 2409,
+    "canonicalCaseIds": 6726,
+    "nativeCases": 6201,
+    "directCanonicalLinks": 5932,
+    "historicallyMappedInactiveCases": 269,
+    "unresolvedNativeMappingCount": 0,
+    "pureDeliveryDefinitionObservations": 105,
+    "strictOpenObligations": 102679
+  },
+  "results": {
+    "structuralExit": 0,
+    "nativeExit": 0,
+    "strictExit": 1,
+    "fullGeneratedCheckerControls": "6 negative +2 restored positive; no root mutation",
+    "immutableCheckpointProjectionControls": "11 negative +2 restored positive"
+  },
+  "rawFailuresPreserved": [
+    "first structural generation21 dangling F-RECOVERY +first root lossless snapshots",
+    "second projection fixture setup failure duplicate refs; fixed immutable6606 fixture"
+  ],
+  "limits": [
+    "Input identity map preserves pre-change generator/checker SHAs; currentFrozenFiles names current versions explicitly, not a false all-input stability claim.",
+    "105 pure observation cases separate from 6726 canonical IDs and6201 native specification bodies.",
+    "Current Root files and Runtime/Delivery/Component fragments frozen; independent outputs may be additive only.",
+    "No production/test changes, implementation authorization, native/runtime/field/wholeC0 acceptance.",
+    "Core alias conservation60 unresolved andwhole-source obligations remain open; F-RECOVERY registered as D20/F-BIND obligation, never waived."
+  ]
+}

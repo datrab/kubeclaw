@@ -1,0 +1,26 @@
+node:internal/test_runner/harness:124
+      throw err;
+      ^
+
+Error: PIPELINE_INPUT_ROOT_INVALID
+    at capturePipelineMaterializerInputSource (file:///tmp/worker-trust-readiness-jjEHiO/buster-image/role/skills/packages/plugin-foundation/config/pipeline-v10-input-set.ts:56:132)
+    at materializePipelineGeneration (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/updates/pipeline-generation.mjs:57:25)
+    at async buildBusterImageBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/build-buster-image-bundle.mjs:19:19)
+    at async file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/worker-trust-readiness.test.mjs:35:15
+
+Node.js v24.21.0
+✖ tests/verification/deployment/worker-trust-readiness.test.mjs (6563.559585ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6570.914966
+
+✖ failing tests:
+
+test at tests/verification/deployment/worker-trust-readiness.test.mjs:1:1
+✖ tests/verification/deployment/worker-trust-readiness.test.mjs (6563.559585ms)
+  'test failed'

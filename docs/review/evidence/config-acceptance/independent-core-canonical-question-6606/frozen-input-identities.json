@@ -1,0 +1,1110 @@
+{
+  "UTC": "2026-10-13T05:01:25.366770+00:00",
+  "head": "6606af9e590032f328f330ecb3d953b1eef027e3",
+  "tree": "47ce9b9c092dcd534eb55ddaebaab010e270a5af",
+  "packageFiles": {
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/link-frozen-handoffs-attempt1.log": "bd42dd814d427df791e7f0e12792e928a1841b0ce26e7e119879abf2e06e1a44",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/link-new-exact-source-fields.py": "54483f461567954dee375b99280bd82855e507170a6aec2fabe80da0eb85914f",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/check-target-profiles.mjs": "8166424ba49f5f1ff96994f65b65a1ba1e8fe17198f1fbc8c3ddad291648d8af",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/README.md": "33edb5de0d79eb2552f55aef1cf96c36a06fc0b6527d2b485a98351ce45816cd",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/mapping-integrity-final2.log": "b9e9e26b803e4fa9119ec02903b3ecaebf1d1f0151d6b2341cb25a3837512f86",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/canonical-question-fragment.json": "f4b51f0a738a51ae622de8af2b0db69282c25eb27a97b251bf0f1ed8f6c5344a",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/add-source-contracts.py": "9ddd2c025e4bfb2fc1f04b8a0d799af49825c74dfcdb3d99af2696176300f710",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/secret-current-reader-attempt1.log": "f2b0fd2c5b33be3a98ba7a8ffc96ae34ff552c1f866873ece39017a45d8e0fa8",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/frozen-crossauthor-canonical-handoffs.json": "ba3a4399e46bcca9a0456e110b2aab7d50df06839d34344ab8d3bb5d5cb4a180",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/target-profile-controls-attempt1.log": "c02d602d17540da80218075b66049935f4d602dfa5016c753eeb421ff9de5de7",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/mapping-integrity-final3.log": "b9e9e26b803e4fa9119ec02903b3ecaebf1d1f0151d6b2341cb25a3837512f86",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/image-wire-current-attempt1.log": "871e4ff93b57817acb529978bb2a135d76e7db21fa0e827994e6ae4e417025ab",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/source-marker-canonical-projection.json": "feb58321b8bafcccf9e825f4bdaf958f5f2daacfc944ebfc6d1fd72416a5df49",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/secret-entry-complete-profiles.json": "1e7f57b81f7705486fbb7744fa57008dae0f355fb883216c9e203d44bd47a1e6",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/question-canonical-field-case-links.json": "3cc4f63844170386a77647c8d43e3ff50f457351408931aa9b9320967fcf7ce2",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/image-wire-definition-attempt1.log": "62eac1460096191f5996395905f6077475afded97f7753110b8eaa614c20a608",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/runtime-security-image-wire-handoff.json": "15eba24dc9c2df12a4495453a763c2134c207563607409385fd7f4e9d723e0cb",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/committed-input-reference-receipt.json": "cd5c0cbcdc3d6eaeb55308c4dcb50cacda4109a687bcaf22d24ad38a30c1cd2a",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/link-frozen-handoffs.py": "954f0b974320bd505ea0005f92ce5ddbe3c46329a9514f6908d31807ea842171",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/ownership-required-quota-case.json": "d3b14d3fca252efbeb8f25917092c9f282d413706fb2fec65e8d23fb9bfe604c",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/link-new-exact-source-fields-attempt1.log": "a6388c4d474e6b3080397aff143d0c82f807ac7d5e7085f108c4592d927f3dac",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/build-attempt2.log": "a671cc962312cd9db6401ad9af79856060656b1f4b845e5d15ac02b410ea08b4",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/mapping-integrity-final.log": "b9e9e26b803e4fa9119ec02903b3ecaebf1d1f0151d6b2341cb25a3837512f86",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/stable-author-batch-summary.json": "6f47c5f8fcffa43fa7bd25fad3a227d838bcfa42e6efeefc71b2ed80961c9b12",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/protected-input-identities.json": "e14f4f31c8aa263d5d5b9aaaf6be5a8c985cc81cb391ab63dddcff43684e8168",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/parameter-default-canonical-contracts.json": "193df5365ca27be9072abed9442101a703b2bfe74b01dc16a0431822cff1359e",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/post-checkpoint-delivery-response-handoff.json": "ac7826cc68ab8a17522c25fd610ddac52d0810a757799ae69bf938b6a27f6a47",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/remaining-backlog.json": "97da784dcd5286e389d25ef1fd72ac8a911feb512f7c45907aae5009183bac41",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/proposed-buster-canonical.schema.json": "20cccd80043579fdcb4c21f9c81000f1f1a6eb9b0815fbac85dd9382ab845c78",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/define-image-wire-handoff.py": "3d7bea680fcca92eadedfc2af67ea2713e00d4b37e954a948c5a144901c0bab7",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/source-default-env-cli-projection.json": "31851aa4ed1dc61c67881e134aeded3804a60936cf50323ba6d4b39fa8c6f8c8",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/mapping-integrity-attempt1.log": "b9e9e26b803e4fa9119ec02903b3ecaebf1d1f0151d6b2341cb25a3837512f86",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/build-attempt1.log": "e0a30d620cdbcddc95bf261bd7cb3b3ea180bf056c6e0ee8fdbe61856269da53",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/mapping-integrity-controls.json": "ab50bf9d84608b5b31592761d95f67388562765777a44a6a346b383e8c209f8a",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/add-source-contracts-attempt1.log": "d7947a7b1109c4c55738bc5c571dfee54da103d7a18f5c122d102c1ef028dcde",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/active-case-input-contracts.json": "a23e079b77f20fa7e19e48b89b3842b3494852208cc63f7b42d1862981bc6253",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/build-mapping.py": "424e956419ad32a9a3d23816c4f6a5d7aa4c1e2573cc7382302e44f66f0e8a57",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/check-mapping-integrity.py": "0dd968e908971703908556b81dd58416dc12ce62cd468506d4ef95c614cfc027",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/metadata-reference-authenticity-accounting.json": "1a778fbd79c8151192f8b7c4c1970ec94def4d7e20fae61f09d29ca19a2ced2c",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/check-secret-current-reader.mjs": "c423d50992fb09d0a763c72cb9417114965fd5dd59e31ebf37733cdb17262344",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/build-attempt3.log": "a671cc962312cd9db6401ad9af79856060656b1f4b845e5d15ac02b410ea08b4",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/public-api-consumer-obligations.json": "4ed15afa2ca6b2a9de399946902102996bad02b9def6795b392a2c261d4e1c98",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/author-correction-ledger.json": "5346264f6cacc7afc0edf09ff6dd8397fd08169b5202acd47ed92d64474c9ab6",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/stable-author-batch-receipt.json": "336fe9d8beb3f809081a6957909943bdf1c6ed9ef60eb607811b8fde51f3ba74",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/ownership-current-reader-attempt1.log": "4e2631663603519c98b413783476cab4e7a99299fcb376710f6dec15373024ab",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/check-image-wire-current.mjs": "a0d3d73258fca60ab16a2fdaf3f60cd131605f798ce89f767b07066da5c0a5dd",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/add-ownership-future-contract-attempt1.log": "66592bb79425b2b062ebcf2a39085f05a30e2cbb00c8fd9d251bd68072c07f1d",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/check-ownership-current-reader.mjs": "9db9e3f33e974ee9fe85d2889b50234ee9ccdd0feac274df2c8c504e116e6c72",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/add-ownership-future-contract.py": "4891fc30032aa9f9a618816c3c2b01f7e78ccc6cb7d83743c9349433b66e25df",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/author-attempt2-history/canonical-question-fragment.json": "1d6c0ca21b950333f95d9b4444e8abd2e26de2ec2ccf1e284cfa267ba64d626a",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/author-attempt2-history/source-marker-canonical-projection.json": "3120666a9c538dfb96fc194c18f8b984478fd47aadc60b5010755cde7f3103df",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/author-attempt2-history/secret-entry-complete-profiles.json": "5ed77ad3850c7488ddd9257171ab0dca10d12cdc49a0c8f05deb09a99ad78038",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/author-attempt2-history/question-canonical-field-case-links.json": "4754e97be01601df1e418914e64564a51e77a191a6e0d705c5d0d84bf56bcae3",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/author-attempt2-history/committed-input-reference-receipt.json": "cd5c0cbcdc3d6eaeb55308c4dcb50cacda4109a687bcaf22d24ad38a30c1cd2a",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/author-attempt2-history/remaining-backlog.json": "23fa8508fc6826043896d6b859118c3f4e96f7943b5833e7a7df50291cecd5be",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/author-attempt2-history/source-default-env-cli-projection.json": "c42c18d7b62ae52b6eab26e7c6d152a569627e11381e9155cbd5b7a7559a59fe",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/author-attempt2-history/active-case-input-contracts.json": "6c75f666bd2cb05e0b7737bb4967b1a65784cd930f929416e7d7a5da8e0082e7",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/author-attempt2-history/build-mapping.py": "049fb2ccbeae6b611ece65ed34ed85be799b7b98347ac7cebc255c8a8c0fa7f7",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/author-attempt2-history/metadata-reference-authenticity-accounting.json": "31b62814005a81240edf4be6750c7d1fbaede2e1c2896da5781bba62f990d415",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/author-attempt2-history/author-correction-ledger.json": "5aa969ca9811f84c2f60553fa5355637631f69aa950e3eaf547807f20a76af7c",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/author-before-image-wire-handoff/reconstruction-receipt.json": "8b0ff25c4ad368af79d98ecc65dc5c6f7712503639295711d4e2629ef710e486",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/author-before-image-wire-handoff/parameter-default-canonical-contracts.json": "f2fd3553495e82e8a2cbe858c98aaf2055c48114311f31a00e89a4941ef2fdec",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/author-attempt1-history/canonical-question-fragment.json": "eed1cf39c917cd3b5431c900b3425f414e535196f540021c8ffff3ae83f71e4f",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/author-attempt1-history/source-marker-canonical-projection.json": "f17549a2507f1a6337536e0c59e3b7105b3d1f4c2882b28f664e04c1f6839cc1",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/author-attempt1-history/secret-entry-complete-profiles.json": "5ed77ad3850c7488ddd9257171ab0dca10d12cdc49a0c8f05deb09a99ad78038",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/author-attempt1-history/question-canonical-field-case-links.json": "4754e97be01601df1e418914e64564a51e77a191a6e0d705c5d0d84bf56bcae3",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/author-attempt1-history/committed-input-reference-receipt.json": "cd5c0cbcdc3d6eaeb55308c4dcb50cacda4109a687bcaf22d24ad38a30c1cd2a",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/author-attempt1-history/remaining-backlog.json": "10e32edae93a023021a929d666d273cccf85cd81752e8e227302423f8eb0ef01",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/author-attempt1-history/source-default-env-cli-projection.json": "a520970d2cc065fbda081c165612684f56df1698a8a8bc70001f5e2fd6d37495",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/author-attempt1-history/active-case-input-contracts.json": "6c75f666bd2cb05e0b7737bb4967b1a65784cd930f929416e7d7a5da8e0082e7",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/author-attempt1-history/build-mapping.py": "2fb991ce192e79631c8f015ea6c43ab5cf269981ccfe4d66d86515104b341198",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/author-attempt1-history/metadata-reference-authenticity-accounting.json": "31b62814005a81240edf4be6750c7d1fbaede2e1c2896da5781bba62f990d415"
+  },
+  "selectedSourceAndReferenceFiles": {
+    "charts/kubeclaw/files/config/buster-engine.config.json": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+    "charts/kubeclaw/files/config/prism-control.config.json": "5e41d7612926ce4d3bfad195d79649e106b54cd59c23de64afad1e9c43e1dcd0",
+    "charts/kubeclaw/files/config/prism-execution.config.json": "94f1a8eece3aa58db89907accd846d471d17263557c8e0925cc1caae6ec0034f",
+    "charts/kubeclaw/files/config/prism-studio.config.json": "c38ba184a0dcbdd4b11c86f99eb39b2dd7c0ec72bd697fce7f7a1fa32f750fdb",
+    "charts/kubeclaw/files/config/prism-worker.config.json": "6d263c2f1844e4bc117ec25504ccb9d6644a5272611de031a2027d5a55d7c834",
+    "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b",
+    "charts/kubeclaw/files/config/worker-core.config.json": "08a6c89490442803c2d4178608832fb0a8147be1a83bb6027a7a00f3d81dc615",
+    "charts/kubeclaw/templates/_swarm-config.tpl": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+    "charts/kubeclaw/values.yaml": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+    "charts/prism/values.yaml": "8b13da5c725b9eff02d1e12dae6f799ca74a6b01a83cb714a2777a915e98cee8",
+    "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+    "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v2.schema.json": "26e936fbd954562547e7c0548085ae65ceb22394061d956532730a17ced42f7c",
+    "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json": "debb2e5ca9ade4c30f5081d56b4596af4b295e282e2c099a6d1623b4b15c5cf3",
+    "contracts/pipeline-worker-core/v1/src/digest.ts": "10c61ec122ca6e65c7deef2c059a19ad70627cf65bdf1eb65f0ac2539457d780",
+    "contracts/pipeline-worker-core/v1/src/index.ts": "013609ae51e836644640820de878378c0cbc797d6c299f06d926925790676c72",
+    "contracts/pipeline-worker-core/v1/src/resource-validation-v2.ts": "9c75271a9830c86faa484acaaa52e042d03a56c53b027d4aeae5f8531d06e54e",
+    "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts": "00332a01a4674616f0859a83d704771b497d0c0d4220629a35b9a7414f924784",
+    "contracts/pipeline-worker-core/v1/src/trust.ts": "c650fdbe7f43b422f36d050df291d2a00fdd4bc694a1dae5d6236b4814743cd5",
+    "contracts/pipeline-worker-core/v1/src/types.ts": "399e42c696f561fbea8f38305252f873179f1b71115f7eacd961f7b5f899ec43",
+    "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+    "scripts/native-worker-node-policy.mjs": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+    "scripts/prepare-native-worker-pools.mjs": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+    "scripts/updates/release-configuration.mjs": "25913c0267162ddb0c89b36cf6c141061431bd9ead08990ff195cc9808a23fc6",
+    "skills/buster/engine/remote-plan-cli.ts": "2f5e47619915feede36cf8909c860b9cd7e4dd4378eeaf2f9b8b72a61a8d5670",
+    "skills/buster/engine/test-gates/buildkit-readiness.ts": "7f50b4c1c6c1e661319dd2f9ba1afecf27dd19a26c06ac51ef52abc0d97703f3",
+    "skills/buster/engine/test-gates/capability-runtime.ts": "3615780a7c173fc3f43f0510e208378e276a9e34f71c8a7c1c643fde296ded11",
+    "skills/buster/engine/test-gates/dependency-process.ts": "c1f305fd3281328e1cd5714b1366cb946907e2a96af2bf6c3f629c2ab4ed354b",
+    "skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts": "d2ea5344cca6f0e849dbe94b3bb455e170c7a0ec44d8e2f9f0517c5bd3ce0a74",
+    "skills/buster/engine/test-gates/kubernetes-fixture-manifest-files.ts": "d39c0de3c0e245cc6dfe8845f984a4b36b31449a5a1e37faa414f2254aa3806c",
+    "skills/buster/engine/test-gates/kubernetes-fixture-pods.ts": "676752f55ed5a52830067897f6199746a0808a2a1e4e66ccc41f6250b284b5bd",
+    "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts": "1f41112db44a5135ff7c8d7a575e87699a854278a9e792d248ee91673d06fbd0",
+    "skills/buster/engine/test-gates/kubernetes-fixture-readiness.ts": "b93b8ffe1b0af18614e20bb16899afe4378be86e748f667fc3b3ebdd77853fd9",
+    "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts": "e3aba99f6637b5d2987d78c12034391562e1e9f59d91e7e33e629e70064d5cdd",
+    "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4",
+    "skills/buster/engine/test-gates/kubernetes-fixture-storage.ts": "da2858e192df14fc5d457ebd1f3414696c5a3be116f611216c214c0b6b194f1f",
+    "skills/buster/engine/test-gates/kubernetes-fixture-values.ts": "bf0d1b34c387395c58be0b171741e2e338ec6f25449bdad4fbf2aeb3ff40f6ad",
+    "skills/buster/engine/test-gates/kubernetes-manifest.ts": "a86a248f1bd72e949a6d2cf63811f48fb1974e417954eea0e4a9f5f2a1a9e8df",
+    "skills/buster/engine/test-gates/kubernetes-runtime-security.ts": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004",
+    "skills/buster/engine/test-gates/preparation-archive.ts": "a3f47267addf5e371faff3896521eb3aac35b49523275a7766ed29c8d1d42f6a",
+    "skills/buster/engine/test-gates/preparation-cleanup-binding.ts": "454c3f6a5a41e179776eddda24ff7a89e9ac959558cfb8343f6334861fc93901",
+    "skills/buster/engine/test-gates/preparation-cleanup-envelope.ts": "837f2b0c6acf2ab0afb56e6a54857fefc15272f8c5c026a3c796e4fd55d9e166",
+    "skills/buster/engine/test-gates/preparation-cleanup-execution.ts": "7f68045db88cfea003fb204b06c61b5cef0d48ff0bb416fa060dceeb33249365",
+    "skills/buster/engine/test-gates/preparation-cleanup-host.ts": "0318f48456c8a36005e70c1272bcf63050b54d60b8cc252d1f902d2f1bb2d242",
+    "skills/buster/engine/test-gates/preparation-cleanup-validation.ts": "8cc3b8d59fb38bcb04b6549a05bb7c95f153f7f603405724f84a9385a45ce134",
+    "skills/buster/engine/test-gates/preparation-cleanup.ts": "192c1954407e294483ea08389220eab128052ba57e9b7a72b26fcb768d608bc1",
+    "skills/buster/engine/test-gates/preparation-client.ts": "31b1bec56dc09daafb7e0ba425243009b86f7f73eb693ae0e74617c1cac6f6dd",
+    "skills/buster/engine/test-gates/preparation-command.ts": "dfa5137629af252882f586de99c178c2c46b8fe660fdbdbec0468224fe814bc6",
+    "skills/buster/engine/test-gates/preparation-config.ts": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835",
+    "skills/buster/engine/test-gates/preparation-envelope.ts": "90112c33cc7ecd6f4c237e3234bb7ba9abc8cf07e17aa9deb882ffc5afdb17df",
+    "skills/buster/engine/test-gates/preparation-execution.ts": "e23033bcf78d19dfada0a25d7cffc9ba8133b97b686ffba24b362c601c8a6e93",
+    "skills/buster/engine/test-gates/preparation-gate.ts": "7f3cb9aa8100a003713195cf3149f9097ea5f0cec18779e8deca92a0d2d894d7",
+    "skills/buster/engine/test-gates/preparation-header.ts": "921c13b2285ce3293ec2c2c75a0e42f576bb11300d527b7dd9640a270136f167",
+    "skills/buster/engine/test-gates/preparation-historical-host.ts": "f8a008a3172e4bd4bdb84ea19f8435878a3c79d8f053d3a16a4f5ffcc084ea16",
+    "skills/buster/engine/test-gates/preparation-host-channel.ts": "8383114bb82cfc3c38a7c65ebd8c2ea21fb88c7b25b1a185473b2f82c639fa08",
+    "skills/buster/engine/test-gates/preparation-host.ts": "960f4605605171a5c1745144321995c91dc9f571926d497df278f9f2974c7fcc",
+    "skills/buster/engine/test-gates/preparation-ledger-state.ts": "e37446c62e1e9a599a525c4203935b6b43ed093c8af612bc89e95b5c321c19b1",
+    "skills/buster/engine/test-gates/preparation-ledger.ts": "e0631a2ec68d28a2eddbb62d37727db2fd71378ae48c0d879ee3aaadc56c92c5",
+    "skills/buster/engine/test-gates/preparation-native-phase.ts": "20362a6d9a4147be607c1006cd42a33465d5b56b7df5acfef04562009abba179",
+    "skills/buster/engine/test-gates/preparation-parent-channel.ts": "9b6548ed266f22453044c813d31b60f1cd4bef9d85f5b0fe2cacec06fc48ada9",
+    "skills/buster/engine/test-gates/preparation-recovery.ts": "3bc1d7f6787a1917ea471b55c4f7075618ae16459b6f9d85825493bc98ca10de",
+    "skills/buster/engine/test-gates/preparation-reservations.ts": "2f079e6521872c056e44fad666efef8e38e4ba07ef9772aa4118d38c3c5df04d",
+    "skills/buster/engine/test-gates/preparation-slots.ts": "cca405b4dac32f2292483815880fb2e0d1d58c5d5134957864fd1bf65f8ed897",
+    "skills/buster/engine/test-gates/preparation-supervisor.ts": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad",
+    "skills/buster/engine/test-gates/process-input-lifecycle.ts": "ff1279f5ca4af3364b0e04cf977803717b6884329f75b9c5461be3b5455797bd",
+    "skills/buster/engine/test-gates/process-input.ts": "4215ff0c2849dba12fe36887aed1ba771a0c77c8475274176807ea472b66856d",
+    "skills/buster/engine/test-gates/production-cluster-options.ts": "eb4448a7250ed6e2adbff8ec47956ba5c4d253d198697c344f75274eb3d61bff",
+    "skills/buster/engine/test-gates/production.ts": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005",
+    "skills/buster/engine/test-gates/provider-loader.ts": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e",
+    "skills/buster/engine/test-gates/provider-process-session.ts": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d",
+    "skills/buster/engine/test-gates/remote-plan-service.ts": "e375000b0e256497409276093ad5375c32285475c87a33d337bef3124be456b7",
+    "skills/buster/engine/test-gates/report-adapter-runtime.ts": "47e65214958d6df49a39d71cef89c660bdb730a3cdee0a450006d83dafdaaf3d",
+    "skills/buster/engine/test-gates/runner-attempt-envelope.ts": "15994d9caebf7f98f2e23740a66ad105ec721c0ebbe01aba22def8a9e4c5bad4",
+    "skills/buster/engine/test-gates/runner-attempt-execution.ts": "9012607f67aeb7abe5aa29ae6687ea1e43b091b3bea3c1b57b0ed9d01fa6c705",
+    "skills/buster/engine/test-gates/runner-attempt-result.ts": "cdba534f94cbf3fca17d16d40b196d5a303620e8809f1f419e996478dbfd0d69",
+    "skills/buster/engine/test-gates/runner-provider-operation.ts": "332e73e5e35b28800ab7ad70331adf8c2ed683f819a0ea6504eea0abbb61645c",
+    "skills/buster/engine/test-gates/runner-setup.ts": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+    "skills/buster/engine/test-gates/runner-worker-profile.ts": "4e7cc1f1206047bf768b1826d979fc5384fe1edc7e3e4fa9bb71e24e5d31a648",
+    "skills/buster/engine/test-gates/runner.ts": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a",
+    "skills/buster/engine/test-gates/specialist-report-finalization.ts": "2bc8ae28f2f2e9e65616681ba2e2b430b2d3378f6119f6bdc0b0aae5fd7b2d40",
+    "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc",
+    "skills/buster/engine/test-gates/tailscale-operation-policy.ts": "cf35868ce909f53a05fae0e8a4bdf81f0e8c030850d569839f13d47f5efa4607",
+    "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057",
+    "skills/common/plugin-runtime/foundation/config/buster-execution.ts": "5d6b78d0ab9da185827f35d25c5f2c6da68a4f7e1de8e815b48641b935c298d5",
+    "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts": "8f29590beaa082f4bdb51741aebefca4f917c280e4fdbf153b7aca0f92d434b3",
+    "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json": "51e7bc64a25fd6cc67d465ebe46bab170a6c9b7215423147ab3f15777dc58968",
+    "skills/common/plugin-runtime/foundation/config/swarm.schema.json": "2269b97277a5a24ccd14434c942cdf4ea83c43d1c6a8e048083add782140ae20",
+    "skills/common/plugin-runtime/foundation/config/swarm.ts": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1",
+    "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts": "134fa89160a8f7ddd309d482effc3d1db6ad3b0d559a2960fb9ab0fa0dfbcd12",
+    "skills/common/plugin-runtime/foundation/observability/attempt-completeness.ts": "9e5c0582733ba97abfa21ea41dd3964d38fc5d8a93443368c8aa12e07777bbe2",
+    "skills/common/plugin-runtime/foundation/observability/attempt-evidence.ts": "e232178fab57c5f55742d9b8ccec88cdbccada7b77f6ec8a653ee1ad56972f95",
+    "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts": "5e59b793e4682e68a780952b2d15da28f9477611cd5041295517a111e21f6793",
+    "skills/common/plugin-runtime/foundation/observability/attempt-replay.ts": "99b766563ae07230838fa85c4f60a3c6b0f9a4dde341885af679ce983ad8eb08",
+    "skills/common/plugin-runtime/foundation/observability/attempt-results.ts": "8eb29b312f6dc332a597294589a3b7089650868853688fc45012b7cf70cef18c",
+    "skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts": "669f438a9ebc092ac4b5334b030b574026981d8f5ae67b3a4eb70e2e38850327",
+    "skills/common/plugin-runtime/foundation/observability/attempt-state.ts": "392ad6e2a590c964cc0d8cd1fe0c75237f240798e6d99ee2ed2b33da8047fdca",
+    "skills/common/plugin-runtime/foundation/observability/clawdeck-view.ts": "51264741ac619877d2154668d83aeedbb666d1dfeb524685936b2d90d3322c41",
+    "skills/common/plugin-runtime/foundation/observability/closure-projection.ts": "0c76760e141a63472111d2e930e8215b8336a3a9ed9bac1533dd2cd2c0cae69a",
+    "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts": "19a9a9ad9e3a3bbb876d2b846a3e97b738a1e9c2586e37c4bb2a80a960d46d20",
+    "skills/common/plugin-runtime/foundation/observability/durable-blob-read.ts": "5b736d337407890d27b547bc07bd514d378478589d4f56092ca9e5742fe2d285",
+    "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea",
+    "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+    "skills/common/plugin-runtime/foundation/observability/durable-record-dependency.ts": "b9d7866810eaa8b77681aa42c69b8f4651229317b0f73d0077b1866f97c1e73a",
+    "skills/common/plugin-runtime/foundation/observability/durable-records.ts": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+    "skills/common/plugin-runtime/foundation/observability/hash-journal.ts": "b00c2271bb662055d7250ca193f842d1e6346edf22dfa713b33df1b637ce957a",
+    "skills/common/plugin-runtime/foundation/observability/record-retirement.ts": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681",
+    "skills/common/plugin-runtime/foundation/observability/replay-validation.ts": "8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc",
+    "skills/common/plugin-runtime/foundation/observability/wait-projection.ts": "f999051f0bf3539e64172bf636a0f95141dd74643ff1738fda1a4f2a656ba656",
+    "skills/prism/config/native-worker.ts": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+    "skills/prism/config/resource-policy.ts": "46d4daca088d7f716a202abc5e94794830d601db47518479da19056ed5fc652f",
+    "skills/prism/control/agent-jobs.ts": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334",
+    "skills/prism/control/native-operation-store.ts": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9",
+    "skills/prism/control/native-operation.ts": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac",
+    "skills/prism/control/pipeline-preference-subject.ts": "ded8597750c0e6fb3de823cceb31ecbbff7ece03143f4cdd30037ceff0a77eb3",
+    "skills/prism/control/worker-operation-transport.ts": "048a23bb132d4d70978e28449a468169ccd87b3a06fa2127fedffbcc992a9958",
+    "skills/prism/engine/worker-envelope.ts": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+    "skills/prism/server/agent-attempt.ts": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+    "skills/prism/server/agent-job-runner.mjs": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+    "skills/prism/server/agent-routes.ts": "55c4c77fc4ff7b981287c433c126d9754dffd3df1de464ec0d83bb0294caec17",
+    "skills/prism/server/control-config.ts": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+    "skills/prism/server/control-context.ts": "2444e6f0f22860aea6f109c984be4747a13421da2d33dd738ef7c29b71f04d02",
+    "skills/prism/server/control-server.ts": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3",
+    "skills/prism/server/control.ts": "d723c04698afa8bd6306beca93dd9daf5cde75b710129975642591688ec0fcac",
+    "skills/prism/server/dispatch-route.ts": "407b0befbe8cbf6009f2cef6fe80ab10a2213258d4be5bddc578f24abdb47382",
+    "skills/prism/server/native-worker-execution.ts": "d87eb7d05cdc40f3eb353dba63236fa8c20a02adf1b70512c81944bb7cb71a56",
+    "skills/prism/server/native-worker-host.ts": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34",
+    "skills/prism/server/studio-config.ts": "c2a7d42ae65d68da876c2efc64194effc969d90a1132d8677ec2190260391465",
+    "skills/prism/server/studio-request.ts": "efca0f821ef3da9f441e9c6c5458a33d8c525f8e7db3a63aea1a8e7f37e93bbb",
+    "skills/prism/server/studio.ts": "a80e34fc95dda763649f9f030df0410c327812b369ac15091f6ba09abda62a48",
+    "skills/prism/server/worker-config.ts": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e",
+    "skills/prism/server/worker-lifecycle.ts": "d166a6ec6fd21c6b28c5bbeb0a1494dd3b81c61bbae588846250347917f5318a",
+    "skills/prism/server/worker-operation.ts": "1987bd75921ce43775dc43e0a83e776be7624d6a1dc510ed572fdfce02c57471",
+    "skills/prism/server/worker-service.ts": "90174f5edf19c85ef1642da95a51aac46854f9a1ce7172d876045a5bac1595e4",
+    "skills/prism/server/worker.ts": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d",
+    "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+    "skills/worker/core/worker/digest.ts": "d8c005287076f3ca2a6e84daf386c17ff77858ba5dc22cfebd3b9063d48ef402",
+    "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+    "skills/worker/core/worker/log-decoder.ts": "7f777b5cd5f9544c6eb2f5933613d8d8379633742edf45cd235428805e7dea88",
+    "skills/worker/core/worker/native-attempt-executor.ts": "bddc68aa370648c86e7b7301f4f31a083504217dd89bac7694c36c344a8e23a3",
+    "skills/worker/core/worker/native-attempt-journal.ts": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+    "skills/worker/core/worker/native-attempt-recovery.ts": "f6cef5767983497edd3865667a6b480e8ea75ed34b847bc4f44e8fae02d807bc",
+    "skills/worker/core/worker/native-cleanup-reconciliation.ts": "9cfc04ab25b0eecea23b75b9dcdbb4b87f87854c8b00b7346e7eafa33a0118f4",
+    "skills/worker/core/worker/native-control-channel.ts": "253ecc17f153e13e6e00aad3f842565ad17a01e85cac15db910d9b4b2ea9edc8",
+    "skills/worker/core/worker/native-hierarchy-events.ts": "de9626356ef4ffca272c1bb534b29e13c9a3845df0ff34b33783b71320e32aea",
+    "skills/worker/core/worker/native-journal-capacity.ts": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a",
+    "skills/worker/core/worker/native-journal-state.ts": "ae5cca21eb24261fa5389c7081bc3534e8e12b411d5bda0e97a69a94ead424d2",
+    "skills/worker/core/worker/native-node-identity.ts": "6ea78a96f82fa25ad27b26a2a48911e1e7a625fe9c0b25db76af39f49f2394f3",
+    "skills/worker/core/worker/native-output-spool.ts": "da9b2bdd9f5b8f9418e98a451eb3275aadec117a9ee7ca733566e571870898c7",
+    "skills/worker/core/worker/native-owned-children.ts": "631594461634def759607c57e4a7407c062bd1d5e837a28d7f83c5fcde5e204d",
+    "skills/worker/core/worker/native-pool-policy.ts": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+    "skills/worker/core/worker/native-process-cancellation.ts": "1a3295c2220b82b3c06047151df0a6ca4e126f747f5eaabb57ddb5a753cd1bf5",
+    "skills/worker/core/worker/native-process-control.ts": "3cfd56d48a2f70fb80072692a133fb0c8490bd94ec79d5270b771dd2e2717d2e",
+    "skills/worker/core/worker/native-process-launches.ts": "4b4ea9b64584e43f2f791d97872430f0d2dcf917d5ada11c0a8bb2ecd4456155",
+    "skills/worker/core/worker/native-process-output.ts": "5f7a4e1cdd9424fefe249775886a34019da38f7a76c486b38005c5d727f14350",
+    "skills/worker/core/worker/native-resource-accounting.ts": "c92b1246dd5b924b71147314257063eba2478838abe4ddcb3a9453a2e9abe448",
+    "skills/worker/core/worker/native-resource-observation.ts": "903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c",
+    "skills/worker/core/worker/native-resource-pool.ts": "2a002b796bae216210186f258d32f5dd267ec10a4940f4d0fc2f12ea72bd93ee",
+    "skills/worker/core/worker/native-resource-scope.ts": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c",
+    "skills/worker/core/worker/native-result.ts": "11c8074a973fec8f764e64668e29c7d4907a5b9e605b6bad04cbfa0454d318bd",
+    "skills/worker/core/worker/native-runtime-identity.ts": "4bb8600bf48477411e75148e6edbd0dae345809316d60a3d3cd4b8ad6f8a057e",
+    "skills/worker/core/worker/native-supervisor-authority.ts": "2a710c00d935777144fc2055e435f1610bc66a01976a002047de751862e18650",
+    "skills/worker/core/worker/native-worker-launcher.c": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+    "skills/worker/core/worker/native-worker-ownership.ts": "52f2f06fe2f18a8cabd8426d360d756d01d34471e2f0015e8fe148e753238350",
+    "skills/worker/core/worker/native-worker-process.ts": "230bcb2eae21abc5d87187d682504155ef131a649b05f6662fb0d7a6db575182",
+    "skills/worker/core/worker/ownership-capacity.ts": "4ff8bec1986def8a064b10e5e3ab1d1f3d6a4af0871ec5135f49903670aff309",
+    "skills/worker/core/worker/ownership-children.ts": "cda8cec00dc6046b0204d72c7cdda342d3a23934a4c26d00129352dbc07535b1",
+    "skills/worker/core/worker/ownership-state.ts": "ef33d0452ca1c814430a4815d4bfa5fce85b8b2fa1217ccb171f6c942dc12f85",
+    "skills/worker/core/worker/ownership-store.ts": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+    "skills/worker/core/worker/phase-deadline.ts": "13ead2817f0277f8bb7a45b09f42df228bc62e8a0d43e26eabbcbc4f2365e456",
+    "skills/worker/core/worker/resource-accounting.ts": "eaed91f776bfdbf1daac4faa7b2e56848b5f1b1f83d2737622048cd4426837ef",
+    "skills/worker/core/worker/resource-reservations.ts": "781ba82f68942a44ba3c40652adffb76d8ceb369c279909dc826fbc361fd63e9",
+    "skills/worker/core/worker/resource-result-fields.ts": "d109f3aedf33fca9a84eab376d96ae714ea4134af5cfebf7c495cb7db89e218f",
+    "skills/worker/core/worker/trust.ts": "722f48ca75fb8546dbc4f4c9cc8eab8e31dfdfeafec7ea7aab587045e78b23fe",
+    "tests/verification/contracts/check-pipeline-worker-core-contracts.mts": "a2eabfd0752ff2fcd6133277be19e8e68a7200b51cd6d1998ab72f21ee12a110",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/proposed-buster-canonical.schema.json": "20cccd80043579fdcb4c21f9c81000f1f1a6eb9b0815fbac85dd9382ab845c78",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/question-definitions.json": "a10b12f7beb504d9bf0a0269007c72867175e457a9ce8699d6f4719866fe8b54",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json": "90e7e24d9862ef305a294c280bc8e3e5ccf768b2548a8ebe19f98dd829b5f7bb",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/boundary-owner-reference-specimens.json": "099c1c68e44a0931d854a4c4fd2e574450b1c63f5a8ebc310c0541f1488f5dfc",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/serialization-envelope-contract.json": "f6a51283e5352b3d25c683d214a4fd8cdad2330e08277e5c5a4b48c25c050572",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/admission-method-fixtures.json": "888185a65f1baf15d99106d61d6ad5562874cb58c72c3bf1315a187d87a9f698",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/secret-entry-complete-profiles.json": "1e7f57b81f7705486fbb7744fa57008dae0f355fb883216c9e203d44bd47a1e6",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/public-api-consumer-obligations.json": "4ed15afa2ca6b2a9de399946902102996bad02b9def6795b392a2c261d4e1c98",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/ownership-current-reader-attempt1.log": "4e2631663603519c98b413783476cab4e7a99299fcb376710f6dec15373024ab",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/ownership-required-quota-case.json": "d3b14d3fca252efbeb8f25917092c9f282d413706fb2fec65e8d23fb9bfe604c",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/question-case-specs.json": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28",
+    "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+    "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+    "skills/common/plugins/state-store/src/adapter.ts": "1805e68a4d478af60df925fb6c38204344d53e17a8134fafdd47732263c473c7",
+    "skills/common/plugins/wait-store/src/adapter.ts": "9114197adde4307becd0d14548eef723804be8f051acef012abbcbf8c5b8b082",
+    "skills/common/plugins/telemetry-store/src/adapter.ts": "f5a3ff64dce028471c800e9a5da01bcc3a405f26b1e68ccdd8e78cd54e00fb13",
+    "skills/common/plugins/operator-messaging/src/adapter.ts": "a6d719a5e69b401a0696af9a74dcf358015cdc57bfa062cca0514c54410b3785",
+    "skills/common/plugins/transport-publisher/src/adapter.ts": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31",
+    "skills/common/plugins/artifact-store/src/adapter.ts": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154",
+    "skills/common/plugin-runtime/foundation/config/published-pair.ts": "c0c4fc08ae422962f201b4ec9f134ec03f8e3354c85316cb92657db18aafa27a",
+    "skills/nova/plugins/demo-handoff/src/adapter.ts": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+    "skills/nova/core/test-gates/remote-result-import.ts": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+    "skills/nova/core/test-gates/remote-dispatch-store.ts": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+    "skills/nova/core/observability/reconciler.ts": "61c65951f07d04e1767fdc3114a473183ed5b968ef8d68f665b4ec5d0661dd71",
+    "skills/buster/engine/test-gates/historical-plan-store.ts": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+    "skills/buster/engine/test-gates/native-fixture-journal.ts": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+    "skills/buster/engine/test-gates/prepared-plan-store.ts": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+    "scripts/retire-wait-value.mjs": "7a62bff9b58dbb5d4dbb6af8cdd3b3b7b64b5cdc2b536f23ea0ba1c0bb489102",
+    "scripts/retire-telemetry.mjs": "050d770035a702a33e487ae06c7903aee6333cdbdf1f1e44dd4b5fcf7503c456",
+    "scripts/retire-operator-request.mjs": "8aebd618c02dc8a898db323b99f7a0dee0abb27c470dda59a9bd3d7cde01dc21",
+    "scripts/retire-admission.mjs": "ac31444b3acdad697ec7317773fda4dfad48b4ee3a22a4eb2d329e73c5d30d96",
+    "scripts/retire-attempt-result.mjs": "c84c13e778070012ca005b272f0bc0875b3a587e8623ddf5aee827f9b90ae61a",
+    "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/retirement-binding-contract.json": "d75046e7e3a78501033c28a60fa2f18d1b7afaa9b49728440291c0943d776ac4",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/retirement-binding-contract.json": "d75046e7e3a78501033c28a60fa2f18d1b7afaa9b49728440291c0943d776ac4",
+    "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-method-fixtures.json": "d672235916533b74c9dbcc4733b2c3b630196d3036ce51ed5bc94b0ef053ab59",
+    "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/reserve-boundary-fixtures.json": "e1fb9bd749780fe2cd7bdf12e409bab8c12a9bdfcac50b9171b5c90d35682288",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/retirement-method-fixtures.json": "eb15e1c3c0b0cdaac0b74e88a5e2c3d66af8184d752ec53a46b9ffa3f6921036",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/question-case-specs.json": "6a780cc922481322fe671cc9511a0fefbf403f167ed3b6b40444ab08053ec409",
+    "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-method-fixtures.json": "77cfd0a74b6e737236ce1e5ee260e8ff47dccd17d34c1481e71ac82390bfef22",
+    "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-pending-state.json": "4bcbc555fec72bec1dd15f963ba8da00d08642e14c37072ddb879fa4f635ee79",
+    "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-oversized-2049.bytes": "4b7787594928d92fd11386a9210a7322cd2d1d30bddcabb4611274f547272101",
+    "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/tar-correlated-profiles.json": "8ea2f054ce6604e75b76d78b94ebf655af95724616ed6a790e70d5e21d6d3e49",
+    "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/provider-provenance-contract.json": "43b34f676dacb4534381a20fefb02b3773c8649c72629860f3c2e6f8d47c621d",
+    "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/provider-provenance-specimens.json": "69fec151a304efabdcc90e601933d3d3f906355e73f42c1cf1c575d81787b78e",
+    "docs/review/remediation/config-semantic-inventory.json": "e7d818d858a135d14a8a968b04baf94616fa5bca708fe6cd21457e7881d849e6",
+    "charts/prism/templates/workloads.yaml": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+    "docker/buster-runtime-entrypoint.sh": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+    "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/source-stable-receipt.json": "2e707781f3340cf252b97977cf5658477a6bbe3d18714fc54881313a21a7a2d7",
+    "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/candidate-dispositions.json": "b30dcc79c8a5f6c6e67cb56a91f55eba9720ca4158ce9aee85f7ede0e42a8a05",
+    "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/loader-packaging-marker-semantics.json": "21887205b03676591532402c86fa2423c139ae053e58797c6c712f39fe380303",
+    "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/schema-prism-source-semantics.json": "1d48deadb4301737b64a0101a0828b0bae5503bf0cfbc7515d1f57dc4f605792",
+    "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/prism-contract-marker-semantics.json": "1e2960cf8c3ba04ca059f6d1ed47e576ce8daca47f18a614fd5cd160901b760b",
+    "docs/review/evidence/config-acceptance/components/residual-fragment.json": "25ca9b453586600cb1bd3fe168fc5c6bb24304330e647a356d957929cb80ee8e",
+    "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/buster-marker-semantics.json": "d32502e067b4a3933d16469df25027282e8f26a22bc4b45cf895993d995bba41",
+    "docs/review/evidence/config-acceptance/components/semantic-fragment.json": "8375d00031f7cdc46099f30d459cf9f3b9830a4a788aa2d56b5061633f7140d1",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/runtime-security-image-wire-handoff.json": "15eba24dc9c2df12a4495453a763c2134c207563607409385fd7f4e9d723e0cb",
+    "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/foundation-marker-semantics.json": "3a635779343fbef5d52dd43bdbf2219a46b73bb8fdc69093d5ba48b26331d70c",
+    "skills/prism/engine/design-providers.ts": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145",
+    "skills/prism/engine/index.ts": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16",
+    "skills/prism/server/ingestion.ts": "bbee6795991e601600e6442927e483bcd5a87c798b66a42ed5606bb496354717",
+    "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/core-marker-semantics.json": "77f2b48e02440fb502c29a6713cb07f2c1b40e278b30649f5625cdcf1c9df6a2",
+    "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45",
+    "cmd/buster-namespace-controller/main.go": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/retirement-complete-owner-profiles.json": "96dfb283f4a9037500912ae42b5060b2366b57da544e4819ab85ffac8441a5d8",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-prior-delivery-identities.json": "6e70b6444c82d6a76b77535b533502f47a2031de2a3987dcf93f7dc0dc9fe2e2",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/corrected-definition-controls-attempt2.log": "18be588b0e8b1d91653c9677c77793b40c8fe3c9cc6553de6f67bb93deea1482",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-normal-bound-target-state.json": "655f7b6a28806b5a878853052a2471de49e81174fbd6b815bc247a07242edd5c",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/overflow-full-current-control.mjs": "c14744cc25747fd87c15216d72aa0fc3a78d462a2225c986edbb3ce7d4397a88",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-binding.schema.json": "2c3b0e60d390bb6a1ec20e5b4600b2e9da6205508db93160872d58aa8e4cc9a9",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json": "b81bf31309808a3b6067c791dd9745a2c64acc1d7982d8b23787631fdeaa5e29",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/check-corrected-definitions.mjs": "3c44fe224c734f57772fbaa0146687eb52aa8d185fbd5efd46f34fb748a47592",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/README.md": "36499e7f8fc2487f0edef98a443e9283efb790911dc79096bf068f6a7539c840",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/corrected-definition-controls.json": "870000516e551ec8f24b9d8a0b1a05f1d79ab26b420b7f3886cfa6d4a0b7150c",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-handoffs.json": "291b303cd01f30f7239202341c48ee044c121d1e7d176e7f395b4df6cf7b5170",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/proposed-core-native-lock.schema.json": "d5b00706ae30c1189385390f42a9b3b4d76bb4753d5201d70a9b969be621a6b4",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/provider-serialization-bound-controls.json": "6db519fe83abf450d02c750efa7c662ff951f630dd85b393410f8dc7b90962bc",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/corrected-definition-controls-final.log": "89f1ab86a56bc72c11acbd4994d1bcb41d1d6ff0b2fee8f12d5a04923cca1708",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/negative-duplicate-case.fixture.json": "1cf99ce38d0c899968dcddb15df4187a8dbc2e063136acbf5f8232f06092482a",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/define-provider-provenance.py": "fc9822ff142b8f82c8391f069d65be8420032cf9c63c0c40b17ca16275fb44ba",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/companion-definition-controls.json": "94dde585438b86f3e08304886b953c0e0d54594300481f387e36403eb612f554",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/proposed-definition-controls-attempt1.log": "fe839d4360fec66459c729b75ca6b725a719b7ddde85f1f321cb2544acd01e49",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/proposed-definition-controls-attempt2.log": "64ff020b646f094072fa636295c23d9127adb42b1693e0503e1cded9909dd4fd",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-oversized-2049.bytes": "4b7787594928d92fd11386a9210a7322cd2d1d30bddcabb4611274f547272101",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/proposed-registered-store-lock-schemas.json": "3bbff705054497bcf6cee13b3448313db932954d3be50a5f3f5c41f476f2207a",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/provider-provenance-specimens.json": "69fec151a304efabdcc90e601933d3d3f906355e73f42c1cf1c575d81787b78e",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/build-corrections.py": "e130acfb37bbc2b22878ef61c64e0e2e50790c4d0f46837fcff248b5236dbd54",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/integrity-negative-empty-env-attempt1.log": "78bed30ccf3130f1816a8b38d534255badc6974bdc1fd67e67d4f5a9b3292c94",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/integrity-freeze-positive.log": "343b28148dc4504487c70646e7de06f4ac4b9c017ea90038da1d3d155ed388ee",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/safe-current-method-controls.json": "21975135632643a8333a5b1297e5a0e8c9539d184d7de5cc6c4ebe0f11d7d38d",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/extend-fixture-definitions.py": "6320a6e2fa36b1ced5748d8763669630064ed04cb8d5fb560fb8faed7452440d",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/provider-provenance.schema.json": "5478de721b33f2b8716c8e65a20ef03b033000a9ee12a0b2421723ac5d656344",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/integrity-positive-attempt1.log": "343b28148dc4504487c70646e7de06f4ac4b9c017ea90038da1d3d155ed388ee",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/provider-provenance-contract.json": "43b34f676dacb4534381a20fefb02b3773c8649c72629860f3c2e6f8d47c621d",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/remaining-obligations.json": "dea38f0b8105537c25a6fec72eed58f67ce2b022cfdd88857fd13f9460381d34",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/reserve-boundary-fixtures.json": "e1fb9bd749780fe2cd7bdf12e409bab8c12a9bdfcac50b9171b5c90d35682288",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-method-fixtures.json": "77cfd0a74b6e737236ce1e5ee260e8ff47dccd17d34c1481e71ac82390bfef22",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/tar-correlated-profiles.json": "8ea2f054ce6604e75b76d78b94ebf655af95724616ed6a790e70d5e21d6d3e49",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/safe-current-method-controls-attempt1.log": "72f79f655c0d881fbd07f33fc22e5d5c7257a159d49adcf6f07e150200f01267",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/proposed-additional-registered-lock.schema.json": "713498fdb28fdb503c2c07fc7e8d987d6478e916cf680541818d94922d5812c7",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/freeze-method-fixtures-attempt1.mjs.snapshot": "6027b4d05206bee4324bb9187b378a26f4d77d3e8a606656fb437d2b3984755b",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/stable-material-correction-receipt.json": "b0f15920b3fd279fd25868d8f885bc0dade6b52adaeae4a165d77c6bbc7e81a1",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/overflow-full-current-control.json": "dec1eda934f50bad2c6c9f05169cceb0d18420edcef3001ae553332070aba43f",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/build-corrections-syntax-attempt1.log": "710e359dc5b4012d28c18ec6f0653b9a08630d07822f6874c95d4bcfab32ddbb",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-pending-state.json": "4bcbc555fec72bec1dd15f963ba8da00d08642e14c37072ddb879fa4f635ee79",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/corrected-definition-controls-attempt1.log": "18be588b0e8b1d91653c9677c77793b40c8fe3c9cc6553de6f67bb93deea1482",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-quarantine-current-state.json": "640bf5263e53a85548176b9925400b27562f40c8e18944a01c8f4aa3ab095dd9",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/integrity-negative-duplicate-case-attempt1.log": "dc13008dca5286c8b01a370b9545bf4e47c400defb42dbc20f13c7d0e576cb05",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/proposed-buster-component.schema.json": "fa051f8dacdda448303d5182374d7970b02e71a496bcd41d098cd1bfd58b028c",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-normal-current-state.json": "27791c560ba315d9d64e78ea00f82aa18c4c353f38746466e39b8a025c2db411",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/build-corrections-syntax-attempt1.py.snapshot": "ccfb649bc894e6a45f2434a548820583dcd0bfc2eff3d578b7880e589402c266",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/historical-input-identities.json": "813f7e55c505a9bfd5c4f1cfe94ee78472520b06ef3a6afdda997934148ccdc9",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-compacted-state.json": "e6fe093599557c1e1071ff00c6284830c16f8d5998065c04e3dcc6e497828ae7",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/correction-ledger.json": "3487fc35dd4cc9b930c5797e7928b12cb11b86e42a0a092f78c4d08181adfd8e",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/validate-proposed-definitions.mjs": "816f564439857d769c070a7afcbea94375151b32a04b1fc54a501969f7b99580",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/corrected-definition-controls-attempt2.receipt.json": "352562c04fa43e71ed5f2f59abd31861091e7e628de94b4bd3296dfefad847db",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-gap-current-state.json": "7f896cc031b73df420deea14e4fd62a06ba1d99596f9e27e0994a64259315e8c",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/integrity-restored-positive-attempt1.log": "343b28148dc4504487c70646e7de06f4ac4b9c017ea90038da1d3d155ed388ee",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-overflow-bound-target-state.json": "6a3c7b0286b2fe47997fff366f7f81ed03d64b6e38615b6a67a5912b7e25ef06",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-gap-bound-target-state.json": "3c49d23ed1caf396fb5b381a8b406135d3e6247fed92b62e54ebac9aff263c82",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/safe-current-method-controls-attempt2.log": "f1f97c474b44baf89cc37ee262216073d7d8a613a5be8ab20607e6e76b7e0a2d",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-overflow-full-other-run-bound-target-state.json": "9abcbf37dd83415425de05bc199e632e32f472fb2f08be2b1ac531885ee75027",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/integrity-restored-positive-attempt2.log": "343b28148dc4504487c70646e7de06f4ac4b9c017ea90038da1d3d155ed388ee",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/integrity-final-positive.log": "343b28148dc4504487c70646e7de06f4ac4b9c017ea90038da1d3d155ed388ee",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/corrected-definition-controls-freeze.log": "89f1ab86a56bc72c11acbd4994d1bcb41d1d6ff0b2fee8f12d5a04923cca1708",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-method-fixtures.json": "d672235916533b74c9dbcc4733b2c3b630196d3036ce51ed5bc94b0ef053ab59",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/computed-environment-supersession.json": "f84fd8e8ccbecd868fa7355f6b8eb3e0b76b7f4c5cfdb7514165e728c981991c",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-quarantine-bound-target-state.json": "d57c078efcf7ed50b7bf8fe003a8f9cb8f9c123f83eb8f69fc312c3da8913426",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-acknowledged-state.json": "d60220088241a334e56829da09f99ffb553fa730cb2fc8d1c6d1365ef8a1590b",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/corrected-definition-controls-attempt4.log": "b5eb7e3b5cd74299903ba8c981868d75571ef237af5e24d77981503f09da350c",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/companion-definition-controls-attempt1.log": "e7be31b3b6da10d72e85000591fcdeb80b1cf8c01a46b6a46bab571d7fc28918",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/proposed-nova-platform.schema.json": "c7e358cb1688302961cc2fac61ca98e46feee2f06a1dbf48c114b6cbc8d9a847",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/check-corrected-definitions-attempt1.mjs.snapshot": "1fd054ed8d1f424fa733e7b94ae4a31ac79799f7abccc30701814466660aaa43",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/freeze-method-fixtures.mjs": "d20cd8033feb4045199c73b61fa84a5998bb66e51dabe72bc555709c9430c929",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/finalize-corrections.py": "ed01887642767a39321e1b0872ecfea5c161289ffc10d97647a7aa525ddb2f25",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/corrected-definition-controls-attempt1.receipt.json": "8543c67e188f6156104ae44705af09227f5d490ac8f1ce54f9180d4a42cac27a",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/check-companion-definitions.mjs": "61f80bf1fca3af9517f24b069701e7cd572cd52cac11af4c02c99d254369ce63",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/check-icq-integrity.py": "91b27f113f2330ab0d4ab6bdffccaf1c42cf2b225b92fa454b5aee964df51bd2",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-empty-bound-target-state.json": "07c5a0565325b940161a968460b17925cb15258c553ad51c5959ab0b5c75508c",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/negative-empty-env-expansion.fixture.json": "c41004aa22a66574992923689e26d5c2fd6bb23aa4108aff0080afbc74a12811",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-overflow-current-state.json": "63c5bd92bfb185d18b7cc8d0d8b77ff27f6c60d7984967b8485c1c48d3f990f6",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/corrected-definition-controls-attempt5.log": "89f1ab86a56bc72c11acbd4994d1bcb41d1d6ff0b2fee8f12d5a04923cca1708",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/companion-definition-controls-freeze.log": "e7be31b3b6da10d72e85000591fcdeb80b1cf8c01a46b6a46bab571d7fc28918",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/corrected-definition-controls-attempt3.log": "b5eb7e3b5cd74299903ba8c981868d75571ef237af5e24d77981503f09da350c",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/overflow-full-current-control-attempt1.log": "90e329995439cf31cbf9ecf8d380779a61fdca6c4372671ceede7bfd219941a3",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/companion-definition-controls-final.log": "e7be31b3b6da10d72e85000591fcdeb80b1cf8c01a46b6a46bab571d7fc28918",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/immutable-owner-reference-specimens.json": "ce86318e766f933da38a83994b39e39f434ee13b00c24769b303bdfde24dc7c4",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/author/PRISM-HANDOFF-TARGET-20261013.md": "ca84be429d093bdcffd19cec0ee9f233e719cc6363ad09659b900aef5dbc142f",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/author/prism-handoff-target-contracts-20261013.json": "61fff54f52aec11efbff691db0ea2ca5c0215a80dcbe122d593c33532dd3b4b5",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/author/prism-design-cardinality-proposal.json": "097b4b8b84214746be3e55810f58bd5f0798b7e486d531239f95f4ed80c6d1ff",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/delivery/native-host-target-case-specifications-20261013.json": "38fceb5362a5562d988a54f054279cde262727afc62ae685a4764b14df1ec14b",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/delivery/native-provisioning-contracts-bce3f075.json": "ab4f6f4ee1b8d87e208770d9016cb7dceca5bafb3a4028781b9198387afb8433",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/delivery/buster-kubernetes-captured-injections-20261013.json": "a8b31a1c090152199a81248a397709d5071ea233184fb75642fb866c3d0689e9",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/delivery/dls-authority-corrections-20261013.json": "8897b5bf3614a62804c738a6e06def2d4c52b7f2477a8bfa44dc4b5cfd092e5c",
+    "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/delivery/buster-kube-capture-case-specification-20261013.json": "e1f8a70d6b76d2949e439cb498072e8b0b09724ff3242dd821a97b7bcd49d780",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/boundary-material-controls-attempt1.log": "750e00ffab0f7c3a17b19c18bc330851de5d7780bd7f81bdfcc5f9c8517f0f40",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/case-input-contracts.json": "52bae0f819b8702475080c107141877f3603b90c41970a9459e08c6695ccee08",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/README.md": "8c15f6a39f4fc3591da16f25f2727a4e1f9ec7952c523681b378ede66ff9eac0",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/check-current-api-return.mjs": "6c9768da50529328d6a36d9094ff7c4fb4a50220b512db3e2ef5bb12ac118866",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/current-api-return-controls-attempt1.log": "d0eb1ee007cd51a301aca4673e9d6922a0e3c63a24f5a86d146d188a4db300c8",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/stable-material-correction-receipt.json": "27ad0c413a0ef8fb28af301634549fea76692c6fa68ad199dd719d43289798fe",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/correction-ledger.json": "578b78cec64cfd69cb3bc2a1bd0432ba588f01791ae4816a9c159ba93aaa3e7b",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/check-boundary-materials.mjs": "63598f018ffa15b4f11798dd8aa4aebb812d97442e6f6beea1fa7327b65df0ff",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/build-boundary-materials.py": "187cbb5a082b4c337efee29c0cde004c6b91f48177d6e947ca257f3103abf4aa",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/boundary-material-controls.json": "7de19599416c3acfd1530e69b4049959ba501dfb3e3a61a6ab2a84356f621d45",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/current-api-return-controls.json": "e46ee51380320c66dd4532c7074969cd06e9b2c7ac3b7fdac9c39c9c9446a51f",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/README.md.json": "59d9bcb0e96a86eaa86143b0732f272a5902037a4d965e6022a9e23891f9d5da",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/preserved-input-identities.json": "cb75b7cf23f62ad4a8f433c42f6ef5616bc594948b579365df9ecdec05a6a2e3",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/duplicate-positive-original.json": "28bc43d9a21570e463aeacf4a4eac7eb2ee9d78bf71260ac7164c48d42e67ece",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/recordGap-positive-original.json": "7fb6125679ecf0b400b58da3f0137818177d2e581e76b6b370f4258f4126f0dd",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/quarantine-negative-original.json": "d1c94ca5c4b7f26f96d267d06daf10c18c50e6a0144b05b71d20ac25ced1e493",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/counter-overflow-positive-original.json": "4ef205998f19d4ef7623885adaad5a4bc4ed3d01c58e5cf1771d0400312a8013",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/normal-admit-negative-original.json": "8a4bb7b4c2271d9a4280e717c2ed59baf0c6c85860199baaceae10364a2f2ada",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/normal-admitAndRead-negative-original.json": "1d0b8f68c77fd1f8fa786d4ec786c749658d792f7d0dfa0b33ead4565c59be28",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/overflow-positive-original.json": "4260f6d01ef345481835bac5a0ad35cd9871f5141d5fa8b90a1bf90c44ee6c16",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/oversized-history-positive-original.json": "c215814d9ff4c2e5c6d0be784a9097a0861e3738729b5abf2d1f45a0e0959580",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/normal-admitAndRead-positive-original.json": "0ac6bda9b0ef1e8f876d7f26b975aff200661cea3f48993fc41a72189609ffb0",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/recordGap-negative-original.json": "bbb6922707d7a5b2302e0a6de331f604dc5e0ead56e6f9ef2d533584745451a4",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/quarantine-positive-original.json": "09460d174a29232aac137414cb8f3d0393d2504fb390c402c9b7eecb76799c4d",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/normal-admit-positive-original.json": "22666cc88a25590b0ed0dfd394f89545a5be1c5b00abf2122f597ae5724ff322",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/gap-restoration-unproved-positive-original.json": "a5d864c2c2cc023d6e2cfeb21b5a2fd7e99adfbdfe719b4e4cf8a6c32fb1cfb5",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/oversized-history-positive-prior.json": "9c1e7b00ae3fde46d5a68281122066a331fea92cfe879149bd961a485f9e82b9",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admitAndRead-positive-prior.json": "1460732c86063c2bf5cce72dabf36109b171e80f00c85360aa20e7c9083e637e",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/quarantine-positive-candidate.json": "220965e3467e87e5c6f7b98a20018e1125ddfbdbcdca888fe7cf399bff9da37b",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/overflow-positive-candidate.json": "d013b261c1c588a2cd678df6ec35c2540830c9c35d7eaedcc48a85937c50a92b",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/gap-restoration-unproved-positive-candidate.json": "9b13ba9e7be48cb3d6269d0c801491212f609a2434dd6d3c73661e28ef4f7330",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/gap-restoration-unproved-positive-prior.json": "9b13ba9e7be48cb3d6269d0c801491212f609a2434dd6d3c73661e28ef4f7330",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/duplicate-positive-prior.json": "a9248a57ef5877c31cd29527aadd9980ed93d7c9f595dafcfec9cf23f9738eb9",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/duplicate-positive-candidate.json": "a9248a57ef5877c31cd29527aadd9980ed93d7c9f595dafcfec9cf23f9738eb9",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/quarantine-negative-overflow-candidate.json": "fc6ffb646ad7b7317754eb870278fd228c18c28ebe81dc00de3282bc06055019",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/recordGap-positive-candidate.json": "f3155e2045e692f9c102957016e742b0aec098136fb95117516c22da928ce7f9",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/recordGap-positive-prior.json": "1129cc37e95ffec6ef0a3943d0bc0797d993b2739d45fe7c25fad73b9da290c8",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/overflow-negative-other-run-prior.json": "99753959507f8ec4fd40e23d3ae29af949573bcb423fbc1857ec9f0dc64e64ce",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/quarantine-positive-prior.json": "fe21ed2dd211577b929d57bc6683f6ccd15a2ef6cf15e5dd3e6896a4b79a5d94",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/oversized-history-oversized-original.bytes": "ae4acf0d87d428546c118dc13df623d3191c9493d4ff1869965cccc00eb5710e",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/quarantine-negative-attempted-candidate.json": "6dc3e6e2db3ea56437a2517cd735a8bd0a4f6da8667cad35c517663237a3f950",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admitAndRead-positive-candidate.json": "cf8b0ae74e88652445634382e0c676614f87ff3bf4b9aaa1a10b42fd1b9cef3d",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/quarantine-negative-prior.json": "e414f4c469453980ea9aa23b95d4e152edee5209b3f7c5dda14b1f5c447a6b9a",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admit-positive-candidate.json": "21d2be3dea74b915a4c505c212069a8cab2f1c96abf8b3ef0aa21cf0ca41106c",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/recordGap-negative-prior.json": "65ddd966f56a2eac7af34a89e620fc43253eb070ea8ad68df653976a855de551",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admit-negative-prior.json": "a8ec87b25a50a50352aabaafb667ed69e7a5c30425fd0aa614815de9b56f9cc4",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/overflow-positive-prior.json": "c0e1ef388f03ca775a04086a37ccd42afc23a4bf2d8d958660d321b122f4193a",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/counter-overflow-positive-prior.json": "e35b918f26f588a0c9596600b8153211486b216311511fa6113c64874527f759",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admitAndRead-negative-attempted-candidate.json": "25621f0929f76566f4e3abc3eb966fb581cbdc6cca871e1ba77dbfa1a76c050d",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admit-positive-prior.json": "6a3c832dce2d58f7210baca59da72e560ac4b7fa164168685afc586d876bc378",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/recordGap-negative-attempted-candidate.json": "02c6a91177b56b06e1a17d6d20b15547265c890fd5f7941583d7b55f42dacf5d",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admit-negative-attempted-candidate.json": "b7101f0f9c26a886347abbc7b30eb028cbe854482520e3ef9c534c9a5e6924ea",
+    "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admitAndRead-negative-prior.json": "db39ddec140ca93b29c069e934a3b50319372608f33f61d73bb01da523a39e94",
+    "docs/review/evidence/config-acceptance/components/core-adjustable-profiles.json": "e67b9a96ee0737e99b03a20f5887034f40802d7f4d6a1df7ff46e10932283f43",
+    "docs/review/evidence/config-acceptance/components/core-adjustable-target.schema.json": "695ea10b3c08a72f93098665e7d4a0b83947a5f436241adc0447c048aabfd1be",
+    "docs/review/evidence/config-acceptance/components/core-adjustability-current.md": "4cfcb52bff31787f70c8ede26377075b2db62bed708815ee15f74b475a1efa0a",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/image-wire-current-attempt1.log": "871e4ff93b57817acb529978bb2a135d76e7db21fa0e827994e6ae4e417025ab",
+    "docs/review/evidence/config-acceptance/delivery/delivery-stable-controller-milestone-6606af9-20261013.json": "777092c34cca7c1f81f43dd790d464ca8aae9acb7203867084cf2d93f786b452",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/metadata-reference-authenticity-accounting.json": "1a778fbd79c8151192f8b7c4c1970ec94def4d7e20fae61f09d29ca19a2ced2c",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/frozen-crossauthor-canonical-handoffs.json": "ba3a4399e46bcca9a0456e110b2aab7d50df06839d34344ab8d3bb5d5cb4a180",
+    "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/parameter-default-dispositions.json": "c02e8db22c9e07554b9c7ccad16cbd1518fbc92a7d0889e8223b42746c60e598",
+    "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/native-cli-dispositions.json": "bb7351a73b200c19ab10187837635d75cd7c274c0eb05dfb7d98e0e25c2771ab"
+  },
+  "protectedOriginalCoreInputs": [
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/retirement-complete-owner-profiles.json",
+      "sha256": "96dfb283f4a9037500912ae42b5060b2366b57da544e4819ab85ffac8441a5d8"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-prior-delivery-identities.json",
+      "sha256": "6e70b6444c82d6a76b77535b533502f47a2031de2a3987dcf93f7dc0dc9fe2e2"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/corrected-definition-controls-attempt2.log",
+      "sha256": "18be588b0e8b1d91653c9677c77793b40c8fe3c9cc6553de6f67bb93deea1482"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-normal-bound-target-state.json",
+      "sha256": "655f7b6a28806b5a878853052a2471de49e81174fbd6b815bc247a07242edd5c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/overflow-full-current-control.mjs",
+      "sha256": "c14744cc25747fd87c15216d72aa0fc3a78d462a2225c986edbb3ce7d4397a88"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-binding.schema.json",
+      "sha256": "2c3b0e60d390bb6a1ec20e5b4600b2e9da6205508db93160872d58aa8e4cc9a9"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json",
+      "sha256": "b81bf31309808a3b6067c791dd9745a2c64acc1d7982d8b23787631fdeaa5e29"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/check-corrected-definitions.mjs",
+      "sha256": "3c44fe224c734f57772fbaa0146687eb52aa8d185fbd5efd46f34fb748a47592"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/README.md",
+      "sha256": "36499e7f8fc2487f0edef98a443e9283efb790911dc79096bf068f6a7539c840"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/corrected-definition-controls.json",
+      "sha256": "870000516e551ec8f24b9d8a0b1a05f1d79ab26b420b7f3886cfa6d4a0b7150c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-handoffs.json",
+      "sha256": "291b303cd01f30f7239202341c48ee044c121d1e7d176e7f395b4df6cf7b5170"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/proposed-core-native-lock.schema.json",
+      "sha256": "d5b00706ae30c1189385390f42a9b3b4d76bb4753d5201d70a9b969be621a6b4"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/provider-serialization-bound-controls.json",
+      "sha256": "6db519fe83abf450d02c750efa7c662ff951f630dd85b393410f8dc7b90962bc"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/corrected-definition-controls-final.log",
+      "sha256": "89f1ab86a56bc72c11acbd4994d1bcb41d1d6ff0b2fee8f12d5a04923cca1708"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/negative-duplicate-case.fixture.json",
+      "sha256": "1cf99ce38d0c899968dcddb15df4187a8dbc2e063136acbf5f8232f06092482a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/define-provider-provenance.py",
+      "sha256": "fc9822ff142b8f82c8391f069d65be8420032cf9c63c0c40b17ca16275fb44ba"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/retirement-binding-contract.json",
+      "sha256": "d75046e7e3a78501033c28a60fa2f18d1b7afaa9b49728440291c0943d776ac4"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/companion-definition-controls.json",
+      "sha256": "94dde585438b86f3e08304886b953c0e0d54594300481f387e36403eb612f554"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/proposed-definition-controls-attempt1.log",
+      "sha256": "fe839d4360fec66459c729b75ca6b725a719b7ddde85f1f321cb2544acd01e49"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/proposed-definition-controls-attempt2.log",
+      "sha256": "64ff020b646f094072fa636295c23d9127adb42b1693e0503e1cded9909dd4fd"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-oversized-2049.bytes",
+      "sha256": "4b7787594928d92fd11386a9210a7322cd2d1d30bddcabb4611274f547272101"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/proposed-registered-store-lock-schemas.json",
+      "sha256": "3bbff705054497bcf6cee13b3448313db932954d3be50a5f3f5c41f476f2207a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/provider-provenance-specimens.json",
+      "sha256": "69fec151a304efabdcc90e601933d3d3f906355e73f42c1cf1c575d81787b78e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/build-corrections.py",
+      "sha256": "e130acfb37bbc2b22878ef61c64e0e2e50790c4d0f46837fcff248b5236dbd54"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/integrity-negative-empty-env-attempt1.log",
+      "sha256": "78bed30ccf3130f1816a8b38d534255badc6974bdc1fd67e67d4f5a9b3292c94"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/integrity-freeze-positive.log",
+      "sha256": "343b28148dc4504487c70646e7de06f4ac4b9c017ea90038da1d3d155ed388ee"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/safe-current-method-controls.json",
+      "sha256": "21975135632643a8333a5b1297e5a0e8c9539d184d7de5cc6c4ebe0f11d7d38d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/extend-fixture-definitions.py",
+      "sha256": "6320a6e2fa36b1ced5748d8763669630064ed04cb8d5fb560fb8faed7452440d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/provider-provenance.schema.json",
+      "sha256": "5478de721b33f2b8716c8e65a20ef03b033000a9ee12a0b2421723ac5d656344"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/serialization-envelope-contract.json",
+      "sha256": "f6a51283e5352b3d25c683d214a4fd8cdad2330e08277e5c5a4b48c25c050572"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/question-case-specs.json",
+      "sha256": "6a780cc922481322fe671cc9511a0fefbf403f167ed3b6b40444ab08053ec409"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/integrity-positive-attempt1.log",
+      "sha256": "343b28148dc4504487c70646e7de06f4ac4b9c017ea90038da1d3d155ed388ee"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/provider-provenance-contract.json",
+      "sha256": "43b34f676dacb4534381a20fefb02b3773c8649c72629860f3c2e6f8d47c621d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/remaining-obligations.json",
+      "sha256": "dea38f0b8105537c25a6fec72eed58f67ce2b022cfdd88857fd13f9460381d34"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/reserve-boundary-fixtures.json",
+      "sha256": "e1fb9bd749780fe2cd7bdf12e409bab8c12a9bdfcac50b9171b5c90d35682288"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/question-definitions.json",
+      "sha256": "a10b12f7beb504d9bf0a0269007c72867175e457a9ce8699d6f4719866fe8b54"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-method-fixtures.json",
+      "sha256": "77cfd0a74b6e737236ce1e5ee260e8ff47dccd17d34c1481e71ac82390bfef22"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/tar-correlated-profiles.json",
+      "sha256": "8ea2f054ce6604e75b76d78b94ebf655af95724616ed6a790e70d5e21d6d3e49"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/safe-current-method-controls-attempt1.log",
+      "sha256": "72f79f655c0d881fbd07f33fc22e5d5c7257a159d49adcf6f07e150200f01267"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/proposed-additional-registered-lock.schema.json",
+      "sha256": "713498fdb28fdb503c2c07fc7e8d987d6478e916cf680541818d94922d5812c7"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/freeze-method-fixtures-attempt1.mjs.snapshot",
+      "sha256": "6027b4d05206bee4324bb9187b378a26f4d77d3e8a606656fb437d2b3984755b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/stable-material-correction-receipt.json",
+      "sha256": "b0f15920b3fd279fd25868d8f885bc0dade6b52adaeae4a165d77c6bbc7e81a1"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/overflow-full-current-control.json",
+      "sha256": "dec1eda934f50bad2c6c9f05169cceb0d18420edcef3001ae553332070aba43f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/build-corrections-syntax-attempt1.log",
+      "sha256": "710e359dc5b4012d28c18ec6f0653b9a08630d07822f6874c95d4bcfab32ddbb"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-pending-state.json",
+      "sha256": "4bcbc555fec72bec1dd15f963ba8da00d08642e14c37072ddb879fa4f635ee79"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/corrected-definition-controls-attempt1.log",
+      "sha256": "18be588b0e8b1d91653c9677c77793b40c8fe3c9cc6553de6f67bb93deea1482"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-quarantine-current-state.json",
+      "sha256": "640bf5263e53a85548176b9925400b27562f40c8e18944a01c8f4aa3ab095dd9"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/integrity-negative-duplicate-case-attempt1.log",
+      "sha256": "dc13008dca5286c8b01a370b9545bf4e47c400defb42dbc20f13c7d0e576cb05"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/proposed-buster-component.schema.json",
+      "sha256": "fa051f8dacdda448303d5182374d7970b02e71a496bcd41d098cd1bfd58b028c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-normal-current-state.json",
+      "sha256": "27791c560ba315d9d64e78ea00f82aa18c4c353f38746466e39b8a025c2db411"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/build-corrections-syntax-attempt1.py.snapshot",
+      "sha256": "ccfb649bc894e6a45f2434a548820583dcd0bfc2eff3d578b7880e589402c266"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/historical-input-identities.json",
+      "sha256": "813f7e55c505a9bfd5c4f1cfe94ee78472520b06ef3a6afdda997934148ccdc9"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-compacted-state.json",
+      "sha256": "e6fe093599557c1e1071ff00c6284830c16f8d5998065c04e3dcc6e497828ae7"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/correction-ledger.json",
+      "sha256": "3487fc35dd4cc9b930c5797e7928b12cb11b86e42a0a092f78c4d08181adfd8e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/validate-proposed-definitions.mjs",
+      "sha256": "816f564439857d769c070a7afcbea94375151b32a04b1fc54a501969f7b99580"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/corrected-definition-controls-attempt2.receipt.json",
+      "sha256": "352562c04fa43e71ed5f2f59abd31861091e7e628de94b4bd3296dfefad847db"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+      "sha256": "90e7e24d9862ef305a294c280bc8e3e5ccf768b2548a8ebe19f98dd829b5f7bb"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-gap-current-state.json",
+      "sha256": "7f896cc031b73df420deea14e4fd62a06ba1d99596f9e27e0994a64259315e8c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/integrity-restored-positive-attempt1.log",
+      "sha256": "343b28148dc4504487c70646e7de06f4ac4b9c017ea90038da1d3d155ed388ee"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-overflow-bound-target-state.json",
+      "sha256": "6a3c7b0286b2fe47997fff366f7f81ed03d64b6e38615b6a67a5912b7e25ef06"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-gap-bound-target-state.json",
+      "sha256": "3c49d23ed1caf396fb5b381a8b406135d3e6247fed92b62e54ebac9aff263c82"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/safe-current-method-controls-attempt2.log",
+      "sha256": "f1f97c474b44baf89cc37ee262216073d7d8a613a5be8ab20607e6e76b7e0a2d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-overflow-full-other-run-bound-target-state.json",
+      "sha256": "9abcbf37dd83415425de05bc199e632e32f472fb2f08be2b1ac531885ee75027"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/integrity-restored-positive-attempt2.log",
+      "sha256": "343b28148dc4504487c70646e7de06f4ac4b9c017ea90038da1d3d155ed388ee"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/integrity-final-positive.log",
+      "sha256": "343b28148dc4504487c70646e7de06f4ac4b9c017ea90038da1d3d155ed388ee"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/corrected-definition-controls-freeze.log",
+      "sha256": "89f1ab86a56bc72c11acbd4994d1bcb41d1d6ff0b2fee8f12d5a04923cca1708"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-method-fixtures.json",
+      "sha256": "d672235916533b74c9dbcc4733b2c3b630196d3036ce51ed5bc94b0ef053ab59"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/computed-environment-supersession.json",
+      "sha256": "f84fd8e8ccbecd868fa7355f6b8eb3e0b76b7f4c5cfdb7514165e728c981991c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-quarantine-bound-target-state.json",
+      "sha256": "d57c078efcf7ed50b7bf8fe003a8f9cb8f9c123f83eb8f69fc312c3da8913426"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-acknowledged-state.json",
+      "sha256": "d60220088241a334e56829da09f99ffb553fa730cb2fc8d1c6d1365ef8a1590b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/corrected-definition-controls-attempt4.log",
+      "sha256": "b5eb7e3b5cd74299903ba8c981868d75571ef237af5e24d77981503f09da350c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/companion-definition-controls-attempt1.log",
+      "sha256": "e7be31b3b6da10d72e85000591fcdeb80b1cf8c01a46b6a46bab571d7fc28918"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/proposed-nova-platform.schema.json",
+      "sha256": "c7e358cb1688302961cc2fac61ca98e46feee2f06a1dbf48c114b6cbc8d9a847"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/check-corrected-definitions-attempt1.mjs.snapshot",
+      "sha256": "1fd054ed8d1f424fa733e7b94ae4a31ac79799f7abccc30701814466660aaa43"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/freeze-method-fixtures.mjs",
+      "sha256": "d20cd8033feb4045199c73b61fa84a5998bb66e51dabe72bc555709c9430c929"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/finalize-corrections.py",
+      "sha256": "ed01887642767a39321e1b0872ecfea5c161289ffc10d97647a7aa525ddb2f25"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+      "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/corrected-definition-controls-attempt1.receipt.json",
+      "sha256": "8543c67e188f6156104ae44705af09227f5d490ac8f1ce54f9180d4a42cac27a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/check-companion-definitions.mjs",
+      "sha256": "61f80bf1fca3af9517f24b069701e7cd572cd52cac11af4c02c99d254369ce63"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/check-icq-integrity.py",
+      "sha256": "91b27f113f2330ab0d4ab6bdffccaf1c42cf2b225b92fa454b5aee964df51bd2"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-empty-bound-target-state.json",
+      "sha256": "07c5a0565325b940161a968460b17925cb15258c553ad51c5959ab0b5c75508c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/negative-empty-env-expansion.fixture.json",
+      "sha256": "c41004aa22a66574992923689e26d5c2fd6bb23aa4108aff0080afbc74a12811"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-overflow-current-state.json",
+      "sha256": "63c5bd92bfb185d18b7cc8d0d8b77ff27f6c60d7984967b8485c1c48d3f990f6"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/corrected-definition-controls-attempt5.log",
+      "sha256": "89f1ab86a56bc72c11acbd4994d1bcb41d1d6ff0b2fee8f12d5a04923cca1708"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/retirement-method-fixtures.json",
+      "sha256": "eb15e1c3c0b0cdaac0b74e88a5e2c3d66af8184d752ec53a46b9ffa3f6921036"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/companion-definition-controls-freeze.log",
+      "sha256": "e7be31b3b6da10d72e85000591fcdeb80b1cf8c01a46b6a46bab571d7fc28918"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/corrected-definition-controls-attempt3.log",
+      "sha256": "b5eb7e3b5cd74299903ba8c981868d75571ef237af5e24d77981503f09da350c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/overflow-full-current-control-attempt1.log",
+      "sha256": "90e329995439cf31cbf9ecf8d380779a61fdca6c4372671ceede7bfd219941a3"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/companion-definition-controls-final.log",
+      "sha256": "e7be31b3b6da10d72e85000591fcdeb80b1cf8c01a46b6a46bab571d7fc28918"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/immutable-owner-reference-specimens.json",
+      "sha256": "ce86318e766f933da38a83994b39e39f434ee13b00c24769b303bdfde24dc7c4"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/author/PRISM-HANDOFF-TARGET-20261013.md",
+      "sha256": "ca84be429d093bdcffd19cec0ee9f233e719cc6363ad09659b900aef5dbc142f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/author/prism-handoff-target-contracts-20261013.json",
+      "sha256": "61fff54f52aec11efbff691db0ea2ca5c0215a80dcbe122d593c33532dd3b4b5"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/author/prism-design-cardinality-proposal.json",
+      "sha256": "097b4b8b84214746be3e55810f58bd5f0798b7e486d531239f95f4ed80c6d1ff"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/delivery/native-host-target-case-specifications-20261013.json",
+      "sha256": "38fceb5362a5562d988a54f054279cde262727afc62ae685a4764b14df1ec14b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/delivery/native-provisioning-contracts-bce3f075.json",
+      "sha256": "ab4f6f4ee1b8d87e208770d9016cb7dceca5bafb3a4028781b9198387afb8433"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/delivery/buster-kubernetes-captured-injections-20261013.json",
+      "sha256": "a8b31a1c090152199a81248a397709d5071ea233184fb75642fb866c3d0689e9"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/delivery/dls-authority-corrections-20261013.json",
+      "sha256": "8897b5bf3614a62804c738a6e06def2d4c52b7f2477a8bfa44dc4b5cfd092e5c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/delivery/buster-kube-capture-case-specification-20261013.json",
+      "sha256": "e1f8a70d6b76d2949e439cb498072e8b0b09724ff3242dd821a97b7bcd49d780"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/boundary-material-controls-attempt1.log",
+      "sha256": "750e00ffab0f7c3a17b19c18bc330851de5d7780bd7f81bdfcc5f9c8517f0f40"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/case-input-contracts.json",
+      "sha256": "52bae0f819b8702475080c107141877f3603b90c41970a9459e08c6695ccee08"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/README.md",
+      "sha256": "8c15f6a39f4fc3591da16f25f2727a4e1f9ec7952c523681b378ede66ff9eac0"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/check-current-api-return.mjs",
+      "sha256": "6c9768da50529328d6a36d9094ff7c4fb4a50220b512db3e2ef5bb12ac118866"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/question-case-specs.json",
+      "sha256": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/current-api-return-controls-attempt1.log",
+      "sha256": "d0eb1ee007cd51a301aca4673e9d6922a0e3c63a24f5a86d146d188a4db300c8"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/stable-material-correction-receipt.json",
+      "sha256": "27ad0c413a0ef8fb28af301634549fea76692c6fa68ad199dd719d43289798fe"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/correction-ledger.json",
+      "sha256": "578b78cec64cfd69cb3bc2a1bd0432ba588f01791ae4816a9c159ba93aaa3e7b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/boundary-owner-reference-specimens.json",
+      "sha256": "099c1c68e44a0931d854a4c4fd2e574450b1c63f5a8ebc310c0541f1488f5dfc"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/check-boundary-materials.mjs",
+      "sha256": "63598f018ffa15b4f11798dd8aa4aebb812d97442e6f6beea1fa7327b65df0ff"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/build-boundary-materials.py",
+      "sha256": "187cbb5a082b4c337efee29c0cde004c6b91f48177d6e947ca257f3103abf4aa"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/boundary-material-controls.json",
+      "sha256": "7de19599416c3acfd1530e69b4049959ba501dfb3e3a61a6ab2a84356f621d45"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/admission-method-fixtures.json",
+      "sha256": "888185a65f1baf15d99106d61d6ad5562874cb58c72c3bf1315a187d87a9f698"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/current-api-return-controls.json",
+      "sha256": "e46ee51380320c66dd4532c7074969cd06e9b2c7ac3b7fdac9c39c9c9446a51f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/README.md.json",
+      "sha256": "59d9bcb0e96a86eaa86143b0732f272a5902037a4d965e6022a9e23891f9d5da"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/preserved-input-identities.json",
+      "sha256": "cb75b7cf23f62ad4a8f433c42f6ef5616bc594948b579365df9ecdec05a6a2e3"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/duplicate-positive-original.json",
+      "sha256": "28bc43d9a21570e463aeacf4a4eac7eb2ee9d78bf71260ac7164c48d42e67ece"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/recordGap-positive-original.json",
+      "sha256": "7fb6125679ecf0b400b58da3f0137818177d2e581e76b6b370f4258f4126f0dd"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/quarantine-negative-original.json",
+      "sha256": "d1c94ca5c4b7f26f96d267d06daf10c18c50e6a0144b05b71d20ac25ced1e493"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/counter-overflow-positive-original.json",
+      "sha256": "4ef205998f19d4ef7623885adaad5a4bc4ed3d01c58e5cf1771d0400312a8013"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/normal-admit-negative-original.json",
+      "sha256": "8a4bb7b4c2271d9a4280e717c2ed59baf0c6c85860199baaceae10364a2f2ada"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/normal-admitAndRead-negative-original.json",
+      "sha256": "1d0b8f68c77fd1f8fa786d4ec786c749658d792f7d0dfa0b33ead4565c59be28"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/overflow-positive-original.json",
+      "sha256": "4260f6d01ef345481835bac5a0ad35cd9871f5141d5fa8b90a1bf90c44ee6c16"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/oversized-history-positive-original.json",
+      "sha256": "c215814d9ff4c2e5c6d0be784a9097a0861e3738729b5abf2d1f45a0e0959580"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/normal-admitAndRead-positive-original.json",
+      "sha256": "0ac6bda9b0ef1e8f876d7f26b975aff200661cea3f48993fc41a72189609ffb0"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/recordGap-negative-original.json",
+      "sha256": "bbb6922707d7a5b2302e0a6de331f604dc5e0ead56e6f9ef2d533584745451a4"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/quarantine-positive-original.json",
+      "sha256": "09460d174a29232aac137414cb8f3d0393d2504fb390c402c9b7eecb76799c4d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/normal-admit-positive-original.json",
+      "sha256": "22666cc88a25590b0ed0dfd394f89545a5be1c5b00abf2122f597ae5724ff322"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/gap-restoration-unproved-positive-original.json",
+      "sha256": "a5d864c2c2cc023d6e2cfeb21b5a2fd7e99adfbdfe719b4e4cf8a6c32fb1cfb5"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/oversized-history-positive-prior.json",
+      "sha256": "9c1e7b00ae3fde46d5a68281122066a331fea92cfe879149bd961a485f9e82b9"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admitAndRead-positive-prior.json",
+      "sha256": "1460732c86063c2bf5cce72dabf36109b171e80f00c85360aa20e7c9083e637e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/quarantine-positive-candidate.json",
+      "sha256": "220965e3467e87e5c6f7b98a20018e1125ddfbdbcdca888fe7cf399bff9da37b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/overflow-positive-candidate.json",
+      "sha256": "d013b261c1c588a2cd678df6ec35c2540830c9c35d7eaedcc48a85937c50a92b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/gap-restoration-unproved-positive-candidate.json",
+      "sha256": "9b13ba9e7be48cb3d6269d0c801491212f609a2434dd6d3c73661e28ef4f7330"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/gap-restoration-unproved-positive-prior.json",
+      "sha256": "9b13ba9e7be48cb3d6269d0c801491212f609a2434dd6d3c73661e28ef4f7330"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/duplicate-positive-prior.json",
+      "sha256": "a9248a57ef5877c31cd29527aadd9980ed93d7c9f595dafcfec9cf23f9738eb9"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/duplicate-positive-candidate.json",
+      "sha256": "a9248a57ef5877c31cd29527aadd9980ed93d7c9f595dafcfec9cf23f9738eb9"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/quarantine-negative-overflow-candidate.json",
+      "sha256": "fc6ffb646ad7b7317754eb870278fd228c18c28ebe81dc00de3282bc06055019"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/recordGap-positive-candidate.json",
+      "sha256": "f3155e2045e692f9c102957016e742b0aec098136fb95117516c22da928ce7f9"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/recordGap-positive-prior.json",
+      "sha256": "1129cc37e95ffec6ef0a3943d0bc0797d993b2739d45fe7c25fad73b9da290c8"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/overflow-negative-other-run-prior.json",
+      "sha256": "99753959507f8ec4fd40e23d3ae29af949573bcb423fbc1857ec9f0dc64e64ce"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/quarantine-positive-prior.json",
+      "sha256": "fe21ed2dd211577b929d57bc6683f6ccd15a2ef6cf15e5dd3e6896a4b79a5d94"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/oversized-history-oversized-original.bytes",
+      "sha256": "ae4acf0d87d428546c118dc13df623d3191c9493d4ff1869965cccc00eb5710e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/quarantine-negative-attempted-candidate.json",
+      "sha256": "6dc3e6e2db3ea56437a2517cd735a8bd0a4f6da8667cad35c517663237a3f950"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admitAndRead-positive-candidate.json",
+      "sha256": "cf8b0ae74e88652445634382e0c676614f87ff3bf4b9aaa1a10b42fd1b9cef3d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/quarantine-negative-prior.json",
+      "sha256": "e414f4c469453980ea9aa23b95d4e152edee5209b3f7c5dda14b1f5c447a6b9a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admit-positive-candidate.json",
+      "sha256": "21d2be3dea74b915a4c505c212069a8cab2f1c96abf8b3ef0aa21cf0ca41106c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/recordGap-negative-prior.json",
+      "sha256": "65ddd966f56a2eac7af34a89e620fc43253eb070ea8ad68df653976a855de551"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admit-negative-prior.json",
+      "sha256": "a8ec87b25a50a50352aabaafb667ed69e7a5c30425fd0aa614815de9b56f9cc4"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/overflow-positive-prior.json",
+      "sha256": "c0e1ef388f03ca775a04086a37ccd42afc23a4bf2d8d958660d321b122f4193a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/counter-overflow-positive-prior.json",
+      "sha256": "e35b918f26f588a0c9596600b8153211486b216311511fa6113c64874527f759"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admitAndRead-negative-attempted-candidate.json",
+      "sha256": "25621f0929f76566f4e3abc3eb966fb581cbdc6cca871e1ba77dbfa1a76c050d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admit-positive-prior.json",
+      "sha256": "6a3c832dce2d58f7210baca59da72e560ac4b7fa164168685afc586d876bc378"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/recordGap-negative-attempted-candidate.json",
+      "sha256": "02c6a91177b56b06e1a17d6d20b15547265c890fd5f7941583d7b55f42dacf5d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admit-negative-attempted-candidate.json",
+      "sha256": "b7101f0f9c26a886347abbc7b30eb028cbe854482520e3ef9c534c9a5e6924ea"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admitAndRead-negative-prior.json",
+      "sha256": "db39ddec140ca93b29c069e934a3b50319372608f33f61d73bb01da523a39e94"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/core-adjustable-profiles.json",
+      "sha256": "e67b9a96ee0737e99b03a20f5887034f40802d7f4d6a1df7ff46e10932283f43"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/core-adjustable-target.schema.json",
+      "sha256": "695ea10b3c08a72f93098665e7d4a0b83947a5f436241adc0447c048aabfd1be"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/core-adjustability-current.md",
+      "sha256": "4cfcb52bff31787f70c8ede26377075b2db62bed708815ee15f74b475a1efa0a"
+    }
+  ],
+  "pausedRuntimeInputs": {
+    "docs/review/evidence/config-acceptance/runtime/README.md": "80461b5244921aa8cc3601c6b42d540789097ad3324f8dcbe70dc47031bf0f30",
+    "docs/review/evidence/config-acceptance/runtime/inventory-fragment.json": "9619343edf808fffaadbff775932b0e4f808daba31ad194324b154df374a46c3",
+    "docs/review/evidence/config-acceptance/runtime/case-proposals.json": "51feea1a4ca73511668255dd0e328581fe18be04c6494a739496e7ca124fc28f",
+    "docs/review/evidence/config-acceptance/runtime/runtime-case-dispositions.json": "a2b7134c8ff161fa89fdb008fb52907f1c818cdf246d2f4a7b6f760d52365c56"
+  },
+  "archiveRawSHA256": "81f601389e9a6a97bc8aa7ca575ef9a0f3b0de1243d68005051c5dcedd480831",
+  "archiveCompressedSHA256": "baca5ae26c0c709df2bf92126b78b60bd790305102f921a83d3a45dcbbec3352",
+  "scope": "independent non-authored Core canonical definitions only; historical Core/Runtime inputs untouched; external fixtures and root projection excluded"
+}

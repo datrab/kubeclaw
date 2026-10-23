@@ -1,0 +1,721 @@
+{
+  "scope": "independent96 pure current source resolver controls:87 exact defaults+9 actual current codec/output/context guard negatives; no compiler/dispatch/stage/task/runtime/model/host/API effect",
+  "observations": [
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING",
+      "result": "passed",
+      "sourceField": "DEFAULTS.fast.tokenizerEncoding",
+      "actual": "o200k_base",
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-FAST-COMPONENTBUDGET-MAXFILES",
+      "result": "passed",
+      "sourceField": "DEFAULTS.fast.componentBudget.maxFiles",
+      "actual": 60,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-FAST-COMPONENTBUDGET-MAXBYTES",
+      "result": "passed",
+      "sourceField": "DEFAULTS.fast.componentBudget.maxBytes",
+      "actual": 400000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-FAST-COMPONENTBUDGET-MAXTOKENS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.fast.componentBudget.maxTokens",
+      "actual": 86000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-FAST-BOUNDARYBUDGET-MAXFILES",
+      "result": "passed",
+      "sourceField": "DEFAULTS.fast.boundaryBudget.maxFiles",
+      "actual": 400,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-FAST-BOUNDARYBUDGET-MAXBYTES",
+      "result": "passed",
+      "sourceField": "DEFAULTS.fast.boundaryBudget.maxBytes",
+      "actual": 900000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-FAST-BOUNDARYBUDGET-MAXTOKENS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.fast.boundaryBudget.maxTokens",
+      "actual": 80000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-FAST-BOUNDARYBUDGET-MAXRELATIONS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.fast.boundaryBudget.maxRelations",
+      "actual": 600,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-FAST-BOUNDARYBUDGET-MAXSLICES",
+      "result": "passed",
+      "sourceField": "DEFAULTS.fast.boundaryBudget.maxSlices",
+      "actual": 200,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-FAST-MAXPRIMARYJOBS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.fast.maxPrimaryJobs",
+      "actual": 75,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-FAST-MAXCONTEXTEXPANSIONJOBS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.fast.maxContextExpansionJobs",
+      "actual": 12,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-FAST-MAXVERIFICATIONJOBS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.fast.maxVerificationJobs",
+      "actual": 8,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-FAST-MAXINPUTTOKENSPERJOB",
+      "result": "passed",
+      "sourceField": "DEFAULTS.fast.maxInputTokensPerJob",
+      "actual": 120000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-FAST-MAXCONTEXTTOKENSPERJOB",
+      "result": "passed",
+      "sourceField": "DEFAULTS.fast.maxContextTokensPerJob",
+      "actual": 128000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-FAST-MAXPROMPTBYTESPERJOB",
+      "result": "passed",
+      "sourceField": "DEFAULTS.fast.maxPromptBytesPerJob",
+      "actual": 900000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-FAST-MAXINITIALINPUTTOKENS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.fast.maxInitialInputTokens",
+      "actual": 6500000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-FAST-MAXCONTEXTEXPANSIONINPUTTOKENS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.fast.maxContextExpansionInputTokens",
+      "actual": 750000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-FAST-MAXVERIFICATIONINPUTTOKENS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.fast.maxVerificationInputTokens",
+      "actual": 750000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-FAST-MAXTOTALINPUTTOKENS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.fast.maxTotalInputTokens",
+      "actual": 8000000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-FAST-MAXOUTPUTTOKENSPERJOB",
+      "result": "passed",
+      "sourceField": "DEFAULTS.fast.maxOutputTokensPerJob",
+      "actual": 6000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-FAST-MAXESTIMATEDCOSTUSD",
+      "result": "passed",
+      "sourceField": "DEFAULTS.fast.maxEstimatedCostUsd",
+      "actual": 100,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-FAST-MAXWALLTIMESECONDS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.fast.maxWallTimeSeconds",
+      "actual": 3600,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-FAST-ESTIMATEDSECONDSPERJOB",
+      "result": "passed",
+      "sourceField": "DEFAULTS.fast.estimatedSecondsPerJob",
+      "actual": 120,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-FAST-INPUTUSDPERMILLIONTOKENS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.fast.inputUsdPerMillionTokens",
+      "actual": 10,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-FAST-OUTPUTUSDPERMILLIONTOKENS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.fast.outputUsdPerMillionTokens",
+      "actual": 30,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-FAST-CONCURRENCY",
+      "result": "passed",
+      "sourceField": "DEFAULTS.fast.concurrency",
+      "actual": 8,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-FAST-MAXRETRIES",
+      "result": "passed",
+      "sourceField": "DEFAULTS.fast.maxRetries",
+      "actual": 1,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-FAST-MAXRETRYATTEMPTSPERPHASE",
+      "result": "passed",
+      "sourceField": "DEFAULTS.fast.maxRetryAttemptsPerPhase",
+      "actual": 4,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-FAST-ENABLEDLENSES",
+      "result": "passed",
+      "sourceField": "DEFAULTS.fast.enabledLenses",
+      "actual": [
+        "contracts",
+        "security",
+        "lifecycle"
+      ],
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-STANDARD-TOKENIZERENCODING",
+      "result": "passed",
+      "sourceField": "DEFAULTS.standard.tokenizerEncoding",
+      "actual": "o200k_base",
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-STANDARD-COMPONENTBUDGET-MAXFILES",
+      "result": "passed",
+      "sourceField": "DEFAULTS.standard.componentBudget.maxFiles",
+      "actual": 60,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-STANDARD-COMPONENTBUDGET-MAXBYTES",
+      "result": "passed",
+      "sourceField": "DEFAULTS.standard.componentBudget.maxBytes",
+      "actual": 400000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-STANDARD-COMPONENTBUDGET-MAXTOKENS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.standard.componentBudget.maxTokens",
+      "actual": 86000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-STANDARD-BOUNDARYBUDGET-MAXFILES",
+      "result": "passed",
+      "sourceField": "DEFAULTS.standard.boundaryBudget.maxFiles",
+      "actual": 400,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-STANDARD-BOUNDARYBUDGET-MAXBYTES",
+      "result": "passed",
+      "sourceField": "DEFAULTS.standard.boundaryBudget.maxBytes",
+      "actual": 900000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-STANDARD-BOUNDARYBUDGET-MAXTOKENS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.standard.boundaryBudget.maxTokens",
+      "actual": 80000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-STANDARD-BOUNDARYBUDGET-MAXRELATIONS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.standard.boundaryBudget.maxRelations",
+      "actual": 600,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-STANDARD-BOUNDARYBUDGET-MAXSLICES",
+      "result": "passed",
+      "sourceField": "DEFAULTS.standard.boundaryBudget.maxSlices",
+      "actual": 200,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-STANDARD-MAXPRIMARYJOBS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.standard.maxPrimaryJobs",
+      "actual": 500,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-STANDARD-MAXCONTEXTEXPANSIONJOBS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.standard.maxContextExpansionJobs",
+      "actual": 100,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-STANDARD-MAXVERIFICATIONJOBS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.standard.maxVerificationJobs",
+      "actual": 100,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-STANDARD-MAXINPUTTOKENSPERJOB",
+      "result": "passed",
+      "sourceField": "DEFAULTS.standard.maxInputTokensPerJob",
+      "actual": 120000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-STANDARD-MAXCONTEXTTOKENSPERJOB",
+      "result": "passed",
+      "sourceField": "DEFAULTS.standard.maxContextTokensPerJob",
+      "actual": 128000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-STANDARD-MAXPROMPTBYTESPERJOB",
+      "result": "passed",
+      "sourceField": "DEFAULTS.standard.maxPromptBytesPerJob",
+      "actual": 900000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-STANDARD-MAXINITIALINPUTTOKENS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.standard.maxInitialInputTokens",
+      "actual": 25000000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-STANDARD-MAXCONTEXTEXPANSIONINPUTTOKENS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.standard.maxContextExpansionInputTokens",
+      "actual": 50000000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-STANDARD-MAXVERIFICATIONINPUTTOKENS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.standard.maxVerificationInputTokens",
+      "actual": 50000000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-STANDARD-MAXTOTALINPUTTOKENS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.standard.maxTotalInputTokens",
+      "actual": 50000000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-STANDARD-MAXOUTPUTTOKENSPERJOB",
+      "result": "passed",
+      "sourceField": "DEFAULTS.standard.maxOutputTokensPerJob",
+      "actual": 6000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-STANDARD-MAXESTIMATEDCOSTUSD",
+      "result": "passed",
+      "sourceField": "DEFAULTS.standard.maxEstimatedCostUsd",
+      "actual": 650,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-STANDARD-MAXWALLTIMESECONDS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.standard.maxWallTimeSeconds",
+      "actual": 28800,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-STANDARD-ESTIMATEDSECONDSPERJOB",
+      "result": "passed",
+      "sourceField": "DEFAULTS.standard.estimatedSecondsPerJob",
+      "actual": 120,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-STANDARD-INPUTUSDPERMILLIONTOKENS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.standard.inputUsdPerMillionTokens",
+      "actual": 10,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-STANDARD-OUTPUTUSDPERMILLIONTOKENS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.standard.outputUsdPerMillionTokens",
+      "actual": 30,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-STANDARD-CONCURRENCY",
+      "result": "passed",
+      "sourceField": "DEFAULTS.standard.concurrency",
+      "actual": 10,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-STANDARD-MAXRETRIES",
+      "result": "passed",
+      "sourceField": "DEFAULTS.standard.maxRetries",
+      "actual": 2,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-STANDARD-MAXRETRYATTEMPTSPERPHASE",
+      "result": "passed",
+      "sourceField": "DEFAULTS.standard.maxRetryAttemptsPerPhase",
+      "actual": 20,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-STANDARD-ENABLEDLENSES",
+      "result": "passed",
+      "sourceField": "DEFAULTS.standard.enabledLenses",
+      "actual": [
+        "architecture",
+        "contracts",
+        "security",
+        "lifecycle",
+        "resilience",
+        "deployment",
+        "simplification"
+      ],
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-DEEP-TOKENIZERENCODING",
+      "result": "passed",
+      "sourceField": "DEFAULTS.deep.tokenizerEncoding",
+      "actual": "o200k_base",
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-DEEP-COMPONENTBUDGET-MAXFILES",
+      "result": "passed",
+      "sourceField": "DEFAULTS.deep.componentBudget.maxFiles",
+      "actual": 30,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-DEEP-COMPONENTBUDGET-MAXBYTES",
+      "result": "passed",
+      "sourceField": "DEFAULTS.deep.componentBudget.maxBytes",
+      "actual": 220000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-DEEP-COMPONENTBUDGET-MAXTOKENS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.deep.componentBudget.maxTokens",
+      "actual": 90000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-DEEP-BOUNDARYBUDGET-MAXFILES",
+      "result": "passed",
+      "sourceField": "DEFAULTS.deep.boundaryBudget.maxFiles",
+      "actual": 100,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-DEEP-BOUNDARYBUDGET-MAXBYTES",
+      "result": "passed",
+      "sourceField": "DEFAULTS.deep.boundaryBudget.maxBytes",
+      "actual": 480000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-DEEP-BOUNDARYBUDGET-MAXTOKENS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.deep.boundaryBudget.maxTokens",
+      "actual": 110000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-DEEP-BOUNDARYBUDGET-MAXRELATIONS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.deep.boundaryBudget.maxRelations",
+      "actual": 100,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-DEEP-BOUNDARYBUDGET-MAXSLICES",
+      "result": "passed",
+      "sourceField": "DEFAULTS.deep.boundaryBudget.maxSlices",
+      "actual": 32,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-DEEP-MAXPRIMARYJOBS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.deep.maxPrimaryJobs",
+      "actual": 2000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-DEEP-MAXCONTEXTEXPANSIONJOBS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.deep.maxContextExpansionJobs",
+      "actual": 250,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-DEEP-MAXVERIFICATIONJOBS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.deep.maxVerificationJobs",
+      "actual": 250,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-DEEP-MAXINPUTTOKENSPERJOB",
+      "result": "passed",
+      "sourceField": "DEFAULTS.deep.maxInputTokensPerJob",
+      "actual": 120000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-DEEP-MAXCONTEXTTOKENSPERJOB",
+      "result": "passed",
+      "sourceField": "DEFAULTS.deep.maxContextTokensPerJob",
+      "actual": 128000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-DEEP-MAXPROMPTBYTESPERJOB",
+      "result": "passed",
+      "sourceField": "DEFAULTS.deep.maxPromptBytesPerJob",
+      "actual": 900000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-DEEP-MAXINITIALINPUTTOKENS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.deep.maxInitialInputTokens",
+      "actual": 50000000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-DEEP-MAXCONTEXTEXPANSIONINPUTTOKENS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.deep.maxContextExpansionInputTokens",
+      "actual": 100000000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-DEEP-MAXVERIFICATIONINPUTTOKENS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.deep.maxVerificationInputTokens",
+      "actual": 100000000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-DEEP-MAXTOTALINPUTTOKENS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.deep.maxTotalInputTokens",
+      "actual": 100000000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-DEEP-MAXOUTPUTTOKENSPERJOB",
+      "result": "passed",
+      "sourceField": "DEFAULTS.deep.maxOutputTokensPerJob",
+      "actual": 6000,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-DEEP-MAXESTIMATEDCOSTUSD",
+      "result": "passed",
+      "sourceField": "DEFAULTS.deep.maxEstimatedCostUsd",
+      "actual": 1300,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-DEEP-MAXWALLTIMESECONDS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.deep.maxWallTimeSeconds",
+      "actual": 86400,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-DEEP-ESTIMATEDSECONDSPERJOB",
+      "result": "passed",
+      "sourceField": "DEFAULTS.deep.estimatedSecondsPerJob",
+      "actual": 150,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-DEEP-INPUTUSDPERMILLIONTOKENS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.deep.inputUsdPerMillionTokens",
+      "actual": 10,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-DEEP-OUTPUTUSDPERMILLIONTOKENS",
+      "result": "passed",
+      "sourceField": "DEFAULTS.deep.outputUsdPerMillionTokens",
+      "actual": 30,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-DEEP-CONCURRENCY",
+      "result": "passed",
+      "sourceField": "DEFAULTS.deep.concurrency",
+      "actual": 4,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-DEEP-MAXRETRIES",
+      "result": "passed",
+      "sourceField": "DEFAULTS.deep.maxRetries",
+      "actual": 2,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-DEEP-MAXRETRYATTEMPTSPERPHASE",
+      "result": "passed",
+      "sourceField": "DEFAULTS.deep.maxRetryAttemptsPerPhase",
+      "actual": 40,
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-RT-REPOSITORY-GRADE-DEEP-ENABLEDLENSES",
+      "result": "passed",
+      "sourceField": "DEFAULTS.deep.enabledLenses",
+      "actual": [
+        "architecture",
+        "contracts",
+        "security",
+        "lifecycle",
+        "resilience",
+        "deployment",
+        "simplification"
+      ],
+      "limit": "current exportedDEFAULTS resolver only; no taskoverrides/operatorauthor/physicalcontext/API/model/dispatch acceptance"
+    },
+    {
+      "id": "INDEPENDENT-CURRENT-fast-CODEC-UNSUPPORTED",
+      "result": "passed",
+      "overrides": {
+        "tokenizerEncoding": "cl100k_base"
+      },
+      "expectedSourceBoundary": "tokenizer encoding conflicts",
+      "limit": "actual current parser rejects; successor alternative explicitly future compatibility proposal, NOT existing positive tuning"
+    },
+    {
+      "id": "INDEPENDENT-CURRENT-fast-OUTPUT-UNSUPPORTED",
+      "result": "passed",
+      "overrides": {
+        "maxOutputTokensPerJob": 3000
+      },
+      "expectedSourceBoundary": "output token reserve conflicts",
+      "limit": "actual current parser rejects; successor alternative explicitly future compatibility proposal, NOT existing positive tuning"
+    },
+    {
+      "id": "INDEPENDENT-CURRENT-fast-CONTEXT-UNSUPPORTED",
+      "result": "passed",
+      "overrides": {
+        "maxContextTokensPerJob": 14000
+      },
+      "expectedSourceBoundary": "per-job token limits exceed",
+      "limit": "actual current parser rejects; successor alternative explicitly future compatibility proposal, NOT existing positive tuning"
+    },
+    {
+      "id": "INDEPENDENT-CURRENT-standard-CODEC-UNSUPPORTED",
+      "result": "passed",
+      "overrides": {
+        "tokenizerEncoding": "cl100k_base"
+      },
+      "expectedSourceBoundary": "tokenizer encoding conflicts",
+      "limit": "actual current parser rejects; successor alternative explicitly future compatibility proposal, NOT existing positive tuning"
+    },
+    {
+      "id": "INDEPENDENT-CURRENT-standard-OUTPUT-UNSUPPORTED",
+      "result": "passed",
+      "overrides": {
+        "maxOutputTokensPerJob": 3000
+      },
+      "expectedSourceBoundary": "output token reserve conflicts",
+      "limit": "actual current parser rejects; successor alternative explicitly future compatibility proposal, NOT existing positive tuning"
+    },
+    {
+      "id": "INDEPENDENT-CURRENT-standard-CONTEXT-UNSUPPORTED",
+      "result": "passed",
+      "overrides": {
+        "maxContextTokensPerJob": 14000
+      },
+      "expectedSourceBoundary": "per-job token limits exceed",
+      "limit": "actual current parser rejects; successor alternative explicitly future compatibility proposal, NOT existing positive tuning"
+    },
+    {
+      "id": "INDEPENDENT-CURRENT-deep-CODEC-UNSUPPORTED",
+      "result": "passed",
+      "overrides": {
+        "tokenizerEncoding": "cl100k_base"
+      },
+      "expectedSourceBoundary": "tokenizer encoding conflicts",
+      "limit": "actual current parser rejects; successor alternative explicitly future compatibility proposal, NOT existing positive tuning"
+    },
+    {
+      "id": "INDEPENDENT-CURRENT-deep-OUTPUT-UNSUPPORTED",
+      "result": "passed",
+      "overrides": {
+        "maxOutputTokensPerJob": 3000
+      },
+      "expectedSourceBoundary": "output token reserve conflicts",
+      "limit": "actual current parser rejects; successor alternative explicitly future compatibility proposal, NOT existing positive tuning"
+    },
+    {
+      "id": "INDEPENDENT-CURRENT-deep-CONTEXT-UNSUPPORTED",
+      "result": "passed",
+      "overrides": {
+        "maxContextTokensPerJob": 14000
+      },
+      "expectedSourceBoundary": "per-job token limits exceed",
+      "limit": "actual current parser rejects; successor alternative explicitly future compatibility proposal, NOT existing positive tuning"
+    }
+  ],
+  "sourceDigests": {
+    "skills/nova/plugins/review/src/repository-review-profile.ts": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b",
+    "package-lock.json": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b",
+    "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/reproduce-current-grade-reader.mjs": "f34cf11ec032a10a12f1d938461d2c357504413d975ae96c5baded8bdad8b578"
+  },
+  "node": "v24.21.0"
+}

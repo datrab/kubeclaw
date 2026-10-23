@@ -7,8 +7,8 @@ export function boundedUtf8(text, limit) {
   return { text: bytes.subarray(0, end).toString('utf8'), truncated: true };
 }
 
-export function logObservation(raw, { sinceTime, tailLines }) {
-  const { text, truncated } = boundedUtf8(raw, 64 * 1024);
+export function logObservation(raw, { sinceTime, tailLines }, maxBytes=64*1024) {
+  const { text, truncated } = boundedUtf8(raw, maxBytes);
   const lines = text.split('\n').filter(Boolean);
   const timestamp = line => /^\d{4}-\d\d-\d\dT\S+/.exec(line ?? '')?.[0] ?? null;
   const lineLimitReached = tailLines !== undefined && lines.length >= tailLines;

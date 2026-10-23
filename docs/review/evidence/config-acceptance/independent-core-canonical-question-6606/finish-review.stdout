@@ -1,0 +1,31 @@
+docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/stable-completion-receipt.json 14cc46532779d77782105b80e7f5c3c0de55fa5f189a5d91b0d2c339c5dac0bf
+{
+  "verdict": "no new actionable material finding at bounded frozen canonical mapping/definition scope; NOT wholeC0/rootprojection/implementation acceptance",
+  "rowsReviewed": 13,
+  "questionsReviewed": 14,
+  "futureCasesNotRun": 25,
+  "narrowCurrentCases": 2,
+  "independentDefinitionControls": 13,
+  "independentPureControls": 16,
+  "authorSafeReplayControls": {
+    "check-secret-current-reader.mjs": 6,
+    "check-ownership-current-reader.mjs": 4,
+    "check-image-wire-current.mjs": 4,
+    "check-target-profiles.mjs": 11
+  },
+  "unresolvedCrossOwnerAliases": 60,
+  "remainingExactSourceLinkObligations": 808,
+  "frozenPackageFiles": 72,
+  "frozenSourceReferenceFiles": 390,
+  "protectedCoreInputsUnchanged": 157,
+  "primarySourcesUnchanged": 173,
+  "RuntimePausedInputsUnchanged": 4,
+  "drift": {
+    "packageFiles": [],
+    "selectedSourceAndReferenceFiles": [],
+    "pausedRuntimeInputs": []
+  },
+  "wholeC0Accepted": false,
+  "rootProjectionReviewed": false,
+  "RuntimeSelfReviewed": false
+}

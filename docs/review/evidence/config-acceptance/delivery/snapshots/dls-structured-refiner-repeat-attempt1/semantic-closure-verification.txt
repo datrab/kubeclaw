@@ -1,0 +1,124 @@
+Command: python3 docs/review/evidence/config-acceptance/delivery/verify-semantic-closure.py
+{
+  "method": "static JSON/reference/SHA256 consistency checks; no production/test/package/cluster/host execution",
+  "settingRows": 824,
+  "caseSpecifications": 198,
+  "issues": [
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-ALTERNATE-PROFILES",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-MISSING-OLD-AUTHOR",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-ALLOWEDCAPABILITIES",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-BROWSERAXE",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-BROWSERLIGHTHOUSE",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-BROWSERPLAYWRIGHT",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-BROWSERVISUAL",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-CLUSTERBINDINGS",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-CONTAINERBUILD",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-DIRECTCOMMAND",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-HOST",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-NETWORKHTTP",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-PLATFORM",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-PLATFORMCONFIG",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-RUNTIMEROOT",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-SCHEMAVERSION",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-SECURITYSCAN",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-SOURCEATTESTATIONPUBLICKEYENVIRONMENTVARIABLE",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-STATEROOT",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-TAREXECUTABLE",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-GENERATED-TRUSTEDSOURCEAUTHORITY",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    },
+    {
+      "kind": "specDigests-mismatch",
+      "case": "DLV-CASE-BUSTER-CONDITIONAL-AUTH-REGISTRY-MEMBERS",
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-structured-target-case-specifications-20261013.json"
+    }
+  ],
+  "consistencyResult": "failed",
+  "c0Acceptance": "incomplete",
+  "implementationResults": {
+    "not-run": 198
+  }
+}
+Exit: 1

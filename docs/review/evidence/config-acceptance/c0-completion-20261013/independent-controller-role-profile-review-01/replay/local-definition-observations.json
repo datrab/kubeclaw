@@ -1,0 +1,290 @@
+{
+  "tool": {
+    "node": "v24.21.0",
+    "ajv": "8.x actual installed version recorded separately"
+  },
+  "limits": "No Go/controller/Helm/API/listener/token/CA/native execution. Relations are explicitly source-derived local proposal predicates, not real productive loader validation.",
+  "overflowSentinelFloorBytes": 181,
+  "observations": [
+    {
+      "id": "complete-A",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "complete-B",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "complete-role-off",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "complete-ready-product-off",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "complete-Ready-port-contrast",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "missing-policy-httpClientTimeoutSeconds",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "missing-policy-runtimeSecurityRefreshSeconds",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "missing-policy-runtimeSecurityFutureSkewSeconds",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "missing-policy-runtimeSecurityMaximumFindings",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "missing-policy-runtimeSecurityMaximumSerializedBytes",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "missing-policy-apiResponseMaximumBytes",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "missing-policy-apiRequestMaximumBytes",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "missing-policy-apiDiagnosticMaximumBytes",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "missing-policy-namespaceDeletionTimeoutSeconds",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "missing-policy-readyReadHeaderTimeoutSeconds",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "missing-policy-readyReadTimeoutSeconds",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "missing-policy-readyWriteTimeoutSeconds",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "missing-policy-readyIdleTimeoutSeconds",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "missing-policy-readyMaxHeaderBytes",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "missing-policy-readyHandlerTimeoutSeconds",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "missing-policy-readyMaximumBodyBytes",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "missing-policy-defaultDemoRetentionSeconds",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "missing-policy-authorizationMaximumBytes",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "missing-policy-readyObservationMaximumAgeSeconds",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "missing-policy-productHandlerTimeoutSeconds",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "missing-policy-productMaximumBodyBytes",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "missing-policy-productDecisionMaximumValiditySeconds",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "unknown-profile-key",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "missing-image",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "TTL-default-greater-max",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "string-poll-not-coerced",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "zero-poll",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "duration-overflow",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "disabled-role-keeps-controller",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "ready-disabled-product-enabled",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "controller-product-projection-differs-original-owner",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "duplicate-product-author",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "product-producer-equals-Ready",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "duplicate-subject",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "role-name-not-derived",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "shared-lease-group-competing",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "zero-ready-port",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "port-oversupported-Kubernetes-domain",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "native-url-invalid-IPv6-shape",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "header-byte-relation",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "array-sentinel-too-small",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "shared-group-schema-domain-not-const",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "resource-request-over-limit",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "resource-invalid-quantity",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "array-sentinel-exact-floor",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "utf8-byte-vs-codepoint",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "ordered-prefix-source-distinction",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "current-env-fallback-vs-target-no-default",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "source-policy-no-config-epoch-today",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "actual-role-helper-not-release-name",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    },
+    {
+      "id": "source-Ready-and-Product-actual-admission",
+      "result": "passed",
+      "meaning": "pure schema/source-derived local definition only"
+    }
+  ]
+}

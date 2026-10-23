@@ -1,0 +1,1403 @@
+{
+  "cases": [
+    {
+      "id": "QC-OUTBOX-UNBOUNDED-READ-FOUR-METHODS",
+      "fieldId": "CMP-API-OUTBOX-EXISTING-MAXIMUMBYTES-READBOUND",
+      "originalCase": {
+        "id": "QC-OUTBOX-UNBOUNDED-READ-FOUR-METHODS",
+        "source": {
+          "path": "docs/review/remediation/config-acceptance-matrix.json",
+          "sha256": "ab559aee906e4f72085031a84bb618c01941bc6e2d613175f235af0a18289227"
+        },
+        "pointer": "/cases/419",
+        "body": {
+          "id": "QC-OUTBOX-UNBOUNDED-READ-FOUR-METHODS",
+          "settingIds": [
+            "CMP-API-OUTBOX-EXISTING-MAXIMUMBYTES-READBOUND"
+          ],
+          "requirementIds": [
+            "F-VAL",
+            "F-EFFECT"
+          ],
+          "scope": "local",
+          "phase": "proposed-after-approval",
+          "productiveCaller": "FileProducerOutbox append/pending/acknowledge/compact (four independent subcases)",
+          "inputProfile": {
+            "fourMethodContracts": {
+              "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-method-fixtures.json",
+              "sha256": "77cfd0a74b6e737236ce1e5ee260e8ff47dccd17d34c1481e71ac82390bfef22"
+            },
+            "selectedExistingMaximumBytes": 2048
+          },
+          "priorState": {
+            "exactPositive": {
+              "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-pending-state.json",
+              "sha256": "4bcbc555fec72bec1dd15f963ba8da00d08642e14c37072ddb879fa4f635ee79"
+            },
+            "independentNegative": {
+              "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-oversized-2049.bytes",
+              "sha256": "4b7787594928d92fd11386a9210a7322cd2d1d30bddcabb4611274f547272101"
+            }
+          },
+          "expectedEffectOrRejectingBoundary": [
+            "Allfour target boundedreaders reject independentlycopied2049bytes againstselected2048 beforeparse/write, hashunchanged; exact1223byte recordstate append/pending/ack/compact positives. Current positives executed only."
+          ],
+          "observerMethod": "exact original immutable case contract; NOT currently executed targetruntime",
+          "command": [
+            "node",
+            "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+            "--case",
+            "QC-OUTBOX-UNBOUNDED-READ-FOUR-METHODS",
+            "--profiles",
+            "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+            "--stand",
+            "APPROVED_IMPLEMENTATION_COMMIT",
+            "--case-contracts",
+            "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+          ],
+          "sourceIdentity": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/question-case-specs.json",
+            "sha256": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28",
+            "rfc6901Pointer": "/activeCases/9"
+          },
+          "testDigests": {
+            "definitionSource": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28"
+          },
+          "toolDependencyImageConfigIdentities": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "profile": {
+              "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+              "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+              "sha256": "90e7e24d9862ef305a294c280bc8e3e5ccf768b2548a8ebe19f98dd829b5f7bb"
+            },
+            "sourceAndCaseContract": {
+              "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+              "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/question-case-specs.json",
+              "sha256": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28",
+              "rfc6901Pointer": "/activeCases/9"
+            }
+          },
+          "rawEvidencePath": null,
+          "result": "not-run",
+          "reason": "exact original case preserved and per-field settings projected; no future harness implementation/runtime result",
+          "reviewerConfirmation": null,
+          "specificationStatus": "incomplete",
+          "nativeSpecificationReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/question-case-specs.json",
+            "sha256": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28",
+            "rfc6901Pointer": "/activeCases/9"
+          },
+          "activeInputContract": {
+            "stage": "C0-proposed-definition",
+            "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+            "invocation": {
+              "executable": "node",
+              "argv": [
+                "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+                "--case",
+                "QC-OUTBOX-UNBOUNDED-READ-FOUR-METHODS",
+                "--profiles",
+                "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+                "--stand",
+                "APPROVED_IMPLEMENTATION_COMMIT",
+                "--case-contracts",
+                "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+              ],
+              "availability": "Exact proposed harness contract; file is deliberately not implemented before approval. Current-reader-controls.mjs is separately runnable now."
+            },
+            "requirements": [
+              "F-VAL",
+              "F-EFFECT"
+            ],
+            "environment": {
+              "ambientConfig": "forbidden",
+              "disposableRoot": "fresh mkdtemp per case",
+              "productionServices": "none"
+            },
+            "priorState": {
+              "exactPositive": {
+                "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-pending-state.json",
+                "sha256": "4bcbc555fec72bec1dd15f963ba8da00d08642e14c37072ddb879fa4f635ee79"
+              },
+              "independentNegative": {
+                "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-oversized-2049.bytes",
+                "sha256": "4b7787594928d92fd11386a9210a7322cd2d1d30bddcabb4611274f547272101"
+              }
+            },
+            "generationContract": "Select complete immutable owner profile; capture owner/profile/generation/source/schema digests before first effect. Started/claimed/recovery/retry/Eval keeps captured generation; new work may select B only after atomic publish. Same physical root may not be opened under a conflicting author or incompatible state policy. Compatible new operation may select B without changing originalA holder; exact retainedhistory compatibility required, no latest substitution. Missing fields fail; no literal/ENV fallback.",
+            "id": "QC-OUTBOX-UNBOUNDED-READ-FOUR-METHODS",
+            "questionId": "CMP-SOURCE-OUTBOX-UNBOUNDED-READ",
+            "boundary": "FileProducerOutbox append/pending/acknowledge/compact (four independent subcases)",
+            "input": {
+              "fourMethodContracts": {
+                "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-method-fixtures.json",
+                "sha256": "77cfd0a74b6e737236ce1e5ee260e8ff47dccd17d34c1481e71ac82390bfef22"
+              },
+              "selectedExistingMaximumBytes": 2048
+            },
+            "oracle": [
+              "Allfour target boundedreaders reject independentlycopied2049bytes againstselected2048 beforeparse/write, hashunchanged; exact1223byte recordstate append/pending/ack/compact positives. Current positives executed only."
+            ],
+            "supersedesCase": {
+              "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+              "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+              "id": "QC-OUTBOX-UNBOUNDED-READ-FOUR-METHODS"
+            },
+            "lifecycle": {
+              "status": "active-superseding-proposed-not-run",
+              "originalRequirementsPreserved": true,
+              "historicalOriginalCase": {
+                "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+                "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+                "id": "QC-OUTBOX-UNBOUNDED-READ-FOUR-METHODS"
+              }
+            }
+          },
+          "unresolvedOwnerAliases": []
+        },
+        "bodySha256": "b4f13f3a16c01c3ef90dfffc0a2566bcb2b83c21d21fb0e7a5dcea8e33c0e7a3"
+      },
+      "requirementsUnchanged": true,
+      "localRecipe": [
+        "All four methods independently at exact encoded cap and cap+1, with no write/ack/compaction on oversized replay; restore positive.",
+        "pending→deliverPending→ack duplicate replay retains recordDigest/producer/sequence/canonicalCursor and original A after B publication; no lower-B prevalidation or larger-B bypass."
+      ],
+      "consumerChain": [
+        "append",
+        "pending",
+        "acknowledge",
+        "compact"
+      ],
+      "originalBinding": "Original R/J admitted policy, claim, request, source/software, store version/root and deadlines remain captured. Retry/recovery resolves exact original A before current B validation; B cannot reset counters, extend deadlines or silently migrate/delete history. New independent B requires compatible root/grant and complete original admission semantics.",
+      "mutationAndRestoredPositive": "Isolate actual source mutation at pinned consumer; run the same future real selected caller case and restore original source/profile positive. No lexical source match or toy substitute proves EFFECT.",
+      "status": "not-run",
+      "nativeGate": "Authentic original issuer/storage/kernel/native measurement and original claims if applicable; controlled definition artifacts never native proof.",
+      "causalOrUnsupported": "contracts.json exact domain/caller/granularity predicates. Unsupported exported membership/native maximumProcesses remains explicit X, not overall requirement waiver."
+    },
+    {
+      "id": "QC-OUTBOX-UNBOUNDED-READ-REPLAY",
+      "fieldId": "CMP-API-OUTBOX-EXISTING-MAXIMUMBYTES-READBOUND",
+      "originalCase": {
+        "id": "QC-OUTBOX-UNBOUNDED-READ-REPLAY",
+        "source": {
+          "path": "docs/review/remediation/config-acceptance-matrix.json",
+          "sha256": "ab559aee906e4f72085031a84bb618c01941bc6e2d613175f235af0a18289227"
+        },
+        "pointer": "/cases/420",
+        "body": {
+          "id": "QC-OUTBOX-UNBOUNDED-READ-REPLAY",
+          "settingIds": [
+            "CMP-API-OUTBOX-EXISTING-MAXIMUMBYTES-READBOUND"
+          ],
+          "requirementIds": [
+            "F-BIND",
+            "F-RECOVERY",
+            "F-EVAL"
+          ],
+          "scope": "local",
+          "phase": "proposed-after-approval",
+          "productiveCaller": "deliverPending(outbox,admission)+retained state restart",
+          "inputProfile": {
+            "originalExistingMaximumBytes": 2048,
+            "newIndependentB": 4096,
+            "pendingFixture": {
+              "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-pending-state.json",
+              "sha256": "4bcbc555fec72bec1dd15f963ba8da00d08642e14c37072ddb879fa4f635ee79"
+            },
+            "oversizedOriginal": {
+              "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-oversized-2049.bytes",
+              "sha256": "4b7787594928d92fd11386a9210a7322cd2d1d30bddcabb4611274f547272101"
+            },
+            "ackFixture": {
+              "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-method-fixtures.json",
+              "sha256": "77cfd0a74b6e737236ce1e5ee260e8ff47dccd17d34c1481e71ac82390bfef22"
+            }
+          },
+          "priorState": {
+            "generation": "A",
+            "root": "fresh unless case explicitly retained",
+            "unacknowledgedWork": "preserve; no clearing"
+          },
+          "expectedEffectOrRejectingBoundary": [
+            "OriginalA2049bytehistory rejects unchanged even currentB4096 permits; exactA1223byte record repeateddeliver/ack/compact preserves originalidentities/cursor; no latestB fallback."
+          ],
+          "observerMethod": "exact original immutable case contract; NOT currently executed targetruntime",
+          "command": [
+            "node",
+            "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+            "--case",
+            "QC-OUTBOX-UNBOUNDED-READ-REPLAY",
+            "--profiles",
+            "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+            "--stand",
+            "APPROVED_IMPLEMENTATION_COMMIT",
+            "--case-contracts",
+            "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+          ],
+          "sourceIdentity": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/question-case-specs.json",
+            "sha256": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28",
+            "rfc6901Pointer": "/activeCases/10"
+          },
+          "testDigests": {
+            "definitionSource": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28"
+          },
+          "toolDependencyImageConfigIdentities": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "profile": {
+              "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+              "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+              "sha256": "90e7e24d9862ef305a294c280bc8e3e5ccf768b2548a8ebe19f98dd829b5f7bb"
+            },
+            "sourceAndCaseContract": {
+              "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+              "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/question-case-specs.json",
+              "sha256": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28",
+              "rfc6901Pointer": "/activeCases/10"
+            }
+          },
+          "rawEvidencePath": null,
+          "result": "not-run",
+          "reason": "exact original case preserved and per-field settings projected; no future harness implementation/runtime result",
+          "reviewerConfirmation": null,
+          "specificationStatus": "incomplete",
+          "nativeSpecificationReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/question-case-specs.json",
+            "sha256": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28",
+            "rfc6901Pointer": "/activeCases/10"
+          },
+          "activeInputContract": {
+            "stage": "C0-proposed-definition",
+            "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+            "invocation": {
+              "executable": "node",
+              "argv": [
+                "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+                "--case",
+                "QC-OUTBOX-UNBOUNDED-READ-REPLAY",
+                "--profiles",
+                "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+                "--stand",
+                "APPROVED_IMPLEMENTATION_COMMIT",
+                "--case-contracts",
+                "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+              ],
+              "availability": "Exact proposed harness contract; file is deliberately not implemented before approval. Current-reader-controls.mjs is separately runnable now."
+            },
+            "requirements": [
+              "F-BIND",
+              "F-RECOVERY",
+              "F-EVAL"
+            ],
+            "environment": {
+              "ambientConfig": "forbidden",
+              "disposableRoot": "fresh mkdtemp per case",
+              "productionServices": "none"
+            },
+            "priorState": {
+              "generation": "A",
+              "root": "fresh unless case explicitly retained",
+              "unacknowledgedWork": "preserve; no clearing"
+            },
+            "generationContract": "Select complete immutable owner profile; capture owner/profile/generation/source/schema digests before first effect. Started/claimed/recovery/retry/Eval keeps captured generation; new work may select B only after atomic publish. Same physical root may not be opened under a conflicting author or incompatible state policy. Compatible new operation may select B without changing originalA holder; exact retainedhistory compatibility required, no latest substitution. Missing fields fail; no literal/ENV fallback.",
+            "id": "QC-OUTBOX-UNBOUNDED-READ-REPLAY",
+            "questionId": "CMP-SOURCE-OUTBOX-UNBOUNDED-READ",
+            "boundary": "deliverPending(outbox,admission)+retained state restart",
+            "input": {
+              "originalExistingMaximumBytes": 2048,
+              "newIndependentB": 4096,
+              "pendingFixture": {
+                "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-pending-state.json",
+                "sha256": "4bcbc555fec72bec1dd15f963ba8da00d08642e14c37072ddb879fa4f635ee79"
+              },
+              "oversizedOriginal": {
+                "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-oversized-2049.bytes",
+                "sha256": "4b7787594928d92fd11386a9210a7322cd2d1d30bddcabb4611274f547272101"
+              },
+              "ackFixture": {
+                "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-method-fixtures.json",
+                "sha256": "77cfd0a74b6e737236ce1e5ee260e8ff47dccd17d34c1481e71ac82390bfef22"
+              }
+            },
+            "oracle": [
+              "OriginalA2049bytehistory rejects unchanged even currentB4096 permits; exactA1223byte record repeateddeliver/ack/compact preserves originalidentities/cursor; no latestB fallback."
+            ],
+            "supersedesCase": {
+              "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+              "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+              "id": "QC-OUTBOX-UNBOUNDED-READ-REPLAY"
+            },
+            "lifecycle": {
+              "status": "active-superseding-proposed-not-run",
+              "originalRequirementsPreserved": true,
+              "historicalOriginalCase": {
+                "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+                "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+                "id": "QC-OUTBOX-UNBOUNDED-READ-REPLAY"
+              }
+            }
+          },
+          "unresolvedOwnerAliases": []
+        },
+        "bodySha256": "540f6a0e75d64db3e2e9ea2bf3927a58b0e1e925bf63d6efa53e899561bed4e3"
+      },
+      "requirementsUnchanged": true,
+      "localRecipe": [
+        "Library API constructor negative safeinteger/domain, unknown receiver fields, original caller missing proof; no toy deployed F-EFFECT claim.",
+        "Mutation omit cap in each of four actual read calls killed separately by capped real retained-file future control; constructor-export-only membership marked unsupported instead of invented runtime effect."
+      ],
+      "consumerChain": [
+        "append",
+        "pending",
+        "acknowledge",
+        "compact"
+      ],
+      "originalBinding": "Original R/J admitted policy, claim, request, source/software, store version/root and deadlines remain captured. Retry/recovery resolves exact original A before current B validation; B cannot reset counters, extend deadlines or silently migrate/delete history. New independent B requires compatible root/grant and complete original admission semantics.",
+      "mutationAndRestoredPositive": "Isolate actual source mutation at pinned consumer; run the same future real selected caller case and restore original source/profile positive. No lexical source match or toy substitute proves EFFECT.",
+      "status": "not-run",
+      "nativeGate": "Authentic original issuer/storage/kernel/native measurement and original claims if applicable; controlled definition artifacts never native proof.",
+      "causalOrUnsupported": "contracts.json exact domain/caller/granularity predicates. Unsupported exported membership/native maximumProcesses remains explicit X, not overall requirement waiver."
+    },
+    {
+      "id": "QC-LATENT-UNBOUNDED-BLOB-API-API-AND-SEVEN",
+      "fieldId": "CMP-API-BLOB-EXISTING-TOTALBYTES-REQUIRED",
+      "originalCase": {
+        "id": "QC-LATENT-UNBOUNDED-BLOB-API-API-AND-SEVEN",
+        "source": {
+          "path": "docs/review/remediation/config-acceptance-matrix.json",
+          "sha256": "ab559aee906e4f72085031a84bb618c01941bc6e2d613175f235af0a18289227"
+        },
+        "pointer": "/cases/421",
+        "body": {
+          "id": "QC-LATENT-UNBOUNDED-BLOB-API-API-AND-SEVEN",
+          "settingIds": [
+            "CMP-API-BLOB-EXISTING-TOTALBYTES-REQUIRED"
+          ],
+          "requirementIds": [
+            "F-VAL",
+            "F-BIND",
+            "F-EFFECT",
+            "F-RECOVERY",
+            "F-EVAL"
+          ],
+          "scope": "local",
+          "phase": "proposed-after-approval",
+          "productiveCaller": "FileDurableBlobStore constructor/put/get + seven exact constructor projections",
+          "inputProfile": {
+            "apiProfiles": {
+              "A": {
+                "maximumBytes": 8,
+                "maximumTotalBytes": 16
+              },
+              "B": {
+                "maximumBytes": 8,
+                "maximumTotalBytes": 8
+              }
+            },
+            "invalid": "omitTotal/zero/fraction/unsafe/moreperBlobThanTotal",
+            "callers": "blob-owner-map.json ALL7"
+          },
+          "priorState": {
+            "generation": "A",
+            "root": "fresh unless case explicitly retained",
+            "unacknowledgedWork": "preserve; no clearing"
+          },
+          "expectedEffectOrRejectingBoundary": [
+            "Omission/invalid rejectsbeforeIO; real first8byte blob succeeds both; second distinct8byte Aadmits Brejects; duplicate both succeeds; each7 caller still passes ORIGINALown total; no duplicate setting author"
+          ],
+          "observerMethod": "exact original immutable case contract; NOT currently executed targetruntime",
+          "command": [
+            "node",
+            "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+            "--case",
+            "QC-LATENT-UNBOUNDED-BLOB-API-API-AND-SEVEN",
+            "--profiles",
+            "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+            "--stand",
+            "APPROVED_IMPLEMENTATION_COMMIT",
+            "--case-contracts",
+            "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+          ],
+          "sourceIdentity": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/question-case-specs.json",
+            "sha256": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28",
+            "rfc6901Pointer": "/activeCases/11"
+          },
+          "testDigests": {
+            "definitionSource": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28"
+          },
+          "toolDependencyImageConfigIdentities": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "profile": {
+              "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+              "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+              "sha256": "90e7e24d9862ef305a294c280bc8e3e5ccf768b2548a8ebe19f98dd829b5f7bb"
+            },
+            "sourceAndCaseContract": {
+              "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+              "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/question-case-specs.json",
+              "sha256": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28",
+              "rfc6901Pointer": "/activeCases/11"
+            }
+          },
+          "rawEvidencePath": null,
+          "result": "not-run",
+          "reason": "exact original case preserved and per-field settings projected; no future harness implementation/runtime result",
+          "reviewerConfirmation": null,
+          "specificationStatus": "incomplete",
+          "nativeSpecificationReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/question-case-specs.json",
+            "sha256": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28",
+            "rfc6901Pointer": "/activeCases/11"
+          },
+          "activeInputContract": {
+            "stage": "C0-proposed-definition",
+            "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+            "invocation": {
+              "executable": "node",
+              "argv": [
+                "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+                "--case",
+                "QC-LATENT-UNBOUNDED-BLOB-API-API-AND-SEVEN",
+                "--profiles",
+                "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+                "--stand",
+                "APPROVED_IMPLEMENTATION_COMMIT",
+                "--case-contracts",
+                "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+              ],
+              "availability": "Exact proposed harness contract; file is deliberately not implemented before approval. Current-reader-controls.mjs is separately runnable now."
+            },
+            "requirements": [
+              "F-VAL",
+              "F-BIND",
+              "F-EFFECT",
+              "F-RECOVERY",
+              "F-EVAL"
+            ],
+            "environment": {
+              "ambientConfig": "forbidden",
+              "disposableRoot": "fresh mkdtemp per case",
+              "productionServices": "none"
+            },
+            "priorState": {
+              "generation": "A",
+              "root": "fresh unless case explicitly retained",
+              "unacknowledgedWork": "preserve; no clearing"
+            },
+            "generationContract": "Select complete immutable owner profile; capture owner/profile/generation/source/schema digests before first effect. Started/claimed/recovery/retry/Eval keeps captured generation; new work may select B only after atomic publish. Same physical root may not be opened under a conflicting author or incompatible state policy. Compatible new operation may select B without changing originalA holder; exact retainedhistory compatibility required, no latest substitution. Missing fields fail; no literal/ENV fallback.",
+            "id": "QC-LATENT-UNBOUNDED-BLOB-API-API-AND-SEVEN",
+            "questionId": "CMP-SOURCE-LATENT-UNBOUNDED-BLOB-API",
+            "boundary": "FileDurableBlobStore constructor/put/get + seven exact constructor projections",
+            "input": {
+              "apiProfiles": {
+                "A": {
+                  "maximumBytes": 8,
+                  "maximumTotalBytes": 16
+                },
+                "B": {
+                  "maximumBytes": 8,
+                  "maximumTotalBytes": 8
+                }
+              },
+              "invalid": "omitTotal/zero/fraction/unsafe/moreperBlobThanTotal",
+              "callers": "blob-owner-map.json ALL7"
+            },
+            "oracle": [
+              "Omission/invalid rejectsbeforeIO; real first8byte blob succeeds both; second distinct8byte Aadmits Brejects; duplicate both succeeds; each7 caller still passes ORIGINALown total; no duplicate setting author"
+            ],
+            "supersedesCase": {
+              "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+              "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+              "id": "QC-LATENT-UNBOUNDED-BLOB-API-API-AND-SEVEN"
+            },
+            "lifecycle": {
+              "status": "active-superseding-proposed-not-run",
+              "originalRequirementsPreserved": true,
+              "historicalOriginalCase": {
+                "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+                "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+                "id": "QC-LATENT-UNBOUNDED-BLOB-API-API-AND-SEVEN"
+              }
+            }
+          },
+          "unresolvedOwnerAliases": []
+        },
+        "bodySha256": "3fe111fb2e87a5856eaf20dee1655a7bca38cf111c21952c9cf2b0ab8cec43c5"
+      },
+      "requirementsUnchanged": true,
+      "localRecipe": [
+        "Mandatory third argument negative before any mkdir/write; safeinteger/perblob<=total/MAX_LENGTH+1 equality boundaries; current seven real nested callers retain their own original values, aliases and outer source identities.",
+        "Same digest duplicate under original writer fence is idempotent; concurrent distinct puts serialize and exceed total without unreferenced bypass; tmp/orphan/symlink/failed-write cases conserve original retained bytes."
+      ],
+      "consumerChain": [],
+      "originalBinding": "Original R/J admitted policy, claim, request, source/software, store version/root and deadlines remain captured. Retry/recovery resolves exact original A before current B validation; B cannot reset counters, extend deadlines or silently migrate/delete history. New independent B requires compatible root/grant and complete original admission semantics.",
+      "mutationAndRestoredPositive": "Isolate actual source mutation at pinned consumer; run the same future real selected caller case and restore original source/profile positive. No lexical source match or toy substitute proves EFFECT.",
+      "status": "not-run",
+      "nativeGate": "Authentic original issuer/storage/kernel/native measurement and original claims if applicable; controlled definition artifacts never native proof.",
+      "causalOrUnsupported": "contracts.json exact domain/caller/granularity predicates. Unsupported exported membership/native maximumProcesses remains explicit X, not overall requirement waiver."
+    },
+    {
+      "id": "QC-LATENT-UNBOUNDED-BLOB-API-HISTORY",
+      "fieldId": "CMP-API-BLOB-EXISTING-TOTALBYTES-REQUIRED",
+      "originalCase": {
+        "id": "QC-LATENT-UNBOUNDED-BLOB-API-HISTORY",
+        "source": {
+          "path": "docs/review/remediation/config-acceptance-matrix.json",
+          "sha256": "ab559aee906e4f72085031a84bb618c01941bc6e2d613175f235af0a18289227"
+        },
+        "pointer": "/cases/422",
+        "body": {
+          "id": "QC-LATENT-UNBOUNDED-BLOB-API-HISTORY",
+          "settingIds": [
+            "CMP-API-BLOB-EXISTING-TOTALBYTES-REQUIRED"
+          ],
+          "requirementIds": [
+            "F-BIND",
+            "F-RECOVERY",
+            "F-EVAL"
+          ],
+          "scope": "local",
+          "phase": "proposed-after-approval",
+          "productiveCaller": "blob-budget lock cumulative scan/restart",
+          "inputProfile": {
+            "prior": "two distinct8byte blobs originalA total16; publishB total8",
+            "new": "new B root one8byte blob",
+            "Eval": "fixedA"
+          },
+          "priorState": {
+            "generation": "A",
+            "root": "fresh unless case explicitly retained",
+            "unacknowledgedWork": "preserve; no clearing"
+          },
+          "expectedEffectOrRejectingBoundary": [
+            "OriginalA recovery reads retained16bytes without adoptingB; incompatible openunderB rejects untouched; rootowner generation/eval persists; no deletion/quotareset"
+          ],
+          "observerMethod": "exact original immutable case contract; NOT currently executed targetruntime",
+          "command": [
+            "node",
+            "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+            "--case",
+            "QC-LATENT-UNBOUNDED-BLOB-API-HISTORY",
+            "--profiles",
+            "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+            "--stand",
+            "APPROVED_IMPLEMENTATION_COMMIT",
+            "--case-contracts",
+            "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+          ],
+          "sourceIdentity": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/question-case-specs.json",
+            "sha256": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28",
+            "rfc6901Pointer": "/activeCases/12"
+          },
+          "testDigests": {
+            "definitionSource": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28"
+          },
+          "toolDependencyImageConfigIdentities": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "profile": {
+              "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+              "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+              "sha256": "90e7e24d9862ef305a294c280bc8e3e5ccf768b2548a8ebe19f98dd829b5f7bb"
+            },
+            "sourceAndCaseContract": {
+              "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+              "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/question-case-specs.json",
+              "sha256": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28",
+              "rfc6901Pointer": "/activeCases/12"
+            }
+          },
+          "rawEvidencePath": null,
+          "result": "not-run",
+          "reason": "exact original case preserved and per-field settings projected; no future harness implementation/runtime result",
+          "reviewerConfirmation": null,
+          "specificationStatus": "incomplete",
+          "nativeSpecificationReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/question-case-specs.json",
+            "sha256": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28",
+            "rfc6901Pointer": "/activeCases/12"
+          },
+          "activeInputContract": {
+            "stage": "C0-proposed-definition",
+            "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+            "invocation": {
+              "executable": "node",
+              "argv": [
+                "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+                "--case",
+                "QC-LATENT-UNBOUNDED-BLOB-API-HISTORY",
+                "--profiles",
+                "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+                "--stand",
+                "APPROVED_IMPLEMENTATION_COMMIT",
+                "--case-contracts",
+                "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+              ],
+              "availability": "Exact proposed harness contract; file is deliberately not implemented before approval. Current-reader-controls.mjs is separately runnable now."
+            },
+            "requirements": [
+              "F-BIND",
+              "F-RECOVERY",
+              "F-EVAL"
+            ],
+            "environment": {
+              "ambientConfig": "forbidden",
+              "disposableRoot": "fresh mkdtemp per case",
+              "productionServices": "none"
+            },
+            "priorState": {
+              "generation": "A",
+              "root": "fresh unless case explicitly retained",
+              "unacknowledgedWork": "preserve; no clearing"
+            },
+            "generationContract": "Select complete immutable owner profile; capture owner/profile/generation/source/schema digests before first effect. Started/claimed/recovery/retry/Eval keeps captured generation; new work may select B only after atomic publish. Same physical root may not be opened under a conflicting author or incompatible state policy. Compatible new operation may select B without changing originalA holder; exact retainedhistory compatibility required, no latest substitution. Missing fields fail; no literal/ENV fallback.",
+            "id": "QC-LATENT-UNBOUNDED-BLOB-API-HISTORY",
+            "questionId": "CMP-SOURCE-LATENT-UNBOUNDED-BLOB-API",
+            "boundary": "blob-budget lock cumulative scan/restart",
+            "input": {
+              "prior": "two distinct8byte blobs originalA total16; publishB total8",
+              "new": "new B root one8byte blob",
+              "Eval": "fixedA"
+            },
+            "oracle": [
+              "OriginalA recovery reads retained16bytes without adoptingB; incompatible openunderB rejects untouched; rootowner generation/eval persists; no deletion/quotareset"
+            ],
+            "supersedesCase": {
+              "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+              "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+              "id": "QC-LATENT-UNBOUNDED-BLOB-API-HISTORY"
+            },
+            "lifecycle": {
+              "status": "active-superseding-proposed-not-run",
+              "originalRequirementsPreserved": true,
+              "historicalOriginalCase": {
+                "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+                "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+                "id": "QC-LATENT-UNBOUNDED-BLOB-API-HISTORY"
+              }
+            }
+          },
+          "unresolvedOwnerAliases": []
+        },
+        "bodySha256": "ab29fc3fef0ae23918b0da389b23ba1056fabfd5bd5fbbf9d0b948e37c873e70"
+      },
+      "requirementsUnchanged": true,
+      "localRecipe": [
+        "Prepared/historical unresolved job result reservation, native journal physical-used+pending reservation and original A reopening before B checked per real caller; read-only evidence adapter wrong capacity must reject.",
+        "Native physical-capacity effect uses actual original provider/writer/PVC grant and full-root scope; local file quota8/16 witnesses cannot prove it. Export-only native-fixture branch declares X membership, retains library API cases, no fabricated deployed receipt."
+      ],
+      "consumerChain": [],
+      "originalBinding": "Original R/J admitted policy, claim, request, source/software, store version/root and deadlines remain captured. Retry/recovery resolves exact original A before current B validation; B cannot reset counters, extend deadlines or silently migrate/delete history. New independent B requires compatible root/grant and complete original admission semantics.",
+      "mutationAndRestoredPositive": "Isolate actual source mutation at pinned consumer; run the same future real selected caller case and restore original source/profile positive. No lexical source match or toy substitute proves EFFECT.",
+      "status": "not-run",
+      "nativeGate": "Authentic original issuer/storage/kernel/native measurement and original claims if applicable; controlled definition artifacts never native proof.",
+      "causalOrUnsupported": "contracts.json exact domain/caller/granularity predicates. Unsupported exported membership/native maximumProcesses remains explicit X, not overall requirement waiver."
+    },
+    {
+      "id": "QC-FIXTURE-STORAGE-EXPONENT-REPRESENTATION",
+      "fieldId": "CMP-BUSTER-FIXTURE-QUANTITY-QUOTA-REPRESENTATION",
+      "originalCase": {
+        "id": "QC-FIXTURE-STORAGE-EXPONENT-REPRESENTATION",
+        "source": {
+          "path": "docs/review/remediation/config-acceptance-matrix.json",
+          "sha256": "ab559aee906e4f72085031a84bb618c01941bc6e2d613175f235af0a18289227"
+        },
+        "pointer": "/cases/423",
+        "body": {
+          "id": "QC-FIXTURE-STORAGE-EXPONENT-REPRESENTATION",
+          "settingIds": [
+            "CMP-BUSTER-FIXTURE-QUANTITY-QUOTA-REPRESENTATION",
+            "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeClaimBytes",
+            "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeTotalBytes"
+          ],
+          "requirementIds": [
+            "F-VAL",
+            "F-EFFECT"
+          ],
+          "scope": "local",
+          "phase": "proposed-after-approval",
+          "productiveCaller": "validatePersistentVolumeClaim->storageBytes->existing maximumClaimBytes; persistentVolumeClaims copies + total aggregation",
+          "inputProfile": {
+            "policy": {
+              "maximumClaimBytes": "1073741824",
+              "maximumTotalBytes": "2147483648",
+              "allowedStorageClasses": [
+                "test"
+              ],
+              "allowDefaultStorageClass": false
+            },
+            "quantities": [
+              "100000000",
+              ".00000000000000000000000000000000000000000000000000000001e64",
+              "1Gi",
+              "1e63",
+              "1e999999999999999999999",
+              "0.1",
+              "0",
+              "-1"
+            ]
+          },
+          "priorState": {
+            "generation": "A",
+            "root": "fresh unless case explicitly retained",
+            "unacknowledgedWork": "preserve; no clearing"
+          },
+          "expectedEffectOrRejectingBoundary": [
+            "Equivalent100000000 andfractione64 both exact100000000 admitted;1Giadmitted; beyondquota/hugelexexp rejected withoutlargepower; fraction/zero/negative rejected; replicas3*1Gi denies total; no parser toggle"
+          ],
+          "observerMethod": "exact original immutable case contract; NOT currently executed targetruntime",
+          "command": [
+            "node",
+            "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+            "--case",
+            "QC-FIXTURE-STORAGE-EXPONENT-REPRESENTATION",
+            "--profiles",
+            "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+            "--stand",
+            "APPROVED_IMPLEMENTATION_COMMIT",
+            "--case-contracts",
+            "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+          ],
+          "sourceIdentity": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/question-case-specs.json",
+            "sha256": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28",
+            "rfc6901Pointer": "/activeCases/18"
+          },
+          "testDigests": {
+            "definitionSource": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28"
+          },
+          "toolDependencyImageConfigIdentities": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "profile": {
+              "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+              "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+              "sha256": "90e7e24d9862ef305a294c280bc8e3e5ccf768b2548a8ebe19f98dd829b5f7bb"
+            },
+            "sourceAndCaseContract": {
+              "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+              "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/question-case-specs.json",
+              "sha256": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28",
+              "rfc6901Pointer": "/activeCases/18"
+            }
+          },
+          "rawEvidencePath": null,
+          "result": "not-run",
+          "reason": "exact original case preserved and per-field settings projected; no future harness implementation/runtime result",
+          "reviewerConfirmation": null,
+          "specificationStatus": "incomplete",
+          "nativeSpecificationReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/question-case-specs.json",
+            "sha256": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28",
+            "rfc6901Pointer": "/activeCases/18"
+          },
+          "activeInputContract": {
+            "stage": "C0-proposed-definition",
+            "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+            "invocation": {
+              "executable": "node",
+              "argv": [
+                "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+                "--case",
+                "QC-FIXTURE-STORAGE-EXPONENT-REPRESENTATION",
+                "--profiles",
+                "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+                "--stand",
+                "APPROVED_IMPLEMENTATION_COMMIT",
+                "--case-contracts",
+                "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+              ],
+              "availability": "Exact proposed harness contract; file is deliberately not implemented before approval. Current-reader-controls.mjs is separately runnable now."
+            },
+            "requirements": [
+              "F-VAL",
+              "F-EFFECT"
+            ],
+            "environment": {
+              "ambientConfig": "forbidden",
+              "disposableRoot": "fresh mkdtemp per case",
+              "productionServices": "none"
+            },
+            "priorState": {
+              "generation": "A",
+              "root": "fresh unless case explicitly retained",
+              "unacknowledgedWork": "preserve; no clearing"
+            },
+            "generationContract": "Select complete immutable owner profile; capture owner/profile/generation/source/schema digests before first effect. Started/claimed/recovery/retry/Eval keeps captured generation; new work may select B only after atomic publish. Same physical root may not be opened under a conflicting author or incompatible state policy. Compatible new operation may select B without changing originalA holder; exact retainedhistory compatibility required, no latest substitution. Missing fields fail; no literal/ENV fallback.",
+            "id": "QC-FIXTURE-STORAGE-EXPONENT-REPRESENTATION",
+            "questionId": "CMP-SOURCE-FIXTURE-STORAGE-EXPONENT",
+            "boundary": "validatePersistentVolumeClaim->storageBytes->existing maximumClaimBytes; persistentVolumeClaims copies + total aggregation",
+            "input": {
+              "policy": {
+                "maximumClaimBytes": "1073741824",
+                "maximumTotalBytes": "2147483648",
+                "allowedStorageClasses": [
+                  "test"
+                ],
+                "allowDefaultStorageClass": false
+              },
+              "quantities": [
+                "100000000",
+                ".00000000000000000000000000000000000000000000000000000001e64",
+                "1Gi",
+                "1e63",
+                "1e999999999999999999999",
+                "0.1",
+                "0",
+                "-1"
+              ]
+            },
+            "oracle": [
+              "Equivalent100000000 andfractione64 both exact100000000 admitted;1Giadmitted; beyondquota/hugelexexp rejected withoutlargepower; fraction/zero/negative rejected; replicas3*1Gi denies total; no parser toggle"
+            ],
+            "supersedesCase": {
+              "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+              "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+              "id": "QC-FIXTURE-STORAGE-EXPONENT-REPRESENTATION"
+            },
+            "lifecycle": {
+              "status": "active-superseding-proposed-not-run",
+              "originalRequirementsPreserved": true,
+              "historicalOriginalCase": {
+                "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+                "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+                "id": "QC-FIXTURE-STORAGE-EXPONENT-REPRESENTATION"
+              }
+            }
+          },
+          "unresolvedOwnerAliases": []
+        },
+        "bodySha256": "2013193eb83c276954188204308096646a13c4caad63c1b5628e322b1e2fa7bc"
+      },
+      "requirementsUnchanged": true,
+      "localRecipe": [
+        "Equivalent512Mi/0.5Gi/536870912 and trailing-zero/exponent forms compare exact bytes and native canonical serialization, no precision loss; lexical64/65, zero/negative/fractional byte/huge exponent negatives before allocating power.",
+        "Positive representation formerly rejected: dot+55zeros+1e64 (61chars) equals100000000bytes, valid only when original Q>=100000000. Reject same normalized amount when Q onebyte below."
+      ],
+      "consumerChain": "production.kubernetesFixtureOptions→capability-runtime→KubernetesFixtureCapabilityInvoker/Runtime→Preparation.readRequest→inspectManifest→persistentVolumeClaims→validatePersistentVolumeClaim→storageBytes",
+      "originalBinding": "Original R/J admitted policy, claim, request, source/software, store version/root and deadlines remain captured. Retry/recovery resolves exact original A before current B validation; B cannot reset counters, extend deadlines or silently migrate/delete history. New independent B requires compatible root/grant and complete original admission semantics.",
+      "mutationAndRestoredPositive": "Isolate actual source mutation at pinned consumer; run the same future real selected caller case and restore original source/profile positive. No lexical source match or toy substitute proves EFFECT.",
+      "status": "not-run",
+      "nativeGate": "Authentic original issuer/storage/kernel/native measurement and original claims if applicable; controlled definition artifacts never native proof.",
+      "causalOrUnsupported": "contracts.json exact domain/caller/granularity predicates. Unsupported exported membership/native maximumProcesses remains explicit X, not overall requirement waiver."
+    },
+    {
+      "id": "QC-FIXTURE-STORAGE-EXPONENT-POLICY-BIND",
+      "fieldId": "CMP-BUSTER-FIXTURE-QUANTITY-QUOTA-REPRESENTATION",
+      "originalCase": {
+        "id": "QC-FIXTURE-STORAGE-EXPONENT-POLICY-BIND",
+        "source": {
+          "path": "docs/review/remediation/config-acceptance-matrix.json",
+          "sha256": "ab559aee906e4f72085031a84bb618c01941bc6e2d613175f235af0a18289227"
+        },
+        "pointer": "/cases/424",
+        "body": {
+          "id": "QC-FIXTURE-STORAGE-EXPONENT-POLICY-BIND",
+          "settingIds": [
+            "CMP-BUSTER-FIXTURE-QUANTITY-QUOTA-REPRESENTATION",
+            "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeClaimBytes",
+            "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeTotalBytes"
+          ],
+          "requirementIds": [
+            "F-BIND",
+            "F-RECOVERY",
+            "F-EVAL"
+          ],
+          "scope": "local",
+          "phase": "proposed-after-approval",
+          "productiveCaller": "selected Kubernetes fixture policy + request spec original/recovery/Eval",
+          "inputProfile": {
+            "AmaximumClaimBytes": "1073741824",
+            "BmaximumClaimBytes": "67108864",
+            "sameQuantity": "100000000",
+            "claimed": "A then publishB",
+            "Eval": "A"
+          },
+          "priorState": {
+            "generation": "A",
+            "root": "fresh unless case explicitly retained",
+            "unacknowledgedWork": "preserve; no clearing"
+          },
+          "expectedEffectOrRejectingBoundary": [
+            "Existing quota Aadmits Bdenies; originalcapturedA retry unchanged; representation change not hidden policyedit; target preserves exact manifests/sourceidentity"
+          ],
+          "observerMethod": "exact original immutable case contract; NOT currently executed targetruntime",
+          "command": [
+            "node",
+            "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+            "--case",
+            "QC-FIXTURE-STORAGE-EXPONENT-POLICY-BIND",
+            "--profiles",
+            "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+            "--stand",
+            "APPROVED_IMPLEMENTATION_COMMIT",
+            "--case-contracts",
+            "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+          ],
+          "sourceIdentity": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/question-case-specs.json",
+            "sha256": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28",
+            "rfc6901Pointer": "/activeCases/19"
+          },
+          "testDigests": {
+            "definitionSource": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28"
+          },
+          "toolDependencyImageConfigIdentities": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "profile": {
+              "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+              "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+              "sha256": "90e7e24d9862ef305a294c280bc8e3e5ccf768b2548a8ebe19f98dd829b5f7bb"
+            },
+            "sourceAndCaseContract": {
+              "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+              "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/question-case-specs.json",
+              "sha256": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28",
+              "rfc6901Pointer": "/activeCases/19"
+            }
+          },
+          "rawEvidencePath": null,
+          "result": "not-run",
+          "reason": "exact original case preserved and per-field settings projected; no future harness implementation/runtime result",
+          "reviewerConfirmation": null,
+          "specificationStatus": "incomplete",
+          "nativeSpecificationReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/question-case-specs.json",
+            "sha256": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28",
+            "rfc6901Pointer": "/activeCases/19"
+          },
+          "activeInputContract": {
+            "stage": "C0-proposed-definition",
+            "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+            "invocation": {
+              "executable": "node",
+              "argv": [
+                "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+                "--case",
+                "QC-FIXTURE-STORAGE-EXPONENT-POLICY-BIND",
+                "--profiles",
+                "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+                "--stand",
+                "APPROVED_IMPLEMENTATION_COMMIT",
+                "--case-contracts",
+                "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+              ],
+              "availability": "Exact proposed harness contract; file is deliberately not implemented before approval. Current-reader-controls.mjs is separately runnable now."
+            },
+            "requirements": [
+              "F-BIND",
+              "F-RECOVERY",
+              "F-EVAL"
+            ],
+            "environment": {
+              "ambientConfig": "forbidden",
+              "disposableRoot": "fresh mkdtemp per case",
+              "productionServices": "none"
+            },
+            "priorState": {
+              "generation": "A",
+              "root": "fresh unless case explicitly retained",
+              "unacknowledgedWork": "preserve; no clearing"
+            },
+            "generationContract": "Select complete immutable owner profile; capture owner/profile/generation/source/schema digests before first effect. Started/claimed/recovery/retry/Eval keeps captured generation; new work may select B only after atomic publish. Same physical root may not be opened under a conflicting author or incompatible state policy. Compatible new operation may select B without changing originalA holder; exact retainedhistory compatibility required, no latest substitution. Missing fields fail; no literal/ENV fallback.",
+            "id": "QC-FIXTURE-STORAGE-EXPONENT-POLICY-BIND",
+            "questionId": "CMP-SOURCE-FIXTURE-STORAGE-EXPONENT",
+            "boundary": "selected Kubernetes fixture policy + request spec original/recovery/Eval",
+            "input": {
+              "AmaximumClaimBytes": "1073741824",
+              "BmaximumClaimBytes": "67108864",
+              "sameQuantity": "100000000",
+              "claimed": "A then publishB",
+              "Eval": "A"
+            },
+            "oracle": [
+              "Existing quota Aadmits Bdenies; originalcapturedA retry unchanged; representation change not hidden policyedit; target preserves exact manifests/sourceidentity"
+            ],
+            "supersedesCase": {
+              "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+              "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+              "id": "QC-FIXTURE-STORAGE-EXPONENT-POLICY-BIND"
+            },
+            "lifecycle": {
+              "status": "active-superseding-proposed-not-run",
+              "originalRequirementsPreserved": true,
+              "historicalOriginalCase": {
+                "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+                "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+                "id": "QC-FIXTURE-STORAGE-EXPONENT-POLICY-BIND"
+              }
+            }
+          },
+          "unresolvedOwnerAliases": []
+        },
+        "bodySha256": "9bd558392125c1c82295fe3acf19fdf43c45308d86a98eb91907fa0fc068fe4c"
+      },
+      "requirementsUnchanged": true,
+      "localRecipe": [
+        "StatefulSet replicas0/1/multiple, multiple templates/directPVC total equality and total+1, exact BigInt; prohibited source/volume/StorageClass routes preserve rejection.",
+        "Task manifest admitted under A original claim/total/namespace grant remains A through B publication/retry/cleanup; genuine distinct lower original A/B request boundary gives causal quota case, no adjustable exponent policy.",
+        "Actual pinned Quantity comparator future pure Go definition case independent of full KubeAPI; native dry-run/admission/provisioning effect requires original issuer/storage grant and controller version later, not replaced by local integer ratio."
+      ],
+      "consumerChain": "production.kubernetesFixtureOptions→capability-runtime→KubernetesFixtureCapabilityInvoker/Runtime→Preparation.readRequest→inspectManifest→persistentVolumeClaims→validatePersistentVolumeClaim→storageBytes",
+      "originalBinding": "Original R/J admitted policy, claim, request, source/software, store version/root and deadlines remain captured. Retry/recovery resolves exact original A before current B validation; B cannot reset counters, extend deadlines or silently migrate/delete history. New independent B requires compatible root/grant and complete original admission semantics.",
+      "mutationAndRestoredPositive": "Isolate actual source mutation at pinned consumer; run the same future real selected caller case and restore original source/profile positive. No lexical source match or toy substitute proves EFFECT.",
+      "status": "not-run",
+      "nativeGate": "Authentic original issuer/storage/kernel/native measurement and original claims if applicable; controlled definition artifacts never native proof.",
+      "causalOrUnsupported": "contracts.json exact domain/caller/granularity predicates. Unsupported exported membership/native maximumProcesses remains explicit X, not overall requirement waiver."
+    },
+    {
+      "id": "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-REAL-PROVENANCE",
+      "fieldId": "CMP-BUSTER-PROVIDER-RESOURCE-MEASUREMENT-PROVENANCE",
+      "originalCase": {
+        "id": "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-REAL-PROVENANCE",
+        "source": {
+          "path": "docs/review/remediation/config-acceptance-matrix.json",
+          "sha256": "ab559aee906e4f72085031a84bb618c01941bc6e2d613175f235af0a18289227"
+        },
+        "pointer": "/cases/425",
+        "body": {
+          "id": "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-REAL-PROVENANCE",
+          "settingIds": [
+            "CMP-BUSTER-PROVIDER-RESOURCE-MEASUREMENT-PROVENANCE"
+          ],
+          "requirementIds": [
+            "F-VAL",
+            "F-EFFECT",
+            "F-BIND"
+          ],
+          "scope": "local",
+          "phase": "proposed-after-approval",
+          "productiveCaller": "RegisteredTestProviderLoader->ProviderProcessSession actualsandbox/providerchild->runner.measure->worker budget result",
+          "inputProfile": {
+            "exactTypedContract": {
+              "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/provider-provenance-contract.json",
+              "sha256": "43b34f676dacb4534381a20fefb02b3773c8649c72629860f3c2e6f8d47c621d"
+            },
+            "specimens": {
+              "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/provider-provenance-specimens.json",
+              "sha256": "69fec151a304efabdcc90e601933d3d3f906355e73f42c1cf1c575d81787b78e"
+            }
+          },
+          "priorState": {
+            "schema": "provider-provenance.schema.json",
+            "caseMatrix": "provider-provenance-contract.json#/cases",
+            "originalA": "complete-profiles.json BusterA, all original quotas preserved; physical PID measurements are required futureobservations"
+          },
+          "expectedEffectOrRejectingBoundary": [
+            "Everycase exact receipt/snapshotstates/inputs and source provenance per typedcontract; source-real successfulpositive notsynthetic numbers; strictunavailableV1 rejection; whole encodedoriginalmetadatacap charged preeffect; no new toggle/quota."
+          ],
+          "observerMethod": "exact original immutable case contract; NOT currently executed targetruntime",
+          "command": [
+            "node",
+            "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+            "--case",
+            "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-REAL-PROVENANCE",
+            "--profiles",
+            "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+            "--stand",
+            "APPROVED_IMPLEMENTATION_COMMIT",
+            "--case-contracts",
+            "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+          ],
+          "sourceIdentity": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/question-case-specs.json",
+            "sha256": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28",
+            "rfc6901Pointer": "/activeCases/20"
+          },
+          "testDigests": {
+            "definitionSource": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28"
+          },
+          "toolDependencyImageConfigIdentities": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "profile": {
+              "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+              "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+              "sha256": "90e7e24d9862ef305a294c280bc8e3e5ccf768b2548a8ebe19f98dd829b5f7bb"
+            },
+            "sourceAndCaseContract": {
+              "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+              "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/question-case-specs.json",
+              "sha256": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28",
+              "rfc6901Pointer": "/activeCases/20"
+            }
+          },
+          "rawEvidencePath": null,
+          "result": "not-run",
+          "reason": "exact original case preserved and per-field settings projected; no future harness implementation/runtime result",
+          "reviewerConfirmation": null,
+          "specificationStatus": "incomplete",
+          "nativeSpecificationReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/question-case-specs.json",
+            "sha256": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28",
+            "rfc6901Pointer": "/activeCases/20"
+          },
+          "activeInputContract": {
+            "stage": "C0-proposed-definition",
+            "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+            "invocation": {
+              "executable": "node",
+              "argv": [
+                "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+                "--case",
+                "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-REAL-PROVENANCE",
+                "--profiles",
+                "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+                "--stand",
+                "APPROVED_IMPLEMENTATION_COMMIT",
+                "--case-contracts",
+                "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+              ],
+              "availability": "Exact proposed harness contract; file is deliberately not implemented before approval. Current-reader-controls.mjs is separately runnable now."
+            },
+            "requirements": [
+              "F-VAL",
+              "F-EFFECT",
+              "F-BIND"
+            ],
+            "environment": {
+              "ambientConfig": "forbidden",
+              "disposableRoot": "fresh mkdtemp per case",
+              "productionServices": "none"
+            },
+            "priorState": {
+              "schema": "provider-provenance.schema.json",
+              "caseMatrix": "provider-provenance-contract.json#/cases",
+              "originalA": "complete-profiles.json BusterA, all original quotas preserved; physical PID measurements are required futureobservations"
+            },
+            "generationContract": "Select complete immutable owner profile; capture owner/profile/generation/source/schema digests before first effect. Started/claimed/recovery/retry/Eval keeps captured generation; new work may select B only after atomic publish. Same physical root may not be opened under a conflicting author or incompatible state policy. Compatible new operation may select B without changing originalA holder; exact retainedhistory compatibility required, no latest substitution. Missing fields fail; no literal/ENV fallback.",
+            "id": "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-REAL-PROVENANCE",
+            "questionId": "CMP-SOURCE-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS",
+            "boundary": "RegisteredTestProviderLoader->ProviderProcessSession actualsandbox/providerchild->runner.measure->worker budget result",
+            "input": {
+              "exactTypedContract": {
+                "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/provider-provenance-contract.json",
+                "sha256": "43b34f676dacb4534381a20fefb02b3773c8649c72629860f3c2e6f8d47c621d"
+              },
+              "specimens": {
+                "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/provider-provenance-specimens.json",
+                "sha256": "69fec151a304efabdcc90e601933d3d3f906355e73f42c1cf1c575d81787b78e"
+              }
+            },
+            "oracle": [
+              "Everycase exact receipt/snapshotstates/inputs and source provenance per typedcontract; source-real successfulpositive notsynthetic numbers; strictunavailableV1 rejection; whole encodedoriginalmetadatacap charged preeffect; no new toggle/quota."
+            ],
+            "supersedesCase": {
+              "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+              "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+              "id": "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-REAL-PROVENANCE"
+            },
+            "lifecycle": {
+              "status": "active-superseding-proposed-not-run",
+              "originalRequirementsPreserved": true,
+              "historicalOriginalCase": {
+                "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+                "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+                "id": "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-REAL-PROVENANCE"
+              }
+            }
+          },
+          "unresolvedOwnerAliases": []
+        },
+        "bodySha256": "958937670442fe5ab6df8e62ee1c3aca91f16b52a1f6d533aa47bc846257729f"
+      },
+      "requirementsUnchanged": true,
+      "localRecipe": [
+        "Real original child measuredpositive self scope vs parent full native scope, independently verifyunits/granularity; missing/malformed/negative/NaN/coerced reports never0PASS, launched unavailable follows preserved V1 error.",
+        "Failed spawn versus started-then-initializefail separated using ownership/native launch evidence; state.instance null afterreject is not no-launch. Missing /proc/vanished PID/reused PID/unknown clock→partial/unavailable with final owned sample retained, no invented process1."
+      ],
+      "consumerChain": "TestPlanRunner→RegisteredTestProviderLoader→IsolatedLoadedProvider→ProviderProcessSession spawn/initialize/execute/cleanup→runner-provider-operation.measure→WorkerAttemptExecutor→assessWorkerResources→durable attempt/completion",
+      "originalBinding": "Original R/J admitted policy, claim, request, source/software, store version/root and deadlines remain captured. Retry/recovery resolves exact original A before current B validation; B cannot reset counters, extend deadlines or silently migrate/delete history. New independent B requires compatible root/grant and complete original admission semantics.",
+      "mutationAndRestoredPositive": "Isolate actual source mutation at pinned consumer; run the same future real selected caller case and restore original source/profile positive. No lexical source match or toy substitute proves EFFECT.",
+      "status": "not-run",
+      "nativeGate": "Authentic original issuer/storage/kernel/native measurement and original claims if applicable; controlled definition artifacts never native proof.",
+      "causalOrUnsupported": "contracts.json exact domain/caller/granularity predicates. Unsupported exported membership/native maximumProcesses remains explicit X, not overall requirement waiver."
+    },
+    {
+      "id": "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-RECOVERY-EVAL",
+      "fieldId": "CMP-BUSTER-PROVIDER-RESOURCE-MEASUREMENT-PROVENANCE",
+      "originalCase": {
+        "id": "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-RECOVERY-EVAL",
+        "source": {
+          "path": "docs/review/remediation/config-acceptance-matrix.json",
+          "sha256": "ab559aee906e4f72085031a84bb618c01941bc6e2d613175f235af0a18289227"
+        },
+        "pointer": "/cases/426",
+        "body": {
+          "id": "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-RECOVERY-EVAL",
+          "settingIds": [
+            "CMP-BUSTER-PROVIDER-RESOURCE-MEASUREMENT-PROVENANCE"
+          ],
+          "requirementIds": [
+            "F-BIND",
+            "F-RECOVERY",
+            "F-EVAL"
+          ],
+          "scope": "local",
+          "phase": "proposed-after-approval",
+          "productiveCaller": "owned launchmeasurement journal and result/claimbinding",
+          "inputProfile": {
+            "exactTypedContract": {
+              "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/provider-provenance-contract.json",
+              "sha256": "43b34f676dacb4534381a20fefb02b3773c8649c72629860f3c2e6f8d47c621d"
+            },
+            "specimens": {
+              "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/provider-provenance-specimens.json",
+              "sha256": "69fec151a304efabdcc90e601933d3d3f906355e73f42c1cf1c575d81787b78e"
+            }
+          },
+          "priorState": {
+            "schema": "provider-provenance.schema.json",
+            "caseMatrix": "provider-provenance-contract.json#/cases",
+            "originalA": "complete-profiles.json BusterA, all original quotas preserved; physical PID measurements are required futureobservations"
+          },
+          "expectedEffectOrRejectingBoundary": [
+            "Everycase exact receipt/snapshotstates/inputs and source provenance per typedcontract; source-real successfulpositive notsynthetic numbers; strictunavailableV1 rejection; whole encodedoriginalmetadatacap charged preeffect; no new toggle/quota."
+          ],
+          "observerMethod": "exact original immutable case contract; NOT currently executed targetruntime",
+          "command": [
+            "node",
+            "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+            "--case",
+            "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-RECOVERY-EVAL",
+            "--profiles",
+            "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+            "--stand",
+            "APPROVED_IMPLEMENTATION_COMMIT",
+            "--case-contracts",
+            "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+          ],
+          "sourceIdentity": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/question-case-specs.json",
+            "sha256": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28",
+            "rfc6901Pointer": "/activeCases/21"
+          },
+          "testDigests": {
+            "definitionSource": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28"
+          },
+          "toolDependencyImageConfigIdentities": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "profile": {
+              "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+              "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+              "sha256": "90e7e24d9862ef305a294c280bc8e3e5ccf768b2548a8ebe19f98dd829b5f7bb"
+            },
+            "sourceAndCaseContract": {
+              "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+              "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/question-case-specs.json",
+              "sha256": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28",
+              "rfc6901Pointer": "/activeCases/21"
+            }
+          },
+          "rawEvidencePath": null,
+          "result": "not-run",
+          "reason": "exact original case preserved and per-field settings projected; no future harness implementation/runtime result",
+          "reviewerConfirmation": null,
+          "specificationStatus": "incomplete",
+          "nativeSpecificationReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/question-case-specs.json",
+            "sha256": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28",
+            "rfc6901Pointer": "/activeCases/21"
+          },
+          "activeInputContract": {
+            "stage": "C0-proposed-definition",
+            "implementationStatus": "not-implemented/not-run; author definition controls/current probes do not satisfy this case",
+            "invocation": {
+              "executable": "node",
+              "argv": [
+                "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/future-question-harness.mjs",
+                "--case",
+                "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-RECOVERY-EVAL",
+                "--profiles",
+                "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+                "--stand",
+                "APPROVED_IMPLEMENTATION_COMMIT",
+                "--case-contracts",
+                "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json"
+              ],
+              "availability": "Exact proposed harness contract; file is deliberately not implemented before approval. Current-reader-controls.mjs is separately runnable now."
+            },
+            "requirements": [
+              "F-BIND",
+              "F-RECOVERY",
+              "F-EVAL"
+            ],
+            "environment": {
+              "ambientConfig": "forbidden",
+              "disposableRoot": "fresh mkdtemp per case",
+              "productionServices": "none"
+            },
+            "priorState": {
+              "schema": "provider-provenance.schema.json",
+              "caseMatrix": "provider-provenance-contract.json#/cases",
+              "originalA": "complete-profiles.json BusterA, all original quotas preserved; physical PID measurements are required futureobservations"
+            },
+            "generationContract": "Select complete immutable owner profile; capture owner/profile/generation/source/schema digests before first effect. Started/claimed/recovery/retry/Eval keeps captured generation; new work may select B only after atomic publish. Same physical root may not be opened under a conflicting author or incompatible state policy. Compatible new operation may select B without changing originalA holder; exact retainedhistory compatibility required, no latest substitution. Missing fields fail; no literal/ENV fallback.",
+            "id": "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-RECOVERY-EVAL",
+            "questionId": "CMP-SOURCE-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS",
+            "boundary": "owned launchmeasurement journal and result/claimbinding",
+            "input": {
+              "exactTypedContract": {
+                "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/provider-provenance-contract.json",
+                "sha256": "43b34f676dacb4534381a20fefb02b3773c8649c72629860f3c2e6f8d47c621d"
+              },
+              "specimens": {
+                "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/provider-provenance-specimens.json",
+                "sha256": "69fec151a304efabdcc90e601933d3d3f906355e73f42c1cf1c575d81787b78e"
+              }
+            },
+            "oracle": [
+              "Everycase exact receipt/snapshotstates/inputs and source provenance per typedcontract; source-real successfulpositive notsynthetic numbers; strictunavailableV1 rejection; whole encodedoriginalmetadatacap charged preeffect; no new toggle/quota."
+            ],
+            "supersedesCase": {
+              "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+              "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+              "id": "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-RECOVERY-EVAL"
+            },
+            "lifecycle": {
+              "status": "active-superseding-proposed-not-run",
+              "originalRequirementsPreserved": true,
+              "historicalOriginalCase": {
+                "path": "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json",
+                "sha256": "211c26371ddcd49ce28cd8a9cb664e3cbea48b831421ebedbbf7c5eaf6d9dcc7",
+                "id": "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-RECOVERY-EVAL"
+              }
+            }
+          },
+          "unresolvedOwnerAliases": []
+        },
+        "bodySha256": "aaa104ed5758c14f53d0eecfd5b27b4ea7a406131482bf413e3206edaeeb384b"
+      },
+      "requirementsUnchanged": true,
+      "localRecipe": [
+        "Execute→failed cleanup→recovery new session CPU accountedonce, repeated terminate/read resource cannotdoublecount; incomplete closure retains ownership/snapshot. A original limits/deadlines remain across B/retry, no ceiling refill.",
+        "Actual Worker early/final measurement phases cover cleanup/evidence/finalization; final observation unavailable cannot reuse earlier as complete. Metadata exactcap/cap+1 and reservation-beforelaunch fail without deleting original history.",
+        "Causal native full-scope A/B original budget boundary only with genuine producer scope/issuer/clock/capability coverage; if requested maximumProcesses unsupported by available full-tree evidence, report exact unsupported metric rather than fabricated native success."
+      ],
+      "consumerChain": "TestPlanRunner→RegisteredTestProviderLoader→IsolatedLoadedProvider→ProviderProcessSession spawn/initialize/execute/cleanup→runner-provider-operation.measure→WorkerAttemptExecutor→assessWorkerResources→durable attempt/completion",
+      "originalBinding": "Original R/J admitted policy, claim, request, source/software, store version/root and deadlines remain captured. Retry/recovery resolves exact original A before current B validation; B cannot reset counters, extend deadlines or silently migrate/delete history. New independent B requires compatible root/grant and complete original admission semantics.",
+      "mutationAndRestoredPositive": "Isolate actual source mutation at pinned consumer; run the same future real selected caller case and restore original source/profile positive. No lexical source match or toy substitute proves EFFECT.",
+      "status": "not-run",
+      "nativeGate": "Authentic original issuer/storage/kernel/native measurement and original claims if applicable; controlled definition artifacts never native proof.",
+      "causalOrUnsupported": "contracts.json exact domain/caller/granularity predicates. Unsupported exported membership/native maximumProcesses remains explicit X, not overall requirement waiver."
+    }
+  ],
+  "count": 8,
+  "allOriginalRequirementsPreserved": true,
+  "executed": false
+}

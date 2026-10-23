@@ -1,0 +1,35 @@
+{
+  "immutableBaseline": {
+    "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+    "tree": "7a74b82dd26bc9d87dc1ca60e35d2846681d3d78",
+    "inputs": {
+      "docs/review/evidence/config-acceptance/runtime/inventory-fragment.json": {
+        "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+        "blob": "899d6d07551a1cb5e18e835c24c143ac0cc7d901",
+        "sha256": "9619343edf808fffaadbff775932b0e4f808daba31ad194324b154df374a46c3"
+      },
+      "docs/review/evidence/config-acceptance/runtime/case-proposals.json": {
+        "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+        "blob": "109838e779b3f4ebf56da056a04dd6468f8fe0a7",
+        "sha256": "51feea1a4ca73511668255dd0e328581fe18be04c6494a739496e7ca124fc28f"
+      },
+      "docs/review/evidence/config-acceptance/runtime/runtime-case-dispositions.json": {
+        "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+        "blob": "0acc1ba5222f44964808623bc7ec0863e296f947",
+        "sha256": "a2b7134c8ff161fa89fdb008fb52907f1c818cdf246d2f4a7b6f760d52365c56"
+      }
+    },
+    "caseBodies": 6201,
+    "noWholeFragmentCopies": true
+  },
+  "previousReceipt": {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/stable-milestone-receipt.json",
+    "sha256": "8146900563db69f306b0c28c5acc90ef7db460fe6dc96838a453830330062f77"
+  },
+  "currentBeforeOwnedIdentities": {
+    "docs/review/evidence/config-acceptance/runtime/inventory-fragment.json": "a9c1a229af5054909b792b49841649564cd857abe31b16e5e1c726285a088f8f",
+    "docs/review/evidence/config-acceptance/runtime/case-proposals.json": "9c5b4aaeae097bb2952f668acd4353a3d15735c6bf0f80a5c8191a1d23f25d36",
+    "docs/review/evidence/config-acceptance/runtime/runtime-case-dispositions.json": "a9bb3d5038d94be18ad939177e8303fed702e4110078b48beb3e3e20550137d3"
+  },
+  "noWholeFragmentCopies": true
+}

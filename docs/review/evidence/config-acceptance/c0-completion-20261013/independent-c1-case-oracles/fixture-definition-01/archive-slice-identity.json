@@ -1,0 +1,7 @@
+{
+  "productiveSource": "skills/buster/engine/test-gates/preparation-archive.ts",
+  "sourceSha256": "a3f47267addf5e371faff3896521eb3aac35b49523275a7766ed29c8d1d42f6a",
+  "evidenceSliceSha256": "af73e21de1c3e66d85ce30ac7892a93dc25367786e9dce01702164d1a7d83db8",
+  "exactTransformation": "Rename export; remove ONLY final extraction runTar call, retain actual runTar listing parser/checks unchanged. Importtype erased by Node; no production file edit.",
+  "notClaimed": "Actual extraction/native result; success means listing phase only."
+}

@@ -1,0 +1,934 @@
+{
+  "reviewerTask": "/root/delivery_module_contract_review",
+  "scope": "fresh material R01/R02/R03 independent recovery02 recheck; existing narrow pure collector only",
+  "recordedAt": "2026-10-14T00:53:21.514051+00:00",
+  "head": "3ff47184c9cc446c7a15f7a434be7ea537677ee9",
+  "tree": "550825032aff2295f70046af09c3cad153aecb1f",
+  "proposalManifestSha256": "e0a80b631bb306f43210e7787d6719a85d8324fe1b4f81a3483e8c8e9c670299",
+  "frozenInputs": [
+    {
+      "path": "/home/node/.openclaw/workspace/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/README.md",
+      "sha256": "d8c027f59db0bfd247b71eecd4db8a831e5ab4140ef539fa84af175eee5fc30a",
+      "bytes": 12256,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/d8c027f59db0bfd247b71eecd4db8a831e5ab4140ef539fa84af175eee5fc30a.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/commands-and-exits.json",
+      "sha256": "0e2d744f4a057d4e53fce383ddd1eac2005a408e2b0604dfae230774755ca802",
+      "bytes": 1001,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/0e2d744f4a057d4e53fce383ddd1eac2005a408e2b0604dfae230774755ca802.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c3-buster-complete-profile-review-03/README.md",
+      "sha256": "78ac60f8a3e395360493cc42915570841e4623a0459a8dbb473fce7dac0b4d62",
+      "bytes": 8380,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/78ac60f8a3e395360493cc42915570841e4623a0459a8dbb473fce7dac0b4d62.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-provider-field-dependency-adoption-review-01/README.md",
+      "sha256": "3f2cbaee1b65445d142444f156ced11e7c4509092fa4e0798816587cbf00f80f",
+      "bytes": 7894,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/3f2cbaee1b65445d142444f156ced11e7c4509092fa4e0798816587cbf00f80f.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/README.md",
+      "sha256": "d8c027f59db0bfd247b71eecd4db8a831e5ab4140ef539fa84af175eee5fc30a",
+      "bytes": 12256,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/d8c027f59db0bfd247b71eecd4db8a831e5ab4140ef539fa84af175eee5fc30a.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/commands-and-exits.json",
+      "sha256": "0e2d744f4a057d4e53fce383ddd1eac2005a408e2b0604dfae230774755ca802",
+      "bytes": 1001,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/0e2d744f4a057d4e53fce383ddd1eac2005a408e2b0604dfae230774755ca802.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/end-identities.json",
+      "sha256": "4345da033ca709f4a315fee228779fb0b6dfb21394f15c6a6647a9061a4a26b1",
+      "bytes": 30686,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/4345da033ca709f4a315fee228779fb0b6dfb21394f15c6a6647a9061a4a26b1.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/review-manifest.json",
+      "sha256": "73d68a6085494b7f795baf1b27364d30d429cbb195401a4014724cb3bf8ad510",
+      "bytes": 17131,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/73d68a6085494b7f795baf1b27364d30d429cbb195401a4014724cb3bf8ad510.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-provisioning-source-review-01/README.md",
+      "sha256": "8febd988fd2153a0bf49ea448ac07bb1d70e30df4155c8eef157c2e28e36ca9f",
+      "bytes": 10531,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/8febd988fd2153a0bf49ea448ac07bb1d70e30df4155c8eef157c2e28e36ca9f.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-runtime-provider-contract-review-03/README.md",
+      "sha256": "bee4775dd4e065c7f7f623c8b5a4d20b7183f2d2ad01c57ca0447fac9c87dd55",
+      "bytes": 10399,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/bee4775dd4e065c7f7f623c8b5a4d20b7183f2d2ad01c57ca0447fac9c87dd55.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/provider-field-dependency-adoption-01/dependency-adoption.json",
+      "sha256": "bdf2d54a2bdb40bae1afa68e9e04376d89214421e35ba0b8e89796c605ebf39b",
+      "bytes": 174467,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/bdf2d54a2bdb40bae1afa68e9e04376d89214421e35ba0b8e89796c605ebf39b.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/README.md",
+      "sha256": "a226e9aafd4e85393ab5d043bf19f3da428bf3de48ee911944641c884960cf76",
+      "bytes": 15066,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/a226e9aafd4e85393ab5d043bf19f3da428bf3de48ee911944641c884960cf76.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/case-definitions.json",
+      "sha256": "8e0cfc8c01f1f879beaf1b98a09e71ec08c2cb246ced60d8be29f03c1b16622e",
+      "bytes": 85529,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/8e0cfc8c01f1f879beaf1b98a09e71ec08c2cb246ced60d8be29f03c1b16622e.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/collect-definition-checks.mjs",
+      "sha256": "d2d329571481133b510df803f948c4b4367e9612d9f8a47a8d3fe15b07394aff",
+      "bytes": 21372,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/d2d329571481133b510df803f948c4b4367e9612d9f8a47a8d3fe15b07394aff.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/commands-and-exits.json",
+      "sha256": "3791e059011edc99941d79882aa67b5829575cbbb20fe5b156cda174986cbf7b",
+      "bytes": 2919,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/3791e059011edc99941d79882aa67b5829575cbbb20fe5b156cda174986cbf7b.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/config/pipeline.config.json",
+      "sha256": "9acd5845d808effd7b5f2f04815620ab3a17459652b5561bdf4f17903af030ff",
+      "bytes": 3643,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/9acd5845d808effd7b5f2f04815620ab3a17459652b5561bdf4f17903af030ff.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/conservation-receipt.json",
+      "sha256": "5a21c026555487f0fcf64246627d0381088b858c91a10762e0cd5989b71d5ec3",
+      "bytes": 1650,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/5a21c026555487f0fcf64246627d0381088b858c91a10762e0cd5989b71d5ec3.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/entry-supersession.json",
+      "sha256": "472f4f62d9e9d27f42b0b98400b18b2014e5f600e5bd59d4d9ddbe3a25b3f6c3",
+      "bytes": 1353,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/472f4f62d9e9d27f42b0b98400b18b2014e5f600e5bd59d4d9ddbe3a25b3f6c3.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/field-definitions.json",
+      "sha256": "adb871ea14bf84f2c24f73037fea8b358f9337a39f5fdb3f1d070962efcf78fe",
+      "bytes": 25027,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/adb871ea14bf84f2c24f73037fea8b358f9337a39f5fdb3f1d070962efcf78fe.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/final-run/definition-receipt.json",
+      "sha256": "9f3982984727a4ed1b6cf63bd9a4419ad7d5f76d0fbf3fce1c2eede8ba9f5eb6",
+      "bytes": 15333,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/9f3982984727a4ed1b6cf63bd9a4419ad7d5f76d0fbf3fce1c2eede8ba9f5eb6.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/final-run/generated-public-projections.json",
+      "sha256": "12ba84000466f496ed712e61057e0945ccc78d26ee805c0965064b9ceba658a7",
+      "bytes": 179000,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/12ba84000466f496ed712e61057e0945ccc78d26ee805c0965064b9ceba658a7.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/final-run/isolated-current-pure-functions.mjs",
+      "sha256": "2c5072d0f1d1b483d72808686db13cad49f405f31233121483c72229801e31ce",
+      "bytes": 6965,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/2c5072d0f1d1b483d72808686db13cad49f405f31233121483c72229801e31ce.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/final-run.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/final-run.stdout",
+      "sha256": "baccd7e9f99fdfc56a13e125b7afe867427692f7a785ab666882a4acaef44869",
+      "bytes": 4638,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/baccd7e9f99fdfc56a13e125b7afe867427692f7a785ab666882a4acaef44869.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/generated-handoff-definition.json",
+      "sha256": "a5705bfb3d671520afa2884a523bbc4dfe479544e82c6b593a5efd8a216c9d0e",
+      "bytes": 1981,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/a5705bfb3d671520afa2884a523bbc4dfe479544e82c6b593a5efd8a216c9d0e.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/my-values/infra/postgresql-recovery.yaml",
+      "sha256": "ce029433a76e6e4edc5d67086ab1293277ea852ca83a2e9bdccadf15232acae7",
+      "bytes": 25823,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/ce029433a76e6e4edc5d67086ab1293277ea852ca83a2e9bdccadf15232acae7.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/original-candidate-lineage.json",
+      "sha256": "ace11c5d6e0f04dcaec568962bedeb1005e7e3404267f424116931defec80c09",
+      "bytes": 96426,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/ace11c5d6e0f04dcaec568962bedeb1005e7e3404267f424116931defec80c09.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/package-manifest.json",
+      "sha256": "3e6cd8ad0590fbb45f9bfa68a910c6b099959404aef3af89002cdcde6ffa34d7",
+      "bytes": 6726,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/3e6cd8ad0590fbb45f9bfa68a910c6b099959404aef3af89002cdcde6ffa34d7.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/profile-index.json",
+      "sha256": "0c0cd57f3601f96e0889d25e971805c5314db7458c911f9e457cc8dac3007bf6",
+      "bytes": 6067,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/0c0cd57f3601f96e0889d25e971805c5314db7458c911f9e457cc8dac3007bf6.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/public-fixtures/field-pair-input-stands.json",
+      "sha256": "fa5139150fd455ba831113f40147c53b76b2e6c573bb48b286a0e260aba24a2b",
+      "bytes": 17451,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/fa5139150fd455ba831113f40147c53b76b2e6c573bb48b286a0e260aba24a2b.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/public-fixtures/runtime-A.env",
+      "sha256": "904282ccd6495d5a00fff6af7f24ce9e33c25e19dc43cd0bd3b066d7482cf20c",
+      "bytes": 1123,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/904282ccd6495d5a00fff6af7f24ce9e33c25e19dc43cd0bd3b066d7482cf20c.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/public-fixtures/source-reference-stand.json",
+      "sha256": "b738b2095210cb8fcad4f69e7a906e2b2201330a6968a076dade7e5d8026c7ff",
+      "bytes": 2266,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/b738b2095210cb8fcad4f69e7a906e2b2201330a6968a076dade7e5d8026c7ff.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/public-fixtures/task-stands.json",
+      "sha256": "7704b4d6a9f9b07615e712a424c5e91f89eae3a8003f8fdb3c6ab58e7a6ea606",
+      "bytes": 827,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/7704b4d6a9f9b07615e712a424c5e91f89eae3a8003f8fdb3c6ab58e7a6ea606.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/receiving-abi.md",
+      "sha256": "cc2515bad09a6072151e6e91e5c2f8eb02d38043f7af9c3b9c1fd533a9d1db8f",
+      "bytes": 10156,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/cc2515bad09a6072151e6e91e5c2f8eb02d38043f7af9c3b9c1fd533a9d1db8f.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/schemas/pipeline-entry.schema.json",
+      "sha256": "8fa961cfcf1e907d6b2c5fa67f83a441decc65852e6985414e01a45a570f2c1c",
+      "bytes": 4952,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/8fa961cfcf1e907d6b2c5fa67f83a441decc65852e6985414e01a45a570f2c1c.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/schemas/postgresql-recovery-policy.schema.json",
+      "sha256": "36bfaba20ffe0e258f75a345873aacbbbccdb8fb710436d6e8b692101f97b34a",
+      "bytes": 7075,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/36bfaba20ffe0e258f75a345873aacbbbccdb8fb710436d6e8b692101f97b34a.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/schemas/recovery-task.schema.json",
+      "sha256": "dc896fd0fd4a48875267c75d5c1c7ae09380819d0f759ac39b00d831d12cd794",
+      "bytes": 1680,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/dc896fd0fd4a48875267c75d5c1c7ae09380819d0f759ac39b00d831d12cd794.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-01/source-pins.json",
+      "sha256": "16692731eac048cfbae3115c923937500d23982bf3becf72dc057ca899d73740",
+      "bytes": 3316,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/16692731eac048cfbae3115c923937500d23982bf3becf72dc057ca899d73740.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/README.md",
+      "sha256": "abc56d8daf542950e9dcd305373473d894ae379decaf910238ffaa2c9f52254f",
+      "bytes": 11388,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/abc56d8daf542950e9dcd305373473d894ae379decaf910238ffaa2c9f52254f.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/accounting-admission.md",
+      "sha256": "eff8bff309ad76ba7cd4569dc4a49a4636723babd0875bd8ffa08afdd09578e1",
+      "bytes": 3307,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/eff8bff309ad76ba7cd4569dc4a49a4636723babd0875bd8ffa08afdd09578e1.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/author-observations.json",
+      "sha256": "7e668d228c89ea5d11b109508a9f36511313f6b16e8c9e5754c395ce72663d35",
+      "bytes": 396,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/7e668d228c89ea5d11b109508a9f36511313f6b16e8c9e5754c395ce72663d35.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/case-definitions.json",
+      "sha256": "8e0cfc8c01f1f879beaf1b98a09e71ec08c2cb246ced60d8be29f03c1b16622e",
+      "bytes": 85529,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/8e0cfc8c01f1f879beaf1b98a09e71ec08c2cb246ced60d8be29f03c1b16622e.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/collect-definition-checks.mjs",
+      "sha256": "3df0c2717af34991cff6d982a3c5d07691713ee17ed6bba9e96d92965630ff8b",
+      "bytes": 32793,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/3df0c2717af34991cff6d982a3c5d07691713ee17ed6bba9e96d92965630ff8b.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/commands-and-exits.json",
+      "sha256": "c620dacb42cdb5fc0cca6c30c1981f9e33ef1210b11ea3c44037018b51f84e0c",
+      "bytes": 2564,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/c620dacb42cdb5fc0cca6c30c1981f9e33ef1210b11ea3c44037018b51f84e0c.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/config/pipeline.config.json",
+      "sha256": "9acd5845d808effd7b5f2f04815620ab3a17459652b5561bdf4f17903af030ff",
+      "bytes": 3643,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/9acd5845d808effd7b5f2f04815620ab3a17459652b5561bdf4f17903af030ff.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/conservation-receipt.json",
+      "sha256": "1c7d9d7069e49715ffb137096e74eceff507507115173787b60a8e22a15691c6",
+      "bytes": 2385,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/1c7d9d7069e49715ffb137096e74eceff507507115173787b60a8e22a15691c6.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/correction-case-addendum.json",
+      "sha256": "41562bee35b2b278b6d3fd516237498e753513707239496cbd90d52912a8c3fd",
+      "bytes": 14889,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/41562bee35b2b278b6d3fd516237498e753513707239496cbd90d52912a8c3fd.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/dependency-rejoin.json",
+      "sha256": "fa71481faa97d90a9d9be0761a5be6f74b18ada1db203826d6a05ab73bc4e28a",
+      "bytes": 12184,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/fa71481faa97d90a9d9be0761a5be6f74b18ada1db203826d6a05ab73bc4e28a.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/field-definitions.json",
+      "sha256": "adb871ea14bf84f2c24f73037fea8b358f9337a39f5fdb3f1d070962efcf78fe",
+      "bytes": 25027,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/adb871ea14bf84f2c24f73037fea8b358f9337a39f5fdb3f1d070962efcf78fe.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/final-run/definition-receipt.json",
+      "sha256": "7fc344826f91958b03c6bca91b4b0d5378da79656b755ab9b8d4e88d2c64aa52",
+      "bytes": 35229,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/7fc344826f91958b03c6bca91b4b0d5378da79656b755ab9b8d4e88d2c64aa52.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/final-run/generated-public-projections.json",
+      "sha256": "12ba84000466f496ed712e61057e0945ccc78d26ee805c0965064b9ceba658a7",
+      "bytes": 179000,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/12ba84000466f496ed712e61057e0945ccc78d26ee805c0965064b9ceba658a7.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/final-run/isolated-current-pure-functions.mjs",
+      "sha256": "2c5072d0f1d1b483d72808686db13cad49f405f31233121483c72229801e31ce",
+      "bytes": 6965,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/2c5072d0f1d1b483d72808686db13cad49f405f31233121483c72229801e31ce.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/final-run.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/final-run.stdout",
+      "sha256": "15d45d399e4aa49921641bb8ada651c03f74ecd0a938ee00522ec8231dc01d3e",
+      "bytes": 6974,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/15d45d399e4aa49921641bb8ada651c03f74ecd0a938ee00522ec8231dc01d3e.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/generated-handoff-definition.json",
+      "sha256": "91b1f175695180faaafa8d57e246ecfbd53f9b00d45d4d511e9d404a6ea0403c",
+      "bytes": 2367,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/91b1f175695180faaafa8d57e246ecfbd53f9b00d45d4d511e9d404a6ea0403c.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/my-values/infra/postgresql-recovery.yaml",
+      "sha256": "ce029433a76e6e4edc5d67086ab1293277ea852ca83a2e9bdccadf15232acae7",
+      "bytes": 25823,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/ce029433a76e6e4edc5d67086ab1293277ea852ca83a2e9bdccadf15232acae7.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/original-candidate-lineage.json",
+      "sha256": "ace11c5d6e0f04dcaec568962bedeb1005e7e3404267f424116931defec80c09",
+      "bytes": 96426,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/ace11c5d6e0f04dcaec568962bedeb1005e7e3404267f424116931defec80c09.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/package-manifest.json",
+      "sha256": "e0a80b631bb306f43210e7787d6719a85d8324fe1b4f81a3483e8c8e9c670299",
+      "bytes": 8755,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/e0a80b631bb306f43210e7787d6719a85d8324fe1b4f81a3483e8c8e9c670299.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/phase-plan.json",
+      "sha256": "2439b184da7d0e4c016254127e910b5b111f803b55c68ed648c918662accf106",
+      "bytes": 18772,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/2439b184da7d0e4c016254127e910b5b111f803b55c68ed648c918662accf106.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/profile-index.json",
+      "sha256": "0c0cd57f3601f96e0889d25e971805c5314db7458c911f9e457cc8dac3007bf6",
+      "bytes": 6067,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/0c0cd57f3601f96e0889d25e971805c5314db7458c911f9e457cc8dac3007bf6.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/public-fixtures/field-pair-input-stands.json",
+      "sha256": "fa5139150fd455ba831113f40147c53b76b2e6c573bb48b286a0e260aba24a2b",
+      "bytes": 17451,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/fa5139150fd455ba831113f40147c53b76b2e6c573bb48b286a0e260aba24a2b.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/public-fixtures/runtime-A.env",
+      "sha256": "bcc4842e5125556bc49d02c88da3612dae6a3af97b2e0f1d4ebd69f9a7cf9d62",
+      "bytes": 1244,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/bcc4842e5125556bc49d02c88da3612dae6a3af97b2e0f1d4ebd69f9a7cf9d62.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/public-fixtures/source-reference-stand.json",
+      "sha256": "b738b2095210cb8fcad4f69e7a906e2b2201330a6968a076dade7e5d8026c7ff",
+      "bytes": 2266,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/b738b2095210cb8fcad4f69e7a906e2b2201330a6968a076dade7e5d8026c7ff.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/public-fixtures/task-authority.json",
+      "sha256": "4d6928560a287b09a01d19851af8f56945ec9eec2262147637133fbbb5fd5955",
+      "bytes": 6096,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/4d6928560a287b09a01d19851af8f56945ec9eec2262147637133fbbb5fd5955.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/public-fixtures/task-envelopes.json",
+      "sha256": "86c6768c91b6013825811f19ebe8c3a82f1287873624b962e0576919f32b8f8e",
+      "bytes": 1437,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/86c6768c91b6013825811f19ebe8c3a82f1287873624b962e0576919f32b8f8e.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/public-fixtures/task-stands.json",
+      "sha256": "7704b4d6a9f9b07615e712a424c5e91f89eae3a8003f8fdb3c6ab58e7a6ea606",
+      "bytes": 827,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/7704b4d6a9f9b07615e712a424c5e91f89eae3a8003f8fdb3c6ab58e7a6ea606.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/receiving-abi.md",
+      "sha256": "d010c4ea67b0705c227a23e6ec07d43bd053a677db324a5c90f3821fbd7ecdff",
+      "bytes": 11067,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/d010c4ea67b0705c227a23e6ec07d43bd053a677db324a5c90f3821fbd7ecdff.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/schemas/pipeline-entry.schema.json",
+      "sha256": "2d9c7e5f11924f4ada516475bcec89c695edeced076343b332647d2b9b1ee6fb",
+      "bytes": 4952,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/2d9c7e5f11924f4ada516475bcec89c695edeced076343b332647d2b9b1ee6fb.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/schemas/postgresql-recovery-policy.schema.json",
+      "sha256": "36bfaba20ffe0e258f75a345873aacbbbccdb8fb710436d6e8b692101f97b34a",
+      "bytes": 7075,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/36bfaba20ffe0e258f75a345873aacbbbccdb8fb710436d6e8b692101f97b34a.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/schemas/recovery-task-authority.schema.json",
+      "sha256": "3f249dee2776e5782f2c9531fba4b61db659a3f9f20625b9b071d9731b9aa635",
+      "bytes": 4904,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/3f249dee2776e5782f2c9531fba4b61db659a3f9f20625b9b071d9731b9aa635.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/schemas/recovery-task.schema.json",
+      "sha256": "1629b9c23a471e855d9b22f980fc71d1fc29082bea4ee0f72aaa6e7b25bdf57f",
+      "bytes": 4673,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/1629b9c23a471e855d9b22f980fc71d1fc29082bea4ee0f72aaa6e7b25bdf57f.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/source-pins.json",
+      "sha256": "aa26f863a8eb17d8bef4ac852d58b78f585d07c7a8caca3e2ae4274d565093b2",
+      "bytes": 15230,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/aa26f863a8eb17d8bef4ac852d58b78f585d07c7a8caca3e2ae4274d565093b2.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/task-deadline-authority.md",
+      "sha256": "09223d428522d4bf525cc600a9bd26095ef0a49cc40fae631cdb68db7b9efd5f",
+      "bytes": 14989,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/09223d428522d4bf525cc600a9bd26095ef0a49cc40fae631cdb68db7b9efd5f.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-review01-relocation.json",
+      "sha256": "5aab46fabf47b527dad963b6a375ecbd022800207078f84c03d9d4e6ba5332d7",
+      "bytes": 1339,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/5aab46fabf47b527dad963b6a375ecbd022800207078f84c03d9d4e6ba5332d7.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-source-contracts-01/README.md",
+      "sha256": "15f0ecf19c9a804b01dff515dac42715249531d61b6c7db801fc013544ab643d",
+      "bytes": 3765,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/15f0ecf19c9a804b01dff515dac42715249531d61b6c7db801fc013544ab643d.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-source-contracts-01/candidate-dispositions.json",
+      "sha256": "98893de074072657c6bb832f84fee88eefa9d35276c6ecaa5ac8fdbb1d814fc0",
+      "bytes": 93054,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/98893de074072657c6bb832f84fee88eefa9d35276c6ecaa5ac8fdbb1d814fc0.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-source-contracts-01/source-identities.json",
+      "sha256": "9c52de0a1310f68717deb418171d60a2153adcbc31dd1fd157e510942330349b",
+      "bytes": 1340,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/9c52de0a1310f68717deb418171d60a2153adcbc31dd1fd157e510942330349b.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+      "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557",
+      "bytes": 227220,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/artifact-identities.json",
+      "sha256": "21f14842c3fc5c5b7480e7b134a54d09d686816cdd52bb9b63afdc99e0fdaa7b",
+      "bytes": 55711,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/21f14842c3fc5c5b7480e7b134a54d09d686816cdd52bb9b63afdc99e0fdaa7b.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/c3-integrated-reference-generation.json",
+      "sha256": "f8d9d08f60acfaf884c183b560398f018b5463b52a984214a4bbaa4d75dc993f",
+      "bytes": 1941,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/f8d9d08f60acfaf884c183b560398f018b5463b52a984214a4bbaa4d75dc993f.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/c3-registry-peer-reference-contract.json",
+      "sha256": "d1ba44788070a8300c6081fb448184d8cba8d3a38a6d20ff11583cb64bfd38c2",
+      "bytes": 3889,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/d1ba44788070a8300c6081fb448184d8cba8d3a38a6d20ff11583cb64bfd38c2.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json",
+      "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+      "bytes": 9017837,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/components/buster-engine.config.json",
+      "sha256": "100d63939fa1eb164053a0c0d205ab534a5b592c3d8ecc5ba43b0ee5f83a6ebf",
+      "bytes": 1140207,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/100d63939fa1eb164053a0c0d205ab534a5b592c3d8ecc5ba43b0ee5f83a6ebf.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/components/prism-control.config.json",
+      "sha256": "524ca90d6b62c656b5f279c27b8b49250d93869636aa71f73d5891429e01e1e4",
+      "bytes": 4597,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/524ca90d6b62c656b5f279c27b8b49250d93869636aa71f73d5891429e01e1e4.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/components/prism-execution.config.json",
+      "sha256": "225d2d31235f0996196da2f2b7d25a0605d59087427b997ab487d648ddf89ce3",
+      "bytes": 1606,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/225d2d31235f0996196da2f2b7d25a0605d59087427b997ab487d648ddf89ce3.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/components/prism-studio.config.json",
+      "sha256": "b41a9113d26384ee0dd07d5defac180b8a52d67315c738d0a5459c49bead0fac",
+      "bytes": 976,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/b41a9113d26384ee0dd07d5defac180b8a52d67315c738d0a5459c49bead0fac.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/components/prism-worker.config.json",
+      "sha256": "61da3c7b2b81033ed9c350f593cf1ab58f3630a39b109a9b251f1b2e0ba28220",
+      "bytes": 1581,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/61da3c7b2b81033ed9c350f593cf1ab58f3630a39b109a9b251f1b2e0ba28220.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/components/worker-core.config.json",
+      "sha256": "f59c7ec6798e853f9fb87a494cdd245193c50d19f90275fe5b530706adcb8934",
+      "bytes": 1270,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/f59c7ec6798e853f9fb87a494cdd245193c50d19f90275fe5b530706adcb8934.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/pipeline.config.json",
+      "sha256": "355ea24016a9fec3ead3e845d28a95925f3fc7fd337f1a970d5a788bf1c5b0e5",
+      "bytes": 3421,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/355ea24016a9fec3ead3e845d28a95925f3fc7fd337f1a970d5a788bf1c5b0e5.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/plugins/kubeclaw.api-flow.config.json",
+      "sha256": "6d0d39c516128aefb8e94edf6c8f68c43caa0bf9aade74628c6fc49d3c5fe917",
+      "bytes": 7218,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/6d0d39c516128aefb8e94edf6c8f68c43caa0bf9aade74628c6fc49d3c5fe917.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/plugins/kubeclaw.http.config.json",
+      "sha256": "e8eb48798dd3b126b32962b1e17882109a289420a3ad87d82f65b8aefbe87517",
+      "bytes": 6020,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/e8eb48798dd3b126b32962b1e17882109a289420a3ad87d82f65b8aefbe87517.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/plugins/kubeclaw.network-http.config.json",
+      "sha256": "26b4fb9495edd6b6c60ff9acbfc866f43e953b9e013781950ff9c6708e4e64c4",
+      "bytes": 6133,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/26b4fb9495edd6b6c60ff9acbfc866f43e953b9e013781950ff9c6708e4e64c4.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/config/plugins/kubeclaw.openapi.config.json",
+      "sha256": "f575e0431736bb0ff20cd6e6f615b3595ab366c45858dc1712436dabcafe98e3",
+      "bytes": 17513,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/f575e0431736bb0ff20cd6e6f615b3595ab366c45858dc1712436dabcafe98e3.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+      "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+      "bytes": 1393650,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/generated-view-index.json",
+      "sha256": "fbe5763907300c00e271783836071d15c77d0a0e4091e0d3ff0c2f5ab4332ede",
+      "bytes": 749,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/fbe5763907300c00e271783836071d15c77d0a0e4091e0d3ff0c2f5ab4332ede.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/package-binding-identities.json",
+      "sha256": "01efa50eeae30613e0e80caf7132d904fb200daa452103110c4f74ec9554665d",
+      "bytes": 3089,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/01efa50eeae30613e0e80caf7132d904fb200daa452103110c4f74ec9554665d.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/api-flow.target-task-file.schema.json",
+      "sha256": "5c95926961def5f457273595f6c56daa6f9fe0c15f46379473a514aa996cce45",
+      "bytes": 3107,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/5c95926961def5f457273595f6c56daa6f9fe0c15f46379473a514aa996cce45.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/buster-network-resource.schema.json",
+      "sha256": "dab39fb1a420514c879ecb1722e31c84923e1bf08c41fa676a002a2a76b56fae",
+      "bytes": 1982,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/dab39fb1a420514c879ecb1722e31c84923e1bf08c41fa676a002a2a76b56fae.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/c3-generated-runtime.schema.json",
+      "sha256": "af8e9bded1aef68ebe88e0ded835b202e0a4591099eda89fa4ea99a31b1b1740",
+      "bytes": 66369,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/af8e9bded1aef68ebe88e0ded835b202e0a4591099eda89fa4ea99a31b1b1740.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/components/buster-engine.schema.json",
+      "sha256": "115982f18efb75f7ea5e2e05a5dee7a574707400469aaf5de4b88721d3b9cb97",
+      "bytes": 97220,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/115982f18efb75f7ea5e2e05a5dee7a574707400469aaf5de4b88721d3b9cb97.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/components/prism-control.schema.json",
+      "sha256": "235717a7621de85c3933b095b0724c53eb27afa791ed5f094bf47a53bee39d85",
+      "bytes": 74117,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/235717a7621de85c3933b095b0724c53eb27afa791ed5f094bf47a53bee39d85.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/components/prism-execution.schema.json",
+      "sha256": "c6dfe88a3518f6819f5840b7e6739796c6fc0e6a0711ab1fc42cf19df4e76cbe",
+      "bytes": 48715,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/c6dfe88a3518f6819f5840b7e6739796c6fc0e6a0711ab1fc42cf19df4e76cbe.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/components/prism-studio.schema.json",
+      "sha256": "72921bb9de970f5eccec5b7889a26501c8614e96304179dc54a5eef0375abe7b",
+      "bytes": 44639,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/72921bb9de970f5eccec5b7889a26501c8614e96304179dc54a5eef0375abe7b.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/components/prism-worker.schema.json",
+      "sha256": "5b7fca15563fb20ad2b5dcef67724b62c68648a67fa7e5b0d34276f5472faa5b",
+      "bytes": 49101,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/5b7fca15563fb20ad2b5dcef67724b62c68648a67fa7e5b0d34276f5472faa5b.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/components/worker-core.schema.json",
+      "sha256": "22c665a659ae8af436b642ef8959e3f2ca6aebcefd1e9858ff718386dbd65630",
+      "bytes": 45730,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/22c665a659ae8af436b642ef8959e3f2ca6aebcefd1e9858ff718386dbd65630.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.api-flow.evidence-override.schema.json",
+      "sha256": "831f8c25a87165080759fb805825d2e1a1fbcf13dd1171bcf7b9600d12ab8eda",
+      "bytes": 1192,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/831f8c25a87165080759fb805825d2e1a1fbcf13dd1171bcf7b9600d12ab8eda.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.api-flow.schema.json",
+      "sha256": "feda3e42ced475a7d1c7b4e86fb4750946d622d0e801bf6d279da3e7189e5b31",
+      "bytes": 4959,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/feda3e42ced475a7d1c7b4e86fb4750946d622d0e801bf6d279da3e7189e5b31.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.api-flow.task.schema.json",
+      "sha256": "64be3ae79bed9a97a4fe51615ab66a403413c0f0b09ddf3a2e922a67d6b80198",
+      "bytes": 527,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/64be3ae79bed9a97a4fe51615ab66a403413c0f0b09ddf3a2e922a67d6b80198.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.http.evidence-override.schema.json",
+      "sha256": "03920b7906d96bc998f2423877daa88b9fc178481d509c7f4908c291fc576204",
+      "bytes": 958,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/03920b7906d96bc998f2423877daa88b9fc178481d509c7f4908c291fc576204.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.http.schema.json",
+      "sha256": "dbe452c5aebf4fc3fbe7ce1dc68cb05f08193694df23b09f122461f4d87de10c",
+      "bytes": 4231,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/dbe452c5aebf4fc3fbe7ce1dc68cb05f08193694df23b09f122461f4d87de10c.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.http.task.schema.json",
+      "sha256": "a6307a45ffea3b999575efe27ba11c28bc9bb47f82cdfeb71645bcb2706c1e44",
+      "bytes": 1128,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/a6307a45ffea3b999575efe27ba11c28bc9bb47f82cdfeb71645bcb2706c1e44.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.network-http.schema.json",
+      "sha256": "dce2ee99d8e3bbaa073b8cfb5aee20715b96bb2e3838a259a7c05c5ccf982892",
+      "bytes": 3193,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/dce2ee99d8e3bbaa073b8cfb5aee20715b96bb2e3838a259a7c05c5ccf982892.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.openapi.evidence-override.schema.json",
+      "sha256": "831f8c25a87165080759fb805825d2e1a1fbcf13dd1171bcf7b9600d12ab8eda",
+      "bytes": 1192,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/831f8c25a87165080759fb805825d2e1a1fbcf13dd1171bcf7b9600d12ab8eda.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.openapi.schema.json",
+      "sha256": "5a0a92ad66b8340579a9523854a8c8e5f4b4014ca72548702eb52a5526d52ac6",
+      "bytes": 5944,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/5a0a92ad66b8340579a9523854a8c8e5f4b4014ca72548702eb52a5526d52ac6.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.openapi.task.schema.json",
+      "sha256": "a97d83747a5319a85720d444c0c9aa836b4dfe37d01479a9fe4916e3b0c099d8",
+      "bytes": 2832,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/a97d83747a5319a85720d444c0c9aa836b4dfe37d01479a9fe4916e3b0c099d8.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/nova-adapter-processing.schema.json",
+      "sha256": "09671db157edcd889a62c485f0083113c796cb2eca23d13b6c5ab5cc32d0fdf3",
+      "bytes": 1739,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/09671db157edcd889a62c485f0083113c796cb2eca23d13b6c5ab5cc32d0fdf3.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/pipeline-entry.schema.json",
+      "sha256": "650dfba7c8030edfa1d3bf75dcf5820c6b1c88aefe50d1b01ef5c8267c062e23",
+      "bytes": 4058,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/650dfba7c8030edfa1d3bf75dcf5820c6b1c88aefe50d1b01ef5c8267c062e23.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/provider-configuration.v2.schema.json",
+      "sha256": "2548f1b8edf8aa36cbccecfc5101aa2927718d1f0a03096f90fb59131f91bc58",
+      "bytes": 31442,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/2548f1b8edf8aa36cbccecfc5101aa2927718d1f0a03096f90fb59131f91bc58.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/my-values/infra/litellm-config.yaml",
+      "sha256": "70356ac84fef937d6cfad5ea54583a16342784d8299406e155524128542baa6d",
+      "bytes": 377,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/70356ac84fef937d6cfad5ea54583a16342784d8299406e155524128542baa6d.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/my-values/infra/litellm-deployment.yaml",
+      "sha256": "21136d7cc63b549db0d9e1f3a32d449c5bf3c2644790d144d47d476372c56bab",
+      "bytes": 2700,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/21136d7cc63b549db0d9e1f3a32d449c5bf3c2644790d144d47d476372c56bab.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/my-values/infra/postgresql-recovery.yaml",
+      "sha256": "5f0ffb0cdf5acdbd814da726060d5125c5cae912554f27de57251ea90ae8d438",
+      "bytes": 445,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/5f0ffb0cdf5acdbd814da726060d5125c5cae912554f27de57251ea90ae8d438.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/my-values/infra/postgresql-values.yaml",
+      "sha256": "b7c1445d47350c6fcae2fc7de901e930dec1f8309331bf0db69c70c1f3404994",
+      "bytes": 502,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/b7c1445d47350c6fcae2fc7de901e930dec1f8309331bf0db69c70c1f3404994.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/deploy.sh",
+      "sha256": "c90cc9c082b3adba89c458a9e28853afa77682a6c7066a7641c70aac749d0960",
+      "bytes": 150066,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/c90cc9c082b3adba89c458a9e28853afa77682a6c7066a7641c70aac749d0960.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/infrastructure-chart-lock.mjs",
+      "sha256": "8884d8e41166f9739ea8f5986cbd8a4c8ae66e8756f0fa3ccb8712e9124601e5",
+      "bytes": 1271,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/8884d8e41166f9739ea8f5986cbd8a4c8ae66e8756f0fa3ccb8712e9124601e5.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/infrastructure-chart.mjs",
+      "sha256": "6a136a40cced70d63de028e635bd5b9e4fb30f1a632cd725175385faf9c57e25",
+      "bytes": 3579,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/6a136a40cced70d63de028e635bd5b9e4fb30f1a632cd725175385faf9c57e25.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/infrastructure-release.mjs",
+      "sha256": "a03aa7721f871473effbb0f79de84bc7ebcb2877c68fa023675ea335e27936f8",
+      "bytes": 2675,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/a03aa7721f871473effbb0f79de84bc7ebcb2877c68fa023675ea335e27936f8.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/postgresql-recovery-preflight.mjs",
+      "sha256": "fef2fed9b07fb7731c58d69c744a418130882cc5507d16616a3b516ff9485fd4",
+      "bytes": 1612,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/fef2fed9b07fb7731c58d69c744a418130882cc5507d16616a3b516ff9485fd4.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/postgresql-recovery.sh",
+      "sha256": "86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b",
+      "bytes": 10599,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/render-postgresql-recovery.mjs",
+      "sha256": "3e0d30b0c0888c4039f176ddb80d19e00b7b7064ead979d5bb9122d4df19e14f",
+      "bytes": 10576,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/3e0d30b0c0888c4039f176ddb80d19e00b7b7064ead979d5bb9122d4df19e14f.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/stateful-database-service.mjs",
+      "sha256": "fd96f1a30f997d4a6a71a23b81cad2dc4ccca69b223e4945e22c9261819bbfa8",
+      "bytes": 2764,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/fd96f1a30f997d4a6a71a23b81cad2dc4ccca69b223e4945e22c9261819bbfa8.gz"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/versions.json",
+      "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d",
+      "bytes": 12594,
+      "frozenPath": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-02/frozen-inputs/40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d.gz"
+    }
+  ],
+  "authorManifestChecks": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/README.md",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/accounting-admission.md",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/author-observations.json",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/case-definitions.json",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/collect-definition-checks.mjs",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/commands-and-exits.json",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/config/pipeline.config.json",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/conservation-receipt.json",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/correction-case-addendum.json",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/dependency-rejoin.json",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/field-definitions.json",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/final-run/definition-receipt.json",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/final-run/generated-public-projections.json",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/final-run/isolated-current-pure-functions.mjs",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/final-run.stderr",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/final-run.stdout",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/generated-handoff-definition.json",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/my-values/infra/postgresql-recovery.yaml",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/original-candidate-lineage.json",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/phase-plan.json",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/profile-index.json",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/public-fixtures/field-pair-input-stands.json",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/public-fixtures/runtime-A.env",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/public-fixtures/source-reference-stand.json",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/public-fixtures/task-authority.json",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/public-fixtures/task-envelopes.json",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/public-fixtures/task-stands.json",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/receiving-abi.md",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/schemas/pipeline-entry.schema.json",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/schemas/postgresql-recovery-policy.schema.json",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/schemas/recovery-task-authority.schema.json",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/schemas/recovery-task.schema.json",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/source-pins.json",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/recovery-policy-profile-02/task-deadline-authority.md",
+      "match": true
+    }
+  ]
+}

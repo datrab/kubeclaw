@@ -1,0 +1,96 @@
+{
+  "head": "a07de5673e24ba99109833120d94417ebb0fc407",
+  "tree": "583a342afd982242d17788fc2d64bbe8b7fca7ef",
+  "atUtc": "2026-10-12T20:48:28.882793+00:00",
+  "report": "docs/review/remediation/independent-config-c0-core-domain-a07de567.md",
+  "files": {
+    "docs/review/remediation/independent-config-c0-core-domain-a07de567.md": {
+      "sha256": "8232caa55d1d9d0c70d66f1682e478db25bfdbc4a582c7ead931d09cfbc67043",
+      "bytes": 18504
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/schema-enumeration.log": {
+      "sha256": "9bb0d459fbd4043a928cca27e14d4f1321655a592b8a1080d3cbdab236db16e1",
+      "bytes": 1056
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/author-residual-integrity-reproduction.log": {
+      "sha256": "a6f839453c0949dabe56cf415197bc907244ba062a3d954c7c32d4fcdea82ccc",
+      "bytes": 8582
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/tracked.patch": {
+      "sha256": "f84dd90ba39b8a1c7b715b39a7dd3ab7fc105b990c8d72edfc40356d8fc559fe",
+      "bytes": 66031686
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/expected-api-obligations.json": {
+      "sha256": "bb545e7570475153aea81ab16afbfdeb8e0b97d3060d62260b8479d80454452e",
+      "bytes": 341534
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/commands.json": {
+      "sha256": "d93a2ca5f52135c2afadf2461656fbb67dfca081d15c6256a5a2aa37f3f1e161",
+      "bytes": 2786
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/schema-definition-reproduction-corrected.log": {
+      "sha256": "d4e91f84f73ccbb3b836f8199beb457466a7146b0bde40927ce368889c73a632",
+      "bytes": 20739
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/schema-definition-reproduction.log": {
+      "sha256": "efc2197c9e764bf13f1cbece06fcd77bcfe15b2b8b1481f8dd865249c14e97d0",
+      "bytes": 698
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/api-enumeration.log": {
+      "sha256": "d6937e514bc16f12817f5522e4622b87077b7459fbb6cdfb892ac2f456c02417",
+      "bytes": 99
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/review-input-identities.json": {
+      "sha256": "3edeb00a3e6c5b36f13a5450186320378e06f53b7c1a148daf13e9cc01927ac9",
+      "bytes": 39273
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/independent-source-read.log": {
+      "sha256": "cd100607785183447b46f8a48ca19490d1d8c4a598ad1d9af52aa79c06e76be4",
+      "bytes": 898515
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/enumerate-schema.py": {
+      "sha256": "df6a445abb92f7aa8ccc879781e3c594b030ba4d8e2550d67d1f658f6a4119eb",
+      "bytes": 2522
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/review-drift-check.json": {
+      "sha256": "1ace2ecef1d5a3e491d5e3f2c62aacf3385d5b4e35228edb49edf77740c08faf",
+      "bytes": 46
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/core-definition-reproduction.log": {
+      "sha256": "954baf5605019c10335faa6aa92b22d9c6f345631231850aec90ba7fb1db78d3",
+      "bytes": 12804
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/enumerate-api.mjs": {
+      "sha256": "c82245d30d813145604dad40930f89a2aefb2e7d3016b170f0b1a184e79c803f",
+      "bytes": 2097
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/author-schema-integrity-reproduction.log": {
+      "sha256": "8bee3380710c7b947cb6ffcc39d4c7abac2d41571c7c68030662f2d7d4d4ec51",
+      "bytes": 308
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/expected-source-field-case-obligations.json": {
+      "sha256": "c940c74f5bab967ff0cd8779bdaad5f600ba5c482b10dee357cedb3d67500c61",
+      "bytes": 1828420
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/preparation-definition-reproduction.log": {
+      "sha256": "a599a9f347fd17740041d849690dcb32dd517492de15b2afb7aae4337734788e",
+      "bytes": 13730
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/git-status.txt": {
+      "sha256": "7ec8ef80a8fbdfc4f330a8779d849658b968bd2ecfdd9219db536733a6604d09",
+      "bytes": 11430
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/raw-log-review.json": {
+      "sha256": "f0a94b4920df2ddb46c3f68715f414a3dbd2477de12a45088e46b5b045440799",
+      "bytes": 887668
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/expected-schema-obligations.json": {
+      "sha256": "b227271570a0940d2764cd80773d691d91dac32d3c735602c2f070ffc46fe91b",
+      "bytes": 488852
+    },
+    "docs/review/evidence/config-acceptance/independent-core-domain/refined-profiles-reproduction.log": {
+      "sha256": "40c2ac61f6be3a575c7899b3f1a5829c6ce4225f53a543071367b8dfd15e37ba",
+      "bytes": 373436
+    }
+  }
+}

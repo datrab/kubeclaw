@@ -1,0 +1,608 @@
+{
+  "command": "node docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/check.mjs",
+  "node": "v24.21.0",
+  "sourceDigests": {
+    "skills/nova/plugins/repository-adapter/src/adapter.ts": "657ec9c38069eead03aa531e5d5b60041c8fe34b643e2bab838eb0a80e12afcd",
+    "skills/nova/plugins/repository-adapter/src/revision-parsers.ts": "de1770df42f8bcb5451b9b23cfa539c1f7d8fc0716d105e389ce95309a8fd295",
+    "skills/nova/plugins/repository-adapter/src/revision-reader.ts": "35aadab83485ed1dcf370ce2136a67d892b6026ba594d0d12d8c739dc3f0c71f",
+    "skills/nova/plugins/repository-adapter/src/repository-file.ts": "a6d8442958b8d90132a23d69449058c6d146aa170ad5f63a11433e42fb73277e",
+    "skills/nova/plugins/repository-adapter/tests/live-function.test.ts": "3229a2a986685917a01475d6c9ab2655ad59313f568380278a55e33c4b15f22f",
+    "skills/nova/plugins/repository-adapter/tests/path-safety.test.ts": "503590cf3a8a2c15fa70e8993e53a6d1c5362e41c7a7f078ead9903c35113a0c",
+    "skills/nova/plugins/lint/src/adapter.ts": "7d525ef53fc8a187eba48e7ee15ca7f8f2df1d00a4e23823de15bae47a1b49e4",
+    "skills/nova/plugins/lint/src/request.ts": "68d31dbdfb0a48764b436307be6998cd21700091f9f06f306bdef34532fb2453",
+    "skills/nova/plugins/lint/src/stage.ts": "6ba5172934f59d7b806e90ff1ce114feb8efe386a61ccedd8b86afc46b07d864",
+    "skills/nova/plugins/lint/src/candidate.ts": "cb87e62587a7bad9f2d63a305870e85bdbf439440e02e4dfed5d91475ba6560e",
+    "skills/nova/plugins/lint/src/engine/process-termination.ts": "47199969a22d1415bee97247400c9dfaf33ea843a41e5b68d13646febda59ed9",
+    "skills/nova/plugins/lint/src/engine/policy.ts": "9b48e0b8de2714bde16f58a667ac9356ec2b8a8f9ccd364673000dec076feb53",
+    "skills/nova/plugins/lint/src/engine/openapi-tool.ts": "5bf93fd93ea7e29019ea77fab78eeb365715c57504013ad82526d4db32dc9c61",
+    "skills/nova/plugins/lint/src/engine/kubernetes-security-tools.ts": "70b9625b994b9d210734941fdfd6cb6b663dbd5b4dd20db9ded0a144af8dfc4e",
+    "skills/nova/plugins/lint/src/engine/policy-validation.ts": "1c6f1e831d24a8df17557fe9919425042b995de3d28d92a0c6b8afb25293633e",
+    "skills/nova/plugins/lint/src/engine/kubernetes-manifests.ts": "16709307fb3b7b954902e20d3e8c7a8485ff4cd2160ac7944b8904a9ae7e6608",
+    "skills/nova/plugins/lint/src/engine/constants.ts": "03e18f020b7e416463dc333c06d7ad24628e5105fa5ee10a457e364baa7bf058",
+    "skills/nova/plugins/lint/src/engine/evidence-file-partition.ts": "00caab4a144b1f76962249f6bc2098424540efd644686154eeeeb62e6ae8e9bb",
+    "skills/nova/plugins/lint/src/engine/tool-registry-semgrep.ts": "6148c63c63ab2b8ad4fa258790e95bb89121d4e844969b7a91020f6803527de5",
+    "skills/nova/plugins/lint/src/engine/policy-patterns.ts": "7403829fae95019d046086f596f58035dae315c1b3def61e9849565b1c06584e",
+    "skills/nova/plugins/lint/src/engine/parsers.ts": "4948bf6d3e1ce744d436ebf9e4e3b289d7bced8782d5364bb0ea54f4580ab638",
+    "skills/nova/plugins/lint/src/engine/tool-registry.ts": "3e49b2dfecee85df614db7d2e89e9f1087ef31c412cf0dfecc7959c220d2fa28",
+    "skills/nova/plugins/lint/src/engine/paths.ts": "c84ba218c0185216e3e6eb1b4e348015e60833a761059f6388f0166eee347b83",
+    "skills/nova/plugins/lint/src/engine/policy-version.ts": "6324eb9a75f6151eaede8fae9ec4c48c61f2fe8265e4be64ec9fd6ce90db1d24",
+    "skills/nova/plugins/lint/src/engine/output.ts": "cb405a9b8166ff3c6ea08d26a2eede788c0b3cbd007f06a5c09aef7340b7903c",
+    "skills/nova/plugins/lint/src/engine/go-tools.ts": "2ca058762435596a50dcddecc8e33a65d6f5638aa01bbe74140bd7d89b808d3d",
+    "skills/nova/plugins/lint/src/engine/helm-render.ts": "acafef0f53da08c16d9836dea2f243999bd9fdd347220d47c68310191b0ffb2c",
+    "skills/nova/plugins/lint/src/engine/tool-registry-language-tools.ts": "85b1c25c238682acce0fcea59ceea75ba1b2d7aa91f95a8308194a0602cbd184",
+    "skills/nova/plugins/lint/src/engine/tool-registry-core.ts": "766fba947b149d80b78789743b65d0e427804ae08e39f47d862f5163a583203d",
+    "skills/nova/plugins/lint/src/engine/report.ts": "62246dd40865be23329e9c0ba091cfb97b41fabb8e26981a52713c1006d1244b",
+    "skills/nova/plugins/lint/src/engine/discovery.ts": "ef94db8bda63eb74abe47cefabea3f3b64ef1e8848b868f61bb885059e8e4b16",
+    "skills/nova/plugins/lint/src/engine/terraform-tools.ts": "b189a72a067325eca719e5c3a2c863aa8b8401938b590e258dc67fcc2ef9978c",
+    "skills/nova/plugins/lint/src/engine/execution.ts": "9aa2e64b50e9a9f7bb3bf1d181860f772c70dfc9c4ce058f376e4d56f2a675f4",
+    "skills/nova/plugins/lint/src/engine/go-terraform-tools.ts": "559229928d17cd3eff2c201eae78e705eb36b4d5c9f231a15faab2b917b00a9d",
+    "skills/nova/plugins/lint/src/engine/policy-paths.ts": "4e7723eb14813fe5d594222d8a9b69809f809abaa379fbb44041793f28aa66e3",
+    "skills/nova/plugins/lint/src/engine/container-yaml-tools.ts": "7a97ff6e62bc9e431c7dd1c8123bad9afa36fb797f0891edf879924ea5429cbc",
+    "skills/nova/plugins/lint/src/engine/kubeconform-tool.ts": "b7b24ece9566c430c480795b916f094faed7dbb372520b58da3b5a99ff56a0fc",
+    "skills/nova/plugins/lint/src/engine/report-contract.ts": "a0acf232699b954e74e35f3c075d68f5559576eda588e48a4e36f47c51d05893",
+    "skills/nova/plugins/lint/src/engine/process.ts": "81320777e32a2af656cbb6f22903918d8c8a48074c0e33f47b4ae87b7bfeaca3",
+    "skills/nova/plugins/lint/src/engine/tool-summary.ts": "e53ec5b5468aecffbe2ca0efd366c00e1eb585b7d1d8b0d34e9c7e13fd893904",
+    "skills/nova/plugins/lint/src/engine/architecture-tools.ts": "42720f0013e983cf28b693f2cd709b3fec3470c45ec1637d832eff7430fd0d03",
+    "skills/nova/plugins/lint/src/engine/linux-process-group.ts": "83696b7511173f21e5af38f238758fc087afc0b3d84d8c62017aefa3527e6ea2",
+    "skills/nova/plugins/lint/src/engine/tool-registry-dependency-tools.ts": "4c1e54233cc2af3e0e110937433c6258923f6d15d7a991317d7a07add38ba577",
+    "skills/nova/plugins/lint/src/engine/finding-fingerprints.ts": "1a0e06f7bcb937839a43e5025e47831a173661240d9cce91125df3f3ff7ce317",
+    "skills/nova/plugins/lint/src/engine/lint-governance.ts": "7904cc32edb9304644c02a705669624c224c87be0a176d1babc5cb0016bc6145",
+    "skills/nova/plugins/lint/src/engine/index.ts": "b7c408dc76e87aada6047264734c766b259a24254d7a3bb59e5fb735229c5214",
+    "skills/nova/plugins/lint/src/engine/kubernetes-policy-pack.ts": "c449ee445791ed4c7e3e2fde96139bb46e1407e6898d4ab698203314f0a70171",
+    "skills/nova/plugins/lint/src/engine/kubernetes-policy-tools.ts": "a09beb82bd8db595e9467dcfe61bfa4bdaa07a09e8828dd83fda01f72150b002",
+    "skills/nova/plugins/lint/src/support/optional-absence.ts": "09944ef955b43f0d1bd2e33ceed7d1655c1fc0bff100fc9c7e8053651b84a7d4",
+    "skills/nova/plugins/lint/src/support/value-boundary.ts": "d5982b5b79fce71aa8c61bfabbf5fc233c1afc3b73414f9df6f316c6439a16e0",
+    "skills/nova/plugins/repository-adapter/plugin.json": "91fe75d56133722d51c62bb2b06f729cdf3ee35735f471857fb324aab34501bd",
+    "skills/nova/plugins/lint/plugin.json": "3d671a34bb259b1c031d7f2ac1c54b19b4821e023bb53c7d43e5642dd1a0ce04",
+    "skills/nova/plugins/repository-adapter/schemas/config.schema.json": "f41b62a39c7f0dd5f959e94807d8bb60352fc4bbdab28929214c9199106978a2",
+    "skills/nova/plugins/lint/schemas/result.schema.json": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+    "skills/nova/plugins/lint/schemas/input.schema.json": "b5d3f14f5971057c8a5a81471b857b6f92ee9ac106b9cb1947441a5c96c4a84b",
+    "skills/nova/plugins/lint/schemas/config.schema.json": "02ee8a644c0e7ce0bfa58b0fe22582ba12e97f65c3a1e13170304231662a5bf8",
+    "skills/nova/plugins/lint/schemas/adapter-config.schema.json": "07d9497e85246c310e93213a90ff22d7b1323302051902e6a75e3e0f6bb46b24",
+    "skills/nova/core/execution/adapter-startup.ts": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0",
+    "skills/nova/core/execution/engine-runtime.ts": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613",
+    "skills/nova/core/execution/adapters.ts": "30332f9d2d360b32a13e6f2795f83c90297346eb892b4d9346d5e61ed9d60d5b"
+  },
+  "testDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/check.mjs": "4f2228a3406f63ef9a3bacea35c8b43ac09487f7a2fdc9e2597a5f30c1320c0e"
+  },
+  "inputDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/contracts.json": "b98a798278a964912e2eadfb8c0a9468f2cbc6d12a9fee6c562c156efbf37521",
+    "package-lock.json": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+  },
+  "controls": [
+    {
+      "id": "actual-repository-activation-and-read-text",
+      "inputs": {
+        "A": {
+          "repositoryRoot": "actual fresh root",
+          "maxFileBytes": 8,
+          "maxChangedPaths": 2,
+          "expectedHead": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "B": {
+          "repositoryRoot": "same root",
+          "maxFileBytes": 16,
+          "maxChangedPaths": 4,
+          "expectedHead": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "files": {
+          "exact8.txt": "12345678",
+          "over9.txt": "123456789"
+        }
+      },
+      "observed": "exact8accepted/9rejectunder8; originaladapterretains8 aftercallerobjectmutated16; newadapter16accept9; malformedexpectedHeadconstructorreject; validnonmatchingexpectedHeaddoesnotguardread_text; actualmissing/nullfallbackreadaccepts9; noGit/realrevisioncommands executed"
+    },
+    {
+      "id": "actual-exported-lint-requestPayload",
+      "input": {
+        "workingDirectory": "/tmp/runtime-repository-definition-YRKYBV",
+        "policyPath": "/tmp/runtime-repository-definition-YRKYBV/policy.json",
+        "policyProject": "approved",
+        "tier": "full"
+      },
+      "observed": "absentfalse omitted; onlybooleantrue preserved; truthywrongtypes ignored atdirectpureconsumer; invalidtier rejects. Notstagecontextinvoke substitute or realtool dispatch/effect"
+    }
+  ],
+  "results": [
+    {
+      "setting": "RT-861151f1c38043d9",
+      "field": "policyPath",
+      "registration": "kubeclaw.lint:pre-check",
+      "actualSchemaCompletePositive": {
+        "policyPath": "/tmp/runtime-repository-definition-YRKYBV/policy.json",
+        "policyProject": "approved",
+        "includeDebt": false,
+        "includeExperimental": false
+      },
+      "actualSchemaNullRejected": {
+        "policyPath": null,
+        "policyProject": "approved",
+        "includeDebt": false,
+        "includeExperimental": false
+      },
+      "actualSchemaUnknownRejected": {
+        "policyPath": "/tmp/runtime-repository-definition-YRKYBV/policy.json",
+        "policyProject": "approved",
+        "includeDebt": false,
+        "includeExperimental": false,
+        "unapprovedKnob": true
+      },
+      "source": {
+        "path": "skills/nova/plugins/lint/src/stage.ts",
+        "sha256": "6ba5172934f59d7b806e90ff1ce114feb8efe386a61ccedd8b86afc46b07d864"
+      },
+      "result": "passed",
+      "scope": "Exact current exported schema/source definition plus separately attributed actual narrow readers. Field effects/realtools/revisions/source-authority/generation compatibility not accepted"
+    },
+    {
+      "setting": "RT-3868555514538d7c",
+      "field": "policyProject",
+      "registration": "kubeclaw.lint:pre-check",
+      "actualSchemaCompletePositive": {
+        "policyPath": "/tmp/runtime-repository-definition-YRKYBV/policy.json",
+        "policyProject": "approved",
+        "includeDebt": false,
+        "includeExperimental": false
+      },
+      "actualSchemaNullRejected": {
+        "policyPath": "/tmp/runtime-repository-definition-YRKYBV/policy.json",
+        "policyProject": null,
+        "includeDebt": false,
+        "includeExperimental": false
+      },
+      "actualSchemaUnknownRejected": {
+        "policyPath": "/tmp/runtime-repository-definition-YRKYBV/policy.json",
+        "policyProject": "approved",
+        "includeDebt": false,
+        "includeExperimental": false,
+        "unapprovedKnob": true
+      },
+      "source": {
+        "path": "skills/nova/plugins/lint/src/engine/index.ts",
+        "sha256": "b7c408dc76e87aada6047264734c766b259a24254d7a3bb59e5fb735229c5214"
+      },
+      "result": "passed",
+      "scope": "Exact current exported schema/source definition plus separately attributed actual narrow readers. Field effects/realtools/revisions/source-authority/generation compatibility not accepted"
+    },
+    {
+      "setting": "RT-d8ebf6f356c617b2",
+      "field": "includeDebt",
+      "registration": "kubeclaw.lint:pre-check",
+      "actualSchemaCompletePositive": {
+        "policyPath": "/tmp/runtime-repository-definition-YRKYBV/policy.json",
+        "policyProject": "approved",
+        "includeDebt": false,
+        "includeExperimental": false
+      },
+      "actualSchemaNullRejected": {
+        "policyPath": "/tmp/runtime-repository-definition-YRKYBV/policy.json",
+        "policyProject": "approved",
+        "includeDebt": null,
+        "includeExperimental": false
+      },
+      "actualSchemaUnknownRejected": {
+        "policyPath": "/tmp/runtime-repository-definition-YRKYBV/policy.json",
+        "policyProject": "approved",
+        "includeDebt": false,
+        "includeExperimental": false,
+        "unapprovedKnob": true
+      },
+      "source": {
+        "path": "skills/nova/plugins/lint/src/engine/report.ts",
+        "sha256": "62246dd40865be23329e9c0ba091cfb97b41fabb8e26981a52713c1006d1244b"
+      },
+      "result": "passed",
+      "scope": "Exact current exported schema/source definition plus separately attributed actual narrow readers. Field effects/realtools/revisions/source-authority/generation compatibility not accepted"
+    },
+    {
+      "setting": "RT-be07606dce452256",
+      "field": "includeExperimental",
+      "registration": "kubeclaw.lint:pre-check",
+      "actualSchemaCompletePositive": {
+        "policyPath": "/tmp/runtime-repository-definition-YRKYBV/policy.json",
+        "policyProject": "approved",
+        "includeDebt": false,
+        "includeExperimental": false
+      },
+      "actualSchemaNullRejected": {
+        "policyPath": "/tmp/runtime-repository-definition-YRKYBV/policy.json",
+        "policyProject": "approved",
+        "includeDebt": false,
+        "includeExperimental": null
+      },
+      "actualSchemaUnknownRejected": {
+        "policyPath": "/tmp/runtime-repository-definition-YRKYBV/policy.json",
+        "policyProject": "approved",
+        "includeDebt": false,
+        "includeExperimental": false,
+        "unapprovedKnob": true
+      },
+      "source": {
+        "path": "skills/nova/plugins/lint/src/engine/report.ts",
+        "sha256": "62246dd40865be23329e9c0ba091cfb97b41fabb8e26981a52713c1006d1244b"
+      },
+      "result": "passed",
+      "scope": "Exact current exported schema/source definition plus separately attributed actual narrow readers. Field effects/realtools/revisions/source-authority/generation compatibility not accepted"
+    },
+    {
+      "setting": "RT-cdfe9d6d2726e553",
+      "field": "policyPath",
+      "registration": "kubeclaw.lint:full",
+      "actualSchemaCompletePositive": {
+        "policyPath": "/tmp/runtime-repository-definition-YRKYBV/policy.json",
+        "policyProject": "approved",
+        "includeDebt": false,
+        "includeExperimental": false
+      },
+      "actualSchemaNullRejected": {
+        "policyPath": null,
+        "policyProject": "approved",
+        "includeDebt": false,
+        "includeExperimental": false
+      },
+      "actualSchemaUnknownRejected": {
+        "policyPath": "/tmp/runtime-repository-definition-YRKYBV/policy.json",
+        "policyProject": "approved",
+        "includeDebt": false,
+        "includeExperimental": false,
+        "unapprovedKnob": true
+      },
+      "source": {
+        "path": "skills/nova/plugins/lint/src/stage.ts",
+        "sha256": "6ba5172934f59d7b806e90ff1ce114feb8efe386a61ccedd8b86afc46b07d864"
+      },
+      "result": "passed",
+      "scope": "Exact current exported schema/source definition plus separately attributed actual narrow readers. Field effects/realtools/revisions/source-authority/generation compatibility not accepted"
+    },
+    {
+      "setting": "RT-36a194a799b00dd6",
+      "field": "policyProject",
+      "registration": "kubeclaw.lint:full",
+      "actualSchemaCompletePositive": {
+        "policyPath": "/tmp/runtime-repository-definition-YRKYBV/policy.json",
+        "policyProject": "approved",
+        "includeDebt": false,
+        "includeExperimental": false
+      },
+      "actualSchemaNullRejected": {
+        "policyPath": "/tmp/runtime-repository-definition-YRKYBV/policy.json",
+        "policyProject": null,
+        "includeDebt": false,
+        "includeExperimental": false
+      },
+      "actualSchemaUnknownRejected": {
+        "policyPath": "/tmp/runtime-repository-definition-YRKYBV/policy.json",
+        "policyProject": "approved",
+        "includeDebt": false,
+        "includeExperimental": false,
+        "unapprovedKnob": true
+      },
+      "source": {
+        "path": "skills/nova/plugins/lint/src/engine/index.ts",
+        "sha256": "b7c408dc76e87aada6047264734c766b259a24254d7a3bb59e5fb735229c5214"
+      },
+      "result": "passed",
+      "scope": "Exact current exported schema/source definition plus separately attributed actual narrow readers. Field effects/realtools/revisions/source-authority/generation compatibility not accepted"
+    },
+    {
+      "setting": "RT-0962ccb55872fa4b",
+      "field": "includeDebt",
+      "registration": "kubeclaw.lint:full",
+      "actualSchemaCompletePositive": {
+        "policyPath": "/tmp/runtime-repository-definition-YRKYBV/policy.json",
+        "policyProject": "approved",
+        "includeDebt": false,
+        "includeExperimental": false
+      },
+      "actualSchemaNullRejected": {
+        "policyPath": "/tmp/runtime-repository-definition-YRKYBV/policy.json",
+        "policyProject": "approved",
+        "includeDebt": null,
+        "includeExperimental": false
+      },
+      "actualSchemaUnknownRejected": {
+        "policyPath": "/tmp/runtime-repository-definition-YRKYBV/policy.json",
+        "policyProject": "approved",
+        "includeDebt": false,
+        "includeExperimental": false,
+        "unapprovedKnob": true
+      },
+      "source": {
+        "path": "skills/nova/plugins/lint/src/engine/report.ts",
+        "sha256": "62246dd40865be23329e9c0ba091cfb97b41fabb8e26981a52713c1006d1244b"
+      },
+      "result": "passed",
+      "scope": "Exact current exported schema/source definition plus separately attributed actual narrow readers. Field effects/realtools/revisions/source-authority/generation compatibility not accepted"
+    },
+    {
+      "setting": "RT-6bcf520e0a029976",
+      "field": "includeExperimental",
+      "registration": "kubeclaw.lint:full",
+      "actualSchemaCompletePositive": {
+        "policyPath": "/tmp/runtime-repository-definition-YRKYBV/policy.json",
+        "policyProject": "approved",
+        "includeDebt": false,
+        "includeExperimental": false
+      },
+      "actualSchemaNullRejected": {
+        "policyPath": "/tmp/runtime-repository-definition-YRKYBV/policy.json",
+        "policyProject": "approved",
+        "includeDebt": false,
+        "includeExperimental": null
+      },
+      "actualSchemaUnknownRejected": {
+        "policyPath": "/tmp/runtime-repository-definition-YRKYBV/policy.json",
+        "policyProject": "approved",
+        "includeDebt": false,
+        "includeExperimental": false,
+        "unapprovedKnob": true
+      },
+      "source": {
+        "path": "skills/nova/plugins/lint/src/engine/report.ts",
+        "sha256": "62246dd40865be23329e9c0ba091cfb97b41fabb8e26981a52713c1006d1244b"
+      },
+      "result": "passed",
+      "scope": "Exact current exported schema/source definition plus separately attributed actual narrow readers. Field effects/realtools/revisions/source-authority/generation compatibility not accepted"
+    },
+    {
+      "setting": "RT-0fb54476343394c5",
+      "field": "allowedRepositoryRoots",
+      "registration": "kubeclaw.lint:executor",
+      "actualSchemaCompletePositive": {
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-repository-definition-YRKYBV"
+        ],
+        "allowedPolicyRoots": [
+          "/tmp/runtime-repository-definition-YRKYBV"
+        ]
+      },
+      "actualSchemaNullRejected": {
+        "allowedRepositoryRoots": null,
+        "allowedPolicyRoots": [
+          "/tmp/runtime-repository-definition-YRKYBV"
+        ]
+      },
+      "actualSchemaUnknownRejected": {
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-repository-definition-YRKYBV"
+        ],
+        "allowedPolicyRoots": [
+          "/tmp/runtime-repository-definition-YRKYBV"
+        ],
+        "unapprovedKnob": true
+      },
+      "source": {
+        "path": "skills/nova/plugins/lint/src/adapter.ts",
+        "sha256": "7d525ef53fc8a187eba48e7ee15ca7f8f2df1d00a4e23823de15bae47a1b49e4"
+      },
+      "result": "passed",
+      "scope": "Exact current exported schema/source definition plus separately attributed actual narrow readers. Field effects/realtools/revisions/source-authority/generation compatibility not accepted"
+    },
+    {
+      "setting": "RT-c72d89a17baccb7b",
+      "field": "allowedRepositoryRoots[]",
+      "registration": "kubeclaw.lint:executor",
+      "actualSchemaCompletePositive": {
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-repository-definition-YRKYBV"
+        ],
+        "allowedPolicyRoots": [
+          "/tmp/runtime-repository-definition-YRKYBV"
+        ]
+      },
+      "actualSchemaNullRejected": {
+        "allowedRepositoryRoots": null,
+        "allowedPolicyRoots": [
+          "/tmp/runtime-repository-definition-YRKYBV"
+        ]
+      },
+      "actualSchemaUnknownRejected": {
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-repository-definition-YRKYBV"
+        ],
+        "allowedPolicyRoots": [
+          "/tmp/runtime-repository-definition-YRKYBV"
+        ],
+        "unapprovedKnob": true
+      },
+      "source": {
+        "path": "skills/nova/plugins/lint/src/adapter.ts",
+        "sha256": "7d525ef53fc8a187eba48e7ee15ca7f8f2df1d00a4e23823de15bae47a1b49e4"
+      },
+      "result": "passed",
+      "scope": "Exact current exported schema/source definition plus separately attributed actual narrow readers. Field effects/realtools/revisions/source-authority/generation compatibility not accepted"
+    },
+    {
+      "setting": "RT-39db4fe31eda9428",
+      "field": "allowedPolicyRoots",
+      "registration": "kubeclaw.lint:executor",
+      "actualSchemaCompletePositive": {
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-repository-definition-YRKYBV"
+        ],
+        "allowedPolicyRoots": [
+          "/tmp/runtime-repository-definition-YRKYBV"
+        ]
+      },
+      "actualSchemaNullRejected": {
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-repository-definition-YRKYBV"
+        ],
+        "allowedPolicyRoots": null
+      },
+      "actualSchemaUnknownRejected": {
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-repository-definition-YRKYBV"
+        ],
+        "allowedPolicyRoots": [
+          "/tmp/runtime-repository-definition-YRKYBV"
+        ],
+        "unapprovedKnob": true
+      },
+      "source": {
+        "path": "skills/nova/plugins/lint/src/adapter.ts",
+        "sha256": "7d525ef53fc8a187eba48e7ee15ca7f8f2df1d00a4e23823de15bae47a1b49e4"
+      },
+      "result": "passed",
+      "scope": "Exact current exported schema/source definition plus separately attributed actual narrow readers. Field effects/realtools/revisions/source-authority/generation compatibility not accepted"
+    },
+    {
+      "setting": "RT-76791de9a633c9ce",
+      "field": "allowedPolicyRoots[]",
+      "registration": "kubeclaw.lint:executor",
+      "actualSchemaCompletePositive": {
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-repository-definition-YRKYBV"
+        ],
+        "allowedPolicyRoots": [
+          "/tmp/runtime-repository-definition-YRKYBV"
+        ]
+      },
+      "actualSchemaNullRejected": {
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-repository-definition-YRKYBV"
+        ],
+        "allowedPolicyRoots": null
+      },
+      "actualSchemaUnknownRejected": {
+        "allowedRepositoryRoots": [
+          "/tmp/runtime-repository-definition-YRKYBV"
+        ],
+        "allowedPolicyRoots": [
+          "/tmp/runtime-repository-definition-YRKYBV"
+        ],
+        "unapprovedKnob": true
+      },
+      "source": {
+        "path": "skills/nova/plugins/lint/src/adapter.ts",
+        "sha256": "7d525ef53fc8a187eba48e7ee15ca7f8f2df1d00a4e23823de15bae47a1b49e4"
+      },
+      "result": "passed",
+      "scope": "Exact current exported schema/source definition plus separately attributed actual narrow readers. Field effects/realtools/revisions/source-authority/generation compatibility not accepted"
+    },
+    {
+      "setting": "RT-89d7ff67ced4d9b4",
+      "field": "repositoryRoot",
+      "registration": "kubeclaw.repository-adapter:repository",
+      "actualSchemaCompletePositive": {
+        "repositoryRoot": "/tmp/runtime-repository-definition-YRKYBV",
+        "maxFileBytes": 8,
+        "maxChangedPaths": 2,
+        "expectedHead": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "actualSchemaNullRejected": {
+        "repositoryRoot": null,
+        "maxFileBytes": 8,
+        "maxChangedPaths": 2,
+        "expectedHead": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "actualSchemaUnknownRejected": {
+        "repositoryRoot": "/tmp/runtime-repository-definition-YRKYBV",
+        "maxFileBytes": 8,
+        "maxChangedPaths": 2,
+        "expectedHead": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "unapprovedKnob": true
+      },
+      "source": {
+        "path": "skills/nova/plugins/repository-adapter/src/adapter.ts",
+        "sha256": "657ec9c38069eead03aa531e5d5b60041c8fe34b643e2bab838eb0a80e12afcd"
+      },
+      "result": "passed",
+      "scope": "Exact current exported schema/source definition plus separately attributed actual narrow readers. Field effects/realtools/revisions/source-authority/generation compatibility not accepted"
+    },
+    {
+      "setting": "RT-1e54fe8d9c58d3f7",
+      "field": "maxFileBytes",
+      "registration": "kubeclaw.repository-adapter:repository",
+      "actualSchemaCompletePositive": {
+        "repositoryRoot": "/tmp/runtime-repository-definition-YRKYBV",
+        "maxFileBytes": 8,
+        "maxChangedPaths": 2,
+        "expectedHead": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "actualSchemaNullRejected": {
+        "repositoryRoot": "/tmp/runtime-repository-definition-YRKYBV",
+        "maxFileBytes": null,
+        "maxChangedPaths": 2,
+        "expectedHead": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "actualSchemaUnknownRejected": {
+        "repositoryRoot": "/tmp/runtime-repository-definition-YRKYBV",
+        "maxFileBytes": 8,
+        "maxChangedPaths": 2,
+        "expectedHead": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "unapprovedKnob": true
+      },
+      "source": {
+        "path": "skills/nova/plugins/repository-adapter/src/repository-file.ts",
+        "sha256": "a6d8442958b8d90132a23d69449058c6d146aa170ad5f63a11433e42fb73277e"
+      },
+      "result": "passed",
+      "scope": "Exact current exported schema/source definition plus separately attributed actual narrow readers. Field effects/realtools/revisions/source-authority/generation compatibility not accepted"
+    },
+    {
+      "setting": "RT-9e5898da0a8f1aa3",
+      "field": "maxChangedPaths",
+      "registration": "kubeclaw.repository-adapter:repository",
+      "actualSchemaCompletePositive": {
+        "repositoryRoot": "/tmp/runtime-repository-definition-YRKYBV",
+        "maxFileBytes": 8,
+        "maxChangedPaths": 2,
+        "expectedHead": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "actualSchemaNullRejected": {
+        "repositoryRoot": "/tmp/runtime-repository-definition-YRKYBV",
+        "maxFileBytes": 8,
+        "maxChangedPaths": null,
+        "expectedHead": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "actualSchemaUnknownRejected": {
+        "repositoryRoot": "/tmp/runtime-repository-definition-YRKYBV",
+        "maxFileBytes": 8,
+        "maxChangedPaths": 2,
+        "expectedHead": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "unapprovedKnob": true
+      },
+      "source": {
+        "path": "skills/nova/plugins/repository-adapter/src/revision-reader.ts",
+        "sha256": "35aadab83485ed1dcf370ce2136a67d892b6026ba594d0d12d8c739dc3f0c71f"
+      },
+      "result": "passed",
+      "scope": "Exact current exported schema/source definition plus separately attributed actual narrow readers. Field effects/realtools/revisions/source-authority/generation compatibility not accepted"
+    },
+    {
+      "setting": "RT-5537565840bd0714",
+      "field": "expectedHead",
+      "registration": "kubeclaw.repository-adapter:repository",
+      "actualSchemaCompletePositive": {
+        "repositoryRoot": "/tmp/runtime-repository-definition-YRKYBV",
+        "maxFileBytes": 8,
+        "maxChangedPaths": 2,
+        "expectedHead": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "actualSchemaNullRejected": {
+        "repositoryRoot": "/tmp/runtime-repository-definition-YRKYBV",
+        "maxFileBytes": 8,
+        "maxChangedPaths": 2,
+        "expectedHead": null
+      },
+      "actualSchemaUnknownRejected": {
+        "repositoryRoot": "/tmp/runtime-repository-definition-YRKYBV",
+        "maxFileBytes": 8,
+        "maxChangedPaths": 2,
+        "expectedHead": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "unapprovedKnob": true
+      },
+      "source": {
+        "path": "skills/nova/plugins/repository-adapter/src/revision-reader.ts",
+        "sha256": "35aadab83485ed1dcf370ce2136a67d892b6026ba594d0d12d8c739dc3f0c71f"
+      },
+      "result": "passed",
+      "scope": "Exact current exported schema/source definition plus separately attributed actual narrow readers. Field effects/realtools/revisions/source-authority/generation compatibility not accepted"
+    }
+  ],
+  "passed": 16,
+  "failed": 0,
+  "scope": "Current local source/owning schema/exported pure parser/actual safe repository localfile reader only. NoGitcommands, linttool spawn, realregistration activation, stage/effect/API/host or targetimplementation acceptance"
+}

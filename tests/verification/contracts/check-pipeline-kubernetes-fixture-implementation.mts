@@ -90,7 +90,7 @@ try {
     controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
     allowedNamespacePrefixes: ['test'], allowedRegistryPrefixes: ['registry.local/app'], allowedSecretReferences: [],
     allowedStorageClasses: ['example.com/fast'], allowDefaultStorageClass: false,
-    maximumManifestBytes: 1024 * 1024, maximumResources: 64,
+    maximumSecretReferenceEntries: 32, maximumManifestBytes: 1024 * 1024, maximumResources: 64,
     maximumPersistentVolumeClaimBytes: 10 * 1024 ** 3, maximumPersistentVolumeTotalBytes: 15 * 1024 ** 3,
     maximumRetentionSeconds: 3600, maximumExecutionMs: 120_000 }), /KUBERNETES_FIXTURE_STORAGE_CLASSES_INVALID/u);
   const capability = new KubernetesFixtureCapabilityInvoker({ shortCommandTimeoutMs: 15000, commandOutputManifestMultiplier: 2, diagnosticCodeUnits: 4096, manifest: { maximumNodes: 100000, maximumDepth: 64, maximumAliases: 1000, maximumFlattenVisits: 100000, maximumFlattenPending: 100000 }, runnerSubject: 'kubeclaw' + '/agent-buster', credentialReaderSubject: 'kubeclaw' + '/agent-nova', pollIntervalMs: 1000,  processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, workspaceRoot: temporary, kubectlExecutable: executable,
@@ -98,7 +98,7 @@ try {
     allowedNamespacePrefixes: ['test'], allowedRegistryPrefixes: ['registry.local/app'], allowedSecretReferences: [],
     allowedStorageClasses: ['fast'], allowDefaultStorageClass: false,
     maximumPersistentVolumeClaimBytes: 10 * 1024 ** 3, maximumPersistentVolumeTotalBytes: 15 * 1024 ** 3,
-    maximumManifestBytes: 1024 * 1024,
+    maximumSecretReferenceEntries: 32, maximumManifestBytes: 1024 * 1024,
     maximumResources: 64, maximumRetentionSeconds: 3600, maximumExecutionMs: 120_000 });
   await assert.rejects(() => capability.invoke('kubernetes.fixture', { operation: 'prepare',
     resource: { type: 'kubernetes.fixture', canonicalId: 'invalid' }, payload: {} } as any,
@@ -134,7 +134,7 @@ try {
     kubectlExecutable: executable, controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai',
     leaseApiVersion: 'v1alpha1', allowedNamespacePrefixes: ['test'], allowedRegistryPrefixes: ['registry.local/app'],
     allowedSecretReferences: [], allowedStorageClasses: ['fast'], allowDefaultStorageClass: false,
-    maximumManifestBytes: 1024 * 1024, maximumResources: 64,
+    maximumSecretReferenceEntries: 32, maximumManifestBytes: 1024 * 1024, maximumResources: 64,
     maximumPersistentVolumeClaimBytes: 10 * 1024 ** 3, maximumPersistentVolumeTotalBytes: 15 * 1024 ** 3,
     maximumRetentionSeconds: 3600, maximumExecutionMs: 2_000, pollIntervalMs: 50,
     async execute(_command, args, options) {
@@ -187,7 +187,7 @@ try {
     kubectlExecutable: executable, controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai',
     leaseApiVersion: 'v1alpha1', allowedNamespacePrefixes: ['test'], allowedRegistryPrefixes: ['registry.local/app'],
     allowedSecretReferences: [], allowedStorageClasses: ['fast'], allowDefaultStorageClass: false,
-    maximumManifestBytes: 1024 * 1024, maximumResources: 64,
+    maximumSecretReferenceEntries: 32, maximumManifestBytes: 1024 * 1024, maximumResources: 64,
     maximumPersistentVolumeClaimBytes: 10 * 1024 ** 3, maximumPersistentVolumeTotalBytes: 15 * 1024 ** 3,
     maximumRetentionSeconds: 3600, maximumExecutionMs: 120_000,
     execute: async () => ({ stdout: 'no\n', stderr: '' }) });

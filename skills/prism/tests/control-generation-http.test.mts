@@ -1,5 +1,6 @@
-import {writeControlPolicy} from './fixtures/control-policy.mts';
-import test from 'node:test';
+import {publishedControlConfig} from './fixtures/published-config.mjs';
+import {pathToFileURL} from 'node:url';
+import test, {type TestContext} from 'node:test';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {mkdtemp, rm, readFile} from 'node:fs/promises';
@@ -10,7 +11,6 @@ import {PGlite} from '@electric-sql/pglite';
 import {vector} from '@electric-sql/pglite-pgvector';
 import fixture from '../../../contracts/prism/v1/fixtures/minimal-web.json' with {type:'json'};
 import {migrate} from '../storage/index.ts';
-import {createControlServer} from '../server/control-server.ts';
 import {agentPrompt} from '../server/agent-prompt.mjs';
 import register from '../openclaw-plugin/index.mjs';
 
@@ -25,13 +25,25 @@ async function listen(server:Server) {
 async function close(server:Server) {
   await new Promise<void>((resolve,reject)=>{server.close(error=>error?reject(error):resolve());server.closeAllConnections();});
 }
-async function setup(policy?: {identity: string; studioPublicUrl: string}) {
+async function setup(t: TestContext, policy?: {identity: string; studioPublicUrl: string}) {
   const selectedIdentity = policy?.identity ?? identity;
   const selectedSubject = `user-${createHash('sha256').update(selectedIdentity).digest('hex').slice(0,24)}`;
   const root=await mkdtemp(join(tmpdir(),'prism-original-http-'));
-  const environment={...writeControlPolicy(root,{artifactRoot:join(root,'artifacts'),pipelinePreferenceSubject:selectedSubject,...(policy ? {studioPublicUrl:policy.studioPublicUrl} : {})}),PRISM_SESSION_SECRET:'local-session-secret',PRISM_INGRESS_SECRET:'local-ingress-secret',PRISM_INGESTION_SECRET:'local-ingestion-secret',WORKER_TRUST_SPIFFE_ENABLED:'true',PRISM_TRUSTED_NOVA_SPIFFE_ID:'spiffe://kubeclaw.test/nova',PRISM_TRUSTED_WORKER_SPIFFE_ID:'spiffe://kubeclaw.test/worker',PRISM_CONTROL_SPIFFE_ID:'spiffe://kubeclaw.test/control',PRISM_TRUSTED_AGENT_SPIFFE_ID:peer};
+  const published=await publishedControlConfig(t,{artifactRoot:join(root,'artifacts'),pipelinePreferenceSubject:selectedSubject,...(policy ? {studioPublicUrl:policy.studioPublicUrl} : {})});
+  // Explicit fixture image identity for import-time producer composition only;
+  // these HTTP cases do not claim native engine/image execution acceptance.
+  const priorIdentity=process.env.PRISM_ENGINE_CONTENT_DIGEST;
+  let createControlServer;
+  try {
+    process.env.PRISM_ENGINE_CONTENT_DIGEST='sha256:'+'a'.repeat(64);
+    ({createControlServer}=await import(pathToFileURL(join(published.root,'role/skills/packages/prism-engine/server/control-server.ts')).href));
+  } finally {
+    if(priorIdentity===undefined) delete process.env.PRISM_ENGINE_CONTENT_DIGEST;
+    else process.env.PRISM_ENGINE_CONTENT_DIGEST=priorIdentity;
+  }
+  const environment={PRISM_SESSION_SECRET:'local-session-secret',PRISM_INGRESS_SECRET:'local-ingress-secret',PRISM_INGESTION_SECRET:'local-ingestion-secret',WORKER_TRUST_SPIFFE_ENABLED:'true',PRISM_TRUSTED_NOVA_SPIFFE_ID:'spiffe://kubeclaw.test/nova',PRISM_TRUSTED_WORKER_SPIFFE_ID:'spiffe://kubeclaw.test/worker',PRISM_CONTROL_SPIFFE_ID:'spiffe://kubeclaw.test/control',PRISM_TRUSTED_AGENT_SPIFFE_ID:peer};
   let db=new PGlite(join(root,'db'),{extensions:{vector}});await migrate(db);
-  let server=await createControlServer(db,environment);let url=await listen(server);
+  let server=await createControlServer(db,published.capture,environment);let url=await listen(server);
   // This forwards real HTTP bytes to the original handler at its documented
   // loopback/proxy boundary. It is NOT an Envoy, TLS, CNI or SPIFFE issuance test.
   const relay=createServer(async(request,response)=>{
@@ -43,7 +55,7 @@ async function setup(policy?: {identity: string; studioPublicUrl: string}) {
   });
   const relayUrl=await listen(relay);
   const tools=new Map<string,{execute:(id:string,input:unknown,context:unknown)=>Promise<any>}>();
-  register({registerTool:(tool:any)=>tools.set(tool.name,tool)});
+  register({pluginConfig:{controlUrl:relayUrl},registerTool:(tool:any)=>tools.set(tool.name,tool)});
   async function api(path:string,body?:unknown,extra:Record<string,string>={},method=body===undefined?'GET':'POST') {
     const result=await fetch(new URL(path,url),{method,headers:{'content-type':'application/json',...extra},...(body===undefined?{}:{body:JSON.stringify(body)})});
     return {status:result.status,value:await result.json() as any,headers:result.headers};
@@ -63,12 +75,12 @@ async function setup(policy?: {identity: string; studioPublicUrl: string}) {
   }
   async function deliver(job:any,label:string) {return tools.get('prism_create_design_set')!.execute('actual-tool-invocation',{jobId:job.id,fence:job.fence,generationId:job.id,projectId:job.request.projectId,designs:designs(job.request.projectId,label)},{config:{controlUrl:relayUrl}});}
   return {api,session,dispatch,claim,deliver,root,designs,db:()=>db,
-    restart:async()=>{await close(server);await db.close();db=new PGlite(join(root,'db'),{extensions:{vector}});await db.waitReady;server=await createControlServer(db,environment);url=await listen(server);},
+    restart:async()=>{await close(server);await db.close();db=new PGlite(join(root,'db'),{extensions:{vector}});await db.waitReady;server=await createControlServer(db,published.capture,environment);url=await listen(server);},
     close:async()=>{await close(relay);await close(server);await db.close();await rm(root,{recursive:true,force:true});}};
 }
 
-test('PATH-T02-001 original HTTP event survives database/service restart and a fresh session into exact agent input and tool result',async()=>{
-  const context=await setup();try {
+test('PATH-T02-001 original HTTP event survives database/service restart and a fresh session into exact agent input and tool result',async t=>{
+  const context=await setup(t);try {
     const first=await context.session();
     assert.equal((await context.api('/v1/projects',{externalId:'origin',name:'Origin'},first.headers)).status,201);
     const event={schema:'prism.preference-event.v1',eventId:'persisted-personal-event',userId:first.subject,projectId:'origin',action:'liked',traits:['dense'],context:{domain:'tools'},source:'explicit',learningScope:'personal',occurredAt:new Date().toISOString()};
@@ -95,8 +107,8 @@ test('PATH-T02-001 original HTTP event survives database/service restart and a f
   }finally{await context.close();}
 });
 
-test('PATH-T02-002 diagnostic: original stale tool callback makes no successor mutation, but running predecessor still blocks successor claim',async()=>{
-  const context=await setup();try {
+test('PATH-T02-002 diagnostic: original stale tool callback makes no successor mutation, but running predecessor still blocks successor claim',async t=>{
+  const context=await setup(t);try {
     await context.dispatch('overlap',1);const first=await context.claim();assert.ok(first.fence);
     const second=await context.dispatch('overlap',2);
     assert.equal(await context.claim(),null,'real same-session admission prevents a fabricated overlapping claim');
@@ -108,9 +120,9 @@ test('PATH-T02-002 diagnostic: original stale tool callback makes no successor m
   }finally{await context.close();}
 });
 
-for (const factor of [1, 2]) test(`CC3 real Control service profile ${factor} selects history, artifact root and Studio URL`, async () => {
+for (const factor of [1, 2]) test(`CC3 real Control service profile ${factor} selects history, artifact root and Studio URL`, async t => {
   const studioPublicUrl = `https://studio-${factor}.example.test/design`;
-  const context = await setup({identity: `operator-${factor}@example.invalid`, studioPublicUrl});
+  const context = await setup(t, {identity: `operator-${factor}@example.invalid`, studioPublicUrl});
   try {
     const actor = await context.session();
     assert.equal((await context.api('/v1/projects', {externalId:'origin',name:'Origin'}, actor.headers)).status, 201);

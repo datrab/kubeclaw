@@ -1,0 +1,264 @@
+{
+  "status": "author definition only; independent review required",
+  "contracts": [
+    {
+      "id": "task-input",
+      "proposedScopes": [
+        "T"
+      ],
+      "semanticReason": "Authenticated workflow, suite, plan, request, application/expected evidence intent is not an operator CONFIG setting. Capture exact task bytes/digest and provenance with its R graph or J plan/order.",
+      "firstAcceptanceBoundary": "original graph/plan/order acceptance before first source or effect",
+      "stableBounds": "original approved scope, source approval, provider contracts and grants; no B rewriting task intent",
+      "units": [
+        "project",
+        "free-graph",
+        "prism-order",
+        "buster-plan"
+      ],
+      "patternJustification": "These members share this activation/retention boundary, not necessarily field type, numeric range, authority class or behavioral oracle. Per-member exact source/reader/validation/cases remain mandatory. No grouped EFFECT/VAL waiver follows."
+    },
+    {
+      "id": "protocol-software",
+      "proposedScopes": [
+        "V"
+      ],
+      "semanticReason": "Actual schema/codec/software/implemented capability vocabulary or installed artifact version; cannot be tuned as numeric business policy.",
+      "firstAcceptanceBoundary": "coordinated complete supported generation/schema/package admission",
+      "stableBounds": "legacy codec/package/config closure stays A; supported package ABI not widened by a filename",
+      "units": [
+        "all"
+      ],
+      "patternJustification": "These members share this activation/retention boundary, not necessarily field type, numeric range, authority class or behavioral oracle. Per-member exact source/reader/validation/cases remain mandatory. No grouped EFFECT/VAL waiver follows."
+    },
+    {
+      "id": "generated-authority-ref",
+      "proposedScopes": [
+        "G"
+      ],
+      "semanticReason": "Output projection or derived source/image/role/endpoint/identity reference is not a second editable author. It captures genuine original supplying S/H/R or V authority.",
+      "firstAcceptanceBoundary": "materialize/package/load then original foundation/J acceptance",
+      "stableBounds": "original physical root/writer/retention/grant/code/image/source authority and byte identity; no current PVC or ambient ENV replacing A",
+      "units": [
+        "all"
+      ],
+      "patternJustification": "These members share this activation/retention boundary, not necessarily field type, numeric range, authority class or behavioral oracle. Per-member exact source/reader/validation/cases remain mandatory. No grouped EFFECT/VAL waiver follows."
+    },
+    {
+      "id": "dormant-unused",
+      "proposedScopes": [
+        "X"
+      ],
+      "semanticReason": "Existing actual registration accepts an unused field, closed empty config or library-only branch; no productive tuning/effect reader is invented.",
+      "firstAcceptanceBoundary": "reject unsupported productive activation; preserve historical public/task/schema compatibility separately",
+      "stableBounds": "real productive caller must be evidenced before any future M applicability; original cases remain explicit",
+      "units": [
+        "all"
+      ],
+      "patternJustification": "These members share this activation/retention boundary, not necessarily field type, numeric range, authority class or behavioral oracle. Per-member exact source/reader/validation/cases remain mandatory. No grouped EFFECT/VAL waiver follows."
+    },
+    {
+      "id": "runtime-adapter-foundation",
+      "proposedScopes": [
+        "R",
+        "S",
+        "H"
+      ],
+      "semanticReason": "Actual AdapterStarter once-per-run registry/instance cache retains transport/store/credential/grant/dependency profiles. New module cannot mutate the same activated instance or move its physical authority.",
+      "firstAcceptanceBoundary": "original run discovery and foundation admission before adapters.start/dependency I/O",
+      "stableBounds": "S endpoints/global queues/store service; H roots/credentials/trusted writers; R provider/grants/total budgets/replay/retention captured once",
+      "units": [
+        "project",
+        "free-graph"
+      ],
+      "patternJustification": "These members share this activation/retention boundary, not necessarily field type, numeric range, authority class or behavioral oracle. Per-member exact source/reader/validation/cases remain mandatory. No grouped EFFECT/VAL waiver follows."
+    },
+    {
+      "id": "runtime-target-invocation",
+      "proposedScopes": [
+        "M"
+      ],
+      "semanticReason": "Specific runtime agent/model/thinking/prompt selection may be a new unstarted module view passed outside model task payload; current cached target map is not hot-mutated.",
+      "firstAcceptanceBoundary": "whole project group or standalone order closure durably accepted before first dispatch",
+      "stableBounds": "unchanged R allowed agents/roles/grants/budgets; S endpoint/controller/session/collector transport; H actual installed runtime/model/tokenizer/output/secret/CLI support",
+      "units": [
+        "project",
+        "free-graph",
+        "standalone-review"
+      ],
+      "patternJustification": "These members share this activation/retention boundary, not necessarily field type, numeric range, authority class or behavioral oracle. Per-member exact source/reader/validation/cases remain mandatory. No grouped EFFECT/VAL waiver follows."
+    },
+    {
+      "id": "review-quality-module",
+      "proposedScopes": [
+        "M"
+      ],
+      "semanticReason": "Actual typed quality/prompt/evidence/processing profile is frozen once for the whole review dependency within a project module, or standalone audit/revalidation order; all source expansion/reduction/rechecks reuse A.",
+      "firstAcceptanceBoundary": "before module first Git/artifact/model/effect and before observer notification",
+      "stableBounds": "unchanged R source/task/approval/grants/total budget; S/H native target/tokenizer/output reservation and store limits; no per-expansion reload",
+      "units": [
+        "project",
+        "free-graph",
+        "standalone-review"
+      ],
+      "patternJustification": "These members share this activation/retention boundary, not necessarily field type, numeric range, authority class or behavioral oracle. Per-member exact source/reader/validation/cases remain mandatory. No grouped EFFECT/VAL waiver follows."
+    },
+    {
+      "id": "run-compiler-foundation",
+      "proposedScopes": [
+        "R"
+      ],
+      "semanticReason": "Actual compiler writes these repair/retry/accounting/publication constraints into original authenticated graph; later module publication cannot replace the graph or replenish repairs.",
+      "firstAcceptanceBoundary": "compile and persist original graph/membership/run foundation before dispatch",
+      "stableBounds": "maxConcurrency supported project publication domain exactly[1]; task explicit graph concurrency separate; future M deadline may only tighten original graph ceiling and absolute grant deadline",
+      "units": [
+        "project",
+        "free-graph"
+      ],
+      "patternJustification": "These members share this activation/retention boundary, not necessarily field type, numeric range, authority class or behavioral oracle. Per-member exact source/reader/validation/cases remain mandatory. No grouped EFFECT/VAL waiver follows."
+    },
+    {
+      "id": "run-observer-delivery",
+      "proposedScopes": [
+        "R"
+      ],
+      "semanticReason": "Observer subscription/failure/backoff/replay/store policy composes original ObserverRuntime and drainer, covering skipped/start/effect/terminal/recovery delivery; no per-event current lookup.",
+      "firstAcceptanceBoundary": "original foundation/adapters/observer composition before any view/delivery",
+      "stableBounds": "original subscriber registration/package/profile/failure outcome/counters/writer/retention; new module view cannot change R observer delivery policy",
+      "units": [
+        "project",
+        "free-graph"
+      ],
+      "patternJustification": "These members share this activation/retention boundary, not necessarily field type, numeric range, authority class or behavioral oracle. Per-member exact source/reader/validation/cases remain mandatory. No grouped EFFECT/VAL waiver follows."
+    },
+    {
+      "id": "native-provider-ceiling",
+      "proposedScopes": [
+        "S",
+        "H",
+        "R"
+      ],
+      "semanticReason": "Actual service options and production option mappers construct capability invokers per prepared plan; constructor frequency does not make endpoints, executables, global capability ceiling or authority M. Owner policy is service ceiling, genuine native authority H, admitted plan/grants R/J.",
+      "firstAcceptanceBoundary": "effect-free full Buster role/provider/profile validation before listener and any plan invoker/native effect",
+      "stableBounds": "actual service/native limits, permitted origins/paths/catalog/browser/network, installed tools/provider support, R total budgets; task/M requested quota may tighten but never exceed ceiling",
+      "units": [
+        "buster-plan",
+        "preparation-cleanup"
+      ],
+      "patternJustification": "These members share this activation/retention boundary, not necessarily field type, numeric range, authority class or behavioral oracle. Per-member exact source/reader/validation/cases remain mandatory. No grouped EFFECT/VAL waiver follows."
+    },
+    {
+      "id": "provider-per-unit-policy",
+      "proposedScopes": [
+        "M",
+        "J"
+      ],
+      "semanticReason": "Provider rule/verdict/preset/evidence/processing/request quota is an eligible owned per-unit policy captured with the complete accepted Buster plan or project test module; task fixture intent remains T.",
+      "firstAcceptanceBoundary": "admitted complete plan/module closure before first provider/source/login/setup effect",
+      "stableBounds": "unchanged S native provider ceiling/endpoint/executable/runtime; H source/credential/grant; R spent budget/approval/claim/exposure deadline; no late per-finding lookup",
+      "units": [
+        "project",
+        "free-graph",
+        "buster-plan"
+      ],
+      "patternJustification": "These members share this activation/retention boundary, not necessarily field type, numeric range, authority class or behavioral oracle. Per-member exact source/reader/validation/cases remain mandatory. No grouped EFFECT/VAL waiver follows."
+    },
+    {
+      "id": "standalone-operation",
+      "proposedScopes": [
+        "J"
+      ],
+      "semanticReason": "Actual standalone Prism operation or launcher job is an immutable order/attempt closure. Eligible parent M may select policy only before original acceptance; all attempts/prompt/result/tool copies derive A.",
+      "firstAcceptanceBoundary": "Control DB round/claim/attempt or accepted WorkerEnvelope before external launch",
+      "stableBounds": "original source intent, claim/deadline/limits, H issuer/peer/native resources and S listener/DB/controller; remote process close is not authenticated cancellation/completion",
+      "units": [
+        "prism-order"
+      ],
+      "patternJustification": "These members share this activation/retention boundary, not necessarily field type, numeric range, authority class or behavioral oracle. Per-member exact source/reader/validation/cases remain mandatory. No grouped EFFECT/VAL waiver follows."
+    },
+    {
+      "id": "service-global-policy",
+      "proposedScopes": [
+        "S"
+      ],
+      "semanticReason": "Actual global service constructor/listener/pool/admission/quarantine/parser/query/supervisor/deployment operator policy belongs to physical service instance, not arbitrary M.",
+      "firstAcceptanceBoundary": "full selected service/role admission before startup I/O",
+      "stableBounds": "existing physical retained records/ownership/queues/PVC/writer/retention accounted under H/R; rollout/drain required, no B counter/root reset",
+      "units": [
+        "all"
+      ],
+      "patternJustification": "These members share this activation/retention boundary, not necessarily field type, numeric range, authority class or behavioral oracle. Per-member exact source/reader/validation/cases remain mandatory. No grouped EFFECT/VAL waiver follows."
+    },
+    {
+      "id": "host-authority",
+      "proposedScopes": [
+        "H",
+        "S",
+        "R"
+      ],
+      "semanticReason": "Native/host/root/issuer/principal/cgroup/UID/trust/key/placement/physical-store authority is authentic H input composed into S and captured by original R/J foundation, not a per-module policy string.",
+      "firstAcceptanceBoundary": "verify authentic installed authority/readback before any service/module effect",
+      "stableBounds": "original native pool policy/root/writer/PVC/grant/retention and consumed R accounting stable through B/loss/retry; missing attestation blocks activation",
+      "units": [
+        "all"
+      ],
+      "patternJustification": "These members share this activation/retention boundary, not necessarily field type, numeric range, authority class or behavioral oracle. Per-member exact source/reader/validation/cases remain mandatory. No grouped EFFECT/VAL waiver follows."
+    },
+    {
+      "id": "secret-revision",
+      "proposedScopes": [
+        "H",
+        "R"
+      ],
+      "semanticReason": "Secret reference names genuine external owner/key/revision/access capability, never bytes or an invented digest. Service may use S transport but started R/J/M binds the exact capable backend reference.",
+      "firstAcceptanceBoundary": "before confidential secret resolution/first effect with original authority guard",
+      "stableBounds": "backend must actually support retained revision/access; latest-only backend is blocked for immutable historical execution, not a fabricated pin; no secret in snapshot/explain",
+      "units": [
+        "all"
+      ],
+      "patternJustification": "These members share this activation/retention boundary, not necessarily field type, numeric range, authority class or behavioral oracle. Per-member exact source/reader/validation/cases remain mandatory. No grouped EFFECT/VAL waiver follows."
+    },
+    {
+      "id": "deployment-generation",
+      "proposedScopes": [
+        "S"
+      ],
+      "semanticReason": "Chart/render/image mount/service/pod/CI/release selected generation is a physical published service/deployment contract, not a request-local module policy.",
+      "firstAcceptanceBoundary": "real materialization/buildcontext/package/render/mount/load before service admission",
+      "stableBounds": "S resource/exposure/endpoints; H PVC/node/issuer/secret authority; R/J started work and retained state remain original despite pod/config publish",
+      "units": [
+        "all"
+      ],
+      "patternJustification": "These members share this activation/retention boundary, not necessarily field type, numeric range, authority class or behavioral oracle. Per-member exact source/reader/validation/cases remain mandatory. No grouped EFFECT/VAL waiver follows."
+    },
+    {
+      "id": "eligible-operation-tuning",
+      "proposedScopes": [
+        "M",
+        "J"
+      ],
+      "semanticReason": "Exact operation-level timeout/result/report/sample/input/render/prompt policy may select a complete B for a genuinely unstarted admitted operation/module. Current startup capture is documented separately.",
+      "firstAcceptanceBoundary": "whole module/plan/order original closure before first dispatch/effect",
+      "stableBounds": "unchanged S global pool/queue/service/native ceiling; H root/issuer/grant/runtime; R total budget/membership/claim/deadline/retention; existing complete A applies through repair and cleanup",
+      "units": [
+        "project",
+        "free-graph",
+        "prism-order",
+        "buster-plan"
+      ],
+      "patternJustification": "These members share this activation/retention boundary, not necessarily field type, numeric range, authority class or behavioral oracle. Per-member exact source/reader/validation/cases remain mandatory. No grouped EFFECT/VAL waiver follows."
+    },
+    {
+      "id": "unresolved-actual-consumer",
+      "proposedScopes": [
+        "U"
+      ],
+      "semanticReason": "Prior sources do not establish one concrete supported activation contract; row gets a finite named source/reader task instead of permission to tune.",
+      "firstAcceptanceBoundary": "NO target activation until exact source-specific contract resolved and independently reviewed",
+      "stableBounds": "preserve all original task/authority/lifecycle/case obligations; do not infer M from class/owner/text",
+      "units": [
+        "all"
+      ],
+      "patternJustification": "These members share this activation/retention boundary, not necessarily field type, numeric range, authority class or behavioral oracle. Per-member exact source/reader/validation/cases remain mandatory. No grouped EFFECT/VAL waiver follows."
+    }
+  ]
+}

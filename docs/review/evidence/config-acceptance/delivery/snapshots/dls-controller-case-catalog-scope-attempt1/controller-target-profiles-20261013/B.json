@@ -1,0 +1,87 @@
+{
+  "schemaVersion": "dlv-controller-policy.v1",
+  "settings": {
+    "BUSTER_ALLOWED_NAMESPACE_PREFIXES": [
+      "dlv-b"
+    ],
+    "BUSTER_DEFAULT_TTL_SECONDS": 3600,
+    "BUSTER_MAX_TTL_SECONDS": 43200,
+    "BUSTER_CONTROLLER_POLL_MS": 6000,
+    "BUSTER_ALLOWED_ACCESS_JSON": [
+      {
+        "subject": "dlv-controller-b/agent-buster",
+        "modes": [
+          "tester",
+          "deployer"
+        ]
+      }
+    ],
+    "BUSTER_ALLOWED_SOURCE_SECRETS": [
+      "dlv-source-b"
+    ],
+    "BUSTER_PRODUCT_ENABLED": true,
+    "httpClientTimeoutSeconds": 120,
+    "runtimeSecurityRefreshSeconds": 10,
+    "runtimeSecurityFutureSkewSeconds": 2,
+    "runtimeSecurityMaximumFindings": 2048,
+    "runtimeSecurityMaximumSerializedBytes": 131072,
+    "readyReadHeaderTimeoutSeconds": 10,
+    "readyReadTimeoutSeconds": 40,
+    "readyWriteTimeoutSeconds": 40,
+    "readyIdleTimeoutSeconds": 60,
+    "readyMaxHeaderBytes": 40960,
+    "readyHandlerTimeoutSeconds": 30,
+    "readyMaximumBodyBytes": 8192,
+    "productHandlerTimeoutSeconds": 30,
+    "productMaximumBodyBytes": 8192,
+    "defaultDemoRetentionSeconds": 1209600
+  },
+  "readonlyBindings": {
+    "KUBERNETES_SERVICE_HOST": "127.0.0.1",
+    "KUBERNETES_SERVICE_PORT": "18444",
+    "BUSTER_LEASE_API_GROUP": "kubeclaw.forgestack.ai",
+    "BUSTER_LEASE_API_VERSION": "v1alpha1",
+    "KUBECLAW_NAMESPACE": "dlv-controller-b",
+    "BUSTER_CONTROLLER_SERVICE_ACCOUNT": "agent-buster-namespace-controller",
+    "BUSTER_SECRET_ROLE_NAME": "agent-buster-controller-secrets",
+    "BUSTER_DEPLOYER_ROLE_NAME": "agent-buster-namespace-deployer",
+    "BUSTER_TESTER_ROLE_NAME": "agent-buster-namespace-tester",
+    "BUSTER_READY_LISTEN": ":8443",
+    "BUSTER_READY_AUDIENCE": "dlv-ready-b",
+    "BUSTER_READY_PRODUCER": "system:serviceaccount:dlv-controller-b:agent-buster",
+    "BUSTER_READY_TLS_CERT": {
+      "path": "/var/run/kubeclaw/ready-server/tls.crt",
+      "providerRef": "dlv-ready-tls-b",
+      "kind": "publiccertificate"
+    },
+    "BUSTER_READY_TLS_KEY": {
+      "path": "/var/run/kubeclaw/ready-server/tls.key",
+      "providerRef": "dlv-ready-tls-b",
+      "kind": "privatekey-reference-no-bytes"
+    },
+    "BUSTER_PRODUCT_AUDIENCE": "dlv-product-b",
+    "BUSTER_PRODUCT_PRODUCER": "system:serviceaccount:dlv-controller-b:prism-control",
+    "BUSTER_PRODUCT_ISSUER": "dlv-human-authority-b",
+    "BUSTER_PRODUCT_VERIFY_KEY": {
+      "publicTrustRef": "dlv-ed25519-issuer-b",
+      "decodedBytes": 32,
+      "encoding": "strict paddedbase64 decoded once configures trustedpublic key; privatekey never artifact"
+    },
+    "BUSTER_PRODUCT_ACTORS_JSON": [
+      "dlv-operator-b"
+    ],
+    "maximumDemoRetentionSeconds": 9223372036
+  },
+  "runtimeBinding": {
+    "architecture": "linux/amd64 only actual currentDockerGOARCH hardcoded; B is samearch differentpolicy/provider, NOT controllerarm64positive",
+    "APIOrigin": "https://127.0.0.1:18444",
+    "credentialRoot": "/var/run/secrets/kubernetes.io/serviceaccount",
+    "providerRef": "dlv-controller-api-b",
+    "CA": "same selected APIorigin CAroots loaded once clientcreation; tokenfile rereadperAPIrequest, namespace captured once; no Ops/Buster/MCP interchangeablecredential",
+    "grants": "actual captured controllerPodSA API/CRD/Role/TokenReview/Secret-copy provider+scope identity before approved future nativeeffects, no stringname inference",
+    "selectedImageAndSource": "authentic exact controllerGo binary/OCI/context/StdGo version/module/amd64ABI receipt beforelaunch and beforebusinessimports/firstinput; sourceDockerbaseGo1.22 pin is not installedbinaryproof",
+    "redirects": "targetfailclosednoHTTPredirect across even same-looking API bindings; currenthttp.Client default redirects are counterexample, C3 CheckRedirect guard beforeauthorityrebind"
+  },
+  "fixture": "future scoped same real nativeGo controller build and actual current typed protocol endpoints against isolated HTTPS/API/TokenReview/CRD fixture (positive sourceprotocol only, NOT deployedKubernetes/CNI/RBACacceptance); native ReadyTLSlistener+actual Ed25519 signer/controllerhandler+realnativelease/status/ownership/fence resourceVersion semantics. Ephemeralprivate credentials never evidence/log/hash. Need declaredphysical/service/image/tool/provider/gates/grants beforedeployed/hostproof; unknownfixture setup not semanticnegativekill.",
+  "priorState": "nonempty activeA leases/namespaceUID/finalizers/expiry/RV/secret-copy RBAC/status/readinessv1/v2/productdecision and originalAPI/credential/grant/publicissuer refs before B. H/S newadmissions versus persisted R lifetime require explicit migration/dual-compatible controller; current newconfigprocess can retrospectivelyapply latestprefix/TTL/max/access/issuer, sourcecounterexample\u2014not approved behavior."
+}

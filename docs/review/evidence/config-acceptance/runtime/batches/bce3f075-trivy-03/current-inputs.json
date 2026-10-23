@@ -1,0 +1,154 @@
+{
+  "creationClockMs": 1791845648457,
+  "observations": [
+    {
+      "setting": "RT-TRIVY-DATABASE-MAXIMUMVULNERABILITYAGEMS",
+      "completeA": {
+        "maximumVulnerabilityAgeMs": 172800000,
+        "maximumJavaAgeMs": 604800000,
+        "maximumDatabaseBytes": 8589934592
+      },
+      "completeB": {
+        "maximumVulnerabilityAgeMs": 345600000,
+        "maximumJavaAgeMs": 604800000,
+        "maximumDatabaseBytes": 8589934592
+      },
+      "fixture": {
+        "creationClockMs": 1791845648457,
+        "cacheIdentity": "ephemeral actual filesystem path, canonicalized before reads",
+        "files": [
+          {
+            "kind": "vulnerability",
+            "directory": "db",
+            "file": "trivy.db",
+            "metadata": {
+              "Version": 2,
+              "UpdatedAt": "2026-10-09T22:54:08.457Z",
+              "NextUpdate": "2026-10-13T22:54:08.457Z"
+            },
+            "metadataBytes": "eyJWZXJzaW9uIjoyLCJVcGRhdGVkQXQiOiIyMDI2LTEwLTA5VDIyOjU0OjA4LjQ1N1oiLCJOZXh0VXBkYXRlIjoiMjAyNi0xMC0xM1QyMjo1NDowOC40NTdaIn0=",
+            "dataBytes": "dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2",
+            "metadataSha256": "df57eef653a8e2bf5d7b154db0efc56dfaf31475f79111dce56aaf9e8b32c50b",
+            "dataSha256": "e00d350d41b1ec04fca2e5a16cf858ceebf2a0d0c0dabf02ce50fcd58cfc29b4"
+          },
+          {
+            "kind": "java",
+            "directory": "java-db",
+            "file": "trivy-java.db",
+            "metadata": {
+              "Version": 1,
+              "UpdatedAt": "2026-10-11T22:54:08.457Z",
+              "NextUpdate": "2026-10-13T22:54:08.457Z"
+            },
+            "metadataBytes": "eyJWZXJzaW9uIjoxLCJVcGRhdGVkQXQiOiIyMDI2LTEwLTExVDIyOjU0OjA4LjQ1N1oiLCJOZXh0VXBkYXRlIjoiMjAyNi0xMC0xM1QyMjo1NDowOC40NTdaIn0=",
+            "dataBytes": "ampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampq",
+            "metadataSha256": "64bb1d4f80360f1d1e722c710f6c25f0b4f8e0a68f27aef3324fe6834295b4b6",
+            "dataSha256": "4d849bc781f3f89ebcc909a6ac0aee132ad55f13268b4d0f38f70820090ddacd"
+          }
+        ],
+        "limitation": "synthetic DB bytes+validmetadata; not actual usable Trivy DB format/installedscan proof"
+      }
+    },
+    {
+      "setting": "RT-TRIVY-DATABASE-MAXIMUMJAVAAGEMS",
+      "completeA": {
+        "maximumVulnerabilityAgeMs": 172800000,
+        "maximumJavaAgeMs": 172800000,
+        "maximumDatabaseBytes": 8589934592
+      },
+      "completeB": {
+        "maximumVulnerabilityAgeMs": 172800000,
+        "maximumJavaAgeMs": 345600000,
+        "maximumDatabaseBytes": 8589934592
+      },
+      "fixture": {
+        "creationClockMs": 1791845648457,
+        "cacheIdentity": "ephemeral actual filesystem path, canonicalized before reads",
+        "files": [
+          {
+            "kind": "vulnerability",
+            "directory": "db",
+            "file": "trivy.db",
+            "metadata": {
+              "Version": 2,
+              "UpdatedAt": "2026-10-11T22:54:08.457Z",
+              "NextUpdate": "2026-10-13T22:54:08.457Z"
+            },
+            "metadataBytes": "eyJWZXJzaW9uIjoyLCJVcGRhdGVkQXQiOiIyMDI2LTEwLTExVDIyOjU0OjA4LjQ1N1oiLCJOZXh0VXBkYXRlIjoiMjAyNi0xMC0xM1QyMjo1NDowOC40NTdaIn0=",
+            "dataBytes": "dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2",
+            "metadataSha256": "5e720819dd06cc026e8f6f20bf7e0244475480fbfc9c46b327815f71e7a5e227",
+            "dataSha256": "e00d350d41b1ec04fca2e5a16cf858ceebf2a0d0c0dabf02ce50fcd58cfc29b4"
+          },
+          {
+            "kind": "java",
+            "directory": "java-db",
+            "file": "trivy-java.db",
+            "metadata": {
+              "Version": 1,
+              "UpdatedAt": "2026-10-09T22:54:08.457Z",
+              "NextUpdate": "2026-10-13T22:54:08.457Z"
+            },
+            "metadataBytes": "eyJWZXJzaW9uIjoxLCJVcGRhdGVkQXQiOiIyMDI2LTEwLTA5VDIyOjU0OjA4LjQ1N1oiLCJOZXh0VXBkYXRlIjoiMjAyNi0xMC0xM1QyMjo1NDowOC40NTdaIn0=",
+            "dataBytes": "ampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampq",
+            "metadataSha256": "3dbc41aa172129ea101cfe67ee71473877f9c2d42a3f17b29112ec90dbe9f691",
+            "dataSha256": "4d849bc781f3f89ebcc909a6ac0aee132ad55f13268b4d0f38f70820090ddacd"
+          }
+        ],
+        "limitation": "synthetic DB bytes+validmetadata; not actual usable Trivy DB format/installedscan proof"
+      }
+    },
+    {
+      "setting": "RT-TRIVY-DATABASE-MAXIMUMDATABASEBYTES",
+      "completeA": {
+        "maximumVulnerabilityAgeMs": 172800000,
+        "maximumJavaAgeMs": 604800000,
+        "maximumDatabaseBytes": 32
+      },
+      "completeB": {
+        "maximumVulnerabilityAgeMs": 172800000,
+        "maximumJavaAgeMs": 604800000,
+        "maximumDatabaseBytes": 64
+      },
+      "fixture": {
+        "creationClockMs": 1791845648457,
+        "cacheIdentity": "ephemeral actual filesystem path, canonicalized before reads",
+        "files": [
+          {
+            "kind": "vulnerability",
+            "directory": "db",
+            "file": "trivy.db",
+            "metadata": {
+              "Version": 2,
+              "UpdatedAt": "2026-10-11T22:54:08.457Z",
+              "NextUpdate": "2026-10-13T22:54:08.457Z"
+            },
+            "metadataBytes": "eyJWZXJzaW9uIjoyLCJVcGRhdGVkQXQiOiIyMDI2LTEwLTExVDIyOjU0OjA4LjQ1N1oiLCJOZXh0VXBkYXRlIjoiMjAyNi0xMC0xM1QyMjo1NDowOC40NTdaIn0=",
+            "dataBytes": "dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2",
+            "metadataSha256": "5e720819dd06cc026e8f6f20bf7e0244475480fbfc9c46b327815f71e7a5e227",
+            "dataSha256": "e00d350d41b1ec04fca2e5a16cf858ceebf2a0d0c0dabf02ce50fcd58cfc29b4"
+          },
+          {
+            "kind": "java",
+            "directory": "java-db",
+            "file": "trivy-java.db",
+            "metadata": {
+              "Version": 1,
+              "UpdatedAt": "2026-10-11T22:54:08.457Z",
+              "NextUpdate": "2026-10-13T22:54:08.457Z"
+            },
+            "metadataBytes": "eyJWZXJzaW9uIjoxLCJVcGRhdGVkQXQiOiIyMDI2LTEwLTExVDIyOjU0OjA4LjQ1N1oiLCJOZXh0VXBkYXRlIjoiMjAyNi0xMC0xM1QyMjo1NDowOC40NTdaIn0=",
+            "dataBytes": "ampqampqampqampqampqampqampqampqampqampqampqampqampqampqampqampq",
+            "metadataSha256": "64bb1d4f80360f1d1e722c710f6c25f0b4f8e0a68f27aef3324fe6834295b4b6",
+            "dataSha256": "4d849bc781f3f89ebcc909a6ac0aee132ad55f13268b4d0f38f70820090ddacd"
+          }
+        ],
+        "limitation": "synthetic DB bytes+validmetadata; not actual usable Trivy DB format/installedscan proof"
+      }
+    }
+  ],
+  "preservedPolicy": {
+    "maximumVulnerabilityAgeMs": 172800000,
+    "maximumJavaAgeMs": 604800000,
+    "maximumDatabaseBytes": 8589934592
+  }
+}

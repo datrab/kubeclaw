@@ -1,0 +1,71 @@
+{
+  "sourcePath": "my-values/infra/native-worker-pools-ax41.yaml",
+  "actualFlatCurrentPolicy": {
+    "schemaVersion": 1,
+    "nodeName": "ax41-production",
+    "runtime": {
+      "containerdVersion": "2.3.4-k3s1.36"
+    },
+    "systemReserve": {
+      "cpuMillicores": 1000,
+      "memoryBytes": 3221225472,
+      "tasks": 2048
+    },
+    "kubernetesReserve": {
+      "cpuMillicores": 500,
+      "memoryBytes": 536870912,
+      "tasks": 2048
+    },
+    "pools": {
+      "buster": {
+        "namespace": "kubeclaw",
+        "cpuMillicores": 1500,
+        "memoryBytes": 8589934592,
+        "tasks": 4096,
+        "maximumActiveScopes": 1
+      },
+      "prism": {
+        "namespace": "kubeclaw",
+        "cpuMillicores": 2000,
+        "memoryBytes": 17179869184,
+        "tasks": 2048,
+        "maximumActiveScopes": 1
+      }
+    }
+  },
+  "inactiveTemplatePath": "my-values/infra/native-worker-pools.yaml",
+  "inactiveTemplate": {
+    "schemaVersion": 1,
+    "nodeName": null,
+    "runtime": {
+      "containerdVersion": null
+    },
+    "systemReserve": {
+      "cpuMillicores": 1000,
+      "memoryBytes": 4294967296,
+      "tasks": 2048
+    },
+    "kubernetesReserve": {
+      "cpuMillicores": 1000,
+      "memoryBytes": 2147483648,
+      "tasks": 2048
+    },
+    "pools": {
+      "buster": {
+        "namespace": "kubeclaw",
+        "cpuMillicores": 4000,
+        "memoryBytes": 34359738368,
+        "tasks": 8192,
+        "maximumActiveScopes": 4
+      },
+      "prism": {
+        "namespace": "kubeclaw",
+        "cpuMillicores": 4000,
+        "memoryBytes": 17179869184,
+        "tasks": 4096,
+        "maximumActiveScopes": 2
+      }
+    }
+  },
+  "qualification": "actual explicit current input and incomplete generic template; not installed host equality. No null node/runtime latest filling."
+}

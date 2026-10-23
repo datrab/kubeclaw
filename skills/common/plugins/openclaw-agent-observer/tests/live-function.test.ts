@@ -128,3 +128,13 @@ console.log(JSON.stringify({
   suite: 'live-function',
   registrations: { 'openclaw:service': ['pass', 'fail', 'crash'] },
 }));
+
+const selectedEnv:Record<string,unknown>={};
+const selectedObserver=createOpenClawAgentObserver({env:selectedEnv,initialConfig:{...baseConfig,enabled:true,policyVersion:'agent-observer-policy.v1'},logger:{info(){},warn(message){warnings.push(message);},error(){},debug(){}},diagnosticSubscriberFactory(){return ()=>{};},redisClientFactory(){return {async xadd(...args){writes.push(args);return '1-0';},async quit(){}};}});
+selectedObserver.start();
+selectedEnv.OPENCLAW_AGENT_OBSERVER_ENABLED='false';
+selectedObserver.handleAgentEvent({stream:'lifecycle',sessionKey:'selected-original',runId:'selected-original',data:{phase:'start'}});
+await selectedObserver.flush();assert.equal(selectedObserver.getStats().enqueued,1);assert.equal(selectedObserver.getStats().written,1);
+selectedObserver.handleHook('agent_start',{sessionKey:'selected-override',runId:'selected-override'},{pluginConfig:{enabled:false}});
+assert.equal(selectedObserver.getStats().enqueued,1);assert(warnings.some(message=>message.includes('COMPETING_AUTHOR')));
+await selectedObserver.stop();

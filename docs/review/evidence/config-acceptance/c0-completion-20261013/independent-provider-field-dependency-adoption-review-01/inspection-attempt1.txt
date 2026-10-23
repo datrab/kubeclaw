@@ -1,0 +1,1 @@
+Observed one-off inspection exit1: KeyError: node. Inspection presumed an extra node wrapper inside exactSelectedSchemaNode; actual source stores the schema node directly. Corrected only inspection navigation; reviewed author artifacts/predicates unchanged.

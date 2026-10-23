@@ -1,0 +1,11 @@
+# Approval consumers — batch13, C0 not accepted
+
+10 original human/architecture/Prism schema rows source/consumer/domain/dormancy refined.10 narrow source/schema definitions plus60 concrete future VAL/AB/BINDING/RECOVERY/EVAL/MUTANT cases, all implementationNOTRUN.37 exactmanualcandidates;755combined/3887unreviewed/136reviewed-open.51 remaining schemas,102 untouchedsupplemental plus95 priorunaccepted declarations and full priorsemantics remain.
+
+Actual pure parseApprovalConfig, guidance, calculateApprovalExpiresAt, validateCreatedWait and PrismwaitFrom controls only; no stagecontextinvoke stub, no signedoperator/waitstore/nativeprovider/model/API execution. Null/missinghuman timeout uses60 directfallback, nullowningschema rejects; whitespace directtrim vsstrictschema;600astralcodepoints1200UTF16 owningschemaaccepts/parserrejects. Currentexpiryhelper nearDateMax throws, not a claim physicaltimercapacity. PrivatePrism config parser is source-traced only, weaker than owningschema on emptystrings and525600maximum.
+
+Approved/rejectedhuman guidance bypassnewwait/target/deadline; architecturecleanreport bypassapprovalconfig thenoptionalverify/write; noncleanfindingsrequire genuineapprovalreason. PrismrequiresDesignfalse bypassconfig; approvedbranch skipsnewwait target/deadline. Prismruntime dispatch andartifactread currentlyprecede expirycalculation—proposedpreeffectguard notcurrentPASS. Agentconstprism implementedroutingidentity has noindependentlegalB andSDKwireprofile selects no businessmodel.
+
+Targetissuer/root/grant/sourcepackaging/capturedwait/authenticguide/baselinebundle and metadataaccounting remain genuineprerequisites. Arbitrary input/display/architecture reference256KiB bounds explicitly OPEN, not physicalcapacity/alias/automaticallyclosed. Parent Nova typedfirstmodulecarrier/taskoperatorpartition/membership/view/legacy/quota/realmanifest/crossreader remainsunapprovedOPEN.
+
+Committed6606af9 baseline blob+SHA references replace wholefragment snapshots; only10 changedbefore-rows gzip retained.5793 originalcases unchanged,2239 immutable refs resolve; all c0Closedfalse. Root269 historicalsupersession mappings batch12 awaitparentintegration andindependentreview—noobsoletecaseactivation. No production/tests/Core/independentreview/parenttool edits/commits/external/native/model/host/API actions.

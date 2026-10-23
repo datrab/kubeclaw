@@ -1,0 +1,11 @@
+{
+  "rawInputs": 23,
+  "preservedOldAuthorInputs": 7,
+  "selectedCases": 625,
+  "selectedDispositions": 625,
+  "selectedRows": 95,
+  "selectedRootMetadata": 356,
+  "canonicalIdSetUnchanged": true,
+  "drift": [],
+  "scope": "Exact selected current/new/historical correction inputs only; unrelated Runtime append-only input additions excluded."
+}

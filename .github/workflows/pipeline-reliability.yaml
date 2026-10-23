@@ -3,6 +3,11 @@ on:
   pull_request:
   # main is covered by the required call from build-images.yaml.
   workflow_call:
+# Superseded PR commits must not occupy the runner queue ahead of the current head.
+# Separate workflow keys also keep reusable workflow callers from sharing a group.
+concurrency:
+  group: pr-pipeline-reliability-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 permissions:
   contents: read
 jobs:
@@ -22,6 +27,7 @@ jobs:
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: |
           npm run versions:check
+          npm run config:prism:check
           node --test tests/verification/deployment/versions.test.mjs
       - name: Typecheck source packages
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
@@ -42,20 +48,33 @@ jobs:
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: sudo apt-get update && sudo apt-get install -y shellcheck shfmt
       - name: Check affected stage and adapter contracts
+        id: affected_contracts
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
+        shell: bash
         run: |
-          npm test --workspace @kubeclaw/plugin-prism-design
-          npm test --workspace @kubeclaw/plugin-notification-observer
-          npm test --workspace @kubeclaw/plugin-human-approval
-          npm test --workspace @kubeclaw/plugin-project-summary
-          npm test --workspace @kubeclaw/plugin-lint
-          npm test --workspace @kubeclaw/plugin-implementation-agent
-          npm test --workspace @kubeclaw/plugin-buster-quality-gate
-          npm test --workspace @kubeclaw/plugin-runtime-dispatch
-          npm test --workspace @kubeclaw/plugin-operator-messaging
-          npm test --prefix skills/buster/plugins/http
-          npm test --prefix skills/nova/plugins/delivery-lint
-          npm test --workspace @kubeclaw/plugin-review
+          mkdir -p tmp
+          {
+            npm test --workspace @kubeclaw/plugin-prism-design
+            npm test --workspace @kubeclaw/plugin-notification-observer
+            npm test --workspace @kubeclaw/plugin-human-approval
+            npm test --workspace @kubeclaw/plugin-project-summary
+            npm test --workspace @kubeclaw/plugin-lint
+            npm test --workspace @kubeclaw/plugin-implementation-agent
+            npm test --workspace @kubeclaw/plugin-buster-quality-gate
+            npm test --workspace @kubeclaw/plugin-runtime-dispatch
+            npm test --workspace @kubeclaw/plugin-operator-messaging
+            npm test --prefix skills/buster/plugins/http
+            npm test --prefix skills/nova/plugins/delivery-lint
+            npm test --workspace @kubeclaw/plugin-review
+          } 2>&1 | tee tmp/core-affected-contracts.log
+      - name: Retain original affected-contract failure output
+        if: ${{ failure() && steps.affected_contracts.outcome == 'failure' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: core-affected-contracts-failure-${{ github.sha }}
+          path: tmp/core-affected-contracts.log
+          if-no-files-found: error
+          retention-days: 3
       - uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4 # v4
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         with:
@@ -63,10 +82,12 @@ jobs:
       - name: Validate Buster persistent storage manifests
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: |
-          node tests/verification/deployment/check-role-chart.mjs
-          node tests/verification/deployment/check-deployment-truth.mjs
-          helm lint charts/kubeclaw -f my-values/buster-values.yaml -f tests/fixtures/helm/runtime-registry.yaml
-          helm template agent-buster charts/kubeclaw -f my-values/buster-values.yaml -f tests/fixtures/helm/runtime-registry.yaml > /tmp/buster-rendered.yaml
+          # Both originals call the genuine generation publisher, which requires
+          # root-owned image/package trees. Preserve that check on hosted runners.
+          sudo env "PATH=$PATH" "$(command -v node)" tests/verification/deployment/check-role-chart.mjs
+          sudo env "PATH=$PATH" "$(command -v node)" tests/verification/deployment/check-deployment-truth.mjs
+          # check-role-chart packages, lints and renders all roles with the actual
+          # current Buster image receipt and the central release/namespace identity.
       - name: Exercise real isolated provider transport and evidence import
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: node tests/verification/contracts/check-pipeline-remote-real-provider.mts
@@ -96,12 +117,46 @@ jobs:
       - run: npm run plugin-system:sandbox:build
       - name: Verify complete test partition
         run: node --test tests/verification/deployment/reliability-groups.test.mjs
+      - name: Install the centrally pinned real kubectl for wire-protocol originals
+        shell: bash
+        run: |
+          # Do not inherit the changing ubuntu-latest client. Use the SAME
+          # version and checksum as the actual Buster/Nova runtime images.
+          install_dir="$RUNNER_TEMP/reliability-kubectl"
+          mkdir -p "$install_dir"
+          read -r version checksum < <(node --input-type=module -e '
+            import fs from "node:fs";
+            const {buildArgs} = JSON.parse(fs.readFileSync("versions.json", "utf8"));
+            console.log(buildArgs.KUBECTL_VERSION, buildArgs.KUBECTL_SHA256_AMD64);
+          ')
+          curl --fail --silent --show-error --location --retry 3 \
+            "https://dl.k8s.io/release/v${version}/bin/linux/amd64/kubectl" -o "$install_dir/kubectl"
+          printf '%s  %s\n' "$checksum" "$install_dir/kubectl" | sha256sum --check --strict
+          chmod 755 "$install_dir/kubectl"
+          # Match the real adapter's restricted child environment; retain
+          # client identity and fail setup before tests if startup is broken.
+          timeout 10s env -i "PATH=$PATH" "$install_dir/kubectl" version --client -o json
+          echo "$install_dir" >> "$GITHUB_PATH"
       - name: Run reliability shard
-        run: node scripts/reliability-tests.mjs core ${{ matrix.shard }} 4
+        id: shard-tests
+        shell: bash
+        run: |
+          # Keep the original runner and its exit status; hosted-only failures
+          # must remain diagnosable when Actions log downloads require login.
+          node scripts/reliability-tests.mjs core ${{ matrix.shard }} 4 \
+            2>&1 | tee "$RUNNER_TEMP/reliability-shard-${{ matrix.shard }}.log"
+      - name: Retain original shard failure diagnostics
+        if: ${{ failure() && steps.shard-tests.outcome == 'failure' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: reliability-shard-${{ matrix.shard }}-failure-${{ github.sha }}
+          path: ${{ runner.temp }}/reliability-shard-${{ matrix.shard }}.log
+          retention-days: 7
+          if-no-files-found: error
 
   native-reliability:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
@@ -111,11 +166,33 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci --ignore-scripts
+      - run: npm run plugin-system:sandbox:build
       - name: Run native authority tests in an actual accounted Linux scope
+        id: native-tests
+        shell: bash
         run: |
+          # UID1000 must resolve absolute module paths without traversing the
+          # hosted runner's private home. Preserve the complete checkout,
+          # installed workspace links and sandbox binary; never relax home modes.
+          native_root="$(mktemp -d /tmp/kubeclaw-native.XXXXXX)"
+          trap 'sudo rm -rf -- "$native_root"' EXIT
+          mkdir "$native_root/source"
+          cp -a "$GITHUB_WORKSPACE/." "$native_root/source/"
+          chmod 0755 "$native_root" "$native_root/source"
+          cd "$native_root/source"
           sudo systemd-run --scope --quiet \
             -p MemoryAccounting=yes -p TasksAccounting=yes -p CPUAccounting=yes \
-            env "PATH=$PATH" "$(command -v node)" scripts/reliability-tests.mjs native
+            env "PATH=$PATH" PRISM_NATIVE_ISOLATED_TEST_POOL=true \
+              "$(command -v node)" scripts/reliability-tests.mjs native \
+            2>&1 | tee "$RUNNER_TEMP/native-reliability.log"
+      - name: Retain original native failure diagnostics
+        if: ${{ failure() && steps.native-tests.outcome == 'failure' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: native-reliability-failure-${{ github.sha }}
+          path: ${{ runner.temp }}/native-reliability.log
+          retention-days: 7
+          if-no-files-found: error
 
   service-reliability:
     runs-on: ubuntu-latest

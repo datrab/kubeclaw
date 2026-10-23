@@ -1,0 +1,146 @@
+{
+  "originalRoot": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/stand/config/pipeline.config.json",
+    "sha256": "0571c257b9bea46dcd4e43c40c60d34ad695921f193f1b3694a5a240b16604f4"
+  },
+  "currentRootRawSHA256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011",
+  "sameRootPath": "config/pipeline.config.json",
+  "newVersion": "pipeline-entry.v7",
+  "normativeSupersession": "Only proposed currentgenerationv7; v6/v5 are retained original decoding/history, not simultaneous latest roots",
+  "original9ComponentBindings": [
+    {
+      "role": "prism",
+      "owner": "prism-control",
+      "instanceId": "fixture.service.prism-control",
+      "profileId": "local-A"
+    },
+    {
+      "role": "prism",
+      "owner": "prism-execution",
+      "instanceId": "fixture.service.prism-control",
+      "profileId": "local-A"
+    },
+    {
+      "role": "prism",
+      "owner": "prism-worker",
+      "instanceId": "fixture.service.prism-worker",
+      "profileId": "local-A"
+    },
+    {
+      "role": "prism",
+      "owner": "prism-control",
+      "instanceId": "fixture.service.prism-worker",
+      "profileId": "local-A"
+    },
+    {
+      "role": "prism",
+      "owner": "prism-execution",
+      "instanceId": "fixture.service.prism-worker",
+      "profileId": "local-A"
+    },
+    {
+      "role": "prism",
+      "owner": "prism-studio",
+      "instanceId": "fixture.service.prism-studio",
+      "profileId": "local-A"
+    },
+    {
+      "role": "buster",
+      "owner": "buster-engine",
+      "instanceId": "fixture.service.buster-preparation",
+      "profileId": "local-A"
+    },
+    {
+      "role": "buster",
+      "owner": "buster-engine",
+      "instanceId": "fixture.service.buster-runtime",
+      "profileId": "provider-network-A"
+    },
+    {
+      "role": "buster",
+      "owner": "worker-core",
+      "instanceId": "fixture.service.buster-runtime",
+      "profileId": "local-A"
+    }
+  ],
+  "original4PluginSelections": [
+    {
+      "kind": "test-provider",
+      "packageId": "kubeclaw.api-flow",
+      "registrationId": "kubeclaw.api-flow:flow",
+      "instanceId": "fixture.api-flow",
+      "ownerPath": "plugins/kubeclaw.api-flow.config.json",
+      "profileId": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime"
+    },
+    {
+      "kind": "test-provider",
+      "packageId": "kubeclaw.http",
+      "registrationId": "kubeclaw.http:request",
+      "instanceId": "fixture.http",
+      "ownerPath": "plugins/kubeclaw.http.config.json",
+      "profileId": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime"
+    },
+    {
+      "kind": "test-provider",
+      "packageId": "kubeclaw.openapi",
+      "registrationId": "kubeclaw.openapi:operations",
+      "instanceId": "fixture.openapi",
+      "ownerPath": "plugins/kubeclaw.openapi.config.json",
+      "profileId": "A",
+      "serviceInstanceId": "fixture.service.buster-runtime"
+    },
+    {
+      "kind": "adapter",
+      "packageId": "kubeclaw.network-http",
+      "registrationId": "kubeclaw.network-http:http",
+      "instanceId": "fixture.network-http",
+      "ownerPath": "plugins/kubeclaw.network-http.config.json",
+      "profileId": "A",
+      "serviceInstanceId": "fixture.service.nova-runtime"
+    }
+  ],
+  "unchangedOriginalRootProperties": [
+    "profile",
+    "features",
+    "tuning",
+    "overrides",
+    "components",
+    "infrastructureSelections",
+    "deploymentSelections"
+  ],
+  "sixOwnerPathsUnchanged": {
+    "prism-control": "components/prism-control.config.json",
+    "prism-studio": "components/prism-studio.config.json",
+    "prism-worker": "components/prism-worker.config.json",
+    "prism-execution": "components/prism-execution.config.json",
+    "buster-engine": "components/buster-engine.config.json",
+    "worker-core": "components/worker-core.config.json"
+  },
+  "fiveByteExactComponents": [
+    "prism-control",
+    "prism-studio",
+    "prism-worker",
+    "prism-execution",
+    "worker-core"
+  ],
+  "busterOwner": {
+    "oldRaw": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/stand/config/components/buster-engine.config.json",
+      "sha256": "100d63939fa1eb164053a0c0d205ab534a5b592c3d8ecc5ba43b0ee5f83a6ebf"
+    },
+    "currentRaw": {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/stand/config/components/buster-engine.config.json",
+      "sha256": "849d4848f2dccfe19d5d6c4a421b6001ee0f59ff4905b646b9dd3b93f3b0cc84"
+    },
+    "allOldPropertiesAndProfilesEqual": true,
+    "newProfilesOnly": [
+      "security-https-source-A",
+      "security-source-A"
+    ],
+    "meaning": "Additive same-owner snapshot, not second editable writer or changed old native service profile"
+  },
+  "original4ProviderOwnersByteExact": true,
+  "securityService": "Future structural isolated service/role receiving stand only; no currently routed/installed second service is asserted"
+}

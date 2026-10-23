@@ -1,0 +1,2 @@
+npm notice run npx
+npm notice run 'tsc' --noEmit -p skills/buster/plugins/size-budget/tsconfig.json

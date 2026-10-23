@@ -1,0 +1,325 @@
+{
+  "sourceCommit": "bce3f075156a86be345821499c04628cb35c2762",
+  "sourceTree": "a8b0adf641de573565360b0c4eb577d6bc7545c3",
+  "originalCount": 4642,
+  "originalArtifactSha256": "9f925682048ea9976e6dab177f4d5363727b429483b7855a34930d5a0d5facfc",
+  "explicitReviewedCandidateRecords": [
+    {
+      "id": "RT-CANDIDATE-63dc03188cf4ba1d",
+      "source": {
+        "path": "skills/buster/engine/test-gates/trivy-database.ts",
+        "line": 12,
+        "text": "export const DEFAULT_TRIVY_DATABASE_POLICY: TrivyDatabasePolicy = Object.freeze({",
+        "sha256": "240997c417ef7ab27716b482c7b698abed6249c8c8b6f303f9264875347224cf",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-TRIVY-DATABASE-MAXIMUMVULNERABILITYAGEMS",
+        "RT-TRIVY-DATABASE-MAXIMUMJAVAAGEMS",
+        "RT-TRIVY-DATABASE-MAXIMUMDATABASEBYTES"
+      ],
+      "disposition": "existing-setting-source-default",
+      "explicitReviewedReason": "literal whole DB policy default48h/7d/8GiB in current actual runtimeconstructor; three namedsource rows now explicitlymapped",
+      "status": "exact namedsource/runtimepolicy or nonsettingreason; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-trivy-03/observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-f6df3538ff260dbe",
+      "source": {
+        "path": "skills/buster/engine/test-gates/trivy-database.ts",
+        "line": 38,
+        "text": "export function databasePolicy(value: TrivyDatabasePolicy = DEFAULT_TRIVY_DATABASE_POLICY): TrivyDatabasePolicy {",
+        "sha256": "240997c417ef7ab27716b482c7b698abed6249c8c8b6f303f9264875347224cf",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-TRIVY-DATABASE-MAXIMUMVULNERABILITYAGEMS",
+        "RT-TRIVY-DATABASE-MAXIMUMJAVAAGEMS",
+        "RT-TRIVY-DATABASE-MAXIMUMDATABASEBYTES"
+      ],
+      "disposition": "existing-setting-whole-absence-fallback",
+      "explicitReviewedReason": "whole undefined policy usesDEFAULT; missing individualfield rejects; actual native/domain/C0 controls separatefuturestrictowner",
+      "status": "exact namedsource/runtimepolicy or nonsettingreason; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-trivy-03/observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-04d56806c1a00df2",
+      "source": {
+        "path": "skills/buster/engine/test-gates/trivy-database.ts",
+        "line": 40,
+        "text": "if (!Number.isSafeInteger(age) || age < 1 || age > 30 * 24 * 60 * 60 * 1000) throw new Error('SECURITY_SCAN_DATABASE_POLICY_INVALID');",
+        "sha256": "240997c417ef7ab27716b482c7b698abed6249c8c8b6f303f9264875347224cf",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-TRIVY-DATABASE-MAXIMUMVULNERABILITYAGEMS",
+        "RT-TRIVY-DATABASE-MAXIMUMJAVAAGEMS"
+      ],
+      "disposition": "existing-setting-domain",
+      "explicitReviewedReason": "actual age safeinteger1..30days source/domainrange; configuredpolicy not physicalmaximum",
+      "status": "exact namedsource/runtimepolicy or nonsettingreason; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-trivy-03/observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-07bb45244064c7e7",
+      "source": {
+        "path": "skills/buster/engine/test-gates/trivy-database.ts",
+        "line": 42,
+        "text": "if (!Number.isSafeInteger(value.maximumDatabaseBytes) || value.maximumDatabaseBytes < 1",
+        "sha256": "240997c417ef7ab27716b482c7b698abed6249c8c8b6f303f9264875347224cf",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-TRIVY-DATABASE-MAXIMUMDATABASEBYTES"
+      ],
+      "disposition": "existing-setting-domain",
+      "explicitReviewedReason": "actual perfile bytes safeintegerpositive (not cacheaggregate)",
+      "status": "exact namedsource/runtimepolicy or nonsettingreason; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-trivy-03/observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-9f450b19d0c09e7e",
+      "source": {
+        "path": "skills/buster/engine/test-gates/trivy-database.ts",
+        "line": 43,
+        "text": "|| value.maximumDatabaseBytes > 32 * 1024 * 1024 * 1024) throw new Error('SECURITY_SCAN_DATABASE_POLICY_INVALID');",
+        "sha256": "240997c417ef7ab27716b482c7b698abed6249c8c8b6f303f9264875347224cf",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-TRIVY-DATABASE-MAXIMUMDATABASEBYTES"
+      ],
+      "disposition": "existing-setting-domain",
+      "explicitReviewedReason": "supported parser max32GiBperfile, explicit tunabledomain withinactualretainedruntimecompatibility",
+      "status": "exact namedsource/runtimepolicy or nonsettingreason; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-trivy-03/observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-bce8f9a35c937778",
+      "source": {
+        "path": "skills/buster/engine/test-gates/trivy-database.ts",
+        "line": 54,
+        "text": "if (typeof value !== 'string' || value.length > 64",
+        "sha256": "240997c417ef7ab27716b482c7b698abed6249c8c8b6f303f9264875347224cf",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-TRIVY-DATABASE-MAXIMUMVULNERABILITYAGEMS",
+        "RT-TRIVY-DATABASE-MAXIMUMJAVAAGEMS",
+        "RT-TRIVY-DATABASE-MAXIMUMDATABASEBYTES"
+      ],
+      "disposition": "open-processing-quota",
+      "explicitReviewedReason": "metadata timestampchars64 is independent numeric processingquota alongside safe syntax, not DBpolicyage",
+      "status": "precise open processingquota obligation",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-trivy-03/observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-802ce73ee133cc4a",
+      "source": {
+        "path": "skills/buster/engine/test-gates/trivy-database.ts",
+        "line": 55,
+        "text": "|| !/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,9})?(?:Z|[+-]\\d{2}:\\d{2})$/u.test(value)) {",
+        "sha256": "240997c417ef7ab27716b482c7b698abed6249c8c8b6f303f9264875347224cf",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-TRIVY-DATABASE-MAXIMUMVULNERABILITYAGEMS",
+        "RT-TRIVY-DATABASE-MAXIMUMJAVAAGEMS",
+        "RT-TRIVY-DATABASE-MAXIMUMDATABASEBYTES"
+      ],
+      "disposition": "nonsetting-finite-metadata-time-format",
+      "explicitReviewedReason": "supported ISOtimestamp wiregrammar seconds/nanofraction9+offset; actualdatetime calendar guardretained",
+      "status": "exact namedsource/runtimepolicy or nonsettingreason; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-trivy-03/observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b065a34778b937b8",
+      "source": {
+        "path": "skills/buster/engine/test-gates/trivy-database.ts",
+        "line": 59,
+        "text": "if (!Number.isFinite(parsed) || parsed <= 0 || !validCalendar(value)) throw new Error('SECURITY_SCAN_DATABASE_METADATA_INVALID');",
+        "sha256": "240997c417ef7ab27716b482c7b698abed6249c8c8b6f303f9264875347224cf",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-TRIVY-DATABASE-MAXIMUMVULNERABILITYAGEMS",
+        "RT-TRIVY-DATABASE-MAXIMUMJAVAAGEMS",
+        "RT-TRIVY-DATABASE-MAXIMUMDATABASEBYTES"
+      ],
+      "disposition": "nonsetting-metadata-time-validation",
+      "explicitReviewedReason": "finite>0 parsedtime +validcalendar rejectsunsupportedmetadata, not CONFIGclockauthor",
+      "status": "exact namedsource/runtimepolicy or nonsettingreason; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-trivy-03/observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-98a21a7eb4f6324d",
+      "source": {
+        "path": "skills/buster/engine/test-gates/trivy-database.ts",
+        "line": 64,
+        "text": "if (!value || typeof value !== 'object' || Array.isArray(value)",
+        "sha256": "240997c417ef7ab27716b482c7b698abed6249c8c8b6f303f9264875347224cf",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-TRIVY-DATABASE-MAXIMUMVULNERABILITYAGEMS",
+        "RT-TRIVY-DATABASE-MAXIMUMJAVAAGEMS",
+        "RT-TRIVY-DATABASE-MAXIMUMDATABASEBYTES"
+      ],
+      "disposition": "nonsetting-metadata-input-shape",
+      "explicitReviewedReason": "metadata plainobject schema, not a default",
+      "status": "exact namedsource/runtimepolicy or nonsettingreason; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-trivy-03/observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-f2aafe9ec222a1c9",
+      "source": {
+        "path": "skills/buster/engine/test-gates/trivy-database.ts",
+        "line": 65,
+        "text": "|| !('Version' in value) || value.Version !== expectedVersion || !('UpdatedAt' in value) || !('NextUpdate' in value)) {",
+        "sha256": "240997c417ef7ab27716b482c7b698abed6249c8c8b6f303f9264875347224cf",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-TRIVY-DATABASE-MAXIMUMVULNERABILITYAGEMS",
+        "RT-TRIVY-DATABASE-MAXIMUMJAVAAGEMS",
+        "RT-TRIVY-DATABASE-MAXIMUMDATABASEBYTES"
+      ],
+      "disposition": "nonsetting-finite-metadata-version",
+      "explicitReviewedReason": "Version required exactvulnerability2/java1 andUpdatedAt/NextUpdate required; finite actualDBversion support notbusinesspreset",
+      "status": "exact namedsource/runtimepolicy or nonsettingreason; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-trivy-03/observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-3fa9e2d456425961",
+      "source": {
+        "path": "skills/buster/engine/test-gates/trivy-database.ts",
+        "line": 78,
+        "text": "if (!before.isFile() || before.size <= 0n || before.size > BigInt(maximum)) throw new Error('SECURITY_SCAN_DATABASE_BYTES_INVALID');",
+        "sha256": "240997c417ef7ab27716b482c7b698abed6249c8c8b6f303f9264875347224cf",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-TRIVY-DATABASE-MAXIMUMDATABASEBYTES"
+      ],
+      "disposition": "existing-setting-byte-consumer",
+      "explicitReviewedReason": "native regularfile,size>0<=maximum passedactualperfile policy; metadata16KiB call separatequotaobligation",
+      "status": "exact namedsource/runtimepolicy or nonsettingreason; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-trivy-03/observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-e61038c1a7f23fd3",
+      "source": {
+        "path": "skills/buster/engine/test-gates/trivy-database.ts",
+        "line": 89,
+        "text": "if (before.size !== after.size || before.mtimeNs !== after.mtimeNs || before.ctimeNs !== after.ctimeNs",
+        "sha256": "240997c417ef7ab27716b482c7b698abed6249c8c8b6f303f9264875347224cf",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-TRIVY-DATABASE-MAXIMUMVULNERABILITYAGEMS",
+        "RT-TRIVY-DATABASE-MAXIMUMJAVAAGEMS",
+        "RT-TRIVY-DATABASE-MAXIMUMDATABASEBYTES"
+      ],
+      "disposition": "nonsetting-native-source-consistency",
+      "explicitReviewedReason": "native openstatbefore/after size+mtime+ctime unchanged proof, nocache/operator author",
+      "status": "exact namedsource/runtimepolicy or nonsettingreason; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-trivy-03/observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a8332408ca066b0d",
+      "source": {
+        "path": "skills/buster/engine/test-gates/trivy-database.ts",
+        "line": 90,
+        "text": "|| BigInt(bytes) !== before.size) throw new Error('SECURITY_SCAN_DATABASE_CHANGED');",
+        "sha256": "240997c417ef7ab27716b482c7b698abed6249c8c8b6f303f9264875347224cf",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-TRIVY-DATABASE-MAXIMUMVULNERABILITYAGEMS",
+        "RT-TRIVY-DATABASE-MAXIMUMJAVAAGEMS",
+        "RT-TRIVY-DATABASE-MAXIMUMDATABASEBYTES"
+      ],
+      "disposition": "nonsetting-native-source-consistency",
+      "explicitReviewedReason": "bytesactuallyread equals declaredstat.size prevents partial/changingdata acceptance",
+      "status": "exact namedsource/runtimepolicy or nonsettingreason; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-trivy-03/observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-6d34a692f26ceb5a",
+      "source": {
+        "path": "skills/buster/engine/test-gates/trivy-database.ts",
+        "line": 134,
+        "text": "if (before.databases.length !== after.databases.length || before.databases.some((item, index) => {",
+        "sha256": "240997c417ef7ab27716b482c7b698abed6249c8c8b6f303f9264875347224cf",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-TRIVY-DATABASE-MAXIMUMVULNERABILITYAGEMS",
+        "RT-TRIVY-DATABASE-MAXIMUMJAVAAGEMS",
+        "RT-TRIVY-DATABASE-MAXIMUMDATABASEBYTES"
+      ],
+      "disposition": "nonsetting-before-after-evidence-integrity",
+      "explicitReviewedReason": "before/after DBlistlength/contentmatches actualsame scanclosure, noreset/configreload",
+      "status": "exact namedsource/runtimepolicy or nonsettingreason; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-trivy-03/observations.json",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ea21b83a047e1ad0",
+      "source": {
+        "path": "skills/buster/engine/test-gates/trivy-database.ts",
+        "line": 136,
+        "text": "return current?.kind !== item.kind || current.databaseDigest !== item.databaseDigest || current.metadataDigest !== item.metadataDigest;",
+        "sha256": "240997c417ef7ab27716b482c7b698abed6249c8c8b6f303f9264875347224cf",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "settings": [
+        "RT-TRIVY-DATABASE-MAXIMUMVULNERABILITYAGEMS",
+        "RT-TRIVY-DATABASE-MAXIMUMJAVAAGEMS",
+        "RT-TRIVY-DATABASE-MAXIMUMDATABASEBYTES"
+      ],
+      "disposition": "nonsetting-before-after-digest-identity",
+      "explicitReviewedReason": "actualDBkind/datahash/metadatahash equality, syntheticnativeprobe notusablegenuineDB/trustsourceproof",
+      "status": "exact namedsource/runtimepolicy or nonsettingreason; independent review pending",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-trivy-03/observations.json",
+      "countsTowardAcceptance": false
+    }
+  ],
+  "thisBatchCount": 15,
+  "combinedReviewedCount": 164,
+  "remainingUnreviewed": 4478,
+  "dispositions": {
+    "existing-setting-source-default": 1,
+    "existing-setting-whole-absence-fallback": 1,
+    "existing-setting-domain": 3,
+    "open-processing-quota": 1,
+    "nonsetting-finite-metadata-time-format": 1,
+    "nonsetting-metadata-time-validation": 1,
+    "nonsetting-metadata-input-shape": 1,
+    "nonsetting-finite-metadata-version": 1,
+    "existing-setting-byte-consumer": 1,
+    "nonsetting-native-source-consistency": 2,
+    "nonsetting-before-after-evidence-integrity": 1,
+    "nonsetting-before-after-digest-identity": 1
+  },
+  "earlierOpenDBProjectionLinkedNow": "security02 database-evidence candidate maximumAgeMs/databaseBytes now linked these3actualruntimepolicyrows, not anotherprovider-author. Their externalactualruntimeprofile/genuineDB/real scan/binding obligation remainsopen; earlierrecords notrewritten asaccepted.",
+  "unmatchedGuardBusinessDefaultsNotInOriginalSyntaxRoster": [
+    "trivy-database.ts inspectTrivyDatabases fingerprintmetadata16KiB beforeparse separate resourcepolicy",
+    "native metadataread/fingerprint/size/quota trustworthy sourceformat vs actual scannerDB compatibility and execution/grants remain separateunknowns",
+    "CURRENT capturedRconstructorpolicy cannotnextMtakeB via payload; target typedmodule/newruntimeinstance dependency+grants C5 unimplemented"
+  ],
+  "status": "manualpercandidate exactsourceonly; nolexicalautomaticclosure,noC0acceptance"
+}

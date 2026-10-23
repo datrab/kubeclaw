@@ -34,13 +34,13 @@ spec:
       {{- if or (and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker"))) (eq $name "control") (eq $name "worker") (eq $name "studio") }}
       annotations:
         {{- if has $name (list "control" "worker" "studio") }}
-        checksum/swarm-config: {{ include "kubeclaw.swarmBundle" $ | sha256sum }}
+        checksum/swarm-config: {{ include "prism.swarmConfig" $ | sha256sum }}
         {{- end }}
         {{- if eq $name "worker" }}
         kubeclaw.dev/native-worker-role: prism
         kubeclaw.dev/native-worker-policy: {{ $.Values.worker.native.policyDigest | quote }}
         {{- end }}
-        {{- if and (eq $name "control") $.Values.control.productDecisions.enabled }}
+        {{- if and (eq $name "control") (eq (include "prism.productDecisions.enabled" $) "true") }}
         checksum/product-decisions: {{ toJson $.Values.control.productDecisions | sha256sum }}
         {{- end }}
         {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker")) }}
@@ -78,7 +78,7 @@ spec:
           image: {{ include "prism.imageRef" $image | quote }}
           imagePullPolicy: {{ $image.pullPolicy }}
           {{- if eq $name "worker" }}
-          command: ["node", "skills/prism/server/worker.ts"]
+          command: ["node", "skills/packages/prism-engine/server/worker.ts"]
           securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: ["ALL"], add: ["SETUID", "SETGID", "KILL"] } }
           {{- else }}
           securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: ["ALL"] } }
@@ -87,18 +87,12 @@ spec:
             {{- if or (eq $name "control") (eq $name "worker") }}
             - { name: PRISM_ENGINE_CONTENT_DIGEST, value: {{ $.Values.images.worker.digest | quote }} }
             {{- end }}
-            - { name: SWARM_CONFIG, value: /etc/kubeclaw/swarm/swarm.config.json }
             {{- if and (or (eq $name "control") (eq $name "worker")) (not $.Values.workerTrust.spiffe.enabled) }}
             - name: PRISM_WORKER_SECRET
               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: worker-secret } }
             {{- end }}
             {{- if eq $name "control" }}
             {{- include "prism.productDecisions.env" $ | nindent 12 }}
-            {{- if $.Values.workerTrust.spiffe.enabled }}
-            - { name: PRISM_WORKER_URL, value: "http://127.0.0.1:18081" }
-            - { name: PRISM_CONTROL_INTERNAL_URL, value: "http://127.0.0.1:18080" }
-            - { name: PRISM_AGENT_URL, value: "http://127.0.0.1:18082" }
-            {{- end }}
             - name: DATABASE_URL
               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.database }}, key: runtime-url } }
             - name: PRISM_SESSION_SECRET
@@ -109,7 +103,6 @@ spec:
             - name: PRISM_DISPATCH_SECRET
               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: dispatch-secret } }
             {{- end }}
-            - { name: PRISM_INGESTION_URL, value: "http://prism-ingestion:8080" }
             - name: PRISM_INGESTION_SECRET
               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: ingestion-secret } }
             {{- end }}
@@ -118,7 +111,6 @@ spec:
               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: ingress-secret } }
             {{- end }}
             {{- if eq $name "worker" }}
-            - { name: PRISM_CONTROL_INTERNAL_URL, value: {{ ternary "http://127.0.0.1:18080" "http://prism-control:8080" $.Values.workerTrust.spiffe.enabled | quote }} }
             - name: DATABASE_URL
               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.database }}, key: runtime-url } }
             {{- end }}
@@ -138,9 +130,6 @@ spec:
           resources: {{ toYaml (index $.Values $name).resources | nindent 12 }}
           volumeMounts:
             - { name: tmp, mountPath: /tmp }
-            {{- if has $name (list "control" "worker" "studio") }}
-            - { name: swarm-config, mountPath: /etc/kubeclaw/swarm, readOnly: true }
-            {{- end }}
             {{- if eq $name "worker" }}
             - { name: native-pool, mountPath: /sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service/prism }
             - { name: native-ownership, mountPath: /var/lib/kubeclaw/native/prism }
@@ -150,7 +139,7 @@ spec:
             {{- end }}
             {{- if eq $name "control" }}
             - { name: artifacts, mountPath: {{ $swarm.operator.prism.control.artifactRoot | quote }} }
-            {{- if $.Values.control.productDecisions.enabled }}
+            {{- if (eq (include "prism.productDecisions.enabled" $) "true") }}
             - { name: product-decision-signing, mountPath: /var/run/prism/product-signing, readOnly: true }
             - { name: product-decision-controller, mountPath: /var/run/prism/product-controller, readOnly: true }
             {{- end }}
@@ -190,7 +179,6 @@ spec:
       volumes:
         - { name: tmp, emptyDir: { sizeLimit: 4Gi } }
         {{- if has $name (list "control" "worker" "studio") }}
-        - { name: swarm-config, configMap: { name: prism-swarm-config, defaultMode: 0444 } }
         {{- end }}
         {{- if eq $name "worker" }}
         - { name: native-pool, hostPath: { path: /sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service/prism, type: Directory } }

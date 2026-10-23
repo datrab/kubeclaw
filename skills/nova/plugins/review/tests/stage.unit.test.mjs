@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { canonicalJson } from '@kubeclaw/plugin-sdk';
@@ -490,4 +491,15 @@ await assert.rejects(
 );
 
 await assert.rejects(execute(input, { ...testContext(), contract: { config: {} } }), /agent is not configured/u);
+// Exercise the actual production stage with the selected owner's A/B values.
+const owned = JSON.parse(fs.readFileSync(new URL('../../../../../config/plugins/kubeclaw.review/profiles/standard.config.json',import.meta.url),'utf8')).profiles.standard.settings;
+for (const maximum of [1,2]) {
+  const policies=structuredClone(owned);policies.profiles.gate.limits.maxInitialContextFiles=maximum;
+  const calls=[];const selected=testContext([pass],calls);delete selected.contract.config.policy;
+  selected.contract.config.ownedPolicyProfiles=policies;
+  assert.equal((await execute(input,selected)).outcome,'passed');
+  assert.equal(calls.find(call=>call.capability==='runtime.dispatch').request.payload.review.bundle.context.length,maximum);
+}
+const duplicate=testContext();duplicate.contract.config.ownedPolicyProfiles=owned;
+await assert.rejects(execute(input,duplicate),/REVIEW_POLICY_COMPETING_AUTHOR/);
 console.log(JSON.stringify({ ok: true, plugin: 'kubeclaw.review', suite: 'stage-unit' }));

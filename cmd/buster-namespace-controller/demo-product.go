@@ -161,6 +161,24 @@ func productUTC(s string) (time.Time, error) {
 	return t, nil
 }
 func (c *controller) verifyProduct(envelope productEnvelope) (productDecision, string, error) {
+	d, digest, err := c.verifyProductEnvelope(envelope)
+	if err == nil {
+		err = c.validateProductValidity(d)
+	}
+	return d, digest, err
+}
+func (c *controller) validateProductValidity(d productDecision) error {
+	issued, _ := productUTC(d.IssuedAt)
+	expires, _ := productUTC(d.ExpiresAt)
+	if expires.Sub(issued) > time.Duration(c.policy.ProductDecisionMaximumValiditySeconds)*time.Second {
+		return errors.New("DEMO_PRODUCT_TIME_INVALID")
+	}
+	return nil
+}
+
+// Verify original signed identity before lookup, but apply the current admission
+// window only after exact durable receipt lookup, never to an accepted replay.
+func (c *controller) verifyProductEnvelope(envelope productEnvelope) (productDecision, string, error) {
 	var d productDecision
 	invalid := errors.New("DEMO_PRODUCT_SIGNATURE_INVALID")
 	if c.product == nil || envelope.SchemaVersion != "demo-product-decision-envelope.v1" {
@@ -185,7 +203,7 @@ func (c *controller) verifyProduct(envelope productEnvelope) (productDecision, s
 	}
 	issued, ie := productUTC(d.IssuedAt)
 	expires, ee := productUTC(d.ExpiresAt)
-	if ie != nil || ee != nil || !expires.After(issued) || expires.Sub(issued) > 5*time.Minute {
+	if ie != nil || ee != nil || !expires.After(issued) {
 		return d, "", errors.New("DEMO_PRODUCT_TIME_INVALID")
 	}
 	if _, e = time.Parse(time.RFC3339Nano, d.ExpectedExpiry); e != nil {
@@ -258,7 +276,7 @@ func (c *controller) productSubject(ctx context.Context, item *lease) (map[strin
 	return map[string]interface{}{"leaseName": item.Metadata.Name, "leaseUID": item.Metadata.UID, "sourceRevision": s["sourceRevision"], "candidateDigest": s["candidateDigest"], "resultDigest": s["resultDigest"], "readyDigest": s["requestDigest"], "generation": item.Metadata.Generation, "expectedExpiry": c.expiresAt(item).UTC().Format(time.RFC3339Nano), "expectedRevision": item.Metadata.ResourceVersion, "url": s["url"], "runId": s["runId"]}, nil
 }
 func (c *controller) commitProduct(ctx context.Context, envelope productEnvelope) (map[string]interface{}, error) {
-	d, digest, err := c.verifyProduct(envelope)
+	d, digest, err := c.verifyProductEnvelope(envelope)
 	if err != nil {
 		return nil, err
 	}
@@ -271,6 +289,9 @@ func (c *controller) commitProduct(ctx context.Context, envelope productEnvelope
 	}
 	if receipt, e := productReceipt(&item, d.DecisionID, digest); e != nil || receipt != nil {
 		return receipt, e
+	}
+	if err := c.validateProductValidity(d); err != nil {
+		return nil, err
 	}
 	issued, _ := productUTC(d.IssuedAt)
 	expires, _ := productUTC(d.ExpiresAt)
@@ -336,13 +357,13 @@ func (c *controller) productHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "DEMO_PRODUCT_DISABLED_OR_ROUTE_INVALID", 404)
 		return
 	}
-	ctx, cancel := context.WithTimeout(r.Context(), 15*time.Second)
+	ctx, cancel := context.WithTimeout(r.Context(), time.Duration(c.policy.ProductHandlerTimeoutSeconds)*time.Second)
 	defer cancel()
 	if c.authenticateTransport(ctx, r.Header.Get("Authorization"), &readinessConfig{Audience: c.product.Audience, Producer: c.product.Producer}) != nil {
 		http.Error(w, "DEMO_PRODUCT_UNAUTHORIZED", 401)
 		return
 	}
-	raw, err := io.ReadAll(http.MaxBytesReader(w, r.Body, 16384))
+	raw, err := io.ReadAll(http.MaxBytesReader(w, r.Body, c.policy.ProductMaximumBodyBytes))
 	if err != nil {
 		http.Error(w, "DEMO_PRODUCT_REQUEST_INVALID", 400)
 		return

@@ -174,17 +174,25 @@ export async function gateway(context: OpenClawGatewayContext, target: OpenClawT
   return response.body;
 }
 
+export function sessionListRecentMinutes(target: OpenClawTarget): number {
+  if (!Number.isSafeInteger(target.sessionListMinimumRecentMinutes) || target.sessionListMinimumRecentMinutes < 1
+    || target.sessionListMinimumRecentMinutes > 2147483647 || !Number.isSafeInteger(target.sessionListPaddingMinutes)
+    || target.sessionListPaddingMinutes < 0 || target.sessionListPaddingMinutes > 2147483647) throw new Error('OPENCLAW_SESSION_LIST_LOOKBACK_INVALID');
+  return Math.max(target.sessionListMinimumRecentMinutes, Math.ceil(target.sessionTimeoutMs / 60_000) + target.sessionListPaddingMinutes);
+}
+
 async function cachedSessionList(
   context: OpenClawGatewayContext, target: OpenClawTarget, token: string,
 ): Promise<unknown> {
+  if (!Number.isSafeInteger(target.sessionListCacheTtlMs) || target.sessionListCacheTtlMs < 0) throw new Error('OPENCLAW_SESSION_LIST_CACHE_TTL_INVALID');
   let cache = SESSION_LIST_CACHE.get(context);
   if (!cache) { cache = new Map(); SESSION_LIST_CACHE.set(context, cache); }
-  const recentMinutes = Math.max(10, Math.ceil(target.sessionTimeoutMs / 60_000) + 5);
-  const key = `${target.endpoint}\u0000${target.controllerSessionKey ?? ''}\u0000${recentMinutes}`;
+  const recentMinutes = sessionListRecentMinutes(target);
+  const key = `${target.endpoint}\u0000${target.controllerSessionKey ?? ''}\u0000${recentMinutes}\u0000${target.sessionListCacheTtlMs}`;
   const current = cache.get(key);
   if (current && current.expiresAt > Date.now()) return current.response;
   const response = gateway(context, target, token, 'subagents', { action: 'list', recentMinutes });
-  cache.set(key, { expiresAt: Date.now() + 250, response });
+  cache.set(key, { expiresAt: Date.now() + target.sessionListCacheTtlMs, response });
   try { return await response; }
   catch (error) { if (cache.get(key)?.response === response) cache.delete(key); throw error; }
 }
@@ -207,10 +215,12 @@ async function wait(ms: number, signal: AbortSignal): Promise<void> {
 
 export async function readSessionState(context: OpenClawGatewayContext, target: OpenClawTarget,
   token: string, identity: OpenClawSessionIdentity, exactIdentity = false): Promise<OpenClawSessionState> {
+  if (target.runtime === 'subagent' && target.collectorMode && (!Number.isSafeInteger(target.collectorWaitTimeoutSeconds)
+    || target.collectorWaitTimeoutSeconds < 0 || target.collectorWaitTimeoutSeconds > 2147483)) throw new Error('OPENCLAW_COLLECTOR_WAIT_INVALID');
   const status = target.runtime === 'subagent'
       ? target.collectorMode
-        ? await gateway(context, target, token, 'agents_wait', { ids: [identity.runId], timeoutSeconds: 15 })
-        : await gateway(context, target, token, 'subagents', { action: 'list', recentMinutes: Math.max(10, Math.ceil(target.sessionTimeoutMs / 60_000) + 5) })
+        ? await gateway(context, target, token, 'agents_wait', { ids: [identity.runId], timeoutSeconds: target.collectorWaitTimeoutSeconds })
+        : await gateway(context, target, token, 'subagents', { action: 'list', recentMinutes: sessionListRecentMinutes(target) })
       : await gateway(context, target, token, 'session_status', { sessionKey: identity.sessionKey });
   return target.collectorMode ? collectorTerminal(status, identity)
       : terminal(status, identity, target.runtime === 'subagent', exactIdentity);
@@ -254,7 +264,7 @@ export async function cancelSession(context: OpenClawGatewayContext, target: Ope
 async function pollSessionIdentity(context: OpenClawGatewayContext, target: OpenClawTarget, token: string,
   identity: OpenClawSessionIdentity): Promise<string | undefined> {
   const raw = await gateway(context, target, token, 'subagents', {
-    action: 'list', recentMinutes: Math.max(10, Math.ceil(target.sessionTimeoutMs / 60_000) + 5),
+    action: 'list', recentMinutes: sessionListRecentMinutes(target),
   });
   return terminal(raw, identity, true, true).taskId;
 }

@@ -1,0 +1,122 @@
+{
+  "scope": "Fresh independent NONAUTHORED actual generated-root projection/conservation/checker review. Own Core definitions only identity/body conservation, NOT substantive semantic selfreview.",
+  "verdict": "CURRENT_PROJECTION_CONSERVED; MATERIAL_FAIL_CLOSED_CORE_PROJECTION_GUARD_CORRECTION_REQUIRED",
+  "globalC0Verdict": null,
+  "nativeAcceptance": false,
+  "materialFindings": [
+    {
+      "id": "GROOT-01",
+      "severity": "high",
+      "title": "Core registered source row/case identities are present but their projected properties and requirements are not guarded",
+      "locations": [
+        "docs/review/evidence/config-acceptance/author/check-matrix.py:55",
+        "docs/review/evidence/config-acceptance/author/check-matrix.py:76",
+        "docs/review/evidence/config-acceptance/author/check-matrix.py:227",
+        "docs/review/evidence/config-acceptance/author/check-matrix.py:244"
+      ],
+      "actualBaseline": "All source-provided keys/values currently match across13 Core rows/27 canonical cases,14 question bodies/links and60 aliases. Current generated root is not alleged to have material data drift.",
+      "reproduction": "With original canonical-question-fragment and question-link source files/hashes, required IDs and source registration unchanged, ACTUAL full check-matrix.py --structural returns exit0/errorCount0 for changing source-provided instanceScope or source.field of CMP-buster-engine-preparation.storeLockWaitSeconds; for replacing QC-FOUNDATION-FLOCK-WAIT-VAL priorState; and for removing F-VAL from that canonical case requirementIds. No observation resolver stub or source rewrite used.",
+      "why": "Mandatory Core source guard checks IDs and fragment registration; supplemental guard deeply preserves link/alias object and its question-ID set, but does not compare normalized projected row/case properties to the immutable fragment. Row checks verify whole source-file SHA and field presence, not exact original field coordinate. Supplemental22 native baseline requirements do not impose their retained requirements on the corresponding root canonical cases. Thus exact source input SHA can coexist with altered root meaning or dropped obligations.",
+      "evidence": [
+        "core-row-source-provided-instanceScope-tamper.stdout",
+        "core-row-source-field-coordinate-tamper.stdout",
+        "core-case-projection-priorstate-tamper.stdout",
+        "core-case-projection-requirement-loss.stdout",
+        "full-checker-controls-summary.json",
+        "check-full-mutants.py"
+      ],
+      "scopeInjectionQualification": "Original exploratory scope injection also passes, but scope was not a source-provided key on this row. It is not used as evidence of overwriting an original property; the existing instanceScope/source.field controls establish that independently.",
+      "requiredCorrection": "Add explicit source-to-root conservation guard for registered13 rows/27 cases: every source-provided key remains present with exact recursively equal value except precisely named documented normalization (e.g. reviewerConfirmation forced None); derived row aliases/class/requirements/cases/status/evidence and case normalized aliases/phase/source/result must match the actual parent projection contract. Preserve source required requirement IDs in root canonical cases, allow justified union additions without loss. Pin/check same source hashes before comparing. No new author, domain retuning or substantive Core definition change.",
+      "exactOracles": [
+        "Same actual frozen baseline and restored final roots pass structural0/native helper0; all raw13/27 keys and required tags match normalized parent contract.",
+        "Each existing row instanceScope change and nested source.field change rejects at a named registered Core projection/source-body conservation boundary, despite unchanged whole source file hash.",
+        "Replacing priorState or deleting F-VAL from QC-FOUNDATION-FLOCK-WAIT-VAL rejects at canonical property/requirement conservation boundary.",
+        "Missing originally present source keys and wrong normalized derived aliases must reject, rather than checking only source ID presence.",
+        "Original269 inactive native bodies/requirements/results/scopes,356 successors,14 links/60 aliases,105 pure package and all historical evidence remain untouched. Strict gate still fails full acceptance; no author truthy confirmation or bounded review becomes whole approval."
+      ]
+    }
+  ],
+  "verifiedActualProjection": {
+    "scope": "Projection identity/body conservation only; no substantive own Core definition review",
+    "nativeBodiesExact": 6201,
+    "directLinks": 5932,
+    "inactiveHistories": 269,
+    "historySuccessors": 356,
+    "unresolvedNativeMappingCount": 0,
+    "CoreOriginalRowPropertiesPreserved": 13,
+    "CoreOriginalCasePropertiesPreserved": 27,
+    "CoreLinkQuestionsExact": 14,
+    "CoreUnresolvedAliasesPreserved": 60,
+    "old22CaseBaselineRequirementsPreserved": 22,
+    "pureObservationBodiesSeparateExact": 105,
+    "pureObservationsNotPromotedToCanonicalBodies": true,
+    "reviewerConfirmationsRemainNone": true,
+    "nativeFRecoveryTaggedCasesPreserved": 0,
+    "projectionDrift": [],
+    "CoreFRecoveryTaggedRowsPreserved": 11,
+    "CoreFRecoveryTaggedCasesPreserved": 10,
+    "FRecoveryRegisteredAlias": "Exact original tag retained with new registry description D20/F-BIND; not removal or behavioral acceptance",
+    "CoreQuestionBodiesEqualOriginalSource": 14
+  },
+  "fullCheckerRuns": {
+    "structural": {
+      "exit": 0,
+      "errors": 0,
+      "rows": 2409,
+      "canonicalIds": 6726
+    },
+    "strict": {
+      "exit": 1,
+      "openObligations": 102679,
+      "scope": "Full unaccepted C0 gate; not a list of new integration findings."
+    },
+    "nativeHelper": {
+      "exit": 0,
+      "nativeBodies": 6201,
+      "direct": 5932,
+      "unlinkedInactive": 269,
+      "historicallyMapped": 269,
+      "unresolvedNativeMappingOnly": 0
+    },
+    "restored": {
+      "completeStructural": 0,
+      "publicNativeHelper": 0
+    },
+    "controls": {
+      "actualFullCheckerMutants": 27,
+      "intendedRejections": 22,
+      "escapedGuards": 5,
+      "materialOriginalPropertyEscapes": 4,
+      "exploratoryNonSourceScopeInjection": 1,
+      "noOpResolver": false
+    }
+  },
+  "supportedIntegration": [
+    "Every full run used actual ObservationReferences and all productive source/input digest guards. Initial35 snapshots verified, actual dependency hashes captured before first read and checked at end; no mocked/no-op checker component.",
+    "Historical expected histories loaded from unchanged independently guarded mapping,269 old native bodies and original requirements/results/scopes remain inactive with canonicalCaseId None;356 existing successors linked only via exact historical references.1052 historical reverse references separate from5932 operative native references; missing/tampered/unknown/promotion/count probes reject.",
+    "Runtime package omission, including removal from both inventory advertisements and matrix packages, rejects required-source guard. Native body scope change rejects complete source body equality. Mapping counts are explicitly269 unlinked/269 historical/0 unresolved, not case acceptance.",
+    "Core fragment registration,13row/27case omissions, supplemental package/source omission, question omission and alias loss reject. Actual14 original question bodies/link objects and60 unresolved aliases are conserved; strict rejects aliases and complete field closure. GROOT-01 addresses remaining root property/tag guard loss.",
+    "105 Delivery pure observations equal exact raw source body, source/spec/test digests checked by full checker; kept in definitionObservationPackages rather than canonical/native behavior bodies. Omission, source digest tamper and observation scope/result promotion reject; package reviewerConfirmation remains None. No native quota/deployment truth asserted.",
+    "Source author pending/truthy confirmation labels are not promoted by generator: all actual row/canonical reviewer confirmations, native mappingReview/package reviewerConfirmation, supplemental and pure-package reviewer confirmations are None. Strict remains102679 errors. This is actual projection evidence, not authority validation for a future arbitrary confirmation.",
+    "All original Core F-RECOVERY tags conserved (11rows/10cases, accounting for initial21 dangling errors), registry adds D20/F-BIND description instead of dropping tags. Earlier failed roots/duplicate-reference setup logs untouched."
+  ],
+  "inputIntegrity": {
+    "freeze": "input-freeze.json",
+    "beforeFirstReadDependencies": "opened-input-union.json",
+    "end": "end-input-integrity.json",
+    "rawInputs": 35,
+    "actualDependencies": 2152,
+    "drift": 0
+  },
+  "remaining": [
+    "GROOT-01 guard correction and fresh independent actual-root material recheck.",
+    "Separate Delivery corrected controller definition semantic review;105 raw pure observations/integration do not resolve original DCTRL findings by themselves.",
+    "Global inventory/source/case/field/consumer/native/physical proof and C0 acceptance still open."
+  ],
+  "actionsNotTaken": [
+    "consolidator/root/author/Core/Runtime/Delivery/production/test edits",
+    "substantive selfreview of Core domain/profile definitions",
+    "implementation future cases/native/controller/API/host/image/auth/model actions",
+    "delegation/commit/global verdict"
+  ]
+}

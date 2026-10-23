@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/check-icd-corrections.py", line 5, in <module>
+    parser=argparse.ArgumentParser();parser.add_argument('--residual',default=str(O/'residual-fragment.json'));args=parser.parse_args();r=json.loads(pathlib.Path(args.residual).read_text());gap_counts=collections.Counter(g['id'] for g in r['gaps']);duplicate_gap_ids=sorted(k for k,v in gap_counts.items() if v>1);check('Unique residual gap IDs; duplicates='+repr(duplicate_gap_ids),not duplicate_gap_ids)
+                                                                                                                                                                                                                                                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/check-icd-corrections.py", line 4, in check
+    assert predicate,name;checks.append(name)
+    ^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Unique residual gap IDs; duplicates=['CMP-ICD-MATERIAL-RECHECK']

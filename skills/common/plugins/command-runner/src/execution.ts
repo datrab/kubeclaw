@@ -1,3 +1,4 @@
+import type { CommandProcessCleanupPolicy } from './types.ts';
 import type { ChildProcessByStdio } from 'node:child_process';
 import type { Readable } from 'node:stream';
 import { CommandProcessGroup } from './process-group.ts';
@@ -15,14 +16,15 @@ export interface ExecutionLimits {
   readonly openFiles: number;
 }
 interface ExecutionOptions {
+  readonly processCleanup: CommandProcessCleanupPolicy;
   readonly child: ManagedChild;
+  readonly monitoring: Readonly<{maximumOutputRecords: number; sampleIntervalMs: number}>;
   readonly signal: AbortSignal;
   readonly limits: ExecutionLimits;
   readonly graceMs: number;
   readonly sandboxed: boolean;
   readonly cgroup: string | undefined;
 }
-const MAXIMUM_OUTPUT_RECORDS = 4096;
 
 export class CommandExecution {
   readonly result: Promise<Readonly<Record<string, unknown>>>;
@@ -43,12 +45,12 @@ export class CommandExecution {
 
   constructor(options: ExecutionOptions) {
     this.#options = options;
-    this.#group = new CommandProcessGroup(options.child, options.graceMs, options.cgroup);
+    this.#group = new CommandProcessGroup(options.child, options.graceMs, options.cgroup, options.processCleanup);
     this.result = new Promise((resolve, reject) => { this.#resolve = resolve; this.#reject = reject; });
     this.finished = new Promise((resolve, reject) => { this.#finishActive = resolve; this.#failActive = reject; });
     this.#timeout = setTimeout(() => this.#fail(new Error('COMMAND_TIMEOUT')), options.limits.maxExecutionMs);
     this.#timeout.unref();
-    this.#sampleTimer = setInterval(() => this.#sample(), 25);
+    this.#sampleTimer = setInterval(() => this.#sample(), options.monitoring.sampleIntervalMs);
     this.#sampleTimer.unref();
     options.signal.addEventListener('abort', this.#abort, { once: true });
     options.child.stdout.on('data', (chunk: Buffer) => this.#append('stdout', chunk));
@@ -106,7 +108,7 @@ export class CommandExecution {
     const last = this.#output.records.at(-1);
     if (last?.stream === stream) {
       this.#output.records[this.#output.records.length - 1] = { ...last, content: last.content + content };
-    } else if (this.#output.records.length >= MAXIMUM_OUTPUT_RECORDS) {
+    } else if (this.#output.records.length >= this.#options.monitoring.maximumOutputRecords) {
       this.#fail(new Error('COMMAND_OUTPUT_RECORD_LIMIT_EXCEEDED'));
     } else {
       this.#output.sequence += 1;

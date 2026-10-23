@@ -1,0 +1,474 @@
+{
+  "passed": 92,
+  "total": 92,
+  "negativeControls": [
+    {
+      "name": "missing RT-CORE-LEASE-MEMORY",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-PLATFORM-SCHEMAVERSION",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-PLATFORM-INSTALLATIONROOTS",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-PLATFORM-TRUSTEDBUILTINROOTS",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-PLATFORM-EXTERNALTRUST",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-PLATFORM-PROVIDERS",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-PLATFORM-GRANTS",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-PLATFORM-ADAPTERS",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-PLATFORM-ACTIVEADAPTERS",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-PLATFORM-OBSERVERS",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-PLATFORM-ISOLATION",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-PLATFORM-STORAGEROOT",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-PLATFORM-SHUTDOWNTIMEOUTMS",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-PLATFORM-EFFECTLOCKTTLMS",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-PLATFORM-ORCHESTRATORISSUERID",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-PLATFORM-ADMINISTRATIVEDECISIONISSUERS",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-REPORT-EVIDENCE-READ-ALLOWEDRUNIDS",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-STATE-READ-ALLOWEDNAMESPACES",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-STATE-APPEND-ALLOWEDNAMESPACES",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-ARTIFACTS-READ-ALLOWEDNAMESPACES",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-ARTIFACTS-WRITE-ALLOWEDNAMESPACES",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-RUNTIME-DISPATCH-ALLOWEDAGENTS",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-GIT-REPOSITORY-READ-ALLOWEDPREFIXES",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-GIT-WORKSPACE-CREATE-ALLOWEDROOTS",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-GIT-WORKSPACE-CREATE-ALLOWEDWORKSPACEROOTS",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-GIT-WORKSPACE-REMOVE-ALLOWEDROOTS",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-GIT-WORKSPACE-REMOVE-ALLOWEDWORKSPACEROOTS",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-GIT-COMMIT-ALLOWEDROOTS",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-GIT-MERGE-ALLOWEDROOTS",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-GIT-SYNC-ALLOWEDROOTS",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-SIGNAL-WAIT-ALLOWEDSIGNALTYPES",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-SIGNAL-WAIT-ALLOWEDISSUERIDS",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-OPERATOR-RECEIPT-ALLOWEDTARGETS",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-DEMO-HANDOFF-ALLOWEDNAMESPACES",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-OPERATOR-REQUEST-ALLOWEDTARGETS",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-TELEMETRY-EMIT-ALLOWEDEVENTPREFIXES",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-SECRETS-READ-ALLOWEDNAMES",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-NETWORK-HTTP-ALLOWEDORIGINS",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-COMMAND-EXECUTE-ALLOWEDEXECUTABLES",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-COMMAND-EXECUTE-ALLOWEDWORKINGROOTS",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-CONTAINER-BUILD-ALLOWEDPLATFORMS",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-CONTAINER-BUILD-ALLOWEDWORKSPACEROOTS",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-KUBERNETES-FIXTURE-ALLOWEDNAMESPACEPREFIXES",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-KUBERNETES-FIXTURE-ALLOWEDWORKSPACEROOTS",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-KUBERNETES-EXPOSURE-ALLOWEDNAMESPACEPREFIXES",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-LINT-EXECUTE-ALLOWEDPROJECTS",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-LINT-EXECUTE-ALLOWEDROOTS",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-LINT-EXECUTE-ALLOWEDPOLICYROOTS",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-TEST-PLAN-EVIDENCE-ALLOWEDNAMESPACES",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-TEST-PLAN-EXECUTE-ALLOWEDROOTS",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-TRANSPORT-PUBLISH-ALLOWEDTARGETS",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-GRANT-AGENT-EVENTS-SUBSCRIBE-ALLOWEDSOURCES",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-OBSERVER-LEASE-MEMORY",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing RT-RESOLVER-RETRY-DEFAULT",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "original id",
+      "rejected": true,
+      "error": "'foreign'"
+    },
+    {
+      "name": "original original",
+      "rejected": true,
+      "error": "Core original drift: RT-CORE-LEASE-MEMORY"
+    },
+    {
+      "name": "original originalObjectSha256",
+      "rejected": true,
+      "error": "Core original drift: RT-CORE-LEASE-MEMORY"
+    },
+    {
+      "name": "original class",
+      "rejected": true,
+      "error": "Core original drift: RT-CORE-LEASE-MEMORY"
+    },
+    {
+      "name": "original caseIds",
+      "rejected": true,
+      "error": "Core original drift: RT-CORE-LEASE-MEMORY"
+    },
+    {
+      "name": "original owner",
+      "rejected": true,
+      "error": "Core original drift: RT-CORE-LEASE-MEMORY"
+    },
+    {
+      "name": "duplicate original",
+      "rejected": true,
+      "error": "Core54 original roster drift"
+    },
+    {
+      "name": "missing central stageMemoryBytes",
+      "rejected": true,
+      "error": "'stageMemoryBytes'"
+    },
+    {
+      "name": "missing central schema stageMemoryBytes",
+      "rejected": true,
+      "error": "'stageMemoryBytes'"
+    },
+    {
+      "name": "missing central observerMemoryBytes",
+      "rejected": true,
+      "error": "'observerMemoryBytes'"
+    },
+    {
+      "name": "missing central schema observerMemoryBytes",
+      "rejected": true,
+      "error": "'observerMemoryBytes'"
+    },
+    {
+      "name": "missing platform schema schemaVersion",
+      "rejected": true,
+      "error": "'schemaVersion'"
+    },
+    {
+      "name": "missing platform schema installationRoots",
+      "rejected": true,
+      "error": "'installationRoots'"
+    },
+    {
+      "name": "missing platform schema trustedBuiltinRoots",
+      "rejected": true,
+      "error": "'trustedBuiltinRoots'"
+    },
+    {
+      "name": "missing platform schema externalTrust",
+      "rejected": true,
+      "error": "'externalTrust'"
+    },
+    {
+      "name": "missing platform schema providers",
+      "rejected": true,
+      "error": "'providers'"
+    },
+    {
+      "name": "missing platform schema grants",
+      "rejected": true,
+      "error": "'grants'"
+    },
+    {
+      "name": "missing platform schema adapters",
+      "rejected": true,
+      "error": "'adapters'"
+    },
+    {
+      "name": "missing platform schema activeAdapters",
+      "rejected": true,
+      "error": "'activeAdapters'"
+    },
+    {
+      "name": "missing platform schema observers",
+      "rejected": true,
+      "error": "'observers'"
+    },
+    {
+      "name": "missing platform schema isolation",
+      "rejected": true,
+      "error": "'isolation'"
+    },
+    {
+      "name": "missing platform schema storageRoot",
+      "rejected": true,
+      "error": "'storageRoot'"
+    },
+    {
+      "name": "missing platform schema shutdownTimeoutMs",
+      "rejected": true,
+      "error": "'shutdownTimeoutMs'"
+    },
+    {
+      "name": "missing platform schema effectLockTtlMs",
+      "rejected": true,
+      "error": "'effectLockTtlMs'"
+    },
+    {
+      "name": "missing platform schema orchestratorIssuerId",
+      "rejected": true,
+      "error": "'orchestratorIssuerId'"
+    },
+    {
+      "name": "missing platform schema administrativeDecisionIssuers",
+      "rejected": true,
+      "error": "'administrativeDecisionIssuers'"
+    },
+    {
+      "name": "wrong protocol identity",
+      "rejected": true,
+      "error": "Original protocol invariant drift"
+    },
+    {
+      "name": "full roster fields loss",
+      "rejected": true,
+      "error": "Incomplete fields"
+    },
+    {
+      "name": "full roster cases loss",
+      "rejected": true,
+      "error": "Incomplete cases"
+    },
+    {
+      "name": "full roster requirements loss",
+      "rejected": true,
+      "error": "Incomplete requirements"
+    },
+    {
+      "name": "supplement duplicate",
+      "rejected": true,
+      "error": "Core54 source partition drift"
+    },
+    {
+      "name": "supplement missing",
+      "rejected": true,
+      "error": "Core54 source partition drift"
+    },
+    {
+      "name": "supplement original",
+      "rejected": true,
+      "error": "Core54 original/acceptance drift: RT-CORE-LEASE-MEMORY"
+    },
+    {
+      "name": "supplement classification",
+      "rejected": true,
+      "error": "Core54 original/acceptance drift: RT-CORE-LEASE-MEMORY"
+    },
+    {
+      "name": "supplement cases",
+      "rejected": true,
+      "error": "Core54 original/acceptance drift: RT-CORE-LEASE-MEMORY"
+    },
+    {
+      "name": "supplement acceptance",
+      "rejected": true,
+      "error": "Core54 original/acceptance drift: RT-CORE-LEASE-MEMORY"
+    },
+    {
+      "name": "supplement fabricated author",
+      "rejected": true,
+      "error": "Core54 invented central author"
+    }
+  ],
+  "restoredDeterministic": true,
+  "originalFields": 54,
+  "existingCentralLeaseMemoryJoins": 2,
+  "originalProtocolInvariants": 1,
+  "centralReceivingResiduals": 51,
+  "fullRoster": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50
+  },
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "independentReview": "OPEN; author controls only"
+}

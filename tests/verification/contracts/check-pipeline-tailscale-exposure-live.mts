@@ -1,9 +1,17 @@
-import { loadSwarmSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
+import { captureSwarmSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
 import assert from 'node:assert/strict';
+import { readTestPipeline, busterRuntimeSelection } from '../../fixtures/config/pipeline-components.mjs';
+import { validateBusterClusterInvokerSettings } from '../../../skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts';
 import { TailscaleExposureCapabilityInvoker, NetworkHttpCapabilityInvoker } from '@kubeclaw/buster-engine';
 
 if (process.env.KUBECLAW_TAILSCALE_EXPOSURE_LIVE !== '1') throw new Error('KUBECLAW_TAILSCALE_EXPOSURE_LIVE=1 is required');
-const clusterEndpoint = loadSwarmSettings(process.env).buster.clusterInvokers.shared;
+// Locator transports the complete current central file-set; it is not an author.
+const file = process.env.SWARM_CONFIG;
+if (!file) throw new Error('SWARM_CONFIG_PATH_REQUIRED');
+const selected = busterRuntimeSelection(readTestPipeline(file));
+const component = captureSwarmSettings(file, selected).components['buster-engine'];
+assert.ok(component);
+const clusterEndpoint = validateBusterClusterInvokerSettings(component.settings.clusterInvokers).shared;
 const leaseName = process.env.KUBECLAW_TAILSCALE_LIVE_LEASE;
 const namespace = process.env.KUBECLAW_TAILSCALE_LIVE_NAMESPACE;
 const serviceName = process.env.KUBECLAW_TAILSCALE_LIVE_SERVICE;

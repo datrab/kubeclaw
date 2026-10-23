@@ -1,0 +1,10 @@
+autoreview target: local
+branch: master
+engine: codex
+tools: on
+web_search: off
+bundle: 322300 chars
+codex engine failed (1)
+WARNING: proceeding, even though we could not create PATH aliases: Read-only file system (os error 30)
+Error: failed to initialize in-process app-server client: Read-only file system (os error 30)
+

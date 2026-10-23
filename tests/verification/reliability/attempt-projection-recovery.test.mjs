@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY, TEST_CORE_POLICY_SELECTION } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -10,7 +11,7 @@ import { FileJournal } from '../../../skills/nova/core/state/journal.ts';
 
 function platform(root, production = false) {
   const roots = [path.resolve('tests/fixtures/plugin-system-v2'), ...(production ? [path.resolve('skills/common/plugins'), path.resolve('skills/nova/plugins')] : [])];
-  return { schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: roots, trustedBuiltinRoots: roots,
+  return {corePolicySelection: TEST_CORE_POLICY_SELECTION, schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: roots, trustedBuiltinRoots: roots,
     externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} }, providers: {}, grants: {}, adapters: {},
     activeAdapters: [], observers: {}, storageRoot: path.join(root, 'state'), shutdownTimeoutMs: 5000,
     orchestratorIssuerId: 'nova', administrativeDecisionIssuers: [] };
@@ -40,7 +41,7 @@ for (const mode of ['orchestrator_required', 'wait', 'retry']) {
       for (let index = completed; index < original.length; index++) {
         truncate(file, original, index);
         fs.rmSync(path.join(runRoot(config.storageRoot, runId), 'signals.jsonl'), { force: true });
-        const wait = recoverStageStates(definition, new FileJournal(file).records(), runId, 'nova').get('review').wait;
+        const wait = recoverStageStates(definition, new FileJournal(file, TEST_CORE_POLICY.journalAppendLockTimeoutMs).records(), runId, 'nova').get('review').wait;
         assert.deepEqual(wait, first.stages.get('review').wait, 'live and recovered wait identity must match');
         await assert.rejects(recoverPipelineV2(config, definition, runId), /RECOVERY_SIGNAL_REQUIRED/);
         const signal = { schemaVersion: 'resume-signal.v2', signalId: `signal:${mode}:${index}`, idempotencyKey: `key:${mode}:${index}`,

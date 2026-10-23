@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -76,7 +77,7 @@ test('implementation independently requires the admitted producer after a genuin
 for(const mutate of [false,true])test(`compiled findings require bound operator approval before Git sync; source changes=${mutate}`,async()=>{
   await scenario({review:true,clean:false},async f=>{
     const paused=await runPipelineV2(f.platform,f.definition,f.runId);
-    const waitingRecords=new FileJournal(path.join(runRoot(f.platform.storageRoot,f.runId),'events.jsonl')).records();
+    const waitingRecords=new FileJournal(path.join(runRoot(f.platform.storageRoot,f.runId),'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs).records();
     assert.equal(paused.status,'waiting',JSON.stringify({stages:[...paused.stages],reasons:waitingRecords.map(({entry})=>entry.payload?.reason).filter(Boolean)}));
     assert.equal(f.messages.length,1,'original operator adapter delivered the approval request to localhost');
     assert.equal(f.dispatches.length,1,'only the bound architecture review ran');
@@ -95,7 +96,7 @@ for(const mutate of [false,true])test(`compiled findings require bound operator 
     assert.equal(result.status,mutate?'blocked':'succeeded',JSON.stringify([...result.stages]));
     assert.equal(f.dispatches.length,mutate?1:3,'stale approval cannot reach implementation');
     if(mutate){
-      const records=new FileJournal(path.join(runRoot(f.platform.storageRoot,f.runId),'events.jsonl')).records();
+      const records=new FileJournal(path.join(runRoot(f.platform.storageRoot,f.runId),'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs).records();
       assert.ok(records.some(({entry})=>String(entry.payload?.reason?.message).includes('REVIEW_SUBJECT_STALE')),'original source recheck rejected approval');
       assert.equal(fs.existsSync(path.join(f.repository,'modules/api/FORGE.md')),false,'stale source cannot sync');
       assert.equal(fs.existsSync(path.join(f.repository,'api.mjs')),false);

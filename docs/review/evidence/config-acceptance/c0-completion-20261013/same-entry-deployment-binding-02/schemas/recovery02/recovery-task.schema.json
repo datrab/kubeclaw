@@ -1,0 +1,187 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kubeclaw.invalid/proposed/recovery-policy-profile-02/task",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "taskAuthorityRef"
+      ],
+      "properties": {
+        "operation": {
+          "const": "backup"
+        },
+        "taskAuthorityRef": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "artifactSha256",
+            "memberPointer"
+          ],
+          "properties": {
+            "artifactSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$",
+              "minLength": 64,
+              "maxLength": 64
+            },
+            "memberPointer": {
+              "type": "string",
+              "pattern": "^/receipts/(?:0|[1-9][0-9]*)(?![\\s\\S])"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "taskAuthorityRef"
+      ],
+      "properties": {
+        "operation": {
+          "const": "scheduled"
+        },
+        "taskAuthorityRef": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "artifactSha256",
+            "memberPointer"
+          ],
+          "properties": {
+            "artifactSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$",
+              "minLength": 64,
+              "maxLength": 64
+            },
+            "memberPointer": {
+              "type": "string",
+              "pattern": "^/receipts/(?:0|[1-9][0-9]*)(?![\\s\\S])"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "taskAuthorityRef"
+      ],
+      "properties": {
+        "operation": {
+          "const": "verify"
+        },
+        "taskAuthorityRef": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "artifactSha256",
+            "memberPointer"
+          ],
+          "properties": {
+            "artifactSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$",
+              "minLength": 64,
+              "maxLength": 64
+            },
+            "memberPointer": {
+              "type": "string",
+              "pattern": "^/receipts/(?:0|[1-9][0-9]*)(?![\\s\\S])"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "directory",
+        "taskAuthorityRef"
+      ],
+      "properties": {
+        "operation": {
+          "const": "restore"
+        },
+        "directory": {
+          "type": "string",
+          "pattern": "^/backups/litellm/backup-[^/\u0000]*$"
+        },
+        "taskAuthorityRef": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "artifactSha256",
+            "memberPointer"
+          ],
+          "properties": {
+            "artifactSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$",
+              "minLength": 64,
+              "maxLength": 64
+            },
+            "memberPointer": {
+              "type": "string",
+              "pattern": "^/receipts/(?:0|[1-9][0-9]*)(?![\\s\\S])"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "directory",
+        "sourceVersion",
+        "taskAuthorityRef"
+      ],
+      "properties": {
+        "operation": {
+          "const": "migrate"
+        },
+        "directory": {
+          "type": "string",
+          "pattern": "^/backups/litellm/backup-[^/\u0000]*$"
+        },
+        "sourceVersion": {
+          "type": "integer",
+          "minimum": 100000,
+          "maximum": 9999999999999
+        },
+        "taskAuthorityRef": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "artifactSha256",
+            "memberPointer"
+          ],
+          "properties": {
+            "artifactSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$",
+              "minLength": 64,
+              "maxLength": 64
+            },
+            "memberPointer": {
+              "type": "string",
+              "pattern": "^/receipts/(?:0|[1-9][0-9]*)(?![\\s\\S])"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "finding": "BC3-R02-01",
+  "status": "proposed; fresh independent material review required",
+  "soleSource": "existing operator-owned registry-clients.v1 receipt; no second writer",
+  "generatedPeerFields": [
+    "registryBaseUrl",
+    "registryReference",
+    "registryCaFile",
+    "registryUsernameEnvironmentVariable",
+    "registryPasswordEnvironmentVariable"
+  ],
+  "transport": "runtime emits no transport field: infer http/https from normalized origin; captured original receipt must carry matching explicit https/http-lab transport and equal host/reference. Source origin predicate checks producer normalization; admission rejects mismatch before effects.",
+  "authentication": "HTTPS requires both actual producer ENV names ^[A-Z][A-Z0-9_]+$; HTTP-lab forbids either name and must be anonymous. No value defaults. Source may accept decoder-only broader names but generated source-producer domain governs this projection.",
+  "customTrust": "HTTPS may carry registryCaFile iff original source carries paired worker caFile/nodeCaFile. Runtime emits only worker caFile, not nodeCaFile. Preserve original resolved paths and source revisions; do not add NetworkHttp caFile option. Empty paired source trust strings emit no CA; absolute nonempty paths supported.",
+  "receivers": {
+    "scanner": "scannerRegistry resolves registryCaFile to registryAccess.caFile; SecurityScan constructor checks readable and invocation passes --cacert. HTTPS real positive constructor/command is external, not exercised.",
+    "buildkit": "existing generated TOML uses worker caFile; containerBuildOptions does not forward a CA option. Repeated generated refs equal original peer.",
+    "node": "nodeConfiguration configs[host].tls.ca_file consumes nodeCaFile for the node container registry client (containerd), distinct from worker CA and distinct from Node.js fetch. Authentic node-installed trust receipt needed; not proof of NetworkHttp trust.",
+    "networkHealth": "RegistryHealthOptions declares only origin/username/password; registryHealthConfiguration forwards those only; NetworkHttp invokes standard fetch. Existing runtime/Node.js trust authority must be authenticated for custom-CA HTTPS (process/image trust delivery), not containerd nodeCaFile equivalence or an invented caFile option. No local implementation of custom trust delivery is proved. If active HTTPS health needs custom trust and authentic applicable Node.js trust receipt is absent, activation stops before effect; source profile remains shape-supported and archived. This does not exclude public anonymous HTTP health.",
+    "HTTPscanner": "scannerRegistry returns unsupportedHttpRegistry for anonymous HTTP. SecurityScan activation throws SECURITY_SCAN_HTTP_LAB_UNSUPPORTED for matched HTTP image; preserve source branch, archive explicit incompatibility before effects instead of excluding HTTP peer from schema."
+  },
+  "admission": "Capture original registry receipt identity/root owner/provider revision, selected generation/role, worker and Node trust references with authorized original roots, regular no-follow resolution/ownership/size budget, content revision/digest and read-drift checks. Normalize path under each explicit original granted root (no escape, no symlink traversal), no arbitrary new root or writer. Root equality is semantic admission beyond schema. Historical stored/archive source capture precedes current authority at replay/submit/bootstrap/queue/start/cancel/evidence/result per carried contract; source/CA drift rejects before effects, never substitutes current trust into historical A. These authentic receipts remain missing external inputs.",
+  "caseLineage": "future-case-joins.json original IDs/bodies/cases preserved; new reference oracles strengthen existing provider registry/securityScan/containerBuild/networkHttp and historical archive gates, no result reclassification."
+}

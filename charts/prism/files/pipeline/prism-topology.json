@@ -1,0 +1,214 @@
+{
+  "schemaVersion": "pipeline-prism-chart-projection.v1",
+  "generatedFrom": "config/pipeline.config.json",
+  "generationDigest": "sha256:58c4a15d908a6781b326fcc2a1a77a8b6ed3f6a46f45d557c595f1828b389db3",
+  "deployment": {
+    "namespace": "kubeclaw",
+    "releaseName": "prism"
+  },
+  "profile": "standard",
+  "features": {
+    "observability": true,
+    "buster": true,
+    "discord_alerts": true
+  },
+  "tuning": {
+    "safety_margins": "high",
+    "retention": "high",
+    "alerts": "rich",
+    "logs": "verbose",
+    "checks": "strict",
+    "determinism": "strict"
+  },
+  "overrides": {},
+  "operator": {
+    "prism": {
+      "control": {
+        "pipelinePreferenceSubject": null,
+        "artifactRoot": "/var/lib/prism/artifacts",
+        "studioPublicUrl": "https://prism-studio",
+        "port": 8080,
+        "dispatchTimeoutMs": 900000,
+        "maximumJsonBodyBytes": 2000000,
+        "maximumArtifactUploadBodyBytes": 8500000,
+        "maximumArtifactBytes": 6000000,
+        "maximumRenderAssetBytes": 6000000,
+        "maximumDispatchBodyBytes": 2000000,
+        "ingestionAcquireTimeoutMs": 30000,
+        "ingestionCleanupTimeoutMs": 10000,
+        "maximumInternalEvidenceBytes": 134217728,
+        "sessionLifetimeSeconds": 900,
+        "ingestionUrl": "http://prism-ingestion:8080",
+        "workerUrl": "http://127.0.0.1:18081",
+        "controlInternalUrl": "http://127.0.0.1:18080",
+        "maximumProductInputBytes": 32000,
+        "productControllerTimeoutMs": 15000,
+        "maximumProductControllerResponseBytes": 1000000,
+        "productDecisionHistoryLimit": 100,
+        "maximumProductControllerTokenCharacters": 64000,
+        "productDecisionLifetimeMs": 300000,
+        "nativeAttemptLifetimeMs": 600000,
+        "nativeAttemptTimeoutMs": 300000,
+        "nativeAttemptCleanupTimeoutMs": 10000,
+        "nativeAttemptLogBytes": 1048576,
+        "nativeAttemptResultBytes": 16777216,
+        "nativeAttemptEvidenceBytes": 134217728,
+        "nativeAttemptEvidenceFiles": 64,
+        "corpusSearchDefaultLimit": 10,
+        "corpusSearchMaximumLimit": 50,
+        "corpusSourceFamilyDefaultLimit": 2,
+        "corpusSourceFamilyMaximumLimit": 10,
+        "ingestionServer": {
+          "port": 8080,
+          "quarantineRoot": "/quarantine",
+          "quarantineTtlMs": 3600000,
+          "reaperIntervalMs": 60000,
+          "maximumRequestBytes": 2000000,
+          "maximumSourceBytes": 6000000,
+          "sourceRequestTimeoutMs": 15000,
+          "maximumRedirects": 3,
+          "allowedMediaTypes": [
+            "application/json",
+            "text/html",
+            "text/plain",
+            "image/png",
+            "image/jpeg",
+            "image/webp",
+            "image/svg+xml",
+            "font/woff2"
+          ]
+        },
+        "maximumArtifactAcknowledgmentBytes": 8192,
+        "agentLauncher": {
+          "attemptLifetimeMs": 960000,
+          "limits": {
+            "timeoutMs": 900000,
+            "cleanupTimeoutMs": 10000,
+            "logBytes": 1048576,
+            "resultBytes": 1048576,
+            "evidenceBytes": 2097152,
+            "evidenceFiles": 2
+          },
+          "terminationGraceMs": 1000
+        },
+        "databaseBootstrap": {
+          "connectionTimeoutMs": 5000,
+          "maximumAttempts": 60,
+          "retryDelayMs": 2000
+        },
+        "agentBridge": {
+          "port": 18080,
+          "controlUrl": "http://127.0.0.1:28080",
+          "maximumRequestBytes": 2000000,
+          "dispatchTimeoutMs": 30000,
+          "controlRequestTimeoutMs": 10000,
+          "pollIntervalMs": 1000
+        },
+        "agentToolControlUrl": "http://127.0.0.1:28080",
+        "corpusRanking": {
+          "schemaVersion": "corpus-ranking.v1",
+          "candidateFloor": 100,
+          "candidateMultiplier": 10,
+          "rrfDamping": 60
+        },
+        "sessionDefaultRoles": [
+          "editor"
+        ],
+        "productDecisionsEnabled": false
+      },
+      "studio": {
+        "port": 8080,
+        "controlTimeoutMs": 30000,
+        "controlUrl": "http://prism-control:8080",
+        "maximumRequestBodyBytes": 2000000,
+        "browserPolicy": {
+          "maximumPreviewAssetBytes": 6000000,
+          "previewAssetTimeoutMs": 30000,
+          "roundPolling": {
+            "maximumAttempts": 30,
+            "intervalMs": 2000
+          },
+          "revisionPolling": {
+            "maximumAttempts": 300,
+            "intervalMs": 2000
+          },
+          "initialDirectionPolling": {
+            "maximumAttempts": 300,
+            "intervalMs": 2000
+          }
+        }
+      },
+      "worker": {
+        "port": 8080,
+        "maximumActiveRequests": 16,
+        "maximumProbeRequests": 4,
+        "maximumConnections": 128,
+        "requestTimeoutMs": 120000,
+        "shutdownTimeoutMs": 120000,
+        "maximumInputBytes": 16777216
+      },
+      "native": {
+        "resourcePolicy": {
+          "cpuTimeMs": 60000,
+          "memoryBytes": 8589934592,
+          "tasks": 2048
+        },
+        "maximumResultBytes": 67108864,
+        "enginePolicy": {
+          "cache": {
+            "maximumInFlight": 4,
+            "maximumCompletedEntries": 32,
+            "maximumCompletedBytes": 16777216
+          },
+          "maximumIngestTextCharacters": 200000,
+          "maximumAssetSourceCharacters": 16000000,
+          "render": {
+            "schemaVersion": "prism-render-policy.v1",
+            "widths": {
+              "compact": 390,
+              "regular": 768,
+              "wide": 1440
+            },
+            "height": 1000,
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "reducedMotion": "reduce"
+          },
+          "schemaVersion": "prism-engine-policy.v2"
+        },
+        "supervisor": {
+          "uid": 1000,
+          "gid": 1000,
+          "maximumOwnershipRecords": 65536,
+          "maximumOwnershipBytes": 67108864,
+          "maximumOutputBytes": 33554432,
+          "maximumJournalBytes": 68719476736,
+          "pollIntervalMs": 20,
+          "drainTimeoutMs": 10000,
+          "closeTimeoutMs": 105000
+        },
+        "dispatchTimeoutMs": 900000
+      },
+      "ingestion": {
+        "port": 8080,
+        "quarantineRoot": "/quarantine",
+        "quarantineTtlMs": 3600000,
+        "reaperIntervalMs": 60000,
+        "maximumRequestBytes": 2000000,
+        "maximumSourceBytes": 6000000,
+        "sourceRequestTimeoutMs": 15000,
+        "maximumRedirects": 3,
+        "allowedMediaTypes": [
+          "application/json",
+          "text/html",
+          "text/plain",
+          "image/png",
+          "image/jpeg",
+          "image/webp",
+          "image/svg+xml",
+          "font/woff2"
+        ]
+      }
+    }
+  }
+}

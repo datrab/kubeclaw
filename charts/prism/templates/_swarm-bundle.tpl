@@ -1,1 +1,0 @@
-../../kubeclaw/templates/_swarm-config.tpl

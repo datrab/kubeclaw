@@ -1,0 +1,173 @@
+{
+  "scope": "pure immutable root copies and exact code/helper blocks, no root-on-disk mutation",
+  "observations": [
+    {
+      "id": "immutable6606-plus-reviewed-histories",
+      "result": "positive",
+      "counts": {
+        "unlinkedNativeCaseCount": 269,
+        "historicallyMappedNativeCaseCount": 269,
+        "unresolvedNativeCaseCount": 0
+      }
+    },
+    {
+      "id": "history-forward-omitted",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:projection historical set omission/addition"
+    },
+    {
+      "id": "whole-history-native-link-omitted",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:projection historical set omission/addition"
+    },
+    {
+      "id": "duplicate-native-link",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:projection duplicate native link"
+    },
+    {
+      "id": "history-acceptance-promoted",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:projection reviewed mapping drift: RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING"
+    },
+    {
+      "id": "predecessor-directly-reactivated",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:projection reactivates predecessor: RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING"
+    },
+    {
+      "id": "predecessor-added-to-canonical-body",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:projection reactivates predecessor: RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING"
+    },
+    {
+      "id": "successor-omitted",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:projection dangling successor: RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-GRADE-CONTRACT"
+    },
+    {
+      "id": "reverse-tamper-sourcePath",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:projection missing/duplicate/changed reverse link: RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING"
+    },
+    {
+      "id": "reverse-tamper-sourceSha256",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:projection missing/duplicate/changed reverse link: RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING"
+    },
+    {
+      "id": "reverse-tamper-mapPath",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:projection missing/duplicate/changed reverse link: RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING"
+    },
+    {
+      "id": "reverse-tamper-mapSha256",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:projection missing/duplicate/changed reverse link: RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING"
+    },
+    {
+      "id": "reverse-tamper-countsTowardAcceptance",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:projection missing/duplicate/changed reverse link: RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING"
+    },
+    {
+      "id": "reverse-tamper-scope",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:projection missing/duplicate/changed reverse link: RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING"
+    },
+    {
+      "id": "reverse-omitted",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:projection missing/duplicate/changed reverse link: RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING"
+    },
+    {
+      "id": "reverse-duplicate",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:projection missing/duplicate/changed reverse link: RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING"
+    },
+    {
+      "id": "unknown-reverse-packageId",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:projection unknown historical package"
+    },
+    {
+      "id": "unknown-reverse-nativeCaseId",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:projection unknown historical predecessor"
+    },
+    {
+      "id": "unrelated-reverse-tuple",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:projection reverse reference identity/binding drift: RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING"
+    },
+    {
+      "id": "count-unlinkedNativeCaseCount",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:projection advertised count drift: unlinkedNativeCaseCount"
+    },
+    {
+      "id": "count-historicallyMappedNativeCaseCount",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:projection advertised count drift: historicallyMappedNativeCaseCount"
+    },
+    {
+      "id": "count-unresolvedNativeCaseCount",
+      "result": "intended-rejection",
+      "error": "HISTORICAL_MAPPING:projection advertised count drift: unresolvedNativeCaseCount"
+    },
+    {
+      "id": "exact-native-block-structural-positive",
+      "result": "positive",
+      "limit": "Not full checker/global root. Existing observation-log checks are outside new block review and adapted no-op; actual identity/history loading executes."
+    },
+    {
+      "id": "exact-native-block-package-omitted",
+      "result": "intended-rejection",
+      "errors": [
+        "native package presence differs between inventory and matrix",
+        "required productive Runtime native specification package missing/wrong source",
+        "case RT-351419f2c26e2696-CURRENT-SCHEMA-FIELD: native reference package missing",
+        "case RT-351419f2c26e2696-NETWORK05-DEFINITION: native reference package missing"
+      ]
+    },
+    {
+      "id": "exact-native-block-both-package-and-advertisement-omitted",
+      "result": "intended-rejection",
+      "errors": [
+        "required productive Runtime native specification package missing/wrong source",
+        "case RT-351419f2c26e2696-CURRENT-SCHEMA-FIELD: native reference package missing",
+        "case RT-351419f2c26e2696-NETWORK05-DEFINITION: native reference package missing",
+        "case RT-351419f2c26e2696-NETWORK05-CONTRACT: native reference package missing"
+      ]
+    },
+    {
+      "id": "exact-native-block-forward-history-omitted",
+      "result": "intended-rejection",
+      "errors": [
+        "native historical projection: HISTORICAL_MAPPING:projection historical set omission/addition"
+      ]
+    },
+    {
+      "id": "exact-native-block-unknown-reverse-link",
+      "result": "intended-rejection",
+      "errors": [
+        "native historical projection: HISTORICAL_MAPPING:projection unknown historical package"
+      ]
+    },
+    {
+      "id": "strict-native-block-still-rejects-acceptance",
+      "result": "positive",
+      "strictErrors": 5794,
+      "limit": "Full checker not run on ungenerated final root; native review gate demonstrated only."
+    },
+    {
+      "id": "restored-projection",
+      "result": "positive"
+    }
+  ],
+  "counts": {
+    "total": 29,
+    "negative": 25,
+    "positive": 4
+  }
+}

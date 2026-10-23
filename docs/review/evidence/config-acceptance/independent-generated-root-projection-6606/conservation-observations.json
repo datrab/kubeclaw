@@ -1,0 +1,22 @@
+{
+  "scope": "Projection identity/body conservation only; no substantive own Core definition review",
+  "nativeBodiesExact": 6201,
+  "directLinks": 5932,
+  "inactiveHistories": 269,
+  "historySuccessors": 356,
+  "unresolvedNativeMappingCount": 0,
+  "CoreOriginalRowPropertiesPreserved": 13,
+  "CoreOriginalCasePropertiesPreserved": 27,
+  "CoreLinkQuestionsExact": 14,
+  "CoreUnresolvedAliasesPreserved": 60,
+  "old22CaseBaselineRequirementsPreserved": 22,
+  "pureObservationBodiesSeparateExact": 105,
+  "pureObservationsNotPromotedToCanonicalBodies": true,
+  "reviewerConfirmationsRemainNone": true,
+  "nativeFRecoveryTaggedCasesPreserved": 0,
+  "projectionDrift": [],
+  "CoreFRecoveryTaggedRowsPreserved": 11,
+  "CoreFRecoveryTaggedCasesPreserved": 10,
+  "FRecoveryRegisteredAlias": "Exact original tag retained with new registry description D20/F-BIND; not removal or behavioral acceptance",
+  "CoreQuestionBodiesEqualOriginalSource": 14
+}

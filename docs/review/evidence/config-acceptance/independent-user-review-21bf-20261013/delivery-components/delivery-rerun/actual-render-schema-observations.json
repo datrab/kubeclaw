@@ -1,0 +1,319 @@
+{
+  "scope": "actual offline pure current source render/pinned strict definitions only; failed raw kept; no native/API/auth/host/business actions",
+  "baseline": "21bf51bc2075abec1191fdc091952492b6cb484e",
+  "records": [
+    {
+      "profile": {
+        "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/kubeclaw-A.json",
+        "sha256": "f99fa2ab20b4e92683f4e4b486156b3b7f6a6bb548e4682596b9c47f9165116a"
+      },
+      "scope": "actual offline currentChart full-document source render only",
+      "render": {
+        "argv": [
+          "helm",
+          "template",
+          "dlv-nova",
+          "charts/kubeclaw",
+          "--namespace",
+          "kubeclaw",
+          "--kube-version",
+          "1.35.6",
+          "--values",
+          "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/kubeclaw-A.json"
+        ],
+        "exitCode": 0,
+        "stdout": {
+          "path": "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/nova-A-chart-supported.render.yaml",
+          "sha256": "254452c54e03d0964c762c010dec9e168e82baf364ab24a6b5e8a694b07bb67f"
+        },
+        "stderr": {
+          "path": "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/nova-A-chart-supported.render.stderr",
+          "sha256": "8ae11aa77e95ea1d4c88b750a66f9a008f643f38d26220d28e4cdb9a519731b7"
+        }
+      },
+      "strictDefinition": {
+        "argv": [
+          "kubeconform",
+          "-summary",
+          "-strict",
+          "-kubernetes-version",
+          "1.35.6",
+          "-schema-location",
+          "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+          "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/nova-A-chart-supported.render.yaml"
+        ],
+        "exitCode": 0,
+        "stdout": {
+          "path": "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/nova-A-chart-supported.strict-schema.stdout",
+          "sha256": "737f1218a2afa8481edb9f292f919f4af4d51dfd6ecae818db1b018bd7c8119d"
+        },
+        "stderr": {
+          "path": "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/nova-A-chart-supported.strict-schema.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "meaning": "exact pinned PRIMARY structural definitions, no skip; NOT deployedAPI/default/feature/provider/image/native behavior acceptance"
+      }
+    },
+    {
+      "profile": {
+        "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/kubeclaw-buster-A.json",
+        "sha256": "d2f3b268804059c4031df798b28cde913b30680825112165774471e52cb7857a"
+      },
+      "scope": "actual offline currentChart full-document source render only",
+      "render": {
+        "argv": [
+          "helm",
+          "template",
+          "dlv-buster",
+          "charts/kubeclaw",
+          "--namespace",
+          "kubeclaw",
+          "--kube-version",
+          "1.35.6",
+          "--values",
+          "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/kubeclaw-buster-A.json"
+        ],
+        "exitCode": 0,
+        "stdout": {
+          "path": "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/buster-A-chart-supported.render.yaml",
+          "sha256": "9a6a8ab1617974f69b24cabd9a5e6dd59ef0065bc015128ab175f2bc19c0b03e"
+        },
+        "stderr": {
+          "path": "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/buster-A-chart-supported.render.stderr",
+          "sha256": "8ae11aa77e95ea1d4c88b750a66f9a008f643f38d26220d28e4cdb9a519731b7"
+        }
+      },
+      "strictDefinition": {
+        "argv": [
+          "kubeconform",
+          "-summary",
+          "-strict",
+          "-kubernetes-version",
+          "1.35.6",
+          "-schema-location",
+          "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+          "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/buster-A-chart-supported.render.yaml"
+        ],
+        "exitCode": 1,
+        "stdout": {
+          "path": "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/buster-A-chart-supported.strict-schema.stdout",
+          "sha256": "6ea8b59b5c83d621ddb2aac2af939a6ccf2e6e62ed3dbd1fa8267bd7aae0e9c6"
+        },
+        "stderr": {
+          "path": "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/buster-A-chart-supported.strict-schema.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "meaning": "exact pinned PRIMARY structural definitions, no skip; NOT deployedAPI/default/feature/provider/image/native behavior acceptance"
+      }
+    },
+    {
+      "profile": {
+        "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/prism-A.json",
+        "sha256": "8c811a238f6d6bde7de5d9416aac902eb2c08e56b1fa3c90fe8fba206d350f86"
+      },
+      "scope": "actual offline currentChart full-document source render only",
+      "render": {
+        "argv": [
+          "helm",
+          "template",
+          "dlv-prism",
+          "charts/prism",
+          "--namespace",
+          "kubeclaw",
+          "--kube-version",
+          "1.35.6",
+          "--values",
+          "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/prism-A.json"
+        ],
+        "exitCode": 0,
+        "stdout": {
+          "path": "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/prism-A-chart-supported.render.yaml",
+          "sha256": "f702502be82b535976d412e5afac3e6bc537252070083d968c8a5fcadb28c884"
+        },
+        "stderr": {
+          "path": "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/prism-A-chart-supported.render.stderr",
+          "sha256": "90a2cd3a1ecc2c029ea240c2764836095c2a96922129d50f816946df155f2973"
+        }
+      },
+      "strictDefinition": {
+        "argv": [
+          "kubeconform",
+          "-summary",
+          "-strict",
+          "-kubernetes-version",
+          "1.35.6",
+          "-schema-location",
+          "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+          "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/prism-A-chart-supported.render.yaml"
+        ],
+        "exitCode": 0,
+        "stdout": {
+          "path": "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/prism-A-chart-supported.strict-schema.stdout",
+          "sha256": "faee9b25b90acd791aa289b038ccb93ade8ef198cd77f40adcdb7f931dba7cbd"
+        },
+        "stderr": {
+          "path": "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/prism-A-chart-supported.strict-schema.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "meaning": "exact pinned PRIMARY structural definitions, no skip; NOT deployedAPI/default/feature/provider/image/native behavior acceptance"
+      }
+    },
+    {
+      "profile": {
+        "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/kubeclaw-B.json",
+        "sha256": "e02ae7c1fc7ba059622864ff938435d17328a9d85612d8196ab98acd8c253dbd"
+      },
+      "scope": "actual offline currentChart full-document source render only",
+      "render": {
+        "argv": [
+          "helm",
+          "template",
+          "dlv-nova",
+          "charts/kubeclaw",
+          "--namespace",
+          "kubeclaw",
+          "--kube-version",
+          "1.35.6",
+          "--values",
+          "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/kubeclaw-B.json"
+        ],
+        "exitCode": 0,
+        "stdout": {
+          "path": "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/nova-B-chart-supported.render.yaml",
+          "sha256": "9431fb3bfce4b3ca7980b0ecc376a9cbb5afddb7757604682a23d8cb12060ec2"
+        },
+        "stderr": {
+          "path": "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/nova-B-chart-supported.render.stderr",
+          "sha256": "8ae11aa77e95ea1d4c88b750a66f9a008f643f38d26220d28e4cdb9a519731b7"
+        }
+      },
+      "strictDefinition": {
+        "argv": [
+          "kubeconform",
+          "-summary",
+          "-strict",
+          "-kubernetes-version",
+          "1.35.6",
+          "-schema-location",
+          "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+          "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/nova-B-chart-supported.render.yaml"
+        ],
+        "exitCode": 0,
+        "stdout": {
+          "path": "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/nova-B-chart-supported.strict-schema.stdout",
+          "sha256": "737f1218a2afa8481edb9f292f919f4af4d51dfd6ecae818db1b018bd7c8119d"
+        },
+        "stderr": {
+          "path": "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/nova-B-chart-supported.strict-schema.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "meaning": "exact pinned PRIMARY structural definitions, no skip; NOT deployedAPI/default/feature/provider/image/native behavior acceptance"
+      }
+    },
+    {
+      "profile": {
+        "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/kubeclaw-buster-B.json",
+        "sha256": "a415f160c84f4037c04e4bc63889671bfc329017307300030c4708e69d0a59b4"
+      },
+      "scope": "actual offline currentChart full-document source render only",
+      "render": {
+        "argv": [
+          "helm",
+          "template",
+          "dlv-buster",
+          "charts/kubeclaw",
+          "--namespace",
+          "kubeclaw",
+          "--kube-version",
+          "1.35.6",
+          "--values",
+          "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/kubeclaw-buster-B.json"
+        ],
+        "exitCode": 0,
+        "stdout": {
+          "path": "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/buster-B-chart-supported.render.yaml",
+          "sha256": "7b9eaf8459991050d9ecf27bb08c3c8c0e2fee02e7d8a8482b661b5c44892c97"
+        },
+        "stderr": {
+          "path": "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/buster-B-chart-supported.render.stderr",
+          "sha256": "8ae11aa77e95ea1d4c88b750a66f9a008f643f38d26220d28e4cdb9a519731b7"
+        }
+      },
+      "strictDefinition": {
+        "argv": [
+          "kubeconform",
+          "-summary",
+          "-strict",
+          "-kubernetes-version",
+          "1.35.6",
+          "-schema-location",
+          "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+          "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/buster-B-chart-supported.render.yaml"
+        ],
+        "exitCode": 1,
+        "stdout": {
+          "path": "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/buster-B-chart-supported.strict-schema.stdout",
+          "sha256": "f155848941f06112ea89390db6944c25df4d8e5af3cc50c8f4e3ce8ab3a2f5ad"
+        },
+        "stderr": {
+          "path": "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/buster-B-chart-supported.strict-schema.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "meaning": "exact pinned PRIMARY structural definitions, no skip; NOT deployedAPI/default/feature/provider/image/native behavior acceptance"
+      }
+    },
+    {
+      "profile": {
+        "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/prism-B.json",
+        "sha256": "914ac63c5a0afba702a4550ae14031ea118d12c62e909ad5869991de96fd312b"
+      },
+      "scope": "actual offline currentChart full-document source render only",
+      "render": {
+        "argv": [
+          "helm",
+          "template",
+          "dlv-prism",
+          "charts/prism",
+          "--namespace",
+          "kubeclaw",
+          "--kube-version",
+          "1.35.6",
+          "--values",
+          "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/prism-B.json"
+        ],
+        "exitCode": 0,
+        "stdout": {
+          "path": "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/prism-B-chart-supported.render.yaml",
+          "sha256": "7b18ef837e27d13bdd4d848143da1b5bf6f9e7c47f767a14aa5d27f1ad2c7cba"
+        },
+        "stderr": {
+          "path": "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/prism-B-chart-supported.render.stderr",
+          "sha256": "90a2cd3a1ecc2c029ea240c2764836095c2a96922129d50f816946df155f2973"
+        }
+      },
+      "strictDefinition": {
+        "argv": [
+          "kubeconform",
+          "-summary",
+          "-strict",
+          "-kubernetes-version",
+          "1.35.6",
+          "-schema-location",
+          "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+          "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/prism-B-chart-supported.render.yaml"
+        ],
+        "exitCode": 0,
+        "stdout": {
+          "path": "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/prism-B-chart-supported.strict-schema.stdout",
+          "sha256": "faee9b25b90acd791aa289b038ccb93ade8ef198cd77f40adcdb7f931dba7cbd"
+        },
+        "stderr": {
+          "path": "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/delivery-rerun/prism-B-chart-supported.strict-schema.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "meaning": "exact pinned PRIMARY structural definitions, no skip; NOT deployedAPI/default/feature/provider/image/native behavior acceptance"
+      }
+    }
+  ],
+  "v1.34.11": "BLOCKED exact missing primaryschemas404at old acquiredcommit, retainedidentity; no permissive fallback or skipPASS"
+}

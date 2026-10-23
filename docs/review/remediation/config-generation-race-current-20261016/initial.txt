@@ -1,0 +1,36 @@
+✔ physical generation retains complete old authors during delivery alias replacement (68.783264ms)
+✔ removing a selected generation component after reading entry rejects (5.711838ms)
+✔ changing an already read component during later reads rejects the local bundle (6.640432ms)
+✔ readonly packaged-reader core verifies complete receipts and installed code readback (909.499481ms)
+✔ self-consistent hashes do not validate a two-field fake package manifest (535.682295ms)
+✔ changed installed code and additional unreceipted code files reject (477.563557ms)
+✔ stale expected generation cannot admit changed profile content (526.333982ms)
+✔ writable files and escaping expected-receipt atomic-writer target reject (415.462886ms)
+✔ inventory retains early file observations until all members have been read (452.140267ms)
+✔ package observations remain alive until boot capture is branded (473.173753ms)
+✔ self-consistent receipts reject nonexistent facade and open metadata records (421.574074ms)
+✔ an off-tree reader copy cannot borrow a genuine installed package receipt (639.21109ms)
+✖ expected-delivery alias replacement after read retains original receipt, next boot validates new receipt (547.12383ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 12
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5527.907451
+
+✖ failing tests:
+
+test at tests/verification/reliability/pipeline-boot.test.mjs:190:1
+✖ expected-delivery alias replacement after read retains original receipt, next boot validates new receipt (547.12383ms)
+  Error: PIPELINE_PACKAGE_CHANGED
+      at assertRuntimeBundleObservations (file:///tmp/pipeline-boot-5kuYud/code/skills/packages/plugin-foundation/config/runtime-bundle-receipt.mjs:25:69)
+      at runtimeBundleFiles (file:///tmp/pipeline-boot-5kuYud/code/skills/packages/plugin-foundation/config/runtime-bundle-receipt.mjs:64:5)
+      at verifyInstalledRuntimeBundle (file:///tmp/pipeline-boot-5kuYud/code/skills/packages/plugin-foundation/config/runtime-bundle-receipt.mjs:155:20)
+      at captureBoot (file:///tmp/pipeline-boot-5kuYud/code/skills/packages/plugin-foundation/config/pipeline-boot.mjs:111:5)
+      at Module.capturePipelineBootReceipts (file:///tmp/pipeline-boot-5kuYud/code/skills/packages/plugin-foundation/config/pipeline-boot.mjs:151:10)
+      at Object.load (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/pipeline-boot.test.mjs:94:27)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/pipeline-boot.test.mjs:209:22)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

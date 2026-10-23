@@ -1,0 +1,275 @@
+{
+  "scope": "independent review01 exact artifacts except this manifest",
+  "files": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/end-identities.json",
+      "sha256": "4345da033ca709f4a315fee228779fb0b6dfb21394f15c6a6647a9061a4a26b1",
+      "bytes": 30686
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/0c0cd57f3601f96e0889d25e971805c5314db7458c911f9e457cc8dac3007bf6.gz",
+      "sha256": "209fe23d0bc026240681e8d906c23aafb23382843328b1202a29f4c3e562d7f9",
+      "bytes": 948
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/12ba84000466f496ed712e61057e0945ccc78d26ee805c0965064b9ceba658a7.gz",
+      "sha256": "2144453b555d4c71549f59d29f20811f6445708b7f1c18a7ce23a4d3e6f67f06",
+      "bytes": 3398
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/15f0ecf19c9a804b01dff515dac42715249531d61b6c7db801fc013544ab643d.gz",
+      "sha256": "d4f8b9783835ec3a114d4446fbc23388351acaa03a25af9926fccefd7888d658",
+      "bytes": 1879
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/16692731eac048cfbae3115c923937500d23982bf3becf72dc057ca899d73740.gz",
+      "sha256": "2cc8fe8d5f1d2c0a95444865df66a0524f5a2eba1f9796a6a3ed9282e3f78650",
+      "bytes": 1209
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/21136d7cc63b549db0d9e1f3a32d449c5bf3c2644790d144d47d476372c56bab.gz",
+      "sha256": "1a82850e5d1035475540713ed2f4dbd5ba7ec281f05fb637d10609eac14864dc",
+      "bytes": 879
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/2c5072d0f1d1b483d72808686db13cad49f405f31233121483c72229801e31ce.gz",
+      "sha256": "08cb9f7012a88eac5b715eb0d9b8ef064f723ce71e88f427c47f244a21daa55c",
+      "bytes": 2427
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/355ea24016a9fec3ead3e845d28a95925f3fc7fd337f1a970d5a788bf1c5b0e5.gz",
+      "sha256": "13ef7ac7d57a025864382496137e74fcdbca87a857121ca9695201b4727d280d",
+      "bytes": 644
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/36bfaba20ffe0e258f75a345873aacbbbccdb8fb710436d6e8b692101f97b34a.gz",
+      "sha256": "305726e8945b020760c2bf631e829f3730a0f49b0c94eab18d734935c4ffe482",
+      "bytes": 1002
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/3791e059011edc99941d79882aa67b5829575cbbb20fe5b156cda174986cbf7b.gz",
+      "sha256": "af7fdc3fbf993bccca0cb87b9e01ed50c756d2309815f8575c7fa9fbdac9babb",
+      "bytes": 644
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/3e0d30b0c0888c4039f176ddb80d19e00b7b7064ead979d5bb9122d4df19e14f.gz",
+      "sha256": "a91173de3b36d4b7d25feca709d46ff8a90d50aaf69407c954a9db4d3ad0e7c2",
+      "bytes": 3494
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/3e6cd8ad0590fbb45f9bfa68a910c6b099959404aef3af89002cdcde6ffa34d7.gz",
+      "sha256": "e80f079f5191400e46ed32e6df65703903b3ae457685f51d447cf3104ebc782f",
+      "bytes": 1811
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d.gz",
+      "sha256": "7e69cf7899d80e30f91a690314a00bc6646826b8e141430326e71175d7bd4c77",
+      "bytes": 4692
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/472f4f62d9e9d27f42b0b98400b18b2014e5f600e5bd59d4d9ddbe3a25b3f6c3.gz",
+      "sha256": "a6ebc8bab4df57d69e83a604694a650a7408ec76f680aa65ee704ba287a20172",
+      "bytes": 758
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/5a21c026555487f0fcf64246627d0381088b858c91a10762e0cd5989b71d5ec3.gz",
+      "sha256": "62f0ee3a9c942f576b953a4f2a9619c5f3c551d046c36d3f0cd8d73914e5c50d",
+      "bytes": 653
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/5f0ffb0cdf5acdbd814da726060d5125c5cae912554f27de57251ea90ae8d438.gz",
+      "sha256": "e6ae667b3dd821a4225f0a6936901e44550b29989e8fa0a2aa4530e06d598a64",
+      "bytes": 296
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/6a136a40cced70d63de028e635bd5b9e4fb30f1a632cd725175385faf9c57e25.gz",
+      "sha256": "2cda7dbc4eff6765b6e99fdf8bef3a791c8f1940216df94d9bd0ca241758d5d8",
+      "bytes": 1416
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/70356ac84fef937d6cfad5ea54583a16342784d8299406e155524128542baa6d.gz",
+      "sha256": "6ec48bb26f8b77286a231cdc9bd8d27f1c633697f104f592365cd365a9e59cbf",
+      "bytes": 262
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/7704b4d6a9f9b07615e712a424c5e91f89eae3a8003f8fdb3c6ab58e7a6ea606.gz",
+      "sha256": "35a1047758c621327181251ace64785379b8d5bbc0385b5210826250cb7a0c2c",
+      "bytes": 318
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b.gz",
+      "sha256": "5c5176e0934c603312ca9f4e67ea5e2b3e8c2b050ec4795b385bb277a74946a3",
+      "bytes": 3758
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/8884d8e41166f9739ea8f5986cbd8a4c8ae66e8756f0fa3ccb8712e9124601e5.gz",
+      "sha256": "045c3668bf95ffb5cfc7b157217a8d3131fa77efa5da5aca6233abe2290a6573",
+      "bytes": 552
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/8e0cfc8c01f1f879beaf1b98a09e71ec08c2cb246ced60d8be29f03c1b16622e.gz",
+      "sha256": "fbb03171818065ec8d8b867759f0e626fe94db63c5b0e366dcb5ceb01322d056",
+      "bytes": 13477
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/8fa961cfcf1e907d6b2c5fa67f83a441decc65852e6985414e01a45a570f2c1c.gz",
+      "sha256": "770a25aa97e2f159bf2632aafd6ee979b8886154e8db6e219f2806d6a4f288fc",
+      "bytes": 1018
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/8febd988fd2153a0bf49ea448ac07bb1d70e30df4155c8eef157c2e28e36ca9f.gz",
+      "sha256": "5e8adc066950ce18b3ce9885172a3a065f24228c2276af910ada55571928b245",
+      "bytes": 4749
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/904282ccd6495d5a00fff6af7f24ce9e33c25e19dc43cd0bd3b066d7482cf20c.gz",
+      "sha256": "d9f5cc1b0bd16acd650beb8925f5af57492bb6997e50cef934f2c09253b3f631",
+      "bytes": 670
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/98893de074072657c6bb832f84fee88eefa9d35276c6ecaa5ac8fdbb1d814fc0.gz",
+      "sha256": "9fd44958ac482ed7231b70a4ef206afe00a7a62e3c5d608c7379408907974cb4",
+      "bytes": 10546
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/9acd5845d808effd7b5f2f04815620ab3a17459652b5561bdf4f17903af030ff.gz",
+      "sha256": "516ecd8f1acbfe218fed8df65f260ae49922e9658f6abd81719e893da3fad484",
+      "bytes": 707
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/9c52de0a1310f68717deb418171d60a2153adcbc31dd1fd157e510942330349b.gz",
+      "sha256": "b19d950b94befd1b3b0e6a5b78353ac7d9ed335560e293fac1af67c80e773f43",
+      "bytes": 589
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/9f3982984727a4ed1b6cf63bd9a4419ad7d5f76d0fbf3fce1c2eede8ba9f5eb6.gz",
+      "sha256": "186ab26d0e6a9a81e2601d1cd39d7180d9937de9bbe12bbf1ad22f60a3f87771",
+      "bytes": 3435
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/a03aa7721f871473effbb0f79de84bc7ebcb2877c68fa023675ea335e27936f8.gz",
+      "sha256": "6aa40b575a1f80f18d121b46fa8cd92ee05a7302db3e10ca3d15d2c9618c4e31",
+      "bytes": 1255
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/a226e9aafd4e85393ab5d043bf19f3da428bf3de48ee911944641c884960cf76.gz",
+      "sha256": "87063818f1e9213b9837adaef2897450b3bb4a10ad97ddc3094567581e70f319",
+      "bytes": 6799
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/a5705bfb3d671520afa2884a523bbc4dfe479544e82c6b593a5efd8a216c9d0e.gz",
+      "sha256": "f558aea3ec425d1c8bebeee3ddc23db1aa53a5d8d14a54656b2d17416dae64d0",
+      "bytes": 997
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/a753784296af94246501460c5653a8a81fddcfd153dba63904f3e0e17aa1ab84.gz",
+      "sha256": "12ce4b6f63f5870220f4c14de63e051044352b00e614b07ed08b5971ca0f431f",
+      "bytes": 1069
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/ace11c5d6e0f04dcaec568962bedeb1005e7e3404267f424116931defec80c09.gz",
+      "sha256": "3da9064d7ab800dd0409a43773f411660f116a8d229de908ec8665f481a504b0",
+      "bytes": 10182
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/adb871ea14bf84f2c24f73037fea8b358f9337a39f5fdb3f1d070962efcf78fe.gz",
+      "sha256": "b67af3580722a752caa7a9d91a6458323a1d76dd6976cfc152c06bc51e0e5959",
+      "bytes": 4190
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/b738b2095210cb8fcad4f69e7a906e2b2201330a6968a076dade7e5d8026c7ff.gz",
+      "sha256": "a901d482d4729b65cbfed6bd5e0475e0617b7c0a2a90c49d6ceb268e2d6fc29b",
+      "bytes": 1129
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/b7c1445d47350c6fcae2fc7de901e930dec1f8309331bf0db69c70c1f3404994.gz",
+      "sha256": "771da2d34b47a195012c9888aac6bb396c7e334b269135c5423802ce46e1681b",
+      "bytes": 319
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/baccd7e9f99fdfc56a13e125b7afe867427692f7a785ab666882a4acaef44869.gz",
+      "sha256": "792e4efa8af937c5e6f8b0dc12370aa3c3bf90c61f97917c41cdd7e5f6e43371",
+      "bytes": 787
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/c90cc9c082b3adba89c458a9e28853afa77682a6c7066a7641c70aac749d0960.gz",
+      "sha256": "fb60a8bda435bcd62fdc79b8fd1b77b16999d135130a6900fbcab444c2006bea",
+      "bytes": 28673
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/cc2515bad09a6072151e6e91e5c2f8eb02d38043f7af9c3b9c1fd533a9d1db8f.gz",
+      "sha256": "285ae6486bff4333f8402b4fce95686eba5f23394163209e21be0919f6c23adf",
+      "bytes": 4685
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/ce029433a76e6e4edc5d67086ab1293277ea852ca83a2e9bdccadf15232acae7.gz",
+      "sha256": "5fb968cd58920f267cda8e1d181315527a23a11b6f789fdebffd5d1629554ff9",
+      "bytes": 901
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/d2d329571481133b510df803f948c4b4367e9612d9f8a47a8d3fe15b07394aff.gz",
+      "sha256": "4eba7cb2ffd9353b0976400e97830bf4cd4cd36165f759ae3b302913cf378d4d",
+      "bytes": 7258
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/dc896fd0fd4a48875267c75d5c1c7ae09380819d0f759ac39b00d831d12cd794.gz",
+      "sha256": "7f682ca0dcf50b80be954036719cab4b1dea0e2ca4cf6b594813d531293fd7c3",
+      "bytes": 368
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 20
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/fa5139150fd455ba831113f40147c53b76b2e6c573bb48b286a0e260aba24a2b.gz",
+      "sha256": "c4a3c7f90aa3684c875eea1ac1592fafacea0f56f16ab1ee6195be47de460bec",
+      "bytes": 1228
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/fd96f1a30f997d4a6a71a23b81cad2dc4ccca69b223e4945e22c9261819bbfa8.gz",
+      "sha256": "e2d80c47f292c0ada2cf80c21350c97c72f272fefe91771c94e79455cb098277",
+      "bytes": 1060
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/frozen-inputs/fef2fed9b07fb7731c58d69c744a418130882cc5507d16616a3b516ff9485fd4.gz",
+      "sha256": "10765efc80c252335ca0df0f8c823c3ebc33d4044c6f771cf330fcd613bd11c7",
+      "bytes": 717
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/initial-identities.json",
+      "sha256": "6e20a6e99825b5779247ad193ed714e6f1c142ab437faa78998b63b00f4bddb1",
+      "bytes": 27845
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/replay/definition-receipt.json",
+      "sha256": "5761f2405905429abaaa0b3456a494069e155bf10083d4104ae8e7dd2a3b7ac8",
+      "bytes": 15349
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/replay/generated-public-projections.json",
+      "sha256": "12ba84000466f496ed712e61057e0945ccc78d26ee805c0965064b9ceba658a7",
+      "bytes": 179000
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/replay/isolated-current-pure-functions.mjs",
+      "sha256": "2c5072d0f1d1b483d72808686db13cad49f405f31233121483c72229801e31ce",
+      "bytes": 6965
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/replay.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/replay.stdout",
+      "sha256": "baccd7e9f99fdfc56a13e125b7afe867427692f7a785ab666882a4acaef44869",
+      "bytes": 4638
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-recovery-policy-profile-review-01/start-worktree-status.txt",
+      "sha256": "d6bc1ab41a125e402dbeacdd08eeb22ea30bc74d35356b2d02325e234f45bc78",
+      "bytes": 34213
+    }
+  ]
+}

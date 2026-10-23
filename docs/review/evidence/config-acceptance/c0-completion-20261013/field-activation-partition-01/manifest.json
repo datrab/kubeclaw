@@ -1,0 +1,75 @@
+{
+  "qualification": "Author proposed activation definition only; fresh independent review required",
+  "artifacts": [
+    {
+      "path": "README.md",
+      "sha256": "bf6e4a9c8b60242995e958987955f4a96e16e8aa24a3e13ad7fd3de9e9c10735",
+      "bytes": 14347
+    },
+    {
+      "path": "actual-new-policy-map.json",
+      "sha256": "28337d0b43fe70ec7d6c7a489f031587a33b699c1e13752f87a023e05b5b39f9",
+      "bytes": 2149512
+    },
+    {
+      "path": "attempt1-observed.stderr.txt",
+      "sha256": "3b3ffcd167aff9c06bf9949c1cc638834214c05c7ead970a5e0b135eb264f4bb",
+      "bytes": 284
+    },
+    {
+      "path": "build-map.py",
+      "sha256": "1edfe593370b6a7a34757b7798f207842f3cea1675447cbae65779f4e9d71573",
+      "bytes": 37479
+    },
+    {
+      "path": "build.stdout",
+      "sha256": "32475605d4a9fd4fa17a91f09993592c80a4eda3b5439bc1e49b190133efff89",
+      "bytes": 138
+    },
+    {
+      "path": "contracts.json",
+      "sha256": "9af766e90c192bfa4cbb996920c299a2ff9cf51a85fa26777d4b17d16b09ee2d",
+      "bytes": 17116
+    },
+    {
+      "path": "definition-observations.json",
+      "sha256": "9643bb62212d2121bf0b36ab400bbee94fd8974638a3520d9d85bca3c501e1ff",
+      "bytes": 736
+    },
+    {
+      "path": "exact-source-exceptions.json",
+      "sha256": "76d6a8e80067804216948fa41125056ed0e4162b6b1c2c067ddd7d64f756ec82",
+      "bytes": 160671
+    },
+    {
+      "path": "field-map.json",
+      "sha256": "222e14c24fc939577828ea5e69f5cd16919a74e494326dce97f6bd4986d49969",
+      "bytes": 26177012
+    },
+    {
+      "path": "future-binding-case-joins.json",
+      "sha256": "b3c38ad1418d3c41f415c0a2b29d081b1f7c4b47854bb3d17dd0b74e06923de2",
+      "bytes": 344884
+    },
+    {
+      "path": "identical-binding-patterns.json",
+      "sha256": "015c83a63511ed528dadf0e44d4f8fcde370950b5b59b77410d35c6ea71dd6ac",
+      "bytes": 1329719
+    },
+    {
+      "path": "post-build-source-joins.json",
+      "sha256": "599a5fda2ca108c0273383078147843c3344ee7f84a47d9a06089814ce3d4391",
+      "bytes": 910
+    },
+    {
+      "path": "read-identities.json",
+      "sha256": "d23b743ef97cfb550e76c9a82192f0533d7612dbdad2cb8d3f9829018f22b7a3",
+      "bytes": 11341
+    },
+    {
+      "path": "unit-applicability.json",
+      "sha256": "0816dfdf5399f219588e7b3e9cbc18981ee935601daf1f19bc57a13dc57cd75d",
+      "bytes": 8242
+    }
+  ]
+}

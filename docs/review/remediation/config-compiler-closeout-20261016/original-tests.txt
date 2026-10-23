@@ -1,0 +1,21 @@
+✔ delivery mode is independent across source, report, Review and topology and recovers the whole graph (1908.208052ms)
+✔ recovery rejects missing, swapped, junk, unknown and foreign delivery selector authority (216.841647ms)
+✔ explicit reference resolves against author, pure preparation performs no policy I/O, all fields required and snapshots owned (45.709346ms)
+✔ real stage/observer startup A/B leases and retained A resume survive missing current policy B (1990.726645ms)
+✔ selected real mutation TTL/renewal and required journal deadline replace literals (278.918824ms)
+✔ selected audit UTF8 exact/over boundary and effect journal inline limit remain separate (59.664994ms)
+✔ actual resource provisional-lock lifetime is selected independently of mutation TTL (64.788176ms)
+✔ active recovery receiver uses selected metadata capacity and restores positive behavior (67.983099ms)
+✔ stored source/report modes are independent and all generated Review nodes agree (641.551672ms)
+✔ archived compiler with current coverage helper preserves portable-source and legacy module/final reports (915.484168ms)
+✔ saved Review node set, uniform mode, and the entire pinned graph remain authoritative (346.151103ms)
+✔ independent semantic authority covers module-only, final-only, both and neither graph roundtrips (615.612834ms)
+✔ new semantic graph rejects mixed, unsupported, partial and stray Summary mode without changing stored bytes (261.076045ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4522.158487

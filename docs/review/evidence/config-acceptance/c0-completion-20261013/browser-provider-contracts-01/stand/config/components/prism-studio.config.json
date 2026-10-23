@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "pipeline-component.v3",
+  "owner": "prism-studio",
+  "profiles": {
+    "local-A": {
+      "settings": {
+        "port": 8080,
+        "controlTimeoutMs": 30000,
+        "controlUrl": "http://prism-control:8080",
+        "installation": {
+          "assetRoot": "/app/prism/skills/prism/dist-studio"
+        },
+        "proxy": {
+          "maximumRequestBytes": 2000000
+        },
+        "security": {
+          "connectSources": [
+            "'self'",
+            "https:"
+          ]
+        },
+        "uiPolicy": {
+          "maximumDisplayedBriefFields": 12,
+          "editorWidths": {
+            "compact": 390,
+            "regular": 768,
+            "wide": 1280
+          },
+          "maximumInitialRoundPolls": 300,
+          "initialRoundPollIntervalMs": 2000,
+          "maximumPreviewAssetBytes": 6000000,
+          "previewAssetTimeoutMs": 30000
+        }
+      },
+      "activation": {
+        "studio": "enabled"
+      }
+    }
+  }
+}

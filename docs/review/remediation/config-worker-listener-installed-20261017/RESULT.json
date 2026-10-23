@@ -1,0 +1,52 @@
+{
+  "at": "2026-10-17T03:14:17.967619+00:00",
+  "status": "ORIGINAL_RETIRED_PORT_INSTALLED_TRANSPORT_IMPLEMENTED_PROCESSES_NOT_VERIFIED",
+  "change": "Two original retired PORT subprocess cases moved to explicit isolated-guest suite using complete current authors, genuine publication and installed original Worker entrypoint. Same three outcome assertions and5000ms process cutoff. No production source or policy changes.",
+  "checks": {
+    "invalidSelectedPortsRejectedBeforePublication": 3,
+    "restoredPublication": true,
+    "authenticConsumerPORTNegatives": 2,
+    "isolatedGuestGuard": true,
+    "strictPrismTypecheck": true,
+    "diffCheck": true
+  },
+  "originalEntrypointCases": "NOT_RUN_NOT_VERIFIED: isolated fixed-path guest absent; no shared system installation",
+  "remainingInvalidPortEntrypointCases": {
+    "count": 3,
+    "file": "skills/prism/tests/worker-listener-config.test.mts",
+    "constraint": "Historical source entrypoint with retired facade cannot admit current boot. Production rejects missing/0/65536 before genuine publication, so invalid authored generation cannot carry authentic receipt. No forged receipt, trust bypass or generator-negative substitution for original entrypoint obligations."
+  },
+  "independentReview": "OPEN: native reviewer/spawn unavailable; no active CONFIG reviewer or fresh output; unchanged EROFS not retried. Author checks only.",
+  "originalCasesNewlyAccepted": 0,
+  "originalResultsChanged": false,
+  "fullC0C6Complete": false,
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "nextAction": "Resolve original three invalid-port entrypoint receiving obligations without authenticating invalid generation; complete genuine QB-R02 producer/source/build/baseline/inputStore reservation/accounting/sealed publication and coordinated sole-root actual boot/Nova receiving. All independent/history/native/archive/full C0-C6 gates OPEN.",
+  "externalOwner": "Raven",
+  "resumeCondition": "Suitable isolated Linux Docker UID/GID1000 delegated writable cgroup/native pool; trusted writable archive storage and migrated isolated PostgreSQL. For two PORT cases: PRISM_NATIVE_ISOLATED_TEST_POOL=true node --test --test-concurrency=1 skills/prism/tests/worker-listener-entrypoint-native.mts",
+  "writerLock": "SAME exclusive nonblocking shared lock; released on command exit",
+  "noHistoricalFollowup": true,
+  "originalRoster": {
+    "fields": {
+      "required": 2409,
+      "sha256": "444e0c8e77c8275c4db45d8c5946569924f0f069ecb166071ca34ef1bdb6f84e",
+      "unchanged": true
+    },
+    "cases": {
+      "required": 6845,
+      "sha256": "5d93688cec44512539dc44e9f2bd281b6f92e34c5a6677d6dedd6e1c6ba5d566",
+      "unchanged": true
+    },
+    "requirements": {
+      "required": 50,
+      "sha256": "89ab6863642522b4bb43442c6f204b64a1fbefdc44140c30d923188d11c69add",
+      "unchanged": true
+    }
+  },
+  "sourceCommit": "2d7dc1d1fd569288c90e511b94dbd3b130aa21d4",
+  "verifiedRemoteHead": "2d7dc1d1fd569288c90e511b94dbd3b130aa21d4",
+  "sourceRemoteVerified": true,
+  "evidence": "docs/review/remediation/config-worker-listener-installed-20261017"
+}

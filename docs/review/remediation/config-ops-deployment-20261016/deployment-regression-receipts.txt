@@ -1,0 +1,67 @@
+✖ original deployment render entrypoints bind all roles, sidecars and bundles to the selected source (18925.001046ms)
+✔ deployment rejects missing receipts, source identity, mutable overrides and cross-source bundles before cluster access (14013.245143ms)
+✔ private operational overlays survive while replaced or removed runtime slots fail (14907.96621ms)
+✖ Prism and Ops reject image overrides even when another value could conceal them (9646.982247ms)
+✔ source configuration and materialized values are rechecked by actual deployment entrypoints (10169.829875ms)
+✔ private bundle URL and authentication survive while the selected revision stays fixed (10663.008286ms)
+✔ private extraEnv cannot shadow reserved runtime bundle controls (20117.465464ms)
+✔ noncanonical alias and indirect controls cannot stand in for bundle consumers (16657.856023ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 6
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 115171.909439
+
+✖ failing tests:
+
+test at tests/verification/deployment/deployment-release.test.mjs:63:1
+✖ original deployment render entrypoints bind all roles, sidecars and bundles to the selected source (18925.001046ms)
+  AssertionError [ERR_ASSERTION]: [0;34m[i][0m Selected Prism code bundle commit: 9099eae7a80b86ddcc802a26fe94aea847d1522b
+  [0;31m[✗][0m Prism control image digest is missing or invalid; set PRISM_CONTROL_IMAGE_DIGEST or images.control.digest in /tmp/deployment-selection-uzA6sk/releases/values/prism.yaml
+
+
+  1 !== 0
+
+      at success (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:60:35)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:65:18
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:57:5)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:63:114)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/deployment-release.test.mjs:111:1
+✖ Prism and Ops reject image overrides even when another value could conceal them (9646.982247ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /image slot changed or missing/. Input:
+
+  '\x1B[0;34m[i]\x1B[0m Selected Prism code bundle commit: 4fbc4e5a667b3e2789e28c0c22f0d1afd4a8123a\n' +
+    '\x1B[0;31m[✗]\x1B[0m Prism control image digest is missing or invalid; set PRISM_CONTROL_IMAGE_DIGEST or images.control.digest in /tmp/deployment-selection-Xmn7Kc/releases/values/prism.yaml\n'
+
+      at failure (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:61:82)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:114:3
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:57:5)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/deployment-release.test.mjs:111:95)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '\x1B[0;34m[i]\x1B[0m Selected Prism code bundle commit: 4fbc4e5a667b3e2789e28c0c22f0d1afd4a8123a\n\x1B[0;31m[✗]\x1B[0m Prism control image digest is missing or invalid; set PRISM_CONTROL_IMAGE_DIGEST or images.control.digest in /tmp/deployment-selection-Xmn7Kc/releases/values/prism.yaml\n',
+    expected: /image slot changed or missing/,
+    operator: 'match',
+    diff: 'simple'
+  }

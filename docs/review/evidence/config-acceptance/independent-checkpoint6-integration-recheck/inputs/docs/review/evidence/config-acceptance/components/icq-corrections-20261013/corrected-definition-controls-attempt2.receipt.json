@@ -1,0 +1,88 @@
+{
+  "results": [
+    {
+      "id": "ICQ02-real-canonical-header-and-empty",
+      "passed": true
+    },
+    {
+      "id": "ICQ02-complete-near-boundary-positive",
+      "passed": true
+    },
+    {
+      "id": "ICQ02-adjacent-byte-negative",
+      "passed": true
+    },
+    {
+      "id": "ICQ01-authorized-root-correlated-positive",
+      "passed": true
+    },
+    {
+      "id": "ICQ01-historical-outside-root-negative",
+      "passed": true
+    },
+    {
+      "id": "ICQ04-exact-record-ack-cap",
+      "passed": true
+    },
+    {
+      "id": "ICQ05-exact-six-callers",
+      "passed": true
+    },
+    {
+      "id": "ICQ06-provider-structural-reservedReceipt",
+      "passed": true
+    },
+    {
+      "id": "ICQ06-provider-structural-unavailableSnapshot",
+      "passed": true
+    },
+    {
+      "id": "ICQ06-provider-structural-provenNoLaunchSnapshot",
+      "passed": true
+    },
+    {
+      "id": "ICQ06-provider-structural-observedStructuralSpecimen",
+      "passed": true
+    },
+    {
+      "id": "ICQ06-provider-negative-unknown",
+      "passed": true
+    },
+    {
+      "id": "ICQ06-provider-negative-NaN",
+      "passed": true
+    },
+    {
+      "id": "ICQ06-provider-negative-negative",
+      "passed": true
+    },
+    {
+      "id": "ICQ06-provider-negative-unsafe",
+      "passed": true
+    },
+    {
+      "id": "ICQ06-provider-negative-missing",
+      "passed": true
+    },
+    {
+      "id": "ICQ06-provider-negative-unavailable-value",
+      "passed": true
+    },
+    {
+      "id": "ICQ06-provider-enumerated-serialization-bound",
+      "passed": true
+    },
+    {
+      "id": "ICQ06-admission-exact-method-authors",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(a.maximumQuarantineBytes<=a.maximumBytes-a.metadataReserveBytes)\n"
+    },
+    {
+      "id": "ICQ06-all-lock-coordinates-preserved",
+      "passed": true
+    }
+  ],
+  "passed": 19,
+  "failed": 1,
+  "scope": "Author documentation/schema/source/fixture-integrity controls only. NOT independentreview/F-MUT/runtime or globalC0acceptance."
+}

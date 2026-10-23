@@ -1,0 +1,6480 @@
+[
+  {
+    "setting": "RT-dab100380f6a024f",
+    "provider": "axe",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [],
+      "acceptances": [],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [],
+      "acceptances": [],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-6776ec7160ea0036",
+    "provider": "axe",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [],
+      "acceptances": [],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [],
+      "acceptances": [],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-b6eb30fbf6be03e1",
+    "provider": "axe",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [],
+      "acceptances": [],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [],
+      "acceptances": [],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-0d37b61a9e8bc451",
+    "provider": "axe",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [],
+      "acceptances": [],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [],
+      "acceptances": [],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-ce85d1e95781cb1b",
+    "provider": "axe",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [],
+      "acceptances": [],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "mobile"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [],
+      "acceptances": [],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-735e529045f176ca",
+    "provider": "axe",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [],
+      "acceptances": [],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "mobile"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [],
+      "acceptances": [],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-6053515db8e5f294",
+    "provider": "axe",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [],
+      "acceptances": [],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [],
+      "acceptances": [],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-b523246a8e584359",
+    "provider": "axe",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [],
+      "acceptances": [],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a"
+      ],
+      "exclude": [],
+      "acceptances": [],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-0f8819569bb41402",
+    "provider": "axe",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [],
+      "acceptances": [],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a"
+      ],
+      "exclude": [],
+      "acceptances": [],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-bb8352234e6c6200",
+    "provider": "axe",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [
+        "#a"
+      ],
+      "acceptances": [],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [
+        "#b"
+      ],
+      "acceptances": [],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-e32df097509e32fe",
+    "provider": "axe",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [
+        "#a"
+      ],
+      "acceptances": [],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [
+        "#b"
+      ],
+      "acceptances": [],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-ea6c994234263250",
+    "provider": "axe",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [],
+      "acceptances": [
+        {
+          "rule": "case-rule",
+          "route": "/a",
+          "selector": "#case",
+          "reason": "C0 approved fixture waiver",
+          "expiresAt": "2099-01-01"
+        }
+      ],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [],
+      "acceptances": [
+        {
+          "rule": "case-rule",
+          "route": "/a",
+          "selector": "#case",
+          "reason": "C0 approved fixture waiver",
+          "expiresAt": "2000-01-01"
+        }
+      ],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-3d366b22c4baadb6",
+    "provider": "axe",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [],
+      "acceptances": [
+        {
+          "rule": "case-rule",
+          "route": "/a",
+          "selector": "#case",
+          "reason": "C0 approved fixture waiver",
+          "expiresAt": "2099-01-01"
+        }
+      ],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [],
+      "acceptances": [
+        {
+          "rule": "case-rule",
+          "route": "/a",
+          "selector": "#case",
+          "reason": "C0 approved fixture waiver",
+          "expiresAt": "2000-01-01"
+        }
+      ],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-ace0dff341a51674",
+    "provider": "axe",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [],
+      "acceptances": [
+        {
+          "rule": "case-rule",
+          "route": "/a",
+          "selector": "#case",
+          "reason": "C0 approved fixture waiver",
+          "expiresAt": "2099-01-01"
+        }
+      ],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [],
+      "acceptances": [
+        {
+          "rule": "other",
+          "route": "/a",
+          "selector": "#case",
+          "reason": "C0 approved fixture waiver",
+          "expiresAt": "2099-01-01"
+        }
+      ],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-e2d010126067fa17",
+    "provider": "axe",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [],
+      "acceptances": [
+        {
+          "rule": "case-rule",
+          "route": "/a",
+          "selector": "#case",
+          "reason": "C0 approved fixture waiver",
+          "expiresAt": "2099-01-01"
+        }
+      ],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [],
+      "acceptances": [
+        {
+          "rule": "case-rule",
+          "route": "/b",
+          "selector": "#case",
+          "reason": "C0 approved fixture waiver",
+          "expiresAt": "2099-01-01"
+        }
+      ],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-36d7d882e2bd6da2",
+    "provider": "axe",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [],
+      "acceptances": [
+        {
+          "rule": "case-rule",
+          "route": "/a",
+          "selector": "#case",
+          "reason": "C0 approved fixture waiver",
+          "expiresAt": "2099-01-01"
+        }
+      ],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [],
+      "acceptances": [
+        {
+          "rule": "case-rule",
+          "route": "/a",
+          "selector": "#other",
+          "reason": "C0 approved fixture waiver",
+          "expiresAt": "2099-01-01"
+        }
+      ],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-a31018709bf73a5c",
+    "provider": "axe",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [],
+      "acceptances": [
+        {
+          "rule": "case-rule",
+          "route": "/a",
+          "selector": "#case",
+          "reason": "C0 approved fixture waiver",
+          "expiresAt": "2099-01-01"
+        }
+      ],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [],
+      "acceptances": [
+        {
+          "rule": "case-rule",
+          "route": "/a",
+          "selector": "#case",
+          "reason": "Second C0 reviewed rationale",
+          "expiresAt": "2099-01-01"
+        }
+      ],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-3eeda647e60d7d1b",
+    "provider": "axe",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [],
+      "acceptances": [
+        {
+          "rule": "case-rule",
+          "route": "/a",
+          "selector": "#case",
+          "reason": "C0 approved fixture waiver",
+          "expiresAt": "2099-01-01"
+        }
+      ],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [],
+      "acceptances": [
+        {
+          "rule": "case-rule",
+          "route": "/a",
+          "selector": "#case",
+          "reason": "C0 approved fixture waiver",
+          "expiresAt": "2000-01-01"
+        }
+      ],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-28216d3eec81ad18",
+    "provider": "axe",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [],
+      "acceptances": [],
+      "timeoutMs": 1000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "selectedProfiles": [
+        "desktop"
+      ],
+      "tags": [
+        "wcag2a",
+        "wcag2aa"
+      ],
+      "exclude": [],
+      "acceptances": [],
+      "timeoutMs": 2000
+    }
+  },
+  {
+    "setting": "RT-45cbcce6c9a8143a",
+    "provider": "lighthouse",
+    "completeOwnedA": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    },
+    "completeOwnedB": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    }
+  },
+  {
+    "setting": "RT-c5c2b774e067d6c3",
+    "provider": "lighthouse",
+    "completeOwnedA": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    },
+    "completeOwnedB": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    }
+  },
+  {
+    "setting": "RT-f513e45a2c34c183",
+    "provider": "lighthouse",
+    "completeOwnedA": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    },
+    "completeOwnedB": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    }
+  },
+  {
+    "setting": "RT-91356268eda2cde6",
+    "provider": "lighthouse",
+    "completeOwnedA": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    },
+    "completeOwnedB": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    }
+  },
+  {
+    "setting": "RT-9bca7a8727abb08f",
+    "provider": "lighthouse",
+    "completeOwnedA": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    },
+    "completeOwnedB": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    }
+  },
+  {
+    "setting": "RT-b8fe49d2862e13fe",
+    "provider": "lighthouse",
+    "completeOwnedA": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    },
+    "completeOwnedB": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 82,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    }
+  },
+  {
+    "setting": "RT-c245ed3eed7a76c8",
+    "provider": "lighthouse",
+    "completeOwnedA": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    },
+    "completeOwnedB": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "mobile",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    }
+  },
+  {
+    "setting": "RT-858b7c0d83228aea",
+    "provider": "lighthouse",
+    "completeOwnedA": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    },
+    "completeOwnedB": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "strict",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    }
+  },
+  {
+    "setting": "RT-d1ed31f756f931f4",
+    "provider": "lighthouse",
+    "completeOwnedA": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    },
+    "completeOwnedB": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 5,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    }
+  },
+  {
+    "setting": "RT-91b918f8698f70dd",
+    "provider": "lighthouse",
+    "completeOwnedA": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": [
+            {
+              "audit": "case-audit",
+              "route": "/a",
+              "reason": "C0 approved fixture waiver",
+              "expiresAt": "2099-01-01"
+            }
+          ]
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    },
+    "completeOwnedB": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": [
+            {
+              "audit": "case-audit",
+              "route": "/a",
+              "reason": "C0 approved fixture waiver",
+              "expiresAt": "2000-01-01"
+            }
+          ]
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    }
+  },
+  {
+    "setting": "RT-8138a8b093bfc06d",
+    "provider": "lighthouse",
+    "completeOwnedA": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": [
+            {
+              "audit": "case-audit",
+              "route": "/a",
+              "reason": "C0 approved fixture waiver",
+              "expiresAt": "2099-01-01"
+            }
+          ]
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    },
+    "completeOwnedB": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": [
+            {
+              "audit": "case-audit",
+              "route": "/a",
+              "reason": "C0 approved fixture waiver",
+              "expiresAt": "2000-01-01"
+            }
+          ]
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    }
+  },
+  {
+    "setting": "RT-323256cac3d5065d",
+    "provider": "lighthouse",
+    "completeOwnedA": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": [
+            {
+              "audit": "case-audit",
+              "route": "/a",
+              "reason": "C0 approved fixture waiver",
+              "expiresAt": "2099-01-01"
+            }
+          ]
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    },
+    "completeOwnedB": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": [
+            {
+              "audit": "other",
+              "route": "/a",
+              "reason": "C0 approved fixture waiver",
+              "expiresAt": "2099-01-01"
+            }
+          ]
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    }
+  },
+  {
+    "setting": "RT-398b1cee6b5ad261",
+    "provider": "lighthouse",
+    "completeOwnedA": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": [
+            {
+              "audit": "case-audit",
+              "route": "/a",
+              "reason": "C0 approved fixture waiver",
+              "expiresAt": "2099-01-01"
+            }
+          ]
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    },
+    "completeOwnedB": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": [
+            {
+              "audit": "case-audit",
+              "route": "/b",
+              "reason": "C0 approved fixture waiver",
+              "expiresAt": "2099-01-01"
+            }
+          ]
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    }
+  },
+  {
+    "setting": "RT-1412bca48fc1b08d",
+    "provider": "lighthouse",
+    "completeOwnedA": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": [
+            {
+              "audit": "case-audit",
+              "route": "/a",
+              "reason": "C0 approved fixture waiver",
+              "expiresAt": "2099-01-01"
+            }
+          ]
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    },
+    "completeOwnedB": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": [
+            {
+              "audit": "case-audit",
+              "route": "/a",
+              "reason": "Second C0 reviewed rationale",
+              "expiresAt": "2099-01-01"
+            }
+          ]
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    }
+  },
+  {
+    "setting": "RT-bfc739d422a140ce",
+    "provider": "lighthouse",
+    "completeOwnedA": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": [
+            {
+              "audit": "case-audit",
+              "route": "/a",
+              "reason": "C0 approved fixture waiver",
+              "expiresAt": "2099-01-01"
+            }
+          ]
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    },
+    "completeOwnedB": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": [
+            {
+              "audit": "case-audit",
+              "route": "/a",
+              "reason": "C0 approved fixture waiver",
+              "expiresAt": "2000-01-01"
+            }
+          ]
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    }
+  },
+  {
+    "setting": "RT-088d813a8d6ff7ca",
+    "provider": "lighthouse",
+    "completeOwnedA": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 10000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    },
+    "completeOwnedB": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 20000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    }
+  },
+  {
+    "setting": "RT-a8b0c90a7a729d20",
+    "provider": "lighthouse",
+    "completeOwnedA": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    },
+    "completeOwnedB": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    }
+  },
+  {
+    "setting": "RT-14d3d815490102e1",
+    "provider": "lighthouse",
+    "completeOwnedA": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    },
+    "completeOwnedB": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 5,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    }
+  },
+  {
+    "setting": "RT-97dfffc2083d51ea",
+    "provider": "lighthouse",
+    "completeOwnedA": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    },
+    "completeOwnedB": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    }
+  },
+  {
+    "setting": "RT-480d76acac6850a9",
+    "provider": "lighthouse",
+    "completeOwnedA": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    },
+    "completeOwnedB": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 240,
+              "height": 240,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 10000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    }
+  },
+  {
+    "setting": "RT-f6fd1dec2d2c6b35",
+    "provider": "playwright",
+    "completeOwnedA": {
+      "workers": 1,
+      "timeoutMs": 600000,
+      "minimumExecutedTests": 1,
+      "requiredTests": [
+        "root > case > chromium"
+      ]
+    },
+    "completeOwnedB": {
+      "workers": 1,
+      "timeoutMs": 600000,
+      "minimumExecutedTests": 1,
+      "requiredTests": [
+        "root > case > chromium"
+      ]
+    }
+  },
+  {
+    "setting": "RT-d17ed366e09f9e72",
+    "provider": "playwright",
+    "completeOwnedA": {
+      "workers": 1,
+      "timeoutMs": 600000,
+      "minimumExecutedTests": 1,
+      "requiredTests": [
+        "root > case > chromium"
+      ]
+    },
+    "completeOwnedB": {
+      "workers": 1,
+      "timeoutMs": 600000,
+      "minimumExecutedTests": 1,
+      "requiredTests": [
+        "root > case > chromium"
+      ]
+    }
+  },
+  {
+    "setting": "RT-0960971aa584ed2a",
+    "provider": "playwright",
+    "completeOwnedA": {
+      "workers": 1,
+      "timeoutMs": 600000,
+      "minimumExecutedTests": 1,
+      "requiredTests": [
+        "root > case > chromium"
+      ]
+    },
+    "completeOwnedB": {
+      "workers": 1,
+      "timeoutMs": 600000,
+      "minimumExecutedTests": 1,
+      "requiredTests": [
+        "root > case > chromium"
+      ]
+    }
+  },
+  {
+    "setting": "RT-c226799a77c2da3b",
+    "provider": "playwright",
+    "completeOwnedA": {
+      "workers": 1,
+      "timeoutMs": 600000,
+      "minimumExecutedTests": 1,
+      "requiredTests": [
+        "root > case > chromium"
+      ]
+    },
+    "completeOwnedB": {
+      "workers": 1,
+      "timeoutMs": 600000,
+      "minimumExecutedTests": 1,
+      "requiredTests": [
+        "root > case > chromium"
+      ]
+    }
+  },
+  {
+    "setting": "RT-fbdecaab60720898",
+    "provider": "playwright",
+    "completeOwnedA": {
+      "workers": 1,
+      "timeoutMs": 600000,
+      "minimumExecutedTests": 1,
+      "requiredTests": [
+        "root > case > chromium"
+      ]
+    },
+    "completeOwnedB": {
+      "workers": 2,
+      "timeoutMs": 600000,
+      "minimumExecutedTests": 1,
+      "requiredTests": [
+        "root > case > chromium"
+      ]
+    }
+  },
+  {
+    "setting": "RT-d46f4334df4967fa",
+    "provider": "playwright",
+    "completeOwnedA": {
+      "workers": 1,
+      "timeoutMs": 1000,
+      "minimumExecutedTests": 1,
+      "requiredTests": [
+        "root > case > chromium"
+      ]
+    },
+    "completeOwnedB": {
+      "workers": 1,
+      "timeoutMs": 2000,
+      "minimumExecutedTests": 1,
+      "requiredTests": [
+        "root > case > chromium"
+      ]
+    }
+  },
+  {
+    "setting": "RT-e4dcfff9aa6b1ef0",
+    "provider": "playwright",
+    "completeOwnedA": {
+      "workers": 1,
+      "timeoutMs": 600000,
+      "minimumExecutedTests": 1,
+      "requiredTests": [
+        "root > case > chromium"
+      ]
+    },
+    "completeOwnedB": {
+      "workers": 1,
+      "timeoutMs": 600000,
+      "minimumExecutedTests": 2,
+      "requiredTests": [
+        "root > case > chromium"
+      ]
+    }
+  },
+  {
+    "setting": "RT-28f9b2da06d59a77",
+    "provider": "playwright",
+    "completeOwnedA": {
+      "workers": 1,
+      "timeoutMs": 600000,
+      "minimumExecutedTests": 1,
+      "requiredTests": [
+        "root > case > chromium"
+      ]
+    },
+    "completeOwnedB": {
+      "workers": 1,
+      "timeoutMs": 600000,
+      "minimumExecutedTests": 1,
+      "requiredTests": [
+        "root > missing > chromium"
+      ]
+    }
+  },
+  {
+    "setting": "RT-d348d41c2ab35c8b",
+    "provider": "playwright",
+    "completeOwnedA": {
+      "workers": 1,
+      "timeoutMs": 600000,
+      "minimumExecutedTests": 1,
+      "requiredTests": [
+        "root > case > chromium"
+      ]
+    },
+    "completeOwnedB": {
+      "workers": 1,
+      "timeoutMs": 600000,
+      "minimumExecutedTests": 1,
+      "requiredTests": [
+        "root > missing > chromium"
+      ]
+    }
+  },
+  {
+    "setting": "RT-42fd37c34f097e2d",
+    "provider": "visual",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 0,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 0,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-4003eb10ed91148b",
+    "provider": "visual",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 0,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 0,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-7055bd224779ebc9",
+    "provider": "visual",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 0,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 0,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-e044f6419f72c0e0",
+    "provider": "visual",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 0,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 0,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-bf905e47ed35863a",
+    "provider": "visual",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 0,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 0,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-165dd3d0da855565",
+    "provider": "visual",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 0,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 0,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-1ef5ab4a60156159",
+    "provider": "visual",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 0,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 0,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-e747f65a9f069ccd",
+    "provider": "visual",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 0,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 1,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-9bc4832efb4988b7",
+    "provider": "visual",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 0,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 1,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-fe646415d23cc642",
+    "provider": "visual",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 0,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 0,
+        "pixelThreshold": 0.5,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-6e3cc348f44734f5",
+    "provider": "visual",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 0,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 0,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 1
+      },
+      "masks": [],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-be3717baf421a9dd",
+    "provider": "visual",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 0,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [
+        {
+          "target": "target-a",
+          "selectors": [
+            "#a"
+          ]
+        }
+      ],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 0,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [
+        {
+          "target": "target-a",
+          "selectors": [
+            "#b"
+          ]
+        }
+      ],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-fa24eda72114411c",
+    "provider": "visual",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 0,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [
+        {
+          "target": "target-a",
+          "selectors": [
+            "#a"
+          ]
+        }
+      ],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 0,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [
+        {
+          "target": "target-a",
+          "selectors": [
+            "#b"
+          ]
+        }
+      ],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-d57032dd890b6f18",
+    "provider": "visual",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 0,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [
+        {
+          "target": "target-a",
+          "selectors": [
+            "#a"
+          ]
+        }
+      ],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 0,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [
+        {
+          "target": "target-b",
+          "selectors": [
+            "#b"
+          ]
+        }
+      ],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-3f0dfb808c23e5e0",
+    "provider": "visual",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 0,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [
+        {
+          "target": "target-a",
+          "selectors": [
+            "#a"
+          ]
+        }
+      ],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 0,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [
+        {
+          "target": "target-a",
+          "selectors": [
+            "#b"
+          ]
+        }
+      ],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-086164702f20b582",
+    "provider": "visual",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 0,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [
+        {
+          "target": "target-a",
+          "selectors": [
+            "#a"
+          ]
+        }
+      ],
+      "timeoutMs": 30000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 0,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [
+        {
+          "target": "target-a",
+          "selectors": [
+            "#b"
+          ]
+        }
+      ],
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "setting": "RT-b1bebfd3aa463e09",
+    "provider": "visual",
+    "completeOwnedA": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 0,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [],
+      "timeoutMs": 1000
+    },
+    "completeOwnedB": {
+      "profiles": {
+        "desktop": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": false,
+          "isMobile": false,
+          "deviceScaleFactor": 1
+        },
+        "mobile": {
+          "browser": "chromium",
+          "viewport": {
+            "width": 240,
+            "height": 240
+          },
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "locale": "en-US",
+          "timezoneId": "UTC",
+          "hasTouch": true,
+          "isMobile": true,
+          "deviceScaleFactor": 1
+        }
+      },
+      "comparison": {
+        "maximumDifferencePercent": 0,
+        "pixelThreshold": 0.1,
+        "uncertaintyMarginPercent": 0
+      },
+      "masks": [],
+      "timeoutMs": 2000
+    }
+  }
+]

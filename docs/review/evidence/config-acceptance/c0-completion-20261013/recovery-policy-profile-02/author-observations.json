@@ -1,0 +1,8 @@
+{
+  "initialNavigationAttempt": {
+    "exit": 1,
+    "failure": "IsADirectoryError: provider03/schemas/components included by glob while hashing reference rejoin; no destructive operation",
+    "correction": "Enumerated actual recursive files only; directory is not an input byte identity"
+  },
+  "noRuntimeExecution": "No production/source/schema/test/native/API/credentials/script operation"
+}

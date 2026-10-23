@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY, TEST_CORE_POLICY_SELECTION } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -165,7 +166,7 @@ const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-phase6-'));
 try {
   const fixtureRoot = path.resolve('tests/fixtures/plugin-system-v2');
   const observerJournal = path.join(temporary, 'observer.jsonl');
-  const platform = {
+  const platform = {corePolicySelection: TEST_CORE_POLICY_SELECTION,
     schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000,
     installationRoots: [fixtureRoot],
     trustedBuiltinRoots: [fixtureRoot],
@@ -242,7 +243,7 @@ try {
   assert.deepEqual(
     [...core.recoverStageStates(
       cleanConditional,
-      new core.FileJournal(path.join(cleanConditionalRoot, 'events.jsonl')).records(),
+      new core.FileJournal(path.join(cleanConditionalRoot, 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs).records(),
       'run:conditional-clean',
       'nova',
     )],
@@ -373,7 +374,7 @@ try {
     [1, 2],
   );
 
-  const runRecords = new core.FileJournal(path.join(runRoot, 'events.jsonl')).records();
+  const runRecords = new core.FileJournal(path.join(runRoot, 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs).records();
   const recovered = core.recoverStageStates(definition, runRecords, 'run:phase6', 'nova');
   assert.deepEqual([...recovered], [...result.stages]);
   const requestFixTerminalIndex = runRecords.findIndex(({ entry }) =>
@@ -491,13 +492,13 @@ try {
     'run:administrative-reopen',
   );
   const administrativeRecords = new core.FileJournal(
-    path.join(administrativeRunRoot, 'administrative-decisions.jsonl'),
+    path.join(administrativeRunRoot, 'administrative-decisions.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs,
   ).records();
   assert.equal(administrativeRecords.length, 1);
   assert.equal(administrativeRecords[0].entry.actor.id, 'admin:test');
   assert.equal(
     new core.FileJournal(
-      path.join(administrativeRunRoot, 'events.jsonl'),
+      path.join(administrativeRunRoot, 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs,
     ).records().filter(({ entry }) => entry.type === 'attempt.created').length,
     2,
     'concurrent idempotent calls authorize only one additional attempt',
@@ -513,7 +514,7 @@ try {
   };
   const crashWindowRoot = resolveRunRoot(platform.storageRoot, crashWindowRunId);
   new core.FileJournal(
-    path.join(crashWindowRoot, 'administrative-decisions.jsonl'),
+    path.join(crashWindowRoot, 'administrative-decisions.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs,
   ).append(crashWindowDecision);
   const recoveredAdministrativeIntent = await core.reopenBlockedPipelineV2(
     platform,
@@ -524,7 +525,7 @@ try {
   assert.equal(recoveredAdministrativeIntent.status, 'succeeded');
   assert.equal(
     new core.FileJournal(
-      path.join(crashWindowRoot, 'administrative-decisions.jsonl'),
+      path.join(crashWindowRoot, 'administrative-decisions.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs,
     ).records().length,
     1,
     'an exact recorded-but-unapplied administrative decision resumes idempotently',
@@ -532,7 +533,7 @@ try {
 
   const crashWindowEventsFile = path.join(crashWindowRoot, 'events.jsonl');
   const eventCountBeforeCompletedReplay = new core.FileJournal(
-    crashWindowEventsFile,
+    crashWindowEventsFile, TEST_CORE_POLICY.journalAppendLockTimeoutMs,
   ).records().length;
   const repeatedAdministrativeResult = await core.reopenBlockedPipelineV2(
     platform,
@@ -547,12 +548,12 @@ try {
     'replaying a completed administrative decision does not execute another attempt',
   );
   assert.equal(
-    new core.FileJournal(crashWindowEventsFile).records().length,
+    new core.FileJournal(crashWindowEventsFile, TEST_CORE_POLICY.journalAppendLockTimeoutMs).records().length,
     eventCountBeforeCompletedReplay,
     'replaying a completed administrative decision is lifecycle-journal idempotent',
   );
   assert.equal(
-    new core.FileJournal(crashWindowEventsFile).records()
+    new core.FileJournal(crashWindowEventsFile, TEST_CORE_POLICY.journalAppendLockTimeoutMs).records()
       .filter(({ entry }) => entry.type === 'run.created').length,
     1,
   );

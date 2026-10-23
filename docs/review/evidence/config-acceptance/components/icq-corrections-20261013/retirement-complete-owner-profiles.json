@@ -1,0 +1,115 @@
+{
+  "profiles": [
+    {
+      "id": "A",
+      "author": {
+        "schemaVersion": "pipeline-platform.v2",
+        "installationRoots": [
+          "${CASE_ROOT}/installed"
+        ],
+        "trustedBuiltinRoots": [
+          "${CASE_ROOT}/installed"
+        ],
+        "externalTrust": {
+          "allowedSourceDigests": {},
+          "verifiedAttestations": {}
+        },
+        "providers": {},
+        "grants": {},
+        "adapters": {},
+        "activeAdapters": [],
+        "observers": {},
+        "storageRoot": "${CASE_ROOT}/state",
+        "shutdownTimeoutMs": 1000,
+        "effectLockTtlMs": 300000,
+        "orchestratorIssuerId": "c0-question-fixture",
+        "administrativeDecisionIssuers": [],
+        "observability": {
+          "admission": {
+            "maximumIngressBytes": 20000,
+            "maximumRecords": 2,
+            "maximumBytes": 50000,
+            "maximumQuarantineRecords": 10,
+            "maximumQuarantineBytes": 5000,
+            "metadataReserveBytes": 8192,
+            "reasonThresholdCodeUnits": 256,
+            "reasonPrefixCodeUnits": 180,
+            "lockWaitSeconds": 5
+          },
+          "attempts": {
+            "maximumEvidenceObjects": 10,
+            "maximumEvidenceBytes": 10000,
+            "maximumEvidenceObjectBytes": 1000,
+            "maximumResults": 10,
+            "maximumClosures": 10,
+            "maximumMetadataBytes": 100000,
+            "maximumPendingEvidenceAgeMs": 60000,
+            "lockWaitSeconds": 5
+          }
+        },
+        "projectScaffold": {
+          "lockWaitSeconds": 5
+        }
+      },
+      "scope": "Complete synthetic same-existingNova owner fixture matching exact originalretirement helper quotas; A/B reserve/formatter/wait only differ; no deployedoriginalidentity/capacity implied",
+      "materialization": "replace CASE_ROOT by fresh absolute temporary root; create installed/state directories; noexternalplugins/services"
+    },
+    {
+      "id": "B",
+      "author": {
+        "schemaVersion": "pipeline-platform.v2",
+        "installationRoots": [
+          "${CASE_ROOT}/installed"
+        ],
+        "trustedBuiltinRoots": [
+          "${CASE_ROOT}/installed"
+        ],
+        "externalTrust": {
+          "allowedSourceDigests": {},
+          "verifiedAttestations": {}
+        },
+        "providers": {},
+        "grants": {},
+        "adapters": {},
+        "activeAdapters": [],
+        "observers": {},
+        "storageRoot": "${CASE_ROOT}/state",
+        "shutdownTimeoutMs": 1000,
+        "effectLockTtlMs": 300000,
+        "orchestratorIssuerId": "c0-question-fixture",
+        "administrativeDecisionIssuers": [],
+        "observability": {
+          "admission": {
+            "maximumIngressBytes": 20000,
+            "maximumRecords": 2,
+            "maximumBytes": 50000,
+            "maximumQuarantineRecords": 10,
+            "maximumQuarantineBytes": 5000,
+            "metadataReserveBytes": 16384,
+            "reasonThresholdCodeUnits": 128,
+            "reasonPrefixCodeUnits": 56,
+            "lockWaitSeconds": 1
+          },
+          "attempts": {
+            "maximumEvidenceObjects": 10,
+            "maximumEvidenceBytes": 10000,
+            "maximumEvidenceObjectBytes": 1000,
+            "maximumResults": 10,
+            "maximumClosures": 10,
+            "maximumMetadataBytes": 100000,
+            "maximumPendingEvidenceAgeMs": 60000,
+            "lockWaitSeconds": 1
+          }
+        },
+        "projectScaffold": {
+          "lockWaitSeconds": 1
+        }
+      },
+      "scope": "Complete synthetic same-existingNova owner fixture matching exact originalretirement helper quotas; A/B reserve/formatter/wait only differ; no deployedoriginalidentity/capacity implied",
+      "materialization": "replace CASE_ROOT by fresh absolute temporary root; create installed/state directories; noexternalplugins/services"
+    }
+  ],
+  "helperResourceCapsUnchanged": true,
+  "Core13Untouched": true,
+  "migration": "Genuine authenticated originalhistoricalpolicy input stillmandatory; fixtureproof not realdeploymentproof"
+}

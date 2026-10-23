@@ -1,0 +1,157 @@
+{
+  "schemaVersion": "pipeline-component.v3",
+  "owner": "prism-control",
+  "profiles": {
+    "local-A": {
+      "settings": {
+        "pipelinePreferenceSubject": null,
+        "artifactRoot": "/var/lib/prism/artifacts",
+        "studioPublicUrl": "https://prism-studio",
+        "port": 8080,
+        "dispatchTimeoutMs": 900000,
+        "agentLauncher": {
+          "claimHttpTimeoutMs": 10000,
+          "claimLifetimeMs": 960000,
+          "agentId": "main",
+          "finishHttpTimeoutMs": 10000,
+          "terminationGraceMs": 1000,
+          "limits": {
+            "cleanupTimeoutMs": 10000,
+            "evidenceBytes": 2097152,
+            "evidenceFiles": 2,
+            "logBytes": 1048576,
+            "resultBytes": 1048576,
+            "timeoutMs": 900000
+          },
+          "maximumRunnerIdCodeUnits": 160,
+          "maximumStartKeyCodeUnits": 240
+        },
+        "agentBridge": {
+          "maximumRequestBytes": 2000000,
+          "dispatchTimeoutMs": 30000,
+          "jobLookupTimeoutMs": 10000,
+          "pollIntervalMs": 1000,
+          "port": 18080
+        },
+        "artifactUpload": {
+          "maximumDecodedBytes": 6000000,
+          "maximumWireBytes": 8500000
+        },
+        "corpusPolicy": {
+          "acquireTimeoutMs": 30000,
+          "cleanupTimeoutMs": 10000
+        },
+        "controlPolicies": {
+          "HTTP-BODY-BYTES": 2000000,
+          "SESSION-DEFAULT-ROLES": [
+            "editor"
+          ],
+          "sessionTtlMs": 900000,
+          "maximumRenderAssetDecodedBytes": 6000000
+        },
+        "searchPolicy": {
+          "candidateFloor": 100,
+          "candidateMultiplier": 10,
+          "defaultLimit": 10,
+          "defaultFamilyLimit": 2,
+          "maximumFamilyLimit": 10,
+          "maximumLimit": 50,
+          "rrfDamping": 60
+        },
+        "databaseBootstrap": {
+          "connectionTimeoutMs": 5000,
+          "maximumAttempts": 60,
+          "retryDelayMs": 2000,
+          "pool": {
+            "idleTimeoutMs": 10000,
+            "connectionLifetime": {
+              "mode": "unbounded"
+            },
+            "maximumConnections": 10,
+            "minimumIdleConnections": 0,
+            "connectionReuse": {
+              "mode": "unbounded"
+            }
+          }
+        },
+        "designPolicy": {
+          "count": 3,
+          "maximumDecisionKeyCodeUnits": 200,
+          "diversity": {
+            "minimumDistance": 3,
+            "otherWeight": 1,
+            "rootWeight": 2,
+            "typeWeight": 3
+          }
+        },
+        "ingestion": {
+          "getPinned.size": 6000000,
+          "request.setTimeout": 15000,
+          "PORT": 8080,
+          "redirects": 3,
+          "handleRequest.size": 2000000,
+          "PRISM_QUARANTINE_ROOT": "/quarantine",
+          "PRISM_QUARANTINE_TTL_MS": 3600000,
+          "listenAddress": "0.0.0.0"
+        },
+        "internalArtifact": {
+          "maximumUploadBytes": 134217728
+        },
+        "productAuthority": {
+          "decisionTtlMs": 300000,
+          "enabled": true
+        },
+        "preferencePolicy": {
+          "scoring": {
+            "halfLifeDays": 180,
+            "negativeWeight": 1,
+            "positiveWeight": 1,
+            "retainedWeight": 0.5,
+            "scoreFractionDigits": 4
+          },
+          "personalEnabledWhenProjectPolicyAbsent": true
+        },
+        "databasePool": {
+          "idleTimeoutMs": 10000,
+          "connectionLifetime": {
+            "mode": "unbounded"
+          },
+          "maximumConnections": 10,
+          "minimumIdleConnections": 0,
+          "connectionReuse": {
+            "mode": "unbounded"
+          }
+        },
+        "migration": {
+          "databasePool": {
+            "idleTimeoutMs": 10000,
+            "connectionLifetime": {
+              "mode": "unbounded"
+            },
+            "maximumConnections": 10,
+            "minimumIdleConnections": 0,
+            "connectionReuse": {
+              "mode": "unbounded"
+            }
+          }
+        },
+        "productPolicies": {
+          "maximumControllerResponseBytes": 1000000,
+          "controllerRequestTimeoutMs": 15000,
+          "decisionHistoryLimit": 100,
+          "maximumDecisionInputBytes": 32000,
+          "maximumSubjectCodeUnits": 2048,
+          "maximumControllerTokenCodeUnits": 64000
+        }
+      },
+      "activation": {
+        "control": "enabled",
+        "ingestion": "enabled",
+        "agentBridge": "enabled",
+        "databaseBootstrap": "enabled",
+        "migrator": "enabled",
+        "agentLauncher": "enabled"
+      }
+    }
+  }
+}

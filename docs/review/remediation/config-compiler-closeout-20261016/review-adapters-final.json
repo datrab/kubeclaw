@@ -1,0 +1,18 @@
+{
+  "findings": [
+    {
+      "title": "[P1] Preserve capture compatibility for previously retained Core policies",
+      "body": "Making `operatorMessagingPayload.payloadStructure` required without changing the policy version invalidates policies captured before this patch, including existing `nova-core-runtime-policy.v2` runs. Recovery passes the retained policy through `captureCoreRuntimePolicy`, which now throws `CORE_RUNTIME_POLICY_INVALID` before the original runtime can be reconstructed. Preserve version-aware capture compatibility by interpreting the missing field in older retained policies as the previous fixed protocol limits, while requiring explicit selection for newly authored policies.",
+      "priority": "P1",
+      "confidence": 0.97,
+      "category": "regression",
+      "code_location": {
+        "file_path": "skills/common/plugin-runtime/foundation/config/core-runtime-policy.schema.json",
+        "line": 559
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "The configuration wiring generally follows the selected policy, but the new required field breaks recovery of previously captured policies under the same supported policy versions. This assessment is based on source inspection only; no tests or native execution were performed.",
+  "overall_confidence": 0.94
+}

@@ -1,5 +1,6 @@
 import type {StageDefinition} from '@kubeclaw/plugin-sdk';
 import {validatePipelineTestGateContract,resolvedTestPlanDigest,type ResolvedTestPlanV1} from '@kubeclaw/pipeline-test-gate-contract';
+import {resolveCompilerExecutionGroups} from './execution-group-policy.ts';
 export interface Demo {readonly authNodeId:string;readonly protocol:'json-session.v1';readonly operatorTarget:string;readonly retentionSeconds:number;}
 function configuration(value:unknown):Demo {
   if(!value||typeof value!=='object'||Array.isArray(value))throw new Error('PROJECT_DEMO_INVALID');
@@ -31,9 +32,21 @@ function validatePlan(value:unknown,demo:Demo):void {
 }
 export function normalizeDemo(value:unknown):Demo|undefined {return value===undefined?undefined:configuration(value);}
 export function demoStages(value:unknown,plan:unknown):StageDefinition[] {
+  return buildDemoStages(value,plan,120000);
+}
+
+/** Explicit groups remain required even when this task has no demo branch.
+ * Numeric receiving is not source/task/R/caller publication authority.
+ */
+export function demoStagesWithExecutionGroups(value:unknown,plan:unknown,executionGroups:unknown):StageDefinition[] {
+  const groups=resolveCompilerExecutionGroups(executionGroups);
+  return buildDemoStages(value,plan,groups.demo.timeoutMs);
+}
+
+function buildDemoStages(value:unknown,plan:unknown,timeoutMs:number):StageDefinition[] {
   if(value===undefined)return [];
   const demo=configuration(value);validatePlan(plan,demo);
-  const execution={maxAttempts:2,maxRemediationCycles:0,maxTechnicalRetries:1,timeoutMs:120000};
+  const execution={maxAttempts:2,maxRemediationCycles:0,maxTechnicalRetries:1,timeoutMs};
   return [{id:'demo-candidate',type:'kubeclaw.demo.candidate',dependsOn:['project-summary'],config:{},input:{manifestStageId:'project-summary',...demo},execution},
     {id:'demo-delivery',type:'kubeclaw.demo.delivery',dependsOn:['demo-candidate'],config:{},input:{candidateStageId:'demo-candidate'},execution},
     {id:'demo-ready',type:'kubeclaw.demo.ready',dependsOn:['demo-delivery'],config:{},input:{candidateStageId:'demo-candidate',deliveryStageId:'demo-delivery'},execution}];

@@ -1,0 +1,98 @@
+{
+  "status": "bounded-proposal-requires-sequencing-correction; intentionallypartialglobaldefinitionNOTACCEPTED",
+  "scope": "Independent parentauthored Nova seam only, not authoredCore or Runtime/Delivery",
+  "materialFindings": [
+    {
+      "id": "NOVA-CARRIER-01",
+      "severity": "material-proposed-order-contradiction",
+      "proposal": "NOVA-MODULE-CARRIER-PROPOSAL-20261013.md:66-81",
+      "finding": "Writtensteps1/2 select and validate currentcandidate before step3 retained-originallookup, but step3 promises originalreturn withoutselectingB and step5 originalrecovery. Missing/malformed/incompatible currentB can reject before retainedA is consulted. Originalclosurevalidation must not depend on currentpublication.",
+      "counterexample": "retained-first-ordering-controls.log (logicalwritten-order witness using actuallocalFileJournal; not productiveNova implementation)",
+      "requiredDefinition": "Under originalrun/journal synchronization first resolve andvalidate originalgroup/history/taskmembership. If acceptedoriginalA exists, resolve its retained full dependencyclosure without currentB lookup; incompatible explicit changed original intent/tuple rejects separately. Only proven genuinelyunstarted group may resolve/materialize currentcandidate outsidejournal callback; then recheck original/history/membership and commit one complete entry under same run authority. An intervening originalcommit must win without rebinding or requiring currentB. Preserve missinglegacy/uncertain failclosed and compatible originalrecovery.",
+      "authorAcknowledgment": "Parent acknowledged ordering contradiction before modifying proposal; frozeninput unchanged at this reviewcompletion."
+    }
+  ],
+  "verifiedCurrentSourceDistinctions": [
+    "Compiler exactsource/module/final/demo stage memberships and same-module request_fix edges match proposal; arbitrary graph has real dependency/remediation/activation validation, not prefixmembership",
+    "Current snapshots pin completegraph/config/package/protocol identities; source map doesnot claim bindinguniversallyabsent or all PlatformConfigfields persisted",
+    "prepareRuntime precedes runlock/current recoveryequality; targetpreactivation compatibility acknowledgedOPEN, not silently currentimplemented",
+    "FileJournal callback not rollback; fsync eachwrittenJSONline, hashverifyfullrecords, truncateincompletetail, reject escapedappend;7localcontrols reproduced",
+    "No proposed module.binding.accepted type in currentSDKLifecycleEvent; parent explicitly requires evolvedcontract and marks strictschemas/readers OPEN"
+  ],
+  "sourceBoundaryConstraints": [
+    {
+      "id": "NOVA-BOUNDARY-CURRENT-JOURNAL-CRASH-MODEL",
+      "status": "sourceconstraint-for-open-durability-contract, not newdemandforruntimePASS",
+      "source": [
+        "skills/nova/core/state/journal.ts:53-80",
+        "skills/nova/core/state/journal.ts:125-155",
+        "skills/nova/core/execution/engine-snapshots.ts:108-120"
+      ],
+      "constraint": "Current append fsyncs filedescriptor, but FileJournal doesnot fsync parentdirectory on firstcreation. Snapshotwriter has explicitdirectoryfsync. Narrow localtests do not prove power-loss/physicalfilesystem durability. Proposed durable/crash guarantee must name processcrash versus storage/power model and ensure requiredcarrier existence/retention; do not infer stronger guarantee from sevencontrols."
+    },
+    {
+      "id": "NOVA-BOUNDARY-INNER-EVENT-SEQUENCE",
+      "status": "exactSDK/wrapper obligation alreadyOPEN",
+      "source": [
+        "skills/nova/core/execution/runner.ts:63",
+        "skills/nova/core/state/journal.ts:176-201",
+        "skills/nova/core/telemetry/observer-recovery.ts:23-31"
+      ],
+      "constraint": "Existing lifecycle/domain entriescarry inner eventId/sequence/runidentity and appendSequenced derives actualsequence after journalrefresh underappendmutex. Stablebindingbody can validate outsidecallback, but finaleventwrapper sequence/encoding/completebyteaccounting must use committed position inside synchronouscallback before singleappend, not precomputedrace-pronesequence. Newtypedentry needs actualobserver/recovery readers, not baregenericjournal specimen."
+    },
+    {
+      "id": "NOVA-BOUNDARY-OBSERVER-VIEW-GATE",
+      "status": "view/subscription/requiredpolicy/consumer contract alreadyOPEN",
+      "source": [
+        "skills/nova/core/telemetry/observers.ts:66-99",
+        "skills/nova/core/telemetry/observer-recovery.ts:23-31",
+        "skills/nova/core/execution/engine-runtime.ts:97-103",
+        "skills/nova/core/execution/pipeline-loop.ts:87-128"
+      ],
+      "constraint": "ObserverRuntime filters subscriptions and requiredmode throws; nonrequiredfailures accumulate/return while engine drainer ignores returnsummary. Therefore awaitedflush is not universally proof desiredviewwasdelivered. Define exactcorrespondingview/readers, requiredgate versus allowed degradation under originalRpolicy, persistentcheckpoint and retry/crash replay before firststage/skip/executor. Currentloop skips beforeexecute and runcreated/resumedflushes separately; actualgategoesin both skip and execute paths, not stage.started alone."
+    },
+    {
+      "id": "NOVA-BOUNDARY-ASYNC-LOCK-CALLBACK",
+      "status": "actualownership/abort scope constraint, not demonstratedlockbug",
+      "source": [
+        "skills/nova/core/execution/run-mutation.ts:6-24",
+        "skills/nova/core/state/file-mutex.ts:7-28",
+        "skills/nova/core/state/journal.ts:161-188",
+        "skills/nova/core/effects/locks.ts:98-103,177-213"
+      ],
+      "constraint": "Runlock spans asynchronous Promise operation withrenewal/AbortSignal; journalmutex spans synchronouscallback only. Current transact doesnot runtime-reject a returnedPromise, so noasync callback is callercontract, not APIenforcementproof. Futurematerialization/activation/delivery asyncwork outsidejournal callback must preserveoriginalrunauthority and honor loss/abort before append/effects. Do not claim TTLalone permits stealingliveowner; resource-lock acquisition checksprocessliveness."
+    }
+  ],
+  "intentionallyOpenNotWaived": [
+    "Strictschema/typedSDKcarrier and canonical completewrapper accounting",
+    "Task/operator partition and graph/snapshot version/legacy migration",
+    "Full M/J/R/S/H owner scopes, immutable manifests/authenticgrants/secretrefs/code/roles",
+    "Store/metadata/physical quotas and referenced payload compatibility",
+    "Concrete cross-reader futurecases/concurrency/processkill/skip/Eval/cleanup/adminversion fixtures andcommands",
+    "WholeC0 acceptance"
+  ],
+  "controls": {
+    "replayedActualCurrentJournal": 7,
+    "logicalOrderingWitnesses": 2,
+    "futureTargetCasesRun": 0,
+    "frozenInputs": 35,
+    "inputDrift": [
+      {
+        "path": "docs/review/remediation/config-definition-current.md",
+        "expected": "7316ca6af5a68de28cb56265ad4fa937f188c774882bb98c38744ba42c93ff51",
+        "actual": "0ce6cdaeee9171d2838cd1c3ad4edf0f5ca7d6524c3865be1413f1607627d584"
+      }
+    ],
+    "inputDriftClassification": {
+      "path": "docs/review/remediation/config-definition-current.md",
+      "fileDrift": true,
+      "changedSection": "Excluded Core R06 status andintegrationlog link only; no Core substantive review performed",
+      "novaRelevantTailByteIdentical": true,
+      "frozenNovaSectionSha256": "e02a4ffe954bc1ae4efff97f4879ecc845d591c4824a89121e03430df2ef8121",
+      "scopeCriticalParentProposalSourcesDrift": 0,
+      "evidence": "end-input-drift.diff",
+      "conclusion": "Report adjudicates exactfrozenparentNova inputs; fullcriteriafile intentionallymutable andqualified, nofalsewholefreeze0driftclaim"
+    }
+  },
+  "excluded": "Authored Core55/97/145/Core13 not reviewed ormodified. Runtime/Deliverynotreviewed. Othermutable dirs qualifiedbyexactfreeze; no production/tests/live API/host/image/actions/commit."
+}

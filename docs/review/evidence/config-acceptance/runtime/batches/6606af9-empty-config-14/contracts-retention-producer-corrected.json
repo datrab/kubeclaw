@@ -1,0 +1,308 @@
+{
+  "entries": [
+    {
+      "setting": "RT-3638839f98359efd",
+      "registration": "kubeclaw.agent-observability:ingester",
+      "classification": "closed-empty-configuration-representation-no-operator-field",
+      "current": "ingest projects/redactsdeliverypayload then telemetry.emit append; no contract.config read. Observer manifest subscriptions/retrymode5attempt/backoff1000/timeout10000 are actual runtimepolicy outsideemptyconfig; exact15existingobserver rows remainOPEN, no sourcepolicyabsence inferred.",
+      "domain": "Exactly {} at currentowning stage/observerconfig boundary; unknownfield/type/null/array reject. No independentlegalBconfig, no syntheticsettings/profiles/aliases invented. Emptypluginconfig doesnot prove absenceof manifest/task/adapter/SDK/source policies.",
+      "profiles": {
+        "A": {},
+        "B": "no legal independentlydifferent config; only approvedtask/source/dependency profile canchange elsewhere",
+        "negative": {
+          "maximumBytes": 1
+        }
+      },
+      "source": {
+        "path": "skills/common/plugins/agent-observability/src/observers.ts",
+        "sha256": "b52a00959c3ba7c122faf4fe364ce9ab5baf530e590df89b8f3ddc5e764b111c",
+        "export": "ingest"
+      },
+      "manifest": {
+        "path": "skills/common/plugins/agent-observability/plugin.json",
+        "sha256": "00319c7417cd253a0bcc0ae6574baba74a2592a8ee9284552f7d2fc2c341ce8c"
+      },
+      "schema": {
+        "path": "skills/common/plugins/agent-observability/schemas/config.schema.json",
+        "sha256": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa"
+      },
+      "productiveCaller": "Exactmanifestregistration -> ObserverRuntime.drain/deliverObserver actuallease/config/grants or StageExecutor actualcontract -> namedmodule/export; sourceinput/taskadapter contract realeffects notexecuted here.",
+      "futureDefinition": "Owningrealregistry accepts{} beforeeffects/rejectsnonnullunknown config; genuine same task/source/wait/adapter/grant positive. Unknown-key validatorbypass futuremutationred/restoredgreen, not inventedconfigfield AB effect. Full originalmodule/source/dependency/manifestpolicy bindings remainOPEN."
+    },
+    {
+      "setting": "RT-596681e5b34e5066",
+      "registration": "kubeclaw.agent-observability:evidence",
+      "classification": "closed-empty-configuration-representation-no-operator-field",
+      "current": "recordEvidence projectsredactedpayload and artifacts.write agent-evidence:<eventId>, no config read. Identity in projectAgentEvent currentlyunredacted vs telemetryEnvelope redactsidentity; payloaddata/source semantics not closed. Manifest policy separate sameexistingowner rows.",
+      "domain": "Exactly {} at currentowning stage/observerconfig boundary; unknownfield/type/null/array reject. No independentlegalBconfig, no syntheticsettings/profiles/aliases invented. Emptypluginconfig doesnot prove absenceof manifest/task/adapter/SDK/source policies.",
+      "profiles": {
+        "A": {},
+        "B": "no legal independentlydifferent config; only approvedtask/source/dependency profile canchange elsewhere",
+        "negative": {
+          "maximumBytes": 1
+        }
+      },
+      "source": {
+        "path": "skills/common/plugins/agent-observability/src/observers.ts",
+        "sha256": "b52a00959c3ba7c122faf4fe364ce9ab5baf530e590df89b8f3ddc5e764b111c",
+        "export": "recordEvidence"
+      },
+      "manifest": {
+        "path": "skills/common/plugins/agent-observability/plugin.json",
+        "sha256": "00319c7417cd253a0bcc0ae6574baba74a2592a8ee9284552f7d2fc2c341ce8c"
+      },
+      "schema": {
+        "path": "skills/common/plugins/agent-observability/schemas/config.schema.json",
+        "sha256": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa"
+      },
+      "productiveCaller": "Exactmanifestregistration -> ObserverRuntime.drain/deliverObserver actuallease/config/grants or StageExecutor actualcontract -> namedmodule/export; sourceinput/taskadapter contract realeffects notexecuted here.",
+      "futureDefinition": "Owningrealregistry accepts{} beforeeffects/rejectsnonnullunknown config; genuine same task/source/wait/adapter/grant positive. Unknown-key validatorbypass futuremutationred/restoredgreen, not inventedconfigfield AB effect. Full originalmodule/source/dependency/manifestpolicy bindings remainOPEN."
+    },
+    {
+      "setting": "RT-7757cf59afecb196",
+      "registration": "kubeclaw.telemetry-observer:telemetry",
+      "classification": "closed-empty-configuration-representation-no-operator-field",
+      "current": "observe -> telemetryEnvelope redactsidentity/payload then telemetry.emit append; no config read. ActualObserverRuntime filtersmanifest subscriptions, checksgrantpresence, retainedcheckpoint/priorattempts, requiredmode failures; deliverObserver lease wall/cpu fromtimeout and hardcodedmemory256MiB are separate productivepolicies\u2014not absent becauseconfig{}.",
+      "domain": "Exactly {} at currentowning stage/observerconfig boundary; unknownfield/type/null/array reject. No independentlegalBconfig, no syntheticsettings/profiles/aliases invented. Emptypluginconfig doesnot prove absenceof manifest/task/adapter/SDK/source policies.",
+      "profiles": {
+        "A": {},
+        "B": "no legal independentlydifferent config; only approvedtask/source/dependency profile canchange elsewhere",
+        "negative": {
+          "maximumBytes": 1
+        }
+      },
+      "source": {
+        "path": "skills/common/plugins/telemetry-observer/src/observer.ts",
+        "sha256": "21abca7f49d39ccb085bac5aa152c3e2fd7b5b477d7fbc897785a8750854b71c",
+        "export": "observe"
+      },
+      "manifest": {
+        "path": "skills/common/plugins/telemetry-observer/plugin.json",
+        "sha256": "e8f47d3fe54481f200935675f1899a29fe428b636060e5cf61756958044221b6"
+      },
+      "schema": {
+        "path": "skills/common/plugins/telemetry-observer/schemas/config.schema.json",
+        "sha256": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa"
+      },
+      "productiveCaller": "Exactmanifestregistration -> ObserverRuntime.drain/deliverObserver actuallease/config/grants or StageExecutor actualcontract -> namedmodule/export; sourceinput/taskadapter contract realeffects notexecuted here.",
+      "futureDefinition": "Owningrealregistry accepts{} beforeeffects/rejectsnonnullunknown config; genuine same task/source/wait/adapter/grant positive. Unknown-key validatorbypass futuremutationred/restoredgreen, not inventedconfigfield AB effect. Full originalmodule/source/dependency/manifestpolicy bindings remainOPEN."
+    },
+    {
+      "setting": "RT-4a2c371d1c272b14",
+      "registration": "kubeclaw.blueprint-sync:sync",
+      "classification": "closed-empty-configuration-representation-no-operator-field",
+      "current": "execute validates task blueprint/repository/branch/controlpaths, checks approvedSource subset, git.sync then git.commit onlysynced>0, state.append/artifactwrite; no config read. Paths/revisions/approvedsource input remain tasksource/authorization, operatoradapter/grants remainseparate; no actual git effect now.",
+      "domain": "Exactly {} at currentowning stage/observerconfig boundary; unknownfield/type/null/array reject. No independentlegalBconfig, no syntheticsettings/profiles/aliases invented. Emptypluginconfig doesnot prove absenceof manifest/task/adapter/SDK/source policies.",
+      "profiles": {
+        "A": {},
+        "B": "no legal independentlydifferent config; only approvedtask/source/dependency profile canchange elsewhere",
+        "negative": {
+          "maximumBytes": 1
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/blueprint-sync/src/stage.ts",
+        "sha256": "77735e30c7109aee73cd6c396fe11858275935df1f251aae77d582ed4a7f2765",
+        "export": "execute"
+      },
+      "manifest": {
+        "path": "skills/nova/plugins/blueprint-sync/plugin.json",
+        "sha256": "b7d85a1c195d9d5280da1c396ac1d697be9e0d3a85babe1046850c18fa47e384"
+      },
+      "schema": {
+        "path": "skills/nova/plugins/blueprint-sync/schemas/config.schema.json",
+        "sha256": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa"
+      },
+      "productiveCaller": "Exactmanifestregistration -> ObserverRuntime.drain/deliverObserver actuallease/config/grants or StageExecutor actualcontract -> namedmodule/export; sourceinput/taskadapter contract realeffects notexecuted here.",
+      "futureDefinition": "Owningrealregistry accepts{} beforeeffects/rejectsnonnullunknown config; genuine same task/source/wait/adapter/grant positive. Unknown-key validatorbypass futuremutationred/restoredgreen, not inventedconfigfield AB effect. Full originalmodule/source/dependency/manifestpolicy bindings remainOPEN."
+    },
+    {
+      "setting": "RT-b7fd151953533329",
+      "registration": "kubeclaw.delivery-lint:delivery-lint",
+      "classification": "closed-empty-configuration-representation-no-operator-field",
+      "current": "execute task dockerfile/staticPath read via repositoryadapter; safe paths, literalDocker COPY/WORKDIR matching, artifactreport. dockerfile null skipsread and passeswrite. No config read; repository/auth/artifact limits separatelyowned.",
+      "domain": "Exactly {} at currentowning stage/observerconfig boundary; unknownfield/type/null/array reject. No independentlegalBconfig, no syntheticsettings/profiles/aliases invented. Emptypluginconfig doesnot prove absenceof manifest/task/adapter/SDK/source policies.",
+      "profiles": {
+        "A": {},
+        "B": "no legal independentlydifferent config; only approvedtask/source/dependency profile canchange elsewhere",
+        "negative": {
+          "maximumBytes": 1
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/delivery-lint/src/stage.ts",
+        "sha256": "b8f849c5d228713dd73ab7a47e73ef5be9ee5fd07af39e4276c483a3555ac862",
+        "export": "execute"
+      },
+      "manifest": {
+        "path": "skills/nova/plugins/delivery-lint/plugin.json",
+        "sha256": "4d560ad2f25858a8f399097effb0f32c7a25bfbe326c3dfd61101346ee1d01d9"
+      },
+      "schema": {
+        "path": "skills/nova/plugins/delivery-lint/schemas/config.schema.json",
+        "sha256": "2656294ca60aa23acaa3e6e1b688fa8b754196e6636657eb146a559936511803"
+      },
+      "productiveCaller": "Exactmanifestregistration -> ObserverRuntime.drain/deliverObserver actuallease/config/grants or StageExecutor actualcontract -> namedmodule/export; sourceinput/taskadapter contract realeffects notexecuted here.",
+      "futureDefinition": "Owningrealregistry accepts{} beforeeffects/rejectsnonnullunknown config; genuine same task/source/wait/adapter/grant positive. Unknown-key validatorbypass futuremutationred/restoredgreen, not inventedconfigfield AB effect. Full originalmodule/source/dependency/manifestpolicy bindings remainOPEN."
+    },
+    {
+      "setting": "RT-ddc5f07235cd7d5a",
+      "registration": "kubeclaw.demo-handoff:candidate",
+      "classification": "closed-empty-configuration-representation-no-operator-field",
+      "current": "execute task manifeststage/authnode/protocol/operatorTarget/retentionSeconds -> exactsourceevidence/candidate artifact; no config read. protocol json-session.v1 enum is implementationcontract; operatorTarget mustmatch actual adapter config; retention default604800 and range1..9223372036 affect durable controller lease, not closedtask/nonsetting: Existing RT-PROJECT-DEMO-RETENTIONSECONDS owns traced currentproducer normalizeDemo: omitted604800/project.demo integeroverride -> compiler demoStages config{} + candidate.input -> retention -> boundcandidate/request -> exactcontrollerresponse and storedv1/v2deadline. Technical9223372036=(2^63-1)/1e9 GoDuration bound, not selectedoperationalbudget/physicalcapacity; actualdeadline years1..9999 guard and historicalv1onlydefault, v2requires explicitretention. Signedsource/genuinecompilerplan/adapter/controller/role/lease/profilequota/module binding and whole-sourcepolicy author approval remainOPEN. No secondretentionauthor/newID or claim technicalcap independenttunable.",
+      "domain": "Exactly {} at currentowning stage/observerconfig boundary; unknownfield/type/null/array reject. No independentlegalBconfig, no syntheticsettings/profiles/aliases invented. Emptypluginconfig doesnot prove absenceof manifest/task/adapter/SDK/source policies.",
+      "profiles": {
+        "A": {},
+        "B": "no legal independentlydifferent config; only approvedtask/source/dependency profile canchange elsewhere",
+        "negative": {
+          "maximumBytes": 1
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/candidate.ts",
+        "sha256": "0706b62469c38751d1b22fdc0486e66915cda45077b315b144ef8a4ec641eff3",
+        "export": "execute"
+      },
+      "manifest": {
+        "path": "skills/nova/plugins/demo-handoff/plugin.json",
+        "sha256": "6603951e6a1eb1eef6a48d400a942ca153ec064d2ea67b0ec7f78b4f7e680d6e"
+      },
+      "schema": {
+        "path": "skills/nova/plugins/demo-handoff/schemas/empty.schema.json",
+        "sha256": "2656294ca60aa23acaa3e6e1b688fa8b754196e6636657eb146a559936511803"
+      },
+      "productiveCaller": "Exactmanifestregistration -> ObserverRuntime.drain/deliverObserver actuallease/config/grants or StageExecutor actualcontract -> namedmodule/export; sourceinput/taskadapter contract realeffects notexecuted here.",
+      "futureDefinition": "Owningrealregistry accepts{} beforeeffects/rejectsnonnullunknown config; genuine same task/source/wait/adapter/grant positive. Unknown-key validatorbypass futuremutationred/restoredgreen, not inventedconfigfield AB effect. Full originalmodule/source/dependency/manifestpolicy bindings remainOPEN."
+    },
+    {
+      "setting": "RT-e206200eaa42040e",
+      "registration": "kubeclaw.demo-handoff:delivery",
+      "classification": "closed-empty-configuration-representation-no-operator-field",
+      "current": "execute selects actual same-run/latest singlecandidate artifact then demo.handoffdeliver andartifactwrite; no config read. Capturedadapter configstageIDs/target/client/storelimits are realseparatepolicy; source/candidate/receipt exactbinding not fakefieldaliases.",
+      "domain": "Exactly {} at currentowning stage/observerconfig boundary; unknownfield/type/null/array reject. No independentlegalBconfig, no syntheticsettings/profiles/aliases invented. Emptypluginconfig doesnot prove absenceof manifest/task/adapter/SDK/source policies.",
+      "profiles": {
+        "A": {},
+        "B": "no legal independentlydifferent config; only approvedtask/source/dependency profile canchange elsewhere",
+        "negative": {
+          "maximumBytes": 1
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/delivery.ts",
+        "sha256": "a1dfb3d6fef144d5f11e3546039ba4a291c97ad4f5fcf7ee0279b83fdfadaff7",
+        "export": "execute"
+      },
+      "manifest": {
+        "path": "skills/nova/plugins/demo-handoff/plugin.json",
+        "sha256": "6603951e6a1eb1eef6a48d400a942ca153ec064d2ea67b0ec7f78b4f7e680d6e"
+      },
+      "schema": {
+        "path": "skills/nova/plugins/demo-handoff/schemas/empty.schema.json",
+        "sha256": "2656294ca60aa23acaa3e6e1b688fa8b754196e6636657eb146a559936511803"
+      },
+      "productiveCaller": "Exactmanifestregistration -> ObserverRuntime.drain/deliverObserver actuallease/config/grants or StageExecutor actualcontract -> namedmodule/export; sourceinput/taskadapter contract realeffects notexecuted here.",
+      "futureDefinition": "Owningrealregistry accepts{} beforeeffects/rejectsnonnullunknown config; genuine same task/source/wait/adapter/grant positive. Unknown-key validatorbypass futuremutationred/restoredgreen, not inventedconfigfield AB effect. Full originalmodule/source/dependency/manifestpolicy bindings remainOPEN."
+    },
+    {
+      "setting": "RT-5ca0fcad939b5fd8",
+      "registration": "kubeclaw.demo-handoff:ready",
+      "classification": "closed-empty-configuration-representation-no-operator-field",
+      "current": "execute selectscandidate/delivery references -> demo.handoffcommit ->artifactwrite; no config read. Actualadapter durableintents+HTTPSstatus fallback/controllerresponse retention/sourcepredicate/grants keep originaltuple; no realendpoint/model/native effects now.",
+      "domain": "Exactly {} at currentowning stage/observerconfig boundary; unknownfield/type/null/array reject. No independentlegalBconfig, no syntheticsettings/profiles/aliases invented. Emptypluginconfig doesnot prove absenceof manifest/task/adapter/SDK/source policies.",
+      "profiles": {
+        "A": {},
+        "B": "no legal independentlydifferent config; only approvedtask/source/dependency profile canchange elsewhere",
+        "negative": {
+          "maximumBytes": 1
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/ready.ts",
+        "sha256": "ae78a23722ab515d539b8ad4c0950ee8d487c5ff02a4b5f851f249f2026ffb82",
+        "export": "execute"
+      },
+      "manifest": {
+        "path": "skills/nova/plugins/demo-handoff/plugin.json",
+        "sha256": "6603951e6a1eb1eef6a48d400a942ca153ec064d2ea67b0ec7f78b4f7e680d6e"
+      },
+      "schema": {
+        "path": "skills/nova/plugins/demo-handoff/schemas/empty.schema.json",
+        "sha256": "2656294ca60aa23acaa3e6e1b688fa8b754196e6636657eb146a559936511803"
+      },
+      "productiveCaller": "Exactmanifestregistration -> ObserverRuntime.drain/deliverObserver actuallease/config/grants or StageExecutor actualcontract -> namedmodule/export; sourceinput/taskadapter contract realeffects notexecuted here.",
+      "futureDefinition": "Owningrealregistry accepts{} beforeeffects/rejectsnonnullunknown config; genuine same task/source/wait/adapter/grant positive. Unknown-key validatorbypass futuremutationred/restoredgreen, not inventedconfigfield AB effect. Full originalmodule/source/dependency/manifestpolicy bindings remainOPEN."
+    },
+    {
+      "setting": "RT-db48347c4f9c7450",
+      "registration": "kubeclaw.preflight-contract:validate",
+      "classification": "closed-empty-configuration-representation-no-operator-field",
+      "current": "execute task module/substep paths -> readFORGE.md -> parse exactone taggedJSONblock and exactmodule/substepdeclaredpaths -> artifactreport. no config read; taskdeclarations/sourcecoverage remain fixed, no arbitraryconfig knob.",
+      "domain": "Exactly {} at currentowning stage/observerconfig boundary; unknownfield/type/null/array reject. No independentlegalBconfig, no syntheticsettings/profiles/aliases invented. Emptypluginconfig doesnot prove absenceof manifest/task/adapter/SDK/source policies.",
+      "profiles": {
+        "A": {},
+        "B": "no legal independentlydifferent config; only approvedtask/source/dependency profile canchange elsewhere",
+        "negative": {
+          "maximumBytes": 1
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/preflight-contract/src/stage.ts",
+        "sha256": "75da42cf49cb7a655e9edb4e4928bd3e708ece30f592cb5a14aa2627ce3fc4ef",
+        "export": "execute"
+      },
+      "manifest": {
+        "path": "skills/nova/plugins/preflight-contract/plugin.json",
+        "sha256": "3db03aa245a1721e183ce3e035bf0c6a5a57b2c227e3ca230b528b1bc68c192c"
+      },
+      "schema": {
+        "path": "skills/nova/plugins/preflight-contract/schemas/config.schema.json",
+        "sha256": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa"
+      },
+      "productiveCaller": "Exactmanifestregistration -> ObserverRuntime.drain/deliverObserver actuallease/config/grants or StageExecutor actualcontract -> namedmodule/export; sourceinput/taskadapter contract realeffects notexecuted here.",
+      "futureDefinition": "Owningrealregistry accepts{} beforeeffects/rejectsnonnullunknown config; genuine same task/source/wait/adapter/grant positive. Unknown-key validatorbypass futuremutationred/restoredgreen, not inventedconfigfield AB effect. Full originalmodule/source/dependency/manifestpolicy bindings remainOPEN."
+    },
+    {
+      "setting": "RT-699f4317f8aa6e6e",
+      "registration": "kubeclaw.preflight-contract:source",
+      "classification": "closed-empty-configuration-representation-no-operator-field",
+      "current": "execute tasksource/contract.policy/requiredfiles/modules -> captureReviewSubject exactpaths/project/baseRevision and deliveries -> boundsubjectartifactwrite; no config read. input.contract.policy is task/schema-validated source-binding payload, not an implicitlyapproved secondeditable CONFIG author; policy/taskpartition parentOPEN.",
+      "domain": "Exactly {} at currentowning stage/observerconfig boundary; unknownfield/type/null/array reject. No independentlegalBconfig, no syntheticsettings/profiles/aliases invented. Emptypluginconfig doesnot prove absenceof manifest/task/adapter/SDK/source policies.",
+      "profiles": {
+        "A": {},
+        "B": "no legal independentlydifferent config; only approvedtask/source/dependency profile canchange elsewhere",
+        "negative": {
+          "maximumBytes": 1
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/preflight-contract/src/source-stage.ts",
+        "sha256": "9f7e566f15813cb4b096dbd5dcd84f9d4925e09da29075ef8a85dc1f352bb1c6",
+        "export": "execute"
+      },
+      "manifest": {
+        "path": "skills/nova/plugins/preflight-contract/plugin.json",
+        "sha256": "3db03aa245a1721e183ce3e035bf0c6a5a57b2c227e3ca230b528b1bc68c192c"
+      },
+      "schema": {
+        "path": "skills/nova/plugins/preflight-contract/schemas/config.schema.json",
+        "sha256": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa"
+      },
+      "productiveCaller": "Exactmanifestregistration -> ObserverRuntime.drain/deliverObserver actuallease/config/grants or StageExecutor actualcontract -> namedmodule/export; sourceinput/taskadapter contract realeffects notexecuted here.",
+      "futureDefinition": "Owningrealregistry accepts{} beforeeffects/rejectsnonnullunknown config; genuine same task/source/wait/adapter/grant positive. Unknown-key validatorbypass futuremutationred/restoredgreen, not inventedconfigfield AB effect. Full originalmodule/source/dependency/manifestpolicy bindings remainOPEN."
+    }
+  ],
+  "openProductivePolicyCounterexamples": [
+    "15existingobserver manifest policyrows untouched; ObserverRuntime timeout also leases cpuMillis,256MiB literalmemory; policy defaults/currentmetadata are productive not closed byemptyconfigs.",
+    "Existing RT-PROJECT-DEMO-RETENTIONSECONDS owns traced currentproducer normalizeDemo: omitted604800/project.demo integeroverride -> compiler demoStages config{} + candidate.input -> retention -> boundcandidate/request -> exactcontrollerresponse and storedv1/v2deadline. Technical9223372036=(2^63-1)/1e9 GoDuration bound, not selectedoperationalbudget/physicalcapacity; actualdeadline years1..9999 guard and historicalv1onlydefault, v2requires explicitretention. Signedsource/genuinecompilerplan/adapter/controller/role/lease/profilequota/module binding and whole-sourcepolicy author approval remainOPEN. No secondretentionauthor/newID or claim technicalcap independenttunable.",
+    "Demo clienthardcoded16KiBrequest/response/token,1MiBCA and recordstore10000records/64MiBtotal/65536record; actualsyntax/source/caller/genuinequota+grants/metadata headroom controls remainOPEN; no newglobalauthor."
+  ],
+  "binding": "CurrentNova v4pins/prelockactivation and parenttypedfirstlogicalmodule/taskoperator/metadataquota/membership/view/legacy/crossreader unacceptedOPEN, not SDKcodec/profilefilename.",
+  "materialErratum": {
+    "supersededInputContract": {
+      "path": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-empty-config-14/contracts.json",
+      "sha256": "48b435d409d3a426a63db334169c588c359764c3816aebb828ae765a4c4f3bba"
+    },
+    "reason": "Earlier currentbatch sourcecounterexample omitted alreadyexistingcompiler row; originalcontract/inputidentity preserved, activeview nowexplicitproducercrosslink, not semanticacceptance",
+    "existingSetting": "RT-PROJECT-DEMO-RETENTIONSECONDS"
+  }
+}

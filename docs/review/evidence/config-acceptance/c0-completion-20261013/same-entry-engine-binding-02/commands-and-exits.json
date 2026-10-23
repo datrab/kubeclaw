@@ -1,0 +1,28 @@
+{
+  "priorNarrowCorrectionRun": {
+    "argv": [
+      "node",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-02/check-correction.mjs"
+    ],
+    "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+    "exitCode": 0,
+    "elapsedSeconds": 14.989552021026611,
+    "scriptStartSha256": "339c69e3d302be0f521d6e9cfb954c6c621d250dae0886205c5e885522a5be57",
+    "scriptEndSha256": "339c69e3d302be0f521d6e9cfb954c6c621d250dae0886205c5e885522a5be57",
+    "safety": "Inspected source-specific collector; builtin/schema/pure copied source functions only; no productive module/CLI/native/API execution"
+  },
+  "finalRun": {
+    "argv": [
+      "node",
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-02/check-correction.mjs"
+    ],
+    "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+    "exitCode": 0,
+    "elapsedSeconds": 16.002281427383423,
+    "scriptStartSha256": "5b4d985620bdb662ef8f90e170fa7c7b201b0e5a3f23d008f8c13c2159712a67",
+    "scriptEndSha256": "5b4d985620bdb662ef8f90e170fa7c7b201b0e5a3f23d008f8c13c2159712a67",
+    "stdout": "check-correction.stdout.json",
+    "stderr": "check-correction.stderr",
+    "safety": "Inspected source-specific pure JSON/schema/hash/selector and copied functions, no productive/native source execution"
+  }
+}

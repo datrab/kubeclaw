@@ -1,0 +1,7 @@
+{
+  "scope": "exact committed changed input only, not repeated entire fragments; SHA verified git blob source for historical coordinate controls",
+  "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+  "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+  "localPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+  "sha256": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+}

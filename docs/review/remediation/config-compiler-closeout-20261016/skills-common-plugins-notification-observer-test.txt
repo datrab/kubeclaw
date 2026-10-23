@@ -1,0 +1,6 @@
+npm notice run test
+npm notice run node tests/observer.unit.test.mjs && node tests/parity.test.ts && node tests/live-function.test.ts && node tests/package-boundary.test.mjs
+{"ok":true,"plugin":"kubeclaw.notification-observer","suite":"observer-unit"}
+{"ok":true,"plugin":"kubeclaw.notification-observer","suite":"parity"}
+{"ok":true,"plugin":"kubeclaw.notification-observer","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.notification-observer","suite":"package-boundary"}

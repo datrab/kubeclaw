@@ -1,15 +1,18 @@
+import { captureSourceAcquisitionPolicy, LEGACY_SOURCE_ACQUISITION_POLICY, type SourceAcquisitionPolicy } from './source-acquisition-policy.ts';
 import type { ChildProcess } from 'node:child_process';
 import { captureLinuxProcessGroup, linuxProcessGroupRunning } from '@kubeclaw/plugin-foundation/processes/linux-process-group';
 
 /** Own Git's process group and local pipes; escaped descendants are not termination proof. */
 export class SourceProcessLifecycle {
+  readonly #policy: SourceAcquisitionPolicy;
   readonly #child: ChildProcess;
   readonly #closed: Promise<void>;
   readonly #group: number | undefined;
   readonly #identityError: unknown;
   #cleanup: Promise<void> | undefined;
 
-  constructor(child: ChildProcess, closed: Promise<void>) {
+  constructor(child: ChildProcess, closed: Promise<void>, policy: SourceAcquisitionPolicy = LEGACY_SOURCE_ACQUISITION_POLICY) {
+    this.#policy = captureSourceAcquisitionPolicy(policy);
     this.#child = child; this.#closed = closed;
     if (process.platform === 'linux' && child.pid) {
       try { this.#group = captureLinuxProcessGroup(child.pid); }
@@ -20,7 +23,7 @@ export class SourceProcessLifecycle {
   cleanup(): Promise<void> { this.#cleanup ??= this.#finish(); return this.#cleanup; }
 
   async #finish(): Promise<void> {
-    const deadline = Date.now() + 1500;
+    const deadline = Date.now() + this.#policy.cleanupTimeoutMs;
     let force: NodeJS.Timeout | undefined;
     let bound: NodeJS.Timeout | undefined;
     const signalFailures: unknown[] = [];
@@ -28,7 +31,7 @@ export class SourceProcessLifecycle {
       try { this.#signal('SIGTERM'); } catch (error) { signalFailures.push(error); }
       force = setTimeout(() => {
         try { this.#signal('SIGKILL'); } catch (error) { signalFailures.push(error); }
-      }, 250);
+      }, this.#policy.forceKillAfterMs);
       await Promise.race([
         Promise.all([this.#closed, this.#acknowledge(deadline).catch(error => { signalFailures.push(error); })]),
         new Promise<never>((_resolve, reject) => {
@@ -48,7 +51,7 @@ export class SourceProcessLifecycle {
     if (this.#group === undefined) throw new Error('NOVA_SOURCE_PROCESS_IDENTITY_UNAVAILABLE', { cause: this.#identityError });
     while (await linuxProcessGroupRunning(this.#group, deadline)) {
       if (Date.now() >= deadline) throw new Error('NOVA_SOURCE_PROCESS_CLEANUP_TIMEOUT');
-      await new Promise(resolve => setTimeout(resolve, 10));
+      await new Promise(resolve => setTimeout(resolve, this.#policy.pollIntervalMs));
     }
   }
 

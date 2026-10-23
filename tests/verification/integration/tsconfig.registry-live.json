@@ -6,6 +6,7 @@
   },
   "include": [
     "../contracts/check-pipeline-http-live.mts",
-    "../contracts/check-pipeline-kubernetes-fixture-live.mts"
+    "../contracts/check-pipeline-kubernetes-fixture-live.mts",
+    "fixtures/pipeline-v10-boot-source-types.mts"
   ]
 }

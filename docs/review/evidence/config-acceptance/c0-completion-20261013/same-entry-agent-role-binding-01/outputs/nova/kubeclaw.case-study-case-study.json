@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "nova-registration-policy.v1",
+  "binding": {
+    "kind": "stage",
+    "packageId": "kubeclaw.case-study",
+    "registrationId": "kubeclaw.case-study:case-study",
+    "instanceId": "fixture.case-study",
+    "ownerPath": "plugins/kubeclaw.case-study.config.json",
+    "profileId": "A",
+    "serviceInstanceId": "fixture.service.nova-runtime",
+    "rootVersion": "pipeline-entry.v9",
+    "rootRawSha256": "b2f8be237c1a3cbe2f98aaf2378224afbf87b8910fbacd3047e17c1efc078ae1",
+    "inputGenerationSha256": "941b7d2a90f5dc3057f6025029cda9091d6766ab4126ec8dcaafb80e25303d9a",
+    "ownerRawSha256": "d7da8c57b40e12d791cf80c7b92d7712c936a841c86d51934754f5ec1c56cec8",
+    "ownerSchemaSha256": "4931209afc2b14d50f77dc6c92182edb150078f18eadeaeb76ee5fc5667789b4",
+    "profileSha256": "07ddb302741a6133e31230f122e6564c55de2171e3437258d0200342dc1ff6ad",
+    "manifestSha256": "e18697e96655c6b0fcf775de0a898a18821d7bd1c9e1960fdd150d18f9f68b8e",
+    "sourcePackageDigest": "sha256:a48224a175039afc1856ea71f0f4ae765dc3671048553125c6713251db078463",
+    "runtimeDispatchOwnerRawSha256": "64dbefffefc75df11853ec3d0b1654b807dec0ea2d0aea44eb2517f1dba72438"
+  },
+  "configuration": {
+    "agent": "case-target-a"
+  },
+  "authentication": "public-unsealed"
+}

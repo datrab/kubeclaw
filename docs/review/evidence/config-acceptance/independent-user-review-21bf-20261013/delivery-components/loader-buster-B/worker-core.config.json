@@ -1,0 +1,11 @@
+{
+  "schemaVersion": "swarm-component.v1",
+  "owner": "worker-core",
+  "settings": {
+    "localRuntime": {
+      "drainTimeoutMs": 300000,
+      "cancellationTimeoutMs": 30000,
+      "replayLimit": 65536
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "qualification": "Author source/body/concordance receipt, not independent/global/native acceptance",
+  "frozenHistoricalInputsUnchanged": 917,
+  "historicalInputMismatches": [],
+  "sourceCoordinatesExact": 257,
+  "originalRowsExact": 67,
+  "originalCanonicalCasesExact": 408,
+  "originalNativeBodiesExact": 408,
+  "historical274ObservationSha256": "484b76a30a6a7a3c6a688bcfcf5e5489fd66b6112fd02d421a6a5b97bc6e59f1",
+  "originalCaseLifecycles": {
+    "implementation-proposal/not-run": 405,
+    "C0/not-run": 3
+  },
+  "eightProcessingContractsUnchangedFrom02": 8,
+  "activeMemberSchemasCurrent03": 454,
+  "fieldReceivingNodeConcordance": 67,
+  "allDeclaredProfilesAdmissible": 60,
+  "allWholeEntriesChecked": 22,
+  "futureImplementationResults": "not-run",
+  "canonicalPins": {
+    "inventory": "9d5e7372f87f6b4e79809cbcd29f239f34cdea3e8020b3c6dda19b17044dae7a",
+    "matrix": "1867bdae578f47d19e558db024203f3bf0b39210081df40f19d68c2a98288992"
+  }
+}

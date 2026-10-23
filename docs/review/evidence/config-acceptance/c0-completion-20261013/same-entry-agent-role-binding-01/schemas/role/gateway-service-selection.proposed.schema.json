@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "role",
+    "deploymentInstanceId",
+    "ownerPath",
+    "profileId",
+    "consumer",
+    "serviceInstanceId"
+  ],
+  "properties": {
+    "role": {
+      "enum": [
+        "nova",
+        "buster",
+        "prism"
+      ]
+    },
+    "deploymentInstanceId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "ownerPath": {
+      "const": "charts/kubeclaw/values.yaml"
+    },
+    "profileId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+    },
+    "consumer": {
+      "const": "openclaw-gateway"
+    },
+    "serviceInstanceId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    }
+  }
+}

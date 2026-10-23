@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY_SELECTION } from '../../fixtures/core-runtime-policy.mjs';
 import fs from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
@@ -23,7 +24,7 @@ export async function approvalFixture(root, rejected) {
   }
   fs.symlinkSync(path.resolve('node_modules'), path.join(root, 'node_modules'), 'dir');
   const roots = [installation];
-  const platform = { schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: roots, trustedBuiltinRoots: roots,
+  const platform = {corePolicySelection: TEST_CORE_POLICY_SELECTION, schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: roots, trustedBuiltinRoots: roots,
     externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },
     providers: { 'git.repository.read': 'kubeclaw.repository-adapter:repository', 'artifacts.write': 'kubeclaw.artifact-store:artifact-store', 'artifacts.read': 'kubeclaw.artifact-store:artifact-store',
       'signal.wait': 'kubeclaw.wait-store:waits', 'operator.request': 'kubeclaw.operator-messaging:operator',
@@ -34,7 +35,7 @@ export async function approvalFixture(root, rejected) {
       'kubeclaw.operator-messaging:operator': { 'network.http': { allowedOrigins: [origin] }, 'secrets.read': { allowedNames: ['approval-token'] } } },
     adapters: { 'kubeclaw.repository-adapter:repository': { repositoryRoot: repository }, 'kubeclaw.artifact-store:artifact-store': { artifactRoot: path.join(root, 'artifacts') },
       'kubeclaw.wait-store:waits': { root: path.join(root, 'waits') },
-      'kubeclaw.operator-messaging:operator': { deliveryRoot: path.join(root, 'deliveries'), targets: { operators: { endpoint: `${origin}/approval`, tokenSecret: 'approval-token' } } },
+      'kubeclaw.operator-messaging:operator': { deliveryRoot: path.join(root, 'deliveries'), targets: { operators: { payloadProfile: 'standard', endpoint: `${origin}/approval`, tokenSecret: 'approval-token' } } },
       'kubeclaw.network-http:http': { allowedOrigins: [origin], allowedMethods: ['POST'], allowedHeaders: ['content-type', 'idempotency-key', 'x-kubeclaw-signature'] },
       'kubeclaw.secret-resolver:secrets': { environment: { 'approval-token': secret } } },
     activeAdapters: [], observers: {}, storageRoot: path.join(root, 'state'), shutdownTimeoutMs: 5000,

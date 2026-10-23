@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kubeclaw.expected-original-deployment.v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "leaseName",
+    "namespace",
+    "leaseUID",
+    "immutableImage",
+    "manifestDigest",
+    "expiresAt",
+    "serviceName",
+    "servicePort"
+  ],
+  "properties": {
+    "leaseName": {
+      "type": "string",
+      "maxLength": 63,
+      "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$"
+    },
+    "namespace": {
+      "type": "string",
+      "maxLength": 63,
+      "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$"
+    },
+    "leaseUID": {
+      "type": "string",
+      "minLength": 1
+    },
+    "immutableImage": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[^\\s]+@sha256:[a-f0-9]{64}$"
+    },
+    "manifestDigest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "expiresAt": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "serviceName": {
+      "type": "string",
+      "maxLength": 63,
+      "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$"
+    },
+    "servicePort": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 65535
+    }
+  },
+  "$comment": "Proposed only. expiresAt additionally requires finite Date.parse and exact original/native equality. Object shape cannot authenticate producer/source; original output/effect provenance remains mandatory. UID nonempty string follows actual exposure-handoff reader; no invented lexical or 128-character cap."
+}

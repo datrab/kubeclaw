@@ -1,0 +1,306 @@
+{
+  "entries": [
+    {
+      "setting": "RT-c0a779743e7384ba",
+      "field": "agent",
+      "registration": "kubeclaw.architecture-validator:architecture",
+      "classification": "operator-authorized-runtime-target-locator",
+      "current": "Currentstring withnonblanktrim check butvalue notnormalized -> runtime.dispatch resource.runtime.agent canonicalId=agent; SDKruntimeDispatchProfile onlyencodes declaredwirecontract, not selectmodel/backend/agentthinking. Architectural/source/evidence/workspace guards real perstage; no ENV/CLI/defaultagent fallback. Buster agent onlyread/required when evaluatorenabled; allmandatorynativeplanexecution stillrequired.",
+      "targetDomain": "Canonicalexacttargetmember ofSAME capturedRconfig.targets/approvedgrants/source/role dependencies, no surroundingwhitespace/control chars. Existingstageowner profile selects permittedtargetlocator; backend/model/grant/service changesneedexplicitapprovedactivation, not arbitrarySDK/taskpayload. Actualtarget roster externalgenuineinput, not fabricateduniversalfiniteset.",
+      "effect": "Realactualsame fixedtask/source stage dispatchesA/B authorizedknowncapturedtargets andcorrectdeclaredprotocol/output/proof; unknown/padded/ungrantedtarget rejected before productiveinvoker. No model/backendselection inferredfromsourcecfg or codec. Everyoriginalstage/source/workspace/evidence/coverage/recovery invariant retained.",
+      "profiles": {
+        "A": {
+          "agent": "actual-captured-target-A"
+        },
+        "B": {
+          "agent": "actual-captured-target-B"
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/architecture-validator/src/stage.ts",
+        "sha256": "1d078730d6c276cba32fbdded3b289bff155638490e7a5d191750732e13565bc"
+      },
+      "productiveCaller": "Exactregisteredarchitecture-validator manifest -> StageExecutor currentcontract/config/source/guidance/lease -> entryactualmodule andpublicprotocol/source/evidence/workspace helpers -> runtime.dispatch canonicaltarget and/or artifacts.write. No stagedeffect mock standsin for actualnamedconsumer.",
+      "binding": "CurrentNova wholegraph/input/config/registry/pkg/grant pins andprelockprepare/activate apply; userD20nextunstartedmoduleB/startedA allsubsequentstages/retry/recovery/cleanup needsparenttypedfirstcarrier/taskoperator/membership/view/legacy/metadataquota/crossreader protocol OPEN. No filename/SDKselector/privateconfig newauthor shortcut.",
+      "genuineFixtures": "actualcapturedtarget roster/instance/source/protocol/modelrole/grants andsignedmatchingartifact/evidence/source/coverage/workspace/taskoperator prerequisites explicit; fixturelabels aboveNOT installedtargets. agentRoleA/B no behaviorrole knob; targetrejects. Encoding requires typedv2/v3 sourceunicode/outersemanticbytes, not emptyfakeartifacts."
+    },
+    {
+      "setting": "RT-ae11bf913a6050c6",
+      "field": "agentRole",
+      "registration": "kubeclaw.architecture-validator:architecture",
+      "classification": "accepted-unused-business-role-field-not-setting",
+      "current": "Owning schema accepts optionalnonemptyagentRole, but actualentry and transitivepackage source contain no businessread ofthat field (projectsummary onlyallowskey/portableJSON). Source/requestbuilder role/protocol determined by implementedstage, agentresourcecanonicalId andactualcapturedRtarget. Wholegraph/registry/config digests maybind acceptedfield, but thatisnot rolebehavior/evidence of parameter support.",
+      "targetDomain": "TargetremoveagentRole from editableowningprofile andrejectpresentoldalias, preserveold pinnedhistory/sourceconfigcompatibility. No independentlegalA/B roleeffect; do notinventfieldreader or second runtime author.",
+      "effect": "Currentowningschema complete configwithagentRole accepted; targetotherwisevalidcompleteconfig withagentRole mustreject before productiveeffects, correspondingfield-absentvalidprofile reachesrealstage. Oldconfig history remainsreadableexplicitversion, no latest/fallback. Unsupportedrole knob cannot becomeSDKselector.",
+      "profiles": {
+        "A": {
+          "agent": "actual-captured-target-A",
+          "agentRole": "fixture-source-role-A"
+        },
+        "B": {
+          "agent": "actual-captured-target-B",
+          "agentRole": "fixture-source-role-B"
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/architecture-validator/src/stage.ts",
+        "sha256": "1d078730d6c276cba32fbdded3b289bff155638490e7a5d191750732e13565bc"
+      },
+      "productiveCaller": "Exactregisteredarchitecture-validator manifest -> StageExecutor currentcontract/config/source/guidance/lease -> entryactualmodule andpublicprotocol/source/evidence/workspace helpers -> runtime.dispatch canonicaltarget and/or artifacts.write. No stagedeffect mock standsin for actualnamedconsumer.",
+      "binding": "CurrentNova wholegraph/input/config/registry/pkg/grant pins andprelockprepare/activate apply; userD20nextunstartedmoduleB/startedA allsubsequentstages/retry/recovery/cleanup needsparenttypedfirstcarrier/taskoperator/membership/view/legacy/metadataquota/crossreader protocol OPEN. No filename/SDKselector/privateconfig newauthor shortcut.",
+      "genuineFixtures": "actualcapturedtarget roster/instance/source/protocol/modelrole/grants andsignedmatchingartifact/evidence/source/coverage/workspace/taskoperator prerequisites explicit; fixturelabels aboveNOT installedtargets. agentRoleA/B no behaviorrole knob; targetrejects. Encoding requires typedv2/v3 sourceunicode/outersemanticbytes, not emptyfakeartifacts."
+    },
+    {
+      "setting": "RT-fc079b7fbe9926b7",
+      "field": "agent",
+      "registration": "kubeclaw.buster-quality-gate:quality",
+      "classification": "operator-authorized-runtime-target-locator",
+      "current": "Currentstring withnonblanktrim check butvalue notnormalized -> runtime.dispatch resource.runtime.agent canonicalId=agent; SDKruntimeDispatchProfile onlyencodes declaredwirecontract, not selectmodel/backend/agentthinking. Architectural/source/evidence/workspace guards real perstage; no ENV/CLI/defaultagent fallback. Buster agent onlyread/required when evaluatorenabled; allmandatorynativeplanexecution stillrequired.",
+      "targetDomain": "Canonicalexacttargetmember ofSAME capturedRconfig.targets/approvedgrants/source/role dependencies, no surroundingwhitespace/control chars. Existingstageowner profile selects permittedtargetlocator; backend/model/grant/service changesneedexplicitapprovedactivation, not arbitrarySDK/taskpayload. Actualtarget roster externalgenuineinput, not fabricateduniversalfiniteset.",
+      "effect": "Realactualsame fixedtask/source stage dispatchesA/B authorizedknowncapturedtargets andcorrectdeclaredprotocol/output/proof; unknown/padded/ungrantedtarget rejected before productiveinvoker. No model/backendselection inferredfromsourcecfg or codec. Everyoriginalstage/source/workspace/evidence/coverage/recovery invariant retained.",
+      "profiles": {
+        "A": {
+          "agent": "actual-captured-target-A",
+          "testAgentEnabled": true
+        },
+        "B": {
+          "agent": "actual-captured-target-A",
+          "testAgentEnabled": false
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/buster-quality-gate/src/stage.ts",
+        "sha256": "3b58135f8f95a089a7776ca76152d51ae394627f13ce0da1f362c90ab7b1ea76"
+      },
+      "productiveCaller": "Exactregisteredbuster-quality-gate manifest -> StageExecutor currentcontract/config/source/guidance/lease -> entryactualmodule andpublicprotocol/source/evidence/workspace helpers -> runtime.dispatch canonicaltarget and/or artifacts.write. No stagedeffect mock standsin for actualnamedconsumer.",
+      "binding": "CurrentNova wholegraph/input/config/registry/pkg/grant pins andprelockprepare/activate apply; userD20nextunstartedmoduleB/startedA allsubsequentstages/retry/recovery/cleanup needsparenttypedfirstcarrier/taskoperator/membership/view/legacy/metadataquota/crossreader protocol OPEN. No filename/SDKselector/privateconfig newauthor shortcut.",
+      "genuineFixtures": "actualcapturedtarget roster/instance/source/protocol/modelrole/grants andsignedmatchingartifact/evidence/source/coverage/workspace/taskoperator prerequisites explicit; fixturelabels aboveNOT installedtargets. agentRoleA/B no behaviorrole knob; targetrejects. Encoding requires typedv2/v3 sourceunicode/outersemanticbytes, not emptyfakeartifacts."
+    },
+    {
+      "setting": "RT-078157b4efb99088",
+      "field": "agentRole",
+      "registration": "kubeclaw.buster-quality-gate:quality",
+      "classification": "accepted-unused-business-role-field-not-setting",
+      "current": "Owning schema accepts optionalnonemptyagentRole, but actualentry and transitivepackage source contain no businessread ofthat field (projectsummary onlyallowskey/portableJSON). Source/requestbuilder role/protocol determined by implementedstage, agentresourcecanonicalId andactualcapturedRtarget. Wholegraph/registry/config digests maybind acceptedfield, but thatisnot rolebehavior/evidence of parameter support.",
+      "targetDomain": "TargetremoveagentRole from editableowningprofile andrejectpresentoldalias, preserveold pinnedhistory/sourceconfigcompatibility. No independentlegalA/B roleeffect; do notinventfieldreader or second runtime author.",
+      "effect": "Currentowningschema complete configwithagentRole accepted; targetotherwisevalidcompleteconfig withagentRole mustreject before productiveeffects, correspondingfield-absentvalidprofile reachesrealstage. Oldconfig history remainsreadableexplicitversion, no latest/fallback. Unsupportedrole knob cannot becomeSDKselector.",
+      "profiles": {
+        "A": {
+          "agent": "actual-captured-target-A",
+          "testAgentEnabled": true,
+          "agentRole": "fixture-source-role-A"
+        },
+        "B": {
+          "agent": "actual-captured-target-A",
+          "testAgentEnabled": false,
+          "agentRole": "fixture-source-role-B"
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/buster-quality-gate/src/stage.ts",
+        "sha256": "3b58135f8f95a089a7776ca76152d51ae394627f13ce0da1f362c90ab7b1ea76"
+      },
+      "productiveCaller": "Exactregisteredbuster-quality-gate manifest -> StageExecutor currentcontract/config/source/guidance/lease -> entryactualmodule andpublicprotocol/source/evidence/workspace helpers -> runtime.dispatch canonicaltarget and/or artifacts.write. No stagedeffect mock standsin for actualnamedconsumer.",
+      "binding": "CurrentNova wholegraph/input/config/registry/pkg/grant pins andprelockprepare/activate apply; userD20nextunstartedmoduleB/startedA allsubsequentstages/retry/recovery/cleanup needsparenttypedfirstcarrier/taskoperator/membership/view/legacy/metadataquota/crossreader protocol OPEN. No filename/SDKselector/privateconfig newauthor shortcut.",
+      "genuineFixtures": "actualcapturedtarget roster/instance/source/protocol/modelrole/grants andsignedmatchingartifact/evidence/source/coverage/workspace/taskoperator prerequisites explicit; fixturelabels aboveNOT installedtargets. agentRoleA/B no behaviorrole knob; targetrejects. Encoding requires typedv2/v3 sourceunicode/outersemanticbytes, not emptyfakeartifacts."
+    },
+    {
+      "setting": "RT-28c93b05e095eb31",
+      "field": "testAgentEnabled",
+      "registration": "kubeclaw.buster-quality-gate:quality",
+      "classification": "operator-optional-evaluator-policy",
+      "current": "Actual !==false meansdefaulttrue andtruthy/string/null enable (sourceonly; schema booleans). Mandatory providerPlan/coverage andsource revision verified; realtest.plan.execute result/decision proof+artifact alwaysrequired. Agentjudging onlyafter decision.statepassed andflagtrue; flagfalse returnsnativepassedwithdecision+disabledproofartifact. Nativefailures cannotbeoverriddenbyflag oragent.",
+      "targetDomain": "Targetrequiredboolean no implicittruefallback. Falselegalonlywhen additionalagentjudgement explicitlyoptionalunderoriginaltask/operatorrequirements; cannottrim mandatorynativecoverage/requiredqualityevidence or convertinvalidnativeevidence toPass. True requiresactualauthorizedagenttarget/protocol/source/grants. Wholecorrelatedprofile/task requirement assertion needed.",
+      "effect": "Fullgenuine same nativepassed decision/coverage/source plan: Atrue actualagentjudgement+boundverdictartifact/Bfalse noagentbutexactnativeproof+decision retained. Realnativefailure/absentproviderPlan bothprofiles reject/notpass. Iforiginaltask mandatesadditionaljudge, Bfalseinvalidowningprofilebeforeeffects\u2014not silentweakening.",
+      "profiles": {
+        "A": {
+          "agent": "actual-captured-target-A",
+          "testAgentEnabled": true
+        },
+        "B": {
+          "agent": "actual-captured-target-A",
+          "testAgentEnabled": false
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/buster-quality-gate/src/stage.ts",
+        "sha256": "3b58135f8f95a089a7776ca76152d51ae394627f13ce0da1f362c90ab7b1ea76"
+      },
+      "productiveCaller": "Exactregisteredbuster-quality-gate manifest -> StageExecutor currentcontract/config/source/guidance/lease -> entryactualmodule andpublicprotocol/source/evidence/workspace helpers -> runtime.dispatch canonicaltarget and/or artifacts.write. No stagedeffect mock standsin for actualnamedconsumer.",
+      "binding": "CurrentNova wholegraph/input/config/registry/pkg/grant pins andprelockprepare/activate apply; userD20nextunstartedmoduleB/startedA allsubsequentstages/retry/recovery/cleanup needsparenttypedfirstcarrier/taskoperator/membership/view/legacy/metadataquota/crossreader protocol OPEN. No filename/SDKselector/privateconfig newauthor shortcut.",
+      "genuineFixtures": "actualcapturedtarget roster/instance/source/protocol/modelrole/grants andsignedmatchingartifact/evidence/source/coverage/workspace/taskoperator prerequisites explicit; fixturelabels aboveNOT installedtargets. agentRoleA/B no behaviorrole knob; targetrejects. Encoding requires typedv2/v3 sourceunicode/outersemanticbytes, not emptyfakeartifacts."
+    },
+    {
+      "setting": "RT-8152550972f10185",
+      "field": "agent",
+      "registration": "kubeclaw.case-study:case-study",
+      "classification": "operator-authorized-runtime-target-locator",
+      "current": "Currentstring withnonblanktrim check butvalue notnormalized -> runtime.dispatch resource.runtime.agent canonicalId=agent; SDKruntimeDispatchProfile onlyencodes declaredwirecontract, not selectmodel/backend/agentthinking. Architectural/source/evidence/workspace guards real perstage; no ENV/CLI/defaultagent fallback. Buster agent onlyread/required when evaluatorenabled; allmandatorynativeplanexecution stillrequired.",
+      "targetDomain": "Canonicalexacttargetmember ofSAME capturedRconfig.targets/approvedgrants/source/role dependencies, no surroundingwhitespace/control chars. Existingstageowner profile selects permittedtargetlocator; backend/model/grant/service changesneedexplicitapprovedactivation, not arbitrarySDK/taskpayload. Actualtarget roster externalgenuineinput, not fabricateduniversalfiniteset.",
+      "effect": "Realactualsame fixedtask/source stage dispatchesA/B authorizedknowncapturedtargets andcorrectdeclaredprotocol/output/proof; unknown/padded/ungrantedtarget rejected before productiveinvoker. No model/backendselection inferredfromsourcecfg or codec. Everyoriginalstage/source/workspace/evidence/coverage/recovery invariant retained.",
+      "profiles": {
+        "A": {
+          "agent": "actual-captured-target-A"
+        },
+        "B": {
+          "agent": "actual-captured-target-B"
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/case-study/src/stage.ts",
+        "sha256": "a537e4028ddc30ea19ae7fa18e828c10745f08f14b0cf16e534ee8b42ea720b9"
+      },
+      "productiveCaller": "Exactregisteredcase-study manifest -> StageExecutor currentcontract/config/source/guidance/lease -> entryactualmodule andpublicprotocol/source/evidence/workspace helpers -> runtime.dispatch canonicaltarget and/or artifacts.write. No stagedeffect mock standsin for actualnamedconsumer.",
+      "binding": "CurrentNova wholegraph/input/config/registry/pkg/grant pins andprelockprepare/activate apply; userD20nextunstartedmoduleB/startedA allsubsequentstages/retry/recovery/cleanup needsparenttypedfirstcarrier/taskoperator/membership/view/legacy/metadataquota/crossreader protocol OPEN. No filename/SDKselector/privateconfig newauthor shortcut.",
+      "genuineFixtures": "actualcapturedtarget roster/instance/source/protocol/modelrole/grants andsignedmatchingartifact/evidence/source/coverage/workspace/taskoperator prerequisites explicit; fixturelabels aboveNOT installedtargets. agentRoleA/B no behaviorrole knob; targetrejects. Encoding requires typedv2/v3 sourceunicode/outersemanticbytes, not emptyfakeartifacts."
+    },
+    {
+      "setting": "RT-34cb107ae059df42",
+      "field": "agent",
+      "registration": "kubeclaw.implementation-agent:implementation",
+      "classification": "operator-authorized-runtime-target-locator",
+      "current": "Currentstring withnonblanktrim check butvalue notnormalized -> runtime.dispatch resource.runtime.agent canonicalId=agent; SDKruntimeDispatchProfile onlyencodes declaredwirecontract, not selectmodel/backend/agentthinking. Architectural/source/evidence/workspace guards real perstage; no ENV/CLI/defaultagent fallback. Buster agent onlyread/required when evaluatorenabled; allmandatorynativeplanexecution stillrequired.",
+      "targetDomain": "Canonicalexacttargetmember ofSAME capturedRconfig.targets/approvedgrants/source/role dependencies, no surroundingwhitespace/control chars. Existingstageowner profile selects permittedtargetlocator; backend/model/grant/service changesneedexplicitapprovedactivation, not arbitrarySDK/taskpayload. Actualtarget roster externalgenuineinput, not fabricateduniversalfiniteset.",
+      "effect": "Realactualsame fixedtask/source stage dispatchesA/B authorizedknowncapturedtargets andcorrectdeclaredprotocol/output/proof; unknown/padded/ungrantedtarget rejected before productiveinvoker. No model/backendselection inferredfromsourcecfg or codec. Everyoriginalstage/source/workspace/evidence/coverage/recovery invariant retained.",
+      "profiles": {
+        "A": {
+          "agent": "actual-captured-target-A"
+        },
+        "B": {
+          "agent": "actual-captured-target-B"
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/implementation-agent/src/stage.ts",
+        "sha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870"
+      },
+      "productiveCaller": "Exactregisteredimplementation-agent manifest -> StageExecutor currentcontract/config/source/guidance/lease -> entryactualmodule andpublicprotocol/source/evidence/workspace helpers -> runtime.dispatch canonicaltarget and/or artifacts.write. No stagedeffect mock standsin for actualnamedconsumer.",
+      "binding": "CurrentNova wholegraph/input/config/registry/pkg/grant pins andprelockprepare/activate apply; userD20nextunstartedmoduleB/startedA allsubsequentstages/retry/recovery/cleanup needsparenttypedfirstcarrier/taskoperator/membership/view/legacy/metadataquota/crossreader protocol OPEN. No filename/SDKselector/privateconfig newauthor shortcut.",
+      "genuineFixtures": "actualcapturedtarget roster/instance/source/protocol/modelrole/grants andsignedmatchingartifact/evidence/source/coverage/workspace/taskoperator prerequisites explicit; fixturelabels aboveNOT installedtargets. agentRoleA/B no behaviorrole knob; targetrejects. Encoding requires typedv2/v3 sourceunicode/outersemanticbytes, not emptyfakeartifacts."
+    },
+    {
+      "setting": "RT-6442142673149854",
+      "field": "agentRole",
+      "registration": "kubeclaw.implementation-agent:implementation",
+      "classification": "accepted-unused-business-role-field-not-setting",
+      "current": "Owning schema accepts optionalnonemptyagentRole, but actualentry and transitivepackage source contain no businessread ofthat field (projectsummary onlyallowskey/portableJSON). Source/requestbuilder role/protocol determined by implementedstage, agentresourcecanonicalId andactualcapturedRtarget. Wholegraph/registry/config digests maybind acceptedfield, but thatisnot rolebehavior/evidence of parameter support.",
+      "targetDomain": "TargetremoveagentRole from editableowningprofile andrejectpresentoldalias, preserveold pinnedhistory/sourceconfigcompatibility. No independentlegalA/B roleeffect; do notinventfieldreader or second runtime author.",
+      "effect": "Currentowningschema complete configwithagentRole accepted; targetotherwisevalidcompleteconfig withagentRole mustreject before productiveeffects, correspondingfield-absentvalidprofile reachesrealstage. Oldconfig history remainsreadableexplicitversion, no latest/fallback. Unsupportedrole knob cannot becomeSDKselector.",
+      "profiles": {
+        "A": {
+          "agent": "actual-captured-target-A",
+          "agentRole": "fixture-source-role-A"
+        },
+        "B": {
+          "agent": "actual-captured-target-B",
+          "agentRole": "fixture-source-role-B"
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/implementation-agent/src/stage.ts",
+        "sha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870"
+      },
+      "productiveCaller": "Exactregisteredimplementation-agent manifest -> StageExecutor currentcontract/config/source/guidance/lease -> entryactualmodule andpublicprotocol/source/evidence/workspace helpers -> runtime.dispatch canonicaltarget and/or artifacts.write. No stagedeffect mock standsin for actualnamedconsumer.",
+      "binding": "CurrentNova wholegraph/input/config/registry/pkg/grant pins andprelockprepare/activate apply; userD20nextunstartedmoduleB/startedA allsubsequentstages/retry/recovery/cleanup needsparenttypedfirstcarrier/taskoperator/membership/view/legacy/metadataquota/crossreader protocol OPEN. No filename/SDKselector/privateconfig newauthor shortcut.",
+      "genuineFixtures": "actualcapturedtarget roster/instance/source/protocol/modelrole/grants andsignedmatchingartifact/evidence/source/coverage/workspace/taskoperator prerequisites explicit; fixturelabels aboveNOT installedtargets. agentRoleA/B no behaviorrole knob; targetrejects. Encoding requires typedv2/v3 sourceunicode/outersemanticbytes, not emptyfakeartifacts."
+    },
+    {
+      "setting": "RT-2d37a257c3d7dd45",
+      "field": "agent",
+      "registration": "kubeclaw.pipeline-review:review",
+      "classification": "operator-authorized-runtime-target-locator",
+      "current": "Currentstring withnonblanktrim check butvalue notnormalized -> runtime.dispatch resource.runtime.agent canonicalId=agent; SDKruntimeDispatchProfile onlyencodes declaredwirecontract, not selectmodel/backend/agentthinking. Architectural/source/evidence/workspace guards real perstage; no ENV/CLI/defaultagent fallback. Buster agent onlyread/required when evaluatorenabled; allmandatorynativeplanexecution stillrequired.",
+      "targetDomain": "Canonicalexacttargetmember ofSAME capturedRconfig.targets/approvedgrants/source/role dependencies, no surroundingwhitespace/control chars. Existingstageowner profile selects permittedtargetlocator; backend/model/grant/service changesneedexplicitapprovedactivation, not arbitrarySDK/taskpayload. Actualtarget roster externalgenuineinput, not fabricateduniversalfiniteset.",
+      "effect": "Realactualsame fixedtask/source stage dispatchesA/B authorizedknowncapturedtargets andcorrectdeclaredprotocol/output/proof; unknown/padded/ungrantedtarget rejected before productiveinvoker. No model/backendselection inferredfromsourcecfg or codec. Everyoriginalstage/source/workspace/evidence/coverage/recovery invariant retained.",
+      "profiles": {
+        "A": {
+          "agent": "actual-captured-target-A"
+        },
+        "B": {
+          "agent": "actual-captured-target-B"
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/stage.ts",
+        "sha256": "e2951394c77a1f57f8538dc8586fb6f8b571a5b2050b87fec65f42260055d51a"
+      },
+      "productiveCaller": "Exactregisteredpipeline-review manifest -> StageExecutor currentcontract/config/source/guidance/lease -> entryactualmodule andpublicprotocol/source/evidence/workspace helpers -> runtime.dispatch canonicaltarget and/or artifacts.write. No stagedeffect mock standsin for actualnamedconsumer.",
+      "binding": "CurrentNova wholegraph/input/config/registry/pkg/grant pins andprelockprepare/activate apply; userD20nextunstartedmoduleB/startedA allsubsequentstages/retry/recovery/cleanup needsparenttypedfirstcarrier/taskoperator/membership/view/legacy/metadataquota/crossreader protocol OPEN. No filename/SDKselector/privateconfig newauthor shortcut.",
+      "genuineFixtures": "actualcapturedtarget roster/instance/source/protocol/modelrole/grants andsignedmatchingartifact/evidence/source/coverage/workspace/taskoperator prerequisites explicit; fixturelabels aboveNOT installedtargets. agentRoleA/B no behaviorrole knob; targetrejects. Encoding requires typedv2/v3 sourceunicode/outersemanticbytes, not emptyfakeartifacts."
+    },
+    {
+      "setting": "RT-4c1a2b66cdab7e18",
+      "field": "agentRole",
+      "registration": "kubeclaw.pipeline-review:review",
+      "classification": "accepted-unused-business-role-field-not-setting",
+      "current": "Owning schema accepts optionalnonemptyagentRole, but actualentry and transitivepackage source contain no businessread ofthat field (projectsummary onlyallowskey/portableJSON). Source/requestbuilder role/protocol determined by implementedstage, agentresourcecanonicalId andactualcapturedRtarget. Wholegraph/registry/config digests maybind acceptedfield, but thatisnot rolebehavior/evidence of parameter support.",
+      "targetDomain": "TargetremoveagentRole from editableowningprofile andrejectpresentoldalias, preserveold pinnedhistory/sourceconfigcompatibility. No independentlegalA/B roleeffect; do notinventfieldreader or second runtime author.",
+      "effect": "Currentowningschema complete configwithagentRole accepted; targetotherwisevalidcompleteconfig withagentRole mustreject before productiveeffects, correspondingfield-absentvalidprofile reachesrealstage. Oldconfig history remainsreadableexplicitversion, no latest/fallback. Unsupportedrole knob cannot becomeSDKselector.",
+      "profiles": {
+        "A": {
+          "agent": "actual-captured-target-A",
+          "agentRole": "fixture-source-role-A"
+        },
+        "B": {
+          "agent": "actual-captured-target-B",
+          "agentRole": "fixture-source-role-B"
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/stage.ts",
+        "sha256": "e2951394c77a1f57f8538dc8586fb6f8b571a5b2050b87fec65f42260055d51a"
+      },
+      "productiveCaller": "Exactregisteredpipeline-review manifest -> StageExecutor currentcontract/config/source/guidance/lease -> entryactualmodule andpublicprotocol/source/evidence/workspace helpers -> runtime.dispatch canonicaltarget and/or artifacts.write. No stagedeffect mock standsin for actualnamedconsumer.",
+      "binding": "CurrentNova wholegraph/input/config/registry/pkg/grant pins andprelockprepare/activate apply; userD20nextunstartedmoduleB/startedA allsubsequentstages/retry/recovery/cleanup needsparenttypedfirstcarrier/taskoperator/membership/view/legacy/metadataquota/crossreader protocol OPEN. No filename/SDKselector/privateconfig newauthor shortcut.",
+      "genuineFixtures": "actualcapturedtarget roster/instance/source/protocol/modelrole/grants andsignedmatchingartifact/evidence/source/coverage/workspace/taskoperator prerequisites explicit; fixturelabels aboveNOT installedtargets. agentRoleA/B no behaviorrole knob; targetrejects. Encoding requires typedv2/v3 sourceunicode/outersemanticbytes, not emptyfakeartifacts."
+    },
+    {
+      "setting": "RT-2b6e3bc13743e80c",
+      "field": "agentRole",
+      "registration": "kubeclaw.project-summary:summary",
+      "classification": "accepted-unused-business-role-field-not-setting",
+      "current": "Owning schema accepts optionalnonemptyagentRole, but actualentry and transitivepackage source contain no businessread ofthat field (projectsummary onlyallowskey/portableJSON). Source/requestbuilder role/protocol determined by implementedstage, agentresourcecanonicalId andactualcapturedRtarget. Wholegraph/registry/config digests maybind acceptedfield, but thatisnot rolebehavior/evidence of parameter support.",
+      "targetDomain": "TargetremoveagentRole from editableowningprofile andrejectpresentoldalias, preserveold pinnedhistory/sourceconfigcompatibility. No independentlegalA/B roleeffect; do notinventfieldreader or second runtime author.",
+      "effect": "Currentowningschema complete configwithagentRole accepted; targetotherwisevalidcompleteconfig withagentRole mustreject before productiveeffects, correspondingfield-absentvalidprofile reachesrealstage. Oldconfig history remainsreadableexplicitversion, no latest/fallback. Unsupportedrole knob cannot becomeSDKselector.",
+      "profiles": {
+        "A": {
+          "agentRole": "fixture-source-role-A"
+        },
+        "B": {
+          "deliveryManifestEncoding": "delivery-manifest.utf16-v1",
+          "agentRole": "fixture-source-role-B"
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/project-summary/src/stage.ts",
+        "sha256": "b16533ade1d6bbf08c53d3c31bbe7102f5b67b785b1f928524ca9879a99a4fee"
+      },
+      "productiveCaller": "Exactregisteredproject-summary manifest -> StageExecutor currentcontract/config/source/guidance/lease -> entryactualmodule andpublicprotocol/source/evidence/workspace helpers -> runtime.dispatch canonicaltarget and/or artifacts.write. No stagedeffect mock standsin for actualnamedconsumer.",
+      "binding": "CurrentNova wholegraph/input/config/registry/pkg/grant pins andprelockprepare/activate apply; userD20nextunstartedmoduleB/startedA allsubsequentstages/retry/recovery/cleanup needsparenttypedfirstcarrier/taskoperator/membership/view/legacy/metadataquota/crossreader protocol OPEN. No filename/SDKselector/privateconfig newauthor shortcut.",
+      "genuineFixtures": "actualcapturedtarget roster/instance/source/protocol/modelrole/grants andsignedmatchingartifact/evidence/source/coverage/workspace/taskoperator prerequisites explicit; fixturelabels aboveNOT installedtargets. agentRoleA/B no behaviorrole knob; targetrejects. Encoding requires typedv2/v3 sourceunicode/outersemanticbytes, not emptyfakeartifacts."
+    },
+    {
+      "setting": "RT-0086141ada6be298",
+      "field": "deliveryManifestEncoding",
+      "registration": "kubeclaw.project-summary:summary",
+      "classification": "versioned-output-encoding-contract-not-free-format-knob",
+      "current": "ConfigportableJSON+exactkeys; optionaldeliveryManifestEncoding undefinedhistoricalpath vs constdelivery-manifest.utf16-v1; unsupportedpresent rejected. summaryv2 canonicaldigest vs v3 chosenbinding/schema/portable UTF16 output; outer artifacts.write encoding=kubeclaw-json.utf16.v1 onlyenabledcase. V3 reviewSemanticEncoding requires explicitouterreviewArtifactEncoding whenpresent; no broadcodec/modelcompatibility inferred.",
+      "targetDomain": "Exactimplementedconst+explicitcaptured historicalabsence/versioncompatibility, not arbitraryformatchoice orindependentmodel knob. Newselectedownerprofile requiredversionedencodingdocument; historyv2 absence explicitcompat mode, no latestdefault. Correlated finalreviewsource/semantic/outerartifact expectation andfulltypedmanifest schemas mustmatch.",
+      "effect": "Fullgenuine sourcedata/nativecoverage/finalreviewproof fixed: historicalv2 andexplicitv3 producecorrecttypedmanifest/digest/artifactbinding; invalidencoding/mixedreviewsemantic-outerexpectation rejectbeforewrite. LiteralASCIIequalbytes doesnotdemonstrateunicodewire/proof effect; exactUTF16 signedfixture needed.",
+      "profiles": {
+        "A": {},
+        "B": {
+          "deliveryManifestEncoding": "delivery-manifest.utf16-v1"
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/project-summary/src/stage.ts",
+        "sha256": "b16533ade1d6bbf08c53d3c31bbe7102f5b67b785b1f928524ca9879a99a4fee"
+      },
+      "productiveCaller": "Exactregisteredproject-summary manifest -> StageExecutor currentcontract/config/source/guidance/lease -> entryactualmodule andpublicprotocol/source/evidence/workspace helpers -> runtime.dispatch canonicaltarget and/or artifacts.write. No stagedeffect mock standsin for actualnamedconsumer.",
+      "binding": "CurrentNova wholegraph/input/config/registry/pkg/grant pins andprelockprepare/activate apply; userD20nextunstartedmoduleB/startedA allsubsequentstages/retry/recovery/cleanup needsparenttypedfirstcarrier/taskoperator/membership/view/legacy/metadataquota/crossreader protocol OPEN. No filename/SDKselector/privateconfig newauthor shortcut.",
+      "genuineFixtures": "actualcapturedtarget roster/instance/source/protocol/modelrole/grants andsignedmatchingartifact/evidence/source/coverage/workspace/taskoperator prerequisites explicit; fixturelabels aboveNOT installedtargets. agentRoleA/B no behaviorrole knob; targetrejects. Encoding requires typedv2/v3 sourceunicode/outersemanticbytes, not emptyfakeartifacts."
+    }
+  ],
+  "sourceRoleNote": "Five acceptedunused fields targetreject, currentwholeconfiguration/digest history retained; no unsupportedtarget/modelparameter support or fake secondroleauthor."
+}

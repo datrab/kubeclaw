@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import crypto from 'node:crypto';
@@ -37,14 +38,14 @@ test('SPIFFE transport and adapter agree on IPv4, bracketed IPv6 and denied remo
     for (const host of ['127.0.0.1', '[::1]', 'localhost']) {
       const endpoint = `http://${host}:8080`;
       assert.doesNotThrow(() => new HttpRemotePlanTransport({ endpoint, authentication: 'spiffe-proxy', maximumResponseBytes: 1024 }));
-      const adapter = activate({ config: { endpoint, authentication: 'spiffe-proxy', stateRoot: root,
+      const adapter = activate({ config: { gateLimits: TEST_CORE_POLICY.remoteTestGate, endpoint, authentication: 'spiffe-proxy', stateRoot: root,
         allowedRepositoryRoots: [root], sourcePrivateKeySecret: 'test-key', sourceAuthority: 'nova:test' } } as unknown as AdapterActivationContext);
       await adapter.ready(); await adapter.shutdown();
     }
     for (const host of ['127.0.0.2', 'example.invalid', '[2001:db8::1]']) {
       const endpoint = `https://${host}:8080`;
       assert.throws(() => new HttpRemotePlanTransport({ endpoint, authentication: 'spiffe-proxy', maximumResponseBytes: 1024 }), /SPIFFE_PROXY_NOT_LOOPBACK/u);
-      assert.throws(() => activate({ config: { endpoint, authentication: 'spiffe-proxy', stateRoot: root,
+      assert.throws(() => activate({ config: { gateLimits: TEST_CORE_POLICY.remoteTestGate, endpoint, authentication: 'spiffe-proxy', stateRoot: root,
         allowedRepositoryRoots: [root] } } as unknown as AdapterActivationContext), /SPIFFE_PROXY_NOT_LOOPBACK/u);
     }
   } finally { fs.rmSync(root, { recursive: true, force: true }); }

@@ -131,10 +131,15 @@ test('native subagent tool evidence requires exact causal pairing', () => {
 
 test('every expected nonzero scenario retains an explicit typed failure contract', t => {
   const previous = process.env.KUBECLAW_REGISTRY_CONFIG;
+  const previousLegacy = process.env.KUBECLAW_LOCAL_REGISTRY;
+  // Isolate the explicit fixture author without relaxing legacy rejection.
+  delete process.env.KUBECLAW_LOCAL_REGISTRY;
   process.env.KUBECLAW_REGISTRY_CONFIG = registryTestContract;
   t.after(() => {
     if (previous === undefined) delete process.env.KUBECLAW_REGISTRY_CONFIG;
     else process.env.KUBECLAW_REGISTRY_CONFIG = previous;
+    if (previousLegacy === undefined) delete process.env.KUBECLAW_LOCAL_REGISTRY;
+    else process.env.KUBECLAW_LOCAL_REGISTRY = previousLegacy;
   });
   for (const id of listRealE2EScenarioIds()) {
     const scenario = resolveRealE2EScenario(id);

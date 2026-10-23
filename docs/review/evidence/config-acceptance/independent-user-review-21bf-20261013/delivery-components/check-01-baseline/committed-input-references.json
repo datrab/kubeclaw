@@ -1,0 +1,52 @@
+{
+  "scope": "No huge unchanged artifact copies; exact21bf commit/blob/content references",
+  "refs": [
+    {
+      "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+      "path": "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/source-marker-canonical-projection.json",
+      "sha256": "feb58321b8bafcccf9e825f4bdaf958f5f2daacfc944ebfc6d1fd72416a5df49",
+      "gitBlob": "3569b50613c4cfb3527c69e6efce773ba16d9896"
+    },
+    {
+      "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+      "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+      "gitBlob": "91bfaa4dbe766b2fced7414f4991b593e4932f79"
+    },
+    {
+      "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+      "path": "docs/review/evidence/config-acceptance/components/semantic-fragment.json",
+      "sha256": "8375d00031f7cdc46099f30d459cf9f3b9830a4a788aa2d56b5061633f7140d1",
+      "gitBlob": "6ccfb1356f5bc20749be4981999f22c73b7a0dd1"
+    },
+    {
+      "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "sha256": "51e7bc64a25fd6cc67d465ebe46bab170a6c9b7215423147ab3f15777dc58968",
+      "gitBlob": "21110b9c93b84785c75e6818e268a53992a6eba5"
+    },
+    {
+      "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+      "path": "docs/review/evidence/config-acceptance/components/refined-case-profiles.json",
+      "sha256": "139f4f494bc8806d164b66c87f2b5cddc4e6f0a846fe6b2f979776987c558d87",
+      "gitBlob": "bce44ae83319dbbb0701e8fa8241248582b8b5a8"
+    },
+    {
+      "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+      "path": "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/remaining-backlog.json",
+      "sha256": "97da784dcd5286e389d25ef1fd72ac8a911feb512f7c45907aae5009183bac41",
+      "gitBlob": "e34d7aaa9ce712f2d999715fd6931bd6397fa47c"
+    },
+    {
+      "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+      "path": "charts/kubeclaw/files/config/swarm-components.schema.json",
+      "sha256": "b14a6006b67588da0af802477d83342c3643b056611c8edcb8854f626201d443",
+      "gitBlob": "4d8a71db28f86be386f3e8684afc23e7a78f57ad",
+      "gitEntryKind": "symlink",
+      "linkTarget": "../../../../skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "effectiveContentPath": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "effectiveContentSha256": "51e7bc64a25fd6cc67d465ebe46bab170a6c9b7215423147ab3f15777dc58968",
+      "sha256Meaning": "committed symlink bytes, not dereferenced schema bytes"
+    }
+  ]
+}

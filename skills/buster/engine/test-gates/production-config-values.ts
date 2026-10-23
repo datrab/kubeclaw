@@ -1,3 +1,6 @@
+import { validateBusterRuntimeSourceMetadata } from '@kubeclaw/plugin-foundation/config/buster-service-policy';
+import type { captureRegistryPeer } from './production-registry-peer.ts';
+import { createPublicKey } from 'node:crypto';
 import { loadPlatformConfig } from '@kubeclaw/plugin-foundation/config/platform';
 import { buildRegistry } from '@kubeclaw/plugin-foundation/registry/build';
 import { discoverPackages } from '@kubeclaw/plugin-foundation/registry/discovery';
@@ -136,11 +139,11 @@ export function registryHealthConfiguration(
   return options;
 }
 
-export function scannerRegistry(source: Record<string, unknown>, environment: NodeJS.ProcessEnv, directory: string) {
+export function scannerRegistry(source: Record<string, unknown>, capturedRegistryPeer: ReturnType<typeof captureRegistryPeer>, directory: string) {
   if (source.registry === undefined) return {};
   const registry = object(source.registry, 'securityScan.registry');
-  const username = optionalEnvironmentSecret(registry, 'registryUsernameEnvironmentVariable', environment);
-  const password = optionalEnvironmentSecret(registry, 'registryPasswordEnvironmentVariable', environment);
+  if (!capturedRegistryPeer) throw new Error('BUSTER_REGISTRY_PEER_REQUIRED');
+  const { username, password } = capturedRegistryPeer;
   if ((username === undefined) !== (password === undefined))
     throw new Error('BUSTER_SCAN_REGISTRY_CREDENTIALS_INCOMPLETE');
   const url = new URL(String(registry.registryBaseUrl));
@@ -168,35 +171,16 @@ export function scannerRegistry(source: Record<string, unknown>, environment: No
 }
 
 export function validateRuntimeRoot(value: Record<string, unknown>): void {
-  if (value.schemaVersion !== 'buster-remote-plan-runtime.v1') throw new Error('BUSTER_REMOTE_CONFIG_VERSION_INVALID');
-  for (const key of ['kubernetesFixture', 'tailscaleExposure', 'kubernetesRuntimeSecurity']) {
-    if (Object.hasOwn(value, key)) throw new Error(`SWARM_CONFIG_LEGACY_OVERRIDE:${key}`);
-  }
-  if (Object.hasOwn(value, 'dependencyReadiness')) {
-    throw new Error('SWARM_CONFIG_LEGACY_OVERRIDE:dependencyReadiness:use buster-engine.config.json settings.dependencyReadiness');
-  }
-  for (const key of ['maximumArchiveBytes', 'maximumExtractedBytes', 'maximumRequestBytes']) {
-    if (Object.hasOwn(value, key))
-      throw new Error(`SWARM_CONFIG_LEGACY_OVERRIDE:${key}:use buster-engine.config.json settings.preparation`);
-  }
-  for (const key of ['maximumActiveJobs', 'maximumQueuedJobs', 'maximumConcurrentAttempts']) {
-    if (Object.hasOwn(value, key)) throw new Error(`SWARM_CONFIG_LEGACY_OVERRIDE:${key}:use buster-engine.config.json settings.admission`);
-  }
-  for (const name of [
-    'platformConfig',
-    'host',
-    'sourceAttestationPublicKeyEnvironmentVariable',
-    'trustedSourceAuthority',
-    'stateRoot',
-    'runtimeRoot',
-    'tarExecutable',
-  ]) {
-    if (typeof value[name] !== 'string' || value[name].length === 0)
-      throw new Error(`BUSTER_REMOTE_CONFIG_INVALID:${name}`);
-  }
+  validateBusterRuntimeSourceMetadata(value, 'buster-remote-plan-runtime.v1');
 }
 
 export function runtimeAuthority(value: Record<string, unknown>, environment: NodeJS.ProcessEnv) {
+  // Reject competing authentication authors before reading either confidential
+  // carrier or constructing registry/store handles. SPIFFE is proxied peer
+  // authentication here, not a replacement source-key or delivery receipt.
+  if (Object.hasOwn(value, 'trustedPeerSpiffeIds') === Object.hasOwn(value, 'tokenEnvironmentVariable')) {
+    throw new Error('BUSTER_REMOTE_CONFIG_AUTHORITY_XOR_REQUIRED');
+  }
   const trustedPeerSpiffeIds =
     value.trustedPeerSpiffeIds === undefined
       ? undefined
@@ -211,16 +195,33 @@ export function runtimeAuthority(value: Record<string, unknown>, environment: No
       throw new Error('BUSTER_REMOTE_CONFIG_TOKEN_ENV_INVALID');
     }
     tokenName = value.tokenEnvironmentVariable;
+  }
+  const sourceKeyName = value.sourceAttestationPublicKeyEnvironmentVariable;
+  if (typeof sourceKeyName !== 'string' || !/^[A-Z][A-Z0-9_]*$/u.test(sourceKeyName) || sourceKeyName === tokenName) {
+    throw new Error('BUSTER_SOURCE_ATTESTATION_ENV_INVALID');
+  }
+  if (typeof value.trustedSourceAuthority !== 'string' || !value.trustedSourceAuthority.trim()) {
+    throw new Error('BUSTER_SOURCE_ATTESTATION_AUTHORITY_REQUIRED');
+  }
+  // Retain the exact issuer admitted before confidential carrier resolution,
+  // as the parent source receiver does. A carrier getter cannot select a new
+  // source authority for the subsequently constructed store.
+  const trustedSourceAuthority = value.trustedSourceAuthority;
+  // Validate both carrier names and issuer metadata before any confidential
+  // lookup. Even equal public-key/token aliases must never read token bytes.
+  if (tokenName) {
     token = environment[tokenName];
     if (!token) throw new Error('BUSTER_REMOTE_CONFIG_TOKEN_MISSING');
-  }
-  const sourceKeyName = value.sourceAttestationPublicKeyEnvironmentVariable as string;
-  if (!/^[A-Z][A-Z0-9_]*$/u.test(sourceKeyName) || sourceKeyName === tokenName) {
-    throw new Error('BUSTER_SOURCE_ATTESTATION_ENV_INVALID');
+    if (token.length < 32) throw new Error('BUSTER_REMOTE_TOKEN_INVALID');
   }
   const sourceAttestationPublicKey = environment[sourceKeyName];
   if (!sourceAttestationPublicKey) throw new Error('BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY_MISSING');
-  return { trustedPeerSpiffeIds, token, sourceAttestationPublicKey };
+  // Source schema v1 still needs genuine original issuer/key-revision binding;
+  // parsing an Ed25519 key is necessary, never sufficient proof of provenance.
+  try {
+    if (createPublicKey(sourceAttestationPublicKey).asymmetricKeyType !== 'ed25519') throw new Error('wrong key type');
+  } catch (cause) { throw new Error('BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID', { cause }); }
+  return Object.freeze({ trustedPeerSpiffeIds, token, sourceAttestationPublicKey, trustedSourceAuthority });
 }
 
 export function runtimeRegistry(value: Record<string, unknown>, directory: string) {

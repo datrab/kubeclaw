@@ -1,0 +1,48 @@
+✔ actual kubectl diagnostic captures 16 code units (7.590086ms)
+✔ actual kubectl diagnostic captures 80 code units (1.814367ms)
+✔ public invoker maximumManifestBytes, low true (1.375756ms)
+✔ public invoker maximumManifestBytes, low false (2.782352ms)
+✔ public invoker maximumResources, low true (1.485168ms)
+✔ public invoker maximumResources, low false (1.706344ms)
+✔ actual YAML consumer maximumNodes (0.618996ms)
+✔ actual YAML consumer maximumDepth (0.520383ms)
+✔ actual YAML consumer maximumAliases (0.633797ms)
+✔ actual List consumer maximumFlattenVisits (0.551714ms)
+✔ actual List consumer maximumFlattenPending (0.437801ms)
+✔ shared lease version domain reaches both actual constructors: v1 (1.345045ms)
+✔ shared lease version domain reaches both actual constructors: v2 (0.914053ms)
+✔ shared lease version domain reaches both actual constructors: v1alpha1 (0.916203ms)
+✔ shared lease version domain reaches both actual constructors: v2beta12 (0.942345ms)
+✔ shared lease version domain reaches both actual constructors: v1alpha (1.064198ms)
+✔ shared lease version domain reaches both actual constructors: v1beta (0.945354ms)
+✔ shared lease version domain reaches both actual constructors: v1rc1 (0.76748ms)
+✔ shared lease version domain reaches both actual constructors: v1alpha1x (0.75915ms)
+✔ shared lease version domain reaches both actual constructors:  (0.816621ms)
+✔ actual kubernetes.fixture polling cadence 50 (110.187546ms)
+✔ actual kubernetes.fixture polling cadence 200 (402.901676ms)
+✔ actual kubernetes.exposure polling cadence 50 (105.972287ms)
+✔ actual kubernetes.exposure polling cadence 200 (403.740718ms)
+✔ kubernetes.fixture actual auth process uses short deadline 600 (621.821709ms)
+✔ kubernetes.fixture actual auth process uses short deadline 2000 (1034.675352ms)
+✔ kubernetes.exposure actual auth process uses short deadline 600 (617.968169ms)
+✔ kubernetes.exposure actual auth process uses short deadline 2000 (1035.76991ms)
+✔ actual entrypoint rejects missing before first runtime effect (4008.655032ms)
+✔ actual entrypoint rejects invalid before first runtime effect (1873.356558ms)
+✔ actual entrypoint rejects security-missing before first runtime effect (1888.57812ms)
+✔ actual entrypoint rejects security-invalid before first runtime effect (1838.685151ms)
+✔ actual entrypoint rejects group-empty before first runtime effect (493.669318ms)
+✔ actual entrypoint rejects group-equal before first runtime effect (499.700034ms)
+✔ actual entrypoint rejects version-empty before first runtime effect (515.639445ms)
+✔ actual entrypoint rejects version-equal before first runtime effect (517.940454ms)
+✔ actual entrypoint rejects secrets-empty before first runtime effect (494.339535ms)
+✔ actual entrypoint rejects secrets-equal before first runtime effect (505.918854ms)
+✔ relative executable uses the captured physical generation; component aliases reject (2801.925353ms)
+✔ actual read-only preflight accepts an explicit complete generation (2011.44022ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 40
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 31194.577333

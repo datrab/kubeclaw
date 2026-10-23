@@ -1,0 +1,17 @@
+{
+  "independentSourceAudit": [
+    {
+      "batch": "01",
+      "coordinates": 16,
+      "memberOccurrencesAudited": 147,
+      "canonicalMemberSetsAndExactProfileBindings": true
+    },
+    {
+      "batch": "02",
+      "coordinates": 105,
+      "memberOccurrencesAudited": 125,
+      "canonicalMemberSetsAndExactProfileBindings": true
+    }
+  ],
+  "runtimeAcceptance": false
+}

@@ -1,0 +1,119 @@
+{
+  "verdict": "NOT ACCEPTED",
+  "scope": "Independent Core source/question C0 definition review only; no Runtime review/global acceptance",
+  "findings": [
+    {
+      "id": "ICQ-01",
+      "priority": "high",
+      "questionIds": [
+        "CMP-SOURCE-BUSTER-TAR-LOCATOR-UNUSED"
+      ],
+      "caseIds": [
+        "QC-BUSTER-TAR-LOCATOR-UNUSED-PAIRED-PROVISION"
+      ],
+      "title": "Alternate tar positive omits actual sandbox read/execute grant correlation",
+      "source": [
+        "skills/buster/engine/test-gates/preparation-command.ts:27",
+        "skills/common/plugin-runtime/foundation/isolation/sandbox.c:75",
+        "docker/Dockerfile.buster-runtime:106"
+      ],
+      "evidence": [
+        "definition-counterexamples.log"
+      ],
+      "remainingDefinition": "Supply complete same-author image/runtime/grant correlated A/B. Either exact alternative under an existing authorized root, or explicit least-privilege verified binary grant projection. Preserve source-ancestor denial and no broad read-root/isolation waiver. Keep genuine tar physical execution future/not-run."
+    },
+    {
+      "id": "ICQ-02",
+      "priority": "high",
+      "questionIds": [
+        "CMP-SOURCE-ADMISSION-METADATA-RESERVE"
+      ],
+      "caseIds": [
+        "QC-ADMISSION-METADATA-RESERVE-VAL"
+      ],
+      "title": "Published supported upper domain contradicts the proposed semantic validator",
+      "evidence": [
+        "definition-counterexamples.log"
+      ],
+      "counterexample": "Complete A author with maximumBytes=8500, metadataReserveBytes=8192, maximumQuarantineBytes=100 passes owning schema and published reserve<=maximumBytes-empty-1; validator rejects because maximumBytes must exceed reserve+empty+525.",
+      "remainingDefinition": "Make one exact header-inclusive supported upper domain/relation authoritative in question definition, schema-semantic validator and cases; add admitted near-boundary positive and one-byte smaller rejection. Preserve fixed 4011/3243 reserve floors, selected8192/16384 witnesses and original1024 historical/current evidence."
+    },
+    {
+      "id": "ICQ-03",
+      "priority": "high",
+      "questionIds": [
+        "CMP-SOURCE-FOUNDATION-FLOCK-WAIT",
+        "CMP-SOURCE-ADMISSION-REASON-LIMITS",
+        "CMP-SOURCE-ADMISSION-METADATA-RESERVE"
+      ],
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY",
+        "QC-ADMISSION-REASON-LIMITS-HISTORY",
+        "QC-ADMISSION-METADATA-RESERVE-ALL-WRITES"
+      ],
+      "title": "Retirement current command-supplied quotas are characterized as captured original policy without a checked current binding",
+      "source": [
+        "scripts/retire-attempt-result.mjs:13",
+        "scripts/retire-attempt-result.mjs:59",
+        "scripts/retire-admission.mjs:12",
+        "scripts/retire-admission.mjs:54"
+      ],
+      "evidence": [
+        "retirement-scope-reader.log"
+      ],
+      "remainingDefinition": "Keep current local-operator authority/input separate from proposed immutable policy capture. Define exact original generation/author/profile/policy metadata locator and equality checks, old-state migration and same-boundary changed-quota rejection/unchanged positive; no new command quota author or latest lookup. Source-only parser control is not productive retirement acceptance."
+    },
+    {
+      "id": "ICQ-04",
+      "priority": "medium",
+      "questionIds": [
+        "CMP-SOURCE-OUTBOX-UNBOUNDED-READ"
+      ],
+      "caseIds": [
+        "QC-OUTBOX-UNBOUNDED-READ-FOUR-METHODS"
+      ],
+      "title": "1024-byte outbox positive lacks an exact fitting record/state witness",
+      "source": [
+        "tests/verification/contracts/check-pipeline-observability-durable-delivery.mts:12",
+        "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts:376"
+      ],
+      "evidence": [
+        "outbox-positive-witness.log"
+      ],
+      "remainingDefinition": "Freeze an exact valid unsigned record and correctly bound ack/state whose whole serialization fits selected1024 cap, or explicitly choose a larger cap proven to fit. Existing actual contract fixture requires1223 bytes and current1024 append rejectsFULL;2048 same-input positive admits. Specify independent unchanged oversized state for each append/pending/acknowledge/compact negative. No claim that all possible smaller records are impossible."
+    },
+    {
+      "id": "ICQ-05",
+      "priority": "medium",
+      "questionIds": [],
+      "caseIds": [],
+      "title": "Computed normal preparation ENV reader has an empty actual caller expansion",
+      "source": [
+        "skills/buster/engine/test-gates/preparation-host.ts:28",
+        "skills/worker/core/worker/native-worker-launcher.c:103"
+      ],
+      "evidence": [
+        "dynamic-environment-counterexample.json"
+      ],
+      "remainingDefinition": "Append superseding exact six caller records for helper environment: five assigned values at lines34/50/83/84/101 plus generated native scope at65; source candidate reason currently says every literal caller expanded while literalCallerExpansions is empty. Preserve old frozen bytes as history, do not rewrite them or infer a new ENV author."
+    },
+    {
+      "id": "ICQ-06",
+      "priority": "high",
+      "questionIds": [
+        "CMP-SOURCE-ADMISSION-METADATA-RESERVE",
+        "CMP-SOURCE-FOUNDATION-FLOCK-WAIT",
+        "CMP-SOURCE-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS"
+      ],
+      "caseIds": [
+        "QC-ADMISSION-METADATA-RESERVE-ALL-WRITES",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY",
+        "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-RECOVERY-EVAL"
+      ],
+      "title": "Some active case specifications still leave exact prior-state/write/caller inputs as prose placeholders",
+      "remainingDefinition": "For ALL-WRITES replace exercise each concrete method/near-headroom state with exact versioned state bytes or immutable fixture refs, method inputs and resulting byte/counter oracles for normal admission, quarantine, overflow, recordGap and retireCompletion/replay. Expand history lock case across actual owning caller matrix, including declared outstanding Buster runtime and standalone/registered Nova companions, without inventing deployed inputs. Freeze exact provider launch receipt/snapshot schema and quota contribution for failed-load/recovery cases; retain genuine sandbox/provider prerequisite as future execution, not current PASS. This is missing C0 case definition precision, not a demand to implement/run C1 harness."
+    }
+  ],
+  "globalC0Accepted": false,
+  "futureImplementationRequiredToPassC0": false
+}

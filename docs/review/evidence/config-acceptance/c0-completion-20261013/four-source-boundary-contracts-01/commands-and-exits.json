@@ -1,0 +1,81 @@
+{
+  "runs": [
+    {
+      "argv": [
+        "python",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/author-definition.py"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exit": 0,
+      "stdout": "definition.stdout",
+      "stderr": "definition.stderr",
+      "toolSources": {
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/author-definition.py": "88bb33f3e3581f730fd4c0d111358b327dc9e62ebfce1f82a33546fa0adb3131",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/definition-shape-check.mjs": "4cdb1a7ce858b2864832e539d7db814fcf97e531ee7898805900637f1f8e64fa"
+      },
+      "toolEndPins": {
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/author-definition.py": "88bb33f3e3581f730fd4c0d111358b327dc9e62ebfce1f82a33546fa0adb3131",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/definition-shape-check.mjs": "4cdb1a7ce858b2864832e539d7db814fcf97e531ee7898805900637f1f8e64fa"
+      },
+      "scope": "Inspected finite JSON/schema/source hashing and rg only; no source module execution"
+    },
+    {
+      "argv": [
+        "node",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/definition-shape-check.mjs"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exit": 0,
+      "stdout": "shape.stdout",
+      "stderr": "shape.stderr",
+      "toolSources": {
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/author-definition.py": "88bb33f3e3581f730fd4c0d111358b327dc9e62ebfce1f82a33546fa0adb3131",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/definition-shape-check.mjs": "4cdb1a7ce858b2864832e539d7db814fcf97e531ee7898805900637f1f8e64fa"
+      },
+      "toolEndPins": {
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/author-definition.py": "88bb33f3e3581f730fd4c0d111358b327dc9e62ebfce1f82a33546fa0adb3131",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/definition-shape-check.mjs": "4cdb1a7ce858b2864832e539d7db814fcf97e531ee7898805900637f1f8e64fa"
+      },
+      "scope": "Inspected finite JSON/schema/source hashing and rg only; no source module execution"
+    }
+  ],
+  "earlierAuthorAttempts": [
+    {
+      "exit": 1,
+      "observedFailure": "Python traversal met dictionary-valued id; corrected type guard, no original artifact edits; original tool transcript contains traceback, not claimed saved raw subprocess log"
+    },
+    {
+      "exit": 0,
+      "observedResult": "4rows/8cases/130inputFiles/417pins"
+    },
+    {
+      "exit": 0,
+      "observedResult": "4rows/8cases/134inputFiles/440pins"
+    },
+    {
+      "exit": 1,
+      "observedFailure": "Ajv repeated schema id in own finite shape check; corrected per-def local check IDs; no schema or original artifact change"
+    },
+    {
+      "exit": 0,
+      "observedResult": "13shapeControls/4rows/8cases/440pins/134endpins"
+    }
+  ],
+  "toolVersion": {
+    "python": "3.11.2 (main, Oct  7 2026, 12:35:07) [GCC 12.2.0]",
+    "node": "v24.21.0",
+    "ajvPackage": {
+      "path": "node_modules/ajv/package.json",
+      "sha256": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989"
+    },
+    "ajv2020Source": {
+      "path": "node_modules/ajv/dist/2020.js",
+      "sha256": "908e9670b478b2ba126802a221b7e47006f50cf467e2c5dd7935d3dbef10a20a"
+    },
+    "ajvFormatsPackage": {
+      "path": "node_modules/ajv-formats/package.json",
+      "sha256": "402fb4bcfa457f0226813f3976ac42839dd619907c075c108efba8600d7edb69"
+    }
+  },
+  "executedFutureCases": 0
+}

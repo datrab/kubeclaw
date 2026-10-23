@@ -1,0 +1,64 @@
+{
+  "scope": "Independent NONAUTHORED GROOT01 ACTUAL FULL-checker projection-guard material correction recheck only; own Core semantic definitions excluded",
+  "verdict": "GROOT-01_RESOLVED_AT_BOUNDED_PROJECTION_GUARD_SCOPE",
+  "materialFindings": [],
+  "globalC0Verdict": null,
+  "fieldOrNativeAcceptance": false,
+  "originalReport": {
+    "path": "docs/review/evidence/config-acceptance/independent-generated-root-projection-6606/independent-review.json",
+    "sha256": "0dbcaedff449efa22a13311ebc2c56c3e1b6c1150a06980135bd4f6bb70f748b"
+  },
+  "resolution": {
+    "exactRowContract": "13 normalized rows require full recursive equality with source original plus actual conso-derived class/fragment/requirementIds/caseIds/evidence/semanticStatus/reviewerNone. Unknown added row properties and absent original/derived fields reject.",
+    "exactCaseContract": "27 cases require every original source key present and exact recursive value equality; explicit canonical normalization aliases and phase/reviewerNone are guarded. This is not a blanket closed-schema claim for every extra inherited root case property.",
+    "originalControls": "Existing instanceScope and nested source.field changes on CMP-buster-engine-preparation.storeLockWaitSeconds now reject at named normalized row conservation boundary. QC-FOUNDATION-FLOCK-WAIT-VAL priorState replacement and F-VAL deletion now reject at named source property/requirement boundary. Original exploratory extra row scope injection also rejects.",
+    "additionalControls": "Derived fragment/evidence/class drift, original and derived key omission, missing source-provided null reviewerConfirmation, nested sourceIdentity drift, phase/row/case author review promotion, command/inputProfile changes all reject through actual full checker.",
+    "aliasesQualification": "Current27 source cases already use canonical contract keys; no source member exercises conditional raw alias normalization branches. Those branches match current generator mappings by code inspection. Actual derived row aliases and case canonical fields/phase are exercised. No fictitious source mutation to exercise inactive branches or future implementation proof is claimed.",
+    "unchangedData": "Actual three root logical SHA/bytes unchanged from original review. Current13 rows/27 source case properties,14 question bodies/links60 aliases, native6201 bodies/5932direct/269histories and105 separate pure observations remain conserved. No source/profile retuning/result/review promotion."
+  },
+  "evidence": {
+    "fullActualRuns": {
+      "structuralExit": 0,
+      "structuralErrors": 0,
+      "strictExit": 1,
+      "strictOpenObligations": 102679,
+      "nativeExit": 0,
+      "nativeBodies": 6201,
+      "directLinks": 5932,
+      "inactiveHistoricalLinks": 269,
+      "restoredFullStructuralExit": 0,
+      "restoredPublicNativeExit": 0
+    },
+    "independentActualMutants": 40,
+    "intendedRejections": 40,
+    "escapedControls": 0,
+    "mockOrNoOpResolver": false,
+    "parentControls": "Frozen author16-negative/two-positive expanded control script/log identities preserved; not invoked in place because that script writes author logs. Independent actual40 controls cover original escape and negative preservation boundaries.",
+    "inputFreeze": "46 raw current/old/source/root/code/receipt inputs; actual dependency hashes captured before first read and verified after. Zero drift. Preserved previous checker/control/freeze copies match original independent SHA.",
+    "commands": [
+      "PYTHONDONTWRITEBYTECODE=1 python3 docs/review/evidence/config-acceptance/independent-generated-root-groot01-recheck-6606/run-audited.py structural docs/review/evidence/config-acceptance/author/check-matrix.py --structural",
+      "PYTHONDONTWRITEBYTECODE=1 python3 docs/review/evidence/config-acceptance/independent-generated-root-groot01-recheck-6606/run-audited.py strict docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "PYTHONDONTWRITEBYTECODE=1 python3 docs/review/evidence/config-acceptance/independent-generated-root-groot01-recheck-6606/run-audited.py native docs/review/evidence/config-acceptance/author/check-native-case-integration.py",
+      "PYTHONDONTWRITEBYTECODE=1 python3 docs/review/evidence/config-acceptance/independent-generated-root-groot01-recheck-6606/check-full-mutants.py 0 20",
+      "PYTHONDONTWRITEBYTECODE=1 python3 docs/review/evidence/config-acceptance/independent-generated-root-groot01-recheck-6606/check-full-mutants.py 20 40"
+    ]
+  },
+  "preservedOtherGuards": [
+    "Runtime package omission including both advertisements/package absent; historical mappings/reverse refs/count/acceptance/unknown tuple and old canonical promotion reject.",
+    "Core required package/source/fragment registration/alias/question/13row27case omissions reject.",
+    "Pure105 package omission, source digest mismatch, exact body scope/result promotion reject; no operative native body or acceptance inferred from pure observations.",
+    "Source and root input identities, original historical reports/raw failures and requirement tags remain intact. Strict rejection102679 and all actual None reviewer confirmations remain unchanged."
+  ],
+  "remainingOutsideScope": [
+    "Whole C0/field/consumer/case completeness and substantive Core review: not this bounded author tool correction.",
+    "Separate material semantic review of Delivery controller corrective definitions, actual future cases and physical/runtime/provider/deployment proof.",
+    "Future source schema or generator normalization changes require exact new input/correction review, not inherited guard approval."
+  ],
+  "actionsNotTaken": [
+    "Shared source/root/author/Core/Runtime/Delivery/production/test edits",
+    "Substantive selfreview or retuning own Core domain/profile definitions",
+    "Native/host/API/controller/image/auth/model behavior execution",
+    "Implementation/test authorization or global/field/native acceptance",
+    "Delegation/commit"
+  ]
+}

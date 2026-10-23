@@ -9,15 +9,18 @@ export class ProductControllerError extends Error {
     super(code ?? `product controller response ${status}`); this.code = code;
   }
 }
-export async function productController(config: ProductConfig, path: string, body: unknown): Promise<unknown> {
+export async function productController(config: ProductConfig, path: string, body: unknown, timeoutMs: number, maximumResponseBytes: number, maximumTokenCharacters: number): Promise<unknown> {
+  if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 2147483647) throw new Error('valid product controller timeout required');
+  if (!Number.isSafeInteger(maximumResponseBytes) || maximumResponseBytes < 1) throw new Error('valid product controller response limit required');
+  if (!Number.isSafeInteger(maximumTokenCharacters) || maximumTokenCharacters < 1) throw new Error('valid product controller token limit required');
   const [ca, token] = await Promise.all([readFile(config.caFile), readFile(config.tokenFile, 'utf8')]);
-  if (!token.trim() || token.length > 64_000 || /[\r\n]/u.test(token.trim())) throw new Error('invalid product controller transport token');
+  if (!token.trim() || token.length > maximumTokenCharacters || /[\r\n]/u.test(token.trim())) throw new Error('invalid product controller transport token');
   const bytes = Buffer.from(JSON.stringify(body));
   return new Promise((resolve, reject) => {
     const outgoing = request(new URL(path, config.controller), {method: 'POST', ca, rejectUnauthorized: true,
-      signal: AbortSignal.timeout(15_000), headers: {authorization: `Bearer ${token.trim()}`, 'content-type': 'application/json', 'content-length': bytes.length}}, response => {
+      signal: AbortSignal.timeout(timeoutMs), headers: {authorization: `Bearer ${token.trim()}`, 'content-type': 'application/json', 'content-length': bytes.length}}, response => {
       const chunks: Buffer[] = []; let size = 0;
-      response.on('data', (chunk: Buffer) => { size += chunk.length; if (size > 1_000_000) response.destroy(new Error('product controller response too large')); else chunks.push(chunk); });
+      response.on('data', (chunk: Buffer) => { size += chunk.length; if (size > maximumResponseBytes) response.destroy(new Error('product controller response too large')); else chunks.push(chunk); });
       response.on('error', reject);
       response.on('end', () => {
         if (response.statusCode !== 200) { reject(new ProductControllerError(response.statusCode, Buffer.concat(chunks))); return; }

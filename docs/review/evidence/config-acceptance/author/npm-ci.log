@@ -1,0 +1,103 @@
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/@sentry/core/build/esm/asyncContext/stackStrategy.js'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, lstat '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/puppeteer-core/lib/puppeteer/cdp'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/@sentry/node-core/build/types/cron/cron.d.ts'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, lstat '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/@sentry/node-core/build/types-ts3.8'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/chromium-bidi/out/Default/gen/src/utils/time.js.map'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/@sentry/core/build/cjs/utils/stacktrace.js'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, lstat '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/@sentry/node-core/build/types'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, lstat '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/@sentry/core/build/esm'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, lstat '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/@sentry/node-core/build'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, lstat '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/@sentry/core/build'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, lstat '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/@sentry/node-core/build'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, lstat '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/@sentry/core/build'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, lstat '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/@sentry/node-core/build'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, lstat '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/@sentry/core/build'
+npm warn cleanup Failed to remove some directories [
+npm warn cleanup   [
+npm warn cleanup     '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/happy-dom',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/happy-dom/lib/nodes'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/happy-dom/lib/nodes'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/happy-dom/lib/nodes'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/happy-dom/lib/nodes'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/puppeteer-core',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/puppeteer-core/lib/puppeteer'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/puppeteer-core/lib/puppeteer'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/@opentelemetry',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/@opentelemetry/api/build/esnext'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/@opentelemetry/api/build/esnext'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/@sentry/server-utils',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/@sentry/server-utils/build/esm/integrations/tracing-channel/aws-sdk/services'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/@sentry/server-utils/build/esm/integrations/tracing-channel/aws-sdk/services'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/chromium-bidi',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/chromium-bidi/out/Default/gen/src'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/chromium-bidi/out/Default/gen/src'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/@sentry',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/@sentry/node/build/types/integrations/tracing'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/@sentry/node/build/types/integrations/tracing'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/@sentry/node',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/@sentry/node/build/types/integrations/tracing'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/@sentry/node/build/types/integrations/tracing'
+npm warn cleanup     }
+npm warn cleanup   ]
+npm warn cleanup ]
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, lstat '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/@sentry/node-core/build'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, lstat '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/@sentry/core/build'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, lstat '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/@sentry/node/build/cjs/integrations'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, lstat '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/@sentry/node-core/build'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, lstat '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/@sentry/core/build'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, lstat '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/@sentry/server-utils/build/cjs/vendored/source-map'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, lstat '/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/lighthouse/shared'
+npm error code EROFS
+npm error syscall open
+npm error path /root/.npm/_cacache/tmp/***
+npm error errno -30
+npm error rofs EROFS: read-only file system, open '/root/.npm/_cacache/tmp/***'
+npm error rofs Often virtualized file systems, or other file systems that don't support symlinks, give this error.
+npm error Log files were not written due to an error writing to the directory: /root/.npm/_logs
+npm error You can rerun the command with `--loglevel=verbose` to see the logs in your terminal

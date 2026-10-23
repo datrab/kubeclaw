@@ -1,0 +1,19 @@
+✔ canonical authored Studio profile starts the actual packaged service contract (6330.458872ms)
+✔ actual Studio survives refused Control and malformed URL with explicit responses (6352.234164ms)
+✔ actual Studio retains proxy bytes, cookies and upstream status (6095.723037ms)
+✔ actual Studio forwards direction idempotency keys and retry payloads to Control (6273.841004ms)
+✔ actual Studio bounds upstream headers wait and remains healthy (6449.710205ms)
+✔ actual Studio bounds upstream empty-body wait and remains healthy (6421.700974ms)
+✔ actual Studio bounds upstream partial-body wait and remains healthy (6331.8971ms)
+✔ actual Studio cancels upstream streaming when the client disconnects (6524.573236ms)
+✔ authored Studio timeout 150 reaches the live proxy and startup snapshot (6388.486059ms)
+✔ authored Studio timeout 600 reaches the live proxy and startup snapshot (6711.187794ms)
+✔ missing Studio ingress secret retains 503 proxy response and static availability (6075.510152ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 70276.588941

@@ -1,0 +1,114 @@
+import { readLegacyBusterRuntimeServicePolicy } from '@kubeclaw/plugin-foundation/config/buster-service-policy';
+import { createPublicKey } from 'node:crypto';
+import { validateRuntimeRoot } from './production-config-values.ts';
+import { validateCapabilitySourceClosure } from './production-capability-sources.ts';
+
+/** The privileged parent receives the complete installed legacy runtime, not
+ * the shell producer's partial source projection. Reject the child's service
+ * policy before resolving credentials or creating native ownership/journals.
+ * This remains v1 validation, never selected-generation/source authority.
+ */
+export function readBusterPreparationRuntime(runtime: Readonly<Record<string, unknown>>,
+  environment: NodeJS.ProcessEnv) {
+  const policy = readLegacyBusterRuntimeServicePolicy(runtime);
+  // The complete privileged receiver must reject the same retired root authors
+  // and required public locators as its child before accessing credentials.
+  // The shell producer's partial projection remains a separate legacy API.
+  validateRuntimeRoot(runtime);
+  // Match the child's public conditional-source admission before the root
+  // parent resolves key/token carriers or creates native ownership state.
+  validateCapabilitySourceClosure(runtime, new Set(policy.allowedCapabilities));
+  return readBusterPreparationRuntimeSource(runtime, environment);
+}
+
+/** Effect-free receiver for the existing runtime.v1 source binding. This is
+ * legacy runtime input, NOT selected-generation or original-boot authority.
+ * Keep it separate from host evidence and capsule activation.
+ */
+export function readBusterPreparationRuntimeSource(runtime: Readonly<Record<string, unknown>>,
+  environment: NodeJS.ProcessEnv) {
+  // The parent must reject the same version/competing-owner boundary as the
+  // child before accepting source trust. A future selected receiver is not v1.
+  if (runtime.schemaVersion !== 'buster-remote-plan-runtime.v1') throw new Error('BUSTER_REMOTE_CONFIG_VERSION_INVALID');
+  if (Object.hasOwn(runtime, 'runtimeService') || Object.hasOwn(runtime, 'remotePlanService')) {
+    throw new Error('BUSTER_SERVICE_POLICY_COMPETING_AUTHOR');
+  }
+  // The generated installed-tool locator is not an editable policy or PATH
+  // fallback. Reject unsupported input before reading any source carrier.
+  if (runtime.tarExecutable !== '/usr/bin/tar') throw new Error('BUSTER_NATIVE_TAR_LOCATOR_INVALID');
+  // Authentication metadata must agree with the runtime child before source
+  // trust is captured. Proxied SPIFFE is not a substitute for the source key.
+  if (Object.hasOwn(runtime, 'trustedPeerSpiffeIds') === Object.hasOwn(runtime, 'tokenEnvironmentVariable')) {
+    throw new Error('BUSTER_REMOTE_CONFIG_AUTHORITY_XOR_REQUIRED');
+  }
+  if (Object.hasOwn(runtime, 'trustedPeerSpiffeIds')) {
+    const peers = runtime.trustedPeerSpiffeIds;
+    if (!Array.isArray(peers) || peers.length === 0 || peers.length > 32
+      || peers.some(peer => typeof peer !== 'string' || peer.length === 0)) {
+      throw new Error('BUSTER_REMOTE_CONFIG_INVALID:trustedPeerSpiffeIds');
+    }
+  } else if (typeof runtime.tokenEnvironmentVariable !== 'string'
+    || !/^[A-Z][A-Z0-9_]*$/u.test(runtime.tokenEnvironmentVariable)) {
+    throw new Error('BUSTER_REMOTE_CONFIG_TOKEN_ENV_INVALID');
+  }
+  const publicKeyName = runtime.sourceAttestationPublicKeyEnvironmentVariable;
+  if (typeof publicKeyName !== 'string' || !/^[A-Z][A-Z0-9_]*$/u.test(publicKeyName)
+    || publicKeyName === runtime.tokenEnvironmentVariable
+    || typeof runtime.trustedSourceAuthority !== 'string' || !runtime.trustedSourceAuthority.trim()) {
+    throw new Error('BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID');
+  }
+  // Reject unsupported storage/timer metadata before accessing the public-key
+  // carrier, just as the child validates its complete policy before authority.
+  if (runtime.stateRoot !== '/var/lib/buster-v2/plan-jobs' || runtime.runtimeRoot !== '/var/lib/buster-v2/runs') {
+    throw new Error('BUSTER_NATIVE_STATE_ROOT_INVALID');
+  }
+  if (!Number.isSafeInteger(runtime.shutdownTimeoutMs) || Number(runtime.shutdownTimeoutMs) < 1
+    || Number(runtime.shutdownTimeoutMs) > 0x7fffffff) throw new Error('BUSTER_SERVICE_SHUTDOWN_TIMEOUT_REQUIRED');
+  // Carrier resolution must not replace the admitted original source tuple.
+  // Retain its public primitive metadata before either environment lookup;
+  // parsing a key does not validate a second mutable runtime configuration.
+  const originalSource = Object.freeze({ trustedSourceAuthority: runtime.trustedSourceAuthority,
+    stateRoot: runtime.stateRoot, tarExecutable: runtime.tarExecutable,
+    serviceShutdownTimeoutMs: Number(runtime.shutdownTimeoutMs) });
+  // Match the actual HTTP receiver before privileged shell/store effects. The
+  // token stays in its confidential carrier; it is never part of boot facts.
+  if (typeof runtime.tokenEnvironmentVariable === 'string') {
+    const token = environment[runtime.tokenEnvironmentVariable];
+    if (!token) throw new Error('BUSTER_REMOTE_CONFIG_TOKEN_MISSING');
+    if (token.length < 32) throw new Error('BUSTER_REMOTE_TOKEN_INVALID');
+  }
+  let sourceAttestationPublicKey: string;
+  try {
+    const value = environment[publicKeyName];
+    if (!value) throw new Error('missing public key');
+    const key = createPublicKey(value);
+    if (key.asymmetricKeyType !== 'ed25519') throw new Error('wrong public key algorithm');
+    sourceAttestationPublicKey = key.export({ type: 'spki', format: 'pem' }).toString();
+  } catch { throw new Error('BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID'); }
+  return Object.freeze({ sourceAttestationPublicKey, ...originalSource });
+}
+
+/** The existing shell producer's exact legacy projection, now validated before
+ * any shell effects. These preserved v1 values are NOT a new CONFIG fallback.
+ * The selected-owner successor must replace this producer as one complete
+ * versioned contract; it cannot promote this value into verified boot facts.
+ */
+export function projectLegacyBusterPreparationSource(environment: NodeJS.ProcessEnv) {
+  if (Object.hasOwn(environment, 'BUSTER_V2_STATE_DIR') || Object.hasOwn(environment, 'BUSTER_V2_RUN_DIR')) {
+    throw new Error('BUSTER_NATIVE_LEGACY_STATE_ROOT_REJECTED');
+  }
+  const runtime = Object.freeze({
+    schemaVersion: 'buster-remote-plan-runtime.v1',
+    ...(environment.BUSTER_TRUSTED_PEER_SPIFFE_ID
+      ? { trustedPeerSpiffeIds: [environment.BUSTER_TRUSTED_PEER_SPIFFE_ID] }
+      : { tokenEnvironmentVariable: 'BUSTER_V2_TOKEN' }),
+    sourceAttestationPublicKeyEnvironmentVariable: 'BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY',
+    trustedSourceAuthority: environment.BUSTER_PLAN_TRUSTED_SOURCE_AUTHORITY || 'nova:production',
+    stateRoot: environment.BUSTER_PLAN_STATE_DIR || '/var/lib/buster-v2/plan-jobs',
+    runtimeRoot: environment.BUSTER_PLAN_RUN_DIR || '/var/lib/buster-v2/runs',
+    tarExecutable: '/usr/bin/tar',
+    shutdownTimeoutMs: 15000,
+  });
+  readBusterPreparationRuntimeSource(runtime, environment);
+  return runtime;
+}

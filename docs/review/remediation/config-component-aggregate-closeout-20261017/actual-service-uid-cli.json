@@ -1,0 +1,9 @@
+{
+  "status": "NOT_EXECUTED_OS_CREDENTIAL_DROP_DENIED",
+  "attempt": "subprocess.run(node identity probe,user=1000,group=1000,extra_groups=[])",
+  "error": "PermissionError: [Errno 1] Operation not permitted",
+  "originalTestChanged": false,
+  "nativeAcceptance": "OPEN",
+  "owner": "Raven",
+  "resume": "Run unchanged original CLI test on genuine UID/GID1000 service host; no UID/trust/kernel mocking or runtime reconfiguration"
+}

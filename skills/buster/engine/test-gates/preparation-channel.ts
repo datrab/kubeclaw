@@ -1,11 +1,12 @@
 import type { NativeWorkerControlChannel } from '@kubeclaw/worker-core';
-import type { BusterPreparationSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+import type { BusterPreparationSettings } from '@kubeclaw/plugin-foundation/config/swarm';
+import { busterStartupAssociationBytes } from '@kubeclaw/plugin-foundation/config/buster-startup';
 
 export const preparationChunkBytes = 64 * 1024;
 const framePrefixBytes = 17;
 const nativeFrameHeaderBytes = 4;
-export type PreparationMessageKind = 'begin' | 'bytes' | 'end' | 'cancel' | 'ready' | 'ack' | 'result' | 'failure' | 'validated' | 'proceed' | 'decline' | 'extract';
-const kinds: readonly PreparationMessageKind[] = ['begin', 'bytes', 'end', 'cancel', 'ready', 'ack', 'result', 'failure', 'validated', 'proceed', 'decline', 'extract'];
+export type PreparationMessageKind = 'begin' | 'bytes' | 'end' | 'cancel' | 'ready' | 'ack' | 'result' | 'failure' | 'validated' | 'proceed' | 'decline' | 'extract' | 'startup' | 'startup-ack';
+const kinds: readonly PreparationMessageKind[] = ['begin', 'bytes', 'end', 'cancel', 'ready', 'ack', 'result', 'failure', 'validated', 'proceed', 'decline', 'extract', 'startup', 'startup-ack'];
 
 export function preparationServiceChannelLimits(settings: BusterPreparationSettings) {
   // Stage: body/ack pairs, begin/ready, end/preview, decision/result.
@@ -13,9 +14,10 @@ export function preparationServiceChannelLimits(settings: BusterPreparationSetti
   const frames = 2 * Math.ceil(settings.maximumRequestBytes / preparationChunkBytes) + 10;
   const perRequest = settings.maximumRequestBytes + 4 * settings.maximumResultBytes
     + frames * (framePrefixBytes + nativeFrameHeaderBytes);
-  const maximumSessionBytes = settings.maximumRecords * perRequest;
+  const startupWireBytes = busterStartupAssociationBytes + framePrefixBytes;
+  const maximumSessionBytes = settings.maximumRecords * perRequest + 2 * (startupWireBytes + nativeFrameHeaderBytes);
   if (!Number.isSafeInteger(maximumSessionBytes)) throw new Error('BUSTER_PREPARATION_CHANNEL_LIMIT_INVALID');
-  return { maximumMessageBytes: settings.maximumResultBytes + framePrefixBytes, maximumSessionBytes };
+  return { maximumMessageBytes: Math.max(settings.maximumResultBytes + framePrefixBytes, startupWireBytes), maximumSessionBytes };
 }
 
 /** HTTP segmentation never changes the accepted wire-byte budget or framing allowance. */

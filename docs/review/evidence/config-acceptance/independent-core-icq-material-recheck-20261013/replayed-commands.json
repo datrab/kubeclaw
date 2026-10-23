@@ -1,0 +1,46 @@
+[
+  {
+    "argv": [
+      "node",
+      "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/validate-proposed-definitions.mjs"
+    ],
+    "cwd": "docs/review/evidence/config-acceptance/independent-core-icq-material-recheck-20261013/replay-root",
+    "scriptSha256": "816f564439857d769c070a7afcbea94375151b32a04b1fc54a501969f7b99580",
+    "exit": 0,
+    "stdoutSha256": "64ff020b646f094072fa636295c23d9127adb42b1693e0503e1cded9909dd4fd",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "node",
+      "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/check-corrected-definitions.mjs"
+    ],
+    "cwd": "docs/review/evidence/config-acceptance/independent-core-icq-material-recheck-20261013/replay-root",
+    "scriptSha256": "3c44fe224c734f57772fbaa0146687eb52aa8d185fbd5efd46f34fb748a47592",
+    "exit": 0,
+    "stdoutSha256": "89f1ab86a56bc72c11acbd4994d1bcb41d1d6ff0b2fee8f12d5a04923cca1708",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "node",
+      "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/check-companion-definitions.mjs"
+    ],
+    "cwd": "docs/review/evidence/config-acceptance/independent-core-icq-material-recheck-20261013/replay-root",
+    "scriptSha256": "61f80bf1fca3af9517f24b069701e7cd572cd52cac11af4c02c99d254369ce63",
+    "exit": 0,
+    "stdoutSha256": "e7be31b3b6da10d72e85000591fcdeb80b1cf8c01a46b6a46bab571d7fc28918",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "python3",
+      "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/check-icq-integrity.py"
+    ],
+    "cwd": "docs/review/evidence/config-acceptance/independent-core-icq-material-recheck-20261013/replay-root",
+    "scriptSha256": "91b27f113f2330ab0d4ab6bdffccaf1c42cf2b225b92fa454b5aee964df51bd2",
+    "exit": 0,
+    "stdoutSha256": "343b28148dc4504487c70646e7de06f4ac4b9c017ea90038da1d3d155ed388ee",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

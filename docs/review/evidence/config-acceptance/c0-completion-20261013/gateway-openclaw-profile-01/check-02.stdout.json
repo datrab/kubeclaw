@@ -1,0 +1,2346 @@
+{
+  "qualification": "pure original gateway-specific schema/source/receiver checks only; native full parser/model/provider/image/host/secret/grant/effect evidence unrun",
+  "node": "v24.21.0",
+  "scriptSha256": "d2f9e61a78c37d2a4629c7a95952366fc5ba64df0c82f500f74cc14cd7b095ce",
+  "observations": [
+    {
+      "name": "closed whole managed profile A",
+      "pass": true,
+      "detail": {
+        "profileId": "A",
+        "credential": "named locator/ref metadata only; authentic revision/provider/host access missing, no native secret read",
+        "native": "primary native full Zod/schema/installed source/harness/model/host/grant admission NOT executed"
+      }
+    },
+    {
+      "name": "closed whole managed profile B",
+      "pass": true,
+      "detail": {
+        "profileId": "B",
+        "credential": "named locator/ref metadata only; authentic revision/provider/host access missing, no native secret read",
+        "native": "primary native full Zod/schema/installed source/harness/model/host/grant admission NOT executed"
+      }
+    },
+    {
+      "name": "sole existing Chart whole-profile source and endpoint/model aliases",
+      "pass": true,
+      "detail": {
+        "role": "buster",
+        "instanceId": "agent-buster-gateway",
+        "settings": {
+          "gatewayOpenClaw": {
+            "memory": {
+              "search": {
+                "enabled": true,
+                "experimental": {
+                  "sessionMemory": true
+                },
+                "sources": [
+                  "memory",
+                  "sessions"
+                ],
+                "provider": "openai-compatible",
+                "remote": {
+                  "apiKey": {
+                    "source": "env",
+                    "provider": "default",
+                    "id": "LITELLM_API_KEY"
+                  }
+                },
+                "model": "dlv-embedding-a"
+              }
+            },
+            "agents": {
+              "defaults": {
+                "thinkingDefault": "off",
+                "reasoningDefault": "off",
+                "modelPolicy": {
+                  "allow": [
+                    "openai/gpt-5.6-sol",
+                    "openai/gpt-5.5"
+                  ]
+                },
+                "models": {
+                  "openai/gpt-5.6-sol": {
+                    "agentRuntime": {
+                      "id": "codex"
+                    }
+                  },
+                  "openai/gpt-5.5": {
+                    "agentRuntime": {
+                      "id": "codex"
+                    }
+                  }
+                },
+                "workspace": "/home/node/.openclaw/workspace",
+                "embeddedAgent": {
+                  "executionContract": "strict-agentic"
+                },
+                "contextPruning": {
+                  "mode": "cache-ttl",
+                  "ttl": "2h"
+                },
+                "compaction": {
+                  "mode": "safeguard",
+                  "keepRecentTokens": 140000,
+                  "memoryFlush": {
+                    "enabled": true
+                  }
+                },
+                "subagents": {
+                  "maxConcurrent": 20,
+                  "archiveAfterMinutes": 240,
+                  "runTimeoutSeconds": 43200,
+                  "maxSpawnDepth": 3
+                },
+                "contextInjection": "never",
+                "timeoutSeconds": 172800
+              },
+              "entries": {
+                "main": {
+                  "subagents": {
+                    "allowAgents": [
+                      "*"
+                    ]
+                  },
+                  "skills": [],
+                  "skillsLimits": {
+                    "maxSkillsPromptChars": 1200
+                  }
+                }
+              }
+            },
+            "acp": {
+              "enabled": true,
+              "backend": "acpx",
+              "defaultAgent": "codex",
+              "allowedAgents": [
+                "claude",
+                "codex",
+                "kimi",
+                "gemini",
+                "pi"
+              ]
+            },
+            "tools": {
+              "profile": "coding",
+              "sessions": {
+                "visibility": "all"
+              },
+              "sessions_spawn": {
+                "attachments": {
+                  "enabled": true
+                }
+              },
+              "exec": {
+                "timeoutSeconds": 604800,
+                "mode": "full"
+              },
+              "agentToAgent": {
+                "enabled": true
+              }
+            },
+            "commands": {
+              "native": "auto",
+              "nativeSkills": "auto",
+              "restart": true
+            },
+            "session": {
+              "dmScope": "per-channel-peer",
+              "resetByType": {
+                "group": {
+                  "mode": "idle",
+                  "idleMinutes": 43200
+                }
+              },
+              "threadBindings": {
+                "enabled": true,
+                "idleHours": 999,
+                "maxAgeHours": 0
+              }
+            },
+            "channels": {
+              "discord": {
+                "groupPolicy": "allowlist",
+                "streaming": {
+                  "mode": "partial"
+                },
+                "guilds": {
+                  "*": {
+                    "requireMention": true
+                  }
+                },
+                "threadBindings": {
+                  "enabled": true,
+                  "idleHours": 999,
+                  "spawnSessions": true
+                },
+                "execApprovals": {
+                  "enabled": true,
+                  "target": "dm"
+                }
+              }
+            },
+            "gateway": {
+              "mode": "local",
+              "bind": "loopback",
+              "controlUi": {
+                "dangerouslyAllowHostHeaderOriginFallback": true
+              },
+              "auth": {
+                "mode": "token"
+              },
+              "tools": {
+                "allow": [
+                  "sessions_spawn",
+                  "sessions_send",
+                  "session_status",
+                  "group:openclaw"
+                ]
+              },
+              "tailscale": {
+                "mode": "off"
+              }
+            },
+            "plugins": {
+              "entries": {
+                "acpx": {
+                  "enabled": true,
+                  "config": {
+                    "permissionMode": "approve-all"
+                  }
+                },
+                "openai": {
+                  "enabled": true
+                },
+                "codex": {
+                  "enabled": true
+                }
+              }
+            },
+            "messages": {
+              "groupChat": {
+                "visibleReplies": "automatic"
+              }
+            }
+          },
+          "litellm": {
+            "endpoint": "http://127.0.0.1:18081/v1",
+            "existingSecret": "openclaw-shared-secrets",
+            "existingSecretKey": "litellmApiKey"
+          },
+          "agent": {
+            "model": {
+              "primary": "openai/gpt-5.6-sol",
+              "fallbacks": [
+                "openai/gpt-5.5"
+              ]
+            }
+          }
+        },
+        "readonlyBindings": {
+          "modelRoute": {
+            "primary": "openai/gpt-5.6-sol",
+            "fallbacks": [
+              "openai/gpt-5.5"
+            ],
+            "sourceRef": "charts/kubeclaw/values.yaml#/agent/model (same existing Chart author; B explicit conditional selected branch proposal)"
+          },
+          "embedding": {
+            "providerRef": "original-registered-core.openai-compatible",
+            "modelCatalogueReceipt": "external-required",
+            "serviceSourceRef": "charts/kubeclaw/values.yaml#/litellm/endpoint; isolated future compatible-service fixture is not installed endpoint",
+            "credential": {
+              "authoritySourceRef": "my-values/buster-values.yaml#/litellm/existingSecret+existingSecretKey",
+              "locator": "kubernetes-secret:kubeclaw/openclaw-shared-secrets#litellmApiKey",
+              "revisionCapability": "requires-authentic-supported-original-revision-retention-or-block",
+              "originalRevisionReceipt": "external-required-not-fake-pin",
+              "accessGrantReceipt": "external-required",
+              "confidentialTransport": "original-authenticated-host-provider-to-native-resolved-runtime-snapshot-no-plaintext-config"
+            }
+          },
+          "installedRuntime": {
+            "version": "2026.9.5",
+            "nativePackageSourceReceipt": "npm archive1fb6ef4fae447af14f1e3b1028334f39146d181a66a4cce2848d4f741c636340; exact selected OCI bytes/source closure STILL external",
+            "actualImageEqualityReceipt": "external-required",
+            "agentOwnerReceipt": "external-required",
+            "harnessModelToolPluginGrantReceipt": "external-required"
+          },
+          "deployment": {
+            "role": "buster",
+            "instanceId": "agent-buster-gateway",
+            "namespace": "kubeclaw",
+            "gatewayPort": 18789,
+            "sourceRef": "my-values/buster-values.yaml +charts/kubeclaw/values.yaml; original authenticated role/instance/grant required"
+          },
+          "bootstrapContextRef": "managed-bootstrap-context.json#/contexts/A",
+          "originalRunAndRecoveryAuthority": "original-service/run/session/agent/model/source/trust/grants/credential-revision/deadline/cleanup; no latest or hot-M rebinding"
+        }
+      }
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-ENABLED/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-ENABLED/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/memory/search\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/memory/properties/search/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"enabled\"},\"message\":\"must have required property 'enabled'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-ENABLED/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-ENABLED/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/memory/search\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/memory/properties/search/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"enabled\"},\"message\":\"must have required property 'enabled'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-EXPERIMENTAL-SESSIONMEMORY/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-EXPERIMENTAL-SESSIONMEMORY/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/memory/search/experimental\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/memory/properties/search/properties/experimental/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"sessionMemory\"},\"message\":\"must have required property 'sessionMemory'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-EXPERIMENTAL-SESSIONMEMORY/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-EXPERIMENTAL-SESSIONMEMORY/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/memory/search/experimental\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/memory/properties/search/properties/experimental/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"sessionMemory\"},\"message\":\"must have required property 'sessionMemory'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-SOURCES/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-SOURCES/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/memory/search\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/memory/properties/search/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"sources\"},\"message\":\"must have required property 'sources'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-SOURCES/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-SOURCES/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/memory/search\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/memory/properties/search/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"sources\"},\"message\":\"must have required property 'sources'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-PROVIDER/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-PROVIDER/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/memory/search\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/memory/properties/search/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"provider\"},\"message\":\"must have required property 'provider'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-PROVIDER/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-PROVIDER/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/memory/search\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/memory/properties/search/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"provider\"},\"message\":\"must have required property 'provider'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-BASEURL/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-BASEURL/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/memory/search/remote\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/memory/properties/search/properties/remote/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"baseUrl\"},\"message\":\"must have required property 'baseUrl'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-BASEURL/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-BASEURL/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/memory/search/remote\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/memory/properties/search/properties/remote/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"baseUrl\"},\"message\":\"must have required property 'baseUrl'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-SOURCE/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-SOURCE/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/memory/search/remote/apiKey\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/memory/properties/search/properties/remote/properties/apiKey/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"source\"},\"message\":\"must have required property 'source'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-SOURCE/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-SOURCE/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/memory/search/remote/apiKey\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/memory/properties/search/properties/remote/properties/apiKey/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"source\"},\"message\":\"must have required property 'source'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-PROVIDER/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-PROVIDER/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/memory/search/remote/apiKey\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/memory/properties/search/properties/remote/properties/apiKey/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"provider\"},\"message\":\"must have required property 'provider'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-PROVIDER/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-PROVIDER/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/memory/search/remote/apiKey\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/memory/properties/search/properties/remote/properties/apiKey/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"provider\"},\"message\":\"must have required property 'provider'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-ID/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-ID/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/memory/search/remote/apiKey\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/memory/properties/search/properties/remote/properties/apiKey/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"id\"},\"message\":\"must have required property 'id'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-ID/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-ID/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/memory/search/remote/apiKey\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/memory/properties/search/properties/remote/properties/apiKey/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"id\"},\"message\":\"must have required property 'id'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-MODEL/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-MODEL/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/memory/search\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/memory/properties/search/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"model\"},\"message\":\"must have required property 'model'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-MODEL/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-MODEL/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/memory/search\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/memory/properties/search/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"model\"},\"message\":\"must have required property 'model'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-THINKINGDEFAULT/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-THINKINGDEFAULT/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"thinkingDefault\"},\"message\":\"must have required property 'thinkingDefault'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-THINKINGDEFAULT/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-THINKINGDEFAULT/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"thinkingDefault\"},\"message\":\"must have required property 'thinkingDefault'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-REASONINGDEFAULT/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-REASONINGDEFAULT/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"reasoningDefault\"},\"message\":\"must have required property 'reasoningDefault'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-REASONINGDEFAULT/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-REASONINGDEFAULT/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"reasoningDefault\"},\"message\":\"must have required property 'reasoningDefault'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELPOLICY-ALLOW/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELPOLICY-ALLOW/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults/modelPolicy\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/properties/modelPolicy/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"allow\"},\"message\":\"must have required property 'allow'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELPOLICY-ALLOW/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELPOLICY-ALLOW/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults/modelPolicy\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/properties/modelPolicy/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"allow\"},\"message\":\"must have required property 'allow'\"}]"
+    },
+    {
+      "name": "honest conditional/unused omission DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-6-ASTRA-AGENTRUNTIME-ID/A",
+      "pass": true
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-6-ASTRA-AGENTRUNTIME-ID/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-6-ASTRA-AGENTRUNTIME-ID/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults/models/openai~1gpt-6-astra/agentRuntime\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/properties/models/properties/openai~1gpt-6-astra/properties/agentRuntime/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"id\"},\"message\":\"must have required property 'id'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-6-SOL-AGENTRUNTIME-ID/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-6-SOL-AGENTRUNTIME-ID/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults/models/openai~1gpt-5.6-sol/agentRuntime\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/properties/models/properties/openai~1gpt-5.6-sol/properties/agentRuntime/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"id\"},\"message\":\"must have required property 'id'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-6-SOL-AGENTRUNTIME-ID/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-6-SOL-AGENTRUNTIME-ID/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults/models/openai~1gpt-5.6-sol/agentRuntime\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/properties/models/properties/openai~1gpt-5.6-sol/properties/agentRuntime/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"id\"},\"message\":\"must have required property 'id'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-5-AGENTRUNTIME-ID/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-5-AGENTRUNTIME-ID/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults/models/openai~1gpt-5.5/agentRuntime\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/properties/models/properties/openai~1gpt-5.5/properties/agentRuntime/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"id\"},\"message\":\"must have required property 'id'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-5-AGENTRUNTIME-ID/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-5-AGENTRUNTIME-ID/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults/models/openai~1gpt-5.5/agentRuntime\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/properties/models/properties/openai~1gpt-5.5/properties/agentRuntime/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"id\"},\"message\":\"must have required property 'id'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-WORKSPACE/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-WORKSPACE/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"workspace\"},\"message\":\"must have required property 'workspace'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-WORKSPACE/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-WORKSPACE/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"workspace\"},\"message\":\"must have required property 'workspace'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-EMBEDDEDAGENT-EXECUTIONCONTRACT/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-EMBEDDEDAGENT-EXECUTIONCONTRACT/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults/embeddedAgent\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/properties/embeddedAgent/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"executionContract\"},\"message\":\"must have required property 'executionContract'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-EMBEDDEDAGENT-EXECUTIONCONTRACT/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-EMBEDDEDAGENT-EXECUTIONCONTRACT/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults/embeddedAgent\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/properties/embeddedAgent/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"executionContract\"},\"message\":\"must have required property 'executionContract'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-MODE/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-MODE/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults/contextPruning\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/properties/contextPruning/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"mode\"},\"message\":\"must have required property 'mode'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-MODE/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-MODE/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults/contextPruning\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/properties/contextPruning/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"mode\"},\"message\":\"must have required property 'mode'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-TTL/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-TTL/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults/contextPruning\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/properties/contextPruning/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"ttl\"},\"message\":\"must have required property 'ttl'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-TTL/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-TTL/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults/contextPruning\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/properties/contextPruning/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"ttl\"},\"message\":\"must have required property 'ttl'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MODE/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MODE/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults/compaction\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/properties/compaction/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"mode\"},\"message\":\"must have required property 'mode'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MODE/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MODE/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults/compaction\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/properties/compaction/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"mode\"},\"message\":\"must have required property 'mode'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-KEEPRECENTTOKENS/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-KEEPRECENTTOKENS/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults/compaction\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/properties/compaction/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"keepRecentTokens\"},\"message\":\"must have required property 'keepRecentTokens'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-KEEPRECENTTOKENS/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-KEEPRECENTTOKENS/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults/compaction\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/properties/compaction/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"keepRecentTokens\"},\"message\":\"must have required property 'keepRecentTokens'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MEMORYFLUSH-ENABLED/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MEMORYFLUSH-ENABLED/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults/compaction/memoryFlush\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/properties/compaction/properties/memoryFlush/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"enabled\"},\"message\":\"must have required property 'enabled'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MEMORYFLUSH-ENABLED/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MEMORYFLUSH-ENABLED/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults/compaction/memoryFlush\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/properties/compaction/properties/memoryFlush/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"enabled\"},\"message\":\"must have required property 'enabled'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXCONCURRENT/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXCONCURRENT/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults/subagents\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/properties/subagents/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"maxConcurrent\"},\"message\":\"must have required property 'maxConcurrent'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXCONCURRENT/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXCONCURRENT/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults/subagents\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/properties/subagents/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"maxConcurrent\"},\"message\":\"must have required property 'maxConcurrent'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-ARCHIVEAFTERMINUTES/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-ARCHIVEAFTERMINUTES/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults/subagents\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/properties/subagents/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"archiveAfterMinutes\"},\"message\":\"must have required property 'archiveAfterMinutes'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-ARCHIVEAFTERMINUTES/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-ARCHIVEAFTERMINUTES/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults/subagents\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/properties/subagents/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"archiveAfterMinutes\"},\"message\":\"must have required property 'archiveAfterMinutes'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-RUNTIMEOUTSECONDS/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-RUNTIMEOUTSECONDS/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults/subagents\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/properties/subagents/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"runTimeoutSeconds\"},\"message\":\"must have required property 'runTimeoutSeconds'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-RUNTIMEOUTSECONDS/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-RUNTIMEOUTSECONDS/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults/subagents\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/properties/subagents/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"runTimeoutSeconds\"},\"message\":\"must have required property 'runTimeoutSeconds'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXSPAWNDEPTH/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXSPAWNDEPTH/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults/subagents\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/properties/subagents/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"maxSpawnDepth\"},\"message\":\"must have required property 'maxSpawnDepth'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXSPAWNDEPTH/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXSPAWNDEPTH/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults/subagents\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/properties/subagents/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"maxSpawnDepth\"},\"message\":\"must have required property 'maxSpawnDepth'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTINJECTION/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTINJECTION/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"contextInjection\"},\"message\":\"must have required property 'contextInjection'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTINJECTION/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTINJECTION/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"contextInjection\"},\"message\":\"must have required property 'contextInjection'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SUBAGENTS-ALLOWAGENTS/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SUBAGENTS-ALLOWAGENTS/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/entries/main/subagents\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/entries/properties/main/properties/subagents/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"allowAgents\"},\"message\":\"must have required property 'allowAgents'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SUBAGENTS-ALLOWAGENTS/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SUBAGENTS-ALLOWAGENTS/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/entries/main/subagents\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/entries/properties/main/properties/subagents/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"allowAgents\"},\"message\":\"must have required property 'allowAgents'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLS/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLS/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/entries/main\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/entries/properties/main/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"skills\"},\"message\":\"must have required property 'skills'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLS/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLS/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/entries/main\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/entries/properties/main/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"skills\"},\"message\":\"must have required property 'skills'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLSLIMITS-MAXSKILLSPROMPTCHARS/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLSLIMITS-MAXSKILLSPROMPTCHARS/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/entries/main/skillsLimits\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/entries/properties/main/properties/skillsLimits/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"maxSkillsPromptChars\"},\"message\":\"must have required property 'maxSkillsPromptChars'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLSLIMITS-MAXSKILLSPROMPTCHARS/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLSLIMITS-MAXSKILLSPROMPTCHARS/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/entries/main/skillsLimits\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/entries/properties/main/properties/skillsLimits/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"maxSkillsPromptChars\"},\"message\":\"must have required property 'maxSkillsPromptChars'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-ACP-ENABLED/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-ACP-ENABLED/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/acp\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/acp/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"enabled\"},\"message\":\"must have required property 'enabled'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-ACP-ENABLED/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-ACP-ENABLED/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/acp\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/acp/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"enabled\"},\"message\":\"must have required property 'enabled'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-ACP-BACKEND/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-ACP-BACKEND/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/acp\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/acp/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"backend\"},\"message\":\"must have required property 'backend'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-ACP-BACKEND/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-ACP-BACKEND/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/acp\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/acp/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"backend\"},\"message\":\"must have required property 'backend'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-ACP-DEFAULTAGENT/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-ACP-DEFAULTAGENT/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/acp\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/acp/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"defaultAgent\"},\"message\":\"must have required property 'defaultAgent'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-ACP-DEFAULTAGENT/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-ACP-DEFAULTAGENT/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/acp\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/acp/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"defaultAgent\"},\"message\":\"must have required property 'defaultAgent'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-ACP-ALLOWEDAGENTS/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-ACP-ALLOWEDAGENTS/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/acp\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/acp/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"allowedAgents\"},\"message\":\"must have required property 'allowedAgents'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-ACP-ALLOWEDAGENTS/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-ACP-ALLOWEDAGENTS/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/acp\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/acp/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"allowedAgents\"},\"message\":\"must have required property 'allowedAgents'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-TOOLS-PROFILE/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-TOOLS-PROFILE/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/tools\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/tools/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"profile\"},\"message\":\"must have required property 'profile'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-TOOLS-PROFILE/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-TOOLS-PROFILE/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/tools\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/tools/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"profile\"},\"message\":\"must have required property 'profile'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-VISIBILITY/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-VISIBILITY/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/tools/sessions\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/tools/properties/sessions/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"visibility\"},\"message\":\"must have required property 'visibility'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-VISIBILITY/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-VISIBILITY/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/tools/sessions\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/tools/properties/sessions/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"visibility\"},\"message\":\"must have required property 'visibility'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-SPAWN-ATTACHMENTS-ENABLED/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-SPAWN-ATTACHMENTS-ENABLED/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/tools/sessions_spawn/attachments\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/tools/properties/sessions_spawn/properties/attachments/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"enabled\"},\"message\":\"must have required property 'enabled'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-SPAWN-ATTACHMENTS-ENABLED/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-SPAWN-ATTACHMENTS-ENABLED/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/tools/sessions_spawn/attachments\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/tools/properties/sessions_spawn/properties/attachments/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"enabled\"},\"message\":\"must have required property 'enabled'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-TIMEOUTSECONDS/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-TIMEOUTSECONDS/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/tools/exec\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/tools/properties/exec/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"timeoutSeconds\"},\"message\":\"must have required property 'timeoutSeconds'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-TIMEOUTSECONDS/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-TIMEOUTSECONDS/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/tools/exec\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/tools/properties/exec/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"timeoutSeconds\"},\"message\":\"must have required property 'timeoutSeconds'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-MODE/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-MODE/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/tools/exec\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/tools/properties/exec/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"mode\"},\"message\":\"must have required property 'mode'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-MODE/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-MODE/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/tools/exec\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/tools/properties/exec/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"mode\"},\"message\":\"must have required property 'mode'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-TOOLS-AGENTTOAGENT-ENABLED/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-TOOLS-AGENTTOAGENT-ENABLED/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/tools/agentToAgent\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/tools/properties/agentToAgent/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"enabled\"},\"message\":\"must have required property 'enabled'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-TOOLS-AGENTTOAGENT-ENABLED/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-TOOLS-AGENTTOAGENT-ENABLED/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/tools/agentToAgent\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/tools/properties/agentToAgent/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"enabled\"},\"message\":\"must have required property 'enabled'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVE/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVE/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/commands\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/commands/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"native\"},\"message\":\"must have required property 'native'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVE/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVE/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/commands\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/commands/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"native\"},\"message\":\"must have required property 'native'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVESKILLS/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVESKILLS/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/commands\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/commands/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"nativeSkills\"},\"message\":\"must have required property 'nativeSkills'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVESKILLS/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVESKILLS/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/commands\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/commands/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"nativeSkills\"},\"message\":\"must have required property 'nativeSkills'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-COMMANDS-RESTART/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-COMMANDS-RESTART/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/commands\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/commands/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"restart\"},\"message\":\"must have required property 'restart'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-COMMANDS-RESTART/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-COMMANDS-RESTART/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/commands\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/commands/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"restart\"},\"message\":\"must have required property 'restart'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-SESSION-DMSCOPE/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-SESSION-DMSCOPE/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/session\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/session/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"dmScope\"},\"message\":\"must have required property 'dmScope'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-SESSION-DMSCOPE/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-SESSION-DMSCOPE/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/session\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/session/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"dmScope\"},\"message\":\"must have required property 'dmScope'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-MODE/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-MODE/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/session/resetByType/group\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/session/properties/resetByType/properties/group/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"mode\"},\"message\":\"must have required property 'mode'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-MODE/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-MODE/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/session/resetByType/group\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/session/properties/resetByType/properties/group/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"mode\"},\"message\":\"must have required property 'mode'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-IDLEMINUTES/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-IDLEMINUTES/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/session/resetByType/group\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/session/properties/resetByType/properties/group/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"idleMinutes\"},\"message\":\"must have required property 'idleMinutes'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-IDLEMINUTES/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-IDLEMINUTES/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/session/resetByType/group\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/session/properties/resetByType/properties/group/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"idleMinutes\"},\"message\":\"must have required property 'idleMinutes'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-ENABLED/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-ENABLED/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/session/threadBindings\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/session/properties/threadBindings/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"enabled\"},\"message\":\"must have required property 'enabled'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-ENABLED/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-ENABLED/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/session/threadBindings\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/session/properties/threadBindings/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"enabled\"},\"message\":\"must have required property 'enabled'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-IDLEHOURS/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-IDLEHOURS/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/session/threadBindings\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/session/properties/threadBindings/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"idleHours\"},\"message\":\"must have required property 'idleHours'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-IDLEHOURS/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-IDLEHOURS/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/session/threadBindings\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/session/properties/threadBindings/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"idleHours\"},\"message\":\"must have required property 'idleHours'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-MAXAGEHOURS/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-MAXAGEHOURS/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/session/threadBindings\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/session/properties/threadBindings/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"maxAgeHours\"},\"message\":\"must have required property 'maxAgeHours'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-MAXAGEHOURS/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-MAXAGEHOURS/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/session/threadBindings\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/session/properties/threadBindings/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"maxAgeHours\"},\"message\":\"must have required property 'maxAgeHours'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GROUPPOLICY/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GROUPPOLICY/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/channels/discord\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/channels/properties/discord/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"groupPolicy\"},\"message\":\"must have required property 'groupPolicy'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GROUPPOLICY/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GROUPPOLICY/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/channels/discord\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/channels/properties/discord/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"groupPolicy\"},\"message\":\"must have required property 'groupPolicy'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-STREAMING-MODE/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-STREAMING-MODE/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/channels/discord/streaming\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/channels/properties/discord/properties/streaming/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"mode\"},\"message\":\"must have required property 'mode'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-STREAMING-MODE/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-STREAMING-MODE/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/channels/discord/streaming\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/channels/properties/discord/properties/streaming/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"mode\"},\"message\":\"must have required property 'mode'\"}]"
+    },
+    {
+      "name": "honest conditional/unused omission DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-INBOUNDWORKER-RUNTIMEOUTMS/A",
+      "pass": true
+    },
+    {
+      "name": "honest conditional/unused omission DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-INBOUNDWORKER-RUNTIMEOUTMS/B",
+      "pass": true
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GUILDS-REQUIREMENTION/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GUILDS-REQUIREMENTION/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/channels/discord/guilds/*\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/channels/properties/discord/properties/guilds/properties/*/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"requireMention\"},\"message\":\"must have required property 'requireMention'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GUILDS-REQUIREMENTION/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GUILDS-REQUIREMENTION/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/channels/discord/guilds/*\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/channels/properties/discord/properties/guilds/properties/*/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"requireMention\"},\"message\":\"must have required property 'requireMention'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-ENABLED/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-ENABLED/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/channels/discord/threadBindings\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/channels/properties/discord/properties/threadBindings/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"enabled\"},\"message\":\"must have required property 'enabled'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-ENABLED/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-ENABLED/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/channels/discord/threadBindings\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/channels/properties/discord/properties/threadBindings/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"enabled\"},\"message\":\"must have required property 'enabled'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-IDLEHOURS/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-IDLEHOURS/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/channels/discord/threadBindings\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/channels/properties/discord/properties/threadBindings/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"idleHours\"},\"message\":\"must have required property 'idleHours'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-IDLEHOURS/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-IDLEHOURS/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/channels/discord/threadBindings\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/channels/properties/discord/properties/threadBindings/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"idleHours\"},\"message\":\"must have required property 'idleHours'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-SPAWNSESSIONS/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-SPAWNSESSIONS/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/channels/discord/threadBindings\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/channels/properties/discord/properties/threadBindings/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"spawnSessions\"},\"message\":\"must have required property 'spawnSessions'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-SPAWNSESSIONS/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-SPAWNSESSIONS/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/channels/discord/threadBindings\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/channels/properties/discord/properties/threadBindings/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"spawnSessions\"},\"message\":\"must have required property 'spawnSessions'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-ENABLED/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-ENABLED/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/channels/discord/execApprovals\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/channels/properties/discord/properties/execApprovals/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"enabled\"},\"message\":\"must have required property 'enabled'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-ENABLED/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-ENABLED/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/channels/discord/execApprovals\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/channels/properties/discord/properties/execApprovals/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"enabled\"},\"message\":\"must have required property 'enabled'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-TARGET/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-TARGET/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/channels/discord/execApprovals\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/channels/properties/discord/properties/execApprovals/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"target\"},\"message\":\"must have required property 'target'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-TARGET/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-TARGET/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/channels/discord/execApprovals\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/channels/properties/discord/properties/execApprovals/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"target\"},\"message\":\"must have required property 'target'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-GATEWAY-MODE/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-GATEWAY-MODE/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/gateway\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/gateway/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"mode\"},\"message\":\"must have required property 'mode'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-GATEWAY-MODE/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-GATEWAY-MODE/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/gateway\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/gateway/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"mode\"},\"message\":\"must have required property 'mode'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-GATEWAY-BIND/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-GATEWAY-BIND/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/gateway\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/gateway/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"bind\"},\"message\":\"must have required property 'bind'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-GATEWAY-BIND/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-GATEWAY-BIND/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/gateway\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/gateway/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"bind\"},\"message\":\"must have required property 'bind'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-GATEWAY-CONTROLUI-DANGEROUSLYALLOWHOSTHEADERORIGINFALLBACK/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-GATEWAY-CONTROLUI-DANGEROUSLYALLOWHOSTHEADERORIGINFALLBACK/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/gateway/controlUi\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/gateway/properties/controlUi/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"dangerouslyAllowHostHeaderOriginFallback\"},\"message\":\"must have required property 'dangerouslyAllowHostHeaderOriginFallback'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-GATEWAY-CONTROLUI-DANGEROUSLYALLOWHOSTHEADERORIGINFALLBACK/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-GATEWAY-CONTROLUI-DANGEROUSLYALLOWHOSTHEADERORIGINFALLBACK/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/gateway/controlUi\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/gateway/properties/controlUi/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"dangerouslyAllowHostHeaderOriginFallback\"},\"message\":\"must have required property 'dangerouslyAllowHostHeaderOriginFallback'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-GATEWAY-AUTH-MODE/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-GATEWAY-AUTH-MODE/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/gateway/auth\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/gateway/properties/auth/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"mode\"},\"message\":\"must have required property 'mode'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-GATEWAY-AUTH-MODE/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-GATEWAY-AUTH-MODE/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/gateway/auth\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/gateway/properties/auth/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"mode\"},\"message\":\"must have required property 'mode'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-GATEWAY-TOOLS-ALLOW/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-GATEWAY-TOOLS-ALLOW/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/gateway/tools\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/gateway/properties/tools/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"allow\"},\"message\":\"must have required property 'allow'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-GATEWAY-TOOLS-ALLOW/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-GATEWAY-TOOLS-ALLOW/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/gateway/tools\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/gateway/properties/tools/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"allow\"},\"message\":\"must have required property 'allow'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-GATEWAY-TAILSCALE-MODE/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-GATEWAY-TAILSCALE-MODE/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/gateway/tailscale\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/gateway/properties/tailscale/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"mode\"},\"message\":\"must have required property 'mode'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-GATEWAY-TAILSCALE-MODE/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-GATEWAY-TAILSCALE-MODE/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/gateway/tailscale\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/gateway/properties/tailscale/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"mode\"},\"message\":\"must have required property 'mode'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-ENABLED/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-ENABLED/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/plugins/entries/acpx\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/plugins/properties/entries/properties/acpx/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"enabled\"},\"message\":\"must have required property 'enabled'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-ENABLED/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-ENABLED/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/plugins/entries/acpx\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/plugins/properties/entries/properties/acpx/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"enabled\"},\"message\":\"must have required property 'enabled'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-CONFIG-PERMISSIONMODE/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-CONFIG-PERMISSIONMODE/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/plugins/entries/acpx/config\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/plugins/properties/entries/properties/acpx/properties/config/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"permissionMode\"},\"message\":\"must have required property 'permissionMode'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-CONFIG-PERMISSIONMODE/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-CONFIG-PERMISSIONMODE/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/plugins/entries/acpx/config\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/plugins/properties/entries/properties/acpx/properties/config/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"permissionMode\"},\"message\":\"must have required property 'permissionMode'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-OPENAI-ENABLED/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-OPENAI-ENABLED/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/plugins/entries/openai\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/plugins/properties/entries/properties/openai/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"enabled\"},\"message\":\"must have required property 'enabled'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-OPENAI-ENABLED/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-OPENAI-ENABLED/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/plugins/entries/openai\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/plugins/properties/entries/properties/openai/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"enabled\"},\"message\":\"must have required property 'enabled'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-CODEX-ENABLED/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-CODEX-ENABLED/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/plugins/entries/codex\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/plugins/properties/entries/properties/codex/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"enabled\"},\"message\":\"must have required property 'enabled'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-CODEX-ENABLED/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-CODEX-ENABLED/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/plugins/entries/codex\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/plugins/properties/entries/properties/codex/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"enabled\"},\"message\":\"must have required property 'enabled'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-MESSAGES-GROUPCHAT-VISIBLEREPLIES/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-MESSAGES-GROUPCHAT-VISIBLEREPLIES/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/messages/groupChat\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/messages/properties/groupChat/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"visibleReplies\"},\"message\":\"must have required property 'visibleReplies'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-GATEWAY-OPENCLAW-MESSAGES-GROUPCHAT-VISIBLEREPLIES/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-GATEWAY-OPENCLAW-MESSAGES-GROUPCHAT-VISIBLEREPLIES/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/messages/groupChat\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/messages/properties/groupChat/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"visibleReplies\"},\"message\":\"must have required property 'visibleReplies'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-NATIVE-OPENCLAW-AGENTS-DEFAULTS-TIMEOUTSECONDS/A",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-NATIVE-OPENCLAW-AGENTS-DEFAULTS-TIMEOUTSECONDS/A",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"timeoutSeconds\"},\"message\":\"must have required property 'timeoutSeconds'\"}]"
+    },
+    {
+      "name": "exact receiving+same-author node DLV-NATIVE-OPENCLAW-AGENTS-DEFAULTS-TIMEOUTSECONDS/B",
+      "pass": true
+    },
+    {
+      "name": "required missing leaf DLV-NATIVE-OPENCLAW-AGENTS-DEFAULTS-TIMEOUTSECONDS/B",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/agents/defaults\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/agents/properties/defaults/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"timeoutSeconds\"},\"message\":\"must have required property 'timeoutSeconds'\"}]"
+    },
+    {
+      "name": "wrong role/caller rejected",
+      "pass": true,
+      "error": "WRONG_ROLE_ORIGINAL_CALLER"
+    },
+    {
+      "name": "wrong selected author path",
+      "pass": true,
+      "error": "WRONG_OWNER_PATH"
+    },
+    {
+      "name": "missing profile selector",
+      "pass": true,
+      "error": "MISSING_PROFILE"
+    },
+    {
+      "name": "old author/equal override GATEWAY_PORT",
+      "pass": true,
+      "error": "OLD_ENV_CLI_PVC_EQUAL_OVERRIDE_REJECTED"
+    },
+    {
+      "name": "old author/equal override --bind",
+      "pass": true,
+      "error": "OLD_ENV_CLI_PVC_EQUAL_OVERRIDE_REJECTED"
+    },
+    {
+      "name": "old author/equal override --allow-unconfigured",
+      "pass": true,
+      "error": "OLD_ENV_CLI_PVC_EQUAL_OVERRIDE_REJECTED"
+    },
+    {
+      "name": "old author/equal override /config/openclaw.json",
+      "pass": true,
+      "error": "OLD_ENV_CLI_PVC_EQUAL_OVERRIDE_REJECTED"
+    },
+    {
+      "name": "old author/equal override LITELLM_API_KEY-CONFIG_OVERRIDE",
+      "pass": true,
+      "error": "OLD_ENV_CLI_PVC_EQUAL_OVERRIDE_REJECTED"
+    },
+    {
+      "name": "unknown/inline secret key rejects",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/memory/search/remote/apiKey\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/memory/properties/search/properties/remote/properties/apiKey/additionalProperties\",\"keyword\":\"additionalProperties\",\"params\":{\"additionalProperty\":\"secret\"},\"message\":\"must NOT have additional properties\"}]"
+    },
+    {
+      "name": "missing external provider alias rejects before native secret read",
+      "pass": true,
+      "error": "SECRET_PROVIDER_SOURCE_MISMATCH"
+    },
+    {
+      "name": "wrong env SecretRef id rejects",
+      "pass": true,
+      "error": "SECRET_ID_DOMAIN"
+    },
+    {
+      "name": "declared-unused inboundWorker never materializes",
+      "pass": true,
+      "error": "PROFILE_SCHEMA:[{\"instancePath\":\"/managedOpenClaw/channels/discord\",\"schemaPath\":\"#/properties/managedOpenClaw/properties/channels/properties/discord/additionalProperties\",\"keyword\":\"additionalProperties\",\"params\":{\"additionalProperty\":\"inboundWorker\"},\"message\":\"must NOT have additional properties\"}]"
+    },
+    {
+      "name": "unselected whole author required field rejected",
+      "pass": true,
+      "error": "OWNER_SCHEMA:[{\"instancePath\":\"/profiles/local-B/settings/gatewayOpenClaw/tools/exec\",\"schemaPath\":\"#/properties/profiles/additionalProperties/properties/settings/properties/gatewayOpenClaw/properties/tools/properties/exec/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"timeoutSeconds\"},\"message\":\"must have required property 'timeoutSeconds'\"}]"
+    },
+    {
+      "name": "actual managed startup JS source-only memory triple restoration and gateway nonrefresh",
+      "pass": true,
+      "detail": {
+        "sourceCutSha256": "f34d1ffe11783e7a6b4a4febc37ad4884342e66991f03d4708d416e6e8378fcf",
+        "mode": "in-memory fs shim only; no filesystem/native config/credential write",
+        "currentCounterexamples": [
+          "hardcoded env/default/LITELLM_API_KEY replaces file tuple",
+          "gateway port and thinking default remain persisted; managed full69 loader NOT present"
+        ]
+      }
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-ENABLED/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema.agent-runtime-DQfiImgc.mjs:30",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-ENABLED/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/memory-search-DlNwNH1y.mjs:42",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-EXPERIMENTAL-SESSIONMEMORY/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema.agent-runtime-DQfiImgc.mjs:30",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-EXPERIMENTAL-SESSIONMEMORY/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/memory-search-DlNwNH1y.mjs:42",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-EXPERIMENTAL-SESSIONMEMORY/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/memory-search-source-policy-B3S1qyBP.mjs:1",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-SOURCES/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema.agent-runtime-DQfiImgc.mjs:30",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-SOURCES/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/memory-search-DlNwNH1y.mjs:42",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-SOURCES/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/memory-search-source-policy-B3S1qyBP.mjs:1",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-PROVIDER/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema.agent-runtime-DQfiImgc.mjs:30",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-PROVIDER/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/memory-search-DlNwNH1y.mjs:42",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-PROVIDER/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/gateway-startup-plugin-config-DS9I_vc_.mjs:245",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-BASEURL/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema.agent-runtime-DQfiImgc.mjs:30",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-BASEURL/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/memory-search-DlNwNH1y.mjs:42",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-BASEURL/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/gateway-startup-plugin-config-DS9I_vc_.mjs:98",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-BASEURL/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/gateway-startup-plugin-config-DS9I_vc_.mjs:245",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-SOURCE/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema.core-CZ0zDyHR.mjs:122",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-SOURCE/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/secret-input-CUYoxLQo.mjs:4",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-SOURCE/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/gateway-startup-plugin-config-DS9I_vc_.mjs:245",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-PROVIDER/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema.core-CZ0zDyHR.mjs:122",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-PROVIDER/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/secret-input-CUYoxLQo.mjs:4",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-PROVIDER/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/gateway-startup-plugin-config-DS9I_vc_.mjs:245",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-ID/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema.core-CZ0zDyHR.mjs:122",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-ID/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/secret-input-CUYoxLQo.mjs:4",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-ID/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/gateway-startup-plugin-config-DS9I_vc_.mjs:245",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-MODEL/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema.agent-runtime-DQfiImgc.mjs:30",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-MODEL/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/memory-search-DlNwNH1y.mjs:42",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-MODEL/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/gateway-startup-plugin-config-DS9I_vc_.mjs:98",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-MODEL/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/gateway-startup-plugin-config-DS9I_vc_.mjs:245",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-THINKINGDEFAULT/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-THINKINGDEFAULT/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/get-reply-DN4OcavF.mjs:1965",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-THINKINGDEFAULT/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/model-thinking-default-BWHuh9PM.mjs:5",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-THINKINGDEFAULT/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/thinking-runtime-nyXcYFng.mjs:32",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-REASONINGDEFAULT/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-REASONINGDEFAULT/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/get-reply-DN4OcavF.mjs:1965",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELPOLICY-ALLOW/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema.agent-runtime-DQfiImgc.mjs:30",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELPOLICY-ALLOW/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/validation-core-Deo_OniF.mjs:1267",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELPOLICY-ALLOW/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/validation-core-Deo_OniF.mjs:1370",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELPOLICY-ALLOW/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/model-selection-shared-BVpjol2x.mjs:1146",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-6-ASTRA-AGENTRUNTIME-ID/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema.agent-runtime-DQfiImgc.mjs:30",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-6-ASTRA-AGENTRUNTIME-ID/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/model-runtime-policy-BLaXzaLP.mjs:68",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-6-ASTRA-AGENTRUNTIME-ID/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/thinking-runtime-nyXcYFng.mjs:32",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-6-SOL-AGENTRUNTIME-ID/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema.agent-runtime-DQfiImgc.mjs:30",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-6-SOL-AGENTRUNTIME-ID/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/model-runtime-policy-BLaXzaLP.mjs:68",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-6-SOL-AGENTRUNTIME-ID/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/thinking-runtime-nyXcYFng.mjs:32",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-5-AGENTRUNTIME-ID/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema.agent-runtime-DQfiImgc.mjs:30",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-5-AGENTRUNTIME-ID/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/model-runtime-policy-BLaXzaLP.mjs:68",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-5-AGENTRUNTIME-ID/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/thinking-runtime-nyXcYFng.mjs:32",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-WORKSPACE/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-WORKSPACE/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/agent-scope-config-D2MQzbc-.mjs:367",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-EMBEDDEDAGENT-EXECUTIONCONTRACT/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-EMBEDDEDAGENT-EXECUTIONCONTRACT/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/builtin-openclaw-C7-lQJ2Z.mjs:7705",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-MODE/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-MODE/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/tool-result-truncation-CS-9YGQx.mjs:542",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-MODE/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/builtin-openclaw-C7-lQJ2Z.mjs:1332",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-TTL/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-TTL/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/tool-result-truncation-CS-9YGQx.mjs:542",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-TTL/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/builtin-openclaw-C7-lQJ2Z.mjs:1332",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MODE/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MODE/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/agent-settings-er47wg1i.mjs:5",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-KEEPRECENTTOKENS/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-KEEPRECENTTOKENS/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/agent-settings-er47wg1i.mjs:5",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-KEEPRECENTTOKENS/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/compaction-DNVKIk6g.mjs:536",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MEMORYFLUSH-ENABLED/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MEMORYFLUSH-ENABLED/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/extensions/memory-core/index.js:656",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXCONCURRENT/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXCONCURRENT/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/validation-core-Deo_OniF.mjs:153",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-ARCHIVEAFTERMINUTES/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-ARCHIVEAFTERMINUTES/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/subagent-completion-admission.store-n_o95th3.mjs:660",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-RUNTIMEOUTSECONDS/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-RUNTIMEOUTSECONDS/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/subagent-spawn-ownership-C6ceClEw.mjs:526",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXSPAWNDEPTH/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXSPAWNDEPTH/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/subagent-spawn-ownership-C6ceClEw.mjs:325",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTINJECTION/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTINJECTION/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/bootstrap-files-CWP6Usgv.mjs:57",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTINJECTION/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/builtin-openclaw-C7-lQJ2Z.mjs:1332",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SUBAGENTS-ALLOWAGENTS/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema.agent-runtime-DQfiImgc.mjs:30",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SUBAGENTS-ALLOWAGENTS/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/subagent-spawn-ownership-C6ceClEw.mjs:325",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLS/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema.agent-runtime-DQfiImgc.mjs:30",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLS/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/agent-filter-BEuhjVkZ.mjs:26",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLSLIMITS-MAXSKILLSPROMPTCHARS/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema.agent-runtime-DQfiImgc.mjs:30",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLSLIMITS-MAXSKILLSPROMPTCHARS/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/agent-filter-BEuhjVkZ.mjs:26",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLSLIMITS-MAXSKILLSPROMPTCHARS/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/workspace-skill-prompt-CMs-9K9B.mjs:14",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLSLIMITS-MAXSKILLSPROMPTCHARS/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/skill-prompt-limits-CwjetzV2.mjs:25",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-ACP-ENABLED/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-ACP-ENABLED/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/policy-BLZaTvGZ.mjs:6",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-ACP-ENABLED/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/acp-spawn-DBebUPRe.mjs:1059",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-ACP-BACKEND/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-ACP-BACKEND/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/acp-spawn-DBebUPRe.mjs:1059",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-ACP-DEFAULTAGENT/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-ACP-DEFAULTAGENT/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/acp-spawn-DBebUPRe.mjs:1059",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-ACP-ALLOWEDAGENTS/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-ACP-ALLOWEDAGENTS/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/policy-BLZaTvGZ.mjs:6",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-ACP-ALLOWEDAGENTS/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/acp-spawn-DBebUPRe.mjs:1059",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-TOOLS-PROFILE/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema.agent-runtime-DQfiImgc.mjs:30",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-TOOLS-PROFILE/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/tool-catalog-BAOwO8Un.mjs:485",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-TOOLS-PROFILE/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/tool-resolution-By0BnXxU.mjs:102",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-VISIBILITY/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema.agent-runtime-DQfiImgc.mjs:30",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-VISIBILITY/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/session-visibility-WczUxrIV.mjs:197",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-SPAWN-ATTACHMENTS-ENABLED/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema.agent-runtime-DQfiImgc.mjs:30",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-SPAWN-ATTACHMENTS-ENABLED/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/subagent-spawn-cleanup-wzjnU00p.mjs:99",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-TIMEOUTSECONDS/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema.agent-runtime-DQfiImgc.mjs:30",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-TIMEOUTSECONDS/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/agent-tools-lIZNv5a0.mjs:520",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-TIMEOUTSECONDS/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/exec-tool-timeout-Ber3V3yq.mjs:4",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-MODE/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema.agent-runtime-DQfiImgc.mjs:30",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-MODE/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/exec-approvals-core-BZ3ECkXD.mjs:53",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-MODE/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/exec-policy-D9ObJIoJ.mjs:4",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-MODE/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/agent-tools-lIZNv5a0.mjs:520",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-TOOLS-AGENTTOAGENT-ENABLED/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema.agent-runtime-DQfiImgc.mjs:30",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-TOOLS-AGENTTOAGENT-ENABLED/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/session-visibility-WczUxrIV.mjs:251",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-TOOLS-AGENTTOAGENT-ENABLED/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/session-visibility-WczUxrIV.mjs:197",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVE/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema.core-CZ0zDyHR.mjs:122",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVE/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVE/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/commands-bj0OwRJk.mjs:6",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVESKILLS/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema.core-CZ0zDyHR.mjs:122",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVESKILLS/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVESKILLS/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/commands-bj0OwRJk.mjs:6",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-COMMANDS-RESTART/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-COMMANDS-RESTART/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/commands.flags-BNJlVVgU.mjs:4",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-SESSION-DMSCOPE/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-SESSION-DMSCOPE/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/session-key-CPlMYURm.mjs:378",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-MODE/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-MODE/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/reset-policy-e-dYr0YY.mjs:11",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-IDLEMINUTES/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-IDLEMINUTES/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/reset-policy-e-dYr0YY.mjs:11",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-ENABLED/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-ENABLED/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/thread-bindings-policy-BnrYHQte.mjs:8",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-IDLEHOURS/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-IDLEHOURS/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/thread-bindings-policy-BnrYHQte.mjs:8",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-MAXAGEHOURS/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-MAXAGEHOURS/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/thread-bindings-policy-BnrYHQte.mjs:8",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GROUPPOLICY/docs/review/evidence/config-acceptance/delivery/pinned-discord-2026.9.5/dist/.setup/config-schema-CiZz-mtA.mjs:485",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GROUPPOLICY/docs/review/evidence/config-acceptance/delivery/pinned-discord-2026.9.5/dist/.setup/channel-type-DKnjV1XW.mjs:448",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GROUPPOLICY/docs/review/evidence/config-acceptance/delivery/pinned-discord-2026.9.5/dist/.setup/provider-72zIvN-i.mjs:10465",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-STREAMING-MODE/docs/review/evidence/config-acceptance/delivery/pinned-discord-2026.9.5/dist/.setup/config-schema-CiZz-mtA.mjs:485",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-STREAMING-MODE/docs/review/evidence/config-acceptance/delivery/pinned-discord-2026.9.5/dist/.setup/message-handler.process-Dz1xvuQU.mjs:954",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GUILDS-REQUIREMENTION/docs/review/evidence/config-acceptance/delivery/pinned-discord-2026.9.5/dist/.setup/config-schema-CiZz-mtA.mjs:485",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GUILDS-REQUIREMENTION/docs/review/evidence/config-acceptance/delivery/pinned-discord-2026.9.5/dist/.setup/channel-type-DKnjV1XW.mjs:448",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-ENABLED/docs/review/evidence/config-acceptance/delivery/pinned-discord-2026.9.5/dist/.setup/config-schema-CiZz-mtA.mjs:485",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-ENABLED/docs/review/evidence/config-acceptance/delivery/pinned-discord-2026.9.5/dist/.setup/provider-72zIvN-i.mjs:10465",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-ENABLED/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/thread-bindings-policy-BnrYHQte.mjs:8",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-IDLEHOURS/docs/review/evidence/config-acceptance/delivery/pinned-discord-2026.9.5/dist/.setup/config-schema-CiZz-mtA.mjs:485",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-IDLEHOURS/docs/review/evidence/config-acceptance/delivery/pinned-discord-2026.9.5/dist/.setup/thread-bindings-CK5272V3.mjs:13",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-IDLEHOURS/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/thread-bindings-policy-BnrYHQte.mjs:8",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-SPAWNSESSIONS/docs/review/evidence/config-acceptance/delivery/pinned-discord-2026.9.5/dist/.setup/config-schema-CiZz-mtA.mjs:485",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-SPAWNSESSIONS/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/thread-bindings-policy-BnrYHQte.mjs:8",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-SPAWNSESSIONS/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/acp-spawn-DBebUPRe.mjs:1059",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-ENABLED/docs/review/evidence/config-acceptance/delivery/pinned-discord-2026.9.5/dist/.setup/config-schema-CiZz-mtA.mjs:485",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-ENABLED/docs/review/evidence/config-acceptance/delivery/pinned-discord-2026.9.5/dist/.setup/outbound-session-route-CqWbuMOm.mjs:20",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-TARGET/docs/review/evidence/config-acceptance/delivery/pinned-discord-2026.9.5/dist/.setup/config-schema-CiZz-mtA.mjs:485",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-TARGET/docs/review/evidence/config-acceptance/delivery/pinned-discord-2026.9.5/dist/.setup/channel-ChKdlBgH.mjs:167",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-GATEWAY-MODE/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-GATEWAY-MODE/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/run-DjUt0Etp.mjs:1980",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-GATEWAY-BIND/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-GATEWAY-BIND/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/run-DjUt0Etp.mjs:1980",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-GATEWAY-BIND/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/server-runtime-config-CL6YtxdP.mjs:50",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-GATEWAY-CONTROLUI-DANGEROUSLYALLOWHOSTHEADERORIGINFALLBACK/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-GATEWAY-CONTROLUI-DANGEROUSLYALLOWHOSTHEADERORIGINFALLBACK/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/origin-check-UahNXagk.mjs:8",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-GATEWAY-CONTROLUI-DANGEROUSLYALLOWHOSTHEADERORIGINFALLBACK/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/server-runtime-config-CL6YtxdP.mjs:50",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-GATEWAY-AUTH-MODE/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-GATEWAY-AUTH-MODE/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/server-runtime-config-CL6YtxdP.mjs:50",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-GATEWAY-AUTH-MODE/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/run-DjUt0Etp.mjs:1980",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-GATEWAY-TOOLS-ALLOW/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-GATEWAY-TOOLS-ALLOW/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/tool-resolution-By0BnXxU.mjs:102",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-GATEWAY-TOOLS-ALLOW/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/tools-invoke-shared-CtoD60xj.mjs:198",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-GATEWAY-TAILSCALE-MODE/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-GATEWAY-TAILSCALE-MODE/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/server-runtime-config-CL6YtxdP.mjs:50",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-ENABLED/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-ENABLED/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:665",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-ENABLED/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/config-normalization-shared-Btqp-2KT.mjs:62",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-CONFIG-PERMISSIONMODE/docs/review/evidence/config-acceptance/delivery/pinned-acpx-2026.9.5/dist/.setup/config-DvCm0_Dp.mjs:14",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-CONFIG-PERMISSIONMODE/docs/review/evidence/config-acceptance/delivery/pinned-acpx-2026.9.5/dist/.setup/config-DvCm0_Dp.mjs:150",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-CONFIG-PERMISSIONMODE/docs/review/evidence/config-acceptance/delivery/pinned-acpx-2026.9.5/dist/.setup/service-DZYyo6-7.mjs:1324",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-CONFIG-PERMISSIONMODE/docs/review/evidence/config-acceptance/delivery/pinned-acpx-runtime-0.16.0/dist/live-checkpoint-BEfxBKCh.js:1836",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-CONFIG-PERMISSIONMODE/docs/review/evidence/config-acceptance/delivery/pinned-acpx-runtime-0.16.0/dist/live-checkpoint-BEfxBKCh.js:2083",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-OPENAI-ENABLED/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-OPENAI-ENABLED/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:665",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-OPENAI-ENABLED/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/config-normalization-shared-Btqp-2KT.mjs:62",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-CODEX-ENABLED/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:135",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-CODEX-ENABLED/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema-DN2u5FdA.mjs:665",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-CODEX-ENABLED/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/config-normalization-shared-Btqp-2KT.mjs:62",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-MESSAGES-GROUPCHAT-VISIBLEREPLIES/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/zod-schema.core-CZ0zDyHR.mjs:122",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-GATEWAY-OPENCLAW-MESSAGES-GROUPCHAT-VISIBLEREPLIES/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/source-reply-delivery-mode-Bo76bLDa.mjs:66",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-NATIVE-OPENCLAW-AGENTS-DEFAULTS-TIMEOUTSECONDS/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/timeout-Bjg7ga80.mjs:8",
+      "pass": true
+    },
+    {
+      "name": "native source cut identity DLV-NATIVE-OPENCLAW-AGENTS-DEFAULTS-TIMEOUTSECONDS/docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/get-reply-DN4OcavF.mjs:6395",
+      "pass": true
+    },
+    {
+      "name": "same-entry02 current closed root explicitly lacks gateway consumer support",
+      "pass": true,
+      "detail": "future same-root closed discriminator extension needed; no seventh component or second root accepted"
+    }
+  ],
+  "failures": 0
+}

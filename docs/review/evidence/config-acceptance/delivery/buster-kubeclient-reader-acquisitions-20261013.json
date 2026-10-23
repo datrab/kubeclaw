@@ -1,0 +1,65 @@
+{
+  "scope": "immutable source-reader pin matches selected kubectl version; not installed binary/deployed API proof",
+  "records": [
+    {
+      "repository": "kubernetes/kubernetes",
+      "release": "v1.35.6",
+      "commit": "fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26",
+      "sourcePath": "staging/src/k8s.io/client-go/tools/clientcmd/loader.go",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26/staging/src/k8s.io/client-go/tools/clientcmd/loader.go",
+      "status": 200,
+      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-buster-kubeclient-20261013/staging/src/k8s.io/client-go/tools/clientcmd/loader.go",
+      "bytes": 21640,
+      "sha256": "b31190301b405e4f5515a5fc744144b0eb959ad4cbfe3ce120e51ce785048401",
+      "result": "acquired"
+    },
+    {
+      "repository": "kubernetes/kubernetes",
+      "release": "v1.35.6",
+      "commit": "fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26",
+      "sourcePath": "staging/src/k8s.io/client-go/tools/clientcmd/client_config.go",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26/staging/src/k8s.io/client-go/tools/clientcmd/client_config.go",
+      "status": 200,
+      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-buster-kubeclient-20261013/staging/src/k8s.io/client-go/tools/clientcmd/client_config.go",
+      "bytes": 28190,
+      "sha256": "144a1895df23e2ff08d9bcefa34af127c8ec4614a8da3083dbdfcf38931d71b6",
+      "result": "acquired"
+    },
+    {
+      "repository": "kubernetes/kubernetes",
+      "release": "v1.35.6",
+      "commit": "fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26",
+      "sourcePath": "staging/src/k8s.io/client-go/rest/config.go",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26/staging/src/k8s.io/client-go/rest/config.go",
+      "status": 200,
+      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-buster-kubeclient-20261013/staging/src/k8s.io/client-go/rest/config.go",
+      "bytes": 25410,
+      "sha256": "eec2bc86377a181b1e0da51dcbe77a33402344b16d9c48e989e870e5e21b576b",
+      "result": "acquired"
+    },
+    {
+      "repository": "kubernetes/kubernetes",
+      "release": "v1.35.6",
+      "commit": "fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26",
+      "sourcePath": "staging/src/k8s.io/client-go/transport/token_source.go",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26/staging/src/k8s.io/client-go/transport/token_source.go",
+      "status": 200,
+      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-buster-kubeclient-20261013/staging/src/k8s.io/client-go/transport/token_source.go",
+      "bytes": 5418,
+      "sha256": "e7f7a6dcf1640df81f9d7a8bef5150ea70f8543157c951288ced7337235e338f",
+      "result": "acquired"
+    },
+    {
+      "repository": "kubernetes/kubernetes",
+      "release": "v1.35.6",
+      "commit": "fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26",
+      "sourcePath": "staging/src/k8s.io/client-go/transport/round_trippers.go",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26/staging/src/k8s.io/client-go/transport/round_trippers.go",
+      "status": 200,
+      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-buster-kubeclient-20261013/staging/src/k8s.io/client-go/transport/round_trippers.go",
+      "bytes": 24765,
+      "sha256": "313a86434787540a7fb70c4f610fc9b218c09f9038740be921d656fa04308400",
+      "result": "acquired"
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "UTC": "2026-10-13T06:31:29.219038+00:00",
+  "head": "21bf51bc2075abec1191fdc091952492b6cb484e",
+  "tree": "7a74b82dd26bc9d87dc1ca60e35d2846681d3d78",
+  "status": "stable17 existing supplemental source/loader/domain/fullcase milestone ONLY; NOT ACCEPTED",
+  "baselineReferences": {
+    "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+    "tree": "7a74b82dd26bc9d87dc1ca60e35d2846681d3d78",
+    "inputs": {
+      "docs/review/evidence/config-acceptance/runtime/inventory-fragment.json": {
+        "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+        "blob": "899d6d07551a1cb5e18e835c24c143ac0cc7d901",
+        "sha256": "9619343edf808fffaadbff775932b0e4f808daba31ad194324b154df374a46c3"
+      },
+      "docs/review/evidence/config-acceptance/runtime/case-proposals.json": {
+        "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+        "blob": "109838e779b3f4ebf56da056a04dd6468f8fe0a7",
+        "sha256": "51feea1a4ca73511668255dd0e328581fe18be04c6494a739496e7ca124fc28f"
+      },
+      "docs/review/evidence/config-acceptance/runtime/runtime-case-dispositions.json": {
+        "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+        "blob": "0acc1ba5222f44964808623bc7ec0863e296f947",
+        "sha256": "a2b7134c8ff161fa89fdb008fb52907f1c818cdf246d2f4a7b6f760d52365c56"
+      }
+    },
+    "caseBodies": 6201,
+    "noWholeFragmentCopies": true
+  },
+  "summary": {
+    "status": "stable17 original standaloneCLI supplemental source/ENV/capturedcontent/polling/wholequota definitions ONLY; NOT ACCEPTED",
+    "rows": 1248,
+    "cases": 6320,
+    "caseResults": {
+      "not-run": 4799,
+      "passed": 1521
+    },
+    "originalSupplementalRowsRefined": 17,
+    "newNarrowCurrentDefinitionCases": 17,
+    "newFutureNotRunCases": 102,
+    "oldCaseBodiesUnchanged": 6201,
+    "genericCaseDispositionsPreservedAndSuperseded": 51,
+    "immutableObservationReferenceOccurrences": 2308,
+    "allC0ClosedFalse": true,
+    "remainingUntouchedOriginalSupplementalRows": 85,
+    "manualCandidatesThisBatch": 77,
+    "manualCandidatesCombined": 988,
+    "remainingUnreviewedCandidates": 3654,
+    "reviewedOpenCandidates": 203,
+    "remaining": "85 untouched original supplemental+95 prior unaccepted declarations and ALL refined full domain/correlated actual role/provider/source/key/grants/whole A6/maxima/metadata/physical quota/effect/currentlibrarycleanup+CLIinput+registeredfixedpolicy/module/observer/recovery/Eval/mutation/independent review obligations remain OPEN.3654unreviewed+203reviewed-open candidates. Core54 lock aliases OPEN no invented commonauthor. FiveagentRole batch16 currentstage.started diagnostic projection material correction queued separatebatch20, previous business-plugin readerabsence notwholeengineabsence."
+  },
+  "ownedPublishedFiles": {
+    "docs/review/evidence/config-acceptance/runtime/README.md": "62c28cfea72503213dae5db6d66edfd6c604afb5b4a1bf20e36af49fa8b56425",
+    "docs/review/evidence/config-acceptance/runtime/inventory-fragment.json": "a9c1a229af5054909b792b49841649564cd857abe31b16e5e1c726285a088f8f",
+    "docs/review/evidence/config-acceptance/runtime/case-proposals.json": "9c5b4aaeae097bb2952f668acd4353a3d15735c6bf0f80a5c8191a1d23f25d36",
+    "docs/review/evidence/config-acceptance/runtime/runtime-case-dispositions.json": "a9bb3d5038d94be18ad939177e8303fed702e4110078b48beb3e3e20550137d3"
+  },
+  "rawDirtyPatchSHA256": "f200b379d41ca01c5b73954819554842e0b17aecd23d8f1191ad53c1d2842a01",
+  "compressedDirtyPatchSHA256": "bcc55a4ba67cb148ae578948e1f757099fa24b678fdef25e153ee29816a5fad1",
+  "artifacts": {
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/check.mjs": "bc497116a0648178df12ef85d9e735ce36cfeea8a00786cb0815f5a07f64b1db",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/integrate.py": "0c7901395dd6d7fe653287427565952433de4a8b96f6ca10521c89b30060d22f",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/dirty-runtime-delivery.patch.gz": "bcc55a4ba67cb148ae578948e1f757099fa24b678fdef25e153ee29816a5fad1",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations-attempt1.json": "352a5c4fdeb2204aaccc19fbaeff315137386e971ad9eab01cd90c1ef07fb9e0",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/check-attempt2.stdout": "ec93ee9dbd92f3e1b5c92bf0cad05e6321d94780f4d21ebb2aedfd32dd401355",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/README.md": "671bd6b782288216ca4163e5c6b829b71e185bd37a89757a360370aa68cca92f",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/clarify-captured-content.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/check-integrity.stdout": "465564fe6ea8931a8e4d09bc2b1ec89184f8fc59284070996aa9ba82e5722df4",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/candidate-dispositions.stdout": "3c8f4bbb562114864cb523a306b7ec2d5c7d8d4ae1b643d0b8684c6168d92bca",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json": "ec93ee9dbd92f3e1b5c92bf0cad05e6321d94780f4d21ebb2aedfd32dd401355",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/candidate-dispositions.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-before-captured-content-clarification.json": "445af2e8c4ed9c5ab37edb949c400a8c4c86ad5bbd0f8ef7524dd1c2b453015d",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/committed-baseline-references.json": "f5107e220e84932e7f62d127d032fa8b74a330ffd3b945cb59a0f41a42ae37af",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/candidate-dispositions.json": "e5a4d5e970c087752cf5dbc2b75ffaf9f8b2f8f3d66611f73875b104538ef984",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/clarify-captured-content.py": "b23dd5d1c079504d3535309334eb053dfcca28ba529ff1d3e7005008d86388c1",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/check-integrity.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts.json": "445af2e8c4ed9c5ab37edb949c400a8c4c86ad5bbd0f8ef7524dd1c2b453015d",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/integrate.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/captured-content-clarification.json": "2f1060d66c4e52f382fdc95c9150b3e73ed184d397df979fce64b17de693a231",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz": "08df03d68f5df497a288542bd976016c659b7f6e000e7e8cc1d6f09d1192d6ff",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/candidate-dispositions.py": "52fd588e9df6532209dde140d3d620e3243daa85f05d2bbe13b483da5f8d8eac",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/build.stdout": "3ddf6789615fa0813f657e5b8a698d8f4420912945501adea306847ce88418f6",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/combined-candidate-dispositions.json": "eabf8805cf71732ef3c32dad36c6e83713974e437f76f63fb4a5cc0e888748e5",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/historical-case-supersession.json": "2a3181a9f91bf23009dcd194db7a3bc44cd87a9465faaedfd0645f2c50030740",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/clarify-captured-content.stdout": "022151defbc7374eb60f728e2e31c122a57303679f47c027832c368e424ba4cc",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/check-integrity.py": "d85d17ae1e86757014781a947effebe4febbf25305bcd947bbdb4cff0bef4443",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/check-attempt1.mjs.snapshot": "dbac71b2292f40f12734563c944daa3c0f5b679ee8cd0ec1f36dc9852537721c",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/source-identities.json": "e86e65a82fe41109c7578cb43c98efdfa080bc1d379412ca29243cd97b3c71ee",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/complete-profiles.json": "34b9770d5281dbe90df5b434fef3367a37c5e67f8ce33b57067df0c4b0c2ef98",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/check-attempt2.stderr": "def88c129c830ea3fa388d652bddcbc8ea776aee38d76b64380d1f58dfe982f0",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/build.py": "208238636f5032520fd7100e5bdc4ca01bc16134427c090909a6fb64c0d566fa",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/check-attempt1.stderr": "55efbb58c97f7f7a8b4ffb36aa02abd78f20bf2cc7f7a3a9b8215168d90f5ef9",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json": "4a1b8f0bc9d4901c02a0b0a564f2cf007ccb13f922bedf72e60995fd7945b74a",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/check-attempt1.stdout": "352a5c4fdeb2204aaccc19fbaeff315137386e971ad9eab01cd90c1ef07fb9e0",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/integrate.stdout": "978ff03fa277acdfb95f2097c41be687a5eb22de286e27622919d9e791a42f86",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/full-numbered-sources.log": "a264f650289a7ed7aa4f28d3ce0a032d96dbf2c5f1e27084e01fb49f25f52f15",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/build.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/summary.json": "465564fe6ea8931a8e4d09bc2b1ec89184f8fc59284070996aa9ba82e5722df4",
+    "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/freeze.py": "0da05cf1ee7a98814acb635b3dccfdfca40e3b84298578c78a4b092ad20e969b"
+  },
+  "commands": [
+    {
+      "argv": [
+        "node",
+        "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/check.mjs"
+      ],
+      "exit": 0,
+      "stdout": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/check-attempt2.stdout",
+      "stderr": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/check-attempt2.stderr",
+      "retainedPriorAttempt": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/check-attempt1.mjs.snapshot"
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/check-integrity.py"
+      ],
+      "exit": 0,
+      "stdout": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/check-integrity.stdout",
+      "stderr": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/check-integrity.stderr"
+    }
+  ],
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "sourceTestNativeExternalActions": "no production/tests/native/external/installedcredential/API/host/model effects orcommit; syntheticlocalfile/constructor/purememory technicalcontrols only",
+  "noAcceptance": true
+}

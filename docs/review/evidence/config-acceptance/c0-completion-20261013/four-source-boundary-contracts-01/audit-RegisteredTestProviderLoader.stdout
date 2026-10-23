@@ -1,0 +1,19 @@
+skills/buster/engine/src/index.ts:6:export { RegisteredTestProviderLoader } from '../test-gates/provider-loader.ts';
+skills/buster/engine/test-gates/runner.ts:29:import { RegisteredTestProviderLoader, type LoadedTestProvider, type TestProviderLoader } from "./provider-loader.ts";
+skills/buster/engine/test-gates/runner.ts:57:    this.#loader = options.loader ?? new RegisteredTestProviderLoader({ provider: executionPolicy.provider, observation: executionPolicy.observation });
+skills/buster/engine/test-gates/provider-loader.ts:156:export class RegisteredTestProviderLoader implements TestProviderLoader {
+tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:6:import { RegisteredTestProviderLoader } from '../../../skills/buster/engine/test-gates/provider-loader.ts';
+tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:89:      const loader = new RegisteredTestProviderLoader({ provider: options.executionPolicy.provider,
+tests/verification/contracts/check-pipeline-test-plan-runner.mts:6:import { createBusterWorkerProfiles, LocalWorkerRuntime, RegisteredTestProviderLoader, TestPlanRunner, type WorkerAttemptRuntime } from "../../../skills/buster/engine/src/index.ts";
+tests/verification/contracts/check-pipeline-test-plan-runner.mts:651:const realLogHangLoader = new RegisteredTestProviderLoader({ provider: runnerExecutionPolicy.provider, observation: runnerExecutionPolicy.observation });
+tests/verification/contracts/check-pipeline-test-plan-runner.mts:1484:const registeredLoader = new RegisteredTestProviderLoader({ provider: runnerExecutionPolicy.provider, observation: runnerExecutionPolicy.observation });
+tests/verification/contracts/provider-disposal-recovery.test.mjs:6:import { RegisteredTestProviderLoader } from '../../../skills/buster/engine/test-gates/provider-loader.ts';
+tests/verification/contracts/provider-disposal-recovery.test.mjs:17:    const loader = new RegisteredTestProviderLoader({ provider: options.executionPolicy.provider,
+tests/verification/contracts/provider-disposal-recovery.test.mjs:84:    const loader = new RegisteredTestProviderLoader({ provider: options.executionPolicy.provider,
+tests/verification/contracts/provider-disposal-recovery.test.mjs:126:  const loader = new RegisteredTestProviderLoader({ provider: options.executionPolicy.provider,
+tests/verification/contracts/kubernetes-cleanup-runner.test.mjs:6:import { RegisteredTestProviderLoader } from '../../../skills/buster/engine/test-gates/provider-loader.ts';
+tests/verification/contracts/kubernetes-cleanup-runner.test.mjs:16:    const loader = new RegisteredTestProviderLoader({ provider: options.executionPolicy.provider, observation: options.executionPolicy.observation });
+tests/verification/contracts/kubernetes-cleanup-runner.test.mjs:70:  const loader = new RegisteredTestProviderLoader({ provider: options.executionPolicy.provider, observation: options.executionPolicy.observation });
+tests/verification/contracts/buster-provider-session-policy.test.mjs:5:import { RegisteredTestProviderLoader } from '../../../skills/buster/engine/test-gates/provider-loader.ts';
+tests/verification/contracts/buster-provider-session-policy.test.mjs:20:    assert.throws(() => new RegisteredTestProviderLoader(candidate), /SWARM_CONFIG_BUSTER_PROVIDER_RUNTIME_INVALID/);
+tests/verification/contracts/buster-provider-session-policy.test.mjs:41:  assert.throws(() => new RegisteredTestProviderLoader(runnerExecutionPolicy.observation), /SWARM_CONFIG_BUSTER_PROVIDER_RUNTIME_INVALID/);

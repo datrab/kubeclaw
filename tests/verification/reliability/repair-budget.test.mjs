@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -10,7 +11,7 @@ import { recoverStageStates } from '../../../skills/nova/core/lifecycle/recovery
 import { budgetFixture } from './repair-budget-fixture.mjs';
 
 const rootFor = () => fs.mkdtempSync(path.join(os.tmpdir(), 'repair-budget-'));
-const eventsFor = (f, runId) => new FileJournal(path.join(runRoot(f.platform.storageRoot, runId), 'events.jsonl'));
+const eventsFor = (f, runId) => new FileJournal(path.join(runRoot(f.platform.storageRoot, runId), 'events.jsonl'), TEST_CORE_POLICY.journalAppendLockTimeoutMs);
 const authorization = wait => ({ schemaVersion: 'resume-signal.v2', signalId: 'signal:extra', idempotencyKey: 'key:extra',
   waitId: wait.waitId, signalType: wait.signalType, issuer: wait.authorizedIssuer, issuedAt: new Date().toISOString(),
   payload: { repairAuthorization: { pendingDigest: wait.request.repairAuthorization.digest, reason: 'Reviewed all findings; authorize exactly one repair.' } } });

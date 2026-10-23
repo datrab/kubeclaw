@@ -1,0 +1,260 @@
+{
+  "scope": "Current unchanged Control/Worker configuration-composition tests; NOT migrated trust/secret/schema/binding/deployment runtime acceptance",
+  "head": "bce3f075156a86be345821499c04628cb35c2762",
+  "tree": "a8b0adf641de573565360b0c4eb577d6bc7545c3",
+  "node": "v24.21.0",
+  "command": [
+    "env",
+    "-u",
+    "NODE_ENV",
+    "-u",
+    "SWARM_CONFIG",
+    "node",
+    "--test",
+    "skills/prism/tests/control-server-config.test.mts",
+    "skills/prism/tests/swarm-worker-config.test.mts"
+  ],
+  "observed": {
+    "tests": 74,
+    "passed": 74,
+    "failed": 0,
+    "skipped": 0
+  },
+  "sourceAndTestInputs": [
+    {
+      "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+      "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+      "matchesCommit": true
+    },
+    {
+      "path": "charts/kubeclaw/files/config/jscpd-tests.json",
+      "sha256": "ad5863319bfcde746150cdd37f36664d82a84e075b0bdc341ff151a81b9838b5",
+      "matchesCommit": true
+    },
+    {
+      "path": "charts/kubeclaw/files/config/jscpd.json",
+      "sha256": "0dc8789cd2cbf1341eed9bc43ae4991c60e80bb9825ecd843c0b6bc594fe6af9",
+      "matchesCommit": true
+    },
+    {
+      "path": "charts/kubeclaw/files/config/knip.json",
+      "sha256": "f3b6ced7573925bf338b8d3c9789d794792af62364fae1f227c9c997624b5d23",
+      "matchesCommit": true
+    },
+    {
+      "path": "charts/kubeclaw/files/config/kubernetes-policy-pack-default.json",
+      "sha256": "3c0e2815bc1154e89fdeca2623adbc5018a4b6348f966bdec6dadf82cbc32781",
+      "matchesCommit": true
+    },
+    {
+      "path": "charts/kubeclaw/files/config/lint-baseline.json",
+      "sha256": "de99dfe709e8779d55b1079334cea0415b661f3933cc32bd36260fb3bc393ed7",
+      "matchesCommit": true
+    },
+    {
+      "path": "charts/kubeclaw/files/config/lint-policy.json",
+      "sha256": "2c3a9eb507d31524d8718febaed5df780e12438037e0e61fcedf438748802993",
+      "matchesCommit": true
+    },
+    {
+      "path": "charts/kubeclaw/files/config/prism-control.config.json",
+      "sha256": "5e41d7612926ce4d3bfad195d79649e106b54cd59c23de64afad1e9c43e1dcd0",
+      "matchesCommit": true
+    },
+    {
+      "path": "charts/kubeclaw/files/config/prism-execution.config.json",
+      "sha256": "94f1a8eece3aa58db89907accd846d471d17263557c8e0925cc1caae6ec0034f",
+      "matchesCommit": true
+    },
+    {
+      "path": "charts/kubeclaw/files/config/prism-studio.config.json",
+      "sha256": "c38ba184a0dcbdd4b11c86f99eb39b2dd7c0ec72bd697fce7f7a1fa32f750fdb",
+      "matchesCommit": true
+    },
+    {
+      "path": "charts/kubeclaw/files/config/prism-worker.config.json",
+      "sha256": "6d263c2f1844e4bc117ec25504ccb9d6644a5272611de031a2027d5a55d7c834",
+      "matchesCommit": true
+    },
+    {
+      "path": "charts/kubeclaw/files/config/swarm-components.schema.json",
+      "sha256": "51e7bc64a25fd6cc67d465ebe46bab170a6c9b7215423147ab3f15777dc58968",
+      "matchesCommit": true,
+      "gitLinkTarget": "../../../../skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "gitLinkSha256": "b14a6006b67588da0af802477d83342c3643b056611c8edcb8854f626201d443",
+      "resolvedTrackedSource": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/swarm.config.json",
+      "sha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58",
+      "matchesCommit": true
+    },
+    {
+      "path": "charts/kubeclaw/files/config/swarm.schema.json",
+      "sha256": "2269b97277a5a24ccd14434c942cdf4ea83c43d1c6a8e048083add782140ae20",
+      "matchesCommit": true,
+      "gitLinkTarget": "../../../../skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+      "gitLinkSha256": "c2b9d795f77a0b3962fa35627a3d3c029d5a7d4b73600c86d0c7b54c95ed1459",
+      "resolvedTrackedSource": "skills/common/plugin-runtime/foundation/config/swarm.schema.json"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/worker-core.config.json",
+      "sha256": "08a6c89490442803c2d4178608832fb0a8147be1a83bb6027a7a00f3d81dc615",
+      "matchesCommit": true
+    },
+    {
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc",
+      "matchesCommit": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+      "matchesCommit": true
+    },
+    {
+      "path": "charts/prism/values.yaml",
+      "sha256": "8b13da5c725b9eff02d1e12dae6f799ca74a6b01a83cb714a2777a915e98cee8",
+      "matchesCommit": true
+    },
+    {
+      "path": "docker/Dockerfile.prism-studio",
+      "sha256": "a2acdc718f9becd23c4f90bfc361c26115f67363677665248cc96647e7180d2f",
+      "matchesCommit": true
+    },
+    {
+      "path": "docker/Dockerfile.prism-worker",
+      "sha256": "820d8c1b9cb0784113fbd4c2ceb206b40cb0e2381d3fad3df647d7dcc784bb80",
+      "matchesCommit": true
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b",
+      "matchesCommit": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "sha256": "51e7bc64a25fd6cc67d465ebe46bab170a6c9b7215423147ab3f15777dc58968",
+      "matchesCommit": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+      "sha256": "2269b97277a5a24ccd14434c942cdf4ea83c43d1c6a8e048083add782140ae20",
+      "matchesCommit": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "sha256": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1",
+      "matchesCommit": true
+    },
+    {
+      "path": "skills/prism/config/native-worker.ts",
+      "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "matchesCommit": true
+    },
+    {
+      "path": "skills/prism/server/control-config.ts",
+      "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "matchesCommit": true
+    },
+    {
+      "path": "skills/prism/server/control-context.ts",
+      "sha256": "2444e6f0f22860aea6f109c984be4747a13421da2d33dd738ef7c29b71f04d02",
+      "matchesCommit": true
+    },
+    {
+      "path": "skills/prism/server/control-server.ts",
+      "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3",
+      "matchesCommit": true
+    },
+    {
+      "path": "skills/prism/server/control.ts",
+      "sha256": "d723c04698afa8bd6306beca93dd9daf5cde75b710129975642591688ec0fcac",
+      "matchesCommit": true
+    },
+    {
+      "path": "skills/prism/server/dispatch-route.ts",
+      "sha256": "407b0befbe8cbf6009f2cef6fe80ab10a2213258d4be5bddc578f24abdb47382",
+      "matchesCommit": true
+    },
+    {
+      "path": "skills/prism/server/internal-artifacts.ts",
+      "sha256": "16750a5eecea51781dc67e271cfc331550f1a0a03460917133226cd9c975dab8",
+      "matchesCommit": true
+    },
+    {
+      "path": "skills/prism/server/native-worker-execution.ts",
+      "sha256": "d87eb7d05cdc40f3eb353dba63236fa8c20a02adf1b70512c81944bb7cb71a56",
+      "matchesCommit": true
+    },
+    {
+      "path": "skills/prism/server/native-worker-host.ts",
+      "sha256": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34",
+      "matchesCommit": true
+    },
+    {
+      "path": "skills/prism/server/studio-config.ts",
+      "sha256": "c2a7d42ae65d68da876c2efc64194effc969d90a1132d8677ec2190260391465",
+      "matchesCommit": true
+    },
+    {
+      "path": "skills/prism/server/studio-request.ts",
+      "sha256": "efca0f821ef3da9f441e9c6c5458a33d8c525f8e7db3a63aea1a8e7f37e93bbb",
+      "matchesCommit": true
+    },
+    {
+      "path": "skills/prism/server/worker-artifacts.ts",
+      "sha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950",
+      "matchesCommit": true
+    },
+    {
+      "path": "skills/prism/server/worker-config.ts",
+      "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e",
+      "matchesCommit": true
+    },
+    {
+      "path": "skills/prism/server/worker-service.ts",
+      "sha256": "90174f5edf19c85ef1642da95a51aac46854f9a1ce7172d876045a5bac1595e4",
+      "matchesCommit": true
+    },
+    {
+      "path": "skills/prism/tests/control-server-config.test.mts",
+      "sha256": "81e0b5caae2b338bc7ab54c3619a1b2514a09f0edbf7862fbb838e69432aac5a",
+      "matchesCommit": true
+    },
+    {
+      "path": "skills/prism/tests/fixtures/control-policy.mts",
+      "sha256": "cf58dcbf260395a68fa626aa27c0f33bf74ace98d3744222c00a7b431501f3e4",
+      "matchesCommit": true
+    },
+    {
+      "path": "skills/prism/tests/swarm-worker-config.test.mts",
+      "sha256": "e17586a73f9df4a305d9f714eb07ef81367f0fd4f71188c15292baecdd4db8ee",
+      "matchesCommit": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-launcher.c",
+      "sha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "matchesCommit": true
+    },
+    {
+      "path": "skills/worker/core/worker/trust.ts",
+      "sha256": "722f48ca75fb8546dbc4f4c9cc8eab8e31dfdfeafec7ea7aab587045e78b23fe",
+      "matchesCommit": true
+    }
+  ],
+  "rawEvidence": "docs/review/evidence/config-acceptance/author/prism-composition-current-checkpoint-5.log",
+  "rawSha256": "d96e1ec2f67906db485544d5f270fa53004d239ec30a9949099c5125e3b8f18a",
+  "sourceReadLog": "docs/review/evidence/config-acceptance/author/prism-trust-source-read-checkpoint-5.log",
+  "sourceReadSha256": "82ec6c4f5558257c5236de5085399a03facc2e4d9ab150dfc079bf54fb178a80",
+  "dirtyStand": {
+    "patchPath": "docs/review/evidence/config-acceptance/author/prism-trust-source-stand-checkpoint-5.patch.gz",
+    "compressedSha256": "e6bde8bd1d40bb9f9785dc2fefc10b4ff987265c4797532fd9e3c314540247e8",
+    "decompressedSha256": "2a78cd5c955e8406c8ff1d38fb06ca427018db51779c6fc54cb6dde0b4f30e4f",
+    "capture": "post-command; every actual tracked source/test/config input verified unchanged against checkpoint5, including symlink target bytes and resolved schema; concurrent child documentation-only changes retained in exact patch",
+    "untrackedActuallyExecutedInputs": []
+  },
+  "externalCredentialsUsed": false,
+  "deployedSecretRevisionKnown": false,
+  "globalC0Accepted": false
+}

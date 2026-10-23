@@ -9,7 +9,7 @@ import { body, json } from "./control-http.ts";
 type RouteContext = Pick<
   AuthenticatedControlContext,
   "pool" | "artifacts" | "actor"
->;
+ | "config">;
 
 export async function projectRoutes(
   context: RouteContext,
@@ -76,7 +76,7 @@ async function createProject(
 ) {
   const { pool, artifacts } = context;
 
-  const input = (await body(request)) as {
+  const input = (await body(request, context.config.maximumJsonBodyBytes)) as {
     externalId?: string;
     name?: string;
   };

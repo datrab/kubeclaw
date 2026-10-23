@@ -1,0 +1,99 @@
+{
+  "negativeControls": [
+    {
+      "name": "original id",
+      "rejected": true,
+      "error": "'foreign'"
+    },
+    {
+      "name": "original original",
+      "rejected": true,
+      "error": "Residual drift: RT-719c34694bda7da3"
+    },
+    {
+      "name": "original originalObjectSha256",
+      "rejected": true,
+      "error": "Residual drift: RT-719c34694bda7da3"
+    },
+    {
+      "name": "original class",
+      "rejected": true,
+      "error": "Residual drift: RT-719c34694bda7da3"
+    },
+    {
+      "name": "original owner",
+      "rejected": true,
+      "error": "Command/workspace original roster drift"
+    },
+    {
+      "name": "original caseIds",
+      "rejected": true,
+      "error": "Residual drift: RT-719c34694bda7da3"
+    },
+    {
+      "name": "omitted original field",
+      "rejected": true,
+      "error": "Command/workspace original roster drift"
+    },
+    {
+      "name": "duplicate original field",
+      "rejected": true,
+      "error": "Command/workspace original roster drift"
+    },
+    {
+      "name": "full roster fields loss",
+      "rejected": true,
+      "error": "Incomplete fields"
+    },
+    {
+      "name": "full roster cases loss",
+      "rejected": true,
+      "error": "Incomplete cases"
+    },
+    {
+      "name": "full roster requirements loss",
+      "rejected": true,
+      "error": "Incomplete requirements"
+    },
+    {
+      "name": "missing command-runner schema allowedExecutables",
+      "rejected": true,
+      "error": "'allowedExecutables'"
+    },
+    {
+      "name": "missing command-runner schema executableCatalog",
+      "rejected": true,
+      "error": "'executableCatalog'"
+    },
+    {
+      "name": "missing git-workspace schema authorEmail",
+      "rejected": true,
+      "error": "'authorEmail'"
+    },
+    {
+      "name": "missing command items schema",
+      "rejected": true,
+      "error": "'items'"
+    },
+    {
+      "name": "missing catalog child schema",
+      "rejected": true,
+      "error": "'additionalProperties'"
+    }
+  ],
+  "passed": 16,
+  "total": 16,
+  "restoredDeterministic": true,
+  "prior32RowsPreserved": true,
+  "newOriginalFields": 18,
+  "composedRows": 50,
+  "fullRoster": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50
+  },
+  "integrityFailures": [],
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "independentReview": "OPEN; author-run matrix controls, not independent review or original runtime proof"
+}

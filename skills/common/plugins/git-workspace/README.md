@@ -33,3 +33,9 @@ Independent module work remains in separate worktrees. Shared repository mutatio
 require the core resource lock; this adapter does not blindly retry an uncertain
 accepted mutation. Execution limits apply per Git command. Pre-dispatch lock
 contention and attempt-owned workspace cleanup are separate core/stage concerns.
+
+Git failure stderr excerpts use required `gitWorkspaceFailure.errorExcerptCharacters`
+from the selected central Core policy (standard: 4096 JavaScript characters).
+Nova injects this value and rejects duplicate adapter authors. It does not change
+the combined stdout/stderr byte cap or execution timeout. Direct embeddings must
+supply the selected value explicitly; activation captures it for the instance.

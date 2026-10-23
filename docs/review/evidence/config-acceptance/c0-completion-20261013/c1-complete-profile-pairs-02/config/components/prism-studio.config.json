@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "pipeline-component.v2",
+  "owner": "prism-studio",
+  "profiles": {
+    "baseline-A": {
+      "settings": {
+        "port": 8080,
+        "controlTimeoutMs": 30000,
+        "controlUrl": "http://prism-control:8080"
+      }
+    },
+    "b-4fd2545f74c7d791": {
+      "settings": {
+        "port": 6060,
+        "controlTimeoutMs": 30000,
+        "controlUrl": "http://prism-control:8080"
+      }
+    },
+    "b-479d02e83b5fbd6f": {
+      "settings": {
+        "port": 8080,
+        "controlTimeoutMs": 22500,
+        "controlUrl": "http://prism-control:8080"
+      }
+    },
+    "b-63dc9bab65322757": {
+      "settings": {
+        "port": 8080,
+        "controlTimeoutMs": 30000,
+        "controlUrl": "http://config-acceptance-control:18080"
+      }
+    }
+  }
+}

@@ -20,20 +20,29 @@ export class BusterRemotePlanRuntime {
   readonly #options: BusterRemotePlanRuntimeOptions;
   readonly #server: Server;
   #started = false;
+  #stop: Promise<void> | undefined;
 
   constructor(options: BusterRemotePlanRuntimeOptions) {
     if (options.host.length === 0) throw new Error('BUSTER_REMOTE_HOST_INVALID');
     if (!Number.isSafeInteger(options.port) || options.port < 0 || options.port > 65_535) {
       throw new Error('BUSTER_REMOTE_PORT_INVALID');
     }
-    if (!Number.isSafeInteger(options.shutdownTimeoutMs) || options.shutdownTimeoutMs < 1) {
+    if (!Number.isSafeInteger(options.shutdownTimeoutMs) || options.shutdownTimeoutMs < 1
+      || options.shutdownTimeoutMs > 0x7fffffff) {
       throw new Error('BUSTER_REMOTE_SHUTDOWN_TIMEOUT_INVALID');
     }
-    this.#options = options;
-    this.#server = createBusterRemotePlanHttpServer(options);
+    // Retain the same admitted S listener/drain policy for start and stop;
+    // caller mutation cannot redirect recovery or mint another drain ceiling.
+    this.#options = Object.freeze({ ...options,
+      ...(options.trustedPeerSpiffeIds === undefined ? {} : {
+        trustedPeerSpiffeIds: Object.freeze([...options.trustedPeerSpiffeIds]),
+      }),
+    });
+    this.#server = createBusterRemotePlanHttpServer(this.#options);
   }
 
   async start(): Promise<AddressInfo> {
+    if (this.#stop) throw new Error('BUSTER_REMOTE_RUNTIME_STOPPED');
     if (this.#started) throw new Error('BUSTER_REMOTE_RUNTIME_ALREADY_STARTED');
     await this.#options.service.recover();
     await new Promise<void>((resolve, reject) => {
@@ -50,26 +59,45 @@ export class BusterRemotePlanRuntime {
     return address;
   }
 
-  async stop(): Promise<void> {
-    if (!this.#started) return;
+  stop(): Promise<void> {
+    if (this.#stop) return this.#stop;
+    if (!this.#started) return Promise.resolve();
     this.#started = false;
+    this.#stop = this.#drain();
+    return this.#stop;
+  }
+
+  async #drain(): Promise<void> {
+    // This is only the captured S process-drain ceiling, not an original task
+    // cleanup deadline or authority. Start service shutdown before waiting for
+    // HTTP: admission closes immediately and neither drain gets a fresh budget.
+    let shutdownFailure: { error: unknown } | undefined;
+    const shutdown = this.#options.service.shutdown(this.#options.shutdownTimeoutMs).catch((error: unknown) => {
+      shutdownFailure = { error };
+      throw error;
+    });
     const close = new Promise<void>((resolve, reject) => {
       this.#server.close((error) => error ? reject(error) : resolve());
     });
     let timer: NodeJS.Timeout | undefined;
     try {
-      await Promise.race([
-        close,
-        new Promise<void>((resolve) => {
+      const outcomes = await Promise.race([
+        Promise.allSettled([close, shutdown]),
+        new Promise<never>((_resolve, reject) => {
           timer = setTimeout(() => {
             this.#server.closeAllConnections();
-            resolve();
+            const timeout = new Error('BUSTER_REMOTE_SHUTDOWN_TIMEOUT');
+            reject(shutdownFailure
+              ? new AggregateError([shutdownFailure.error, timeout], 'BUSTER_REMOTE_SHUTDOWN_FAILED')
+              : timeout);
           }, this.#options.shutdownTimeoutMs);
         }),
       ]);
+      for (const outcome of outcomes) {
+        if (outcome.status === 'rejected') throw outcome.reason;
+      }
     } finally {
       if (timer) clearTimeout(timer);
-      await this.#options.service.shutdown(this.#options.shutdownTimeoutMs);
     }
   }
 }

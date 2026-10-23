@@ -1,0 +1,104 @@
+[
+  {
+    "id": "DLV-OPENCLAW-AGENT-OBSERVER-ENABLED",
+    "field": "enabled",
+    "disposition": "selected central chart owner policy",
+    "author": "charts/kubeclaw/values.yaml:agentObserverPolicy"
+  },
+  {
+    "id": "DLV-OPENCLAW-AGENT-OBSERVER-REDISHOST",
+    "field": "redisHost",
+    "disposition": "existing independent Redis identity/credential discovery input; not invented constant policy",
+    "author": "existing config/Secret identity source"
+  },
+  {
+    "id": "DLV-OPENCLAW-AGENT-OBSERVER-REDISPORT",
+    "field": "redisPort",
+    "disposition": "existing independent Redis identity/credential discovery input; not invented constant policy",
+    "author": "existing config/Secret identity source"
+  },
+  {
+    "id": "DLV-OPENCLAW-AGENT-OBSERVER-REDISUSERNAME",
+    "field": "redisUsername",
+    "disposition": "existing independent Redis identity/credential discovery input; not invented constant policy",
+    "author": "existing config/Secret identity source"
+  },
+  {
+    "id": "DLV-OPENCLAW-AGENT-OBSERVER-REDISPASSWORD",
+    "field": "redisPassword",
+    "disposition": "existing independent Redis identity/credential discovery input; not invented constant policy",
+    "author": "existing config/Secret identity source"
+  },
+  {
+    "id": "DLV-OPENCLAW-AGENT-OBSERVER-REDISTLS",
+    "field": "redisTls",
+    "disposition": "selected central chart owner policy",
+    "author": "charts/kubeclaw/values.yaml:agentObserverPolicy"
+  },
+  {
+    "id": "DLV-OPENCLAW-AGENT-OBSERVER-REDISNETWORKISOLATION",
+    "field": "redisNetworkIsolation",
+    "disposition": "selected central chart owner policy",
+    "author": "charts/kubeclaw/values.yaml:agentObserverPolicy"
+  },
+  {
+    "id": "DLV-OPENCLAW-AGENT-OBSERVER-MAXEVENTBYTES",
+    "field": "maxEventBytes",
+    "disposition": "selected central chart owner policy",
+    "author": "charts/kubeclaw/values.yaml:agentObserverPolicy"
+  },
+  {
+    "id": "DLV-OPENCLAW-AGENT-OBSERVER-MAXQUEUEPERSTREAM",
+    "field": "maxQueuePerStream",
+    "disposition": "selected central chart owner policy",
+    "author": "charts/kubeclaw/values.yaml:agentObserverPolicy"
+  },
+  {
+    "id": "DLV-OPENCLAW-AGENT-OBSERVER-REDISCOMMANDTIMEOUTMS",
+    "field": "redisCommandTimeoutMs",
+    "disposition": "selected central chart owner policy",
+    "author": "charts/kubeclaw/values.yaml:agentObserverPolicy"
+  },
+  {
+    "id": "DLV-OPENCLAW-AGENT-OBSERVER-STREAMMAXLEN",
+    "field": "streamMaxLen",
+    "disposition": "selected central chart owner policy",
+    "author": "charts/kubeclaw/values.yaml:agentObserverPolicy"
+  },
+  {
+    "id": "DLV-OPENCLAW-AGENT-OBSERVER-DEADLETTERMAXLEN",
+    "field": "deadLetterMaxLen",
+    "disposition": "selected central chart owner policy",
+    "author": "charts/kubeclaw/values.yaml:agentObserverPolicy"
+  },
+  {
+    "id": "DLV-OPENCLAW-AGENT-OBSERVER-CONTROLWRITEMAXATTEMPTS",
+    "field": "controlWriteMaxAttempts",
+    "disposition": "selected central chart owner policy",
+    "author": "charts/kubeclaw/values.yaml:agentObserverPolicy"
+  },
+  {
+    "id": "DLV-OPENCLAW-AGENT-OBSERVER-CONTROLWRITERETRYBASEMS",
+    "field": "controlWriteRetryBaseMs",
+    "disposition": "selected central chart owner policy",
+    "author": "charts/kubeclaw/values.yaml:agentObserverPolicy"
+  },
+  {
+    "id": "DLV-OPENCLAW-AGENT-OBSERVER-CONTROLWRITERETRYMAXMS",
+    "field": "controlWriteRetryMaxMs",
+    "disposition": "selected central chart owner policy",
+    "author": "charts/kubeclaw/values.yaml:agentObserverPolicy"
+  },
+  {
+    "id": "DLV-OPENCLAW-AGENT-OBSERVER-HOOKPRIORITY",
+    "field": "hookPriority",
+    "disposition": "selected central chart owner policy",
+    "author": "charts/kubeclaw/values.yaml:agentObserverPolicy"
+  },
+  {
+    "id": "DLV-OPENCLAW-AGENT-OBSERVER-HOOKTIMEOUTMS",
+    "field": "hookTimeoutMs",
+    "disposition": "selected central chart owner policy",
+    "author": "charts/kubeclaw/values.yaml:agentObserverPolicy"
+  }
+]

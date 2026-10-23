@@ -1,0 +1,1106 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "packageId",
+    "instanceId",
+    "profiles"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "pipeline-package-policy.v1"
+    },
+    "packageId": {
+      "const": "kubeclaw.security-providers"
+    },
+    "instanceId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$"
+    },
+    "profiles": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "verdictPolicy",
+          "sharedProcessing",
+          "registrations"
+        ],
+        "properties": {
+          "verdictPolicy": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "blockingSeverities",
+              "blockActiveThreats",
+              "blockMissingFixes"
+            ],
+            "properties": {
+              "blockingSeverities": {
+                "type": "array",
+                "maxItems": 5,
+                "uniqueItems": true,
+                "items": {
+                  "enum": [
+                    "critical",
+                    "high",
+                    "medium",
+                    "low",
+                    "info"
+                  ]
+                }
+              },
+              "blockActiveThreats": {
+                "type": "boolean"
+              },
+              "blockMissingFixes": {
+                "type": "boolean"
+              }
+            }
+          },
+          "sharedProcessing": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "maximumFindings"
+            ],
+            "properties": {
+              "maximumFindings": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 4096
+              }
+            }
+          },
+          "registrations": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "headers",
+              "dependency-trivy",
+              "image-trivy",
+              "kubernetes-policy",
+              "kubernetes-runtime"
+            ],
+            "properties": {
+              "headers": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "processing",
+                  "declarations"
+                ],
+                "properties": {
+                  "processing": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "profile",
+                      "requestTimeoutMs",
+                      "rules",
+                      "policy",
+                      "presets",
+                      "maximumResponseBytes",
+                      "maximumPaths"
+                    ],
+                    "properties": {
+                      "profile": {
+                        "enum": [
+                          "web-https-v1",
+                          "api-http-v1"
+                        ]
+                      },
+                      "requestTimeoutMs": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 300000
+                      },
+                      "rules": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "add",
+                          "replace",
+                          "remove"
+                        ],
+                        "properties": {
+                          "add": {
+                            "type": "array",
+                            "maxItems": 32,
+                            "items": {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "required": [
+                                "id",
+                                "header",
+                                "severity",
+                                "kind"
+                              ],
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "pattern": "^[a-z0-9.-]+$",
+                                  "maxLength": 128
+                                },
+                                "header": {
+                                  "type": "string",
+                                  "pattern": "^[a-z0-9-]+$",
+                                  "maxLength": 128
+                                },
+                                "severity": {
+                                  "enum": [
+                                    "critical",
+                                    "high",
+                                    "medium",
+                                    "low",
+                                    "info"
+                                  ]
+                                },
+                                "kind": {
+                                  "enum": [
+                                    "present",
+                                    "equals",
+                                    "contains",
+                                    "hsts-min-age"
+                                  ]
+                                },
+                                "value": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 1024
+                                }
+                              },
+                              "allOf": [
+                                {
+                                  "if": {
+                                    "properties": {
+                                      "kind": {
+                                        "const": "present"
+                                      }
+                                    },
+                                    "required": [
+                                      "kind"
+                                    ]
+                                  },
+                                  "then": {
+                                    "not": {
+                                      "required": [
+                                        "value"
+                                      ],
+                                      "properties": {
+                                        "value": {}
+                                      }
+                                    }
+                                  },
+                                  "else": {
+                                    "required": [
+                                      "value"
+                                    ],
+                                    "properties": {
+                                      "value": {}
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "replace": {
+                            "type": "array",
+                            "maxItems": 32,
+                            "items": {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "required": [
+                                "id",
+                                "header",
+                                "severity",
+                                "kind"
+                              ],
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "pattern": "^[a-z0-9.-]+$",
+                                  "maxLength": 128
+                                },
+                                "header": {
+                                  "type": "string",
+                                  "pattern": "^[a-z0-9-]+$",
+                                  "maxLength": 128
+                                },
+                                "severity": {
+                                  "enum": [
+                                    "critical",
+                                    "high",
+                                    "medium",
+                                    "low",
+                                    "info"
+                                  ]
+                                },
+                                "kind": {
+                                  "enum": [
+                                    "present",
+                                    "equals",
+                                    "contains",
+                                    "hsts-min-age"
+                                  ]
+                                },
+                                "value": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 1024
+                                }
+                              },
+                              "allOf": [
+                                {
+                                  "if": {
+                                    "properties": {
+                                      "kind": {
+                                        "const": "present"
+                                      }
+                                    },
+                                    "required": [
+                                      "kind"
+                                    ]
+                                  },
+                                  "then": {
+                                    "not": {
+                                      "required": [
+                                        "value"
+                                      ],
+                                      "properties": {
+                                        "value": {}
+                                      }
+                                    }
+                                  },
+                                  "else": {
+                                    "required": [
+                                      "value"
+                                    ],
+                                    "properties": {
+                                      "value": {}
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "remove": {
+                            "type": "array",
+                            "maxItems": 32,
+                            "uniqueItems": true,
+                            "items": {
+                              "type": "string",
+                              "pattern": "^[a-z0-9.-]+$",
+                              "maxLength": 128
+                            }
+                          }
+                        }
+                      },
+                      "policy": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "profile",
+                          "acceptances"
+                        ],
+                        "properties": {
+                          "profile": {
+                            "const": "strict-v1"
+                          },
+                          "acceptances": {
+                            "type": "array",
+                            "maxItems": 128,
+                            "items": {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "required": [
+                                "findingId",
+                                "reason",
+                                "expiresAt"
+                              ],
+                              "properties": {
+                                "findingId": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 256,
+                                  "pattern": "^[A-Za-z0-9._:@/-]+$"
+                                },
+                                "reason": {
+                                  "type": "string",
+                                  "minLength": 8,
+                                  "maxLength": 1024
+                                },
+                                "expiresAt": {
+                                  "type": "string",
+                                  "format": "date-time"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "presets": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "api-http-v1",
+                          "web-https-v1"
+                        ],
+                        "properties": {
+                          "api-http-v1": {
+                            "type": "array",
+                            "minItems": 1,
+                            "maxItems": 64,
+                            "items": {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "required": [
+                                "id",
+                                "header",
+                                "severity",
+                                "kind"
+                              ],
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "pattern": "^[a-z0-9.-]+$",
+                                  "maxLength": 128
+                                },
+                                "header": {
+                                  "type": "string",
+                                  "pattern": "^[a-z0-9-]+$",
+                                  "maxLength": 128
+                                },
+                                "severity": {
+                                  "enum": [
+                                    "critical",
+                                    "high",
+                                    "medium",
+                                    "low",
+                                    "info"
+                                  ]
+                                },
+                                "kind": {
+                                  "enum": [
+                                    "present",
+                                    "equals",
+                                    "contains",
+                                    "hsts-min-age"
+                                  ]
+                                },
+                                "value": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 1024
+                                }
+                              },
+                              "allOf": [
+                                {
+                                  "if": {
+                                    "properties": {
+                                      "kind": {
+                                        "const": "present"
+                                      }
+                                    },
+                                    "required": [
+                                      "kind"
+                                    ]
+                                  },
+                                  "then": {
+                                    "not": {
+                                      "required": [
+                                        "value"
+                                      ],
+                                      "properties": {
+                                        "value": {}
+                                      }
+                                    }
+                                  },
+                                  "else": {
+                                    "required": [
+                                      "value"
+                                    ],
+                                    "properties": {
+                                      "value": {}
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "web-https-v1": {
+                            "type": "array",
+                            "minItems": 1,
+                            "maxItems": 64,
+                            "items": {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "required": [
+                                "id",
+                                "header",
+                                "severity",
+                                "kind"
+                              ],
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "pattern": "^[a-z0-9.-]+$",
+                                  "maxLength": 128
+                                },
+                                "header": {
+                                  "type": "string",
+                                  "pattern": "^[a-z0-9-]+$",
+                                  "maxLength": 128
+                                },
+                                "severity": {
+                                  "enum": [
+                                    "critical",
+                                    "high",
+                                    "medium",
+                                    "low",
+                                    "info"
+                                  ]
+                                },
+                                "kind": {
+                                  "enum": [
+                                    "present",
+                                    "equals",
+                                    "contains",
+                                    "hsts-min-age"
+                                  ]
+                                },
+                                "value": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 1024
+                                }
+                              },
+                              "allOf": [
+                                {
+                                  "if": {
+                                    "properties": {
+                                      "kind": {
+                                        "const": "present"
+                                      }
+                                    },
+                                    "required": [
+                                      "kind"
+                                    ]
+                                  },
+                                  "then": {
+                                    "not": {
+                                      "required": [
+                                        "value"
+                                      ],
+                                      "properties": {
+                                        "value": {}
+                                      }
+                                    }
+                                  },
+                                  "else": {
+                                    "required": [
+                                      "value"
+                                    ],
+                                    "properties": {
+                                      "value": {}
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      },
+                      "maximumResponseBytes": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 65536
+                      },
+                      "maximumPaths": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 32
+                      }
+                    }
+                  },
+                  "declarations": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "retrySafe",
+                      "matrixFields",
+                      "evidenceDefaults"
+                    ],
+                    "properties": {
+                      "retrySafe": {
+                        "type": "boolean"
+                      },
+                      "matrixFields": {
+                        "type": "array",
+                        "maxItems": 0,
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "evidenceDefaults": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "onPass",
+                          "onFail",
+                          "onError"
+                        ],
+                        "properties": {
+                          "onPass": {
+                            "type": "array",
+                            "minItems": 1,
+                            "maxItems": 1,
+                            "uniqueItems": true,
+                            "items": {
+                              "const": "log"
+                            }
+                          },
+                          "onFail": {
+                            "type": "array",
+                            "minItems": 1,
+                            "maxItems": 1,
+                            "uniqueItems": true,
+                            "items": {
+                              "const": "log"
+                            }
+                          },
+                          "onError": {
+                            "type": "array",
+                            "minItems": 1,
+                            "maxItems": 1,
+                            "uniqueItems": true,
+                            "items": {
+                              "const": "log"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "dependency-trivy": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "processing",
+                  "declarations"
+                ],
+                "properties": {
+                  "processing": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "timeoutMs",
+                      "policy"
+                    ],
+                    "properties": {
+                      "timeoutMs": {
+                        "type": "integer",
+                        "minimum": 1000,
+                        "maximum": 900000
+                      },
+                      "policy": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "profile",
+                          "acceptances"
+                        ],
+                        "properties": {
+                          "profile": {
+                            "const": "strict-v1"
+                          },
+                          "acceptances": {
+                            "type": "array",
+                            "maxItems": 128,
+                            "items": {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "required": [
+                                "findingId",
+                                "reason",
+                                "expiresAt"
+                              ],
+                              "properties": {
+                                "findingId": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 256,
+                                  "pattern": "^[A-Za-z0-9._:@/-]+$"
+                                },
+                                "reason": {
+                                  "type": "string",
+                                  "minLength": 8,
+                                  "maxLength": 1024
+                                },
+                                "expiresAt": {
+                                  "type": "string",
+                                  "format": "date-time"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "declarations": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "retrySafe",
+                      "matrixFields",
+                      "evidenceDefaults"
+                    ],
+                    "properties": {
+                      "retrySafe": {
+                        "type": "boolean"
+                      },
+                      "matrixFields": {
+                        "type": "array",
+                        "maxItems": 0,
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "evidenceDefaults": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "onPass",
+                          "onFail",
+                          "onError"
+                        ],
+                        "properties": {
+                          "onPass": {
+                            "type": "array",
+                            "minItems": 1,
+                            "maxItems": 1,
+                            "uniqueItems": true,
+                            "items": {
+                              "const": "log"
+                            }
+                          },
+                          "onFail": {
+                            "type": "array",
+                            "minItems": 1,
+                            "maxItems": 1,
+                            "uniqueItems": true,
+                            "items": {
+                              "const": "log"
+                            }
+                          },
+                          "onError": {
+                            "type": "array",
+                            "minItems": 1,
+                            "maxItems": 1,
+                            "uniqueItems": true,
+                            "items": {
+                              "const": "log"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "image-trivy": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "processing",
+                  "declarations"
+                ],
+                "properties": {
+                  "processing": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "timeoutMs",
+                      "policy"
+                    ],
+                    "properties": {
+                      "timeoutMs": {
+                        "type": "integer",
+                        "minimum": 1000,
+                        "maximum": 900000
+                      },
+                      "policy": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "profile",
+                          "acceptances"
+                        ],
+                        "properties": {
+                          "profile": {
+                            "const": "strict-v1"
+                          },
+                          "acceptances": {
+                            "type": "array",
+                            "maxItems": 128,
+                            "items": {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "required": [
+                                "findingId",
+                                "reason",
+                                "expiresAt"
+                              ],
+                              "properties": {
+                                "findingId": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 256,
+                                  "pattern": "^[A-Za-z0-9._:@/-]+$"
+                                },
+                                "reason": {
+                                  "type": "string",
+                                  "minLength": 8,
+                                  "maxLength": 1024
+                                },
+                                "expiresAt": {
+                                  "type": "string",
+                                  "format": "date-time"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "declarations": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "retrySafe",
+                      "matrixFields",
+                      "evidenceDefaults"
+                    ],
+                    "properties": {
+                      "retrySafe": {
+                        "type": "boolean"
+                      },
+                      "matrixFields": {
+                        "type": "array",
+                        "maxItems": 0,
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "evidenceDefaults": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "onPass",
+                          "onFail",
+                          "onError"
+                        ],
+                        "properties": {
+                          "onPass": {
+                            "type": "array",
+                            "minItems": 1,
+                            "maxItems": 1,
+                            "uniqueItems": true,
+                            "items": {
+                              "const": "log"
+                            }
+                          },
+                          "onFail": {
+                            "type": "array",
+                            "minItems": 1,
+                            "maxItems": 1,
+                            "uniqueItems": true,
+                            "items": {
+                              "const": "log"
+                            }
+                          },
+                          "onError": {
+                            "type": "array",
+                            "minItems": 1,
+                            "maxItems": 1,
+                            "uniqueItems": true,
+                            "items": {
+                              "const": "log"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "kubernetes-policy": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "processing",
+                  "declarations"
+                ],
+                "properties": {
+                  "processing": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "timeoutMs",
+                      "policy"
+                    ],
+                    "properties": {
+                      "timeoutMs": {
+                        "type": "integer",
+                        "minimum": 1000,
+                        "maximum": 300000
+                      },
+                      "policy": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "profile",
+                          "acceptances"
+                        ],
+                        "properties": {
+                          "profile": {
+                            "const": "strict-v1"
+                          },
+                          "acceptances": {
+                            "type": "array",
+                            "maxItems": 128,
+                            "items": {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "required": [
+                                "findingId",
+                                "reason",
+                                "expiresAt"
+                              ],
+                              "properties": {
+                                "findingId": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 256,
+                                  "pattern": "^[A-Za-z0-9._:@/-]+$"
+                                },
+                                "reason": {
+                                  "type": "string",
+                                  "minLength": 8,
+                                  "maxLength": 1024
+                                },
+                                "expiresAt": {
+                                  "type": "string",
+                                  "format": "date-time"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "declarations": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "retrySafe",
+                      "matrixFields",
+                      "evidenceDefaults"
+                    ],
+                    "properties": {
+                      "retrySafe": {
+                        "type": "boolean"
+                      },
+                      "matrixFields": {
+                        "type": "array",
+                        "maxItems": 0,
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "evidenceDefaults": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "onPass",
+                          "onFail",
+                          "onError"
+                        ],
+                        "properties": {
+                          "onPass": {
+                            "type": "array",
+                            "minItems": 1,
+                            "maxItems": 1,
+                            "uniqueItems": true,
+                            "items": {
+                              "const": "log"
+                            }
+                          },
+                          "onFail": {
+                            "type": "array",
+                            "minItems": 1,
+                            "maxItems": 1,
+                            "uniqueItems": true,
+                            "items": {
+                              "const": "log"
+                            }
+                          },
+                          "onError": {
+                            "type": "array",
+                            "minItems": 1,
+                            "maxItems": 1,
+                            "uniqueItems": true,
+                            "items": {
+                              "const": "log"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "kubernetes-runtime": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "processing",
+                  "declarations"
+                ],
+                "properties": {
+                  "processing": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "timeoutMs",
+                      "policy"
+                    ],
+                    "properties": {
+                      "timeoutMs": {
+                        "type": "integer",
+                        "minimum": 1000,
+                        "maximum": 300000
+                      },
+                      "policy": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "profile",
+                          "acceptances"
+                        ],
+                        "properties": {
+                          "profile": {
+                            "const": "strict-v1"
+                          },
+                          "acceptances": {
+                            "type": "array",
+                            "maxItems": 128,
+                            "items": {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "required": [
+                                "findingId",
+                                "reason",
+                                "expiresAt"
+                              ],
+                              "properties": {
+                                "findingId": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 256,
+                                  "pattern": "^[A-Za-z0-9._:@/-]+$"
+                                },
+                                "reason": {
+                                  "type": "string",
+                                  "minLength": 8,
+                                  "maxLength": 1024
+                                },
+                                "expiresAt": {
+                                  "type": "string",
+                                  "format": "date-time"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "declarations": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "retrySafe",
+                      "matrixFields",
+                      "evidenceDefaults"
+                    ],
+                    "properties": {
+                      "retrySafe": {
+                        "type": "boolean"
+                      },
+                      "matrixFields": {
+                        "type": "array",
+                        "maxItems": 0,
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "evidenceDefaults": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "onPass",
+                          "onFail",
+                          "onError"
+                        ],
+                        "properties": {
+                          "onPass": {
+                            "type": "array",
+                            "minItems": 1,
+                            "maxItems": 1,
+                            "uniqueItems": true,
+                            "items": {
+                              "const": "log"
+                            }
+                          },
+                          "onFail": {
+                            "type": "array",
+                            "minItems": 1,
+                            "maxItems": 1,
+                            "uniqueItems": true,
+                            "items": {
+                              "const": "log"
+                            }
+                          },
+                          "onError": {
+                            "type": "array",
+                            "minItems": 1,
+                            "maxItems": 1,
+                            "uniqueItems": true,
+                            "items": {
+                              "const": "log"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

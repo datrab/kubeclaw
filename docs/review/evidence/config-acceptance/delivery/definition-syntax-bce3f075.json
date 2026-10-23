@@ -1,0 +1,264 @@
+{
+  "scope": "selected immutable Semgrep1.170.0 primary JSONschema (YAML) shape only; no native rule/language-pattern parser or tool effects",
+  "method": "Existing installed Ajv strictSchema/strictTypes diagnostics disabled for primary schema annotations/union types only; no changed schema bytes, broad object substitute, skipped references or added local rules. Native Semgrep parser remains separate.",
+  "records": [
+    {
+      "id": "DLV-C0-BCE3-SEMgrep-SCHEMA-A",
+      "profile": "docs/review/evidence/config-acceptance/delivery/lint-definition-profiles-bce3f075/A.semgrep.yml",
+      "expected": true,
+      "valid": true,
+      "errors": null,
+      "result": "passed"
+    },
+    {
+      "id": "DLV-C0-BCE3-SEMgrep-SCHEMA-A-NO-PATTERN",
+      "expected": false,
+      "valid": false,
+      "errors": [
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/0/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "pattern"
+          },
+          "message": "must have required property 'pattern'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/1/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "patterns"
+          },
+          "message": "must have required property 'patterns'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/2/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "pattern-either"
+          },
+          "message": "must have required property 'pattern-either'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/3/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "pattern-regex"
+          },
+          "message": "must have required property 'pattern-regex'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/4/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "r2c-internal-project-depends-on"
+          },
+          "message": "must have required property 'r2c-internal-project-depends-on'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/5/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "match"
+          },
+          "message": "must have required property 'match'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf",
+          "keyword": "oneOf",
+          "params": {
+            "passingSchemas": null
+          },
+          "message": "must match exactly one schema in oneOf"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/if",
+          "keyword": "if",
+          "params": {
+            "failingKeyword": "else"
+          },
+          "message": "must match \"else\" schema"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/if",
+          "keyword": "if",
+          "params": {
+            "failingKeyword": "then"
+          },
+          "message": "must match \"then\" schema"
+        }
+      ],
+      "result": "passed"
+    },
+    {
+      "id": "DLV-C0-BCE3-SEMgrep-SCHEMA-A-INVALID-SEVERITY",
+      "expected": false,
+      "valid": false,
+      "errors": [
+        {
+          "instancePath": "/rules/0/severity",
+          "schemaPath": "#/properties/rules/items/properties/severity/enum",
+          "keyword": "enum",
+          "params": {
+            "allowedValues": [
+              "ERROR",
+              "WARNING",
+              "INFO",
+              "INVENTORY",
+              "EXPERIMENT",
+              "CRITICAL",
+              "HIGH",
+              "MEDIUM",
+              "LOW"
+            ]
+          },
+          "message": "must be equal to one of the allowed values"
+        }
+      ],
+      "result": "passed"
+    },
+    {
+      "id": "DLV-C0-BCE3-SEMgrep-SCHEMA-B",
+      "profile": "docs/review/evidence/config-acceptance/delivery/lint-definition-profiles-bce3f075/B.semgrep.yml",
+      "expected": true,
+      "valid": true,
+      "errors": null,
+      "result": "passed"
+    },
+    {
+      "id": "DLV-C0-BCE3-SEMgrep-SCHEMA-B-NO-PATTERN",
+      "expected": false,
+      "valid": false,
+      "errors": [
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/0/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "pattern"
+          },
+          "message": "must have required property 'pattern'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/1/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "patterns"
+          },
+          "message": "must have required property 'patterns'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/2/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "pattern-either"
+          },
+          "message": "must have required property 'pattern-either'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/3/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "pattern-regex"
+          },
+          "message": "must have required property 'pattern-regex'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/4/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "r2c-internal-project-depends-on"
+          },
+          "message": "must have required property 'r2c-internal-project-depends-on'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf/5/required",
+          "keyword": "required",
+          "params": {
+            "missingProperty": "match"
+          },
+          "message": "must have required property 'match'"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/else/oneOf",
+          "keyword": "oneOf",
+          "params": {
+            "passingSchemas": null
+          },
+          "message": "must match exactly one schema in oneOf"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/then/if",
+          "keyword": "if",
+          "params": {
+            "failingKeyword": "else"
+          },
+          "message": "must match \"else\" schema"
+        },
+        {
+          "instancePath": "/rules/0",
+          "schemaPath": "#/properties/rules/items/allOf/4/if",
+          "keyword": "if",
+          "params": {
+            "failingKeyword": "then"
+          },
+          "message": "must match \"then\" schema"
+        }
+      ],
+      "result": "passed"
+    },
+    {
+      "id": "DLV-C0-BCE3-SEMgrep-SCHEMA-B-INVALID-SEVERITY",
+      "expected": false,
+      "valid": false,
+      "errors": [
+        {
+          "instancePath": "/rules/0/severity",
+          "schemaPath": "#/properties/rules/items/properties/severity/enum",
+          "keyword": "enum",
+          "params": {
+            "allowedValues": [
+              "ERROR",
+              "WARNING",
+              "INFO",
+              "INVENTORY",
+              "EXPERIMENT",
+              "CRITICAL",
+              "HIGH",
+              "MEDIUM",
+              "LOW"
+            ]
+          },
+          "message": "must be equal to one of the allowed values"
+        }
+      ],
+      "result": "passed"
+    }
+  ],
+  "sourceDigests": {
+    "docs/review/evidence/config-acceptance/delivery/pinned-lint-reader-bce3f075/cli/src/semgrep/semgrep_interfaces/rule_schema_v1.yaml": "c89688567cbd6f964d0bfe9c032dc45b7318b8ed1e099e2a2ae021e9aacce416",
+    "docs/review/evidence/config-acceptance/delivery/check-definition-syntax-bce3f075.cjs": "2440f065699044424a1776d68c946829187258bae5e899a23cc94c7ee15fd189"
+  },
+  "toolIdentity": {
+    "node": "v24.21.0",
+    "ajv": "8.20.0",
+    "js-yaml": "4.3.1"
+  },
+  "acceptance": "INCOMPLETE; structural definition controls only"
+}

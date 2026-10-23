@@ -23,7 +23,7 @@
     "skills/nova/project"
   ],
   "scripts": {
-    "verify:config:components": "tsc --noEmit -p tests/verification/reliability/tsconfig.config-components.json && node --test --test-concurrency=1 tests/verification/reliability/config-component-bundle.test.mts tests/verification/reliability/config-component-generation.test.mjs tests/verification/deployment/config-component-packaging.test.mjs tests/verification/deployment/prism-swarm-config.test.mjs tests/verification/deployment/buster-admission-render.test.mjs skills/prism/tests/swarm-*.test.mts skills/prism/tests/studio-config.test.mts skills/prism/tests/studio-service.test.mts",
+    "verify:config:components": "tsc --noEmit -p tests/verification/reliability/tsconfig.config-components.json && NODE_ENV=test node --test --test-concurrency=1 tests/verification/reliability/config-component-bundle.test.mts tests/verification/reliability/config-component-generation.test.mjs tests/verification/deployment/config-component-packaging.test.mjs tests/verification/deployment/prism-swarm-config.test.mjs tests/verification/deployment/buster-admission-render.test.mjs skills/prism/tests/swarm-*.test.mts skills/prism/tests/studio-config.test.mts skills/prism/tests/studio-service.test.mts",
     "verify:orchestrator:effect-lock-config": "node --test tests/verification/reliability/effect-lock-configuration.test.mjs",
     "verify:nova-journal-scale": "node tests/verification/contracts/check-nova-journal-scale.mts",
     "scan:images": "bash scripts/scan-runtime-images.sh",
@@ -233,19 +233,27 @@
     "verify:lint:policy-delivery": "node skills/nova/plugins/lint/tests/eslint-discipline.test.mjs && node --test tests/verification/deployment/eslint-policy-delivery.test.mjs tests/verification/deployment/eslint-infrastructure-boundaries.test.mjs",
     "verify:buster:runtime-security-policy": "npm run plugin-system:sandbox:build && node --test --test-concurrency=1 tests/verification/contracts/buster-runtime-security-policy.test.mjs && npm run verify:buster:cluster-policy && node tests/verification/contracts/check-pipeline-remote-runtime-config.mts && npm run verify:test-gate:security-cutover",
     "verify:buster:cluster-policy": "npm run plugin-system:sandbox:build && tsc --noEmit -p tests/verification/contracts/tsconfig.buster-cluster-policy.json && node --test --test-concurrency=1 tests/verification/reliability/buster-cluster-entrypoint.test.mjs tests/verification/contracts/buster-cluster-output-consumers.test.mjs tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs tests/verification/contracts/buster-cluster-timing-consumers.test.mjs tests/verification/contracts/buster-cluster-poll-consumers.test.mjs tests/verification/contracts/buster-cluster-capture.test.mjs tests/verification/contracts/buster-cluster-production-route.test.mjs tests/verification/deployment/buster-cluster-invoker-parity.test.mjs && node tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts && node tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts",
-    "verify:buster:cluster-ownership": "node --test --test-concurrency=1 tests/verification/contracts/buster-cluster-ownership.test.mjs"
+    "verify:buster:cluster-ownership": "node --test --test-concurrency=1 tests/verification/contracts/buster-cluster-ownership.test.mjs",
+    "config:prism:sync": "node scripts/generate-prism-chart-config.mjs",
+    "config:prism:check": "node scripts/generate-prism-chart-config.mjs --check",
+    "config:buster:sync": "node scripts/generate-buster-chart-config.mjs",
+    "config:buster:check": "node scripts/generate-buster-chart-config.mjs --check"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "0.5.5",
+    "@playwright/test": "1.62.1",
     "@types/js-yaml": "^4.0.9",
     "ajv": "^8.20.0",
     "ajv-formats": "^3.0.1",
     "eslint": "10.7.0",
     "json-schema-to-typescript": "^15.0.4",
     "knip": "6.27.0",
+    "ms": "2.1.3",
+    "playwright-core": "1.62.1",
     "typescript": "5.9.3",
     "typescript-eslint": "8.64.0",
     "yaml": "2.9.0",
-    "@playwright/test": "1.62.1"
+    "esbuild": "0.28.2"
   },
   "overrides": {
     "fast-uri": "3.1.5",

@@ -1,0 +1,15 @@
+{
+  "runId": "run:fixture-nova",
+  "moduleId": "fixture-module",
+  "attempt": 1,
+  "task": "Implement the fixture task only in the attempt-owned workspace.",
+  "headBefore": "cccccccccccccccccccccccccccccccccccccccc",
+  "workspace": {
+    "repositoryRoot": "/fixture/repository",
+    "workspacePath": "/fixture/worktrees/attempt",
+    "branch": "fixture-attempt",
+    "baseRef": "cccccccccccccccccccccccccccccccccccccccc",
+    "mergeTarget": "fixture-main",
+    "commitMessage": "Fixture implementation"
+  }
+}

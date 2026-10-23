@@ -1,0 +1,133 @@
+{
+  "head": "825530713cd4f5292101bd6bacdb7f7ac88a443f",
+  "tree": "8dbcddf69430fa96193e4583e0856e03a3d1e2cf",
+  "branch": "codex/config-c0-semantic-inventory-20261012",
+  "inputs": [
+    {
+      "path": "charts/kubeclaw/templates/_helpers.tpl",
+      "sha256": "69986722975a973479b9fb1a2c35ab1a1ecb972662e8c19dd03718ac441f5103",
+      "bytes": 3671
+    },
+    {
+      "path": "charts/kubeclaw/templates/_worker-trust-readiness.tpl",
+      "sha256": "f2a66ef5c8228675daa1ad16d29ffd71e298d9c65fefde19aa6588e457e4b67c",
+      "bytes": 6539
+    },
+    {
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be",
+      "bytes": 12202
+    },
+    {
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+      "bytes": 85514
+    },
+    {
+      "path": "charts/kubeclaw/templates/service.yaml",
+      "sha256": "76a347213feffadad635311cc89fdbfb896c6a3f800e8e92528ec9efee280cc2",
+      "bytes": 1187
+    },
+    {
+      "path": "charts/kubeclaw/templates/serviceaccount.yaml",
+      "sha256": "7b7b2e4ba4dc139f6d4953fa242ed70ea20de090bbe30287215f5c7f1349a13f",
+      "bytes": 326
+    },
+    {
+      "path": "charts/kubeclaw/values.yaml",
+      "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+      "bytes": 18792
+    },
+    {
+      "path": "charts/prism/templates/_worker-trust-readiness.tpl",
+      "sha256": "9240a98b2ae24fa5002147972c6aa4eb8c11b89fab7f4ac392b692e4705fccd7",
+      "bytes": 6533
+    },
+    {
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc",
+      "bytes": 19487
+    },
+    {
+      "path": "charts/prism/templates/serviceaccounts.yaml",
+      "sha256": "314f1d925e667fc98e5000486599431ea2ce7e189f420576378264c10e0f02be",
+      "bytes": 215
+    },
+    {
+      "path": "charts/prism/templates/services.yaml",
+      "sha256": "abae201f362dacc4e4422c8867d57113483eb443d5cf964e2a65996bf9683a85",
+      "bytes": 1700
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+      "bytes": 14944
+    },
+    {
+      "path": "charts/prism/values.schema.json",
+      "sha256": "7588db4e045bc4d52c1b46b4bbffeac238f12c9bd074b71aa9592c4ed24589c3",
+      "bytes": 13136
+    },
+    {
+      "path": "charts/prism/values.yaml",
+      "sha256": "8b13da5c725b9eff02d1e12dae6f799ca74a6b01a83cb714a2777a915e98cee8",
+      "bytes": 3362
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/candidate-ledger.json",
+      "sha256": "a5066c74fe2dbd60c88c75d1e17264b98f05df352823cf3b6e39bc206fae09d1",
+      "bytes": 4174777
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/remaining-batches.json",
+      "sha256": "c0fc9f0996ecdecab945ba7c8b9810d3211e8c418631fddc03ed91a71c4fefad",
+      "bytes": 36482
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-31/README.md",
+      "sha256": "359bdcd06e8eb76b69659bdb095c5a34b8357323eea749b7a1fbef7f870039dc",
+      "bytes": 847
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-31/define.py",
+      "sha256": "997d8abcf3aaf98d4cfc4cdd9b4ffbe78f1a5115510b8146770a7a170c94b532",
+      "bytes": 10752
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-31/local-check.json",
+      "sha256": "7d323e6010dc2f2528e5933bbc189b7fe95cd8d509a769ef50fdd0aeb30f4bec",
+      "bytes": 125
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-31/package-manifest.json",
+      "sha256": "bec3988ac8608eadf897135167b79a0b63c1d548fabae3207d93add1c1ededb6",
+      "bytes": 881
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-31/source-field-definitions.json",
+      "sha256": "691757948cefcba4383e0321e4497ebc02c30223a62a43741c1fbb81dc1c47bd",
+      "bytes": 111725
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/candidate-dispositions.json",
+      "sha256": "2d5267f5a7b0bbc80fd2ba8cf680011e59d7cbdb262e36c7e0031765dc0a2ad6",
+      "bytes": 1849332
+    },
+    {
+      "path": "docs/review/remediation/GOAL-START.md",
+      "sha256": "688334e1ccaa30fd9497e605ef0a9de1fb67fbeae51c4a312b15e15a12fa085b",
+      "bytes": 6788
+    },
+    {
+      "path": "docs/review/remediation/OPENCLAW-CONFIG-GOAL.md",
+      "sha256": "fe9215a2674b95facef1d6fe0920eab2fa1f4830e765624692152a28b1731127",
+      "bytes": 21857
+    },
+    {
+      "path": "scripts/deploy.sh",
+      "sha256": "c90cc9c082b3adba89c458a9e28853afa77682a6c7066a7641c70aac749d0960",
+      "bytes": 150066
+    }
+  ],
+  "note": "Dirty/untracked inputs are identified by exact file digests; no acceptance derived from HEAD alone."
+}

@@ -1,3 +1,4 @@
+import { retainedCoreRuntimePolicy } from '../skills/nova/core/execution/engine-snapshots.ts';
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -84,7 +85,7 @@ export async function retireWaitValue(input) {
       runJournalHead: source.runJournalHead, snapshotDigest: source.snapshotDigest, effectKey: scope.intent.operatorEffectKey } };
   const resolve = ref => resolveRetainedCoreWait(ref, { storageRoot: scope.novaStorageRoot,
     waitRoot: scope.intent.waitRoot, orchestratorIssuerId: scope.orchestratorIssuerId });
-  return withRunMutationLock(root, async signal => {
+  return withRunMutationLock(root, retainedCoreRuntimePolicy(root), async signal => {
     signal.throwIfAborted();
     const initial = retainedRun(authorityScope), config = initial.configuration;
     for (const [name, bytes] of [['events.jsonl', source.eventsPrefixBytes], ['effects.jsonl', source.effectsPrefixBytes],

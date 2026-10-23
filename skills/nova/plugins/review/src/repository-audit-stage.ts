@@ -3,7 +3,7 @@ import { canonicalJson, sha256Text, type ArtifactRef, type PluginInvocationConte
 
 import { reusableReviewResult, selectedReviewIncomplete } from './review-completion.ts';
 import { ReviewPhaseAdmission } from './review-phase-admission.ts';
-import { getReviewPolicyProfile } from './review-policy-profiles.ts';
+import { getReviewPolicyProfile, selectedReviewCacheReadConcurrency } from './review-policy-profiles.ts';
 import { resolveReviewPolicy } from './review-policy-resolver.ts';
 import { freezeReviewRevision } from './review-repository.ts';
 import { parseReviewSnapshotInventory } from './review-snapshot-inventory.ts';
@@ -20,7 +20,7 @@ import { buildScalableVerificationDispatchPayload, buildScalableVerificationJobs
 import { compareCodeUnits } from './review-ordering.ts';
 import { REVIEW_HARD_LIMITS } from './review-hard-limits.ts';
 import { buildReviewInventoryLookup } from './review-inventory-lookup.ts';
-import { parseRepositoryReviewInput, type ResolvedRepositoryReviewProfile } from './repository-review-profile.ts';
+import { selectedRepositoryGrades, parseRepositoryReviewInput, type ResolvedRepositoryReviewProfile } from './repository-review-profile.ts';
 import { repositoryCompleteness, repositoryExecutionFacts, repositoryPlanFacts,
   repositoryUsageAccounting } from './repository-audit-results.ts';
 import { estimatedReviewCostUsd, reserveReviewAttempts, reserveReviewRuntimePrompt, selectFittingCandidates,
@@ -38,6 +38,7 @@ interface AuditConfig {
   readonly reviewerThinking: string;
   readonly profile: string;
   readonly policy?: unknown;
+  readonly ownedPolicyProfiles?: unknown;
 }
 class RepositoryAuditIntegrityError extends Error {}
 class RepositoryAuditInfrastructureError extends Error {}
@@ -66,6 +67,7 @@ interface AuditCacheSummary {
   readonly verification: AuditCacheRunSummary;
 }
 interface AuditRuntime {
+  readonly cacheReadConcurrency: number;
   readonly cache: RepositoryAuditArtifactCache;
   readonly agent: string;
   readonly context: PluginInvocationContext;
@@ -99,8 +101,8 @@ interface DispatchAccountingSnapshot {
   readonly verificationInputTokens: number;
 }
 
-function parseInput(value: unknown): AuditInput {
-  return Object.freeze({ reviewProfile: parseRepositoryReviewInput(value) });
+function parseInput(value: unknown, context:PluginInvocationContext): AuditInput {
+  return Object.freeze({ reviewProfile: parseRepositoryReviewInput(value, selectedRepositoryGrades(context.contract.config)) });
 }
 
 function configText(value: unknown, fallback?: string): string {
@@ -119,7 +121,8 @@ function stageConfig(context: PluginInvocationContext): AuditConfig {
     || !reviewerAgentId || !reviewerThinking || !profile) {
     throw new Error('repository audit config is invalid');
   }
-  return { agent, reviewerModel, reviewerRuntime: reviewerRuntime as ReviewRuntimeIdentity['runtime'],
+  if(value.ownedPolicyProfiles !== undefined && Object.hasOwn(value,'policy'))throw new Error('REVIEW_POLICY_COMPETING_AUTHOR');
+  return { ...(value.ownedPolicyProfiles === undefined ? {} : {ownedPolicyProfiles:value.ownedPolicyProfiles}), agent, reviewerModel, reviewerRuntime: reviewerRuntime as ReviewRuntimeIdentity['runtime'],
     reviewerAgentId, reviewerThinking, profile,
     ...(value.policy === undefined ? {} : { policy: value.policy }) };
 }
@@ -354,7 +357,7 @@ async function verifiedReduction(
     beforeDispatch: (payload: Readonly<Record<string, unknown>>) => dispatchBudget.reserve(payload, phase),
     beforeRetry: () => admission.retry(),
   }; };
-  const runtime = { cache, agent: config.agent, context, execution: execution('initial'), expectedRuntime };
+  const runtime = { cache, cacheReadConcurrency: selectedReviewCacheReadConcurrency(context.contract.config), agent: config.agent, context, execution: execution('initial'), expectedRuntime };
   const reviewRun = await cachedReviewJobs(compilation.jobs, reviewIdentity, runtime);
   const firstResults = compilation.jobs.map(({ id }) => reviewRun.values.get(id) as ScalableReviewJobResult);
   const completeSources = new Map<string, ScalableReviewSource>(compilation.jobs.filter(({ kind }) => kind === 'component')
@@ -424,6 +427,7 @@ async function verifiedReduction(
   }
   const requestedVerificationJobs = buildScalableVerificationJobs(preflight, finalJobs, policyDigest, {
     tokenizerEncoding: compilation.profile.tokenizerEncoding,
+    promptTokenBoundaryReserve: compilation.profile.promptTokenBoundaryReserve,
     maxPromptBytes: compilation.profile.maxPromptBytesPerJob,
     maxInputTokens: Math.min(compilation.profile.maxInputTokensPerJob,
       compilation.profile.maxContextTokensPerJob - compilation.profile.maxOutputTokensPerJob),
@@ -492,7 +496,7 @@ function enforceExpansionBudget(
   }
   const reservation = reserveReviewAttempts(jobs.map(buildScalableReviewDispatchPayload),
     compilation.profile.tokenizerEncoding, compilation.profile.maxRetries,
-    compilation.profile.maxRetryAttemptsPerPhase);
+    compilation.profile.maxRetryAttemptsPerPhase, compilation.profile.promptTokenBoundaryReserve);
   const inputTokens = reservation.inputTokens;
   const outputTokens = reservation.attempts * compilation.profile.maxOutputTokensPerJob;
   const cost = estimatedReviewCostUsd({ inputTokens, outputTokens,
@@ -531,10 +535,10 @@ function verificationJobAccounting(
   compilation: ReturnType<typeof compileScalableReview>, jobs: readonly ScalableVerificationJob[],
 ): VerificationAccounting {
   const metrics = jobs.map((job) => reserveReviewRuntimePrompt(
-    buildScalableVerificationDispatchPayload(job), compilation.profile.tokenizerEncoding));
+    buildScalableVerificationDispatchPayload(job), compilation.profile.tokenizerEncoding, compilation.profile.promptTokenBoundaryReserve));
   const reservation = reserveReviewAttempts(jobs.map(buildScalableVerificationDispatchPayload),
     compilation.profile.tokenizerEncoding, compilation.profile.maxRetries,
-    compilation.profile.maxRetryAttemptsPerPhase);
+    compilation.profile.maxRetryAttemptsPerPhase, compilation.profile.promptTokenBoundaryReserve);
   const inputTokens = reservation.inputTokens;
   const reservedOutputTokens = reservation.attempts * compilation.profile.maxOutputTokensPerJob;
   return Object.freeze({ jobs: jobs.length,
@@ -592,7 +596,7 @@ async function cachedReviewJobs(
   }, (unit, value) => {
     const job = jobs.find(({ id }) => id === unit.id);
     return job !== undefined && reusableReviewResult(job, value, allowContextRequest);
-  }, runtime.cache.profile);
+  }, runtime.cache.profile, runtime.cacheReadConcurrency);
   run.values.forEach((value) => assertReviewRuntimeIdentity(value.runtime, runtime.expectedRuntime));
   return run;
 }
@@ -612,7 +616,7 @@ async function cachedVerificationJobs(
   }, (unit, value) => {
     const job = jobs.find(({ id }) => id === unit.id);
     return job !== undefined && reduceScalableReview([job], [value]).incompleteJobs.length === 0;
-  }, runtime.cache.profile);
+  }, runtime.cache.profile, runtime.cacheReadConcurrency);
   run.values.forEach((value) => assertReviewRuntimeIdentity(value.runtime, runtime.expectedRuntime));
   return run;
 }
@@ -685,9 +689,10 @@ async function storeFollowUpStatus(
 async function runRepositoryAudit(
   input: unknown, context: PluginInvocationContext,
 ): Promise<StageResult> {
-    const parsed = parseInput(input), config = stageConfig(context);
-    const policy = resolveReviewPolicy({ builtIn: getReviewPolicyProfile(config.profile),
-      ...(config.policy === undefined ? {} : { settingsFile: config.policy }) });
+    const parsed = parseInput(input, context), config = stageConfig(context);
+    const policy = config.ownedPolicyProfiles === undefined
+      ? resolveReviewPolicy({ builtIn: getReviewPolicyProfile(config.profile), ...(config.policy === undefined ? {} : { settingsFile: config.policy }) })
+      : resolveReviewPolicy({selectedFile:getReviewPolicyProfile(config.profile,config.ownedPolicyProfiles)});
     if (parsed.reviewProfile.enabledLenses.includes('simplification') && !policy.policy.simplification.enabled) {
       throw new RepositoryAuditIntegrityError('repository audit simplification lens requires an enabled simplification policy');
     }

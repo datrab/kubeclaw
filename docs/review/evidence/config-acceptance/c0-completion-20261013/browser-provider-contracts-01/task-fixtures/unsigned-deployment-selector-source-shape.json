@@ -1,0 +1,23 @@
+{
+  "inputs": [
+    {
+      "name": "deployment",
+      "kind": "value",
+      "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+      "value": {
+        "schemaVersion": "kubernetes-deployment-fixture.v1",
+        "endpoints": [
+          {
+            "name": "service-a",
+            "url": "http://service-a.test-browser-fixture.svc.cluster.local:18080"
+          },
+          {
+            "name": "service-b",
+            "url": "http://service-b.test-browser-fixture.svc.cluster.local:18081"
+          }
+        ]
+      }
+    }
+  ],
+  "qualification": "Parser shape definition only, not authentic lease/input/grant/source/producer receipt; exact real producer requires matching Service ports/name/namespace and original grants"
+}

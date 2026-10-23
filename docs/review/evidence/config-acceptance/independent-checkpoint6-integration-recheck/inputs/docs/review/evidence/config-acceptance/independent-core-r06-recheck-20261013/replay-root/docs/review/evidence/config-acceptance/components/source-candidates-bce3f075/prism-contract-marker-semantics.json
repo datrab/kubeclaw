@@ -1,0 +1,1984 @@
+{
+  "dispositions": [
+    {
+      "candidateId": "SRC-5682a4f4a1b987dd",
+      "source": "contracts/pipeline-worker-core/v1/src/digest.ts",
+      "line": 41,
+      "sourceSha256": "10c61ec122ca6e65c7deef2c059a19ad70627cf65bdf1eb65f0ac2539457d780",
+      "exactText": "  return `{${Object.entries(value as Record<string, unknown>)",
+      "reader": {
+        "name": "canonicalJson",
+        "parents": [],
+        "startLine": 22,
+        "endLine": 45
+      },
+      "classification": "protocol-invariant",
+      "reason": "Canonical JSON sorted Object.entries serialization/hashing is wireidentity/digest algorithm, not ENV access (discovery falsepositive).",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-ebf7b04f4d29d2a2",
+      "source": "contracts/pipeline-worker-core/v1/src/resource-validation-v2.ts",
+      "line": 23,
+      "sourceSha256": "9c75271a9830c86faa484acaaa52e042d03a56c53b027d4aeae5f8531d06e54e",
+      "exactText": "  const observed=accounting.observations[metric];const capability=accounting.capabilities[metric];const budget=accounting.budgets[metric];",
+      "reader": {
+        "name": "accountingErrors",
+        "parents": [],
+        "startLine": 20,
+        "endLine": 31
+      },
+      "classification": "generated-binding",
+      "reason": "v2 resultaccounting observation/capability/requested budget, actualevidence/specialist serialized bytes/result/log bounds and claimabsolute window must match original accepted envelope. Requested unavailable/excess cannotcompleted. All accepted budget producer policies separately parentPrism/Buster/task-specific640 coordinates; no newnumeric policy/default at validator.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-afb46a862af2aba2",
+      "source": "contracts/pipeline-worker-core/v1/src/resource-validation-v2.ts",
+      "line": 28,
+      "sourceSha256": "9c75271a9830c86faa484acaaa52e042d03a56c53b027d4aeae5f8531d06e54e",
+      "exactText": "  if(result.state==='completed' && budget.state==='requested' && (observed.status!=='observed' || capability.measurement==='unavailable' || observed.value>budget.limit))errors.push(`${metric}: requested resource budget was not satisfied`);",
+      "reader": {
+        "name": "accountingErrors",
+        "parents": [],
+        "startLine": 20,
+        "endLine": 31
+      },
+      "classification": "generated-binding",
+      "reason": "v2 resultaccounting observation/capability/requested budget, actualevidence/specialist serialized bytes/result/log bounds and claimabsolute window must match original accepted envelope. Requested unavailable/excess cannotcompleted. All accepted budget producer policies separately parentPrism/Buster/task-specific640 coordinates; no newnumeric policy/default at validator.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-2c2ac88045e1466a",
+      "source": "contracts/pipeline-worker-core/v1/src/resource-validation-v2.ts",
+      "line": 50,
+      "sourceSha256": "9c75271a9830c86faa484acaaa52e042d03a56c53b027d4aeae5f8531d06e54e",
+      "exactText": " if(evidenceBytes>envelope.limits.evidenceBytes || evidenceBytes!==result.resources.evidenceBytes)errors.push('evidence bytes do not match accepted limits and receipt');",
+      "reader": {
+        "name": "resultLimitErrors",
+        "parents": [],
+        "startLine": 45,
+        "endLine": 58
+      },
+      "classification": "generated-binding",
+      "reason": "v2 resultaccounting observation/capability/requested budget, actualevidence/specialist serialized bytes/result/log bounds and claimabsolute window must match original accepted envelope. Requested unavailable/excess cannotcompleted. All accepted budget producer policies separately parentPrism/Buster/task-specific640 coordinates; no newnumeric policy/default at validator.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-0df3219425694d32",
+      "source": "contracts/pipeline-worker-core/v1/src/resource-validation-v2.ts",
+      "line": 51,
+      "sourceSha256": "9c75271a9830c86faa484acaaa52e042d03a56c53b027d4aeae5f8531d06e54e",
+      "exactText": " if(result.resources.logBytes>envelope.limits.logBytes || result.resources.resultBytes>envelope.limits.resultBytes)errors.push('log/result bytes exceed accepted limits');",
+      "reader": {
+        "name": "resultLimitErrors",
+        "parents": [],
+        "startLine": 45,
+        "endLine": 58
+      },
+      "classification": "generated-binding",
+      "reason": "v2 resultaccounting observation/capability/requested budget, actualevidence/specialist serialized bytes/result/log bounds and claimabsolute window must match original accepted envelope. Requested unavailable/excess cannotcompleted. All accepted budget producer policies separately parentPrism/Buster/task-specific640 coordinates; no newnumeric policy/default at validator.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-aef6e7039a2275ee",
+      "source": "contracts/pipeline-worker-core/v1/src/resource-validation-v2.ts",
+      "line": 54,
+      "sourceSha256": "9c75271a9830c86faa484acaaa52e042d03a56c53b027d4aeae5f8531d06e54e",
+      "exactText": "  if(actualResultBytes!==result.resources.resultBytes || actualResultBytes>envelope.limits.resultBytes)errors.push('actual specialist result bytes do not match accepted limit and receipt');",
+      "reader": {
+        "name": "resultLimitErrors",
+        "parents": [],
+        "startLine": 45,
+        "endLine": 58
+      },
+      "classification": "generated-binding",
+      "reason": "v2 resultaccounting observation/capability/requested budget, actualevidence/specialist serialized bytes/result/log bounds and claimabsolute window must match original accepted envelope. Requested unavailable/excess cannotcompleted. All accepted budget producer policies separately parentPrism/Buster/task-specific640 coordinates; no newnumeric policy/default at validator.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-67c430e72eaac66f",
+      "source": "contracts/pipeline-worker-core/v1/src/resource-validation-v2.ts",
+      "line": 56,
+      "sourceSha256": "9c75271a9830c86faa484acaaa52e042d03a56c53b027d4aeae5f8531d06e54e",
+      "exactText": " if(result.state==='completed' && (Date.parse(result.startedAt)<Date.parse(envelope.claim.claimedAt) || Date.parse(result.completedAt)>=Date.parse(envelope.claim.expiresAt)))errors.push('completed result falls outside accepted claim window');",
+      "reader": {
+        "name": "resultLimitErrors",
+        "parents": [],
+        "startLine": 45,
+        "endLine": 58
+      },
+      "classification": "generated-binding",
+      "reason": "v2 resultaccounting observation/capability/requested budget, actualevidence/specialist serialized bytes/result/log bounds and claimabsolute window must match original accepted envelope. Requested unavailable/excess cannotcompleted. All accepted budget producer policies separately parentPrism/Buster/task-specific640 coordinates; no newnumeric policy/default at validator.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-57cb00ca4eabc545",
+      "source": "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts",
+      "line": 23,
+      "sourceSha256": "00332a01a4674616f0859a83d704771b497d0c0d4220629a35b9a7414f924784",
+      "exactText": "    const budget = result.resourceAccounting.budgets[metric];",
+      "reader": {
+        "name": "accountingErrors",
+        "parents": [],
+        "startLine": 19,
+        "endLine": 31
+      },
+      "classification": "generated-binding",
+      "reason": "v3 realobserved safecounters equalresultresources; requestedbudget/capabilities/profile matchoriginalaccepted envelope; evidence uniqueIDs/bytes/files andlog/result/claim times validated. Recovery cannotfilloldbudgets fromcurrentprofile. Metricloopbudgetfield references are task/modeldata not independent CONFIGauthors.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-8a4e8d06736d60dd",
+      "source": "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts",
+      "line": 25,
+      "sourceSha256": "00332a01a4674616f0859a83d704771b497d0c0d4220629a35b9a7414f924784",
+      "exactText": "      if (!Number.isSafeInteger(observation.value) || result.resources[metric] !== observation.value) errors.push(`${metric}: invalid or inconsistent observation`);",
+      "reader": {
+        "name": "accountingErrors",
+        "parents": [],
+        "startLine": 19,
+        "endLine": 31
+      },
+      "classification": "generated-binding",
+      "reason": "v3 realobserved safecounters equalresultresources; requestedbudget/capabilities/profile matchoriginalaccepted envelope; evidence uniqueIDs/bytes/files andlog/result/claim times validated. Recovery cannotfilloldbudgets fromcurrentprofile. Metricloopbudgetfield references are task/modeldata not independent CONFIGauthors.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-86dc939a3781a657",
+      "source": "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts",
+      "line": 27,
+      "sourceSha256": "00332a01a4674616f0859a83d704771b497d0c0d4220629a35b9a7414f924784",
+      "exactText": "    if (result.state === 'completed' && budget.state === 'requested'",
+      "reader": {
+        "name": "accountingErrors",
+        "parents": [],
+        "startLine": 19,
+        "endLine": 31
+      },
+      "classification": "generated-binding",
+      "reason": "v3 realobserved safecounters equalresultresources; requestedbudget/capabilities/profile matchoriginalaccepted envelope; evidence uniqueIDs/bytes/files andlog/result/claim times validated. Recovery cannotfilloldbudgets fromcurrentprofile. Metricloopbudgetfield references are task/modeldata not independent CONFIGauthors.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-06bc4d6b59e26c57",
+      "source": "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts",
+      "line": 28,
+      "sourceSha256": "00332a01a4674616f0859a83d704771b497d0c0d4220629a35b9a7414f924784",
+      "exactText": "      && (observation.status !== 'observed' || observation.value > budget.limit)) errors.push(`${metric}: requested budget was not satisfied`);",
+      "reader": {
+        "name": "accountingErrors",
+        "parents": [],
+        "startLine": 19,
+        "endLine": 31
+      },
+      "classification": "generated-binding",
+      "reason": "v3 realobserved safecounters equalresultresources; requestedbudget/capabilities/profile matchoriginalaccepted envelope; evidence uniqueIDs/bytes/files andlog/result/claim times validated. Recovery cannotfilloldbudgets fromcurrentprofile. Metricloopbudgetfield references are task/modeldata not independent CONFIGauthors.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-0c6cc12a9bfa267b",
+      "source": "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts",
+      "line": 42,
+      "sourceSha256": "00332a01a4674616f0859a83d704771b497d0c0d4220629a35b9a7414f924784",
+      "exactText": "      const budget = envelope.resourceBudgets[metric];",
+      "reader": {
+        "name": "checkWorkerResourceContractV3",
+        "parents": [],
+        "startLine": 33,
+        "endLine": 47
+      },
+      "classification": "generated-binding",
+      "reason": "v3 realobserved safecounters equalresultresources; requestedbudget/capabilities/profile matchoriginalaccepted envelope; evidence uniqueIDs/bytes/files andlog/result/claim times validated. Recovery cannotfilloldbudgets fromcurrentprofile. Metricloopbudgetfield references are task/modeldata not independent CONFIGauthors.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-45fad50cc81d0e1a",
+      "source": "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts",
+      "line": 43,
+      "sourceSha256": "00332a01a4674616f0859a83d704771b497d0c0d4220629a35b9a7414f924784",
+      "exactText": "      if (budget.state === 'requested' && !Number.isSafeInteger(budget.limit)) errors.push(`${metric}: unsafe budget integer`);",
+      "reader": {
+        "name": "checkWorkerResourceContractV3",
+        "parents": [],
+        "startLine": 33,
+        "endLine": 47
+      },
+      "classification": "generated-binding",
+      "reason": "v3 realobserved safecounters equalresultresources; requestedbudget/capabilities/profile matchoriginalaccepted envelope; evidence uniqueIDs/bytes/files andlog/result/claim times validated. Recovery cannotfilloldbudgets fromcurrentprofile. Metricloopbudgetfield references are task/modeldata not independent CONFIGauthors.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-716b739be4cecd45",
+      "source": "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts",
+      "line": 72,
+      "sourceSha256": "00332a01a4674616f0859a83d704771b497d0c0d4220629a35b9a7414f924784",
+      "exactText": "    || canonicalJson(envelope.profile.resourceCapabilities) !== canonicalJson(result.resourceAccounting.capabilities)) errors.push('native result policy does not match accepted attempt');",
+      "reader": {
+        "name": "checkWorkerNativeResultBinding",
+        "parents": [],
+        "startLine": 62,
+        "endLine": 75
+      },
+      "classification": "generated-binding",
+      "reason": "v3 realobserved safecounters equalresultresources; requestedbudget/capabilities/profile matchoriginalaccepted envelope; evidence uniqueIDs/bytes/files andlog/result/claim times validated. Recovery cannotfilloldbudgets fromcurrentprofile. Metricloopbudgetfield references are task/modeldata not independent CONFIGauthors.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-e93f46c40ecb090f",
+      "source": "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts",
+      "line": 80,
+      "sourceSha256": "00332a01a4674616f0859a83d704771b497d0c0d4220629a35b9a7414f924784",
+      "exactText": "  if (result.evidence.length > envelope.limits.evidenceFiles || new Set(result.evidence.map(item => item.evidenceId)).size !== result.evidence.length",
+      "reader": {
+        "name": "resultLimits",
+        "parents": [],
+        "startLine": 77,
+        "endLine": 87
+      },
+      "classification": "generated-binding",
+      "reason": "v3 realobserved safecounters equalresultresources; requestedbudget/capabilities/profile matchoriginalaccepted envelope; evidence uniqueIDs/bytes/files andlog/result/claim times validated. Recovery cannotfilloldbudgets fromcurrentprofile. Metricloopbudgetfield references are task/modeldata not independent CONFIGauthors.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-b58330b11bc9937c",
+      "source": "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts",
+      "line": 81,
+      "sourceSha256": "00332a01a4674616f0859a83d704771b497d0c0d4220629a35b9a7414f924784",
+      "exactText": "    || evidenceBytes !== result.resources.evidenceBytes || evidenceBytes > envelope.limits.evidenceBytes) errors.push('native result evidence exceeds or differs from accepted limits');",
+      "reader": {
+        "name": "resultLimits",
+        "parents": [],
+        "startLine": 77,
+        "endLine": 87
+      },
+      "classification": "generated-binding",
+      "reason": "v3 realobserved safecounters equalresultresources; requestedbudget/capabilities/profile matchoriginalaccepted envelope; evidence uniqueIDs/bytes/files andlog/result/claim times validated. Recovery cannotfilloldbudgets fromcurrentprofile. Metricloopbudgetfield references are task/modeldata not independent CONFIGauthors.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-a30bde8e6768aa0d",
+      "source": "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts",
+      "line": 82,
+      "sourceSha256": "00332a01a4674616f0859a83d704771b497d0c0d4220629a35b9a7414f924784",
+      "exactText": "  if (result.resources.logBytes > envelope.limits.logBytes || result.resources.resultBytes > envelope.limits.resultBytes) errors.push('native result output exceeds accepted limits');",
+      "reader": {
+        "name": "resultLimits",
+        "parents": [],
+        "startLine": 77,
+        "endLine": 87
+      },
+      "classification": "generated-binding",
+      "reason": "v3 realobserved safecounters equalresultresources; requestedbudget/capabilities/profile matchoriginalaccepted envelope; evidence uniqueIDs/bytes/files andlog/result/claim times validated. Recovery cannotfilloldbudgets fromcurrentprofile. Metricloopbudgetfield references are task/modeldata not independent CONFIGauthors.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-09ce1b9ee65a642f",
+      "source": "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts",
+      "line": 85,
+      "sourceSha256": "00332a01a4674616f0859a83d704771b497d0c0d4220629a35b9a7414f924784",
+      "exactText": "    || Date.parse(result.completedAt) >= Date.parse(envelope.claim.expiresAt))) errors.push('native result outside accepted claim window');",
+      "reader": {
+        "name": "resultLimits",
+        "parents": [],
+        "startLine": 77,
+        "endLine": 87
+      },
+      "classification": "generated-binding",
+      "reason": "v3 realobserved safecounters equalresultresources; requestedbudget/capabilities/profile matchoriginalaccepted envelope; evidence uniqueIDs/bytes/files andlog/result/claim times validated. Recovery cannotfilloldbudgets fromcurrentprofile. Metricloopbudgetfield references are task/modeldata not independent CONFIGauthors.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-d7678afc4dc97764",
+      "source": "contracts/pipeline-worker-core/v1/src/trust.ts",
+      "line": 33,
+      "sourceSha256": "c650fdbe7f43b422f36d050df291d2a00fdd4bc694a1dae5d6236b4814743cd5",
+      "exactText": "  if (value.schemaVersion !== 'worker-trust-envelope.v1' || value.algorithm !== 'ed25519'",
+      "reader": {
+        "name": "verifyWorkerTrustEnvelope",
+        "parents": [],
+        "startLine": 25,
+        "endLine": 44
+      },
+      "classification": "protocol-invariant",
+      "reason": "Public signed workerTrustEnvelope v1/ed25519, suppliedexpectedissuer/audience/purpose, valid issued/expires and realnow interval checks; helper mustreceive explicit realkey/expectations and strictschema separately. No production service caller discovered for this trust-envelope API; actual proxiedSPIFFE auth separate.13coordinates declaredpubliconly.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-daee214a182e5374",
+      "source": "contracts/pipeline-worker-core/v1/src/trust.ts",
+      "line": 34,
+      "sourceSha256": "c650fdbe7f43b422f36d050df291d2a00fdd4bc694a1dae5d6236b4814743cd5",
+      "exactText": "    || value.issuer !== expected.issuer || value.audience !== expected.audience",
+      "reader": {
+        "name": "verifyWorkerTrustEnvelope",
+        "parents": [],
+        "startLine": 25,
+        "endLine": 44
+      },
+      "classification": "protocol-invariant",
+      "reason": "Public signed workerTrustEnvelope v1/ed25519, suppliedexpectedissuer/audience/purpose, valid issued/expires and realnow interval checks; helper mustreceive explicit realkey/expectations and strictschema separately. No production service caller discovered for this trust-envelope API; actual proxiedSPIFFE auth separate.13coordinates declaredpubliconly.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-31037d1c31e2bee9",
+      "source": "contracts/pipeline-worker-core/v1/src/trust.ts",
+      "line": 35,
+      "sourceSha256": "c650fdbe7f43b422f36d050df291d2a00fdd4bc694a1dae5d6236b4814743cd5",
+      "exactText": "    || value.purpose !== expected.purpose || !Number.isFinite(issuedAt) || !Number.isFinite(expiresAt)",
+      "reader": {
+        "name": "verifyWorkerTrustEnvelope",
+        "parents": [],
+        "startLine": 25,
+        "endLine": 44
+      },
+      "classification": "protocol-invariant",
+      "reason": "Public signed workerTrustEnvelope v1/ed25519, suppliedexpectedissuer/audience/purpose, valid issued/expires and realnow interval checks; helper mustreceive explicit realkey/expectations and strictschema separately. No production service caller discovered for this trust-envelope API; actual proxiedSPIFFE auth separate.13coordinates declaredpubliconly.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-07b88084fa1dd0c5",
+      "source": "contracts/pipeline-worker-core/v1/src/trust.ts",
+      "line": 36,
+      "sourceSha256": "c650fdbe7f43b422f36d050df291d2a00fdd4bc694a1dae5d6236b4814743cd5",
+      "exactText": "    || expiresAt <= issuedAt || issuedAt > now || expiresAt <= now) return false;",
+      "reader": {
+        "name": "verifyWorkerTrustEnvelope",
+        "parents": [],
+        "startLine": 25,
+        "endLine": 44
+      },
+      "classification": "protocol-invariant",
+      "reason": "Public signed workerTrustEnvelope v1/ed25519, suppliedexpectedissuer/audience/purpose, valid issued/expires and realnow interval checks; helper mustreceive explicit realkey/expectations and strictschema separately. No production service caller discovered for this trust-envelope API; actual proxiedSPIFFE auth separate.13coordinates declaredpubliconly.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-26bb329b8a57db62",
+      "source": "contracts/pipeline-worker-core/v1/src/validation.ts",
+      "line": 56,
+      "sourceSha256": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+      "exactText": "    if (!error || typeof error !== 'object') return String(error);",
+      "reader": {
+        "name": "errorText",
+        "parents": [],
+        "startLine": 53,
+        "endLine": 60
+      },
+      "classification": "nonsetting",
+      "reason": "Error-object normalization and instancePath/message absentfallback labels produce diagnostic text only; never defaults policy/acceptedpayload.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-4e730818b5735904",
+      "source": "contracts/pipeline-worker-core/v1/src/validation.ts",
+      "line": 58,
+      "sourceSha256": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+      "exactText": "    return `${item.instancePath || '/'} ${item.message || 'is invalid'}`;",
+      "reader": {
+        "name": "errorText",
+        "parents": [],
+        "startLine": 53,
+        "endLine": 60
+      },
+      "classification": "nonsetting",
+      "reason": "Error-object normalization and instancePath/message absentfallback labels produce diagnostic text only; never defaults policy/acceptedpayload.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-ddf39d12ea3ee5d2",
+      "source": "skills/prism/config/native-worker.ts",
+      "line": 7,
+      "sourceSha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "exactText": "export function prismEngineContentDigest(environment: NodeJS.ProcessEnv = process.env): string | undefined {",
+      "reader": {
+        "name": "prismEngineContentDigest",
+        "parents": [],
+        "startLine": 7,
+        "endLine": 13
+      },
+      "classification": "generated-binding",
+      "reason": "StartupENV snapshot parameter API and required normalizednon-root locator helper; legacy PRISM_NATIVE_MAXIMUM_INPUT_BYTES rejects presence, assignedchildlimit comes from actual parentselected ingress. Actual current source fields/handoffs parent21 trustsurface, not optionalconfiguration returnedfrom missingroot.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-1d2d62990956ba29",
+      "source": "skills/prism/config/native-worker.ts",
+      "line": 15,
+      "sourceSha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "exactText": "export function nativePrismHostConfig(environment: NodeJS.ProcessEnv = process.env) {",
+      "reader": {
+        "name": "nativePrismHostConfig",
+        "parents": [],
+        "startLine": 15,
+        "endLine": 26
+      },
+      "classification": "generated-binding",
+      "reason": "StartupENV snapshot parameter API and required normalizednon-root locator helper; legacy PRISM_NATIVE_MAXIMUM_INPUT_BYTES rejects presence, assignedchildlimit comes from actual parentselected ingress. Actual current source fields/handoffs parent21 trustsurface, not optionalconfiguration returnedfrom missingroot.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-333e22a759079c75",
+      "source": "skills/prism/config/native-worker.ts",
+      "line": 18,
+      "sourceSha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "exactText": "  if (environment.PRISM_NATIVE_MAXIMUM_INPUT_BYTES !== undefined) throw new Error('SWARM_CONFIG_LEGACY_OVERRIDE:PRISM_NATIVE_MAXIMUM_INPUT_BYTES');",
+      "reader": {
+        "name": "nativePrismHostConfig",
+        "parents": [],
+        "startLine": 15,
+        "endLine": 26
+      },
+      "classification": "generated-binding",
+      "reason": "StartupENV snapshot parameter API and required normalizednon-root locator helper; legacy PRISM_NATIVE_MAXIMUM_INPUT_BYTES rejects presence, assignedchildlimit comes from actual parentselected ingress. Actual current source fields/handoffs parent21 trustsurface, not optionalconfiguration returnedfrom missingroot.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-09a616db40d54f7d",
+      "source": "skills/prism/config/native-worker.ts",
+      "line": 22,
+      "sourceSha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "exactText": "  const workerSecret = environment.PRISM_WORKER_SECRET ?? '';",
+      "reader": {
+        "name": "nativePrismHostConfig",
+        "parents": [],
+        "startLine": 15,
+        "endLine": 26
+      },
+      "classification": "parent-current-source-handoff",
+      "reason": "Exact actual PRISM_WORKER_SECRET fieldconsumer linked parent AUTH-PRISM-SECRET-WORKER current source/producercontract. Secret-reference/principal/closedchildprojection author remains exact parent/deliveryboundrole, not a newCore writer; complete targetdomain/cases remain parentopen.",
+      "settingIds": [
+        "AUTH-PRISM-SECRET-WORKER"
+      ],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-0fa9d027dec58a7b",
+      "source": "skills/prism/config/native-worker.ts",
+      "line": 28,
+      "sourceSha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "exactText": "export function nativePrismSupervisorConfig(config: ReturnType<typeof loadWorkerConfig>, environment: NodeJS.ProcessEnv = process.env) {",
+      "reader": {
+        "name": "nativePrismSupervisorConfig",
+        "parents": [],
+        "startLine": 28,
+        "endLine": 48
+      },
+      "classification": "generated-binding",
+      "reason": "StartupENV snapshot parameter API and required normalizednon-root locator helper; legacy PRISM_NATIVE_MAXIMUM_INPUT_BYTES rejects presence, assignedchildlimit comes from actual parentselected ingress. Actual current source fields/handoffs parent21 trustsurface, not optionalconfiguration returnedfrom missingroot.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-2a3d0ae32539f67e",
+      "source": "skills/prism/config/native-worker.ts",
+      "line": 30,
+      "sourceSha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "exactText": "    const value = environment[name];",
+      "reader": {
+        "name": "nativePrismSupervisorConfig",
+        "parents": [],
+        "startLine": 28,
+        "endLine": 48
+      },
+      "classification": "generated-binding",
+      "reason": "StartupENV snapshot parameter API and required normalizednon-root locator helper; legacy PRISM_NATIVE_MAXIMUM_INPUT_BYTES rejects presence, assignedchildlimit comes from actual parentselected ingress. Actual current source fields/handoffs parent21 trustsurface, not optionalconfiguration returnedfrom missingroot.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-f7899ba75892e7a7",
+      "source": "skills/prism/config/native-worker.ts",
+      "line": 31,
+      "sourceSha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "exactText": "    if (!value || !path.isAbsolute(value) || path.resolve(value) !== value || value === '/') throw new Error(`PRISM_NATIVE_PATH_REQUIRED:${name}`);",
+      "reader": {
+        "name": "nativePrismSupervisorConfig",
+        "parents": [],
+        "startLine": 28,
+        "endLine": 48
+      },
+      "classification": "generated-binding",
+      "reason": "StartupENV snapshot parameter API and required normalizednon-root locator helper; legacy PRISM_NATIVE_MAXIMUM_INPUT_BYTES rejects presence, assignedchildlimit comes from actual parentselected ingress. Actual current source fields/handoffs parent21 trustsurface, not optionalconfiguration returnedfrom missingroot.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-ce3b026db4001994",
+      "source": "skills/prism/config/resource-policy.ts",
+      "line": 4,
+      "sourceSha256": "46d4daca088d7f716a202abc5e94794830d601db47518479da19056ed5fc652f",
+      "exactText": "/** Cumulative CPU time is not comparable to the pool's CPU quota/rate. */",
+      "reader": null,
+      "classification": "generated-binding",
+      "reason": "Requested native envelope metric limit must stay within selected pool policy for new admission; recovered immutable accepted budgets remain original. CPU cumulative time explicitly not compared to host CPU rate. Real envelope/pool supplies quantities, no synthetic selector/resource metric.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-638142dddcb14546",
+      "source": "skills/prism/config/resource-policy.ts",
+      "line": 13,
+      "sourceSha256": "46d4daca088d7f716a202abc5e94794830d601db47518479da19056ed5fc652f",
+      "exactText": "  const requested = (metric: 'cpuTimeMs' | 'maximumMemoryBytes' | 'maximumTasks', maximum: number) => {",
+      "reader": {
+        "name": "prismAttemptResourceLimits",
+        "parents": [],
+        "startLine": 12,
+        "endLine": 20
+      },
+      "classification": "generated-binding",
+      "reason": "Requested native envelope metric limit must stay within selected pool policy for new admission; recovered immutable accepted budgets remain original. CPU cumulative time explicitly not compared to host CPU rate. Real envelope/pool supplies quantities, no synthetic selector/resource metric.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-7c60a3eb8ecf792b",
+      "source": "skills/prism/config/resource-policy.ts",
+      "line": 14,
+      "sourceSha256": "46d4daca088d7f716a202abc5e94794830d601db47518479da19056ed5fc652f",
+      "exactText": "    const budget = envelope.resourceBudgets[metric];",
+      "reader": {
+        "name": "prismAttemptResourceLimits",
+        "parents": [],
+        "startLine": 12,
+        "endLine": 20
+      },
+      "classification": "generated-binding",
+      "reason": "Requested native envelope metric limit must stay within selected pool policy for new admission; recovered immutable accepted budgets remain original. CPU cumulative time explicitly not compared to host CPU rate. Real envelope/pool supplies quantities, no synthetic selector/resource metric.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-757689b5eeb0a41b",
+      "source": "skills/prism/config/resource-policy.ts",
+      "line": 15,
+      "sourceSha256": "46d4daca088d7f716a202abc5e94794830d601db47518479da19056ed5fc652f",
+      "exactText": "    if (budget.state !== 'requested' || (!recovered && budget.limit > maximum)) throw new Error(`PRISM_NATIVE_BUDGET_NOT_ACCEPTED:${metric}`);",
+      "reader": {
+        "name": "prismAttemptResourceLimits",
+        "parents": [],
+        "startLine": 12,
+        "endLine": 20
+      },
+      "classification": "generated-binding",
+      "reason": "Requested native envelope metric limit must stay within selected pool policy for new admission; recovered immutable accepted budgets remain original. CPU cumulative time explicitly not compared to host CPU rate. Real envelope/pool supplies quantities, no synthetic selector/resource metric.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-49a32f4ec37ee090",
+      "source": "skills/prism/config/resource-policy.ts",
+      "line": 16,
+      "sourceSha256": "46d4daca088d7f716a202abc5e94794830d601db47518479da19056ed5fc652f",
+      "exactText": "    return budget.limit;",
+      "reader": {
+        "name": "prismAttemptResourceLimits",
+        "parents": [],
+        "startLine": 12,
+        "endLine": 20
+      },
+      "classification": "generated-binding",
+      "reason": "Requested native envelope metric limit must stay within selected pool policy for new admission; recovered immutable accepted budgets remain original. CPU cumulative time explicitly not compared to host CPU rate. Real envelope/pool supplies quantities, no synthetic selector/resource metric.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-025fc773bfeb0b9d",
+      "source": "skills/prism/control/agent-jobs.ts",
+      "line": 40,
+      "sourceSha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334",
+      "exactText": "  if(!runnerId || runnerId.length>160)throw new Error('agent runner identity is required');",
+      "reader": {
+        "name": "claimAgentJob",
+        "parents": [],
+        "startLine": 39,
+        "endLine": 54
+      },
+      "classification": "generated-binding",
+      "reason": "Agent trusted runner ID nonempty<=160 current job identity domain; persisted job/fence/attempt/claim/execution equality and running/live state prevent another claim/result/action. Completed/needs_nova job replay returns persisted record, not default completion; legacy small error shape expressly validated. Claim lifetime/attempt numeric policy remains parent AUTH fields, not Core role tuning.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-07e86313d34c6b3c",
+      "source": "skills/prism/control/agent-jobs.ts",
+      "line": 60,
+      "sourceSha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334",
+      "exactText": "    if(!job || job.fence!==fence)throw new Error('agent job fence conflict');",
+      "reader": {
+        "name": "finishAgentRun",
+        "parents": [],
+        "startLine": 56,
+        "endLine": 67
+      },
+      "classification": "generated-binding",
+      "reason": "Agent trusted runner ID nonempty<=160 current job identity domain; persisted job/fence/attempt/claim/execution equality and running/live state prevent another claim/result/action. Completed/needs_nova job replay returns persisted record, not default completion; legacy small error shape expressly validated. Claim lifetime/attempt numeric policy remains parent AUTH fields, not Core role tuning.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-c6f9307229a4a6e7",
+      "source": "skills/prism/control/agent-jobs.ts",
+      "line": 62,
+      "sourceSha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334",
+      "exactText": "    if(job.state==='completed' || job.state==='needs_nova')return job;",
+      "reader": {
+        "name": "finishAgentRun",
+        "parents": [],
+        "startLine": 56,
+        "endLine": 67
+      },
+      "classification": "generated-binding",
+      "reason": "Agent trusted runner ID nonempty<=160 current job identity domain; persisted job/fence/attempt/claim/execution equality and running/live state prevent another claim/result/action. Completed/needs_nova job replay returns persisted record, not default completion; legacy small error shape expressly validated. Claim lifetime/attempt numeric policy remains parent AUTH fields, not Core role tuning.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-0b390a7785b0f417",
+      "source": "skills/prism/control/agent-jobs.ts",
+      "line": 73,
+      "sourceSha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334",
+      "exactText": "  if(accepted.attemptId!==job.fence || accepted.claim.claimId!==job.fence || accepted.executionId!==job.id)throw new Error('agent persisted attempt identity conflict');",
+      "reader": {
+        "name": "validateAgentOutcome",
+        "parents": [],
+        "startLine": 70,
+        "endLine": 82
+      },
+      "classification": "generated-binding",
+      "reason": "Agent trusted runner ID nonempty<=160 current job identity domain; persisted job/fence/attempt/claim/execution equality and running/live state prevent another claim/result/action. Completed/needs_nova job replay returns persisted record, not default completion; legacy small error shape expressly validated. Claim lifetime/attempt numeric policy remains parent AUTH fields, not Core role tuning.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-6d9d05dc85ff2b9e",
+      "source": "skills/prism/control/agent-jobs.ts",
+      "line": 80,
+      "sourceSha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334",
+      "exactText": "    && Object.keys(outcome).every(key=>key==='state' || key==='error'))return;",
+      "reader": {
+        "name": "validateAgentOutcome",
+        "parents": [],
+        "startLine": 70,
+        "endLine": 82
+      },
+      "classification": "generated-binding",
+      "reason": "Agent trusted runner ID nonempty<=160 current job identity domain; persisted job/fence/attempt/claim/execution equality and running/live state prevent another claim/result/action. Completed/needs_nova job replay returns persisted record, not default completion; legacy small error shape expressly validated. Claim lifetime/attempt numeric policy remains parent AUTH fields, not Core role tuning.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-45c8719cc3d15afe",
+      "source": "skills/prism/control/agent-jobs.ts",
+      "line": 86,
+      "sourceSha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334",
+      "exactText": "  if(identity.jobId!==generationId || !identity.fence)throw new Error('agent result job identity is required');",
+      "reader": {
+        "name": "lockAgentResult",
+        "parents": [],
+        "startLine": 85,
+        "endLine": 96
+      },
+      "classification": "generated-binding",
+      "reason": "Agent trusted runner ID nonempty<=160 current job identity domain; persisted job/fence/attempt/claim/execution equality and running/live state prevent another claim/result/action. Completed/needs_nova job replay returns persisted record, not default completion; legacy small error shape expressly validated. Claim lifetime/attempt numeric policy remains parent AUTH fields, not Core role tuning.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-a4e66a5929796a4c",
+      "source": "skills/prism/control/agent-jobs.ts",
+      "line": 89,
+      "sourceSha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334",
+      "exactText": "  if(!job || job.fence!==identity.fence)throw new Error('agent result fence conflict');",
+      "reader": {
+        "name": "lockAgentResult",
+        "parents": [],
+        "startLine": 85,
+        "endLine": 96
+      },
+      "classification": "generated-binding",
+      "reason": "Agent trusted runner ID nonempty<=160 current job identity domain; persisted job/fence/attempt/claim/execution equality and running/live state prevent another claim/result/action. Completed/needs_nova job replay returns persisted record, not default completion; legacy small error shape expressly validated. Claim lifetime/attempt numeric policy remains parent AUTH fields, not Core role tuning.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-e732ba7d29653400",
+      "source": "skills/prism/control/agent-jobs.ts",
+      "line": 94,
+      "sourceSha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334",
+      "exactText": "  if(job.state!=='running'||!job.live)throw new Error('agent action is unresolved; NeedsNova reconciliation is required');",
+      "reader": {
+        "name": "lockAgentResult",
+        "parents": [],
+        "startLine": 85,
+        "endLine": 96
+      },
+      "classification": "generated-binding",
+      "reason": "Agent trusted runner ID nonempty<=160 current job identity domain; persisted job/fence/attempt/claim/execution equality and running/live state prevent another claim/result/action. Completed/needs_nova job replay returns persisted record, not default completion; legacy small error shape expressly validated. Claim lifetime/attempt numeric policy remains parent AUTH fields, not Core role tuning.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-586cc5e2c98284a3",
+      "source": "skills/prism/control/native-operation-store.ts",
+      "line": 12,
+      "sourceSha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9",
+      "exactText": "  const input = attempt.inputs.find(item => item.name === attempt.operation.values.inputName);",
+      "reader": {
+        "name": "requestIdentity",
+        "parents": [],
+        "startLine": 10,
+        "endLine": 15
+      },
+      "classification": "generated-binding",
+      "reason": "Captured native artifact input must exist/type; actual persisted idempotencyKey/attempt/execution/operation/requestDigest and canonical captured envelope must match before seal. Operation DB serialization is discovery ENV false-positive; no producer identity filled from CONFIG.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-af2d197472378a62",
+      "source": "skills/prism/control/native-operation-store.ts",
+      "line": 13,
+      "sourceSha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9",
+      "exactText": "  if (!input || input.kind !== 'artifact') throw new Error('PRISM_NATIVE_OPERATION_INPUT_REQUIRED');",
+      "reader": {
+        "name": "requestIdentity",
+        "parents": [],
+        "startLine": 10,
+        "endLine": 15
+      },
+      "classification": "generated-binding",
+      "reason": "Captured native artifact input must exist/type; actual persisted idempotencyKey/attempt/execution/operation/requestDigest and canonical captured envelope must match before seal. Operation DB serialization is discovery ENV false-positive; no producer identity filled from CONFIG.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-b2a7af646734faf2",
+      "source": "skills/prism/control/native-operation-store.ts",
+      "line": 36,
+      "sourceSha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9",
+      "exactText": "      if (requestIdentity(previous.attempt) !== requestDigest || previous.attempt.executionId !== previous.attempt_id",
+      "reader": {
+        "name": "reserveNativePrismOperation",
+        "parents": [],
+        "startLine": 26,
+        "endLine": 45
+      },
+      "classification": "generated-binding",
+      "reason": "Captured native artifact input must exist/type; actual persisted idempotencyKey/attempt/execution/operation/requestDigest and canonical captured envelope must match before seal. Operation DB serialization is discovery ENV false-positive; no producer identity filled from CONFIG.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-67fe5b3d3cf6a515",
+      "source": "skills/prism/control/native-operation-store.ts",
+      "line": 37,
+      "sourceSha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9",
+      "exactText": "        || previous.operation !== String(previous.attempt.operation.values.operation)) throw new Error('PRISM_NATIVE_OPERATION_BINDING_INVALID');",
+      "reader": {
+        "name": "reserveNativePrismOperation",
+        "parents": [],
+        "startLine": 26,
+        "endLine": 45
+      },
+      "classification": "generated-binding",
+      "reason": "Captured native artifact input must exist/type; actual persisted idempotencyKey/attempt/execution/operation/requestDigest and canonical captured envelope must match before seal. Operation DB serialization is discovery ENV false-positive; no producer identity filled from CONFIG.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-12abfa84b2b3a771",
+      "source": "skills/prism/control/native-operation-store.ts",
+      "line": 42,
+      "sourceSha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9",
+      "exactText": "      [key, attempt.executionId, String(attempt.operation.values.operation), requestDigest, JSON.stringify(attempt)]);",
+      "reader": {
+        "name": "reserveNativePrismOperation",
+        "parents": [],
+        "startLine": 26,
+        "endLine": 45
+      },
+      "classification": "generated-binding",
+      "reason": "Captured native artifact input must exist/type; actual persisted idempotencyKey/attempt/execution/operation/requestDigest and canonical captured envelope must match before seal. Operation DB serialization is discovery ENV false-positive; no producer identity filled from CONFIG.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-5ae189374a38d2a6",
+      "source": "skills/prism/control/native-operation-store.ts",
+      "line": 55,
+      "sourceSha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9",
+      "exactText": "    if (!current?.attempt || canonicalJson(current.attempt) !== canonicalJson(captured)) throw new Error('PRISM_NATIVE_OPERATION_BINDING_INVALID');",
+      "reader": {
+        "name": "recordNativePrismResult",
+        "parents": [],
+        "startLine": 48,
+        "endLine": 63
+      },
+      "classification": "generated-binding",
+      "reason": "Captured native artifact input must exist/type; actual persisted idempotencyKey/attempt/execution/operation/requestDigest and canonical captured envelope must match before seal. Operation DB serialization is discovery ENV false-positive; no producer identity filled from CONFIG.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-42387bc336a67152",
+      "source": "skills/prism/control/native-operation.ts",
+      "line": 23,
+      "sourceSha256": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac",
+      "exactText": "    return hydrated.values;",
+      "reader": {
+        "name": "runNativePrismOperation",
+        "parents": [],
+        "startLine": 12,
+        "endLine": 30
+      },
+      "classification": "task-data",
+      "reason": "Actual hydrated operation values are task-data returned into engine method; name.values discovery policy false-positive, not tuning profile.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-78cb926cbbe36f43",
+      "source": "skills/prism/control/native-operation.ts",
+      "line": 29,
+      "sourceSha256": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac",
+      "exactText": "  return hydrated.values;",
+      "reader": {
+        "name": "runNativePrismOperation",
+        "parents": [],
+        "startLine": 12,
+        "endLine": 30
+      },
+      "classification": "task-data",
+      "reason": "Actual hydrated operation values are task-data returned into engine method; name.values discovery policy false-positive, not tuning profile.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-19432fb4b3345ad7",
+      "source": "skills/prism/control/pipeline-preference-subject.ts",
+      "line": 3,
+      "sourceSha256": "ded8597750c0e6fb3de823cceb31ecbbff7ece03143f4cdd30037ceff0a77eb3",
+      "exactText": "  if (configured !== undefined && (typeof configured !== 'string' || !/^user-[a-f0-9]{24}$/u.test(configured))) {",
+      "reader": {
+        "name": "authorizePipelinePreferenceSubject",
+        "parents": [],
+        "startLine": 2,
+        "endLine": 11
+      },
+      "classification": "duplicate",
+      "reason": "Actual configured user-[24hex] subject or undefined; requested identity must exact selected platform authorized subject. Existing loader maps authorednull\u2192undefined, direct configurednull is invalid; no secondallowlist author.",
+      "settingIds": [
+        "CMP-prism-control-pipelinePreferenceSubject"
+      ],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-4b5e36673d874c31",
+      "source": "skills/prism/control/pipeline-preference-subject.ts",
+      "line": 7,
+      "sourceSha256": "ded8597750c0e6fb3de823cceb31ecbbff7ece03143f4cdd30037ceff0a77eb3",
+      "exactText": "  if (typeof requested !== 'string' || requested !== configured) {",
+      "reader": {
+        "name": "authorizePipelinePreferenceSubject",
+        "parents": [],
+        "startLine": 2,
+        "endLine": 11
+      },
+      "classification": "duplicate",
+      "reason": "Actual configured user-[24hex] subject or undefined; requested identity must exact selected platform authorized subject. Existing loader maps authorednull\u2192undefined, direct configurednull is invalid; no secondallowlist author.",
+      "settingIds": [
+        "CMP-prism-control-pipelinePreferenceSubject"
+      ],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-016b6471a26763de",
+      "source": "skills/prism/engine/worker-envelope.ts",
+      "line": 28,
+      "sourceSha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+      "exactText": "  const values = JSON.parse(canonicalJson(operation.values)) as typeof operation.values;",
+      "reader": {
+        "name": "prismRequestDigest",
+        "parents": [],
+        "startLine": 27,
+        "endLine": 32
+      },
+      "classification": "task-data",
+      "reason": "Canonical cloned operation values/inputName/operation form accepted task spec; taskpayload not newly configured limits. Parent AUTH-Prism attempts/claim policies govern actual hardcoded producer members.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-330329f3c8680509",
+      "source": "skills/prism/engine/worker-envelope.ts",
+      "line": 30,
+      "sourceSha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+      "exactText": "    values: { operation: values.operation, inputName: values.inputName, ...values } };",
+      "reader": {
+        "name": "prismRequestDigest",
+        "parents": [],
+        "startLine": 27,
+        "endLine": 32
+      },
+      "classification": "task-data",
+      "reason": "Canonical cloned operation values/inputName/operation form accepted task spec; taskpayload not newly configured limits. Parent AUTH-Prism attempts/claim policies govern actual hardcoded producer members.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-cd5cd4671d651eba",
+      "source": "skills/prism/server/agent-attempt.ts",
+      "line": 10,
+      "sourceSha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+      "exactText": "/** This is the local launcher profile, not the remote gateway/model engine or deterministic Prism engine. */",
+      "reader": null,
+      "classification": "generated-binding",
+      "reason": "Local agent launcher implementation profile hashes named actual source-file set; remote gateway/modelengine and deterministic native Prism engine are distinct implementationowners. File list defines packageidentity, not operator choosing model/provider or resource tuning.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-89b4527554553eb5",
+      "source": "skills/prism/server/agent-attempt.ts",
+      "line": 12,
+      "sourceSha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+      "exactText": "  const files=['agent-process.ts','agent-attempt.ts','agent-job-runner.mjs','agent-prompt.mjs','preference-prompt.mjs'];",
+      "reader": {
+        "name": "agentAttempt",
+        "parents": [],
+        "startLine": 11,
+        "endLine": 29
+      },
+      "classification": "generated-binding",
+      "reason": "Local agent launcher implementation profile hashes named actual source-file set; remote gateway/modelengine and deterministic native Prism engine are distinct implementationowners. File list defines packageidentity, not operator choosing model/provider or resource tuning.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-91aec4969d1f6739",
+      "source": "skills/prism/server/agent-job-runner.mjs",
+      "line": 7,
+      "sourceSha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+      "exactText": "import { agentPrompt } from './agent-prompt.mjs';",
+      "reader": null,
+      "classification": "generated-binding",
+      "reason": "Agent prompt import is source roster lexicalfalse-positive, body/prompt content separate parent agent instructions; active/stopping lifecycle and exact claimed job envelope identity ensure one runner fencedclaim. Actual launch CLI timeout/owner/HTTP phase policies parent-owned AUTH IDs.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-fd5fa0187bc506e5",
+      "source": "skills/prism/server/agent-job-runner.mjs",
+      "line": 23,
+      "sourceSha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+      "exactText": "    if(this.active || this.stopping.signal.aborted)return;",
+      "reader": {
+        "name": "tick",
+        "parents": [],
+        "startLine": 22,
+        "endLine": 26
+      },
+      "classification": "generated-binding",
+      "reason": "Agent prompt import is source roster lexicalfalse-positive, body/prompt content separate parent agent instructions; active/stopping lifecycle and exact claimed job envelope identity ensure one runner fencedclaim. Actual launch CLI timeout/owner/HTTP phase policies parent-owned AUTH IDs.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-66a08bbe0c213d0e",
+      "source": "skills/prism/server/agent-job-runner.mjs",
+      "line": 34,
+      "sourceSha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+      "exactText": "      if(!envelope || envelope.claim.workerId!==this.runnerId || envelope.attemptId!==job.fence || envelope.executionId!==job.id)throw new Error('Prism accepted attempt identity is missing or conflicts with claim');",
+      "reader": {
+        "name": "runOne",
+        "parents": [],
+        "startLine": 27,
+        "endLine": 45
+      },
+      "classification": "generated-binding",
+      "reason": "Agent prompt import is source roster lexicalfalse-positive, body/prompt content separate parent agent instructions; active/stopping lifecycle and exact claimed job envelope identity ensure one runner fencedclaim. Actual launch CLI timeout/owner/HTTP phase policies parent-owned AUTH IDs.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-379f31405c7f89e0",
+      "source": "skills/prism/server/agent-routes.ts",
+      "line": 75,
+      "sourceSha256": "55c4c77fc4ff7b981287c433c126d9754dffd3df1de464ec0d83bb0294caec17",
+      "exactText": "    if (!item.key || !item.title || !item.summary)",
+      "reader": {
+        "name": "createAgentDesignSet",
+        "parents": [],
+        "startLine": 43,
+        "endLine": 95
+      },
+      "classification": "task-data",
+      "reason": "Requested concept key/title/summary and project/document/instruction required taskvalues; no default model/prompt/policy created at requestguard. Design cardinality3 line60 remains explicit parentquestion, not declared fundamental invariant.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-66de532246589766",
+      "source": "skills/prism/server/agent-routes.ts",
+      "line": 113,
+      "sourceSha256": "55c4c77fc4ff7b981287c433c126d9754dffd3df1de464ec0d83bb0294caec17",
+      "exactText": "    !input.projectId ||",
+      "reader": {
+        "name": "reviseAgentDocument",
+        "parents": [],
+        "startLine": 96,
+        "endLine": 156
+      },
+      "classification": "task-data",
+      "reason": "Requested concept key/title/summary and project/document/instruction required taskvalues; no default model/prompt/policy created at requestguard. Design cardinality3 line60 remains explicit parentquestion, not declared fundamental invariant.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-1fe144d788e01aad",
+      "source": "skills/prism/server/agent-routes.ts",
+      "line": 114,
+      "sourceSha256": "55c4c77fc4ff7b981287c433c126d9754dffd3df1de464ec0d83bb0294caec17",
+      "exactText": "    !input.documentId ||",
+      "reader": {
+        "name": "reviseAgentDocument",
+        "parents": [],
+        "startLine": 96,
+        "endLine": 156
+      },
+      "classification": "task-data",
+      "reason": "Requested concept key/title/summary and project/document/instruction required taskvalues; no default model/prompt/policy created at requestguard. Design cardinality3 line60 remains explicit parentquestion, not declared fundamental invariant.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-6a43a01fe19aa091",
+      "source": "skills/prism/server/agent-routes.ts",
+      "line": 115,
+      "sourceSha256": "55c4c77fc4ff7b981287c433c126d9754dffd3df1de464ec0d83bb0294caec17",
+      "exactText": "    !input.instruction ||",
+      "reader": {
+        "name": "reviseAgentDocument",
+        "parents": [],
+        "startLine": 96,
+        "endLine": 156
+      },
+      "classification": "task-data",
+      "reason": "Requested concept key/title/summary and project/document/instruction required taskvalues; no default model/prompt/policy created at requestguard. Design cardinality3 line60 remains explicit parentquestion, not declared fundamental invariant.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-076aecf0d5cf3400",
+      "source": "skills/prism/server/control-config.ts",
+      "line": 10,
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "exactText": "export function loadControlConfig(environment: NodeJS.ProcessEnv = process.env): ControlConfig {",
+      "reader": {
+        "name": "loadControlConfig",
+        "parents": [],
+        "startLine": 10,
+        "endLine": 12
+      },
+      "classification": "generated-binding",
+      "reason": "ProcessEnv parameter defaults describe actual startup captured composition input, not fieldfallback. required(name) helper expands actual required secret names SESSION/INGRESS/DISPATCH/WORKER/INGESTION; SPIFFE-enabled branch requires actual parent principal bindings. Composition captures {...environment} once andloads both policies before construction. Product-config authority selection remains parent/runtime fieldscope, not silently ignored.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-6aded341a1358075",
+      "source": "skills/prism/server/control-config.ts",
+      "line": 21,
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "exactText": "  const value = environment[name];",
+      "reader": {
+        "name": "required",
+        "parents": [],
+        "startLine": 20,
+        "endLine": 24
+      },
+      "classification": "generated-binding",
+      "reason": "ProcessEnv parameter defaults describe actual startup captured composition input, not fieldfallback. required(name) helper expands actual required secret names SESSION/INGRESS/DISPATCH/WORKER/INGESTION; SPIFFE-enabled branch requires actual parent principal bindings. Composition captures {...environment} once andloads both policies before construction. Product-config authority selection remains parent/runtime fieldscope, not silently ignored.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-65c588f79aa0f9ce",
+      "source": "skills/prism/server/control-config.ts",
+      "line": 30,
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "exactText": "  const trustedControlSpiffeId = environment.PRISM_CONTROL_SPIFFE_ID ?? '';",
+      "reader": {
+        "name": "loadTrustConfig",
+        "parents": [],
+        "startLine": 26,
+        "endLine": 42
+      },
+      "classification": "parent-current-source-handoff",
+      "reason": "Exact actual PRISM_CONTROL_SPIFFE_ID fieldconsumer linked parent AUTH-PRISM-TRUST-PRINCIPAL-CONTROL current source/producercontract. Secret-reference/principal/closedchildprojection author remains exact parent/deliveryboundrole, not a newCore writer; complete targetdomain/cases remain parentopen.",
+      "settingIds": [
+        "AUTH-PRISM-TRUST-PRINCIPAL-CONTROL"
+      ],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-2c54783b91e6f209",
+      "source": "skills/prism/server/control-config.ts",
+      "line": 32,
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "exactText": "  if (spiffeEnabled && (!trustedNovaSpiffeId || !trustedWorkerSpiffeId || !trustedControlSpiffeId || !trustedPrismAgentSpiffeId)) {",
+      "reader": {
+        "name": "loadTrustConfig",
+        "parents": [],
+        "startLine": 26,
+        "endLine": 42
+      },
+      "classification": "generated-binding",
+      "reason": "ProcessEnv parameter defaults describe actual startup captured composition input, not fieldfallback. required(name) helper expands actual required secret names SESSION/INGRESS/DISPATCH/WORKER/INGESTION; SPIFFE-enabled branch requires actual parent principal bindings. Composition captures {...environment} once andloads both policies before construction. Product-config authority selection remains parent/runtime fieldscope, not silently ignored.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-0155e1471859cd2a",
+      "source": "skills/prism/server/control-config.ts",
+      "line": 45,
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "exactText": "export function loadControlServerConfig(environment: NodeJS.ProcessEnv = process.env) {",
+      "reader": {
+        "name": "loadControlServerConfig",
+        "parents": [],
+        "startLine": 45,
+        "endLine": 64
+      },
+      "classification": "generated-binding",
+      "reason": "ProcessEnv parameter defaults describe actual startup captured composition input, not fieldfallback. required(name) helper expands actual required secret names SESSION/INGRESS/DISPATCH/WORKER/INGESTION; SPIFFE-enabled branch requires actual parent principal bindings. Composition captures {...environment} once andloads both policies before construction. Product-config authority selection remains parent/runtime fieldscope, not silently ignored.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-e7a5ed529a370b70",
+      "source": "skills/prism/server/control-config.ts",
+      "line": 66,
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "exactText": "export function loadProductAuthorityConfig(environment: NodeJS.ProcessEnv = process.env): Promise<ProductConfig | undefined> {",
+      "reader": {
+        "name": "loadProductAuthorityConfig",
+        "parents": [],
+        "startLine": 66,
+        "endLine": 68
+      },
+      "classification": "generated-binding",
+      "reason": "ProcessEnv parameter defaults describe actual startup captured composition input, not fieldfallback. required(name) helper expands actual required secret names SESSION/INGRESS/DISPATCH/WORKER/INGESTION; SPIFFE-enabled branch requires actual parent principal bindings. Composition captures {...environment} once andloads both policies before construction. Product-config authority selection remains parent/runtime fieldscope, not silently ignored.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-9c59d0db61e1afdb",
+      "source": "skills/prism/server/control-config.ts",
+      "line": 71,
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "exactText": "export async function loadControlCompositionConfig(environment: NodeJS.ProcessEnv = process.env) {",
+      "reader": {
+        "name": "loadControlCompositionConfig",
+        "parents": [],
+        "startLine": 71,
+        "endLine": 76
+      },
+      "classification": "generated-binding",
+      "reason": "ProcessEnv parameter defaults describe actual startup captured composition input, not fieldfallback. required(name) helper expands actual required secret names SESSION/INGRESS/DISPATCH/WORKER/INGESTION; SPIFFE-enabled branch requires actual parent principal bindings. Composition captures {...environment} once andloads both policies before construction. Product-config authority selection remains parent/runtime fieldscope, not silently ignored.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-c5f18f48e12861ca",
+      "source": "skills/prism/server/control-context.ts",
+      "line": 44,
+      "sourceSha256": "2444e6f0f22860aea6f109c984be4747a13421da2d33dd738ef7c29b71f04d02",
+      "exactText": "  const session = verifySession(values.prism_session ?? \"\", sessionSecret);",
+      "reader": {
+        "name": "authenticated",
+        "parents": [],
+        "startLine": 38,
+        "endLine": 52
+      },
+      "classification": "task-data",
+      "reason": "Missing session/CSRF cookie/header or absent method normalize empty to authenticate/reject unsafe requests; not fallbackcredentials. Real session/ingress signing secrets are parent-owned references, no values recorded.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-a24ec1be77989c12",
+      "source": "skills/prism/server/control-context.ts",
+      "line": 45,
+      "sourceSha256": "2444e6f0f22860aea6f109c984be4747a13421da2d33dd738ef7c29b71f04d02",
+      "exactText": "  const csrf = values.prism_csrf ?? \"\";",
+      "reader": {
+        "name": "authenticated",
+        "parents": [],
+        "startLine": 38,
+        "endLine": 52
+      },
+      "classification": "task-data",
+      "reason": "Missing session/CSRF cookie/header or absent method normalize empty to authenticate/reject unsafe requests; not fallbackcredentials. Real session/ingress signing secrets are parent-owned references, no values recorded.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-8451873e10c8392f",
+      "source": "skills/prism/server/control-context.ts",
+      "line": 47,
+      "sourceSha256": "2444e6f0f22860aea6f109c984be4747a13421da2d33dd738ef7c29b71f04d02",
+      "exactText": "    ![\"GET\", \"HEAD\"].includes(request.method ?? \"\") &&",
+      "reader": {
+        "name": "authenticated",
+        "parents": [],
+        "startLine": 38,
+        "endLine": 52
+      },
+      "classification": "task-data",
+      "reason": "Missing session/CSRF cookie/header or absent method normalize empty to authenticate/reject unsafe requests; not fallbackcredentials. Real session/ingress signing secrets are parent-owned references, no values recorded.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-145ac52802e7cfe2",
+      "source": "skills/prism/server/control-context.ts",
+      "line": 48,
+      "sourceSha256": "2444e6f0f22860aea6f109c984be4747a13421da2d33dd738ef7c29b71f04d02",
+      "exactText": "    (!csrf || request.headers[\"x-prism-csrf\"] !== csrf)",
+      "reader": {
+        "name": "authenticated",
+        "parents": [],
+        "startLine": 38,
+        "endLine": 52
+      },
+      "classification": "task-data",
+      "reason": "Missing session/CSRF cookie/header or absent method normalize empty to authenticate/reject unsafe requests; not fallbackcredentials. Real session/ingress signing secrets are parent-owned references, no values recorded.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-e411c3f0c35a171a",
+      "source": "skills/prism/server/control-server.ts",
+      "line": 43,
+      "sourceSha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3",
+      "exactText": "    const url = new URL(request.url ?? \"/\", \"http://prism-control\");",
+      "reader": {
+        "name": "handle",
+        "parents": [],
+        "startLine": 37,
+        "endLine": 56
+      },
+      "classification": "protocol-invariant",
+      "reason": "Request URL may be absent=>/ and parsed against fixed internal relative URL base; base http://prism-control is parser origin, not outgoing upstream endpoint/fetchauthor.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-463acf32db6e8c58",
+      "source": "skills/prism/server/dispatch-route.ts",
+      "line": 117,
+      "sourceSha256": "407b0befbe8cbf6009f2cef6fe80ab10a2213258d4be5bddc578f24abdb47382",
+      "exactText": "    !(request.headers[\"content-type\"] ?? \"\")",
+      "reader": {
+        "name": "authenticateDispatch",
+        "parents": [],
+        "startLine": 88,
+        "endLine": 145
+      },
+      "classification": "generated-binding",
+      "reason": "Require JSON content-type and actual idempotency-key/signature; empty headers reject/mismatch, actualHMAC byte-length/timingSafeEqual equality verifies request. Secret/subject targets parent/currentCMP, not generated permissive defaults.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-a86fba22a69cb1ef",
+      "source": "skills/prism/server/dispatch-route.ts",
+      "line": 131,
+      "sourceSha256": "407b0befbe8cbf6009f2cef6fe80ab10a2213258d4be5bddc578f24abdb47382",
+      "exactText": "  const key = String(request.headers[\"idempotency-key\"] ?? \"\");",
+      "reader": {
+        "name": "authenticateDispatch",
+        "parents": [],
+        "startLine": 88,
+        "endLine": 145
+      },
+      "classification": "generated-binding",
+      "reason": "Require JSON content-type and actual idempotency-key/signature; empty headers reject/mismatch, actualHMAC byte-length/timingSafeEqual equality verifies request. Secret/subject targets parent/currentCMP, not generated permissive defaults.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-519077a3ebe5c9b4",
+      "source": "skills/prism/server/dispatch-route.ts",
+      "line": 135,
+      "sourceSha256": "407b0befbe8cbf6009f2cef6fe80ab10a2213258d4be5bddc578f24abdb47382",
+      "exactText": "      request.headers[\"x-kubeclaw-signature\"] ?? \"\",",
+      "reader": {
+        "name": "authenticateDispatch",
+        "parents": [],
+        "startLine": 88,
+        "endLine": 145
+      },
+      "classification": "generated-binding",
+      "reason": "Require JSON content-type and actual idempotency-key/signature; empty headers reject/mismatch, actualHMAC byte-length/timingSafeEqual equality verifies request. Secret/subject targets parent/currentCMP, not generated permissive defaults.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-f04ed058ffd11587",
+      "source": "skills/prism/server/dispatch-route.ts",
+      "line": 141,
+      "sourceSha256": "407b0befbe8cbf6009f2cef6fe80ab10a2213258d4be5bddc578f24abdb47382",
+      "exactText": "    if (actual.length !== expected.length || !timingSafeEqual(actual, expected))",
+      "reader": {
+        "name": "authenticateDispatch",
+        "parents": [],
+        "startLine": 88,
+        "endLine": 145
+      },
+      "classification": "generated-binding",
+      "reason": "Require JSON content-type and actual idempotency-key/signature; empty headers reject/mismatch, actualHMAC byte-length/timingSafeEqual equality verifies request. Secret/subject targets parent/currentCMP, not generated permissive defaults.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-0abc3147adc01ba3",
+      "source": "skills/prism/server/studio-config.ts",
+      "line": 8,
+      "sourceSha256": "c2a7d42ae65d68da876c2efc64194effc969d90a1132d8677ec2190260391465",
+      "exactText": "    if (environment[key] !== undefined) throw new Error(`SWARM_CONFIG_LEGACY_OVERRIDE:${key}:use prism-studio.config.json settings`);",
+      "reader": {
+        "name": "loadStudioConfig",
+        "parents": [],
+        "startLine": 6,
+        "endLine": 14
+      },
+      "classification": "duplicate",
+      "reason": "Dynamic legacyENV key guard expands PORT/PRISM_CONTROL_URL/PRISM_STUDIO_PROXY_TIMEOUT_MS and rejects presence, including equalvalues; actualauthorprism-studio ownersettings selected, not environmentfield reader fallback.",
+      "settingIds": [
+        "CMP-prism-studio-port",
+        "CMP-prism-studio-controlUrl",
+        "CMP-prism-studio-controlTimeoutMs"
+      ],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-27263a668a05758b",
+      "source": "skills/prism/server/studio-request.ts",
+      "line": 33,
+      "sourceSha256": "efca0f821ef3da9f441e9c6c5458a33d8c525f8e7db3a63aea1a8e7f37e93bbb",
+      "exactText": "  process.stderr.write(`${JSON.stringify({ time: new Date().toISOString(), level: 'error', component: 'prism-studio',",
+      "reader": {
+        "name": "studioRequestFailed",
+        "parents": [],
+        "startLine": 28,
+        "endLine": 42
+      },
+      "classification": "protocol-invariant",
+      "reason": "Actual log/errorResponse lifecycle, missing request path=>/, assetdirectory request=>index.html, staticMIME mapping/unknown=>octet-stream andhealth/ready route shapes are HTTP/assets protocol behavior. Selected real assetroot/upstream/bodybounds parent-owned; defaultindex path not rootfallback.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-1f6b7b0cd63d86ab",
+      "source": "skills/prism/server/studio-request.ts",
+      "line": 35,
+      "sourceSha256": "efca0f821ef3da9f441e9c6c5458a33d8c525f8e7db3a63aea1a8e7f37e93bbb",
+      "exactText": "  if (response.destroyed || response.writableEnded) return;",
+      "reader": {
+        "name": "studioRequestFailed",
+        "parents": [],
+        "startLine": 28,
+        "endLine": 42
+      },
+      "classification": "protocol-invariant",
+      "reason": "Actual log/errorResponse lifecycle, missing request path=>/, assetdirectory request=>index.html, staticMIME mapping/unknown=>octet-stream andhealth/ready route shapes are HTTP/assets protocol behavior. Selected real assetroot/upstream/bodybounds parent-owned; defaultindex path not rootfallback.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-5e0d4b587ddf541f",
+      "source": "skills/prism/server/studio-request.ts",
+      "line": 110,
+      "sourceSha256": "efca0f821ef3da9f441e9c6c5458a33d8c525f8e7db3a63aea1a8e7f37e93bbb",
+      "exactText": "  const root = resolve(options.root); let file = resolve(root, requested || 'index.html');",
+      "reader": {
+        "name": "staticFile",
+        "parents": [],
+        "startLine": 106,
+        "endLine": 128
+      },
+      "classification": "protocol-invariant",
+      "reason": "Actual log/errorResponse lifecycle, missing request path=>/, assetdirectory request=>index.html, staticMIME mapping/unknown=>octet-stream andhealth/ready route shapes are HTTP/assets protocol behavior. Selected real assetroot/upstream/bodybounds parent-owned; defaultindex path not rootfallback.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-c5aaa35f06393f36",
+      "source": "skills/prism/server/studio-request.ts",
+      "line": 124,
+      "sourceSha256": "efca0f821ef3da9f441e9c6c5458a33d8c525f8e7db3a63aea1a8e7f37e93bbb",
+      "exactText": "    response.setHeader('content-type', types[extname(file)] ?? 'application/octet-stream');",
+      "reader": {
+        "name": "staticFile",
+        "parents": [],
+        "startLine": 106,
+        "endLine": 128
+      },
+      "classification": "protocol-invariant",
+      "reason": "Actual log/errorResponse lifecycle, missing request path=>/, assetdirectory request=>index.html, staticMIME mapping/unknown=>octet-stream andhealth/ready route shapes are HTTP/assets protocol behavior. Selected real assetroot/upstream/bodybounds parent-owned; defaultindex path not rootfallback.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-49b22a572606d5a3",
+      "source": "skills/prism/server/studio-request.ts",
+      "line": 132,
+      "sourceSha256": "efca0f821ef3da9f441e9c6c5458a33d8c525f8e7db3a63aea1a8e7f37e93bbb",
+      "exactText": "  try { url = new URL(request.url ?? '/', 'http://studio'); }",
+      "reader": {
+        "name": "handleStudioRequest",
+        "parents": [],
+        "startLine": 130,
+        "endLine": 139
+      },
+      "classification": "protocol-invariant",
+      "reason": "Actual log/errorResponse lifecycle, missing request path=>/, assetdirectory request=>index.html, staticMIME mapping/unknown=>octet-stream andhealth/ready route shapes are HTTP/assets protocol behavior. Selected real assetroot/upstream/bodybounds parent-owned; defaultindex path not rootfallback.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-298b4ff49421247e",
+      "source": "skills/prism/server/studio-request.ts",
+      "line": 134,
+      "sourceSha256": "efca0f821ef3da9f441e9c6c5458a33d8c525f8e7db3a63aea1a8e7f37e93bbb",
+      "exactText": "  if (url.pathname === '/health' || url.pathname === '/ready') {",
+      "reader": {
+        "name": "handleStudioRequest",
+        "parents": [],
+        "startLine": 130,
+        "endLine": 139
+      },
+      "classification": "protocol-invariant",
+      "reason": "Actual log/errorResponse lifecycle, missing request path=>/, assetdirectory request=>index.html, staticMIME mapping/unknown=>octet-stream andhealth/ready route shapes are HTTP/assets protocol behavior. Selected real assetroot/upstream/bodybounds parent-owned; defaultindex path not rootfallback.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-c702be421b6a4d47",
+      "source": "skills/prism/server/worker-config.ts",
+      "line": 5,
+      "sourceSha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e",
+      "exactText": "export function loadWorkerConfig(environment: NodeJS.ProcessEnv = process.env) {",
+      "reader": {
+        "name": "loadWorkerConfig",
+        "parents": [],
+        "startLine": 5,
+        "endLine": 20
+      },
+      "classification": "generated-binding",
+      "reason": "WrapperProcessEnv defaults capture actual startupauthor context, not absentfieldvaluefallback; numeric ingresssettings strictselectedcomponentowner, trust/credential/nativebinding fields separately parent21 surface.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-4377d213dc3df8b1",
+      "source": "skills/prism/server/worker-config.ts",
+      "line": 8,
+      "sourceSha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e",
+      "exactText": "  const workerSecret = environment.PRISM_WORKER_SECRET ?? '';",
+      "reader": {
+        "name": "loadWorkerConfig",
+        "parents": [],
+        "startLine": 5,
+        "endLine": 20
+      },
+      "classification": "parent-current-source-handoff",
+      "reason": "Exact actual PRISM_WORKER_SECRET fieldconsumer linked parent AUTH-PRISM-SECRET-WORKER current source/producercontract. Secret-reference/principal/closedchildprojection author remains exact parent/deliveryboundrole, not a newCore writer; complete targetdomain/cases remain parentopen.",
+      "settingIds": [
+        "AUTH-PRISM-SECRET-WORKER"
+      ],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-7865b1e2d5e706ab",
+      "source": "skills/prism/server/worker-config.ts",
+      "line": 10,
+      "sourceSha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e",
+      "exactText": "  const trustedControlSpiffeId = environment.PRISM_TRUSTED_CONTROL_SPIFFE_ID ?? '';",
+      "reader": {
+        "name": "loadWorkerConfig",
+        "parents": [],
+        "startLine": 5,
+        "endLine": 20
+      },
+      "classification": "parent-current-source-handoff",
+      "reason": "Exact actual PRISM_TRUSTED_CONTROL_SPIFFE_ID fieldconsumer linked parent AUTH-PRISM-TRUST-PRINCIPAL-CONTROL current source/producercontract. Secret-reference/principal/closedchildprojection author remains exact parent/deliveryboundrole, not a newCore writer; complete targetdomain/cases remain parentopen.",
+      "settingIds": [
+        "AUTH-PRISM-TRUST-PRINCIPAL-CONTROL"
+      ],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-255b68e6d0427d7b",
+      "source": "skills/prism/server/worker-config.ts",
+      "line": 12,
+      "sourceSha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e",
+      "exactText": "  const databaseUrl = environment.DATABASE_URL ?? '';",
+      "reader": {
+        "name": "loadWorkerConfig",
+        "parents": [],
+        "startLine": 5,
+        "endLine": 20
+      },
+      "classification": "parent-current-source-handoff",
+      "reason": "Exact actual DATABASE_URL fieldconsumer linked parent AUTH-PRISM-SECRET-DATABASE current source/producercontract. Secret-reference/principal/closedchildprojection author remains exact parent/deliveryboundrole, not a newCore writer; complete targetdomain/cases remain parentopen.",
+      "settingIds": [
+        "AUTH-PRISM-SECRET-DATABASE"
+      ],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-9d28ceb2e637b331",
+      "source": "skills/prism/server/worker-config.ts",
+      "line": 22,
+      "sourceSha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e",
+      "exactText": "export function workerIngressLimits(environment: NodeJS.ProcessEnv = process.env) {",
+      "reader": {
+        "name": "workerIngressLimits",
+        "parents": [],
+        "startLine": 22,
+        "endLine": 24
+      },
+      "classification": "generated-binding",
+      "reason": "WrapperProcessEnv defaults capture actual startupauthor context, not absentfieldvaluefallback; numeric ingresssettings strictselectedcomponentowner, trust/credential/nativebinding fields separately parent21 surface.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-f6eeac8dcd4a9c7e",
+      "source": "skills/prism/server/worker-lifecycle.ts",
+      "line": 11,
+      "sourceSha256": "d166a6ec6fd21c6b28c5bbeb0a1494dd3b81c61bbae588846250347917f5318a",
+      "exactText": "    || result.error?.code === 'WORKER_PHASE_UNRESOLVED'",
+      "reader": {
+        "name": "unresolved",
+        "parents": [],
+        "startLine": 9,
+        "endLine": 13
+      },
+      "classification": "generated-binding",
+      "reason": "Unresolved/termination failure closes admission; request probe allowed only exactGET health/bootstrap/ready no requestbody, actualactive controllers cancel during closing. Required selected ingress/close safe positive timers<=signed32 validated; timeouthandle undefined is local state not fallback.",
+      "settingIds": [
+        "CMP-prism-worker-ingress.maximumActiveRequests",
+        "CMP-prism-worker-ingress.maximumProbeRequests",
+        "CMP-prism-worker-ingress.maximumConnections",
+        "CMP-prism-worker-ingress.requestTimeoutMs",
+        "CMP-prism-worker-ingress.shutdownTimeoutMs"
+      ],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-1bb6e1fe22842aa8",
+      "source": "skills/prism/server/worker-lifecycle.ts",
+      "line": 12,
+      "sourceSha256": "d166a6ec6fd21c6b28c5bbeb0a1494dd3b81c61bbae588846250347917f5318a",
+      "exactText": "    || result.error?.code === 'WORKER_TERMINATION_FAILED'));",
+      "reader": {
+        "name": "unresolved",
+        "parents": [],
+        "startLine": 9,
+        "endLine": 13
+      },
+      "classification": "generated-binding",
+      "reason": "Unresolved/termination failure closes admission; request probe allowed only exactGET health/bootstrap/ready no requestbody, actualactive controllers cancel during closing. Required selected ingress/close safe positive timers<=signed32 validated; timeouthandle undefined is local state not fallback.",
+      "settingIds": [
+        "CMP-prism-worker-ingress.maximumActiveRequests",
+        "CMP-prism-worker-ingress.maximumProbeRequests",
+        "CMP-prism-worker-ingress.maximumConnections",
+        "CMP-prism-worker-ingress.requestTimeoutMs",
+        "CMP-prism-worker-ingress.shutdownTimeoutMs"
+      ],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-981e8b5b7effdbf8",
+      "source": "skills/prism/server/worker-lifecycle.ts",
+      "line": 34,
+      "sourceSha256": "d166a6ec6fd21c6b28c5bbeb0a1494dd3b81c61bbae588846250347917f5318a",
+      "exactText": "    if (Object.values(limits).some(value => !Number.isSafeInteger(value) || value < 1 || value > 2_147_483_647)) throw new Error('PRISM_WORKER_INGRESS_INVALID');",
+      "reader": {
+        "name": "constructor",
+        "parents": [],
+        "startLine": 33,
+        "endLine": 44
+      },
+      "classification": "generated-binding",
+      "reason": "Unresolved/termination failure closes admission; request probe allowed only exactGET health/bootstrap/ready no requestbody, actualactive controllers cancel during closing. Required selected ingress/close safe positive timers<=signed32 validated; timeouthandle undefined is local state not fallback.",
+      "settingIds": [
+        "CMP-prism-worker-ingress.maximumActiveRequests",
+        "CMP-prism-worker-ingress.maximumProbeRequests",
+        "CMP-prism-worker-ingress.maximumConnections",
+        "CMP-prism-worker-ingress.requestTimeoutMs",
+        "CMP-prism-worker-ingress.shutdownTimeoutMs"
+      ],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-e918cdbfff1af1fa",
+      "source": "skills/prism/server/worker-lifecycle.ts",
+      "line": 46,
+      "sourceSha256": "d166a6ec6fd21c6b28c5bbeb0a1494dd3b81c61bbae588846250347917f5318a",
+      "exactText": "    if (this.stopping || this.unsafe) { unavailable(response); return; }",
+      "reader": {
+        "name": "accept",
+        "parents": [],
+        "startLine": 45,
+        "endLine": 65
+      },
+      "classification": "generated-binding",
+      "reason": "Unresolved/termination failure closes admission; request probe allowed only exactGET health/bootstrap/ready no requestbody, actualactive controllers cancel during closing. Required selected ingress/close safe positive timers<=signed32 validated; timeouthandle undefined is local state not fallback.",
+      "settingIds": [
+        "CMP-prism-worker-ingress.maximumActiveRequests",
+        "CMP-prism-worker-ingress.maximumProbeRequests",
+        "CMP-prism-worker-ingress.maximumConnections",
+        "CMP-prism-worker-ingress.requestTimeoutMs",
+        "CMP-prism-worker-ingress.shutdownTimeoutMs"
+      ],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-49deac369ec95ede",
+      "source": "skills/prism/server/worker-lifecycle.ts",
+      "line": 47,
+      "sourceSha256": "d166a6ec6fd21c6b28c5bbeb0a1494dd3b81c61bbae588846250347917f5318a",
+      "exactText": "    const probe = request.method === 'GET' && ['/health', '/bootstrap', '/ready'].includes(request.url ?? '')",
+      "reader": {
+        "name": "accept",
+        "parents": [],
+        "startLine": 45,
+        "endLine": 65
+      },
+      "classification": "generated-binding",
+      "reason": "Unresolved/termination failure closes admission; request probe allowed only exactGET health/bootstrap/ready no requestbody, actualactive controllers cancel during closing. Required selected ingress/close safe positive timers<=signed32 validated; timeouthandle undefined is local state not fallback.",
+      "settingIds": [
+        "CMP-prism-worker-ingress.maximumActiveRequests",
+        "CMP-prism-worker-ingress.maximumProbeRequests",
+        "CMP-prism-worker-ingress.maximumConnections",
+        "CMP-prism-worker-ingress.requestTimeoutMs",
+        "CMP-prism-worker-ingress.shutdownTimeoutMs"
+      ],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-03ce1851a449b77a",
+      "source": "skills/prism/server/worker-lifecycle.ts",
+      "line": 48,
+      "sourceSha256": "d166a6ec6fd21c6b28c5bbeb0a1494dd3b81c61bbae588846250347917f5318a",
+      "exactText": "      && !request.headers['transfer-encoding'] && Number(request.headers['content-length'] ?? 0) === 0;",
+      "reader": {
+        "name": "accept",
+        "parents": [],
+        "startLine": 45,
+        "endLine": 65
+      },
+      "classification": "generated-binding",
+      "reason": "Unresolved/termination failure closes admission; request probe allowed only exactGET health/bootstrap/ready no requestbody, actualactive controllers cancel during closing. Required selected ingress/close safe positive timers<=signed32 validated; timeouthandle undefined is local state not fallback.",
+      "settingIds": [
+        "CMP-prism-worker-ingress.maximumActiveRequests",
+        "CMP-prism-worker-ingress.maximumProbeRequests",
+        "CMP-prism-worker-ingress.maximumConnections",
+        "CMP-prism-worker-ingress.requestTimeoutMs",
+        "CMP-prism-worker-ingress.shutdownTimeoutMs"
+      ],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-66778b137958433b",
+      "source": "skills/prism/server/worker-lifecycle.ts",
+      "line": 68,
+      "sourceSha256": "d166a6ec6fd21c6b28c5bbeb0a1494dd3b81c61bbae588846250347917f5318a",
+      "exactText": "    if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 2_147_483_647) {",
+      "reader": {
+        "name": "shutdown",
+        "parents": [],
+        "startLine": 66,
+        "endLine": 84
+      },
+      "classification": "generated-binding",
+      "reason": "Unresolved/termination failure closes admission; request probe allowed only exactGET health/bootstrap/ready no requestbody, actualactive controllers cancel during closing. Required selected ingress/close safe positive timers<=signed32 validated; timeouthandle undefined is local state not fallback.",
+      "settingIds": [
+        "CMP-prism-worker-ingress.maximumActiveRequests",
+        "CMP-prism-worker-ingress.maximumProbeRequests",
+        "CMP-prism-worker-ingress.maximumConnections",
+        "CMP-prism-worker-ingress.requestTimeoutMs",
+        "CMP-prism-worker-ingress.shutdownTimeoutMs"
+      ],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-3c2d0a56228356ee",
+      "source": "skills/prism/server/worker-lifecycle.ts",
+      "line": 78,
+      "sourceSha256": "d166a6ec6fd21c6b28c5bbeb0a1494dd3b81c61bbae588846250347917f5318a",
+      "exactText": "    for (const { controller, response } of this.active.values()) {",
+      "reader": {
+        "name": "shutdown",
+        "parents": [],
+        "startLine": 66,
+        "endLine": 84
+      },
+      "classification": "generated-binding",
+      "reason": "Unresolved/termination failure closes admission; request probe allowed only exactGET health/bootstrap/ready no requestbody, actualactive controllers cancel during closing. Required selected ingress/close safe positive timers<=signed32 validated; timeouthandle undefined is local state not fallback.",
+      "settingIds": [
+        "CMP-prism-worker-ingress.maximumActiveRequests",
+        "CMP-prism-worker-ingress.maximumProbeRequests",
+        "CMP-prism-worker-ingress.maximumConnections",
+        "CMP-prism-worker-ingress.requestTimeoutMs",
+        "CMP-prism-worker-ingress.shutdownTimeoutMs"
+      ],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-8da2f122af81d688",
+      "source": "skills/prism/server/worker-lifecycle.ts",
+      "line": 86,
+      "sourceSha256": "d166a6ec6fd21c6b28c5bbeb0a1494dd3b81c61bbae588846250347917f5318a",
+      "exactText": "    let timer: NodeJS.Timeout | undefined;",
+      "reader": {
+        "name": "drain",
+        "parents": [],
+        "startLine": 85,
+        "endLine": 104
+      },
+      "classification": "generated-binding",
+      "reason": "Unresolved/termination failure closes admission; request probe allowed only exactGET health/bootstrap/ready no requestbody, actualactive controllers cancel during closing. Required selected ingress/close safe positive timers<=signed32 validated; timeouthandle undefined is local state not fallback.",
+      "settingIds": [
+        "CMP-prism-worker-ingress.maximumActiveRequests",
+        "CMP-prism-worker-ingress.maximumProbeRequests",
+        "CMP-prism-worker-ingress.maximumConnections",
+        "CMP-prism-worker-ingress.requestTimeoutMs",
+        "CMP-prism-worker-ingress.shutdownTimeoutMs"
+      ],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-633b05949b727333",
+      "source": "skills/prism/server/worker-operation.ts",
+      "line": 61,
+      "sourceSha256": "1987bd75921ce43775dc43e0a83e776be7624d6a1dc510ed572fdfce02c57471",
+      "exactText": "    if (this.envelope.operation.values.operation === \"generate\")",
+      "reader": {
+        "name": "run",
+        "parents": [],
+        "startLine": 58,
+        "endLine": 88
+      },
+      "classification": "task-data",
+      "reason": "Actual accepted native operation generate/inputName/JSON artifact type/media constraints and returned specialist values/evidence; empty inputName causes real missing artifact rejection, not dependency/config default. Log textformats actual operation name notpolicy.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-7a591f8ede3e5091",
+      "source": "skills/prism/server/worker-operation.ts",
+      "line": 65,
+      "sourceSha256": "1987bd75921ce43775dc43e0a83e776be7624d6a1dc510ed572fdfce02c57471",
+      "exactText": "      `Prism ${String(this.envelope.operation.values.operation)} operation started`,",
+      "reader": {
+        "name": "run",
+        "parents": [],
+        "startLine": 58,
+        "endLine": 88
+      },
+      "classification": "task-data",
+      "reason": "Actual accepted native operation generate/inputName/JSON artifact type/media constraints and returned specialist values/evidence; empty inputName causes real missing artifact rejection, not dependency/config default. Log textformats actual operation name notpolicy.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-daa5c2f1251dacd0",
+      "source": "skills/prism/server/worker-operation.ts",
+      "line": 77,
+      "sourceSha256": "1987bd75921ce43775dc43e0a83e776be7624d6a1dc510ed572fdfce02c57471",
+      "exactText": "    const values={...specialistResult.values};const evidence=[];",
+      "reader": {
+        "name": "run",
+        "parents": [],
+        "startLine": 58,
+        "endLine": 88
+      },
+      "classification": "task-data",
+      "reason": "Actual accepted native operation generate/inputName/JSON artifact type/media constraints and returned specialist values/evidence; empty inputName causes real missing artifact rejection, not dependency/config default. Log textformats actual operation name notpolicy.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-de89de682eeb536b",
+      "source": "skills/prism/server/worker-operation.ts",
+      "line": 93,
+      "sourceSha256": "1987bd75921ce43775dc43e0a83e776be7624d6a1dc510ed572fdfce02c57471",
+      "exactText": "  const inputName = String(envelope.operation.values.inputName ?? '');",
+      "reader": {
+        "name": "readInput",
+        "parents": [],
+        "startLine": 91,
+        "endLine": 99
+      },
+      "classification": "task-data",
+      "reason": "Actual accepted native operation generate/inputName/JSON artifact type/media constraints and returned specialist values/evidence; empty inputName causes real missing artifact rejection, not dependency/config default. Log textformats actual operation name notpolicy.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-bb07aa0edd14561b",
+      "source": "skills/prism/server/worker-operation.ts",
+      "line": 95,
+      "sourceSha256": "1987bd75921ce43775dc43e0a83e776be7624d6a1dc510ed572fdfce02c57471",
+      "exactText": "  if (!declared || declared.kind !== 'artifact' || declared.artifact.mediaType !== 'application/json'",
+      "reader": {
+        "name": "readInput",
+        "parents": [],
+        "startLine": 91,
+        "endLine": 99
+      },
+      "classification": "task-data",
+      "reason": "Actual accepted native operation generate/inputName/JSON artifact type/media constraints and returned specialist values/evidence; empty inputName causes real missing artifact rejection, not dependency/config default. Log textformats actual operation name notpolicy.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-04dfe19ee81937be",
+      "source": "skills/prism/server/worker-operation.ts",
+      "line": 96,
+      "sourceSha256": "1987bd75921ce43775dc43e0a83e776be7624d6a1dc510ed572fdfce02c57471",
+      "exactText": "    || declared.artifact.type !== 'prism-engine-input') throw new Error('Prism input artifact is missing or invalid');",
+      "reader": {
+        "name": "readInput",
+        "parents": [],
+        "startLine": 91,
+        "endLine": 99
+      },
+      "classification": "task-data",
+      "reason": "Actual accepted native operation generate/inputName/JSON artifact type/media constraints and returned specialist values/evidence; empty inputName causes real missing artifact rejection, not dependency/config default. Log textformats actual operation name notpolicy.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-018cfa49afdd225f",
+      "source": "skills/prism/server/worker-service.ts",
+      "line": 33,
+      "sourceSha256": "90174f5edf19c85ef1642da95a51aac46854f9a1ce7172d876045a5bac1595e4",
+      "exactText": "  if (request.url !== \"/v1/attempts\" || request.method !== \"POST\") {",
+      "reader": {
+        "name": "handleWorkerRequest",
+        "parents": [],
+        "startLine": 28,
+        "endLine": 70
+      },
+      "classification": "parent-current-source-handoff",
+      "reason": "Exact actual POST fieldconsumer linked parent AUTH-PRISM-INTERNAL-ARTIFACT-UPLOAD-BYTES current source/producercontract. Secret-reference/principal/closedchildprojection author remains exact parent/deliveryboundrole, not a newCore writer; complete targetdomain/cases remain parentopen.",
+      "settingIds": [
+        "AUTH-PRISM-INTERNAL-ARTIFACT-UPLOAD-BYTES"
+      ],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-e4e207b59e064b8b",
+      "source": "skills/prism/server/worker-service.ts",
+      "line": 39,
+      "sourceSha256": "90174f5edf19c85ef1642da95a51aac46854f9a1ce7172d876045a5bac1595e4",
+      "exactText": "      !(request.headers[\"content-type\"] ?? \"\")",
+      "reader": {
+        "name": "handleWorkerRequest",
+        "parents": [],
+        "startLine": 28,
+        "endLine": 70
+      },
+      "classification": "protocol-invariant",
+      "reason": "Actual attempts POST+JSON and health/bootstrap HTTP routes; only real dependency-unavailable/attemptbusy\u2192503, other validation\u2192422. Endpointmethod/errorstatus literals HTTP contract, not runtimecapacity tuning.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-b62081292022dc6c",
+      "source": "skills/prism/server/worker-service.ts",
+      "line": 63,
+      "sourceSha256": "90174f5edf19c85ef1642da95a51aac46854f9a1ce7172d876045a5bac1595e4",
+      "exactText": "    response.writeHead(error instanceof WorkerDependencyUnavailable || error instanceof NativeWorkerAttemptBusy ? 503 : 422, { \"content-type\": \"application/json\" });",
+      "reader": {
+        "name": "handleWorkerRequest",
+        "parents": [],
+        "startLine": 28,
+        "endLine": 70
+      },
+      "classification": "protocol-invariant",
+      "reason": "Actual attempts POST+JSON and health/bootstrap HTTP routes; only real dependency-unavailable/attemptbusy\u2192503, other validation\u2192422. Endpointmethod/errorstatus literals HTTP contract, not runtimecapacity tuning.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-91dc5ea13060791e",
+      "source": "skills/prism/server/worker-service.ts",
+      "line": 96,
+      "sourceSha256": "90174f5edf19c85ef1642da95a51aac46854f9a1ce7172d876045a5bac1595e4",
+      "exactText": "  if (request.url === \"/health\" || request.url === \"/bootstrap\") {",
+      "reader": {
+        "name": "serveLocalHealth",
+        "parents": [],
+        "startLine": 95,
+        "endLine": 107
+      },
+      "classification": "protocol-invariant",
+      "reason": "Actual attempts POST+JSON and health/bootstrap HTTP routes; only real dependency-unavailable/attemptbusy\u2192503, other validation\u2192422. Endpointmethod/errorstatus literals HTTP contract, not runtimecapacity tuning.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    },
+    {
+      "candidateId": "SRC-e4fe23a7946e22db",
+      "source": "skills/prism/server/worker.ts",
+      "line": 56,
+      "sourceSha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d",
+      "exactText": "    process.stderr.write(`${JSON.stringify({ event: 'prism_native_worker_failure',",
+      "reader": null,
+      "classification": "nonsetting",
+      "reason": "JSON diagnostic serialization of actual native worker failure event is not an environment read/settings author.",
+      "settingIds": [],
+      "status": "source-disposed; independent source/full target recheck pending"
+    }
+  ],
+  "proofLimits": [
+    "Current21Prism fields handoff only, their unsupported target domains remain open",
+    "Role/OCIdigest vs packagecode hash not conflated",
+    "Cardinality3 and any other numericbound lacking invariant remains explicit sourcequestion"
+  ]
+}

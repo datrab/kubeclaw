@@ -1,0 +1,4274 @@
+[
+  {
+    "plugin": "artifact-store",
+    "field": "artifactRoot",
+    "default": null,
+    "unit": "absolute filesystem root",
+    "reader": [
+      {
+        "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+        "line": 160,
+        "sourceLine": "  const configured = context.config.artifactRoot;",
+        "sha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 55,
+        "sourceLine": "    this.#file = path.join(path.resolve(root), \"records\", \"store.json\");",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      }
+    ],
+    "error": "artifactRoot is required",
+    "effect": "persistent store location, readiness and effect records",
+    "a": "${CASE_ROOT}/a/artifact-store",
+    "b": "${CASE_ROOT}/b/artifact-store",
+    "action": "artifacts.write put_json of a valid application/json value; artifacts.read get_json with returned digest; same invocation reaches A/B store roots, inspect canonical durable file paths; after A writes publish B and recover A: retained A root only",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "string",
+      "minimumLength": 1,
+      "pathNormalization": "path.resolve in actual durable store; current adapter does not require canonical absolute root; target canonical root before activation"
+    },
+    "reason": "Changes persistent store location, readiness and effect records at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "artifact-store",
+    "field": "maxArtifactBytes",
+    "default": 16777216,
+    "unit": "UTF-8 serialized bytes",
+    "reader": [
+      {
+        "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+        "line": 136,
+        "sourceLine": "  if (bytes.byteLength > maximumArtifactBytes) throw new Error('ARTIFACT_SIZE_EXCEEDED');",
+        "sha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154"
+      }
+    ],
+    "error": "ARTIFACT_SIZE_EXCEEDED",
+    "effect": "admitted encoded object/record size",
+    "a": 256,
+    "b": 512,
+    "action": "artifacts.write put_json of a valid application/json value; artifacts.read get_json with returned digest; construct valid payload with measured actual encoding length 384 bytes (including state/wait wrapper when relevant), assert A rejects before append/blob and B accepts; small128-byte positive reaches same boundary",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "relation": "target per-entry <=store capacity; exact encoding includes wrapper for state/wait; telemetry checks pre-redaction payload first"
+    },
+    "reason": "Changes admitted encoded object/record size at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "artifact-store",
+    "field": "maximumRecords",
+    "default": 100000,
+    "unit": "live durable records across all streams",
+    "reader": [
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 84,
+        "sourceLine": "      const record: DurableRecord<T> = {",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 85,
+        "sourceLine": "        schemaVersion: owner === undefined ? \"pipeline-durable-record.v1\" : \"pipeline-durable-record.v2\",",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      }
+    ],
+    "error": "DURABLE_RECORD_STORE_FULL",
+    "effect": "durable record admission count",
+    "a": 2,
+    "b": 3,
+    "action": "artifacts.write put_json of a valid application/json value; artifacts.read get_json with returned digest; submit three distinct idempotency keys, confirm A admits exactly2 then rejects third; B admits3; duplicate replay returns original without consuming fourth record; readiness read consumes no record",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "reason": "Changes durable record admission count at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "artifact-store",
+    "field": "maximumStoreBytes",
+    "default": 268435456,
+    "unit": "serialized store bytes; artifact blob total separately",
+    "reader": [
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 80,
+        "sourceLine": "      const duplicate = existingRecord(state, stream, idempotencyKey, digest, snapshot, owner);",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 100,
+        "sourceLine": "    });",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 101,
+        "sourceLine": "  }",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+        "line": 62,
+        "sourceLine": "      if (!Number.isSafeInteger(total) || total > this.#maximumTotalBytes!) throw new Error('DURABLE_BLOB_STORE_LIMIT_EXCEEDED');",
+        "sha256": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+        "line": 81,
+        "sourceLine": "      throw new Error('DURABLE_BLOB_STORE_LIMIT_EXCEEDED');",
+        "sha256": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea"
+      }
+    ],
+    "error": "DURABLE_RECORD_STORE_FULL or DURABLE_BLOB_STORE_LIMIT_EXCEEDED",
+    "effect": "on-disk canonical state admission capacity (artifact metadata and blob stores each apply same limit, not one proven aggregate)",
+    "a": 8192,
+    "b": 16384,
+    "action": "artifacts.write put_json of a valid application/json value; artifacts.read get_json with returned digest; finite fixed task creates canonical candidate state 12288 bytes including envelopes; A rejects before commit and B commits, assert previous bytes intact; keep per-record cap>12288 and record-count cap>number of writes so only store quota governs; artifact case separately exercise distinct blobs totaling12288 while metadata below8192",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "relation": "current no cross-field relation; target reject entry capacity exceeding entire store where unsupported"
+    },
+    "reason": "Changes on-disk canonical state admission capacity (artifact metadata and blob stores each apply same limit, not one proven aggregate) at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "state-store",
+    "field": "root",
+    "default": null,
+    "unit": "absolute filesystem root",
+    "reader": [
+      {
+        "path": "skills/common/plugins/state-store/src/adapter.ts",
+        "line": 27,
+        "sourceLine": "  const configured = context.config.root;",
+        "sha256": "1805e68a4d478af60df925fb6c38204344d53e17a8134fafdd47732263c473c7"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 55,
+        "sourceLine": "    this.#file = path.join(path.resolve(root), \"records\", \"store.json\");",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      }
+    ],
+    "error": "state root is required",
+    "effect": "persistent store location, readiness and effect records",
+    "a": "${CASE_ROOT}/a/state-store",
+    "b": "${CASE_ROOT}/b/state-store",
+    "action": "state.append append payload {data:string}; state.read read same namespace; same invocation reaches A/B store roots, inspect canonical durable file paths; after A writes publish B and recover A: retained A root only",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "string",
+      "minimumLength": 1,
+      "pathNormalization": "path.resolve in actual durable store; current adapter does not require canonical absolute root; target canonical root before activation"
+    },
+    "reason": "Changes persistent store location, readiness and effect records at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "state-store",
+    "field": "maxEntryBytes",
+    "default": 1048576,
+    "unit": "UTF-8 serialized bytes",
+    "reader": [
+      {
+        "path": "skills/common/plugins/state-store/src/adapter.ts",
+        "line": 77,
+        "sourceLine": "        if (error instanceof Error && error.message === 'DURABLE_RECORD_SIZE_EXCEEDED') throw new Error('STATE_ENTRY_SIZE_EXCEEDED');",
+        "sha256": "1805e68a4d478af60df925fb6c38204344d53e17a8134fafdd47732263c473c7"
+      }
+    ],
+    "error": "STATE_ENTRY_SIZE_EXCEEDED",
+    "effect": "admitted encoded object/record size",
+    "a": 256,
+    "b": 512,
+    "action": "state.append append payload {data:string}; state.read read same namespace; construct valid payload with measured actual encoding length 384 bytes (including state/wait wrapper when relevant), assert A rejects before append/blob and B accepts; small128-byte positive reaches same boundary",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "relation": "target per-entry <=store capacity; exact encoding includes wrapper for state/wait; telemetry checks pre-redaction payload first"
+    },
+    "reason": "Changes admitted encoded object/record size at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "state-store",
+    "field": "maximumRecords",
+    "default": 100000,
+    "unit": "live durable records across all streams",
+    "reader": [
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 84,
+        "sourceLine": "      const record: DurableRecord<T> = {",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 85,
+        "sourceLine": "        schemaVersion: owner === undefined ? \"pipeline-durable-record.v1\" : \"pipeline-durable-record.v2\",",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      }
+    ],
+    "error": "DURABLE_RECORD_STORE_FULL",
+    "effect": "durable record admission count",
+    "a": 2,
+    "b": 3,
+    "action": "state.append append payload {data:string}; state.read read same namespace; submit three distinct idempotency keys, confirm A admits exactly2 then rejects third; B admits3; duplicate replay returns original without consuming fourth record; readiness read consumes no record",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "reason": "Changes durable record admission count at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "state-store",
+    "field": "maximumStoreBytes",
+    "default": 268435456,
+    "unit": "serialized store bytes; artifact blob total separately",
+    "reader": [
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 80,
+        "sourceLine": "      const duplicate = existingRecord(state, stream, idempotencyKey, digest, snapshot, owner);",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 100,
+        "sourceLine": "    });",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 101,
+        "sourceLine": "  }",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      }
+    ],
+    "error": "DURABLE_RECORD_STORE_FULL",
+    "effect": "on-disk canonical state admission capacity (artifact metadata and blob stores each apply same limit, not one proven aggregate)",
+    "a": 8192,
+    "b": 16384,
+    "action": "state.append append payload {data:string}; state.read read same namespace; finite fixed task creates canonical candidate state 12288 bytes including envelopes; A rejects before commit and B commits, assert previous bytes intact; keep per-record cap>12288 and record-count cap>number of writes so only store quota governs; artifact case separately exercise distinct blobs totaling12288 while metadata below8192",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "relation": "current no cross-field relation; target reject entry capacity exceeding entire store where unsupported"
+    },
+    "reason": "Changes on-disk canonical state admission capacity (artifact metadata and blob stores each apply same limit, not one proven aggregate) at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "telemetry-store",
+    "field": "root",
+    "default": null,
+    "unit": "absolute filesystem root",
+    "reader": [
+      {
+        "path": "skills/common/plugins/telemetry-store/src/adapter.ts",
+        "line": 6,
+        "sourceLine": "  const root = context.config.root;",
+        "sha256": "f5a3ff64dce028471c800e9a5da01bcc3a405f26b1e68ccdd8e78cd54e00fb13"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 55,
+        "sourceLine": "    this.#file = path.join(path.resolve(root), \"records\", \"store.json\");",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      }
+    ],
+    "error": "root is required",
+    "effect": "persistent store location, readiness and effect records",
+    "a": "${CASE_ROOT}/a/telemetry-store",
+    "b": "${CASE_ROOT}/b/telemetry-store",
+    "action": "telemetry.emit append valid telemetryEnvelope; inspect stored redacted event; same invocation reaches A/B store roots, inspect canonical durable file paths; after A writes publish B and recover A: retained A root only",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "string",
+      "minimumLength": 1,
+      "pathNormalization": "path.resolve in actual durable store; current adapter does not require canonical absolute root; target canonical root before activation"
+    },
+    "reason": "Changes persistent store location, readiness and effect records at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "telemetry-store",
+    "field": "maxRecordBytes",
+    "default": 1048576,
+    "unit": "UTF-8 serialized bytes",
+    "reader": [
+      {
+        "path": "skills/common/plugins/telemetry-store/src/adapter.ts",
+        "line": 36,
+        "sourceLine": "          throw new Error('TELEMETRY_RECORD_SIZE_EXCEEDED');",
+        "sha256": "f5a3ff64dce028471c800e9a5da01bcc3a405f26b1e68ccdd8e78cd54e00fb13"
+      }
+    ],
+    "error": "TELEMETRY_RECORD_SIZE_EXCEEDED",
+    "effect": "admitted encoded object/record size",
+    "a": 256,
+    "b": 512,
+    "action": "telemetry.emit append valid telemetryEnvelope; inspect stored redacted event; construct valid payload with measured actual encoding length 384 bytes (including state/wait wrapper when relevant), assert A rejects before append/blob and B accepts; small128-byte positive reaches same boundary",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "relation": "target per-entry <=store capacity; exact encoding includes wrapper for state/wait; telemetry checks pre-redaction payload first"
+    },
+    "reason": "Changes admitted encoded object/record size at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "telemetry-store",
+    "field": "maximumRecords",
+    "default": 100000,
+    "unit": "live durable records across all streams",
+    "reader": [
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 84,
+        "sourceLine": "      const record: DurableRecord<T> = {",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 85,
+        "sourceLine": "        schemaVersion: owner === undefined ? \"pipeline-durable-record.v1\" : \"pipeline-durable-record.v2\",",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      }
+    ],
+    "error": "DURABLE_RECORD_STORE_FULL",
+    "effect": "durable record admission count",
+    "a": 2,
+    "b": 3,
+    "action": "telemetry.emit append valid telemetryEnvelope; inspect stored redacted event; submit three distinct idempotency keys, confirm A admits exactly2 then rejects third; B admits3; duplicate replay returns original without consuming fourth record; readiness read consumes no record",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "reason": "Changes durable record admission count at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "telemetry-store",
+    "field": "maximumStoreBytes",
+    "default": 268435456,
+    "unit": "serialized store bytes; artifact blob total separately",
+    "reader": [
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 80,
+        "sourceLine": "      const duplicate = existingRecord(state, stream, idempotencyKey, digest, snapshot, owner);",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 100,
+        "sourceLine": "    });",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 101,
+        "sourceLine": "  }",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      }
+    ],
+    "error": "DURABLE_RECORD_STORE_FULL",
+    "effect": "on-disk canonical state admission capacity (artifact metadata and blob stores each apply same limit, not one proven aggregate)",
+    "a": 8192,
+    "b": 16384,
+    "action": "telemetry.emit append valid telemetryEnvelope; inspect stored redacted event; finite fixed task creates canonical candidate state 12288 bytes including envelopes; A rejects before commit and B commits, assert previous bytes intact; keep per-record cap>12288 and record-count cap>number of writes so only store quota governs; artifact case separately exercise distinct blobs totaling12288 while metadata below8192",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "relation": "current no cross-field relation; target reject entry capacity exceeding entire store where unsupported"
+    },
+    "reason": "Changes on-disk canonical state admission capacity (artifact metadata and blob stores each apply same limit, not one proven aggregate) at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "wait-store",
+    "field": "root",
+    "default": null,
+    "unit": "absolute filesystem root",
+    "reader": [
+      {
+        "path": "skills/common/plugins/wait-store/src/adapter.ts",
+        "line": 199,
+        "sourceLine": "  const root = context.config.root;",
+        "sha256": "9114197adde4307becd0d14548eef723804be8f051acef012abbcbf8c5b8b082"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 55,
+        "sourceLine": "    this.#file = path.join(path.resolve(root), \"records\", \"store.json\");",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      }
+    ],
+    "error": "root is required",
+    "effect": "persistent store location, readiness and effect records",
+    "a": "${CASE_ROOT}/a/wait-store",
+    "b": "${CASE_ROOT}/b/wait-store",
+    "action": "signal.wait create valid wait fields {kind:signal,signalType:kubeclaw.case.signal,authorizedIssuer:{type:operator,id:operator:case},expiresAt:null,request:{data:string}}; read waits; same invocation reaches A/B store roots, inspect canonical durable file paths; after A writes publish B and recover A: retained A root only",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "string",
+      "minimumLength": 1,
+      "pathNormalization": "path.resolve in actual durable store; current adapter does not require canonical absolute root; target canonical root before activation"
+    },
+    "reason": "Changes persistent store location, readiness and effect records at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "wait-store",
+    "field": "maxEntryBytes",
+    "default": 1048576,
+    "unit": "UTF-8 serialized bytes",
+    "reader": [
+      {
+        "path": "skills/common/plugins/wait-store/src/adapter.ts",
+        "line": 244,
+        "sourceLine": "        if (error instanceof Error && error.message === 'DURABLE_RECORD_SIZE_EXCEEDED') throw new Error('WAIT_ENTRY_SIZE_EXCEEDED');",
+        "sha256": "9114197adde4307becd0d14548eef723804be8f051acef012abbcbf8c5b8b082"
+      }
+    ],
+    "error": "WAIT_ENTRY_SIZE_EXCEEDED",
+    "effect": "admitted encoded object/record size",
+    "a": 256,
+    "b": 512,
+    "action": "signal.wait create valid wait fields {kind:signal,signalType:kubeclaw.case.signal,authorizedIssuer:{type:operator,id:operator:case},expiresAt:null,request:{data:string}}; read waits; construct valid payload with measured actual encoding length 384 bytes (including state/wait wrapper when relevant), assert A rejects before append/blob and B accepts; small128-byte positive reaches same boundary",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "relation": "target per-entry <=store capacity; exact encoding includes wrapper for state/wait; telemetry checks pre-redaction payload first"
+    },
+    "reason": "Changes admitted encoded object/record size at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "wait-store",
+    "field": "maximumRecords",
+    "default": 100000,
+    "unit": "live durable records across all streams",
+    "reader": [
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 84,
+        "sourceLine": "      const record: DurableRecord<T> = {",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 85,
+        "sourceLine": "        schemaVersion: owner === undefined ? \"pipeline-durable-record.v1\" : \"pipeline-durable-record.v2\",",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      }
+    ],
+    "error": "DURABLE_RECORD_STORE_FULL",
+    "effect": "durable record admission count",
+    "a": 2,
+    "b": 3,
+    "action": "signal.wait create valid wait fields {kind:signal,signalType:kubeclaw.case.signal,authorizedIssuer:{type:operator,id:operator:case},expiresAt:null,request:{data:string}}; read waits; submit three distinct idempotency keys, confirm A admits exactly2 then rejects third; B admits3; duplicate replay returns original without consuming fourth record; readiness read consumes no record",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "reason": "Changes durable record admission count at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "wait-store",
+    "field": "maximumStoreBytes",
+    "default": 268435456,
+    "unit": "serialized store bytes; artifact blob total separately",
+    "reader": [
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 80,
+        "sourceLine": "      const duplicate = existingRecord(state, stream, idempotencyKey, digest, snapshot, owner);",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 100,
+        "sourceLine": "    });",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 101,
+        "sourceLine": "  }",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      }
+    ],
+    "error": "DURABLE_RECORD_STORE_FULL",
+    "effect": "on-disk canonical state admission capacity (artifact metadata and blob stores each apply same limit, not one proven aggregate)",
+    "a": 8192,
+    "b": 16384,
+    "action": "signal.wait create valid wait fields {kind:signal,signalType:kubeclaw.case.signal,authorizedIssuer:{type:operator,id:operator:case},expiresAt:null,request:{data:string}}; read waits; finite fixed task creates canonical candidate state 12288 bytes including envelopes; A rejects before commit and B commits, assert previous bytes intact; keep per-record cap>12288 and record-count cap>number of writes so only store quota governs; artifact case separately exercise distinct blobs totaling12288 while metadata below8192",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "relation": "current no cross-field relation; target reject entry capacity exceeding entire store where unsupported"
+    },
+    "reason": "Changes on-disk canonical state admission capacity (artifact metadata and blob stores each apply same limit, not one proven aggregate) at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "network-http",
+    "field": "allowedOrigins",
+    "default": null,
+    "unit": "canonical origin strings",
+    "reader": [
+      {
+        "path": "skills/common/plugins/network-http/src/adapter.ts",
+        "line": 19,
+        "sourceLine": "  const origins = config.allowedOrigins;",
+        "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+      },
+      {
+        "path": "skills/common/plugins/network-http/src/adapter.ts",
+        "line": 28,
+        "sourceLine": "    origins: new Set(origins.map((origin) => new URL(origin).origin)),",
+        "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+      },
+      {
+        "path": "skills/common/plugins/network-http/src/adapter.ts",
+        "line": 118,
+        "sourceLine": "      if (!config.origins.has(url.origin)) throw new Error(`NETWORK_ORIGIN_DENIED:${url.origin}`);",
+        "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+      }
+    ],
+    "error": "NETWORK_ORIGIN_DENIED:<origin>",
+    "effect": "per-origin network admission",
+    "a": [
+      "${HTTP_FIXTURE_ORIGIN}"
+    ],
+    "b": [
+      "${HTTP_FIXTURE_ORIGIN}",
+      "${HTTP_FIXTURE_ORIGIN_B}"
+    ],
+    "action": "same GET to fixture H2: A denies before fetch, B hits real HTTP server; H GET is same-boundary positive; URI path canonicalizes to origin, reject embedded credentials at actual invocation",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": "schema URI; parser new URL(...).origin"
+    },
+    "reason": "Changes per-origin network admission at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "network-http",
+    "field": "allowedMethods",
+    "default": [
+      "GET"
+    ],
+    "unit": "HTTP method names",
+    "reader": [
+      {
+        "path": "skills/common/plugins/network-http/src/adapter.ts",
+        "line": 29,
+        "sourceLine": "    methods: new Set((config.allowedMethods as string[] | undefined ?? ['GET']).map((method) => method.toUpperCase())),",
+        "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+      },
+      {
+        "path": "skills/common/plugins/network-http/src/adapter.ts",
+        "line": 120,
+        "sourceLine": "      const method = typeof request.payload.method === 'string' ? request.payload.method.toUpperCase() : 'GET';",
+        "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+      },
+      {
+        "path": "skills/common/plugins/network-http/src/adapter.ts",
+        "line": 121,
+        "sourceLine": "      if (!config.methods.has(method)) throw new Error(`NETWORK_METHOD_DENIED:${method}`);",
+        "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+      }
+    ],
+    "error": "NETWORK_METHOD_DENIED:POST",
+    "effect": "allowed outbound method set",
+    "a": [
+      "GET"
+    ],
+    "b": [
+      "GET",
+      "POST"
+    ],
+    "action": "same POST to local echo fixture: A denies, B records POST; GET positive; separate HEAD rejection shows supported schema enum omits HEAD despite provider http mode supporting it",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": [
+        "GET",
+        "POST",
+        "PUT",
+        "PATCH",
+        "DELETE"
+      ]
+    },
+    "reason": "Changes allowed outbound method set at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "network-http",
+    "field": "allowedHeaders",
+    "default": [
+      "accept",
+      "content-type",
+      "idempotency-key"
+    ],
+    "unit": "lowercase header names",
+    "reader": [
+      {
+        "path": "skills/common/plugins/network-http/src/adapter.ts",
+        "line": 23,
+        "sourceLine": "  const rawHeaders = config.allowedHeaders ?? ['accept', 'content-type', 'idempotency-key'];",
+        "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+      },
+      {
+        "path": "skills/common/plugins/network-http/src/adapter.ts",
+        "line": 30,
+        "sourceLine": "    headers: new Set(rawHeaders.map((item) => item.toLowerCase())),",
+        "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+      },
+      {
+        "path": "skills/common/plugins/network-http/src/adapter.ts",
+        "line": 44,
+        "sourceLine": "    if (!allowed.has(normalized) || typeof headerValue !== 'string' || /[\\r\\n]/.test(headerValue)) {",
+        "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+      },
+      {
+        "path": "skills/common/plugins/network-http/src/adapter.ts",
+        "line": 45,
+        "sourceLine": "      throw new Error(`NETWORK_HEADER_DENIED:${normalized}`);",
+        "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+      }
+    ],
+    "error": "NETWORK_HEADER_DENIED:x-case",
+    "effect": "outbound header admission",
+    "a": [
+      "accept",
+      "content-type"
+    ],
+    "b": [
+      "accept",
+      "content-type",
+      "x-case"
+    ],
+    "action": "same GET headers{x-case:approved}: A rejects before fetch, B fixture observes x-case; no arbitrary CR/LF allowed; automatic connection:close is distinct code policy",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": "^[a-z0-9-]+$; empty explicitly allowed"
+    },
+    "reason": "Changes outbound header admission at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "network-http",
+    "field": "maxRequestBytes",
+    "default": 1048576,
+    "unit": "JSON.stringify(body) UTF-8 bytes",
+    "reader": [
+      {
+        "path": "skills/common/plugins/network-http/src/adapter.ts",
+        "line": 31,
+        "sourceLine": "    maxRequestBytes: positiveInteger(config.maxRequestBytes, 'maxRequestBytes', 1_048_576),",
+        "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+      },
+      {
+        "path": "skills/common/plugins/network-http/src/adapter.ts",
+        "line": 124,
+        "sourceLine": "      if (body && Buffer.byteLength(body, 'utf8') > config.maxRequestBytes) throw new Error('NETWORK_REQUEST_SIZE_EXCEEDED');",
+        "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+      }
+    ],
+    "error": "NETWORK_REQUEST_SIZE_EXCEEDED",
+    "effect": "outbound JSON body admission",
+    "a": 64,
+    "b": 128,
+    "action": "POST {data: x repeated96} =>107 serialized bytes; A64 rejects, B128 sends107 observed raw bytes; smallbody positive; explicitly keep allowedPOST/content-type and other byte limits above task",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "reason": "Changes outbound JSON body admission at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "network-http",
+    "field": "maxResponseBytes",
+    "default": 1048576,
+    "unit": "decompressed response body bytes",
+    "reader": [
+      {
+        "path": "skills/common/plugins/network-http/src/adapter.ts",
+        "line": 32,
+        "sourceLine": "    maxResponseBytes: positiveInteger(config.maxResponseBytes, 'maxResponseBytes', 1_048_576),",
+        "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+      },
+      {
+        "path": "skills/common/plugins/network-http/src/adapter.ts",
+        "line": 79,
+        "sourceLine": "    if (declared > maximum) throw new Error('NETWORK_RESPONSE_SIZE_EXCEEDED');",
+        "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+      },
+      {
+        "path": "skills/common/plugins/network-http/src/adapter.ts",
+        "line": 86,
+        "sourceLine": "      if (value.byteLength > maximum - total) throw new Error('NETWORK_RESPONSE_SIZE_EXCEEDED');",
+        "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+      },
+      {
+        "path": "skills/common/plugins/network-http/src/adapter.ts",
+        "line": 92,
+        "sourceLine": "    return { text, contentType: response.headers.get('content-type')?.split(';', 1)[0]?.trim().toLowerCase() };",
+        "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+      }
+    ],
+    "error": "NETWORK_RESPONSE_SIZE_EXCEEDED",
+    "effect": "streamed decoded response admission",
+    "a": 64,
+    "b": 128,
+    "action": "GET fixture response body96 UTF-8 bytes with/without content-length; A64 rejects before retaining excess chunk, B128 receives exact96; small32byte response positive",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "reason": "Changes streamed decoded response admission at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "network-http",
+    "field": "timeoutMs",
+    "default": 30000,
+    "unit": "milliseconds",
+    "reader": [
+      {
+        "path": "skills/common/plugins/network-http/src/adapter.ts",
+        "line": 33,
+        "sourceLine": "    timeoutMs: positiveInteger(config.timeoutMs, 'timeoutMs', 30_000),",
+        "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+      },
+      {
+        "path": "skills/common/plugins/network-http/src/adapter.ts",
+        "line": 57,
+        "sourceLine": "  const timeout = AbortSignal.timeout(timeoutMs);",
+        "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+      },
+      {
+        "path": "skills/common/plugins/network-http/src/adapter.ts",
+        "line": 67,
+        "sourceLine": "      const timedOut = timeout.aborted && requestSignal.reason === timeout.reason;",
+        "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+      },
+      {
+        "path": "skills/common/plugins/network-http/src/adapter.ts",
+        "line": 68,
+        "sourceLine": "      throw new Error(timedOut ? 'NETWORK_TIMEOUT' : 'ADAPTER_CANCELLED', { cause: requestSignal.reason });",
+        "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+      }
+    ],
+    "error": "NETWORK_TIMEOUT",
+    "effect": "finite HTTP fetch + response read cancellation deadline",
+    "a": 20,
+    "b": 1000,
+    "action": "same server deliberately delays80ms then writes32bytes; A20 times out, B1000 returns200; immediate32byte positive underA; prove requestSignal timeout reason, not unavailable endpoint",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": "current safeinteger only; target timer-supported maximum2147483647"
+    },
+    "reason": "Changes finite HTTP fetch + response read cancellation deadline at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "command-runner",
+    "field": "allowedExecutables",
+    "default": null,
+    "unit": "canonical executable file paths",
+    "reader": [
+      {
+        "path": "skills/common/plugins/command-runner/src/adapter.ts",
+        "line": 63,
+        "sourceLine": "  const executables = new Set(stringArray(context.config.allowedExecutables, 'allowedExecutables').map(canonicalExecutable));",
+        "sha256": "31265c4ce8ad540a119e74cc0b4449ffb0621af688f0c37fa848cdb509b4620b"
+      },
+      {
+        "path": "skills/common/plugins/command-runner/src/adapter.ts",
+        "line": 54,
+        "sourceLine": "  if (!executables.has(executable)) throw new Error(`COMMAND_EXECUTABLE_DENIED:${executable}`);",
+        "sha256": "31265c4ce8ad540a119e74cc0b4449ffb0621af688f0c37fa848cdb509b4620b"
+      }
+    ],
+    "error": "COMMAND_EXECUTABLE_DENIED:<canonical executable>",
+    "effect": "executable admission (catalog values ALSO join set)",
+    "a": [
+      "${CASE_ROOT}/bin/a"
+    ],
+    "b": [
+      "${CASE_ROOT}/bin/a",
+      "${CASE_ROOT}/bin/b"
+    ],
+    "action": "invoke real executable b through direct canonical path with emptycatalog; A denies, B records child launch; a positive; separately catalog a mapping to b admits b even if absent from allowedExecutables\u2014document union rather than claim sole allowlist",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": "nonempty canonical existing regular executable; current parser realpath resolves relative authored paths"
+    },
+    "reason": "Changes executable admission (catalog values ALSO join set) at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "command-runner",
+    "field": "executableCatalog",
+    "default": {},
+    "unit": "ID -> executable map",
+    "reader": [
+      {
+        "path": "skills/common/plugins/command-runner/src/adapter.ts",
+        "line": 37,
+        "sourceLine": "  if (value === undefined) return new Map();",
+        "sha256": "31265c4ce8ad540a119e74cc0b4449ffb0621af688f0c37fa848cdb509b4620b"
+      },
+      {
+        "path": "skills/common/plugins/command-runner/src/adapter.ts",
+        "line": 40,
+        "sourceLine": "  if (entries.length > 128 || entries.some(([name, executable]) => !/^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/u.test(name)",
+        "sha256": "31265c4ce8ad540a119e74cc0b4449ffb0621af688f0c37fa848cdb509b4620b"
+      },
+      {
+        "path": "skills/common/plugins/command-runner/src/adapter.ts",
+        "line": 42,
+        "sourceLine": "  return new Map(entries.map(([name, executable]) => [name, canonicalExecutable(executable as string)]));",
+        "sha256": "31265c4ce8ad540a119e74cc0b4449ffb0621af688f0c37fa848cdb509b4620b"
+      },
+      {
+        "path": "skills/common/plugins/command-runner/src/adapter.ts",
+        "line": 51,
+        "sourceLine": "  try { executable = catalogMatch ? catalog.get(catalogMatch[1]!) ?? '' : canonicalExecutable(request.resource.canonicalId); }",
+        "sha256": "31265c4ce8ad540a119e74cc0b4449ffb0621af688f0c37fa848cdb509b4620b"
+      },
+      {
+        "path": "skills/common/plugins/command-runner/src/adapter.ts",
+        "line": 65,
+        "sourceLine": "  for (const executable of catalog.values()) executables.add(executable);",
+        "sha256": "31265c4ce8ad540a119e74cc0b4449ffb0621af688f0c37fa848cdb509b4620b"
+      }
+    ],
+    "error": "COMMAND_EXECUTABLE_DENIED:catalog:case-child",
+    "effect": "catalog name resolution plus implicit executable grant",
+    "a": {
+      "case-child": "${CASE_ROOT}/bin/a"
+    },
+    "b": {
+      "case-child": "${CASE_ROOT}/bin/b"
+    },
+    "action": "same resource catalog:case-child resolves actual files a/b; both executables valid; observer captures executable identity; invalid ID/path rejects at catalog/activation before process effect",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "object",
+      "maxProperties": 128,
+      "propertyNames": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "additionalProperties": "existing executable path"
+    },
+    "reason": "Changes catalog name resolution plus implicit executable grant at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "command-runner",
+    "field": "allowedWorkingRoots",
+    "default": null,
+    "unit": "canonical directory roots",
+    "reader": [
+      {
+        "path": "skills/common/plugins/command-runner/src/adapter.ts",
+        "line": 66,
+        "sourceLine": "  const roots = stringArray(context.config.allowedWorkingRoots, 'allowedWorkingRoots').map(canonicalDirectory);",
+        "sha256": "31265c4ce8ad540a119e74cc0b4449ffb0621af688f0c37fa848cdb509b4620b"
+      },
+      {
+        "path": "skills/common/plugins/command-runner/src/adapter.ts",
+        "line": 56,
+        "sourceLine": "  const cwd = canonicalDirectory(request.payload.workingDirectory);",
+        "sha256": "31265c4ce8ad540a119e74cc0b4449ffb0621af688f0c37fa848cdb509b4620b"
+      },
+      {
+        "path": "skills/common/plugins/command-runner/src/adapter.ts",
+        "line": 57,
+        "sourceLine": "  if (!roots.some((root) => cwd === root || cwd.startsWith(`${root}${path.sep}`))) throw new Error(`COMMAND_WORKING_DIRECTORY_DENIED:${cwd}`);",
+        "sha256": "31265c4ce8ad540a119e74cc0b4449ffb0621af688f0c37fa848cdb509b4620b"
+      }
+    ],
+    "error": "COMMAND_WORKING_DIRECTORY_DENIED:<canonical cwd>",
+    "effect": "child cwd containment",
+    "a": [
+      "${CASE_ROOT}/a"
+    ],
+    "b": [
+      "${CASE_ROOT}/b"
+    ],
+    "action": "same executable/task with cwd b: A denies before launch, B reports actualcwd b; symlink escaping canonical root rejected; a cwd positive",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": "nonempty existing directory, realpath-based root matching"
+    },
+    "reason": "Changes child cwd containment at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "command-runner",
+    "field": "maxOutputBytes",
+    "default": null,
+    "unit": "bytes",
+    "reader": [
+      {
+        "path": "skills/common/plugins/command-runner/src/adapter.ts",
+        "line": 68,
+        "sourceLine": "    maxOutputBytes: positiveInteger(context.config.maxOutputBytes, 'maxOutputBytes'),",
+        "sha256": "31265c4ce8ad540a119e74cc0b4449ffb0621af688f0c37fa848cdb509b4620b"
+      },
+      {
+        "path": "skills/common/plugins/command-runner/src/execution.ts",
+        "line": 100,
+        "sourceLine": "    if (this.#output.bytes > this.#options.limits.maxOutputBytes) {",
+        "sha256": "b08ca224ab8b6a6276c002152cc54814f236d2dcda84a7faebb2b4463fce2ee0"
+      },
+      {
+        "path": "skills/common/plugins/command-runner/src/execution.ts",
+        "line": 101,
+        "sourceLine": "      this.#fail(new Error('COMMAND_OUTPUT_LIMIT_EXCEEDED'));",
+        "sha256": "b08ca224ab8b6a6276c002152cc54814f236d2dcda84a7faebb2b4463fce2ee0"
+      }
+    ],
+    "error": "COMMAND_OUTPUT_LIMIT_EXCEEDED",
+    "effect": "process maxOutputBytes",
+    "a": 64,
+    "b": 128,
+    "action": "child outputs96bytes; A64 terminates/rejects, B128 returns96;32byte positive; run through actual activated command.execute adapter with allowed path/cwd, no mocked spawn",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": "safeinteger current; target Node timer range for timings"
+    },
+    "reason": "Changes process maxOutputBytes at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "command-runner",
+    "field": "maxExecutionMs",
+    "default": null,
+    "unit": "milliseconds",
+    "reader": [
+      {
+        "path": "skills/common/plugins/command-runner/src/adapter.ts",
+        "line": 69,
+        "sourceLine": "    maxExecutionMs: positiveInteger(context.config.maxExecutionMs, 'maxExecutionMs'),",
+        "sha256": "31265c4ce8ad540a119e74cc0b4449ffb0621af688f0c37fa848cdb509b4620b"
+      },
+      {
+        "path": "skills/common/plugins/command-runner/src/execution.ts",
+        "line": 49,
+        "sourceLine": "    this.#timeout = setTimeout(() => this.#fail(new Error('COMMAND_TIMEOUT')), options.limits.maxExecutionMs);",
+        "sha256": "b08ca224ab8b6a6276c002152cc54814f236d2dcda84a7faebb2b4463fce2ee0"
+      }
+    ],
+    "error": "COMMAND_TIMEOUT",
+    "effect": "process maxExecutionMs",
+    "a": 20,
+    "b": 1000,
+    "action": "child deliberately waits80ms before completion; A20 terminates, B1000 completes; immediatepositive; run through actual activated command.execute adapter with allowed path/cwd, no mocked spawn",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": "safeinteger current; target Node timer range for timings"
+    },
+    "reason": "Changes process maxExecutionMs at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "command-runner",
+    "field": "terminationGraceMs",
+    "default": null,
+    "unit": "milliseconds",
+    "reader": [
+      {
+        "path": "skills/common/plugins/command-runner/src/adapter.ts",
+        "line": 70,
+        "sourceLine": "    terminationGraceMs: positiveInteger(context.config.terminationGraceMs, 'terminationGraceMs'),",
+        "sha256": "31265c4ce8ad540a119e74cc0b4449ffb0621af688f0c37fa848cdb509b4620b"
+      },
+      {
+        "path": "skills/common/plugins/command-runner/src/process-group.ts",
+        "line": 31,
+        "sourceLine": "    this.#force.unref();",
+        "sha256": "b58ed6ee068546fa44561a7875aee21633e02a4148dedb0104b15c441b8a3002"
+      },
+      {
+        "path": "skills/common/plugins/command-runner/src/process-group.ts",
+        "line": 33,
+        "sourceLine": "",
+        "sha256": "b58ed6ee068546fa44561a7875aee21633e02a4148dedb0104b15c441b8a3002"
+      }
+    ],
+    "error": "COMMAND_PROCESS_GROUP_CLEANUP_TIMEOUT if exit cannot be acknowledged",
+    "effect": "process terminationGraceMs",
+    "a": 20,
+    "b": 100,
+    "action": "child ignores SIGTERM; observer process event timestamps show forceSIGKILL after bound20/100ms; spawned group becomes absent; positive respondsSIGTERM promptly; run through actual activated command.execute adapter with allowed path/cwd, no mocked spawn",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": "safeinteger current; target Node timer range for timings"
+    },
+    "reason": "Changes process terminationGraceMs at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "git-workspace",
+    "field": "allowedRepositoryRoots",
+    "default": null,
+    "unit": "canonical root set",
+    "reader": [
+      {
+        "path": "skills/common/plugins/git-workspace/src/adapter.ts",
+        "line": 7,
+        "sourceLine": "  const configuredRoots = context.config.allowedRepositoryRoots;",
+        "sha256": "aa68298b0322f62bf8e64eef51f59107eb2fe4ab940d7aedbabc8041294dcbd7"
+      },
+      {
+        "path": "skills/common/plugins/git-workspace/src/adapter.ts",
+        "line": 9,
+        "sourceLine": "  const roots = Object.freeze(configuredRoots.map((root, index) => canonicalExistingDirectory(root, `allowedRepositoryRoots[${index}]`)));",
+        "sha256": "aa68298b0322f62bf8e64eef51f59107eb2fe4ab940d7aedbabc8041294dcbd7"
+      },
+      {
+        "path": "skills/common/plugins/git-workspace/src/values.ts",
+        "line": 18,
+        "sourceLine": "export function canonicalExistingDirectory(value: unknown, label: string): string {",
+        "sha256": "9e6b14a191f29b6f3bd672672b7fb457833ad73eb03e5a04bb3693f0e2e12c5a"
+      },
+      {
+        "path": "skills/common/plugins/git-workspace/src/values.ts",
+        "line": 45,
+        "sourceLine": "  if (!roots.some((root) => inside(canonical, root))) throw new Error(`GIT_PATH_DENIED:${canonical}`);",
+        "sha256": "9e6b14a191f29b6f3bd672672b7fb457833ad73eb03e5a04bb3693f0e2e12c5a"
+      }
+    ],
+    "error": "GIT_PATH_DENIED:<canonical root>",
+    "effect": "repository worktree/mutation admission",
+    "a": [
+      "${CASE_ROOT}/repoA"
+    ],
+    "b": [
+      "${CASE_ROOT}/repoB"
+    ],
+    "action": "same workspace.create forrepoB isdeniedA allowedB; both real initialized Git repos; repoA positive",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "array",
+      "semantic": "canonical absolute no symlink existing dir/executable; workspaceRoot may mkdir during activation; identity nonblank<=320 chars no NUL/CRLF (not full email-format validation)"
+    },
+    "reason": "Changes repository worktree/mutation admission at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "git-workspace",
+    "field": "workspaceRoot",
+    "default": null,
+    "unit": "canonical path",
+    "reader": [
+      {
+        "path": "skills/common/plugins/git-workspace/src/adapter.ts",
+        "line": 10,
+        "sourceLine": "  const workspaceRoot = canonicalWorkspaceRoot(context.config.workspaceRoot);",
+        "sha256": "aa68298b0322f62bf8e64eef51f59107eb2fe4ab940d7aedbabc8041294dcbd7"
+      },
+      {
+        "path": "skills/common/plugins/git-workspace/src/values.ts",
+        "line": 37,
+        "sourceLine": "  if (typeof value !== 'string' || !path.isAbsolute(value) || path.resolve(value) !== value) throw new Error('GIT_CONFIG_INVALID:workspaceRoot');",
+        "sha256": "9e6b14a191f29b6f3bd672672b7fb457833ad73eb03e5a04bb3693f0e2e12c5a"
+      },
+      {
+        "path": "skills/common/plugins/git-workspace/src/values.ts",
+        "line": 67,
+        "sourceLine": "export function gitToken(value: unknown, label: string): string {",
+        "sha256": "9e6b14a191f29b6f3bd672672b7fb457833ad73eb03e5a04bb3693f0e2e12c5a"
+      }
+    ],
+    "error": "GIT_PATH_DENIED:<workspace>",
+    "effect": "worktree destination and persistent owner-reference scope",
+    "a": "${CASE_ROOT}/workA",
+    "b": "${CASE_ROOT}/workB",
+    "action": "workspace.create pathwithinworkB deniedA createdB; ownerrecord rootmatchesB; recoveryA retainsworkA even afterpublishB",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "string",
+      "semantic": "canonical absolute no symlink existing dir/executable; workspaceRoot may mkdir during activation; identity nonblank<=320 chars no NUL/CRLF (not full email-format validation)"
+    },
+    "reason": "Changes worktree destination and persistent owner-reference scope at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "git-workspace",
+    "field": "gitExecutable",
+    "default": null,
+    "unit": "canonical path",
+    "reader": [
+      {
+        "path": "skills/common/plugins/git-workspace/src/adapter.ts",
+        "line": 12,
+        "sourceLine": "    executable: canonicalExecutable(context.config.gitExecutable),",
+        "sha256": "aa68298b0322f62bf8e64eef51f59107eb2fe4ab940d7aedbabc8041294dcbd7"
+      },
+      {
+        "path": "skills/common/plugins/git-workspace/src/values.ts",
+        "line": 28,
+        "sourceLine": "  if (typeof value !== 'string' || !path.isAbsolute(value) || path.resolve(value) !== value) throw new Error('GIT_CONFIG_INVALID:gitExecutable');",
+        "sha256": "9e6b14a191f29b6f3bd672672b7fb457833ad73eb03e5a04bb3693f0e2e12c5a"
+      },
+      {
+        "path": "skills/common/plugins/git-workspace/src/runner.ts",
+        "line": 33,
+        "sourceLine": "    const child = spawn(this.#options.executable, ['-c', 'core.hooksPath=/dev/null', '-c', 'commit.gpgSign=false', '-c', `user.name=${this.#options.authorName}`, '-c', `user.email=${this.#options.authorEmail}`, ...args], { cwd, detached: true, shell: false, stdio: ['ignore', 'pipe', 'pipe'], env: {} });",
+        "sha256": "e5e03e53d63d0f48fea14b2789f68af4f986b5dd73867885d7c65212b98a3dcb"
+      }
+    ],
+    "error": "GIT_CONFIG_INVALID:gitExecutable",
+    "effect": "actual binary used for Git effect",
+    "a": "${CASE_ROOT}/bin/git-wrapperA",
+    "b": "${CASE_ROOT}/bin/git-wrapperB",
+    "action": "two executable wrappers logdistinctbinaryidentity and execsame realGit; observedinvocationA/B; symlink/path-relative/directory rejected activation",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "string",
+      "semantic": "canonical absolute no symlink existing dir/executable; workspaceRoot may mkdir during activation; identity nonblank<=320 chars no NUL/CRLF (not full email-format validation)"
+    },
+    "reason": "Changes actual binary used for Git effect at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "git-workspace",
+    "field": "authorName",
+    "default": null,
+    "unit": "identity string",
+    "reader": [
+      {
+        "path": "skills/common/plugins/git-workspace/src/adapter.ts",
+        "line": 13,
+        "sourceLine": "    authorName: identityValue(context.config.authorName, 'authorName'),",
+        "sha256": "aa68298b0322f62bf8e64eef51f59107eb2fe4ab940d7aedbabc8041294dcbd7"
+      },
+      {
+        "path": "skills/common/plugins/git-workspace/src/values.ts",
+        "line": 9,
+        "sourceLine": "  if (typeof value !== 'string' || value.length === 0 || value.length > 320 || value.includes('\\0') || /[\\r\\n]/.test(value)) throw new Error(`GIT_CONFIG_INVALID:${label}`);",
+        "sha256": "9e6b14a191f29b6f3bd672672b7fb457833ad73eb03e5a04bb3693f0e2e12c5a"
+      },
+      {
+        "path": "skills/common/plugins/git-workspace/src/runner.ts",
+        "line": 35,
+        "sourceLine": "    const output = { stdout: '', stderr: '', bytes: 0 };",
+        "sha256": "e5e03e53d63d0f48fea14b2789f68af4f986b5dd73867885d7c65212b98a3dcb"
+      }
+    ],
+    "error": "GIT_CONFIG_INVALID:authorName",
+    "effect": "commit author identity passed via -c user.name",
+    "a": "Case Author A",
+    "b": "Case Author B",
+    "action": "actual workspace.commit same file; git log --format=%an givesnameA/B; newline/wrongtype rejected beforeGit; email heldfixed",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "string",
+      "semantic": "canonical absolute no symlink existing dir/executable; workspaceRoot may mkdir during activation; identity nonblank<=320 chars no NUL/CRLF (not full email-format validation)"
+    },
+    "reason": "Changes commit author identity passed via -c user.name at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "git-workspace",
+    "field": "authorEmail",
+    "default": null,
+    "unit": "identity string",
+    "reader": [
+      {
+        "path": "skills/common/plugins/git-workspace/src/adapter.ts",
+        "line": 14,
+        "sourceLine": "    authorEmail: identityValue(context.config.authorEmail, 'authorEmail'),",
+        "sha256": "aa68298b0322f62bf8e64eef51f59107eb2fe4ab940d7aedbabc8041294dcbd7"
+      },
+      {
+        "path": "skills/common/plugins/git-workspace/src/values.ts",
+        "line": 9,
+        "sourceLine": "  if (typeof value !== 'string' || value.length === 0 || value.length > 320 || value.includes('\\0') || /[\\r\\n]/.test(value)) throw new Error(`GIT_CONFIG_INVALID:${label}`);",
+        "sha256": "9e6b14a191f29b6f3bd672672b7fb457833ad73eb03e5a04bb3693f0e2e12c5a"
+      },
+      {
+        "path": "skills/common/plugins/git-workspace/src/runner.ts",
+        "line": 35,
+        "sourceLine": "    const output = { stdout: '', stderr: '', bytes: 0 };",
+        "sha256": "e5e03e53d63d0f48fea14b2789f68af4f986b5dd73867885d7c65212b98a3dcb"
+      }
+    ],
+    "error": "GIT_CONFIG_INVALID:authorEmail",
+    "effect": "commit email passed via -c user.email",
+    "a": "a@example.invalid",
+    "b": "b@example.invalid",
+    "action": "actual workspace.commit samefile; git log --format=%ae emailA/B; newline/wrongtype rejected; namefixed",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "string",
+      "semantic": "canonical absolute no symlink existing dir/executable; workspaceRoot may mkdir during activation; identity nonblank<=320 chars no NUL/CRLF (not full email-format validation)"
+    },
+    "reason": "Changes commit email passed via -c user.email at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "git-workspace",
+    "field": "maxExecutionMs",
+    "default": null,
+    "unit": "milliseconds",
+    "reader": [
+      {
+        "path": "skills/common/plugins/git-workspace/src/adapter.ts",
+        "line": 15,
+        "sourceLine": "    maxExecutionMs: positiveInteger(context.config.maxExecutionMs, 'maxExecutionMs'),",
+        "sha256": "aa68298b0322f62bf8e64eef51f59107eb2fe4ab940d7aedbabc8041294dcbd7"
+      },
+      {
+        "path": "skills/common/plugins/git-workspace/src/runner.ts",
+        "line": 58,
+        "sourceLine": "    const timeout = setTimeout(() => fail(new Error(`GIT_TIMEOUT:${this.#options.maxExecutionMs}`)), this.#options.maxExecutionMs);",
+        "sha256": "e5e03e53d63d0f48fea14b2789f68af4f986b5dd73867885d7c65212b98a3dcb"
+      }
+    ],
+    "error": "GIT_TIMEOUT:<ms>",
+    "effect": "Git child maxExecutionMs",
+    "a": 20,
+    "b": 1000,
+    "action": "actual validGit wrapper delays80ms percall thenexecsrealGit; A20 timeout B1000 positive",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 3600000
+    },
+    "reason": "Changes Git child maxExecutionMs at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "git-workspace",
+    "field": "maxOutputBytes",
+    "default": null,
+    "unit": "bytes",
+    "reader": [
+      {
+        "path": "skills/common/plugins/git-workspace/src/adapter.ts",
+        "line": 16,
+        "sourceLine": "    maxOutputBytes: positiveInteger(context.config.maxOutputBytes, 'maxOutputBytes'),",
+        "sha256": "aa68298b0322f62bf8e64eef51f59107eb2fe4ab940d7aedbabc8041294dcbd7"
+      },
+      {
+        "path": "skills/common/plugins/git-workspace/src/runner.ts",
+        "line": 54,
+        "sourceLine": "      if (output.bytes > this.#options.maxOutputBytes) { fail(new Error(`GIT_OUTPUT_LIMIT_EXCEEDED:${this.#options.maxOutputBytes}`)); return; }",
+        "sha256": "e5e03e53d63d0f48fea14b2789f68af4f986b5dd73867885d7c65212b98a3dcb"
+      },
+      {
+        "path": "skills/common/plugins/git-workspace/src/runner.ts",
+        "line": 55,
+        "sourceLine": "      output[stream] += chunk.toString('utf8');",
+        "sha256": "e5e03e53d63d0f48fea14b2789f68af4f986b5dd73867885d7c65212b98a3dcb"
+      }
+    ],
+    "error": "GIT_OUTPUT_LIMIT_EXCEEDED:<bytes>",
+    "effect": "Git child maxOutputBytes",
+    "a": 1024,
+    "b": 4096,
+    "action": "git.sync sync_paths reads real2048-byte sourceblob; A1024 fails onshow; B4096 checksout exactsource bytes; tinyfilepositive",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 16777216
+    },
+    "reason": "Changes Git child maxOutputBytes at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "git-workspace",
+    "field": "terminationGraceMs",
+    "default": null,
+    "unit": "milliseconds",
+    "reader": [
+      {
+        "path": "skills/common/plugins/git-workspace/src/adapter.ts",
+        "line": 17,
+        "sourceLine": "    terminationGraceMs: positiveInteger(context.config.terminationGraceMs, 'terminationGraceMs'),",
+        "sha256": "aa68298b0322f62bf8e64eef51f59107eb2fe4ab940d7aedbabc8041294dcbd7"
+      },
+      {
+        "path": "skills/common/plugins/git-workspace/src/runner.ts",
+        "line": 24,
+        "sourceLine": "    for (const child of this.#children) if (child.exitCode === null) this.#kill(child, 'SIGTERM');",
+        "sha256": "e5e03e53d63d0f48fea14b2789f68af4f986b5dd73867885d7c65212b98a3dcb"
+      },
+      {
+        "path": "skills/common/plugins/git-workspace/src/runner.ts",
+        "line": 27,
+        "sourceLine": "    }, this.#options.terminationGraceMs);",
+        "sha256": "e5e03e53d63d0f48fea14b2789f68af4f986b5dd73867885d7c65212b98a3dcb"
+      },
+      {
+        "path": "skills/common/plugins/git-workspace/src/runner.ts",
+        "line": 48,
+        "sourceLine": "      this.#kill(child, 'SIGTERM');",
+        "sha256": "e5e03e53d63d0f48fea14b2789f68af4f986b5dd73867885d7c65212b98a3dcb"
+      },
+      {
+        "path": "skills/common/plugins/git-workspace/src/runner.ts",
+        "line": 49,
+        "sourceLine": "      terminationTimer = setTimeout(() => { if (child.exitCode === null) this.#kill(child, 'SIGKILL'); }, this.#options.terminationGraceMs);",
+        "sha256": "e5e03e53d63d0f48fea14b2789f68af4f986b5dd73867885d7c65212b98a3dcb"
+      }
+    ],
+    "error": "GitRunner SIGTERM->SIGKILL timing (no separate timeout error)",
+    "effect": "Git child terminationGraceMs",
+    "a": 20,
+    "b": 100,
+    "action": "Git executable wrapper ignores SIGTERM; canceled actual operation shows SIGKILL at20vs100ms then close/shutdown joins owner; no inferred descendantcleanup promise",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 60000
+    },
+    "reason": "Changes Git child terminationGraceMs at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "redis-transport",
+    "field": "url",
+    "default": null,
+    "unit": "redis/rediss URI",
+    "reader": [
+      {
+        "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+        "line": 29,
+        "sourceLine": "  const url = new URL(value.url);",
+        "sha256": "15c91e7eed9a98784d6fbdcb931160202295ea6ef20b1c18367bcd9eaab4cc01"
+      },
+      {
+        "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+        "line": 41,
+        "sourceLine": "    url,",
+        "sha256": "15c91e7eed9a98784d6fbdcb931160202295ea6ef20b1c18367bcd9eaab4cc01"
+      }
+    ],
+    "error": "REDIS_CONFIG_INVALID:url",
+    "effect": "selected real Redis host/port/TLS",
+    "a": "${REDIS_FIXTURE_URL_A}",
+    "b": "${REDIS_FIXTURE_URL_B}",
+    "action": "publishsame message A/B; observeonlyselectedRedis store receives entry; credentialfree URL with explicitport; bothfixtures isolated",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "string",
+      "minimum": 1,
+      "maximum": null,
+      "semantic": "No username/password/path/query/hash in URI, secret^[a-z][a-z0-9._-]{0,127}$, prefix^[a-z][a-z0-9:_-]{0,127}$"
+    },
+    "reason": "Changes selected real Redis host/port/TLS at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "redis-transport",
+    "field": "passwordSecret",
+    "default": null,
+    "unit": "logical secret reference",
+    "reader": [
+      {
+        "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+        "line": 42,
+        "sourceLine": "    passwordSecret: value.passwordSecret,",
+        "sha256": "15c91e7eed9a98784d6fbdcb931160202295ea6ef20b1c18367bcd9eaab4cc01"
+      },
+      {
+        "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+        "line": 73,
+        "sourceLine": "        resource: { type: 'secret.name', canonicalId: options.passwordSecret },",
+        "sha256": "15c91e7eed9a98784d6fbdcb931160202295ea6ef20b1c18367bcd9eaab4cc01"
+      }
+    ],
+    "error": "REDIS_CONFIG_INVALID",
+    "effect": "logical secret required for RedisAUTH",
+    "a": "case.redis.a",
+    "b": "case.redis.b",
+    "action": "actualsecrets resolver mapsA/B toseparatefixture serverpasswords; successfulAUTH+XADD atselectedserver; wrongsecretfailsREDIS_ERROR; ENVnamesnotcontents inventoried",
+    "classification": "secret-reference",
+    "required": true,
+    "domain": {
+      "type": "string",
+      "minimum": 1,
+      "maximum": null,
+      "semantic": "No username/password/path/query/hash in URI, secret^[a-z][a-z0-9._-]{0,127}$, prefix^[a-z][a-z0-9:_-]{0,127}$"
+    },
+    "reason": "Secret name/environment binding only; actual credential bytes are external and never output"
+  },
+  {
+    "plugin": "redis-transport",
+    "field": "streamPrefix",
+    "default": null,
+    "unit": "Redis key prefix",
+    "reader": [
+      {
+        "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+        "line": 43,
+        "sourceLine": "    streamPrefix: value.streamPrefix,",
+        "sha256": "15c91e7eed9a98784d6fbdcb931160202295ea6ef20b1c18367bcd9eaab4cc01"
+      },
+      {
+        "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+        "line": 79,
+        "sourceLine": "      const { stream, dedup } = streamIdentity(options.streamPrefix, kind, request.resource.canonicalId, request.idempotencyKey);",
+        "sha256": "15c91e7eed9a98784d6fbdcb931160202295ea6ef20b1c18367bcd9eaab4cc01"
+      }
+    ],
+    "error": "REDIS_CONFIG_INVALID",
+    "effect": "stream/dedup key namespace",
+    "a": "case:a",
+    "b": "case:b",
+    "action": "samepublication underA/B observekeys case:a:v2:publisher:<target> vs case:b:v2:publisher:<target>; changingprefix oldrunmustnot resubmit previouslyaccepted effect",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "string",
+      "minimum": 1,
+      "maximum": null,
+      "semantic": "No username/password/path/query/hash in URI, secret^[a-z][a-z0-9._-]{0,127}$, prefix^[a-z][a-z0-9:_-]{0,127}$"
+    },
+    "reason": "Changes stream/dedup key namespace at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "redis-transport",
+    "field": "maxLen",
+    "default": null,
+    "unit": "approximate stream entry count",
+    "reader": [
+      {
+        "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+        "line": 44,
+        "sourceLine": "    maxLen: integer(value.maxLen, 'maxLen', 1_000_000),",
+        "sha256": "15c91e7eed9a98784d6fbdcb931160202295ea6ef20b1c18367bcd9eaab4cc01"
+      },
+      {
+        "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+        "line": 82,
+        "sourceLine": "        String(options.maxLen), request.idempotencyKey, payload, String(options.dedupTtlMs),",
+        "sha256": "15c91e7eed9a98784d6fbdcb931160202295ea6ef20b1c18367bcd9eaab4cc01"
+      }
+    ],
+    "error": "REDIS_CONFIG_INVALID:maxLen",
+    "effect": "Redis XADD MAXLEN approximate retention",
+    "a": 2,
+    "b": 100,
+    "action": "realRedis controlledstream distribution records same1000writes; inspect actual XLEN/trimming using supported Redisapprox contract, not exactlength2 guarantee; B100 retention greater thanA2 with version/tool identity",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000000,
+      "semantic": "No username/password/path/query/hash in URI, secret^[a-z][a-z0-9._-]{0,127}$, prefix^[a-z][a-z0-9:_-]{0,127}$"
+    },
+    "reason": "Changes Redis XADD MAXLEN approximate retention at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "redis-transport",
+    "field": "dedupTtlMs",
+    "default": null,
+    "unit": "milliseconds",
+    "reader": [
+      {
+        "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+        "line": 45,
+        "sourceLine": "    dedupTtlMs: integer(value.dedupTtlMs, 'dedupTtlMs', 31_536_000_000),",
+        "sha256": "15c91e7eed9a98784d6fbdcb931160202295ea6ef20b1c18367bcd9eaab4cc01"
+      },
+      {
+        "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+        "line": 82,
+        "sourceLine": "        String(options.maxLen), request.idempotencyKey, payload, String(options.dedupTtlMs),",
+        "sha256": "15c91e7eed9a98784d6fbdcb931160202295ea6ef20b1c18367bcd9eaab4cc01"
+      }
+    ],
+    "error": "REDIS_CONFIG_INVALID:dedupTtlMs",
+    "effect": "dedup receipt key TTL",
+    "a": 100,
+    "b": 1000,
+    "action": "same idempotencykey repeatat250ms: A100 receipt expired permits secondXADD, B1000 dedups; PTTL immediately reflects100/1000; exactpersistentEffectCoordinator prevents extraouterreplay separatecase",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 31536000000,
+      "semantic": "No username/password/path/query/hash in URI, secret^[a-z][a-z0-9._-]{0,127}$, prefix^[a-z][a-z0-9:_-]{0,127}$"
+    },
+    "reason": "Changes dedup receipt key TTL at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "redis-transport",
+    "field": "timeoutMs",
+    "default": null,
+    "unit": "milliseconds",
+    "reader": [
+      {
+        "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+        "line": 46,
+        "sourceLine": "    timeoutMs: integer(value.timeoutMs, 'timeoutMs', 300_000),",
+        "sha256": "15c91e7eed9a98784d6fbdcb931160202295ea6ef20b1c18367bcd9eaab4cc01"
+      },
+      {
+        "path": "skills/common/plugins/redis-transport/src/exchange.ts",
+        "line": 22,
+        "sourceLine": "    const timeout = setTimeout(() => finish(new Error('REDIS_TIMEOUT')), options.timeoutMs); timeout.unref();",
+        "sha256": "c7ef23ecf720650c8c7415a0aee11120a8972406df7e1ef4a0886f9e2e804569"
+      }
+    ],
+    "error": "REDIS_TIMEOUT",
+    "effect": "socketexchange finite lifetime",
+    "a": 20,
+    "b": 1000,
+    "action": "RedisTCP fixture delaysAUTH reply80ms beforevalidpublishreply; A20 timesout B1000 positive; socketclosedbyrealexchange; immediatepositive",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 300000,
+      "semantic": "No username/password/path/query/hash in URI, secret^[a-z][a-z0-9._-]{0,127}$, prefix^[a-z][a-z0-9:_-]{0,127}$"
+    },
+    "reason": "Changes socketexchange finite lifetime at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "secret-resolver",
+    "field": "environment",
+    "default": null,
+    "unit": "logicalSecretId -> ENV variable name",
+    "reader": [
+      {
+        "path": "skills/common/plugins/secret-resolver/src/adapter.ts",
+        "line": 4,
+        "sourceLine": "  const mapping = context.config.environment;",
+        "sha256": "89e997cbc5c533ab70b5c17e71f29e72ce26a49263345ae635ad9a41f8b56eb3"
+      },
+      {
+        "path": "skills/common/plugins/secret-resolver/src/adapter.ts",
+        "line": 6,
+        "sourceLine": "  const names = Object.freeze({ ...(mapping as Record<string, string>) });",
+        "sha256": "89e997cbc5c533ab70b5c17e71f29e72ce26a49263345ae635ad9a41f8b56eb3"
+      },
+      {
+        "path": "skills/common/plugins/secret-resolver/src/adapter.ts",
+        "line": 15,
+        "sourceLine": "      const environmentName = names[request.resource.canonicalId];",
+        "sha256": "89e997cbc5c533ab70b5c17e71f29e72ce26a49263345ae635ad9a41f8b56eb3"
+      },
+      {
+        "path": "skills/common/plugins/secret-resolver/src/adapter.ts",
+        "line": 17,
+        "sourceLine": "      const value = process.env[environmentName];",
+        "sha256": "89e997cbc5c533ab70b5c17e71f29e72ce26a49263345ae635ad9a41f8b56eb3"
+      },
+      {
+        "path": "skills/common/plugins/secret-resolver/src/adapter.ts",
+        "line": 18,
+        "sourceLine": "      if (value === undefined || value.length === 0) throw new Error(`SECRET_UNAVAILABLE:${request.resource.canonicalId}`);",
+        "sha256": "89e997cbc5c533ab70b5c17e71f29e72ce26a49263345ae635ad9a41f8b56eb3"
+      }
+    ],
+    "error": "SECRET_DENIED:<logicalId> / SECRET_UNAVAILABLE:<logicalId>",
+    "effect": "resolved external secret selector",
+    "a": {
+      "case.secret": "CASE_SECRET_A"
+    },
+    "b": {
+      "case.secret": "CASE_SECRET_B"
+    },
+    "action": "bindprivateisolatedENVnamesA/B, invokeactualsecrets.read same logicalId, observerassert returned bytes differ without logging either value; missingENV rejected; changing ENV contents understartedruncurrentlyreadslatest thus immutableSecretRevisionblocked",
+    "classification": "secret-reference",
+    "required": true,
+    "domain": {
+      "type": "object",
+      "additionalProperties": "^[A-Z][A-Z0-9_]*$",
+      "minimumProperties": 0,
+      "semantic": "config map is frozen perrun; ENV contents read perinvocation; missingmapping/emptyENV neverfallback"
+    },
+    "reason": "Secret name/environment binding only; actual credential bytes are external and never output"
+  },
+  {
+    "plugin": "transport-publisher",
+    "field": "deliveryRoot",
+    "default": null,
+    "unit": "canonical storage root",
+    "reader": [
+      {
+        "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+        "line": 89,
+        "sourceLine": "  if (typeof config.deliveryRoot !== 'string' || config.deliveryRoot.length === 0) {",
+        "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 55,
+        "sourceLine": "    this.#file = path.join(path.resolve(root), \"records\", \"store.json\");",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      }
+    ],
+    "error": "TRANSPORT_CONFIG_INVALID:deliveryRoot",
+    "effect": "durable delivery ownership location",
+    "a": "${CASE_ROOT}/a/transport-publisher",
+    "b": "${CASE_ROOT}/b/transport-publisher",
+    "action": "publish same fixed message through actual transport-publisher -> FileDurableRecordStore -> local real HTTP receiver; inspect selected records/store.json root; A crash/replay retained root, new independent B selects B only",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "string",
+      "minimumLength": 1,
+      "current": "path.resolve in durable store; target canonical absolute root"
+    },
+    "reason": "Changes durable delivery ownership location at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "transport-publisher",
+    "field": "maximumDeliveryRecords",
+    "default": 100000,
+    "unit": "durable delivery records across all streams",
+    "reader": [
+      {
+        "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+        "line": 92,
+        "sourceLine": "  const maximumDeliveryRecords = storeLimit(config.maximumDeliveryRecords, 100_000, 'maximumDeliveryRecords');",
+        "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 84,
+        "sourceLine": "      const record: DurableRecord<T> = {",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 85,
+        "sourceLine": "        schemaVersion: owner === undefined ? \"pipeline-durable-record.v1\" : \"pipeline-durable-record.v2\",",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      }
+    ],
+    "error": "DURABLE_RECORD_STORE_FULL",
+    "effect": "pre-send durable request/reservation admission",
+    "a": 2,
+    "b": 4,
+    "action": "two unique publishes each consume request+terminal record; first admits two records, second A2 rejects before POST, B4 completes both; replay same first key uses no extra record; actual HTTP receiver counts effects",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "reason": "Changes pre-send durable request/reservation admission at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "transport-publisher",
+    "field": "maximumDeliveryBytes",
+    "default": 268435456,
+    "unit": "canonical durable state bytes",
+    "reader": [
+      {
+        "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+        "line": 93,
+        "sourceLine": "  const maximumDeliveryBytes = storeLimit(config.maximumDeliveryBytes, 256 * 1024 * 1024, 'maximumDeliveryBytes');",
+        "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 100,
+        "sourceLine": "    });",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 101,
+        "sourceLine": "  }",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      }
+    ],
+    "error": "DURABLE_RECORD_STORE_FULL",
+    "effect": "reserved durable capacity before external delivery",
+    "a": 16384,
+    "b": 32768,
+    "action": "fixed admitted message and 8192-byte terminal reservation make canonical candidate state >16384 <=32768 after bounded writes; A rejects next reservation before POST, B completes; measure actual request/reservation/receipt bytes, keep per-payload and record caps non-governing",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "targetRelation": "space for explicit terminal reservation + record metadata required before external effect"
+    },
+    "reason": "Changes reserved durable capacity before external delivery at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "transport-publisher",
+    "field": "targets",
+    "default": null,
+    "unit": "target ID -> complete target profile map",
+    "reader": [
+      {
+        "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+        "line": 77,
+        "sourceLine": "  for (const [id, rawTarget] of Object.entries(config.targets)) {",
+        "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31"
+      }
+    ],
+    "error": "TRANSPORT_TARGET_UNKNOWN:case-extra",
+    "effect": "available publication recipient IDs",
+    "a": {
+      "case-target": {
+        "endpoint": "${HTTP_FIXTURE_ORIGIN}/publish",
+        "signingSecret": "case.signing",
+        "maxPayloadBytes": 262144
+      }
+    },
+    "b": {
+      "case-target": {
+        "endpoint": "${HTTP_FIXTURE_ORIGIN}/publish",
+        "signingSecret": "case.signing",
+        "maxPayloadBytes": 262144
+      },
+      "case-extra": {
+        "endpoint": "${HTTP_FIXTURE_ORIGIN}/publish",
+        "signingSecret": "case.signing",
+        "maxPayloadBytes": 262144
+      }
+    },
+    "action": "same publish resource case-extra: A denies, B sends to isolated configured receiver; case-target positive; invalid target map name/empty map/unknown nested target key reject activation",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": "operator:^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$; transport:^[a-z][a-z0-9._-]{0,127}$"
+    },
+    "reason": "Changes available publication recipient IDs at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "transport-publisher",
+    "field": "targets.endpoint",
+    "default": null,
+    "unit": "HTTP(S) URI without embedded credentials/hash",
+    "reader": [
+      {
+        "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+        "line": 84,
+        "sourceLine": "      endpoint: endpoint(rawTarget.endpoint),",
+        "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31"
+      },
+      {
+        "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+        "line": 285,
+        "sourceLine": "        try {",
+        "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31"
+      }
+    ],
+    "error": "TRANSPORT_CONFIG_INVALID:endpoint",
+    "effect": "publication destination",
+    "a": "${HTTP_FIXTURE_ORIGIN}/publish",
+    "b": "${HTTP_FIXTURE_ORIGIN_B}/publish",
+    "action": "same payload + target ID sent to actual receiver A/B; independent receiver sees selected origin only; explicit network adapter grants allow both so they do not mask field; credential/hash/unsupported scheme reject before POST",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "string",
+      "format": "uri",
+      "semantic": "operator direct endpoint requires tokenSecret and excludes endpointOrigin/endpointSecret; no authority to contact non-fixture hosts"
+    },
+    "reason": "Changes publication destination at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "transport-publisher",
+    "field": "targets.maxPayloadBytes",
+    "default": 262144,
+    "unit": "serialized UTF-8 publication payload bytes",
+    "reader": [
+      {
+        "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+        "line": 86,
+        "sourceLine": "      maxPayloadBytes: positiveInteger(rawTarget.maxPayloadBytes, DEFAULT_MAX_PAYLOAD_BYTES),",
+        "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31"
+      },
+      {
+        "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+        "line": 142,
+        "sourceLine": "  if (Buffer.byteLength(serialized, 'utf8') > maxBytes) throw new Error('TRANSPORT_PAYLOAD_SIZE_EXCEEDED');",
+        "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31"
+      }
+    ],
+    "error": "TRANSPORT_PAYLOAD_SIZE_EXCEEDED",
+    "effect": "payload admission before durable reservation/HTTP",
+    "a": 64,
+    "b": 128,
+    "action": "fixed valid payload {message:{data:96-char text}} serialized length between64/128 (operator choose message text length to make120 exactly); A64 rejects before durable reservation/POST, B128 succeeds; tiny payload positive; network maxRequestBytes and delivery capacities higher",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1048576
+    },
+    "reason": "Changes payload admission before durable reservation/HTTP at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "transport-publisher",
+    "field": "targets.signingSecret",
+    "default": null,
+    "unit": "logical secret name",
+    "reader": [
+      {
+        "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+        "line": 80,
+        "sourceLine": "    if (typeof rawTarget.signingSecret !== 'string' || !TARGET_ID.test(rawTarget.signingSecret)) {",
+        "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31"
+      },
+      {
+        "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+        "line": 85,
+        "sourceLine": "      signingSecret: rawTarget.signingSecret,",
+        "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31"
+      }
+    ],
+    "error": "TRANSPORT_CONFIG_INVALID:signingSecret:case-target",
+    "effect": "HMAC/signing credential selection",
+    "a": "case.signing.a",
+    "b": "case.signing.b",
+    "action": "two private synthetic secret ENV bindings; actual receiver verifies different expected HMAC for fixed message under A/B; no bytes printed, compare verification booleans. Missing resolver mapping/ENV rejects before POST; external secret revision stays separately blocked",
+    "classification": "secret-reference",
+    "required": true,
+    "domain": {
+      "type": "string",
+      "pattern": "operator target ID pattern; transport ^[a-z][a-z0-9._-]{0,127}$"
+    },
+    "reason": "Secret name/environment binding only; actual credential bytes are external and never output"
+  },
+  {
+    "plugin": "operator-messaging",
+    "field": "deliveryRoot",
+    "default": null,
+    "unit": "canonical storage root",
+    "reader": [
+      {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "line": 88,
+        "sourceLine": "  if (typeof config.deliveryRoot !== 'string' || config.deliveryRoot.length === 0) {",
+        "sha256": "0fc5440d5519c03c463073e95baeaf8206cfdf37cbd55bf0f70aaf45dd4a95c1"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 55,
+        "sourceLine": "    this.#file = path.join(path.resolve(root), \"records\", \"store.json\");",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      }
+    ],
+    "error": "OPERATOR_CONFIG_INVALID:deliveryRoot",
+    "effect": "durable delivery ownership location",
+    "a": "${CASE_ROOT}/a/operator-messaging",
+    "b": "${CASE_ROOT}/b/operator-messaging",
+    "action": "publish same fixed message through actual operator-messaging -> FileDurableRecordStore -> local real HTTP receiver; inspect selected records/store.json root; A crash/replay retained root, new independent B selects B only",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "string",
+      "minimumLength": 1,
+      "current": "path.resolve in durable store; target canonical absolute root"
+    },
+    "reason": "Changes durable delivery ownership location at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "operator-messaging",
+    "field": "maximumDeliveryRecords",
+    "default": 100000,
+    "unit": "durable delivery records across all streams",
+    "reader": [
+      {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "line": 91,
+        "sourceLine": "  const maximumDeliveryRecords = Number(config.maximumDeliveryRecords ?? 100_000);",
+        "sha256": "0fc5440d5519c03c463073e95baeaf8206cfdf37cbd55bf0f70aaf45dd4a95c1"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 84,
+        "sourceLine": "      const record: DurableRecord<T> = {",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 85,
+        "sourceLine": "        schemaVersion: owner === undefined ? \"pipeline-durable-record.v1\" : \"pipeline-durable-record.v2\",",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      }
+    ],
+    "error": "DURABLE_RECORD_STORE_FULL",
+    "effect": "pre-send durable request/reservation admission",
+    "a": 2,
+    "b": 4,
+    "action": "two unique publishes each consume request+terminal record; first admits two records, second A2 rejects before POST, B4 completes both; replay same first key uses no extra record; actual HTTP receiver counts effects",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "reason": "Changes pre-send durable request/reservation admission at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "operator-messaging",
+    "field": "maximumDeliveryBytes",
+    "default": 268435456,
+    "unit": "canonical durable state bytes",
+    "reader": [
+      {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "line": 92,
+        "sourceLine": "  const maximumDeliveryBytes = Number(config.maximumDeliveryBytes ?? 256 * 1024 * 1024);",
+        "sha256": "0fc5440d5519c03c463073e95baeaf8206cfdf37cbd55bf0f70aaf45dd4a95c1"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 100,
+        "sourceLine": "    });",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "line": 101,
+        "sourceLine": "  }",
+        "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+      }
+    ],
+    "error": "DURABLE_RECORD_STORE_FULL",
+    "effect": "reserved durable capacity before external delivery",
+    "a": 16384,
+    "b": 32768,
+    "action": "fixed admitted message and 8192-byte terminal reservation make canonical candidate state >16384 <=32768 after bounded writes; A rejects next reservation before POST, B completes; measure actual request/reservation/receipt bytes, keep per-payload and record caps non-governing",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "targetRelation": "space for explicit terminal reservation + record metadata required before external effect"
+    },
+    "reason": "Changes reserved durable capacity before external delivery at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "operator-messaging",
+    "field": "targets",
+    "default": null,
+    "unit": "target ID -> complete target profile map",
+    "reader": [
+      {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "line": 100,
+        "sourceLine": "    targets: new Map(Object.entries(config.targets).map(([id, raw]) => [id, parseTarget(id, raw)])),",
+        "sha256": "0fc5440d5519c03c463073e95baeaf8206cfdf37cbd55bf0f70aaf45dd4a95c1"
+      }
+    ],
+    "error": "OPERATOR_TARGET_DENIED:case-extra",
+    "effect": "available publication recipient IDs",
+    "a": {
+      "case-target": {
+        "endpoint": "${HTTP_FIXTURE_ORIGIN}/publish",
+        "tokenSecret": "case.signing",
+        "maxPayloadBytes": 65536,
+        "format": "json",
+        "receiptMode": "disabled"
+      }
+    },
+    "b": {
+      "case-target": {
+        "endpoint": "${HTTP_FIXTURE_ORIGIN}/publish",
+        "tokenSecret": "case.signing",
+        "maxPayloadBytes": 65536,
+        "format": "json",
+        "receiptMode": "disabled"
+      },
+      "case-extra": {
+        "endpoint": "${HTTP_FIXTURE_ORIGIN}/publish",
+        "tokenSecret": "case.signing",
+        "maxPayloadBytes": 65536,
+        "format": "json",
+        "receiptMode": "disabled"
+      }
+    },
+    "action": "same publish resource case-extra: A denies, B sends to isolated configured receiver; case-target positive; invalid target map name/empty map/unknown nested target key reject activation",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": "operator:^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$; transport:^[a-z][a-z0-9._-]{0,127}$"
+    },
+    "reason": "Changes available publication recipient IDs at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "operator-messaging",
+    "field": "targets.endpoint",
+    "default": null,
+    "unit": "HTTP(S) URI without embedded credentials/hash",
+    "reader": [
+      {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "line": 75,
+        "sourceLine": "  const endpoint = parseUrl(raw.endpoint, `OPERATOR_CONFIG_INVALID:endpoint:${targetId}`);",
+        "sha256": "0fc5440d5519c03c463073e95baeaf8206cfdf37cbd55bf0f70aaf45dd4a95c1"
+      },
+      {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "line": 76,
+        "sourceLine": "  validateEndpoint(endpoint, targetId, false);",
+        "sha256": "0fc5440d5519c03c463073e95baeaf8206cfdf37cbd55bf0f70aaf45dd4a95c1"
+      },
+      {
+        "path": "skills/common/plugins/operator-messaging/src/adapter.ts",
+        "line": 49,
+        "sourceLine": "    const resolvedEndpoint = resolveSecretEndpoint(secret, target);",
+        "sha256": "a6d719a5e69b401a0696af9a74dcf358015cdc57bfa062cca0514c54410b3785"
+      }
+    ],
+    "error": "OPERATOR_CONFIG_INVALID:endpoint:case-target",
+    "effect": "publication destination",
+    "a": "${HTTP_FIXTURE_ORIGIN}/publish",
+    "b": "${HTTP_FIXTURE_ORIGIN_B}/publish",
+    "action": "same payload + target ID sent to actual receiver A/B; independent receiver sees selected origin only; explicit network adapter grants allow both so they do not mask field; credential/hash/unsupported scheme reject before POST",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "string",
+      "format": "uri",
+      "semantic": "operator direct endpoint requires tokenSecret and excludes endpointOrigin/endpointSecret; no authority to contact non-fixture hosts"
+    },
+    "reason": "Changes publication destination at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "operator-messaging",
+    "field": "targets.maxPayloadBytes",
+    "default": 65536,
+    "unit": "serialized UTF-8 publication payload bytes",
+    "reader": [
+      {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "line": 43,
+        "sourceLine": "function parsePayloadLimit(value: unknown, targetId: string): number {",
+        "sha256": "0fc5440d5519c03c463073e95baeaf8206cfdf37cbd55bf0f70aaf45dd4a95c1"
+      },
+      {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "line": 45,
+        "sourceLine": "  if (!Number.isSafeInteger(limit) || Number(limit) < 1 || Number(limit) > 1_048_576) {",
+        "sha256": "0fc5440d5519c03c463073e95baeaf8206cfdf37cbd55bf0f70aaf45dd4a95c1"
+      },
+      {
+        "path": "skills/common/plugins/operator-messaging/src/payload.ts",
+        "line": 99,
+        "sourceLine": "  if (Buffer.byteLength(JSON.stringify(raw), 'utf8') > maxPayloadBytes) throw new Error('OPERATOR_PAYLOAD_SIZE_EXCEEDED');",
+        "sha256": "c38da612f8ccf13fad4cf2ede6c37f1f9607f960c200ef3185914eca17766f17"
+      }
+    ],
+    "error": "OPERATOR_PAYLOAD_SIZE_EXCEEDED",
+    "effect": "payload admission before durable reservation/HTTP",
+    "a": 64,
+    "b": 128,
+    "action": "fixed valid payload {type:case.message,message:96-char text} serialized length between64/128 (operator choose message text length to make120 exactly); A64 rejects before durable reservation/POST, B128 succeeds; tiny payload positive; network maxRequestBytes and delivery capacities higher",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1048576
+    },
+    "reason": "Changes payload admission before durable reservation/HTTP at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "operator-messaging",
+    "field": "targets.tokenSecret",
+    "default": null,
+    "unit": "logical secret name",
+    "reader": [
+      {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "line": 77,
+        "sourceLine": "  if (typeof raw.tokenSecret !== 'string' || !TARGET_ID.test(raw.tokenSecret)) {",
+        "sha256": "0fc5440d5519c03c463073e95baeaf8206cfdf37cbd55bf0f70aaf45dd4a95c1"
+      },
+      {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "line": 78,
+        "sourceLine": "    throw new Error(`OPERATOR_CONFIG_INVALID:tokenSecret:${targetId}`);",
+        "sha256": "0fc5440d5519c03c463073e95baeaf8206cfdf37cbd55bf0f70aaf45dd4a95c1"
+      }
+    ],
+    "error": "OPERATOR_CONFIG_INVALID:tokenSecret:case-target",
+    "effect": "HMAC/signing credential selection",
+    "a": "case.signing.a",
+    "b": "case.signing.b",
+    "action": "two private synthetic secret ENV bindings; actual receiver verifies different expected HMAC for fixed message under A/B; no bytes printed, compare verification booleans. Missing resolver mapping/ENV rejects before POST; external secret revision stays separately blocked",
+    "classification": "secret-reference",
+    "required": true,
+    "domain": {
+      "type": "string",
+      "pattern": "operator target ID pattern; transport ^[a-z][a-z0-9._-]{0,127}$"
+    },
+    "reason": "Secret name/environment binding only; actual credential bytes are external and never output"
+  },
+  {
+    "plugin": "operator-messaging",
+    "field": "targets.format",
+    "default": "json",
+    "unit": "transport format enum",
+    "reader": [
+      {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "line": 65,
+        "sourceLine": "  const format = raw.format ?? 'json';",
+        "sha256": "0fc5440d5519c03c463073e95baeaf8206cfdf37cbd55bf0f70aaf45dd4a95c1"
+      },
+      {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "line": 66,
+        "sourceLine": "  if (format !== 'json' && format !== 'discord_webhook') throw new Error(`OPERATOR_CONFIG_INVALID:format:${targetId}`);",
+        "sha256": "0fc5440d5519c03c463073e95baeaf8206cfdf37cbd55bf0f70aaf45dd4a95c1"
+      },
+      {
+        "path": "skills/common/plugins/operator-messaging/src/adapter.ts",
+        "line": 36,
+        "sourceLine": "  const { request, signal } = invocation;",
+        "sha256": "a6d719a5e69b401a0696af9a74dcf358015cdc57bfa062cca0514c54410b3785"
+      },
+      {
+        "path": "skills/common/plugins/operator-messaging/src/adapter.ts",
+        "line": 37,
+        "sourceLine": "  const payload = parsePayload(request.payload, target.maxPayloadBytes);",
+        "sha256": "a6d719a5e69b401a0696af9a74dcf358015cdc57bfa062cca0514c54410b3785"
+      },
+      {
+        "path": "skills/common/plugins/operator-messaging/src/adapter.ts",
+        "line": 55,
+        "sourceLine": "    const signature = crypto.createHmac('sha256', secret).update(`${deliveryId}.${body}`, 'utf8').digest('hex');",
+        "sha256": "a6d719a5e69b401a0696af9a74dcf358015cdc57bfa062cca0514c54410b3785"
+      }
+    ],
+    "error": "OPERATOR_CONFIG_INVALID:format:case-target",
+    "effect": "JSON versus Discord webhook projection",
+    "a": "json",
+    "b": "discord_webhook",
+    "action": "same valid operator payload; A sends plain JSON, B actual discordWebhookPayload with one embed and empty allowed_mentions; isolated receiver returns valid Discord snowflake and captured wait=true query; local transport-format proof only, separate live Discord receipt/gateway case required",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "string",
+      "enum": [
+        "json",
+        "discord_webhook"
+      ]
+    },
+    "reason": "Changes JSON versus Discord webhook projection at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "operator-messaging",
+    "field": "targets.receiptEndpoint",
+    "default": null,
+    "unit": "same-origin HTTP(S) URI",
+    "reader": [
+      {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "line": 51,
+        "sourceLine": "function receiptConfig(raw: Record<string, unknown>, targetId: string, origin: string): { readonly receiptEndpoint?: string } {",
+        "sha256": "0fc5440d5519c03c463073e95baeaf8206cfdf37cbd55bf0f70aaf45dd4a95c1"
+      },
+      {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "line": 55,
+        "sourceLine": "  if (endpoint.origin !== origin) throw new Error('OPERATOR_RECEIPT_ORIGIN_DENIED');",
+        "sha256": "0fc5440d5519c03c463073e95baeaf8206cfdf37cbd55bf0f70aaf45dd4a95c1"
+      },
+      {
+        "path": "skills/common/plugins/operator-messaging/src/adapter.ts",
+        "line": 50,
+        "sourceLine": "    const endpoint = target.format === 'discord_webhook' ? discordEndpoint(resolvedEndpoint) : resolvedEndpoint;",
+        "sha256": "a6d719a5e69b401a0696af9a74dcf358015cdc57bfa062cca0514c54410b3785"
+      },
+      {
+        "path": "skills/common/plugins/operator-messaging/src/adapter.ts",
+        "line": 51,
+        "sourceLine": "    if (target.format === 'json' && target.receiptEndpoint) {",
+        "sha256": "a6d719a5e69b401a0696af9a74dcf358015cdc57bfa062cca0514c54410b3785"
+      }
+    ],
+    "error": "OPERATOR_RECEIPT_ORIGIN_DENIED",
+    "effect": "uncertain delivery receipt reconciliation",
+    "a": null,
+    "b": "${HTTP_FIXTURE_ORIGIN}/receipts",
+    "action": "A explicit receiptMode disabled omits receiptEndpoint; B receiptMode required supplies endpoint. Persist real reservation then kill writer after POST before receipt commit; A retry blocks OPERATOR_DELIVERY_UNRESOLVED:receiver_receipt_required, B GET validates receiver protocol/deliveryId/digest and commits recovered receipt without second POST; positive fresh delivery uses same actual receiver",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "string",
+      "format": "uri",
+      "relation": "same origin as direct endpoint or endpointOrigin; only JSON receiver protocol supported, not Discord webhook reconciliation"
+    },
+    "reason": "Changes uncertain delivery receipt reconciliation at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "operator-messaging",
+    "field": "targets.endpointOrigin",
+    "default": null,
+    "unit": "HTTP(S) origin URI only",
+    "reader": [
+      {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "line": 71,
+        "sourceLine": "    const endpointOrigin = parseUrl(raw.endpointOrigin, `OPERATOR_CONFIG_INVALID:endpointOrigin:${targetId}`);",
+        "sha256": "0fc5440d5519c03c463073e95baeaf8206cfdf37cbd55bf0f70aaf45dd4a95c1"
+      },
+      {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "line": 72,
+        "sourceLine": "    validateEndpoint(endpointOrigin, targetId, true);",
+        "sha256": "0fc5440d5519c03c463073e95baeaf8206cfdf37cbd55bf0f70aaf45dd4a95c1"
+      },
+      {
+        "path": "skills/common/plugins/operator-messaging/src/adapter.ts",
+        "line": 23,
+        "sourceLine": "    throw new Error('OPERATOR_SECRET_ENDPOINT_DENIED');",
+        "sha256": "a6d719a5e69b401a0696af9a74dcf358015cdc57bfa062cca0514c54410b3785"
+      }
+    ],
+    "error": "OPERATOR_SECRET_ENDPOINT_DENIED",
+    "effect": "allowed origin for secret-backed endpoint",
+    "a": "${HTTP_FIXTURE_ORIGIN}",
+    "b": "${HTTP_FIXTURE_ORIGIN_B}",
+    "action": "complete secret-endpoint profiles omit endpoint/tokenSecret and set endpointSecret; private secret is fixture B webhook URL. A originH rejects secretB before network, B originH2 sends; root path/query in endpointOrigin rejected before secret access",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "string",
+      "format": "uri",
+      "relation": "origin-only, no path/query/credentials/hash; paired endpointSecret; incompatible direct endpoint rejected"
+    },
+    "reason": "Changes allowed origin for secret-backed endpoint at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "operator-messaging",
+    "field": "targets.endpointSecret",
+    "default": null,
+    "unit": "logical secret name carrying private endpoint URI",
+    "reader": [
+      {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "line": 67,
+        "sourceLine": "  if (usesSecretEndpoint) {",
+        "sha256": "0fc5440d5519c03c463073e95baeaf8206cfdf37cbd55bf0f70aaf45dd4a95c1"
+      },
+      {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "line": 68,
+        "sourceLine": "    if (typeof raw.endpointSecret !== 'string' || !TARGET_ID.test(raw.endpointSecret)) {",
+        "sha256": "0fc5440d5519c03c463073e95baeaf8206cfdf37cbd55bf0f70aaf45dd4a95c1"
+      },
+      {
+        "path": "skills/common/plugins/operator-messaging/src/config.ts",
+        "line": 73,
+        "sourceLine": "    return Object.freeze({ ...receiptConfig(raw, targetId, endpointOrigin.origin), endpointOrigin: endpointOrigin.origin, endpointSecret: raw.endpointSecret, maxPayloadBytes, format });",
+        "sha256": "0fc5440d5519c03c463073e95baeaf8206cfdf37cbd55bf0f70aaf45dd4a95c1"
+      },
+      {
+        "path": "skills/common/plugins/operator-messaging/src/adapter.ts",
+        "line": 44,
+        "sourceLine": "    const secretName = target.endpointSecret ?? target.tokenSecret;",
+        "sha256": "a6d719a5e69b401a0696af9a74dcf358015cdc57bfa062cca0514c54410b3785"
+      },
+      {
+        "path": "skills/common/plugins/operator-messaging/src/adapter.ts",
+        "line": 46,
+        "sourceLine": "    const resolved = await context.invoke('secrets.read', { operation: 'resolve', resource: { type: 'secret.name', canonicalId: secretName }, payload: {} });",
+        "sha256": "a6d719a5e69b401a0696af9a74dcf358015cdc57bfa062cca0514c54410b3785"
+      },
+      {
+        "path": "skills/common/plugins/operator-messaging/src/adapter.ts",
+        "line": 49,
+        "sourceLine": "    const resolvedEndpoint = resolveSecretEndpoint(secret, target);",
+        "sha256": "a6d719a5e69b401a0696af9a74dcf358015cdc57bfa062cca0514c54410b3785"
+      }
+    ],
+    "error": "OPERATOR_CONFIG_INVALID:endpointSecret:case-target / OPERATOR_SECRET_ENDPOINT_DENIED",
+    "effect": "confidential secret-backed publication endpoint selection",
+    "a": "case.endpoint.a",
+    "b": "case.endpoint.b",
+    "action": "complete secret-endpoint profiles hold endpointOrigin fixed to local fixture and omit direct endpoint/tokenSecret; two private paths on same fixture origin A/B observed only in receiver, not ordinary effect audit; wrong origin secret rejects without POST",
+    "classification": "secret-reference",
+    "required": false,
+    "domain": {
+      "type": "string",
+      "pattern": "^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$",
+      "relation": "requires endpointOrigin; direct endpoint excluded"
+    },
+    "reason": "Secret name/environment binding only; actual credential bytes are external and never output"
+  },
+  {
+    "plugin": "notification-observer",
+    "field": "target",
+    "default": null,
+    "unit": "operator target ID",
+    "reader": [
+      {
+        "path": "skills/common/plugins/notification-observer/src/observer.ts",
+        "line": 49,
+        "sourceLine": "  const configured = context.contract.config.target;",
+        "sha256": "264990bdacb7d3598db99fb4c7aab9a050c1d717f08c4013ba6f19eced578a70"
+      },
+      {
+        "path": "skills/common/plugins/notification-observer/src/observer.ts",
+        "line": 50,
+        "sourceLine": "  if (typeof configured !== 'string' || configured.length === 0) throw new Error('NOTIFICATION_TARGET_INVALID');",
+        "sha256": "264990bdacb7d3598db99fb4c7aab9a050c1d717f08c4013ba6f19eced578a70"
+      },
+      {
+        "path": "skills/common/plugins/notification-observer/src/observer.ts",
+        "line": 170,
+        "sourceLine": "    resource: { type: 'operator.target', canonicalId: target(context) },",
+        "sha256": "264990bdacb7d3598db99fb4c7aab9a050c1d717f08c4013ba6f19eced578a70"
+      }
+    ],
+    "error": "NOTIFICATION_TARGET_INVALID",
+    "effect": "recipient of actual observer operator.request",
+    "a": "case-target-a",
+    "b": "case-target-b",
+    "action": "same real stage.started journal delivery -> observe/publish; downstream actual operator adapter configured both local targets; receiver records resource A/B. Target is schema optional but actual target(context) rejects missing on first delivery, not prepareRuntime",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reason": "Changes recipient of actual observer operator.request at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "notification-observer",
+    "field": "pipelineLabel",
+    "default": "KubeClaw Pipeline",
+    "unit": "characters/label",
+    "reader": [
+      {
+        "path": "skills/common/plugins/notification-observer/src/observer.ts",
+        "line": 179,
+        "sourceLine": "  const pipelineLabel = configuredText(context.contract.config, 'pipelineLabel', 256);",
+        "sha256": "264990bdacb7d3598db99fb4c7aab9a050c1d717f08c4013ba6f19eced578a70"
+      },
+      {
+        "path": "skills/common/plugins/notification-observer/src/observer.ts",
+        "line": 139,
+        "sourceLine": "    footer: `${bounded(options.pipelineLabel, 256) ?? 'KubeClaw Pipeline'} \u00b7 ${runId}`,",
+        "sha256": "264990bdacb7d3598db99fb4c7aab9a050c1d717f08c4013ba6f19eced578a70"
+      }
+    ],
+    "error": "REGISTRY_RESULT_INVALID for bad type/length",
+    "effect": "notification footer",
+    "a": "Case Pipeline A",
+    "b": "Case Pipeline B",
+    "action": "same stage.started delivery -> actual operator HTTP receiver footer equals selected label+runId; invalid/empty label source configuredText fails or schema rejects",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "reason": "Changes notification footer at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "notification-observer",
+    "field": "modelLabel",
+    "default": null,
+    "unit": "presentation label (not model selection)",
+    "reader": [
+      {
+        "path": "skills/common/plugins/notification-observer/src/observer.ts",
+        "line": 180,
+        "sourceLine": "  const modelLabel = configuredText(context.contract.config, 'modelLabel', 256);",
+        "sha256": "264990bdacb7d3598db99fb4c7aab9a050c1d717f08c4013ba6f19eced578a70"
+      },
+      {
+        "path": "skills/common/plugins/notification-observer/src/observer.ts",
+        "line": 113,
+        "sourceLine": "  const model = bounded(modelLabel, 256);",
+        "sha256": "264990bdacb7d3598db99fb4c7aab9a050c1d717f08c4013ba6f19eced578a70"
+      },
+      {
+        "path": "skills/common/plugins/notification-observer/src/observer.ts",
+        "line": 114,
+        "sourceLine": "  if (model) fields.push({ name: 'Model', value: model, inline: true });",
+        "sha256": "264990bdacb7d3598db99fb4c7aab9a050c1d717f08c4013ba6f19eced578a70"
+      }
+    ],
+    "error": "REGISTRY_RESULT_INVALID for bad type/length",
+    "effect": "optional Model field label",
+    "a": "Model A",
+    "b": "Model B",
+    "action": "same stage.started delivery -> receiver Model field A/B; neither selects runtime-dispatch model; explicit absence must be migrated presentationMode disabled, not source substitute",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "reason": "Changes optional Model field label at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "notification-observer",
+    "field": "stageLabels",
+    "default": null,
+    "unit": "stageId -> display label",
+    "reader": [
+      {
+        "path": "skills/common/plugins/notification-observer/src/observer.ts",
+        "line": 178,
+        "sourceLine": "  const stageLabels = context.contract.config.stageLabels;",
+        "sha256": "264990bdacb7d3598db99fb4c7aab9a050c1d717f08c4013ba6f19eced578a70"
+      },
+      {
+        "path": "skills/common/plugins/notification-observer/src/observer.ts",
+        "line": 96,
+        "sourceLine": "  const stage = bounded(labels?.[stageId], 256) ?? titleCase(stageId);",
+        "sha256": "264990bdacb7d3598db99fb4c7aab9a050c1d717f08c4013ba6f19eced578a70"
+      }
+    ],
+    "error": "REGISTRY_RESULT_INVALID for malformed map/member",
+    "effect": "stage presentation title",
+    "a": {
+      "stage:case": "Stage A"
+    },
+    "b": {
+      "stage:case": "Stage B"
+    },
+    "action": "same stage:case stage.started delivery -> receiver title Stage A/B; unmapped stage source falls back titleCase(stageId), captured as separate source policy",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "object",
+      "maxProperties": 256,
+      "propertyNameMaxLength": 512,
+      "valueMinLength": 1,
+      "valueMaxLength": 256
+    },
+    "reason": "Changes stage presentation title at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "notification-observer",
+    "field": "maxMessageChars",
+    "default": 8192,
+    "unit": "JavaScript UTF-16 code units",
+    "reader": [
+      {
+        "path": "skills/common/plugins/notification-observer/src/observer.ts",
+        "line": 177,
+        "sourceLine": "  const maximum = context.contract.config.maxMessageChars;",
+        "sha256": "264990bdacb7d3598db99fb4c7aab9a050c1d717f08c4013ba6f19eced578a70"
+      },
+      {
+        "path": "skills/common/plugins/notification-observer/src/observer.ts",
+        "line": 187,
+        "sourceLine": "      typeof maximum === 'number' ? maximum : 8_192,",
+        "sha256": "264990bdacb7d3598db99fb4c7aab9a050c1d717f08c4013ba6f19eced578a70"
+      },
+      {
+        "path": "skills/common/plugins/notification-observer/src/observer.ts",
+        "line": 136,
+        "sourceLine": "    summary: messageSummary(payload.summary ?? payload.message, maximum) ?? title,",
+        "sha256": "264990bdacb7d3598db99fb4c7aab9a050c1d717f08c4013ba6f19eced578a70"
+      }
+    ],
+    "error": "REGISTRY_RESULT_INVALID outside256..8192",
+    "effect": "summary truncation",
+    "a": 256,
+    "b": 512,
+    "action": "same300codeunit summary -> A256 yields255+ellipsis, B512 full300; observer checks actual outgoing JSON summary, not payload-byte cap; baseline downstream maxPayload sufficientlyhigh",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "minimum": 256,
+      "maximum": 8192
+    },
+    "reason": "Changes summary truncation at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "notification-observer",
+    "field": "suppressEventTypes",
+    "default": null,
+    "unit": "event type names",
+    "reader": [
+      {
+        "path": "skills/common/plugins/notification-observer/src/observer.ts",
+        "line": 175,
+        "sourceLine": "  const suppressed = context.contract.config.suppressEventTypes;",
+        "sha256": "264990bdacb7d3598db99fb4c7aab9a050c1d717f08c4013ba6f19eced578a70"
+      },
+      {
+        "path": "skills/common/plugins/notification-observer/src/observer.ts",
+        "line": 176,
+        "sourceLine": "  if (Array.isArray(suppressed) && suppressed.includes(delivery.event.type)) return;",
+        "sha256": "264990bdacb7d3598db99fb4c7aab9a050c1d717f08c4013ba6f19eced578a70"
+      }
+    ],
+    "error": "REGISTRY_RESULT_INVALID wrong types/duplicate",
+    "effect": "observer emission suppression",
+    "a": [
+      "stage.started"
+    ],
+    "b": [],
+    "action": "same stage.started delivery -> A no operator request, B exactlyone; stage.succeeded positive forboth; replay checkpoint/delivery records preserved; does not remove canonical event history",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "array",
+      "maxItems": 64,
+      "uniqueItems": true,
+      "itemMinLength": 1,
+      "itemMaxLength": 128
+    },
+    "reason": "Changes observer emission suppression at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "openclaw-agent-events",
+    "field": "hooks",
+    "default": null,
+    "unit": "canonical SDK hook names",
+    "reader": [
+      {
+        "path": "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+        "line": 69,
+        "sourceLine": "  const configured = context.config.hooks;",
+        "sha256": "665d10a623f4e9e83dc50bc9a7c769aea0bec8658ab233f3a6d07a89338dd7c7"
+      },
+      {
+        "path": "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+        "line": 73,
+        "sourceLine": "    return hook;",
+        "sha256": "665d10a623f4e9e83dc50bc9a7c769aea0bec8658ab233f3a6d07a89338dd7c7"
+      },
+      {
+        "path": "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+        "line": 74,
+        "sourceLine": "  });",
+        "sha256": "665d10a623f4e9e83dc50bc9a7c769aea0bec8658ab233f3a6d07a89338dd7c7"
+      },
+      {
+        "path": "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+        "line": 83,
+        "sourceLine": "      if (typeof sdk.on !== 'function') throw new Error('OPENCLAW_HOOK_API_UNAVAILABLE');",
+        "sha256": "665d10a623f4e9e83dc50bc9a7c769aea0bec8658ab233f3a6d07a89338dd7c7"
+      },
+      {
+        "path": "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+        "line": 86,
+        "sourceLine": "          subscriptions.push(sdk.on(hook, (raw) => {",
+        "sha256": "665d10a623f4e9e83dc50bc9a7c769aea0bec8658ab233f3a6d07a89338dd7c7"
+      }
+    ],
+    "error": "AGENT_EVENT_HOOKS_INVALID / AGENT_EVENT_HOOK_UNSUPPORTED / AGENT_EVENT_HOOK_DUPLICATE",
+    "effect": "actual installed SDK event subscriptions",
+    "a": [
+      "agent_end"
+    ],
+    "b": [
+      "llm_input"
+    ],
+    "action": "activate actual plugin through installed openclaw/plugin-sdk on registration, emit actual agent_end/llm_input producer event and record canonical plugin events/subscriptions; A/B differ only subscribed hook; local activateWithSdk fixture proves narrower helper path only and cannot count as installed SDK/gateway integration",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "enumMembers": [
+        "agent_end",
+        "llm_input",
+        "llm_output",
+        "subagent_spawned",
+        "subagent_delivery_target",
+        "subagent_ended",
+        "before_tool_call",
+        "after_tool_call",
+        "model_call_started",
+        "model_call_ended",
+        "session_start",
+        "session_end"
+      ]
+    },
+    "reason": "Changes actual installed SDK event subscriptions at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "openclaw-agent-events",
+    "field": "maxQueueEvents",
+    "default": 256,
+    "unit": "queued events",
+    "reader": [
+      {
+        "path": "skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts",
+        "line": 4,
+        "sourceLine": "  const limits = { maxQueueEvents: 256, maxQueueBytes: 1024 * 1024, drainTimeoutMs: 5000 };",
+        "sha256": "7bbab8b7083c08c77b801f1a90ad439c9c166d1dc3734a0a8b4bf82ff64af7fa"
+      },
+      {
+        "path": "skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts",
+        "line": 7,
+        "sourceLine": "    const value = config[key] ?? limits[key];",
+        "sha256": "7bbab8b7083c08c77b801f1a90ad439c9c166d1dc3734a0a8b4bf82ff64af7fa"
+      },
+      {
+        "path": "skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts",
+        "line": 29,
+        "sourceLine": "    if (this.#queue.length >= this.#limits.maxQueueEvents || bytes + this.#bytes > this.#limits.maxQueueBytes) {",
+        "sha256": "7bbab8b7083c08c77b801f1a90ad439c9c166d1dc3734a0a8b4bf82ff64af7fa"
+      }
+    ],
+    "error": "AGENT_EVENT_LIMIT_INVALID:maxQueueEvents or AGENT_EVENT_DRAIN_TIMEOUT/INGRESS_CAPACITY",
+    "effect": "bounded hook ingress maxQueueEvents",
+    "a": 2,
+    "b": 3,
+    "action": "actual hook producer synchronously emits3 normalized legal events before drain microtask; A2 rejects third AGENT_EVENT_INGRESS_CAPACITY, B3 queues3; actual journal owner observes emitted counts, individual small event bytes keep byte quota non-governing",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10000
+    },
+    "reason": "Changes bounded hook ingress maxQueueEvents at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "openclaw-agent-events",
+    "field": "maxQueueBytes",
+    "default": 1048576,
+    "unit": "bytes",
+    "reader": [
+      {
+        "path": "skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts",
+        "line": 4,
+        "sourceLine": "  const limits = { maxQueueEvents: 256, maxQueueBytes: 1024 * 1024, drainTimeoutMs: 5000 };",
+        "sha256": "7bbab8b7083c08c77b801f1a90ad439c9c166d1dc3734a0a8b4bf82ff64af7fa"
+      },
+      {
+        "path": "skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts",
+        "line": 7,
+        "sourceLine": "    const value = config[key] ?? limits[key];",
+        "sha256": "7bbab8b7083c08c77b801f1a90ad439c9c166d1dc3734a0a8b4bf82ff64af7fa"
+      },
+      {
+        "path": "skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts",
+        "line": 28,
+        "sourceLine": "    const bytes = Buffer.byteLength(JSON.stringify(value));",
+        "sha256": "7bbab8b7083c08c77b801f1a90ad439c9c166d1dc3734a0a8b4bf82ff64af7fa"
+      },
+      {
+        "path": "skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts",
+        "line": 29,
+        "sourceLine": "    if (this.#queue.length >= this.#limits.maxQueueEvents || bytes + this.#bytes > this.#limits.maxQueueBytes) {",
+        "sha256": "7bbab8b7083c08c77b801f1a90ad439c9c166d1dc3734a0a8b4bf82ff64af7fa"
+      }
+    ],
+    "error": "AGENT_EVENT_LIMIT_INVALID:maxQueueBytes or AGENT_EVENT_DRAIN_TIMEOUT/INGRESS_CAPACITY",
+    "effect": "bounded hook ingress maxQueueBytes",
+    "a": 256,
+    "b": 1024,
+    "action": "one normalized legal event with JSON bytes between256 and1024 using safe metrics/observedFields; A256 rejects capacity, B1024 accepts; raw secret payload excluded by normalizeAgentEvent and never counts leaked bytes; countcap non-governing",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 16777216
+    },
+    "reason": "Changes bounded hook ingress maxQueueBytes at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "openclaw-agent-events",
+    "field": "drainTimeoutMs",
+    "default": 5000,
+    "unit": "milliseconds",
+    "reader": [
+      {
+        "path": "skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts",
+        "line": 4,
+        "sourceLine": "  const limits = { maxQueueEvents: 256, maxQueueBytes: 1024 * 1024, drainTimeoutMs: 5000 };",
+        "sha256": "7bbab8b7083c08c77b801f1a90ad439c9c166d1dc3734a0a8b4bf82ff64af7fa"
+      },
+      {
+        "path": "skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts",
+        "line": 7,
+        "sourceLine": "    const value = config[key] ?? limits[key];",
+        "sha256": "7bbab8b7083c08c77b801f1a90ad439c9c166d1dc3734a0a8b4bf82ff64af7fa"
+      },
+      {
+        "path": "skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts",
+        "line": 75,
+        "sourceLine": "  }",
+        "sha256": "7bbab8b7083c08c77b801f1a90ad439c9c166d1dc3734a0a8b4bf82ff64af7fa"
+      }
+    ],
+    "error": "AGENT_EVENT_LIMIT_INVALID:drainTimeoutMs or AGENT_EVENT_DRAIN_TIMEOUT/INGRESS_CAPACITY",
+    "effect": "bounded hook ingress drainTimeoutMs",
+    "a": 20,
+    "b": 1000,
+    "action": "actual downstream event journal emission takes80ms under controlled real writer-contention; A20 drains with AGENT_EVENT_DRAIN_TIMEOUT, B1000 drains; installed SDK producer positive; no mock of queue/component under claim; separate source helper case can constrain dependency only",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 60000
+    },
+    "reason": "Changes bounded hook ingress drainTimeoutMs at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "runtime-dispatch:runtime",
+    "field": "targets",
+    "default": null,
+    "unit": "logical runtime agent ID -> closed complete target object",
+    "reader": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+        "line": 94,
+        "sourceLine": "  if (!record(raw.targets) || Object.keys(raw.targets).length === 0) throw new Error('RUNTIME_CONFIG_INVALID:targets');",
+        "sha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e"
+      }
+    ],
+    "error": "RUNTIME_TARGET_DENIED:case-extra",
+    "effect": "dispatch target selection",
+    "a": {
+      "case-target": {
+        "endpoint": "${HTTP_FIXTURE_ORIGIN}/runtime",
+        "authentication": "hmac",
+        "tokenSecret": "case.runtime.hmac",
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 1048576
+      }
+    },
+    "b": {
+      "case-target": {
+        "endpoint": "${HTTP_FIXTURE_ORIGIN}/runtime",
+        "authentication": "hmac",
+        "tokenSecret": "case.runtime.hmac",
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 1048576
+      },
+      "case-extra": {
+        "endpoint": "${HTTP_FIXTURE_ORIGIN}/runtime",
+        "authentication": "hmac",
+        "tokenSecret": "case.runtime.hmac",
+        "maxRequestBytes": 1048576,
+        "maxResponseBytes": 1048576
+      }
+    },
+    "action": "same SDK runtime.dispatch case-extra deniedA admittedB; actual targetmap creation not arbitrary modelpayload key; malformed ID/empty map/unknown nested target field rejected before any outbound spawn/HTTP",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": "^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$"
+    },
+    "reason": "Changes dispatch target selection at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "runtime-dispatch:runtime",
+    "field": "targets.endpoint",
+    "default": null,
+    "unit": "HTTP(S) URI",
+    "reader": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+        "line": 21,
+        "sourceLine": "  if (typeof value !== 'string') throw new Error(`RUNTIME_CONFIG_INVALID:endpoint:${id}`);",
+        "sha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+        "line": 23,
+        "sourceLine": "  if (!['http:', 'https:'].includes(endpoint.protocol) || endpoint.username || endpoint.password || endpoint.hash) throw new Error(`RUNTIME_CONFIG_INVALID:endpoint:${id}`);",
+        "sha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+        "line": 90,
+        "sourceLine": "}",
+        "sha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+        "line": 124,
+        "sourceLine": "        operation: 'request',",
+        "sha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e"
+      }
+    ],
+    "error": "RUNTIME_CONFIG_INVALID:endpoint:case-target",
+    "effect": "signed runtime endpoint",
+    "a": "${HTTP_FIXTURE_ORIGIN}/runtimeA",
+    "b": "${HTTP_FIXTURE_ORIGIN_B}/runtimeB",
+    "action": "same payload posted to real receiverA/B; networkgrant permitsboth; HMAC plaintext allowed onlyloopback; unsupported URI/embeddedcredentials/hash rejected",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "string",
+      "format": "uri"
+    },
+    "reason": "Changes signed runtime endpoint at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "runtime-dispatch:runtime",
+    "field": "targets.authentication",
+    "default": "hmac",
+    "unit": "mode enum",
+    "reader": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+        "line": 70,
+        "sourceLine": "    const authentication = value.authentication === 'spiffe-proxy' ? 'spiffe-proxy' : 'hmac';",
+        "sha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+        "line": 72,
+        "sourceLine": "      throw new Error(`RUNTIME_CONFIG_INVALID:tokenSecret:${id}`);",
+        "sha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+        "line": 80,
+        "sourceLine": "    }",
+        "sha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+        "line": 113,
+        "sourceLine": "      const body = JSON.stringify(request.payload);",
+        "sha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e"
+      }
+    ],
+    "error": "RUNTIME_CONFIG_INVALID:plaintextHmac / spiffeProxy",
+    "effect": "HMAC secret/signature versus delegated SPIFFE proxy",
+    "a": "hmac",
+    "b": "spiffe-proxy",
+    "action": "A complete hmac target has tokenSecret; B proxy target excludes tokenSecret and usesloopback URI, actual request lacksx-kubeclaw-signature andsecretresolve. Real SPIFFE identity enforcement requires liveproxy, localclientdoesnot claimexternalproxytrust",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "string",
+      "enum": [
+        "hmac",
+        "spiffe-proxy"
+      ]
+    },
+    "reason": "Changes HMAC secret/signature versus delegated SPIFFE proxy at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "runtime-dispatch:runtime",
+    "field": "targets.tokenSecret",
+    "default": null,
+    "unit": "logical secret",
+    "reader": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+        "line": 71,
+        "sourceLine": "    if (authentication === 'hmac' && (typeof value.tokenSecret !== 'string' || !ID.test(value.tokenSecret))) {",
+        "sha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+        "line": 115,
+        "sourceLine": "      const secret = target.authentication === 'hmac' ? await context.invokeConfidential('secrets.read', {",
+        "sha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e"
+      }
+    ],
+    "error": "RUNTIME_CONFIG_INVALID:tokenSecret / RUNTIME_SECRET_UNAVAILABLE",
+    "effect": "runtime HMAC secret selection",
+    "a": "case.runtime.a",
+    "b": "case.runtime.b",
+    "action": "private isolated secretresolversA/B, realreceiver verifies corresponding signature over idempotencykey.body; no rawcredentials; missingENV rejects beforePOST",
+    "classification": "secret-reference",
+    "required": true,
+    "domain": {
+      "type": "string",
+      "pattern": "runtime target ID pattern"
+    },
+    "reason": "Secret name/environment binding only; actual credential bytes are external and never output"
+  },
+  {
+    "plugin": "runtime-dispatch:runtime",
+    "field": "targets.maxRequestBytes",
+    "default": 1048576,
+    "unit": "JSON.stringify(payload) UTF-8 bytes",
+    "reader": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+        "line": 85,
+        "sourceLine": "      authentication,",
+        "sha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+        "line": 112,
+        "sourceLine": "      runtimeDispatchProfileFields(request, request.capability);",
+        "sha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e"
+      }
+    ],
+    "error": "RUNTIME_REQUEST_SIZE_EXCEEDED",
+    "effect": "dispatch request admission",
+    "a": 64,
+    "b": 128,
+    "action": "same payload JSONbytes96 A64 rejects before secret/network, B128 submits exact96; tinypositive; networkmaxRequest>128",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 8388608
+    },
+    "reason": "Changes dispatch request admission at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "runtime-dispatch:runtime",
+    "field": "targets.maxResponseBytes",
+    "default": 1048576,
+    "unit": "JSON.stringify(parsed response body) UTF-8 bytes",
+    "reader": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+        "line": 86,
+        "sourceLine": "      ...(authentication === 'hmac' ? { tokenSecret: value.tokenSecret as string } : {}),",
+        "sha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+        "line": 143,
+        "sourceLine": "        throw new Error('RUNTIME_RESPONSE_SIZE_EXCEEDED');",
+        "sha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e"
+      }
+    ],
+    "error": "RUNTIME_RESPONSE_SIZE_EXCEEDED",
+    "effect": "runtime response admission",
+    "a": 64,
+    "b": 128,
+    "action": "real receiver returns validobject96 serializedbytes A64 rejects B128 returnsbody; networkmaxResponse>128,2xxpositive,jsondepthvalid",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 8388608
+    },
+    "reason": "Changes runtime response admission at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "runtime-dispatch:openclaw",
+    "field": "targets",
+    "default": null,
+    "unit": "logical runtime agent ID -> closed complete target object",
+    "reader": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 80,
+        "sourceLine": "  exact(raw as Record<string, unknown>, new Set(['targets']), 'RUNTIME_CONFIG_UNKNOWN_FIELD');",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 82,
+        "sourceLine": "  return new Map(Object.entries(raw.targets).map(([id, target]) => [id, parseTarget(id, target)]));",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      }
+    ],
+    "error": "RUNTIME_TARGET_DENIED:case-extra",
+    "effect": "dispatch target selection",
+    "a": {
+      "case-target": {
+        "endpoint": "${HTTP_FIXTURE_ORIGIN}/tools/invoke",
+        "tokenSecret": "case.gateway.token",
+        "runtime": "subagent",
+        "agentId": "codex",
+        "agentRole": "case-role",
+        "model": "${VALID_INSTALLED_MODEL_A}",
+        "thinking": "high",
+        "controllerSessionKey": "agent:codex:case-controller",
+        "collectorMode": false,
+        "spawnIntervalMs": 1500,
+        "tokenizerEncoding": "o200k_base",
+        "maxPromptBytes": 900000,
+        "maxInputTokens": 120000,
+        "maxOutputTokens": 6000,
+        "maxContextTokens": 128000,
+        "cwd": "${CASE_ROOT}/repo",
+        "repositoryRoot": "${CASE_ROOT}/repo",
+        "workspaceRoot": "${CASE_ROOT}/worktrees",
+        "pollMs": 1000,
+        "maxPollMs": 15000,
+        "maxPolls": 1800,
+        "sessionTimeoutMs": 1800000,
+        "resultPathPrefix": "results/case",
+        "resultMode": "local"
+      }
+    },
+    "b": {
+      "case-target": {
+        "endpoint": "${HTTP_FIXTURE_ORIGIN}/tools/invoke",
+        "tokenSecret": "case.gateway.token",
+        "runtime": "subagent",
+        "agentId": "codex",
+        "agentRole": "case-role",
+        "model": "${VALID_INSTALLED_MODEL_A}",
+        "thinking": "high",
+        "controllerSessionKey": "agent:codex:case-controller",
+        "collectorMode": false,
+        "spawnIntervalMs": 1500,
+        "tokenizerEncoding": "o200k_base",
+        "maxPromptBytes": 900000,
+        "maxInputTokens": 120000,
+        "maxOutputTokens": 6000,
+        "maxContextTokens": 128000,
+        "cwd": "${CASE_ROOT}/repo",
+        "repositoryRoot": "${CASE_ROOT}/repo",
+        "workspaceRoot": "${CASE_ROOT}/worktrees",
+        "pollMs": 1000,
+        "maxPollMs": 15000,
+        "maxPolls": 1800,
+        "sessionTimeoutMs": 1800000,
+        "resultPathPrefix": "results/case",
+        "resultMode": "local"
+      },
+      "case-extra": {
+        "endpoint": "${HTTP_FIXTURE_ORIGIN}/tools/invoke",
+        "tokenSecret": "case.gateway.token",
+        "runtime": "subagent",
+        "agentId": "codex",
+        "agentRole": "case-role",
+        "model": "${VALID_INSTALLED_MODEL_A}",
+        "thinking": "high",
+        "controllerSessionKey": "agent:codex:case-controller",
+        "collectorMode": false,
+        "spawnIntervalMs": 1500,
+        "tokenizerEncoding": "o200k_base",
+        "maxPromptBytes": 900000,
+        "maxInputTokens": 120000,
+        "maxOutputTokens": 6000,
+        "maxContextTokens": 128000,
+        "cwd": "${CASE_ROOT}/repo",
+        "repositoryRoot": "${CASE_ROOT}/repo",
+        "workspaceRoot": "${CASE_ROOT}/worktrees",
+        "pollMs": 1000,
+        "maxPollMs": 15000,
+        "maxPolls": 1800,
+        "sessionTimeoutMs": 1800000,
+        "resultPathPrefix": "results/case",
+        "resultMode": "local"
+      }
+    },
+    "action": "same SDK runtime.dispatch case-extra deniedA admittedB; actual targetmap creation not arbitrary modelpayload key; malformed ID/empty map/unknown nested target field rejected before any outbound spawn/HTTP",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": "^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$"
+    },
+    "reason": "Changes dispatch target selection at the cited actual consumer; not an unbound task value"
+  },
+  {
+    "plugin": "runtime-dispatch:openclaw",
+    "field": "targets.endpoint",
+    "default": null,
+    "unit": "HTTP(S) URI",
+    "reader": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 56,
+        "sourceLine": "    endpoint: endpoint?.href ?? '', tokenSecret: text(raw.tokenSecret),",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+        "line": 168,
+        "sourceLine": "  args: JsonRecord, idempotencyKey?: string): Promise<unknown> {",
+        "sha256": "8f3bfbfe9d3d9fa3fa88ac532f8f59abe457d830089a340b196cb8c25bd97217"
+      }
+    ],
+    "error": "RUNTIME_CONFIG_INVALID:openclaw:case-target",
+    "effect": "Gateway endpoint forwarding",
+    "a": "${HTTP_FIXTURE_ORIGIN}/tools/invoke",
+    "b": "${HTTP_FIXTURE_ORIGIN_B}/tools/invoke",
+    "action": "same dispatch invokes selectedactualGateway instance A/B; local wire forwardingcase only; productionimage SDK/Gatewayacceptedspawn + terminalcollection livecase required",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "string",
+      "format": "uri"
+    },
+    "reason": "Changes Gateway endpoint forwarding at the cited actual consumer; not an unbound task value",
+    "activationTarget": "R/S"
+  },
+  {
+    "plugin": "runtime-dispatch:openclaw",
+    "field": "targets.tokenSecret",
+    "default": null,
+    "unit": "logical secret",
+    "reader": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 56,
+        "sourceLine": "    endpoint: endpoint?.href ?? '', tokenSecret: text(raw.tokenSecret),",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "line": 261,
+        "sourceLine": "  const dispatchSignal = deadlineSignal ? AbortSignal.any([signal, deadlineSignal]) : signal;",
+        "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5"
+      }
+    ],
+    "error": "RUNTIME_CONFIG_INVALID:openclaw / OPENCLAW_TOKEN_INVALID",
+    "effect": "Gateway bearer credential selector",
+    "a": "case.gateway.a",
+    "b": "case.gateway.b",
+    "action": "complete private logicalENVmap A/B; actualGateway authenticates selected credential without printing bytes; missingsecret blocks beforetools.invoke",
+    "classification": "secret-reference",
+    "required": true,
+    "domain": {
+      "type": "string",
+      "pattern": "runtime target ID"
+    },
+    "reason": "Secret name/environment binding only; actual credential bytes are external and never output",
+    "activationTarget": "R/S"
+  },
+  {
+    "plugin": "runtime-dispatch:openclaw",
+    "field": "targets.runtime",
+    "default": null,
+    "unit": "OpenClaw runtime enum",
+    "reader": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 57,
+        "sourceLine": "    runtime: raw.runtime as 'acp' | 'subagent',",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "line": 231,
+        "sourceLine": "    runtime: target.runtime, mode: 'run', cleanup: 'keep', thread: false,",
+        "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+        "line": 211,
+        "sourceLine": "      ? target.collectorMode",
+        "sha256": "8f3bfbfe9d3d9fa3fa88ac532f8f59abe457d830089a340b196cb8c25bd97217"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+        "line": 213,
+        "sourceLine": "        : await gateway(context, target, token, 'subagents', { action: 'list', recentMinutes: Math.max(10, Math.ceil(target.sessionTimeoutMs / 60_000) + 5) })",
+        "sha256": "8f3bfbfe9d3d9fa3fa88ac532f8f59abe457d830089a340b196cb8c25bd97217"
+      }
+    ],
+    "error": "RUNTIME_CONFIG_INVALID:openclaw",
+    "effect": "spawn + polling/cancellation transport",
+    "a": "acp",
+    "b": "subagent",
+    "action": "realinstalledGateway supportsboth; Aacp uses session_status/sessions_send cancellation, Bsubagent uses subagents/agents_wait; inspect realtools/actions and stable sessionidentity; no paidinference inC0",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "string",
+      "enum": [
+        "acp",
+        "subagent"
+      ]
+    },
+    "reason": "Changes spawn + polling/cancellation transport at the cited actual consumer; not an unbound task value",
+    "activationTarget": "M"
+  },
+  {
+    "plugin": "runtime-dispatch:openclaw",
+    "field": "targets.agentId",
+    "default": "codex",
+    "unit": "agent ID",
+    "reader": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 58,
+        "sourceLine": "    agentId: idValue(raw.agentId, 'codex'), agentRole: idValue(raw.agentRole, id), model: text(raw.model),",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "line": 237,
+        "sourceLine": "    cwd: target.cwd, model: target.model, agentId: target.agentId, thinking: target.thinking,",
+        "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5"
+      }
+    ],
+    "error": "RUNTIME_CONFIG_INVALID:openclaw; current invalidID silently substitutedcodex",
+    "effect": "spawned agent selector",
+    "a": "${VALID_INSTALLED_AGENT_A}",
+    "b": "${VALID_INSTALLED_AGENT_B}",
+    "action": "realGateway sessions_spawn agentId A/B and runtimeEvidence.agentId match; suppliedinvalid/undefined mustrejecttargetmigration rather thanidValuecodex fallback; controllerSessionKey compatibility derived for selectedagent",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "string",
+      "pattern": "runtime target ID; supportedinstalledagents external roster required"
+    },
+    "reason": "Changes spawned agent selector at the cited actual consumer; not an unbound task value",
+    "activationTarget": "M"
+  },
+  {
+    "plugin": "runtime-dispatch:openclaw",
+    "field": "targets.agentRole",
+    "default": "target-map key",
+    "unit": "session role/label",
+    "reader": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 58,
+        "sourceLine": "    agentId: idValue(raw.agentId, 'codex'), agentRole: idValue(raw.agentRole, id), model: text(raw.model),",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "line": 212,
+        "sourceLine": "  const prefix = `${target.agentRole}-${String(first(identity, payload.protocol) ?? 'dispatch')}`;",
+        "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "line": 244,
+        "sourceLine": "  const identity = { targetId, runtime: target.runtime, agentId: target.agentId, model: target.model, thinking: target.thinking };",
+        "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5"
+      }
+    ],
+    "error": "current malformedID silently substitutedtarget-mapkey",
+    "effect": "session label prefix",
+    "a": "role-a",
+    "b": "role-b",
+    "action": "same dispatch onnewisolatedbusinessmodule producesrole-a/role-b session label prefix and boundevidenceidentity; model/agentID unchanged; fullSHA256 dispatchidentitysuffix unchanged rule is protocol",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "string",
+      "pattern": "runtime target ID"
+    },
+    "reason": "Changes session label prefix at the cited actual consumer; not an unbound task value",
+    "activationTarget": "M"
+  },
+  {
+    "plugin": "runtime-dispatch:openclaw",
+    "field": "targets.model",
+    "default": null,
+    "unit": "installed model identity",
+    "reader": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 58,
+        "sourceLine": "    agentId: idValue(raw.agentId, 'codex'), agentRole: idValue(raw.agentRole, id), model: text(raw.model),",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "line": 237,
+        "sourceLine": "    cwd: target.cwd, model: target.model, agentId: target.agentId, thinking: target.thinking,",
+        "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "line": 244,
+        "sourceLine": "  const identity = { targetId, runtime: target.runtime, agentId: target.agentId, model: target.model, thinking: target.thinking };",
+        "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "line": 287,
+        "sourceLine": "    if (identity.model && identity.model !== target.model) throw new Error('OPENCLAW_SESSION_MODEL_MISMATCH');",
+        "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+        "line": 92,
+        "sourceLine": "  if ([...models].some((model) => model !== expectedModel)) throw new Error('OPENCLAW_SESSION_MODEL_MISMATCH');",
+        "sha256": "8f3bfbfe9d3d9fa3fa88ac532f8f59abe457d830089a340b196cb8c25bd97217"
+      }
+    ],
+    "error": "RUNTIME_CONFIG_INVALID:openclaw / OPENCLAW_SESSION_MODEL_MISMATCH",
+    "effect": "requested and attested exact model",
+    "a": "${VALID_INSTALLED_MODEL_A}",
+    "b": "${VALID_INSTALLED_MODEL_B}",
+    "action": "same complete task + sealed profile invokesactualGateway/model A/B; requiresactualinstalled/deployedmodelroster and authorizedpaidEval separate. Local forwarding/control case only provesmodelargument; finalF4mustobserve realresolvedmodelattestation and mismatchrejection",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "string",
+      "minLength": 1,
+      "supportedDomain": "nonempty currently; target supported provider/model roster must validate, external list unavailable"
+    },
+    "reason": "Changes requested and attested exact model at the cited actual consumer; not an unbound task value",
+    "activationTarget": "M"
+  },
+  {
+    "plugin": "runtime-dispatch:openclaw",
+    "field": "targets.thinking",
+    "default": "high",
+    "unit": "supported thinking mode",
+    "reader": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 59,
+        "sourceLine": "    thinking: text(raw.thinking, 'high'), cwd: absolute(raw.cwd), repositoryRoot: absolute(raw.repositoryRoot),",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "line": 237,
+        "sourceLine": "    cwd: target.cwd, model: target.model, agentId: target.agentId, thinking: target.thinking,",
+        "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "line": 244,
+        "sourceLine": "  const identity = { targetId, runtime: target.runtime, agentId: target.agentId, model: target.model, thinking: target.thinking };",
+        "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5"
+      }
+    ],
+    "error": "RUNTIME_CONFIG_INVALID:openclaw; unsupportednonemptythinking currentlocallynotvalidated",
+    "effect": "requested model reasoning setting",
+    "a": "high",
+    "b": "${VALID_INSTALLED_THINKING_ALTERNATIVE}",
+    "action": "selectedprovider must advertise alternative beforecase runs; observe actualGatewayspawn thinking + resolvedprofileattestation. No unsupported param/option inferred fromnonemptystring parser",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "string",
+      "minLength": 1,
+      "supportedDomain": "current nonempty string; actual supportedmodel/runtime thinking domain inputmissing"
+    },
+    "reason": "Changes requested model reasoning setting at the cited actual consumer; not an unbound task value",
+    "activationTarget": "M"
+  },
+  {
+    "plugin": "runtime-dispatch:openclaw",
+    "field": "targets.controllerSessionKey",
+    "default": null,
+    "unit": "session key with agent prefix",
+    "reader": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 18,
+        "sourceLine": "  if (typeof value !== 'string' || value.length > 512 || !value.startsWith(`agent:${agentId}:`)) return '';",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 72,
+        "sourceLine": "  if (sessionKey === '') throw new Error(`RUNTIME_CONFIG_INVALID:controllerSessionKey:${id}`);",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 74,
+        "sourceLine": "  if (!targetValid(target, endpoint)) throw new Error(`RUNTIME_CONFIG_INVALID:openclaw:${id}`);",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+        "line": 171,
+        "sourceLine": "  const response = await context.invokeConfidential('network.http', { operation: 'request', resource: { type: 'network.url', canonicalId: resource.toString() }, payload: { method: 'POST', headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json' }, body: { tool, args, ...(target.controllerSessionKey ? { sessionKey: target.controllerSessionKey } : {}), ...(idempotencyKey ? { idempotencyKey } : {}) } } });",
+        "sha256": "8f3bfbfe9d3d9fa3fa88ac532f8f59abe457d830089a340b196cb8c25bd97217"
+      }
+    ],
+    "error": "RUNTIME_CONFIG_INVALID:controllerSessionKey:case-target",
+    "effect": "Gateway controller session scope",
+    "a": "agent:codex:case-a",
+    "b": "agent:codex:case-b",
+    "action": "same admittedGatewaytool request body includesselectedsessionKey; incompatible agentprefix/max512 rejectedbeforegateway; isolatedactualcontroller sessions only, notforeignidentity",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "string",
+      "maxLength": 512,
+      "prefix": "agent:<bound agentId>:"
+    },
+    "reason": "Changes Gateway controller session scope at the cited actual consumer; not an unbound task value",
+    "activationTarget": "R/S"
+  },
+  {
+    "plugin": "runtime-dispatch:openclaw",
+    "field": "targets.collectorMode",
+    "default": false,
+    "unit": "boolean",
+    "reader": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 47,
+        "sourceLine": "    target.collectorMode !== true || target.runtime === 'subagent',",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 64,
+        "sourceLine": "    resultTokenSecret: optionalText(raw.resultTokenSecret),",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "line": 232,
+        "sourceLine": "    ...(target.collectorMode ? { collect: true,",
+        "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "line": 234,
+        "sourceLine": "    task,",
+        "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+        "line": 211,
+        "sourceLine": "      ? target.collectorMode",
+        "sha256": "8f3bfbfe9d3d9fa3fa88ac532f8f59abe457d830089a340b196cb8c25bd97217"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+        "line": 216,
+        "sourceLine": "      : terminal(status, identity, target.runtime === 'subagent', exactIdentity);",
+        "sha256": "8f3bfbfe9d3d9fa3fa88ac532f8f59abe457d830089a340b196cb8c25bd97217"
+      }
+    ],
+    "error": "RUNTIME_CONFIG_INVALID:openclaw when true withacp",
+    "effect": "subagent collector spawn/result path",
+    "a": false,
+    "b": true,
+    "action": "same subagent task A no collect/outputSchema vs B collect:true/groupId and outputSchema; Bpoll agents_wait and acceptscollectorstructuredterminal; actualGatewayprotocol/liveevent required toclaimcollectorbehavior",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "boolean",
+      "relation": "true implies runtime=subagent"
+    },
+    "reason": "Changes subagent collector spawn/result path at the cited actual consumer; not an unbound task value",
+    "activationTarget": "M"
+  },
+  {
+    "plugin": "runtime-dispatch:openclaw",
+    "field": "targets.spawnIntervalMs",
+    "default": 1500,
+    "unit": "milliseconds",
+    "reader": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 30,
+        "sourceLine": "  return validInteger(target.spawnIntervalMs, 0, 60_000)",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 66,
+        "sourceLine": "    spawnIntervalMs: numberValue(raw.spawnIntervalMs, 1_500),",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "line": 201,
+        "sourceLine": "      }",
+        "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "line": 202,
+        "sourceLine": "    }",
+        "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5"
+      }
+    ],
+    "error": "RUNTIME_CONFIG_INVALID:openclaw",
+    "effect": "per-endpoint/controller queued spawn pacing",
+    "a": 0,
+    "b": 100,
+    "action": "two actual concurrentGatewayacceptedspawns sameendpoint+controller, independentservertimestamps A immediatequeue vs B>=100ms betweenoperations; distinctendpoint queues do not share delay; cancellationwhilequeuedprevents spawn",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 60000
+    },
+    "reason": "Changes per-endpoint/controller queued spawn pacing at the cited actual consumer; not an unbound task value",
+    "activationTarget": "M"
+  },
+  {
+    "plugin": "runtime-dispatch:openclaw",
+    "field": "targets.tokenizerEncoding",
+    "default": "o200k_base",
+    "unit": "tokenizer name",
+    "reader": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 43,
+        "sourceLine": "    target.tokenizerEncoding === 'o200k_base',",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 67,
+        "sourceLine": "    tokenizerEncoding: encodingValue(raw.tokenizerEncoding),",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "line": 48,
+        "sourceLine": "  let encoder = ENCODERS.get(name);",
+        "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "line": 126,
+        "sourceLine": "  const promptBytes = Buffer.byteLength(task, 'utf8');",
+        "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "line": 143,
+        "sourceLine": "  const bytes = Buffer.byteLength(task, 'utf8'), tokens = promptTokens(task, target.tokenizerEncoding);",
+        "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5"
+      }
+    ],
+    "error": "RUNTIME_CONFIG_INVALID:openclaw / OPENCLAW_PROMPT_TOKENIZER_MISMATCH",
+    "effect": "prompt/output token accounting",
+    "a": "o200k_base",
+    "b": "o200k_base",
+    "action": "Current domain singletono200k_base; alternate cl100k_baserejectedbeforeeffect, nofabricatedA/Beffect. Target tokenizerprofilechoice only when selectedmodelcompatible reviewedencoder exists; fixedmodelalternative first needscontractinput. Countknowntextwith actualencoding; boundaryreserve agreed",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "string",
+      "const": "o200k_base",
+      "supportedAlternative": "notestablished-currently; class remains adjustablepolicy but comparisonblocked until supportedmodeldomain defined"
+    },
+    "reason": "Changes prompt/output token accounting at the cited actual consumer; not an unbound task value",
+    "activationTarget": "M"
+  },
+  {
+    "plugin": "runtime-dispatch:openclaw",
+    "field": "targets.maxPromptBytes",
+    "default": 900000,
+    "unit": "UTF-8 serialized runtime envelope bytes",
+    "reader": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 44,
+        "sourceLine": "    target.maxPromptBytes === 900_000, target.maxInputTokens === 120_000,",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 68,
+        "sourceLine": "    maxPromptBytes: numberValue(raw.maxPromptBytes, 900_000), maxInputTokens: numberValue(raw.maxInputTokens, 120_000),",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "line": 126,
+        "sourceLine": "  const promptBytes = Buffer.byteLength(task, 'utf8');",
+        "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "line": 127,
+        "sourceLine": "  if (promptBytes > target.maxPromptBytes) throw new Error(`OPENCLAW_PROMPT_BYTES_EXCEEDED:${promptBytes}:${target.maxPromptBytes}`);",
+        "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5"
+      }
+    ],
+    "error": "RUNTIME_CONFIG_INVALID:openclaw / OPENCLAW_PROMPT_BYTES_EXCEEDED",
+    "effect": "actual generated prompt byte admission",
+    "a": 450000,
+    "b": 900000,
+    "action": "Current parser const900000 rejectsA450000; approvedtarget makesexplicitboundedpolicy, use same full generated task600000bytes ->A rejectsbeforeSpawn Baccepts; source-envelope fixed scaffoldingcounts; declaredreviewbudget mustderive compatible boundtarget",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "currentConst": 900000,
+      "targetMinimum": 1,
+      "targetMaximum": "selectedmodel/runtimebytecontract, never guessedlarger than current900000"
+    },
+    "reason": "Changes actual generated prompt byte admission at the cited actual consumer; not an unbound task value",
+    "activationTarget": "M"
+  },
+  {
+    "plugin": "runtime-dispatch:openclaw",
+    "field": "targets.maxInputTokens",
+    "default": 120000,
+    "unit": "encoded generated prompt input tokens",
+    "reader": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 44,
+        "sourceLine": "    target.maxPromptBytes === 900_000, target.maxInputTokens === 120_000,",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 68,
+        "sourceLine": "    maxPromptBytes: numberValue(raw.maxPromptBytes, 900_000), maxInputTokens: numberValue(raw.maxInputTokens, 120_000),",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "line": 128,
+        "sourceLine": "  const inputTokens = promptTokens(task, target.tokenizerEncoding);",
+        "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "line": 129,
+        "sourceLine": "  if (inputTokens > target.maxInputTokens || inputTokens + target.maxOutputTokens > target.maxContextTokens) {",
+        "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5"
+      }
+    ],
+    "error": "RUNTIME_CONFIG_INVALID:openclaw / OPENCLAW_PROMPT_TOKENS_EXCEEDED",
+    "effect": "generated prompt input admission",
+    "a": 60000,
+    "b": 120000,
+    "action": "Current parser const120000 rejectsA; targetsamevalidmodel/input with measuredactual90000tokenenvelope ->ApreSpawnreject Baccept; reserveoutput+input<=context, notnewmodelgenerationparam",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "currentConst": 120000,
+      "targetMinimum": 1,
+      "targetMaximum": "compatible actualmodelbound <=current supported120000"
+    },
+    "reason": "Changes generated prompt input admission at the cited actual consumer; not an unbound task value",
+    "activationTarget": "M"
+  },
+  {
+    "plugin": "runtime-dispatch:openclaw",
+    "field": "targets.maxOutputTokens",
+    "default": 6000,
+    "unit": "tokenized returned result budget, not gatewaygeneration max_tokens",
+    "reader": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 45,
+        "sourceLine": "    target.maxOutputTokens === 6_000, target.maxContextTokens === 128_000,",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 46,
+        "sourceLine": "    target.maxInputTokens + target.maxOutputTokens <= target.maxContextTokens,",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 69,
+        "sourceLine": "    maxOutputTokens: numberValue(raw.maxOutputTokens, 6_000), maxContextTokens: numberValue(raw.maxContextTokens, 128_000),",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "line": 164,
+        "sourceLine": "  declaredMaximum?: number,",
+        "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "line": 167,
+        "sourceLine": "  const maximum = Math.min(target.maxOutputTokens, declaredMaximum ?? target.maxOutputTokens);",
+        "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "line": 168,
+        "sourceLine": "  if (tokens > maximum) throw new Error(`OPENCLAW_OUTPUT_TOKENS_EXCEEDED:${tokens}:${maximum}`);",
+        "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5"
+      }
+    ],
+    "error": "RUNTIME_CONFIG_INVALID:openclaw / OPENCLAW_OUTPUT_TOKENS_EXCEEDED / OPENCLAW_OUTPUT_TOKEN_CAP_MISMATCH",
+    "effect": "returned output/reserved context admission",
+    "a": 3000,
+    "b": 6000,
+    "action": "Current parser const6000 rejectsA; targetactualcompleted session returns fixed4500tokenrawJSON, A3000 post-readreject B6000accept. Promptreserve/declaredbudgetderive boundtarget so no duplicated review6000 author; no claim tokenslimit senttoGatewaymodel",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "currentConst": 6000,
+      "targetMinimum": 1,
+      "targetMaximum": "supportedresolvedmodeloutputcontract <=current6000 unlessexplicitnewcontractapproved"
+    },
+    "reason": "Changes returned output/reserved context admission at the cited actual consumer; not an unbound task value",
+    "activationTarget": "M"
+  },
+  {
+    "plugin": "runtime-dispatch:openclaw",
+    "field": "targets.maxContextTokens",
+    "default": 128000,
+    "unit": "input+reserved output context tokens",
+    "reader": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 45,
+        "sourceLine": "    target.maxOutputTokens === 6_000, target.maxContextTokens === 128_000,",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 46,
+        "sourceLine": "    target.maxInputTokens + target.maxOutputTokens <= target.maxContextTokens,",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 69,
+        "sourceLine": "    maxOutputTokens: numberValue(raw.maxOutputTokens, 6_000), maxContextTokens: numberValue(raw.maxContextTokens, 128_000),",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "line": 129,
+        "sourceLine": "  if (inputTokens > target.maxInputTokens || inputTokens + target.maxOutputTokens > target.maxContextTokens) {",
+        "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5"
+      }
+    ],
+    "error": "RUNTIME_CONFIG_INVALID:openclaw / OPENCLAW_PROMPT_TOKENS_EXCEEDED",
+    "effect": "total context reservation admission",
+    "a": 126000,
+    "b": 128000,
+    "action": "Current parser const128000 rejectsA; proposedtargetuse input119000 + outputreserve7000 invalidsincecurrentoutputmax6000; correcttask is input119000 + reserve6000=125000, bothA126000/B128000pass so cannotproveeffect. Comparativecase must holdlegalinput<=120000 and output<=6000 and choose A<=125000 with input+output>A; setA124000, B128000, task119000+6000=125000; binding numeric relations beforedispatch",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "currentConst": 128000,
+      "targetMinimum": 1,
+      "relation": "inputCap+outputCap<=contextCap; Aprofile mustreduce inputCap to118000 if context124000; actualtask119000wouldinputreject first, so targetdistinctcontextbehavior is cross-constraint validation not isolatedtuning; explicit groupcase"
+    },
+    "reason": "Changes total context reservation admission at the cited actual consumer; not an unbound task value",
+    "activationTarget": "M"
+  },
+  {
+    "plugin": "runtime-dispatch:openclaw",
+    "field": "targets.cwd",
+    "default": null,
+    "unit": "absolute canonical mutable working directory",
+    "reader": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 59,
+        "sourceLine": "    thinking: text(raw.thinking, 'high'), cwd: absolute(raw.cwd), repositoryRoot: absolute(raw.repositoryRoot),",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "line": 237,
+        "sourceLine": "    cwd: target.cwd, model: target.model, agentId: target.agentId, thinking: target.thinking,",
+        "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/workspace-target.ts",
+        "line": 29,
+        "sourceLine": "  return { ...target, cwd: workspace, workspaceReference: ref };",
+        "sha256": "163d6442b6eb4261db013c55af03183a04cedaa1a4a90c0893dc1f65f36f2ab5"
+      }
+    ],
+    "error": "RUNTIME_CONFIG_INVALID:openclaw / RUNTIME_WORKSPACE_PATH_INVALID",
+    "effect": "spawn working directory",
+    "a": "${CASE_ROOT}/repoA",
+    "b": "${CASE_ROOT}/repoB",
+    "action": "normal target no workspaceReference: actualGatewaycwd argument/workerfilesystem matchesA/B; with ownedworkspace ref, cwd is generatedworkspace pathand cannotoperatoroverride; repo/resultscope mustremaincompatible",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "string",
+      "pattern": "^/",
+      "relation": "resultPathPrefix resolvesinsidecwd and repositoryRoot"
+    },
+    "reason": "Changes spawn working directory at the cited actual consumer; not an unbound task value",
+    "activationTarget": "R/S"
+  },
+  {
+    "plugin": "runtime-dispatch:openclaw",
+    "field": "targets.repositoryRoot",
+    "default": null,
+    "unit": "trusted absolute repository root",
+    "reader": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 59,
+        "sourceLine": "    thinking: text(raw.thinking, 'high'), cwd: absolute(raw.cwd), repositoryRoot: absolute(raw.repositoryRoot),",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "line": 175,
+        "sourceLine": "  const file = path.join(resultRoot, relative);",
+        "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-result.ts",
+        "line": 90,
+        "sourceLine": "    }",
+        "sha256": "38290ff080cc31a5465f911bf8adaf1d7d82c1c0a019914d088a5dd6c35b9643"
+      }
+    ],
+    "error": "RUNTIME_CONFIG_INVALID:openclaw / OPENCLAW_RESULT_PATH_OUTSIDE_REPOSITORY",
+    "effect": "result persistence/trusted workspace repository root",
+    "a": "${CASE_ROOT}/repoA",
+    "b": "${CASE_ROOT}/repoB",
+    "action": "completeA/Bcwd+repositoryrootsselectedsameaspairedpath; resultshashpersistonlyselectedroot; workspaceReference repositorymustmatch; driftcannotadopt oldresultfromotherroot",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "string",
+      "pattern": "^/"
+    },
+    "reason": "Changes result persistence/trusted workspace repository root at the cited actual consumer; not an unbound task value",
+    "activationTarget": "R/S"
+  },
+  {
+    "plugin": "runtime-dispatch:openclaw",
+    "field": "targets.workspaceRoot",
+    "default": null,
+    "unit": "trusted workspace ownership root",
+    "reader": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 60,
+        "sourceLine": "    ...(raw.workspaceRoot === undefined ? {} : { workspaceRoot: absolute(raw.workspaceRoot) }),",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 77,
+        "sourceLine": "}",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/workspace-target.ts",
+        "line": 16,
+        "sourceLine": "  const root = directory(target.workspaceRoot);",
+        "sha256": "163d6442b6eb4261db013c55af03183a04cedaa1a4a90c0893dc1f65f36f2ab5"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/workspace-target.ts",
+        "line": 19,
+        "sourceLine": "  if (ref.workspaceRoot !== root || ref.repositoryRoot !== repository || !workspace.startsWith(`${root}${path.sep}`)",
+        "sha256": "163d6442b6eb4261db013c55af03183a04cedaa1a4a90c0893dc1f65f36f2ab5"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/workspace-target.ts",
+        "line": 22,
+        "sourceLine": "  directory(path.dirname(ownerFile));",
+        "sha256": "163d6442b6eb4261db013c55af03183a04cedaa1a4a90c0893dc1f65f36f2ab5"
+      }
+    ],
+    "error": "RUNTIME_WORKSPACE_ROOT_NOT_CONFIGURED / RUNTIME_WORKSPACE_ROOT_MISMATCH",
+    "effect": "attempt-owned workspace reference authorization",
+    "a": "${CASE_ROOT}/workA",
+    "b": "${CASE_ROOT}/workB",
+    "action": "realGitworkspace withcanonicalownerreference underworkB; AworkA rejects beforegateway, BworkBaccepts and derivescwd/workspaceref; currentabsentmeansfeatureunavailable onlywhenpayloadreferencesworkspace, targetexplicitactivationrequired",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "string",
+      "pattern": "^/",
+      "relation": "workspace refsownerrun/stage/attempt bound; workroot separatefromrepo"
+    },
+    "reason": "Changes attempt-owned workspace reference authorization at the cited actual consumer; not an unbound task value",
+    "activationTarget": "R/S"
+  },
+  {
+    "plugin": "runtime-dispatch:openclaw",
+    "field": "targets.pollMs",
+    "default": 1000,
+    "unit": "milliseconds",
+    "reader": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 31,
+        "sourceLine": "    && validInteger(target.pollMs, 10) && validInteger(target.maxPollMs, target.pollMs)",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 61,
+        "sourceLine": "    pollMs: numberValue(raw.pollMs, 1_000), maxPollMs: numberValue(raw.maxPollMs, 15_000),",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+        "line": 237,
+        "sourceLine": "    }",
+        "sha256": "8f3bfbfe9d3d9fa3fa88ac532f8f59abe457d830089a340b196cb8c25bd97217"
+      }
+    ],
+    "error": "RUNTIME_CONFIG_INVALID:openclaw / OPENCLAW_SESSION_TIMEOUT",
+    "effect": "poll base delay",
+    "a": 10,
+    "b": 100,
+    "action": "controlledactualsessionstate fixture notterminalforfirst3polls thencompleted; independentGatewayrequesttiming follows10vs100 exponentialbase; no mockpollSession; separateliveactualsessionterminalprobe",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "minimum": 10,
+      "relation": "<=maxPollMs,<=sessionTimeoutMs"
+    },
+    "reason": "Changes poll base delay at the cited actual consumer; not an unbound task value",
+    "activationTarget": "M"
+  },
+  {
+    "plugin": "runtime-dispatch:openclaw",
+    "field": "targets.maxPollMs",
+    "default": 15000,
+    "unit": "milliseconds",
+    "reader": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 31,
+        "sourceLine": "    && validInteger(target.pollMs, 10) && validInteger(target.maxPollMs, target.pollMs)",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 61,
+        "sourceLine": "    pollMs: numberValue(raw.pollMs, 1_000), maxPollMs: numberValue(raw.maxPollMs, 15_000),",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+        "line": 237,
+        "sourceLine": "    }",
+        "sha256": "8f3bfbfe9d3d9fa3fa88ac532f8f59abe457d830089a340b196cb8c25bd97217"
+      }
+    ],
+    "error": "RUNTIME_CONFIG_INVALID:openclaw",
+    "effect": "poll delay ceiling",
+    "a": 20,
+    "b": 200,
+    "action": "pollMs10 same repeatedpendingstatus; A delaysclamp20 Bgrow10,20,40,80,160,200; observerrequesttimestamps; deadline/maxPollsbignongoverning",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "minimum": 10,
+      "relation": ">=pollMs"
+    },
+    "reason": "Changes poll delay ceiling at the cited actual consumer; not an unbound task value",
+    "activationTarget": "M"
+  },
+  {
+    "plugin": "runtime-dispatch:openclaw",
+    "field": "targets.maxPolls",
+    "default": 1800,
+    "unit": "poll attempts",
+    "reader": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 32,
+        "sourceLine": "    && validInteger(target.maxPolls, 1) && validInteger(target.sessionTimeoutMs, target.pollMs, 86_400_000);",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 62,
+        "sourceLine": "    maxPolls: numberValue(raw.maxPolls, 1_800), sessionTimeoutMs: numberValue(raw.sessionTimeoutMs, 1_800_000),",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+        "line": 227,
+        "sourceLine": "    for (let poll = 0; poll < target.maxPolls; poll += 1) {",
+        "sha256": "8f3bfbfe9d3d9fa3fa88ac532f8f59abe457d830089a340b196cb8c25bd97217"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+        "line": 236,
+        "sourceLine": "      await wait(Math.min(delay, Math.max(1, deadline - Date.now())), signal);",
+        "sha256": "8f3bfbfe9d3d9fa3fa88ac532f8f59abe457d830089a340b196cb8c25bd97217"
+      }
+    ],
+    "error": "RUNTIME_CONFIG_INVALID:openclaw / OPENCLAW_SESSION_TIMEOUT",
+    "effect": "polling attempt count",
+    "a": 2,
+    "b": 3,
+    "action": "actualGatewayreturns pending,pending,completed; A2 timesout and enterscleanup, B3 accepted; taskidentity/modelstable; sessiondeadlinehigh enough",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "reason": "Changes polling attempt count at the cited actual consumer; not an unbound task value",
+    "activationTarget": "M"
+  },
+  {
+    "plugin": "runtime-dispatch:openclaw",
+    "field": "targets.sessionTimeoutMs",
+    "default": 1800000,
+    "unit": "milliseconds",
+    "reader": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 32,
+        "sourceLine": "    && validInteger(target.maxPolls, 1) && validInteger(target.sessionTimeoutMs, target.pollMs, 86_400_000);",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 62,
+        "sourceLine": "    maxPolls: numberValue(raw.maxPolls, 1_800), sessionTimeoutMs: numberValue(raw.sessionTimeoutMs, 1_800_000),",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+        "line": 220,
+        "sourceLine": "  const deadline = Date.now() + target.sessionTimeoutMs;",
+        "sha256": "8f3bfbfe9d3d9fa3fa88ac532f8f59abe457d830089a340b196cb8c25bd97217"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+        "line": 221,
+        "sourceLine": "  const timeout = AbortSignal.timeout(target.sessionTimeoutMs);",
+        "sha256": "8f3bfbfe9d3d9fa3fa88ac532f8f59abe457d830089a340b196cb8c25bd97217"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+        "line": 229,
+        "sourceLine": "      if (Date.now() >= deadline) throw new Error('OPENCLAW_SESSION_TIMEOUT');",
+        "sha256": "8f3bfbfe9d3d9fa3fa88ac532f8f59abe457d830089a340b196cb8c25bd97217"
+      }
+    ],
+    "error": "RUNTIME_CONFIG_INVALID:openclaw / OPENCLAW_SESSION_TIMEOUT",
+    "effect": "finite model session polling deadline",
+    "a": 20,
+    "b": 1000,
+    "action": "actualsessionterminalat80ms withpoll10/maxPoll10,maxPolls100; A20 endsandmustconfirmcancel/terminal orblocksunknown, B1000completes; priorbounddeadlineandcleanupowner preserved",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "integer",
+      "minimum": "pollMs",
+      "maximum": 86400000
+    },
+    "reason": "Changes finite model session polling deadline at the cited actual consumer; not an unbound task value",
+    "activationTarget": "M"
+  },
+  {
+    "plugin": "runtime-dispatch:openclaw",
+    "field": "targets.resultPathPrefix",
+    "default": null,
+    "unit": "relative no-escape result directory",
+    "reader": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 26,
+        "sourceLine": "  if (typeof value !== 'string' || value.length === 0 || value.startsWith('/') || value.split('/').includes('..')) return '';",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 63,
+        "sourceLine": "    resultPathPrefix: prefixValue(raw.resultPathPrefix), resultEndpoint: optionalUrl(raw.resultEndpoint),",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "line": 174,
+        "sourceLine": "  const resultRoot = target.workspaceReference ? target.cwd : target.repositoryRoot;",
+        "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "line": 182,
+        "sourceLine": "    throw new Error('OPENCLAW_RESULT_PATH_TOO_LONG');",
+        "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5"
+      }
+    ],
+    "error": "RUNTIME_CONFIG_INVALID:openclaw / OPENCLAW_RESULT_PATH_OUTSIDE_WORKSPACE",
+    "effect": "deterministic result file location",
+    "a": "results/a",
+    "b": "results/b",
+    "action": "same dispatchId hash produces pathprefixA/B inownedworkspace/repo withatomicno-replacepersist; rejectsabsolute/.. components beforefilesystemeffect; fixedhashsuffix identity notconfig",
+    "classification": "operator-setting",
+    "required": true,
+    "domain": {
+      "type": "string",
+      "minLength": 1,
+      "semantic": "current prefixValue rejectsabsolute and ..; persistenceparts also rejectsdot/empty/backslash/control chars"
+    },
+    "reason": "Changes deterministic result file location at the cited actual consumer; not an unbound task value",
+    "activationTarget": "R/S"
+  },
+  {
+    "plugin": "runtime-dispatch:openclaw",
+    "field": "targets.resultEndpoint",
+    "default": null,
+    "unit": "HTTP(S) result service URI",
+    "reader": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 35,
+        "sourceLine": "  return ((target.resultEndpoint === undefined) === (target.resultTokenSecret === undefined))",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 63,
+        "sourceLine": "    resultPathPrefix: prefixValue(raw.resultPathPrefix), resultEndpoint: optionalUrl(raw.resultEndpoint),",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-result.ts",
+        "line": 36,
+        "sourceLine": "  const endpoint = new URL(target.resultEndpoint!);",
+        "sha256": "38290ff080cc31a5465f911bf8adaf1d7d82c1c0a019914d088a5dd6c35b9643"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-result.ts",
+        "line": 38,
+        "sourceLine": "  const response = await context.invokeConfidential('network.http', { operation: 'request', resource: { type: 'network.url', canonicalId: endpoint.href }, payload: { method: 'GET', headers: { authorization: `Bearer ${requiredText(secret.value, 'RESULT_TOKEN')}` } } });",
+        "sha256": "38290ff080cc31a5465f911bf8adaf1d7d82c1c0a019914d088a5dd6c35b9643"
+      }
+    ],
+    "error": "RUNTIME_CONFIG_INVALID:openclaw / OPENCLAW_REMOTE_RESULT_READ_FAILED",
+    "effect": "remote result retrieval mode",
+    "a": "${HTTP_FIXTURE_ORIGIN}/resultsA",
+    "b": "${HTTP_FIXTURE_ORIGIN_B}/resultsB",
+    "action": "complete remote-mode profiles pairresultTokenSecret and endpoint; realservedrawJSONrequest destinationA/B; normal local-mode completeprofile excludesboth; bad/missingpairrejectbeforemodeeffect",
+    "classification": "operator-setting",
+    "required": false,
+    "domain": {
+      "type": "string",
+      "format": "uri",
+      "relation": "requiresresultTokenSecret and reciprocalpair"
+    },
+    "reason": "Changes remote result retrieval mode at the cited actual consumer; not an unbound task value",
+    "activationTarget": "R/S"
+  },
+  {
+    "plugin": "runtime-dispatch:openclaw",
+    "field": "targets.resultTokenSecret",
+    "default": null,
+    "unit": "logical remote result token reference",
+    "reader": [
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 36,
+        "sourceLine": "    && (target.resultTokenSecret === undefined || ID.test(target.resultTokenSecret));",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "line": 64,
+        "sourceLine": "    resultTokenSecret: optionalText(raw.resultTokenSecret),",
+        "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-result.ts",
+        "line": 35,
+        "sourceLine": "  const secret = await context.invokeConfidential('secrets.read', { operation: 'resolve', resource: { type: 'secret.name', canonicalId: target.resultTokenSecret! }, payload: {} });",
+        "sha256": "38290ff080cc31a5465f911bf8adaf1d7d82c1c0a019914d088a5dd6c35b9643"
+      },
+      {
+        "path": "skills/common/plugins/runtime-dispatch/src/openclaw-result.ts",
+        "line": 38,
+        "sourceLine": "  const response = await context.invokeConfidential('network.http', { operation: 'request', resource: { type: 'network.url', canonicalId: endpoint.href }, payload: { method: 'GET', headers: { authorization: `Bearer ${requiredText(secret.value, 'RESULT_TOKEN')}` } } });",
+        "sha256": "38290ff080cc31a5465f911bf8adaf1d7d82c1c0a019914d088a5dd6c35b9643"
+      }
+    ],
+    "error": "RUNTIME_CONFIG_INVALID:openclaw / OPENCLAW_RESULT_TOKEN_INVALID",
+    "effect": "remote result bearer token selector",
+    "a": "case.result.a",
+    "b": "case.result.b",
+    "action": "pairedremote endpoint mode, realresultreceiverauthenticatesA/B; no tokenvalues logged; no fallback toGatewaytoken; unavailablemapping rejected",
+    "classification": "secret-reference",
+    "required": false,
+    "domain": {
+      "type": "string",
+      "pattern": "runtime target ID; requiresresultEndpoint"
+    },
+    "reason": "Secret name/environment binding only; actual credential bytes are external and never output",
+    "activationTarget": "R/S"
+  }
+]

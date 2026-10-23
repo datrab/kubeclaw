@@ -1,0 +1,10 @@
+{
+  "mode": "draft-structural",
+  "scope": "integrity only; independent semantic review remains mandatory",
+  "settings": 2409,
+  "cases": 6726,
+  "errorCount": 1,
+  "errors": [
+    "required Delivery pure definition observation package missing"
+  ]
+}

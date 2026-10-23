@@ -1,0 +1,51 @@
+{
+  "at": "2026-10-17T04:39:32.246549+00:00",
+  "status": "ORIGINAL_PRISM_IMAGE_NATIVE_ARCHIVES_5_OF_5_NOT_FULL_ACCEPTANCE",
+  "sourceCommit": "e8f3d29009b57d637983566603d0e70488530ba2",
+  "sourceRemoteVerified": true,
+  "evidence": "docs/review/remediation/config-prism-native-image-packaged-20261017",
+  "change": "Two original image/runtime suites render complete normal chart archives with exact archived selected topology readback. Real ingestion image role package and central generation digest equality, actual checkout revision/manifest binding; Worker original installed receipt/capture preserved. Original security/capability/mount/replica/timeout and real static NRI policy/mode/output-reuse assertions unchanged. No production policy/default/authority change.",
+  "checks": {
+    "image": {
+      "tests": 3,
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "exitCode": 0,
+      "log": "image.txt"
+    },
+    "runtime": {
+      "tests": 2,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "exitCode": 0,
+      "log": "native-render-recovered.txt"
+    },
+    "nodeSyntaxAndDiffCheck": true
+  },
+  "recovery": "Initial runtime1/2: default Go cache missing ziphash and /home/node/go EROFS. Preserved both failures. Normal go mod download with explicit writable workspace GOMODCACHE/GOCACHE succeeded, unchanged required go mod verify/build then original full2/2 succeeded. No source/module/checksum/trust modification or skip.",
+  "qualification": "Local actual static NRI binary and genuine package/receipts plus archive Helm render only; NOT NRI daemon registration, OCI execution, genuine UID1000/native cgroup/history/archive/integrated acceptance. Other image identity-negative/agent fixtures retain explicit synthetic vectors. Checkout revision not clean-worktree identity.",
+  "originalRoster": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50,
+    "sha256": "bce80841fbf205a69494cd9ecd4b5377787c61126e2c22ce0d7cd0d6e28cc1c9",
+    "originalResultsChanged": false
+  },
+  "sourceHashes": {
+    "tests/verification/deployment/prism-native-runtime.test.mjs": "e5b85caa02b72d68b99a8e32711568364804570e7817b0e1b082a1b043d765c8",
+    "tests/verification/deployment/prism-image-generation.test.mjs": "577ad73f5a2000ae6deb1640da7eb8d8f5db659ec79ab0f41ab0fde339e4b16f"
+  },
+  "independentReview": "OPEN: native spawn/reviewer discovery empty; CONFIG subagents0; parent terminal/no productive reviewer, no fresh report. Known unchanged same-surface EROFS not replayed. Author verification only.",
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "externalOwner": "Raven",
+  "resumeCondition": "Isolated Linux Docker genuine UID/GID1000 delegated writable cgroup/native pool and privileged installer; sufficient genuinely root-trusted writable archive storage and isolated migrated PostgreSQL. No spoof/skipped gates.",
+  "writerLock": "SAME nonblocking repository lock held for bounded operations; released at command exit",
+  "noHistoricalFollowup": true,
+  "nextAction": "Complete coordinated sole-root/all-profile/schema/file-set actual boot+Nova receiving including real E2E legacy transport replacement; genuine QB-R02 producer/source/build/baseline inputStore reservation/accounting/sealed publication. Keep exact original UID1000 CLI, three invalid-port entrypoint, independent/history/native/archive/full C0-C6 obligations OPEN. Do not repeat unchanged local green suites."
+}

@@ -1,0 +1,6 @@
+{
+  "exitCode": 1,
+  "diagnostic": "strict mode: use allowUnionTypes to allow union type keyword at https://kubeclaw.dev/schemas/api-flow.v1.json#/$defs/scalars/additionalProperties (strictTypes)",
+  "cause": "Existing source flow schema intentionally allows string/number/boolean union. Evidence Ajv configuration initially rejected standard union schema syntax before final observations.",
+  "correction": "Explicit allowUnionTypes:true, retain strict/allErrors and no defaults/coercion/removal; preserve schemas and all original business domains. No schema/domain weakening or runtime execution."
+}

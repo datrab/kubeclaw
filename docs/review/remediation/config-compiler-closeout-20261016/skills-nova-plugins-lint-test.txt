@@ -1,0 +1,135 @@
+npm notice run test
+npm notice run node tests/stage.unit.test.mjs && node tests/package-boundary.test.mjs && node tests/adapter-boundary.test.mjs && node tests/discovery.test.mjs && node tests/eslint-discipline.test.mjs && node tests/eslint-type-evidence.test.mjs && node --test tests/remediation.test.mjs && node tests/live-function.test.ts
+{"ok":true,"plugin":"kubeclaw.lint","suite":"invalid-report-rejection"}
+{"ok":true,"plugin":"kubeclaw.lint","suite":"package-boundary"}
+{"ok":true,"plugin":"kubeclaw.lint","suite":"adapter-boundary"}
+{"ok":true,"suite":"lint-target-discovery"}
+{"ok":true,"suite":"eslint-discipline-rules"}
+{"ts":"2026-10-16T09:42:27.586Z","level":"INFO","component":"lint-report","msg":"ESLint using config: /home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/files/config/eslint-type-evidence-tests-config.mjs"}
+{"ok":true,"suite":"eslint-type-evidence-rules"}
+{"ts":"2026-10-16T09:42:28.502Z","level":"INFO","component":"lint-report","msg":"Detected project types: javascript","data":{"markers":{"javascript":"**/*.js"}}}
+{"ts":"2026-10-16T09:42:28.502Z","level":"INFO","component":"lint-report","msg":"Scope: full repo"}
+{"ts":"2026-10-16T09:42:28.503Z","level":"INFO","component":"lint-report","msg":"Running 1 tools (tier: full)","data":{"tools":["eslint"]}}
+{"ts":"2026-10-16T09:42:28.503Z","level":"STEP","component":"lint-report","msg":"Running: ESLint"}
+✔ native timeout, failed start, ordinary nonzero, and output overflow remain distinct (643.827423ms)
+{"ts":"2026-10-16T09:42:28.514Z","level":"INFO","component":"lint-report","msg":"ESLint using config: /tmp/lint-remediation-C0732o/eslint.config.mjs"}
+{"ts":"2026-10-16T09:42:28.665Z","level":"INFO","component":"lint-report","msg":"ESLint: 1 files scanned"}
+{"ts":"2026-10-16T09:42:28.665Z","level":"OK","component":"lint-report","msg":"ESLint: 0 errors, 0 warnings (162ms)"}
+{"ts":"2026-10-16T09:42:28.684Z","level":"INFO","component":"lint-report","msg":"Detected project types: javascript","data":{"markers":{"javascript":"**/*.js"}}}
+{"ts":"2026-10-16T09:42:28.685Z","level":"INFO","component":"lint-report","msg":"Scope: 1 changed files (1 requested)"}
+{"ts":"2026-10-16T09:42:28.685Z","level":"INFO","component":"lint-report","msg":"Running 1 tools (tier: full)","data":{"tools":["eslint"]}}
+{"ts":"2026-10-16T09:42:28.685Z","level":"STEP","component":"lint-report","msg":"Running: ESLint"}
+{"ts":"2026-10-16T09:42:28.693Z","level":"INFO","component":"lint-report","msg":"ESLint using config: /tmp/lint-remediation-C0732o/eslint.config.mjs"}
+{"ts":"2026-10-16T09:42:28.834Z","level":"INFO","component":"lint-report","msg":"ESLint: 1 files scanned"}
+{"ts":"2026-10-16T09:42:28.834Z","level":"OK","component":"lint-report","msg":"ESLint: 1 errors, 0 warnings (149ms)"}
+{"ts":"2026-10-16T09:42:28.848Z","level":"INFO","component":"lint-report","msg":"Detected project types: javascript","data":{"markers":{"javascript":"**/*.js"}}}
+{"ts":"2026-10-16T09:42:28.848Z","level":"INFO","component":"lint-report","msg":"Scope: 0 changed files (1 requested)"}
+{"ts":"2026-10-16T09:42:28.848Z","level":"INFO","component":"lint-report","msg":"Running 1 tools (tier: full)","data":{"tools":["eslint"]}}
+{"ts":"2026-10-16T09:42:28.848Z","level":"STEP","component":"lint-report","msg":"Running: ESLint"}
+{"ts":"2026-10-16T09:42:28.848Z","level":"INFO","component":"lint-report","msg":"ESLint: not applicable — No requested changed files match the configured tool scope."}
+{"ts":"2026-10-16T09:42:28.851Z","level":"INFO","component":"lint-report","msg":"Detected project types: javascript","data":{"markers":{"javascript":"**/*.js"}}}
+{"ts":"2026-10-16T09:42:28.852Z","level":"INFO","component":"lint-report","msg":"Scope: 1 changed files (1 requested)"}
+{"ts":"2026-10-16T09:42:28.852Z","level":"INFO","component":"lint-report","msg":"Running 1 tools (tier: full)","data":{"tools":["eslint"]}}
+{"ts":"2026-10-16T09:42:28.852Z","level":"STEP","component":"lint-report","msg":"Running: ESLint"}
+{"ts":"2026-10-16T09:42:28.860Z","level":"INFO","component":"lint-report","msg":"ESLint using config: /tmp/lint-remediation-C0732o/eslint.config.mjs"}
+{"ts":"2026-10-16T09:42:29.016Z","level":"INFO","component":"lint-report","msg":"ESLint: 1 files scanned"}
+{"ts":"2026-10-16T09:42:29.016Z","level":"OK","component":"lint-report","msg":"ESLint: 0 errors, 0 warnings (164ms)"}
+{"ts":"2026-10-16T09:42:29.025Z","level":"INFO","component":"lint-report","msg":"Detected project types: typescript","data":{"markers":{"typescript":"tsconfig.json"}}}
+{"ts":"2026-10-16T09:42:29.025Z","level":"INFO","component":"lint-report","msg":"Scope: full repo"}
+{"ts":"2026-10-16T09:42:29.025Z","level":"INFO","component":"lint-report","msg":"Running 1 tools (tier: full)","data":{"tools":["tsc"]}}
+{"ts":"2026-10-16T09:42:29.025Z","level":"STEP","component":"lint-report","msg":"Running: TypeScript Compiler"}
+✔ real adapter and ESLint retain clean/finding results and deny escaping paths (531.674656ms)
+{"ts":"2026-10-16T09:42:29.441Z","level":"OK","component":"lint-report","msg":"TypeScript Compiler: 0 errors, 0 warnings (416ms)"}
+{"ts":"2026-10-16T09:42:29.884Z","level":"INFO","component":"lint-report","msg":"Detected project types: javascript","data":{"markers":{"javascript":"**/*.js"}}}
+{"ts":"2026-10-16T09:42:29.884Z","level":"INFO","component":"lint-report","msg":"Scope: full repo"}
+{"ts":"2026-10-16T09:42:29.884Z","level":"INFO","component":"lint-report","msg":"Running 1 tools (tier: full)","data":{"tools":["eslint"]}}
+{"ts":"2026-10-16T09:42:29.884Z","level":"STEP","component":"lint-report","msg":"Running: ESLint"}
+✔ native tsconfig cannot consume an excluded source symlink outside the repository (863.110449ms)
+{"ts":"2026-10-16T09:42:29.889Z","level":"INFO","component":"lint-report","msg":"ESLint using config: /tmp/lint-remediation-PWcHMu/eslint.config.mjs"}
+{"ts":"2026-10-16T09:42:30.651Z","level":"WARN","component":"lint-report","msg":"Tool eslint failed: eslint timed out: timeout after 500ms"}
+{"ts":"2026-10-16T09:42:30.652Z","level":"WARN","component":"lint-report","msg":"ESLint: error — eslint timed out: timeout after 500ms"}
+{"ts":"2026-10-16T09:42:30.663Z","level":"INFO","component":"lint-report","msg":"Detected project types: javascript","data":{"markers":{"javascript":"**/*.js"}}}
+{"ts":"2026-10-16T09:42:30.663Z","level":"INFO","component":"lint-report","msg":"Scope: full repo"}
+{"ts":"2026-10-16T09:42:30.663Z","level":"INFO","component":"lint-report","msg":"Running 1 tools (tier: full)","data":{"tools":["eslint"]}}
+{"ts":"2026-10-16T09:42:30.663Z","level":"STEP","component":"lint-report","msg":"Running: ESLint"}
+✔ policy timeout becomes an explicit ESLint report error (777.430982ms)
+{"ts":"2026-10-16T09:42:30.670Z","level":"INFO","component":"lint-report","msg":"ESLint using config: /tmp/lint-remediation-XgX7DN/eslint.config.mjs"}
+{"ts":"2026-10-16T09:42:31.257Z","level":"INFO","component":"lint-report","msg":"Detected project types: javascript","data":{"markers":{"javascript":"**/*.js"}}}
+{"ts":"2026-10-16T09:42:31.257Z","level":"INFO","component":"lint-report","msg":"Scope: full repo"}
+{"ts":"2026-10-16T09:42:31.257Z","level":"INFO","component":"lint-report","msg":"Running 1 tools (tier: full)","data":{"tools":["eslint"]}}
+{"ts":"2026-10-16T09:42:31.257Z","level":"STEP","component":"lint-report","msg":"Running: ESLint"}
+✔ running abort stops actual ESLint and its TERM-resistant descendant (585.533553ms)
+{"ts":"2026-10-16T09:42:31.264Z","level":"INFO","component":"lint-report","msg":"ESLint using config: /tmp/lint-remediation-0fslaL/eslint.config.mjs"}
+✔ running shutdown stops actual ESLint and its TERM-resistant descendant (486.708579ms)
+{"ts":"2026-10-16T09:42:31.804Z","level":"INFO","component":"lint-report","msg":"Detected project types: javascript","data":{"markers":{"javascript":"**/*.js"}}}
+{"ts":"2026-10-16T09:42:31.804Z","level":"INFO","component":"lint-report","msg":"Scope: full repo"}
+{"ts":"2026-10-16T09:42:31.804Z","level":"INFO","component":"lint-report","msg":"Running 1 tools (tier: full)","data":{"tools":["eslint"]}}
+{"ts":"2026-10-16T09:42:31.804Z","level":"STEP","component":"lint-report","msg":"Running: ESLint"}
+{"ts":"2026-10-16T09:42:31.809Z","level":"INFO","component":"lint-report","msg":"ESLint using config: /tmp/lint-remediation-leRArj/eslint.config.mjs"}
+✔ running candidate stops actual ESLint and its TERM-resistant descendant (512.828401ms)
+✔ running git stops actual Git checkout and its smudge filter (335.245709ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4914.034346
+{"ts":"2026-10-16T09:42:35.107Z","level":"INFO","component":"lint-report","msg":"Detected project types: shell","data":{"markers":{"shell":"*.sh"}}}
+{"ts":"2026-10-16T09:42:35.107Z","level":"INFO","component":"lint-report","msg":"Scope: 1 changed files (1 requested)"}
+{"ts":"2026-10-16T09:42:35.108Z","level":"INFO","component":"lint-report","msg":"Running 2 tools (tier: pre-check)","data":{"tools":["shellcheck","shfmt"]}}
+{"ts":"2026-10-16T09:42:35.108Z","level":"STEP","component":"lint-report","msg":"Running: ShellCheck"}
+{"ts":"2026-10-16T09:42:35.125Z","level":"OK","component":"lint-report","msg":"ShellCheck: 0 errors, 0 warnings (16ms)"}
+{"ts":"2026-10-16T09:42:35.125Z","level":"STEP","component":"lint-report","msg":"Running: shfmt"}
+{"ts":"2026-10-16T09:42:35.135Z","level":"OK","component":"lint-report","msg":"shfmt: 0 errors, 0 warnings (10ms)"}
+{"ts":"2026-10-16T09:42:36.789Z","level":"INFO","component":"lint-report","msg":"Detected project types: shell","data":{"markers":{"shell":"*.sh"}}}
+{"ts":"2026-10-16T09:42:36.789Z","level":"INFO","component":"lint-report","msg":"Scope: 1 changed files (1 requested)"}
+{"ts":"2026-10-16T09:42:36.789Z","level":"INFO","component":"lint-report","msg":"Running 2 tools (tier: pre-check)","data":{"tools":["shellcheck","shfmt"]}}
+{"ts":"2026-10-16T09:42:36.789Z","level":"STEP","component":"lint-report","msg":"Running: ShellCheck"}
+{"ts":"2026-10-16T09:42:36.803Z","level":"OK","component":"lint-report","msg":"ShellCheck: 0 errors, 2 warnings (14ms)"}
+{"ts":"2026-10-16T09:42:36.803Z","level":"STEP","component":"lint-report","msg":"Running: shfmt"}
+{"ts":"2026-10-16T09:42:36.812Z","level":"OK","component":"lint-report","msg":"shfmt: 0 errors, 0 warnings (8ms)"}
+{"ts":"2026-10-16T09:42:38.350Z","level":"INFO","component":"lint-report","msg":"Detected project types: shell","data":{"markers":{"shell":"*.sh"}}}
+{"ts":"2026-10-16T09:42:38.350Z","level":"INFO","component":"lint-report","msg":"Scope: 1 changed files (1 requested)"}
+{"ts":"2026-10-16T09:42:38.350Z","level":"INFO","component":"lint-report","msg":"Running 2 tools (tier: full)","data":{"tools":["shellcheck","shfmt"]}}
+{"ts":"2026-10-16T09:42:38.350Z","level":"STEP","component":"lint-report","msg":"Running: ShellCheck"}
+{"ts":"2026-10-16T09:42:38.363Z","level":"OK","component":"lint-report","msg":"ShellCheck: 0 errors, 0 warnings (13ms)"}
+{"ts":"2026-10-16T09:42:38.363Z","level":"STEP","component":"lint-report","msg":"Running: shfmt"}
+{"ts":"2026-10-16T09:42:38.373Z","level":"OK","component":"lint-report","msg":"shfmt: 0 errors, 0 warnings (10ms)"}
+{"ts":"2026-10-16T09:42:40.002Z","level":"INFO","component":"lint-report","msg":"Detected project types: shell","data":{"markers":{"shell":"*.sh"}}}
+{"ts":"2026-10-16T09:42:40.002Z","level":"INFO","component":"lint-report","msg":"Scope: 1 changed files (1 requested)"}
+{"ts":"2026-10-16T09:42:40.002Z","level":"INFO","component":"lint-report","msg":"Running 2 tools (tier: full)","data":{"tools":["shellcheck","shfmt"]}}
+{"ts":"2026-10-16T09:42:40.002Z","level":"STEP","component":"lint-report","msg":"Running: ShellCheck"}
+{"ts":"2026-10-16T09:42:40.018Z","level":"OK","component":"lint-report","msg":"ShellCheck: 0 errors, 2 warnings (15ms)"}
+{"ts":"2026-10-16T09:42:40.018Z","level":"STEP","component":"lint-report","msg":"Running: shfmt"}
+{"ts":"2026-10-16T09:42:40.028Z","level":"OK","component":"lint-report","msg":"shfmt: 0 errors, 0 warnings (10ms)"}
+{"ts":"2026-10-16T09:42:42.361Z","level":"INFO","component":"lint-report","msg":"Detected project types: shell","data":{"markers":{"shell":"*.sh"}}}
+{"ts":"2026-10-16T09:42:42.362Z","level":"INFO","component":"lint-report","msg":"Scope: 1 changed files (1 requested)"}
+{"ts":"2026-10-16T09:42:42.362Z","level":"INFO","component":"lint-report","msg":"Running 2 tools (tier: pre-check)","data":{"tools":["shellcheck","shfmt"]}}
+{"ts":"2026-10-16T09:42:42.362Z","level":"STEP","component":"lint-report","msg":"Running: ShellCheck"}
+{"ts":"2026-10-16T09:42:42.421Z","level":"OK","component":"lint-report","msg":"ShellCheck: 0 errors, 0 warnings (59ms)"}
+{"ts":"2026-10-16T09:42:42.421Z","level":"STEP","component":"lint-report","msg":"Running: shfmt"}
+{"ts":"2026-10-16T09:42:42.434Z","level":"OK","component":"lint-report","msg":"shfmt: 0 errors, 0 warnings (13ms)"}
+{"ts":"2026-10-16T09:42:44.104Z","level":"INFO","component":"lint-report","msg":"Detected project types: shell","data":{"markers":{"shell":"*.sh"}}}
+{"ts":"2026-10-16T09:42:44.104Z","level":"INFO","component":"lint-report","msg":"Scope: 1 changed files (1 requested)"}
+{"ts":"2026-10-16T09:42:44.105Z","level":"INFO","component":"lint-report","msg":"Running 2 tools (tier: full)","data":{"tools":["shellcheck","shfmt"]}}
+{"ts":"2026-10-16T09:42:44.105Z","level":"STEP","component":"lint-report","msg":"Running: ShellCheck"}
+{"ts":"2026-10-16T09:42:44.130Z","level":"OK","component":"lint-report","msg":"ShellCheck: 0 errors, 0 warnings (25ms)"}
+{"ts":"2026-10-16T09:42:44.130Z","level":"STEP","component":"lint-report","msg":"Running: shfmt"}
+{"ts":"2026-10-16T09:42:44.145Z","level":"OK","component":"lint-report","msg":"shfmt: 0 errors, 0 warnings (15ms)"}
+{"ts":"2026-10-16T09:42:45.901Z","level":"INFO","component":"lint-report","msg":"Detected project types: shell","data":{"markers":{"shell":"*.sh"}}}
+{"ts":"2026-10-16T09:42:45.901Z","level":"INFO","component":"lint-report","msg":"Scope: 1 changed files (1 requested)"}
+{"ts":"2026-10-16T09:42:45.902Z","level":"INFO","component":"lint-report","msg":"Running 2 tools (tier: full)","data":{"tools":["shellcheck","shfmt"]}}
+{"ts":"2026-10-16T09:42:45.902Z","level":"STEP","component":"lint-report","msg":"Running: ShellCheck"}
+{"ts":"2026-10-16T09:42:45.919Z","level":"OK","component":"lint-report","msg":"ShellCheck: 0 errors, 2 warnings (17ms)"}
+{"ts":"2026-10-16T09:42:45.919Z","level":"STEP","component":"lint-report","msg":"Running: shfmt"}
+{"ts":"2026-10-16T09:42:45.931Z","level":"OK","component":"lint-report","msg":"shfmt: 0 errors, 0 warnings (12ms)"}
+{"ts":"2026-10-16T09:42:47.643Z","level":"INFO","component":"lint-report","msg":"Detected project types: shell","data":{"markers":{"shell":"*.sh"}}}
+{"ts":"2026-10-16T09:42:47.643Z","level":"INFO","component":"lint-report","msg":"Scope: 1 changed files (1 requested)"}
+{"ts":"2026-10-16T09:42:47.643Z","level":"INFO","component":"lint-report","msg":"Running 2 tools (tier: full)","data":{"tools":["shellcheck","shfmt"]}}
+{"ts":"2026-10-16T09:42:47.643Z","level":"STEP","component":"lint-report","msg":"Running: ShellCheck"}
+{"ts":"2026-10-16T09:42:47.658Z","level":"OK","component":"lint-report","msg":"ShellCheck: 0 errors, 0 warnings (15ms)"}
+{"ts":"2026-10-16T09:42:47.658Z","level":"STEP","component":"lint-report","msg":"Running: shfmt"}
+{"ts":"2026-10-16T09:42:47.668Z","level":"OK","component":"lint-report","msg":"shfmt: 0 errors, 0 warnings (10ms)"}
+{"ok":true,"plugin":"kubeclaw.lint","suite":"live-function","registrations":{"stage:pre-check":["pass","fail","crash"],"stage:full":["pass","fail","crash"],"adapter:executor":["pass","fail","crash"]}}

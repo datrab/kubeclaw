@@ -1,4 +1,5 @@
-import { readTestBundle, writeTestBundle } from '../../../tests/fixtures/config/swarm-bundle.mjs';
+import { fileURLToPath } from 'node:url';
+import { captureSwarmSettings, type PrismWorkerSettings } from '../../common/plugin-runtime/foundation/config/swarm.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -7,7 +8,6 @@ import path from 'node:path';
 import { once } from 'node:events';
 import { spawnSync } from 'node:child_process';
 import type { AddressInfo } from 'node:net';
-import { loadWorkerConfig } from '../server/worker-config.ts';
 import { createWorkerServer } from '../server/worker-service.ts';
 import { nativePrismCommand } from '../server/native-worker-execution.ts';
 import { nativePrismHostConfig, type nativePrismSupervisorConfig } from '../config/native-worker.ts';
@@ -15,10 +15,23 @@ import { nativePrismHostConfig, type nativePrismSupervisorConfig } from '../conf
 function settings(t: { after(fn: () => void): void }, maximumInputBytes: number) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'prism-input-limit-'));
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
-  const authored = readTestBundle(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url));
-  authored['prism-worker'].settings.ingress.maximumInputBytes = maximumInputBytes;
-  const file = path.join(root, 'swarm.config.json'); writeTestBundle(file, authored);
-  return loadWorkerConfig({ SWARM_CONFIG: file, WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://local/control' });
+  fs.cpSync(fileURLToPath(new URL('../../../config/', import.meta.url)), root, { recursive: true });
+  const authorFile = path.join(root, 'components/prism-worker.config.json');
+  const authored = JSON.parse(fs.readFileSync(authorFile, 'utf8'));
+  authored.profiles.standard.settings.ingress.maximumInputBytes = maximumInputBytes;
+  fs.writeFileSync(authorFile, JSON.stringify(authored));
+  const entryFile = path.join(root, 'pipeline.config.json');
+  const entry = JSON.parse(fs.readFileSync(entryFile, 'utf8'));
+  const instanceId = 'kubeclaw/prism/prism-worker';
+  const captured = captureSwarmSettings(entryFile, { role: 'prism', callerId: 'prism-worker', serviceInstanceId: instanceId,
+    bindings: entry.bindings.filter((binding: { instanceId: string }) => binding.instanceId === instanceId)
+      .map(({ role: _role, ...binding }: { role: string; owner: string; instanceId: string; profileId: string }) => binding) });
+  const ingress = captured.components['prism-worker']!.settings.ingress as unknown as PrismWorkerSettings;
+  const controlInternalUrl = new URL(captured.components['prism-control']!.settings.controlInternalUrl as string);
+  // Consumer/parser fixture only, not a verified boot capture or native authority.
+  return { native: { enginePolicy: captured.components['prism-execution']!.settings.enginePolicy as unknown as import('../../common/plugin-runtime/foundation/config/swarm.ts').PrismEngineSettings }, maximumArtifactAcknowledgmentBytes: captured.components['prism-control']!.settings.maximumArtifactAcknowledgmentBytes as number, ingress, shutdownTimeoutMs: ingress.shutdownTimeoutMs, controlInternalUrl,
+    spiffeEnabled: true, workerSecret: '', trustedControlSpiffeId: 'spiffe://local/control' };
+
 }
 
 for (const maximumInputBytes of [64, 128]) test(`CI03 original HTTP body boundary follows authored ${maximumInputBytes} bytes`, { timeout: 10000 }, async t => {

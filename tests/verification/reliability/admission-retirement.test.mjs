@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import {runPipelineV2} from '../../../skills/nova/core/execution/engine.ts';
 import {runRoot} from '../../../skills/nova/core/execution/run-root.ts';
 import {budgetFixture} from './repair-budget-fixture.mjs';
@@ -146,7 +147,7 @@ test('real confirmed import and admission retirement do not release the remainin
   const reopened = new FileDurableAttemptStore(f.scope.attemptRoot, limits);
   const replayed = await reopened.storeResult(f.runId, f.result, {record: f.record, closure: f.closure}, {planId: 'plan:1', nodeId: 'node:1'});
   assert.deepEqual(replayed.result, f.result);
-  const reconciler = new NovaObservabilityReconciler({attemptStore: reopened, admissionStore: f.admission, journalFile: imported.journalFile});
+  const reconciler = new NovaObservabilityReconciler({journalAppendLockTimeoutMs: TEST_CORE_POLICY.journalAppendLockTimeoutMs,attemptStore: reopened, admissionStore: f.admission, journalFile: imported.journalFile});
   assert.equal((await reconciler.reconcile([imported.desired]))[0].action, 'already-imported');
   assert.deepEqual(fs.readFileSync(imported.journalFile), journalBytes);
   assert.deepEqual(fs.readFileSync(sourceFile), sourceBytes);
@@ -218,7 +219,7 @@ test('Attempt-v2 releases actual result quota while every original result, Admis
   assert.equal((await f.admission.admit(canonicalJson(f.record))).acknowledgement.state,'duplicate');
   const afterView=await buildClawDeckObservationView({pipelineRunId:f.runId,requiredClosures:f.imported.desired.requiredClosures,admissionStore:f.admission,attemptStore:reopen});
   assert.deepEqual({...afterView,completeness:{...afterView.completeness,evaluatedAt:view.completeness.evaluatedAt}},view);
-  const replayed=new NovaObservabilityReconciler({attemptStore:reopen,admissionStore:f.admission,journalFile:f.imported.journalFile});
+  const replayed=new NovaObservabilityReconciler({journalAppendLockTimeoutMs: TEST_CORE_POLICY.journalAppendLockTimeoutMs,attemptStore:reopen,admissionStore:f.admission,journalFile:f.imported.journalFile});
   assert.equal((await replayed.reconcile([f.imported.desired]))[0].action,'already-imported');
   assert.deepEqual(fs.readFileSync(f.imported.journalFile),journal);
   await reopen.storeResult('run:next',resultFor(3));

@@ -1,0 +1,221 @@
+{
+  "inputs": [
+    {
+      "path": "/app/dist/agent-id-D1-Q6vR4.mjs",
+      "sha256": "0bfc668f6d2faddb17e5301d824375789f164041fbb0c6e2492dc5088545612d",
+      "endSha256": "0bfc668f6d2faddb17e5301d824375789f164041fbb0c6e2492dc5088545612d"
+    },
+    {
+      "path": "/app/dist/agent-via-gateway-B72P8dV8.mjs",
+      "sha256": "f946dcaa9e695f74801fa431eab6274f0d1c50ed84e46179fb567045502612ff",
+      "endSha256": "f946dcaa9e695f74801fa431eab6274f0d1c50ed84e46179fb567045502612ff"
+    },
+    {
+      "path": "/app/dist/number-coercion-Dq1l5muL.mjs",
+      "sha256": "8216506195f90a94dd6e4ea489ffbcafcfff0bf608867a0a4667d820c34191f3",
+      "endSha256": "8216506195f90a94dd6e4ea489ffbcafcfff0bf608867a0a4667d820c34191f3"
+    },
+    {
+      "path": "/app/dist/register.agent-turn-BI3P2wW6.mjs",
+      "sha256": "c19e4993adc80287d6ad7e4286fc6f2bedb7471554cd7e1eef30618b690dcdb1",
+      "endSha256": "c19e4993adc80287d6ad7e4286fc6f2bedb7471554cd7e1eef30618b690dcdb1"
+    },
+    {
+      "path": "/app/dist/string-coerce-6kR-86XC.mjs",
+      "sha256": "291f7bc4c89888444e4754689b4bda1694a10b977dda364f1038c415502d8f3b",
+      "endSha256": "291f7bc4c89888444e4754689b4bda1694a10b977dda364f1038c415502d8f3b"
+    },
+    {
+      "path": "/app/package.json",
+      "sha256": "09f313df5a3b93723c7f408bba1887e9978156bbcfd4fa0b3c3bccb61c4779c8",
+      "endSha256": "09f313df5a3b93723c7f408bba1887e9978156bbcfd4fa0b3c3bccb61c4779c8"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v2.schema.json",
+      "sha256": "26e936fbd954562547e7c0548085ae65ceb22394061d956532730a17ced42f7c",
+      "endSha256": "26e936fbd954562547e7c0548085ae65ceb22394061d956532730a17ced42f7c"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/contracts/pipeline-worker-core/v1/src/digest.ts",
+      "sha256": "10c61ec122ca6e65c7deef2c059a19ad70627cf65bdf1eb65f0ac2539457d780",
+      "endSha256": "10c61ec122ca6e65c7deef2c059a19ad70627cf65bdf1eb65f0ac2539457d780"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/contracts/pipeline-worker-core/v1/src/resource-types-v2.ts",
+      "sha256": "e75e058344978e1a94856c05caf03cfcff92ccb67e6fefe5c91249d4bc3e5fc8",
+      "endSha256": "e75e058344978e1a94856c05caf03cfcff92ccb67e6fefe5c91249d4bc3e5fc8"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/contracts/pipeline-worker-core/v1/src/resource-validation-v2.ts",
+      "sha256": "9c75271a9830c86faa484acaaa52e042d03a56c53b027d4aeae5f8531d06e54e",
+      "endSha256": "9c75271a9830c86faa484acaaa52e042d03a56c53b027d4aeae5f8531d06e54e"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-source-adjudication-01/README.md",
+      "sha256": "a47b72a80c8bf8f4c877ff583c7873fa4bfa85bcf20e28483bf573d9b5e689eb",
+      "endSha256": "a47b72a80c8bf8f4c877ff583c7873fa4bfa85bcf20e28483bf573d9b5e689eb"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-source-adjudication-01/manifest.json",
+      "sha256": "1a29786ce3b4ac53e18b3f8420f2b51f3e9e904f816f6df7692d7a3b284e8798",
+      "endSha256": "1a29786ce3b4ac53e18b3f8420f2b51f3e9e904f816f6df7692d7a3b284e8798"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-source-adjudication-01/original-bodies.json",
+      "sha256": "7d62d7c6818869f2c54328d479675a195ddc32e80b57cfa3fa37dc3c8e3b4d76",
+      "endSha256": "7d62d7c6818869f2c54328d479675a195ddc32e80b57cfa3fa37dc3c8e3b4d76"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-source-adjudication-01/source-identities.json",
+      "sha256": "3335718db0f4529a603e501fd3f22dc38745acc651d28836dc74745856337cc9",
+      "endSha256": "3335718db0f4529a603e501fd3f22dc38745acc651d28836dc74745856337cc9"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-01/README.md",
+      "sha256": "dcae60fb7244eb4981eaad9ffd5889c2afb9d2be648a8f0f3ee2faa65c9a7a0e",
+      "endSha256": "dcae60fb7244eb4981eaad9ffd5889c2afb9d2be648a8f0f3ee2faa65c9a7a0e"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/root-dependency-rejoin.json",
+      "sha256": "47dda0d831702bfd94751af788fefa14f3ec328d810a9a3b07a106d932f1d780",
+      "endSha256": "47dda0d831702bfd94751af788fefa14f3ec328d810a9a3b07a106d932f1d780"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/schemas/pipeline-entry.schema.json",
+      "sha256": "85f1aef770211378cd277afca9764af2db1e021cfeba489fa6fcd022f361047e",
+      "endSha256": "85f1aef770211378cd277afca9764af2db1e021cfeba489fa6fcd022f361047e"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/stand/config/pipeline.config.json",
+      "sha256": "0571c257b9bea46dcd4e43c40c60d34ad695921f193f1b3694a5a240b16604f4",
+      "endSha256": "0571c257b9bea46dcd4e43c40c60d34ad695921f193f1b3694a5a240b16604f4"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/control/agent-admission.ts",
+      "sha256": "e54b1502044c54a674dffe22895b1530fdf415e292a984569f90ecafe07f99b5",
+      "endSha256": "e54b1502044c54a674dffe22895b1530fdf415e292a984569f90ecafe07f99b5"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/control/agent-jobs.ts",
+      "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334",
+      "endSha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/agent-attempt.ts",
+      "sha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+      "endSha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/agent-bridge.mjs",
+      "sha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c",
+      "endSha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/agent-job-routes.ts",
+      "sha256": "cf4dcb8dcd817106028b018453871accf46eec1c996fa940cac3315790abaaa0",
+      "endSha256": "cf4dcb8dcd817106028b018453871accf46eec1c996fa940cac3315790abaaa0"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/agent-job-runner.mjs",
+      "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+      "endSha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/agent-process.ts",
+      "sha256": "1d3486c1ada0851150257a4ef197d62f523924e2c01da3e7a7c53ad06fb1102b",
+      "endSha256": "1d3486c1ada0851150257a4ef197d62f523924e2c01da3e7a7c53ad06fb1102b"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/agent-prompt.mjs",
+      "sha256": "3bcd6b4b2bb25d82c9ec767a03fd08ea1c17420eca3ce1742410359ed2d1aea9",
+      "endSha256": "3bcd6b4b2bb25d82c9ec767a03fd08ea1c17420eca3ce1742410359ed2d1aea9"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/agent-routes.ts",
+      "sha256": "55c4c77fc4ff7b981287c433c126d9754dffd3df1de464ec0d83bb0294caec17",
+      "endSha256": "55c4c77fc4ff7b981287c433c126d9754dffd3df1de464ec0d83bb0294caec17"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/agent-session.ts",
+      "sha256": "9369e1852f7698c04744a435a43dd92d3a5ba3746de3b4ad375b82b5bcb228d2",
+      "endSha256": "9369e1852f7698c04744a435a43dd92d3a5ba3746de3b4ad375b82b5bcb228d2"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/control-context.ts",
+      "sha256": "2444e6f0f22860aea6f109c984be4747a13421da2d33dd738ef7c29b71f04d02",
+      "endSha256": "2444e6f0f22860aea6f109c984be4747a13421da2d33dd738ef7c29b71f04d02"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/internal-artifacts.ts",
+      "sha256": "16750a5eecea51781dc67e271cfc331550f1a0a03460917133226cd9c975dab8",
+      "endSha256": "16750a5eecea51781dc67e271cfc331550f1a0a03460917133226cd9c975dab8"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/preference-prompt.mjs",
+      "sha256": "0a607949b4ae13bd5636cc02798e63bbcb8aae9f7b944f3bea9ea47a8f40e145",
+      "endSha256": "0a607949b4ae13bd5636cc02798e63bbcb8aae9f7b944f3bea9ea47a8f40e145"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/worker-artifacts.ts",
+      "sha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950",
+      "endSha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/storage/index.ts",
+      "sha256": "e5105909e5f1abf1eb2178270dd63d1b8e2aa337177dcb620b6ae43199a3a199",
+      "endSha256": "e5105909e5f1abf1eb2178270dd63d1b8e2aa337177dcb620b6ae43199a3a199"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/storage/migrations/014_agent_jobs.sql",
+      "sha256": "723f518c0a9fc8d80f5b0191c36834e061ab74871067ea77830262fc6fac450a",
+      "endSha256": "723f518c0a9fc8d80f5b0191c36834e061ab74871067ea77830262fc6fac450a"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/tests/agent-job-http.test.mts",
+      "sha256": "293dd48bee6175d1eb467694e0a473ab3e86fe09a08ca9862cb5e8cc8e6c26fd",
+      "endSha256": "293dd48bee6175d1eb467694e0a473ab3e86fe09a08ca9862cb5e8cc8e6c26fd"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/tests/agent-jobs.test.mts",
+      "sha256": "bb6ff7ce6f1df432e50f4d92bd563388b0037737b9e91d1d96dff3fe3b289110",
+      "endSha256": "bb6ff7ce6f1df432e50f4d92bd563388b0037737b9e91d1d96dff3fe3b289110"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/tests/agent-process.test.mts",
+      "sha256": "8eff8fba328604f2a00521afec7fad805d65f50d0f7c502a39eb412ba7aa523a",
+      "endSha256": "8eff8fba328604f2a00521afec7fad805d65f50d0f7c502a39eb412ba7aa523a"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/tests/agent-resource-contract.test.mts",
+      "sha256": "82008f914fd5c3a6e38da10514aa1fd3fc644a558ead6081d372578ab48f12ce",
+      "endSha256": "82008f914fd5c3a6e38da10514aa1fd3fc644a558ead6081d372578ab48f12ce"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/worker/core/src/index.ts",
+      "sha256": "d1fdfef010a187fbcba74044215741edc538bfb046bcb5e946406ce0de5d016a",
+      "endSha256": "d1fdfef010a187fbcba74044215741edc538bfb046bcb5e946406ce0de5d016a"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/worker/core/worker/attempt-executor.ts",
+      "sha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+      "endSha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/worker/core/worker/phase-deadline.ts",
+      "sha256": "13ead2817f0277f8bb7a45b09f42df228bc62e8a0d43e26eabbcbc4f2365e456",
+      "endSha256": "13ead2817f0277f8bb7a45b09f42df228bc62e8a0d43e26eabbcbc4f2365e456"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/worker/core/worker/resource-accounting.ts",
+      "sha256": "eaed91f776bfdbf1daac4faa7b2e56848b5f1b1f83d2737622048cd4426837ef",
+      "endSha256": "eaed91f776bfdbf1daac4faa7b2e56848b5f1b1f83d2737622048cd4426837ef"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/check-prism-postgres-transactions.mts",
+      "sha256": "85e8fab3340bffd4fe2693f75b8af0a5fe053d3662e018d78aace337aaa2e860",
+      "endSha256": "85e8fab3340bffd4fe2693f75b8af0a5fe053d3662e018d78aace337aaa2e860"
+    }
+  ],
+  "allEndPinsEqual": true,
+  "originalsPreserved": true
+}

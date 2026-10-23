@@ -1,0 +1,18 @@
+{
+  "findings": [
+    {
+      "title": "P2 Preserve mandatory log retention for both v2 providers",
+      "body": "The supplied RECEIVING-AND-ORACLES.md QB-R01 explicitly requires log retention eligibility on every outcome for both providers and says empty selections must reject. This validator instead accepts empty Coverage evidence for every outcome and Size pass/fail evidence containing only the baseline; the new schema permits the same declarations. Consequently a selected profile or task override can suppress genuine runner error logs for Coverage and genuine measurement logs for Size. Require `log` in all three declared and effective outcome sets, while retaining Size's additional baseline requirement. This does not require inventing evidence for quiet Coverage results.",
+      "priority": "P2",
+      "confidence": 0.97,
+      "category": "bug",
+      "code_location": {
+        "file_path": "contracts/pipeline-test-gate/v1/src/provider-policy.ts",
+        "line": 49
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "Source-only review of the supplied bundle; no tests were executed. The earlier processing-shape and Size error-evidence corrections are present, but mandatory log retention still differs from the supplied receiving contract.",
+  "overall_confidence": 0.94
+}

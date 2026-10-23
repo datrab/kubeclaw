@@ -1,0 +1,2 @@
+Command: python3 docs/review/evidence/config-acceptance/delivery/refine-kubernetes-boundaries.py
+Initial post-overlay-annotation patch: exit1 IndentationError unexpected indent at timezone row.update (line105). Evidence script only; production/tests unaffected. Corrected indentation; rerun follows in tool/source evidence. No semantic case PASS inferred from syntax.

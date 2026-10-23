@@ -1,0 +1,8 @@
+{
+  "extends": "../../../skills/buster/engine/tsconfig.json",
+  "include": [
+    "buster-historical-import.test.mts",
+    "buster-historical-identities.test.mts",
+    "../../fixtures/test-gate/historical-import-child.mts"
+  ]
+}

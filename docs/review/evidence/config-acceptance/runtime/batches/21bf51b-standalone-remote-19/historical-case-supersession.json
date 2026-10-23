@@ -1,0 +1,1078 @@
+{
+  "baseline": "21bf51bc2075abec1191fdc091952492b6cb484e",
+  "records": [
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-SCHEMAVERSION-MISSING",
+      "originalBodySHA256": "dd9d901c45dcc306acda6b0f4d0a5fe3ab07934fa91eedb368bf925413391b1c",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-SCHEMAVERSION-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-SCHEMAVERSION-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-SCHEMAVERSION-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-SCHEMAVERSION-ALT",
+      "originalBodySHA256": "a632ccd94eae2c26821ccbeb758cf81085a59400f8e4fd60e0bd2834c2e3808a",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-SCHEMAVERSION-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-SCHEMAVERSION-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-SCHEMAVERSION-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-SCHEMAVERSION-MUTANT",
+      "originalBodySHA256": "dd2530670bb62627ed02c69bc2237531f76ea2989380494818ff1b7e620bf06f",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-SCHEMAVERSION-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-SCHEMAVERSION-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-SCHEMAVERSION-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-ENDPOINT-MISSING",
+      "originalBodySHA256": "ef45028895f21affb6e28a1ae73e9261a682bafb07e98caf98e1ffa00608261d",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-ENDPOINT-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-ENDPOINT-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-ENDPOINT-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-ENDPOINT-ALT",
+      "originalBodySHA256": "cfae1f7a2e7c89b7e45344699158404947488004c60ec0f16d0c4ae24091f7cd",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-ENDPOINT-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-ENDPOINT-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-ENDPOINT-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-ENDPOINT-MUTANT",
+      "originalBodySHA256": "99f6f0f038bef31d775a5ea3c7974fd5726023ac62fa8052b186d1a2e8ef6cde",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-ENDPOINT-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-ENDPOINT-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-ENDPOINT-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-AUTHENTICATION-MISSING",
+      "originalBodySHA256": "12bd8fbec433040fbc9d5dbbe0ab9e246320409589c98e48754c12d83b14fe8a",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-AUTHENTICATION-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-AUTHENTICATION-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-AUTHENTICATION-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-AUTHENTICATION-ALT",
+      "originalBodySHA256": "1b502e7fcaf2dea1ade73fcbb18fbf08675bea24ded41feba0c8eb60deddba27",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-AUTHENTICATION-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-AUTHENTICATION-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-AUTHENTICATION-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-AUTHENTICATION-MUTANT",
+      "originalBodySHA256": "1f02ce1dce3db2354138bd7d4e55091882378ae6c0529b8be8882bd424690394",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-AUTHENTICATION-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-AUTHENTICATION-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-AUTHENTICATION-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-MISSING",
+      "originalBodySHA256": "1f79c7386bf202e98667d071d2a6a5279505e565bd790a81758a477b1c72f7f6",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-ALT",
+      "originalBodySHA256": "caf2730ccb232a96783e3531f0aee6e53fe67fe8960da32e76c6dfc12ee856e8",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-MUTANT",
+      "originalBodySHA256": "aa115ed39c256569f814f9a381d40f238e77c5a4995504cb0687957eb47207b4",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-MISSING",
+      "originalBodySHA256": "f49d0413f7a5d6d175f1ce9c68cfb443024b5fc967cf46dcf98dbd6f83f7b8d2",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-ALT",
+      "originalBodySHA256": "766d7a8f2b26eb4cd8559889589463436e645e3d239c88db6aaabb6d83e828b1",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-MUTANT",
+      "originalBodySHA256": "ff0fe3f1009c3d29d3a56fb7597d38ba82e046b0f7e602350d6af3bbeb08fb91",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-SOURCEAUTHORITY-MISSING",
+      "originalBodySHA256": "ffe68d2533074fef852b93b70dcbe073bea7c1eb8d302ceff903958e7677e35d",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-SOURCEAUTHORITY-ALT",
+      "originalBodySHA256": "94de833d9ba3e546083f8cb7d164284ebad154bb9bd1760155537abe82910249",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-SOURCEAUTHORITY-MUTANT",
+      "originalBodySHA256": "d9484c4fdba56d177e9d42bb1f5fb94374d48a7a7cfcbe78f6965f00c6f185a6",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-SOURCEAUTHORITY-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-STATEROOT-MISSING",
+      "originalBodySHA256": "feaffb7f5aee26c9a5c7b7f23e6ef9df2fd1f83bb838d727561e58c07c0f8959",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-STATEROOT-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-STATEROOT-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-STATEROOT-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-STATEROOT-ALT",
+      "originalBodySHA256": "ee48ce09c9b764f267526fdb3531fab31c436e9dc2dbb3c4e921b2590962efb9",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-STATEROOT-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-STATEROOT-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-STATEROOT-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-STATEROOT-MUTANT",
+      "originalBodySHA256": "2027f159ffc11f52c0acd7da33d6f55cf7c4285e5085fc863078aa79a5aaba1a",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-STATEROOT-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-STATEROOT-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-STATEROOT-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-POLLMILLISECONDS-MISSING",
+      "originalBodySHA256": "c6c8d23ceba1ed7718b483dde5b2cdb8403626a81d80135a8fc6a404887a15b7",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-POLLMILLISECONDS-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-POLLMILLISECONDS-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-POLLMILLISECONDS-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-POLLMILLISECONDS-ALT",
+      "originalBodySHA256": "502895c5f3630aadcbb50595441c02ad0a3aaa94fba4fbad078b32a23f357af6",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-POLLMILLISECONDS-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-POLLMILLISECONDS-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-POLLMILLISECONDS-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-POLLMILLISECONDS-MUTANT",
+      "originalBodySHA256": "a16268b5661bc8327d26ea6d58013048bd1052ef978f0abf6155cc49091371ee",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-POLLMILLISECONDS-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-POLLMILLISECONDS-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-POLLMILLISECONDS-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-MISSING",
+      "originalBodySHA256": "e02f073da29ba935c490cea7fdf1511b568fa461a7aac945481bd448155da956",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-ALT",
+      "originalBodySHA256": "fffa5db95bae99ded1bf54ca40742a3b67cab3c319d6db7d44badde27f6995cd",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-MUTANT",
+      "originalBodySHA256": "16d56c04c3c6d28f1b7a824edda4eec9ad4a587064bc5fcb1688714f0b13e879",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-MISSING",
+      "originalBodySHA256": "4ea3d5b045a29e0878dc44b147c3173b78d0b3fe2b85345d43cdda2c3ac2526b",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-ALT",
+      "originalBodySHA256": "90512ab335b6dfccf22f3ce287cff8aef3e5290cd5c5961cc5ccaafba8216594",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-MUTANT",
+      "originalBodySHA256": "ee61481924bccbc2e41a44a82376cdf91e94e317236a18d95944b0c22f9c0eb3",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-MISSING",
+      "originalBodySHA256": "fd93b67bf9a0910c1f67ae72a326981005ebb6b2a0b65e58d99101bc51a8f74c",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-ALT",
+      "originalBodySHA256": "2ef0a3c851d6684c7eaac09abc11a6ac10c81f13fdd02ca163a9a76ce8fd1cbc",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-MUTANT",
+      "originalBodySHA256": "a99acc7d64bff4dfb5012df55bf17f9f99f924c5f46c59049cf7075a561a8e66",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-MISSING",
+      "originalBodySHA256": "4f928ea9040885dd6e292441b491d3228e3419cf005ca75e1a520431a215b282",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-ALT",
+      "originalBodySHA256": "40321552984d3b4a89385cadfd37830fa6c927745bbe932040879d9306374c90",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-MUTANT",
+      "originalBodySHA256": "d0272729825f342cae44112e2959df771000e02eeb273b97e289d015bf36ea9f",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-MISSING",
+      "originalBodySHA256": "a98ea908460aca5cfb4d883abc722b10e52a368244e5ff9c124c02d00f784143",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-ALT",
+      "originalBodySHA256": "95c86974082ea22e4a336c82c9337b4df12c643da639e6e5c31214d935d3cac6",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-MUTANT",
+      "originalBodySHA256": "75c1d80873d8366eb8e99fb8be0c6bf4ec6c704916db3e6af381399a5ae07685",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-MISSING",
+      "originalBodySHA256": "aa0c4fe2303fb83985985ed5c640e4a91ddbc4361b5adb777b5e417dd63f0f5b",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-ALT",
+      "originalBodySHA256": "86fca9a80f3a4d19625c5286bf333084a88a3c2c84efdb1fd88465e181b37e0b",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-MUTANT",
+      "originalBodySHA256": "bbd0e9314afeb9324113a1783f3b8b5aee02497c54e4c60b3403fa90c03f3ab5",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-MISSING",
+      "originalBodySHA256": "ceb63941606fbe825353a515ea5bb6551c1b9e9c30bf9a2e563a69942df5f558",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-ALT",
+      "originalBodySHA256": "f518be4917e87b9f6f4ae6e0c3dde4cc1cb6584318d4f9767c65f5872e33b7f1",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-MUTANT",
+      "originalBodySHA256": "9148afc8f58e27be0aae30cb13e7eceab79a24f4668177a6ca5c29798c7b615f",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-MISSING",
+      "originalBodySHA256": "ae0ab5f7dcf4c05781c7427b84819fe78c4e3b08809ee7800304f9c59c2f9899",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-ALT",
+      "originalBodySHA256": "208c1964c352abc7caccaae78b8d3869357bb02f7de64a1ff103358bb9e327f6",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-MUTANT",
+      "originalBodySHA256": "0b1a9fb626a97a139f6bafd2a41ef760376dadb7b8310334821c375c5b75c360",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-MISSING",
+      "originalBodySHA256": "104603d9922501854d20dc43f3f6c5463adc7484cbc3b635f376ea178c3f81f7",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-ALT",
+      "originalBodySHA256": "15af6a7b947c306468708a63e4a5b70ea05afb2a4f07b0b0c64cb5513ec25d8d",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    },
+    {
+      "historicalCaseID": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-MUTANT",
+      "originalBodySHA256": "af2a78a75004492f3dff724c059940d9a9ce99e09db5e477405f167a26c8b854",
+      "originalRequirements": [
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-MUT"
+      ],
+      "originalResult": "not-run",
+      "activeSuccessorIDs": [
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-STANDALONE19-VAL",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-STANDALONE19-AB",
+        "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES-STANDALONE19-MUTANT"
+      ],
+      "source": {
+        "path": "skills/nova/core/test-gates/runtime-config.ts",
+        "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a"
+      },
+      "reason": "Original generic missing/alternate/mutant exactbody/result/requiredset retained immutable21bf baseline; concrete samefield fullprofile VAL+AB+MUTANT futureNOTRUN definitions cover everyoriginalrequirement, never narrow-current PASS replacement orcoverage/grants trimming."
+    }
+  ],
+  "originalBodiesUnchanged": true,
+  "scope": "51 genericcase bodies kept; sourceactual controls NOT successor acceptance, originalrequirements preserved in fullconcretefutureNOTRUN cases."
+}

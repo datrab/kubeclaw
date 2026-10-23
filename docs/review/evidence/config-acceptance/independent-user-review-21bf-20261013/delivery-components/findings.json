@@ -1,0 +1,53 @@
+{
+  "reviewer": "/root/review_delivery_21bf",
+  "baselineHead": "21bf51bc2075abec1191fdc091952492b6cb484e",
+  "scope": "delivery/components frozen dirty evidence, C0 bounded review only",
+  "findings": [
+    {
+      "id": "IR21BF-DC-001",
+      "severity": "P2",
+      "title": "Persisted member loss is accepted by both conservation validators",
+      "locations": [
+        {
+          "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/check-bindings.py",
+          "line": 12
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-02/check-bindings.py",
+          "line": 12
+        }
+      ],
+      "proof": "Both batch variables load the candidate artifact; expected members are looked up in that same batch. Remove the last first-record member and decrement memberCount in an isolated input before script startup: both validators exit 0 and report all ten controls passed. Batch01 loses CMP-worker-core-localRuntime.replayLimit from its upper-bound coordinate; batch02 loses another positiveTimerInteger member. Their in-memory negatives only distinguish clones from the already-loaded candidate.",
+      "raw": [
+        "validator-reruns.json",
+        "check-01-member-loss/removed-member.json",
+        "check-02-member-loss/removed-member.json"
+      ],
+      "fix": "Derive the required coordinate/member set independently from frozen canonical schema/template/semantic inputs, compare exact IDs including multiplicity, and add persisted-input deletion negatives. Do not use candidate JSON as its own expected baseline.",
+      "limit": "Current frozen artifacts have not actually lost members: independent ref-graph and ID conservation audits pass. This is a real validator false-positive, not evidence of production runtime weakening."
+    },
+    {
+      "id": "IR21BF-DC-002",
+      "severity": "P2",
+      "title": "A valid but unrelated A/B profile link is accepted",
+      "locations": [
+        {
+          "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/check-bindings.py",
+          "line": 17
+        },
+        {
+          "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-02/check-bindings.py",
+          "line": 15
+        }
+      ],
+      "proof": "Replace first-member completeABProfile/completeAB pointer with /CMP-C1-EFFECT-prism-studio-port in isolated inputs. Batch01 only tests non-null pointer resolution; batch02 does not inspect completeAB at all. Both scripts exit 0 and claim all controls passed although the member is worker-core drainTimeoutMs / prism-control dispatchTimeoutMs respectively.",
+      "raw": [
+        "wrong-profile-reruns.json",
+        "check-01-wrong-profile/source-coordinate-definitions.json",
+        "check-02-wrong-profile/schema-coordinate-definitions.json"
+      ],
+      "fix": "Require the expected EFFECT case/setting ID and exact profile record binding, verify selected field/config values and current profile identities, and reject cross-owner/cross-field existing profile references.",
+      "limit": "This demonstrates a traceability integrity gap; independently checked frozen batch02 links are currently correct, and no missing runtime behavior is inferred from these document checks."
+    }
+  ]
+}

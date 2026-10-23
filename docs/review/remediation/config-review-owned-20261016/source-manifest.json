@@ -1,0 +1,134 @@
+[
+  {
+    "path": ".dockerignore",
+    "sha256": "8c6e5a7e93a46b90c73cf4c4f63fd9adc1b6d24925d2bc6738356cb331bd88f6"
+  },
+  {
+    "path": "config/nova/core.config.json",
+    "sha256": "b5cd58d47b7adc10387884a53253f337fbdbf64c97060c886594b9830fb4cb5c"
+  },
+  {
+    "path": "config/plugins/kubeclaw.review/profiles/standard.config.json",
+    "sha256": "747efde572ae0f30c758e3066a673315d1bb2921d07bad040ce12b13aa1116f7"
+  },
+  {
+    "path": "docker/Dockerfile.buster-runtime",
+    "sha256": "c25294640e75faf07b25556e892c40e5d06748471c3c93fa9fa34bf898e07d88"
+  },
+  {
+    "path": "docker/Dockerfile.nova",
+    "sha256": "27bb1c49e80a4e1a8c496b77c56582b945dae188b2c4d41fe04d31c4ead03479"
+  },
+  {
+    "path": "scripts/build-runtime-role-bundle.mjs",
+    "sha256": "4b2827c18a547afc9dc4bb28f9ef64a1090517605ac776d09cca323d036a05cb"
+  },
+  {
+    "path": "scripts/sync-review-owned-policy-schema.mjs",
+    "sha256": "096b1dc2494cdd3a4a50e9a421955a843824c9454b54a4e3f12bf08f6f350481"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/core-runtime-policy.schema.json",
+    "sha256": "a358fdd2cf37070b4cc132520cb0922c949b1ce91b89a1656a3b81161ed400f5"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts",
+    "sha256": "02587365f2d35b24b7cfb9d3b80418055594c701218eca966903b0af8a655965"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/review-owned-policy.schema.json",
+    "sha256": "46fe4dd6e6e9f4a0518abc18db5b2b66b5af50dc5535a13ebf99d6b287216f32"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/review-owned-policy.ts",
+    "sha256": "76039aa6935c692cf7f0ac6f7748f7659fa70efc9d31442262be581c20786853"
+  },
+  {
+    "path": "skills/nova/core/execution/engine-run.ts",
+    "sha256": "d5bcd98983668b9aea884f5d0b419086e1826c401fbab93c3ebcf562a0dfda09"
+  },
+  {
+    "path": "skills/nova/core/execution/engine-runtime.ts",
+    "sha256": "ef92e1526f4178e86905aebde23bd7c9ce7b3a42fc0cbe019894a3f30f447e9a"
+  },
+  {
+    "path": "skills/nova/core/execution/engine.ts",
+    "sha256": "da7b081b60c05094472eeccbda2a6fe523e0a123b28786ced26f62173fd3b57f"
+  },
+  {
+    "path": "skills/nova/core/execution/runner.ts",
+    "sha256": "2e273a28fe10e63aaef61f837f29aee05c2ac1d3187c0f8dded937743c519b4c"
+  },
+  {
+    "path": "skills/nova/core/execution/stage-configuration.ts",
+    "sha256": "988f0d9b63b7b0f6f3386504bcfe2a09088e91c881b59391ebfe669fa868a838"
+  },
+  {
+    "path": "skills/nova/core/execution/stage-executor.ts",
+    "sha256": "4c60b8de8e1350249b24dd0c133a88b71933d6512ae3fa04ae2772fa461336c4"
+  },
+  {
+    "path": "skills/nova/plugins/review/schemas/config.schema.json",
+    "sha256": "142469d552d9aed8f155dda95a313efbd2577eee473419e5cb235e036a876be3"
+  },
+  {
+    "path": "skills/nova/plugins/review/schemas/owned-policy.schema.json",
+    "sha256": "46fe4dd6e6e9f4a0518abc18db5b2b66b5af50dc5535a13ebf99d6b287216f32"
+  },
+  {
+    "path": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+    "sha256": "c9743afb470c60e813f2233824dc94ed64f9d2b1dd2b7a356c3017080cae4b60"
+  },
+  {
+    "path": "skills/nova/plugins/review/scripts/generate-policy-schema.mjs",
+    "sha256": "6a0a1b193fb2bac415a996b6574a31efcd2d57e4c9b190ff9479d4cf09680daf"
+  },
+  {
+    "path": "skills/nova/plugins/review/src/legacy-review-policy-profiles.ts",
+    "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67"
+  },
+  {
+    "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+    "sha256": "83c42c8ad42a9e0d8617273de853704c5ce686414a304c7f8f79ca1d9c94e752"
+  },
+  {
+    "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+    "sha256": "c329fe874318e782fee0263b552cecfe51a2010aa110bfab555258ade4dca235"
+  },
+  {
+    "path": "skills/nova/plugins/review/src/review-policy-resolver.ts",
+    "sha256": "737c5380749c6847b4e529d393d5dc19d479da1e657cfee541e0c95430612e11"
+  },
+  {
+    "path": "skills/nova/plugins/review/src/stage.ts",
+    "sha256": "eaee317def6806994643021cf3c71e4b761d482b6eddb84aadb573c411606142"
+  },
+  {
+    "path": "skills/nova/plugins/review/tests/repository-audit-stage.unit.test.mjs",
+    "sha256": "3883e537fa3f175c7b38231745c6ea0a715aee6c494a691fa80d4d6365445649"
+  },
+  {
+    "path": "skills/nova/plugins/review/tests/stage.unit.test.mjs",
+    "sha256": "13679ee0cad2141f6d685696334cc2c00c4d4d09cc6565a49b28cd29c3f8803f"
+  },
+  {
+    "path": "tests/fixtures/core-runtime-policy.mjs",
+    "sha256": "5c9fea24c0162a4ce59051059d46849743b92c7046175dd69ea20304df841869"
+  },
+  {
+    "path": "tests/verification/contracts/check-project-compiler.mts",
+    "sha256": "3ba79203f577b3620c961a63bddcda863e1cacb1f96a8d1cc9e7ba964617de50"
+  },
+  {
+    "path": "tests/verification/reliability/nova-project-compiler-policy.test.mjs",
+    "sha256": "a2358e5ce9213295878ac2e5b34673bb5b15cde5aa6ecde9c4ffa35191cc7ef8"
+  },
+  {
+    "path": "tests/verification/reliability/nova-review-owned-policy.test.mjs",
+    "sha256": "c85f22a74e987d2abcb5688df8f0f79526cb6cabb98781a3c5130f02c846b0ef"
+  },
+  {
+    "path": "skills/nova/plugins/review/src/review-policy-contract.ts",
+    "sha256": "3dd3337e85c6e27f0b8ad1cf953448468bc67c22b927c4f09f7cdf008b6e70a2"
+  }
+]

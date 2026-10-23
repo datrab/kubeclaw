@@ -1,0 +1,71 @@
+{
+  "reviewer": "/root/ops_pagination_caller_recheck_28",
+  "conservation": {
+    "counts": [
+      33,
+      33,
+      33,
+      33
+    ],
+    "sameIdsAndOrder": true,
+    "all33OriginalBodiesPreserved": true,
+    "other24RowsIdentical": true,
+    "kubernetesRowCount": 9,
+    "changedFields": {
+      "SRC-1ea77d966fb2b3a8": [
+        "currentDomainAndPrecedence",
+        "productiveCallerRefs",
+        "currentPaginationCallerContracts"
+      ],
+      "SRC-833c7289b3e5cbd4": [
+        "currentDomainAndPrecedence",
+        "productiveCallerRefs",
+        "currentPaginationCallerContracts"
+      ],
+      "SRC-2d5d27664c70dd69": [
+        "currentDomainAndPrecedence",
+        "productiveCallerRefs",
+        "currentPaginationCallerContracts"
+      ],
+      "SRC-7184d91c2105fcc8": [
+        "currentDomainAndPrecedence",
+        "productiveCallerRefs",
+        "currentPaginationCallerContracts"
+      ],
+      "SRC-7ec867234095c231": [
+        "currentDomainAndPrecedence",
+        "productiveCallerRefs",
+        "currentPaginationCallerContracts"
+      ],
+      "SRC-d796606040b78d8e": [
+        "currentDomainAndPrecedence",
+        "productiveCallerRefs",
+        "currentPaginationCallerContracts"
+      ],
+      "SRC-5b183dad3f692afa": [
+        "currentDomainAndPrecedence",
+        "productiveCallerRefs",
+        "currentPaginationCallerContracts"
+      ],
+      "SRC-36ac31ec520644ff": [
+        "currentDomainAndPrecedence",
+        "productiveCallerRefs",
+        "currentPaginationCallerContracts"
+      ],
+      "SRC-214336925a85d221": [
+        "currentDomainAndPrecedence",
+        "productiveCallerRefs",
+        "currentPaginationCallerContracts"
+      ]
+    },
+    "originalRefsPreserved": true,
+    "requiredCallerLinesAll9": true,
+    "contractsAll9Identical": true
+  },
+  "exactSourcePinCount": 727,
+  "allSourcePinsMatched": true,
+  "allOriginalAndManifestPinsMatched": true,
+  "noApprovalPromotion": true,
+  "errors": [],
+  "runtimeResult": "not-run"
+}

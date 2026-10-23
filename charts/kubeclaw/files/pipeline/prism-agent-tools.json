@@ -1,0 +1,5 @@
+{
+  "namespace": "kubeclaw",
+  "releaseName": "agent-prism",
+  "controlUrl": "http://127.0.0.1:28080"
+}

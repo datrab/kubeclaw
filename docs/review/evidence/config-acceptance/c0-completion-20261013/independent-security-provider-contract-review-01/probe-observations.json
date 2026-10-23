@@ -1,0 +1,34 @@
+{
+  "qualification": "Specific read-only schema/current rule/native response-name and existing author finite-predicate probes only; no provider/native invoke/activation/network/API/credentials/browser/timer/Eval",
+  "node": "v24.21.0",
+  "observations": [
+    {
+      "check": "33-unique-headers",
+      "ownerSchemaAccepts": true,
+      "authorSemanticErrors": [],
+      "actualSourceRuleCount": 33,
+      "uniqueRequestedHeaders": 33,
+      "actualNativePureBoundary": "HTTP_RESPONSE_HEADERS_INVALID",
+      "providerOrNativeInvoked": false
+    },
+    {
+      "check": "denied-response-header",
+      "ownerSchemaAccepts": true,
+      "authorSemanticErrors": [],
+      "actualSourceRuleCount": 5,
+      "uniqueRequestedHeaders": 5,
+      "actualNativePureBoundary": "HTTP_RESPONSE_HEADERS_INVALID",
+      "providerOrNativeInvoked": false
+    },
+    {
+      "check": "split-security-package-service-context",
+      "rootSchemaAccepts": true,
+      "authorEntryErrors": [],
+      "securityServiceIds": [
+        "fixture.service.buster-runtime",
+        "fixture.service.buster-preparation"
+      ],
+      "productiveSelectionExecuted": false
+    }
+  ]
+}

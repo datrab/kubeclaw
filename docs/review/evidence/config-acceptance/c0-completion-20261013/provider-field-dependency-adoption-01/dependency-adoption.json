@@ -1,0 +1,2484 @@
+{
+  "qualification": "AUTHOR dependency adoption; fresh independent review required",
+  "baseMap": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+    "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0"
+  },
+  "baseReview": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-field-activation-partition-review-02/README.md",
+    "sha256": "e8d173851af20260486b5f0052cc387bb91a69212c7e8e127ac6d01e7a049c77"
+  },
+  "providerGeneration": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/artifact-identities.json",
+    "sha256": "21f14842c3fc5c5b7480e7b134a54d09d686816cdd52bb9b63afdc99e0fdaa7b"
+  },
+  "providerBoundedReview": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-runtime-provider-contract-review-03/README.md",
+    "sha256": "bee4775dd4e065c7f7f623c8b5a4d20b7183f2d2ad01c57ca0447fac9c87dd55"
+  },
+  "adoptedProcessing": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-processing-adjudication.json",
+    "sha256": "6f4b3749bf5c24ab3183af4673fe3d5457bd94a5575cdb44936cb13944bf0727",
+    "jsonPointer": "/members"
+  },
+  "adoptedC3Generation": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/c3-integrated-reference-generation.json",
+    "sha256": "f8d9d08f60acfaf884c183b560398f018b5463b52a984214a4bbaa4d75dc993f"
+  },
+  "contextFields": [
+    {
+      "id": "RT-10f3f03208806c98",
+      "priorFieldMap": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/347"
+      },
+      "proposedScopeUnchanged": {
+        "contract": "task-input",
+        "classes": [
+          "T"
+        ],
+        "bindingPatternId": "PAT-467c3187961f70d6",
+        "decisionBasis": "Preserve exact original task authority/consumer reason; container/credential/codec submembers retain required generated/secret/V dependency and never become global intent writer.",
+        "fieldConsumerEvidence": "task repository-relative OpenAPI document; current realpath/file containment and supported3.0/3.1 version; spec/request schemas external task data, not CONFIG author",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "currentVerifiedProviderField": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/27"
+      },
+      "meaning": "Original file/operations task intent remains T; processing policies have separate artifact-coordinate identities, not aliases"
+    },
+    {
+      "id": "RT-351419f2c26e2696",
+      "priorFieldMap": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/222"
+      },
+      "proposedScopeUnchanged": {
+        "contract": "task-input",
+        "classes": [
+          "T"
+        ],
+        "bindingPatternId": "PAT-5f5efffcaedc4f16",
+        "decisionBasis": "Preserve exact original task authority/consumer reason; container/credential/codec submembers retain required generated/secret/V dependency and never become global intent writer.",
+        "fieldConsumerEvidence": "task exact repositoryrelative flow source realpath/filesafety+1MiB bound, allflowkeys/schemaVersion and every setup/main/cleanup step validatedbeforeeffects. Task flow intent notCONFIG author; nested perstep timeouts/headers/expectations need exact supplemental dispositions.",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "currentVerifiedProviderField": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/0"
+      },
+      "meaning": "Original file/operations task intent remains T; processing policies have separate artifact-coordinate identities, not aliases"
+    },
+    {
+      "id": "RT-396eb59b11141a9a",
+      "priorFieldMap": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/350"
+      },
+      "proposedScopeUnchanged": {
+        "contract": "task-input",
+        "classes": [
+          "T"
+        ],
+        "bindingPatternId": "PAT-b50470c76cc35435",
+        "decisionBasis": "Preserve exact original task authority/consumer reason; container/credential/codec submembers retain required generated/secret/V dependency and never become global intent writer.",
+        "fieldConsumerEvidence": "task operation selections explicit first, tags add non-explicit IDs, stable cleanup-last sort; declared spec and requests checked, no automatic destructive API permission",
+        "eligibility": "Explicit full selected generation and actual supported role/profile/grants; M/J only genuinely unstarted units within immutable S/H/R; started A/retries/recovery/cleanup remain A."
+      },
+      "currentVerifiedProviderField": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/30"
+      },
+      "meaning": "Original file/operations task intent remains T; processing policies have separate artifact-coordinate identities, not aliases"
+    }
+  ],
+  "scope": "Supersedes prior01 runtimeProviderActiveRef and provider fieldConsumerEvidence for all67 original provider fields with independently checked03 field/schema/case/ABI refs. Scope classes and original bodies/history remain unchanged. Adopts eight source-processing fields separately, three original file/operation contexts remain T. Does not close remaining map/U exceptions or whole C0.",
+  "activeProviderFieldAdoptions": [
+    {
+      "id": "RT-351419f2c26e2696",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/222"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-351419f2c26e2696",
+        "rowSha256": "1c8ae4caf869d134b1cedea48f24b4f3c9ad3a19cefff5d09ffba0058ac0191e"
+      },
+      "historicalFieldConsumerEvidence": "task exact repositoryrelative flow source realpath/filesafety+1MiB bound, allflowkeys/schemaVersion and every setup/main/cleanup step validatedbeforeeffects. Task flow intent notCONFIG author; nested perstep timeouts/headers/expectations need exact supplemental dispositions.",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/0"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-ecc6714a5d1b8270",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/223"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-ecc6714a5d1b8270",
+        "rowSha256": "ac6097236ab88f67b1b9ea5aa08d451025741582bdf5bd922499d1faf646057f"
+      },
+      "historicalFieldConsumerEvidence": "task base endpoint; direct config coercedString andnewURL later, weaker than strictHTTPprovider; taskURL+fixture ambiguous, actualnative origin/ports deny incompatiblevalues. Target explicitcanonical validationbeforefirsteffect.",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/1"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-98800e708ba4ebcc",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/224"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-98800e708ba4ebcc",
+        "rowSha256": "f0e87a2e7af026e89e8b89b6862f4c3d9dc9c559efdbb2abb8dc0f6c75fa048f"
+      },
+      "historicalFieldConsumerEvidence": "task deployment selector exactlyone default, explicitfind; acceptedignored with explicitURL/publicendpoint; proposed unusedreject evenequal beforeeffects.",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/2"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-b8eb5e344f496d7c",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/225"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-b8eb5e344f496d7c",
+        "rowSha256": "22b1b37dc95c65f0e6cb10c1d542420256899bd31827e2d9fe09866cb1a29d63"
+      },
+      "historicalFieldConsumerEvidence": "owned request milliseconds default10000 unless step.timeoutMs overrides! Each min(step orconfigfallback,invocation.timeoutMs); invalidconfig masked by validperstep override. Proposed one owned request policy rejects retired step.timeoutMs evenequal, task-specific deadline must not silentlybecomesecondpolicy author.",
+      "scopeClassesUnchanged": [
+        "M",
+        "J"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/3"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-98a5849759145124",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/226"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-98a5849759145124",
+        "rowSha256": "54aff54a6fbd2af7ead66bfbb0d8a5605b37623c223d5ce9c1983ab52fd61685"
+      },
+      "historicalFieldConsumerEvidence": "owned perrequest responsebytes1..16777216 default1048576; actualruntime cap enforcement beforeeffect, provider invalidquota maybe recordedfailed rather thanthrown ifbeforeinvoke. Wholebudget/spentbytes notsameparameter.",
+      "scopeClassesUnchanged": [
+        "M",
+        "J"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/4"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-6e292c3c6f492f07",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/227"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-6e292c3c6f492f07",
+        "rowSha256": "dfef7f4a40c74723587b887bb8a07da1dd3ad3e0d0506aa59b0a3519419ce523"
+      },
+      "historicalFieldConsumerEvidence": "owned totaldeclared setup+main+cleanup stepcount1..256 default64; allvalidated beforeeffect, >=1 allowedbut zeroexecuted main emitscoveragefailure. Smallerquota rejectswholeflow, nevertrimssteps/cleanup/evidence. Cleanup stillattempted afterfirsttransportfailure thenoriginalerror rethrows.",
+      "scopeClassesUnchanged": [
+        "M",
+        "J"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/5"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-PROVIDER-EVIDENCE-KUBECLAW-API-FLOW-FLOW-EVIDENCEDEFAULTS-ONPASS",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/1320"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-PROVIDER-EVIDENCE-KUBECLAW-API-FLOW-FLOW-EVIDENCEDEFAULTS-ONPASS",
+        "rowSha256": "6312bffec3a333ba8eb8fdda589ba7007172ee41ccf44748ac871de55d6c403a"
+      },
+      "historicalFieldConsumerEvidence": "resolveTestPlan exported API has no demonstrated in-repo production plan-author caller; accepted remote resolved-plan reader -> actual runner uses resolved evidence/capabilities/plan binding. Do not invent resolver service caller or configgeneration source. Registry package manifest author \u2260 independently tunable runtime matrix/retry capability safety. Evidence policy sole existing per-provider registration/instance profile selected by pipeline.config.json; exact supported types and baseline mandatory source/effects/reports/outputs/log requirements govern it. Retire package registration evidenceDefaults as independent operational fallback/competing node policy, preserve capability evidenceTypes/report contracts/code+package source identity. retrySafe/matrixFields remain versioned implemented package capability declarations, not operational toggles that invent idempotence/matrix compatibility.",
+      "scopeClassesUnchanged": [
+        "M",
+        "J"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/6"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-PROVIDER-EVIDENCE-KUBECLAW-API-FLOW-FLOW-EVIDENCEDEFAULTS-ONFAIL",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/1321"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-PROVIDER-EVIDENCE-KUBECLAW-API-FLOW-FLOW-EVIDENCEDEFAULTS-ONFAIL",
+        "rowSha256": "a1e03cf4eb46fd54cba0b9101074790cdb2397402dbc43594d84e61bbe375efc"
+      },
+      "historicalFieldConsumerEvidence": "resolveTestPlan exported API has no demonstrated in-repo production plan-author caller; accepted remote resolved-plan reader -> actual runner uses resolved evidence/capabilities/plan binding. Do not invent resolver service caller or configgeneration source. Registry package manifest author \u2260 independently tunable runtime matrix/retry capability safety. Evidence policy sole existing per-provider registration/instance profile selected by pipeline.config.json; exact supported types and baseline mandatory source/effects/reports/outputs/log requirements govern it. Retire package registration evidenceDefaults as independent operational fallback/competing node policy, preserve capability evidenceTypes/report contracts/code+package source identity. retrySafe/matrixFields remain versioned implemented package capability declarations, not operational toggles that invent idempotence/matrix compatibility.",
+      "scopeClassesUnchanged": [
+        "M",
+        "J"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/7"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-PROVIDER-EVIDENCE-KUBECLAW-API-FLOW-FLOW-EVIDENCEDEFAULTS-ONERROR",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/1322"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-PROVIDER-EVIDENCE-KUBECLAW-API-FLOW-FLOW-EVIDENCEDEFAULTS-ONERROR",
+        "rowSha256": "7890410d5c91cfe6cb6ce31521470e335135fd69da43053b9768317b2852f07e"
+      },
+      "historicalFieldConsumerEvidence": "resolveTestPlan exported API has no demonstrated in-repo production plan-author caller; accepted remote resolved-plan reader -> actual runner uses resolved evidence/capabilities/plan binding. Do not invent resolver service caller or configgeneration source. Registry package manifest author \u2260 independently tunable runtime matrix/retry capability safety. Evidence policy sole existing per-provider registration/instance profile selected by pipeline.config.json; exact supported types and baseline mandatory source/effects/reports/outputs/log requirements govern it. Retire package registration evidenceDefaults as independent operational fallback/competing node policy, preserve capability evidenceTypes/report contracts/code+package source identity. retrySafe/matrixFields remain versioned implemented package capability declarations, not operational toggles that invent idempotence/matrix compatibility.",
+      "scopeClassesUnchanged": [
+        "M",
+        "J"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/8"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-PROVIDER-CONTRACT-KUBECLAW-API-FLOW-FLOW-RETRYSAFE",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/1323"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-PROVIDER-CONTRACT-KUBECLAW-API-FLOW-FLOW-RETRYSAFE",
+        "rowSha256": "061e557e8bbbc0bd348fa787474b7ca6c76b84d7b569211e5d74c59a22be5b70"
+      },
+      "historicalFieldConsumerEvidence": "resolveTestPlan exported API has no demonstrated in-repo production plan-author caller; accepted remote resolved-plan reader -> actual runner uses resolved evidence/capabilities/plan binding. Do not invent resolver service caller or configgeneration source. Registry package manifest author \u2260 independently tunable runtime matrix/retry capability safety. Evidence policy sole existing per-provider registration/instance profile selected by pipeline.config.json; exact supported types and baseline mandatory source/effects/reports/outputs/log requirements govern it. Retire package registration evidenceDefaults as independent operational fallback/competing node policy, preserve capability evidenceTypes/report contracts/code+package source identity. retrySafe/matrixFields remain versioned implemented package capability declarations, not operational toggles that invent idempotence/matrix compatibility.",
+      "scopeClassesUnchanged": [
+        "V"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/9"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-PROVIDER-CONTRACT-KUBECLAW-API-FLOW-FLOW-MATRIXFIELDS",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/1324"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-PROVIDER-CONTRACT-KUBECLAW-API-FLOW-FLOW-MATRIXFIELDS",
+        "rowSha256": "ac15ccc8d31f2e041c1fccedf406a6ca7cd520ce34c528ba87cf5622432bbed3"
+      },
+      "historicalFieldConsumerEvidence": "resolveTestPlan exported API has no demonstrated in-repo production plan-author caller; accepted remote resolved-plan reader -> actual runner uses resolved evidence/capabilities/plan binding. Do not invent resolver service caller or configgeneration source. Registry package manifest author \u2260 independently tunable runtime matrix/retry capability safety. Evidence policy sole existing per-provider registration/instance profile selected by pipeline.config.json; exact supported types and baseline mandatory source/effects/reports/outputs/log requirements govern it. Retire package registration evidenceDefaults as independent operational fallback/competing node policy, preserve capability evidenceTypes/report contracts/code+package source identity. retrySafe/matrixFields remain versioned implemented package capability declarations, not operational toggles that invent idempotence/matrix compatibility.",
+      "scopeClassesUnchanged": [
+        "V"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/10"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-2089ad1c8390909b",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/300"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-2089ad1c8390909b",
+        "rowSha256": "846c649346424f8375a93c011daa1cd01612cf6a6722818bc66d00e4c7d6c8e3"
+      },
+      "historicalFieldConsumerEvidence": "explicit canonical HTTP(S) root origin, no query/hash/userinfo; explicit+deployment ambiguous; canonical origin/ports additionally require actual captured runtime/grant. Task target, not model/CONFIG selector.",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/11"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-e821665e0a2aedb9",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/301"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-e821665e0a2aedb9",
+        "rowSha256": "461620feb0538a6fffd6805dea0f3126f62fc783fcae8aef2f41f59057947585"
+      },
+      "historicalFieldConsumerEvidence": "task deployment endpoint selector, exactlyone omitted default; ambiguous multiple requires explicit selection; selector with explicitURL or without deployment rejects.",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/12"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-c66db038b75b910a",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/302"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-c66db038b75b910a",
+        "rowSha256": "0368082b073691b4f5b38fbb0e6f28dd77ae976f0b813e4a88b7b25e6e357a20"
+      },
+      "historicalFieldConsumerEvidence": "task route null/absent fixture defaultPath or /, max2048 chars no // CRLF #; query allowed; canonical actual HTTP runtime origin remains enforced.",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/13"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-a6feb259112b5574",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/303"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-a6feb259112b5574",
+        "rowSha256": "ed3b5708b9776c55c1389d33e6962c0799161ac831cd3a9b5fc6933eb9af2c9b"
+      },
+      "historicalFieldConsumerEvidence": "task test operation GET/HEAD; absent/null GET sourcefallback; HEAD+expectedText rejects. Runtime allowedMethods captured separately.",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/14"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-d9e562dd50c1f9b3",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/304"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-d9e562dd50c1f9b3",
+        "rowSha256": "aec599033fcb4b121746a59d8d7f7f033c97e210f64883b028d0ef7825816508"
+      },
+      "historicalFieldConsumerEvidence": "task requested representation explicitheader, absent/null */*; <=512 nonempty/no CRLF; actual runtime allowedheader gate distinct.",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/15"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-fcc77b9c29ab0230",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/305"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-fcc77b9c29ab0230",
+        "rowSha256": "ba08aeec1e4b721eac4bf1ead4b750e52a307b810a4b2c92970ae11acaae0683"
+      },
+      "historicalFieldConsumerEvidence": "task expected response contract explicitunique1..32 statuses100..599; absent/null CURRENT any2xx predicate. No test intent second CONFIG writer; targetexplicit expectation required to remove implicit business successpredicate.",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/16"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-259ec75a40f57a0b",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/306"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-259ec75a40f57a0b",
+        "rowSha256": "163e2718a395b817dcfd83f43f8d68a5ed1c72912e86a679c01b9b724a57b0f7"
+      },
+      "historicalFieldConsumerEvidence": "task expected response contract explicitunique1..32 statuses100..599; absent/null CURRENT any2xx predicate. No test intent second CONFIG writer; targetexplicit expectation required to remove implicit business successpredicate.",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/17"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-c7fdaab3e3e6c833",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/307"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-c7fdaab3e3e6c833",
+        "rowSha256": "d5032eeb23c0ecdee9c3ed03303d1caf667d4d3d9c3a01e8b311a115ff616429"
+      },
+      "historicalFieldConsumerEvidence": "task substring assertion1..4096 chars, absence/null disables; forbidden HEAD. Retain rawresponse and evidence even failed; no configurable fallbackfinding deletion.",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/18"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-b2f5e06d53448731",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/308"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-b2f5e06d53448731",
+        "rowSha256": "bb8f416f6f1e76775ffb95db7c0cb07736425b266581da860b3d71295957dbb0"
+      },
+      "historicalFieldConsumerEvidence": "task exact media type token, absence/null disables; native runtime stripsparameters/lowercases. Exact comparisons to normalized header, not rawserverformat.",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/19"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-6b6f0761a77de324",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/309"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-6b6f0761a77de324",
+        "rowSha256": "885bc3500eb931eae5338a6ee0b546106cad05ca21cece4b6375bb0933f8114d"
+      },
+      "historicalFieldConsumerEvidence": "owned processing quota bytes1..16777216 default1048576 current; forwarded without clamping to runtime configuredmaximum; actualruntime rejects requestedquota above capturedcap beforeHTTP. Not artifactbyte quota inferred.",
+      "scopeClassesUnchanged": [
+        "M",
+        "J"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/20"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-6a3cdfc223a3c24b",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/310"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-6a3cdfc223a3c24b",
+        "rowSha256": "b7cd9d4abe016d0235f9d19702a968f51a5cf14c73958b98465a63f510c79d72"
+      },
+      "historicalFieldConsumerEvidence": "owned request milliseconds1..300000 default10000 current; each request min(requested,invocation.timeoutMs); current native maxexec validates bounded requests; overall absolute deadline/cancellation distinct.",
+      "scopeClassesUnchanged": [
+        "M",
+        "J"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/21"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-PROVIDER-EVIDENCE-KUBECLAW-HTTP-REQUEST-EVIDENCEDEFAULTS-ONPASS",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/1350"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-PROVIDER-EVIDENCE-KUBECLAW-HTTP-REQUEST-EVIDENCEDEFAULTS-ONPASS",
+        "rowSha256": "91d36c4cf90a0f2bb7b023bb513d07bb53c501236a37e08bd731d3df7b6f92db"
+      },
+      "historicalFieldConsumerEvidence": "resolveTestPlan exported API has no demonstrated in-repo production plan-author caller; accepted remote resolved-plan reader -> actual runner uses resolved evidence/capabilities/plan binding. Do not invent resolver service caller or configgeneration source. Registry package manifest author \u2260 independently tunable runtime matrix/retry capability safety. Evidence policy sole existing per-provider registration/instance profile selected by pipeline.config.json; exact supported types and baseline mandatory source/effects/reports/outputs/log requirements govern it. Retire package registration evidenceDefaults as independent operational fallback/competing node policy, preserve capability evidenceTypes/report contracts/code+package source identity. retrySafe/matrixFields remain versioned implemented package capability declarations, not operational toggles that invent idempotence/matrix compatibility.",
+      "scopeClassesUnchanged": [
+        "M",
+        "J"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/22"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-PROVIDER-EVIDENCE-KUBECLAW-HTTP-REQUEST-EVIDENCEDEFAULTS-ONFAIL",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/1351"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-PROVIDER-EVIDENCE-KUBECLAW-HTTP-REQUEST-EVIDENCEDEFAULTS-ONFAIL",
+        "rowSha256": "6fd410257ba299e76ff7c23e3c6a1a0a4f76749d25b502095691f2ea00dd6309"
+      },
+      "historicalFieldConsumerEvidence": "resolveTestPlan exported API has no demonstrated in-repo production plan-author caller; accepted remote resolved-plan reader -> actual runner uses resolved evidence/capabilities/plan binding. Do not invent resolver service caller or configgeneration source. Registry package manifest author \u2260 independently tunable runtime matrix/retry capability safety. Evidence policy sole existing per-provider registration/instance profile selected by pipeline.config.json; exact supported types and baseline mandatory source/effects/reports/outputs/log requirements govern it. Retire package registration evidenceDefaults as independent operational fallback/competing node policy, preserve capability evidenceTypes/report contracts/code+package source identity. retrySafe/matrixFields remain versioned implemented package capability declarations, not operational toggles that invent idempotence/matrix compatibility.",
+      "scopeClassesUnchanged": [
+        "M",
+        "J"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/23"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-PROVIDER-EVIDENCE-KUBECLAW-HTTP-REQUEST-EVIDENCEDEFAULTS-ONERROR",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/1352"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-PROVIDER-EVIDENCE-KUBECLAW-HTTP-REQUEST-EVIDENCEDEFAULTS-ONERROR",
+        "rowSha256": "75b571792be3e41f2cf29980893fdce91fe8d00a9968b3ed1f9c57453c590fec"
+      },
+      "historicalFieldConsumerEvidence": "resolveTestPlan exported API has no demonstrated in-repo production plan-author caller; accepted remote resolved-plan reader -> actual runner uses resolved evidence/capabilities/plan binding. Do not invent resolver service caller or configgeneration source. Registry package manifest author \u2260 independently tunable runtime matrix/retry capability safety. Evidence policy sole existing per-provider registration/instance profile selected by pipeline.config.json; exact supported types and baseline mandatory source/effects/reports/outputs/log requirements govern it. Retire package registration evidenceDefaults as independent operational fallback/competing node policy, preserve capability evidenceTypes/report contracts/code+package source identity. retrySafe/matrixFields remain versioned implemented package capability declarations, not operational toggles that invent idempotence/matrix compatibility.",
+      "scopeClassesUnchanged": [
+        "M",
+        "J"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/24"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-PROVIDER-CONTRACT-KUBECLAW-HTTP-REQUEST-RETRYSAFE",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/1353"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-PROVIDER-CONTRACT-KUBECLAW-HTTP-REQUEST-RETRYSAFE",
+        "rowSha256": "4d1a76614b968b913f044865abe15dcd92782baa723440b3ac2ea626762af917"
+      },
+      "historicalFieldConsumerEvidence": "resolveTestPlan exported API has no demonstrated in-repo production plan-author caller; accepted remote resolved-plan reader -> actual runner uses resolved evidence/capabilities/plan binding. Do not invent resolver service caller or configgeneration source. Registry package manifest author \u2260 independently tunable runtime matrix/retry capability safety. Evidence policy sole existing per-provider registration/instance profile selected by pipeline.config.json; exact supported types and baseline mandatory source/effects/reports/outputs/log requirements govern it. Retire package registration evidenceDefaults as independent operational fallback/competing node policy, preserve capability evidenceTypes/report contracts/code+package source identity. retrySafe/matrixFields remain versioned implemented package capability declarations, not operational toggles that invent idempotence/matrix compatibility.",
+      "scopeClassesUnchanged": [
+        "V"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/25"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-PROVIDER-CONTRACT-KUBECLAW-HTTP-REQUEST-MATRIXFIELDS",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/1354"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-PROVIDER-CONTRACT-KUBECLAW-HTTP-REQUEST-MATRIXFIELDS",
+        "rowSha256": "bf8bb524963d85a112f5b5650a0e7b25c1312d4321ca7609a00c410352ee6b42"
+      },
+      "historicalFieldConsumerEvidence": "resolveTestPlan exported API has no demonstrated in-repo production plan-author caller; accepted remote resolved-plan reader -> actual runner uses resolved evidence/capabilities/plan binding. Do not invent resolver service caller or configgeneration source. Registry package manifest author \u2260 independently tunable runtime matrix/retry capability safety. Evidence policy sole existing per-provider registration/instance profile selected by pipeline.config.json; exact supported types and baseline mandatory source/effects/reports/outputs/log requirements govern it. Retire package registration evidenceDefaults as independent operational fallback/competing node policy, preserve capability evidenceTypes/report contracts/code+package source identity. retrySafe/matrixFields remain versioned implemented package capability declarations, not operational toggles that invent idempotence/matrix compatibility.",
+      "scopeClassesUnchanged": [
+        "V"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/26"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-10f3f03208806c98",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/347"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-10f3f03208806c98",
+        "rowSha256": "2fc821ae9cb234f467df596597234ff8867bbb61c081f817aff2cd8ded0c8772"
+      },
+      "historicalFieldConsumerEvidence": "task repository-relative OpenAPI document; current realpath/file containment and supported3.0/3.1 version; spec/request schemas external task data, not CONFIG author",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/27"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-1609b6ce9dfde15b",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/348"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-1609b6ce9dfde15b",
+        "rowSha256": "c0fc5310e8779b9c6a1a5266331ac2dae3ef532a359982251e1ccb135cc7f0ee"
+      },
+      "historicalFieldConsumerEvidence": "task target URL vs exactly one endpoint/deployment fixture; explicit URL plus any input ambiguous; runtime grant/origin validates actual egress",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/28"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-d2dfede67afe22ac",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/349"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-d2dfede67afe22ac",
+        "rowSha256": "1fb9db4a29bc3e86b2da89638e6a1debd4ac6f773d87c1e8200ae0230f94fd6a"
+      },
+      "historicalFieldConsumerEvidence": "task deployment endpoint selection; active only deployment fixture; accepted but dormant with explicit url or public endpoint fixture",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/29"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-396eb59b11141a9a",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/350"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-396eb59b11141a9a",
+        "rowSha256": "93eb82a723bcb8fa9472ea668ab5043a77b653b184a8b63a0dc8da532c287f5b"
+      },
+      "historicalFieldConsumerEvidence": "task operation selections explicit first, tags add non-explicit IDs, stable cleanup-last sort; declared spec and requests checked, no automatic destructive API permission",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/30"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-1d1c5da45ebf7a59",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/351"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-1d1c5da45ebf7a59",
+        "rowSha256": "7ba119c225fe7d1ffb8c60e858c188a663b1405c77b52114b35101ef20e1ad5c"
+      },
+      "historicalFieldConsumerEvidence": "task operation selections explicit first, tags add non-explicit IDs, stable cleanup-last sort; declared spec and requests checked, no automatic destructive API permission",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/31"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-039cd17e18207028",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/352"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-039cd17e18207028",
+        "rowSha256": "54d8321d6ca6bef2521a27f61a83db3c106f36d02df2dbc31f3bcae69b78bd5d"
+      },
+      "historicalFieldConsumerEvidence": "task operation identity; selects real spec route/method; duplicate spec operation IDs rejected; config duplicate IDs not deduplicated",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/32"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-4ad5dd8a7cfccc1c",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/353"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-4ad5dd8a7cfccc1c",
+        "rowSha256": "ba8fba8a9efda442d92263cc1e2fad5e17283c40ec461a06f19827fdd310b6b8"
+      },
+      "historicalFieldConsumerEvidence": "task scalar path data validated against spec; URI-encoded String replacement, unresolved placeholders reject",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/33"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-496f09de742b998e",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/354"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-496f09de742b998e",
+        "rowSha256": "9c3505d805c768f3e0db9c59a9104fda19212c0d19d4f7ec4c82e1f6fcf3955e"
+      },
+      "historicalFieldConsumerEvidence": "task scalar path data validated against spec; URI-encoded String replacement, unresolved placeholders reject",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/34"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-d077dd499ce84e1c",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/355"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-d077dd499ce84e1c",
+        "rowSha256": "5c5fcf4562914d8eccc8da072da9b4bf525e27377217adfe87a2c16c1d6661f0"
+      },
+      "historicalFieldConsumerEvidence": "task scalar path data validated against spec; URI-encoded String replacement, unresolved placeholders reject",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/35"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-9cec05672cab2d0d",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/356"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-9cec05672cab2d0d",
+        "rowSha256": "a10c2354a46bb12b3062c040572fbaa35dcd8e76aa55921e35226f590092bd21"
+      },
+      "historicalFieldConsumerEvidence": "task scalar path data validated against spec; URI-encoded String replacement, unresolved placeholders reject",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/36"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-148251b72f4d24e0",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/357"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-148251b72f4d24e0",
+        "rowSha256": "268f734775e27b4f6b1de2d83ad7004fe5b7e44089c18c7cfab3bc1d7c6dbd94"
+      },
+      "historicalFieldConsumerEvidence": "task scalar path data validated against spec; URI-encoded String replacement, unresolved placeholders reject",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/37"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-153e53cbf58a2c3b",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/358"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-153e53cbf58a2c3b",
+        "rowSha256": "ca853daee53adba1d7b3fa54166972fab9b01dd9a6848dfedb1effe26beb7a51"
+      },
+      "historicalFieldConsumerEvidence": "task scalar query data validated against spec then String URLSearchParams, undeclared parameters fail before invoke",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/38"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-03b79ef05f21760b",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/359"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-03b79ef05f21760b",
+        "rowSha256": "2f77d0a5191ae96058c9fb6f5c869d33e48a8fbbc662db80b4327c65d11a06bb"
+      },
+      "historicalFieldConsumerEvidence": "task scalar query data validated against spec then String URLSearchParams, undeclared parameters fail before invoke",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/39"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-9d2b7832df8521b8",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/360"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-9d2b7832df8521b8",
+        "rowSha256": "19ed588185fa416a51ac42c5e36797a185fef009f9d27114fb4ab2476181abcf"
+      },
+      "historicalFieldConsumerEvidence": "task scalar query data validated against spec then String URLSearchParams, undeclared parameters fail before invoke",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/40"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-88373ef30a584869",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/361"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-88373ef30a584869",
+        "rowSha256": "b084f44e558036d4c038ff12f3c9d0bbc42409b83fe525aa4bffe9941b5da534"
+      },
+      "historicalFieldConsumerEvidence": "task scalar query data validated against spec then String URLSearchParams, undeclared parameters fail before invoke",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/41"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-3168b8463b219872",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/362"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-3168b8463b219872",
+        "rowSha256": "4cb6c31c342e3980e2a381e18e3b4d1d6b097f61ea00a1186f680c3fc7a5a3c3"
+      },
+      "historicalFieldConsumerEvidence": "task scalar query data validated against spec then String URLSearchParams, undeclared parameters fail before invoke",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/42"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-6c40eb311c36aa18",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/363"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-6c40eb311c36aa18",
+        "rowSha256": "8db01a3b3b0f42a94b4e1289336dd6c450215f74c4a6d7c16f49cc0df9a87484"
+      },
+      "historicalFieldConsumerEvidence": "task request headers spec-validated, matching case insensitive; body Content-Type controlled; provider accept/content-type override, actual network allowed-header/origin contract separately applies",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/43"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-67427bf80b25f14f",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/364"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-67427bf80b25f14f",
+        "rowSha256": "8394823b501fad4fa26324858421226d97415a5d19fec21c4772675888ebfd1d"
+      },
+      "historicalFieldConsumerEvidence": "task request headers spec-validated, matching case insensitive; body Content-Type controlled; provider accept/content-type override, actual network allowed-header/origin contract separately applies",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/44"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-da87e9da52e239b4",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/365"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-da87e9da52e239b4",
+        "rowSha256": "9592c163469008a49f25251b980db508022b9cba3ebd1b85a8e58238aa4d4d16"
+      },
+      "historicalFieldConsumerEvidence": "ordinary JSON request data; any schema-level JSON allowed by provider config schema but actual spec requestMedia/schema validates, undefined omitted vs explicit null body serialized",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/45"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-795b89c50339c532",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/366"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-795b89c50339c532",
+        "rowSha256": "ed870b034bbd1f882ac2e7bd0c5b7da6778230d8123c6aacd4cae54731eac1b9"
+      },
+      "historicalFieldConsumerEvidence": "task best-effort cleanup designation: cleanup sorted last; after invoke transport failure skips noncleanup but still attempts cleanup then rethrows first transport failure; not fixture lifecycle cleanup capability",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/46"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-0dfdeb7fe789b20b",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/367"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-0dfdeb7fe789b20b",
+        "rowSha256": "949c3fbec85e0b59c4ce10a5b02559089397f65a9ad665827dc14c4e9e010155"
+      },
+      "historicalFieldConsumerEvidence": "task response assertion; specified statuses intersect documented actual status checks; omitted no extra selection check, empty array schema rejects but direct provider makes every status unexpected",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/47"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-93fe557af6f46c3f",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/368"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-93fe557af6f46c3f",
+        "rowSha256": "effc33ac4ade045f4a30e83f298ad96278b682cc68e7845fc5d0ca2dc003a755"
+      },
+      "historicalFieldConsumerEvidence": "task response assertion; specified statuses intersect documented actual status checks; omitted no extra selection check, empty array schema rejects but direct provider makes every status unexpected",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/48"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-d67d1281071db148",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/369"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-d67d1281071db148",
+        "rowSha256": "67c1901e0e4e07a29a9958fd91a9fd29da38f673f838a0983a9d5022315b0234"
+      },
+      "historicalFieldConsumerEvidence": "task selection expands spec tagged operations not explicitly selected; absent/null empty; explicit ID wins tag expansion; selected total<=128",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/49"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-96b1400c6db325d0",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/370"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-96b1400c6db325d0",
+        "rowSha256": "b13fbe5ae9ea285afac1505b34acabadb8f826dcfbbc9bf2b71a0a027aa01a2e"
+      },
+      "historicalFieldConsumerEvidence": "task selection expands spec tagged operations not explicitly selected; absent/null empty; explicit ID wins tag expansion; selected total<=128",
+      "scopeClassesUnchanged": [
+        "T"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/50"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-550d941bb663f8fc",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/371"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-550d941bb663f8fc",
+        "rowSha256": "e6e3325327c5d3ecda8e5ef8068e937e2cee8befed76d9d0251c4f079bbbfb38"
+      },
+      "historicalFieldConsumerEvidence": "plugin-owned requested HTTP milliseconds; current null/absent10000; Math.min(requested,invocation.timeoutMs), actual retained HTTP runtime maximum also validates; no timeout timer here",
+      "scopeClassesUnchanged": [
+        "M",
+        "J"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/51"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-63d5aafbda9b5281",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/372"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-63d5aafbda9b5281",
+        "rowSha256": "4737c52bd4fc8a839967ec581ea84116fbf0560e97c12ebf01d7042958c378d7"
+      },
+      "historicalFieldConsumerEvidence": "plugin-owned requested response bytes; current null/absent1048576; no provider clamp to invocation artifactBytes; actual retained HTTP runtime cap validates request and streaming bytes",
+      "scopeClassesUnchanged": [
+        "M",
+        "J"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/52"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-PROVIDER-EVIDENCE-KUBECLAW-OPENAPI-OPERATIONS-EVIDENCEDEFAULTS-ONPASS",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/1365"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-PROVIDER-EVIDENCE-KUBECLAW-OPENAPI-OPERATIONS-EVIDENCEDEFAULTS-ONPASS",
+        "rowSha256": "35f62f38037a90d2be11b3abbbd4e2b9086de4c1a2b66bf8bae4256e91b0841f"
+      },
+      "historicalFieldConsumerEvidence": "resolveTestPlan exported API has no demonstrated in-repo production plan-author caller; accepted remote resolved-plan reader -> actual runner uses resolved evidence/capabilities/plan binding. Do not invent resolver service caller or configgeneration source. Registry package manifest author \u2260 independently tunable runtime matrix/retry capability safety. Evidence policy sole existing per-provider registration/instance profile selected by pipeline.config.json; exact supported types and baseline mandatory source/effects/reports/outputs/log requirements govern it. Retire package registration evidenceDefaults as independent operational fallback/competing node policy, preserve capability evidenceTypes/report contracts/code+package source identity. retrySafe/matrixFields remain versioned implemented package capability declarations, not operational toggles that invent idempotence/matrix compatibility.",
+      "scopeClassesUnchanged": [
+        "M",
+        "J"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/53"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-PROVIDER-EVIDENCE-KUBECLAW-OPENAPI-OPERATIONS-EVIDENCEDEFAULTS-ONFAIL",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/1366"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-PROVIDER-EVIDENCE-KUBECLAW-OPENAPI-OPERATIONS-EVIDENCEDEFAULTS-ONFAIL",
+        "rowSha256": "5fb4f60137b8253ff0b0d3472f5254c9365e1ac23563aa1f5e270dcd558c9cff"
+      },
+      "historicalFieldConsumerEvidence": "resolveTestPlan exported API has no demonstrated in-repo production plan-author caller; accepted remote resolved-plan reader -> actual runner uses resolved evidence/capabilities/plan binding. Do not invent resolver service caller or configgeneration source. Registry package manifest author \u2260 independently tunable runtime matrix/retry capability safety. Evidence policy sole existing per-provider registration/instance profile selected by pipeline.config.json; exact supported types and baseline mandatory source/effects/reports/outputs/log requirements govern it. Retire package registration evidenceDefaults as independent operational fallback/competing node policy, preserve capability evidenceTypes/report contracts/code+package source identity. retrySafe/matrixFields remain versioned implemented package capability declarations, not operational toggles that invent idempotence/matrix compatibility.",
+      "scopeClassesUnchanged": [
+        "M",
+        "J"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/54"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-PROVIDER-EVIDENCE-KUBECLAW-OPENAPI-OPERATIONS-EVIDENCEDEFAULTS-ONERROR",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/1367"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-PROVIDER-EVIDENCE-KUBECLAW-OPENAPI-OPERATIONS-EVIDENCEDEFAULTS-ONERROR",
+        "rowSha256": "cd1af5f81af999df99cc5759ae56b31aa69f048af37bc2bc04b0df06dd99e5d9"
+      },
+      "historicalFieldConsumerEvidence": "resolveTestPlan exported API has no demonstrated in-repo production plan-author caller; accepted remote resolved-plan reader -> actual runner uses resolved evidence/capabilities/plan binding. Do not invent resolver service caller or configgeneration source. Registry package manifest author \u2260 independently tunable runtime matrix/retry capability safety. Evidence policy sole existing per-provider registration/instance profile selected by pipeline.config.json; exact supported types and baseline mandatory source/effects/reports/outputs/log requirements govern it. Retire package registration evidenceDefaults as independent operational fallback/competing node policy, preserve capability evidenceTypes/report contracts/code+package source identity. retrySafe/matrixFields remain versioned implemented package capability declarations, not operational toggles that invent idempotence/matrix compatibility.",
+      "scopeClassesUnchanged": [
+        "M",
+        "J"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/55"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-PROVIDER-CONTRACT-KUBECLAW-OPENAPI-OPERATIONS-RETRYSAFE",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/1368"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-PROVIDER-CONTRACT-KUBECLAW-OPENAPI-OPERATIONS-RETRYSAFE",
+        "rowSha256": "f95ff94cf6b2802d1fb65d2407a5ce1d183a7d2b1add5f713cebce93a00e7a59"
+      },
+      "historicalFieldConsumerEvidence": "resolveTestPlan exported API has no demonstrated in-repo production plan-author caller; accepted remote resolved-plan reader -> actual runner uses resolved evidence/capabilities/plan binding. Do not invent resolver service caller or configgeneration source. Registry package manifest author \u2260 independently tunable runtime matrix/retry capability safety. Evidence policy sole existing per-provider registration/instance profile selected by pipeline.config.json; exact supported types and baseline mandatory source/effects/reports/outputs/log requirements govern it. Retire package registration evidenceDefaults as independent operational fallback/competing node policy, preserve capability evidenceTypes/report contracts/code+package source identity. retrySafe/matrixFields remain versioned implemented package capability declarations, not operational toggles that invent idempotence/matrix compatibility.",
+      "scopeClassesUnchanged": [
+        "V"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/56"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-PROVIDER-CONTRACT-KUBECLAW-OPENAPI-OPERATIONS-MATRIXFIELDS",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/1369"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-PROVIDER-CONTRACT-KUBECLAW-OPENAPI-OPERATIONS-MATRIXFIELDS",
+        "rowSha256": "ff7352c58d569f1b02003b71def95d912399524d1da41e40a7ebd1bed5b8dfc1"
+      },
+      "historicalFieldConsumerEvidence": "resolveTestPlan exported API has no demonstrated in-repo production plan-author caller; accepted remote resolved-plan reader -> actual runner uses resolved evidence/capabilities/plan binding. Do not invent resolver service caller or configgeneration source. Registry package manifest author \u2260 independently tunable runtime matrix/retry capability safety. Evidence policy sole existing per-provider registration/instance profile selected by pipeline.config.json; exact supported types and baseline mandatory source/effects/reports/outputs/log requirements govern it. Retire package registration evidenceDefaults as independent operational fallback/competing node policy, preserve capability evidenceTypes/report contracts/code+package source identity. retrySafe/matrixFields remain versioned implemented package capability declarations, not operational toggles that invent idempotence/matrix compatibility.",
+      "scopeClassesUnchanged": [
+        "V"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/57"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-0b11b3282059d1db",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/501"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-0b11b3282059d1db",
+        "rowSha256": "fc29aecd7349eff637b8a0fb90f8bd646bcdaf7682219dfbffbe172b630ef95c"
+      },
+      "historicalFieldConsumerEvidence": "Changes per-origin network admission at the cited actual consumer; not an unbound task value",
+      "scopeClassesUnchanged": [
+        "R",
+        "S",
+        "H"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/58"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-db4ff06654e4c996",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/502"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-db4ff06654e4c996",
+        "rowSha256": "99bb3ee6acac6cc75531395e31f094f2dc3285f82a176da2a1ad4adfdccf7584"
+      },
+      "historicalFieldConsumerEvidence": "Changes per-origin network admission at the cited actual consumer; not an unbound task value",
+      "scopeClassesUnchanged": [
+        "R",
+        "S",
+        "H"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/59"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-8510aae902279dfa",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/503"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-8510aae902279dfa",
+        "rowSha256": "b182938c4a4ece3afec9a02408828bbe20143e665698019b8e1539445e949c9a"
+      },
+      "historicalFieldConsumerEvidence": "Changes allowed outbound method set at the cited actual consumer; not an unbound task value",
+      "scopeClassesUnchanged": [
+        "R",
+        "S",
+        "H"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/60"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-8e9540f20d6b3e93",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/504"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-8e9540f20d6b3e93",
+        "rowSha256": "374ff201de582f8c8b3a95c69b27590c1706193992bb6f7e4b8178fd869ab736"
+      },
+      "historicalFieldConsumerEvidence": "Changes allowed outbound method set at the cited actual consumer; not an unbound task value",
+      "scopeClassesUnchanged": [
+        "R",
+        "S",
+        "H"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/61"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-bdbb356d7dbdb05b",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/505"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-bdbb356d7dbdb05b",
+        "rowSha256": "aa9dddae4477f86313991785e926c22c7c9a9b6a4c1216bd681a0da6257a97c1"
+      },
+      "historicalFieldConsumerEvidence": "Changes outbound header admission at the cited actual consumer; not an unbound task value",
+      "scopeClassesUnchanged": [
+        "R",
+        "S",
+        "H"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/62"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-129d37457d0a92b8",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/506"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-129d37457d0a92b8",
+        "rowSha256": "b14e7e1d8c35c3f5b6c10353cc6fe137f41f1ece5c3e4d6c1da5dd914b75c8fb"
+      },
+      "historicalFieldConsumerEvidence": "Changes outbound header admission at the cited actual consumer; not an unbound task value",
+      "scopeClassesUnchanged": [
+        "R",
+        "S",
+        "H"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/63"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-3e41afae2fdc5889",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/507"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-3e41afae2fdc5889",
+        "rowSha256": "3606a5a50b4ff2d6f28070b560e7b60b0834cd7779bb6cdff784ae839449df70"
+      },
+      "historicalFieldConsumerEvidence": "Changes outbound JSON body admission at the cited actual consumer; not an unbound task value",
+      "scopeClassesUnchanged": [
+        "R",
+        "S",
+        "H"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/64"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-a21fee46884b7194",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/508"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-a21fee46884b7194",
+        "rowSha256": "4a02011b6604ae77fffce36dc96cb41ff236a9a9ede8b3bf59c0a588e7a24acc"
+      },
+      "historicalFieldConsumerEvidence": "Changes streamed decoded response admission at the cited actual consumer; not an unbound task value",
+      "scopeClassesUnchanged": [
+        "R",
+        "S",
+        "H"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/65"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    },
+    {
+      "id": "RT-e8382fb0497a39a3",
+      "priorMapRow": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json",
+        "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+        "jsonPointer": "/fields/509"
+      },
+      "historicalRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+        "fieldId": "RT-e8382fb0497a39a3",
+        "rowSha256": "4ca14cf5eceb2e6f94d6822f385c524109d9936f280c0bf8ebaad32b06742253"
+      },
+      "historicalFieldConsumerEvidence": "Changes finite HTTP fetch + response read cancellation deadline at the cited actual consumer; not an unbound task value",
+      "scopeClassesUnchanged": [
+        "R",
+        "S",
+        "H"
+      ],
+      "currentRuntimeProviderActiveRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json",
+        "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+        "jsonPointer": "/rows/66"
+      },
+      "currentConsumerAndTargetABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md",
+        "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7"
+      },
+      "currentReceivingABI": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md",
+        "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416"
+      },
+      "currentSchemaGenerationConcordance": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json",
+        "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557"
+      },
+      "precedence": "Current03 field/schema/case/receiving contracts supersede the prior01 provider-active ref and prior provider fieldConsumerEvidence text. Old row/current-history/IDs/cases/scopes remain preserved; no retired task-step-timeout ban or old schema domain stays normative."
+    }
+  ]
+}

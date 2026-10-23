@@ -1,0 +1,23 @@
+{
+  "name": "deployment",
+  "kind": "value",
+  "schemaId": "kubeclaw.kubernetes-deployment-fixture@1",
+  "value": {
+    "schemaVersion": "kubernetes-deployment-fixture.v1",
+    "endpoints": [
+      {
+        "name": "fixture",
+        "url": "https://fixture.invalid"
+      }
+    ],
+    "leaseName": "test-security-source-fixture",
+    "namespace": "test-security-source-fixture",
+    "createdAt": "2026-10-14T00:24:33.065916+00:00",
+    "expiresAt": "2026-10-15T00:24:33.065916+00:00",
+    "secretReferences": [],
+    "manifestDigest": "sha256:ce78cf08e049ada50176ef87af300937434a23111fee6af4845221e4759525d6",
+    "immutableImage": "fixture-registry.invalid/kubeclaw/source-fixture@sha256:d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc",
+    "retentionMode": "delete",
+    "releaseAction": "kubectl delete busternamespacelease test-security-source-fixture -n fixture-controller-namespace"
+  }
+}

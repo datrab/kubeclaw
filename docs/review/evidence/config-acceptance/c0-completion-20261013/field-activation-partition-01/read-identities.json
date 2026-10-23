@@ -1,0 +1,219 @@
+{
+  "authorTask": "/root/whole_c0_readiness_review FOLLOWUP WCR06 AUTHOR; cannot self-review this map",
+  "head": "367b4f88698a3db3e595eadf44f40a8f973cc932",
+  "tree": "7abb01f1508c55628605f261f94185e99e73db92",
+  "capturedAt": "2026-10-13T23:18:31.135753+00:00",
+  "inputs": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/binding/README.md",
+      "sha256": "aa8efd0cb243cb168fedcdf2c6180e0d25004461828551bc0ac3b2e1f4a203f2",
+      "bytes": 11082,
+      "snapshot": "frozen-inputs/aa8efd0cb243cb168fedcdf2c6180e0d25004461828551bc0ac3b2e1f4a203f2.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/binding/project-membership-03/README.md",
+      "sha256": "189e539de4cadc00b4c050744044db0b8568a4bb37ebcafb16ee899d4d264aef",
+      "bytes": 2963,
+      "snapshot": "frozen-inputs/189e539de4cadc00b4c050744044db0b8568a4bb37ebcafb16ee899d4d264aef.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/README.md",
+      "sha256": "51fa3046c640c4b99fce2e6771cb2a9f40591ecb5920fdfca35307a3fadc91cf",
+      "bytes": 18659,
+      "snapshot": "frozen-inputs/51fa3046c640c4b99fce2e6771cb2a9f40591ecb5920fdfca35307a3fadc91cf.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/source-target-supersession.json",
+      "sha256": "5fd39e47be3d632c9e54dff99aed4d6aa1c9ca0cf5deb0f0b67fa4f78d65fae1",
+      "bytes": 50948,
+      "snapshot": "frozen-inputs/5fd39e47be3d632c9e54dff99aed4d6aa1c9ca0cf5deb0f0b67fa4f78d65fae1.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-01/whole-profile-index.json",
+      "sha256": "bad813612d8936104c90316acab663939767ef2b14ad1f07353e8a830976ddfc",
+      "bytes": 53506,
+      "snapshot": "frozen-inputs/bad813612d8936104c90316acab663939767ef2b14ad1f07353e8a830976ddfc.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-17/active-component-semantic-bodies.json",
+      "sha256": "d7d402e328eab25d1d61cbfd70861bdde8d700090d94aad63f35c3057bdc688b",
+      "bytes": 8157735,
+      "snapshot": "frozen-inputs/d7d402e328eab25d1d61cbfd70861bdde8d700090d94aad63f35c3057bdc688b.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/provider-field-definitions.json",
+      "sha256": "6ecd92ce1994c16f1bde69bd99a37449086f04d4ef6bc41dcba3fe06398c77ec",
+      "bytes": 657507,
+      "snapshot": "frozen-inputs/6ecd92ce1994c16f1bde69bd99a37449086f04d4ef6bc41dcba3fe06398c77ec.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/provider-domain-corrections-21/registry-health-definition.json",
+      "sha256": "1970399f3c4f4105e3997b5987c68f8f85a1d32e5bfb6551791fc845f86b1698",
+      "bytes": 25949,
+      "snapshot": "frozen-inputs/1970399f3c4f4105e3997b5987c68f8f85a1d32e5bfb6551791fc845f86b1698.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/README.md",
+      "sha256": "930bdf49e7224f0d4cc8ea4067edf32376e0804ba30d29e101a5f8b15ea5b76c",
+      "bytes": 2867,
+      "snapshot": "frozen-inputs/930bdf49e7224f0d4cc8ea4067edf32376e0804ba30d29e101a5f8b15ea5b76c.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/policy-family-contracts-03/contracts.json",
+      "sha256": "437eaf17b7790bc8b987e3eda8b59070b62f76cefb0a232dbad77182b41d6e02",
+      "bytes": 108998,
+      "snapshot": "frozen-inputs/437eaf17b7790bc8b987e3eda8b59070b62f76cefb0a232dbad77182b41d6e02.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/field-definitions.json",
+      "sha256": "0563491dd1dc91a3d6100e56fec2418dc31ab7a9bf2c334caa808d8c7100d5ad",
+      "bytes": 1360227,
+      "snapshot": "frozen-inputs/0563491dd1dc91a3d6100e56fec2418dc31ab7a9bf2c334caa808d8c7100d5ad.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-01/source-consumer-contracts.md",
+      "sha256": "64f36b884cd88923d9541a1e0289a8d208f741b7e105d47735a2e079b176d123",
+      "bytes": 15120,
+      "snapshot": "frozen-inputs/64f36b884cd88923d9541a1e0289a8d208f741b7e105d47735a2e079b176d123.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime/batch-16-runtime-emitter-joins/README.md",
+      "sha256": "5544d08ff21566490f9b8d72611939db0bb6b4193c1946d11cd85a8d97852be2",
+      "bytes": 1768,
+      "snapshot": "frozen-inputs/5544d08ff21566490f9b8d72611939db0bb6b4193c1946d11cd85a8d97852be2.gz"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime/batch-16-runtime-emitter-joins/active-emitter-definitions.json",
+      "sha256": "9886bedd78e2c9364e2c6eadc085e78a262d105c4c2e964a44e0a8bbc6ae8ba9",
+      "bytes": 257394,
+      "snapshot": "frozen-inputs/9886bedd78e2c9364e2c6eadc085e78a262d105c4c2e964a44e0a8bbc6ae8ba9.gz"
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "sha256": "1867bdae578f47d19e558db024203f3bf0b39210081df40f19d68c2a98288992",
+      "bytes": 101612879,
+      "snapshot": "frozen-inputs/1867bdae578f47d19e558db024203f3bf0b39210081df40f19d68c2a98288992.gz"
+    },
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "sha256": "9d5e7372f87f6b4e79809cbcd29f239f34cdea3e8020b3c6dda19b17044dae7a",
+      "bytes": 37907068,
+      "snapshot": "frozen-inputs/9d5e7372f87f6b4e79809cbcd29f239f34cdea3e8020b3c6dda19b17044dae7a.gz"
+    },
+    {
+      "path": "skills/nova/project/compiler.ts",
+      "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5",
+      "bytes": 14415,
+      "snapshot": "frozen-inputs/9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5.gz",
+      "capturedAt": "2026-10-13T23:21:45.486946+00:00"
+    },
+    {
+      "path": "skills/nova/project/source.ts",
+      "sha256": "f652f5bda01a9a39ea7015ddbf12867ff81f989b0fbe2e0cadcff1a4b4ae2cd0",
+      "bytes": 5578,
+      "snapshot": "frozen-inputs/f652f5bda01a9a39ea7015ddbf12867ff81f989b0fbe2e0cadcff1a4b4ae2cd0.gz",
+      "capturedAt": "2026-10-13T23:21:45.487212+00:00"
+    },
+    {
+      "path": "skills/nova/project/coverage.ts",
+      "sha256": "6ad22387d588ec783ddfd12a45d1aea735785f3a065254d0fc00b1820ee01f2b",
+      "bytes": 5662,
+      "snapshot": "frozen-inputs/6ad22387d588ec783ddfd12a45d1aea735785f3a065254d0fc00b1820ee01f2b.gz",
+      "capturedAt": "2026-10-13T23:21:45.487454+00:00"
+    },
+    {
+      "path": "skills/nova/project/demo.ts",
+      "sha256": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566",
+      "bytes": 5223,
+      "snapshot": "frozen-inputs/fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566.gz",
+      "capturedAt": "2026-10-13T23:21:45.487689+00:00"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-run.ts",
+      "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819",
+      "bytes": 11148,
+      "snapshot": "frozen-inputs/eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819.gz",
+      "capturedAt": "2026-10-13T23:21:45.488001+00:00"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-runtime.ts",
+      "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613",
+      "bytes": 8372,
+      "snapshot": "frozen-inputs/96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613.gz",
+      "capturedAt": "2026-10-13T23:21:45.488274+00:00"
+    },
+    {
+      "path": "skills/nova/core/execution/pipeline-loop.ts",
+      "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530",
+      "bytes": 10717,
+      "snapshot": "frozen-inputs/129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530.gz",
+      "capturedAt": "2026-10-13T23:21:45.488602+00:00"
+    },
+    {
+      "path": "skills/nova/core/execution/stage-executor.ts",
+      "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb",
+      "bytes": 11002,
+      "snapshot": "frozen-inputs/4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb.gz",
+      "capturedAt": "2026-10-13T23:21:45.488936+00:00"
+    },
+    {
+      "path": "skills/nova/core/execution/run-mutation.ts",
+      "sha256": "9acd2187077eca9fed18bb73b512cbda72aead9be9d92083438af5305cd7092d",
+      "bytes": 1470,
+      "snapshot": "frozen-inputs/9acd2187077eca9fed18bb73b512cbda72aead9be9d92083438af5305cd7092d.gz",
+      "capturedAt": "2026-10-13T23:21:45.489110+00:00"
+    },
+    {
+      "path": "skills/nova/core/telemetry/observer-delivery.ts",
+      "sha256": "d80f67ca85cafee41eb41d228be7a8d3aff820b556ccf21efa6f0a9845afd1fc",
+      "bytes": 4097,
+      "snapshot": "frozen-inputs/d80f67ca85cafee41eb41d228be7a8d3aff820b556ccf21efa6f0a9845afd1fc.gz",
+      "capturedAt": "2026-10-13T23:21:45.489323+00:00"
+    },
+    {
+      "path": "skills/prism/control/agent-jobs.ts",
+      "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334",
+      "bytes": 8860,
+      "snapshot": "frozen-inputs/ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334.gz",
+      "capturedAt": "2026-10-13T23:21:45.489611+00:00"
+    },
+    {
+      "path": "skills/prism/server/agent-job-runner.mjs",
+      "sha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+      "bytes": 3187,
+      "snapshot": "frozen-inputs/f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb.gz",
+      "capturedAt": "2026-10-13T23:21:45.489812+00:00"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+      "sha256": "832631872e86addc6ae98516f63c191e403675b679c795ad3d47a2fdb8350dde",
+      "bytes": 5102,
+      "snapshot": "frozen-inputs/832631872e86addc6ae98516f63c191e403675b679c795ad3d47a2fdb8350dde.gz",
+      "capturedAt": "2026-10-13T23:21:45.490053+00:00"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad",
+      "bytes": 5244,
+      "snapshot": "frozen-inputs/2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad.gz",
+      "capturedAt": "2026-10-13T23:21:45.490286+00:00"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-cleanup.ts",
+      "sha256": "192c1954407e294483ea08389220eab128052ba57e9b7a72b26fcb768d608bc1",
+      "bytes": 6796,
+      "snapshot": "frozen-inputs/192c1954407e294483ea08389220eab128052ba57e9b7a72b26fcb768d608bc1.gz",
+      "capturedAt": "2026-10-13T23:21:45.490617+00:00"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/binding/future-cases.json",
+      "sha256": "7fb72acf016d092d89fb4384641069dfe13f2488092c5f2078243ea45df9cd86",
+      "bytes": 91135,
+      "snapshot": "frozen-inputs/7fb72acf016d092d89fb4384641069dfe13f2488092c5f2078243ea45df9cd86.gz",
+      "capturedAt": "2026-10-13T23:21:45.500865+00:00"
+    }
+  ],
+  "globalC0Accepted": false,
+  "implementationAuthorization": null,
+  "lastAdditionalCaptureAt": "2026-10-13T23:21:45.500891+00:00"
+}

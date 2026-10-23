@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "No actionable defects were identified in the supplied change bundle. The selected review policy is captured, frozen, passed through runtime validation and execution, and reused from retained Core policy during recovery without live author reads. Review was source-only because local inspection commands were unavailable; tests were not run.",
+  "overall_confidence": 0.79
+}

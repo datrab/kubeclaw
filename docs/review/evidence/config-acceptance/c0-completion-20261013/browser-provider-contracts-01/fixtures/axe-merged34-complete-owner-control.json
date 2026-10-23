@@ -1,0 +1,5982 @@
+{
+  "schemaVersion": "pipeline-package-policy.v1",
+  "packageId": "kubeclaw.axe",
+  "instanceId": "fixture.axe",
+  "profiles": {
+    "A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          },
+          "custom-00": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "custom-01": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "custom-02": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "custom-03": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "custom-04": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "custom-05": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "custom-06": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "custom-07": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "custom-08": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "custom-09": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "custom-10": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "custom-11": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "custom-12": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "custom-13": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "custom-14": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "custom-15": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "custom-16": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "custom-17": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "custom-18": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "custom-19": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "custom-20": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "custom-21": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "custom-22": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "custom-23": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "custom-24": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "custom-25": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "custom-26": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "custom-27": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "custom-28": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "custom-29": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "custom-30": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "custom-31": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop",
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-dab100380f6a024f-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop",
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-dab100380f6a024f-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop",
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-6776ec7160ea0036-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop",
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-6776ec7160ea0036-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop",
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-b6eb30fbf6be03e1-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop",
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-b6eb30fbf6be03e1-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop",
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-0d37b61a9e8bc451-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop",
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-0d37b61a9e8bc451-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop",
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-ce85d1e95781cb1b-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-ce85d1e95781cb1b-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-735e529045f176ca-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-735e529045f176ca-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-6053515db8e5f294-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-6053515db8e5f294-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1280,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-b523246a8e584359-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop",
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-b523246a8e584359-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop",
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-0f8819569bb41402-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop",
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-0f8819569bb41402-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop",
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-bb8352234e6c6200-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop",
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [
+          "#a"
+        ],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-bb8352234e6c6200-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop",
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [
+          "#b"
+        ],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-e32df097509e32fe-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop",
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [
+          "#a"
+        ],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-e32df097509e32fe-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop",
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [
+          "#b"
+        ],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-ea6c994234263250-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a"
+        ],
+        "exclude": [],
+        "acceptances": [
+          {
+            "rule": "image-alt",
+            "route": "/a",
+            "selector": "#case",
+            "reason": "C0 definition-only fixture waiver",
+            "expiresAt": "2099-01-01"
+          }
+        ],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-ea6c994234263250-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a"
+        ],
+        "exclude": [],
+        "acceptances": [
+          {
+            "rule": "image-alt",
+            "route": "/a",
+            "selector": "#case",
+            "reason": "C0 definition-only fixture waiver",
+            "expiresAt": "2000-01-01"
+          }
+        ],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-3d366b22c4baadb6-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a"
+        ],
+        "exclude": [],
+        "acceptances": [
+          {
+            "rule": "image-alt",
+            "route": "/a",
+            "selector": "#case",
+            "reason": "C0 definition-only fixture waiver",
+            "expiresAt": "2099-01-01"
+          }
+        ],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-3d366b22c4baadb6-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a"
+        ],
+        "exclude": [],
+        "acceptances": [
+          {
+            "rule": "image-alt",
+            "route": "/a",
+            "selector": "#case",
+            "reason": "C0 definition-only fixture waiver",
+            "expiresAt": "2000-01-01"
+          }
+        ],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-ace0dff341a51674-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a"
+        ],
+        "exclude": [],
+        "acceptances": [
+          {
+            "rule": "image-alt",
+            "route": "/a",
+            "selector": "#case",
+            "reason": "C0 definition-only fixture waiver",
+            "expiresAt": "2099-01-01"
+          }
+        ],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-ace0dff341a51674-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a"
+        ],
+        "exclude": [],
+        "acceptances": [
+          {
+            "rule": "button-name",
+            "route": "/a",
+            "selector": "#case",
+            "reason": "C0 definition-only fixture waiver",
+            "expiresAt": "2099-01-01"
+          }
+        ],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-e2d010126067fa17-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a"
+        ],
+        "exclude": [],
+        "acceptances": [
+          {
+            "rule": "image-alt",
+            "route": "/a",
+            "selector": "#case",
+            "reason": "C0 definition-only fixture waiver",
+            "expiresAt": "2099-01-01"
+          }
+        ],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-e2d010126067fa17-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a"
+        ],
+        "exclude": [],
+        "acceptances": [
+          {
+            "rule": "image-alt",
+            "route": "/b",
+            "selector": "#case",
+            "reason": "C0 definition-only fixture waiver",
+            "expiresAt": "2099-01-01"
+          }
+        ],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-36d7d882e2bd6da2-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a"
+        ],
+        "exclude": [],
+        "acceptances": [
+          {
+            "rule": "image-alt",
+            "route": "/a",
+            "selector": "#case",
+            "reason": "C0 definition-only fixture waiver",
+            "expiresAt": "2099-01-01"
+          }
+        ],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-36d7d882e2bd6da2-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a"
+        ],
+        "exclude": [],
+        "acceptances": [
+          {
+            "rule": "image-alt",
+            "route": "/a",
+            "selector": "#other",
+            "reason": "C0 definition-only fixture waiver",
+            "expiresAt": "2099-01-01"
+          }
+        ],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-a31018709bf73a5c-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a"
+        ],
+        "exclude": [],
+        "acceptances": [
+          {
+            "rule": "image-alt",
+            "route": "/a",
+            "selector": "#case",
+            "reason": "C0 definition-only fixture waiver",
+            "expiresAt": "2099-01-01"
+          }
+        ],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-a31018709bf73a5c-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a"
+        ],
+        "exclude": [],
+        "acceptances": [
+          {
+            "rule": "image-alt",
+            "route": "/a",
+            "selector": "#case",
+            "reason": "Second C0 definition-only rationale",
+            "expiresAt": "2099-01-01"
+          }
+        ],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-3eeda647e60d7d1b-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a"
+        ],
+        "exclude": [],
+        "acceptances": [
+          {
+            "rule": "image-alt",
+            "route": "/a",
+            "selector": "#case",
+            "reason": "C0 definition-only fixture waiver",
+            "expiresAt": "2099-01-01"
+          }
+        ],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-3eeda647e60d7d1b-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a"
+        ],
+        "exclude": [],
+        "acceptances": [
+          {
+            "rule": "image-alt",
+            "route": "/a",
+            "selector": "#case",
+            "reason": "C0 definition-only fixture waiver",
+            "expiresAt": "2000-01-01"
+          }
+        ],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-28216d3eec81ad18-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop",
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 1000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-28216d3eec81ad18-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop",
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 2000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONPASS-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop",
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONPASS-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop",
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONFAIL-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop",
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONERROR-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop",
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-PROVIDER-EVIDENCE-KUBECLAW-AXE-AXE-EVIDENCEDEFAULTS-ONERROR-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop",
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log",
+            "test-report"
+          ]
+        }
+      }
+    },
+    "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-RETRYSAFE-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop",
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-RETRYSAFE-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop",
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": false,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-PROVIDER-CONTRACT-KUBECLAW-AXE-AXE-MATRIXFIELDS-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop",
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-DESKTOP-BROWSER-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-DESKTOP-BROWSER-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "firefox",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-WIDTH-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-WIDTH-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 800,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-HEIGHT-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-DESKTOP-VIEWPORT-HEIGHT-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 768
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-DESKTOP-COLORSCHEME-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-DESKTOP-COLORSCHEME-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "dark",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-DESKTOP-REDUCEDMOTION-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-DESKTOP-REDUCEDMOTION-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "reduce",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-DESKTOP-LOCALE-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-DESKTOP-LOCALE-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "fr-FR",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-DESKTOP-TIMEZONEID-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-DESKTOP-TIMEZONEID-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "Europe/Paris",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-DESKTOP-HASTOUCH-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-DESKTOP-HASTOUCH-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-DESKTOP-ISMOBILE-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-DESKTOP-ISMOBILE-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-DESKTOP-DEVICESCALEFACTOR-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-DESKTOP-DEVICESCALEFACTOR-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 2
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "desktop"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-MOBILE-BROWSER-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-MOBILE-BROWSER-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "webkit",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-MOBILE-VIEWPORT-WIDTH-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-MOBILE-VIEWPORT-WIDTH-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 412,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-MOBILE-VIEWPORT-HEIGHT-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-MOBILE-VIEWPORT-HEIGHT-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-MOBILE-COLORSCHEME-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-MOBILE-COLORSCHEME-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "dark",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-MOBILE-REDUCEDMOTION-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-MOBILE-REDUCEDMOTION-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "reduce",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-MOBILE-LOCALE-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-MOBILE-LOCALE-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "fr-FR",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-MOBILE-TIMEZONEID-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-MOBILE-TIMEZONEID-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "Europe/Paris",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-MOBILE-HASTOUCH-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-MOBILE-HASTOUCH-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-MOBILE-ISMOBILE-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-MOBILE-ISMOBILE-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-MOBILE-DEVICESCALEFACTOR-A": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 1
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    },
+    "RT-AXE-BUILTIN-MOBILE-DEVICESCALEFACTOR-B": {
+      "processing": {
+        "profiles": {
+          "desktop": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": false,
+            "isMobile": false,
+            "deviceScaleFactor": 1
+          },
+          "mobile": {
+            "browser": "chromium",
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "locale": "en-US",
+            "timezoneId": "UTC",
+            "hasTouch": true,
+            "isMobile": true,
+            "deviceScaleFactor": 2
+          }
+        },
+        "selectedProfiles": [
+          "mobile"
+        ],
+        "tags": [
+          "wcag2a",
+          "wcag2aa"
+        ],
+        "exclude": [],
+        "acceptances": [],
+        "timeoutMs": 30000
+      },
+      "declarations": {
+        "retrySafe": true,
+        "matrixFields": [],
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "onError": [
+            "log"
+          ]
+        }
+      }
+    }
+  }
+}

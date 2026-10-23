@@ -30,6 +30,10 @@ assert.equal(preflight.proposals.length, 1);
 const policyDigest = digest('c');
 const verificationJobs = buildScalableVerificationJobs(preflight, [job], policyDigest);
 assert.equal(verificationJobs.length, 1);
+assert.throws(() => buildScalableVerificationJobs(preflight, [job], policyDigest,
+  {tokenizerEncoding:'o200k_base',maxPromptBytes:900000,maxInputTokens:120000,promptTokenBoundaryReserve:1000000}), /budget|exceeds/);
+assert.equal(buildScalableVerificationJobs(preflight, [job], policyDigest,
+  {tokenizerEncoding:'o200k_base',maxPromptBytes:900000,maxInputTokens:120000,promptTokenBoundaryReserve:64}).length,1);
 const verification = verificationJobs[0];
 assert.equal(verification.taskDigest, sha256Text(scalableVerificationTask()));
 const largeContent = Array.from({ length: 5_000 }, (_value, index) => `export const value${index} = true;`).join('\n');

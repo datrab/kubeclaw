@@ -1,0 +1,22 @@
+✔ source receiving rejects incomplete, unknown and invalid policy before Git spawn (2.531325ms)
+✔ actual Git metadata A/B and in-flight author mutation use captured source policy (478.257345ms)
+✔ production constructor retains admitted source selection and factory forwards it before dispatch (719.570039ms)
+✔ runtime loader receives explicit immutable selection without opening v1 author keys (885.374121ms)
+✔ selected metadata byte ceiling is inclusive and independent of archive ceiling (482.569006ms)
+✔ v2 selects central owner for actual Git and HTTP; original captures survive replacement/deletion (796.174079ms)
+✔ v2 rejects absent, malformed, duplicate/inline policies; v1 retains its closed legacy reader (80.039618ms)
+✔ real remote gate CLI consumes v2 central selection before spawning dispatch (1203.032647ms)
+✔ v2 requires an exact authentication mode and rejects an unused proxy token author before state creation (29.776641ms)
+✔ v2 bearer/proxy A/B/A uses the real HTTP transport and retained A does not reload the selected mode (481.373385ms)
+✔ v2 central remote cleanup budget reaches real HTTP cancellation and is captured before owner replacement (1468.728735ms)
+✔ SPIFFE transport and adapter agree on IPv4, bracketed IPv6 and denied remote hosts (2.575426ms)
+✔ two real Git archives share a total quota while deduplicated bytes remain readable (613.69442ms)
+✔ real HTTP evidence import cannot mark a second over-quota job complete (475.605418ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11826.869197

@@ -32,9 +32,10 @@ export class PluginStateJournal {
   constructor(
     file: string,
     registration: RegistrationProvenance,
+    appendLockTimeoutMs: number,
     now: () => Date = () => new Date(),
   ) {
-    this.#journal = new FileJournal(file);
+    this.#journal = new FileJournal(file, appendLockTimeoutMs);
     this.#registration = snapshotJson(registration);
     this.#namespace = expectedNamespace(this.#registration);
     this.#now = now;

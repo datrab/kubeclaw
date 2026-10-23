@@ -1,0 +1,94 @@
+{
+  "scope": "documentation integrity, NOT F-MUT/productive runtime evidence",
+  "records": [
+    {
+      "name": "contradictory-oracle",
+      "exitCode": 1,
+      "intendedDocumentationRejection": [
+        {
+          "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.allowedHostSuffixes",
+          "field": "expectedEffectOrRejectingBoundary",
+          "reason": "canonical root differs from active authoritative specification"
+        }
+      ],
+      "rawEvidence": "docs/review/evidence/config-acceptance/author/rcore001-negative-contradictory-oracle.log",
+      "rawSha256": "68fc76908d32386e8ba25f7407ac6fe83fe9d0d3764a308d22afb4c78dcf2f84",
+      "matrixMutation": {
+        "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.allowedHostSuffixes",
+        "field": "expectedEffectOrRejectingBoundary",
+        "value": "A rejects/not selects added member; B admits/selects only that member."
+      },
+      "matrixSha256": "c721075f912aa1ea6d41689524aee2e3378da08396c0c93e8a515f27d8689d57"
+    },
+    {
+      "name": "missing-invocation",
+      "exitCode": 1,
+      "intendedDocumentationRejection": [
+        {
+          "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.allowedHostSuffixes",
+          "field": "proposedInvocation",
+          "reason": "canonical root differs from active authoritative specification"
+        }
+      ],
+      "rawEvidence": "docs/review/evidence/config-acceptance/author/rcore001-negative-missing-invocation.log",
+      "rawSha256": "af347ca60b7bafa63b4decee11259069d4769c696c11789adcd2061f24f0bc0f",
+      "matrixMutation": {
+        "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.allowedHostSuffixes",
+        "field": "proposedInvocation",
+        "value": null
+      },
+      "matrixSha256": "fffb2a232369aa6963ec28279cc83fda4001f66cdc19400a7ca8f480f885f88e"
+    },
+    {
+      "name": "missing-historical-requirement",
+      "exitCode": 1,
+      "intendedDocumentationRejection": [
+        {
+          "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.allowedHostSuffixes",
+          "field": "historical-requirements",
+          "reason": "missing historical text or original obligation lost"
+        },
+        {
+          "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.allowedHostSuffixes",
+          "field": "active-requirements"
+        }
+      ],
+      "rawEvidence": "docs/review/evidence/config-acceptance/author/rcore001-negative-missing-historical-requirement.log",
+      "rawSha256": "3f2e6c740fad920da2c5402cf979fb47b0c0e3ae41695bf4908956d42791d40f",
+      "matrixMutation": {
+        "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.allowedHostSuffixes",
+        "field": "requirementIds",
+        "value": [
+          "F-EFFECT"
+        ]
+      },
+      "matrixSha256": "a86629f92d76d81aeb7b3187ea07d431dd877025c35e6c870fdb95464a41f061"
+    },
+    {
+      "name": "restored-current-positive",
+      "exitCode": 0,
+      "checked": 148,
+      "rawEvidence": "docs/review/evidence/config-acceptance/author/rcore001-restored-positive.log",
+      "rawSha256": "d5ada3da5e5676b142e75af6399d909b764eb12d592f504e629e5e70fdb84914"
+    }
+  ],
+  "sourceIdentities": [
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-canonical-refinements.py",
+      "sha256": "b5b3535fc7e89e71823c2328654258983be7228670141d90efce13e38d9b1646"
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "sha256": "89115ac7f03dfb2dd54bab27a997d185cb87856561fa24d875dbfe4c0dbb0a68"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/residual-fragment.json",
+      "sha256": "25ca9b453586600cb1bd3fe168fc5c6bb24304330e647a356d957929cb80ee8e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/active-case-specifications.json",
+      "sha256": "d36e64c1faf6500c0c30955784e50df2d30ab5e80a4a871b147225dc3c4151aa"
+    }
+  ],
+  "globalC0Accepted": false
+}

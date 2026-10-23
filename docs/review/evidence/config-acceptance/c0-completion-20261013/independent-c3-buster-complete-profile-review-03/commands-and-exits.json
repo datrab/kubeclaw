@@ -1,0 +1,15 @@
+{
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "replay": {
+    "cmd": "node docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-03/collect-definition-checks.mjs --output-dir docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c3-buster-complete-profile-review-03/replay > docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c3-buster-complete-profile-review-03/replay.stdout 2> docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c3-buster-complete-profile-review-03/replay.stderr",
+    "chunk_id": "1b345b",
+    "wall_time_seconds": 1.174238186,
+    "exit_code": 0,
+    "original_token_count": 0,
+    "output": ""
+  },
+  "rawStdout": "replay.stdout",
+  "rawStderr": "replay.stderr",
+  "summary": "replay/definition-checks-03.json",
+  "qualification": "Authorized narrow pure source/schema collector only; no productive CLI/provider/native/API/network/credentials/TLSlistener/Eval."
+}

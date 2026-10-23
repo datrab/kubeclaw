@@ -1,0 +1,158 @@
+{
+  "image": {
+    "digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  },
+  "imagePullSecrets": [
+    {
+      "name": "delivery-pull-b"
+    }
+  ],
+  "auth": {
+    "existingSecret": "delivery-auth-b",
+    "existingSecretKey": "gateway-token"
+  },
+  "litellm": {
+    "existingSecret": "delivery-litellm-b",
+    "existingSecretKey": "api-key"
+  },
+  "discord": {
+    "enabled": true,
+    "existingSecret": "delivery-discord-b",
+    "existingSecretKey": "discord-token"
+  },
+  "agent": {
+    "git": {
+      "enabled": false
+    }
+  },
+  "gateway": {
+    "startupDoctor": {
+      "resources": {
+        "requests": {
+          "cpu": "200m",
+          "memory": "256Mi"
+        },
+        "limits": {
+          "cpu": "2",
+          "memory": "2Gi"
+        }
+      }
+    },
+    "resources": {
+      "requests": {
+        "cpu": "200m",
+        "memory": "256Mi",
+        "ephemeral-storage": "2Gi"
+      },
+      "limits": {
+        "cpu": "2",
+        "memory": "2Gi",
+        "ephemeral-storage": "4Gi"
+      }
+    }
+  },
+  "initSetup": {
+    "resources": {
+      "requests": {
+        "cpu": "200m",
+        "memory": "256Mi"
+      },
+      "limits": {
+        "cpu": "2",
+        "memory": "2Gi"
+      }
+    }
+  },
+  "resources": {
+    "requests": {
+      "cpu": "200m",
+      "memory": "256Mi"
+    },
+    "limits": {
+      "cpu": "2",
+      "memory": "2Gi"
+    }
+  },
+  "workerTrust": {
+    "spiffe": {
+      "enabled": true,
+      "envoy": {
+        "resources": {
+          "requests": {
+            "cpu": "200m",
+            "memory": "256Mi"
+          },
+          "limits": {
+            "cpu": "2",
+            "memory": "2Gi"
+          }
+        }
+      }
+    }
+  },
+  "persistence": {
+    "config": {
+      "enabled": true,
+      "size": "20Gi",
+      "storageClass": "delivery-storage-b",
+      "accessModes": [
+        "ReadWriteOnce"
+      ]
+    },
+    "workspace": {
+      "enabled": true,
+      "size": "40Gi",
+      "storageClass": "delivery-storage-b",
+      "accessModes": [
+        "ReadWriteOnce"
+      ]
+    }
+  },
+  "serviceAccount": {
+    "create": true
+  },
+  "agentRole": "buster",
+  "busterNative": {
+    "nodeName": "delivery-node",
+    "namespace": "default",
+    "policyDigest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  },
+  "busterNamespaceBroker": {
+    "enabled": true,
+    "controller": {
+      "resources": {
+        "requests": {
+          "cpu": "200m",
+          "memory": "256Mi"
+        },
+        "limits": {
+          "cpu": "2",
+          "memory": "2Gi"
+        }
+      }
+    }
+  },
+  "extraContainers": [
+    {
+      "name": "buster-v2-runtime",
+      "image": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "resources": {
+        "requests": {
+          "cpu": "200m",
+          "memory": "256Mi"
+        },
+        "limits": {
+          "cpu": "2",
+          "memory": "2Gi"
+        }
+      }
+    }
+  ],
+  "runtimeInfrastructure": {
+    "registry": {
+      "endpoint": "https://registry.example.test",
+      "transport": "https",
+      "authSecretName": "delivery-registry-b"
+    }
+  }
+}

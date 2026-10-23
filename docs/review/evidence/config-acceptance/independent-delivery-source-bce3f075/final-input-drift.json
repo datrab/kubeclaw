@@ -1,0 +1,6 @@
+{
+  "deliveryManifestFiles": 954,
+  "deliveryManifestMismatch": [],
+  "inputDrift": [],
+  "scope": "Delivery + independently enumerated actual inputs stable; broad dirty patch/untracked other-author docs are transient identified snapshots only"
+}

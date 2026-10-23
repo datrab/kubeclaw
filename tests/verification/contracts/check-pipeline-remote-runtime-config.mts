@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY_SELECTION } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -12,7 +13,8 @@ import {
   loadProductionBusterRemotePlanRuntime as productionRuntime,
 } from '@kubeclaw/buster-engine';
 
-import { loadSwarmSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
+import { captureSwarmSettings, type BusterSettings, type WorkerCoreSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
+import { declaredPipelineServices } from '../../../scripts/updates/pipeline-generation.mjs';
 import type { BusterPreparation } from '../../../skills/buster/engine/test-gates/preparation-client.ts';
 
 // This original configuration-only suite starts empty stores, never preparation.
@@ -21,7 +23,23 @@ const preparation: BusterPreparation = {
   extract: async () => { throw new Error('UNEXPECTED_PREPARATION'); },
   repository: async () => { throw new Error('UNEXPECTED_PREPARATION'); },
 };
-const snapshot = loadSwarmSettings({ SWARM_CONFIG: path.resolve('charts/kubeclaw/files/config/swarm.config.json') });
+// Source-only configuration fixture: consume the declared Buster owners together.
+// This is not a verified installed-service boot receipt or native acceptance.
+const authorRoot = path.resolve('config');
+const selection = declaredPipelineServices(authorRoot, { role: 'buster', namespace: 'kubeclaw', releaseName: 'agent-buster' })
+  .find(service => service.callerId === 'buster-runtime');
+if (!selection) throw new Error('TEST_BUSTER_SELECTION_REQUIRED');
+const capture = captureSwarmSettings(path.join(authorRoot, 'pipeline.config.json'), selection);
+const busterComponent = capture.components['buster-engine'];
+const workerComponent = capture.components['worker-core'];
+if (!busterComponent || !workerComponent) throw new Error('TEST_BUSTER_COMPONENT_REQUIRED');
+const authored = busterComponent.settings as unknown as BusterSettings;
+const snapshot = {
+  buster: { ...authored, clusterInvokers: { ...authored.clusterInvokers,
+    shared: { ...authored.clusterInvokers.shared,
+      kubectlExecutable: path.resolve(capture.identity.generationDirectory, authored.clusterInvokers.shared.kubectlExecutable) } } },
+  workerCore: workerComponent.settings as unknown as WorkerCoreSettings,
+};
 function loadProductionBusterRemotePlanRuntime(file: string, environment: NodeJS.ProcessEnv) {
   return productionRuntime(file, preparation, snapshot.buster, snapshot.workerCore.localRuntime, environment);
 }
@@ -79,7 +97,7 @@ try {
 
   const platformConfig = path.join(temporary, 'platform.json');
   const pluginRoot = path.join(root, 'skills/buster/plugins');
-  fs.writeFileSync(platformConfig, JSON.stringify({
+  fs.writeFileSync(platformConfig, JSON.stringify({corePolicySelection: TEST_CORE_POLICY_SELECTION,
     schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: [pluginRoot], trustedBuiltinRoots: [pluginRoot],
     externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} }, providers: {}, grants: {},
     adapters: {}, activeAdapters: [], observers: {}, storageRoot: './platform-state', shutdownTimeoutMs: 5_000,
@@ -156,25 +174,23 @@ try {
   const healthConfiguration = { ...httpConfiguration, networkHttp: { ...httpConfiguration.networkHttp, registryHealth: true } };
   const healthEnvironment = { KUBECLAW_BUILD_REVISION: 'a'.repeat(40), [tokenName]: token, [sourcePublicKeyName]: sourceAttestationPublicKey };
   fs.writeFileSync(busterConfig, JSON.stringify(healthConfiguration));
-  assert.throws(() => loadProductionBusterRemotePlanRuntime(busterConfig, healthEnvironment), /BUSTER_REGISTRY_HEALTH_CONFIG_INVALID/u);
-  // These are configuration-only checks: no build process is launched.
-  const containerBuild = { buildctlExecutable: '/usr/local/bin/buildctl', buildkitHost: 'unix:///run/buildkit.sock',
+  assert.throws(() => loadProductionBusterRemotePlanRuntime(busterConfig, healthEnvironment), /BUSTER_REGISTRY_PEER_REQUIRED/u);
+  // The peer is independent of build activation; no build process is launched.
+  const registryPeer = {
     registryBaseUrl: 'https://registry.example.test:5443', registryReference: 'registry.example.test:5443',
-    registryUsernameEnvironmentVariable: 'REGISTRY_HEALTH_USER', registryPasswordEnvironmentVariable: 'REGISTRY_HEALTH_PASSWORD',
-    repositoryPrefix: 'kubeclaw/test', allowedPlatforms: ['linux/amd64'], allowedBuildArguments: [],
-    maximumLogBytes: 1024, maximumExecutionMs: 5000, maximumManifestBytes: 1024 };
-  fs.writeFileSync(busterConfig, JSON.stringify({ ...healthConfiguration, containerBuild }));
+    registryUsernameEnvironmentVariable: 'REGISTRY_HEALTH_USER', registryPasswordEnvironmentVariable: 'REGISTRY_HEALTH_PASSWORD' };
+  fs.writeFileSync(busterConfig, JSON.stringify({ ...healthConfiguration, registryPeer }));
   assert.throws(() => loadProductionBusterRemotePlanRuntime(busterConfig, healthEnvironment), /REGISTRY_HEALTH_USER|registryUsernameEnvironmentVariable/u);
   const registryEnvironment = { ...healthEnvironment, REGISTRY_HEALTH_USER: 'health-test', REGISTRY_HEALTH_PASSWORD: 'private-health-config-canary' };
   const configuredHealth = loadProductionBusterRemotePlanRuntime(busterConfig, registryEnvironment);
   const healthAddress = await configuredHealth.start(); assert.equal(healthAddress.address, '127.0.0.1'); await configuredHealth.stop();
-  fs.writeFileSync(busterConfig, JSON.stringify({ ...healthConfiguration, containerBuild: { ...containerBuild, registryReference: 'foreign.example.test' } }));
-  assert.throws(() => loadProductionBusterRemotePlanRuntime(busterConfig, registryEnvironment), /BUSTER_REGISTRY_HEALTH_ENDPOINT_MISMATCH/u);
+  fs.writeFileSync(busterConfig, JSON.stringify({ ...healthConfiguration, registryPeer: { ...registryPeer, registryReference: 'foreign.example.test' } }));
+  assert.throws(() => loadProductionBusterRemotePlanRuntime(busterConfig, registryEnvironment), /BUSTER_REGISTRY_PEER_INVALID/u);
 
   // Cluster policy rejects before constructing any new store. Existing originals above remain intact.
   const clusterConfiguration = { ...baseBuster, clusterBindings: { controllerNamespace: 'kubeclaw' },
     stateRoot: './cluster-negative-state',
-    allowedCapabilities: ['kubernetes.fixture'], containerBuild };
+    allowedCapabilities: ['kubernetes.fixture'], registryPeer };
   const clusterLoad = () => loadProductionBusterRemotePlanRuntime(busterConfig, registryEnvironment);
   const noClusterStore = () => assert.equal(fs.existsSync(path.join(temporary, 'cluster-negative-state')), false);
   for (const kubernetesRuntimeSecurity of [null, {}, snapshot.buster.clusterInvokers.runtimeSecurity, 'invalid']) {
@@ -188,7 +204,7 @@ try {
   assert.equal(disabledClusterAddress.address, '127.0.0.1');
   await disabledClusterRuntime.stop();
   for (const clusterBindings of [null, {}, { controllerNamespace: '' },
-    { controllerNamespace: 'kubeclaw', registryReference: containerBuild.registryReference }]) {
+    { controllerNamespace: 'kubeclaw', registryReference: registryPeer.registryReference }]) {
     fs.writeFileSync(busterConfig, JSON.stringify({ ...baseBuster, stateRoot: './cluster-negative-state', clusterBindings }));
     assert.throws(clusterLoad, /BUSTER_(?:REMOTE_CONFIG_INVALID:clusterBindings|CLUSTER_BINDINGS_INVALID)/); noClusterStore();
   }
@@ -198,16 +214,16 @@ try {
     fs.writeFileSync(busterConfig, JSON.stringify({ ...clusterConfiguration, [retired]: {} }));
     assert.throws(clusterLoad, /SWARM_CONFIG_LEGACY_OVERRIDE/); noClusterStore();
   }
-  for (const registryReference of ['', containerBuild.registryReference, 'foreign.example.test']) {
+  for (const registryReference of ['', registryPeer.registryReference, 'foreign.example.test']) {
     fs.writeFileSync(busterConfig, JSON.stringify({ ...clusterConfiguration,
       clusterBindings: { controllerNamespace: 'kubeclaw', registryReference } }));
     assert.throws(clusterLoad, /BUSTER_CLUSTER_BINDINGS_INVALID/); noClusterStore();
   }
   fs.writeFileSync(busterConfig, JSON.stringify({ ...clusterConfiguration,
-    containerBuild: { ...containerBuild, registryReference: 'foreign.example.test' } }));
-  assert.throws(clusterLoad, /BUSTER_REGISTRY_HEALTH_ENDPOINT_MISMATCH/); noClusterStore();
-  fs.writeFileSync(busterConfig, JSON.stringify({ ...clusterConfiguration, containerBuild: undefined }));
-  assert.throws(clusterLoad, /BUSTER_REGISTRY_HEALTH_CONFIG_INVALID/); noClusterStore();
+    registryPeer: { ...registryPeer, registryReference: 'foreign.example.test' } }));
+  assert.throws(clusterLoad, /BUSTER_REGISTRY_PEER_INVALID/); noClusterStore();
+  fs.writeFileSync(busterConfig, JSON.stringify({ ...clusterConfiguration, registryPeer: undefined }));
+  assert.throws(clusterLoad, /BUSTER_REGISTRY_PEER_REQUIRED/); noClusterStore();
   fs.writeFileSync(busterConfig, JSON.stringify(clusterConfiguration));
   const clusterRuntime = clusterLoad();
   const clusterAddress = await clusterRuntime.start();

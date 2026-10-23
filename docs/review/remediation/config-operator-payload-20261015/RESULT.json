@@ -1,0 +1,139 @@
+{
+  "at": "2026-10-15T19:15:41.605496+00:00",
+  "change": "Separate operator maxPayloadBytes externalized into required central operatorMessagingPayload.targetPayloadProfiles and explicit per-target payloadProfile. Former65536 only in central standard; original512/4096 limits and target IDs preserved. No per-target numeric author/default. Frozen selected values and original selectors captured and restored on resume/recover/admin before current config validation. Endpoint/secret/format/receipt and pinned identity rules unchanged.",
+  "settingsSourceWired": 90,
+  "tests": {
+    "integratedPolicyPassed": 33,
+    "integratedPolicyTotal": 33,
+    "skipped": 0,
+    "originalOperatorSuitesPassed": 2,
+    "originalOperatorSuitesTotal": 2,
+    "operatorTypecheckExitCode": 0,
+    "novaTypecheckExitCode": 0
+  },
+  "verification": [
+    {
+      "command": [
+        "node",
+        "--test",
+        "tests/verification/reliability/nova-delivery-policy.test.mjs"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-operator-payload-20261015/check-0.txt"
+    },
+    {
+      "command": [
+        "node",
+        "tests/live-function.test.ts"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/operator-messaging",
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-operator-payload-20261015/check-1.txt"
+    },
+    {
+      "command": [
+        "node",
+        "tests/package-boundary.test.mjs"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/operator-messaging",
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-operator-payload-20261015/check-2.txt"
+    },
+    {
+      "command": [
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "tsconfig.json"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/operator-messaging",
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-operator-payload-20261015/check-3.txt"
+    },
+    {
+      "command": [
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "tsconfig.json"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core",
+      "exitCode": 1,
+      "log": "docs/review/remediation/config-operator-payload-20261015/check-4.txt"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-operator-payload-20261015/check-5.txt"
+    }
+  ],
+  "finalVerification": [
+    {
+      "command": [
+        "./node_modules/.bin/tsc",
+        "--noEmit",
+        "--module",
+        "NodeNext",
+        "--moduleResolution",
+        "NodeNext",
+        "--target",
+        "ES2024",
+        "--lib",
+        "ESNext,DOM,DOM.Iterable",
+        "--strict",
+        "--types",
+        "node",
+        "--skipLibCheck",
+        "--allowImportingTsExtensions",
+        "--esModuleInterop",
+        "skills/nova/core/execution/engine-runtime.ts",
+        "skills/nova/core/execution/engine-snapshots.ts",
+        "skills/nova/core/execution/engine-run.ts",
+        "skills/nova/core/execution/engine-admin.ts"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-operator-payload-20261015/final-0.txt"
+    },
+    {
+      "command": [
+        "node",
+        "--test",
+        "tests/verification/reliability/nova-target-timing-policy.test.mjs",
+        "tests/verification/reliability/nova-artifact-policy.test.mjs",
+        "tests/verification/reliability/nova-telemetry-policy.test.mjs",
+        "tests/verification/reliability/nova-delivery-policy.test.mjs",
+        "tests/verification/reliability/nova-dispatch-policy.test.mjs",
+        "tests/verification/reliability/nova-core-policy.test.mjs",
+        "tests/verification/reliability/nova-state-wait-policy.test.mjs",
+        "tests/verification/reliability/nova-http-policy.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-operator-payload-20261015/final-1.txt"
+    }
+  ],
+  "invocationCorrection": "Initial Nova typecheck used nonexistent skills/nova/core/tsconfig.json (TS5058). Corrected to established explicit strict four-consumer tsc command, exit0; raw failed invocation retained.",
+  "sourceHashes": {
+    "config/nova/core.config.json": "1aadfcea7f9bab2c3fa643bc13553cb9270ba98fa83c751b60aebc5da8479e6b",
+    "skills/common/plugin-runtime/foundation/config/core-runtime-policy.schema.json": "2c0a56e7841f3014dbe1c7f12d2d36a3bb069060684d12489377fc2939caccbc",
+    "skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts": "7ed201f6919ee78198503d7beee37d1656e100c726155f5f788e734b0ec22912",
+    "skills/common/plugins/operator-messaging/README.md": "4a24e40ab5091f08eab217b27bd7153bd1778172bd6ec359573c4f96b51e89f7",
+    "skills/common/plugins/operator-messaging/schemas/config.schema.json": "044e4023104d969e3f886b3e6bb62d1897cb35c54843c7d5afebdb8af98a8f75",
+    "skills/common/plugins/operator-messaging/src/config.ts": "f4cc6bcc20514e2d7afd785eca4f662be24d754f21fc1b62affe76e93196adba",
+    "skills/common/plugins/operator-messaging/tests/live-function.test.ts": "5e5ec735803d7b4bf5981a02b52400821dd9157f4dbaee7e727655af059635a8",
+    "skills/nova/core/execution/engine-admin.ts": "38c175f221ff03a99a37efcc0543c692b4eba464fdc1798c984ba8c9ea8035b1",
+    "skills/nova/core/execution/engine-run.ts": "a6b73e9284c5ff561a5e12d4ae043d39348586bd6ee9a068ab31eb73caa336e4",
+    "skills/nova/core/execution/engine-runtime.ts": "33c749eac20ca6a4363023067638293719f7949f2f456eba668ea7db78bb6674",
+    "skills/nova/core/execution/engine-snapshots.ts": "604908b1b7311cbbc2c664de0717963dd7b1803d6117c11228bf2e1f44de8fbc",
+    "tests/verification/reliability/nova-delivery-policy.test.mjs": "143cb7acf62764f52a3778293310353dc3926e5bce7a9fd3235617997f485d56"
+  },
+  "independentAcceptance": "OPEN: fresh non-author transport + operator review required. No spawn_agent/native collaboration entry exposed in ALL_TOOLS; command -v codex exit127 on this surface. No independent review claimed.",
+  "parentRecovery": "Parent thread-claimed failure persists; no active CONFIG child; no pending recovery duplicate sent. Direct authorized bounded implementation under same nonblocking writer lock.",
+  "nextAction": "Obtain fresh non-author review of transport and operator payload changes when reviewer surface available. Continue remaining network adapter caps / event queues / observers per current externalization scope. All full native/integrated C0-C6 acceptance OPEN.",
+  "writerLock": "shared nonblocking; released on process exit"
+}

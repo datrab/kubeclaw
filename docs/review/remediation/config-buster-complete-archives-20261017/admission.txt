@@ -1,0 +1,33 @@
+✔ actual Buster chart binds both authored admission profiles and rejects retired ENV authors (20218.979622ms)
+✖ actual service CLI rejects inherited retired ENV before opening its parent channel (1.56831ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 20772.790446
+
+✖ failing tests:
+
+test at tests/verification/deployment/buster-admission-render.test.mjs:80:1
+✖ actual service CLI rejects inherited retired ENV before opening its parent channel (1.56831ms)
+  AssertionError [ERR_ASSERTION]: this unprivileged CLI proof uses its real service identity
+  
+  0 !== 1000
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/buster-admission-render.test.mjs:81:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1000,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,34 @@
+{
+  "at": "2026-10-17T04:56:36.637081+00:00",
+  "sourceCheckpoint": "bff00c104",
+  "overallAccepted": false,
+  "implementationChangedThisObservation": false,
+  "independentIntegrationReview": {
+    "attempts": 2,
+    "engine": "codex",
+    "modelOrCredentialChanges": false,
+    "previousEROFSReproduced": false,
+    "currentFailure": "model attempts reached upstream; exceeded retry limit HTTP429 Too Many Requests",
+    "resultAvailable": false,
+    "reviewNotCountedPassed": true
+  },
+  "knownSourceWorkNotEnvironmentBlocked": [
+    "productive coordinated boot/root/source/file-set delivery to Quality map",
+    "actual inputStore-owned QB-R02 sealed byte/producer/build/source/baseline original receipts/reservations/fence",
+    "remaining central platform/grant, Redis, notification and operator receiving/recovery"
+  ],
+  "testQualification": {
+    "componentGate": {
+      "passed": 651,
+      "total": 652,
+      "skipped": 0,
+      "remainingFailure": "actual UID0 vs required UID1000; real setresuid/chown EPERM"
+    },
+    "preservedFieldIds": 2409,
+    "preservedCaseIds": 6845,
+    "preservedRequirementIds": 50,
+    "preservationIsNotImplementationOrAcceptance": true
+  },
+  "externalPrerequisite": "isolated Linux/Docker/UID-GID1000/delegated writable cgroup and root-trusted sufficient archive disk; user access clarification requested without secrets",
+  "priority": "Functional receiving chain before further unrelated test/fixture/matrix cleanup; tests only to prove changed integration or unblock that integration"
+}

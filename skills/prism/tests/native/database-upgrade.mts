@@ -1,3 +1,4 @@
+import { nativeControlSettings } from './resource-policy.mts';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { randomUUID } from 'node:crypto';
@@ -55,15 +56,15 @@ test('native Prism credentials survive failed upgrade; legacy writes and fresh-s
   const admin = pool(databaseUrl(source!)); const target = pool(databaseUrl(destination!));
   const runtime = pool(databaseUrl(source!, 'runtime')); const migrator = pool(databaseUrl(source!, 'migrator'));
   try {
-    await bootstrapPrismDatabaseRoles(admin, databaseUrl(source!), passwords);
+    await bootstrapPrismDatabaseRoles(admin, databaseUrl(source!), passwords, nativeControlSettings.databaseBootstrap.connectionTimeoutMs);
     assert.equal((await admin.query("SELECT extversion FROM pg_extension WHERE extname='vector'")).rows[0].extversion, '0.8.6');
     t.diagnostic(`Native PostgreSQL ${(await admin.query('SHOW server_version')).rows[0].server_version}; pgvector 0.8.6`);
     await migrate(migrator, { infrastructure: 'preprovisioned' });
     const credentials = async () => (await admin.query("SELECT rolname,rolpassword FROM pg_authid WHERE rolname LIKE 'prism_%' ORDER BY rolname")).rows;
     const before = await credentials();
-    await assert.rejects(bootstrapPrismDatabaseRoles(admin, databaseUrl(source!), { ...passwords, runtime: 'changed-password' }), /PRISM_ROLE_CREDENTIAL_TRANSITION_REQUIRED:prism_runtime/);
+    await assert.rejects(bootstrapPrismDatabaseRoles(admin, databaseUrl(source!), { ...passwords, runtime: 'changed-password' }, nativeControlSettings.databaseBootstrap.connectionTimeoutMs), /PRISM_ROLE_CREDENTIAL_TRANSITION_REQUIRED:prism_runtime/);
     assert.deepEqual(await credentials(), before, 'Failed upgrade must not rotate any existing credential');
-    await bootstrapPrismDatabaseRoles(admin, databaseUrl(source!), passwords);
+    await bootstrapPrismDatabaseRoles(admin, databaseUrl(source!), passwords, nativeControlSettings.databaseBootstrap.connectionTimeoutMs);
     assert.deepEqual(await credentials(), before, 'Ordinary bootstrap preserves SCRAM verifiers');
 
     const eventId = randomUUID();
@@ -95,7 +96,7 @@ test('native Prism credentials survive failed upgrade; legacy writes and fresh-s
       const query = `SELECT row_to_json(t)::text AS original FROM prism.${table} t ORDER BY row_to_json(t)::text`;
       assert.deepEqual((await target.query(query)).rows, (await admin.query(query)).rows, `${table} must restore exactly`);
     }
-    await bootstrapPrismDatabaseRoles(target, databaseUrl(destination!), passwords);
+    await bootstrapPrismDatabaseRoles(target, databaseUrl(destination!), passwords, nativeControlSettings.databaseBootstrap.connectionTimeoutMs);
     const restoredRuntime = pool(databaseUrl(destination!, 'runtime'));
     try {
       assert.equal((await restoredRuntime.query("SELECT '[1,2,3]'::vector::text AS value")).rows[0].value, '[1,2,3]');

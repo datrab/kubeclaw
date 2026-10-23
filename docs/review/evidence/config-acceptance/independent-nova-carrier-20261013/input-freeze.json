@@ -1,0 +1,192 @@
+{
+  "recordedAtUTC": "2026-10-13T02:15:00.467621+00:00",
+  "scope": "Independent parentauthored Nova seam only; authored Core55/97/145/Core13 and Runtime/Delivery excluded",
+  "head": "bce3f075156a86be345821499c04628cb35c2762",
+  "inputs": [
+    {
+      "path": "docs/review/evidence/config-acceptance/author/NOVA-MODULE-CARRIER-PROPOSAL-20261013.md",
+      "sha256": "293416f321fc421d62401aa872b538530b0fcb4a8b253fc564bcdf68d122b1f8",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/docs/review/evidence/config-acceptance/author/NOVA-MODULE-CARRIER-PROPOSAL-20261013.md"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/NOVA-MODULE-BINDING-CONSTRAINTS-20261013.md",
+      "sha256": "e71981f37555bcb12644ee3e7c15d42389fba510868fe9d5fce976e29e737038",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/docs/review/evidence/config-acceptance/author/NOVA-MODULE-BINDING-CONSTRAINTS-20261013.md"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/nova-current-binding-seam-map-20261013.json",
+      "sha256": "8c02537b23c8cd5d25a2dbf62ffb71b26862ff31978f978fe9e278de468d3a6e",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/docs/review/evidence/config-acceptance/author/nova-current-binding-seam-map-20261013.json"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/check-nova-journal-binding-seam.mjs",
+      "sha256": "0a53f348e71abe3af81ad0422591b62bb9b4e955c5c5f7d566a2669ca547a3f6",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/docs/review/evidence/config-acceptance/author/check-nova-journal-binding-seam.mjs"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/nova-journal-binding-seam-attempt1-20261013.log",
+      "sha256": "4504b28f3d3ba0793a51e5ad02c5d07ab6e6d3852b5fcfb00f18470d2e96509a",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/docs/review/evidence/config-acceptance/author/nova-journal-binding-seam-attempt1-20261013.log"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/nova-journal-binding-seam-identities-20261013.json",
+      "sha256": "e1baa13795858ecfe080b02bd109fcbe8f4a5826a4ce39733e7df664a84596bd",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/docs/review/evidence/config-acceptance/author/nova-journal-binding-seam-identities-20261013.json"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/nova-current-binding-seam-source-read-20261013.log",
+      "sha256": "c36b0978249e1632b85d8b0aafbf2403766fc67e8c7be9b07079de370fcd2285",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/docs/review/evidence/config-acceptance/author/nova-current-binding-seam-source-read-20261013.log"
+    },
+    {
+      "path": "skills/nova/project/compiler.ts",
+      "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/skills/nova/project/compiler.ts"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-run.ts",
+      "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/skills/nova/core/execution/engine-run.ts"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-runtime.ts",
+      "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/skills/nova/core/execution/engine-runtime.ts"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-snapshots.ts",
+      "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/skills/nova/core/execution/engine-snapshots.ts"
+    },
+    {
+      "path": "skills/nova/core/execution/graph.ts",
+      "sha256": "680077697180d4ef2df70e823391eaef710d49fb721338663f8f73d65973b2af",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/skills/nova/core/execution/graph.ts"
+    },
+    {
+      "path": "skills/nova/core/execution/pipeline-loop.ts",
+      "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/skills/nova/core/execution/pipeline-loop.ts"
+    },
+    {
+      "path": "skills/nova/core/state/journal.ts",
+      "sha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/skills/nova/core/state/journal.ts"
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/values.ts",
+      "sha256": "b91ec914fb8ce1eaccc40751f9693689694e455389eb8742d7f275fdeb24571f",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/skills/common/plugin-runtime/sdk/src/values.ts"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/digest.ts",
+      "sha256": "10c61ec122ca6e65c7deef2c059a19ad70627cf65bdf1eb65f0ac2539457d780",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/contracts/pipeline-worker-core/v1/src/digest.ts"
+    },
+    {
+      "path": "docs/review/remediation/decisions.md",
+      "sha256": "b4d9b29911643d08fc6ef439b88dec4ef3e6a4f355ea591ff3f6db9e3f152d1b",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/docs/review/remediation/decisions.md"
+    },
+    {
+      "path": "docs/review/remediation/config-definition-current.md",
+      "sha256": "7316ca6af5a68de28cb56265ad4fa937f188c774882bb98c38744ba42c93ff51",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/docs/review/remediation/config-definition-current.md"
+    },
+    {
+      "path": "skills/nova/project/source.ts",
+      "sha256": "f652f5bda01a9a39ea7015ddbf12867ff81f989b0fbe2e0cadcff1a4b4ae2cd0",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/skills/nova/project/source.ts"
+    },
+    {
+      "path": "skills/nova/project/coverage.ts",
+      "sha256": "6ad22387d588ec783ddfd12a45d1aea735785f3a065254d0fc00b1820ee01f2b",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/skills/nova/project/coverage.ts"
+    },
+    {
+      "path": "skills/nova/project/demo.ts",
+      "sha256": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/skills/nova/project/demo.ts"
+    },
+    {
+      "path": "skills/nova/core/execution/run-mutation.ts",
+      "sha256": "9acd2187077eca9fed18bb73b512cbda72aead9be9d92083438af5305cd7092d",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/skills/nova/core/execution/run-mutation.ts"
+    },
+    {
+      "path": "skills/nova/core/state/file-mutex.ts",
+      "sha256": "d6d347d6b615796ff761c0c608ed6a4d9f4f834bea92ddd2870d2312b5d04c7c",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/skills/nova/core/state/file-mutex.ts"
+    },
+    {
+      "path": "skills/nova/core/state/json-value.ts",
+      "sha256": "c99b7a8c16e3c8c6860e7e469d9feb454448fab311f8d5f7bbf6dd690e59a58b",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/skills/nova/core/state/json-value.ts"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/hash-journal.ts",
+      "sha256": "b00c2271bb662055d7250ca193f842d1e6346edf22dfa713b33df1b637ce957a",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/skills/common/plugin-runtime/foundation/observability/hash-journal.ts"
+    },
+    {
+      "path": "skills/nova/core/effects/locks.ts",
+      "sha256": "7ca675286800ee88314919f7c0d524c7b5cde99928b9e93c8036e566ecc4b793",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/skills/nova/core/effects/locks.ts"
+    },
+    {
+      "path": "skills/nova/core/execution/runner.ts",
+      "sha256": "9a34098cd68460f42e220ada2f3e7bef37fcc9eb5fdd351db2cd1585fe6a5cc6",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/skills/nova/core/execution/runner.ts",
+      "capture": "supplemental productive reader identity before independent supplemental controls"
+    },
+    {
+      "path": "skills/nova/core/execution/graph-build.ts",
+      "sha256": "75ce0387330d8acc6d7217aa8539a41c7796fcfd1522c079c8585c55e765adc6",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/skills/nova/core/execution/graph-build.ts",
+      "capture": "supplemental productive reader identity before independent supplemental controls"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-admin.ts",
+      "sha256": "f3ba44d49baffa01ee74a4d749818e8f903feb48827eb9108f959c24c8a0a1f2",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/skills/nova/core/execution/engine-admin.ts",
+      "capture": "supplemental productive reader identity before independent supplemental controls"
+    },
+    {
+      "path": "skills/nova/core/lifecycle/recovery.ts",
+      "sha256": "5095a92c809f1e19524687d44e227585edaf482a7024dfc41b72f264b28822c8",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/skills/nova/core/lifecycle/recovery.ts",
+      "capture": "supplemental productive reader identity before independent supplemental controls"
+    },
+    {
+      "path": "skills/nova/core/telemetry/observers.ts",
+      "sha256": "b46b9a70b190bf8541d96188221a63acc1e9c03ff6204a9e94b37c944306aafd",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/skills/nova/core/telemetry/observers.ts",
+      "capture": "supplemental productive reader identity before independent supplemental controls"
+    },
+    {
+      "path": "skills/nova/core/telemetry/observer-delivery.ts",
+      "sha256": "d80f67ca85cafee41eb41d228be7a8d3aff820b556ccf21efa6f0a9845afd1fc",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/skills/nova/core/telemetry/observer-delivery.ts",
+      "capture": "supplemental productive reader identity before independent supplemental controls"
+    },
+    {
+      "path": "skills/nova/core/telemetry/observer-recovery.ts",
+      "sha256": "9d97600debff727243d62fbad6c4a4616b056a4e4afb1098e1e19bbaa5f3edcb",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/skills/nova/core/telemetry/observer-recovery.ts",
+      "capture": "supplemental productive reader identity before independent supplemental controls"
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+      "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+      "capture": "supplemental productive reader identity before independent supplemental controls"
+    },
+    {
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "snapshot": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/inputs/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "capture": "supplemental productive reader identity before independent supplemental controls"
+    }
+  ],
+  "otherDirectories": "mutable outside exact frozeninputs"
+}

@@ -1,0 +1,41 @@
+import pathlib,json,hashlib,gzip,subprocess,collections
+root=pathlib.Path.cwd();base=root/'docs/review/evidence/config-acceptance/c0-completion-20261013';b=base/'field-activation-partition-02';o=base/'independent-field-activation-partition-review-02';(o/'frozen-inputs').mkdir(exist_ok=True);sha=lambda raw:hashlib.sha256(raw).hexdigest();digest=lambda obj:sha(json.dumps(obj,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode());cap=json.loads((b/'read-identities.json').read_text())['inputs'];cache={};snapobs=[]
+for x in cap:
+ raw=gzip.decompress((b/x['snapshot']).read_bytes());cache[(x['path'],x['sha256'])]=raw;snapobs.append({'path':x['path'],'capturedSha256':x['sha256'],'snapshotRoundtrip':sha(raw)==x['sha256'],'currentSha256':sha((root/x['path']).read_bytes()),'currentMatches':sha((root/x['path']).read_bytes())==x['sha256']})
+f=json.loads((b/'field-map.json').read_text())['fields'];new=json.loads((b/'actual-new-policy-map.json').read_text())['records'];invp='docs/review/remediation/config-semantic-inventory.json';matp='docs/review/remediation/config-acceptance-matrix.json';inv=json.loads((root/invp).read_text());mat=json.loads((root/matp).read_text());orig={x['id']:x for x in inv['rows']};cases=collections.defaultdict(list)
+for x in mat['cases']:
+ for id in x['settingIds']:cases[id].append(x['id'])
+checks=[{'id':x['id'],'body':digest(orig[x['id']])==x['originalRowBodySha256'],'source':orig[x['id']]['source']==x['currentScope']['source'],'history':orig[x['id']].get('activationHistory',[])==x['existingActivationHistory'],'cases':cases[x['id']]==x['originalCaseIds']} for x in f];refs=[];pathset=set();parsed={};rawhashes={}
+def ptr(obj,pointer):
+ if not pointer:return obj
+ for step in pointer.lstrip('/').split('/'):
+  step=step.replace('~1','/').replace('~0','~');obj=obj[int(step)] if isinstance(obj,list) else obj[step]
+ return obj
+def walk(obj,where):
+ if isinstance(obj,dict):
+  if isinstance(obj.get('path'),str) and 'sha256' in obj and 'jsonPointer' in obj:
+   path=obj['path'];s=obj['sha256'];pathset.add(path);rec={'where':where,'path':path,'sha256':s,'pointer':obj['jsonPointer']}
+   try:
+    raw=cache.get((path,s));rec['resolvedFromAuthorFrozenBytes']=raw is not None
+    if raw is None:raw=(root/path).read_bytes()
+    key=(path,s)
+    if key not in parsed:parsed[key]=json.loads(raw);rawhashes[key]=sha(raw)
+    rec['fileMatches']=rawhashes[key]==s;val=ptr(parsed[key],obj['jsonPointer']);rec['pointerResolves']=True
+    if 'bodySha256' in obj:rec['bodyMatches']=digest(val)==obj['bodySha256'] or sha(json.dumps(val,sort_keys=True,separators=(',',':'),ensure_ascii=True).encode())==obj['bodySha256']
+    if 'id' in obj and isinstance(val,dict) and 'id' in val:rec['idMatches']=obj['id']==val['id']
+   except Exception as e:rec['error']=str(e)
+   refs.append(rec)
+  for k,v in obj.items():walk(v,where+'/'+k)
+ elif isinstance(obj,list):
+  for i,v in enumerate(obj):walk(v,where+'/'+str(i))
+for name in ['field-map.json','actual-new-policy-map.json','provider-exact-case-joins.json','policy-field-instance-case-joins.json','dependent-material-reference-work.json']:
+ walk(json.loads((b/name).read_text()),name)
+a=json.loads((b/'auth-prism-source-audit.json').read_text())['all107OriginalAUTHRows'];arch=json.loads((b/'pinned-evidence-source-audit.json').read_text())['allArchivedOriginalSourceRows'];patterns=json.loads((b/'identical-binding-patterns.json').read_text())['patterns'];members=[id for x in patterns for id in x['fieldIds']];fm={x['id']:x for x in f};changes=json.loads((b/'source-specific-changes.json').read_text());pjoins=json.loads((b/'provider-exact-case-joins.json').read_text());qjoins=json.loads((b/'policy-field-instance-case-joins.json').read_text());stale=json.loads((b/'dependent-material-reference-work.json').read_text())['concurrentReadStaleness'];old=json.loads(cache[(stale['path'],stale['capturedSha256'])]);latest=json.loads((root/stale['path']).read_text());oldmem={x['profileField']:x for x in old['members']};latmem={x['profileField']:x for x in latest['members']};sd=[{'field':k,'changed':oldmem[k]!=latmem[k],'changedKeys':[j for j in oldmem[k].keys()|latmem[k].keys() if oldmem[k].get(j)!=latmem[k].get(j)],'originalContextId':oldmem[k]['associatedOriginalSettingId']} for k in oldmem];
+obs={'reviewer':'/root/policy_family_contract_review','head':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'counts':{'originalFields':len(orig),'originalCases':len(mat['cases']),'mapFields':len(f),'newRecords':len(new),'authorSnapshots':len(cap),'AUTHPrismRows':len(a),'archivedSourceRows':len(arch),'exactReferenceOccurrences':len(refs),'providerJoins':len(pjoins),'policyJoins':len(qjoins)},'fieldConservation':checks,'exactOriginalIDs':len(f)==len(fm) and set(fm)==set(orig),'authorSnapshotChecks':snapobs,'exactReferenceChecks':refs,'patternsExactMembership':len(members)==len(set(members)) and set(members)==set(orig),'patternScopeChecks':[{'id':x['id'],'field':id,'matchesFinalContract':x['contract']==fm[id]['proposedScope']['contract']} for x in patterns for id in x['fieldIds']],'nineChanges':[{'id':x['id'],'actualContract':fm[x['id']]['proposedScope']['contract'],'classes':fm[x['id']]['proposedScope']['classes'],'expectedContract':x['newContract'],'matches':fm[x['id']]['proposedScope']['contract']==x['newContract']} for x in changes],'AUTHAuditExactIDs':{x['id'] for x in a}=={id for id in orig if id.startswith('AUTH-PRISM-')},'archivedAuditExactIDs':{x['id'] for x in arch}=={id for id,r in orig.items() if r['source']['path'].startswith('docs/')},'allNewCaseIDsNonempty':all(x['caseIds'] for x in new),'policyContextAnchorsNotAliases':all(x['originalAliases']==[] for x in new if x['identity'].get('declaredId') is None),'staleAdjudicationComparison':sd,'staleOriginalContextScopes':[{'id':id,'classes':fm[id]['proposedScope']['classes']} for id in stale['changedContextOriginalIds']],'readInputs':[]}
+paths={str(p.relative_to(root)) for p in b.rglob('*') if p.is_file()};paths.update(x['path'] for x in cap);paths.update(pathset);paths.update(['docs/review/remediation/OPENCLAW-CONFIG-GOAL.md','docs/review/evidence/config-acceptance/c0-completion-20261013/independent-field-activation-partition-review-01/README.md','docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c3-buster-complete-profile-review-03/README.md']);paths.update(x['source']['path'] for x in a);paths.update(['skills/prism/server/studio.ts','skills/prism/server/control-server.ts'])
+for p in sorted(paths):
+ raw=(root/p).read_bytes();s=sha(raw);dest=o/'frozen-inputs'/f'{s}.gz';dest.write_bytes(gzip.compress(raw,mtime=0));obs['readInputs'].append({'path':p,'sha256':s,'snapshot':str(dest.relative_to(o)),'role':'current actual read input; author older bytes remain separately preserved if stale'})
+for x in cap:
+ if x['path']==stale['path']:
+  raw=cache[(x['path'],x['sha256'])];dest=o/'frozen-inputs'/f'{x["sha256"]}.gz';dest.write_bytes(gzip.compress(raw,mtime=0));obs['capturedStaleInput']={**x,'reviewSnapshot':str(dest.relative_to(o))}
+(o/'observations.json').write_text(json.dumps(obs,indent=2)+'\n');(o/'worktree.patch').write_bytes(subprocess.check_output(['git','diff','--binary']));(o/'git-status.txt').write_text(subprocess.check_output(['git','status','--porcelain'],text=True));print(json.dumps({'counts':obs['counts'],'badFieldConservation':sum(any(v is False for v in x.values()) for x in checks),'snapshotDrift':[x for x in snapobs if not x['currentMatches']],'referenceFailures':[x for x in refs if x.get('error') or any(v is False for k,v in x.items() if k not in ['resolvedFromAuthorFrozenBytes'])],'patternsExact':obs['patternsExactMembership'],'badPatternScopes':sum(not x['matchesFinalContract'] for x in obs['patternScopeChecks']),'badCorrections':[x for x in obs['nineChanges'] if not x['matches']],'allNewCaseIDsNonempty':obs['allNewCaseIDsNonempty'],'contextNoAliases':obs['policyContextAnchorsNotAliases'],'staleComparison':sd,'readInputs':len(obs['readInputs'])},indent=2))

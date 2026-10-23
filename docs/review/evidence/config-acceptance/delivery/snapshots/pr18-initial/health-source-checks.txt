@@ -1,0 +1,12 @@
+$ ['node', 'docs/review/evidence/config-acceptance/delivery/extracted-kubeclaw-health.mjs', 'startup-status'] overrides={'KUBECLAW_HEALTH_REQUIRE_STARTUP_MARKER': 'true', 'KUBECLAW_HEALTH_STARTUP_STATUS_PATH': 'docs/review/evidence/config-acceptance/delivery/nonexistent-startup-status.json'}
+exit=1
+{"ok":false,"mode":"startup-status","agent":"nova","failures":["startup verification status: ENOENT: no such file or directory, stat 'docs/review/evidence/config-acceptance/delivery/nonexistent-startup-status.json'"]}
+
+$ ['node', 'docs/review/evidence/config-acceptance/delivery/extracted-kubeclaw-health.mjs', 'startup-status'] overrides={'KUBECLAW_HEALTH_REQUIRE_STARTUP_MARKER': 'false'}
+exit=0
+{"ok":true,"mode":"startup-status","agent":"nova"}
+
+$ ['node', 'docs/review/evidence/config-acceptance/delivery/extracted-kubeclaw-health.mjs', 'startup-status'] overrides={'KUBECLAW_HEALTH_REQUIRE_STARTUP_MARKER': 'not-a-boolean'}
+exit=0
+{"ok":true,"mode":"startup-status","agent":"nova"}
+

@@ -1,0 +1,1382 @@
+[
+  {
+    "caseId": "CMP-WCORE-INPUT-BYTES-VAL",
+    "pattern": "^CMP\\-WCORE\\-INPUT\\-BYTES\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-INPUT-BYTES-EFFECT",
+    "pattern": "^CMP\\-WCORE\\-INPUT\\-BYTES\\-EFFECT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-JSON-NODES-VAL",
+    "pattern": "^CMP\\-WCORE\\-JSON\\-NODES\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-JSON-NODES-EFFECT",
+    "pattern": "^CMP\\-WCORE\\-JSON\\-NODES\\-EFFECT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-JSON-DEPTH-VAL",
+    "pattern": "^CMP\\-WCORE\\-JSON\\-DEPTH\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-JSON-DEPTH-EFFECT",
+    "pattern": "^CMP\\-WCORE\\-JSON\\-DEPTH\\-EFFECT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-LOG-PARTS-VAL",
+    "pattern": "^CMP\\-WCORE\\-LOG\\-PARTS\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-LOG-PARTS-EFFECT",
+    "pattern": "^CMP\\-WCORE\\-LOG\\-PARTS\\-EFFECT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-RETAIN-LOGS-VAL",
+    "pattern": "^CMP\\-WCORE\\-RETAIN\\-LOGS\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-RETAIN-LOGS-EFFECT",
+    "pattern": "^CMP\\-WCORE\\-RETAIN\\-LOGS\\-EFFECT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-DRAIN-POLL-MS-VAL",
+    "pattern": "^CMP\\-WCORE\\-DRAIN\\-POLL\\-MS\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-DRAIN-POLL-MS-EFFECT",
+    "pattern": "^CMP\\-WCORE\\-DRAIN\\-POLL\\-MS\\-EFFECT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-POOL-FILE-BYTES-VAL",
+    "pattern": "^CMP\\-WCORE\\-POOL\\-FILE\\-BYTES\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-POOL-FILE-BYTES-EFFECT",
+    "pattern": "^CMP\\-WCORE\\-POOL\\-FILE\\-BYTES\\-EFFECT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES-VAL",
+    "pattern": "^CMP\\-WCORE\\-RUNTIME\\-IDENTITY\\-FILE\\-BYTES\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES-EFFECT",
+    "pattern": "^CMP\\-WCORE\\-RUNTIME\\-IDENTITY\\-FILE\\-BYTES\\-EFFECT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-NODE-IDENTITY-FILE-BYTES-VAL",
+    "pattern": "^CMP\\-WCORE\\-NODE\\-IDENTITY\\-FILE\\-BYTES\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-NODE-IDENTITY-FILE-BYTES-EFFECT",
+    "pattern": "^CMP\\-WCORE\\-NODE\\-IDENTITY\\-FILE\\-BYTES\\-EFFECT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-JOURNAL-RECORD-BYTES-VAL",
+    "pattern": "^CMP\\-WCORE\\-JOURNAL\\-RECORD\\-BYTES\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-JOURNAL-RECORD-BYTES-EFFECT",
+    "pattern": "^CMP\\-WCORE\\-JOURNAL\\-RECORD\\-BYTES\\-EFFECT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS-VAL",
+    "pattern": "^CMP\\-WCORE\\-JOURNAL\\-DIAGNOSTIC\\-UNITS\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS-EFFECT",
+    "pattern": "^CMP\\-WCORE\\-JOURNAL\\-DIAGNOSTIC\\-UNITS\\-EFFECT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS-VAL",
+    "pattern": "^CMP\\-WCORE\\-OWNERSHIP\\-DIAGNOSTIC\\-UNITS\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS-EFFECT",
+    "pattern": "^CMP\\-WCORE\\-OWNERSHIP\\-DIAGNOSTIC\\-UNITS\\-EFFECT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-LOG-WIRE-BYTES-VAL",
+    "pattern": "^CMP\\-WCORE\\-LOG\\-WIRE\\-BYTES\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-LOG-WIRE-BYTES-CONTRACT",
+    "pattern": "^CMP\\-WCORE\\-LOG\\-WIRE\\-BYTES\\-CONTRACT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-LOG-PART-WIRE-UNITS-VAL",
+    "pattern": "^CMP\\-WCORE\\-LOG\\-PART\\-WIRE\\-UNITS\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-LOG-PART-WIRE-UNITS-CONTRACT",
+    "pattern": "^CMP\\-WCORE\\-LOG\\-PART\\-WIRE\\-UNITS\\-CONTRACT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-DIAGNOSTIC-WIRE-UNITS-VAL",
+    "pattern": "^CMP\\-WCORE\\-DIAGNOSTIC\\-WIRE\\-UNITS\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-DIAGNOSTIC-WIRE-UNITS-CONTRACT",
+    "pattern": "^CMP\\-WCORE\\-DIAGNOSTIC\\-WIRE\\-UNITS\\-CONTRACT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-JS-TIMER-MAX-VAL",
+    "pattern": "^CMP\\-WCORE\\-JS\\-TIMER\\-MAX\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-JS-TIMER-MAX-CONTRACT",
+    "pattern": "^CMP\\-WCORE\\-JS\\-TIMER\\-MAX\\-CONTRACT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-LOCAL-CAPACITY-WIRE-MAX-VAL",
+    "pattern": "^CMP\\-WCORE\\-LOCAL\\-CAPACITY\\-WIRE\\-MAX\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-LOCAL-CAPACITY-WIRE-MAX-CONTRACT",
+    "pattern": "^CMP\\-WCORE\\-LOCAL\\-CAPACITY\\-WIRE\\-MAX\\-CONTRACT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-CGROUP2-MAGIC-VAL",
+    "pattern": "^CMP\\-WCORE\\-CGROUP2\\-MAGIC\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-CGROUP2-MAGIC-CONTRACT",
+    "pattern": "^CMP\\-WCORE\\-CGROUP2\\-MAGIC\\-CONTRACT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-CONTROL-HEADER-VAL",
+    "pattern": "^CMP\\-WCORE\\-CONTROL\\-HEADER\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-CONTROL-HEADER-CONTRACT",
+    "pattern": "^CMP\\-WCORE\\-CONTROL\\-HEADER\\-CONTRACT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-LAUNCH-ROOT-AUTHORITY-VAL",
+    "pattern": "^CMP\\-WCORE\\-LAUNCH\\-ROOT\\-AUTHORITY\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-LAUNCH-ROOT-AUTHORITY-CONTRACT",
+    "pattern": "^CMP\\-WCORE\\-LAUNCH\\-ROOT\\-AUTHORITY\\-CONTRACT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-LAUNCH-NONSETUID-VAL",
+    "pattern": "^CMP\\-WCORE\\-LAUNCH\\-NONSETUID\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-LAUNCH-NONSETUID-CONTRACT",
+    "pattern": "^CMP\\-WCORE\\-LAUNCH\\-NONSETUID\\-CONTRACT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-PRIVACY-MODES-VAL",
+    "pattern": "^CMP\\-WCORE\\-PRIVACY\\-MODES\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-PRIVACY-MODES-CONTRACT",
+    "pattern": "^CMP\\-WCORE\\-PRIVACY\\-MODES\\-CONTRACT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-OWNERSHIP-ID-DOMAIN-VAL",
+    "pattern": "^CMP\\-WCORE\\-OWNERSHIP\\-ID\\-DOMAIN\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-OWNERSHIP-ID-DOMAIN-CONTRACT",
+    "pattern": "^CMP\\-WCORE\\-OWNERSHIP\\-ID\\-DOMAIN\\-CONTRACT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-KERNEL-COUNTERS-VAL",
+    "pattern": "^CMP\\-WCORE\\-KERNEL\\-COUNTERS\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-KERNEL-COUNTERS-CONTRACT",
+    "pattern": "^CMP\\-WCORE\\-KERNEL\\-COUNTERS\\-CONTRACT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-KERNEL-ISOLATION-VAL",
+    "pattern": "^CMP\\-WCORE\\-KERNEL\\-ISOLATION\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-KERNEL-ISOLATION-CONTRACT",
+    "pattern": "^CMP\\-WCORE\\-KERNEL\\-ISOLATION\\-CONTRACT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-JOURNAL-PROTOCOL-VAL",
+    "pattern": "^CMP\\-WCORE\\-JOURNAL\\-PROTOCOL\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-JOURNAL-PROTOCOL-CONTRACT",
+    "pattern": "^CMP\\-WCORE\\-JOURNAL\\-PROTOCOL\\-CONTRACT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-OWNERSHIP-PROTOCOL-VAL",
+    "pattern": "^CMP\\-WCORE\\-OWNERSHIP\\-PROTOCOL\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-OWNERSHIP-PROTOCOL-CONTRACT",
+    "pattern": "^CMP\\-WCORE\\-OWNERSHIP\\-PROTOCOL\\-CONTRACT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-CLOCK-NONCE-VAL",
+    "pattern": "^CMP\\-WCORE\\-CLOCK\\-NONCE\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-CLOCK-NONCE-CONTRACT",
+    "pattern": "^CMP\\-WCORE\\-CLOCK\\-NONCE\\-CONTRACT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-UTF8-PROTOCOL-VAL",
+    "pattern": "^CMP\\-WCORE\\-UTF8\\-PROTOCOL\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-UTF8-PROTOCOL-CONTRACT",
+    "pattern": "^CMP\\-WCORE\\-UTF8\\-PROTOCOL\\-CONTRACT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-HOST-SCHEMAVERSION-VAL",
+    "pattern": "^CMP\\-WCORE\\-HOST\\-SCHEMAVERSION\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-HOST-SCHEMAVERSION-CONTRACT",
+    "pattern": "^CMP\\-WCORE\\-HOST\\-SCHEMAVERSION\\-CONTRACT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-HOST-ROLE-VAL",
+    "pattern": "^CMP\\-WCORE\\-HOST\\-ROLE\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-HOST-ROLE-CONTRACT",
+    "pattern": "^CMP\\-WCORE\\-HOST\\-ROLE\\-CONTRACT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-HOST-NODENAME-VAL",
+    "pattern": "^CMP\\-WCORE\\-HOST\\-NODENAME\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-HOST-NODENAME-CONTRACT",
+    "pattern": "^CMP\\-WCORE\\-HOST\\-NODENAME\\-CONTRACT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-HOST-POLICYDIGEST-VAL",
+    "pattern": "^CMP\\-WCORE\\-HOST\\-POLICYDIGEST\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-HOST-POLICYDIGEST-CONTRACT",
+    "pattern": "^CMP\\-WCORE\\-HOST\\-POLICYDIGEST\\-CONTRACT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-HOST-CGROUPROOT-VAL",
+    "pattern": "^CMP\\-WCORE\\-HOST\\-CGROUPROOT\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-HOST-CGROUPROOT-CONTRACT",
+    "pattern": "^CMP\\-WCORE\\-HOST\\-CGROUPROOT\\-CONTRACT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-HOST-OWNERSHIPROOT-VAL",
+    "pattern": "^CMP\\-WCORE\\-HOST\\-OWNERSHIPROOT\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-HOST-OWNERSHIPROOT-CONTRACT",
+    "pattern": "^CMP\\-WCORE\\-HOST\\-OWNERSHIPROOT\\-CONTRACT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-HOST-NODEIDENTITYFILE-VAL",
+    "pattern": "^CMP\\-WCORE\\-HOST\\-NODEIDENTITYFILE\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-HOST-NODEIDENTITYFILE-CONTRACT",
+    "pattern": "^CMP\\-WCORE\\-HOST\\-NODEIDENTITYFILE\\-CONTRACT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-HOST-RUNTIMEIDENTITYFILE-VAL",
+    "pattern": "^CMP\\-WCORE\\-HOST\\-RUNTIMEIDENTITYFILE\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-HOST-RUNTIMEIDENTITYFILE-CONTRACT",
+    "pattern": "^CMP\\-WCORE\\-HOST\\-RUNTIMEIDENTITYFILE\\-CONTRACT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-HOST-MAXIMUMACTIVESCOPES-VAL",
+    "pattern": "^CMP\\-WCORE\\-HOST\\-MAXIMUMACTIVESCOPES\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-HOST-MAXIMUMACTIVESCOPES-CONTRACT",
+    "pattern": "^CMP\\-WCORE\\-HOST\\-MAXIMUMACTIVESCOPES\\-CONTRACT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-HOST-LIMITS-MEMORYBYTES-VAL",
+    "pattern": "^CMP\\-WCORE\\-HOST\\-LIMITS\\-MEMORYBYTES\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-HOST-LIMITS-MEMORYBYTES-CONTRACT",
+    "pattern": "^CMP\\-WCORE\\-HOST\\-LIMITS\\-MEMORYBYTES\\-CONTRACT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-HOST-LIMITS-TASKS-VAL",
+    "pattern": "^CMP\\-WCORE\\-HOST\\-LIMITS\\-TASKS\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-HOST-LIMITS-TASKS-CONTRACT",
+    "pattern": "^CMP\\-WCORE\\-HOST\\-LIMITS\\-TASKS\\-CONTRACT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-HOST-LIMITS-CPUQUOTAMICROSECONDS-VAL",
+    "pattern": "^CMP\\-WCORE\\-HOST\\-LIMITS\\-CPUQUOTAMICROSECONDS\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-HOST-LIMITS-CPUQUOTAMICROSECONDS-CONTRACT",
+    "pattern": "^CMP\\-WCORE\\-HOST\\-LIMITS\\-CPUQUOTAMICROSECONDS\\-CONTRACT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS-VAL",
+    "pattern": "^CMP\\-WCORE\\-HOST\\-LIMITS\\-CPUPERIODMICROSECONDS\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS-CONTRACT",
+    "pattern": "^CMP\\-WCORE\\-HOST\\-LIMITS\\-CPUPERIODMICROSECONDS\\-CONTRACT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-SUPERVISOR-PID-VAL",
+    "pattern": "^CMP\\-WCORE\\-SUPERVISOR\\-PID\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-SUPERVISOR-PID-CONTRACT",
+    "pattern": "^CMP\\-WCORE\\-SUPERVISOR\\-PID\\-CONTRACT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-CHILD-LIMIT-INHERITANCE-VAL",
+    "pattern": "^CMP\\-WCORE\\-CHILD\\-LIMIT\\-INHERITANCE\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-CHILD-LIMIT-INHERITANCE-CONTRACT",
+    "pattern": "^CMP\\-WCORE\\-CHILD\\-LIMIT\\-INHERITANCE\\-CONTRACT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-LOCK-STRIPES-VAL",
+    "pattern": "^CMP\\-WCORE\\-LOCK\\-STRIPES\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-LOCK-STRIPES-EFFECT",
+    "pattern": "^CMP\\-WCORE\\-LOCK\\-STRIPES\\-EFFECT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-buster-engine-preparation.attemptLogBytes-VAL",
+    "pattern": "^CMP\\-buster\\-engine\\-preparation\\.attemptLogBytes\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-buster-engine-preparation.attemptLogBytes-PROJECTION",
+    "pattern": "^CMP\\-buster\\-engine\\-preparation\\.attemptLogBytes\\-PROJECTION$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-buster-engine-preparation.attemptLogBytes-DORMANT",
+    "pattern": "^CMP\\-buster\\-engine\\-preparation\\.attemptLogBytes\\-DORMANT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-buster-engine-preparation.attemptEvidenceBytes-VAL",
+    "pattern": "^CMP\\-buster\\-engine\\-preparation\\.attemptEvidenceBytes\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-buster-engine-preparation.attemptEvidenceBytes-PROJECTION",
+    "pattern": "^CMP\\-buster\\-engine\\-preparation\\.attemptEvidenceBytes\\-PROJECTION$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-buster-engine-preparation.attemptEvidenceBytes-DORMANT",
+    "pattern": "^CMP\\-buster\\-engine\\-preparation\\.attemptEvidenceBytes\\-DORMANT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-buster-engine-preparation.attemptEvidenceFiles-VAL",
+    "pattern": "^CMP\\-buster\\-engine\\-preparation\\.attemptEvidenceFiles\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-buster-engine-preparation.attemptEvidenceFiles-PROJECTION",
+    "pattern": "^CMP\\-buster\\-engine\\-preparation\\.attemptEvidenceFiles\\-PROJECTION$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-buster-engine-preparation.attemptEvidenceFiles-DORMANT",
+    "pattern": "^CMP\\-buster\\-engine\\-preparation\\.attemptEvidenceFiles\\-DORMANT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-buster-engine-preparation.completionPhaseAllowance-VAL",
+    "pattern": "^CMP\\-buster\\-engine\\-preparation\\.completionPhaseAllowance\\-VAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-buster-engine-preparation.completionPhaseAllowance-PROJECTION",
+    "pattern": "^CMP\\-buster\\-engine\\-preparation\\.completionPhaseAllowance\\-PROJECTION$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-buster-engine-preparation.completionPhaseAllowance-EFFECT",
+    "pattern": "^CMP\\-buster\\-engine\\-preparation\\.completionPhaseAllowance\\-EFFECT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C5-PREPARATION-CLEANUP-BEFORE-BIND",
+    "pattern": "^CMP\\-C5\\-PREPARATION\\-CLEANUP\\-BEFORE\\-BIND$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C5-PREPARATION-CLEANUP-AFTER-BIND",
+    "pattern": "^CMP\\-C5\\-PREPARATION\\-CLEANUP\\-AFTER\\-BIND$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C5-PREPARATION-CLEANUP-PARALLEL-PUBLISH",
+    "pattern": "^CMP\\-C5\\-PREPARATION\\-CLEANUP\\-PARALLEL\\-PUBLISH$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C5-PREPARATION-CLEANUP-INVALID-PUBLISH",
+    "pattern": "^CMP\\-C5\\-PREPARATION\\-CLEANUP\\-INVALID\\-PUBLISH$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C5-PREPARATION-CLEANUP-STARTED-RECOVERY",
+    "pattern": "^CMP\\-C5\\-PREPARATION\\-CLEANUP\\-STARTED\\-RECOVERY$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C5-PREPARATION-CLEANUP-QUIESCENT-RETRY",
+    "pattern": "^CMP\\-C5\\-PREPARATION\\-CLEANUP\\-QUIESCENT\\-RETRY$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C5-PREPARATION-CLEANUP-UNCERTAIN-RETRY",
+    "pattern": "^CMP\\-C5\\-PREPARATION\\-CLEANUP\\-UNCERTAIN\\-RETRY$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C5-PREPARATION-CLEANUP-RECEIPT-EFFECT",
+    "pattern": "^CMP\\-C5\\-PREPARATION\\-CLEANUP\\-RECEIPT\\-EFFECT$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C5-PREPARATION-CLEANUP-PROJECTION",
+    "pattern": "^CMP\\-C5\\-PREPARATION\\-CLEANUP\\-PROJECTION$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C5-PREPARATION-CLEANUP-FIXED-EVAL",
+    "pattern": "^CMP\\-C5\\-PREPARATION\\-CLEANUP\\-FIXED\\-EVAL$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C5-PREPARATION-CLEANUP-SUCCESS-RELEASE",
+    "pattern": "^CMP\\-C5\\-PREPARATION\\-CLEANUP\\-SUCCESS\\-RELEASE$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C5-PREPARATION-CLEANUP-RELEASE-REPLAY",
+    "pattern": "^CMP\\-C5\\-PREPARATION\\-CLEANUP\\-RELEASE\\-REPLAY$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C5-PREPARATION-CLEANUP-HISTORY-CAPACITY",
+    "pattern": "^CMP\\-C5\\-PREPARATION\\-CLEANUP\\-HISTORY\\-CAPACITY$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-INPUT-BYTES-PROJECTION",
+    "pattern": "^CMP\\-WCORE\\-INPUT\\-BYTES\\-PROJECTION$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-JSON-NODES-PROJECTION",
+    "pattern": "^CMP\\-WCORE\\-JSON\\-NODES\\-PROJECTION$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-JSON-DEPTH-PROJECTION",
+    "pattern": "^CMP\\-WCORE\\-JSON\\-DEPTH\\-PROJECTION$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-LOG-PARTS-PROJECTION",
+    "pattern": "^CMP\\-WCORE\\-LOG\\-PARTS\\-PROJECTION$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-RETAIN-LOGS-PROJECTION",
+    "pattern": "^CMP\\-WCORE\\-RETAIN\\-LOGS\\-PROJECTION$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-DRAIN-POLL-MS-PROJECTION",
+    "pattern": "^CMP\\-WCORE\\-DRAIN\\-POLL\\-MS\\-PROJECTION$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-POOL-FILE-BYTES-PROJECTION",
+    "pattern": "^CMP\\-WCORE\\-POOL\\-FILE\\-BYTES\\-PROJECTION$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES-PROJECTION",
+    "pattern": "^CMP\\-WCORE\\-RUNTIME\\-IDENTITY\\-FILE\\-BYTES\\-PROJECTION$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-NODE-IDENTITY-FILE-BYTES-PROJECTION",
+    "pattern": "^CMP\\-WCORE\\-NODE\\-IDENTITY\\-FILE\\-BYTES\\-PROJECTION$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-JOURNAL-RECORD-BYTES-PROJECTION",
+    "pattern": "^CMP\\-WCORE\\-JOURNAL\\-RECORD\\-BYTES\\-PROJECTION$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS-PROJECTION",
+    "pattern": "^CMP\\-WCORE\\-JOURNAL\\-DIAGNOSTIC\\-UNITS\\-PROJECTION$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS-PROJECTION",
+    "pattern": "^CMP\\-WCORE\\-OWNERSHIP\\-DIAGNOSTIC\\-UNITS\\-PROJECTION$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-WCORE-LOCK-STRIPES-PROJECTION",
+    "pattern": "^CMP\\-WCORE\\-LOCK\\-STRIPES\\-PROJECTION$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-prism-control-pipelinePreferenceSubject",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-prism\\-control\\-pipelinePreferenceSubject$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-prism-control-artifactRoot",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-prism\\-control\\-artifactRoot$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-prism-control-studioPublicUrl",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-prism\\-control\\-studioPublicUrl$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-prism-control-port",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-prism\\-control\\-port$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-prism-control-dispatchTimeoutMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-prism\\-control\\-dispatchTimeoutMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-prism-studio-port",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-prism\\-studio\\-port$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-prism-studio-controlTimeoutMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-prism\\-studio\\-controlTimeoutMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-prism-studio-controlUrl",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-prism\\-studio\\-controlUrl$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-prism-worker-ingress.port",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-prism\\-worker\\-ingress\\.port$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-prism-worker-ingress.maximumActiveRequests",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-prism\\-worker\\-ingress\\.maximumActiveRequests$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-prism-worker-ingress.maximumProbeRequests",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-prism\\-worker\\-ingress\\.maximumProbeRequests$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-prism-worker-ingress.maximumConnections",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-prism\\-worker\\-ingress\\.maximumConnections$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-prism-worker-ingress.requestTimeoutMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-prism\\-worker\\-ingress\\.requestTimeoutMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-prism-worker-ingress.shutdownTimeoutMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-prism\\-worker\\-ingress\\.shutdownTimeoutMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-prism-worker-ingress.maximumInputBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-prism\\-worker\\-ingress\\.maximumInputBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.uid",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-prism\\-worker\\-supervisor\\.uid$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.gid",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-prism\\-worker\\-supervisor\\.gid$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.maximumOwnershipRecords",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-prism\\-worker\\-supervisor\\.maximumOwnershipRecords$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.maximumOwnershipBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-prism\\-worker\\-supervisor\\.maximumOwnershipBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.maximumOutputBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-prism\\-worker\\-supervisor\\.maximumOutputBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.maximumJournalBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-prism\\-worker\\-supervisor\\.maximumJournalBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.pollIntervalMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-prism\\-worker\\-supervisor\\.pollIntervalMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.drainTimeoutMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-prism\\-worker\\-supervisor\\.drainTimeoutMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.closeTimeoutMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-prism\\-worker\\-supervisor\\.closeTimeoutMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-prism-execution-resourcePolicy.cpuTimeMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-prism\\-execution\\-resourcePolicy\\.cpuTimeMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-prism-execution-resourcePolicy.memoryBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-prism\\-execution\\-resourcePolicy\\.memoryBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-prism-execution-resourcePolicy.tasks",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-prism\\-execution\\-resourcePolicy\\.tasks$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-prism-execution-maximumResultBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-prism\\-execution\\-maximumResultBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-preparation.resourcePolicy.cpuTimeMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-preparation\\.resourcePolicy\\.cpuTimeMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-preparation.resourcePolicy.memoryBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-preparation\\.resourcePolicy\\.memoryBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-preparation.resourcePolicy.tasks",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-preparation\\.resourcePolicy\\.tasks$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-preparation.timeoutMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-preparation\\.timeoutMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-preparation.cleanupTimeoutMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-preparation\\.cleanupTimeoutMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumActivePreparations",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-preparation\\.maximumActivePreparations$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumPendingAdmissions",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-preparation\\.maximumPendingAdmissions$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumRequestBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-preparation\\.maximumRequestBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumArchiveBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-preparation\\.maximumArchiveBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumExtractedBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-preparation\\.maximumExtractedBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumHeaderBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-preparation\\.maximumHeaderBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumSourceBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-preparation\\.maximumSourceBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumMetadataBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-preparation\\.maximumMetadataBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumRecords",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-preparation\\.maximumRecords$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumOwnershipBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-preparation\\.maximumOwnershipBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumJournalBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-preparation\\.maximumJournalBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumInputBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-preparation\\.maximumInputBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumOutputBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-preparation\\.maximumOutputBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumResultBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-preparation\\.maximumResultBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-preparation.pollIntervalMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-preparation\\.pollIntervalMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-preparation.drainTimeoutMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-preparation\\.drainTimeoutMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-preparation.closeTimeoutMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-preparation\\.closeTimeoutMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-preparation.tarTimeoutMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-preparation\\.tarTimeoutMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumArchiveEntries",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-preparation\\.maximumArchiveEntries$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumListingLineBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-preparation\\.maximumListingLineBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumTarStderrBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-preparation\\.maximumTarStderrBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumSourceEntries",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-preparation\\.maximumSourceEntries$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-preparation.sourceEntryReservationBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-preparation\\.sourceEntryReservationBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumOpenFiles",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-preparation\\.maximumOpenFiles$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-admission.maximumActiveJobs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-admission\\.maximumActiveJobs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-admission.maximumQueuedJobs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-admission\\.maximumQueuedJobs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-admission.maximumConcurrentAttempts",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-admission\\.maximumConcurrentAttempts$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-dependencyReadiness.maximumExecutionMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-dependencyReadiness\\.maximumExecutionMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-dependencyReadiness.maximumOutputBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-dependencyReadiness\\.maximumOutputBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.cleanupTimeoutMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.provider\\.cleanupTimeoutMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.maximumResultBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.provider\\.maximumResultBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.claimGraceMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.provider\\.claimGraceMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.queueTimeoutMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.provider\\.queueTimeoutMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.workerResultWrapperBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.provider\\.workerResultWrapperBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.maximumProtocolBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.provider\\.maximumProtocolBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.terminationGraceMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.provider\\.terminationGraceMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.terminationTimeoutMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.provider\\.terminationTimeoutMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.capabilityDrainTimeoutMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.provider\\.capabilityDrainTimeoutMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.minimumHeapMiB",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.provider\\.minimumHeapMiB$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.heapFraction",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.provider\\.heapFraction$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.maximumPendingCapabilities",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.provider\\.maximumPendingCapabilities$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.minimumOpenFiles",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.provider\\.minimumOpenFiles$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.artifactFileDescriptorReserve",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.provider\\.artifactFileDescriptorReserve$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumAggregateResultBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.reports\\.maximumAggregateResultBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumSourceBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.reports\\.maximumSourceBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumCases",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.reports\\.maximumCases$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumFindings",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.reports\\.maximumFindings$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumCaseFindings",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.reports\\.maximumCaseFindings$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumTimeoutMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.reports\\.maximumTimeoutMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.memoryBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.reports\\.memoryBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.minimumCpuTimeMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.reports\\.minimumCpuTimeMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumOpenFiles",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.reports\\.maximumOpenFiles$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.minimumOpenFiles",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.reports\\.minimumOpenFiles$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.minimumHeapMiB",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.reports\\.minimumHeapMiB$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.heapFraction",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.reports\\.heapFraction$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.runtimeMemoryReserveBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.reports\\.runtimeMemoryReserveBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.observation.resourceSampleIntervalMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.observation\\.resourceSampleIntervalMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.observation.processSampleIntervalMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.observation\\.processSampleIntervalMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumEvidenceObjects",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.stores\\.attempts\\.maximumEvidenceObjects$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumEvidenceBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.stores\\.attempts\\.maximumEvidenceBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumEvidenceObjectBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.stores\\.attempts\\.maximumEvidenceObjectBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumResults",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.stores\\.attempts\\.maximumResults$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumClosures",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.stores\\.attempts\\.maximumClosures$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumMetadataBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.stores\\.attempts\\.maximumMetadataBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumPendingEvidenceAgeMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.stores\\.attempts\\.maximumPendingEvidenceAgeMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.admission.maximumIngressBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.stores\\.admission\\.maximumIngressBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.admission.maximumRecords",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.stores\\.admission\\.maximumRecords$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.admission.maximumBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.stores\\.admission\\.maximumBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.admission.maximumQuarantineRecords",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.stores\\.admission\\.maximumQuarantineRecords$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.admission.maximumQuarantineBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.stores\\.admission\\.maximumQuarantineBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.processInput.cleanupTimeoutMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.processInput\\.cleanupTimeoutMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.processInput.terminationGraceMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.processInput\\.terminationGraceMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-execution.processInput.acknowledgementPollMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-execution\\.processInput\\.acknowledgementPollMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.shared.kubectlExecutable",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.shared\\.kubectlExecutable$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.shared.leaseApiGroup",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.shared\\.leaseApiGroup$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.shared.leaseApiVersion",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.shared\\.leaseApiVersion$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.allowedNamespacePrefixes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.kubernetesFixture\\.allowedNamespacePrefixes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.registryRepositoryPrefixes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.kubernetesFixture\\.registryRepositoryPrefixes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.allowedSecretReferences",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.kubernetesFixture\\.allowedSecretReferences$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.allowedStorageClasses",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.kubernetesFixture\\.allowedStorageClasses$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.allowDefaultStorageClass",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.kubernetesFixture\\.allowDefaultStorageClass$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.runnerServiceAccount",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.kubernetesFixture\\.runnerServiceAccount$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.credentialReaderServiceAccount",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.kubernetesFixture\\.credentialReaderServiceAccount$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.maximumManifestBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.kubernetesFixture\\.maximumManifestBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.maximumResources",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.kubernetesFixture\\.maximumResources$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeClaimBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.kubernetesFixture\\.maximumPersistentVolumeClaimBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeTotalBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.kubernetesFixture\\.maximumPersistentVolumeTotalBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.maximumRetentionSeconds",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.kubernetesFixture\\.maximumRetentionSeconds$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.maximumExecutionMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.kubernetesFixture\\.maximumExecutionMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.pollIntervalMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.kubernetesFixture\\.pollIntervalMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.shortCommandTimeoutMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.kubernetesFixture\\.shortCommandTimeoutMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.commandOutputManifestMultiplier",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.kubernetesFixture\\.commandOutputManifestMultiplier$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.diagnosticCodeUnits",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.kubernetesFixture\\.diagnosticCodeUnits$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumNodes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.kubernetesFixture\\.manifest\\.maximumNodes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumDepth",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.kubernetesFixture\\.manifest\\.maximumDepth$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumAliases",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.kubernetesFixture\\.manifest\\.maximumAliases$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumFlattenVisits",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.kubernetesFixture\\.manifest\\.maximumFlattenVisits$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumFlattenPending",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.kubernetesFixture\\.manifest\\.maximumFlattenPending$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.allowedNamespacePrefixes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.tailscaleExposure\\.allowedNamespacePrefixes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.allowedHostSuffixes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.tailscaleExposure\\.allowedHostSuffixes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.maximumExecutionMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.tailscaleExposure\\.maximumExecutionMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.pollIntervalMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.tailscaleExposure\\.pollIntervalMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.shortCommandTimeoutMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.tailscaleExposure\\.shortCommandTimeoutMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.maximumCommandOutputBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.tailscaleExposure\\.maximumCommandOutputBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.allowedNamespacePrefixes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.runtimeSecurity\\.allowedNamespacePrefixes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.maximumExecutionMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.runtimeSecurity\\.maximumExecutionMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.maximumOutputBytes",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.runtimeSecurity\\.maximumOutputBytes$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.pollIntervalMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.runtimeSecurity\\.pollIntervalMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.maximumObservationAgeMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.runtimeSecurity\\.maximumObservationAgeMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.maximumFutureSkewMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.runtimeSecurity\\.maximumFutureSkewMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.diagnosticCodeUnits",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.runtimeSecurity\\.diagnosticCodeUnits$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.executableSearchPath",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-buster\\-engine\\-clusterInvokers\\.runtimeSecurity\\.executableSearchPath$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-worker-core-localRuntime.drainTimeoutMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-worker\\-core\\-localRuntime\\.drainTimeoutMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-worker-core-localRuntime.cancellationTimeoutMs",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-worker\\-core\\-localRuntime\\.cancellationTimeoutMs$",
+    "match": true
+  },
+  {
+    "caseId": "CMP-C1-EFFECT-worker-core-localRuntime.replayLimit",
+    "pattern": "^CMP\\-C1\\-EFFECT\\-worker\\-core\\-localRuntime\\.replayLimit$",
+    "match": true
+  }
+]

@@ -1,0 +1,173 @@
+{
+  "id": "CORE6606-RUNTIME-SECURITY-IMAGE-WIRE-DOMAIN",
+  "classification": "duplicate current same-field versioned wire/domain guard, not independent Core operator policy and not universal OCI max",
+  "actualProducer": {
+    "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+    "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+    "sha256": "1f41112db44a5135ff7c8d7a575e87699a854278a9e792d248ee91673d06fbd0",
+    "lines": [
+      {
+        "line": 89,
+        "text": "    const immutableImage = text(payload.immutableImage, 'immutableImage', 2048);"
+      },
+      {
+        "line": 90,
+        "text": "    const image = IMMUTABLE_IMAGE.exec(immutableImage);"
+      },
+      {
+        "line": 91,
+        "text": "    if (!image || !settings.registryPrefixes.some((prefix) => image[1] === prefix || image[1]!.startsWith(`${prefix}/`))) {"
+      },
+      {
+        "line": 148,
+        "text": "            verifiedImage: immutableImage, manifestDigest,"
+      }
+    ]
+  },
+  "wireDefinition": {
+    "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+    "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+    "sha256": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45",
+    "lines": [
+      {
+        "line": 113,
+        "text": "                verifiedImage:"
+      },
+      {
+        "line": 114,
+        "text": "                  type: string"
+      },
+      {
+        "line": 115,
+        "text": "                  maxLength: 2048"
+      },
+      {
+        "line": 116,
+        "text": "                  pattern: '^[A-Za-z0-9.-]+(:[0-9]{1,5})?/[a-z0-9]+([._/-][a-z0-9]+)*@sha256:[a-f0-9]{64}$'"
+      },
+      {
+        "line": 538,
+        "text": "                    immutableImage:"
+      },
+      {
+        "line": 539,
+        "text": "                      type: string"
+      },
+      {
+        "line": 540,
+        "text": "                      maxLength: 2048"
+      }
+    ]
+  },
+  "copyingController": {
+    "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+    "path": "cmd/buster-namespace-controller/main.go",
+    "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+    "lines": [
+      {
+        "line": 543,
+        "text": "func (c *controller) runtimeSecurityStatus(ctx context.Context, item *lease, namespaceName string) (map[string]interface{}, error) {"
+      },
+      {
+        "line": 544,
+        "text": "\timmutableImage := stringValue(item.Spec[\"verifiedImage\"])"
+      },
+      {
+        "line": 575,
+        "text": "\t\t\"manifestDigest\": manifestDigest, \"immutableImage\": immutableImage, \"findings\": findings,"
+      },
+      {
+        "line": 576,
+        "text": "\t\t\"totalFindingCount\": totalFindingCount, \"omittedFindingCount\": omittedFindingCount,"
+      }
+    ]
+  },
+  "actualCoreConsumer": {
+    "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004",
+    "lines": [
+      {
+        "line": 36,
+        "text": "function text(value: unknown, label: string, maximum = 2048): string {"
+      },
+      {
+        "line": 37,
+        "text": "  if (typeof value !== 'string' || value.length < 1 || value.length > maximum) {"
+      },
+      {
+        "line": 38,
+        "text": "    throw new Error(`KUBERNETES_RUNTIME_SECURITY_REQUEST_INVALID:${label}`);"
+      },
+      {
+        "line": 122,
+        "text": "function observationMatches(snapshot: JsonObject | null, digest: string, immutableImage: string,"
+      },
+      {
+        "line": 125,
+        "text": "    && snapshot.immutableImage === immutableImage && Array.isArray(snapshot.findings)"
+      },
+      {
+        "line": 152,
+        "text": "    const immutableImage = text(payload.immutableImage, 'immutableImage');"
+      }
+    ]
+  },
+  "distinctReadyStatus1024": {
+    "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+    "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+    "sha256": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45",
+    "lines": [
+      {
+        "line": 365,
+        "text": "                    immutableImage:"
+      },
+      {
+        "line": 366,
+        "text": "                      type: string"
+      },
+      {
+        "line": 367,
+        "text": "                      minLength: 1"
+      },
+      {
+        "line": 368,
+        "text": "                      maxLength: 1024"
+      }
+    ]
+  },
+  "supportedCurrentDomain": {
+    "producer": "nonempty ASCII immutableImage <=2048 UTF16 units and exact IMMUTABLE_IMAGE grammar, selected registry prefix, input imageDigest equality, manifest hash",
+    "CRDspec": "verifiedImage maxLength2048 AND ASCII immutable image regex; declared chart contract only, NOT known installed API validation",
+    "runtimeStatus": "controller copies exact spec.verifiedImage into status.runtimeSecurity.immutableImage; status schema maxLength2048; no independent Go image-length check",
+    "CoreRequest": "text(immutableImage) actual source accepts ANY nonempty JS string<=2048 units; no URI regex here; accepted observation must match exact status image+manifest digest. Thus legitimate same-field producer ASCII values share byte/unit/codepoint length; do not claim Core alone validates OCI provenance",
+    "notSameContract": "readyStatus immutableImage <=1024 is separate field/state path; NOT this runtimeSecurity copy and no equal value alias"
+  },
+  "soleAuthority": "existing selected fixture/CRD/controller wire schema/protocol owner; source role trust/captured installed schema identity is parent/Delivery handoff. No second Core knob or assigned ENV writer",
+  "targetDefinition": {
+    "duplicateRepair": "shared generated immutable field-domain definition/protocol projection, retained as same selected wire version; Core local default2048 is not a current CONFIG fallback",
+    "changing2048": "correlated preparation + CRD verifiedImage/runtimeSecurity status + controller-copy + Core consumer update under explicit version/migration and original authenticated schema/producer/grant binding; cannot independently tune Core and bypass upstream wire contract",
+    "activation": "validate selected canonical schema/version/image/manifest and authentic original-role provenance before effects; original work/recovery retain original wire closure, not current chart latest",
+    "migration": "no inferred installed max2048, no fabricated original CRD/source receipt, no silent legacy/published schema overwrite; missing authentic original binding blocks, not substitution",
+    "unresolved": "parent infra701 canonical CRD field ID/sole-author protocol-version placement + actual installed schema/source/authentic original grants and universal carrier/taskpartition/historical compatibility remain open"
+  },
+  "caseDefinition": {
+    "current": "new source-only pure text/stringArray/CRD predicate controls; no API/controller/native/image deployment",
+    "futureCommand": [
+      "node",
+      "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/future-canonical-question-harness.mjs",
+      "--case",
+      "QC-IMAGE-WIRE-CORRELATED-DOMAIN",
+      "--stand",
+      "APPROVED_IMPLEMENTATION_COMMIT"
+    ],
+    "futureInputs": {
+      "localDomain": "pure pre-network protocol producer/CRD predicate fixtures: synthetic ASCII IMMUTABLE_IMAGE strings exactly2048 and2049 under selected registry prefix; these are syntax-domain specimens, NOT proof of pullable genuine OCI images",
+      "actualProductive": "complete selected fixture/controller/CRD original epoch A manifests and real genuine verified image+manifest bytes whose measured actual string fits2048; actual installed source/schema/role/provenance prerequisites required",
+      "transition": "correlated changed version B only under complete compatible wire+owner manifests; do not assume all schema-domain strings are installed/pullable"
+    },
+    "futureOracle": "cross-reader same-field domain/equality must agree; independent Core len relaxation, stale/missing original schema/role source/grants or unrelated readyStatus1024 binding rejects beforeeffects; originalA retained under currentB absent/incompatible",
+    "futureStatus": "not-implemented/not-run; actual complete physical wire epoch/installed validation companions remain unavailable, not synthesized from strings"
+  },
+  "notC0Accepted": true
+}

@@ -1,0 +1,41 @@
+{
+  "at": "2026-10-16T23:39:50.381117+00:00",
+  "status": "ORIGINAL_NATIVE_DEPLOYMENT_RECEIVING_MIGRATED_NOT_NATIVE_ACCEPTANCE",
+  "sourceCommit": "c65c68dce59ba2349ceb3768ff4e21d481f6ab7b",
+  "sourceRemoteVerified": true,
+  "evidence": "docs/review/remediation/config-native-deployment-current-20261016",
+  "cacheRepair": "Isolated GOMODCACHE; go mod download fetched pinned dependencies without modifying go.mod/go.sum. Actual builder retains go mod verify and readonly build.",
+  "change": "Production native preflight now requires actual packaged worker command; explicit retired command negative rejects. Original Prism native deployment test retains real Helm/NRI/pod/security/negative controls and static NRI executable; retired ConfigMap test projection replaced by actual image package build, authenticated readonly boot receipts and installed worker consumer. No production source/trust change.",
+  "checks": {
+    "originalTests": {
+      "passed": 2,
+      "total": 2,
+      "failed": 0,
+      "skipped": 0
+    },
+    "syntax": true,
+    "diffCheck": true,
+    "originalRoster": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50,
+      "acceptance": "OPEN"
+    }
+  },
+  "baseline": "Original Helm render failed on unbound native-review release; static NRI build failed on inherited cache missing ziphash. Binding actual selected release then exposed genuine productive preflight stale worker command. All raw failures retained.",
+  "qualification": "Actual local static NRI executable validation and Helm render, NOT installed native NRI/runtime/cgroup/Docker/browser acceptance. Render image digest is existing shape-only fixture, not a built image identity.",
+  "independentReview": "OPEN; native reviewer/spawn tool not exposed, CONFIG active/recent reviewers0; known unchanged same-surface EROFS not retried. Author checks not independent acceptance.",
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "nextAction": "Genuine QB-R02 original producer/build/source/baseline/inputStore ownership/reservation/accounting/sealed snapshot/publication and authenticated sole-root/boot+Nova receiving; remaining original source/fixture residuals. No replay unchanged green native fixture or known archive ENOSPC.",
+  "externalOwner": "Raven",
+  "resumeCondition": "Isolated Linux Docker UID1000/GID1000 delegated writable cgroup plus sufficient genuinely root-trusted writable archive storage and migrated isolated PostgreSQL. No trust/UID/kernel spoof or skipped required gates.",
+  "writerLock": "SAME nonblocking repository lock; released on command exit",
+  "noHistoricalFollowup": true,
+  "sourceHashes": {
+    "tests/verification/deployment/prism-native-runtime.test.mjs": "70200315326c20543ccfa6a9573b69147c9c454d8c403463ff5db69b814be688"
+  }
+}

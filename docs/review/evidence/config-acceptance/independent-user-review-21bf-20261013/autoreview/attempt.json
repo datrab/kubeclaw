@@ -1,0 +1,5 @@
+{
+  "status": "unavailable",
+  "reason": "codex CLI executable absent from PATH; helper did not run a review; native fresh reviewers active, no substitution as helper PASS",
+  "command": "python /home/node/.openclaw/agents/main/agent/codex-home/skills/autoreview/scripts/autoreview --mode local --engine codex --no-web-search --prompt <recorded-scope> --output /tmp/kubeclaw-user-autoreview-21bf.txt --json-output /tmp/kubeclaw-user-autoreview-21bf.json"
+}

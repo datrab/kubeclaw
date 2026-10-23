@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/build-collector.py", line 2, in <module>
+    r=pathlib.Path('/home/node/.openclaw/workspace/kubeclaw-config-c0');B=r/'docs/review/evidence/config-acceptance/c0-completion-20261013';out=B/'buster-remote-plan-profile-01';s=(B/'same-entry-engine-binding-02/check-correction.mjs').read_text();end=s.index("record('retained schema-valid foreign current Security") if "record('retained schema-valid foreign current Security" in s else s.index("for(const [name,mutate]")
+                                                                                                                                                                                                                                                                                                                                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: substring not found

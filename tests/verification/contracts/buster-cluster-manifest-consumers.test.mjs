@@ -3,7 +3,8 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
-import { canonicalSwarmEntry, readTestBundle } from '../../fixtures/config/swarm-bundle.mjs';
+import { readTestPipeline, canonicalPipelineEntry, busterRuntimeSelection } from '../../fixtures/config/pipeline-components.mjs';
+import { captureSwarmSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
 import { validateBusterClusterInvokerSettings } from '../../../skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts';
 import { clusterRuntimeBinding, kubernetesFixtureOptions, tailscaleExposureOptions } from '../../../skills/buster/engine/test-gates/production-cluster-options.ts';
 import { createBusterCapabilityRuntime } from '../../../skills/buster/engine/test-gates/capability-runtime.ts';
@@ -13,7 +14,7 @@ import { boundedManifestDocuments } from '../../../skills/buster/engine/test-gat
 import { flattenDocuments } from '../../../skills/buster/engine/test-gates/kubernetes-fixture-manifest-files.ts';
 import { localApi, request } from '../../fixtures/test-gate/kubernetes-cleanup-fixture.mjs';
 
-function authored() { return structuredClone(readTestBundle(canonicalSwarmEntry)['buster-engine'].settings); }
+function authored() { return structuredClone(captureSwarmSettings(canonicalPipelineEntry, busterRuntimeSelection(readTestPipeline())).components['buster-engine'].settings); }
 function runtime(root, settings, execute) {
   const policy = validateBusterClusterInvokerSettings(settings.clusterInvokers);
   const binding = clusterRuntimeBinding({ controllerNamespace: 'kubeclaw' }, policy);
@@ -93,3 +94,35 @@ for (const version of ['v1', 'v2', 'v1alpha1', 'v2beta12', 'v1alpha', 'v1beta', 
     }
   });
 }
+
+for (const limit of [0, 1, 32]) test(`original secret entry limit ${limit} controls raw entries before commands`, async t => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'cluster-secret-limit-'));
+  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  const settings = authored(); settings.clusterInvokers.shared.kubectlExecutable = process.execPath;
+  const selected = settings.clusterInvokers.kubernetesFixture;
+  selected.registryRepositoryPrefixes = ['app']; selected.allowedSecretReferences = ['source'];
+  selected.maximumSecretReferenceEntries = limit;
+  const api = localApi(); const instance = runtime(root, settings, api.execute.bind(api));
+  t.after(() => instance.shutdown());
+  const input = request(root, 'delete');
+  input.payload.secretReferences = Array(limit).fill('source');
+  assert.equal((await instance.invoker.invoke('kubernetes.fixture', input, new AbortController().signal)).ok, true);
+  const before = api.calls.length;
+  input.payload.secretReferences.push('source');
+  await assert.rejects(instance.invoker.invoke('kubernetes.fixture', input, new AbortController().signal), /KUBERNETES_FIXTURE_REQUEST_INVALID:secretReferences/);
+  assert.equal(api.calls.length, before, 'counts raw entries before deduplication and effects');
+  input.payload.secretReferences.pop();
+  assert.equal((await instance.invoker.invoke('kubernetes.fixture', input, new AbortController().signal)).ok, true, 'restored positive');
+});
+test('secret limit is required and retains original integer0..32 domain in loader and native decoder', () => {
+  const settings = authored();
+  for (const value of [undefined, null, -1, 33, 1.5, '1']) {
+    const policy = structuredClone(settings.clusterInvokers);
+    policy.kubernetesFixture.maximumSecretReferenceEntries = value;
+    assert.throws(() => validateBusterClusterInvokerSettings(policy), /SWARM_CONFIG_BUSTER_CLUSTER_INVALID/);
+    const { kubernetesFixture } = kubernetesFixtureOptions(true, policy,
+      clusterRuntimeBinding({controllerNamespace:'kubeclaw'}, policy), 'https://registry.local');
+    assert.throws(() => new KubernetesFixtureCapabilityInvoker({...kubernetesFixture,
+      processInputPolicy: settings.execution.processInput, workspaceRoot: os.tmpdir()}), /KUBERNETES_FIXTURE_SECRET_REFERENCE_LIMIT_INVALID/);
+  }
+});

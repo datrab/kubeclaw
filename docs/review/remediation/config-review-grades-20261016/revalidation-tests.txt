@@ -1,0 +1,48 @@
+{"ok":true,"suite":"repository-revalidation"}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
+  [
+    {
+      path: 'docs/shared.ts',
++     state: 'absent'
+-     state: 'outside-scope'
+    },
+    {
+      objectId: '3333333333333333333333333333333333333333',
+      path: 'src/current.ts',
+      state: 'present'
+
+    at Object.invoke (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/review/tests/repository-revalidation.unit.test.mjs:143:12)
+    at dispatchOne (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/review/src/repository-revalidation-stage.ts:198:52)
+    at async Promise.all (index 0)
+    at async run (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/review/src/repository-revalidation-stage.ts:328:21)
+    at async executeRepositoryRevalidation (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/review/src/repository-revalidation-stage.ts:351:16)
+    at async file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/plugins/review/tests/repository-revalidation.unit.test.mjs:191:22 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: [
+    { path: 'docs/shared.ts', state: 'absent' },
+    {
+      path: 'src/current.ts',
+      state: 'present',
+      objectId: '3333333333333333333333333333333333333333'
+    }
+  ],
+  expected: [
+    { path: 'docs/shared.ts', state: 'outside-scope' },
+    {
+      path: 'src/current.ts',
+      state: 'present',
+      objectId: '3333333333333333333333333333333333333333'
+    }
+  ],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

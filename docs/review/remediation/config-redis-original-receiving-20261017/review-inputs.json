@@ -1,0 +1,42 @@
+{
+  "sourceCommit": "0e02e5b234aa1703a6ee934e66838350c2e0bd14",
+  "reviewStatus": "OPEN_NO_INDEPENDENT_RESULT",
+  "files": [
+    {
+      "path": "skills/nova/core/execution/redis-runtime-binding.ts",
+      "sha256": "d367040f5219733b9dfef433cb9e710b46bfbd5c37226be86f64f0b3004e13a7"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-runtime.ts",
+      "sha256": "59862ce08f3746d7d0dc41bc8835e57c896be9af435f7dc804e1b96e39599dd8"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-snapshots.ts",
+      "sha256": "d2466526b363ebd7166281abc141d2e7776fbad4a2036b3e96ae7b2ae9ce3d98"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-run.ts",
+      "sha256": "c02409ac22882077109f837882fac02b1a0ea9817820da282d70a607e1c065ce"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-admin.ts",
+      "sha256": "5ac06d1668208b586a2ace56580688a763f079aa54181401218af88637f3b1f0"
+    },
+    {
+      "path": "tests/verification/reliability/nova-redis-original-recovery.test.mjs",
+      "sha256": "81f02e73310b39aa39bf72450ff7e606753129ab4d78e0b80d21bdecaf2817db"
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+      "sha256": "77fa00ee7bcdfb4fc35d9b78e46f7d2ab6410f4909a6c4bb1c3c22653cd6b169"
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/src/exchange.ts",
+      "sha256": "a92eb6089942d66c889c7f23caae832b0fffc69e6ee618015c24c614ef3435ad"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/core-runtime-policy.ts",
+      "sha256": "02587365f2d35b24b7cfb9d3b80418055594c701218eca966903b0af8a655965"
+    }
+  ]
+}

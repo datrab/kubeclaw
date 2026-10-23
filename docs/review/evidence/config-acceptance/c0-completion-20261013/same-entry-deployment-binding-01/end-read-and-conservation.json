@@ -1,0 +1,13 @@
+{
+  "time": "2026-10-14T01:07:45.709166+00:00",
+  "readInputCount": 182,
+  "changedInputs": [],
+  "originalControllerFieldBodyMismatch": [],
+  "originalCanonicalCaseBodyMismatch": [],
+  "providerOriginalCaseBodyMismatch": [],
+  "providerCasesCompared": 408,
+  "priorArtifacts": "all exact pinned bytes stable unless separately listed above; none written",
+  "canonicalMetadata": "currentProviderFieldAdoption frozen complete, no original semantics overwritten",
+  "globalC0Accepted": false,
+  "freshIndependentMaterialReviewRequired": true
+}

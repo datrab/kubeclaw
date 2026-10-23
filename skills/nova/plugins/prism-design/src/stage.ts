@@ -1,8 +1,8 @@
-import { verifyBaselineArchive } from './archive.ts';
+import { verifyBaselineArchive, capturePrismArchiveBudgets } from './archive.ts';
 import { assertArchitectureReferenceEncoding, verifiedArchitectureValue } from './architecture.ts';
 import { type ArtifactRef, type PluginInvocationContext, type StageResult, type WaitRequest } from "@kubeclaw/plugin-sdk";
 type Input={runId:string;projectId:string;architectureArtifact:{artifactId:string;contentDigest:string;revision:number};requiresDesign:boolean};
-type Config={agent:"prism";target:string;issuerId:string;timeoutMinutes:number};
+type Config={agent:"prism";target:string;issuerId:string;timeoutMinutes:number;budgets:{maximumArchiveBytes:number;maximumArchiveFiles:number;maximumArchitectureBytes:number}};
 const record=(value:unknown):Record<string,unknown>=>{if(!value||typeof value!=="object"||Array.isArray(value))throw new Error("PRISM_DESIGN_VALUE_INVALID");return value as Record<string,unknown>;};
 function config(value:unknown):Config{const item=record(value);if(item.agent!=="prism"||typeof item.target!=="string"||typeof item.issuerId!=="string"||!Number.isSafeInteger(item.timeoutMinutes)||Number(item.timeoutMinutes)<1)return (()=>{throw new Error("PRISM_DESIGN_CONFIG_INVALID");})();return item as unknown as Config;}
 function approval(value:unknown,issuerId:string,architectureDigest:string):{approvalId:string;bundleDigest:string}|undefined{if(value===undefined)return undefined;const item=record(value);const issuer=record(item.issuer);if(item.decision!=="approved"||issuer.type!=="operator"||issuer.id!==issuerId||typeof item.approvalId!=="string"||!item.approvalId||item.architectureDigest!==architectureDigest||typeof item.bundleDigest!=="string"||!/^sha256:[a-f0-9]{64}$/u.test(item.bundleDigest))return (()=>{throw new Error("PRISM_DESIGN_APPROVAL_INVALID");})();return {approvalId:item.approvalId,bundleDigest:item.bundleDigest};}
@@ -10,11 +10,11 @@ export function waitFrom(value:unknown,expected:{issuerId:string;expiresAt:strin
 export async function execute(input:Input,context:PluginInvocationContext):Promise<StageResult>{
   if(!input.requiresDesign)return {schemaVersion:"stage-result.v2",outcome:"passed",artifacts:[]};
   input={...input,runId:context.contract.lease.attempt.runId};
-  const settings=config(context.contract.config);const approved=approval(context.contract.guidance,settings.issuerId,input.architectureArtifact.contentDigest);
+  const settings=config(context.contract.config);capturePrismArchiveBudgets(settings.budgets);if(!Number.isSafeInteger(settings.budgets.maximumArchitectureBytes)||settings.budgets.maximumArchitectureBytes<1)throw new Error("PRISM_ARCHITECTURE_BUDGET_REQUIRED");const approved=approval(context.contract.guidance,settings.issuerId,input.architectureArtifact.contentDigest);
   try{
     const architectureRef=context.artifact(input.architectureArtifact.artifactId);
     if(architectureRef)assertArchitectureReferenceEncoding(architectureRef);
-    if(!architectureRef||architectureRef.producer.runId!==input.runId||architectureRef.mediaType!=="application/json"||architectureRef.sizeBytes>256*1024||architectureRef.digest!==input.architectureArtifact.contentDigest)throw new Error("PRISM_DESIGN_ARCHITECTURE_REFERENCE_INVALID");
+    if(!architectureRef||architectureRef.producer.runId!==input.runId||architectureRef.mediaType!=="application/json"||architectureRef.sizeBytes>settings.budgets.maximumArchitectureBytes||architectureRef.digest!==input.architectureArtifact.contentDigest)throw new Error("PRISM_DESIGN_ARCHITECTURE_REFERENCE_INVALID");
     const architectureResponse=await context.invoke("artifacts.read",{operation:"get_json",resource:{type:"artifact.object",canonicalId:architectureRef.artifactId},payload:{namespace:architectureRef.namespace,digest:architectureRef.digest}});
     const architectureContent=verifiedArchitectureValue(architectureResponse,architectureRef);
     const request={schema:"prism.design-request.v1",projectId:input.projectId,architecture:input.architectureArtifact,architectureContent,...approved?{approvalId:approved.approvalId}:{}};
@@ -28,7 +28,7 @@ export async function execute(input:Input,context:PluginInvocationContext):Promi
       await context.invoke("operator.request",{operation:"publish",resource:{type:"operator.target",canonicalId:settings.target},payload:{type:"prism.approval.requested",projectId:input.projectId,waitId:wait.waitId,architectureDigest:input.architectureArtifact.contentDigest,signalType:"prism.approval.resolved",authorizedIssuer:{type:"operator",id:settings.issuerId},expiresAt}});
       return {schemaVersion:"stage-result.v2",outcome:"wait",reason:{code:"prism_design.approval_pending",message:"Waiting for an approved Prism Baseline Bundle."},artifacts:[],wait};
     }
-    const imported=verifyBaselineArchive(result,approved.bundleDigest,input.projectId);
+    const imported=verifyBaselineArchive(result,approved.bundleDigest,input.projectId,settings.budgets);
     const stored=await context.invoke("artifacts.write",{operation:"put_json",resource:{type:"artifact.object",canonicalId:`prism-baseline:${input.projectId}:${result.bundleDigest}`},payload:{namespace:"kubeclaw.prism",mediaType:"application/json",value:{...imported,designRequest:request,approvedArchitectureDigest:input.architectureArtifact.contentDigest}}});
     return {schemaVersion:"stage-result.v2",outcome:"passed",artifacts:[stored.artifact as ArtifactRef]};
   }catch(error){return {schemaVersion:"stage-result.v2",outcome:"blocked",reason:{code:"prism_design.dispatch_failed",message:error instanceof Error?error.message:String(error)},artifacts:[]};}

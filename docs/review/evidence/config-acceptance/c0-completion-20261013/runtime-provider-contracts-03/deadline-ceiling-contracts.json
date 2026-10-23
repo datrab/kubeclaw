@@ -1,0 +1,215 @@
+{
+  "qualification": "Explicit complete03 definition, not timed/native/provider execution",
+  "families": [
+    {
+      "packageId": "kubeclaw.api-flow",
+      "originalSettingId": "RT-b8eb5e344f496d7c",
+      "task": "task-fixtures/config/api-flow.deadline-ceiling.task.json",
+      "entries": {
+        "A": "fixtures/entries/kubeclaw.api-flow.deadline-ceiling-A.pipeline.config.json",
+        "B": "fixtures/entries/kubeclaw.api-flow.deadline-ceiling-B.pipeline.config.json"
+      },
+      "completeProfiles": {
+        "A": "deadline-ceiling-A",
+        "B": "deadline-ceiling-B"
+      },
+      "sameSoleDefault": 500,
+      "ceilings": {
+        "A": 1000,
+        "B": 500
+      },
+      "invocationNativeRemainingDeadlineMinimum": 1000,
+      "status": "not-run",
+      "classification": "source-supported task request800 \u2192 proposed effective800/500; task50 masks both; omitted task uses500 both; default<=ceiling valid",
+      "negativeRelations": [
+        "default501 ceiling500 rejects whole owner even if profile unselected",
+        "0/noninteger/out-of-domain rejects schema",
+        "request default500 ceiling500 equality admitted",
+        "original package/native/invocation/deadline binding cannot be raised or reset to create a witness"
+      ],
+      "originalAffectedSettingIds": [
+        "RT-b8eb5e344f496d7c",
+        "RT-351419f2c26e2696"
+      ],
+      "originalCaseArtifactRefs": [
+        {
+          "caseId": "RT-351419f2c26e2696-CURRENT-SCHEMA-FIELD",
+          "pointer": "case-definitions.json#/cases/70"
+        },
+        {
+          "caseId": "RT-351419f2c26e2696-NETWORK05-ALTERNATE",
+          "pointer": "case-definitions.json#/cases/71"
+        },
+        {
+          "caseId": "RT-351419f2c26e2696-NETWORK05-BINDING",
+          "pointer": "case-definitions.json#/cases/72"
+        },
+        {
+          "caseId": "RT-351419f2c26e2696-NETWORK05-CONTRACT",
+          "pointer": "case-definitions.json#/cases/73"
+        },
+        {
+          "caseId": "RT-351419f2c26e2696-NETWORK05-DEFINITION",
+          "pointer": "case-definitions.json#/cases/74"
+        },
+        {
+          "caseId": "RT-351419f2c26e2696-NETWORK05-MUTANT",
+          "pointer": "case-definitions.json#/cases/75"
+        },
+        {
+          "caseId": "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "pointer": "case-definitions.json#/cases/192"
+        },
+        {
+          "caseId": "RT-C0-BCE3F075-NETWORK05-OWNED-DOMAIN",
+          "pointer": "case-definitions.json#/cases/193"
+        },
+        {
+          "caseId": "RT-b8eb5e344f496d7c-CURRENT-SCHEMA-FIELD",
+          "pointer": "case-definitions.json#/cases/334"
+        },
+        {
+          "caseId": "RT-b8eb5e344f496d7c-NETWORK05-ALTERNATE",
+          "pointer": "case-definitions.json#/cases/335"
+        },
+        {
+          "caseId": "RT-b8eb5e344f496d7c-NETWORK05-BINDING",
+          "pointer": "case-definitions.json#/cases/336"
+        },
+        {
+          "caseId": "RT-b8eb5e344f496d7c-NETWORK05-CONTRACT",
+          "pointer": "case-definitions.json#/cases/337"
+        },
+        {
+          "caseId": "RT-b8eb5e344f496d7c-NETWORK05-DEFINITION",
+          "pointer": "case-definitions.json#/cases/338"
+        },
+        {
+          "caseId": "RT-b8eb5e344f496d7c-NETWORK05-MUTANT",
+          "pointer": "case-definitions.json#/cases/339"
+        }
+      ]
+    },
+    {
+      "packageId": "kubeclaw.http",
+      "originalSettingId": "RT-6a3cdfc223a3c24b",
+      "task": "task-fixtures/config/http.deadline-ceiling.task.json",
+      "entries": {
+        "A": "fixtures/entries/kubeclaw.http.deadline-ceiling-A.pipeline.config.json",
+        "B": "fixtures/entries/kubeclaw.http.deadline-ceiling-B.pipeline.config.json"
+      },
+      "completeProfiles": {
+        "A": "deadline-ceiling-A",
+        "B": "deadline-ceiling-B"
+      },
+      "sameSoleDefault": 500,
+      "ceilings": {
+        "A": 1000,
+        "B": 500
+      },
+      "invocationNativeRemainingDeadlineMinimum": 1000,
+      "status": "not-run",
+      "classification": "ADMISSION/RELATION ONLY for added ceiling: same default500 <=both ceilings yields500/500; no independent cap effect exists in current no-step caller. Original default50/500 pair still meaningful; do not substitute metadata cap difference for original effect.",
+      "negativeRelations": [
+        "default501 ceiling500 rejects whole owner even if profile unselected",
+        "0/noninteger/out-of-domain rejects schema",
+        "request default500 ceiling500 equality admitted",
+        "original package/native/invocation/deadline binding cannot be raised or reset to create a witness"
+      ],
+      "originalAffectedSettingIds": [
+        "RT-6a3cdfc223a3c24b"
+      ],
+      "originalCaseArtifactRefs": [
+        {
+          "caseId": "RT-6a3cdfc223a3c24b-CURRENT-SCHEMA-FIELD",
+          "pointer": "case-definitions.json#/cases/116"
+        },
+        {
+          "caseId": "RT-6a3cdfc223a3c24b-NETWORK05-ALTERNATE",
+          "pointer": "case-definitions.json#/cases/117"
+        },
+        {
+          "caseId": "RT-6a3cdfc223a3c24b-NETWORK05-BINDING",
+          "pointer": "case-definitions.json#/cases/118"
+        },
+        {
+          "caseId": "RT-6a3cdfc223a3c24b-NETWORK05-CONTRACT",
+          "pointer": "case-definitions.json#/cases/119"
+        },
+        {
+          "caseId": "RT-6a3cdfc223a3c24b-NETWORK05-DEFINITION",
+          "pointer": "case-definitions.json#/cases/120"
+        },
+        {
+          "caseId": "RT-6a3cdfc223a3c24b-NETWORK05-MUTANT",
+          "pointer": "case-definitions.json#/cases/121"
+        },
+        {
+          "caseId": "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "pointer": "case-definitions.json#/cases/192"
+        },
+        {
+          "caseId": "RT-C0-BCE3F075-NETWORK05-OWNED-DOMAIN",
+          "pointer": "case-definitions.json#/cases/193"
+        }
+      ]
+    },
+    {
+      "packageId": "kubeclaw.openapi",
+      "originalSettingId": "RT-550d941bb663f8fc",
+      "task": "task-fixtures/config/openapi.deadline-ceiling.task.json",
+      "entries": {
+        "A": "fixtures/entries/kubeclaw.openapi.deadline-ceiling-A.pipeline.config.json",
+        "B": "fixtures/entries/kubeclaw.openapi.deadline-ceiling-B.pipeline.config.json"
+      },
+      "completeProfiles": {
+        "A": "deadline-ceiling-A",
+        "B": "deadline-ceiling-B"
+      },
+      "sameSoleDefault": 500,
+      "ceilings": {
+        "A": 1000,
+        "B": 500
+      },
+      "invocationNativeRemainingDeadlineMinimum": 1000,
+      "status": "not-run",
+      "classification": "ADMISSION/RELATION ONLY for added ceiling: same default500 <=both ceilings yields500/500; no independent cap effect exists in current no-step caller. Original default50/500 pair still meaningful; do not substitute metadata cap difference for original effect.",
+      "negativeRelations": [
+        "default501 ceiling500 rejects whole owner even if profile unselected",
+        "0/noninteger/out-of-domain rejects schema",
+        "request default500 ceiling500 equality admitted",
+        "original package/native/invocation/deadline binding cannot be raised or reset to create a witness"
+      ],
+      "originalAffectedSettingIds": [
+        "RT-550d941bb663f8fc"
+      ],
+      "originalCaseArtifactRefs": [
+        {
+          "caseId": "RT-550d941bb663f8fc-BCE3F075-ALTERNATE",
+          "pointer": "case-definitions.json#/cases/98"
+        },
+        {
+          "caseId": "RT-550d941bb663f8fc-BCE3F075-BINDING",
+          "pointer": "case-definitions.json#/cases/99"
+        },
+        {
+          "caseId": "RT-550d941bb663f8fc-BCE3F075-CONTRACT",
+          "pointer": "case-definitions.json#/cases/100"
+        },
+        {
+          "caseId": "RT-550d941bb663f8fc-BCE3F075-DEFINITION",
+          "pointer": "case-definitions.json#/cases/101"
+        },
+        {
+          "caseId": "RT-550d941bb663f8fc-BCE3F075-MUTANT",
+          "pointer": "case-definitions.json#/cases/102"
+        },
+        {
+          "caseId": "RT-550d941bb663f8fc-CURRENT-SCHEMA-FIELD",
+          "pointer": "case-definitions.json#/cases/103"
+        }
+      ]
+    }
+  ],
+  "httpOpenapiCeilingEffectObligation": "No original case waived. Additional ceiling is admission cap/relationship; independent effect contrast unavailable under valid same-default no-step caller. Actual original requestTimeoutMs cases continue to use existing sole-default50/500 complete pairs and real future timeout oracle."
+}

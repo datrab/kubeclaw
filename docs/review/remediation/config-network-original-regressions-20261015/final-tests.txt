@@ -1,0 +1,11 @@
+✔ original recorded legacy journal prefixes recover without identity migration across native locales (14482.258595ms)
+✔ new original durable producers and completed replay use the same explicit portable identity in both locale directions (3850.273243ms)
+✔ independent closed profile never consumes historical model keys on actual HMAC wire or replay (714.496186ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18733.361212

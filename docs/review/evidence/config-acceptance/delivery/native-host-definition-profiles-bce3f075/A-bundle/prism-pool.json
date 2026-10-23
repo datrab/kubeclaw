@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "role": "prism",
+  "nodeName": "dlv-native-a",
+  "policyDigest": "614839c558e11a73e06221d1d42eb8454b7fa35b7f2462a1c0c3f256e2cc15b6",
+  "cgroupRoot": "/sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service/prism",
+  "ownershipRoot": "/var/lib/kubeclaw/native/prism",
+  "nodeIdentityFile": "/etc/kubeclaw/native-node-id",
+  "runtimeIdentityFile": "/etc/kubeclaw/native-runtime-identity.json",
+  "maximumActiveScopes": 2,
+  "limits": {
+    "memoryBytes": 67108864,
+    "tasks": 32,
+    "cpuQuotaMicroseconds": 50000,
+    "cpuPeriodMicroseconds": 100000
+  }
+}

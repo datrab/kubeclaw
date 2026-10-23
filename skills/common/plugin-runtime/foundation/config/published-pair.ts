@@ -1,3 +1,6 @@
+import { canonicalJson } from '@kubeclaw/pipeline-observability-contract';
+import { parseDocument } from 'yaml';
+import { readWorkerCorePolicyCapture, type WorkerCorePolicyCapture } from './worker-core-policy.ts';
 import fs, {type Stats} from 'node:fs';
 import fsp from 'node:fs/promises';
 import path from 'node:path';
@@ -7,9 +10,12 @@ import { ensureDirectoryDurable, withDurableStoreLock, writeDurableState } from 
 const LIMIT = 64 * 1024 * 1024;
 const DIRECTORY = '.scaffold-publication';
 type Member = { name: string; digest: string; bytes: number };
-type Manifest = { schemaVersion: 'published-json-pair.v1'; generation: string; members: [Member, Member] };
+type Manifest = { schemaVersion: 'published-json-pair.v1' | 'published-json-pair.v2'; generation: string; members: [Member, Member]; workerCore?: WorkerCorePolicyCapture };
 const digest = (bytes: Buffer | string) => crypto.createHash('sha256').update(bytes).digest('hex');
-const generationId = (members: readonly Member[]) => digest(JSON.stringify(members.map(member=>[member.name,member.digest,member.bytes])));
+const generationId = (members: readonly Member[], workerCore?: WorkerCorePolicyCapture) => {
+  const identities = members.map(member=>[member.name,member.digest,member.bytes]);
+  return digest(workerCore ? canonicalJson({members:identities,workerCore}) : JSON.stringify(identities));
+};
 function fail(code: string): never { throw new Error(`PUBLISHED_PAIR_${code}: reconcile explicitly with scaffold --apply`); }
 function namesValid(names: readonly [string,string]): void {
   if (names[0] === names[1] || names.some(name => !/^[a-z][a-z0-9.-]*\.json$/u.test(name))) fail('NAMES_INVALID');
@@ -48,17 +54,24 @@ function validateMember(member:Member,name:string):void {
 }
 function manifestValue(bytes:Buffer,names:readonly [string,string]):Manifest {
   let value:Manifest;try{value=JSON.parse(bytes.toString());}catch{fail('MANIFEST_INVALID');}
-  if(!value||value.schemaVersion!=='published-json-pair.v1'||!Array.isArray(value.members)||value.members.length!==2
-    ||Object.keys(value).sort().join(',')!=='generation,members,schemaVersion')fail('MANIFEST_INVALID');
+  const selected=value?.schemaVersion==='published-json-pair.v2';
+  if(!value||!['published-json-pair.v1','published-json-pair.v2'].includes(value.schemaVersion)||!Array.isArray(value.members)||value.members.length!==2
+    ||Object.keys(value).sort().join(',')!==(selected?'generation,members,schemaVersion,workerCore':'generation,members,schemaVersion'))fail('MANIFEST_INVALID');
+  if(selected){
+    if(parseDocument(bytes.toString(),{version:'1.2',schema:'json',strict:true,uniqueKeys:true}).errors.length)fail('MANIFEST_INVALID');
+    const captured=readWorkerCorePolicyCapture(value.workerCore);
+    if(bytes.length>captured.settings.scaffoldPublication.maximumPointerBytes)fail('FILE_INVALID');
+  }
   value.members.forEach((member,index)=>validateMember(member,names[index]!));
-  if(value.generation!==generationId(value.members))fail('MANIFEST_INVALID');return value;
+  if(value.generation!==generationId(value.members,value.workerCore))fail('MANIFEST_INVALID');return value;
 }
 /** A present but damaged publication never falls back to loose authored files. */
-export function readPublishedPair(root:string,names:readonly [string,string],verifyCopies=true):readonly [unknown,unknown] {
+export function readPublishedPair(root:string,names:readonly [string,string],verifyCopies=true, workerCore?: WorkerCorePolicyCapture):readonly [unknown,unknown] {
+  const selected=workerCore===undefined?undefined:readWorkerCorePolicyCapture(workerCore);
   root=path.resolve(root);namesValid(names);const base=path.join(root,DIRECTORY);
   const rootPins=pins(root);
   if(!present(base)){
-    const values=names.map(name=>{const file=path.join(root,name);return present(file)?JSON.parse(read(file).toString()):null;});
+    const values=names.map(name=>{const file=path.join(root,name);return present(file)?JSON.parse(read(file,selected?.settings.scaffoldPublication.maximumMemberBytes).toString()):null;});
     if(present(base))fail('CHANGED');verifyPins(rootPins);return values as [unknown,unknown];
   }
   const basePins=pins(base);const pointer=path.join(base,'current.json');
@@ -66,9 +79,10 @@ export function readPublishedPair(root:string,names:readonly [string,string],ver
   const bytes=read(pointer,4096),manifest=manifestValue(bytes,names);
   const generation=path.join(base,manifest.generation),generationPins=pins(generation);
   const values=manifest.members.map(member=>{
-    const content=read(path.join(generation,member.name));
+    const maximum=manifest.workerCore?.settings.scaffoldPublication.maximumMemberBytes;
+    const content=read(path.join(generation,member.name),maximum);
     if(content.length!==member.bytes||digest(content)!==member.digest)fail('MEMBER_INVALID');
-    if(verifyCopies&&!content.equals(read(path.join(root,member.name))))fail('MATERIALIZATION_DIVERGED');
+    if(verifyCopies&&!content.equals(read(path.join(root,member.name),maximum)))fail('MATERIALIZATION_DIVERGED');
     try{return JSON.parse(content.toString());}catch{fail('MEMBER_INVALID');}
   });
   if(!read(pointer,4096).equals(bytes))fail('CHANGED');
@@ -92,12 +106,14 @@ async function materialize(file:string,bytes:Buffer):Promise<void> {
   targetValid(file);await fsp.rename(temporary,file);await syncDirectory(path.dirname(file));
 }
 /** The single current.json rename commits both members; loose files alone never authorize execution. */
-export async function publishJsonPair(root:string,names:readonly [string,string],values:readonly [unknown,unknown]):Promise<void> {
+export async function publishJsonPair(root:string,names:readonly [string,string],values:readonly [unknown,unknown], workerCore?: WorkerCorePolicyCapture):Promise<void> {
+  const selected=workerCore===undefined?undefined:readWorkerCorePolicyCapture(workerCore);
   root=path.resolve(root);namesValid(names);const rootPins=pins(root);
   const contents=values.map(value=>Buffer.from(`${JSON.stringify(value,null,2)}\n`));
-  if(contents.some(bytes=>bytes.length>LIMIT))fail('SIZE_EXCEEDED');
+  if(contents.some(bytes=>bytes.length>(selected?.settings.scaffoldPublication.maximumMemberBytes ?? LIMIT)))fail('SIZE_EXCEEDED');
   const members=contents.map((bytes,index)=>({name:names[index]!,digest:digest(bytes),bytes:bytes.length})) as [Member,Member];
-  const manifest:Manifest={schemaVersion:'published-json-pair.v1',generation:generationId(members),members};
+  const manifest:Manifest={schemaVersion:selected?'published-json-pair.v2':'published-json-pair.v1',generation:generationId(members,selected),members,...(selected?{workerCore:selected}:{})};
+  if(Buffer.byteLength(canonicalJson(manifest))>(selected?.settings.scaffoldPublication.maximumPointerBytes ?? 4096))fail('POINTER_SIZE_EXCEEDED');
   const base=path.join(root,DIRECTORY),pointer=path.join(base,'current.json');
   names.forEach(name=>targetValid(path.join(root,name)));targetValid(pointer);
   await ensureDirectoryDurable(base);

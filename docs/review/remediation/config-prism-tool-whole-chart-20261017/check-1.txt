@@ -1,0 +1,12 @@
+✔ Prism OpenClaw plugin enforces one exact three-design commit tool (1.293893ms)
+✔ tool startup requires explicit plugin policy and rejects legacy ENV even when equal (0.544954ms)
+✔ startup A/B policies reach actual HTTP consumers; retained A and per-call override remain isolated (58.199319ms)
+✔ central A/B selection renders actual gateway plugin startup policy and reaches HTTP without per-call authors (806.623692ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1376.210699

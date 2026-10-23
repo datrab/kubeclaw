@@ -1,3 +1,5 @@
+import { nativeBrowserPolicy } from './native/resource-policy.mts';
+import { nativeControlSettings } from './native/resource-policy.mts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createServer} from 'node:http';
@@ -30,7 +32,7 @@ test('actual HTTP dropped admission response retains the same client key; SQL re
  })();});
  await new Promise<void>(resolve=>server.listen(0,'127.0.0.1',resolve));const root=await mkdtemp(join(tmpdir(),'prism-revision-client-'));
  let data=new Map<string,string>();const storage={getItem:(key:string)=>data.get(key)??null,setItem:(key:string,value:string)=>{data.set(key,value);},removeItem:(key:string)=>{data.delete(key);}};
- const client:RevisionClient={documentId,userId:'user-one',csrf:'csrf',origin:`http://127.0.0.1:${(server.address() as {port:number}).port}`,storage};
+ const client:RevisionClient={documentId,userId:'user-one',csrf:'csrf',origin:`http://127.0.0.1:${(server.address() as {port:number}).port}`,policy:nativeBrowserPolicy,storage};
  try{
   const pending=pendingRevision(client,document,'original instruction');
   await assert.rejects(submitRevision(client,pending),/fetch failed/);
@@ -38,7 +40,7 @@ test('actual HTTP dropped admission response retains the same client key; SQL re
   const restored=savedRevision(client)!;assert.equal(restored.idempotencyKey,pending.idempotencyKey);
   assert.equal(pendingRevision(client,document,'different retry text').input.instruction,'original instruction');
   const accepted=await submitRevision(client,restored);assert.ok(accepted.jobId);assert.equal((await db.query('SELECT id FROM prism.agent_job')).rows.length,1);
-  const claimed=await claimAgentJob(db,'runner');assert.ok(claimed?.fence);
+  const claimed=await claimAgentJob(db,'runner',nativeControlSettings);assert.ok(claimed?.fence);
   await finishAgentRun(db,claimed.id,claimed.fence,{state:'errored',error:'gateway transport interrupted'});
   await assert.rejects(waitForRevision(client,accepted),/HTTP 422.*NeedsNova.*gateway transport interrupted/s);
   assert.equal(savedRevision(client)?.jobId,accepted.jobId,'uncertain action remains available for reconciliation');

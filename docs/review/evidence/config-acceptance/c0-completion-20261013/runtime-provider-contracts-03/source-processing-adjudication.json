@@ -1,0 +1,850 @@
+{
+  "status": "finite coordinate/domain/identity/case adjudication for named members; canonical ledger untouched and exact missing-candidate coverage gaps remain explicit, no closed-global claim",
+  "members": [
+    {
+      "owner": "kubeclaw.api-flow",
+      "profileField": "processing.maximumFlowFileBytes",
+      "source": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "line": 49,
+        "lineText": "  if (bytes.byteLength > 1_048_576) throw new Error('API_FLOW_FILE_TOO_LARGE');",
+        "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+      },
+      "exactOriginalCandidateRecords": [],
+      "candidateDisposition": "NO exact ledger candidate at this literal coordinate; explicit source-coordinate coverage gap; no invented or nearby ID assigned",
+      "associatedOriginalSettingId": "RT-351419f2c26e2696",
+      "originalCaseIds": [
+        "RT-351419f2c26e2696-CURRENT-SCHEMA-FIELD",
+        "RT-351419f2c26e2696-NETWORK05-DEFINITION",
+        "RT-351419f2c26e2696-NETWORK05-CONTRACT",
+        "RT-351419f2c26e2696-NETWORK05-ALTERNATE",
+        "RT-351419f2c26e2696-NETWORK05-BINDING",
+        "RT-351419f2c26e2696-NETWORK05-MUTANT",
+        "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION"
+      ],
+      "identityMeaning": "Associated existing task/file/schema case obligations, NOT assertion that original task field is this quota or canonical candidate ledger was updated",
+      "classification": "selected processing budget bounded by existing safety cap, defaults removed; fixed syntax/type/cycle/security guards remain noneditable invariants",
+      "domain": {
+        "integerMinimum": 1,
+        "maximum": 1048576,
+        "sourceCeiling": 1048576
+      },
+      "boundary": "file bytes after complete read, before JSON parse",
+      "error": "API_FLOW_FILE_TOO_LARGE",
+      "wholePair": {
+        "ownerPath": "config/plugins/kubeclaw.api-flow.config.json",
+        "A": "maximumFlowFileBytes-A",
+        "B": "maximumFlowFileBytes-B"
+      },
+      "fixture": "task-fixtures/repository/api-flow-513.json",
+      "oracle": "same actual registered provider/source task and authenticated endpoint; A admits processing fixture, tighter B denies at exact named boundary; for response constraints first request already occurred; no graph/pattern mock or invented pre-request denial",
+      "negativeControls": [
+        "cap equality admitted by > comparison; cap+1 rejected",
+        "invalid0/noninteger/overflow fails selected owner schema before reader",
+        "boolean/no-ref/nonstring shortcuts distinguished, never claim guard visited when skipped",
+        "source syntax/cycle/external-ref/security invariants unchanged under A/B",
+        "mutant literal/default/ignored selected B must be killed by actual provider/runtime case"
+      ],
+      "result": "not-run",
+      "immutableSourceIdentity": {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "sourceSha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+        "line": 49,
+        "exactLineText": "  if (bytes.byteLength > 1_048_576) throw new Error('API_FLOW_FILE_TOO_LARGE');",
+        "selectedFieldPointer": "/profiles/<selected>/processing/maximumFlowFileBytes"
+      },
+      "boundedDefinitionStatus": "Locally adjudicated owner/domain/source-consumer/application/fixture/case contract COMPLETE AS PROPOSAL; scanner identity gap remains global coverage issue, not unspecified behavior or activation blocker",
+      "applicationContract": {
+        "currentConsumer": "api-flow readFlow(repositoryPath, flowFile) byteLength guard",
+        "targetABI": "readFlow(repositoryPath, flowFile, selectedPolicy.processing.maximumFlowFileBytes); compare after captured bytes read, before parse; no fallback",
+        "fixtureResponse": null
+      },
+      "applicationCaseArtifactRefs": [
+        {
+          "originalCaseId": "RT-351419f2c26e2696-CURRENT-SCHEMA-FIELD",
+          "pointer": "case-definitions.json#/cases/70",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-351419f2c26e2696-NETWORK05-DEFINITION",
+          "pointer": "case-definitions.json#/cases/74",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-351419f2c26e2696-NETWORK05-CONTRACT",
+          "pointer": "case-definitions.json#/cases/73",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-351419f2c26e2696-NETWORK05-ALTERNATE",
+          "pointer": "case-definitions.json#/cases/71",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-351419f2c26e2696-NETWORK05-BINDING",
+          "pointer": "case-definitions.json#/cases/72",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-351419f2c26e2696-NETWORK05-MUTANT",
+          "pointer": "case-definitions.json#/cases/75",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+          "pointer": "case-definitions.json#/cases/192",
+          "originalRequirementsUnchanged": true
+        }
+      ],
+      "exactSelectedSchemaNode": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 1048576
+      },
+      "wholeEntries": {
+        "A": "fixtures/entries/kubeclaw.api-flow.maximumFlowFileBytes-A.pipeline.config.json",
+        "B": "fixtures/entries/kubeclaw.api-flow.maximumFlowFileBytes-B.pipeline.config.json"
+      },
+      "actualTaskData": "task-fixtures/config/kubeclaw.api-flow.maximumFlowFileBytes.task.json"
+    },
+    {
+      "owner": "kubeclaw.openapi",
+      "profileField": "processing.maximumSpecFileBytes",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 193,
+        "lineText": "  const bytes = fs.readFileSync(inside(fs.realpathSync(repositoryPath), config.specFile)); if (bytes.byteLength > 4_194_304) throw new Error('OPENAPI_FILE_TOO_LARGE');",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+      },
+      "exactOriginalCandidateRecords": [],
+      "candidateDisposition": "NO exact ledger candidate at this literal coordinate; explicit source-coordinate coverage gap; no invented or nearby ID assigned",
+      "associatedOriginalSettingId": "RT-10f3f03208806c98",
+      "originalCaseIds": [
+        "RT-10f3f03208806c98-CURRENT-SCHEMA-FIELD",
+        "RT-10f3f03208806c98-BCE3F075-DEFINITION",
+        "RT-10f3f03208806c98-BCE3F075-CONTRACT",
+        "RT-10f3f03208806c98-BCE3F075-ALTERNATE",
+        "RT-10f3f03208806c98-BCE3F075-BINDING",
+        "RT-10f3f03208806c98-BCE3F075-MUTANT"
+      ],
+      "identityMeaning": "Associated existing task/file/schema case obligations, NOT assertion that original task field is this quota or canonical candidate ledger was updated",
+      "classification": "selected processing budget bounded by existing safety cap, defaults removed; fixed syntax/type/cycle/security guards remain noneditable invariants",
+      "domain": {
+        "integerMinimum": 1,
+        "maximum": 4194304,
+        "sourceCeiling": 4194304
+      },
+      "boundary": "file bytes after complete read, before JSON parse",
+      "error": "OPENAPI_FILE_TOO_LARGE",
+      "wholePair": {
+        "ownerPath": "config/plugins/kubeclaw.openapi.config.json",
+        "A": "maximumSpecFileBytes-A",
+        "B": "maximumSpecFileBytes-B"
+      },
+      "fixture": "task-fixtures/repository/openapi-513.json",
+      "oracle": "same actual registered provider/source task and authenticated endpoint; A admits processing fixture, tighter B denies at exact named boundary; for response constraints first request already occurred; no graph/pattern mock or invented pre-request denial",
+      "negativeControls": [
+        "cap equality admitted by > comparison; cap+1 rejected",
+        "invalid0/noninteger/overflow fails selected owner schema before reader",
+        "boolean/no-ref/nonstring shortcuts distinguished, never claim guard visited when skipped",
+        "source syntax/cycle/external-ref/security invariants unchanged under A/B",
+        "mutant literal/default/ignored selected B must be killed by actual provider/runtime case"
+      ],
+      "result": "not-run",
+      "immutableSourceIdentity": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "sourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "line": 193,
+        "exactLineText": "  const bytes = fs.readFileSync(inside(fs.realpathSync(repositoryPath), config.specFile)); if (bytes.byteLength > 4_194_304) throw new Error('OPENAPI_FILE_TOO_LARGE');",
+        "selectedFieldPointer": "/profiles/<selected>/processing/maximumSpecFileBytes"
+      },
+      "boundedDefinitionStatus": "Locally adjudicated owner/domain/source-consumer/application/fixture/case contract COMPLETE AS PROPOSAL; scanner identity gap remains global coverage issue, not unspecified behavior or activation blocker",
+      "applicationContract": {
+        "currentConsumer": "openapi provider execute captured spec readFileSync byteLength guard",
+        "targetABI": "captured bytes byteLength > selectedPolicy.processing.maximumSpecFileBytes before JSON.parse; no fallback",
+        "fixtureResponse": null
+      },
+      "applicationCaseArtifactRefs": [
+        {
+          "originalCaseId": "RT-10f3f03208806c98-CURRENT-SCHEMA-FIELD",
+          "pointer": "case-definitions.json#/cases/27",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-10f3f03208806c98-BCE3F075-DEFINITION",
+          "pointer": "case-definitions.json#/cases/25",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-10f3f03208806c98-BCE3F075-CONTRACT",
+          "pointer": "case-definitions.json#/cases/24",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-10f3f03208806c98-BCE3F075-ALTERNATE",
+          "pointer": "case-definitions.json#/cases/22",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-10f3f03208806c98-BCE3F075-BINDING",
+          "pointer": "case-definitions.json#/cases/23",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-10f3f03208806c98-BCE3F075-MUTANT",
+          "pointer": "case-definitions.json#/cases/26",
+          "originalRequirementsUnchanged": true
+        }
+      ],
+      "exactSelectedSchemaNode": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 4194304
+      },
+      "wholeEntries": {
+        "A": "fixtures/entries/kubeclaw.openapi.maximumSpecFileBytes-A.pipeline.config.json",
+        "B": "fixtures/entries/kubeclaw.openapi.maximumSpecFileBytes-B.pipeline.config.json"
+      },
+      "actualTaskData": "task-fixtures/config/kubeclaw.openapi.maximumSpecFileBytes.task.json"
+    },
+    {
+      "owner": "kubeclaw.openapi",
+      "profileField": "processing.maximumSelections",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 202,
+        "lineText": "  if (!selections.length) throw new Error('OPENAPI_SELECTION_EMPTY'); if (selections.length > 128) throw new Error('OPENAPI_SELECTION_LIMIT_EXCEEDED');",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+      },
+      "exactOriginalCandidateRecords": [],
+      "candidateDisposition": "NO exact ledger candidate at this literal coordinate; explicit source-coordinate coverage gap; no invented or nearby ID assigned",
+      "associatedOriginalSettingId": "RT-396eb59b11141a9a",
+      "originalCaseIds": [
+        "RT-396eb59b11141a9a-CURRENT-SCHEMA-FIELD",
+        "RT-396eb59b11141a9a-BCE3F075-DEFINITION",
+        "RT-396eb59b11141a9a-BCE3F075-CONTRACT",
+        "RT-396eb59b11141a9a-BCE3F075-ALTERNATE",
+        "RT-396eb59b11141a9a-BCE3F075-BINDING",
+        "RT-396eb59b11141a9a-BCE3F075-MUTANT"
+      ],
+      "identityMeaning": "Associated existing task/file/schema case obligations, NOT assertion that original task field is this quota or canonical candidate ledger was updated",
+      "classification": "selected processing budget bounded by existing safety cap, defaults removed; fixed syntax/type/cycle/security guards remain noneditable invariants",
+      "domain": {
+        "integerMinimum": 1,
+        "maximum": 128,
+        "sourceCeiling": 128
+      },
+      "boundary": "combined explicit+tag selections before per-operation invoke",
+      "error": "OPENAPI_SELECTION_LIMIT_EXCEEDED",
+      "wholePair": {
+        "ownerPath": "config/plugins/kubeclaw.openapi.config.json",
+        "A": "maximumSelections-A",
+        "B": "maximumSelections-B"
+      },
+      "fixture": "task-fixtures/repository/spec-typed.json",
+      "oracle": "same actual registered provider/source task and authenticated endpoint; A admits processing fixture, tighter B denies at exact named boundary; for response constraints first request already occurred; no graph/pattern mock or invented pre-request denial",
+      "negativeControls": [
+        "cap equality admitted by > comparison; cap+1 rejected",
+        "invalid0/noninteger/overflow fails selected owner schema before reader",
+        "boolean/no-ref/nonstring shortcuts distinguished, never claim guard visited when skipped",
+        "source syntax/cycle/external-ref/security invariants unchanged under A/B",
+        "mutant literal/default/ignored selected B must be killed by actual provider/runtime case"
+      ],
+      "result": "not-run",
+      "immutableSourceIdentity": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "sourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "line": 202,
+        "exactLineText": "  if (!selections.length) throw new Error('OPENAPI_SELECTION_EMPTY'); if (selections.length > 128) throw new Error('OPENAPI_SELECTION_LIMIT_EXCEEDED');",
+        "selectedFieldPointer": "/profiles/<selected>/processing/maximumSelections"
+      },
+      "boundedDefinitionStatus": "Locally adjudicated owner/domain/source-consumer/application/fixture/case contract COMPLETE AS PROPOSAL; scanner identity gap remains global coverage issue, not unspecified behavior or activation blocker",
+      "applicationContract": {
+        "currentConsumer": "openapi provider execute combined explicit operations and selected tags array length",
+        "targetABI": "combined selections.length > selectedPolicy.processing.maximumSelections after empty check and before operation loop; no fallback",
+        "fixtureResponse": null
+      },
+      "applicationCaseArtifactRefs": [
+        {
+          "originalCaseId": "RT-396eb59b11141a9a-CURRENT-SCHEMA-FIELD",
+          "pointer": "case-definitions.json#/cases/81",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-396eb59b11141a9a-BCE3F075-DEFINITION",
+          "pointer": "case-definitions.json#/cases/79",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-396eb59b11141a9a-BCE3F075-CONTRACT",
+          "pointer": "case-definitions.json#/cases/78",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-396eb59b11141a9a-BCE3F075-ALTERNATE",
+          "pointer": "case-definitions.json#/cases/76",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-396eb59b11141a9a-BCE3F075-BINDING",
+          "pointer": "case-definitions.json#/cases/77",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-396eb59b11141a9a-BCE3F075-MUTANT",
+          "pointer": "case-definitions.json#/cases/80",
+          "originalRequirementsUnchanged": true
+        }
+      ],
+      "exactSelectedSchemaNode": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 128
+      },
+      "wholeEntries": {
+        "A": "fixtures/entries/kubeclaw.openapi.maximumSelections-A.pipeline.config.json",
+        "B": "fixtures/entries/kubeclaw.openapi.maximumSelections-B.pipeline.config.json"
+      },
+      "actualTaskData": "task-fixtures/config/kubeclaw.openapi.maximumSelections.task.json"
+    },
+    {
+      "owner": "kubeclaw.openapi",
+      "profileField": "processing.maximumSchemaGraphDepth",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/schema-support.js",
+        "line": 47,
+        "lineText": "  if (depth > 64) throw new Error('OPENAPI_SCHEMA_DEPTH_EXCEEDED');",
+        "sha256": "05e27ae54dfd00cb9f1344eb171699a6e4fa87801f5c5f8ff97be18910377e4b"
+      },
+      "exactOriginalCandidateRecords": [],
+      "candidateDisposition": "NO exact ledger candidate at this literal coordinate; explicit source-coordinate coverage gap; no invented or nearby ID assigned",
+      "associatedOriginalSettingId": "RT-10f3f03208806c98",
+      "originalCaseIds": [
+        "RT-10f3f03208806c98-CURRENT-SCHEMA-FIELD",
+        "RT-10f3f03208806c98-BCE3F075-DEFINITION",
+        "RT-10f3f03208806c98-BCE3F075-CONTRACT",
+        "RT-10f3f03208806c98-BCE3F075-ALTERNATE",
+        "RT-10f3f03208806c98-BCE3F075-BINDING",
+        "RT-10f3f03208806c98-BCE3F075-MUTANT"
+      ],
+      "identityMeaning": "Associated existing task/file/schema case obligations, NOT assertion that original task field is this quota or canonical candidate ledger was updated",
+      "classification": "selected processing budget bounded by existing safety cap, defaults removed; fixed syntax/type/cycle/security guards remain noneditable invariants",
+      "domain": {
+        "integerMinimum": 1,
+        "maximum": 64,
+        "sourceCeiling": 64
+      },
+      "boundary": "assertSupportedSchema root0; boolean/undefined short circuit BEFORE depth>limit; traverses all supported children; response-body call post invoke",
+      "error": "OPENAPI_SCHEMA_DEPTH_EXCEEDED",
+      "wholePair": {
+        "ownerPath": "config/plugins/kubeclaw.openapi.config.json",
+        "A": "maximumSchemaGraphDepth-A",
+        "B": "maximumSchemaGraphDepth-B"
+      },
+      "fixture": "task-fixtures/repository/spec-graph-depth9.json",
+      "oracle": "same actual registered provider/source task and authenticated endpoint; A admits processing fixture, tighter B denies at exact named boundary; for response constraints first request already occurred; no graph/pattern mock or invented pre-request denial",
+      "negativeControls": [
+        "cap equality admitted by > comparison; cap+1 rejected",
+        "invalid0/noninteger/overflow fails selected owner schema before reader",
+        "boolean/no-ref/nonstring shortcuts distinguished, never claim guard visited when skipped",
+        "source syntax/cycle/external-ref/security invariants unchanged under A/B",
+        "mutant literal/default/ignored selected B must be killed by actual provider/runtime case"
+      ],
+      "result": "not-run",
+      "immutableSourceIdentity": {
+        "path": "skills/buster/plugins/openapi/src/schema-support.js",
+        "sourceSha256": "05e27ae54dfd00cb9f1344eb171699a6e4fa87801f5c5f8ff97be18910377e4b",
+        "line": 47,
+        "exactLineText": "  if (depth > 64) throw new Error('OPENAPI_SCHEMA_DEPTH_EXCEEDED');",
+        "selectedFieldPointer": "/profiles/<selected>/processing/maximumSchemaGraphDepth"
+      },
+      "boundedDefinitionStatus": "Locally adjudicated owner/domain/source-consumer/application/fixture/case contract COMPLETE AS PROPOSAL; scanner identity gap remains global coverage issue, not unspecified behavior or activation blocker",
+      "applicationContract": {
+        "currentConsumer": "assertSupportedSchema raw graph traversal and child recursion",
+        "targetABI": "add explicit immutable processing budgets argument after depth parameter; every assertSupportedSchema child carries exact same budgets; preserve boolean/undefined shortcuts before depth > maximumSchemaGraphDepth; no fallback",
+        "fixtureResponse": "response-payload-depth9.json"
+      },
+      "applicationCaseArtifactRefs": [
+        {
+          "originalCaseId": "RT-10f3f03208806c98-CURRENT-SCHEMA-FIELD",
+          "pointer": "case-definitions.json#/cases/27",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-10f3f03208806c98-BCE3F075-DEFINITION",
+          "pointer": "case-definitions.json#/cases/25",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-10f3f03208806c98-BCE3F075-CONTRACT",
+          "pointer": "case-definitions.json#/cases/24",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-10f3f03208806c98-BCE3F075-ALTERNATE",
+          "pointer": "case-definitions.json#/cases/22",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-10f3f03208806c98-BCE3F075-BINDING",
+          "pointer": "case-definitions.json#/cases/23",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-10f3f03208806c98-BCE3F075-MUTANT",
+          "pointer": "case-definitions.json#/cases/26",
+          "originalRequirementsUnchanged": true
+        }
+      ],
+      "exactSelectedSchemaNode": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 64
+      },
+      "wholeEntries": {
+        "A": "fixtures/entries/kubeclaw.openapi.maximumSchemaGraphDepth-A.pipeline.config.json",
+        "B": "fixtures/entries/kubeclaw.openapi.maximumSchemaGraphDepth-B.pipeline.config.json"
+      },
+      "actualTaskData": "task-fixtures/config/kubeclaw.openapi.maximumSchemaGraphDepth.task.json"
+    },
+    {
+      "owner": "kubeclaw.openapi",
+      "profileField": "processing.maximumRefChainDepth",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 37,
+        "lineText": "  if (depth > 64) throw new Error('OPENAPI_SCHEMA_DEPTH_EXCEEDED');",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+      },
+      "exactOriginalCandidateRecords": [],
+      "candidateDisposition": "NO exact ledger candidate at this literal coordinate; explicit source-coordinate coverage gap; no invented or nearby ID assigned",
+      "associatedOriginalSettingId": "RT-10f3f03208806c98",
+      "originalCaseIds": [
+        "RT-10f3f03208806c98-CURRENT-SCHEMA-FIELD",
+        "RT-10f3f03208806c98-BCE3F075-DEFINITION",
+        "RT-10f3f03208806c98-BCE3F075-CONTRACT",
+        "RT-10f3f03208806c98-BCE3F075-ALTERNATE",
+        "RT-10f3f03208806c98-BCE3F075-BINDING",
+        "RT-10f3f03208806c98-BCE3F075-MUTANT"
+      ],
+      "identityMeaning": "Associated existing task/file/schema case obligations, NOT assertion that original task field is this quota or canonical candidate ledger was updated",
+      "classification": "selected processing budget bounded by existing safety cap, defaults removed; fixed syntax/type/cycle/security guards remain noneditable invariants",
+      "domain": {
+        "integerMinimum": 1,
+        "maximum": 64,
+        "sourceCeiling": 64
+      },
+      "boundary": "resolveSchema depth0; no-ref return BEFORE depth guard, chain65 refs resolves, chain66 rejects current64; distinct from graph traversal",
+      "error": "OPENAPI_SCHEMA_DEPTH_EXCEEDED",
+      "wholePair": {
+        "ownerPath": "config/plugins/kubeclaw.openapi.config.json",
+        "A": "maximumRefChainDepth-A",
+        "B": "maximumRefChainDepth-B"
+      },
+      "fixture": "task-fixtures/repository/spec-ref-chain10.json",
+      "oracle": "same actual registered provider/source task and authenticated endpoint; A admits processing fixture, tighter B denies at exact named boundary; for response constraints first request already occurred; no graph/pattern mock or invented pre-request denial",
+      "negativeControls": [
+        "cap equality admitted by > comparison; cap+1 rejected",
+        "invalid0/noninteger/overflow fails selected owner schema before reader",
+        "boolean/no-ref/nonstring shortcuts distinguished, never claim guard visited when skipped",
+        "source syntax/cycle/external-ref/security invariants unchanged under A/B",
+        "mutant literal/default/ignored selected B must be killed by actual provider/runtime case"
+      ],
+      "result": "not-run",
+      "immutableSourceIdentity": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "sourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "line": 37,
+        "exactLineText": "  if (depth > 64) throw new Error('OPENAPI_SCHEMA_DEPTH_EXCEEDED');",
+        "selectedFieldPointer": "/profiles/<selected>/processing/maximumRefChainDepth"
+      },
+      "boundedDefinitionStatus": "Locally adjudicated owner/domain/source-consumer/application/fixture/case contract COMPLETE AS PROPOSAL; scanner identity gap remains global coverage issue, not unspecified behavior or activation blocker",
+      "applicationContract": {
+        "currentConsumer": "resolveSchema local-ref recursion",
+        "targetABI": "add explicit immutable processing budgets argument after depth parameter; recursive resolve carries same budgets; preserve no-ref return before depth > maximumRefChainDepth; no fallback",
+        "fixtureResponse": "response-ref-string.json"
+      },
+      "applicationCaseArtifactRefs": [
+        {
+          "originalCaseId": "RT-10f3f03208806c98-CURRENT-SCHEMA-FIELD",
+          "pointer": "case-definitions.json#/cases/27",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-10f3f03208806c98-BCE3F075-DEFINITION",
+          "pointer": "case-definitions.json#/cases/25",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-10f3f03208806c98-BCE3F075-CONTRACT",
+          "pointer": "case-definitions.json#/cases/24",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-10f3f03208806c98-BCE3F075-ALTERNATE",
+          "pointer": "case-definitions.json#/cases/22",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-10f3f03208806c98-BCE3F075-BINDING",
+          "pointer": "case-definitions.json#/cases/23",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-10f3f03208806c98-BCE3F075-MUTANT",
+          "pointer": "case-definitions.json#/cases/26",
+          "originalRequirementsUnchanged": true
+        }
+      ],
+      "exactSelectedSchemaNode": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 64
+      },
+      "wholeEntries": {
+        "A": "fixtures/entries/kubeclaw.openapi.maximumRefChainDepth-A.pipeline.config.json",
+        "B": "fixtures/entries/kubeclaw.openapi.maximumRefChainDepth-B.pipeline.config.json"
+      },
+      "actualTaskData": "task-fixtures/config/kubeclaw.openapi.maximumRefChainDepth.task.json"
+    },
+    {
+      "owner": "kubeclaw.openapi",
+      "profileField": "processing.maximumPayloadDepth",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 70,
+        "lineText": "  if (depth > 64) throw new Error('OPENAPI_SCHEMA_DEPTH_EXCEEDED');",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+      },
+      "exactOriginalCandidateRecords": [],
+      "candidateDisposition": "NO exact ledger candidate at this literal coordinate; explicit source-coordinate coverage gap; no invented or nearby ID assigned",
+      "associatedOriginalSettingId": "RT-10f3f03208806c98",
+      "originalCaseIds": [
+        "RT-10f3f03208806c98-CURRENT-SCHEMA-FIELD",
+        "RT-10f3f03208806c98-BCE3F075-DEFINITION",
+        "RT-10f3f03208806c98-BCE3F075-CONTRACT",
+        "RT-10f3f03208806c98-BCE3F075-ALTERNATE",
+        "RT-10f3f03208806c98-BCE3F075-BINDING",
+        "RT-10f3f03208806c98-BCE3F075-MUTANT"
+      ],
+      "identityMeaning": "Associated existing task/file/schema case obligations, NOT assertion that original task field is this quota or canonical candidate ledger was updated",
+      "classification": "selected processing budget bounded by existing safety cap, defaults removed; fixed syntax/type/cycle/security guards remain noneditable invariants",
+      "domain": {
+        "integerMinimum": 1,
+        "maximum": 64,
+        "sourceCeiling": 64
+      },
+      "boundary": "schemaFailures root0; boolean/undefined/null shortcuts first; follows only visited payload plus combinators; graph preflight separately64",
+      "error": "OPENAPI_SCHEMA_DEPTH_EXCEEDED",
+      "wholePair": {
+        "ownerPath": "config/plugins/kubeclaw.openapi.config.json",
+        "A": "maximumPayloadDepth-A",
+        "B": "maximumPayloadDepth-B"
+      },
+      "fixture": "task-fixtures/repository/spec-graph-depth9.json",
+      "oracle": "same actual registered provider/source task and authenticated endpoint; A admits processing fixture, tighter B denies at exact named boundary; for response constraints first request already occurred; no graph/pattern mock or invented pre-request denial",
+      "negativeControls": [
+        "cap equality admitted by > comparison; cap+1 rejected",
+        "invalid0/noninteger/overflow fails selected owner schema before reader",
+        "boolean/no-ref/nonstring shortcuts distinguished, never claim guard visited when skipped",
+        "source syntax/cycle/external-ref/security invariants unchanged under A/B",
+        "mutant literal/default/ignored selected B must be killed by actual provider/runtime case"
+      ],
+      "result": "not-run",
+      "immutableSourceIdentity": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "sourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "line": 70,
+        "exactLineText": "  if (depth > 64) throw new Error('OPENAPI_SCHEMA_DEPTH_EXCEEDED');",
+        "selectedFieldPointer": "/profiles/<selected>/processing/maximumPayloadDepth"
+      },
+      "boundedDefinitionStatus": "Locally adjudicated owner/domain/source-consumer/application/fixture/case contract COMPLETE AS PROPOSAL; scanner identity gap remains global coverage issue, not unspecified behavior or activation blocker",
+      "applicationContract": {
+        "currentConsumer": "schemaFailures visited value/schema recursion",
+        "targetABI": "add explicit immutable processing budgets argument after depth parameter; recursive schemaFailures carries same budgets; assertSupportedSchema receives graph budget not payload budget; preserve shortcut and depth > maximumPayloadDepth",
+        "fixtureResponse": "response-payload-depth9.json"
+      },
+      "applicationCaseArtifactRefs": [
+        {
+          "originalCaseId": "RT-10f3f03208806c98-CURRENT-SCHEMA-FIELD",
+          "pointer": "case-definitions.json#/cases/27",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-10f3f03208806c98-BCE3F075-DEFINITION",
+          "pointer": "case-definitions.json#/cases/25",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-10f3f03208806c98-BCE3F075-CONTRACT",
+          "pointer": "case-definitions.json#/cases/24",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-10f3f03208806c98-BCE3F075-ALTERNATE",
+          "pointer": "case-definitions.json#/cases/22",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-10f3f03208806c98-BCE3F075-BINDING",
+          "pointer": "case-definitions.json#/cases/23",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-10f3f03208806c98-BCE3F075-MUTANT",
+          "pointer": "case-definitions.json#/cases/26",
+          "originalRequirementsUnchanged": true
+        }
+      ],
+      "exactSelectedSchemaNode": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 64
+      },
+      "wholeEntries": {
+        "A": "fixtures/entries/kubeclaw.openapi.maximumPayloadDepth-A.pipeline.config.json",
+        "B": "fixtures/entries/kubeclaw.openapi.maximumPayloadDepth-B.pipeline.config.json"
+      },
+      "actualTaskData": "task-fixtures/config/kubeclaw.openapi.maximumPayloadDepth.task.json"
+    },
+    {
+      "owner": "kubeclaw.openapi",
+      "profileField": "processing.maximumPatternCodeUnits",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 56,
+        "lineText": "  if (typeof source !== 'string' || source.length > 256 || /[()|]/u.test(source)",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+      },
+      "exactOriginalCandidateRecords": [
+        {
+          "id": "SRC-f08c65e1075873b3",
+          "source": "skills/buster/plugins/openapi/src/provider.js",
+          "line": 56,
+          "kinds": [
+            "fallback-or-expression"
+          ],
+          "sourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+          "disposition": "unresolved",
+          "settingIds": [],
+          "reason": null
+        }
+      ],
+      "candidateDisposition": "exact existing ledger coordinate retained, locally adjudicated processing budget",
+      "associatedOriginalSettingId": "RT-10f3f03208806c98",
+      "originalCaseIds": [
+        "RT-10f3f03208806c98-CURRENT-SCHEMA-FIELD",
+        "RT-10f3f03208806c98-BCE3F075-DEFINITION",
+        "RT-10f3f03208806c98-BCE3F075-CONTRACT",
+        "RT-10f3f03208806c98-BCE3F075-ALTERNATE",
+        "RT-10f3f03208806c98-BCE3F075-BINDING",
+        "RT-10f3f03208806c98-BCE3F075-MUTANT"
+      ],
+      "identityMeaning": "Associated existing task/file/schema case obligations, NOT assertion that original task field is this quota or canonical candidate ledger was updated",
+      "classification": "selected processing budget bounded by existing safety cap, defaults removed; fixed syntax/type/cycle/security guards remain noneditable invariants",
+      "domain": {
+        "integerMinimum": 1,
+        "maximum": 256,
+        "sourceCeiling": 256
+      },
+      "boundary": "safePattern JS string.length UTF16 code units; guard only when visited value string",
+      "error": "OPENAPI_SCHEMA_PATTERN_UNSAFE",
+      "wholePair": {
+        "ownerPath": "config/plugins/kubeclaw.openapi.config.json",
+        "A": "maximumPatternCodeUnits-A",
+        "B": "maximumPatternCodeUnits-B"
+      },
+      "fixture": "task-fixtures/repository/spec-pattern-length9.json",
+      "oracle": "same actual registered provider/source task and authenticated endpoint; A admits processing fixture, tighter B denies at exact named boundary; for response constraints first request already occurred; no graph/pattern mock or invented pre-request denial",
+      "negativeControls": [
+        "cap equality admitted by > comparison; cap+1 rejected",
+        "invalid0/noninteger/overflow fails selected owner schema before reader",
+        "boolean/no-ref/nonstring shortcuts distinguished, never claim guard visited when skipped",
+        "source syntax/cycle/external-ref/security invariants unchanged under A/B",
+        "mutant literal/default/ignored selected B must be killed by actual provider/runtime case"
+      ],
+      "result": "not-run",
+      "immutableSourceIdentity": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "sourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "line": 56,
+        "exactLineText": "  if (typeof source !== 'string' || source.length > 256 || /[()|]/u.test(source)",
+        "selectedFieldPointer": "/profiles/<selected>/processing/maximumPatternCodeUnits"
+      },
+      "boundedDefinitionStatus": "Locally adjudicated owner/domain/source-consumer/application/fixture/case contract COMPLETE AS PROPOSAL; scanner identity gap remains global coverage issue, not unspecified behavior or activation blocker",
+      "applicationContract": {
+        "currentConsumer": "safePattern invoked inside visited string schemaFailures branch",
+        "targetABI": "safePattern(source, immutable processing budgets) uses source.length > maximumPatternCodeUnits; unchanged other regex security guards; no fallback",
+        "fixtureResponse": "response-pattern-length9.json"
+      },
+      "applicationCaseArtifactRefs": [
+        {
+          "originalCaseId": "RT-10f3f03208806c98-CURRENT-SCHEMA-FIELD",
+          "pointer": "case-definitions.json#/cases/27",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-10f3f03208806c98-BCE3F075-DEFINITION",
+          "pointer": "case-definitions.json#/cases/25",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-10f3f03208806c98-BCE3F075-CONTRACT",
+          "pointer": "case-definitions.json#/cases/24",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-10f3f03208806c98-BCE3F075-ALTERNATE",
+          "pointer": "case-definitions.json#/cases/22",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-10f3f03208806c98-BCE3F075-BINDING",
+          "pointer": "case-definitions.json#/cases/23",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-10f3f03208806c98-BCE3F075-MUTANT",
+          "pointer": "case-definitions.json#/cases/26",
+          "originalRequirementsUnchanged": true
+        }
+      ],
+      "exactSelectedSchemaNode": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 256
+      },
+      "wholeEntries": {
+        "A": "fixtures/entries/kubeclaw.openapi.maximumPatternCodeUnits-A.pipeline.config.json",
+        "B": "fixtures/entries/kubeclaw.openapi.maximumPatternCodeUnits-B.pipeline.config.json"
+      },
+      "actualTaskData": "task-fixtures/config/kubeclaw.openapi.maximumPatternCodeUnits.task.json"
+    },
+    {
+      "owner": "kubeclaw.openapi",
+      "profileField": "processing.maximumPatternQuantifier",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 62,
+        "lineText": "    if (minimum > 1024 || maximum > 1024) throw new Error('OPENAPI_SCHEMA_PATTERN_UNSAFE');",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+      },
+      "exactOriginalCandidateRecords": [
+        {
+          "id": "SRC-0e9d90225155cbb9",
+          "source": "skills/buster/plugins/openapi/src/provider.js",
+          "line": 62,
+          "kinds": [
+            "fallback-or-expression",
+            "policy-or-input"
+          ],
+          "sourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+          "disposition": "unresolved",
+          "settingIds": [],
+          "reason": null
+        }
+      ],
+      "candidateDisposition": "exact existing ledger coordinate retained, locally adjudicated processing budget",
+      "associatedOriginalSettingId": "RT-10f3f03208806c98",
+      "originalCaseIds": [
+        "RT-10f3f03208806c98-CURRENT-SCHEMA-FIELD",
+        "RT-10f3f03208806c98-BCE3F075-DEFINITION",
+        "RT-10f3f03208806c98-BCE3F075-CONTRACT",
+        "RT-10f3f03208806c98-BCE3F075-ALTERNATE",
+        "RT-10f3f03208806c98-BCE3F075-BINDING",
+        "RT-10f3f03208806c98-BCE3F075-MUTANT"
+      ],
+      "identityMeaning": "Associated existing task/file/schema case obligations, NOT assertion that original task field is this quota or canonical candidate ledger was updated",
+      "classification": "selected processing budget bounded by existing safety cap, defaults removed; fixed syntax/type/cycle/security guards remain noneditable invariants",
+      "domain": {
+        "integerMinimum": 1,
+        "maximum": 1024,
+        "sourceCeiling": 1024
+      },
+      "boundary": "safePattern parsed explicit quantifier min/max each <=limit; maximum infinity rejected; visited string only",
+      "error": "OPENAPI_SCHEMA_PATTERN_UNSAFE",
+      "wholePair": {
+        "ownerPath": "config/plugins/kubeclaw.openapi.config.json",
+        "A": "maximumPatternQuantifier-A",
+        "B": "maximumPatternQuantifier-B"
+      },
+      "fixture": "task-fixtures/repository/spec-pattern-quantifier9.json",
+      "oracle": "same actual registered provider/source task and authenticated endpoint; A admits processing fixture, tighter B denies at exact named boundary; for response constraints first request already occurred; no graph/pattern mock or invented pre-request denial",
+      "negativeControls": [
+        "cap equality admitted by > comparison; cap+1 rejected",
+        "invalid0/noninteger/overflow fails selected owner schema before reader",
+        "boolean/no-ref/nonstring shortcuts distinguished, never claim guard visited when skipped",
+        "source syntax/cycle/external-ref/security invariants unchanged under A/B",
+        "mutant literal/default/ignored selected B must be killed by actual provider/runtime case"
+      ],
+      "result": "not-run",
+      "immutableSourceIdentity": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "sourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "line": 62,
+        "exactLineText": "    if (minimum > 1024 || maximum > 1024) throw new Error('OPENAPI_SCHEMA_PATTERN_UNSAFE');",
+        "selectedFieldPointer": "/profiles/<selected>/processing/maximumPatternQuantifier"
+      },
+      "boundedDefinitionStatus": "Locally adjudicated owner/domain/source-consumer/application/fixture/case contract COMPLETE AS PROPOSAL; scanner identity gap remains global coverage issue, not unspecified behavior or activation blocker",
+      "applicationContract": {
+        "currentConsumer": "safePattern explicit bounded quantifier scan",
+        "targetABI": "safePattern(source, immutable processing budgets) compares each parsed min/max > maximumPatternQuantifier; infinity/security guards remain; no fallback",
+        "fixtureResponse": "response-pattern-quantifier9.json"
+      },
+      "applicationCaseArtifactRefs": [
+        {
+          "originalCaseId": "RT-10f3f03208806c98-CURRENT-SCHEMA-FIELD",
+          "pointer": "case-definitions.json#/cases/27",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-10f3f03208806c98-BCE3F075-DEFINITION",
+          "pointer": "case-definitions.json#/cases/25",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-10f3f03208806c98-BCE3F075-CONTRACT",
+          "pointer": "case-definitions.json#/cases/24",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-10f3f03208806c98-BCE3F075-ALTERNATE",
+          "pointer": "case-definitions.json#/cases/22",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-10f3f03208806c98-BCE3F075-BINDING",
+          "pointer": "case-definitions.json#/cases/23",
+          "originalRequirementsUnchanged": true
+        },
+        {
+          "originalCaseId": "RT-10f3f03208806c98-BCE3F075-MUTANT",
+          "pointer": "case-definitions.json#/cases/26",
+          "originalRequirementsUnchanged": true
+        }
+      ],
+      "exactSelectedSchemaNode": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 1024
+      },
+      "wholeEntries": {
+        "A": "fixtures/entries/kubeclaw.openapi.maximumPatternQuantifier-A.pipeline.config.json",
+        "B": "fixtures/entries/kubeclaw.openapi.maximumPatternQuantifier-B.pipeline.config.json"
+      },
+      "actualTaskData": "task-fixtures/config/kubeclaw.openapi.maximumPatternQuantifier.task.json"
+    }
+  ],
+  "fixedRegexInvariants": [
+    "No grouping or alternation [()|]",
+    "No numeric/named backreference",
+    "At most one unescaped * or +",
+    "No infinite explicit quantifier bound",
+    "RegExp(source,u) compile must succeed"
+  ],
+  "otherFixedInvariants": [
+    "supported keyword/dialect/type sets and shape guards",
+    "local-only JSON pointer refs, no cycles, missing refs reject",
+    "API-flow methods/variable/header/selector/task type/shape constraints retained; no task data migrated to CONFIG"
+  ]
+}

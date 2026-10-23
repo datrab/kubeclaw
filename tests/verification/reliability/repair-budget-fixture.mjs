@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY_SELECTION } from '../../fixtures/core-runtime-policy.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
@@ -30,7 +31,7 @@ export function budgetFixture(root, failures = {}, technical = {}) {
 export function budgetPlatform(root) {
   const installed = path.join(root, 'plugins');
   const provider = 'kubeclaw.artifact-store:artifact-store';
-  return { schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: [installed], trustedBuiltinRoots: [installed],
+  return {corePolicySelection: TEST_CORE_POLICY_SELECTION, schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: [installed], trustedBuiltinRoots: [installed],
     externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} }, providers: { 'artifacts.write': provider },
     grants: { 'test.repair-budget:execute': { 'artifacts.write': { allowedNamespaces: ['test.repair-budget'] } } },
     adapters: { [provider]: { artifactRoot: path.join(root, 'artifacts') } }, activeAdapters: [provider], observers: {},

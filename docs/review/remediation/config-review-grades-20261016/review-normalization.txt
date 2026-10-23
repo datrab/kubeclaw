@@ -1,0 +1,7 @@
+autoreview findings: 1
+[P2] Compare reviewer identity against normalized OpenClaw target values
+skills/nova/core/execution/review-runtime-targets.ts:11
+The identity check compares raw target fields, but the activation parser normalizes them: `parseTarget` trims `model` and `thinking` and normalizes `agentId` through `idValue`. For example, a schema-valid target with `model: " test-model "` activates as `test-model` and previously worked with `reviewerModel: "test-model"`; explicit v2 now rejects that configuration with `REVIEW_ACTIVATED_TARGET_IDENTITY_MISMATCH` before activation. Derive the identity through the same normalization used by the actual adapter so this check compares the effective selected runtime identity.
+
+overall: patch is incorrect (0.9)
+The shared capacity normalizer fixes omitted legacy capacity fields, and the supplied recovery implementation restores retained targets without merging current target values. However, the new identity check rejects valid configurations whose raw identity fields differ from their activated, normalized values. Review was source-only because local inspection failed with a sandbox initialization error; no tests or nested reviewers were run.

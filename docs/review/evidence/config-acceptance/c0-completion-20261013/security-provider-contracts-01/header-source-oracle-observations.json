@@ -1,0 +1,1827 @@
+{
+  "qualification": "Concrete SOURCE-assessed expected oracles, not observed HTTP response/native execution; direct helper must not substitute for original productive F-EFFECT cases",
+  "entries": [
+    {
+      "setting": "RT-163ebc138c768e21",
+      "A": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": true
+          }
+        ],
+        "sourceAssessedOutcome": "passed",
+        "counts": {
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        },
+        "visibleFindings": [],
+        "acceptedFindings": [],
+        "unusedAcceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00Z"
+          }
+        ]
+      },
+      "B": {
+        "predicates": [
+          {
+            "ruleId": "hsts",
+            "header": "strict-transport-security",
+            "severity": "high",
+            "satisfied": false
+          },
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "frame-options",
+            "header": "x-frame-options",
+            "severity": "medium",
+            "satisfied": false
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": true
+          }
+        ],
+        "sourceAssessedOutcome": "failed",
+        "counts": {
+          "total": 2,
+          "passed": 0,
+          "failed": 2,
+          "skipped": 0
+        },
+        "visibleFindings": [
+          {
+            "id": "header:hsts:/a",
+            "severity": "high",
+            "message": "/a does not satisfy security-header rule hsts.",
+            "rule": "security-header.hsts"
+          },
+          {
+            "id": "header:frame-options:/a",
+            "severity": "medium",
+            "message": "/a does not satisfy security-header rule frame-options.",
+            "rule": "security-header.frame-options"
+          }
+        ],
+        "acceptedFindings": [],
+        "unusedAcceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00Z"
+          }
+        ]
+      }
+    },
+    {
+      "setting": "RT-611f5b01895a7c90",
+      "A": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": false
+          }
+        ],
+        "sourceAssessedOutcome": "passed",
+        "counts": {
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        },
+        "visibleFindings": [
+          {
+            "id": "header:custom:/a",
+            "severity": "high",
+            "message": "/a does not satisfy security-header rule custom.",
+            "rule": "security-header.custom"
+          }
+        ],
+        "acceptedFindings": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00Z"
+          }
+        ],
+        "unusedAcceptances": []
+      },
+      "B": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom-b",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": false
+          }
+        ],
+        "sourceAssessedOutcome": "failed",
+        "counts": {
+          "total": 1,
+          "passed": 0,
+          "failed": 1,
+          "skipped": 0
+        },
+        "visibleFindings": [
+          {
+            "id": "header:custom-b:/a",
+            "severity": "high",
+            "message": "/a does not satisfy security-header rule custom-b.",
+            "rule": "security-header.custom-b"
+          }
+        ],
+        "acceptedFindings": [],
+        "unusedAcceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00Z"
+          }
+        ]
+      }
+    },
+    {
+      "setting": "RT-93c925a29f21dd8d",
+      "A": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": true
+          }
+        ],
+        "sourceAssessedOutcome": "passed",
+        "counts": {
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        },
+        "visibleFindings": [],
+        "acceptedFindings": [],
+        "unusedAcceptances": []
+      },
+      "B": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-other",
+            "severity": "high",
+            "satisfied": false
+          }
+        ],
+        "sourceAssessedOutcome": "failed",
+        "counts": {
+          "total": 1,
+          "passed": 0,
+          "failed": 1,
+          "skipped": 0
+        },
+        "visibleFindings": [
+          {
+            "id": "header:custom:/a",
+            "severity": "high",
+            "message": "/a does not satisfy security-header rule custom.",
+            "rule": "security-header.custom"
+          }
+        ],
+        "acceptedFindings": [],
+        "unusedAcceptances": []
+      }
+    },
+    {
+      "setting": "RT-d852318fd5b15892",
+      "A": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": true
+          }
+        ],
+        "sourceAssessedOutcome": "passed",
+        "counts": {
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        },
+        "visibleFindings": [],
+        "acceptedFindings": [],
+        "unusedAcceptances": []
+      },
+      "B": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-other",
+            "severity": "high",
+            "satisfied": false
+          }
+        ],
+        "sourceAssessedOutcome": "failed",
+        "counts": {
+          "total": 1,
+          "passed": 0,
+          "failed": 1,
+          "skipped": 0
+        },
+        "visibleFindings": [
+          {
+            "id": "header:custom:/a",
+            "severity": "high",
+            "message": "/a does not satisfy security-header rule custom.",
+            "rule": "security-header.custom"
+          }
+        ],
+        "acceptedFindings": [],
+        "unusedAcceptances": []
+      }
+    },
+    {
+      "setting": "RT-cd92cb7109a38c4a",
+      "A": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": false
+          }
+        ],
+        "sourceAssessedOutcome": "passed",
+        "counts": {
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        },
+        "visibleFindings": [
+          {
+            "id": "header:custom:/a",
+            "severity": "high",
+            "message": "/a does not satisfy security-header rule custom.",
+            "rule": "security-header.custom"
+          }
+        ],
+        "acceptedFindings": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00Z"
+          }
+        ],
+        "unusedAcceptances": []
+      },
+      "B": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom-b",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": false
+          }
+        ],
+        "sourceAssessedOutcome": "failed",
+        "counts": {
+          "total": 1,
+          "passed": 0,
+          "failed": 1,
+          "skipped": 0
+        },
+        "visibleFindings": [
+          {
+            "id": "header:custom-b:/a",
+            "severity": "high",
+            "message": "/a does not satisfy security-header rule custom-b.",
+            "rule": "security-header.custom-b"
+          }
+        ],
+        "acceptedFindings": [],
+        "unusedAcceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00Z"
+          }
+        ]
+      }
+    },
+    {
+      "setting": "RT-8a73cb4fa2939ad4",
+      "A": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": true
+          }
+        ],
+        "sourceAssessedOutcome": "passed",
+        "counts": {
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        },
+        "visibleFindings": [],
+        "acceptedFindings": [],
+        "unusedAcceptances": []
+      },
+      "B": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-other",
+            "severity": "high",
+            "satisfied": false
+          }
+        ],
+        "sourceAssessedOutcome": "failed",
+        "counts": {
+          "total": 1,
+          "passed": 0,
+          "failed": 1,
+          "skipped": 0
+        },
+        "visibleFindings": [
+          {
+            "id": "header:custom:/a",
+            "severity": "high",
+            "message": "/a does not satisfy security-header rule custom.",
+            "rule": "security-header.custom"
+          }
+        ],
+        "acceptedFindings": [],
+        "unusedAcceptances": []
+      }
+    },
+    {
+      "setting": "RT-ebb85facca8d1b1b",
+      "A": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": false
+          }
+        ],
+        "sourceAssessedOutcome": "failed",
+        "counts": {
+          "total": 1,
+          "passed": 0,
+          "failed": 1,
+          "skipped": 0
+        },
+        "visibleFindings": [
+          {
+            "id": "header:custom:/a",
+            "severity": "high",
+            "message": "/a does not satisfy security-header rule custom.",
+            "rule": "security-header.custom"
+          }
+        ],
+        "acceptedFindings": [],
+        "unusedAcceptances": []
+      },
+      "B": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-custom",
+            "severity": "low",
+            "satisfied": false
+          }
+        ],
+        "sourceAssessedOutcome": "passed",
+        "counts": {
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        },
+        "visibleFindings": [
+          {
+            "id": "header:custom:/a",
+            "severity": "low",
+            "message": "/a does not satisfy security-header rule custom.",
+            "rule": "security-header.custom"
+          }
+        ],
+        "acceptedFindings": [],
+        "unusedAcceptances": []
+      }
+    },
+    {
+      "setting": "RT-d87b67b33610f619",
+      "A": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": false
+          }
+        ],
+        "sourceAssessedOutcome": "failed",
+        "counts": {
+          "total": 1,
+          "passed": 0,
+          "failed": 1,
+          "skipped": 0
+        },
+        "visibleFindings": [
+          {
+            "id": "header:custom:/a",
+            "severity": "high",
+            "message": "/a does not satisfy security-header rule custom.",
+            "rule": "security-header.custom"
+          }
+        ],
+        "acceptedFindings": [],
+        "unusedAcceptances": []
+      },
+      "B": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": true
+          }
+        ],
+        "sourceAssessedOutcome": "passed",
+        "counts": {
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        },
+        "visibleFindings": [],
+        "acceptedFindings": [],
+        "unusedAcceptances": []
+      }
+    },
+    {
+      "setting": "RT-ef66623413223fef",
+      "A": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": false
+          }
+        ],
+        "sourceAssessedOutcome": "failed",
+        "counts": {
+          "total": 1,
+          "passed": 0,
+          "failed": 1,
+          "skipped": 0
+        },
+        "visibleFindings": [
+          {
+            "id": "header:custom:/a",
+            "severity": "high",
+            "message": "/a does not satisfy security-header rule custom.",
+            "rule": "security-header.custom"
+          }
+        ],
+        "acceptedFindings": [],
+        "unusedAcceptances": []
+      },
+      "B": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": true
+          }
+        ],
+        "sourceAssessedOutcome": "passed",
+        "counts": {
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        },
+        "visibleFindings": [],
+        "acceptedFindings": [],
+        "unusedAcceptances": []
+      }
+    },
+    {
+      "setting": "RT-101f7a1f1f29236a",
+      "A": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": true
+          }
+        ],
+        "sourceAssessedOutcome": "passed",
+        "counts": {
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        },
+        "visibleFindings": [],
+        "acceptedFindings": [],
+        "unusedAcceptances": []
+      },
+      "B": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-other",
+            "severity": "high",
+            "satisfied": false
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": true
+          }
+        ],
+        "sourceAssessedOutcome": "failed",
+        "counts": {
+          "total": 1,
+          "passed": 0,
+          "failed": 1,
+          "skipped": 0
+        },
+        "visibleFindings": [
+          {
+            "id": "header:content-type-nosniff:/a",
+            "severity": "high",
+            "message": "/a does not satisfy security-header rule content-type-nosniff.",
+            "rule": "security-header.content-type-nosniff"
+          }
+        ],
+        "acceptedFindings": [],
+        "unusedAcceptances": []
+      }
+    },
+    {
+      "setting": "RT-5118b56e0742663b",
+      "A": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": true
+          }
+        ],
+        "sourceAssessedOutcome": "passed",
+        "counts": {
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        },
+        "visibleFindings": [],
+        "acceptedFindings": [],
+        "unusedAcceptances": []
+      },
+      "B": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-other",
+            "severity": "high",
+            "satisfied": false
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": true
+          }
+        ],
+        "sourceAssessedOutcome": "failed",
+        "counts": {
+          "total": 1,
+          "passed": 0,
+          "failed": 1,
+          "skipped": 0
+        },
+        "visibleFindings": [
+          {
+            "id": "header:content-type-nosniff:/a",
+            "severity": "high",
+            "message": "/a does not satisfy security-header rule content-type-nosniff.",
+            "rule": "security-header.content-type-nosniff"
+          }
+        ],
+        "acceptedFindings": [],
+        "unusedAcceptances": []
+      }
+    },
+    {
+      "setting": "RT-584baa9f0f15c058",
+      "A": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": true
+          }
+        ],
+        "sourceAssessedOutcome": "passed",
+        "counts": {
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        },
+        "visibleFindings": [],
+        "acceptedFindings": [],
+        "unusedAcceptances": []
+      },
+      "B": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "satisfied": false
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": true
+          }
+        ],
+        "sourceAssessedOutcome": "failed",
+        "counts": {
+          "total": 1,
+          "passed": 0,
+          "failed": 1,
+          "skipped": 0
+        },
+        "visibleFindings": [
+          {
+            "id": "header:content-type-nosniff:/a",
+            "severity": "high",
+            "message": "/a does not satisfy security-header rule content-type-nosniff.",
+            "rule": "security-header.content-type-nosniff"
+          }
+        ],
+        "acceptedFindings": [],
+        "unusedAcceptances": []
+      }
+    },
+    {
+      "setting": "RT-6ecf22c1afd37e91",
+      "A": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": true
+          }
+        ],
+        "sourceAssessedOutcome": "passed",
+        "counts": {
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        },
+        "visibleFindings": [],
+        "acceptedFindings": [],
+        "unusedAcceptances": []
+      },
+      "B": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-other",
+            "severity": "high",
+            "satisfied": false
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": true
+          }
+        ],
+        "sourceAssessedOutcome": "failed",
+        "counts": {
+          "total": 1,
+          "passed": 0,
+          "failed": 1,
+          "skipped": 0
+        },
+        "visibleFindings": [
+          {
+            "id": "header:content-type-nosniff:/a",
+            "severity": "high",
+            "message": "/a does not satisfy security-header rule content-type-nosniff.",
+            "rule": "security-header.content-type-nosniff"
+          }
+        ],
+        "acceptedFindings": [],
+        "unusedAcceptances": []
+      }
+    },
+    {
+      "setting": "RT-e702d189d1282e3b",
+      "A": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "satisfied": false
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": true
+          }
+        ],
+        "sourceAssessedOutcome": "failed",
+        "counts": {
+          "total": 1,
+          "passed": 0,
+          "failed": 1,
+          "skipped": 0
+        },
+        "visibleFindings": [
+          {
+            "id": "header:content-type-nosniff:/a",
+            "severity": "high",
+            "message": "/a does not satisfy security-header rule content-type-nosniff.",
+            "rule": "security-header.content-type-nosniff"
+          }
+        ],
+        "acceptedFindings": [],
+        "unusedAcceptances": []
+      },
+      "B": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "low",
+            "satisfied": false
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": true
+          }
+        ],
+        "sourceAssessedOutcome": "passed",
+        "counts": {
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        },
+        "visibleFindings": [
+          {
+            "id": "header:content-type-nosniff:/a",
+            "severity": "low",
+            "message": "/a does not satisfy security-header rule content-type-nosniff.",
+            "rule": "security-header.content-type-nosniff"
+          }
+        ],
+        "acceptedFindings": [],
+        "unusedAcceptances": []
+      }
+    },
+    {
+      "setting": "RT-58a77efdd8cd5820",
+      "A": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "satisfied": false
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": true
+          }
+        ],
+        "sourceAssessedOutcome": "failed",
+        "counts": {
+          "total": 1,
+          "passed": 0,
+          "failed": 1,
+          "skipped": 0
+        },
+        "visibleFindings": [
+          {
+            "id": "header:content-type-nosniff:/a",
+            "severity": "high",
+            "message": "/a does not satisfy security-header rule content-type-nosniff.",
+            "rule": "security-header.content-type-nosniff"
+          }
+        ],
+        "acceptedFindings": [],
+        "unusedAcceptances": []
+      },
+      "B": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": true
+          }
+        ],
+        "sourceAssessedOutcome": "passed",
+        "counts": {
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        },
+        "visibleFindings": [],
+        "acceptedFindings": [],
+        "unusedAcceptances": []
+      }
+    },
+    {
+      "setting": "RT-95a1b17121581a49",
+      "A": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "satisfied": false
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": true
+          }
+        ],
+        "sourceAssessedOutcome": "failed",
+        "counts": {
+          "total": 1,
+          "passed": 0,
+          "failed": 1,
+          "skipped": 0
+        },
+        "visibleFindings": [
+          {
+            "id": "header:content-type-nosniff:/a",
+            "severity": "high",
+            "message": "/a does not satisfy security-header rule content-type-nosniff.",
+            "rule": "security-header.content-type-nosniff"
+          }
+        ],
+        "acceptedFindings": [],
+        "unusedAcceptances": []
+      },
+      "B": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": true
+          }
+        ],
+        "sourceAssessedOutcome": "passed",
+        "counts": {
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        },
+        "visibleFindings": [],
+        "acceptedFindings": [],
+        "unusedAcceptances": []
+      }
+    },
+    {
+      "setting": "RT-f4e73c3bb3c19c65",
+      "A": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": true
+          }
+        ],
+        "sourceAssessedOutcome": "passed",
+        "counts": {
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        },
+        "visibleFindings": [],
+        "acceptedFindings": [],
+        "unusedAcceptances": []
+      },
+      "B": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": false
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": true
+          }
+        ],
+        "sourceAssessedOutcome": "failed",
+        "counts": {
+          "total": 1,
+          "passed": 0,
+          "failed": 1,
+          "skipped": 0
+        },
+        "visibleFindings": [
+          {
+            "id": "header:referrer-policy:/a",
+            "severity": "medium",
+            "message": "/a does not satisfy security-header rule referrer-policy.",
+            "rule": "security-header.referrer-policy"
+          }
+        ],
+        "acceptedFindings": [],
+        "unusedAcceptances": []
+      }
+    },
+    {
+      "setting": "RT-0da96fe7ba066ccb",
+      "A": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "permissions-policy",
+            "header": "permissions-policy",
+            "severity": "medium",
+            "satisfied": true
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": true
+          }
+        ],
+        "sourceAssessedOutcome": "passed",
+        "counts": {
+          "total": 1,
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0
+        },
+        "visibleFindings": [],
+        "acceptedFindings": [],
+        "unusedAcceptances": []
+      },
+      "B": {
+        "predicates": [
+          {
+            "ruleId": "content-type-nosniff",
+            "header": "x-content-type-options",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "content-security-policy",
+            "header": "content-security-policy",
+            "severity": "high",
+            "satisfied": true
+          },
+          {
+            "ruleId": "referrer-policy",
+            "header": "referrer-policy",
+            "severity": "medium",
+            "satisfied": false
+          },
+          {
+            "ruleId": "custom",
+            "header": "x-custom",
+            "severity": "high",
+            "satisfied": true
+          }
+        ],
+        "sourceAssessedOutcome": "failed",
+        "counts": {
+          "total": 1,
+          "passed": 0,
+          "failed": 1,
+          "skipped": 0
+        },
+        "visibleFindings": [
+          {
+            "id": "header:referrer-policy:/a",
+            "severity": "medium",
+            "message": "/a does not satisfy security-header rule referrer-policy.",
+            "rule": "security-header.referrer-policy"
+          }
+        ],
+        "acceptedFindings": [],
+        "unusedAcceptances": []
+      }
+    }
+  ]
+}

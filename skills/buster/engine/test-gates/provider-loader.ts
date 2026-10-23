@@ -1,5 +1,8 @@
+import { assertBudgetSourceAdmission } from './budget-source-admission.ts';
+import { freeze } from './runner-values.ts';
+import { validateRetainedProviderConfiguration } from '@kubeclaw/plugin-foundation/registry/configuration';
 import { ProviderProcessSession, assertCleanupDisposition } from './provider-process-session.ts';
-import { validateBusterProviderRuntimeSettings, type BusterProviderRuntimeSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
+import { validateBusterProviderRuntimeSettings, type BusterProviderRuntimeSettings } from '@kubeclaw/plugin-foundation/config/buster-execution';
 import { createHash } from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -161,6 +164,10 @@ export class RegisteredTestProviderLoader implements TestProviderLoader {
 
   async load(entry: TestProviderRegistryEntry, invocation: ProviderInvocationV1, workspaceRoot: string,
     signal: AbortSignal): Promise<LoadedTestProvider> {
+    // Do not retain an externally mutable reference across asynchronous initialize/cleanup.
+    if (invocation.configuration.schemaVersion === 'provider-configuration.v2') invocation = freeze(structuredClone(invocation));
+    validateRetainedProviderConfiguration(entry, invocation.configuration, invocation.provider, invocation.evidence);
+    assertBudgetSourceAdmission(invocation.configuration);
     if (signal.aborted) throw signal.reason ?? new Error('TEST_PROVIDER_CANCELLED');
     const provider = new IsolatedLoadedProvider(verifiedSnapshot(entry, workspaceRoot, invocation.attemptId), invocation, workspaceRoot, this.#policy);
     if (signal.aborted) { await provider.discard(); throw signal.reason ?? new Error('TEST_PROVIDER_CANCELLED'); }

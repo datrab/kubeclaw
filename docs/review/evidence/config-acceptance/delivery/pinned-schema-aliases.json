@@ -1,0 +1,26 @@
+{
+  "method": "generated $ref-only delivery alias to exact primary strict canonical recursive definition; no local schema properties, enums, constraints or permissive object fallback authored",
+  "source": {
+    "repository": "yannh/kubernetes-json-schema",
+    "commit": "c8f4e61c63bc529749125ac566bccc6986e08d45",
+    "path": "v1.35.6-standalone-strict/_definitions.json",
+    "url": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/_definitions.json",
+    "status": 200,
+    "sha256": "9dbc9ea6042d41e36d908b24897c4ee126e199a0a46856cd60c7dcbe73381e45",
+    "bytes": 1420392,
+    "result": "acquired",
+    "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/_definitions.json"
+  },
+  "definitionPointer": "#/definitions/io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.CustomResourceDefinition",
+  "definitionCanonicalSha256": "09ecf7a7fb84746bad51d6b635b0594863fe9195e21dabab8e9aec25d4520086",
+  "alias": {
+    "path": "docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/customresourcedefinition-apiextensions-v1.json",
+    "sha256": "df8a2947181c208eb33d92fa1424d6699e7a48b5f31ab0d6e8feaad2df53ef57",
+    "body": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "$ref": "file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/_definitions.json#/definitions/io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.CustomResourceDefinition"
+    }
+  },
+  "standaloneAbsence": "exact pinned directory lacks standalone CRD file; previous raw404/failures preserved",
+  "scope": "same primary pinned schema structural check only; native API structural/CEL/admission/runtime validation still distinct; actual deployed version unknown"
+}

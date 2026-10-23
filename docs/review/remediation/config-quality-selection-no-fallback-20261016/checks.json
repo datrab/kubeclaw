@@ -1,0 +1,53 @@
+[
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-timeout=30000",
+      "tests/verification/reliability/quality-provider-v2.test.mts"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-quality-selection-no-fallback-20261016/check-0.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/reliability/pipeline-v10-input-set.test.mts"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-quality-selection-no-fallback-20261016/check-1.txt"
+  },
+  {
+    "command": [
+      "./node_modules/.bin/tsc",
+      "--noEmit",
+      "--module",
+      "NodeNext",
+      "--moduleResolution",
+      "NodeNext",
+      "--target",
+      "ES2024",
+      "--lib",
+      "ESNext,DOM,DOM.Iterable",
+      "--strict",
+      "--types",
+      "node",
+      "--skipLibCheck",
+      "--allowImportingTsExtensions",
+      "--esModuleInterop",
+      "skills/nova/core/test-gates/resolver.ts"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-quality-selection-no-fallback-20261016/check-2.txt"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-quality-selection-no-fallback-20261016/check-3.txt"
+  }
+]

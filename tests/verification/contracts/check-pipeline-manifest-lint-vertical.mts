@@ -1,3 +1,6 @@
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -71,7 +74,7 @@ async function runAuthoritative(runId: string): Promise<any> {
   const granted = grantedRegistry();
   const activated = await core.activateRegistry(granted.snapshot, new Set(granted.grants.keys()));
   const effects = new core.EffectCoordinator(
-    new core.FileEffectJournal(path.join(fixture.root, `${runId}-effects.jsonl`)),
+    new core.FileEffectJournal(path.join(fixture.root, `${runId}-effects.jsonl`), TEST_CORE_POLICY),
     undefined,
     undefined,
     new core.MemoryResourceLockManager(), 300_000,
@@ -84,7 +87,7 @@ async function runAuthoritative(runId: string): Promise<any> {
         allowedRepositoryRoots: [fixture.repository],
         allowedPolicyRoots: [fixture.configuration],
       }],
-      ['kubeclaw.artifact-store:artifact-store', { artifactRoot: artifacts }],
+      ['kubeclaw.artifact-store:artifact-store', { ...TEST_ARTIFACT_STORE_POLICY, artifactRoot: artifacts }],
     ]),
     effects,
     shutdownTimeoutMs: 2_000,
@@ -92,7 +95,7 @@ async function runAuthoritative(runId: string): Promise<any> {
   });
   await adapters.start();
   try {
-    const runner = new core.PipelineRunner({
+    const runner = new core.PipelineRunner({stageMemoryBytes: TEST_CORE_POLICY.stageMemoryBytes,
       definition: {
         schemaVersion: 'pipeline-definition.v2',
         id: `pipeline:${runId}`,
@@ -134,7 +137,7 @@ async function runAuthoritative(runId: string): Promise<any> {
       registry: granted,
       activated,
       adapters,
-      journal: new core.FileJournal(path.join(fixture.root, `${runId}-events.jsonl`)),
+      journal: new core.FileJournal(path.join(fixture.root, `${runId}-events.jsonl`), TEST_CORE_POLICY.journalAppendLockTimeoutMs),
     });
     return await runner.run(`run:${runId}`);
   } finally {

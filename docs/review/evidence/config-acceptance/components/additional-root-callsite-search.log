@@ -1,0 +1,18 @@
+{
+  "command": [
+    "rg",
+    "-n",
+    "verifyWorkerTrustEnvelope|signWorkerTrustEnvelope|checkWorkerCancellationBinding|workerCancellationRequest",
+    "skills",
+    "--glob",
+    "*.ts",
+    "--glob",
+    "*.mjs",
+    "--glob",
+    "*.mts"
+  ],
+  "exitCode": 1,
+  "stdout": "",
+  "stderr": "",
+  "meaning": "No service callsite found for contract-only trust/cancellation if stdout empty; these do not substitute for actual Prism SPIFFE auth/local runtime cancellation"
+}

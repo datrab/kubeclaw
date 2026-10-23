@@ -1,0 +1,63 @@
+{
+  "node": "v24.21.0",
+  "python": "3.11.2",
+  "commands": [
+    {
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/historical-quiet-miss.mjs",
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "rawStdout": "raw/historical-quiet-miss.json",
+      "exitCode": 1,
+      "observations": 500,
+      "failures": 1,
+      "scriptSha256": "66da5c823958b3eef9bb886728b740641d916a4ef1829bebf8daf6e0a0787248",
+      "scriptSnapshot": "historical-quiet-miss.mjs",
+      "qualification": "source-specific pure definition extraction/schema/receiver checks, no native/credential/network effect"
+    },
+    {
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/check-gateway-definition.mjs",
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "rawStdout": "raw/check-01.json",
+      "exitCode": 1,
+      "observations": 557,
+      "failures": 2,
+      "scriptSha256": "56c33dbd3c8731d1caa054cb7e19bcc66513209b5f505e0a7b78c01792396455",
+      "scriptSnapshot": "raw/check-01.script.mjs",
+      "qualification": "source-specific pure definition extraction/schema/receiver checks, no native/credential/network effect"
+    },
+    {
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/check-gateway-definition.mjs",
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "rawStdout": "raw/check-02.json",
+      "exitCode": 0,
+      "observations": 557,
+      "failures": 0,
+      "scriptSha256": "52f2b22c19cc472602ae569f96ffce2edc99149922262eb3ce814ce04d48677a",
+      "scriptSnapshot": "raw/check-02.script.mjs",
+      "qualification": "source-specific pure definition extraction/schema/receiver checks, no native/credential/network effect"
+    },
+    {
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/check-gateway-definition.mjs",
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "rawStdout": "raw/check-03.json",
+      "exitCode": 0,
+      "observations": 560,
+      "failures": 0,
+      "scriptSha256": "9b9b64e1a546ef12b35874148dac043490a51dad37d6e0d1a419a4bbb6ff43f2",
+      "scriptSnapshot": "raw/check-03.script.mjs",
+      "qualification": "source-specific pure definition extraction/schema/receiver checks, no native/credential/network effect"
+    },
+    {
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-02/check-gateway-definition.mjs",
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "rawStdout": "raw/check-04.json",
+      "exitCode": 0,
+      "observations": 560,
+      "failures": 0,
+      "scriptSha256": "9b9b64e1a546ef12b35874148dac043490a51dad37d6e0d1a419a4bbb6ff43f2",
+      "scriptSnapshot": "check-gateway-definition.mjs",
+      "qualification": "source-specific pure definition extraction/schema/receiver checks, no native/credential/network effect"
+    }
+  ],
+  "authoringScripts": "author-correction.py/adapt-collector.py/finish-definitions.py are exact historical authoring commands run exit0; not final rerun/reproducers. Final collector is check-gateway-definition.mjs; freeze-conservation.py current pure evidence freeze.",
+  "archiveInspection": "Python tarfile exact member read only, no extraction path traversal, external executable or native parser entrypoint"
+}

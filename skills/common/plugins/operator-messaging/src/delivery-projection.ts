@@ -1,3 +1,4 @@
+import {OPERATOR_PAYLOAD_PROTOCOL_LIMITS} from './payload-structure.ts';
 import crypto from 'node:crypto';
 import path from 'node:path';
 import type { EffectRequest } from '@kubeclaw/plugin-sdk';
@@ -50,7 +51,7 @@ export function deliveryRequestKey(request: EffectRequest): string {
 export function originalJsonDeliveryCandidate(request: EffectRequest, transportPayload?: Payload): Payload {
   if (request.deliveryId !== undefined || request.capability !== 'operator.request' || request.operation !== 'publish'
     || request.resource.type !== 'operator.target') fail();
-  const payload = parsePayload(request.payload, 1048576);
+  const payload = parsePayload(request.payload, 1048576, OPERATOR_PAYLOAD_PROTOCOL_LIMITS);
   if (transportPayload !== undefined && !same(payload, transportPayload)) fail();
   return { schemaVersion: 'notification-delivery-request.v1', idempotencyKey: request.idempotencyKey,
     target: request.resource.canonicalId, payload };

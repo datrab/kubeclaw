@@ -1,0 +1,2250 @@
+{
+  "scope": "exact independent artifacts except itself; no giant archive",
+  "files": [
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/README.md",
+      "sha256": "cba0ec112b4d24ac078d7e5508e1f1cbd3f8188734f8025dd5582690bea5e5d8",
+      "bytes": 10348
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/commands-and-exits.json",
+      "sha256": "43ed7d317846d78878ebc9bc05a0d756118be8b6e3cd5ac6ac92394a05d9a23c",
+      "bytes": 1551
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/end-identities.json",
+      "sha256": "3499b548b76e8eee3fdda3acde4037969c6eca4d033e2addc1b0e788ba8da8c5",
+      "bytes": 559079
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/020e2717a107dd120c52a965812509918cd3ef8923d57c55f4ee2c38bafadc56.gz",
+      "sha256": "5cb06633d2605a8e956c4d8d7f5025ef9fb00906f0516fad97f792714ae1c774",
+      "bytes": 1519
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/0215713975966d21582ed26a5a3b024d6cb532292c35d5d0b0a91fb16428052f.gz",
+      "sha256": "5f1a368c068aa6732009839caa30b1f08f1fb026a975fa5d9ec6cd81415ce93f",
+      "bytes": 15042
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/02d45172112b735e2b8ada8f53a54c90591177cbcfcb69c201c2edeed01ec620.gz",
+      "sha256": "4f03f2c53ddac62202cbe2654da20d65dc000ec9767553f17ad863ded93a697a",
+      "bytes": 15113
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/03ae1e8d8587eac4b7d765062636f1952edaa1e209db4a10dc9442012248e08c.gz",
+      "sha256": "568e342422a20760010117f67f1fc2e3ece51c8e7e962bdb7093c85d59aec8e7",
+      "bytes": 1600
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/0426e43a949d4a6756c4396176d33a7381c0a92c7434f5a04b0b295a23bfeb7a.gz",
+      "sha256": "f0cdc5bfbb62063934bf30b617ba736916779247e652b1af107830df9bee310d",
+      "bytes": 1626
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/0495a4589a887d493b2b8d5c3bdc71884ab46857829c0fb28f5e5ab02f7e657b.gz",
+      "sha256": "f7696722b5988e50bda4ea2f6073882a463615bf03799ab97af79f9487565a8f",
+      "bytes": 341
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/07a21a95381ad733978cdb68040cee279f1338329e041de1eaba329b6e0d54eb.gz",
+      "sha256": "1b37dcbebc9c3dda3cfc750533449ab628c011485b6009089f8299129d2bdfca",
+      "bytes": 1553
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/0804cd2f16954556ef5fb2c7bcf4a362d01bebdc2d46c5e547b3712801c68837.gz",
+      "sha256": "c58b7eac75ab6ef98bd2273b88ec0c523014f4d6d8bc45d578541c0d09067e9d",
+      "bytes": 3733
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/0874ce8e07bfb6976573b8185aed96c919d66f6db2a3e5fb99c86e8f2ee9a910.gz",
+      "sha256": "acad7cda3fa5d2ded7c9412647646e228e0c2517e0f44dcfaf702d626cdaf53f",
+      "bytes": 1639
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/09a3f1a37a4d80ceb6a15d0ccb1c143ed27964e6d212f5250412975b38990a9e.gz",
+      "sha256": "2993acc7dd8f91ff2fdb4e8ff3d827940b8259643fa7ba85a93b19830c3b64c6",
+      "bytes": 742
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/09bc704e6b8c8868ca6e744e9b6d66b08256dae06af3d0a950a64b4582b18890.gz",
+      "sha256": "f0e265877d19628e1cd75a0c2b8f9130bbc81e24ec2d5dea6ace4635d0c3fd37",
+      "bytes": 3696
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/0a1e7857540d3843f47949aa5b3d24d807665e10f3b5d855d95d040936a7045b.gz",
+      "sha256": "6bbe660a2460640cefa371c5dbc0415e081c84d11d042aec27b9c169dd8f90b6",
+      "bytes": 1625
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/0a5b2576ddaf62bb897b57f36661d4f9eb9f5cf332093f6308c4b4952f0b232d.gz",
+      "sha256": "2955dd023e0e7eae43f2f697932f581f3d97d09cfade18de0d605a6ccf02c4c6",
+      "bytes": 26764
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/0b6914e85ee7f25f89603761544a2dae22a2ee3ab6b585cf34d219ef17b777db.gz",
+      "sha256": "5dd0361d040079681ec18110f32e34296e77a747f638408c9a43b00733973415",
+      "bytes": 1625
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/0c11c5af0fdf23a5969431cfe129852b7217e0869824fd2ef331ad96440dd35e.gz",
+      "sha256": "3df20f2a36320ffeb6f96810cc0bfb111a7232edb592f7396f26d2a44c771e76",
+      "bytes": 1589
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/0c5efd1c30e0a851ee98b1b9489d1b10c825abc95ac3feccca94eee34d567d2d.gz",
+      "sha256": "bae409736b7d890588633f9d4e618294c92746036cc9efe0f9fe5000f437b73c",
+      "bytes": 11432
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/0c836256e8787432963a36fedecef4135783a658f60d314349c4ecdd4bbc0b33.gz",
+      "sha256": "bc5bc52a10b8be99bd8dd1d4be1316d9331ffcdb69a3191625aab28cf13cc13a",
+      "bytes": 12702
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/0dcce6212ece7889fb774e3e036684fb39b7cdfdefd5a37d387b10109827405c.gz",
+      "sha256": "84c5e6b257f39589a05548ff313bb8470695170fbae8f3c90362d2291e40187d",
+      "bytes": 1627
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/0f8f206fd73bd052529dae754aa471f7867201366ca982f6e4154c75f5dbcb76.gz",
+      "sha256": "3fd178030c4122b852842aa349b35881fc04ff7871751f5c1db9fa437b972cd2",
+      "bytes": 1605
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/0f9b8ca1155cb6311f78bf2f4876382e21050944161504ba075d7344b3ee206d.gz",
+      "sha256": "c0d4938f65370984f3d59b2293db076f7356e0f2cfe865a6607dad62ca757220",
+      "bytes": 1631
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/0fea18f1c01d1a9e0352f42f81d3b16a08a99aa749a3207ea17fca881da5961c.gz",
+      "sha256": "e74818ee38d385bc004c727798b2e83de7b8d89264863129963c4f43e801668d",
+      "bytes": 2144722
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/10226c5f71bbfbd55fe9e5a72c3527c5de36d343bcca530d55c65bbf955092dd.gz",
+      "sha256": "0362d5af9166e4b61bbfe37485e7ce3cae2cd20277abba289b59976f1a78d2fe",
+      "bytes": 10578
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/1090c987bb219e1cf966eb508856a202c6b7737534186af7b3f6eace6c3709d9.gz",
+      "sha256": "15568218b022f4ad93d4e21bbc7711f878aac3d91236c5ea315be19f53b68e6a",
+      "bytes": 821
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/10a5daf2acb24d7f2bfe3f25b238948889442f7635c2171292c6919775903b38.gz",
+      "sha256": "b5619151150b561d3fc8b92ae4b781824f8c9148f27a35beef225d53393f7411",
+      "bytes": 893
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/10e28fa07c4d4411e6df871ab79a042020b685823be446d0327dbff7cbccac0f.gz",
+      "sha256": "0971b9231ec2cecaeaa6fc87416d8875efc47a4e4fd08cc0fed24b5ef94dcade",
+      "bytes": 1691
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/11457c60daddcf6825ec961cda56ce4f5a6ed3332ccad2ec897f6ca918e966c5.gz",
+      "sha256": "48999dfc8998a798c1468bf3143bc4050838931ef374523406f25cd3b516d7e3",
+      "bytes": 1628
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/11756bc76b28e093f5f74b7424c644dc0c2c94947a592d0854ecaa9557bd19b0.gz",
+      "sha256": "149828f0750860d39f38f98e997595a4f68442f1cf20555af5fdb4f2c95af80c",
+      "bytes": 25227
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/1195e0c36668df573c246de0aabdd11442a673b2eb264e52b4a09ba4e971624e.gz",
+      "sha256": "0fc841eec532075ad3169a00447781c132785dc89ff80baeb2ee9ec6c914189e",
+      "bytes": 1694
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/1277f475d344c777c17601b4f68308e44d540070a88560d8dce40d4c396f0b06.gz",
+      "sha256": "197f34a2efe0bec45c0b5bf6b0253431131c0fc7e8743f070e676d724950064f",
+      "bytes": 24305
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/12fcc373175ddd96b93ce70dcb6146ff5328c612c857d12004260d007edc7e0a.gz",
+      "sha256": "68dbe40551e2cff90d573e0ea61f0c7e28888ab0db9004e20fec14fe3a917f1b",
+      "bytes": 1629
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/131e175112ed4920d04ef96dd473c1e768ea0a9671d2cc74b9fb6c38330e1760.gz",
+      "sha256": "6816aa5b553174e1544899eee41044495f51af999b803a3bd8b30d18582f77d8",
+      "bytes": 8801
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/135689be25aebb88ab80795f26f4d7a74975b58d6cc5471bbecd9ed5161c8313.gz",
+      "sha256": "a3780efdf51c4707cec29f263c78126b262be0856362d2127beb00d6dc63327e",
+      "bytes": 2646
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/13af9f416fd869fcc71919f504712825b685d3cb97561aa6e7c8b49cc334aa71.gz",
+      "sha256": "92ae6b968f54dc364cefbd41d75d4a2de4b33fbb53cbf5a2b26ddca09500bd1b",
+      "bytes": 1630
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/13d26f393b7023664f1bc7bd9ff4f5b6aa8c0baeeed94175f4663a01c45a47da.gz",
+      "sha256": "cc6a829834b6c82fa29b286647e907b3e9bb6fce0612a3bcdbee6da3dcaa24cd",
+      "bytes": 1603
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/1441cd49ba3170b0f351e6373fa766edbb5dc9c666985005d674902f6407199b.gz",
+      "sha256": "b0939843942cbf82db5362971ab5f19ce80663ecd7e715e9c4426b5f2525577a",
+      "bytes": 1604
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/149828f0750860d39f38f98e997595a4f68442f1cf20555af5fdb4f2c95af80c.gz",
+      "sha256": "ccbd92258a8c6b0b85677955fe7d7b934adf038ae125cadcb994e64a1eb5305c",
+      "bytes": 25128
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/14ce4ae922ff68d8eb33bd4170e131cc31c25204b29d05d9a38ec862037edbad.gz",
+      "sha256": "73021097f95c6aa24ff3ab3ad1d4b9d2b7448c27210e87299bf18da2b46abd2c",
+      "bytes": 1626
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/14eb72c9ec662f04b6d15be8b0f935fbfcbaf210ab0eee6babfcd161622465f0.gz",
+      "sha256": "6303cd58fba693aed0b90e48786aff43a33c7af0087a7962e7a645a5b2c17e8f",
+      "bytes": 837
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/1971b08db30afda97cb9ad99ef427c07cf5d273edf2d52f626dabe7be9881a7a.gz",
+      "sha256": "551257e1982f96e119281a6f6b2c87748034928852b50b9924e86e62323d6bd1",
+      "bytes": 2994
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/1a698cb51e9bbe732a405e4fefed8714dd3c24d56772d09a3047f8b987a316ff.gz",
+      "sha256": "574e41277e0734dd8270ec9d5445c04bfb7f8aac2dfd2638cecfb855ee29afc2",
+      "bytes": 21972
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/1a6b4d9739790c0b94ab96c8cc0507e281c164c311ff4fbf5e57fb8d26290b40.gz",
+      "sha256": "a32b6ac43d6d9bfc187f8ff47fe7ceceec0b0fd8727873322e3d3c66445088e9",
+      "bytes": 377
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/1b9dc744b779fe426c38a4ced194e2d732ac48d9e20a6bdbf0c2d1428b82c929.gz",
+      "sha256": "a148663bc4906d67b1090458285ae504954a5ae02ae76688e4856aeccb0e1284",
+      "bytes": 1615
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/1c0c009918160cd43e1068110e26440013e5af78ec2bb5b58a7132f91f739a7d.gz",
+      "sha256": "17c01fcc5aa8aa5f3dae20843f124559d0fb5a5e5090570fb93344672a5982c8",
+      "bytes": 1672
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/1c772e8fcb26e3e62fca10499fb19929cf8b3abe0db7ef530a6cbb0681175991.gz",
+      "sha256": "3197e0051976a18bce025a3bd626edd72316422c7927eba70d95ab234c388f81",
+      "bytes": 1601
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/1cb233936c1545213acc9ee36620aa9ca24bf5f3e2a2986ae7d75ab081515302.gz",
+      "sha256": "1790f265c9a32bafb97bff86f2e1c68fdbed54c22c5f517287c356713095a3b5",
+      "bytes": 3576
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/1cc3f84b309ce3c92936772edfd05511cf413127b0e86027818004f3e14087a6.gz",
+      "sha256": "5f153d51ddb68267bcf0a4427a59f34bb1258457eb41c6562729fcf58c2ceba9",
+      "bytes": 1624
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/1d594aa3e9de3cdd706e5bbf387a74cdda3c118c752797146c4fee15b6eeb0c0.gz",
+      "sha256": "477a72eb7141eb1327e804accab2b9bea1641bfb4d1dc3677f70611267366b80",
+      "bytes": 896
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989.gz",
+      "sha256": "0c11c5af0fdf23a5969431cfe129852b7217e0869824fd2ef331ad96440dd35e",
+      "bytes": 1566
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/1f9541b581efc052ed5e9cc05f619eb4fa82162c350dabaa15788685c4a43c3c.gz",
+      "sha256": "6b853ef67f2add9f227bd5113472611c8605a1d3db200083d0f7903a750826bf",
+      "bytes": 3622
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/203190c8dfa085b163526d0e4aa2e2de9751e235a4595ba4f82f38c63b6a8109.gz",
+      "sha256": "3a8cce5e7fd41a021a3b0e3ad708e71bf7822e9537eb9b0ae213b57cd77f0a80",
+      "bytes": 1601
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/223f9b6133621030c5852d59a59c90ecf43d0901c8234d0df447eca3b942e8d3.gz",
+      "sha256": "3220bdc9f83ddd5d04d5384d286ef19a36a43b1ef27d25df866c566810694a9d",
+      "bytes": 16057
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/2244f3af3acdd9fa0f27e28abee85f0173f31ec2fc28c56ddc6144c600ad5b54.gz",
+      "sha256": "20369a9858ebc80395f6b943ff284db0ff8426c1c65da714de1162f3d6e5b328",
+      "bytes": 2514
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/22476af007c7ab127c7c054e5c9c172e8655db2f49bb017a440f326a2fb3595e.gz",
+      "sha256": "e7d0398c82b8637f0cffbc011b9983f4ce085694eafec9b5bd3bfc8f5308ae90",
+      "bytes": 1633
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/23106a0d42310ad7aa5e2ce22a7bc940e88beac0eb486130b6f728dd84e0472f.gz",
+      "sha256": "630b54f0ced3979398f9ced4470f2418bb618dea63ff189e0bc49003c6f37419",
+      "bytes": 2809
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/233cf3a093168b77c1bff1aea686f88bb79413793d3c94e7a2e90bc9cab6faa6.gz",
+      "sha256": "9f9f4b210f1a67a93cf91f608ce5add3a53ea6f413d58c03d3c6c5bd8ef93ab5",
+      "bytes": 666
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/2459c9629138576846c7226b04a8d44c62e28d46bd3ca331e895c581bc997797.gz",
+      "sha256": "365c29df2780b9c0d790be48343f7de3c29e888149db8c25e1bca57c511e1147",
+      "bytes": 1603
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/24a7eaaff39fd9fd0725a48fd451ef0d8e7de7dedf9b02deec25540c7c914c04.gz",
+      "sha256": "d7ead0cf99bbc431a369b151b12e0f7d825d7f65a3dacc34c9f85b5140ae1a9b",
+      "bytes": 2665
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/25397a60e4462fc1bbe0cbef2c76ca4629d15ec10b312dbd5268b0da16ddbae6.gz",
+      "sha256": "a85ad030d455c1ba152dda28f2fc36a253d1b4488e0ccb09ea3ae8efc9a33084",
+      "bytes": 13816
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/2598b73522db9400fb833c78ccf1a7d335ef050a39b27b680877c4a63e5431b8.gz",
+      "sha256": "0a1e7857540d3843f47949aa5b3d24d807665e10f3b5d855d95d040936a7045b",
+      "bytes": 1602
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/260e11a21c7cafd6afe594406278b8727a2bf0fdda3faea90201cfcdde6072e3.gz",
+      "sha256": "9bcd13f24583000497fce2add78cdcfbfe89697a5c923c149f2156fb980ed106",
+      "bytes": 1691
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/2641cd28464eab51eb12c59a4884e3b9063469b69fb3e1d6c4599a620abaf197.gz",
+      "sha256": "0426e43a949d4a6756c4396176d33a7381c0a92c7434f5a04b0b295a23bfeb7a",
+      "bytes": 1603
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/267accfee5539780d91fc65983ab2ab0a2bc5d785bf9ed20835c04e77d496a48.gz",
+      "sha256": "98a5b557c72f080b48e3a5d058620cc95853c6c4a6e6d0a2b42188ed8e279196",
+      "bytes": 1604
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/270c72d9bb97e736e5ce265137cf1cb3a483bf00c400c7d6ae1abe6626f20e3e.gz",
+      "sha256": "42f3ca547b067d31e01d658b19e42a77cd1d2d402a5da926328c0a819038e25c",
+      "bytes": 5554
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/27a23c7b1c553fdebb555eecd18acf39da44474c667af5a8e3c824f19c635f3b.gz",
+      "sha256": "591b0d3cd9821b45338eb20b1350b58fda16e9cd2ad0f52eb68f34f1b2cbe67f",
+      "bytes": 1629
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/286a6b48901469e1671eeaf37da3a677707ff51a0b667fe3a7e72f29d10d191a.gz",
+      "sha256": "10e28fa07c4d4411e6df871ab79a042020b685823be446d0327dbff7cbccac0f",
+      "bytes": 1668
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/298341261e58fa742fca404566074d019567da58b155b217437bc5b4c63bb55d.gz",
+      "sha256": "5e11388bbb9577e3bee2c734f261f72495f041ad01c3891e0a85ca64a6ee6350",
+      "bytes": 1620
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/2993acc7dd8f91ff2fdb4e8ff3d827940b8259643fa7ba85a93b19830c3b64c6.gz",
+      "sha256": "b3c371f1d03c321f12c3187510337f29c4c41ab79d56707c0ef2b452a5fc37c0",
+      "bytes": 765
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/2ae1d9d200c6a055ca82aacead1d800434f5295e32d3791c70318e86100b061d.gz",
+      "sha256": "8e924545ddb12b408312896680c5762a173e6729808cb400ea6e3e05264011e0",
+      "bytes": 348
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/2b1f87ede43c2eed5a4a9f5df651f36cec0d981fe2f66c4e881bcbe8a59afdfe.gz",
+      "sha256": "646f6efee3861385cae1d0e1323727bec263e4d8e1b84dc15d13a0ac49e308c0",
+      "bytes": 10746
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/2b981638b66c8c68d758a2e6b8a5495b6346cbc03c10ce30893090befbfed3ed.gz",
+      "sha256": "b321606c73f957b4ae1cc63f40fe1a521768c2ab5f08c397f6e240b530c84150",
+      "bytes": 2511
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/2bb3c6496b2455eebed94012f31362ced18a997b48d321fb3ff1b0ae65389be2.gz",
+      "sha256": "1944dfdbb784e63436df6cc80ccea408ed7f6b92067eea581800854430162aa1",
+      "bytes": 3516
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/2c56796bf27b2b89cba5158c6ca3b9c0a02cb78c5633f8503c00ab32b654e13b.gz",
+      "sha256": "66f499e7bd980c1674baece0a32e64d6117002f6c9ba04e77b7e87810c82a720",
+      "bytes": 4991
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/2c86e1caa8a6807eda441e4df43879ecb6db06c2db515110c10ab077e7ec735a.gz",
+      "sha256": "00fda67d0c8850d9a9cdcb5692e44ba2c28a13a80df71198448dc6b61271d117",
+      "bytes": 1626
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/2cdfd7bf9fe1f7aaad2c9731aee53fc4b7293d555e93abe576d2507b3cd7d443.gz",
+      "sha256": "b52fd69cfb1fc4307bde7ca0fb675d239af90f2f5beb37afa729fef67997acd5",
+      "bytes": 8147
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/2f50541f8e8badc4f39a689f15063eb5976585cf705acbd391898377487b521b.gz",
+      "sha256": "efa3d503895d3a73d3eba5764a92100e31d15082c6653c873532a4a61deff750",
+      "bytes": 567
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/30347183e50ed707b15d93297d20e7a74bdf56fabe1dec4bcf3648d4453d54ea.gz",
+      "sha256": "b67c2c98e6c392add412711a72af175906a010228b65eda7ee4502532a7aeef9",
+      "bytes": 11250
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/3056adf5d1dcb13348ca0b81859971e9481dc28222e30eb6934c0ccd2e52fc27.gz",
+      "sha256": "a2eb5596330b91a33b637d8fa2f36f2d2caa3bb9def8666e799b9a46c693b4c3",
+      "bytes": 788533
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/3066b10e2a77db887715f175a83b888e2581b4cdf527841f2b0b912ae38cb4a8.gz",
+      "sha256": "aede665bfa66dcb1fd69e2354a70e6998787c3b5dd721efe17e4f503a10573c7",
+      "bytes": 1591
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/3124460ff1cc87989a093721a8e78ab4cd79eafb6d1837a8a90c632eb894f97a.gz",
+      "sha256": "d713a13684f459bd4cc7b98c01a53f949a62bf1bb8c68b01f8d27c8b91f2dd61",
+      "bytes": 1602
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/319d7cef693311f2d9ad001d2fb73b49bce7da757411231ab98182ee9f735ade.gz",
+      "sha256": "aad89baab99ae9a1cf877f738a71c95e01a0f186a8bda5fed99a2d71195fdb79",
+      "bytes": 1625
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/322352153110f88ea209dfc262e60b099791983a220481dcdffc19fbf0e6b35d.gz",
+      "sha256": "d9458b09972d7dbbd68e101b6bac2adb693c04e6f0d44bf404021d085f884ade",
+      "bytes": 90011
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/33c64ce92f9aa32cddc47a47fbecd9b53a28bade4af3bfa7137ffb60247c6394.gz",
+      "sha256": "63424fab5be33ca3c67bb10807a2ba4bb08cc4a04445b8c84b456d9879baa8c5",
+      "bytes": 1746
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/33e658031595dea1e406f752c6715c8480ab1a7ba6a2950274e08db6399e43a3.gz",
+      "sha256": "e6d31ec78bf9085b3d680d56ca1bcd4683c7da56958dcafd7a368730050afa91",
+      "bytes": 1732
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/340917ed7f337ed7d5945ea0f030743426f281b5e7c65b17f11b6c008b0c48b3.gz",
+      "sha256": "66d731e6e8361042832852ff387fe0f2902042f2a96b6f36c3eb6f693027e2d3",
+      "bytes": 640
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/340946573f55d96adbcf6b9730002a338919112208a24dc1a21652eda7ee492b.gz",
+      "sha256": "84548540751dd8ebdbdd113fb0af9f1685c417fc0d8f5a71ed54ad48f23d6a63",
+      "bytes": 895
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/34e54267a3cd0d7541315de3c6ec785206a0364b7ec76699d433c4a3ca341242.gz",
+      "sha256": "9caf9977e9f4b0be7112384c1cd6a70696e7e42e9570bbf730aa876924f8caeb",
+      "bytes": 5608
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/352bf53baf9b0b9ae8b009a96b025b1b51626b8d4b31cc5390ea033dd184f855.gz",
+      "sha256": "b1e85792a92f0b95ca677141ab265b36573365bcd76c23b3279abcfbddbea10c",
+      "bytes": 1604
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/35cc482d45ec6f31e597e5bb3e6a42718207cc87fcc3c12f4c5d0d665586567c.gz",
+      "sha256": "260e11a21c7cafd6afe594406278b8727a2bf0fdda3faea90201cfcdde6072e3",
+      "bytes": 1668
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/3642633418ef64bd830f4f35fbf78489328122480550a069a5d4586096200535.gz",
+      "sha256": "02390c410dcf121ae07caf8b3b52bbbca903c96279e1178ef2b0777254a30af5",
+      "bytes": 1532
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/365c29df2780b9c0d790be48343f7de3c29e888149db8c25e1bca57c511e1147.gz",
+      "sha256": "10cb909bd689adcf8ac909d6e2fecf80ceb8d1f3c201656ac992a5116fbcf597",
+      "bytes": 1626
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/366da6a23663e6ce20656d7c7ea298df3b779016b3718a758c3b5d9946b38900.gz",
+      "sha256": "152be98115d419214eb394c51ccb0e399823a18484b1b885e2900a5779e3028a",
+      "bytes": 394
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/36a4b1353c08205b1e11e4ddb911eb9fa0aa1759288b333d8b988509b77278af.gz",
+      "sha256": "986579e24c1abeae912da593c86418e04e59018a0e413daf851bcc6e10f30caf",
+      "bytes": 12804
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/36dc69460aa8ed61f44fd18d222f73dae15fb7303698e82c54954c416223cb5c.gz",
+      "sha256": "1cc3f84b309ce3c92936772edfd05511cf413127b0e86027818004f3e14087a6",
+      "bytes": 1601
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/3708db7a73eb485540be4eff5e9b0cc0a7f6521cf30f56ef4274ef675a482be3.gz",
+      "sha256": "22476af007c7ab127c7c054e5c9c172e8655db2f49bb017a440f326a2fb3595e",
+      "bytes": 1610
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/376115b944e54d03cd30d1a08c0d42c5f2edcc874e6dcfa4553c19657b49696a.gz",
+      "sha256": "a015d9a9c8985a75883d6a69c1d8e62d248b68301cc008d2d41d8a256e054735",
+      "bytes": 1597
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/377689f852994634a7f95e6794ee0a8de9b68919c8807f441e3cf32bd542c331.gz",
+      "sha256": "14f5a4697288ba867597ef00439df1bddda54ba2c2faba75dcfecbc1a6b28966",
+      "bytes": 3223
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/3906e17a67091804435d435c284d7268225869c0fc706ad0b2be2984e4a5db65.gz",
+      "sha256": "ac5b086916057b7bc15b24a6b10d13060fc0e3a6072fd09c9d6dd955784c0ef8",
+      "bytes": 1603
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/391595410db00da2b7f43471ee08b4ace5e7e2a59668fe95f3a1d1bda2c4a190.gz",
+      "sha256": "3a0056fc4bfec4c95ec27897e8a97543de847b1fc7525fc0e0702ef4199b8cc4",
+      "bytes": 1593
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/39bd60e3065a1dc3802c7d2401c7558ede3f126fe43dd25d23f86bef4e1c2f1e.gz",
+      "sha256": "6ccfc067ab9e27efb561621dcea2702b9cb231c4844d19ba93ccc5dce530a350",
+      "bytes": 5063
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/3a0056fc4bfec4c95ec27897e8a97543de847b1fc7525fc0e0702ef4199b8cc4.gz",
+      "sha256": "6561852b9da05f7b94b509d7fd543841d1fa067dc3d6e764b01c4cf983fe418a",
+      "bytes": 1616
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/3a38fe8a1f5563ca175bf5d71efcf0c0e837394e365c181c455fbb2c892e4fc0.gz",
+      "sha256": "53d38534f779f9a26292ac1d6f7468b44f28c3d417ac18d504771b26a5be9f62",
+      "bytes": 29719
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/3a8cce5e7fd41a021a3b0e3ad708e71bf7822e9537eb9b0ae213b57cd77f0a80.gz",
+      "sha256": "da7a2e8977dfbcd7b6efcd9f0b6877f0cd819fa8a9b9574bdaf14f20c6ba6088",
+      "bytes": 1624
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/3a921048027ddb8c3437e5d5ed76ff6a077392aabecf366409baf7b051af27fd.gz",
+      "sha256": "cd18590751c99aae6d8f7b9961aa448632e45d2b24b6803378e3ce939ad30f3b",
+      "bytes": 3156
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/3a9e50f3554756b32ee52a5a6154e145deb6523d6f65e421e8bf639d93188033.gz",
+      "sha256": "33c64ce92f9aa32cddc47a47fbecd9b53a28bade4af3bfa7137ffb60247c6394",
+      "bytes": 1723
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/3bc4e0a1621724daa38945969e1d9842bccc85edadfc87db1170c44912581249.gz",
+      "sha256": "725e03a5c30ae714eaa8fa0878690221458b65e12c3663d7e7836865b3fe8c50",
+      "bytes": 1631
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/3c7646b7776881c91a738e301299e492121b276936899735d2bed181b0945d57.gz",
+      "sha256": "cc3d7951527ffa84c7ca41c8cf14e784d4dba44159c67bc9daa88cb5e1bad50b",
+      "bytes": 1609
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/3c7b675c79aee35b486062832d210bf742c8da30261e17cff8a56cab9e4551a9.gz",
+      "sha256": "1196f38b45ae13c9069c04cf6d900476ecacdd4ff389e928861a21117c21c558",
+      "bytes": 3758
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/3cb5c0cafae57a846737aa2ffe8056ba04a677229fb0a0443273429c89a5b400.gz",
+      "sha256": "1277f475d344c777c17601b4f68308e44d540070a88560d8dce40d4c396f0b06",
+      "bytes": 24277
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/3d4caf0704ff69569bc959151def2c66d5e2b16e8b3e03e71113e9e5205e427a.gz",
+      "sha256": "a9094859f3d4666fb3922df986ec43e33dde7ffb3eeae5aec6d6590d7729e0af",
+      "bytes": 1623
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/3d67f8fd68322c9b06efdc7aee1007a96e07d415d0d9946a8bd668d3673a6366.gz",
+      "sha256": "ba1f65ca66ecf9b785d6fe623ded6e28854eaa4926bff8157f62972b2ab9895f",
+      "bytes": 2366
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/3e7d1bd5a93aff0ef5735e06d99399d5cb9ddd24e67910d500023ed0e60806f8.gz",
+      "sha256": "e488cd107debd66fdede9cc6e2b808337e39c2bd8507aefbc648c3432832af51",
+      "bytes": 22221
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/3efc22f1f53a8fd2b7dd30eebcc75731bfc7ed328578e0ae542986d2048ac6b7.gz",
+      "sha256": "1971b08db30afda97cb9ad99ef427c07cf5d273edf2d52f626dabe7be9881a7a",
+      "bytes": 2971
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/3f3014150293846086d11058bb8bf43e669e354a98b37adcf10281454d5e753b.gz",
+      "sha256": "340917ed7f337ed7d5945ea0f030743426f281b5e7c65b17f11b6c008b0c48b3",
+      "bytes": 617
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/3fd178030c4122b852842aa349b35881fc04ff7871751f5c1db9fa437b972cd2.gz",
+      "sha256": "ea50ff549941ddc008b194d0aa1841cffecd3296974c18d8b459d1444cfa4104",
+      "bytes": 1628
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/402fb4bcfa457f0226813f3976ac42839dd619907c075c108efba8600d7edb69.gz",
+      "sha256": "4b952c829a20f0f921ada768c70965f0d1e14c930b6e5bb1c081eb6582fd4fca",
+      "bytes": 720
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d.gz",
+      "sha256": "7e69cf7899d80e30f91a690314a00bc6646826b8e141430326e71175d7bd4c77",
+      "bytes": 4692
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/40f81276184aa9d1f721be84c0106d98e281c3c90cf9d6bbab84d1350aa64d73.gz",
+      "sha256": "7844e0165bf425edc150787fc5e4850b135d75538827aafd7f2f7088adb599f8",
+      "bytes": 5473
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/414742ccbc598bfe1dafeb3f2d510487e5e8c2c897771c5536d08be49787f20b.gz",
+      "sha256": "09f5ee7e3d37cb122344ff527daf3129a08c484799dcf461d9603a322b1fc35f",
+      "bytes": 1626
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/4217dee8d0def084dfaa70445d5a71f569e1776c9e0af0451378f1ca5601c626.gz",
+      "sha256": "22d1a7ed057f4c77f1d4ca7e1ecef0eef2f9df3b2afe3c217b7459590d7ceb4d",
+      "bytes": 7308
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/42872afa371126d5dcf3639207f2407315fbcd689db736849dfaa65396afc946.gz",
+      "sha256": "5b12ceba5d20280d8a283e9e3c9cd7c3e8ca5d3e1d4e7869c7385b0b6587273c",
+      "bytes": 1623
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/42dc2d0af5b61b7838d2d5a62e7c6c7cfa7921d291d214c05b2bc7504299762d.gz",
+      "sha256": "0b533171257a9c923e05c2f06501f30949742d4c6550c3c6becc83a1f5dc2344",
+      "bytes": 1630
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/43259f7e61b238c363504a8e41e3787359d80033db9d2e70ecb6f2b25312bee9.gz",
+      "sha256": "74822380c5b9605996c8b598620469ab667eaae79ee932e4beb95bee2f749da4",
+      "bytes": 354
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/433e01e0651b77b6cd1bbb528846151474a36b4ff172a1ce33995d9efdbf8bae.gz",
+      "sha256": "d1a15ce074d5d481c097f1de6086c0c0d18b56a78792e99e845f01bda5ef6cce",
+      "bytes": 1602
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/43c26faf3179c017b59f473b72076e407a7ca44ef524c1826b08cbe2e7b5caa5.gz",
+      "sha256": "9a4c68526915672eb16b1e9142fac2d961d95bd44b057814595a2cb38f918993",
+      "bytes": 1605
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/4673fdeabe9381f0373c08aa0f370871df6ae5c07405d3dbd0ac29791927a11c.gz",
+      "sha256": "6bbf87c0c095461ff43eedb5b7f82d3d558e9ebb07b2ffbd33d0b91f90d402df",
+      "bytes": 1620
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/47378566ebde3814bb980eebcaef969f554c0739433cdf14361a922671e8d5e9.gz",
+      "sha256": "ae7e1af2634a11b7b8f19615c212d7bab0c416d24133b25ab9833c7cc362bb2d",
+      "bytes": 54857
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/476ddaaad74789ff3235adca81e0c5973ff06b585b9c65c5cb8da6090d95bf0b.gz",
+      "sha256": "86afc0884279f3fd74add33a783326809d764ead8139674eab8bdd9352cda886",
+      "bytes": 1682
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/477a72eb7141eb1327e804accab2b9bea1641bfb4d1dc3677f70611267366b80.gz",
+      "sha256": "b6e58ad66aa03d21fc78d2053b8397495a79574874aad763ac4ef5984e286c8e",
+      "bytes": 919
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/47ff6c39990b2380f477d5a5cbab95a0d07cad6ff92e4a7e7e7c670e16339b67.gz",
+      "sha256": "42872afa371126d5dcf3639207f2407315fbcd689db736849dfaa65396afc946",
+      "bytes": 1600
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/4801fcc605931b4f318122403e89e4262a0e4b196fdf5659c62d1990349d6b31.gz",
+      "sha256": "864ad522fe6cb9c615ee6021ece99c7a105b0ca4fd5c2156aac99225cb6a077f",
+      "bytes": 10643
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/488eb220190f8d30d264777debb16a6d9592946d0e4ca1d6748d23b626109144.gz",
+      "sha256": "70d49866d239cf87828821f7b45e8ae850543c468626a8831a91b84ae5b41a41",
+      "bytes": 9548
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/48c8f1178a3feeeb40ca5506c577e1f6b77bfe799346beed1fc9f168e798098c.gz",
+      "sha256": "2ae1d9d200c6a055ca82aacead1d800434f5295e32d3791c70318e86100b061d",
+      "bytes": 325
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/49cf8053e742419ae596c822d4b262c3a125c22e8e5b7a8caa4c33d41178db76.gz",
+      "sha256": "d7aebbad9e25af0394c256eb5238fd6984495cecd5e4176602a0b764ffead4bc",
+      "bytes": 65049
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/4b7eaefd97e7e55dddab4c257ef6e881611e9376e06652754aab3e10f606b74b.gz",
+      "sha256": "4801fcc605931b4f318122403e89e4262a0e4b196fdf5659c62d1990349d6b31",
+      "bytes": 10620
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/4b952c829a20f0f921ada768c70965f0d1e14c930b6e5bb1c081eb6582fd4fca.gz",
+      "sha256": "f203143c0eb6fb23e3a97f8f3744db133e9e5e21434103bcd4cac8f284b27d2a",
+      "bytes": 743
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/4c7a543723c2df22ed4f1b8ad4628479c001dbd006a76cb38d49879779a20a0a.gz",
+      "sha256": "e0d613b798ec1dc0aea161143d11d93bda4198cbc09c5eaebe099af8bf29348f",
+      "bytes": 1626
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/4d02e1af9a97f3c4d77ed8839f0bc7a0203f08deef637f686faa2508c368e471.gz",
+      "sha256": "624ef73de11a89d21bd2351f5f8a76099aaee705bc3d0f3acb7e8e54603af9f6",
+      "bytes": 2043
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/4d258296d99daf0065a262488c57e698b44ce413604b90d78f4d601b461a9bae.gz",
+      "sha256": "e9b0db46f704bc25520a56e1c53e532bdf7ececb222c7b4ec194a0de5649c503",
+      "bytes": 9546
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/4d74473ad95b99b3d31496c98111beac210034f2abac221434366386a4aa0b08.gz",
+      "sha256": "c3924918945da52075115818c02c7737020cba7dc595d57587a330f524dbe70d",
+      "bytes": 1607
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/4dad733ba5db0cec7763e0ff7299e3192f32b17e566e057ee2a987f379050735.gz",
+      "sha256": "db031a9ff8981814d1e4b3983a87e38c2821a373259074d513fb5800bb5ce057",
+      "bytes": 1674
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/4e30a6002d03e44285848288502d3f1fa0de6fd634801be47e9616b30f5cc738.gz",
+      "sha256": "8329a8309f0d9fcc57d7a4f61b61cdc02c933b74c2256534bef374e5edcf7f83",
+      "bytes": 1624
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/4f4dcfed644813d0f64b661e0ef3c1256a355d77226412807e40959f59698e16.gz",
+      "sha256": "8ad1ef5c575b148599cd7eaa03c6483ebcca805bcf2f26b2f92fb74e7ebcf2b3",
+      "bytes": 1629
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/4f60fd0e8e1f796fa7947f2c18c37018e726c2971506f5809f1f8b0a313c4a10.gz",
+      "sha256": "1c772e8fcb26e3e62fca10499fb19929cf8b3abe0db7ef530a6cbb0681175991",
+      "bytes": 1578
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/4ffea2706f72838ad0572a5c560e4148e88982e12537bba5efa514d5a8009c4f.gz",
+      "sha256": "70f2c3a82abc9105a8875fcefae05dccbf99a9226390b7ccbbc79a3f26a46ed7",
+      "bytes": 5819
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/501a90af54574289f0c2926f5331527fd662e56358ffb00c1ed0d0db05f249e0.gz",
+      "sha256": "8e53eb7b6d621ecc29794833e60fc69ea81d1a2b30475aa57ad5beccda836bbc",
+      "bytes": 1606
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/514f42777f13942b66c4620eedceb8ef1039896d641128f4b7f30c0c6cea00c3.gz",
+      "sha256": "4739edd56395ef10a30a4e6d0e90905ec550fc67d7d41d0a210986d288cc8916",
+      "bytes": 1374
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/51e9edb319dc810c6bcf9d0d9234ddcbcaebd2b48d40d49a9aae9e0760f5b87f.gz",
+      "sha256": "14ce4ae922ff68d8eb33bd4170e131cc31c25204b29d05d9a38ec862037edbad",
+      "bytes": 1603
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/526e01c92b40b38598401e2c975c2231a0d26ed591767521016236540c4f7696.gz",
+      "sha256": "56538998ea1080996dca8b2ff11b787cf7f38e04fa9053f06505dd651912335b",
+      "bytes": 1630
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/5272419ae78ea4ec5da8fc34a14346c07dfb26a5505091c3eeff4f39a6f55ac6.gz",
+      "sha256": "a0d637ad3b221a382de5da865d4cd7f0f37de3ca77a533f279f6acef7ec421f8",
+      "bytes": 7303
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/52e4964bb36d7f1dfaeff2f1ee509b8d626055fc615af530744abb839f6d57ec.gz",
+      "sha256": "87bf279062ec05cc9d4d2e892775517bbc9246e399a2306560ded020ae34f33e",
+      "bytes": 1604
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/52f2b22c19cc472602ae569f96ffce2edc99149922262eb3ce814ce04d48677a.gz",
+      "sha256": "403e80ce4ed15f5b72759886de17fddde00685e17dd419aeb9946d9b08da7b25",
+      "bytes": 8143
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/52f807b1393eef1c68784151c3e0720bb43add4bd00c787d2fbd01527b32f81b.gz",
+      "sha256": "223f9b6133621030c5852d59a59c90ecf43d0901c8234d0df447eca3b942e8d3",
+      "bytes": 16034
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/537e3e878df44c862043c00990cbf9b5050df4f6f395d9a0dc8bb415597f0f79.gz",
+      "sha256": "0c24c8c25f6e854ed9e7f98555d54c51f48410c771e93f40a7e98341e9a40e69",
+      "bytes": 12894
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/548cb8382fd3563e42007ffbef1510694129a5cebcbe52c383ef5b44cb822034.gz",
+      "sha256": "3e6a7e137cbaebaf1903d68aa7f2a5afd4ef63ac7366cf13e2ff3a687ade1dc6",
+      "bytes": 1629
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/568e342422a20760010117f67f1fc2e3ece51c8e7e962bdb7093c85d59aec8e7.gz",
+      "sha256": "b77002a6bc4d37d4426e32a34b442fe61d6af6c837cdb3b28673de3946bc155b",
+      "bytes": 1623
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/56aec651bb2738cb265e44b6132a4cb73ec41a8be55d2c647faad7fc2820365e.gz",
+      "sha256": "e559cd23030ee452a87f6eff09273a2d0439f6912b2f116a84deb0011d26496b",
+      "bytes": 36339
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/56c33dbd3c8731d1caa054cb7e19bcc66513209b5f505e0a7b78c01792396455.gz",
+      "sha256": "8c2a067258082c5e39b46618c471c67b269e33db73b09f717943524abefa4868",
+      "bytes": 8096
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/576a2b34776d98ed90a18dd3a6d1937ff87cafbd35ccd58bf0c16d9221fa3c7a.gz",
+      "sha256": "3065ca130b625bc19a0903004b74768dbac86ece8610133b46a5a52d4c6581de",
+      "bytes": 2344
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/5844ed1cec59465b633c6d0a1f4b9fedc2f055441ae55555c9c6241f8cbed0ab.gz",
+      "sha256": "bd789c8248104ddd7d442eee238ecd473151503bce966fdd423daffd1380f1fe",
+      "bytes": 11522
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/5868f0fec2126e2de7d4428eb131e53913f2689c958c555d7da33c3c0ea5af11.gz",
+      "sha256": "dcc1471577c3ff6bb618bbaec3cea63e126405bfd6a2e5f3019eff3bc7240eed",
+      "bytes": 1475
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/58fadd7ed1ded3751a6ca2d97db41aa2745ef4f8ce9d80ffce08f082978417c2.gz",
+      "sha256": "5f6133a1a7420aa81898a697771acd8f31937dea59ea9018ac0856191673147f",
+      "bytes": 241
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/5a3d8d80a66569cb9e3739955a3418fac47eb4fa0574e31a1b277b34a543c75f.gz",
+      "sha256": "8f185f0e9df54f1d6d1b8834bcf627a772e538911b79a95d08348b0a35d6bd1f",
+      "bytes": 10950
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/5b59e27a49bf867abb1d88f5194f541b97014adbd7f0e355eaf7af1fb2be8eb6.gz",
+      "sha256": "877cdb60251f6a758ecee125816c4ff660976178ecc6744b96c698f005ac668f",
+      "bytes": 1462
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/5cb06633d2605a8e956c4d8d7f5025ef9fb00906f0516fad97f792714ae1c774.gz",
+      "sha256": "3a32222310783533ae9be0bc41f07864008826e866251678c53554e14f855219",
+      "bytes": 1542
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/5dfef69f1265d53f125b8e414eaab68d0587e58ae142e23f73eb2b0330df986f.gz",
+      "sha256": "98f162d6dfb265d52b2c043567b6798878060b5fd2640d4e71b891a7bcc3ab8b",
+      "bytes": 1399
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/5f6133a1a7420aa81898a697771acd8f31937dea59ea9018ac0856191673147f.gz",
+      "sha256": "97ee0c9214df187044d1d63cbea29290b50ecda6d1133ab5e5728b2210f92f8d",
+      "bytes": 264
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/5fb470591356501e5fbe91483895bb5af2b6e7264486e4d9553676f824f8004f.gz",
+      "sha256": "9dc46755c3d9c9ed4d6459b9d2b72e8e5376a8d20ee22f234b2f3a38e613a7e7",
+      "bytes": 2086
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/604e0e588200d1a37eb64bf5a49e16fa20d79ed159b00d62a9ac20b0e1f0cc5e.gz",
+      "sha256": "3adb2d2ae7b63530b700fce6ebba086d2940435953477df548153cae2f9fa40d",
+      "bytes": 10589
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/6067ccdc77a747e519980c5d0ed2202afe42c3402f2f0f657038664bedc03434.gz",
+      "sha256": "b276bb65271cd7bd05b990a340c1e255b1abc8bb0d80d0d226c1cf80704ac25c",
+      "bytes": 509
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/6227c08f26f871694c3ccf54f4f39e01121d0214efa9dabb450b4ae382749c5b.gz",
+      "sha256": "3d4caf0704ff69569bc959151def2c66d5e2b16e8b3e03e71113e9e5205e427a",
+      "bytes": 1600
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/624ef73de11a89d21bd2351f5f8a76099aaee705bc3d0f3acb7e8e54603af9f6.gz",
+      "sha256": "2d1797c73d92380a6d5ac420593c1f1bb0b85af83de5b4c3b86a29862395c770",
+      "bytes": 2066
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/62bf5ccfb9602cfd6f60b725a04e2a5e0751ba40c073bbd8566941b25f6775d6.gz",
+      "sha256": "514f42777f13942b66c4620eedceb8ef1039896d641128f4b7f30c0c6cea00c3",
+      "bytes": 1351
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/630b54f0ced3979398f9ced4470f2418bb618dea63ff189e0bc49003c6f37419.gz",
+      "sha256": "d75a0e58e81b5ee07c22dfee2f12190fc74c22ddbcb967e411dac5102711efb9",
+      "bytes": 2832
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/6380382bbe5e439cbfd2e4c6af3290db1b8e12064d8c09da6093c611fd807e5b.gz",
+      "sha256": "10226c5f71bbfbd55fe9e5a72c3527c5de36d343bcca530d55c65bbf955092dd",
+      "bytes": 10557
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/646f6efee3861385cae1d0e1323727bec263e4d8e1b84dc15d13a0ac49e308c0.gz",
+      "sha256": "34dd8754be66bc303545ae8208171d2bf137ee362d06e6a40c6d87d87a4cde73",
+      "bytes": 10769
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/648e5024c5e05fcb9a4d2462fe3506ef7be812cf6cc40b41d49c2820319ff799.gz",
+      "sha256": "eb47c591b5dedd1374bf6ef638ef42b51a98ee2084c224ec8cdf8821198e1235",
+      "bytes": 3662
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/649d387597ecd9e19683cda74f7f3188d3151a8b3ea0c8680465c43f46fe28e0.gz",
+      "sha256": "84f0820377b18c1bd9c0d13a49ec7df98eb5326cd0c35bdfb8b70fd2dc1beb71",
+      "bytes": 843
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/6509161f5e150ffcc60621795218714e58cbf7d73da18f1563668817a673758c.gz",
+      "sha256": "4529686c70a3651b99f34cfb264f3cbd147aa93512010d70fa344eb12bb6a467",
+      "bytes": 4244
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/651bf5310a5261ee309e219453e534754e7738fdd86152e582183e3ba95ec5eb.gz",
+      "sha256": "75edd26f0c8d65a2cd88797f7ac16e952aaf8166b1be01118b1dde6a38d84341",
+      "bytes": 449
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/6606e85826df680a322b05c1aabab797576450648fa6c61edd87a42d1eebbcf6.gz",
+      "sha256": "39539c1cb5b913681de9c49c4f4f5c56a6c4c95527aed67a31794b4480abdac7",
+      "bytes": 2159
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/662d85fdfe3a6b62c577492534b2aa92b0603cfec0a80dd11e1a615dd9ee2bfc.gz",
+      "sha256": "4217dee8d0def084dfaa70445d5a71f569e1776c9e0af0451378f1ca5601c626",
+      "bytes": 7285
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/666e2e70c1e31319d7af7f055b343129a7538295916b3af4fde359b68f58395c.gz",
+      "sha256": "0874ce8e07bfb6976573b8185aed96c919d66f6db2a3e5fb99c86e8f2ee9a910",
+      "bytes": 1616
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/6692c317e0e1fbdbd940fe9106737ac6b78a34e3956c1f8da59ab97c0551ebd5.gz",
+      "sha256": "3fd6d89886af81a4af94f4e780ecf9099d30ebfd54b0a9488486e8cb89c76fda",
+      "bytes": 16357
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/66da5c823958b3eef9bb886728b740641d916a4ef1829bebf8daf6e0a0787248.gz",
+      "sha256": "51c385d2f505e1b4203af94bf42889ddd39baa4f7a241ad3d7c2a45e55f8ae09",
+      "bytes": 5752
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/66f499e7bd980c1674baece0a32e64d6117002f6c9ba04e77b7e87810c82a720.gz",
+      "sha256": "7b73adb960318a553f395545f24732726192a4b03c8e47dc72fdec7eaae2d143",
+      "bytes": 5014
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/67a5c348f5a0235c950ef2f1bc6f4ee22f481862f6b9494f15114f2dac941f34.gz",
+      "sha256": "1b2b3a41143911aa79d93c3c9786aadf8e7490b8b047e62da478b0795353c3d4",
+      "bytes": 5632
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/67e5f508e9d58c37d62a6849db2317887fc54490b3b3f68fb165a7de732f705d.gz",
+      "sha256": "2272df538ffd2c22c6b8a030a753a77bd6740e124b403cccebf461527db83070",
+      "bytes": 381
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/67e90178d0c3a56d285d379f645ab32e070d356ebf7e59df5b63a46ba2b791c8.gz",
+      "sha256": "669d5182ef76a1d2bd19e1871ed6f8af4f816dba1a4c1ca25bc431e37636b3df",
+      "bytes": 18045
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/68a81d01766659df6f4ea073371dd34e0cd8f6678bac895c3ad733c069d7dd7d.gz",
+      "sha256": "758b6f16a71d6801c323a2af8d121a2f608a82634321b8a253449c75cb6f172f",
+      "bytes": 1605
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/6918bc0c28775e497af2a0a047cef435ea814328e1b575b2bb17adda8703f545.gz",
+      "sha256": "c244b3162c7ee2c1ae27f52a325f32486ba65a750e0971460846d88fb073b956",
+      "bytes": 353
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/69986722975a973479b9fb1a2c35ab1a1ecb972662e8c19dd03718ac441f5103.gz",
+      "sha256": "10a5daf2acb24d7f2bfe3f25b238948889442f7635c2171292c6919775903b38",
+      "bytes": 870
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/69f27226c3d1cff4c9a331887de4c0aedfdfa574e375362145ff0a37300d6ff5.gz",
+      "sha256": "c0e0a2d43b74f2d5e3d3d2d49c60a14aa8c89d7b189e553c77df8e7ff5a1fa63",
+      "bytes": 473
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/6a4d4605cf5e738bbe831a72b8b5e1b242048e61b14717ce35a2be62ca1e47f7.gz",
+      "sha256": "d3d6b1290d25d8ee9e6afadd9ee7d0826b29a82c86a530fe2a56df8d4053404e",
+      "bytes": 2620
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/6b853ef67f2add9f227bd5113472611c8605a1d3db200083d0f7903a750826bf.gz",
+      "sha256": "8bac027035ef82c53ae9c00b5e0d62318380f65edb548fdf073dc2dcbe703f8d",
+      "bytes": 3645
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/6babb9a652770afab4ed6ad600a8daedf7955b2ba945a501a6e5d54d801fd751.gz",
+      "sha256": "8dd6fde33f6b3b8b05612a2f8261d1c76f0bfa79d34c12af75635948572be98e",
+      "bytes": 1627
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/6bec7110599470f88348b5ad61418ff488ca7d6df4dbe9c96b627ef62c88c8d5.gz",
+      "sha256": "f81ebe61eeb25773b7d8131dd59dfdee1e78ac0fd34b72f851c871544df68ca0",
+      "bytes": 4347
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/6ccfc067ab9e27efb561621dcea2702b9cb231c4844d19ba93ccc5dce530a350.gz",
+      "sha256": "4aca31b8acccb0f7fb934572d8ec7911da764836dc8795aafb6413c24fe720ea",
+      "bytes": 5086
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/6e815a5580e105118360365fbf98225655cf44a10014e697a7c0e91a5d5ba511.gz",
+      "sha256": "c4308da1a49d2ccd6a33b0a958a296c5cbb24b7611affd67166ab7a289671b52",
+      "bytes": 12828
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/6e918a4eeb9b8cee2c74c460fcabe91d6fbe2ba1185f30d7a860a3f6b4198a00.gz",
+      "sha256": "733c6ba126089b29268e70a31c2206f2617a3b80c7d65cef4790101960d8c39c",
+      "bytes": 1597
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/70d49866d239cf87828821f7b45e8ae850543c468626a8831a91b84ae5b41a41.gz",
+      "sha256": "c84a4cca7468fb906ace3fa01ef6c41ac68b1d46dc8114134beedb397f79334e",
+      "bytes": 9571
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/70ea7302c4134f40cf950a3446e7f12f37471b27c5cc644432382d463353d271.gz",
+      "sha256": "b3181084f33d9c69e678c33bef99c75f8a9be514e85889dab05d4f9fd4fdc86e",
+      "bytes": 1603
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/70f2c3a82abc9105a8875fcefae05dccbf99a9226390b7ccbbc79a3f26a46ed7.gz",
+      "sha256": "9ccb796cf92aeaf6efeedc6a7e36ee54024b0da28573e6d160633242d9b918d2",
+      "bytes": 5842
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/714039fef822e67798292f0fde8236d4e114792a967e9b5669bc773c79cb4fb1.gz",
+      "sha256": "a697a099f38239a4c71f47a17d5a2a575ee0974a0f95ac7514c21fe642b728bf",
+      "bytes": 6014
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/716f66734438ff07a62288c926281237dd94729dd8d7bcc0ab9b10d06d03a8cd.gz",
+      "sha256": "40f81276184aa9d1f721be84c0106d98e281c3c90cf9d6bbab84d1350aa64d73",
+      "bytes": 5450
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/733c6ba126089b29268e70a31c2206f2617a3b80c7d65cef4790101960d8c39c.gz",
+      "sha256": "2446f846fcb36743da80f0ff69570b4e3ba18a0067996f929b46e04f56895b00",
+      "bytes": 1620
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/734e3fc249ea81e8dbca071425f04d2a9baa5092d89d82c98a24c9fd673c2380.gz",
+      "sha256": "ad5cd5aff885d0ccbc5b4d820cd3ecd2b17c840d33c1d773ca9fc3ce587eef28",
+      "bytes": 5394
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/73502c57fa5a446206abdcbb281b0a43e7e30a6afaa25ee9b20663b410b9fac3.gz",
+      "sha256": "8b07ab0b94a9d36bc9f61239f2b342c3446fb5aa19e2551f51ca64ef3d7077da",
+      "bytes": 1602
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/73d886c98e025ee43f69c14967b441e882a9e8264a060d2bd6fbc183d5277b91.gz",
+      "sha256": "c4809076f8ceccb0eb4f8df9f597ac9ccf0c20f477987acce24a28aa8ef952c2",
+      "bytes": 369
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/7415e5c642a3dc799eb3e76a47eb7e91013c672a5deaef82c360d8f2b49f23d4.gz",
+      "sha256": "2f50541f8e8badc4f39a689f15063eb5976585cf705acbd391898377487b521b",
+      "bytes": 544
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/758b6f16a71d6801c323a2af8d121a2f608a82634321b8a253449c75cb6f172f.gz",
+      "sha256": "9146337fa4efb64e485f09125d26abbba66609a0f557f6fd8ded0544a985b608",
+      "bytes": 1628
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/75c67114b7e6808ffb43d888481755454485a3337c35e70d6c093a4a99a8caf7.gz",
+      "sha256": "67e90178d0c3a56d285d379f645ab32e070d356ebf7e59df5b63a46ba2b791c8",
+      "bytes": 18017
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/75edd26f0c8d65a2cd88797f7ac16e952aaf8166b1be01118b1dde6a38d84341.gz",
+      "sha256": "23767ba8dda8215c141ef3788bbfb01740f5db2f6510ccb7b77eeb7c3fe57cd0",
+      "bytes": 472
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/76a347213feffadad635311cc89fdbfb896c6a3f800e8e92528ec9efee280cc2.gz",
+      "sha256": "e6b42d6b7d137b6f0ec7d68a13d6b25a95461b0eba59c7531791c58fc465dbea",
+      "bytes": 349
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/76e2e89a2314df4bf2f5247f96738d23234e66fa6708e7abc01136b18b208fcc.gz",
+      "sha256": "ab3e9d21f97d5d8b8fae7c307a6c821a16934bf7a8d6dd4b28dff43a1541fbc5",
+      "bytes": 1245
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/775a8e23fc73620dd221313d5c832b21dc5febc8710aeae00c4316b5a734dccd.gz",
+      "sha256": "58143c8ea41b8bd1a4864b630f28ceaab9e7937a1a447adab13fbc8100837edf",
+      "bytes": 1622
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/77cdca0937bbc921fefb7bec349377f7c237116e3cb7546129ae072565449178.gz",
+      "sha256": "f9658685ffbdfd572696336c5a439fc5f6cae23196a8eb62d78cec2f3207bb98",
+      "bytes": 6576
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/787214b42b9b6cb42d66fe5fede95e3b93bdeba1a481f54f6b8e915226d6bcd2.gz",
+      "sha256": "d4875b50e5f1003a4c7636b6dcffa0fd04a2214daff47839dd395586075ffcc0",
+      "bytes": 1581
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/7876b706d36f351b2bc11ee9a731498df44dd55d946c8a5a5d800daae72e451a.gz",
+      "sha256": "6692c317e0e1fbdbd940fe9106737ac6b78a34e3956c1f8da59ab97c0551ebd5",
+      "bytes": 16334
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/795e7499f9bab2700bf7703dc2aa4dba87e8c7a93962aa75a51d7a1cbfae3a75.gz",
+      "sha256": "0b6914e85ee7f25f89603761544a2dae22a2ee3ab6b585cf34d219ef17b777db",
+      "bytes": 1602
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/7ca9fc33d5a011cf2002058c264d986549b5f376bebd7ed165bd58298a631887.gz",
+      "sha256": "274abad471bc9893efa8de7e6cea05fff6a713f4ca6f3878066624cecb589f35",
+      "bytes": 2218
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/7cf1b3e60d30586ff13b21e1aaaa735f2ea606f99963542032c5111bf418981f.gz",
+      "sha256": "b5ea3c79bb8e912e6bd06a1dfd78a0eeff45910db4a75165ddca9db739a17aad",
+      "bytes": 3103
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/7e69cf7899d80e30f91a690314a00bc6646826b8e141430326e71175d7bd4c77.gz",
+      "sha256": "908f546d85069ec2b77838f8262e98f36725b58f492ebb7b3ae3526db5aa79b3",
+      "bytes": 4715
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/7f07c59ba0dd88e4ce0632ad83b6ad6892276512322fb6e4bc95a73bf5203248.gz",
+      "sha256": "c441619f81b8e2c79cf0976ee08718420261ea944c0d39c7e0a507664a1c1380",
+      "bytes": 1614
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/813ea10bdfe0d0bf5b7c0365d688769cbd241af8b49c89722a19832df52ec508.gz",
+      "sha256": "081be4f16ee92c56f3903ffaf8e0cbf08b7bd88c3ea51f8f5f0a587d819407a4",
+      "bytes": 2329
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/81e140058ed9c7fbe2eb3fc633cd756bf2b78b99aade5dea49134297fd71a1d1.gz",
+      "sha256": "999054ed5461f1bca38362a749d8e3d6846caf1e935c40c527dd9ab48fde1d69",
+      "bytes": 1598
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/8237419dd3a45b5662f1666eea566e3717aaa330af4f647557e43215bbcf7a60.gz",
+      "sha256": "9a9af9040035a0ef9a7be6bdd1ad9477354e4afd427cdaa2867f9d3d2d4a6244",
+      "bytes": 1672
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/82a4528231585e6d879dd1565cf7cf142a31d39b6a48a46d592680cd81d8ae5e.gz",
+      "sha256": "cdda63f20a98ea2d72d3b1f4fdff15033cfa98413508ffa67b88fe21f0f4cca8",
+      "bytes": 1623
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/82b932c87c5da7901c6a8f984698c57912570146fffd3156dcdc96a6c210d847.gz",
+      "sha256": "dc989b95314bb285aefa9e4eba99cd20b0dc5b3c948f2fe9058830dabafdf44b",
+      "bytes": 950
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/82f9ad39be99aaba3bdb2f4350dd82b7e39f9d793ad8e3fbc2c32dcc9d5943ea.gz",
+      "sha256": "414742ccbc598bfe1dafeb3f2d510487e5e8c2c897771c5536d08be49787f20b",
+      "bytes": 1603
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/8332bb2f17cb01f9fed4d2996a7ee6f2e88ce3250f09283a3902f9fd18ea6e6a.gz",
+      "sha256": "13af9f416fd869fcc71919f504712825b685d3cb97561aa6e7c8b49cc334aa71",
+      "bytes": 1607
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/8374660bf92f89c4fe2e8fb1dc5a330bb9b99e469a07d149807c1380d74ceb75.gz",
+      "sha256": "0a5b2576ddaf62bb897b57f36661d4f9eb9f5cf332093f6308c4b4952f0b232d",
+      "bytes": 26736
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/844b7b96f6695c2e647e22b65688c67108d8606177ec04e206f961459175b71f.gz",
+      "sha256": "576a2b34776d98ed90a18dd3a6d1937ff87cafbd35ccd58bf0c16d9221fa3c7a",
+      "bytes": 2321
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/84548540751dd8ebdbdd113fb0af9f1685c417fc0d8f5a71ed54ad48f23d6a63.gz",
+      "sha256": "7fd08df1d11cf025074a0280e2c3f2433f4dc82c3a3167d8a84a71d8f4f76f01",
+      "bytes": 918
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/85209d0cb47ab3bca1e2a27acb50d4e554853adfa472fa7195c0468627a19a47.gz",
+      "sha256": "b22f15f68ad1b039b62922bd0b4e0a056de8bc4d89f2a7be1b642be4ed0ff1a5",
+      "bytes": 2301
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/859ae0c2b12269cf494d4591a4f8774a1f9884dc7dafd5ab3169b162083dcd6a.gz",
+      "sha256": "60e4c07ab69f4cdfd0b09f7b5ceda566957771c965d95242d30e79fad0d544e6",
+      "bytes": 65233
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/85f1aef770211378cd277afca9764af2db1e021cfeba489fa6fcd022f361047e.gz",
+      "sha256": "a393cf734c222b550987819996e1235f604d0430040f3b5f4e8ebb6a3f0c765d",
+      "bytes": 1077
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/86ec0a2d5db7905605d4e95c4ae06ff31b2fda0db262ff83120d26a4d3634d80.gz",
+      "sha256": "135689be25aebb88ab80795f26f4d7a74975b58d6cc5471bbecd9ed5161c8313",
+      "bytes": 2623
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/877cdb60251f6a758ecee125816c4ff660976178ecc6744b96c698f005ac668f.gz",
+      "sha256": "5ce8a5cbc08224d396910898f836fbadcddb84bb6607e4f779dd36fc18d3129b",
+      "bytes": 1485
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/87bf279062ec05cc9d4d2e892775517bbc9246e399a2306560ded020ae34f33e.gz",
+      "sha256": "b73263cd335a3d6e36428d4e7699e7fdf7efbcf3d342535d3f9258f8f4e68869",
+      "bytes": 1627
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/87f120f13c01c33d84580550b272df18c8974324a42ccf05ae3b17dcfc7addb7.gz",
+      "sha256": "0dcce6212ece7889fb774e3e036684fb39b7cdfdefd5a37d387b10109827405c",
+      "bytes": 1604
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/8a059981ff2a1d8be82b65f35aa2ff7650a0244cc6bceade4be00ff2bf0bda2e.gz",
+      "sha256": "f25b7f4465dd2e858121f7b4b0417f8ea9479bfca4817e70275e0c31dc7d007e",
+      "bytes": 6986
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/8a9ac47584f3ffcf5f1e7d49af133282846cccddf8e8bf2f8e227ab812e8cae3.gz",
+      "sha256": "298341261e58fa742fca404566074d019567da58b155b217437bc5b4c63bb55d",
+      "bytes": 1597
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/8ac63a82740524bb6949e55c54ff11e5b3cad20bc81ac8aa5454bfec557c9431.gz",
+      "sha256": "9b18ef25c14f9b751e0de883599b740422a3247ae4ce7a13d94bc2c27b87ae69",
+      "bytes": 41662
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/8b07ab0b94a9d36bc9f61239f2b342c3446fb5aa19e2551f51ca64ef3d7077da.gz",
+      "sha256": "8ee113af70682d86728381f833b87a0783a3c0d0885b2e73f930bf8a141b71b4",
+      "bytes": 1625
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/8c0ecff6dd36975f414d57aa86ab7b10b3ef85f6510e522255249019ddc6cda8.gz",
+      "sha256": "1c0c009918160cd43e1068110e26440013e5af78ec2bb5b58a7132f91f739a7d",
+      "bytes": 1649
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/8c1db8d49409cdf00d9038e1cd206f64260a73544e4681fd8956f20d9efb1420.gz",
+      "sha256": "c33046e5e8c5b10b7bb78ed1fb4c21463afe3bc4d6439f16ae46f60f2ebae52e",
+      "bytes": 2087
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/8c529aa3affc863301c419667e4401308a260aa285fce9f74e5f1c2c8541a428.gz",
+      "sha256": "3e7d1bd5a93aff0ef5735e06d99399d5cb9ddd24e67910d500023ed0e60806f8",
+      "bytes": 22193
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/8c946800f25e8d730cf93b3369c6dc7d09a6e0aefeec739f939d1a21e98c905e.gz",
+      "sha256": "a9e19ec6d9b5ef26ae682604e28ea175b26cd0ba5e1663a4e8d0307826859e5f",
+      "bytes": 10503
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/8cccbe389312ebcd16e06821e6f02bbba9d149e8fb45a854ccd2c9dce1238af4.gz",
+      "sha256": "3ebcab6e475dd476cbbf1f5eed42ed3365c62ae49891c235553ec6b500ced288",
+      "bytes": 74006
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/8e1123eca01126dab881223a88ec83a4efd902b03e9484ca80f5dfd2dc9bf452.gz",
+      "sha256": "bdb01bb7884e63e138401400db33b8248d803181698e00ff5cd0f3edfc6f4b17",
+      "bytes": 2079
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/8e53eb7b6d621ecc29794833e60fc69ea81d1a2b30475aa57ad5beccda836bbc.gz",
+      "sha256": "0ef6aa57c6d6105758272508cf421f4dfd4ea53f38180a57d8a2fcc772327022",
+      "bytes": 1629
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/8ef6acef36554f02fd20f043972321ac6f62e52ea1c56206c8e0efec3b10ec99.gz",
+      "sha256": "e967044dbf4c79e6d5b2b2eb5a4a74c5f072f1309bc9130603390a600d5504c0",
+      "bytes": 2159
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/908e9670b478b2ba126802a221b7e47006f50cf467e2c5dd7935d3dbef10a20a.gz",
+      "sha256": "649d387597ecd9e19683cda74f7f3188d3151a8b3ea0c8680465c43f46fe28e0",
+      "bytes": 820
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/90f969aa646fef434424b4877ca3fdc92c2bdf430a0fb2e66b160aefaf27266d.gz",
+      "sha256": "f19d8d9caef6de24ec89ba8d28b42202dd989eebb46e10274de0b09c80f1e699",
+      "bytes": 3798
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/92a2d499150f3d779c3e5f5b68fada4dd76da93b6c1dfbd78e707cda3b059a80.gz",
+      "sha256": "37ae6f2ac75e2df4902348932f316f786b81beeac2d4f127fa4fb62d63c77ff2",
+      "bytes": 14264
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/92e0ca443da9ee5da961f78c8cc7af4efcb2f62a3c3d177ef48c0590ef666b00.gz",
+      "sha256": "84c44e6ab8224da728fd62661128e1660055ea4eab37d2a6b209ed223edcadb1",
+      "bytes": 1624
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/93d7019e530dc6c9e038a7fe82d7dd8ab8b28992a44f3cb7a53d47f49be6862e.gz",
+      "sha256": "a2f16824528d2d6ba66c46886b19a02faaf3f8cdd51ca7d54361922bc0564061",
+      "bytes": 72106
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/9462337fa87add8927e3e4eb9888fa197a25dea40c1598fa5017b7e5d26b11d2.gz",
+      "sha256": "ec47d5a9001eccff197ffd81e8778f3753dcdb5e0b8559356a7c365b289f0c1e",
+      "bytes": 783
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/959da620f3b30317aa13779a87452d2237df3829fa774f9c55ffbe84b7a0731e.gz",
+      "sha256": "1195e0c36668df573c246de0aabdd11442a673b2eb264e52b4a09ba4e971624e",
+      "bytes": 1671
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/97435362096a8903b3a01ee82869b55b4375c371db4be3bcc32b641a9074bcca.gz",
+      "sha256": "a40c3152870eb813229cd3126cdd81e8edb2c87fffa8ec4d6abc634774e5f129",
+      "bytes": 219611
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/9768fdc7076d3e16f09861d5bd50160d86fc4b87aeadcac0ea72eaf75b1fa241.gz",
+      "sha256": "6166ba4a6e1999d4985a55afa10a917100b6cb7a5aae09a7f052598aeee85086",
+      "bytes": 7744
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/97892e332ca72bcc89d9cc746e55c1e2e0935dd15c6ac414c64a989dd3e708de.gz",
+      "sha256": "4fe1a2c90b2d6f548ddd72e8ec71fea4870323957352f35c5a284ad450b91f8a",
+      "bytes": 10776
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/97d26467d0ac394f9fdc9918269e05270d39454ce4942b21479b139e4be2d9f0.gz",
+      "sha256": "e871ae7e1695efe43a5676136de90a3fe67fa0b60a303f13fbf3b4dd364c8dcb",
+      "bytes": 1625
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/98a5b557c72f080b48e3a5d058620cc95853c6c4a6e6d0a2b42188ed8e279196.gz",
+      "sha256": "db4aee661699be936baa901b9a045477a5c31858a777b030aca672fb28f0b036",
+      "bytes": 1627
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/999054ed5461f1bca38362a749d8e3d6846caf1e935c40c527dd9ab48fde1d69.gz",
+      "sha256": "8fe1643639d50ce2d64c08d005bddd04a232485d1d73bbc6a9abaf3c0c92fc31",
+      "bytes": 1621
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/9a20922ea0ca68a6236eb012fdea1942318112956edbe9124f1523c153e7ca1c.gz",
+      "sha256": "2cdfd7bf9fe1f7aaad2c9731aee53fc4b7293d555e93abe576d2507b3cd7d443",
+      "bytes": 8124
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/9a4c68526915672eb16b1e9142fac2d961d95bd44b057814595a2cb38f918993.gz",
+      "sha256": "3482b87e12b831064c3af112195fb2fd4718fbaf40ae12dc3b8f89833af51b8a",
+      "bytes": 1628
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/9a6eb49a2c36aac012c3ae0a2d7128737ca694ed8032699f978e62273c53c24f.gz",
+      "sha256": "43259f7e61b238c363504a8e41e3787359d80033db9d2e70ecb6f2b25312bee9",
+      "bytes": 331
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/9a82e060a93db2cf09c702f29fa395e413785704e9b5033eaea311c98f66ce54.gz",
+      "sha256": "4c7a543723c2df22ed4f1b8ad4628479c001dbd006a76cb38d49879779a20a0a",
+      "bytes": 1603
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/9a9af9040035a0ef9a7be6bdd1ad9477354e4afd427cdaa2867f9d3d2d4a6244.gz",
+      "sha256": "8a31b7723c80729bc57efd8b39bd2b395c3590389ecb90b5b99bd18a2725d24a",
+      "bytes": 1695
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/9af3ddcc1fce749210ebb2ca12dcab8000500e3975bb4139b8fffcc4b8fe1cf6.gz",
+      "sha256": "2215d2e206caab704aff9e2f8af7d0dedcff31d8594382cc540f589978d7c39d",
+      "bytes": 1691
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/9b9b64e1a546ef12b35874148dac043490a51dad37d6e0d1a419a4bbb6ff43f2.gz",
+      "sha256": "a1547f146426a99744abf2cd15fface74c97d2c1cbef3757dec9d3a348d0bb49",
+      "bytes": 8175
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/9c164039f2b37daf2d5ac11ec2370cd6465f053555a03282238486b1b9f6292b.gz",
+      "sha256": "4673fdeabe9381f0373c08aa0f370871df6ae5c07405d3dbd0ac29791927a11c",
+      "bytes": 1597
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/9c8c419f1981ed571eeb8c8836e89b9103c548bb1dad82651190f47cf6bfd738.gz",
+      "sha256": "9510f265d55b3305d61c21c218cd81e5c15e718240fe8582518bbd412f7e2c1e",
+      "bytes": 14846
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/9caf9977e9f4b0be7112384c1cd6a70696e7e42e9570bbf730aa876924f8caeb.gz",
+      "sha256": "2ab68eb5c1b7f635a793b14c140250b60d8d338d75ea4c7dd7f0503445aa89c6",
+      "bytes": 5631
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/9dc46755c3d9c9ed4d6459b9d2b72e8e5376a8d20ee22f234b2f3a38e613a7e7.gz",
+      "sha256": "e1116a392c3c4d6b39b46a38f62b89b660ad3a88ca9674c0cf36f7df4c7b6221",
+      "bytes": 2109
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/9e71b09811fa6ac6d0093cef85905b267222eff6bebe8404281f2194d051a821.gz",
+      "sha256": "5a3d8d80a66569cb9e3739955a3418fac47eb4fa0574e31a1b277b34a543c75f",
+      "bytes": 10927
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/9f9f4b210f1a67a93cf91f608ce5add3a53ea6f413d58c03d3c6c5bd8ef93ab5.gz",
+      "sha256": "98aa33e5d013672fee10b39d46a00cb95a16c679a0fb33379d37c25a14fd5cd2",
+      "bytes": 689
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/a00ba41a50621cd9b1605f67c3c8015093293d4d4a098e5486c0db90ae37927e.gz",
+      "sha256": "9522d15fd49d9fe73af8d81d541cfb9a17f65c06f3b814f034d005b0b44d48b2",
+      "bytes": 2616
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/a015d9a9c8985a75883d6a69c1d8e62d248b68301cc008d2d41d8a256e054735.gz",
+      "sha256": "a5009090c658a3461009e0278b03fe8d74038e55d345894dc12b10eb0ab9dd28",
+      "bytes": 1620
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/a0556a4cf9fed12844076c1491d5c5163ea695d12ee71310afca5980dac55623.gz",
+      "sha256": "604e0e588200d1a37eb64bf5a49e16fa20d79ed159b00d62a9ac20b0e1f0cc5e",
+      "bytes": 10566
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/a0d637ad3b221a382de5da865d4cd7f0f37de3ca77a533f279f6acef7ec421f8.gz",
+      "sha256": "9b3989b2c67f6f262cd1d67c0f29dbba73b9007d9fda5e9aea313a5fa3fe35a3",
+      "bytes": 7326
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/a148663bc4906d67b1090458285ae504954a5ae02ae76688e4856aeccb0e1284.gz",
+      "sha256": "77af781383c5d6b72de693e87a3ab80e16dec7bbc18db85077984724c9880687",
+      "bytes": 1638
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/a1ba657389bead33cda5d4e238416a97aca9a2fc77bf35884d956942043d45bd.gz",
+      "sha256": "537e3e878df44c862043c00990cbf9b5050df4f6f395d9a0dc8bb415597f0f79",
+      "bytes": 12871
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/a2955c31612835ea20fb1410cf26cd1470adc643448fe72f12061384e3b5f616.gz",
+      "sha256": "4f4dcfed644813d0f64b661e0ef3c1256a355d77226412807e40959f59698e16",
+      "bytes": 1606
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/a393cf734c222b550987819996e1235f604d0430040f3b5f4e8ebb6a3f0c765d.gz",
+      "sha256": "ccd91f39d28ae0b0da81d3761207eb734658860b4431995a59e981ba907d695c",
+      "bytes": 1100
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/a39642d13116ae317307a9b2f948a3b0225330039fcd44e3388c090acd571403.gz",
+      "sha256": "02d45172112b735e2b8ada8f53a54c90591177cbcfcb69c201c2edeed01ec620",
+      "bytes": 15090
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/a40c3152870eb813229cd3126cdd81e8edb2c87fffa8ec4d6abc634774e5f129.gz",
+      "sha256": "c1abffa0e491db1a31017cea995be84fce391497415846d6ac33c07d4fdc43ea",
+      "bytes": 219699
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/a41d6c7b0fa2e2fb35e20ecab4de05d195192db473896d13ad451e32d1b69ea1.gz",
+      "sha256": "3056adf5d1dcb13348ca0b81859971e9481dc28222e30eb6934c0ccd2e52fc27",
+      "bytes": 847516
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041.gz",
+      "sha256": "e7d6fe58f9a5636b12ab2f1175993db9b53dc0fb4d375b0cb5d70259883d43df",
+      "bytes": 17048
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/a673961d2b963021cb81418d857ff0f7d669db47931e2c830b9b8300b3f48e89.gz",
+      "sha256": "09bc704e6b8c8868ca6e744e9b6d66b08256dae06af3d0a950a64b4582b18890",
+      "bytes": 3673
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/a7231810551285bf0ce5a374444b34fbf146ca4b2f1a936268f330bd3ee05999.gz",
+      "sha256": "0215713975966d21582ed26a5a3b024d6cb532292c35d5d0b0a91fb16428052f",
+      "bytes": 15019
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/a7db512c5cae0771b91fccdfe4ee9d84c086ae61ff4aab05b2e22871beebfc62.gz",
+      "sha256": "d351f8e7fc17eb110c782e8f68ddc1b3c6204108950b94f4691a28e9fa6b0482",
+      "bytes": 1659
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/a85ad030d455c1ba152dda28f2fc36a253d1b4488e0ccb09ea3ae8efc9a33084.gz",
+      "sha256": "c13ecdf539b835d78b5238597f47f79d34dd428ac052b1354453ed8018470d14",
+      "bytes": 13839
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/a8ea1f53f10969def8c7d4d3fe2585a24a79e62997c14f3e65bdbdbea5863f44.gz",
+      "sha256": "6b553a90a7a9157db9af803dc532e966a59df7eaad00ad7b8e711cf9e852d131",
+      "bytes": 2255
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/a926424778c3afa62c4dbe691c86a76fbaa25737d75d0d236e718d8481a7e39e.gz",
+      "sha256": "34af203bd3dc5e96cc387484e5c09772a98137955ae3fa1d153be6a9fbffbd5a",
+      "bytes": 6358
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/a9e19ec6d9b5ef26ae682604e28ea175b26cd0ba5e1663a4e8d0307826859e5f.gz",
+      "sha256": "42e58af4df363897124f1bf23d311062c54c5968f5b1c159a09678b58bd0e80c",
+      "bytes": 10526
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/ab3e9d21f97d5d8b8fae7c307a6c821a16934bf7a8d6dd4b28dff43a1541fbc5.gz",
+      "sha256": "74c0a868d778cc67d02cdae7ecbcb705db4831c7ce035eb4692cd7f27e63295b",
+      "bytes": 1268
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/ab559aee906e4f72085031a84bb618c01941bc6e2d613175f235af0a18289227.gz",
+      "sha256": "f241240859c1976bad4abd28f22b92910385355c42acfc939d8fa2e8e5eb91b8",
+      "bytes": 4135008
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/ac5b086916057b7bc15b24a6b10d13060fc0e3a6072fd09c9d6dd955784c0ef8.gz",
+      "sha256": "013d679546c2c1d7346e4c4a076557b3f35556f50a7143c0491fb5b6cf04d431",
+      "bytes": 1626
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/ac5c0ab33ccdc03c1934722d5b5ce35be411d16acd9eef56005fcabbdc9a2fc2.gz",
+      "sha256": "e388c35b54f42b5b2f5082c3992e39e1339eee552c788c060f8c69e2a73b6c18",
+      "bytes": 1600
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/ac634388c638cf31f022ef1ded7481a8f0ee1d748f437f876b04d53aa00757af.gz",
+      "sha256": "afa2cc7e705c1e246e3b572d3320c26b7a1e824807c5382bd42ea44a7dd43fd2",
+      "bytes": 1613
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/ad5cd5aff885d0ccbc5b4d820cd3ecd2b17c840d33c1d773ca9fc3ce587eef28.gz",
+      "sha256": "afb7f4615d5ba4891f9cbf18e302cd0fbd589f69afc0f61907bcca678e127d91",
+      "bytes": 5417
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/ad6652ad710147674bb9a874225faeb8c154a895b50bbf43aa7d155830d67170.gz",
+      "sha256": "3bc4e0a1621724daa38945969e1d9842bccc85edadfc87db1170c44912581249",
+      "bytes": 1608
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/ae736b80ee651cdb912d406acfcac1e2a3956b84e3bd6f71dc3cc0cace921c79.gz",
+      "sha256": "0f9b8ca1155cb6311f78bf2f4876382e21050944161504ba075d7344b3ee206d",
+      "bytes": 1608
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/ae7e1af2634a11b7b8f19615c212d7bab0c416d24133b25ab9833c7cc362bb2d.gz",
+      "sha256": "fb386cae32793a6181d430cb8ea9431f812c22f4a36c8cdd9fa92879419ebe9e",
+      "bytes": 54895
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/aede665bfa66dcb1fd69e2354a70e6998787c3b5dd721efe17e4f503a10573c7.gz",
+      "sha256": "edf846529372e17614e913f1b9654893462ab40f21936e9494916dc8afc8211b",
+      "bytes": 1614
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/af393b54812aa3fafed30dad8fe8cb0e06d674b63865358785cc30ad7e9cfbe9.gz",
+      "sha256": "f1e466c94eada926df6eaa41de633ffefe633cc39a8b3b83df7aad394c28e2d7",
+      "bytes": 1764
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/af56bdd8e2fde306c21da00bff3c042f7f3190c0b9e9b73fcd6a9893c97b1cee.gz",
+      "sha256": "9a6f824bd3b879595ecb1e794c3e059ae26f23910103ceda5271825649b4f5bb",
+      "bytes": 79039
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/afa2cc7e705c1e246e3b572d3320c26b7a1e824807c5382bd42ea44a7dd43fd2.gz",
+      "sha256": "5c3dc50116f00d39978c12b20b5c24d4596502cee62db6f3247dd309a8bf4b5e",
+      "bytes": 1636
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/b044ce2ad020eec7a6095484d43874ca387a12889fa5bc12742b29832276e37d.gz",
+      "sha256": "1cb233936c1545213acc9ee36620aa9ca24bf5f3e2a2986ae7d75ab081515302",
+      "bytes": 3553
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/b0939843942cbf82db5362971ab5f19ce80663ecd7e715e9c4426b5f2525577a.gz",
+      "sha256": "d5d427e5fbb1bfe63ab013f2af41dad3fd9ce398bcf2153efd89a8f97bae2b6a",
+      "bytes": 1627
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/b1ad019a8c3e5fab91184866dd434430140f63fe2002612e99ff8500ef68c6c3.gz",
+      "sha256": "efc8f6aab147889ba35d8b711ff3d503420b7004a1eed074f1c7a94413d7f11a",
+      "bytes": 2480
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/b1e85792a92f0b95ca677141ab265b36573365bcd76c23b3279abcfbddbea10c.gz",
+      "sha256": "b5aa125907a35d6f3cf7c3ac4311d3d5f7dc8a40adeeb2395c5d56cf91151d6f",
+      "bytes": 1627
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/b1fc23a30b7058220f0b8306b014c151f468025f8959e210894ef980c3bf2fc9.gz",
+      "sha256": "dff0f623c44742bd588c0ef78a04075561277e33165ec4f353c55ecd9e94bbb6",
+      "bytes": 2165
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/b22f15f68ad1b039b62922bd0b4e0a056de8bc4d89f2a7be1b642be4ed0ff1a5.gz",
+      "sha256": "e4f4647f6f98618007bdc2529afbb94a3e6a269c556654d094361038c1449519",
+      "bytes": 2324
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/b276bb65271cd7bd05b990a340c1e255b1abc8bb0d80d0d226c1cf80704ac25c.gz",
+      "sha256": "279a79c365f9eb138f81e6f193d6710881df2b128614fa166bfc5d482d59b957",
+      "bytes": 532
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/b3181084f33d9c69e678c33bef99c75f8a9be514e85889dab05d4f9fd4fdc86e.gz",
+      "sha256": "28130e2d0776d3f3202c5dc8b01742c8b000b9cbb38546b396187e05da916916",
+      "bytes": 1626
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/b321606c73f957b4ae1cc63f40fe1a521768c2ab5f08c397f6e240b530c84150.gz",
+      "sha256": "8d1c86b6d0bd8550ad566bb6a58e48b3a084dca5ca0645cbae5b41f8210b8939",
+      "bytes": 2534
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/b3ae2453190b2138b23fb6e9a2b64afd4e9efaf9a1a721beec45ded43eef2cdc.gz",
+      "sha256": "67a5c348f5a0235c950ef2f1bc6f4ee22f481862f6b9494f15114f2dac941f34",
+      "bytes": 5609
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/b4469a7a33aba0ecdbf6a09d4bfbdd88e0fe0009416e997e22b68f0d8ff8d368.gz",
+      "sha256": "4e30a6002d03e44285848288502d3f1fa0de6fd634801be47e9616b30f5cc738",
+      "bytes": 1601
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/b48e1012f09364daae1843844dba7c6a84c4877a29d851af9926685fef24ac18.gz",
+      "sha256": "97d26467d0ac394f9fdc9918269e05270d39454ce4942b21479b139e4be2d9f0",
+      "bytes": 1602
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/b620d73076cef04ad276c2326a25bba5a5ce185b9d540bcc5e6cd985b6d14d84.gz",
+      "sha256": "b37e33eda2a6f5c6a076d6162be4d018ced6e0f505fe759700968df820f7be39",
+      "bytes": 2152
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/b63d3634cf91dc5157bd5e80d2826e7f7eaffa6446e375aef43304fcbd65534b.gz",
+      "sha256": "52663687ca4c70f5e481c0d7eb0cf6a540771eee5a9ff149afa80d26b4682af3",
+      "bytes": 1178
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/bae409736b7d890588633f9d4e618294c92746036cc9efe0f9fe5000f437b73c.gz",
+      "sha256": "d8705a42133d1c9feef212631e6b302f868b649d50922541c7feab46f7cf9cb9",
+      "bytes": 11455
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/bc04eb9c29902ae9ec9722afa96fe81faab002819e731d75225a49d6563ee426.gz",
+      "sha256": "6bec7110599470f88348b5ad61418ff488ca7d6df4dbe9c96b627ef62c88c8d5",
+      "bytes": 4324
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/bc5bc52a10b8be99bd8dd1d4be1316d9331ffcdb69a3191625aab28cf13cc13a.gz",
+      "sha256": "8d1e473c044f88e53195b3e7accad262bb542e6492ee25ba41a5cc94d94b2f29",
+      "bytes": 12725
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/bd18300361425b9f005efad737fcddbf5e0aedf2899ec4dd85fbb3f2eaedcf89.gz",
+      "sha256": "38b16851bf5f26fac6f55a5cdcf8f5bbde8deed64bdc3cae2f5b8bc47a0c3bb4",
+      "bytes": 2538
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/bdb01bb7884e63e138401400db33b8248d803181698e00ff5cd0f3edfc6f4b17.gz",
+      "sha256": "74d67a43eb2f0382da0e640055a26dd64718ac21760f7fa1510401c7e1cd1ad0",
+      "bytes": 2102
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/be1deb3c12d2c5e5a773b939c225b8f1eede896e54db7c936556ef454b6c8a92.gz",
+      "sha256": "418986006db9f74b179aa2f02094e0a58909b096dd5d66793d05d020bf1c9ef8",
+      "bytes": 14719
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/be27712e4e1bc10d13e88cb9c95c6ea511045067428580d59cf2130c524410ac.gz",
+      "sha256": "0ca8a9074fdd150c5f622d89a02076a65ac351b3a495ba9bf8b9d2a9db2e935d",
+      "bytes": 1624
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/be7007613f1f8c928260531a9344a1214e59f52c5ed49bb645aaca53ecceb8c2.gz",
+      "sha256": "b1ad019a8c3e5fab91184866dd434430140f63fe2002612e99ff8500ef68c6c3",
+      "bytes": 2457
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/bf95dfd2b5e95ef905a1b22c560779e100edbdb4881684a11bb7d530eb63a127.gz",
+      "sha256": "ee4d02e1696c830a7d7d67100e604058c43c01c274719d5a4221b8c181de1689",
+      "bytes": 904
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/c244b3162c7ee2c1ae27f52a325f32486ba65a750e0971460846d88fb073b956.gz",
+      "sha256": "c68b9b365792e6b0cae6a76e97fd36319d901984ee381c810caded5c2d895df0",
+      "bytes": 376
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/c2c5eb906c27fb64b9e0e2475e5b95f12f88ec0e474ee8c1df000439cc471864.gz",
+      "sha256": "db0a2a101cc536705fb48ea920147a01baf88a877631c88fcb6de2186e61768f",
+      "bytes": 9992
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/c33046e5e8c5b10b7bb78ed1fb4c21463afe3bc4d6439f16ae46f60f2ebae52e.gz",
+      "sha256": "b5dc1766dc1c169ae8818d6f275eee0f9657128f285791e08db71dac7d0e6733",
+      "bytes": 2110
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/c37427ab3c2eab079ee7ecf148ddda2da33f775e1dc61510a9c1044d489442f0.gz",
+      "sha256": "ad32457eec49ca9c1114d6286f25a1fe677775ae087286fc32ec538a002364fe",
+      "bytes": 1622
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/c3924918945da52075115818c02c7737020cba7dc595d57587a330f524dbe70d.gz",
+      "sha256": "6e6f6879a9caecf78da840cb99a6b8b500a49de35a1b5d4dad552efda08cdb17",
+      "bytes": 1630
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/c4308da1a49d2ccd6a33b0a958a296c5cbb24b7611affd67166ab7a289671b52.gz",
+      "sha256": "99d73f7ad232d161d78050bcd5ff56fa8c5ad9fc36e66a024904a69cbca786e4",
+      "bytes": 12851
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/c441619f81b8e2c79cf0976ee08718420261ea944c0d39c7e0a507664a1c1380.gz",
+      "sha256": "6cd227ecee619cd223d471a29faad721d4eba31ab72a65f1515614fbfc581ded",
+      "bytes": 1637
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/c4809076f8ceccb0eb4f8df9f597ac9ccf0c20f477987acce24a28aa8ef952c2.gz",
+      "sha256": "4cc1017ce900f433cf69021fc58cd50fb389c7076e8ad8eebbf45d5290ce380f",
+      "bytes": 392
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/c4ad7e2885088263621329dd99097006857dfbc4d765e5e82becfd5d7967bc98.gz",
+      "sha256": "327703fef0d909505a05f317be1eb522e9a9069fe957fa79fa19f47aa88498d7",
+      "bytes": 1436
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/c4c5a52c151a14d73e46a1d6a251398087c5d19b7989ff4f2141bf1d0d7d1263.gz",
+      "sha256": "7df73f8bdc773df5a0341d101666a8e66f707674dbd007731ea59b7856e97416",
+      "bytes": 7952
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/c4fe3fccc8e3458c1390b5ca95e13ec244ac00bde5c4f736ade79b33613f8f39.gz",
+      "sha256": "9768fdc7076d3e16f09861d5bd50160d86fc4b87aeadcac0ea72eaf75b1fa241",
+      "bytes": 7721
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/c51f2ff998875edc75ef2f6f72cf19bc1566db3cd18d7c24e6d515f2ba2781ad.gz",
+      "sha256": "42dc2d0af5b61b7838d2d5a62e7c6c7cfa7921d291d214c05b2bc7504299762d",
+      "bytes": 1607
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/c58b7eac75ab6ef98bd2273b88ec0c523014f4d6d8bc45d578541c0d09067e9d.gz",
+      "sha256": "00d313d6d7ef2e134d69afde99068d984d949a398d506889f3fb0d1b0a1b1e2a",
+      "bytes": 3756
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/c59d09222d7e13a1988874effdda4ee7e60ca0c8ab65252a963854d308046b84.gz",
+      "sha256": "12fcc373175ddd96b93ce70dcb6146ff5328c612c857d12004260d007edc7e0a",
+      "bytes": 1606
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/c6316b87f87b292db0ae1165eb3178ae0a32bf8db3111294398139c3f112be63.gz",
+      "sha256": "0fea18f1c01d1a9e0352f42f81d3b16a08a99aa749a3207ea17fca881da5961c",
+      "bytes": 2274538
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/c681e90afd977a0839b727bb709e68f134b787b3d689007a00511bb7a6bb4268.gz",
+      "sha256": "93d7019e530dc6c9e038a7fe82d7dd8ab8b28992a44f3cb7a53d47f49be6862e",
+      "bytes": 75959
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/c7bd3135ec6924c122733f31484e5919d8919b8411bb35f9ec2b8be0fedaeb45.gz",
+      "sha256": "714039fef822e67798292f0fde8236d4e114792a967e9b5669bc773c79cb4fb1",
+      "bytes": 6244
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/cc3d7951527ffa84c7ca41c8cf14e784d4dba44159c67bc9daa88cb5e1bad50b.gz",
+      "sha256": "06ee4ec4d9db391adb1113dae91fd6d5fd7fca593be35219e7e372419429568c",
+      "bytes": 1632
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/cc6a829834b6c82fa29b286647e907b3e9bb6fce0612a3bcdbee6da3dcaa24cd.gz",
+      "sha256": "1ff5edfd59cfc8d6d2d5c468e75c9bce014e78f1b2cbfe8fca63f6a6067581d1",
+      "bytes": 1626
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4.gz",
+      "sha256": "813ea10bdfe0d0bf5b7c0365d688769cbd241af8b49c89722a19832df52ec508",
+      "bytes": 2306
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/cd75d337a20f273946c033e7c312d799c8f8265ad20eb22fb1991086d216d366.gz",
+      "sha256": "526e01c92b40b38598401e2c975c2231a0d26ed591767521016236540c4f7696",
+      "bytes": 1607
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/ce000d48ae22d03fbe3afc90925a1c042ebf8684022f02065d679b976d5388c2.gz",
+      "sha256": "3a921048027ddb8c3437e5d5ed76ff6a077392aabecf366409baf7b051af27fd",
+      "bytes": 3133
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/ce15984511136d8d5698615e9f7282fc3e341c17383a0dbe0113e222eff4fdff.gz",
+      "sha256": "578528524aa28cb42d2f5b2f484c4a34f168179879c64f4b789617b64c100a3d",
+      "bytes": 7358
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/ce9749aaf201bc38b3c9a721c67d6777261552817c6b96bbb566955bd943f6e2.gz",
+      "sha256": "131e175112ed4920d04ef96dd473c1e768ea0a9671d2cc74b9fb6c38330e1760",
+      "bytes": 8778
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/cf7d9e2d00bb9417fc1bb5e192a1198c3be1b2994f3915542f41f163ad815509.gz",
+      "sha256": "f7756d6170da1d8a8c561bab1b752fcf5a56bacffd1a629212504cd223d6cc30",
+      "bytes": 1687
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/d00315af5c730b28f1bbe6e09a7f4cebba00091523aebe514a373d29208f5334.gz",
+      "sha256": "775a8e23fc73620dd221313d5c832b21dc5febc8710aeae00c4316b5a734dccd",
+      "bytes": 1599
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/d1a15ce074d5d481c097f1de6086c0c0d18b56a78792e99e845f01bda5ef6cce.gz",
+      "sha256": "563e44a1cfbb15f8f3180d68dc72661df034df1a829447dc96c4014e25053624",
+      "bytes": 1625
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/d24e6ce9e5591e8b1ec23f95d6def52dfe165e25c753d713713d206ed54e9894.gz",
+      "sha256": "c2c5eb906c27fb64b9e0e2475e5b95f12f88ec0e474ee8c1df000439cc471864",
+      "bytes": 9969
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/d337bfcdb25eabc464d56ab85b554f5b1b5d7c060e3083069d90f1b3bc788c3f.gz",
+      "sha256": "5844ed1cec59465b633c6d0a1f4b9fedc2f055441ae55555c9c6241f8cbed0ab",
+      "bytes": 11499
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/d351f8e7fc17eb110c782e8f68ddc1b3c6204108950b94f4691a28e9fa6b0482.gz",
+      "sha256": "ceb5caf348df97cea8e57e3a66995b29b969018ff1c78df72805798278233e61",
+      "bytes": 1682
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/d4875b50e5f1003a4c7636b6dcffa0fd04a2214daff47839dd395586075ffcc0.gz",
+      "sha256": "ea2632aac21fd95ea227423813f83133081b364ed750b95b646a6cdeaa07799e",
+      "bytes": 1604
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/d5830a0fd7a0733d5f47fb4712f8ae83691035d7eda36ea78333c066649c6286.gz",
+      "sha256": "e170f418113964af64a48a5cfbdb6a755c371d99d4910ffb872031bad3933ae2",
+      "bytes": 14733
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/d713a13684f459bd4cc7b98c01a53f949a62bf1bb8c68b01f8d27c8b91f2dd61.gz",
+      "sha256": "c5d4b625150c5c625d492962fac878b86e4022d23454247917d188c8d42a4684",
+      "bytes": 1625
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/d7647b170915675c09699443153f666d8c2724641bac26e5dc7636f475c979e0.gz",
+      "sha256": "319d7cef693311f2d9ad001d2fb73b49bce7da757411231ab98182ee9f735ade",
+      "bytes": 1602
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/d7aebbad9e25af0394c256eb5238fd6984495cecd5e4176602a0b764ffead4bc.gz",
+      "sha256": "0ec55753d1feb387822314a4f78234afe43526e4168ef30578794f9aeda16ee0",
+      "bytes": 64398
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/d7ead0cf99bbc431a369b151b12e0f7d825d7f65a3dacc34c9f85b5140ae1a9b.gz",
+      "sha256": "480af5c62b36414423a53077420bd3eed80e79d4e977ba9a783dafa70c8c444c",
+      "bytes": 2688
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/d8bebeec5ca7d33c9ba1334fc9a169cfeb3c78730862536b8ae426c0aefbc36a.gz",
+      "sha256": "27a23c7b1c553fdebb555eecd18acf39da44474c667af5a8e3c824f19c635f3b",
+      "bytes": 1606
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/d9d98210c24ab4935614177d012f15f2d4d0000880cbe777d3914b4393f7ef96.gz",
+      "sha256": "3936697504c5f8c9798ba59a1b6388e11ad968b65cd33f6507591bd7bf5df083",
+      "bytes": 2486
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/da301f36ceb95acb5f20cde22eb55d821047df77cd4124b74c3a27cd2da2f21b.gz",
+      "sha256": "b5adc56e0c8702553050f96044079891b3e524ceb0176cb4a1632d50b91f0049",
+      "bytes": 17668
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/db031a9ff8981814d1e4b3983a87e38c2821a373259074d513fb5800bb5ce057.gz",
+      "sha256": "7cc7e040844a69e0efe8b4a3b24f1bf8865144649fb06af50cf7abb01c065719",
+      "bytes": 1697
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/db356c1eac4fa61139f324dca132e6c402739d68c7172162439446d4e55c2e75.gz",
+      "sha256": "11457c60daddcf6825ec961cda56ce4f5a6ed3332ccad2ec897f6ca918e966c5",
+      "bytes": 1605
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/db35b7b93a5af6763ed7ae609e7c0b81ac137a9e2f11deeac75933c61868421b.gz",
+      "sha256": "ca9e2e5e65af4c5084c03570613899569fd3a0ff34da17cde34bc6100e9552aa",
+      "bytes": 2584
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/db70aa59f984a63935d147b6ac11b50a90f21b726998853ef3455451f1e622e7.gz",
+      "sha256": "ac5003e45cc5f090a0510eb6b65a61d10644192f944daddd27cd18b1f8acfd89",
+      "bytes": 1310
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/dbc7fde9c31ba6e98514118323956e0445b825fb41f1f7735516435d426b003c.gz",
+      "sha256": "f0fe521353f78e7fa57198063677d7ac86bfd36e4e2b4212b5249e23f25b2a3e",
+      "bytes": 36918
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/dc989b95314bb285aefa9e4eba99cd20b0dc5b3c948f2fe9058830dabafdf44b.gz",
+      "sha256": "12a13d66babcc3e5be6e6e17d198d2bf4dc52c4ab0c8dcb38851e26e066b9d86",
+      "bytes": 973
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/dcc1471577c3ff6bb618bbaec3cea63e126405bfd6a2e5f3019eff3bc7240eed.gz",
+      "sha256": "f1792a31ebcb92bfbb28f116fb5f9548a3c28ed95c92650d374a4e9f4abb0960",
+      "bytes": 1498
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/dd9f6a56a5478fe3b58cd23fbe254008510c8597b0f72c143bea0c74b7d86281.gz",
+      "sha256": "5dfef69f1265d53f125b8e414eaab68d0587e58ae142e23f73eb2b0330df986f",
+      "bytes": 1376
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/ddacdea4bc3ea5e0fc10418e7c2688f76f97fe74358b03ba6d6c29ded4c51081.gz",
+      "sha256": "8cccbe389312ebcd16e06821e6f02bbba9d149e8fb45a854ccd2c9dce1238af4",
+      "bytes": 73963
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/dfe279de0930f194b53823908efabd0045a92204a04d69b18e32920cd0ca0f68.gz",
+      "sha256": "be27712e4e1bc10d13e88cb9c95c6ea511045067428580d59cf2130c524410ac",
+      "bytes": 1601
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/dff0f623c44742bd588c0ef78a04075561277e33165ec4f353c55ecd9e94bbb6.gz",
+      "sha256": "a86ac1a10e8ad7b9587ed50de50e4cc249644213f5b0a1f2b9933895df99dc2c",
+      "bytes": 2188
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/e04a7af3b487fef7cc4257d0911871a3af4da8e4346cf8225fa80692fe49759a.gz",
+      "sha256": "548cb8382fd3563e42007ffbef1510694129a5cebcbe52c383ef5b44cb822034",
+      "bytes": 1606
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/e11b3aa215b9e4322cdf9a263fdaebc4df391bbe3aae1eb47c5fcc1cc69fc0ad.gz",
+      "sha256": "cf7d9e2d00bb9417fc1bb5e192a1198c3be1b2994f3915542f41f163ad815509",
+      "bytes": 1664
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/e123ef21590e8f5538721e4fa320bebb2d66d8cd49fa4037df38fdb95b47937a.gz",
+      "sha256": "30347183e50ed707b15d93297d20e7a74bdf56fabe1dec4bcf3648d4453d54ea",
+      "bytes": 11227
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/e1a3d54c1c720387ce4ae9bc6672dbb1683654b7e4727fa14c680ab9e2a8cd8e.gz",
+      "sha256": "4a3d1950a515dabd9ad0c1eee6171966aa4cb5ab70380edc459b1bd1b1d4cce7",
+      "bytes": 745
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/e1bc89d99e8eb99c42a97538fba2c56da5bf3690be6c67127be76c9606fa1aee.gz",
+      "sha256": "2244f3af3acdd9fa0f27e28abee85f0173f31ec2fc28c56ddc6144c600ad5b54",
+      "bytes": 2491
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/e262dd469cfa81edac1e34354d8af745e8d15cf433ca7a870928383dd8c2f77a.gz",
+      "sha256": "b63d3634cf91dc5157bd5e80d2826e7f7eaffa6446e375aef43304fcbd65534b",
+      "bytes": 1155
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/e388c35b54f42b5b2f5082c3992e39e1339eee552c788c060f8c69e2a73b6c18.gz",
+      "sha256": "00c460f1f9382a488ae6aaa4c6e91227255bae6e4fe5d7149f921e4fd447c729",
+      "bytes": 1623
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 20
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/e52dd9a828fbdc6abdabb3e43832fa818f6b438101a0702436a0aa30bd5bbd0a.gz",
+      "sha256": "476ddaaad74789ff3235adca81e0c5973ff06b585b9c65c5cb8da6090d95bf0b",
+      "bytes": 1659
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/e559cd23030ee452a87f6eff09273a2d0439f6912b2f116a84deb0011d26496b.gz",
+      "sha256": "c1e5a52f08e2dacef9d7e34b68b6cd1b6b83cf3b40e8e96be3da3e4cf4b240a9",
+      "bytes": 35974
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/e5665677dc038177fbbec509dd66af35448ae10904499978629b7ca895e83c13.gz",
+      "sha256": "d4a9e794b40be9d7dbf9b74c231672859d247c131f7ec4a4478c33a513747b12",
+      "bytes": 3877
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1.gz",
+      "sha256": "fc5a7bc1b1c2bbae32552ebe840d668382a52a2193bc9528d74464c18a17c8f5",
+      "bytes": 6199
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/e5f0b6a946a9b2b356a28557728410717df54ea2f599edb619f9839df6b7b0e9.gz",
+      "sha256": "5f10d66d1295ad5f2dd8933d07c75cd3b225ab6feaebea5b95fc77428c8b021f",
+      "bytes": 1005
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/e69156c95153ec837ab1ab633822bb3374bac4eefd4b81cafb46c357a50823c7.gz",
+      "sha256": "2bb3c6496b2455eebed94012f31362ced18a997b48d321fb3ff1b0ae65389be2",
+      "bytes": 3493
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/e6b42d6b7d137b6f0ec7d68a13d6b25a95461b0eba59c7531791c58fc465dbea.gz",
+      "sha256": "d7d63ccb99052cddd40a5aaf3e44410efb61bbc578a56665d8d465510e52d84a",
+      "bytes": 372
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/e6d31ec78bf9085b3d680d56ca1bcd4683c7da56958dcafd7a368730050afa91.gz",
+      "sha256": "7cb66ff3211cbb87f868f11d7f2839544857537a05a986550413efc02a5aff6b",
+      "bytes": 1755
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/e7d6fe58f9a5636b12ab2f1175993db9b53dc0fb4d375b0cb5d70259883d43df.gz",
+      "sha256": "9706dc6f9800cbfcff48fd5efa69b4f30b28b0f94915ae19d7549364ff58e373",
+      "bytes": 17076
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/e7edb551c1c0d2c0b8861d7306c4d5d7b5e54a9c76dcb46f5bd5e1b9063c30f6.gz",
+      "sha256": "c4c5a52c151a14d73e46a1d6a251398087c5d19b7989ff4f2141bf1d0d7d1263",
+      "bytes": 7929
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/e81e944479ad67022cafc148308027a1b63cd448e4065aec7357230a75888c54.gz",
+      "sha256": "db35b7b93a5af6763ed7ae609e7c0b81ac137a9e2f11deeac75933c61868421b",
+      "bytes": 2561
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/e893a783d0b5f55bd0d110fd5b1d92b07e30a2836a236689dd856ee8697a2907.gz",
+      "sha256": "9af3ddcc1fce749210ebb2ca12dcab8000500e3975bb4139b8fffcc4b8fe1cf6",
+      "bytes": 1668
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/e9b0db46f704bc25520a56e1c53e532bdf7ececb222c7b4ec194a0de5649c503.gz",
+      "sha256": "0c3f1994c5de9a222986cadcaa7eeb326c3e93840762112041bf3e0ce9a7ba7b",
+      "bytes": 9569
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/e9ea9129fdff3423b977b0d92e976e08d2c7edb461bba39a0e8b239ae6c35760.gz",
+      "sha256": "7cf1b3e60d30586ff13b21e1aaaa735f2ea606f99963542032c5111bf418981f",
+      "bytes": 3080
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/eb47c591b5dedd1374bf6ef638ef42b51a98ee2084c224ec8cdf8821198e1235.gz",
+      "sha256": "d4d2ddf3b1475048d391996bfee2a72246e8d12eba23852e37711447d09ab0a5",
+      "bytes": 3685
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/eb88d5633272416e8aa11c004c960827054012bff2a1cdc2d597b6ff98d6d817.gz",
+      "sha256": "0d6371d7ebb38903dd2bdf84193645a7742c92f95c9b9cb4b7a2ba2fdb3c0c76",
+      "bytes": 1656
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/ec47d5a9001eccff197ffd81e8778f3753dcdb5e0b8559356a7c365b289f0c1e.gz",
+      "sha256": "895cd7027fc58a232e3856b7d281826957681d247c5fca35d4983ab9eed93bdf",
+      "bytes": 806
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/ec5cd65acc98f9f44d357ff4099fc5cb2b40a0576005961494969f375dd5c029.gz",
+      "sha256": "97892e332ca72bcc89d9cc746e55c1e2e0935dd15c6ac414c64a989dd3e708de",
+      "bytes": 10753
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/ec6a04f10a29d474c3acf35905108f772281aa258ae64790ed3beb9ab7805f50.gz",
+      "sha256": "9c8c419f1981ed571eeb8c8836e89b9103c548bb1dad82651190f47cf6bfd738",
+      "bytes": 14823
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/ece4ed0754578d1e6384734b6bc51e5878e52af4ff2fbbeedb359e8380ffc439.gz",
+      "sha256": "a00ba41a50621cd9b1605f67c3c8015093293d4d4a098e5486c0db90ae37927e",
+      "bytes": 2593
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/ed0b8690e1d49448b354e1adbea675f30f7b00bf665cbceb22ce3f1454cdb972.gz",
+      "sha256": "b620d73076cef04ad276c2326a25bba5a5ce185b9d540bcc5e6cd985b6d14d84",
+      "bytes": 2129
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/ee4d02e1696c830a7d7d67100e604058c43c01c274719d5a4221b8c181de1689.gz",
+      "sha256": "3f39c50e0371df9ceccf5dec315f058189f9a132e8f1b7355e74a8f8e008aaff",
+      "bytes": 927
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/eeaf2f08790863574d8377b66da64c7d8f22f1155d3acd00a703c53c28dc68b1.gz",
+      "sha256": "f6bc957dddb5177f52342badff225c7021e97591e8fcedcda691fe277a7ae193",
+      "bytes": 567
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/efc59eccecbff7723710dd51ce9fca99d7b26b8f58be9fdde65f46d3bb0cc943.gz",
+      "sha256": "f6e3a9283a990a430300d1e2ff016b2fe5c909e6a8f4d6c2a4878748f4926c5a",
+      "bytes": 3780
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/f0128b5d4b2947785260489c221eec96e1cad2d82fccf02f98cf06fa9d5b3600.gz",
+      "sha256": "361394e0c4bc2a8ba835b0ef6290c23abe83322cebfbef0f8f99cbbe8c6e54b5",
+      "bytes": 3707
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/f19d8d9caef6de24ec89ba8d28b42202dd989eebb46e10274de0b09c80f1e699.gz",
+      "sha256": "c2115d9fba648a377791fa46cbb5245b9e7e0d46ebbb4b831e503debfb0eb83a",
+      "bytes": 3821
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/f241240859c1976bad4abd28f22b92910385355c42acfc939d8fa2e8e5eb91b8.gz",
+      "sha256": "c11bcbbda4d192c44ab62646c9641a1589529aeab9f73b7b8a12c86113628ef9",
+      "bytes": 3569732
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/f25b7f4465dd2e858121f7b4b0417f8ea9479bfca4817e70275e0c31dc7d007e.gz",
+      "sha256": "7e093defd2f88315769cb600f1d36b09b032d28dcbb7b079401422ec25326d08",
+      "bytes": 6933
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/f32baaf9ab08ab261600a194f21d56c327895b477969fdecfb4c496fbf5379ef.gz",
+      "sha256": "fcb59791603c78cea85263378bb521802372e665cabf50ff2f529108c2b57ff0",
+      "bytes": 1893
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/f4919515b1594e38d8d14de83d37126fe53d53b8fe148fe3634090bb819b2a2b.gz",
+      "sha256": "fcf8d9bfb84fbc09225cd77e46178e59720311b94355c7e89cc2e0f715719520",
+      "bytes": 929
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/f55ea5c378b781eabc53edf0e6cd01ddcc53ce32b2776155e40dc62a9d6f3c41.gz",
+      "sha256": "322352153110f88ea209dfc262e60b099791983a220481dcdffc19fbf0e6b35d",
+      "bytes": 89963
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/f587c2943b2660003dc7df0fe9d697fc1f041e3ebd8f1841ccd2208532b52779.gz",
+      "sha256": "07a21a95381ad733978cdb68040cee279f1338329e041de1eaba329b6e0d54eb",
+      "bytes": 1530
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/f59ebcf8aba717beb56743f99b281ba8189ecb623b87a2f15ebc9d064379dab9.gz",
+      "sha256": "ce15984511136d8d5698615e9f7282fc3e341c17383a0dbe0113e222eff4fdff",
+      "bytes": 7335
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec.gz",
+      "sha256": "e860dba6f12d00e6f05f9c29f3ac246b67efb295dfcdb684ebb3400db057363f",
+      "bytes": 31
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/f630d4736847a4c0aa500f92d6b8e49d04c5da32897dcc6a60147dc5aac31a77.gz",
+      "sha256": "eb88d5633272416e8aa11c004c960827054012bff2a1cdc2d597b6ff98d6d817",
+      "bytes": 1633
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/f633a6d191d16567310a6c3e7e51245963d90ef6aecf494b94afa91f88c0dff3.gz",
+      "sha256": "82a4528231585e6d879dd1565cf7cf142a31d39b6a48a46d592680cd81d8ae5e",
+      "bytes": 1600
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/f6e3a9283a990a430300d1e2ff016b2fe5c909e6a8f4d6c2a4878748f4926c5a.gz",
+      "sha256": "22af1776e5019c0a1623ef65920e71ecb4e97ab4b665bcb629a943c9db67ad7f",
+      "bytes": 3803
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/f70d361a5dd8465b42cf3b357c033b98d647135ae188fc4dd404e96361d00ba1.gz",
+      "sha256": "c37427ab3c2eab079ee7ecf148ddda2da33f775e1dc61510a9c1044d489442f0",
+      "bytes": 1599
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/f7696722b5988e50bda4ea2f6073882a463615bf03799ab97af79f9487565a8f.gz",
+      "sha256": "fd2a7f6ebc67a9e0a94cba7977279d6137152036a7e29b8b758554f459e5ab51",
+      "bytes": 364
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/f92897ac61399fc82813f7d1ac09010bd389eae8a6ea3c89cc89620fc39eb358.gz",
+      "sha256": "f1b6d08589dcaa2eced10bd15aa47e2ed671f8a6edcae43bfa863d1556ab8857",
+      "bytes": 1256
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/f9658685ffbdfd572696336c5a439fc5f6cae23196a8eb62d78cec2f3207bb98.gz",
+      "sha256": "7f1753b346720fcb494fb2ce0d8be51126860632666deaeeda29d5b38168cb78",
+      "bytes": 6599
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/fb40f7dc73fadf6ef547b631cd1dbb9013ded86cee30774411efebc6e7ecb6f2.gz",
+      "sha256": "2c86e1caa8a6807eda441e4df43879ecb6db06c2db515110c10ab077e7ec735a",
+      "bytes": 1603
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/fbaf8e0eec5f9191ebfe950b1528403cd7fc95ed42dfc8f7b3d4b4e49043472d.gz",
+      "sha256": "a926424778c3afa62c4dbe691c86a76fbaa25737d75d0d236e718d8481a7e39e",
+      "bytes": 6335
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/fc5a7bc1b1c2bbae32552ebe840d668382a52a2193bc9528d74464c18a17c8f5.gz",
+      "sha256": "778170a753655d72cbdf0d4e74124c0e20c456cbe1ed6bdf25853a970678da69",
+      "bytes": 6222
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/fc77f3121311e9f50609e4b008b927cb6f54ee480e6b80c4324fd4e10a577ace.gz",
+      "sha256": "6babb9a652770afab4ed6ad600a8daedf7955b2ba945a501a6e5d54d801fd751",
+      "bytes": 1604
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/fcb59791603c78cea85263378bb521802372e665cabf50ff2f529108c2b57ff0.gz",
+      "sha256": "8ad23dfdb6b07553d63d4f921de7105463b51f9d647743776347519d2f80e0c8",
+      "bytes": 1916
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/fcf8d9bfb84fbc09225cd77e46178e59720311b94355c7e89cc2e0f715719520.gz",
+      "sha256": "37aec8ca7e76731e5b034f335b63254afa0cad09d7a7b81044453afb41b76f68",
+      "bytes": 952
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/fe0a9056d0a2e8d3e9f2eb87161064217b2043a619b15f5895a8129046736514.gz",
+      "sha256": "eeaf2f08790863574d8377b66da64c7d8f22f1155d3acd00a703c53c28dc68b1",
+      "bytes": 544
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/fe24be9aa953aa41d10da28162bd1221034c4a7983f447f4f861b1452156fd85.gz",
+      "sha256": "4aba670dad62f9dcbfb3b9f43a0c1d167cc07166733bff855db6001168dea5cc",
+      "bytes": 21083
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/fe3c88827fa888b047abe02670b6c409e738fa57449ff2b02f8dad656a98b58c.gz",
+      "sha256": "67e5f508e9d58c37d62a6849db2317887fc54490b3b3f68fb165a7de732f705d",
+      "bytes": 358
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/frozen-inputs/fe5c8127fa283af090553c523c13bcc1f79256adbb160173708cfd35f0ae1531.gz",
+      "sha256": "92e0ca443da9ee5da961f78c8cc7af4efcb2f62a3c3d177ef48c0590ef666b00",
+      "bytes": 1601
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/initial-identities.json",
+      "sha256": "15b6e9dbaed60dedfd4f170f87b67cad91f6dacb56dfc632fba7f3877434c19d",
+      "bytes": 511185
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/replay.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/replay.stdout.json",
+      "sha256": "d5830a0fd7a0733d5f47fb4712f8ae83691035d7eda36ea78333c066649c6286",
+      "bytes": 179933
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-openclaw-profile-review-02/start-worktree-status.txt",
+      "sha256": "86c0b7bfd15f647efcb0369054403e9885d62c0d3f5baabf5c63f3382b5a8f2f",
+      "bytes": 34747
+    }
+  ]
+}

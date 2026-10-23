@@ -1,0 +1,64 @@
+{
+  "scope": "Core AUTHOR incremental exact source binding proposal batch, no independent selfreview or global closure",
+  "baselineCommit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+  "intake": "source-coordinate-definitions.json +remaining-source-link-ledger.json; parent must explicitly register/supersede16 exact historical source-link coordinates after nonauthor semantic review, not new policy rows",
+  "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+  "individualCoordinateDefinitions": 16,
+  "existingFieldMemberBindings": 117,
+  "newSettingAuthors": 0,
+  "newCanonicalPolicyRows": 0,
+  "protectedCore13And14Maps27Cases": "Unchanged committed21bf inputs; references only. No retuning/default/cap change.",
+  "remainingExactSourceLinkObligations": 792,
+  "historical808Preserved": true,
+  "lockOwnerAliases": {
+    "RuntimeExactFieldRowsKnown": 0,
+    "callerAliasesStillOpen": 54,
+    "allOwnerAliasesUnchanged": 60
+  },
+  "controls": {
+    "docIntegrityNegatives": 8,
+    "restoredPositives": 2,
+    "actualHelmRender": false,
+    "nativeBehavior": false,
+    "F_MUT": false,
+    "currentProfileOrRuntimeAcceptanceInferred": false
+  },
+  "sourceAndCommittedInputDrift": [],
+  "rootIdentitiesUnchanged": [
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+      "sha256": "b1af942080285f5c7d97c50f2b30bc14a1a0850ffb77908cb73fb3f8c9f6b36c"
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+      "sha256": "623462221f87371c23e0a0b8857a1c8563cd7dc6e1e76f457221b0ba63894a21"
+    },
+    {
+      "path": "docs/review/remediation/config-definition-current.md",
+      "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+      "sha256": "c282b510337226d5b79563967e68488eb37920724f07e5d6b0bfd8d6550f1950"
+    }
+  ],
+  "rawHistory": [
+    "build-attempt1.py",
+    "build-attempt1.stderr",
+    "build-attempt2.py",
+    "build-attempt2.stderr",
+    "build-attempt3.stderr",
+    "check-bindings-attempt1.py",
+    "binding-integrity-attempt1.stdout",
+    "binding-integrity-attempt2.stdout"
+  ],
+  "corrections": "Attempt1 commit reference treated Chart schema symlink as ordinary file; preserved failure. Now git link bytes and dereferenced source schema bytes have distinct explicit identities. Schema definition pointers track each local $ref jump to actual current JSON node; prior builder retained, no bogus abstract pointer claimed current.",
+  "remainingSemantics": [
+    "16 bindings awaiting fresh nonauthor source semantic review. They do not waive per-field consumer/changed/missing/competing/recovery/mutation cases or target schema migration.",
+    "Legacy .Values.swarmConfigJson rejection is a nonsetting forbidden author; exact future intended Helm boundary/whole-chart fixture remains separate delivery/test prerequisite, NOTRUN.",
+    "105 foundation schema marker links and other687 exact source-link details remain individually pending;808minus16 is bookkeeping, not117/16 field acceptance.",
+    "54 distinct lock aliases remain Runtime source/owner handoff; no blanket shared-foundation or duplicate Core author.",
+    "Future engine/runtime capacities/grants/authentic originals and task operator/cleanup/measurement obligations remain open."
+  ],
+  "globalC0Accepted": false,
+  "productionTestsAuthorRootOtherChildEdits": false
+}

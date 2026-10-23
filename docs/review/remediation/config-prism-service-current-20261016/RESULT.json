@@ -1,0 +1,48 @@
+{
+  "at": "2026-10-16T21:10:26.208582+00:00",
+  "sourceCommit": "39f5fbde83b1fc504eb095a818a4c40acd05c09c",
+  "sourceRemoteVerified": true,
+  "evidence": "docs/review/remediation/config-prism-service-current-20261016",
+  "change": "Original Prism transport fixtures derive shared selected control/execution profiles from actual caller bindings rather than standard; complete engine-policy equality retained, inactive valid contrast cannot replace selection, invalid inactive profile rejects for both callers. No production settings/defaults or policy author changed.",
+  "checks": {
+    "originalServiceCancellationHistoryJournalTransportReadiness": {
+      "passed": 39,
+      "failed": 0,
+      "skipped": 1,
+      "total": 40,
+      "log": "docs/review/remediation/config-prism-service-current-20261016/final.txt"
+    },
+    "strictSourceTypecheck": true,
+    "diffCheck": true,
+    "originalRoster": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50,
+      "integrityFailures": 0,
+      "originalResultsChanged": false
+    }
+  },
+  "verificationScope": "NODE_ENV=test is explicit supported nonproduction source-test mode, not a production engine-content receipt or native admission. Inherited NODE_ENV=production fails PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED before import; no digest fabricated or production validation changed.",
+  "unverifiedRequiredGate": {
+    "name": "native PostgreSQL query cancellation settles and releases its actual pool client",
+    "reason": "REAL_POSTGRES_DATABASE_REQUIRED (isolated migrated test database)",
+    "status": "SKIPPED_NOT_VERIFIED",
+    "owner": "Raven",
+    "resume": "Supply isolated migrated real PostgreSQL test database; rerun original test without skip."
+  },
+  "initialFailuresRetained": [
+    "before.txt: inherited production mode rejects missing actual engine image identity; no fake content digest supplied",
+    "development-source.txt: 34 passed/4 failed/1 skipped; actual spiffe binding ignores fixture standard timeout, headers/body deadlines do not reject",
+    "selected-profiles.txt: actual bound timeouts corrected; original full-object oracle exposed omitted selected enginePolicy; expected object now contains entire actual complete execution policy, not weakened scalar assertions"
+  ],
+  "independentReview": "OPEN; fresh tool discovery exposes no native spawn/reviewer/collaboration, no active or recent CONFIG reviewer; unchanged same-surface reviewer EROFS not retried. Author checks do not satisfy independent/native acceptance.",
+  "qualitySealedInputStoreImplemented": false,
+  "qualityProductiveBootImplemented": false,
+  "qualityActivationAllowed": false,
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "nextAction": "Genuine QB-R02 original source/build/baseline producer association -> existing input ownership/reservation/accounting -> sealed original bytes -> actual provider child receiving/publication; coordinated sole-root/all-profile/schema/file-set/boot+Nova integration. Preserve BUDGET_SOURCE_RECEIPT_REQUIRED and denied-v10 activation. Complete-source independent/full original/history/native C0-C6 gates OPEN.",
+  "externalInfrastructure": "UNCHANGED owner Raven: isolated Linux Docker/UID1000/delegated writable cgroup plus sufficient genuinely root-trusted writable archive storage. New bounded original readiness observation also retains explicit real PostgreSQL gate; source network/journal checks are not its proof.",
+  "writerLock": "same shared nonblocking repository lock; released on bounded process exit",
+  "sourceSha256": "1104b0d0aec75a786dd851a83ed9140e4a26fd63ebeb062295aa3446f5169516"
+}

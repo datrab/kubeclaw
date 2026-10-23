@@ -1,0 +1,20 @@
+[
+  {
+    "role": "nova",
+    "sourceCommit": "e65e2e0a84684976c2136dcf7f9c12cdb4fc5e99",
+    "indexedFiles": 1832,
+    "receiverSha256": "72460d228b4478d139186e97c259501cc08922c211b9bf24512abfeb853dffca",
+    "exactSourceBytesAndReceiptDigest": true,
+    "deliveredImport": true,
+    "installedOrNativeAuthority": false
+  },
+  {
+    "role": "buster",
+    "sourceCommit": "e65e2e0a84684976c2136dcf7f9c12cdb4fc5e99",
+    "indexedFiles": 14126,
+    "receiverSha256": "72460d228b4478d139186e97c259501cc08922c211b9bf24512abfeb853dffca",
+    "exactSourceBytesAndReceiptDigest": true,
+    "deliveredImport": true,
+    "installedOrNativeAuthority": false
+  }
+]

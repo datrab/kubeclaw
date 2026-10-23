@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -53,8 +54,8 @@ async function fixture(t,failures={}) {
   const result=await runPipelineV2(f.platform,f.definition,runId);
   const run=runRoot(f.platform.storageRoot,runId),telemetryRoot=path.join(root,'telemetry');
   const store=new FileDurableRecordStore(telemetryRoot,limits);
-  const adapter=activate({config:{root:telemetryRoot,maxRecordBytes:limits.maximumRecordBytes,maximumRecords:limits.maximumRecords,maximumStoreBytes:limits.maximumBytes}});
-  const locks=new FileResourceLockManager(path.join(root,'telemetry-locks'));
+  const adapter=activate({config:{root:telemetryRoot,maxJsonDepth:TEST_CORE_POLICY.telemetryStore.maxJsonDepth,maxJsonNodes:TEST_CORE_POLICY.telemetryStore.maxJsonNodes,maxRecordBytes:limits.maximumRecordBytes,maximumRecords:limits.maximumRecords,maximumStoreBytes:limits.maximumBytes}});
+  const locks=new FileResourceLockManager(path.join(root,'telemetry-locks'), TEST_CORE_POLICY);
   const invoke=async(key,payload=blob,owner=runId)=>{
     const resource={type:'telemetry.event',canonicalId:'run.succeeded'},lock=locks.acquire(resource,key,60000);
     try{return await adapter.invoke({request:{idempotencyKey:key,attempt:{runId:owner,stageId:'observer',attemptId:key,attemptNumber:1},capability:'telemetry.emit',operation:'append',resource,payload},signal:new AbortController().signal,fence:{assertCurrent(){return locks.assertCurrent(lock.lockId,key);}}});}
@@ -124,7 +125,7 @@ test('waiting run, foreign owner, stale source, reused operation and legacy reco
 
 test('real run mutation fence rejects concurrent cleanup; immutable intent survives caller mutation',async t=>{
   const f=await fixture(t);
-  await withRunMutationLock(f.run,async()=>assert.rejects(retireTelemetry(f.scope),/PIPELINE_RUN_MUTATION_LOCKED/));
+  await withRunMutationLock(f.run, TEST_CORE_POLICY,async()=>assert.rejects(retireTelemetry(f.scope),/PIPELINE_RUN_MUTATION_LOCKED/));
   const mutable=structuredClone(f.scope),operation=retireTelemetry(mutable);
   mutable.runId='foreign';mutable.records[0].payloadDigest='sha256:'+'0'.repeat(64);
   assert.equal((await operation).intent.owner,f.runId);

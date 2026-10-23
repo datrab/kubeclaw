@@ -1,0 +1,26 @@
+{
+  "at": "2026-10-17T01:30:10.216121+00:00",
+  "sourceCommit": "d1d868dd035b3417c83b137a155858da0d82a953",
+  "sourceRemoteVerified": true,
+  "scope": "Exact four original source-lane reconciliation only; no production implementation changed",
+  "fields": 4,
+  "existingCentralLifetimeSourceJoins": 1,
+  "centralReceivingResiduals": 3,
+  "negativeControlsRejected": 16,
+  "requiredRoster": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50,
+    "preserved": true
+  },
+  "remainingUnresolvedHistoricalGroups": 7,
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "independentReview": "OPEN; no CONFIG subagents/reviewer output; no callable native reviewer/spawn tool; unchanged reviewer initialization failure not retried",
+  "externalInfrastructure": "UNCHANGED; owner Raven; isolated Linux Docker UID1000 delegated writable cgroup and sufficient genuinely root-trusted archive filesystem required",
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "writerLock": "Same shared nonblocking lock; released on command exit",
+  "noHistoricalFollowup": true
+}

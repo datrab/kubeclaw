@@ -1,0 +1,55 @@
+{
+  "at": "2026-10-17T03:26:35.946574+00:00",
+  "status": "BUSTER_BOTH_CALLER_ADMISSION_DELIVERY_PROOF_IMPLEMENTED_FULL_ACCEPTANCE_OPEN",
+  "sourceCommit": "66b4b1ce2cf160d142968de04a0f47548f1f7c8d",
+  "branch": "codex/config-c0-semantic-inventory-20261012",
+  "remoteHead": "66b4b1ce2cf160d142968de04a0f47548f1f7c8d",
+  "verified": true,
+  "evidence": "docs/review/remediation/config-buster-admission-delivery-20261017",
+  "change": "Changed original render proof now builds from actual HEAD/time, checks emitted receipt/source bytes, projects both genuine parent and runtime caller captures across two complete three-field admission profiles, rejects cross-caller substitution and actual CLI byte mutation with exact diagnostics, restores publication and retains original A against B. No production settings/source or native guard changed.",
+  "checks": {
+    "changedOriginalRenderTest": {
+      "passed": 1,
+      "total": 1,
+      "failed": 0,
+      "skipped": 0,
+      "log": "render-exact-oracles.txt"
+    },
+    "completeAdmissionProfiles": 2,
+    "authenticatedCallerTypes": 2,
+    "crossCallerNegativeControls": 4,
+    "deliveredSourceMutationControls": 2,
+    "restoredPositiveControls": 2,
+    "strictComponentTypecheck": true,
+    "syntaxAndDiffCheck": true,
+    "originalUID1000CLIProofByteIdentical": true
+  },
+  "retainedDiagnostic": "First check used wrong emitted package-relative entrypoint path (extra engine/). Corrected against canonical package ownership; retained render.txt failure, then restored/exact-oracle runs passed. This was test fixture layout, not a production failure.",
+  "originalRoster": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50,
+    "file": "docs/review/evidence/config-acceptance/c0-completion-20261013/PACKAGE-FIELD-CASE-JOINS.json",
+    "sha256": "bce80841fbf205a69494cd9ecd4b5377787c61126e2c22ce0d7cd0d6e28cc1c9",
+    "unchanged": true,
+    "originalResultsChanged": false
+  },
+  "wholeSuite": "NOT_RUN_NOT_PASS: untouched original real UID/GID1000 CLI proof is a separate mandatory case. Current UID0 cannot supply that proof; no skip/spoof or subset global PASS. No native process or deployed OCI image identity verified; native/OCI render identities remain explicitly modeled.",
+  "e2eReceivingResidual": {
+    "status": "OPEN_LOCAL_SOURCE_WORK_NOT_MISSING_USER_APPROVAL",
+    "writer": "tests/verification/e2e/real-run-workspace.mjs#buildRunConfig",
+    "actualTransport": "tests/verification/e2e/run-real-pipeline-e2e.mjs#buildRealE2EPipelineEnv",
+    "constraint": "buildRunConfig still expands a legacy facade and creates run-specific repo/run/agent overrides; buildRealE2EPipelineEnv installs it as SWARM_CONFIG. A variable-only rename would not authenticate a complete coordinated generation or preserve task/config partition, original restored runs, source/package/profile receiving. Must migrate together with sole-root boot/Nova receiver; do not invent a private policy root or promote denied v10."
+  },
+  "independentReview": "OPEN: no native spawn/review/collaboration tool exposed; subagents0, parent done, no fresh independent output. Known unchanged same-surface EROFS not retried. Author checks only.",
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "nextAction": "Complete coordinated sole-root/all-profile/schema/file-set and actual boot+Nova receiving, including real E2E run-scoped legacy config replacement, and genuine QB-R02 producer/source/build/baseline inputStore reservation/accounting/sealed publication. Preserve original UID1000 CLI and three invalid-port process obligations plus all independent/history/native/archive/full C0-C6 gates. Do not repeat unchanged local green suites.",
+  "externalOwner": "Raven",
+  "resumeCondition": "Suitable isolated Linux Docker guest with genuine UID/GID1000, delegated writable cgroup/native pool, privileged installer and original authority; sufficiently large genuinely root-trusted writable archive storage and isolated migrated PostgreSQL. No spoof or gate removal.",
+  "writerLock": "SAME nonblocking lock for every write/check/commit/push; released on command exit",
+  "noHistoricalFollowup": true
+}

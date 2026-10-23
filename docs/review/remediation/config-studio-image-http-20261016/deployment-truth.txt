@@ -1,0 +1,344 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: the host-native observer must receive its required runtime configuration
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/check-deployment-truth.mjs:372:8
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: '{{- $discordGuildUsers := list -}}\n' +
+    '{{- range $sender := (.Values.commands.allowFromDiscord | default list) -}}\n' +
+    '{{- $discordGuildUsers = append $discordGuildUsers (trimPrefix "discord:" (trimPrefix "user:" $sender)) -}}\n' +
+    '{{- end }}\n' +
+    '# ConfigMap: OpenClaw gateway configuration (openclaw.json)\n' +
+    'apiVersion: v1\n' +
+    'kind: ConfigMap\n' +
+    'metadata:\n' +
+    '  name: {{ include "kubeclaw.fullname" . }}-config\n' +
+    '  labels:\n' +
+    '    {{- include "kubeclaw.labels" . | nindent 4 }}\n' +
+    'data:\n' +
+    '  openclaw.json: |\n' +
+    '    {\n' +
+    '      "meta": {\n' +
+    '        "lastTouchedVersion": {{ .Chart.AppVersion | quote }}\n' +
+    '      },\n' +
+    '      "wizard": {\n' +
+    '        "lastRunAt": "2026-03-26T19:20:27.474Z",\n' +
+    '        "lastRunVersion": "2026.3.24",\n' +
+    '        "lastRunCommand": "configure",\n' +
+    '        "lastRunMode": "local"\n' +
+    '      },\n' +
+    '      "auth": {\n' +
+    '        "profiles": {\n' +
+    '          "openai:d.trabucco@tutamail.com": {\n' +
+    '            "provider": "openai",\n' +
+    '            "mode": "oauth",\n' +
+    '            "email": "d.trabucco@tutamail.com"\n' +
+    '          },\n' +
+    '          "openai:chatgpt-d.trabucco@tutamail.com": {\n' +
+    '            "provider": "openai",\n' +
+    '            "mode": "oauth"\n' +
+    '          }\n' +
+    '        },\n' +
+    '        "order": {\n' +
+    '          "openai": [\n' +
+    '            "openai:d.trabucco@tutamail.com",\n' +
+    '            "openai:chatgpt-d.trabucco@tutamail.com"\n' +
+    '          ]\n' +
+    '        }\n' +
+    '      },\n' +
+    '      "acp": {\n' +
+    '        "enabled": true,\n' +
+    '        "backend": "acpx",\n' +
+    '        "defaultAgent": "codex",\n' +
+    '        "allowedAgents": [\n' +
+    '          "claude",\n' +
+    '          "codex",\n' +
+    '          "kimi",\n' +
+    '          "gemini",\n' +
+    '          "pi"\n' +
+    '        ]\n' +
+    '      },\n' +
+    '      "memory": {\n' +
+    '        "search": {\n' +
+    '          "enabled": true,\n' +
+    '          "experimental": {\n' +
+    '            "sessionMemory": true\n' +
+    '          },\n' +
+    '          "sources": [\n' +
+    '            "memory",\n' +
+    '            "sessions"\n' +
+    '          ],\n' +
+    '          "provider": "openai-compatible",\n' +
+    '          "remote": {\n' +
+    '            "baseUrl": "{{ .Values.litellm.endpoint }}",\n' +
+    '            "apiKey": {\n' +
+    '              "source": "env",\n' +
+    '              "provider": "default",\n' +
+    '              "id": "LITELLM_API_KEY"\n' +
+    '            }\n' +
+    '          },\n' +
+    '          "model": "gemini-embedding-001"\n' +
+    '        }\n' +
+    '      },\n' +
+    '      "agents": {\n' +
+    '        "defaults": {\n' +
+    '          "systemAgent": {\n' +
+    '            "agentId": "main"\n' +
+    '          },\n' +
+    '          "thinkingDefault": "off",\n' +
+    '          "reasoningDefault": "off",\n' +
+    '          "model": {\n' +
+    '            "primary": {{ .Values.agent.model.primary | quote }},\n' +
+    '            "fallbacks": [\n' +
+    '              {{- range $index, $model := .Values.agent.model.fallbacks }}\n' +
+    '              {{- if $index }},{{ end }}{{ $model | quote }}\n' +
+    '              {{- end }}\n' +
+    '            ]\n' +
+    '          },\n' +
+    '          "modelPolicy": {\n' +
+    '            "allow": [\n' +
+    '              {{- if eq .Values.agent.model.primary "openai/gpt-6-astra" }}\n' +
+    '              "openai/gpt-6-astra",\n' +
+    '              {{- end }}\n' +
+    '              "openai/gpt-5.6-sol",\n' +
+    '              "openai/gpt-5.5"\n' +
+    '            ]\n' +
+    '          },\n' +
+    '          "models": {\n' +
+    '            {{- if eq .Values.agent.model.primary "openai/gpt-6-astra" }}\n' +
+    '            "openai/gpt-6-astra": {\n' +
+    '              "agentRuntime": {\n' +
+    '                "id": "codex"\n' +
+    '              }\n' +
+    '            },\n' +
+    '            {{- end }}\n' +
+    '            "openai/gpt-5.6-sol": {\n' +
+    '              "agentRuntime": {\n' +
+    '                "id": "codex"\n' +
+    '              }\n' +
+    '            },\n' +
+    '            "openai/gpt-5.5": {\n' +
+    '              "agentRuntime": {\n' +
+    '                "id": "codex"\n' +
+    '              }\n' +
+    '            }\n' +
+    '          },\n' +
+    '          "workspace": "/home/node/.openclaw/workspace",\n' +
+    '          "embeddedAgent": {\n' +
+    '            "executionContract": "strict-agentic"\n' +
+    '          },\n' +
+    '          "contextPruning": {\n' +
+    '            "mode": "cache-ttl",\n' +
+    '            "ttl": "2h"\n' +
+    '          },\n' +
+    '          "compaction": {\n' +
+    '            "mode": "safeguard",\n' +
+    '            "keepRecentTokens": 140000,\n' +
+    '            "memoryFlush": {\n' +
+    '              "enabled": true\n' +
+    '            }\n' +
+    '          },\n' +
+    '          "subagents": {\n' +
+    '            "maxConcurrent": 20,\n' +
+    '            "archiveAfterMinutes": 240,\n' +
+    '            "runTimeoutSeconds": 43200,\n' +
+    '            "maxSpawnDepth": 3\n' +
+    '          },\n' +
+    '          "contextInjection": "never"\n' +
+    '        },\n' +
+    '        "entries": {\n' +
+    '          "main": {\n' +
+    '            "subagents": {\n' +
+    '              "allowAgents": [\n' +
+    '                "*"\n' +
+    '              ]\n' +
+    '            },\n' +
+    '            "skills": [],\n' +
+    '            "skillsLimits": {\n' +
+    '              "maxSkillsPromptChars": 1200\n' +
+    '            }\n' +
+    '          }\n' +
+    '        }\n' +
+    '      },\n' +
+    '      {{- if .Values.discord.enabled }}\n' +
+    '      "bindings": [\n' +
+    '        {\n' +
+    '          "agentId": "main",\n' +
+    '          "match": {\n' +
+    '            "channel": "discord",\n' +
+    '            "accountId": "default"\n' +
+    '          }\n' +
+    '        }\n' +
+    '      ],\n' +
+    '      {{- end }}\n' +
+    '      "tools": {\n' +
+    '        "profile": "coding",\n' +
+    '        "sessions": {\n' +
+    '          "visibility": "all"\n' +
+    '        },\n' +
+    '        "sessions_spawn": {\n' +
+    '          "attachments": {\n' +
+    '            "enabled": true\n' +
+    '          }\n' +
+    '        },\n' +
+    '        "exec": {\n' +
+    '          "timeoutSeconds": 604800,\n' +
+    '          "mode": "full"\n' +
+    '        },\n' +
+    '        "agentToAgent": {\n' +
+    '          "enabled": true\n' +
+    '        }\n' +
+    '      },\n' +
+    '      "commands": {\n' +
+    '        "native": "auto",\n' +
+    '        "nativeSkills": "auto",\n' +
+    '        "restart": true,\n' +
+    '        "ownerAllowFrom": {{ .Values.commands.ownerAllowFrom | default list | toJson }},\n' +
+    '        "allowFrom": {\n' +
+    '          "discord": {{ .Values.commands.allowFromDiscord | default list | toJson }}\n' +
+    '        }\n' +
+    '      },\n' +
+    '      "session": {\n' +
+    '        "dmScope": "per-channel-peer",\n' +
+    '        "resetByType": {\n' +
+    '          "group": {\n' +
+    '            "mode": "idle",\n' +
+    '            "idleMinutes": 43200\n' +
+    '          }\n' +
+    '        },\n' +
+    '        "threadBindings": {\n' +
+    '          "enabled": true,\n' +
+    '          "idleHours": 999,\n' +
+    '          "maxAgeHours": 0\n' +
+    '        }\n' +
+    '      },\n' +
+    '      "channels": {\n' +
+    '        "discord": {\n' +
+    '          "enabled": {{ .Values.discord.enabled }},\n' +
+    '          "token": {\n' +
+    '            "source": "env",\n' +
+    '            "provider": "default",\n' +
+    '            "id": "DISCORD_TOKEN"\n' +
+    '          },\n' +
+    '          "allowFrom": {{ .Values.commands.allowFromDiscord | default list | toJson }},\n' +
+    '          "groupPolicy": "allowlist",\n' +
+    '          "streaming": {\n' +
+    '            "mode": "partial"\n' +
+    '          },\n' +
+    '          "inboundWorker": {\n' +
+    '            "runTimeoutMs": 43200000\n' +
+    '          },\n' +
+    '          "guilds": {\n' +
+    '            "*": {\n' +
+    '              {{- if $discordGuildUsers }}\n' +
+    '              "users": {{ $discordGuildUsers | uniq | toJson }},\n' +
+    '              {{- end }}\n' +
+    '              "requireMention": true\n' +
+    '            }\n' +
+    '          },\n' +
+    '          "threadBindings": {\n' +
+    '            "enabled": true,\n' +
+    '            "idleHours": 999,\n' +
+    '            "spawnSessions": true\n' +
+    '          },\n' +
+    '          "execApprovals": {\n' +
+    '            "enabled": true,\n' +
+    '            "approvers": {{ .Values.discord.execApprovers | default list | toJson }},\n' +
+    '            "target": "dm"\n' +
+    '          }\n' +
+    '        }\n' +
+    '      },\n' +
+    '      "gateway": {\n' +
+    '        "port": {{ .Values.gateway.port }},\n' +
+    '        "mode": "local",\n' +
+    '        "bind": "loopback",\n' +
+    '        "controlUi": {\n' +
+    '          "dangerouslyAllowHostHeaderOriginFallback": true\n' +
+    '        },\n' +
+    '        "auth": {\n' +
+    '          "mode": "token",\n' +
+    '          "token": {\n' +
+    '            "source": "env",\n' +
+    '            "provider": "default",\n' +
+    '            "id": "OPENCLAW_GATEWAY_TOKEN"\n' +
+    '          }\n' +
+    '        },\n' +
+    '        "tools": {\n' +
+    '          "allow": [\n' +
+    '            "sessions_spawn",\n' +
+    '            "sessions_send",\n' +
+    '            "session_status",\n' +
+    '            "group:openclaw"\n' +
+    '          ]\n' +
+    '        },\n' +
+    '        "tailscale": {\n' +
+    '          "mode": "off"\n' +
+    '        }\n' +
+    '      },\n' +
+    '      "plugins": {\n' +
+    '        "allow": [\n' +
+    '          "discord",\n' +
+    '          "acpx",\n' +
+    '          "codex",\n' +
+    '          "openai"\n' +
+    '          {{- if eq (.Values.agentRole | default "") "buster" }},\n' +
+    '          "kubeclaw-agent-observer"\n' +
+    '          {{- end }}\n' +
+    '          {{- if eq (.Values.agentRole | default "") "prism" }},\n' +
+    '          "kubeclaw-prism"\n' +
+    '          {{- end }}\n' +
+    '        ],\n' +
+    '        "entries": {\n' +
+    '          "discord": {\n' +
+    '            "enabled": {{ .Values.discord.enabled }}\n' +
+    '          },\n' +
+    '          "acpx": {\n' +
+    '            "enabled": true,\n' +
+    '            "config": {\n' +
+    '              "permissionMode": "approve-all"\n' +
+    '            }\n' +
+    '          },\n' +
+    '          "openai": {\n' +
+    '            "enabled": true\n' +
+    '          },\n' +
+    '          "codex": {\n' +
+    '            "enabled": true\n' +
+    '          }\n' +
+    '          {{- if eq (.Values.agentRole | default "") "buster" }},\n' +
+    '          "kubeclaw-agent-observer": {\n' +
+    '            "enabled": true,\n' +
+    '            "config": {{ required "Central agentObserverPolicy is required" .Values.agentObserverPolicy | toJson }},\n' +
+    '            "hooks": {\n' +
+    '              "allowConversationAccess": true\n' +
+    '            }\n' +
+    '          }\n' +
+    '          {{- end }}\n' +
+    '          {{- if eq (.Values.agentRole | default "") "prism" }},\n' +
+    '          "kubeclaw-prism": {\n' +
+    '            "enabled": true,\n' +
+    '            "config": {\n' +
+    '              {{- $tools := mustFromJson (required "central Prism tool projection required; run npm run config:prism:sync" (.Files.Get "files/pipeline/prism-agent-tools.json")) }}\n' +
+    '              {{- if or (ne $tools.namespace .Release.Namespace) (ne $tools.releaseName .Release.Name) }}{{ fail "Prism tool release identity must match central bindings" }}{{ end }}\n' +
+    '              "controlUrl": {{ required "Prism tool controlUrl required" $tools.controlUrl | quote }}\n' +
+    '            }\n' +
+    '          }\n' +
+    '          {{- end }}\n' +
+    '        }\n' +
+    '      },\n' +
+    '      "messages": {\n' +
+    '        "groupChat": {\n' +
+    '          "visibleReplies": "automatic"\n' +
+    '        }\n' +
+    '      }\n' +
+    '    }\n',
+  expected: /"kubeclaw-agent-observer"[\s\S]*"config"\s*:\s*\{[\s\S]*"enabled"[\s\S]*"maxEventBytes"[\s\S]*"maxQueuePerStream"[\s\S]*"hookTimeoutMs"/,
+  operator: 'match',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

@@ -1,0 +1,12 @@
+{
+  "inputs": [
+    {
+      "path": "my-values/setup-secrets.sh",
+      "sha256": "d417ee6bb8f6ba1008ad077f7cb4bf6172891aa9d8753681701aad4697e1834c"
+    },
+    {
+      "path": "scripts/deploy.sh",
+      "sha256": "c90cc9c082b3adba89c458a9e28853afa77682a6c7066a7641c70aac749d0960"
+    }
+  ]
+}

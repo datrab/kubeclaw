@@ -1,0 +1,101 @@
+✔ normal Prism chart uses selected central ports/paths without legacy ENV or author mounts (326.419848ms)
+✔ central Prism publication/rendering rejects missing source settings, wrong deployment and duplicate TTL author (216.628733ms)
+✔ generated Prism chart projection is current and contains no competing flat author (563.420767ms)
+✖ disabled ingestion renders no Deployment and requires no invented sizing (167.486534ms)
+✖ enabled ingestion renders supplied resources, actual probes and quarantine-only TTL (127.997405ms)
+✖ enabled ingestion rejects missing sizing, invalid quantities and invalid quarantine TTL (1732.856132ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 3
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2552.144796
+
+✖ failing tests:
+
+test at tests/verification/deployment/prism-ingestion-resources.test.mjs:56:1
+✖ disabled ingestion renders no Deployment and requires no invented sizing (167.486534ms)
+  AssertionError [ERR_ASSERTION]: Error: values don't meet the specifications of the schema(s) in the following chart(s):
+  prism:
+  - worker.native.nodeName: String length must be greater than or equal to 1
+  - worker.native.namespace: String length must be greater than or equal to 1
+  - worker.native.policyDigest: Does not match pattern '^[a-f0-9]{64}$'
+  
+  
+  
+  1 !== 0
+  
+      at documents (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/prism-ingestion-resources.test.mjs:49:10)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/prism-ingestion-resources.test.mjs:58:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-ingestion-resources.test.mjs:62:1
+✖ enabled ingestion renders supplied resources, actual probes and quarantine-only TTL (127.997405ms)
+  AssertionError [ERR_ASSERTION]: Error: values don't meet the specifications of the schema(s) in the following chart(s):
+  prism:
+  - worker.native.nodeName: String length must be greater than or equal to 1
+  - worker.native.namespace: String length must be greater than or equal to 1
+  - worker.native.policyDigest: Does not match pattern '^[a-f0-9]{64}$'
+  
+  
+  
+  1 !== 0
+  
+      at documents (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/prism-ingestion-resources.test.mjs:49:10)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/prism-ingestion-resources.test.mjs:65:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-ingestion-resources.test.mjs:82:1
+✖ enabled ingestion rejects missing sizing, invalid quantities and invalid quarantine TTL (1732.856132ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /quarantineTtlMs/u. Input:
+  
+  'Error: SWARM_CONFIG_INVALID:component:prism-control'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/prism-ingestion-resources.test.mjs:96:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: SWARM_CONFIG_INVALID:component:prism-control
+        at readSwarmBundle (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:384:15)
+        at captureSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:268:18)
+        at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/generate-prism-chart-config.mjs:17:86
+        at Array.map (<anonymous>)
+        at prismChartProjection (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/generate-prism-chart-config.mjs:17:48)
+        at selectTtl (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/prism-ingestion-resources.test.mjs:26:12)
+        at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/prism-ingestion-resources.test.mjs:96:25
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/prism-ingestion-resources.test.mjs:96:12),
+    expected: /quarantineTtlMs/u,
+    operator: 'throws',
+    diff: 'simple'
+  }

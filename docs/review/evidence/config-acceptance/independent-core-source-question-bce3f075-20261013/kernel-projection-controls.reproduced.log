@@ -1,0 +1,49 @@
+{
+  "command": "node docs/review/evidence/config-acceptance/components/question-closure-bce3f075/kernel-projection-controls.mjs",
+  "node": "v24.21.0",
+  "utilitySHA256": "09f189297bce1f713e2ba9a8607a89f17902edadc54d3c3162d43f76e8d3b6f9",
+  "scriptSHA256": "4687bc922c47c585fe3a5147623f108a60e33806f408fed91ad45b9e4d7408ac",
+  "results": [
+    {
+      "id": "QC-KERNEL-WAIT-5",
+      "result": "passed",
+      "waitSeconds": 5,
+      "positive": {
+        "code": 0,
+        "signal": null,
+        "out": "entered",
+        "err": ""
+      },
+      "contention": {
+        "code": 1,
+        "signal": null,
+        "out": "",
+        "err": "",
+        "elapsedMs": 5002.634122
+      },
+      "scope": "Actual genuine flock argument domain/projection positive and contention; proposed owning policy fields are NOT currently consumed by shared helper."
+    },
+    {
+      "id": "QC-KERNEL-WAIT-1",
+      "result": "passed",
+      "waitSeconds": 1,
+      "positive": {
+        "code": 0,
+        "signal": null,
+        "out": "entered",
+        "err": ""
+      },
+      "contention": {
+        "code": 1,
+        "signal": null,
+        "out": "",
+        "err": "",
+        "elapsedMs": 1002.9955710000004
+      },
+      "scope": "Actual genuine flock argument domain/projection positive and contention; proposed owning policy fields are NOT currently consumed by shared helper."
+    }
+  ],
+  "passed": 2,
+  "failed": 0,
+  "scope": "Kernel utility numeric domain controls only, not future policy projection F-EFFECT or acceptance"
+}

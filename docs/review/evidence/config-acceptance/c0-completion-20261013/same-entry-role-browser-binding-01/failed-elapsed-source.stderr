@@ -1,0 +1,13 @@
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/check-elapsed-source.mjs:15
+check('actual cache source no timer and malformed native fallback remains counterexample',()=>{const source=fs.readFileSync(path.join(root,'docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/tool-result-truncation-CS-9YGQx.mjs'),'utf8');assert(source.includes('settings.ttlMs <= 0 || params.now - params.lastCacheTouchAt < settings.ttlMs'),'ACTUAL_ELAPSED_GUARD');const start=source.indexOf('function resolveCacheTtlPruningSettings('),end=source.indexOf('function cacheTtlText(',start),cut=source.slice(start,end);assert(cut.includes('let ttlMs = 3e5;')&&cut.includes('} catch {}')&&!cut.includes('setTimeout'),'ACTUAL_FALLBACK_NOT_TIMER');return 'target exact parse rejects before native fallback; elapsed guard proof only, provider/transcript/native effects unrun';});
+                                                                                                                            ^
+
+ReferenceError: path is not defined
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/check-elapsed-source.mjs:15:125
+    at check (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/check-elapsed-source.mjs:1:204)
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/check-elapsed-source.mjs:15:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0

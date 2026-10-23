@@ -7,7 +7,10 @@ import {parseAllDocuments} from 'yaml';
 import {createHash} from 'node:crypto';
 import {pathToFileURL} from 'node:url';
 import https from 'node:https';
-import {spawn,spawnSync} from 'node:child_process';
+import {spawn,spawnSync,execFileSync} from 'node:child_process';
+import yaml from 'js-yaml';
+import {buildBusterImageBundle} from '../../../scripts/build-buster-image-bundle.mjs';
+import {busterChartProjection} from '../../../scripts/generate-buster-chart-config.mjs';
 import {registryClientConfig,writeRegistryClients} from '../../../scripts/registry-client-config.mjs';
 
 const auth={usernameEnvironmentVariable:'REGISTRY_TEST_USER',passwordEnvironmentVariable:'REGISTRY_TEST_PASSWORD'};
@@ -40,10 +43,46 @@ test('generator writes node credentials privately, never overwrites existing hos
  const child=spawnSync(process.execPath,[relocated,input,'node',output],{env:{...process.env,...environment},encoding:'utf8'});assert.equal(child.status,0,child.stderr);assert.deepEqual(JSON.parse(fs.readFileSync(output)),JSON.parse(fs.readFileSync(file)));assert.equal(fs.statSync(output).mode&0o777,0o600);
  }finally{fs.rmSync(root,{recursive:true,force:true});}
 });
-function helm(args){return spawnSync('helm',['template','registry-test','charts/kubeclaw',...args],{encoding:'utf8'});}
-test('real Helm wires exactly the selected sidecar and refuses missing/duplicate/contradictory configuration',()=>{
+async function registryChart(root) {
+ // Complete genuine delivery and normal chart packaging, not a retired values author.
+ // Native/image digest vectors below are render-only, never native execution proof.
+ const revision=execFileSync('git',['rev-parse','--verify','HEAD'],{encoding:'utf8'}).trim();
+ const builtAt=new Date().toISOString();
+ const built=await buildBusterImageBundle({repository:process.cwd(),output:path.join(root,'image'),revision,builtAt});
+ const manifest=JSON.parse(fs.readFileSync(path.join(built.packageRoot,'manifest.json'),'utf8'));
+ assert.equal(manifest.commit,revision);assert.equal(manifest.builtAt,builtAt);
+ const projection=busterChartProjection(path.resolve('config'));
+ assert.equal(built.generationDigest,projection.generationDigest);
+ const foundation=path.join(built.packageRoot,'skills/packages/plugin-foundation/config');
+ const boot=await import(pathToFileURL(path.join(foundation,'pipeline-boot.mjs')).href);
+ const receiver=await import(pathToFileURL(path.join(foundation,'pipeline-composition.ts')).href);
+ for(const caller of ['buster-preparation','buster-runtime']) {
+  const transport=path.join(root,caller);fs.mkdirSync(transport);
+  fs.cpSync(path.join(path.dirname(built.systemRoot),'expected',caller),path.join(transport,'original'),{recursive:true});
+  fs.symlinkSync('original',path.join(transport,'..data'));
+  const capture=boot.capturePipelineBootReceipts(transport,built.systemRoot,caller,built.packageRoot,'/app/skills');
+  assert(Object.isFrozen(receiver.projectBusterSettings(capture,caller)));
+  assert.throws(()=>receiver.projectBusterSettings(capture,caller==='buster-runtime'?'buster-preparation':'buster-runtime'),/PIPELINE_VERIFIED_CAPTURE_REQUIRED/u);
+ }
+ const values=yaml.load(fs.readFileSync('my-values/buster-values.yaml','utf8'));
+ values.pipelineDelivery={buster:built.metadata};
+ values.busterNative={namespace:projection.deployment.namespace,nodeName:'registry-render-only',policyDigest:'a'.repeat(64)};
+ values.extraContainers.find(container=>container.name==='buster-v2-runtime').image='ghcr.io/datrab/kubeclaw-buster-runtime@sha256:'+'a'.repeat(64);
+ const valuesFile=path.join(root,'values.yaml');fs.writeFileSync(valuesFile,yaml.dump(values));
+ const chart=path.join(root,'chart'),packaged=path.join(root,'packaged');
+ fs.cpSync('charts/kubeclaw',chart,{recursive:true,dereference:true});
+ fs.writeFileSync(path.join(chart,'files/pipeline/buster-topology.json'),JSON.stringify(projection));
+ fs.mkdirSync(packaged);execFileSync('helm',['package',chart,'--destination',packaged],{stdio:'pipe'});
+ const archives=fs.readdirSync(packaged).filter(name=>name.endsWith('.tgz'));assert.equal(archives.length,1);
+ const archive=path.join(packaged,archives[0]);
+ assert.deepEqual(JSON.parse(execFileSync('tar',['-xOf',archive,'kubeclaw/files/pipeline/buster-topology.json'],{encoding:'utf8'})),projection);
+ return {valuesFile,helm:args=>spawnSync('helm',['template',projection.deployment.releaseName,archive,'--namespace',projection.deployment.namespace,...args],{encoding:'utf8'})};
+}
+test('real Helm wires exactly the selected sidecar and refuses missing/duplicate/contradictory configuration',async()=>{
+ const root=fs.mkdtempSync(path.join(os.tmpdir(),'registry-chart-'));try{
+ const {helm,valuesFile}=await registryChart(root);
  assert.equal(helm([]).status,0);
- const base=['-f','my-values/buster-values.yaml'];assert.notEqual(helm(base).status,0);
+ const base=['-f',valuesFile];assert.notEqual(helm(base).status,0);
  const configured=[...base,'--set','runtimeInfrastructure.registry.endpoint=https://registry.example.test:5443','--set','runtimeInfrastructure.registry.transport=https','--set','runtimeInfrastructure.registry.authSecretName=registry-auth'];
  const result=helm(configured);assert.equal(result.status,0,result.stderr);assert.match(result.stdout,/KUBECLAW_REGISTRY_CONFIG/u);assert.match(result.stdout,/name: registry-auth/u);
  assert.doesNotMatch(result.stdout,/KUBECLAW_LOCAL_REGISTRY/u);
@@ -57,6 +96,7 @@ test('real Helm wires exactly the selected sidecar and refuses missing/duplicate
  const pod=deployment.spec.template.spec,worker=pod.containers.find(container=>container.name==='buster-v2-runtime');
  assert.equal(worker.env.find(item=>item.name==='NODE_EXTRA_CA_CERTS').value,'/var/run/kubeclaw-registry-trust/ca.crt');assert.ok(worker.volumeMounts.some(item=>item.mountPath==='/var/run/kubeclaw-registry-trust'&&item.readOnly));assert.ok(pod.volumes.some(item=>item.secret?.secretName==='registry-ca'));
  assert.ok(pod.containers.filter(container=>container!==worker).every(container=>!container.env?.some(item=>item.name==='KUBECLAW_REGISTRY_PASSWORD')));
+ }finally{fs.rmSync(root,{recursive:true,force:true});}
 });
 test('original container-build manifest consumer verifies generated HTTPS origin, CA and scoped credentials',async()=>{
  const root=fs.mkdtempSync(path.join(os.tmpdir(),'registry-tls-'));let server;try{

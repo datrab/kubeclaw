@@ -5,3 +5,4 @@ export * from './gate-decision.ts';
 export * from './coverage.ts';
 export * from './coverage-result.ts';
 export * from './coverage-expectation.ts';
+export * from './provider-policy.ts';

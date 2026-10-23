@@ -1,0 +1,220 @@
+{
+  "scope": "own serialized exact synthetic epoch/UID/TTL/retention/cleanup references and arithmetic only; NOT authentication, deployed API, native Go validation, grant or implementation acceptance",
+  "sourceDigests": {
+    "docs/review/evidence/config-acceptance/delivery/check-controller-epoch-serialization-6606af9-20261013.cjs": "5bda15a7490cb800e984aaaab475879b5f43408f3122cb0643c8f1750bebf030",
+    "docs/review/evidence/config-acceptance/delivery/controller-original-epoch-serialization-schema-6606af9-20261013.json": "4b9add8813f1071622dd085e854891ae626a9bce0d6945c12440f2c624095744",
+    "docs/review/evidence/config-acceptance/delivery/controller-original-epoch-fixture-identities-6606af9-20261013.json": "2d02828c22abe9f38fc639e2c66974406d63ab07f2fa576009cf327d0fc17f2a",
+    "docs/review/evidence/config-acceptance/delivery/controller-original-epoch-fixtures-6606af9-20261013/ordinary-default.json": "47cfcb764abc4ab0dd84761e6c03e00f509ed973817ff8c2a36ad9e587fc3914",
+    "docs/review/evidence/config-acceptance/delivery/controller-original-epoch-fixtures-6606af9-20261013/ordinary-explicit.json": "b85f6451aed326f9e41936d9e608afb2c9c79daa677b28dfeb16a2c4598d0d8d",
+    "docs/review/evidence/config-acceptance/delivery/controller-original-epoch-fixtures-6606af9-20261013/ready-v1.json": "76c282e2c6be811c48ee7acb8f35118457ccb62edcd70289a064ae3a5ce21127",
+    "docs/review/evidence/config-acceptance/delivery/controller-original-epoch-fixtures-6606af9-20261013/ready-v2.json": "7047aa144f2ab4d2a12c76c98ab567879b18e064d6c9a5a55df8d8d664ce0f10",
+    "docs/review/evidence/config-acceptance/delivery/controller-original-epoch-fixtures-6606af9-20261013/product-extended.json": "785ff31d95acd77c9de3b0205667ce451c153d9f2a5575ae7e1048df72f2a31e",
+    "docs/review/evidence/config-acceptance/delivery/controller-original-epoch-fixtures-6606af9-20261013/deleting.json": "4a9e5d7d09fb9951775dc6ae0579ca0ab31e8e702fc749d9363b7ee02a7385cf",
+    "docs/review/evidence/config-acceptance/delivery/controller-response-epoch-profiles-6606af9-20261013/A.json": "dbaffde17d18c220c237216cfccdc335d33d572a0b9973b8bc8d0fd15ef61a4d",
+    "docs/review/evidence/config-acceptance/delivery/controller-response-epoch-profiles-6606af9-20261013/B.json": "67f26310eb5a89cd4ec736d9a690a50dd0f50ac359e89b651a449aae9b0f3a94"
+  },
+  "records": [
+    {
+      "id": "DLV-C0-CONTROLLER-EPOCH-SERIALIZE-ordinary-default",
+      "result": "passed",
+      "observation": {
+        "schema": true,
+        "errors": null,
+        "authorityState": "future-required-not-authenticated; synthetic data, no original-A/API/grant/native proof",
+        "meaning": "own complete serialized fixture and exact originalA profile bytes, not proof that receipt authentic or deployed"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-EPOCH-ORIGINAL-TTL-ordinary-default",
+      "result": "passed",
+      "observation": {
+        "effectiveSeconds": 7200,
+        "originalDeadline": "2030-01-01T02:00:00Z",
+        "newProfileDefault": 3600,
+        "newProfileMax": 43200,
+        "meaning": "synthetic proposal arithmetic originalA, not actual installed policy"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-EPOCH-SERIALIZE-ordinary-explicit",
+      "result": "passed",
+      "observation": {
+        "schema": true,
+        "errors": null,
+        "authorityState": "future-required-not-authenticated; synthetic data, no original-A/API/grant/native proof",
+        "meaning": "own complete serialized fixture and exact originalA profile bytes, not proof that receipt authentic or deployed"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-EPOCH-ORIGINAL-TTL-ordinary-explicit",
+      "result": "passed",
+      "observation": {
+        "effectiveSeconds": 3600,
+        "originalDeadline": "2030-01-01T01:00:00Z",
+        "newProfileDefault": 3600,
+        "newProfileMax": 43200,
+        "meaning": "synthetic proposal arithmetic originalA, not actual installed policy"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-EPOCH-SERIALIZE-ready-v1",
+      "result": "passed",
+      "observation": {
+        "schema": true,
+        "errors": null,
+        "authorityState": "future-required-not-authenticated; synthetic data, no original-A/API/grant/native proof",
+        "meaning": "own complete serialized fixture and exact originalA profile bytes, not proof that receipt authentic or deployed"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-EPOCH-ORIGINAL-TTL-ready-v1",
+      "result": "passed",
+      "observation": {
+        "effectiveSeconds": 7200,
+        "originalDeadline": "2030-01-01T02:00:00Z",
+        "newProfileDefault": 3600,
+        "newProfileMax": 43200,
+        "meaning": "synthetic proposal arithmetic originalA, not actual installed policy"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-EPOCH-RETENTION-ready-v1",
+      "result": "passed",
+      "observation": {
+        "legacySchema": "demo-readiness.v1",
+        "originalRetention": 604800,
+        "newProfileDefault": 1209600,
+        "meaning": "historical-v1 fixed seven days kept separate from operationaldefaultB; no currentmigration action"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-EPOCH-SERIALIZE-ready-v2",
+      "result": "passed",
+      "observation": {
+        "schema": true,
+        "errors": null,
+        "authorityState": "future-required-not-authenticated; synthetic data, no original-A/API/grant/native proof",
+        "meaning": "own complete serialized fixture and exact originalA profile bytes, not proof that receipt authentic or deployed"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-EPOCH-ORIGINAL-TTL-ready-v2",
+      "result": "passed",
+      "observation": {
+        "effectiveSeconds": 7200,
+        "originalDeadline": "2030-01-01T02:00:00Z",
+        "newProfileDefault": 3600,
+        "newProfileMax": 43200,
+        "meaning": "synthetic proposal arithmetic originalA, not actual installed policy"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-EPOCH-RETENTION-ready-v2",
+      "result": "passed",
+      "observation": {
+        "legacySchema": "demo-readiness.v2",
+        "originalRetention": 604800,
+        "newProfileDefault": 1209600,
+        "meaning": "historical-v1 fixed seven days kept separate from operationaldefaultB; no currentmigration action"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-EPOCH-SERIALIZE-product-extended",
+      "result": "passed",
+      "observation": {
+        "schema": true,
+        "errors": null,
+        "authorityState": "future-required-not-authenticated; synthetic data, no original-A/API/grant/native proof",
+        "meaning": "own complete serialized fixture and exact originalA profile bytes, not proof that receipt authentic or deployed"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-EPOCH-ORIGINAL-TTL-product-extended",
+      "result": "passed",
+      "observation": {
+        "effectiveSeconds": 7200,
+        "originalDeadline": "2030-01-01T02:00:00Z",
+        "newProfileDefault": 3600,
+        "newProfileMax": 43200,
+        "meaning": "synthetic proposal arithmetic originalA, not actual installed policy"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-EPOCH-RETENTION-product-extended",
+      "result": "passed",
+      "observation": {
+        "legacySchema": "demo-readiness.v2",
+        "originalRetention": 604800,
+        "newProfileDefault": 1209600,
+        "meaning": "historical-v1 fixed seven days kept separate from operationaldefaultB; no currentmigration action"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-EPOCH-SERIALIZE-deleting",
+      "result": "passed",
+      "observation": {
+        "schema": true,
+        "errors": null,
+        "authorityState": "future-required-not-authenticated; synthetic data, no original-A/API/grant/native proof",
+        "meaning": "own complete serialized fixture and exact originalA profile bytes, not proof that receipt authentic or deployed"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-EPOCH-ORIGINAL-TTL-deleting",
+      "result": "passed",
+      "observation": {
+        "effectiveSeconds": 7200,
+        "originalDeadline": "2030-01-01T02:00:00Z",
+        "newProfileDefault": 3600,
+        "newProfileMax": 43200,
+        "meaning": "synthetic proposal arithmetic originalA, not actual installed policy"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-EPOCH-CLEANUP-ATTEMPT-DEADLINE",
+      "result": "passed",
+      "observation": {
+        "source": "same original120s attempt, B180s cannot renew",
+        "mutationOutcome": "uncertain-until-authoritative-404"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-EPOCH-MISSING-ORIGINAL-RECEIPT-REF",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/policyConfig",
+            "schemaPath": "#/properties/policyConfig/required",
+            "keyword": "required",
+            "params": {
+              "missingProperty": "originalAuthorReceiptRef"
+            },
+            "message": "must have required property 'originalAuthorReceiptRef'"
+          }
+        ],
+        "meaning": "own missing-reference structural rejection; presence of namedref alone never authenticates grant"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-EPOCH-UNKNOWN-LATEST-FALLBACK",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/policyConfig",
+            "schemaPath": "#/properties/policyConfig/additionalProperties",
+            "keyword": "additionalProperties",
+            "params": {
+              "additionalProperty": "latest"
+            },
+            "message": "must NOT have additional properties"
+          }
+        ]
+      }
+    }
+  ],
+  "result": "passed"
+}

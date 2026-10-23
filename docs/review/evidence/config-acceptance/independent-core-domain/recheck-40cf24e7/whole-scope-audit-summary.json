@@ -1,0 +1,21 @@
+{
+  "apiMembers": 173,
+  "apiMissing": [],
+  "apiExtra": [],
+  "selected565Missing": [],
+  "selected565Extra": [],
+  "all640CoordinateMissing": [],
+  "all640DomainMismatch": [],
+  "caseLifecycle": {
+    "active": 204,
+    "historical": 1,
+    "superseded": 39
+  },
+  "caseResults": {
+    "passed": 77,
+    "not-run": 167
+  },
+  "duplicateGapIds": [
+    "CMP-ICD-MATERIAL-RECHECK"
+  ]
+}

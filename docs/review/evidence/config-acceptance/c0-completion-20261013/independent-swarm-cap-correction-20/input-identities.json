@@ -1,0 +1,113 @@
+{
+  "reviewer": "/root/swarm_cap_recheck_20",
+  "head": "ddd49add7eefd5fbbccac84360498a5ece8bae0a",
+  "tree": "70190767cfbfd63259d570cd9162dea3a3615fc8",
+  "scope": "SWARM19-001 additive correction only",
+  "files": [
+    {
+      "path": "charts/kubeclaw/files/config/swarm-components.schema.json",
+      "sha256": "51e7bc64a25fd6cc67d465ebe46bab170a6c9b7215423147ab3f15777dc58968",
+      "bytes": 41591
+    },
+    {
+      "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+      "bytes": 26278
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-27/README.md",
+      "sha256": "47083bcb8b9558359957e602af51082b7e520c26e5163cc5bc5bff5cd0748afc",
+      "bytes": 793
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-27/define.py",
+      "sha256": "2ffe8092003411251d57c7756933f7e1a68faf87f11674f5d59244add9be4b12",
+      "bytes": 9433
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-27/local-check.json",
+      "sha256": "7c6be65588c093fbf25c1ced13c9b2dcbdf8af9925afbb2b97e01a79cefdf96a",
+      "bytes": 135
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-27/package-manifest.json",
+      "sha256": "c53e14b5f5ef562b559fab9599224cde5043319f107bcfe56db3b1d1b6a3a4ad",
+      "bytes": 881
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-27/source-field-definitions.json",
+      "sha256": "485dbbf1fb718f8c8e6691059ea368b1fc1dbd23a298612841690d6acba41622",
+      "bytes": 114412
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-28/README.md",
+      "sha256": "c21dbfab7883c70ddb7cf7ddadc7ade8d891bd0692b89cc38b5682df0de3c598",
+      "bytes": 537
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-28/local-check.json",
+      "sha256": "304074968be7e1346fed4a653a4f2fa0c2a837bc4e320f193391c34c2a68d6fd",
+      "bytes": 374
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-28/package-manifest.json",
+      "sha256": "50077fedfa95cf4875d20cc310d429ff2e79897f5905939d40feb28b9f1cbb50",
+      "bytes": 678
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-28/source-field-definitions.json",
+      "sha256": "4bea930dfdf9746c3abff5e95acc7009e45bc0fb0e9a3d5bf23716b7d744fc75",
+      "bytes": 121623
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-swarm-clauses-19/README.md",
+      "sha256": "1cf053ba23c452d19a7fee5671f11e0fca637de7e29be3dde75fb9260e8730df",
+      "bytes": 5071
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-swarm-clauses-19/checks.json",
+      "sha256": "6a47369e91d4c52f1942f5c2a1dcc6e22988304a5dc09935830df0aa5936a18f",
+      "bytes": 68337
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-swarm-clauses-19/head.stdout",
+      "sha256": "7423f64a083107371855c8b794c32e928f8fb2f86db8ac0d45ae32a10a7d6cc6",
+      "bytes": 82
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-swarm-clauses-19/input-identities.json",
+      "sha256": "616b71ac5601746411c1eae51e6c2dcf3196c29ab3f44d962f94873d453c74b5",
+      "bytes": 4061
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-swarm-clauses-19/patch.stdout",
+      "sha256": "93c419fcc88e0c2296e51b829bb136d08ba694b2b6aaddda72159aee6dfec98d",
+      "bytes": 937
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-swarm-clauses-19/review.py",
+      "sha256": "07ffe426cf921371feeb38c20159d4a0253bd64de9aff8d4f89c717d35458c69",
+      "bytes": 5946
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-swarm-clauses-19/review.stdout",
+      "sha256": "183fc64f0b19b8c5acba4cefe59a9b3a983c8c00856a4149401f241745838305",
+      "bytes": 1159
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-swarm-clauses-19/status.stdout",
+      "sha256": "896d5b89b4217e5f8f04cef6b2557201f5a65468969c0b09308a438da23ba1dc",
+      "bytes": 1596117
+    },
+    {
+      "path": "docs/review/remediation/GOAL-START.md",
+      "sha256": "688334e1ccaa30fd9497e605ef0a9de1fb67fbeae51c4a312b15e15a12fa085b",
+      "bytes": 6788
+    },
+    {
+      "path": "docs/review/remediation/OPENCLAW-CONFIG-GOAL.md",
+      "sha256": "fe9215a2674b95facef1d6fe0920eab2fa1f4830e765624692152a28b1731127",
+      "bytes": 21857
+    }
+  ]
+}

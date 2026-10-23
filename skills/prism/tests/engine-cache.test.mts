@@ -1,3 +1,4 @@
+import { nativeEngineSettings } from './native/resource-policy.mts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtemp, rm } from 'node:fs/promises';
@@ -16,7 +17,7 @@ const render = (key: string, text = 'Retained render') => {
 };
 
 test('many original renders bound retained entries and bytes without changing returned output', async () => {
-  const engine = new PrismEngine(new DeterministicDesignProvider(), limits);
+  const engine = new PrismEngine(new DeterministicDesignProvider(), { ...nativeEngineSettings, cache: (limits) });
   for (let index = 0; index < 100; index++) {
     const result = await engine.execute(render(`render:${index}`, `Actual render ${index}`));
     assert.match(String(result.output.html), new RegExp(`Actual render ${index}`));
@@ -29,17 +30,17 @@ test('many original renders bound retained entries and bytes without changing re
 });
 
 test('byte pressure and oversized successful renders do not retain their large payloads', async () => {
-  const engine = new PrismEngine(new DeterministicDesignProvider(), { ...limits, maximumCompletedBytes: 1024 });
+  const engine = new PrismEngine(new DeterministicDesignProvider(), { ...nativeEngineSettings, cache: ({ ...limits, maximumCompletedBytes: 1024 }) });
   const result = await engine.execute(render('oversized', 'Long render '.repeat(1000)));
   assert(String(result.output.html).length > 1024);
   assert.deepEqual(engine.cacheUsage(), { inFlight: 0, completedEntries: 0, completedBytes: 0, totalEntries: 0 });
 });
 
 test('accumulated render bytes evict completed entries before the count ceiling', async () => {
-  const measured = new PrismEngine(new DeterministicDesignProvider(), limits);
+  const measured = new PrismEngine(new DeterministicDesignProvider(), { ...nativeEngineSettings, cache: (limits) });
   await measured.execute(render('sizing'));
   const budget = measured.cacheUsage().completedBytes + 128;
-  const engine = new PrismEngine(new DeterministicDesignProvider(), { ...limits, maximumCompletedEntries: 100, maximumCompletedBytes: budget });
+  const engine = new PrismEngine(new DeterministicDesignProvider(), { ...nativeEngineSettings, cache: ({ ...limits, maximumCompletedEntries: 100, maximumCompletedBytes: budget }) });
   for (let index = 0; index < 10; index++) {
     await engine.execute(render(`size:${index}`));
     assert.equal(engine.cacheUsage().completedEntries, 1);
@@ -48,7 +49,7 @@ test('accumulated render bytes evict completed entries before the count ceiling'
 });
 
 test('active duplicates share one original operation and admission never evicts active ownership', async () => {
-  const engine = new PrismEngine(new DeterministicDesignProvider(), limits);
+  const engine = new PrismEngine(new DeterministicDesignProvider(), { ...nativeEngineSettings, cache: (limits) });
   const first = engine.execute(render('first'));
   const same = engine.execute(render('first'));
   assert.equal(engine.cacheUsage().inFlight, 1);
@@ -62,7 +63,7 @@ test('active duplicates share one original operation and admission never evicts 
 });
 
 test('retained replay snapshots cannot be enlarged or corrupted through caller mutation', async () => {
-  const engine = new PrismEngine(new DeterministicDesignProvider(), limits);
+  const engine = new PrismEngine(new DeterministicDesignProvider(), { ...nativeEngineSettings, cache: (limits) });
   const request = render('snapshot');
   const original = await engine.execute(request);
   const html = original.output.html;
@@ -75,18 +76,18 @@ test('retained replay snapshots cannot be enlarged or corrupted through caller m
 });
 
 test('failure releases admission and invalid cache limits cannot disable its bounds', async () => {
-  const engine = new PrismEngine(new DeterministicDesignProvider(), limits);
+  const engine = new PrismEngine(new DeterministicDesignProvider(), { ...nativeEngineSettings, cache: (limits) });
   await assert.rejects(engine.execute({ ...render('bad'), input: {} }), /missing Prism input/u);
   assert.deepEqual(engine.cacheUsage(), { inFlight: 0, completedEntries: 0, completedBytes: 0, totalEntries: 0 });
   await engine.execute(render('bad'));
-  assert.throws(() => new PrismEngine(new DeterministicDesignProvider(), { ...limits, maximumInFlight: 0 }), /CACHE_LIMIT_INVALID/u);
-  assert.throws(() => new PrismEngine(new DeterministicDesignProvider(), {} as typeof limits), /CACHE_LIMIT_INVALID/u);
+  assert.throws(() => new PrismEngine(new DeterministicDesignProvider(), { ...nativeEngineSettings, cache: ({ ...limits, maximumInFlight: 0 }) }), /CACHE_LIMIT_INVALID/u);
+  assert.throws(() => new PrismEngine(new DeterministicDesignProvider(), { ...nativeEngineSettings, cache: ({} as typeof limits) }), /CACHE_LIMIT_INVALID/u);
 });
 
 test('real render evidence survives RAM eviction and artifact-store reconstruction', async () => {
   const root = await mkdtemp(path.join(os.tmpdir(), 'prism-engine-cache-'));
   try {
-    const engine = new PrismEngine(new DeterministicDesignProvider(), { ...limits, maximumCompletedEntries: 1 });
+    const engine = new PrismEngine(new DeterministicDesignProvider(), { ...nativeEngineSettings, cache: ({ ...limits, maximumCompletedEntries: 1 }) });
     const first = await engine.execute(render('evidence', 'Persisted evidence'));
     const bytes = Buffer.from(String(first.output.html));
     const stored = await new ContentAddressedArtifactStore(root).put(bytes);
@@ -95,7 +96,7 @@ test('real render evidence survives RAM eviction and artifact-store reconstructi
     const reopened = new ContentAddressedArtifactStore(root);
     assert.deepEqual(Buffer.from(await reopened.get(stored.artifactId)), bytes);
     assert.match(stored.digest, /^sha256:[a-f0-9]{64}$/u);
-    const restarted = new PrismEngine(new DeterministicDesignProvider(), limits);
+    const restarted = new PrismEngine(new DeterministicDesignProvider(), { ...nativeEngineSettings, cache: (limits) });
     assert.equal(restarted.cacheUsage().completedBytes, 0);
     assert.deepEqual(Buffer.from(await reopened.get(stored.artifactId)), bytes);
   } finally { await rm(root, { recursive: true, force: true }); }
@@ -103,7 +104,7 @@ test('real render evidence survives RAM eviction and artifact-store reconstructi
 
 
 test('deferred original rendering uses the request snapshot bound to its fingerprint', async () => {
-  const engine = new PrismEngine(new DeterministicDesignProvider(), limits);
+  const engine = new PrismEngine(new DeterministicDesignProvider(), { ...nativeEngineSettings, cache: (limits) });
   const request = render('input-snapshot', 'Original bound text');
   const untouched = structuredClone(request);
   const pending = engine.execute(request);

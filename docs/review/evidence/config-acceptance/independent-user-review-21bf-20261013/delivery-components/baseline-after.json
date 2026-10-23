@@ -1,0 +1,1146 @@
+[
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/README.md",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/case-proposals.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/inventory-fragment.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/runtime-case-dispositions.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/author/nova-reader-closure-21bf/current-reader-ledger.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/author/nova-reader-closure-21bf/source-line-verification.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/README.md",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/binding-integrity-attempt1.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/binding-integrity-attempt1.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/binding-integrity-attempt2.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/binding-integrity-attempt2.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/binding-integrity-controls.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/build-attempt1.py",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/build-attempt1.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/build-attempt1.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/build-attempt2.py",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/build-attempt2.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/build-attempt2.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/build-attempt3.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/build-attempt3.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/build.py",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/check-bindings-attempt1.py",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/check-bindings.py",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/committed-input-references.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/finalize.py",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/remaining-source-link-ledger.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/source-coordinate-definitions.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/stable-author-receipt.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/stable-author-summary.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-02/binding-integrity-attempt1.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-02/binding-integrity-attempt1.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-02/binding-integrity-controls.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-02/build-attempt1.py",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-02/build-attempt1.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-02/build-attempt1.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-02/build-attempt2.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-02/build-attempt2.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-02/build.py",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-02/check-bindings.py",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-02/committed-input-references.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-02/remaining-source-link-ledger.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-02/schema-coordinate-definitions.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/actual-pure-role-projection-controls.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/actual-render-schema-observations.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/actual-whole-document-definitions.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/buster-A-chart-supported.render.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/buster-A-chart-supported.render.yaml",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/buster-A-chart-supported.strict-schema.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/buster-A-chart-supported.strict-schema.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/buster-A-correlated.render.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/buster-A-correlated.render.yaml",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/buster-A-correlated.strict-schema.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/buster-A-correlated.strict-schema.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/buster-A-selected.render.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/buster-A-selected.render.yaml",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/buster-A-selected.strict-schema.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/buster-A-selected.strict-schema.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/buster-A.render.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/buster-A.render.yaml",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/buster-A.strict-schema.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/buster-A.strict-schema.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/buster-B-chart-supported.render.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/buster-B-chart-supported.render.yaml",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/buster-B-chart-supported.strict-schema.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/buster-B-chart-supported.strict-schema.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/buster-B-correlated.render.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/buster-B-correlated.render.yaml",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/buster-B-correlated.strict-schema.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/buster-B-correlated.strict-schema.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/buster-B-selected.render.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/buster-B-selected.render.yaml",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/buster-B-selected.strict-schema.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/buster-B-selected.strict-schema.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/buster-B.render.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/buster-B.render.yaml",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/buster-B.strict-schema.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/buster-B.strict-schema.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/check-buster-primary-definitions.py",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/check-role-projections.mjs",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/kubeclaw-buster-A.strict-primary-alias-chart-supported.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/kubeclaw-buster-A.strict-primary-alias-chart-supported.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/kubeclaw-buster-A.strict-primary-alias-correlated.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/kubeclaw-buster-A.strict-primary-alias-correlated.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/kubeclaw-buster-A.strict-primary-alias-selected.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/kubeclaw-buster-A.strict-primary-alias-selected.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/kubeclaw-buster-A.strict-primary-alias.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/kubeclaw-buster-A.strict-primary-alias.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/kubeclaw-buster-B.strict-primary-alias-chart-supported.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/kubeclaw-buster-B.strict-primary-alias-chart-supported.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/kubeclaw-buster-B.strict-primary-alias-correlated.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/kubeclaw-buster-B.strict-primary-alias-correlated.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/kubeclaw-buster-B.strict-primary-alias-selected.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/kubeclaw-buster-B.strict-primary-alias-selected.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/kubeclaw-buster-B.strict-primary-alias.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/kubeclaw-buster-B.strict-primary-alias.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/nova-A-chart-supported.render.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/nova-A-chart-supported.render.yaml",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/nova-A-chart-supported.strict-schema.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/nova-A-chart-supported.strict-schema.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/nova-A-correlated.render.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/nova-A-correlated.render.yaml",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/nova-A-correlated.strict-schema.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/nova-A-correlated.strict-schema.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/nova-A-selected.render.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/nova-A-selected.render.yaml",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/nova-A-selected.strict-schema.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/nova-A-selected.strict-schema.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/nova-A.render.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/nova-A.render.yaml",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/nova-A.strict-schema.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/nova-A.strict-schema.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/nova-B-chart-supported.render.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/nova-B-chart-supported.render.yaml",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/nova-B-chart-supported.strict-schema.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/nova-B-chart-supported.strict-schema.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/nova-B-correlated.render.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/nova-B-correlated.render.yaml",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/nova-B-correlated.strict-schema.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/nova-B-correlated.strict-schema.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/nova-B-selected.render.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/nova-B-selected.render.yaml",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/nova-B-selected.strict-schema.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/nova-B-selected.strict-schema.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/nova-B.render.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/nova-B.render.yaml",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/nova-B.strict-schema.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/nova-B.strict-schema.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/prepare-profiles.mjs",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/prism-A-chart-supported.render.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/prism-A-chart-supported.render.yaml",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/prism-A-chart-supported.strict-schema.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/prism-A-chart-supported.strict-schema.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/prism-A-correlated.render.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/prism-A-correlated.render.yaml",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/prism-A-correlated.strict-schema.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/prism-A-correlated.strict-schema.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/prism-A-selected.render.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/prism-A-selected.render.yaml",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/prism-A-selected.strict-schema.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/prism-A-selected.strict-schema.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/prism-A.render.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/prism-A.render.yaml",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/prism-A.strict-schema.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/prism-A.strict-schema.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/prism-B-chart-supported.render.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/prism-B-chart-supported.render.yaml",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/prism-B-chart-supported.strict-schema.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/prism-B-chart-supported.strict-schema.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/prism-B-correlated.render.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/prism-B-correlated.render.yaml",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/prism-B-selected.render.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/prism-B-selected.render.yaml",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/prism-B-selected.strict-schema.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/prism-B-selected.strict-schema.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/prism-B.render.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/prism-B.render.yaml",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/prism-B.strict-schema.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/prism-B.strict-schema.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profile-identities.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profile-preparation-attempt1.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profile-preparation-attempt1.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profile-preparation-attempt2.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profile-preparation-attempt2.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profile-preparation-chart-supported.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profile-preparation-chart-supported.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profile-preparation-correlated.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profile-preparation-correlated.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profile-preparation-selected.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profile-preparation-selected.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/kubeclaw-A.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/kubeclaw-B.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/kubeclaw-buster-A.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/kubeclaw-buster-B.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/native-policy-A.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/native-policy-B.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/prism-A.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/prism-B.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/synthetic-runtime-receipt-A.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/synthetic-runtime-receipt-B.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/render-and-define.py",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/render-definition-attempt1.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/render-definition-attempt1.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/render-definition-chart-supported.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/render-definition-chart-supported.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/render-definition-correlated.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/render-definition-correlated.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/render-definition-selected.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/render-definition-selected.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/role-projection-controls-attempt1.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/role-projection-controls-attempt1.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/role-projection-controls-attempt2.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/role-projection-controls-attempt2.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/role-projection-controls-attempt3.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/role-projection-controls-attempt3.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/role-projection-controls-chart-supported.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/role-projection-controls-chart-supported.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/role-projection-controls-correlated.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/role-projection-controls-correlated.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/snapshots/before-correlated-component-pull-variants/actual-pure-role-projection-controls.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/snapshots/before-correlated-component-pull-variants/actual-whole-document-definitions.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/snapshots/before-correlated-component-pull-variants/kubeclaw-A.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/snapshots/before-correlated-component-pull-variants/kubeclaw-B.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/snapshots/before-correlated-component-pull-variants/kubeclaw-buster-A.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/snapshots/before-correlated-component-pull-variants/kubeclaw-buster-B.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/snapshots/before-correlated-component-pull-variants/native-policy-A.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/snapshots/before-correlated-component-pull-variants/native-policy-B.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/snapshots/before-correlated-component-pull-variants/prepare-profiles.mjs",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/snapshots/before-correlated-component-pull-variants/prism-A.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/snapshots/before-correlated-component-pull-variants/prism-B.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/snapshots/before-correlated-component-pull-variants/profile-identities.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/snapshots/before-correlated-component-pull-variants/synthetic-runtime-receipt-A.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/snapshots/before-correlated-component-pull-variants/synthetic-runtime-receipt-B.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/snapshots/prism-always-schema-rejection/actual-render-schema-observations.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/snapshots/prism-always-schema-rejection/actual-whole-document-definitions.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/snapshots/prism-always-schema-rejection/check-buster-primary-definitions.py",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/snapshots/prism-always-schema-rejection/check-role-projections.mjs",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/snapshots/prism-always-schema-rejection/prepare-profiles.mjs",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/snapshots/prism-always-schema-rejection/prism-B.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/snapshots/prism-always-schema-rejection/profile-identities.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/snapshots/profile-preparation-import-attempt1/prepare-profiles.mjs",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/snapshots/role-projection-manifest-type-attempt1/check-role-projections.mjs",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/snapshots/selected-controller-image-attempt2/actual-render-schema-observations.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/snapshots/selected-controller-image-attempt2/actual-whole-document-definitions.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/snapshots/selected-controller-image-attempt2/buster-A.render.yaml",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/snapshots/selected-controller-image-attempt2/buster-B.render.yaml",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/snapshots/selected-controller-image-attempt2/kubeclaw-buster-A.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/snapshots/selected-controller-image-attempt2/kubeclaw-buster-B.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/snapshots/selected-controller-image-attempt2/prepare-profiles.mjs",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/snapshots/selected-controller-image-attempt2/profile-identities.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/whole-definition-primary-alias-chart-supported.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/whole-definition-primary-alias-chart-supported.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/whole-definition-primary-alias-correlated.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/whole-definition-primary-alias-correlated.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/whole-definition-primary-alias-selected.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/whole-definition-primary-alias-selected.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/whole-definition-primary-alias.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/whole-definition-primary-alias.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-agent-role-event-20/baseline-reference-chain.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-agent-role-event-20/batch16-history-identities.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-agent-role-event-20/build.py",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-agent-role-event-20/build.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-agent-role-event-20/build.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-agent-role-event-20/changed-five-rows-before.json.gz",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-agent-role-event-20/contracts.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-agent-role-event-20/five-role-case-bodies-before.json.gz",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-agent-role-event-20/source-identities.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-agent-role-event-20/uncommitted-case-delta-before.json.gz",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/README.md",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/build.py",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/build.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/build.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/candidate-dispositions.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/candidate-dispositions.py",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/candidate-dispositions.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/candidate-dispositions.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/captured-content-clarification.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/changed-rows-before.json.gz",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/check-attempt1.mjs.snapshot",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/check-attempt1.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/check-attempt1.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/check-attempt2.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/check-attempt2.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/check-integrity.py",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/check-integrity.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/check-integrity.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/check.mjs",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/clarify-captured-content.py",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/clarify-captured-content.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/clarify-captured-content.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/combined-candidate-dispositions.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/committed-baseline-references.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/complete-profiles.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-before-captured-content-clarification.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts-captured-content-corrected.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/contracts.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/dirty-runtime-delivery.patch.gz",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/freeze.py",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/historical-case-supersession.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/integrate.py",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/integrate.stderr",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/integrate.stdout",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations-attempt1.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/observations.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/source-identities.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/stable-milestone-receipt.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/summary.json",
+    "matches": true
+  }
+]

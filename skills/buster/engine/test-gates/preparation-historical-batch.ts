@@ -2,7 +2,7 @@ import { canonicalJson } from '@kubeclaw/pipeline-observability-contract';
 import { assertDurableRecordReplay, payloadDigest, type DurableRecordState } from '@kubeclaw/plugin-foundation/observability/record-retirement';
 import { remotePlanJobDigest, verifySourceSnapshotAttestation, validatePipelineTestGateContract,
   type RemotePlanJobV1 } from '@kubeclaw/pipeline-test-gate-contract';
-import type { BusterPreparationSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+import type { BusterPreparationSettings } from '@kubeclaw/plugin-foundation/config/swarm';
 import { assertPreparedHeader, preparedPlanHeader, preparationDigest } from './preparation-header.ts';
 import { assertPreparationSlot, type PreparationSlot } from './preparation-slots.ts';
 import { assertCompactedPlanJobRecord, type StoredPlanJob } from './remote-plan-compaction.ts';
@@ -41,6 +41,7 @@ function assertImportedPayload(payload: unknown, sequence: number, descriptor: H
     if (payload.historical.importId !== importId || payload.historical.sequence !== sequence
       || payload.historical.originalStoreDigest !== descriptor.originalStoreDigest) throw new Error('BUSTER_HISTORICAL_RECORD_INVALID');
   } else {
+    if ((payload as {schemaVersion?: unknown}).schemaVersion !== 'buster-plan-job-record.v2') throw new Error('BUSTER_HISTORICAL_RECORD_INVALID');
     assertPreparedPlanJobRecord(payload);
     if (payload.input.schemaVersion !== 'buster-historical-input.v1' || payload.input.importId !== importId
       || payload.input.sequence !== sequence || payload.source !== null) throw new Error('BUSTER_HISTORICAL_RECORD_INVALID');

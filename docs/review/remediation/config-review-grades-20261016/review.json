@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The shared capacity and identity normalizers preserve the original activation behavior, and target selection now applies the audit agent trimming. Explicit v2 recovery restores retained targets before activation without merging current target values; v1 recovery retains its previous behavior. No actionable defects were identified in the supplied bundle. Review was source-only because local inspection commands failed; tests and additional packaging inspection were not performed.",
+  "overall_confidence": 0.84
+}

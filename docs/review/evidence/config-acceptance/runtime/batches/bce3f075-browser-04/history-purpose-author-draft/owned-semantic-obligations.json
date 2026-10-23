@@ -1,0 +1,25 @@
+{
+  "lighthouse": [
+    "selectedProfile resolves same owned profiles map, no secondwriter",
+    "purposeperformance requires runs3/5 and nonnull selectedBudget resolving same budgets map; all4 budgetmetrics explicit; previous currentpartial budget/omittedperformancebudget domains need reviewer disposition (targetstricter/unapproved)",
+    "purpose seo/best-practices requires runs1 and selectedBudget:null; waiversallowedonlythatpurpose, unusedperformancewaivers reject beforeeffects",
+    "entirefile parsedallprofiles/budgets; realretained backend profile/run/time/caps/grants compatible"
+  ],
+  "axe": [
+    "selectedProfiles exactownedmaprefs unique; no builtin/missingprofile fallback",
+    "tags and exclude are explicitbusinesscoveragepolicy; actualinstalledAxeCSS/tag/rule support externalrequired, preserve A6 originalscope",
+    "waiverkey auditroute/rule/selector uniqueness, calendarendUTC valid andactualexpiryclock; no firstexpired duplicate fallthrough masqueradingasnewacceptance"
+  ],
+  "visual": [
+    "exactapprovedbaselinev2+observedbrowserVersion/frame/pageConditions +profile referencessameownedmap, not profileclaimofobservedidentity",
+    "masks referselectedtasktargets, uniqueper-target, orderedselectors trueactualpageapplication, duplicate/unknownreject",
+    "uncertainty stillfails, no automaticagentreview or waiver; truepixelcomparison math distinctfromrender"
+  ],
+  "playwright": [
+    "blocking effective minExecuted>=1, zeroactualtestsreject always, skipped/unexecutednotexecute",
+    "requiredtitle exactone actualfulltestsource+realreport, no scope/coverage trimming",
+    "workers intersectdeclaredpolicy/runtime/process minuscurrent4headroom, separateopenheadroomresourcepolicy",
+    "current projectconfigJS imported/spread +secureproxyoverlay/CLIworkers/reporter/alltests; retries/timeouts/hooks/taskconfigembeddedpolicies requireper-source dispositions, not blanketnonsettings"
+  ],
+  "status": "strict targetdomainproposal only; original A6 scope retained, installedbackend and immutablebinding cases notrun/unapproved"
+}

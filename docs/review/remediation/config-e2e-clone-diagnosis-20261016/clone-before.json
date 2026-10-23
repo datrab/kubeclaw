@@ -1,0 +1,11 @@
+{
+  "command": [
+    "node",
+    "--test",
+    "--test-timeout=90000",
+    "--test-name-pattern=materializes canonical swarm review instructions",
+    "tests/verification/e2e/real-run-workspace.test.mjs"
+  ],
+  "exitCode": 1,
+  "seconds": 0.7203831672668457
+}

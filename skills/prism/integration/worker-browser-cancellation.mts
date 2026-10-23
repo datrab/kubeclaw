@@ -1,3 +1,4 @@
+import { nativeEngineSettings } from '../tests/native/resource-policy.mts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
@@ -33,7 +34,7 @@ await test('original engine capture cancellation near launch drains before rejec
   const prerequisite = await openOwnedBrowser(undefined);
   assert(prerequisite.browser.isConnected());
   await prerequisite.close();
-  const engine = new PrismEngine(new DeterministicDesignProvider());
+  const engine = new PrismEngine(new DeterministicDesignProvider(), nativeEngineSettings);
   const owner = new AbortController();
   const capture = engine.execute({ contract: 'kubeclaw.prism-design-engine@1', operation: 'render',
     input: { document: structuredClone(fixture), view: 'home', state: 'default', viewport: 'wide', capture: true },

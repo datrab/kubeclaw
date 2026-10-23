@@ -1,0 +1,7 @@
+# Historical native requirement links — batch12
+
+All269 checkpoint6 unlinked Runtime nativecases already have explicit `superseded` lifecycle:261 original generic grade missing/alternate/mutant cases across87 distinct fields and8 obsolete review attestation alternate claims. This package records exact one-to-many historical→existing activecanonical successor links, not resurrected rowcases. Original bodies/IDs/requirements/results/scopes and2229 immutable observation references are unchanged.
+
+Each mapping preserves original canonicalcasehash, full historical disposition, concrete existing field/grade/registration/sourcehash and classification reason, and exact successor casehash/requirements/result/scope. Actual exported current repository profile resolver reproduced all87 DEFAULTS values; this is pure currentreader evidence, not productive dispatch/model/context capacity. Grades/phase budgets/lenses/expectedattestation have distinct semantic explanations. A6/originalcontext/SDKcodec vs resourcecanonicaltarget, generatedattestation vs dispatch and parentmodulecarrierOPEN retained.
+
+The parent's root269unlinked count remains honest until reviewed one-to-many integration. Parent owns tools and independent recheck; this author changes no root/nativecase/inventory bodies. Noacceptance or fakeclosedMIDs. See native-historical-successor-map.json and current-profile-reader-observations.json. Baseline references are committed6606af9 fullpaths/blobIDs/SHA256, not repeated60MiBfragment snapshots.

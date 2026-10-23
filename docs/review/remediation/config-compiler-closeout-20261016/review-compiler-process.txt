@@ -1,0 +1,13 @@
+autoreview target: local
+branch: master
+engine: codex
+tools: on
+web_search: off
+bundle: 329553 chars
+autoreview findings: 1
+[P1] [P1] Preserve validation of original v1 policy captures
+skills/common/plugin-runtime/foundation/config/core-runtime-policy.schema.json:28
+The shared policy schema now requires new sections such as `resourceAcquisition`, `humanApproval`, and `repositoryRead`, plus new nested fields, even for original v1 policies. `loadCoreRuntimePolicy` still accepts v1 documents, and recovery passes the original snapshot through `captureCoreRuntimePolicy`, but both now validate against this expanded schema. Consequently, policies and run snapshots valid before this patch fail with `CORE_RUNTIME_POLICY_INVALID`, preventing recovery or resumption before graph verification. The fixture that removes only the compiler/version fields from the new policy does not cover actual historical captures. Retain version-specific validation and an explicit compatibility path for original captures without consulting the current owner.
+
+overall: patch is incorrect (0.97)
+The selected compiler policy is captured and reused during recovery, but the expanded shared schema rejects previously valid v1 configuration and retained run policies. This breaks original-run compatibility. Review was based on the supplied source datasets; no tests or native execution were performed.

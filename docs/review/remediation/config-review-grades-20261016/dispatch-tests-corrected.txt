@@ -1,0 +1,5 @@
+npm notice run test
+npm notice run node tests/live-function.test.ts && node tests/package-boundary.test.mjs && node ../../../../tests/verification/reliability/repository-result-paths.test.mjs
+{"ok":true,"plugin":"kubeclaw.runtime-dispatch","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.runtime-dispatch","suite":"package-boundary"}
+{"ok":true,"missingSymlink":true,"directWriter":true,"rootSymlink":true,"idempotency":true,"concurrentAttempts":300,"allowed":38,"denied":262,"outsideWrites":0}

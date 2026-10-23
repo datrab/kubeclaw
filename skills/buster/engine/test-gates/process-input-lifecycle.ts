@@ -1,4 +1,4 @@
-import { validateBusterProcessInputSettings, type BusterProcessInputSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
+import { validateBusterProcessInputSettings, type BusterProcessInputSettings } from '@kubeclaw/plugin-foundation/config/buster-execution';
 import type { ChildProcess } from 'node:child_process';
 import { captureLinuxProcessGroup, linuxProcessGroupRunning } from '@kubeclaw/plugin-foundation/processes/linux-process-group';
 

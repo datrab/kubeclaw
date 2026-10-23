@@ -1,0 +1,66 @@
+{
+  "functions": [
+    {
+      "path": "/app/dist/string-coerce-6kR-86XC.mjs",
+      "sha256": "291f7bc4c89888444e4754689b4bda1694a10b977dda364f1038c415502d8f3b",
+      "function": "normalizeNullableString",
+      "startLine": 7,
+      "verbatim": "function normalizeNullableString(value) {\n\tif (typeof value !== \"string\") return null;\n\tconst trimmed = value.trim();\n\treturn trimmed ? trimmed : null;\n}"
+    },
+    {
+      "path": "/app/dist/string-coerce-6kR-86XC.mjs",
+      "sha256": "291f7bc4c89888444e4754689b4bda1694a10b977dda364f1038c415502d8f3b",
+      "function": "normalizeOptionalString",
+      "startLine": 13,
+      "verbatim": "function normalizeOptionalString(value) {\n\treturn normalizeNullableString(value) ?? void 0;\n}"
+    },
+    {
+      "path": "/app/dist/number-coercion-Dq1l5muL.mjs",
+      "sha256": "8216506195f90a94dd6e4ea489ffbcafcfff0bf608867a0a4667d820c34191f3",
+      "function": "asFiniteNumber",
+      "startLine": 4,
+      "verbatim": "function asFiniteNumber(value) {\n\treturn typeof value === \"number\" && Number.isFinite(value) ? value : void 0;\n}"
+    },
+    {
+      "path": "/app/dist/number-coercion-Dq1l5muL.mjs",
+      "sha256": "8216506195f90a94dd6e4ea489ffbcafcfff0bf608867a0a4667d820c34191f3",
+      "function": "parseStrictInteger",
+      "startLine": 41,
+      "verbatim": "function parseStrictInteger(value) {\n\tif (typeof value === \"number\") return Number.isSafeInteger(value) ? value : void 0;\n\tconst normalized = normalizeOptionalString(value);\n\tif (!normalized || !/^[+-]?\\d+$/.test(normalized)) return;\n\tconst parsed = Number(normalized);\n\treturn Number.isSafeInteger(parsed) ? parsed : void 0;\n}"
+    },
+    {
+      "path": "/app/dist/number-coercion-Dq1l5muL.mjs",
+      "sha256": "8216506195f90a94dd6e4ea489ffbcafcfff0bf608867a0a4667d820c34191f3",
+      "function": "parseStrictNonNegativeInteger",
+      "startLine": 167,
+      "verbatim": "function parseStrictNonNegativeInteger(value) {\n\tconst parsed = parseStrictInteger(value);\n\treturn parsed !== void 0 && parsed >= 0 ? parsed : void 0;\n}"
+    },
+    {
+      "path": "/app/dist/number-coercion-Dq1l5muL.mjs",
+      "sha256": "8216506195f90a94dd6e4ea489ffbcafcfff0bf608867a0a4667d820c34191f3",
+      "function": "resolveTimerTimeoutMs",
+      "startLine": 122,
+      "verbatim": "function resolveTimerTimeoutMs(valueMs, fallbackMs, minMs = 1) {\n\tconst value = asFiniteNumber(valueMs) ?? asFiniteNumber(fallbackMs);\n\tconst min = Math.max(0, Math.floor(minMs));\n\tif (value === void 0) return min;\n\treturn Math.min(Math.max(Math.floor(value), min), MAX_TIMER_TIMEOUT_MS);\n}"
+    },
+    {
+      "path": "/app/dist/agent-via-gateway-B72P8dV8.mjs",
+      "sha256": "f946dcaa9e695f74801fa431eab6274f0d1c50ed84e46179fb567045502612ff",
+      "function": "parseTimeoutSeconds",
+      "startLine": 339,
+      "verbatim": "function parseTimeoutSeconds(opts) {\n\tconst raw = opts.timeout !== void 0 ? parseStrictNonNegativeInteger(opts.timeout) : opts.cfg.agents?.defaults?.timeoutSeconds ?? 600;\n\tif (raw === void 0) throw new Error(`Invalid --timeout. Use seconds as a non-negative integer, for example --timeout 600. Use --timeout 0 to disable the timeout.`);\n\treturn raw;\n}"
+    },
+    {
+      "path": "/app/dist/agent-via-gateway-B72P8dV8.mjs",
+      "sha256": "f946dcaa9e695f74801fa431eab6274f0d1c50ed84e46179fb567045502612ff",
+      "function": "resolveGatewayAgentTimeoutMs",
+      "startLine": 344,
+      "verbatim": "function resolveGatewayAgentTimeoutMs(timeoutSeconds) {\n\tif (timeoutSeconds === 0) return NO_GATEWAY_TIMEOUT_MS;\n\treturn resolveTimerTimeoutMs((timeoutSeconds + 30) * 1e3, 1e4, 1e4);\n}"
+    }
+  ],
+  "constantWitnesses": {
+    "MAX_TIMER_TIMEOUT_MS": "/app/dist/number-coercion-Dq1l5muL.mjs:60",
+    "NO_GATEWAY_TIMEOUT_MS": "/app/dist/agent-via-gateway-B72P8dV8.mjs:144"
+  },
+  "inspectedSafety": "Functions have only Number/Math/trim/regex/cfg reads. No timer/provider/CLI/native/network/credential IO. Whole original host modules never imported.",
+  "deployedIdentityProven": false
+}

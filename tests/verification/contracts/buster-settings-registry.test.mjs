@@ -1,13 +1,15 @@
 import assert from 'node:assert/strict';
-import fs from 'node:fs';
 import test from 'node:test';
+import { captureSwarmSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
+import { canonicalPipelineEntry, readTestPipeline, busterRuntimeSelection } from '../../fixtures/config/pipeline-components.mjs';
 import { validateComponentSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm-bundle.ts';
 import { validateBusterExecutionSettings, validateBusterObservationSettings } from '../../../skills/common/plugin-runtime/foundation/config/buster-execution.ts';
 
 // Read authored bytes inside each test, so registry failures are test failures
 // rather than a shared-fixture module initialization failure before registration.
 function canonicalSettings() {
-  return JSON.parse(fs.readFileSync(new URL('../../../charts/kubeclaw/files/config/buster-engine.config.json', import.meta.url), 'utf8')).settings;
+  const documents = readTestPipeline();
+  return captureSwarmSettings(canonicalPipelineEntry, busterRuntimeSelection(documents)).components['buster-engine'].settings;
 }
 
 for (const [definition, field] of [

@@ -1,0 +1,70 @@
+{
+  "state": "FROZEN independent bounded review, safe for parent read/consolidation; no further mutation",
+  "reviewedScope": "NON-AUTHORED Runtime batch12 historical mappings and parent SDK envelope current-source six controls; authored Delivery controller milestone unchanged",
+  "verdict": "VERIFIED at requested historical mapping/source-control definition scope; no material findings within scope. NOT ACCEPTED as whole C0/native runtime/dispatch/model/module-binding/observer/recovery/effect acceptance.",
+  "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+  "baselineTree": "47ce9b9c092dcd534eb55ddaebaab010e270a5af",
+  "runtimeReceiptSha256": "c28364abb8e336693adbf7c6fdbe27eee04f701281d3d3a61142a0538ca7a0ac",
+  "sdkIdentityRecordSha256": "abf54d73e0f0b822d236b33d02cda92d4f59dbb0f1b136c73fab0ee251a2316e",
+  "report": {
+    "path": "docs/review/remediation/independent-runtime-historical-links-6606.md",
+    "sha256": "5a99aff9cac9a448d8b08429831165cc16aca569b3d17177bd43db131d9bd749"
+  },
+  "manifest": {
+    "path": "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/review-artifact-digests.json",
+    "sha256": "9bd4244dc3ee253dd0a55814ffe4d79f55bebacd9791910a3f317742ece883cc",
+    "files": 27
+  },
+  "manifestVerification": {
+    "path": "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/review-manifest-verification.json",
+    "sha256": "570c8eb5593cf174c5b4c460006918aa7730ac460be1bba862e3029223735788",
+    "result": "passed; identity only"
+  },
+  "independentResults": {
+    "allHistoricalMappings": 269,
+    "gradeHistorical": 261,
+    "attestationHistorical": 8,
+    "distinctMappedFields": 95,
+    "distinctExistingActiveSuccessors": 356,
+    "sourceFilesVerified": 15,
+    "originalCaseDispositionRowHashesRequirementsResultsScopesPreserved": true,
+    "droppedRequirements": [],
+    "structuralSourceIssues": [],
+    "historicalObservationArtifacts": 8,
+    "historicalReferenceOccurrencesScopePreserved": 2229,
+    "pureCurrentProfileControls": 96,
+    "pureCurrentProfileResults": "all passed87defaults+9 actual current codec/output/context rejects",
+    "currentSDKControls": 6,
+    "currentSDKResults": "all passed and exact author stdout byte match",
+    "nativeFutureSuccessorResults": "all remain not-run",
+    "root269Links": "baseline root still269unlinked; no root integration or old-body reactivation performed"
+  },
+  "materialFindings": [],
+  "guardedSensitiveScopes": [
+    "original A6/retained configured128000 context and SDK finitecodec vs actual runtime target preserved, not physicalcapacity proof",
+    "unsupported current codec/output/context alternates explicitly future approved compatibility proposals",
+    "eight current reviewer settings constrain expected attestation/cache rather than businessdispatch selection; proposed generatedtarget aliases not currentimplementation",
+    "genericpayload.binding accepts only genericJSON, no typedmodule/membership/authority/grant/quota proof",
+    "observer/recovery/Runner source paths reviewed but not executed",
+    "historicalrowclassification copied from immutablebaseline, not targetpolicy/fullsemantic acceptance"
+  ],
+  "authoredDeliveryGuard": {
+    "receiptSha256": "777092c34cca7c1f81f43dd790d464ca8aae9acb7203867084cf2d93f786b452",
+    "manifestFilesUnchanged": 1881,
+    "substantiveSelfReview": false
+  },
+  "remainingOutsideScope": [
+    "parent-owned reviewed one-to-many root integration, preserving old requirements/result/scope/hash and inactive disposition",
+    "full Runtime target/domain/profile/harness/native field-effect completeness and actual installedprofile/provider/grants",
+    "universal originalModule/carrier/task-operator/grant/cleanup versioned SDK/observer/recovery compatibility migration",
+    "whole C0 acceptance and C1 implementation approval"
+  ],
+  "actionsNotTaken": [
+    "parent/Runtime/Delivery/productive/test/tool/consolidator edits",
+    "obsolete-case or Runner/FileJournal/observer/stage/module recovery execution",
+    "model/runtime dispatch/host/API/image/account/paid actions",
+    "delegation",
+    "commits",
+    "global acceptance"
+  ]
+}

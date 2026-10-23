@@ -1,0 +1,51 @@
+contracts/pipeline-worker-core/v1/README.md:17:- `workerCancellationRequest`
+contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json:63:    "workerTrustEnvelope": {
+contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json:444:    "workerCancellationRequest": {
+contracts/pipeline-worker-core/v1/src/trust.ts:3:import type { WorkerTrustEnvelopeV1 } from './types.ts';
+contracts/pipeline-worker-core/v1/src/trust.ts:5:export type UnsignedWorkerTrustEnvelopeV1 = Omit<WorkerTrustEnvelopeV1, 'algorithm' | 'signature'>;
+contracts/pipeline-worker-core/v1/src/trust.ts:7:function signingMessage(value: UnsignedWorkerTrustEnvelopeV1 | WorkerTrustEnvelopeV1): Buffer {
+contracts/pipeline-worker-core/v1/src/trust.ts:8:  const { algorithm: _algorithm, signature: _signature, ...unsigned } = value as WorkerTrustEnvelopeV1;
+contracts/pipeline-worker-core/v1/src/trust.ts:12:export function signWorkerTrustEnvelope(
+contracts/pipeline-worker-core/v1/src/trust.ts:13:  value: UnsignedWorkerTrustEnvelopeV1,
+contracts/pipeline-worker-core/v1/src/trust.ts:15:): WorkerTrustEnvelopeV1 {
+contracts/pipeline-worker-core/v1/src/trust.ts:25:export function verifyWorkerTrustEnvelope(
+contracts/pipeline-worker-core/v1/src/trust.ts:26:  value: WorkerTrustEnvelopeV1,
+contracts/pipeline-worker-core/v1/src/types.ts:12:export interface WorkerTrustEnvelopeV1 {
+contracts/pipeline-worker-core/v1/src/types.ts:186:export interface WorkerCancellationRequestV1 {
+contracts/pipeline-worker-core/v1/src/types.ts:263:  | 'workerTrustEnvelope'
+contracts/pipeline-worker-core/v1/src/types.ts:272:  | 'workerCancellationRequest'
+contracts/pipeline-worker-core/v1/src/validation.ts:12:  WorkerCancellationRequestV1,
+contracts/pipeline-worker-core/v1/src/validation.ts:15:  WorkerTrustEnvelopeV1,
+contracts/pipeline-worker-core/v1/src/validation.ts:63:  if (definition === 'workerTrustEnvelope') {
+contracts/pipeline-worker-core/v1/src/validation.ts:64:    const envelope = value as WorkerTrustEnvelopeV1;
+contracts/pipeline-worker-core/v1/src/validation.ts:234:export function checkWorkerCancellationBinding(
+contracts/pipeline-worker-core/v1/src/validation.ts:236:  request: WorkerCancellationRequestV1,
+tests/verification/contracts/check-pipeline-worker-core-contracts.mts:9:  checkWorkerCancellationBinding,
+tests/verification/contracts/check-pipeline-worker-core-contracts.mts:15:  signWorkerTrustEnvelope,
+tests/verification/contracts/check-pipeline-worker-core-contracts.mts:16:  verifyWorkerTrustEnvelope,
+tests/verification/contracts/check-pipeline-worker-core-contracts.mts:26:  WorkerCancellationRequestV1,
+tests/verification/contracts/check-pipeline-worker-core-contracts.mts:31:  WorkerTrustEnvelopeV1,
+tests/verification/contracts/check-pipeline-worker-core-contracts.mts:41:  'workerTrustEnvelope',
+tests/verification/contracts/check-pipeline-worker-core-contracts.mts:50:  'workerCancellationRequest',
+tests/verification/contracts/check-pipeline-worker-core-contracts.mts:56:const trustEnvelope = signWorkerTrustEnvelope({
+tests/verification/contracts/check-pipeline-worker-core-contracts.mts:68:}, trustKeys.privateKey) satisfies WorkerTrustEnvelopeV1;
+tests/verification/contracts/check-pipeline-worker-core-contracts.mts:69:validatePipelineWorkerCoreContract('workerTrustEnvelope', trustEnvelope);
+tests/verification/contracts/check-pipeline-worker-core-contracts.mts:70:assert.equal(verifyWorkerTrustEnvelope(trustEnvelope, trustKeys.publicKey, {
+tests/verification/contracts/check-pipeline-worker-core-contracts.mts:75:assert.equal(verifyWorkerTrustEnvelope({ ...trustEnvelope, subjectDigest: `sha256:${'e'.repeat(64)}` },
+tests/verification/contracts/check-pipeline-worker-core-contracts.mts:78:assert.equal(verifyWorkerTrustEnvelope(trustEnvelope, trustKeys.publicKey, {
+tests/verification/contracts/check-pipeline-worker-core-contracts.mts:83:assert.equal(verifyWorkerTrustEnvelope(trustEnvelope, trustKeys.publicKey, {
+tests/verification/contracts/check-pipeline-worker-core-contracts.mts:88:assert.equal(verifyWorkerTrustEnvelope(trustEnvelope, trustKeys.publicKey, {
+tests/verification/contracts/check-pipeline-worker-core-contracts.mts:93:assert.equal(verifyWorkerTrustEnvelope(trustEnvelope, trustKeys.publicKey, {
+tests/verification/contracts/check-pipeline-worker-core-contracts.mts:98:assert.equal(verifyWorkerTrustEnvelope({ ...trustEnvelope, issuedAt: 'not-a-time' }, trustKeys.publicKey, {
+tests/verification/contracts/check-pipeline-worker-core-contracts.mts:101:assert.equal(verifyWorkerTrustEnvelope({ ...trustEnvelope,
+tests/verification/contracts/check-pipeline-worker-core-contracts.mts:106:assert.equal(verifyWorkerTrustEnvelope(trustEnvelope, wrongTrustKeys.publicKey, {
+tests/verification/contracts/check-pipeline-worker-core-contracts.mts:110:assert.throws(() => signWorkerTrustEnvelope({
+tests/verification/contracts/check-pipeline-worker-core-contracts.mts:117:assert.equal(verifyWorkerTrustEnvelope(trustEnvelope, rsaTrustKeys.publicKey, {
+tests/verification/contracts/check-pipeline-worker-core-contracts.mts:120:assert.equal(verifyWorkerTrustEnvelope({ ...trustEnvelope, signature: 'invalid' }, trustKeys.publicKey, {
+tests/verification/contracts/check-pipeline-worker-core-contracts.mts:255:} satisfies WorkerCancellationRequestV1;
+tests/verification/contracts/check-pipeline-worker-core-contracts.mts:306:  workerTrustEnvelope: trustEnvelope,
+tests/verification/contracts/check-pipeline-worker-core-contracts.mts:315:  workerCancellationRequest: cancellation,
+tests/verification/contracts/check-pipeline-worker-core-contracts.mts:388:assert.equal(schemaValid('workerCancellationRequest', { ...cancellation, reason: '' }), false,
+tests/verification/contracts/check-pipeline-worker-core-contracts.mts:390:assert.equal(schemaValid('workerCancellationRequest', { ...cancellation, forceAfterMs: 2147483648 }), false,
+tests/verification/contracts/check-pipeline-worker-core-contracts.mts:423:assert.deepEqual(checkWorkerCancellationBinding(envelope, cancellation), { ok: true, errors: [] });
+tests/verification/contracts/check-pipeline-worker-core-contracts.mts:424:assert.equal(checkWorkerCancellationBinding(envelope, { ...cancellation, cancellationId: 'cancel:other:1' }).ok, false,

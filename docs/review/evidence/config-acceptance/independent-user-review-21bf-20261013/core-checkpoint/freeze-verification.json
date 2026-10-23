@@ -1,0 +1,17 @@
+{
+  "partChecks": [
+    {
+      "path": "docs/review/evidence/config-acceptance/author/checkpoint-7-dirty.patch.gz.part-001",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/checkpoint-7-dirty.patch.gz.part-002",
+      "matches": true
+    }
+  ],
+  "gzipSha256Matches": true,
+  "rawSha256Matches": true,
+  "rawBytesMatches": true,
+  "parentMatches": true,
+  "selfExclusions": "This receipt and its derived patch parts are added after capture to avoid recursive inclusion. Later checkpoint metadata is separately identified at commit; no final whole-C0 acceptance freeze is claimed."
+}

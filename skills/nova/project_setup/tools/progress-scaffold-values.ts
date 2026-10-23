@@ -1,3 +1,4 @@
+import type { WorkerCorePolicyCapture } from '@kubeclaw/plugin-foundation/config/worker-core-policy';
 import fs, { type Dirent } from 'node:fs';
 import path from 'node:path';
 
@@ -11,8 +12,11 @@ export type Args = {
   repo: string | null;
   swarm: string | null;
   scaffold: string | null;
+  workerCoreFile: string | null;
+  workerCoreProfile: string | null;
 };
 export type Context = {
+  workerCore?: WorkerCorePolicyCapture;
   repoRoot: string;
   project: string;
   swarmDir: string;

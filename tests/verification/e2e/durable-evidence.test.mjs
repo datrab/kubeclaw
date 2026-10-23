@@ -1,3 +1,5 @@
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import fs from 'node:fs';
@@ -8,7 +10,7 @@ import { readRunArtifacts } from './real-run-evidence.mjs';
 
 test('E2E acceptance reads actual durable artifact writes and rejects damaged evidence', async () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'e2e-durable-evidence-'));
-  const adapter = activate({ config: { artifactRoot: root } });
+  const adapter = activate({ config: { ...TEST_ARTIFACT_STORE_POLICY, artifactRoot: root } });
   const namespace = 'kubeclaw.lint';
   try {
     await adapter.ready();

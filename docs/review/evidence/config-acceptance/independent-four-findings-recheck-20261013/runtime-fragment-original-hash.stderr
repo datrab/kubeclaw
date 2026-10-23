@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/four-findings-fix-20261013/runtime/verify.py", line 43, in <module>
+    assert history['oldRowSHA256'] == digest(old), 'Original row digest mismatch: ' + setting
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Original row digest mismatch: RT-NOVA-REMOTE-SCHEMAVERSION

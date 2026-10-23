@@ -1,4 +1,4 @@
-import { validateBusterProcessInputSettings, type BusterProcessInputSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
+import { validateBusterProcessInputSettings, type BusterProcessInputSettings } from '@kubeclaw/plugin-foundation/config/buster-execution';
 import { spawn } from 'node:child_process';
 import { ProcessInputLifecycle } from './process-input-lifecycle.ts';
 

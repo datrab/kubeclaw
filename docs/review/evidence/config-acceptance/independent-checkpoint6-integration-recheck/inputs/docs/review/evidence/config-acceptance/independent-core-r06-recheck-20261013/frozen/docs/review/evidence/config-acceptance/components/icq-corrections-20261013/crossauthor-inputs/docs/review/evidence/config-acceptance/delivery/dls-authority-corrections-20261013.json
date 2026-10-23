@@ -1,0 +1,208 @@
+{
+  "scope": "source-derived DLS001003 correction, reviewer pending; all runtime cases not-run",
+  "DLS001": {
+    "id": "DLV-NATIVE-HOST-RUNTIME-CONTAINERDVERSION",
+    "owner": "native-host",
+    "scope": {
+      "instance": "native-host",
+      "profile": "production deployment; alternate profiles proposed"
+    },
+    "class": "version",
+    "source": {
+      "path": "scripts/native-worker-node-policy.mjs",
+      "field": "runtime.containerdVersion",
+      "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+      "line": null
+    },
+    "current": {
+      "valueOrDefault": "explicit native-worker-pools YAML policy; values not copied from deployment environment",
+      "precedence": "explicit POLICY_YAML \u2192 validated object \u2192 renderer projections; role pool selection not keywise merge"
+    },
+    "typeUnitDomain": "Selected version string matches existing renderer ^v?2.(?:[2-9]|[1-9][0-9]+).[0-9]+(?:[-+][A-Za-z0-9.-]+)?$ with dots literal in source; exact source regex retained. Target versions.json validator uses that exact supported syntax; deployed match normalizes only leading v in capacity helper, activation comparison currently exact. Distribution suffix preserved, no generic semver/image substitution. Authentic selected installed ABI/package/distribution compatibility required before host transition.",
+    "reader": {
+      "operation": "nriPolicy render-only validator, NOT validateNativeNodePolicy \u2192 native-nri.json/containerd native verification",
+      "references": [
+        {
+          "path": "scripts/native-worker-node-policy.mjs",
+          "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+        },
+        {
+          "path": "scripts/render-native-worker-node.mjs",
+          "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+        },
+        {
+          "path": "scripts/prepare-native-worker-pools.mjs",
+          "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+        }
+      ]
+    },
+    "productiveCallerChain": "render-native-worker-node CLI POLICY_YAML NEW_OUTPUT_DIRECTORY \u2192 emitted pool/NRI/Kubelet/systemd artifacts \u2192 initial stage installer \u2192 native host preflight \u2192 worker pool loaders",
+    "validation": {
+      "schema": "handwritten source validators",
+      "semantic": "string /^v?2\\.(?:[2-9]|[1-9][0-9]+)\\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$/; 2.2+ intended support; exact buster,prism pool keys required. No general additionalProperties rejection: unknown fields pass current validator and participate in full selected JSON policyDigest",
+      "errorContract": "NATIVE_NODE_SELECTED_CONTAINERD_VERSION_REQUIRED"
+    },
+    "target": {
+      "author": "versions.json",
+      "reference": "/nativeRuntime/containerd/version",
+      "slice": "C1 new version-manifest member + every real host renderer/preflight/activation caller projection; C3 host maintenance execution only after approval",
+      "classification": "version",
+      "currentAbsence": "versions.json currently has no containerd member; native YAML currently authors runtime.containerdVersion. No existing entry, validator or projection claimed.",
+      "proposal": "add nativeRuntime.containerd.version under the existing sole software-version manifest, not infrastructure image-only map and not host YAML editable version. scripts/versions.mjs must explicitly validate/use this new member and reject unused/conflicting entries; host materializer emits read-only runtime.containerdVersion projection from the selected manifest generation. Native selection is a manifest reference/digest, not a free host-version string."
+    },
+    "activationScope": {
+      "current": "explicit selected YAML runtime.containerdVersion is validated/projected by renderer and compared with node status/activation; currently a competing version author",
+      "target": "H/V: node software maintenance. Require recorded installed runtime/distribution/package receipt, selected versions generation and host-layout compatibility; fence admission and quiesce/drain owned scopes before upgrade. Never retarget a started A attempt or cleanup to B runtime/host; resume only after exact deployed runtime and NRI/cgroup readback matches selected version. Not ordinary next-module policy tuning.",
+      "runStable": "captured installed runtime identity/grants/native ownership remain A for running/recovery scopes; B cannot clear journals/cgroups or reuse A scope identity"
+    },
+    "recoveryRetryClaimDeadlineBudgetEffects": "native pool capacity, Kubernetes reservation, max active scopes and host ownership; D18 migration deferred after T",
+    "profileEvalSuitability": "alternate valid profiles appropriate; fixed-generation Eval requires immutable binding before dispatch",
+    "migrationAction": "Move sole editable containerd version to versions.json /nativeRuntime/containerd/version. Preserve current selected my-values/infra/native-worker-pools-ax41.yaml runtime.containerdVersion=2.3.4-k3s1.36 as migration source, NOT installed observation; project immutable same-generation host YAML and all native outputs. Reject old equal/different YAML author. Include versions validator/CI/deploy renderer/preflight/activation/capacity consumers together; no host upgrade authorized in C0.",
+    "requirementIds": [
+      "C0-A",
+      "C0-B",
+      "C0-C",
+      "F-AUTH",
+      "F-VAL",
+      "F-EFFECT",
+      "F-DELIVERY"
+    ],
+    "caseIds": [
+      "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+      "DLV-CASE-NATIVE-HOST-ACTIVATION"
+    ],
+    "evidence": [
+      "docs/review/evidence/config-acceptance/delivery/source-observations.txt"
+    ],
+    "status": "source-traced"
+  },
+  "DLS003": {
+    "id": "DLV-NATIVE-HOST-POOL-CPU-PERIOD-PROJECTION",
+    "owner": "native-delivery-projection",
+    "scope": {
+      "instance": "native host setup",
+      "profile": "selected actual role/host generation; proposed isolated alternatives only"
+    },
+    "class": "operator-setting",
+    "source": {
+      "path": "scripts/native-worker-node-policy.mjs",
+      "line": 48,
+      "field": "pool CPU period / quota relation",
+      "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+    },
+    "current": {
+      "valueOrDefault": "period100000us; quota=cpuMillicores*100",
+      "precedence": "actual current source producer or literal; no alternate author or equality proof inferred"
+    },
+    "typeUnitDomain": "Generated current100000us. Proposed sole host adjustable period integer1000..1000000us, coupled quota cpuMillicores*period/1000 integral safe >=1000; quotas/rate/hostreadback exactly captured. Memory4096-alignment is separate from CPU and requires actual node/page/cgroup readback. Core generated alias exact CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS",
+    "reader": {
+      "operation": "100ms is current literal scheduler policy, NOT fundamental invariant. Existing setup validates period1000..1000000us and quota>=1000us safe integers; selected millicores with period yields quota=millicores*period/1000, must be exact valid integer and real cgroup supported. Proposed same existing host pools.<role>.cpuPeriodMicroseconds C3 extension; period100000\u2192200000 with corresponding quota scaling and identical CPU rate A/B; memory multiple4096 and actual kernel/page/cgroup readback distinct.",
+      "references": [
+        {
+          "path": "scripts/native-worker-node-policy.mjs",
+          "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+        },
+        {
+          "path": "scripts/prepare-native-worker-pools.mjs",
+          "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3"
+        },
+        {
+          "path": "scripts/render-native-worker-node.mjs",
+          "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+        }
+      ],
+      "crossOwnerHandoff": {
+        "settingId": "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS",
+        "owner": "worker-core",
+        "fragment": "docs/review/evidence/config-acceptance/components/residual-fragment.json",
+        "source": {
+          "path": "scripts/native-worker-node-policy.mjs",
+          "field": "limits.cpuPeriodMicroseconds",
+          "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+        },
+        "caseIds": [
+          "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS-VAL",
+          "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS-CONTRACT"
+        ],
+        "class": "generated-binding"
+      }
+    },
+    "productiveCallerChain": "100ms is current literal scheduler policy, NOT fundamental invariant. Existing setup validates period1000..1000000us and quota>=1000us safe integers; selected millicores with period yields quota=millicores*period/1000, must be exact valid integer and real cgroup supported. Proposed same existing host pools.<role>.cpuPeriodMicroseconds C3 extension; period100000\u2192200000 with corresponding quota scaling and identical CPU rate A/B; memory multiple4096 and actual kernel/page/cgroup readback distinct.",
+    "validation": {
+      "schema": "exact described native source producer/guard; live authentic native dependencies not executed",
+      "semantic": "100ms is current literal scheduler policy, NOT fundamental invariant. Existing setup validates period1000..1000000us and quota>=1000us safe integers; selected millicores with period yields quota=millicores*period/1000, must be exact valid integer and real cgroup supported. Proposed same existing host pools.<role>.cpuPeriodMicroseconds C3 extension; period100000\u2192200000 with corresponding quota scaling and identical CPU rate A/B; memory multiple4096 and actual kernel/page/cgroup readback distinct.",
+      "errorContract": "source-linked trusted-root/native policy/digest/identity/role/byte/CPU guards, not fabricated generic JSON rejection"
+    },
+    "target": {
+      "author": "same existing selected native-host POLICY_YAML producer; proposed config/native-host/<selected-node>/policy.yaml",
+      "reference": "/pools/<role>/cpuPeriodMicroseconds",
+      "readerAlias": {
+        "settingId": "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS",
+        "owner": "worker-core",
+        "fragment": "docs/review/evidence/config-acceptance/components/residual-fragment.json",
+        "source": {
+          "path": "scripts/native-worker-node-policy.mjs",
+          "field": "limits.cpuPeriodMicroseconds",
+          "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+        },
+        "caseIds": [
+          "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS-VAL",
+          "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS-CONTRACT"
+        ],
+        "class": "generated-binding"
+      },
+      "slice": "C3 same-host policy extension; no second WorkerCore writer",
+      "quotaRule": "quota=cpuMillicores*periodMicroseconds/1000 must be integral safe integer and >=1000; period safe integer1000..1000000. Keep rate exact, role pool totals/reservations coupled. Current projection fixes period100000 and quota=cpuMillicores*100; alternate period requires approved producer extension."
+    },
+    "activationScope": {
+      "current": "renderer fixes100000us cadence; native setup/Core validate exact selected period/quota and kernel readback",
+      "target": "H: maintenance of same role-pool scheduler policy; fence admission, ensure empty/quiescent old pool with retained ownership ledger, apply correlated quota/period then compare cpu.max and scope/parent/node/runtime identities before readiness. Do not hot-retarget active scopes or classify as ordinary next-module change.",
+      "runStable": "started scopes retain original quota/period/kernel identity and cleanup ownership. B publication alone changes no A pool"
+    },
+    "recoveryRetryClaimDeadlineBudgetEffects": "native paths/uid/groups/grants/package/image/revision identity must remain mutually consistent; envelope content/source authority not replaceable by same-shaped OCI hash; resource/budget/recovery readers preserve started run authority",
+    "profileEvalSuitability": "A/B fixed native config/state/source locators retained; selected complete role image/host-policy/Core records, actual node/runtime identity and permissions supplied by isolated authentic fixture. Policy cap65536\u219232768 / period100000\u2192200000 correlated quota examples require serialized size/cgroup native prerequisites; no host probe",
+    "migrationAction": "bind actual source/package content digest, OCI image digest and source revision distinctly; native bootstrap refs generated from same existing selected owner/host policy. Do not create a second writer for Core native file caps or shared lease policy.",
+    "requirementIds": [
+      "C0-A",
+      "C0-B",
+      "C0-C",
+      "F-AUTH",
+      "F-VAL",
+      "F-EFFECT",
+      "F-DELIVERY"
+    ],
+    "caseIds": [
+      "DLV-CASE-NATIVE-PROVISIONING-IDENTITY-CLOSURE"
+    ],
+    "evidence": [
+      "docs/review/evidence/config-acceptance/delivery/native-provisioning-contracts-bce3f075.json"
+    ],
+    "status": "source-traced"
+  },
+  "primaryAliasVerification": {
+    "settingId": "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS",
+    "owner": "worker-core",
+    "fragment": "docs/review/evidence/config-acceptance/components/residual-fragment.json",
+    "source": {
+      "path": "scripts/native-worker-node-policy.mjs",
+      "field": "limits.cpuPeriodMicroseconds",
+      "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+    },
+    "caseIds": [
+      "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS-VAL",
+      "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS-CONTRACT"
+    ],
+    "class": "generated-binding"
+  },
+  "snapshot": "snapshots/dls-correction-20261013-before",
+  "sourceDigests": {
+    "versions.json": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d",
+    "my-values/infra/native-worker-pools-ax41.yaml": "47b2aa2f998dd741a31a914cf3fb3a293a335863679734656de1a5b1c366696c",
+    "scripts/versions.mjs": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00",
+    "scripts/render-native-worker-node.mjs": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+    "scripts/native-worker-node-capacity.mjs": "ad4635917bf9d1679eeb427e933fe423ed63f604b0cf57cc09c40be497d0e149",
+    "scripts/activate-native-worker-ax41.sh": "61d6a0ee66a726237b81a14b1b29b3bf074af15040f65ac0eeb5b9b4cc94f7cd",
+    "scripts/native-worker-node-policy.mjs": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+    "skills/worker/core/worker/native-pool-policy.ts": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307"
+  }
+}

@@ -1,6 +1,6 @@
 import { randomBytes } from 'node:crypto';
 import type { NativeAttemptJournal, NativeWorkerOwnership } from '@kubeclaw/worker-core';
-import type { BusterPreparationSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+import type { BusterPreparationSettings } from '@kubeclaw/plugin-foundation/config/swarm';
 import { preparationDigest, type PreparedPlanJob } from './preparation-header.ts';
 import { assertStagedInput, type StagedAdmission } from './preparation-input.ts';
 import { preparationProfile } from './preparation-envelope.ts';
@@ -25,7 +25,7 @@ export async function executeBusterPreparation(options: PreparationExecutionOpti
   admit: (job: PreparedPlanJob) => Promise<boolean>): Promise<StagedAdmission | null> {
   const { ledger } = options;
   const admissionId = randomBytes(16).toString('hex');
-  const envelope = await ledger.reserve(admissionId, preparationProfile(options.engineContentDigest), new Date());
+  const envelope = await ledger.reserve(admissionId, preparationProfile(options.engineContentDigest, options.ledger.version), new Date());
   const gate = await createPreparationGate(options.command.sourceRoot, admissionId, envelope);
   await ledger.bindGate(admissionId, gate);
   let permitted: StagedAdmission | undefined;

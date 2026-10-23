@@ -1,0 +1,291 @@
+{
+  "scope": "concrete same-owner physical proposals, not approved implementation or target semantic closure",
+  "records": [
+    {
+      "id": "DLV-OPS-MCP-KUBERNETES-API-URL",
+      "target": {
+        "author": "charts/ops-pod/values.yaml#/mcp/kubernetes (proposed physical extension of EXISTING Ops deployment/service Chart author; complete selected values referenced by pipeline.config.json, no parallel runtime policy)",
+        "reference": "KUBERNETES_API_URL",
+        "justification": "existing workload projects Ops service configuration; proposed same-owner extension materializes explicit service constructor inputs. Function timeout is NOT ENV today; C3 adds explicit real option wiring without inventing current ENV support. Endpoint/credential/CA/executable locators derive one selected cluster/tool/credential binding, not independent policy writers.",
+        "pairedBindingContract": "HTTPS canonical origin without userinfo/path/search/hash; token+CA regular readable fixture files bound to that SAME service identity; token/CA reread every GET; CA must authenticate selected origin before HTTP semantics. Registry/image versions remain sole versions.json V authority; path ref is not version equality."
+      },
+      "remaining": "exact complete mcp service target schema/profile, declared timer range/reject boundary, executable/CA/credential native fixture and tools/call observer harness; native command/source existence is not effective acceptance"
+    },
+    {
+      "id": "DLV-OPS-MCP-KUBERNETES-TOKEN-FILE",
+      "target": {
+        "author": "charts/ops-pod/values.yaml#/mcp/kubernetes (proposed physical extension of EXISTING Ops deployment/service Chart author; complete selected values referenced by pipeline.config.json, no parallel runtime policy)",
+        "reference": "KUBERNETES_TOKEN_FILE",
+        "justification": "existing workload projects Ops service configuration; proposed same-owner extension materializes explicit service constructor inputs. Function timeout is NOT ENV today; C3 adds explicit real option wiring without inventing current ENV support. Endpoint/credential/CA/executable locators derive one selected cluster/tool/credential binding, not independent policy writers.",
+        "pairedBindingContract": "HTTPS canonical origin without userinfo/path/search/hash; token+CA regular readable fixture files bound to that SAME service identity; token/CA reread every GET; CA must authenticate selected origin before HTTP semantics. Registry/image versions remain sole versions.json V authority; path ref is not version equality."
+      },
+      "remaining": "exact complete mcp service target schema/profile, declared timer range/reject boundary, executable/CA/credential native fixture and tools/call observer harness; native command/source existence is not effective acceptance"
+    },
+    {
+      "id": "DLV-OPS-MCP-KUBERNETES-CA-FILE",
+      "target": {
+        "author": "charts/ops-pod/values.yaml#/mcp/kubernetes (proposed physical extension of EXISTING Ops deployment/service Chart author; complete selected values referenced by pipeline.config.json, no parallel runtime policy)",
+        "reference": "KUBERNETES_CA_FILE",
+        "justification": "existing workload projects Ops service configuration; proposed same-owner extension materializes explicit service constructor inputs. Function timeout is NOT ENV today; C3 adds explicit real option wiring without inventing current ENV support. Endpoint/credential/CA/executable locators derive one selected cluster/tool/credential binding, not independent policy writers.",
+        "pairedBindingContract": "HTTPS canonical origin without userinfo/path/search/hash; token+CA regular readable fixture files bound to that SAME service identity; token/CA reread every GET; CA must authenticate selected origin before HTTP semantics. Registry/image versions remain sole versions.json V authority; path ref is not version equality."
+      },
+      "remaining": "exact complete mcp service target schema/profile, declared timer range/reject boundary, executable/CA/credential native fixture and tools/call observer harness; native command/source existence is not effective acceptance"
+    },
+    {
+      "id": "DLV-OPS-MCP-TIMEOUTMS",
+      "target": {
+        "author": "charts/ops-pod/values.yaml#/mcp/kubernetes (proposed physical extension of EXISTING Ops deployment/service Chart author; complete selected values referenced by pipeline.config.json, no parallel runtime policy)",
+        "reference": "timeoutMs",
+        "justification": "existing workload projects Ops service configuration; proposed same-owner extension materializes explicit service constructor inputs. Function timeout is NOT ENV today; C3 adds explicit real option wiring without inventing current ENV support. Endpoint/credential/CA/executable locators derive one selected cluster/tool/credential binding, not independent policy writers.",
+        "pairedBindingContract": "HTTPS canonical origin without userinfo/path/search/hash; token+CA regular readable fixture files bound to that SAME service identity; token/CA reread every GET; CA must authenticate selected origin before HTTP semantics. Registry/image versions remain sole versions.json V authority; path ref is not version equality."
+      },
+      "remaining": "exact complete mcp service target schema/profile, declared timer range/reject boundary, executable/CA/credential native fixture and tools/call observer harness; native command/source existence is not effective acceptance"
+    },
+    {
+      "id": "DLV-OPS-MCP-HUBBLE-BIN",
+      "target": {
+        "author": "charts/ops-pod/values.yaml#/mcp/hubble (proposed physical extension of EXISTING Ops deployment/service Chart author; complete selected values referenced by pipeline.config.json, no parallel runtime policy)",
+        "reference": "HUBBLE_BIN",
+        "justification": "existing workload projects Ops service configuration; proposed same-owner extension materializes explicit service constructor inputs. Function timeout is NOT ENV today; C3 adds explicit real option wiring without inventing current ENV support. Endpoint/credential/CA/executable locators derive one selected cluster/tool/credential binding, not independent policy writers.",
+        "pairedBindingContract": "executable absolute locator derived from selected authentic locked Go build/PATH ABI; server references same selected native Hubble relay; spawn uses only PATH and HOME=/tmp, no shell. Timeout returns partial CLI/flow semantics, not workflow retry budget."
+      },
+      "remaining": "exact complete mcp service target schema/profile, declared timer range/reject boundary, executable/CA/credential native fixture and tools/call observer harness; native command/source existence is not effective acceptance"
+    },
+    {
+      "id": "DLV-OPS-MCP-HUBBLE-SERVER",
+      "target": {
+        "author": "charts/ops-pod/values.yaml#/mcp/hubble (proposed physical extension of EXISTING Ops deployment/service Chart author; complete selected values referenced by pipeline.config.json, no parallel runtime policy)",
+        "reference": "HUBBLE_SERVER",
+        "justification": "existing workload projects Ops service configuration; proposed same-owner extension materializes explicit service constructor inputs. Function timeout is NOT ENV today; C3 adds explicit real option wiring without inventing current ENV support. Endpoint/credential/CA/executable locators derive one selected cluster/tool/credential binding, not independent policy writers.",
+        "pairedBindingContract": "executable absolute locator derived from selected authentic locked Go build/PATH ABI; server references same selected native Hubble relay; spawn uses only PATH and HOME=/tmp, no shell. Timeout returns partial CLI/flow semantics, not workflow retry budget."
+      },
+      "remaining": "exact complete mcp service target schema/profile, declared timer range/reject boundary, executable/CA/credential native fixture and tools/call observer harness; native command/source existence is not effective acceptance"
+    },
+    {
+      "id": "DLV-OPS-MCP-TIMEOUT",
+      "target": {
+        "author": "charts/ops-pod/values.yaml#/mcp/hubble (proposed physical extension of EXISTING Ops deployment/service Chart author; complete selected values referenced by pipeline.config.json, no parallel runtime policy)",
+        "reference": "timeout",
+        "justification": "existing workload projects Ops service configuration; proposed same-owner extension materializes explicit service constructor inputs. Function timeout is NOT ENV today; C3 adds explicit real option wiring without inventing current ENV support. Endpoint/credential/CA/executable locators derive one selected cluster/tool/credential binding, not independent policy writers.",
+        "pairedBindingContract": "executable absolute locator derived from selected authentic locked Go build/PATH ABI; server references same selected native Hubble relay; spawn uses only PATH and HOME=/tmp, no shell. Timeout returns partial CLI/flow semantics, not workflow retry budget."
+      },
+      "remaining": "exact complete mcp service target schema/profile, declared timer range/reject boundary, executable/CA/credential native fixture and tools/call observer harness; native command/source existence is not effective acceptance"
+    },
+    {
+      "id": "DLV-NATIVE-HOST-SCHEMAVERSION",
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "schemaVersion",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "currentDefinitionProfiles": [
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.yaml",
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.yaml"
+      ]
+    },
+    {
+      "id": "DLV-NATIVE-HOST-NODENAME",
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "nodeName",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "currentDefinitionProfiles": [
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.yaml",
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.yaml"
+      ]
+    },
+    {
+      "id": "DLV-NATIVE-HOST-SYSTEMRESERVE-CPUMILLICORES",
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "systemReserve.cpuMillicores",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "currentDefinitionProfiles": [
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.yaml",
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.yaml"
+      ]
+    },
+    {
+      "id": "DLV-NATIVE-HOST-SYSTEMRESERVE-MEMORYBYTES",
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "systemReserve.memoryBytes",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "currentDefinitionProfiles": [
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.yaml",
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.yaml"
+      ]
+    },
+    {
+      "id": "DLV-NATIVE-HOST-SYSTEMRESERVE-TASKS",
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "systemReserve.tasks",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "currentDefinitionProfiles": [
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.yaml",
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.yaml"
+      ]
+    },
+    {
+      "id": "DLV-NATIVE-HOST-KUBERNETESRESERVE-CPUMILLICORES",
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "kubernetesReserve.cpuMillicores",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "currentDefinitionProfiles": [
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.yaml",
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.yaml"
+      ]
+    },
+    {
+      "id": "DLV-NATIVE-HOST-KUBERNETESRESERVE-MEMORYBYTES",
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "kubernetesReserve.memoryBytes",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "currentDefinitionProfiles": [
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.yaml",
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.yaml"
+      ]
+    },
+    {
+      "id": "DLV-NATIVE-HOST-KUBERNETESRESERVE-TASKS",
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "kubernetesReserve.tasks",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "currentDefinitionProfiles": [
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.yaml",
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.yaml"
+      ]
+    },
+    {
+      "id": "DLV-NATIVE-HOST-POOLS-BUSTER-NAMESPACE",
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "pools.buster.namespace",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "currentDefinitionProfiles": [
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.yaml",
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.yaml"
+      ]
+    },
+    {
+      "id": "DLV-NATIVE-HOST-POOLS-BUSTER-CPUMILLICORES",
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "pools.buster.cpuMillicores",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "currentDefinitionProfiles": [
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.yaml",
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.yaml"
+      ]
+    },
+    {
+      "id": "DLV-NATIVE-HOST-POOLS-BUSTER-MEMORYBYTES",
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "pools.buster.memoryBytes",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "currentDefinitionProfiles": [
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.yaml",
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.yaml"
+      ]
+    },
+    {
+      "id": "DLV-NATIVE-HOST-POOLS-BUSTER-TASKS",
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "pools.buster.tasks",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "currentDefinitionProfiles": [
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.yaml",
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.yaml"
+      ]
+    },
+    {
+      "id": "DLV-NATIVE-HOST-POOLS-BUSTER-MAXIMUMACTIVESCOPES",
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "pools.buster.maximumActiveScopes",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "currentDefinitionProfiles": [
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.yaml",
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.yaml"
+      ]
+    },
+    {
+      "id": "DLV-NATIVE-HOST-POOLS-PRISM-NAMESPACE",
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "pools.prism.namespace",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "currentDefinitionProfiles": [
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.yaml",
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.yaml"
+      ]
+    },
+    {
+      "id": "DLV-NATIVE-HOST-POOLS-PRISM-CPUMILLICORES",
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "pools.prism.cpuMillicores",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "currentDefinitionProfiles": [
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.yaml",
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.yaml"
+      ]
+    },
+    {
+      "id": "DLV-NATIVE-HOST-POOLS-PRISM-MEMORYBYTES",
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "pools.prism.memoryBytes",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "currentDefinitionProfiles": [
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.yaml",
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.yaml"
+      ]
+    },
+    {
+      "id": "DLV-NATIVE-HOST-POOLS-PRISM-TASKS",
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "pools.prism.tasks",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "currentDefinitionProfiles": [
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.yaml",
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.yaml"
+      ]
+    },
+    {
+      "id": "DLV-NATIVE-HOST-POOLS-PRISM-MAXIMUMACTIVESCOPES",
+      "target": {
+        "author": "config/native-host/<selected-node>/policy.yaml (proposed placement of the EXISTING single selected node-policy YAML CLI input, referenced by pipeline.config.json; not a new host policy owner)",
+        "reference": "pools.prism.maximumActiveScopes",
+        "justification": "loadNativeNodePolicy existing YAML argument validates this exact root; renderer/preflight/install callers must consume identical selected file digest. New path selection does not introduce a new loader/default/index. Physical naming/selection must be reviewed in C0 and implemented only authorized C3."
+      },
+      "currentDefinitionProfiles": [
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.yaml",
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.yaml"
+      ]
+    }
+  ]
+}

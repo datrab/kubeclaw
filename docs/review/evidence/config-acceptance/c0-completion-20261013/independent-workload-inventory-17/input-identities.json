@@ -1,0 +1,103 @@
+{
+  "reviewer": "/root/workload_inventory_independent_17",
+  "head": "263277b0014de5f056c019307c40dc83f0201ef5",
+  "tree": "2f2553f6ad902dc83c36e0de7020ccae05d44f86",
+  "inputs": [
+    {
+      "path": "charts/prism/templates/_helpers.tpl",
+      "sha256": "33d5044abeae2faabd1202e544aeb33b34a30fb7afe9300b4bfb11d7ef914e49"
+    },
+    {
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+    },
+    {
+      "path": "charts/prism/values.yaml",
+      "sha256": "8b13da5c725b9eff02d1e12dae6f799ca74a6b01a83cb714a2777a915e98cee8"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/remaining-batches.json",
+      "sha256": "c0fc9f0996ecdecab945ba7c8b9810d3211e8c418631fddc03ed91a71c4fefad"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-25/README.md",
+      "sha256": "d1eccf0f5b1fdfa06505db945258ab1c597b39c325ff49e58f1ab998aa9ff899"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-25/define.py",
+      "sha256": "7c77e37a6ed4970862cc9ff97e781953f2737dc2c0700505715711cd7d89589c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-25/define.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-25/define.stdout",
+      "sha256": "50880e8b4395156418a5f48e916dec2b0f3c860747b43bbc0958c9224977f5a5"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-25/package-manifest.json",
+      "sha256": "7c5d1908ad476e8dc91498f795ff4c3c812abc170967e073748b908b7372ae52"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-25/source-field-definitions.json",
+      "sha256": "4d92bac3a16f03be5cac564dadde223f1becd8a7abdd77fa78618af275b56ddd"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-25/source-identity-check.json",
+      "sha256": "adf0897994b37a502b4d5393d7bec2e8bb6df5da67d759365ea843b44265d537"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/candidate-dispositions.json",
+      "sha256": "2d5267f5a7b0bbc80fd2ba8cf680011e59d7cbdb262e36c7e0031765dc0a2ad6"
+    },
+    {
+      "path": "docs/review/remediation/GOAL-START.md",
+      "sha256": "688334e1ccaa30fd9497e605ef0a9de1fb67fbeae51c4a312b15e15a12fa085b"
+    },
+    {
+      "path": "docs/review/remediation/OPENCLAW-CONFIG-GOAL.md",
+      "sha256": "fe9215a2674b95facef1d6fe0920eab2fa1f4830e765624692152a28b1731127"
+    },
+    {
+      "path": "skills/prism/server/control-config.ts",
+      "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4"
+    },
+    {
+      "path": "skills/prism/server/control.ts",
+      "sha256": "d723c04698afa8bd6306beca93dd9daf5cde75b710129975642591688ec0fcac"
+    },
+    {
+      "path": "skills/prism/server/dispatch-route.ts",
+      "sha256": "407b0befbe8cbf6009f2cef6fe80ab10a2213258d4be5bddc578f24abdb47382"
+    },
+    {
+      "path": "skills/prism/server/engine-route.ts",
+      "sha256": "6093e0f6ea9476db40d388a1d1cd1b0ee865c440723e5df05e4703a8aa360ebf"
+    },
+    {
+      "path": "skills/prism/server/internal-artifacts.ts",
+      "sha256": "16750a5eecea51781dc67e271cfc331550f1a0a03460917133226cd9c975dab8"
+    },
+    {
+      "path": "skills/prism/server/worker-config.ts",
+      "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e"
+    },
+    {
+      "path": "skills/prism/server/worker-service.ts",
+      "sha256": "90174f5edf19c85ef1642da95a51aac46854f9a1ce7172d876045a5bac1595e4"
+    },
+    {
+      "path": "skills/prism/server/worker.ts",
+      "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d"
+    },
+    {
+      "path": "skills/worker/core/worker/trust.ts",
+      "sha256": "722f48ca75fb8546dbc4f4c9cc8eab8e31dfdfeafec7ea7aab587045e78b23fe"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "replayRoot": "docs/review/evidence/config-acceptance/independent-core-icq-material-recheck-20261013/replay-root",
+  "scope": "Exact frozen Core docs copied; utility output writes confined to independent replay copy, not original Core/Runtime files. Primary production/test/source trees and node_modules are read-only-use symlinks to unchanged original source; no constructor generators/native setup/images/API invoked.",
+  "commandsToRun": [
+    "validate-proposed-definitions.mjs",
+    "check-corrected-definitions.mjs",
+    "check-companion-definitions.mjs",
+    "check-icq-integrity.py"
+  ]
+}

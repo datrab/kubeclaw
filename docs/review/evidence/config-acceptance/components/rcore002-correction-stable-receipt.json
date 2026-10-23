@@ -1,0 +1,75 @@
+{
+  "scope": "RCORE002 documentation-integrity regression controls only; NOT F-MUT/runtime evidence/acceptance",
+  "findingReport": "docs/review/remediation/independent-config-c0-core-recheck-40cf24e7.md",
+  "findingReportSha256": "e44a84550e541438aed78980c6060c107cf826a3963cac3516e6b0c08b96f6eb",
+  "head": "40cf24e77388bced59475ece9651c9c94d848368",
+  "beforeSnapshot": "docs/review/evidence/config-acceptance/components/rcore002-before/residual-fragment.json",
+  "beforeSha256": "8189b637d9fd79e0022560c1ab4e04374c7aecadd33f8ab7491d97a69a8fc912",
+  "afterPath": "docs/review/evidence/config-acceptance/components/residual-fragment.json",
+  "afterSha256": "25ca9b453586600cb1bd3fe168fc5c6bb24304330e647a356d957929cb80ee8e",
+  "checkerSha256": "6a6fdfd16deb0e3f9e3c5d205c39e4c2509c25b3d11027592383355a5e47f45f",
+  "controlScriptSha256": "a1f493488b9d448adb8ed36e04808e892e6940a89b9b1b23fd8e9a5aa1b61dd8",
+  "onlySemanticChange": "One identical CMP-ICD-MATERIAL-RECHECK removed; remaining object preserves exact reason and any requirements; all non-gap content unchanged",
+  "controls": [
+    {
+      "control": "negative-original-duplicate",
+      "argv": [
+        "python3",
+        "docs/review/evidence/config-acceptance/components/check-icd-corrections.py",
+        "--residual",
+        "docs/review/evidence/config-acceptance/components/rcore002-before/residual-fragment.json"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exitCode": 1,
+      "expected": "duplicate gap ID rejection before other checks",
+      "raw": "docs/review/evidence/config-acceptance/components/rcore002-negative-original-duplicate.log",
+      "rawSha256": "b92b64569e4beff296a7004fcf31abfd6bd915b676238aec44c4142bad237b47",
+      "diagnosticToken": "Unique residual gap IDs; duplicates=['CMP-ICD-MATERIAL-RECHECK']"
+    },
+    {
+      "control": "negative-conflicting-duplicate",
+      "argv": [
+        "python3",
+        "docs/review/evidence/config-acceptance/components/check-icd-corrections.py",
+        "--residual",
+        "docs/review/evidence/config-acceptance/components/rcore002-conflicting-gap-negative-fixture.json"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exitCode": 1,
+      "expected": "duplicate gap ID rejection before other checks",
+      "raw": "docs/review/evidence/config-acceptance/components/rcore002-negative-conflicting-duplicate.log",
+      "rawSha256": "b92b64569e4beff296a7004fcf31abfd6bd915b676238aec44c4142bad237b47",
+      "diagnosticToken": "Unique residual gap IDs; duplicates=['CMP-ICD-MATERIAL-RECHECK']"
+    },
+    {
+      "control": "restored-positive",
+      "argv": [
+        "python3",
+        "docs/review/evidence/config-acceptance/components/check-icd-corrections.py"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exitCode": 0,
+      "expected": "passed integrity",
+      "raw": "docs/review/evidence/config-acceptance/components/rcore002-restored-positive.log",
+      "rawSha256": "4d68abb37f35f22757750e1c38aa187172084bb53d57c0d4824bd74b8712f6b1",
+      "diagnosticToken": null
+    }
+  ],
+  "controlsPassed": 3,
+  "status": "STABLE for combined independent recheck",
+  "acceptance": "Withheld pending independent combined recheck; RCORE001 parent-owned, no author acceptance",
+  "protectedArtifacts": {
+    "docs/review/evidence/config-acceptance/components/active-case-specifications.json": "d36e64c1faf6500c0c30955784e50df2d30ab5e80a4a871b147225dc3c4151aa",
+    "docs/review/evidence/config-acceptance/components/core-adjustable-profiles.json": "e67b9a96ee0737e99b03a20f5887034f40802d7f4d6a1df7ff46e10932283f43",
+    "docs/review/evidence/config-acceptance/components/refined-case-profiles.json": "139f4f494bc8806d164b66c87f2b5cddc4e6f0a846fe6b2f979776987c558d87",
+    "docs/review/evidence/config-acceptance/components/core-adjustable-target.schema.json": "695ea10b3c08a72f93098665e7d4a0b83947a5f436241adc0447c048aabfd1be",
+    "docs/review/evidence/config-acceptance/components/semantic-fragment.json": "8375d00031f7cdc46099f30d459cf9f3b9830a4a788aa2d56b5061633f7140d1",
+    "docs/review/evidence/config-acceptance/components/case-profiles.json": "34514e17d4f6330cacc2a6541749aaa12e46591aa989a406b340f4a2e5e859bb"
+  },
+  "preservedBeforeEvidence": {
+    "docs/review/evidence/config-acceptance/components/rcore002-before/residual-fragment.json": "8189b637d9fd79e0022560c1ab4e04374c7aecadd33f8ab7491d97a69a8fc912",
+    "docs/review/evidence/config-acceptance/components/rcore002-before/icd-correction-integrity.log": "bd674400cfe6dd781e38192f2641a4dbdb5398cc25464229f2ded1f50f580ceb",
+    "docs/review/evidence/config-acceptance/components/rcore002-before/icd-correction-stable-receipt.json": "6d646c3bc5475b2c88fb0ccefbe3623154e98bf9067e373f47578b7a323bfabf",
+    "docs/review/evidence/config-acceptance/components/rcore002-before/check-icd-corrections.py": "e981c29bb8bcdcdc8b9b783271aabaefb10b0d85fef31f62944c5b197fcb77d2"
+  }
+}

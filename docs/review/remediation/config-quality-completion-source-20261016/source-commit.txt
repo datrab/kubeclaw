@@ -1,0 +1,3 @@
+[codex/config-c0-semantic-inventory-20261012 77b767680] fix(buster): verify original producer bytes before durable completion
+ 3 files changed, 185 insertions(+), 40 deletions(-)
+ create mode 100644 tests/verification/contracts/runner-completion-source.test.mjs

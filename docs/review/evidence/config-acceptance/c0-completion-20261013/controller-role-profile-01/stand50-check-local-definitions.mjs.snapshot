@@ -1,0 +1,69 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import Ajv2020 from 'ajv/dist/2020.js';
+const base=path.dirname(new URL(import.meta.url).pathname);
+const schema=JSON.parse(fs.readFileSync(path.join(base,'controller-role-profiles.schema.json'),'utf8'));
+const ajv=new Ajv2020({strict:true,allErrors:true,useDefaults:false,coerceTypes:false});
+const validate=ajv.compile(schema);
+const load=n=>JSON.parse(fs.readFileSync(path.join(base,'profiles',n+'.json'),'utf8'));
+const findingsFloor=()=>Buffer.byteLength(JSON.stringify([{id:'runtime:findings:overflow',severity:'critical',message:'Runtime security omitted 9223372036854775807 findings after the bounded evidence limit.',resource:'Namespace'}]));
+function sourceRelations(v){
+ const b=v.settings.busterNamespaceBroker,r=v.readonlyBindings;if(!b.enabled)return;
+ const c=b.controller,p=c.policy;
+ if(b.defaultTtlSeconds>b.maxTtlSeconds)throw Error('TTL_DEFAULT_EXCEEDS_MAX');
+ const original=JSON.parse(fs.readFileSync('charts/kubeclaw/files/config/buster-engine.config.json','utf8')).settings.clusterInvokers.shared;
+ if(r.sharedLease.apiGroup!==original.leaseApiGroup||r.sharedLease.apiVersion!==original.leaseApiVersion)throw Error('SHARED_PRIMARY_ALIAS_MISMATCH');
+ const qcpu=x=>x.endsWith('m')?BigInt(x.slice(0,-1)):BigInt(x)*1000n,qmem=x=>{const m=x.match(/^([1-9][0-9]*)(Ki|Mi|Gi|Ti|Pi|Ei)$/u),powers={Ki:1n,Mi:2n,Gi:3n,Ti:4n,Pi:5n,Ei:6n};return BigInt(m[1])*1024n**powers[m[2]]};
+ if(qcpu(c.resources.requests.cpu)>qcpu(c.resources.limits.cpu)||qmem(c.resources.requests.memory)>qmem(c.resources.limits.memory))throw Error('RESOURCE_REQUEST_GT_LIMIT');
+ if(r.api.origin!==`https://${r.api.host.includes(':')?'['+r.api.host+']':r.api.host}:${r.api.port}`)throw Error('API_ORIGIN_BINDING_MISMATCH');
+ if(r.roles.controllerServiceAccount!==r.releaseName+'-namespace-controller'||r.roles.secretRole!==r.releaseName+'-controller-secrets'||r.roles.deployerRole!==r.releaseName+'-namespace-deployer'||r.roles.testerRole!==r.releaseName+'-namespace-tester')throw Error('ROLE_PROJECTION_MISMATCH');
+ if(new Set(c.allowedAccess.map(x=>x.subject)).size!==c.allowedAccess.length)throw Error('DUPLICATE_ACCESS_SUBJECT');
+ if(p.runtimeSecurityMaximumSerializedBytes<findingsFloor())throw Error('OVERFLOW_SENTINEL_BYTE_FLOOR');
+ if(p.apiDiagnosticMaximumBytes>p.apiResponseMaximumBytes)throw Error('DIAGNOSTIC_GT_RESPONSE');
+ if(c.readiness.enabled){
+  if(p.readyReadHeaderTimeoutSeconds>p.readyReadTimeoutSeconds||p.readyHandlerTimeoutSeconds>p.readyWriteTimeoutSeconds)throw Error('READY_DURATION_RELATION');
+  if(p.authorizationMaximumBytes>p.readyMaxHeaderBytes)throw Error('AUTH_HEADER_RELATION');
+  const readyProducer=`system:serviceaccount:${c.readiness.producerNamespace}:${c.readiness.producerServiceAccount}`;
+  if(r.product.enabled&&r.product.producer===readyProducer)throw Error('PRODUCT_READY_PRODUCER_NOT_DISTINCT');
+  const values=[c.readiness.audience,...(r.product.enabled?[r.product.audience,r.product.issuer,...r.product.actors]:[])];
+  if(values.some(x=>Buffer.byteLength(x)>1024||x.trim()!==x||/[\0\r\n]/u.test(x)))throw Error('IDENTITY_UTF8_BYTES');
+ }
+ if(r.product.enabled){
+  if(!c.readiness.enabled)throw Error('PRODUCT_NEEDS_READY');
+  for(const k of ['productHandlerTimeoutSeconds','productMaximumBodyBytes','productDecisionMaximumValiditySeconds'])if(!Object.hasOwn(p,k))throw Error('MISSING_PRODUCT_POLICY');
+  if(p.productHandlerTimeoutSeconds>p.readyWriteTimeoutSeconds)throw Error('PRODUCT_DURATION_RELATION');
+ }else for(const k of ['productHandlerTimeoutSeconds','productMaximumBodyBytes','productDecisionMaximumValiditySeconds'])if(Object.hasOwn(p,k))throw Error('INACTIVE_PRODUCT_POLICY');
+}
+const results=[];function observe(id,fn){try{fn();results.push({id,result:'passed',meaning:'pure schema/source-derived local definition only'});}catch(e){results.push({id,result:'failed',error:String(e)});}}
+const admit=v=>{if(!validate(v))throw Error('SCHEMA:'+JSON.stringify(validate.errors));sourceRelations(v)};
+for(const name of ['A','B','role-off','ready-product-off'])observe('complete-'+name,()=>admit(load(name)));
+const A=load('A');
+function deny(id,mutate){observe(id,()=>{const v=structuredClone(A);mutate(v);let rejected=false;try{admit(v)}catch{rejected=true}if(!rejected)throw Error('invalid definition admitted');});}
+const broker=v=>v.settings.busterNamespaceBroker,policy=v=>broker(v).controller.policy;
+for(const k of Object.keys(policy(A)))deny('missing-policy-'+k,v=>delete policy(v)[k]);
+deny('unknown-profile-key',v=>v.operatorBox={});deny('missing-image',v=>delete broker(v).controller.imageRef);
+deny('TTL-default-greater-max',v=>broker(v).defaultTtlSeconds=broker(v).maxTtlSeconds+1);
+deny('string-poll-not-coerced',v=>broker(v).controller.pollIntervalMs='3000');
+deny('zero-poll',v=>broker(v).controller.pollIntervalMs=0);deny('duration-overflow',v=>broker(v).controller.pollIntervalMs=9223372036855);
+deny('disabled-role-keeps-controller',v=>broker(v).enabled=false);
+deny('ready-disabled-product-enabled',v=>broker(v).controller.readiness={enabled:false});
+deny('duplicate-product-author',v=>broker(v).controller.productDecisions={enabled:true});
+deny('product-producer-equals-Ready',v=>v.readonlyBindings.product.producer='system:serviceaccount:kubeclaw:agent-nova');
+deny('duplicate-subject',v=>broker(v).controller.allowedAccess.push(structuredClone(broker(v).controller.allowedAccess[0])));
+deny('role-name-not-derived',v=>v.readonlyBindings.roles.secretRole='independent-role');
+deny('shared-lease-group-competing',v=>v.readonlyBindings.sharedLease.apiGroup='other.example');
+deny('header-byte-relation',v=>policy(v).authorizationMaximumBytes=policy(v).readyMaxHeaderBytes+1);
+deny('array-sentinel-too-small',v=>policy(v).runtimeSecurityMaximumSerializedBytes=findingsFloor()-1);
+observe('shared-group-schema-domain-not-const',()=>{const v=structuredClone(A);v.readonlyBindings.sharedLease.apiGroup='other.example';if(!validate(v))throw Error('supported primary string domain hidden as const');});
+deny('resource-request-over-limit',v=>broker(v).controller.resources.requests.memory='1024Mi');
+deny('resource-invalid-quantity',v=>broker(v).controller.resources.limits.memory='bananas');
+observe('array-sentinel-exact-floor',()=>{const v=structuredClone(A);policy(v).runtimeSecurityMaximumSerializedBytes=findingsFloor();admit(v)});
+deny('utf8-byte-vs-codepoint',v=>broker(v).controller.readiness.audience='é'.repeat(600));
+observe('ordered-prefix-source-distinction',()=>{const normalize=(raw,prefs)=>{const preferred=prefs.includes('test')?'test':prefs[0];const matched=prefs.find(p=>raw===p||raw.startsWith(p+'-'));return matched??preferred};if(normalize('a-b-case',['a','a-b'])===normalize('a-b-case',['a-b','a']))throw Error('first-match ordered relation lost');});
+observe('current-env-fallback-vs-target-no-default',()=>{const current=(s,d)=>/^[+-]?[0-9]+$/u.test(s.trim())?Number(s.trim()):d;if(current('bad',7200)!==7200||current('-1',7200)!==-1)throw Error('source fact wrong');const v=structuredClone(A);broker(v).defaultTtlSeconds='bad';if(validate(v))throw Error('target string coerced');});
+observe('source-policy-no-config-epoch-today',()=>{const raw=fs.readFileSync('cmd/buster-namespace-controller/main.go','utf8');if(raw.includes('deliveryPolicyEpoch')||!raw.includes('context.Background()')||!raw.includes('responseBody, err := io.ReadAll(resp.Body)'))throw Error('current source assumptions changed');});
+observe('source-Ready-and-Product-actual-admission',()=>{const ready=fs.readFileSync('cmd/buster-namespace-controller/demo-readiness.go','utf8'),product=fs.readFileSync('cmd/buster-namespace-controller/demo-product.go','utf8');if(!ready.includes('/apis/authentication.k8s.io/v1/tokenreviews')||!product.includes('cfg.Producer == c.readiness.Producer'))throw Error('actual producer/auth predicate absent');});
+const report={tool:{node:process.version,ajv:'8.x actual installed version recorded separately'},limits:'No Go/controller/Helm/API/listener/token/CA/native execution. Relations are explicitly source-derived local proposal predicates, not real productive loader validation.',overflowSentinelFloorBytes:findingsFloor(),observations:results};
+fs.writeFileSync(path.join(base,'local-definition-observations.json'),JSON.stringify(report,null,2)+'\n');
+process.stdout.write(JSON.stringify({observations:results.length,failed:results.filter(x=>x.result==='failed').length,meaning:report.limits})+'\n');
+if(results.some(x=>x.result==='failed'))process.exitCode=1;

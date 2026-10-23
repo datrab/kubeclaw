@@ -1,0 +1,104 @@
+[
+  {
+    "setting": "RT-NOVA-REMOTE-SCHEMAVERSION",
+    "actualOriginalRowSHA256": "5154a296c7d2ad23e9d9d43db840e75976bded4d12b64a7ba471f3dfd0ffc73d",
+    "recordedOldRowSHA256": "cc07172930e8f6d666fd4072c6e436c8e1719bf722c6561da3dd283ec509c306",
+    "explainedByEmptyHistoryInsertion": true
+  },
+  {
+    "setting": "RT-NOVA-REMOTE-ENDPOINT",
+    "actualOriginalRowSHA256": "5a99a166a316a419c7e5ba8e20a5d5c7687198c4a1f4f9f6a261022b2ef3ce75",
+    "recordedOldRowSHA256": "809fb92cbe1a1c3ffe9a5df48d65d3547ac314bc2e56ee832a0bdb527740148f",
+    "explainedByEmptyHistoryInsertion": true
+  },
+  {
+    "setting": "RT-NOVA-REMOTE-AUTHENTICATION",
+    "actualOriginalRowSHA256": "a93f65599a811b411e4bc8ffe7d271d8634f390764e5e463866052618fdfaf70",
+    "recordedOldRowSHA256": "24484cf37d7503a43eb1656e76fd854be5e8267ae89a0f368990e1fe1f891bff",
+    "explainedByEmptyHistoryInsertion": true
+  },
+  {
+    "setting": "RT-NOVA-REMOTE-TOKENENVIRONMENTVARIABLE",
+    "actualOriginalRowSHA256": "24b2bc8f5a84cf95b3c9664187980ae53a17109a672414cf2e1dc1c0c818aa6e",
+    "recordedOldRowSHA256": "c6c13742a96002f6f4390f59d7fe2e4f406ef67fa151690b5667358ee198424c",
+    "explainedByEmptyHistoryInsertion": true
+  },
+  {
+    "setting": "RT-NOVA-REMOTE-SOURCEATTESTATIONPRIVATEKEYENVIRONMENTVARIABLE",
+    "actualOriginalRowSHA256": "a0d488415d1689f45510b47dc01037f58e159cffb9cb1442739c09b7cb90dfbd",
+    "recordedOldRowSHA256": "6178f660d932ecdb3414f8b306cb1e4a6bef13d0a6bff010a4241f301af7470a",
+    "explainedByEmptyHistoryInsertion": true
+  },
+  {
+    "setting": "RT-NOVA-REMOTE-SOURCEAUTHORITY",
+    "actualOriginalRowSHA256": "fa4b809e77af63934fc08ee14081ef36eccc978ed9e34034b345cca66f9cd3e5",
+    "recordedOldRowSHA256": "4359e6394cc57ae058f861c95e9df44e6b2d163f0737dd191779e577963cd60c",
+    "explainedByEmptyHistoryInsertion": true
+  },
+  {
+    "setting": "RT-NOVA-REMOTE-STATEROOT",
+    "actualOriginalRowSHA256": "64ebed90d26e4cdf82e0f8da92cfa960a367897bbb10c754e3c5688ea88e396c",
+    "recordedOldRowSHA256": "ccafb71ed764b3efcb0176613bb6c6a09f69e862b0c36b6c95aee8e13e53fb2d",
+    "explainedByEmptyHistoryInsertion": true
+  },
+  {
+    "setting": "RT-NOVA-REMOTE-POLLMILLISECONDS",
+    "actualOriginalRowSHA256": "e426034c860ee2b8e8f128f9caddd1364b01903cf86c8f4290852cabdb2f7571",
+    "recordedOldRowSHA256": "dd00792f77585a792e9b5154880e665ef5db7334d05fbe881c4ad712f5b7a1dd",
+    "explainedByEmptyHistoryInsertion": true
+  },
+  {
+    "setting": "RT-NOVA-REMOTE-MAXIMUMRESPONSEBYTES",
+    "actualOriginalRowSHA256": "dfab6b331735569695887e4072f591ac4563a8e0407ce9b656d12cb52a39db9a",
+    "recordedOldRowSHA256": "33bdb8516ca24376312331056f4514ce65a995c0e1561a734b205b7208a5e696",
+    "explainedByEmptyHistoryInsertion": true
+  },
+  {
+    "setting": "RT-NOVA-REMOTE-MAXIMUMRESULTBYTES",
+    "actualOriginalRowSHA256": "89d484f2ccfb13b3bc33c6b25dbc58f70e368edfd6f90478d6fa2624d2924e15",
+    "recordedOldRowSHA256": "bc1d7f99645f422c693bc0d1a1400726d6167cd9212dc19b76fe5a03c3ae5393",
+    "explainedByEmptyHistoryInsertion": true
+  },
+  {
+    "setting": "RT-NOVA-REMOTE-MAXIMUMARCHIVEBYTES",
+    "actualOriginalRowSHA256": "91afb120ae388db7b7849f8a60bb4c884185ae3fb43666c6a674850133d95010",
+    "recordedOldRowSHA256": "43f392fa98c3fc126f8be4d7e9eb5517a1917831e1c8f2cd53238f8009428b25",
+    "explainedByEmptyHistoryInsertion": true
+  },
+  {
+    "setting": "RT-NOVA-REMOTE-MAXIMUMARCHIVESTOREBYTES",
+    "actualOriginalRowSHA256": "693df26ea6398862968900dc112dcb1331435c3f5c048163f67cd77ecd9c726a",
+    "recordedOldRowSHA256": "0c6c8619f7729c877fa615c7d0d6e8af59128e171ed3006d1d01913d03ef7bc1",
+    "explainedByEmptyHistoryInsertion": true
+  },
+  {
+    "setting": "RT-NOVA-REMOTE-MAXIMUMEVIDENCEBYTES",
+    "actualOriginalRowSHA256": "6c8c929fd3bba51773ee71a0876ebd0148847a3f0e867ad734902b6411fb353b",
+    "recordedOldRowSHA256": "6514546bccd2220329aa698ae2026977985ba03551ae709ec7d36df0d5003924",
+    "explainedByEmptyHistoryInsertion": true
+  },
+  {
+    "setting": "RT-NOVA-REMOTE-MAXIMUMEVIDENCESTOREBYTES",
+    "actualOriginalRowSHA256": "4a1a7dc9c03e692de900610091e6f19a42fc5bd0e320e97213a27f159c26d064",
+    "recordedOldRowSHA256": "71edb459134813601802c4d0924adce9abb736936fc01c58f418270e24e0824d",
+    "explainedByEmptyHistoryInsertion": true
+  },
+  {
+    "setting": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDS",
+    "actualOriginalRowSHA256": "eed09e9e9ed5b1dc0fdbb73138d7cd50cb292f3aa6bfd765e7b26de279c4e6a8",
+    "recordedOldRowSHA256": "01b9f0c3475c01d224beeeade513d18e1d99ef04d6c7ee14b56786f9fac01947",
+    "explainedByEmptyHistoryInsertion": true
+  },
+  {
+    "setting": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMBYTES",
+    "actualOriginalRowSHA256": "4f041072587120331d0bc9110f82cbc40f3c787b01a04f9f3569bc3c83574c0d",
+    "recordedOldRowSHA256": "9ec1b9307f7fcef52033244bce0c454555956e316508d1b6038ddcb9bf349d46",
+    "explainedByEmptyHistoryInsertion": true
+  },
+  {
+    "setting": "RT-NOVA-REMOTE-RECORDLIMITS-MAXIMUMRECORDBYTES",
+    "actualOriginalRowSHA256": "6c59901ece6d5bf1beffc5a22410af5086ad06277b22f85d291551289a131a47",
+    "recordedOldRowSHA256": "2ce73c71e1d85aafd0531cd9ff1a6d314cf74899e9d684ce3e547fd684c31e0f",
+    "explainedByEmptyHistoryInsertion": true
+  }
+]

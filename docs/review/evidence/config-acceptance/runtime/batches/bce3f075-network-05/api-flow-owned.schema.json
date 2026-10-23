@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "requestTimeoutMs",
+    "maximumResponseBytes",
+    "maximumSteps"
+  ],
+  "properties": {
+    "requestTimeoutMs": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 300000
+    },
+    "maximumResponseBytes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 16777216
+    },
+    "maximumSteps": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 256
+    }
+  },
+  "description": "Proposed complete existing plugin-owned processing policy; physical author/loader/retired task and step quota author migration unapproved. Same current supported finite domain, true runtime cap compatibility mandatory."
+}

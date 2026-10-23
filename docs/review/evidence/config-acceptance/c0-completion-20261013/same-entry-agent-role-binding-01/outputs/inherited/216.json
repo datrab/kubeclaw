@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "provider-configuration.v2",
+  "contractId": "kubeclaw.kubernetes-policy-security@1",
+  "taskSchemaDigest": "sha256:a62b6116959321526dacde1d9e07e191dcd029af2bf5238be3eeac619818719a",
+  "values": {},
+  "selectedPolicy": {
+    "schemaVersion": "selected-registration-policy.v1",
+    "binding": {
+      "kind": "test-provider",
+      "packageId": "kubeclaw.security-providers",
+      "registrationId": "kubeclaw.security-providers:kubernetes-policy",
+      "instanceId": "fixture.security-providers",
+      "profileId": "A",
+      "serviceInstanceId": "fixture.service.buster-security-runtime",
+      "rootDigest": "sha256:b2f8be237c1a3cbe2f98aaf2378224afbf87b8910fbacd3047e17c1efc078ae1",
+      "ownerDigest": "sha256:53bde50ac26c05328b7c09c3a855bfbf5e8aca7760646f5c2511f28b8d6eeb01",
+      "profileDigest": "sha256:601108aacf48106309d0408b4cef9f3142db535d3f0bbe614375f44e7e9d24af",
+      "wholePackageProfileDigest": "sha256:49ad222493fbafa448a8542ef6c7ad1c90f9e03f60b976808670edaf82729faf",
+      "packageVersion": "1.0.0",
+      "packageContentDigest": "sha256:1f49bf0aba5957df255facd6d7a6a869d3c85cb27366ebe77b114dcc7cc08314",
+      "ownerSchemaDigest": "sha256:26b0b332f24e7ce6610321be5a089a180057713650a9f1f92597d8af23be3129",
+      "taskSchemaDigest": "sha256:a62b6116959321526dacde1d9e07e191dcd029af2bf5238be3eeac619818719a",
+      "readerVersion": "pipeline-entry.v9/provider-configuration.v2",
+      "c3RuntimeSchemaDigest": "sha256:af8e9bded1aef68ebe88e0ded835b202e0a4591099eda89fa4ea99a31b1b1740",
+      "c3ReferenceContractDigest": "sha256:d1ba44788070a8300c6081fb448184d8cba8d3a38a6d20ff11583cb64bfd38c2"
+    },
+    "processing": {
+      "timeoutMs": 120000,
+      "policy": {
+        "profile": "strict-v1",
+        "acceptances": []
+      }
+    },
+    "declarations": {
+      "retrySafe": true,
+      "matrixFields": [],
+      "evidenceDefaults": {
+        "onPass": [
+          "log"
+        ],
+        "onFail": [
+          "log"
+        ],
+        "onError": [
+          "log"
+        ]
+      }
+    },
+    "verdictPolicy": {
+      "blockingSeverities": [
+        "critical",
+        "high"
+      ],
+      "blockActiveThreats": true,
+      "blockMissingFixes": true
+    },
+    "sharedProcessing": {
+      "maximumFindings": 4096
+    }
+  }
+}

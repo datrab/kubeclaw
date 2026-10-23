@@ -1,0 +1,33 @@
+✔ prism package contains the complete canonical bundle and shared validator (5606.745077ms)
+✔ kubeclaw package contains the complete canonical bundle and shared validator (212.379082ms)
+✔ prism: each component changes real rollout checksum; omitted checksum is detected (6277.940841ms)
+✖ kubeclaw: each component changes real rollout checksum; omitted checksum is detected (1768.145878ms)
+✔ prism: real archive missing a required component fails the complete delivery oracle (1423.424006ms)
+✔ kubeclaw: real archive missing a required component fails the complete delivery oracle (2747.142443ms)
+✔ Buster image COPY contains all authored files; removing one source fails the same structural oracle (0.7817ms)
+✔ prism: worker-core AJV/Helm integer-boundary parity (227.990625ms)
+✔ kubeclaw: worker-core AJV/Helm integer-boundary parity (147.307416ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 8
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 23960.94458
+
+✖ failing tests:
+
+test at tests/verification/deployment/config-component-packaging.test.mjs:99:43
+✖ kubeclaw: each component changes real rollout checksum; omitted checksum is detected (1768.145878ms)
+  AssertionError [ERR_ASSERTION]: kubeclaw/agent-buster/prism-control
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/deployment/config-component-packaging.test.mjs:112:52)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: '72d45c048c4907fc400e2a226ccd6b64637d79b7e0e39a1dfbbbccfbb132d885',
+    expected: '72d45c048c4907fc400e2a226ccd6b64637d79b7e0e39a1dfbbbccfbb132d885',
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }

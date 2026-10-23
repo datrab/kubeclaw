@@ -1,0 +1,12 @@
+{
+  "mode": "draft-structural",
+  "scope": "integrity only; independent semantic review remains mandatory",
+  "settings": 2409,
+  "cases": 6726,
+  "errorCount": 3,
+  "errors": [
+    "fragment: content drift docs/review/evidence/config-acceptance/runtime/inventory-fragment.json",
+    "native case source: content drift docs/review/evidence/config-acceptance/runtime/case-proposals.json",
+    "native RUNTIME-NATIVE-CASE-SPECIFICATIONS: original specification/requirement loss"
+  ]
+}

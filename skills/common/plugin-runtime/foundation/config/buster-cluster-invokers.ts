@@ -20,6 +20,7 @@ export interface BusterKubernetesFixtureSettings {
   readonly allowDefaultStorageClass: boolean;
   readonly runnerServiceAccount: string;
   readonly credentialReaderServiceAccount: string;
+  readonly maximumSecretReferenceEntries: number;
   readonly maximumManifestBytes: number;
   readonly maximumResources: number;
   readonly maximumPersistentVolumeClaimBytes: number;

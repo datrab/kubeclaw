@@ -1,0 +1,7 @@
+{
+  "url": "http://127.0.0.1:18080",
+  "manifestFile": "manifest-800-a.json",
+  "targets": [
+    "target-a"
+  ]
+}

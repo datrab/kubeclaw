@@ -4,6 +4,7 @@ import { assertCoveragePlan, coverageReviewPrefixes, coverageReviewRequirements,
   validatePipelineTestGateContract, type GateCoverageV1, type ResolvedTestPlanV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import { assertProjectDeliveryManifestMode, DELIVERY_MANIFEST_ENCODING,
   type ProjectDeliveryManifestMode } from './delivery-manifest.ts';
+import {resolveCompilerExecutionGroups} from './execution-group-policy.ts';
 
 type ObjectValue = Record<string, any>;
 const compare = (left: string, right: string): number => left < right ? -1 : left > right ? 1 : 0;
@@ -35,13 +36,30 @@ export function cumulativeStages(project: ObjectValue, modules: readonly ObjectV
   reviewSemanticMode: ProjectReviewSemanticMode = 'legacy',
   deliveryManifestEncoding: ProjectDeliveryManifestMode = 'legacy'): StageDefinition[] {
   // Historical archived compilers call this current helper without a fourth arg.
+  return buildCumulativeStages(project,modules,sourceStageId,1800000,reportArtifactEncoding,reviewSemanticMode,deliveryManifestEncoding);
+}
+
+/** Explicit receiving only; original source/task/R authority must precede
+ * publication. Current and archived compileProject paths keep the old entry.
+ */
+export function cumulativeStagesWithExecutionGroups(project: ObjectValue, modules: readonly ObjectValue[], sourceStageId: string,
+  executionGroups: unknown, reportArtifactEncoding: 'legacy' | typeof PORTABLE_JSON_ENCODING = 'legacy',
+  reviewSemanticMode: ProjectReviewSemanticMode = 'legacy',
+  deliveryManifestEncoding: ProjectDeliveryManifestMode = 'legacy'): StageDefinition[] {
+  const groups = resolveCompilerExecutionGroups(executionGroups);
+  return buildCumulativeStages(project,modules,sourceStageId,groups.cumulative.timeoutMs,reportArtifactEncoding,reviewSemanticMode,deliveryManifestEncoding);
+}
+
+function buildCumulativeStages(project: ObjectValue, modules: readonly ObjectValue[], sourceStageId: string, timeoutMs:number,
+  reportArtifactEncoding:'legacy' | typeof PORTABLE_JSON_ENCODING, reviewSemanticMode:ProjectReviewSemanticMode,
+  deliveryManifestEncoding:ProjectDeliveryManifestMode):StageDefinition[] {
   assertProjectReviewModes(reportArtifactEncoding, reviewSemanticMode);
   assertProjectDeliveryManifestMode(deliveryManifestEncoding);
   const final = project.final;
   const coverage = projectCoverage(project.id, project.baseRevision, modules, final.test, final.integrationRequirements, 'cumulative');
   const plan = final.test.providerPlan.plan as ResolvedTestPlanV1;
   if (plan.scope.gateId !== 'final-test' || plan.scope.moduleId !== null || plan.runId !== project.runId) throw new Error('PROJECT_FINAL_PLAN_SCOPE_MISMATCH');
-  const execution = { maxAttempts: 2, maxRemediationCycles: 0, maxTechnicalRetries: 1, timeoutMs: 1_800_000 };
+  const execution = { maxAttempts: 2, maxRemediationCycles: 0, maxTechnicalRetries: 1, timeoutMs };
   const stages: StageDefinition[] = [{ id: 'final-lint', type: 'kubeclaw.lint.full',
     dependsOn: modules.map(module => `test-${module.id}`), config: final.lint,
     input: { workingDirectory: project.repositoryRoot, project: project.id, sourceStageId }, execution }];

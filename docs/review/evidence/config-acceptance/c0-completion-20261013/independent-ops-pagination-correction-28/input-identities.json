@@ -1,0 +1,177 @@
+[
+  {
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "bytes": 7436,
+    "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/remaining-batches.json",
+    "bytes": 36482,
+    "sha256": "c0fc9f0996ecdecab945ba7c8b9810d3211e8c418631fddc03ed91a71c4fefad"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-35/README.md",
+    "bytes": 885,
+    "sha256": "18102569a185db533d0c60f9df94fb50ef6be19f304409684a30845c0e8642df"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-35/define.py",
+    "bytes": 12596,
+    "sha256": "8821dc9be1a0ef771de33a3df70e37d863af8da3cfb96b8a6cdabc7e5668ab31"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-35/local-check.json",
+    "bytes": 128,
+    "sha256": "f65b92b7b8e75679c0d76f72720e59397891f748909de7e9d3b2a06e3a2058ed"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-35/package-manifest.json",
+    "bytes": 881,
+    "sha256": "82568b02cfc0aa759d0756bca4f33e144cbb592b6b838a09e9962286cc072baa"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-35/source-field-definitions.json",
+    "bytes": 144169,
+    "sha256": "cec9451d9e4644e2290ba0fe60464991118edc3c9628ecee42cfcd78015194b3"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-36/README.md",
+    "bytes": 600,
+    "sha256": "128ed65acc4fb1a82f6c4be3af1e00db6104d4329380b66a241776c07e213790"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-36/local-check.json",
+    "bytes": 190,
+    "sha256": "94eac1ed39c285f148376772efd0e771751dec2630d9bfe3620742cd2768a486"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-36/package-manifest.json",
+    "bytes": 678,
+    "sha256": "de547fde405c084403d715718cc408901dcfa5ed31f68fd73aac36ce14ba97ee"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-36/source-field-definitions.json",
+    "bytes": 287271,
+    "sha256": "1b259269e1f4e92bebcebccf71818cce6df5a088b9fce0daf9243b4fd7c44436"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/candidate-dispositions.json",
+    "bytes": 1849332,
+    "sha256": "2d5267f5a7b0bbc80fd2ba8cf680011e59d7cbdb262e36c7e0031765dc0a2ad6"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-ops-source-inventory-27/README.md",
+    "bytes": 7332,
+    "sha256": "309700f1729089a5b7430c4bada0758f91cd8faa36879841d44574a4a4e99d0e"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-ops-source-inventory-27/checkout.txt",
+    "bytes": 82,
+    "sha256": "0e77e7df818a0cdf41480e93fc20ac41c1cd6069139f6cd237177613d271425a"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-ops-source-inventory-27/checkout.txt.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-ops-source-inventory-27/checks.json",
+    "bytes": 1280,
+    "sha256": "8139e9b077d1c7cce5e5226c11efdbb8a7787003da96b4cfe600ea7a9ba328d7"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-ops-source-inventory-27/findings.json",
+    "bytes": 708,
+    "sha256": "4df2e16f427edf3c54f1afa6dc7da9952cbd6e03a217b035b4211d85dcc6538e"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-ops-source-inventory-27/input-identities.json",
+    "bytes": 3426,
+    "sha256": "7bdb7915b4bb7cf75e908096a670fc714d2cc0df267484b79ebc030053e247a7"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-ops-source-inventory-27/input-recheck.json",
+    "bytes": 56,
+    "sha256": "7dda0b7790dfe7c5c5deb2745133718e3b5ea7dc4da401304aba806626f8f3f2"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-ops-source-inventory-27/pin-comparisons.json",
+    "bytes": 74729,
+    "sha256": "15a7af9b039fb209d885aaefb3ce2d537aa4b4ee7cb55bbbf70c223d84115e99"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-ops-source-inventory-27/status.txt",
+    "bytes": 30832,
+    "sha256": "71ce82d56b6e5eeec72b6456a5a749b52d75d2452bce50e3c4b9755fe97398ba"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-ops-source-inventory-27/status.txt.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-ops-source-inventory-27/tracked.patch",
+    "bytes": 10849,
+    "sha256": "1ac0c3e6e1c755e0f9ca5180759bf05879ef4d374de19033b65b61d2f1a9895c"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-ops-source-inventory-27/tracked.patch.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "docs/review/remediation/GOAL-START.md",
+    "bytes": 6788,
+    "sha256": "688334e1ccaa30fd9497e605ef0a9de1fb67fbeae51c4a312b15e15a12fa085b"
+  },
+  {
+    "path": "docs/review/remediation/OPENCLAW-CONFIG-GOAL.md",
+    "bytes": 21857,
+    "sha256": "fe9215a2674b95facef1d6fe0920eab2fa1f4830e765624692152a28b1731127"
+  },
+  {
+    "path": "ops/pod/Dockerfile",
+    "bytes": 4260,
+    "sha256": "d55888e701ea0798c7c2a109f17977cc615442828e010f56e4f17871f6483eb0"
+  },
+  {
+    "path": "ops/pod/bootstrap.py",
+    "bytes": 4053,
+    "sha256": "f12b2fdf8b87c5a0ee1f6a643acfd6110a12698dfb908ea713a79f71f2bd990e"
+  },
+  {
+    "path": "ops/pod/supervisor.py",
+    "bytes": 4784,
+    "sha256": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99"
+  },
+  {
+    "path": "scripts/deploy-ops-pod.sh",
+    "bytes": 3574,
+    "sha256": "b7b114e886142185732eb285a59f5b2f8a5b509ffedfd23de2d1fbf67ea3e73e"
+  },
+  {
+    "path": "tools/ops-mcp/src/authentication.mjs",
+    "bytes": 1626,
+    "sha256": "d816c6dd9354166a009ffdfc5db423f030345b94a16c4009e2aec639d57d0049"
+  },
+  {
+    "path": "tools/ops-mcp/src/config.mjs",
+    "bytes": 1477,
+    "sha256": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c"
+  },
+  {
+    "path": "tools/ops-mcp/src/hubble.mjs",
+    "bytes": 6461,
+    "sha256": "d4e60f2801e3c66ded259f420c1a9faca0071fa084dc198a35433f8c9cb4f599"
+  },
+  {
+    "path": "tools/ops-mcp/src/kubernetes.mjs",
+    "bytes": 4445,
+    "sha256": "449e55709e017f53790539a83936f0471915850180ec9b08fc589251ab5e987b"
+  },
+  {
+    "path": "tools/ops-mcp/src/server.mjs",
+    "bytes": 20550,
+    "sha256": "a4fef1a5e66a45ea2885cc9a1715aba5835d77cb5219e39ac35a5f50b5bab65d"
+  }
+]

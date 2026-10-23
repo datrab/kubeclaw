@@ -1,0 +1,109 @@
+{
+  "codexImage": "ghcr.io/datrab/kubeclaw-codex-ops@sha256:607b51291c8f6952be903d81f760d8eb893474b47bb419b1b67526f38c7589c0",
+  "mcpImage": "ghcr.io/datrab/kubeclaw-ops-mcp@sha256:a9aa21492d046ba5929c0bca7cc0991bd8d52a25f69e8a824ca286c8aa23f855",
+  "imagePullSecrets": [
+    {
+      "name": "delivery-pull-a"
+    }
+  ],
+  "bearerSecret": "dlv-secret-a",
+  "githubSecret": "delivery-github-a",
+  "persistence": {
+    "size": "20Gi",
+    "storageClass": "delivery-storage-a"
+  },
+  "resources": {
+    "codex": {
+      "requests": {
+        "cpu": "100m",
+        "memory": "128Mi"
+      },
+      "limits": {
+        "cpu": "1",
+        "memory": "1Gi"
+      }
+    },
+    "mcp": {
+      "requests": {
+        "cpu": "100m",
+        "memory": "128Mi"
+      },
+      "limits": {
+        "cpu": "1",
+        "memory": "1Gi"
+      }
+    }
+  },
+  "rbac": {
+    "namespaces": [
+      "policy-c0-fixture",
+      "argocd"
+    ],
+    "execNamespaces": [
+      "default"
+    ]
+  },
+  "argoNamespace": "argocd",
+  "defaultNamespace": "policy-c0-fixture",
+  "networkPolicy": {
+    "enabled": true,
+    "cilium": false,
+    "apiServerCIDRs": [
+      "192.0.2.10/32"
+    ],
+    "apiServerPort": 6443
+  },
+  "tailscale": {
+    "enabled": true,
+    "image": "ghcr.io/tailscale/tailscale:v1.102.3",
+    "authSecret": "delivery-tailnet-a",
+    "hostname": "kubeclaw-ops",
+    "extraArgs": "--accept-dns=false",
+    "resources": {
+      "requests": {
+        "cpu": "100m",
+        "memory": "128Mi"
+      },
+      "limits": {
+        "cpu": "1",
+        "memory": "1Gi"
+      }
+    }
+  },
+  "credentials": {
+    "minimumBearerCharacters": 32,
+    "maximumBearerCharacters": 512,
+    "bearerTokenEntropyBytes": 48
+  },
+  "mcp": {
+    "server": {
+      "port": 8080,
+      "host": "127.0.0.1",
+      "localOnly": true,
+      "allowedOrigins": []
+    },
+    "hubble": {
+      "defaultWindowMs": 300000,
+      "maximumWindowMs": 900000,
+      "defaultFlowLimit": 20,
+      "maximumFlowLimit": 50,
+      "timeout": 12000
+    },
+    "kubernetes": {
+      "timeoutMs": 10000,
+      "maxBytes": 8192,
+      "pagination": {
+        "defaultPageSize": 4,
+        "eventPageSize": 4,
+        "singlePageSize": 50,
+        "finiteCallDeadlineMs": 30000,
+        "aggregateScan": {
+          "mode": "bounded",
+          "maximumPages": 2,
+          "maximumAttempts": 3,
+          "deadlineMs": 60000
+        }
+      }
+    }
+  }
+}

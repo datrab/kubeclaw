@@ -1,0 +1,203 @@
+[
+  {
+    "command": [
+      "node",
+      "scripts/generate-prism-chart-config.mjs"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 0.57,
+    "log": "docs/review/remediation/config-control-session-roles-20261016/check-0.txt"
+  },
+  {
+    "command": [
+      "node",
+      "scripts/generate-buster-chart-config.mjs"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 0.55,
+    "log": "docs/review/remediation/config-control-session-roles-20261016/check-1.txt"
+  },
+  {
+    "command": [
+      "node",
+      "scripts/generate-prism-chart-config.mjs",
+      "--check"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 0.55,
+    "log": "docs/review/remediation/config-control-session-roles-20261016/check-2.txt"
+  },
+  {
+    "command": [
+      "node",
+      "scripts/generate-buster-chart-config.mjs",
+      "--check"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 0.5,
+    "log": "docs/review/remediation/config-control-session-roles-20261016/check-3.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "skills/prism/tests/session-selected-policy.test.mts",
+      "skills/prism/tests/control.test.mts",
+      "skills/prism/tests/corpus-ranking-policy.test.mts",
+      "skills/prism/tests/swarm-control-policy.test.mts",
+      "tests/verification/reliability/control-http-config.test.mts"
+    ],
+    "exitCode": 1,
+    "elapsedSeconds": 46.74,
+    "log": "docs/review/remediation/config-control-session-roles-20261016/check-4.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "skills/prism/tests/session-selected-policy.test.mts",
+      "skills/prism/tests/control.test.mts",
+      "skills/prism/tests/corpus-ranking-policy.test.mts",
+      "skills/prism/tests/swarm-control-policy.test.mts",
+      "tests/verification/reliability/control-http-config.test.mts"
+    ],
+    "exitCode": 1,
+    "elapsedSeconds": 6.95,
+    "log": "docs/review/remediation/config-control-session-roles-20261016/corrected-4.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "skills/prism/tests/session-selected-policy.test.mts",
+      "skills/prism/tests/control.test.mts",
+      "skills/prism/tests/corpus-ranking-policy.test.mts",
+      "skills/prism/tests/swarm-control-policy.test.mts",
+      "tests/verification/reliability/control-http-config.test.mts"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 6.96,
+    "log": "docs/review/remediation/config-control-session-roles-20261016/final-4.txt"
+  },
+  {
+    "command": [
+      "./node_modules/.bin/tsc",
+      "--noEmit",
+      "--module",
+      "NodeNext",
+      "--moduleResolution",
+      "NodeNext",
+      "--target",
+      "ES2024",
+      "--lib",
+      "ESNext,DOM,DOM.Iterable",
+      "--strict",
+      "--types",
+      "node",
+      "--skipLibCheck",
+      "--allowImportingTsExtensions",
+      "--esModuleInterop",
+      "skills/prism/server/session-routes.ts",
+      "skills/prism/tests/session-selected-policy.test.mts"
+    ],
+    "exitCode": 2,
+    "elapsedSeconds": 2.53,
+    "log": "docs/review/remediation/config-control-session-roles-20261016/check-5.txt"
+  },
+  {
+    "command": [
+      "./node_modules/.bin/tsc",
+      "--noEmit",
+      "--module",
+      "NodeNext",
+      "--moduleResolution",
+      "NodeNext",
+      "--target",
+      "ES2024",
+      "--lib",
+      "ESNext,DOM,DOM.Iterable",
+      "--strict",
+      "--types",
+      "node",
+      "--skipLibCheck",
+      "--allowImportingTsExtensions",
+      "--esModuleInterop",
+      "skills/prism/server/session-routes.ts",
+      "skills/prism/tests/session-selected-policy.test.mts"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 2.1,
+    "log": "docs/review/remediation/config-control-session-roles-20261016/final-check-5.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-name-pattern=real Prism role package",
+      "tests/verification/reliability/pipeline-role-readback.test.mjs"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 11.3,
+    "log": "docs/review/remediation/config-control-session-roles-20261016/final-check-6.txt"
+  },
+  {
+    "command": [
+      "python3",
+      "docs/review/remediation/config-final-reconciliation-20261016/reconcile.py"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 2.7,
+    "log": "docs/review/remediation/config-control-session-roles-20261016/final-check-7.txt"
+  },
+  {
+    "command": [
+      "python3",
+      "docs/review/remediation/config-final-reconciliation-20261016/reconcile-prism-control.py"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 2.57,
+    "log": "docs/review/remediation/config-control-session-roles-20261016/final-check-8.txt"
+  },
+  {
+    "command": [
+      "python3",
+      "docs/review/remediation/config-final-reconciliation-20261016/reconcile-successors.py"
+    ],
+    "exitCode": 1,
+    "elapsedSeconds": 0.1,
+    "log": "docs/review/remediation/config-control-session-roles-20261016/final-check-9.txt"
+  },
+  {
+    "command": [
+      "python3",
+      "docs/review/remediation/config-final-reconciliation-20261016/reconcile-successors.py"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 0.14,
+    "log": "docs/review/remediation/config-control-session-roles-20261016/closeout-check-9.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/deployment/buster-central-delivery.test.mjs",
+      "tests/verification/deployment/prism-image-generation.test.mjs"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 25.6,
+    "log": "docs/review/remediation/config-control-session-roles-20261016/closeout-check-10.txt"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 0.1,
+    "log": "docs/review/remediation/config-control-session-roles-20261016/closeout-check-11.txt"
+  }
+]

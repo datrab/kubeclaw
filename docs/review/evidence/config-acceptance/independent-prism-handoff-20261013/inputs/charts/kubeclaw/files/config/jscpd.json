@@ -1,0 +1,23 @@
+{
+  "minTokens": 70,
+  "minLines": 10,
+  "mode": "mild",
+  "maxSize": "1mb",
+  "format": ["javascript", "jsx", "typescript", "tsx", "go", "python", "bash", "docker", "hcl"],
+  "reporters": ["json", "silent"],
+  "ignore": [
+    "**/.git/**",
+    "**/.swarm/**",
+    "**/build/**",
+    "**/coverage/**",
+    "**/dist/**",
+    "**/generated/**",
+    "**/node_modules/**",
+    "tests/**",
+    "**/vendor/**",
+    "contracts/telemetry/v1/telemetry-types.ts",
+    "contracts/telemetry/v1/telemetry_types.go",
+    "contracts/telemetry/v1/bundle-types.ts",
+    "contracts/telemetry/v1/bundle_types.go"
+  ]
+}

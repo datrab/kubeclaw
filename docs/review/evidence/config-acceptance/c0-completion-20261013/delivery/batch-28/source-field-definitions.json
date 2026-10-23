@@ -1,0 +1,2491 @@
+{
+  "scope": "Additive SWARM19-001 correction: schema domains retained, six adjacent effective renderer caps explicit",
+  "schemaRef": {
+    "path": "charts/kubeclaw/files/config/swarm-components.schema.json",
+    "sha256": "51e7bc64a25fd6cc67d465ebe46bab170a6c9b7215423147ab3f15777dc58968"
+  },
+  "priorQueueRef": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/remaining-batches.json",
+    "sha256": "c0fc9f0996ecdecab945ba7c8b9810d3211e8c418631fddc03ed91a71c4fefad"
+  },
+  "rows": [
+    {
+      "candidateId": "SRC-ae3c2b0bb81275f6",
+      "originalCandidate": {
+        "id": "SRC-ae3c2b0bb81275f6",
+        "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 52,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 52,
+        "expression": "{{- $maximum := ternary (float64 1000000) (float64 2147483647) (eq $key \"replayLimit\") -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "field": "worker-core local runtime bounds",
+      "members": [
+        {
+          "owner": "worker-core",
+          "currentAuthor": "files/config/worker-core.config.json#/settings/localRuntime/drainTimeoutMs"
+        },
+        {
+          "owner": "worker-core",
+          "currentAuthor": "files/config/worker-core.config.json#/settings/localRuntime/cancellationTimeoutMs"
+        },
+        {
+          "owner": "worker-core",
+          "currentAuthor": "files/config/worker-core.config.json#/settings/localRuntime/replayLimit"
+        }
+      ],
+      "currentDomainAndRelations": "replayLimit 1..1000000; drain/cancellation milliseconds 1..2147483647; integral JSON numbers, no fallback",
+      "classification": "source validation or generated selection; not an independent numeric settings author",
+      "actualReaderRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 52,
+        "expression": "{{- $maximum := ternary (float64 1000000) (float64 2147483647) (eq $key \"replayLimit\") -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "callerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+          "line": 10,
+          "expression": "{{- range $name, $contents := (include \"kubeclaw.swarmBundle\" . | mustFromJson) }}",
+          "sha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875"
+        },
+        {
+          "path": "charts/prism/templates/_swarm-config.tpl",
+          "line": 18,
+          "expression": "{{- $config := include \"kubeclaw.swarmConfig\" . | mustFromJson -}}",
+          "sha256": "e044387aa75a3f784ccd2a0d0f30d91f6e69b7e07e663ab2cc005417bff7265a"
+        }
+      ],
+      "proposedAuthority": "Retain each current component owner in selected complete generation; rename system entry to pipeline.config.json only in approved C1. Loader/protocol/schema limits remain explicit separately from adjustable policy.",
+      "activation": "Validate complete selected component documents before Chart rendering; no per-key overlays or hidden defaults. Actual native caller acceptance remains distinct.",
+      "recovery": "Retain the original full selected document and content identity; do not reselect latest or substitute another Buster profile during an existing run.",
+      "requiredFutureChecks": [
+        "exact original/corrected profile and schema joins",
+        "boundary type/range and each relation rejection at this productive renderer",
+        "same-generation runtime consumer and recovery cases"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-eac5ec66c49e4c61",
+      "originalCandidate": {
+        "id": "SRC-eac5ec66c49e4c61",
+        "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 54,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 54,
+        "expression": "{{- if or (lt $value (float64 1)) (gt $value $maximum) (ne $value (floor $value)) -}}{{- fail (printf \"worker-core.config.json localRuntime.%s is out of range\" $key) -}}{{- end -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "field": "worker-core local runtime rejection",
+      "members": [
+        {
+          "owner": "worker-core",
+          "currentAuthor": "files/config/worker-core.config.json#/settings/localRuntime/drainTimeoutMs"
+        },
+        {
+          "owner": "worker-core",
+          "currentAuthor": "files/config/worker-core.config.json#/settings/localRuntime/cancellationTimeoutMs"
+        },
+        {
+          "owner": "worker-core",
+          "currentAuthor": "files/config/worker-core.config.json#/settings/localRuntime/replayLimit"
+        }
+      ],
+      "currentDomainAndRelations": "Reject nonintegral, below1 or above the distinct per-key maximum; numeric type check occurs at53",
+      "classification": "source validation or generated selection; not an independent numeric settings author",
+      "actualReaderRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 54,
+        "expression": "{{- if or (lt $value (float64 1)) (gt $value $maximum) (ne $value (floor $value)) -}}{{- fail (printf \"worker-core.config.json localRuntime.%s is out of range\" $key) -}}{{- end -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "callerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+          "line": 10,
+          "expression": "{{- range $name, $contents := (include \"kubeclaw.swarmBundle\" . | mustFromJson) }}",
+          "sha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875"
+        },
+        {
+          "path": "charts/prism/templates/_swarm-config.tpl",
+          "line": 18,
+          "expression": "{{- $config := include \"kubeclaw.swarmConfig\" . | mustFromJson -}}",
+          "sha256": "e044387aa75a3f784ccd2a0d0f30d91f6e69b7e07e663ab2cc005417bff7265a"
+        }
+      ],
+      "proposedAuthority": "Retain each current component owner in selected complete generation; rename system entry to pipeline.config.json only in approved C1. Loader/protocol/schema limits remain explicit separately from adjustable policy.",
+      "activation": "Validate complete selected component documents before Chart rendering; no per-key overlays or hidden defaults. Actual native caller acceptance remains distinct.",
+      "recovery": "Retain the original full selected document and content identity; do not reselect latest or substitute another Buster profile during an existing run.",
+      "requiredFutureChecks": [
+        "exact original/corrected profile and schema joins",
+        "boundary type/range and each relation rejection at this productive renderer",
+        "same-generation runtime consumer and recovery cases"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-4531f56429cdcc26",
+      "originalCandidate": {
+        "id": "SRC-4531f56429cdcc26",
+        "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 91,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 91,
+        "expression": "{{- if or (and (hasKey $limit \"minimum\") (lt $value (float64 $limit.minimum))) (gt $value (float64 $limit.maximum)) (and (eq $limit.type \"integer\") (ne $value (floor $value))) -}}{{- fail (printf \"buster execution %s.%s is outside its numeric bounds\" $section $key) -}}{{- end -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "field": "Buster execution numeric schema validation",
+      "members": [
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/processInput/cleanupTimeoutMs",
+          "schemaPointer": "#/$defs/buster-execution-processInput/properties/cleanupTimeoutMs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/processInput/terminationGraceMs",
+          "schemaPointer": "#/$defs/buster-execution-processInput/properties/terminationGraceMs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/processInput/acknowledgementPollMs",
+          "schemaPointer": "#/$defs/buster-execution-processInput/properties/acknowledgementPollMs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/provider/cleanupTimeoutMs",
+          "schemaPointer": "#/$defs/buster-execution-provider/properties/cleanupTimeoutMs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/provider/maximumResultBytes",
+          "schemaPointer": "#/$defs/buster-execution-provider/properties/maximumResultBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/provider/claimGraceMs",
+          "schemaPointer": "#/$defs/buster-execution-provider/properties/claimGraceMs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/provider/queueTimeoutMs",
+          "schemaPointer": "#/$defs/buster-execution-provider/properties/queueTimeoutMs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/provider/workerResultWrapperBytes",
+          "schemaPointer": "#/$defs/buster-execution-provider/properties/workerResultWrapperBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/provider/maximumProtocolBytes",
+          "schemaPointer": "#/$defs/buster-execution-provider/properties/maximumProtocolBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/provider/terminationGraceMs",
+          "schemaPointer": "#/$defs/buster-execution-provider/properties/terminationGraceMs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/provider/terminationTimeoutMs",
+          "schemaPointer": "#/$defs/buster-execution-provider/properties/terminationTimeoutMs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/provider/capabilityDrainTimeoutMs",
+          "schemaPointer": "#/$defs/buster-execution-provider/properties/capabilityDrainTimeoutMs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/provider/minimumHeapMiB",
+          "schemaPointer": "#/$defs/buster-execution-provider/properties/minimumHeapMiB",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8589934591
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/provider/heapFraction",
+          "schemaPointer": "#/$defs/buster-execution-provider/properties/heapFraction",
+          "schemaDomain": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "maximum": 1
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/provider/maximumPendingCapabilities",
+          "schemaPointer": "#/$defs/buster-execution-provider/properties/maximumPendingCapabilities",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/provider/minimumOpenFiles",
+          "schemaPointer": "#/$defs/buster-execution-provider/properties/minimumOpenFiles",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/provider/artifactFileDescriptorReserve",
+          "schemaPointer": "#/$defs/buster-execution-provider/properties/artifactFileDescriptorReserve",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/reports/maximumAggregateResultBytes",
+          "schemaPointer": "#/$defs/buster-execution-reports/properties/maximumAggregateResultBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16777216
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/reports/maximumSourceBytes",
+          "schemaPointer": "#/$defs/buster-execution-reports/properties/maximumSourceBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 67108864
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/reports/maximumCases",
+          "schemaPointer": "#/$defs/buster-execution-reports/properties/maximumCases",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5000
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/reports/maximumFindings",
+          "schemaPointer": "#/$defs/buster-execution-reports/properties/maximumFindings",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5000
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/reports/maximumCaseFindings",
+          "schemaPointer": "#/$defs/buster-execution-reports/properties/maximumCaseFindings",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/reports/maximumTimeoutMs",
+          "schemaPointer": "#/$defs/buster-execution-reports/properties/maximumTimeoutMs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 300000
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/reports/memoryBytes",
+          "schemaPointer": "#/$defs/buster-execution-reports/properties/memoryBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 67108869,
+            "maximum": 2147483648
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/reports/minimumCpuTimeMs",
+          "schemaPointer": "#/$defs/buster-execution-reports/properties/minimumCpuTimeMs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1000,
+            "maximum": 300000,
+            "multipleOf": 1000
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/reports/maximumOpenFiles",
+          "schemaPointer": "#/$defs/buster-execution-reports/properties/maximumOpenFiles",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 256
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/reports/minimumOpenFiles",
+          "schemaPointer": "#/$defs/buster-execution-reports/properties/minimumOpenFiles",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 256
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/reports/minimumHeapMiB",
+          "schemaPointer": "#/$defs/buster-execution-reports/properties/minimumHeapMiB",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8589934591
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/reports/heapFraction",
+          "schemaPointer": "#/$defs/buster-execution-reports/properties/heapFraction",
+          "schemaDomain": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "maximum": 1
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/reports/runtimeMemoryReserveBytes",
+          "schemaPointer": "#/$defs/buster-execution-reports/properties/runtimeMemoryReserveBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483648
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/observation/resourceSampleIntervalMs",
+          "schemaPointer": "#/$defs/buster-execution-observation/properties/resourceSampleIntervalMs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/observation/processSampleIntervalMs",
+          "schemaPointer": "#/$defs/buster-execution-observation/properties/processSampleIntervalMs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/stores/attempts/maximumEvidenceObjects",
+          "schemaPointer": "#/$defs/buster-execution-store-attempts/properties/maximumEvidenceObjects",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/stores/attempts/maximumEvidenceBytes",
+          "schemaPointer": "#/$defs/buster-execution-store-attempts/properties/maximumEvidenceBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/stores/attempts/maximumEvidenceObjectBytes",
+          "schemaPointer": "#/$defs/buster-execution-store-attempts/properties/maximumEvidenceObjectBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/stores/attempts/maximumResults",
+          "schemaPointer": "#/$defs/buster-execution-store-attempts/properties/maximumResults",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/stores/attempts/maximumClosures",
+          "schemaPointer": "#/$defs/buster-execution-store-attempts/properties/maximumClosures",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/stores/attempts/maximumMetadataBytes",
+          "schemaPointer": "#/$defs/buster-execution-store-attempts/properties/maximumMetadataBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/stores/attempts/maximumPendingEvidenceAgeMs",
+          "schemaPointer": "#/$defs/buster-execution-store-attempts/properties/maximumPendingEvidenceAgeMs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/stores/admission/maximumIngressBytes",
+          "schemaPointer": "#/$defs/buster-execution-store-admission/properties/maximumIngressBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/stores/admission/maximumRecords",
+          "schemaPointer": "#/$defs/buster-execution-store-admission/properties/maximumRecords",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/stores/admission/maximumBytes",
+          "schemaPointer": "#/$defs/buster-execution-store-admission/properties/maximumBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1025,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/stores/admission/maximumQuarantineRecords",
+          "schemaPointer": "#/$defs/buster-execution-store-admission/properties/maximumQuarantineRecords",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/stores/admission/maximumQuarantineBytes",
+          "schemaPointer": "#/$defs/buster-execution-store-admission/properties/maximumQuarantineBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        }
+      ],
+      "currentDomainAndRelations": "Use each exact schema minimum/exclusiveMinimum/maximum/type; multipleOf at92-95 is a separate actual gate, no common timer domain",
+      "classification": "source validation or generated selection; not an independent numeric settings author",
+      "actualReaderRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 91,
+        "expression": "{{- if or (and (hasKey $limit \"minimum\") (lt $value (float64 $limit.minimum))) (gt $value (float64 $limit.maximum)) (and (eq $limit.type \"integer\") (ne $value (floor $value))) -}}{{- fail (printf \"buster execution %s.%s is outside its numeric bounds\" $section $key) -}}{{- end -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "callerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+          "line": 10,
+          "expression": "{{- range $name, $contents := (include \"kubeclaw.swarmBundle\" . | mustFromJson) }}",
+          "sha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875"
+        },
+        {
+          "path": "charts/prism/templates/_swarm-config.tpl",
+          "line": 18,
+          "expression": "{{- $config := include \"kubeclaw.swarmConfig\" . | mustFromJson -}}",
+          "sha256": "e044387aa75a3f784ccd2a0d0f30d91f6e69b7e07e663ab2cc005417bff7265a"
+        }
+      ],
+      "proposedAuthority": "Retain each current component owner in selected complete generation; rename system entry to pipeline.config.json only in approved C1. Loader/protocol/schema limits remain explicit separately from adjustable policy.",
+      "activation": "Validate complete selected component documents before Chart rendering; no per-key overlays or hidden defaults. Actual native caller acceptance remains distinct.",
+      "recovery": "Retain the original full selected document and content identity; do not reselect latest or substitute another Buster profile during an existing run.",
+      "requiredFutureChecks": [
+        "exact original/corrected profile and schema joins",
+        "boundary type/range and each relation rejection at this productive renderer",
+        "same-generation runtime consumer and recovery cases"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-fa5d875cf1fc1453",
+      "originalCandidate": {
+        "id": "SRC-fa5d875cf1fc1453",
+        "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 99,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 99,
+        "expression": "{{- if ge $execution.provider.terminationGraceMs $execution.provider.terminationTimeoutMs -}}{{- fail \"buster execution termination grace must precede termination timeout\" -}}{{- end -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "field": "provider termination ordering",
+      "members": [
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/provider/terminationGraceMs"
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/provider/terminationTimeoutMs"
+        }
+      ],
+      "currentDomainAndRelations": "terminationGraceMs < terminationTimeoutMs, selected same provider profile",
+      "classification": "source validation or generated selection; not an independent numeric settings author",
+      "actualReaderRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 99,
+        "expression": "{{- if ge $execution.provider.terminationGraceMs $execution.provider.terminationTimeoutMs -}}{{- fail \"buster execution termination grace must precede termination timeout\" -}}{{- end -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "callerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+          "line": 10,
+          "expression": "{{- range $name, $contents := (include \"kubeclaw.swarmBundle\" . | mustFromJson) }}",
+          "sha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875"
+        },
+        {
+          "path": "charts/prism/templates/_swarm-config.tpl",
+          "line": 18,
+          "expression": "{{- $config := include \"kubeclaw.swarmConfig\" . | mustFromJson -}}",
+          "sha256": "e044387aa75a3f784ccd2a0d0f30d91f6e69b7e07e663ab2cc005417bff7265a"
+        }
+      ],
+      "proposedAuthority": "Retain each current component owner in selected complete generation; rename system entry to pipeline.config.json only in approved C1. Loader/protocol/schema limits remain explicit separately from adjustable policy.",
+      "activation": "Validate complete selected component documents before Chart rendering; no per-key overlays or hidden defaults. Actual native caller acceptance remains distinct.",
+      "recovery": "Retain the original full selected document and content identity; do not reselect latest or substitute another Buster profile during an existing run.",
+      "requiredFutureChecks": [
+        "exact original/corrected profile and schema joins",
+        "boundary type/range and each relation rejection at this productive renderer",
+        "same-generation runtime consumer and recovery cases"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-e95d781b7945c3ca",
+      "originalCandidate": {
+        "id": "SRC-e95d781b7945c3ca",
+        "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 103,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 103,
+        "expression": "{{- if lt $execution.reports.memoryBytes $reportMemory -}}{{- fail \"buster execution report memory cannot hold the maximum selected report profile\" -}}{{- end -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "field": "reports memory relation",
+      "members": [
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/reports/memoryBytes"
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/reports/runtimeMemoryReserveBytes"
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/reports/maximumSourceBytes"
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/execution/reports/maximumAggregateResultBytes"
+        }
+      ],
+      "currentDomainAndRelations": "memoryBytes >= runtimeMemoryReserveBytes + 3*maximumSourceBytes + 2*maximumAggregateResultBytes; current addf/mulf renderer check, not proof of native capacity",
+      "classification": "source validation or generated selection; not an independent numeric settings author",
+      "actualReaderRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 103,
+        "expression": "{{- if lt $execution.reports.memoryBytes $reportMemory -}}{{- fail \"buster execution report memory cannot hold the maximum selected report profile\" -}}{{- end -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "callerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+          "line": 10,
+          "expression": "{{- range $name, $contents := (include \"kubeclaw.swarmBundle\" . | mustFromJson) }}",
+          "sha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875"
+        },
+        {
+          "path": "charts/prism/templates/_swarm-config.tpl",
+          "line": 18,
+          "expression": "{{- $config := include \"kubeclaw.swarmConfig\" . | mustFromJson -}}",
+          "sha256": "e044387aa75a3f784ccd2a0d0f30d91f6e69b7e07e663ab2cc005417bff7265a"
+        }
+      ],
+      "proposedAuthority": "Retain each current component owner in selected complete generation; rename system entry to pipeline.config.json only in approved C1. Loader/protocol/schema limits remain explicit separately from adjustable policy.",
+      "activation": "Validate complete selected component documents before Chart rendering; no per-key overlays or hidden defaults. Actual native caller acceptance remains distinct.",
+      "recovery": "Retain the original full selected document and content identity; do not reselect latest or substitute another Buster profile during an existing run.",
+      "requiredFutureChecks": [
+        "exact original/corrected profile and schema joins",
+        "boundary type/range and each relation rejection at this productive renderer",
+        "same-generation runtime consumer and recovery cases"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-fd03cb740079506d",
+      "originalCandidate": {
+        "id": "SRC-fd03cb740079506d",
+        "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 117,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 117,
+        "expression": "{{- if or (lt $value (float64 $limit.minimum)) (gt $value (float64 $limit.maximum)) (ne $value (floor $value)) -}}{{- fail (printf \"buster %s %s is outside its integer bounds\" $section $key) -}}{{- end -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "field": "admission and dependency readiness integers",
+      "members": [
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/admission/maximumActiveJobs",
+          "schemaPointer": "#/$defs/buster-admission/properties/maximumActiveJobs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/admission/maximumQueuedJobs",
+          "schemaPointer": "#/$defs/buster-admission/properties/maximumQueuedJobs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/admission/maximumConcurrentAttempts",
+          "schemaPointer": "#/$defs/buster-admission/properties/maximumConcurrentAttempts",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/dependencyReadiness/maximumExecutionMs",
+          "schemaPointer": "#/$defs/buster-dependency-readiness/properties/maximumExecutionMs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 30000
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/dependencyReadiness/maximumOutputBytes",
+          "schemaPointer": "#/$defs/buster-dependency-readiness/properties/maximumOutputBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1048576
+          }
+        }
+      ],
+      "currentDomainAndRelations": "Each exact schema minimum..maximum inclusive and integral; no shared arbitrary timer maximum",
+      "classification": "source validation or generated selection; not an independent numeric settings author",
+      "actualReaderRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 117,
+        "expression": "{{- if or (lt $value (float64 $limit.minimum)) (gt $value (float64 $limit.maximum)) (ne $value (floor $value)) -}}{{- fail (printf \"buster %s %s is outside its integer bounds\" $section $key) -}}{{- end -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "callerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+          "line": 10,
+          "expression": "{{- range $name, $contents := (include \"kubeclaw.swarmBundle\" . | mustFromJson) }}",
+          "sha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875"
+        },
+        {
+          "path": "charts/prism/templates/_swarm-config.tpl",
+          "line": 18,
+          "expression": "{{- $config := include \"kubeclaw.swarmConfig\" . | mustFromJson -}}",
+          "sha256": "e044387aa75a3f784ccd2a0d0f30d91f6e69b7e07e663ab2cc005417bff7265a"
+        }
+      ],
+      "proposedAuthority": "Retain each current component owner in selected complete generation; rename system entry to pipeline.config.json only in approved C1. Loader/protocol/schema limits remain explicit separately from adjustable policy.",
+      "activation": "Validate complete selected component documents before Chart rendering; no per-key overlays or hidden defaults. Actual native caller acceptance remains distinct.",
+      "recovery": "Retain the original full selected document and content identity; do not reselect latest or substitute another Buster profile during an existing run.",
+      "requiredFutureChecks": [
+        "exact original/corrected profile and schema joins",
+        "boundary type/range and each relation rejection at this productive renderer",
+        "same-generation runtime consumer and recovery cases"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-ea5d74692fd5fcdd",
+      "originalCandidate": {
+        "id": "SRC-ea5d74692fd5fcdd",
+        "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 130,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 130,
+        "expression": "{{- if or (lt $value (float64 $limit.minimum)) (gt $value (float64 $limit.maximum)) (ne $value (floor $value)) -}}{{- fail (printf \"buster preparation %s is outside its integer bounds\" $key) -}}{{- end -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "field": "preparation scalar integer schema",
+      "members": [
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/timeoutMs",
+          "schemaPointer": "#/$defs/buster-preparation/properties/timeoutMs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/cleanupTimeoutMs",
+          "schemaPointer": "#/$defs/buster-preparation/properties/cleanupTimeoutMs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/maximumActivePreparations",
+          "schemaPointer": "#/$defs/buster-preparation/properties/maximumActivePreparations",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/maximumPendingAdmissions",
+          "schemaPointer": "#/$defs/buster-preparation/properties/maximumPendingAdmissions",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/maximumRequestBytes",
+          "schemaPointer": "#/$defs/buster-preparation/properties/maximumRequestBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "effectiveRendererMaximum": 2147483647,
+          "additionalRendererGateRefs": [
+            {
+              "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+              "line": 214,
+              "expression": "{{- range $key := list \"maximumRequestBytes\" \"maximumArchiveBytes\" \"maximumHeaderBytes\" \"maximumInputBytes\" \"maximumOutputBytes\" \"maximumResultBytes\" -}}",
+              "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+            },
+            {
+              "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+              "line": 215,
+              "expression": "{{- if gt (index $b $key) (float64 2147483647) -}}{{- fail \"swarm Buster buffer limit invalid\" -}}{{- end -}}",
+              "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+            }
+          ]
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/maximumArchiveBytes",
+          "schemaPointer": "#/$defs/buster-preparation/properties/maximumArchiveBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "effectiveRendererMaximum": 2147483647,
+          "additionalRendererGateRefs": [
+            {
+              "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+              "line": 214,
+              "expression": "{{- range $key := list \"maximumRequestBytes\" \"maximumArchiveBytes\" \"maximumHeaderBytes\" \"maximumInputBytes\" \"maximumOutputBytes\" \"maximumResultBytes\" -}}",
+              "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+            },
+            {
+              "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+              "line": 215,
+              "expression": "{{- if gt (index $b $key) (float64 2147483647) -}}{{- fail \"swarm Buster buffer limit invalid\" -}}{{- end -}}",
+              "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+            }
+          ]
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/maximumExtractedBytes",
+          "schemaPointer": "#/$defs/buster-preparation/properties/maximumExtractedBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/maximumHeaderBytes",
+          "schemaPointer": "#/$defs/buster-preparation/properties/maximumHeaderBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "effectiveRendererMaximum": 2147483647,
+          "additionalRendererGateRefs": [
+            {
+              "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+              "line": 214,
+              "expression": "{{- range $key := list \"maximumRequestBytes\" \"maximumArchiveBytes\" \"maximumHeaderBytes\" \"maximumInputBytes\" \"maximumOutputBytes\" \"maximumResultBytes\" -}}",
+              "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+            },
+            {
+              "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+              "line": 215,
+              "expression": "{{- if gt (index $b $key) (float64 2147483647) -}}{{- fail \"swarm Buster buffer limit invalid\" -}}{{- end -}}",
+              "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+            }
+          ]
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/maximumSourceBytes",
+          "schemaPointer": "#/$defs/buster-preparation/properties/maximumSourceBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/maximumMetadataBytes",
+          "schemaPointer": "#/$defs/buster-preparation/properties/maximumMetadataBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/maximumRecords",
+          "schemaPointer": "#/$defs/buster-preparation/properties/maximumRecords",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/maximumOwnershipBytes",
+          "schemaPointer": "#/$defs/buster-preparation/properties/maximumOwnershipBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/maximumJournalBytes",
+          "schemaPointer": "#/$defs/buster-preparation/properties/maximumJournalBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/maximumInputBytes",
+          "schemaPointer": "#/$defs/buster-preparation/properties/maximumInputBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "effectiveRendererMaximum": 2147483647,
+          "additionalRendererGateRefs": [
+            {
+              "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+              "line": 214,
+              "expression": "{{- range $key := list \"maximumRequestBytes\" \"maximumArchiveBytes\" \"maximumHeaderBytes\" \"maximumInputBytes\" \"maximumOutputBytes\" \"maximumResultBytes\" -}}",
+              "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+            },
+            {
+              "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+              "line": 215,
+              "expression": "{{- if gt (index $b $key) (float64 2147483647) -}}{{- fail \"swarm Buster buffer limit invalid\" -}}{{- end -}}",
+              "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+            }
+          ]
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/maximumOutputBytes",
+          "schemaPointer": "#/$defs/buster-preparation/properties/maximumOutputBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "effectiveRendererMaximum": 2147483647,
+          "additionalRendererGateRefs": [
+            {
+              "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+              "line": 214,
+              "expression": "{{- range $key := list \"maximumRequestBytes\" \"maximumArchiveBytes\" \"maximumHeaderBytes\" \"maximumInputBytes\" \"maximumOutputBytes\" \"maximumResultBytes\" -}}",
+              "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+            },
+            {
+              "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+              "line": 215,
+              "expression": "{{- if gt (index $b $key) (float64 2147483647) -}}{{- fail \"swarm Buster buffer limit invalid\" -}}{{- end -}}",
+              "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+            }
+          ]
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/maximumResultBytes",
+          "schemaPointer": "#/$defs/buster-preparation/properties/maximumResultBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "effectiveRendererMaximum": 2147483647,
+          "additionalRendererGateRefs": [
+            {
+              "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+              "line": 214,
+              "expression": "{{- range $key := list \"maximumRequestBytes\" \"maximumArchiveBytes\" \"maximumHeaderBytes\" \"maximumInputBytes\" \"maximumOutputBytes\" \"maximumResultBytes\" -}}",
+              "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+            },
+            {
+              "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+              "line": 215,
+              "expression": "{{- if gt (index $b $key) (float64 2147483647) -}}{{- fail \"swarm Buster buffer limit invalid\" -}}{{- end -}}",
+              "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+            }
+          ]
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/pollIntervalMs",
+          "schemaPointer": "#/$defs/buster-preparation/properties/pollIntervalMs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/drainTimeoutMs",
+          "schemaPointer": "#/$defs/buster-preparation/properties/drainTimeoutMs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/closeTimeoutMs",
+          "schemaPointer": "#/$defs/buster-preparation/properties/closeTimeoutMs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/tarTimeoutMs",
+          "schemaPointer": "#/$defs/buster-preparation/properties/tarTimeoutMs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/maximumArchiveEntries",
+          "schemaPointer": "#/$defs/buster-preparation/properties/maximumArchiveEntries",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/maximumListingLineBytes",
+          "schemaPointer": "#/$defs/buster-preparation/properties/maximumListingLineBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/maximumTarStderrBytes",
+          "schemaPointer": "#/$defs/buster-preparation/properties/maximumTarStderrBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/maximumSourceEntries",
+          "schemaPointer": "#/$defs/buster-preparation/properties/maximumSourceEntries",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/sourceEntryReservationBytes",
+          "schemaPointer": "#/$defs/buster-preparation/properties/sourceEntryReservationBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/maximumOpenFiles",
+          "schemaPointer": "#/$defs/buster-preparation/properties/maximumOpenFiles",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 8,
+            "maximum": 2147483647
+          }
+        }
+      ],
+      "currentDomainAndRelations": "Each non-resourcePolicy preparation scalar must match its exact schema minimum/maximum and integer type; nested resourcePolicy validated separately Additionally lines214\u2013215 cap exactly six listed buffer members at2147483647; effective upper bound is min(schema maximum, renderer cap), not the schema maximum alone. Other preparation members retain their individual schema domains and relation gates.",
+      "classification": "source validation or generated selection; not an independent numeric settings author",
+      "actualReaderRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 130,
+        "expression": "{{- if or (lt $value (float64 $limit.minimum)) (gt $value (float64 $limit.maximum)) (ne $value (floor $value)) -}}{{- fail (printf \"buster preparation %s is outside its integer bounds\" $key) -}}{{- end -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "callerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+          "line": 10,
+          "expression": "{{- range $name, $contents := (include \"kubeclaw.swarmBundle\" . | mustFromJson) }}",
+          "sha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875"
+        },
+        {
+          "path": "charts/prism/templates/_swarm-config.tpl",
+          "line": 18,
+          "expression": "{{- $config := include \"kubeclaw.swarmConfig\" . | mustFromJson -}}",
+          "sha256": "e044387aa75a3f784ccd2a0d0f30d91f6e69b7e07e663ab2cc005417bff7265a"
+        }
+      ],
+      "proposedAuthority": "Retain each current component owner in selected complete generation; rename system entry to pipeline.config.json only in approved C1. Loader/protocol/schema limits remain explicit separately from adjustable policy.",
+      "activation": "Validate complete selected component documents before Chart rendering; no per-key overlays or hidden defaults. Actual native caller acceptance remains distinct.",
+      "recovery": "Retain the original full selected document and content identity; do not reselect latest or substitute another Buster profile during an existing run.",
+      "requiredFutureChecks": [
+        "exact original/corrected profile and schema joins",
+        "boundary type/range and each relation rejection at this productive renderer",
+        "same-generation runtime consumer and recovery cases"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run",
+      "adjacentRendererCap": {
+        "members": [
+          "maximumRequestBytes",
+          "maximumArchiveBytes",
+          "maximumHeaderBytes",
+          "maximumInputBytes",
+          "maximumOutputBytes",
+          "maximumResultBytes"
+        ],
+        "maximum": 2147483647,
+        "sourceRefs": [
+          {
+            "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+            "line": 214,
+            "expression": "{{- range $key := list \"maximumRequestBytes\" \"maximumArchiveBytes\" \"maximumHeaderBytes\" \"maximumInputBytes\" \"maximumOutputBytes\" \"maximumResultBytes\" -}}",
+            "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+          },
+          {
+            "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+            "line": 215,
+            "expression": "{{- if gt (index $b $key) (float64 2147483647) -}}{{- fail \"swarm Buster buffer limit invalid\" -}}{{- end -}}",
+            "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+          }
+        ],
+        "diagnostic": "swarm Buster buffer limit invalid",
+        "sourceWitness": {
+          "member": "maximumRequestBytes",
+          "value": 2147483648,
+          "schemaAcceptsScalar": true,
+          "rendererRejectsScalar": true,
+          "executedHelmOrNativeResult": false
+        }
+      }
+    },
+    {
+      "candidateId": "SRC-3b4dfcac94af3ad0",
+      "originalCandidate": {
+        "id": "SRC-3b4dfcac94af3ad0",
+        "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 147,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 147,
+        "expression": "{{- range $key, $maximum := dict \"port\" 65535 \"controlTimeoutMs\" 2147483647 -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "field": "Studio port and timer bounds",
+      "members": [
+        {
+          "owner": "prism-studio",
+          "currentAuthor": "files/config/prism-studio.config.json#/settings/port"
+        },
+        {
+          "owner": "prism-studio",
+          "currentAuthor": "files/config/prism-studio.config.json#/settings/controlTimeoutMs"
+        }
+      ],
+      "currentDomainAndRelations": "port 1..65535 and controlTimeoutMs 1..2147483647; both integral",
+      "classification": "source validation or generated selection; not an independent numeric settings author",
+      "actualReaderRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 147,
+        "expression": "{{- range $key, $maximum := dict \"port\" 65535 \"controlTimeoutMs\" 2147483647 -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "callerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+          "line": 10,
+          "expression": "{{- range $name, $contents := (include \"kubeclaw.swarmBundle\" . | mustFromJson) }}",
+          "sha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875"
+        },
+        {
+          "path": "charts/prism/templates/_swarm-config.tpl",
+          "line": 18,
+          "expression": "{{- $config := include \"kubeclaw.swarmConfig\" . | mustFromJson -}}",
+          "sha256": "e044387aa75a3f784ccd2a0d0f30d91f6e69b7e07e663ab2cc005417bff7265a"
+        }
+      ],
+      "proposedAuthority": "Retain each current component owner in selected complete generation; rename system entry to pipeline.config.json only in approved C1. Loader/protocol/schema limits remain explicit separately from adjustable policy.",
+      "activation": "Validate complete selected component documents before Chart rendering; no per-key overlays or hidden defaults. Actual native caller acceptance remains distinct.",
+      "recovery": "Retain the original full selected document and content identity; do not reselect latest or substitute another Buster profile during an existing run.",
+      "requiredFutureChecks": [
+        "exact original/corrected profile and schema joins",
+        "boundary type/range and each relation rejection at this productive renderer",
+        "same-generation runtime consumer and recovery cases"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-13c8327678d63641",
+      "originalCandidate": {
+        "id": "SRC-13c8327678d63641",
+        "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 150,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 150,
+        "expression": "{{- if or (lt $value (float64 1)) (gt $value (float64 $maximum)) (ne $value (floor $value)) -}}{{- fail (printf \"swarm studio %s is outside its integer bounds\" $key) -}}{{- end -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "field": "Studio integer rejection",
+      "members": [
+        {
+          "owner": "prism-studio",
+          "currentAuthor": "files/config/prism-studio.config.json#/settings/port"
+        },
+        {
+          "owner": "prism-studio",
+          "currentAuthor": "files/config/prism-studio.config.json#/settings/controlTimeoutMs"
+        }
+      ],
+      "currentDomainAndRelations": "Reject outside key-specific bounds or fractional; type check149 precedes conversion",
+      "classification": "source validation or generated selection; not an independent numeric settings author",
+      "actualReaderRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 150,
+        "expression": "{{- if or (lt $value (float64 1)) (gt $value (float64 $maximum)) (ne $value (floor $value)) -}}{{- fail (printf \"swarm studio %s is outside its integer bounds\" $key) -}}{{- end -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "callerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+          "line": 10,
+          "expression": "{{- range $name, $contents := (include \"kubeclaw.swarmBundle\" . | mustFromJson) }}",
+          "sha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875"
+        },
+        {
+          "path": "charts/prism/templates/_swarm-config.tpl",
+          "line": 18,
+          "expression": "{{- $config := include \"kubeclaw.swarmConfig\" . | mustFromJson -}}",
+          "sha256": "e044387aa75a3f784ccd2a0d0f30d91f6e69b7e07e663ab2cc005417bff7265a"
+        }
+      ],
+      "proposedAuthority": "Retain each current component owner in selected complete generation; rename system entry to pipeline.config.json only in approved C1. Loader/protocol/schema limits remain explicit separately from adjustable policy.",
+      "activation": "Validate complete selected component documents before Chart rendering; no per-key overlays or hidden defaults. Actual native caller acceptance remains distinct.",
+      "recovery": "Retain the original full selected document and content identity; do not reselect latest or substitute another Buster profile during an existing run.",
+      "requiredFutureChecks": [
+        "exact original/corrected profile and schema joins",
+        "boundary type/range and each relation rejection at this productive renderer",
+        "same-generation runtime consumer and recovery cases"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-c63f4f93fa7cdd5c",
+      "originalCandidate": {
+        "id": "SRC-c63f4f93fa7cdd5c",
+        "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 195,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 195,
+        "expression": "{{- $maximum := ternary (float64 9007199254740991) (float64 2147483647) (eq $key \"maximumJournalBytes\") -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "field": "worker supervisor key-specific bounds",
+      "members": [
+        {
+          "owner": "prism-worker",
+          "currentAuthor": "files/config/prism-worker.config.json#/settings/supervisor/uid"
+        },
+        {
+          "owner": "prism-worker",
+          "currentAuthor": "files/config/prism-worker.config.json#/settings/supervisor/gid"
+        },
+        {
+          "owner": "prism-worker",
+          "currentAuthor": "files/config/prism-worker.config.json#/settings/supervisor/maximumOwnershipRecords"
+        },
+        {
+          "owner": "prism-worker",
+          "currentAuthor": "files/config/prism-worker.config.json#/settings/supervisor/maximumOwnershipBytes"
+        },
+        {
+          "owner": "prism-worker",
+          "currentAuthor": "files/config/prism-worker.config.json#/settings/supervisor/maximumOutputBytes"
+        },
+        {
+          "owner": "prism-worker",
+          "currentAuthor": "files/config/prism-worker.config.json#/settings/supervisor/maximumJournalBytes"
+        },
+        {
+          "owner": "prism-worker",
+          "currentAuthor": "files/config/prism-worker.config.json#/settings/supervisor/pollIntervalMs"
+        },
+        {
+          "owner": "prism-worker",
+          "currentAuthor": "files/config/prism-worker.config.json#/settings/supervisor/drainTimeoutMs"
+        },
+        {
+          "owner": "prism-worker",
+          "currentAuthor": "files/config/prism-worker.config.json#/settings/supervisor/closeTimeoutMs"
+        }
+      ],
+      "currentDomainAndRelations": "maximumJournalBytes up to9007199254740991, all other listed fields up to2147483647; minimum1 integral including uid/gid in this current template",
+      "classification": "source validation or generated selection; not an independent numeric settings author",
+      "actualReaderRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 195,
+        "expression": "{{- $maximum := ternary (float64 9007199254740991) (float64 2147483647) (eq $key \"maximumJournalBytes\") -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "callerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+          "line": 10,
+          "expression": "{{- range $name, $contents := (include \"kubeclaw.swarmBundle\" . | mustFromJson) }}",
+          "sha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875"
+        },
+        {
+          "path": "charts/prism/templates/_swarm-config.tpl",
+          "line": 18,
+          "expression": "{{- $config := include \"kubeclaw.swarmConfig\" . | mustFromJson -}}",
+          "sha256": "e044387aa75a3f784ccd2a0d0f30d91f6e69b7e07e663ab2cc005417bff7265a"
+        }
+      ],
+      "proposedAuthority": "Retain each current component owner in selected complete generation; rename system entry to pipeline.config.json only in approved C1. Loader/protocol/schema limits remain explicit separately from adjustable policy.",
+      "activation": "Validate complete selected component documents before Chart rendering; no per-key overlays or hidden defaults. Actual native caller acceptance remains distinct.",
+      "recovery": "Retain the original full selected document and content identity; do not reselect latest or substitute another Buster profile during an existing run.",
+      "requiredFutureChecks": [
+        "exact original/corrected profile and schema joins",
+        "boundary type/range and each relation rejection at this productive renderer",
+        "same-generation runtime consumer and recovery cases"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-a9734a7cd38b3ac8",
+      "originalCandidate": {
+        "id": "SRC-a9734a7cd38b3ac8",
+        "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 197,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 197,
+        "expression": "{{- if or (lt $value (float64 1)) (gt $value $maximum) (ne $value (floor $value)) -}}{{- fail (printf \"swarm supervisor %s exceeds its positive integer bound\" $key) -}}{{- end -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "field": "worker supervisor integer rejection",
+      "members": [
+        {
+          "owner": "prism-worker",
+          "currentAuthor": "files/config/prism-worker.config.json#/settings/supervisor/uid"
+        },
+        {
+          "owner": "prism-worker",
+          "currentAuthor": "files/config/prism-worker.config.json#/settings/supervisor/gid"
+        },
+        {
+          "owner": "prism-worker",
+          "currentAuthor": "files/config/prism-worker.config.json#/settings/supervisor/maximumOwnershipRecords"
+        },
+        {
+          "owner": "prism-worker",
+          "currentAuthor": "files/config/prism-worker.config.json#/settings/supervisor/maximumOwnershipBytes"
+        },
+        {
+          "owner": "prism-worker",
+          "currentAuthor": "files/config/prism-worker.config.json#/settings/supervisor/maximumOutputBytes"
+        },
+        {
+          "owner": "prism-worker",
+          "currentAuthor": "files/config/prism-worker.config.json#/settings/supervisor/maximumJournalBytes"
+        },
+        {
+          "owner": "prism-worker",
+          "currentAuthor": "files/config/prism-worker.config.json#/settings/supervisor/pollIntervalMs"
+        },
+        {
+          "owner": "prism-worker",
+          "currentAuthor": "files/config/prism-worker.config.json#/settings/supervisor/drainTimeoutMs"
+        },
+        {
+          "owner": "prism-worker",
+          "currentAuthor": "files/config/prism-worker.config.json#/settings/supervisor/closeTimeoutMs"
+        }
+      ],
+      "currentDomainAndRelations": "Reject outside those distinct bounds/fractional; type check196; target uid/gid domain must not be confused with host capacity or generalized Unix valid IDs",
+      "classification": "source validation or generated selection; not an independent numeric settings author",
+      "actualReaderRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 197,
+        "expression": "{{- if or (lt $value (float64 1)) (gt $value $maximum) (ne $value (floor $value)) -}}{{- fail (printf \"swarm supervisor %s exceeds its positive integer bound\" $key) -}}{{- end -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "callerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+          "line": 10,
+          "expression": "{{- range $name, $contents := (include \"kubeclaw.swarmBundle\" . | mustFromJson) }}",
+          "sha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875"
+        },
+        {
+          "path": "charts/prism/templates/_swarm-config.tpl",
+          "line": 18,
+          "expression": "{{- $config := include \"kubeclaw.swarmConfig\" . | mustFromJson -}}",
+          "sha256": "e044387aa75a3f784ccd2a0d0f30d91f6e69b7e07e663ab2cc005417bff7265a"
+        }
+      ],
+      "proposedAuthority": "Retain each current component owner in selected complete generation; rename system entry to pipeline.config.json only in approved C1. Loader/protocol/schema limits remain explicit separately from adjustable policy.",
+      "activation": "Validate complete selected component documents before Chart rendering; no per-key overlays or hidden defaults. Actual native caller acceptance remains distinct.",
+      "recovery": "Retain the original full selected document and content identity; do not reselect latest or substitute another Buster profile during an existing run.",
+      "requiredFutureChecks": [
+        "exact original/corrected profile and schema joins",
+        "boundary type/range and each relation rejection at this productive renderer",
+        "same-generation runtime consumer and recovery cases"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-b56d3dbbda2be12a",
+      "originalCandidate": {
+        "id": "SRC-b56d3dbbda2be12a",
+        "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 211,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 211,
+        "expression": "{{- fail \"swarm worker connection budget is too small\" -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "field": "worker connection budget",
+      "members": [
+        {
+          "owner": "prism-worker",
+          "currentAuthor": "files/config/prism-worker.config.json#/settings/ingress/maximumActiveRequests"
+        },
+        {
+          "owner": "prism-worker",
+          "currentAuthor": "files/config/prism-worker.config.json#/settings/ingress/maximumProbeRequests"
+        },
+        {
+          "owner": "prism-worker",
+          "currentAuthor": "files/config/prism-worker.config.json#/settings/ingress/maximumConnections"
+        }
+      ],
+      "currentDomainAndRelations": "maximumActiveRequests + maximumProbeRequests <= maximumConnections; this fail belongs to condition210",
+      "classification": "source validation or generated selection; not an independent numeric settings author",
+      "actualReaderRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 210,
+        "expression": "{{- if gt (add (int $worker.maximumActiveRequests) (int $worker.maximumProbeRequests)) (int $worker.maximumConnections) -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "callerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+          "line": 10,
+          "expression": "{{- range $name, $contents := (include \"kubeclaw.swarmBundle\" . | mustFromJson) }}",
+          "sha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875"
+        },
+        {
+          "path": "charts/prism/templates/_swarm-config.tpl",
+          "line": 18,
+          "expression": "{{- $config := include \"kubeclaw.swarmConfig\" . | mustFromJson -}}",
+          "sha256": "e044387aa75a3f784ccd2a0d0f30d91f6e69b7e07e663ab2cc005417bff7265a"
+        }
+      ],
+      "proposedAuthority": "Retain each current component owner in selected complete generation; rename system entry to pipeline.config.json only in approved C1. Loader/protocol/schema limits remain explicit separately from adjustable policy.",
+      "activation": "Validate complete selected component documents before Chart rendering; no per-key overlays or hidden defaults. Actual native caller acceptance remains distinct.",
+      "recovery": "Retain the original full selected document and content identity; do not reselect latest or substitute another Buster profile during an existing run.",
+      "requiredFutureChecks": [
+        "exact original/corrected profile and schema joins",
+        "boundary type/range and each relation rejection at this productive renderer",
+        "same-generation runtime consumer and recovery cases"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-e6907369daeea5f0",
+      "originalCandidate": {
+        "id": "SRC-e6907369daeea5f0",
+        "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 217,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 217,
+        "expression": "{{- if or (gt $b.maximumArchiveBytes $b.maximumRequestBytes) (ge $b.maximumHeaderBytes $b.maximumMetadataBytes) (gt $b.maximumInputBytes $b.maximumJournalBytes) (gt (addf $b.maximumResultBytes (mulf 4 $b.maximumInputBytes)) $b.maximumOutputBytes) (gt (addf $b.maximumHeaderBytes (mulf 4 $b.maximumInputBytes)) $b.maximumResultBytes) (gt $b.maximumOutputBytes $b.maximumJournalBytes) -}}{{- fail \"swarm Buster storage budget invalid\" -}}{{- end -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "field": "preparation storage relation",
+      "members": [
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/maximumArchiveBytes"
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/maximumRequestBytes"
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/maximumHeaderBytes"
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/maximumMetadataBytes"
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/maximumInputBytes"
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/maximumJournalBytes"
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/maximumResultBytes"
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/maximumOutputBytes"
+        }
+      ],
+      "currentDomainAndRelations": "archive<=request; header<metadata; input<=journal; result+4*input<=output; header+4*input<=result; output<=journal. Preserve all six distinct relations",
+      "classification": "source validation or generated selection; not an independent numeric settings author",
+      "actualReaderRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 217,
+        "expression": "{{- if or (gt $b.maximumArchiveBytes $b.maximumRequestBytes) (ge $b.maximumHeaderBytes $b.maximumMetadataBytes) (gt $b.maximumInputBytes $b.maximumJournalBytes) (gt (addf $b.maximumResultBytes (mulf 4 $b.maximumInputBytes)) $b.maximumOutputBytes) (gt (addf $b.maximumHeaderBytes (mulf 4 $b.maximumInputBytes)) $b.maximumResultBytes) (gt $b.maximumOutputBytes $b.maximumJournalBytes) -}}{{- fail \"swarm Buster storage budget invalid\" -}}{{- end -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "callerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+          "line": 10,
+          "expression": "{{- range $name, $contents := (include \"kubeclaw.swarmBundle\" . | mustFromJson) }}",
+          "sha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875"
+        },
+        {
+          "path": "charts/prism/templates/_swarm-config.tpl",
+          "line": 18,
+          "expression": "{{- $config := include \"kubeclaw.swarmConfig\" . | mustFromJson -}}",
+          "sha256": "e044387aa75a3f784ccd2a0d0f30d91f6e69b7e07e663ab2cc005417bff7265a"
+        }
+      ],
+      "proposedAuthority": "Retain each current component owner in selected complete generation; rename system entry to pipeline.config.json only in approved C1. Loader/protocol/schema limits remain explicit separately from adjustable policy.",
+      "activation": "Validate complete selected component documents before Chart rendering; no per-key overlays or hidden defaults. Actual native caller acceptance remains distinct.",
+      "recovery": "Retain the original full selected document and content identity; do not reselect latest or substitute another Buster profile during an existing run.",
+      "requiredFutureChecks": [
+        "exact original/corrected profile and schema joins",
+        "boundary type/range and each relation rejection at this productive renderer",
+        "same-generation runtime consumer and recovery cases"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-bd47d110c9c2cd08",
+      "originalCandidate": {
+        "id": "SRC-bd47d110c9c2cd08",
+        "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 218,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 218,
+        "expression": "{{- if le $b.closeTimeoutMs $b.drainTimeoutMs -}}{{- fail \"swarm Buster close budget invalid\" -}}{{- end -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "field": "preparation close ordering",
+      "members": [
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/closeTimeoutMs"
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/preparation/drainTimeoutMs"
+        }
+      ],
+      "currentDomainAndRelations": "closeTimeoutMs > drainTimeoutMs",
+      "classification": "source validation or generated selection; not an independent numeric settings author",
+      "actualReaderRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 218,
+        "expression": "{{- if le $b.closeTimeoutMs $b.drainTimeoutMs -}}{{- fail \"swarm Buster close budget invalid\" -}}{{- end -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "callerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+          "line": 10,
+          "expression": "{{- range $name, $contents := (include \"kubeclaw.swarmBundle\" . | mustFromJson) }}",
+          "sha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875"
+        },
+        {
+          "path": "charts/prism/templates/_swarm-config.tpl",
+          "line": 18,
+          "expression": "{{- $config := include \"kubeclaw.swarmConfig\" . | mustFromJson -}}",
+          "sha256": "e044387aa75a3f784ccd2a0d0f30d91f6e69b7e07e663ab2cc005417bff7265a"
+        }
+      ],
+      "proposedAuthority": "Retain each current component owner in selected complete generation; rename system entry to pipeline.config.json only in approved C1. Loader/protocol/schema limits remain explicit separately from adjustable policy.",
+      "activation": "Validate complete selected component documents before Chart rendering; no per-key overlays or hidden defaults. Actual native caller acceptance remains distinct.",
+      "recovery": "Retain the original full selected document and content identity; do not reselect latest or substitute another Buster profile during an existing run.",
+      "requiredFutureChecks": [
+        "exact original/corrected profile and schema joins",
+        "boundary type/range and each relation rejection at this productive renderer",
+        "same-generation runtime consumer and recovery cases"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-a366c6559124018b",
+      "originalCandidate": {
+        "id": "SRC-a366c6559124018b",
+        "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 225,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 225,
+        "expression": "{{- if hasKey .Values \"swarmConfigJson\" -}}{{- fail \"swarmConfigJson duplicates the component bundle author\" -}}{{- end -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "field": "retired duplicate bundle author",
+      "members": [],
+      "currentDomainAndRelations": "Any presence of Values.swarmConfigJson rejects, including empty/null; no settings author here. Bundle comes from seven entry/component documents at228-233",
+      "classification": "source validation or generated selection; not an independent numeric settings author",
+      "actualReaderRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 225,
+        "expression": "{{- if hasKey .Values \"swarmConfigJson\" -}}{{- fail \"swarmConfigJson duplicates the component bundle author\" -}}{{- end -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "callerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+          "line": 10,
+          "expression": "{{- range $name, $contents := (include \"kubeclaw.swarmBundle\" . | mustFromJson) }}",
+          "sha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875"
+        },
+        {
+          "path": "charts/prism/templates/_swarm-config.tpl",
+          "line": 18,
+          "expression": "{{- $config := include \"kubeclaw.swarmConfig\" . | mustFromJson -}}",
+          "sha256": "e044387aa75a3f784ccd2a0d0f30d91f6e69b7e07e663ab2cc005417bff7265a"
+        }
+      ],
+      "proposedAuthority": "Retain each current component owner in selected complete generation; rename system entry to pipeline.config.json only in approved C1. Loader/protocol/schema limits remain explicit separately from adjustable policy.",
+      "activation": "Validate complete selected component documents before Chart rendering; no per-key overlays or hidden defaults. Actual native caller acceptance remains distinct.",
+      "recovery": "Retain the original full selected document and content identity; do not reselect latest or substitute another Buster profile during an existing run.",
+      "requiredFutureChecks": [
+        "exact original/corrected profile and schema joins",
+        "boundary type/range and each relation rejection at this productive renderer",
+        "same-generation runtime consumer and recovery cases"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-2ca0c163bfd57e6a",
+      "originalCandidate": {
+        "id": "SRC-2ca0c163bfd57e6a",
+        "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 260,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 260,
+        "expression": "{{- if or (ne $value (floor $value)) (lt $value (float64 $schema.minimum)) (gt $value (float64 $schema.maximum)) -}}{{- fail (printf \"%s integer bounds invalid\" $name) -}}{{- end -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "field": "cluster policy integer schema vocabulary",
+      "members": [
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/clusterInvokers/kubernetesFixture/maximumManifestBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/clusterInvokers/kubernetesFixture/maximumResources",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/clusterInvokers/kubernetesFixture/maximumPersistentVolumeClaimBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/clusterInvokers/kubernetesFixture/maximumPersistentVolumeTotalBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/clusterInvokers/kubernetesFixture/maximumRetentionSeconds",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/clusterInvokers/kubernetesFixture/maximumExecutionMs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/clusterInvokers/kubernetesFixture/pollIntervalMs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 50,
+            "maximum": 10000
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/clusterInvokers/kubernetesFixture/shortCommandTimeoutMs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/clusterInvokers/kubernetesFixture/commandOutputManifestMultiplier",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/clusterInvokers/kubernetesFixture/diagnosticCodeUnits",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/clusterInvokers/kubernetesFixture/manifest/maximumNodes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/clusterInvokers/kubernetesFixture/manifest/maximumDepth",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/clusterInvokers/kubernetesFixture/manifest/maximumAliases",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/clusterInvokers/kubernetesFixture/manifest/maximumFlattenVisits",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/clusterInvokers/kubernetesFixture/manifest/maximumFlattenPending",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/clusterInvokers/tailscaleExposure/maximumExecutionMs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/clusterInvokers/tailscaleExposure/pollIntervalMs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 2147483647
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/clusterInvokers/tailscaleExposure/shortCommandTimeoutMs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/clusterInvokers/tailscaleExposure/maximumCommandOutputBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/clusterInvokers/runtimeSecurity/maximumExecutionMs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/clusterInvokers/runtimeSecurity/maximumOutputBytes",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1024,
+            "maximum": 9007199254740991
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/clusterInvokers/runtimeSecurity/pollIntervalMs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 10000
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/clusterInvokers/runtimeSecurity/maximumObservationAgeMs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 60000
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/clusterInvokers/runtimeSecurity/maximumFutureSkewMs",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          }
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/clusterInvokers/runtimeSecurity/diagnosticCodeUnits",
+          "schemaDomain": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        }
+      ],
+      "currentDomainAndRelations": "Recursive integer leaf validation uses exact schema.minimum/maximum and integral float64 at258-260; object/array/string/boolean branches are distinct, no default injection",
+      "classification": "source validation or generated selection; not an independent numeric settings author",
+      "actualReaderRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 260,
+        "expression": "{{- if or (ne $value (floor $value)) (lt $value (float64 $schema.minimum)) (gt $value (float64 $schema.maximum)) -}}{{- fail (printf \"%s integer bounds invalid\" $name) -}}{{- end -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "callerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+          "line": 10,
+          "expression": "{{- range $name, $contents := (include \"kubeclaw.swarmBundle\" . | mustFromJson) }}",
+          "sha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875"
+        },
+        {
+          "path": "charts/prism/templates/_swarm-config.tpl",
+          "line": 18,
+          "expression": "{{- $config := include \"kubeclaw.swarmConfig\" . | mustFromJson -}}",
+          "sha256": "e044387aa75a3f784ccd2a0d0f30d91f6e69b7e07e663ab2cc005417bff7265a"
+        }
+      ],
+      "proposedAuthority": "Retain each current component owner in selected complete generation; rename system entry to pipeline.config.json only in approved C1. Loader/protocol/schema limits remain explicit separately from adjustable policy.",
+      "activation": "Validate complete selected component documents before Chart rendering; no per-key overlays or hidden defaults. Actual native caller acceptance remains distinct.",
+      "recovery": "Retain the original full selected document and content identity; do not reselect latest or substitute another Buster profile during an existing run.",
+      "requiredFutureChecks": [
+        "exact original/corrected profile and schema joins",
+        "boundary type/range and each relation rejection at this productive renderer",
+        "same-generation runtime consumer and recovery cases"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-a33bbe84d92a0346",
+      "originalCandidate": {
+        "id": "SRC-a33bbe84d92a0346",
+        "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 265,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 265,
+        "expression": "{{- if not (hasKey .Values \"busterComponentFile\") -}}{{- fail \"busterComponentFile is required\" -}}{{- end -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "field": "selected complete Buster document required",
+      "members": [],
+      "currentDomainAndRelations": "Values.busterComponentFile must be present; full document selection, not keywise merge",
+      "classification": "source validation or generated selection; not an independent numeric settings author",
+      "actualReaderRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 265,
+        "expression": "{{- if not (hasKey .Values \"busterComponentFile\") -}}{{- fail \"busterComponentFile is required\" -}}{{- end -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "callerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+          "line": 10,
+          "expression": "{{- range $name, $contents := (include \"kubeclaw.swarmBundle\" . | mustFromJson) }}",
+          "sha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875"
+        },
+        {
+          "path": "charts/prism/templates/_swarm-config.tpl",
+          "line": 18,
+          "expression": "{{- $config := include \"kubeclaw.swarmConfig\" . | mustFromJson -}}",
+          "sha256": "e044387aa75a3f784ccd2a0d0f30d91f6e69b7e07e663ab2cc005417bff7265a"
+        }
+      ],
+      "proposedAuthority": "Retain each current component owner in selected complete generation; rename system entry to pipeline.config.json only in approved C1. Loader/protocol/schema limits remain explicit separately from adjustable policy.",
+      "activation": "Validate complete selected component documents before Chart rendering; no per-key overlays or hidden defaults. Actual native caller acceptance remains distinct.",
+      "recovery": "Retain the original full selected document and content identity; do not reselect latest or substitute another Buster profile during an existing run.",
+      "requiredFutureChecks": [
+        "exact original/corrected profile and schema joins",
+        "boundary type/range and each relation rejection at this productive renderer",
+        "same-generation runtime consumer and recovery cases"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-3b703d3eda783cd9",
+      "originalCandidate": {
+        "id": "SRC-3b703d3eda783cd9",
+        "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 266,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 266,
+        "expression": "{{- $file := .Values.busterComponentFile -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "field": "Buster selection path",
+      "members": [],
+      "currentDomainAndRelations": "String matching ^files/config/(profiles/)?buster-engine([.][a-z0-9-]+)?[.]config[.]json$ at267-268; required nonempty file at273, owner/schema identity275",
+      "classification": "source validation or generated selection; not an independent numeric settings author",
+      "actualReaderRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 266,
+        "expression": "{{- $file := .Values.busterComponentFile -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "callerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+          "line": 10,
+          "expression": "{{- range $name, $contents := (include \"kubeclaw.swarmBundle\" . | mustFromJson) }}",
+          "sha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875"
+        },
+        {
+          "path": "charts/prism/templates/_swarm-config.tpl",
+          "line": 18,
+          "expression": "{{- $config := include \"kubeclaw.swarmConfig\" . | mustFromJson -}}",
+          "sha256": "e044387aa75a3f784ccd2a0d0f30d91f6e69b7e07e663ab2cc005417bff7265a"
+        }
+      ],
+      "proposedAuthority": "Retain each current component owner in selected complete generation; rename system entry to pipeline.config.json only in approved C1. Loader/protocol/schema limits remain explicit separately from adjustable policy.",
+      "activation": "Validate complete selected component documents before Chart rendering; no per-key overlays or hidden defaults. Actual native caller acceptance remains distinct.",
+      "recovery": "Retain the original full selected document and content identity; do not reselect latest or substitute another Buster profile during an existing run.",
+      "requiredFutureChecks": [
+        "exact original/corrected profile and schema joins",
+        "boundary type/range and each relation rejection at this productive renderer",
+        "same-generation runtime consumer and recovery cases"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-34575fbfcf7ce405",
+      "originalCandidate": {
+        "id": "SRC-34575fbfcf7ce405",
+        "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 269,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 269,
+        "expression": "{{- if hasKey .Values \"busterNamespaceBroker\" -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "field": "retired Buster namespace author envelope",
+      "members": [],
+      "currentDomainAndRelations": "Presence of Values.busterNamespaceBroker triggers retired-key inspection; not blanket prohibition of all deployment/broker keys",
+      "classification": "source validation or generated selection; not an independent numeric settings author",
+      "actualReaderRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 269,
+        "expression": "{{- if hasKey .Values \"busterNamespaceBroker\" -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "callerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+          "line": 10,
+          "expression": "{{- range $name, $contents := (include \"kubeclaw.swarmBundle\" . | mustFromJson) }}",
+          "sha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875"
+        },
+        {
+          "path": "charts/prism/templates/_swarm-config.tpl",
+          "line": 18,
+          "expression": "{{- $config := include \"kubeclaw.swarmConfig\" . | mustFromJson -}}",
+          "sha256": "e044387aa75a3f784ccd2a0d0f30d91f6e69b7e07e663ab2cc005417bff7265a"
+        }
+      ],
+      "proposedAuthority": "Retain each current component owner in selected complete generation; rename system entry to pipeline.config.json only in approved C1. Loader/protocol/schema limits remain explicit separately from adjustable policy.",
+      "activation": "Validate complete selected component documents before Chart rendering; no per-key overlays or hidden defaults. Actual native caller acceptance remains distinct.",
+      "recovery": "Retain the original full selected document and content identity; do not reselect latest or substitute another Buster profile during an existing run.",
+      "requiredFutureChecks": [
+        "exact original/corrected profile and schema joins",
+        "boundary type/range and each relation rejection at this productive renderer",
+        "same-generation runtime consumer and recovery cases"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    },
+    {
+      "candidateId": "SRC-4281f12995569fb2",
+      "originalCandidate": {
+        "id": "SRC-4281f12995569fb2",
+        "source": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 271,
+        "kinds": [
+          "policy-or-input"
+        ],
+        "sourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "disposition": "unresolved",
+        "settingIds": [],
+        "reason": "No proven field/consumer association; source entry explicitly remains unresolved.",
+        "currentSourceSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+        "sourceIdentityMatches": true,
+        "definitionAccepted": false
+      },
+      "sourceRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 271,
+        "expression": "{{- if hasKey $.Values.busterNamespaceBroker $key -}}{{- fail (printf \"retired busterNamespaceBroker.%s; use selected Buster component\" $key) -}}{{- end -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "field": "retired lease API duplicate authors",
+      "members": [
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/clusterInvokers/shared/leaseApiGroup"
+        },
+        {
+          "owner": "buster-engine",
+          "currentAuthor": "files/config/buster-engine.config.json#/settings/clusterInvokers/shared/leaseApiVersion"
+        }
+      ],
+      "currentDomainAndRelations": "Reject presence of either Values.busterNamespaceBroker.leaseApiGroup or leaseApiVersion including null; selected same-Buster component owns the API identity",
+      "classification": "source validation or generated selection; not an independent numeric settings author",
+      "actualReaderRef": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "line": 271,
+        "expression": "{{- if hasKey $.Values.busterNamespaceBroker $key -}}{{- fail (printf \"retired busterNamespaceBroker.%s; use selected Buster component\" $key) -}}{{- end -}}",
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "callerRefs": [
+        {
+          "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+          "line": 10,
+          "expression": "{{- range $name, $contents := (include \"kubeclaw.swarmBundle\" . | mustFromJson) }}",
+          "sha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875"
+        },
+        {
+          "path": "charts/prism/templates/_swarm-config.tpl",
+          "line": 18,
+          "expression": "{{- $config := include \"kubeclaw.swarmConfig\" . | mustFromJson -}}",
+          "sha256": "e044387aa75a3f784ccd2a0d0f30d91f6e69b7e07e663ab2cc005417bff7265a"
+        }
+      ],
+      "proposedAuthority": "Retain each current component owner in selected complete generation; rename system entry to pipeline.config.json only in approved C1. Loader/protocol/schema limits remain explicit separately from adjustable policy.",
+      "activation": "Validate complete selected component documents before Chart rendering; no per-key overlays or hidden defaults. Actual native caller acceptance remains distinct.",
+      "recovery": "Retain the original full selected document and content identity; do not reselect latest or substitute another Buster profile during an existing run.",
+      "requiredFutureChecks": [
+        "exact original/corrected profile and schema joins",
+        "boundary type/range and each relation rejection at this productive renderer",
+        "same-generation runtime consumer and recovery cases"
+      ],
+      "definitionAccepted": false,
+      "runtimeResult": "not-run"
+    }
+  ],
+  "remainingQueueUnchanged": true,
+  "globalC0Accepted": false,
+  "supersedesDefinitionRef": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-27/source-field-definitions.json",
+    "sha256": "485dbbf1fb718f8c8e6691059ea368b1fc1dbd23a298612841690d6acba41622"
+  },
+  "independentCorrectionRecheck": "pending"
+}

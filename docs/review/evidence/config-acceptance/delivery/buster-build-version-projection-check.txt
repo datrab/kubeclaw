@@ -1,0 +1,8 @@
+Command: node scripts/versions.mjs --check
+stdout:
+{"checked":44,"changed":[]}
+{"inputs":4,"locks":5}
+
+stderr:
+
+Exit: 0

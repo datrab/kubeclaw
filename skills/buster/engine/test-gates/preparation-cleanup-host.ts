@@ -1,9 +1,10 @@
+import { assignedWorkerCorePolicy, workerCoreExecutionOptions } from '@kubeclaw/plugin-foundation/config/worker-core-policy';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { WorkerAttemptExecutor, observeNativeWorkerResources, nativeSourceCleanupResultSchema,
   sha256Digest, type WorkerAttemptOperation } from '@kubeclaw/worker-core';
 import { validateWorkerResourceContractV3, type WorkerAttemptEnvelopeV3 } from '@kubeclaw/pipeline-worker-core-contract';
-import { validateBusterPreparationSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+import { preparationCleanupPolicy } from './preparation-cleanup-policy.ts';
 import { assertPreparationCleanupEffects, type PreparationCleanupEffects } from './preparation-cleanup-binding.ts';
 import { preparationSourceDirectory } from './preparation-source.ts';
 
@@ -60,12 +61,13 @@ async function main(): Promise<void> {
   const association = JSON.parse(encoded) as { effects: PreparationCleanupEffects; settings: unknown };
   if (Object.keys(association).sort().join(',') !== 'effects,settings') throw new Error('BUSTER_PREPARATION_CLEANUP_ASSOCIATION_INVALID');
   assertPreparationCleanupEffects(association.effects);
-  validateBusterPreparationSettings(association.settings);
+  const envelope = await readEnvelope(maximumBytes);
+  const { settings } = preparationCleanupPolicy(envelope, association.settings);
+  if (settings.maximumInputBytes !== maximumBytes) throw new Error('BUSTER_PREPARATION_ENVELOPE_LIMIT');
   const effects = association.effects;
   if (process.getuid?.() !== effects.gate.preparationUid || process.getgid?.() !== effects.gate.preparationUid) {
     throw new Error('BUSTER_PREPARATION_SLOT_INVALID');
   }
-  const envelope = await readEnvelope(maximumBytes);
   if (envelope.operation.contractId !== 'kubeclaw.native-source-cleanup@1'
     || envelope.operation.values.effectsDigest !== sha256Digest(effects)) throw new Error('BUSTER_PREPARATION_CLEANUP_ASSOCIATION_INVALID');
   const cancellation = new AbortController();
@@ -93,8 +95,8 @@ async function main(): Promise<void> {
     },
   };
   try {
-    const result = await new WorkerAttemptExecutor({ envelope, operation, signal: cancellation.signal,
-      retainLogs: false, receiptNamespace: 'buster-source-cleanup-provisional' }).execute();
+    const result = await new WorkerAttemptExecutor({ ...workerCoreExecutionOptions(assignedWorkerCorePolicy(process.env), 'buster-source-cleanup', false), envelope, operation, signal: cancellation.signal,
+      receiptNamespace: 'buster-source-cleanup-provisional' }).execute();
     process.stdout.write(JSON.stringify(result));
   } finally {
     process.removeListener('SIGINT', cancel);

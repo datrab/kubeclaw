@@ -1,0 +1,45 @@
+{
+  "final-authors-and-adjacent.txt": {
+    "command": [
+      "node",
+      "--test",
+      "--test-timeout=10000",
+      "tests/verification/e2e/swarm-author-profile.test.mjs",
+      "tests/verification/e2e/fixture-coverage.test.mjs",
+      "tests/verification/e2e/registry-target.test.mjs",
+      "tests/verification/e2e/check-real-e2e-capabilities.test.mjs"
+    ],
+    "exitCode": 0
+  },
+  "final-typecheck.txt": {
+    "command": [
+      "./node_modules/.bin/tsc",
+      "--noEmit",
+      "--module",
+      "NodeNext",
+      "--moduleResolution",
+      "NodeNext",
+      "--target",
+      "ES2024",
+      "--lib",
+      "ESNext,DOM,DOM.Iterable",
+      "--strict",
+      "--types",
+      "node",
+      "--skipLibCheck",
+      "--allowImportingTsExtensions",
+      "--esModuleInterop",
+      "tests/verification/e2e/support/platform-config.ts",
+      "tests/verification/e2e/run-v2-production-pipeline.mts"
+    ],
+    "exitCode": 0
+  },
+  "final-diff.txt": {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0
+  }
+}

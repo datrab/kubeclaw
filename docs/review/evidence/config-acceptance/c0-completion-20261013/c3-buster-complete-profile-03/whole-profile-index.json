@@ -1,0 +1,1020 @@
+{
+  "status": "C3 complete local proposed profiles; no installed/native facts",
+  "author": "config/components/buster-engine.config.json",
+  "profileCount": 91,
+  "providerFieldCount": 64,
+  "providerPhysicalPointers": 61,
+  "baseComponent17C3Bodies": [
+    {
+      "id": "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumSecretReferenceEntries",
+      "originalActiveBodySha256": "094c533994dbb10b78a9774978086309592d8fc2bafe05c12abaa6d63cb551bd",
+      "originalCaseIds": [
+        "QC-FIXTURE-SECRET-ENTRY-CAP-VAL",
+        "QC-FIXTURE-SECRET-ENTRY-CAP-BIND"
+      ],
+      "profileId": "v-070e0920b3744575"
+    },
+    {
+      "id": "CMP-buster-engine-execution.stores.admission.lockWaitSeconds",
+      "originalActiveBodySha256": "aec0f177596a36cf84a1d6fd509e90e63f6669e6e5ce90ad9d2474ca7a9d5289",
+      "originalCaseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ],
+      "profileId": "v-b3705c5f51c5b926"
+    },
+    {
+      "id": "CMP-buster-engine-execution.stores.admission.metadataReserveBytes",
+      "originalActiveBodySha256": "9b0f53ef2c37307268cf471f8a244e6a93b52878cf833af4086b88fb1b4f0fee",
+      "originalCaseIds": [
+        "QC-ADMISSION-METADATA-RESERVE-VAL",
+        "QC-ADMISSION-METADATA-RESERVE-OVERFLOW",
+        "QC-ADMISSION-METADATA-RESERVE-ALL-WRITES"
+      ],
+      "profileId": "v-bebf1354663e26be"
+    },
+    {
+      "id": "CMP-buster-engine-execution.stores.admission.reasonPrefixCodeUnits",
+      "originalActiveBodySha256": "9db85d45633c255f357c4b09260f89929b6a5d3fa32ced1b792acc70bf430aaa",
+      "originalCaseIds": [
+        "QC-ADMISSION-REASON-LIMITS-VAL",
+        "QC-ADMISSION-REASON-LIMITS-FORMAT",
+        "QC-ADMISSION-REASON-LIMITS-HISTORY"
+      ],
+      "profileId": "v-17fc819431b60ffa"
+    },
+    {
+      "id": "CMP-buster-engine-execution.stores.admission.reasonThresholdCodeUnits",
+      "originalActiveBodySha256": "54c4d443ff8990545c257ec09f07de94e5aa1cc14f893f49b3b9e7736158ee0e",
+      "originalCaseIds": [
+        "QC-ADMISSION-REASON-LIMITS-VAL",
+        "QC-ADMISSION-REASON-LIMITS-FORMAT",
+        "QC-ADMISSION-REASON-LIMITS-HISTORY"
+      ],
+      "profileId": "v-a8274d882bf9f1d2"
+    },
+    {
+      "id": "CMP-buster-engine-execution.stores.attempts.lockWaitSeconds",
+      "originalActiveBodySha256": "a1e9b725ce67b8e9cfdbd4eb87e3275425e231fd7f3a8a490ce0805932c11206",
+      "originalCaseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ],
+      "profileId": "v-ffb5b6de976e8ca4"
+    },
+    {
+      "id": "CMP-buster-engine-preparation.attemptEvidenceBytes",
+      "originalActiveBodySha256": "a1d3b950769ccb2665837c9eb1caf20075237637efae18ee1c11d94f6a0832af",
+      "originalCaseIds": [
+        "CMP-buster-engine-preparation.attemptEvidenceBytes-VAL",
+        "CMP-buster-engine-preparation.attemptEvidenceBytes-PROJECTION",
+        "CMP-buster-engine-preparation.attemptEvidenceBytes-DORMANT",
+        "CMP-C0-PREP-evidenceBytes-ZERO",
+        "CMP-C0-PREP-evidenceBytes-NEGATIVE"
+      ],
+      "profileId": "v-3793be64b1eabf50"
+    },
+    {
+      "id": "CMP-buster-engine-preparation.attemptEvidenceFiles",
+      "originalActiveBodySha256": "f350402c12339abce77006f4f416e230e2084bed8e66717e711e6c9994e517ea",
+      "originalCaseIds": [
+        "CMP-buster-engine-preparation.attemptEvidenceFiles-VAL",
+        "CMP-buster-engine-preparation.attemptEvidenceFiles-PROJECTION",
+        "CMP-buster-engine-preparation.attemptEvidenceFiles-DORMANT",
+        "CMP-C0-PREP-evidenceFiles-ZERO",
+        "CMP-C0-PREP-evidenceFiles-NEGATIVE"
+      ],
+      "profileId": "v-dc6a0c6da1f41b40"
+    },
+    {
+      "id": "CMP-buster-engine-preparation.attemptLogBytes",
+      "originalActiveBodySha256": "aeb79a18411c65b8012a2b0df5612ef4568201b177dc1999b843fd3885cfcd26",
+      "originalCaseIds": [
+        "CMP-buster-engine-preparation.attemptLogBytes-VAL",
+        "CMP-buster-engine-preparation.attemptLogBytes-PROJECTION",
+        "CMP-buster-engine-preparation.attemptLogBytes-DORMANT",
+        "CMP-C0-PREP-logBytes-ZERO",
+        "CMP-C0-PREP-logBytes-NEGATIVE",
+        "CMP-C0-PREP-LOG-DECODER-ZERO",
+        "CMP-C0-PREP-LOG-DECODER-ONE",
+        "CMP-C0-PREP-LOG-WIRE-MAX"
+      ],
+      "profileId": "v-0ad84d217cc00c9e"
+    },
+    {
+      "id": "CMP-buster-engine-preparation.completionPhaseAllowance",
+      "originalActiveBodySha256": "bd014849c039c03a3bf76f1f842df6772842339f6c43415b095f2e0cc0262b05",
+      "originalCaseIds": [
+        "CMP-buster-engine-preparation.completionPhaseAllowance-VAL",
+        "CMP-buster-engine-preparation.completionPhaseAllowance-PROJECTION",
+        "CMP-buster-engine-preparation.completionPhaseAllowance-EFFECT",
+        "CMP-C0-PREP-COMPLETION-SOURCE"
+      ],
+      "profileId": "v-c3c56365fac260b8"
+    },
+    {
+      "id": "CMP-buster-engine-preparation.storeLockWaitSeconds",
+      "originalActiveBodySha256": "040d73386f048dc914bd986e3af2c68232066881a52d33eef0e7f9b348eba64b",
+      "originalCaseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ],
+      "profileId": "v-c562b552e52575e8"
+    },
+    {
+      "id": "CMP-buster-engine-preparation.tarDiagnosticCodeUnits",
+      "originalActiveBodySha256": "a595bffdea0ecfbd8c81dca869f1c4a863233f511918c6f2636b0ea52fa4bfaa",
+      "originalCaseIds": [
+        "QC-BUSTER-TAR-DIAGNOSTIC-VAL",
+        "QC-BUSTER-TAR-DIAGNOSTIC-REAL-TAR",
+        "QC-BUSTER-TAR-DIAGNOSTIC-BIND"
+      ],
+      "profileId": "v-2c12ac5d6634b127"
+    },
+    {
+      "id": "CMP7-PREPARATION-RESULT-RESERVE-MULTIPLIER",
+      "originalActiveBodySha256": "a6b3e5e89d1d6af01df18b1596a566dfbadd73706c5703027c43ebf4ef4ea6ac",
+      "originalCaseIds": [
+        "CMP7-PREPARATION-RESULT-RESERVE-MULTIPLIER-AUTH-VAL",
+        "CMP7-PREPARATION-RESULT-RESERVE-MULTIPLIER-EFFECT",
+        "CMP7-PREPARATION-RESULT-RESERVE-MULTIPLIER-RECOVERY",
+        "CMP7-PREPARATION-RESULT-RESERVE-MULTIPLIER-MUTATION"
+      ],
+      "profileId": "v-3add766f6af568cd"
+    }
+  ],
+  "variants": [
+    {
+      "fieldId": "DLV-B23-EMIT-9bc7dd684bcc0ac9",
+      "profileId": "v-a11483f8a7b64ced",
+      "selectedWholeSettingsSha256": "a11483f8a7b64ced6f330789312ffdd09aaf32aa80253d32eb58dd30689916a6",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-9bc7dd684bcc0ac9/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-e353921f59b947d2",
+      "profileId": "v-2046200c4587ce21",
+      "selectedWholeSettingsSha256": "2046200c4587ce213361de1dd1988dfc4947a6adacd44be947d855241c416086",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-e353921f59b947d2/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-f3e081a10a005c6d",
+      "profileId": "v-c5d03b0768617a2f",
+      "selectedWholeSettingsSha256": "c5d03b0768617a2fa42ece170c898e25e00644435962c78517a0167cd4b656aa",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-f3e081a10a005c6d/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-8223d4f82ad78940",
+      "profileId": "v-1b977533b3fb85b8",
+      "selectedWholeSettingsSha256": "1b977533b3fb85b84c785e4f508057e12818b083bf8753ff978eeb99d893764b",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-8223d4f82ad78940/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-15761fa4d74cfd14",
+      "profileId": "v-1d34eb571422b5cc",
+      "selectedWholeSettingsSha256": "1d34eb571422b5cced1347fdd00ad6bf9d540f3402f7e6d952a8bcb8d23e037d",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-15761fa4d74cfd14/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-9e703e930074d2d9",
+      "profileId": "v-89df19445374a1bd",
+      "selectedWholeSettingsSha256": "89df19445374a1bd2d556b38120abb16e62d84912c08329ca46c8edfbe6a7a80",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-9e703e930074d2d9/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-c7b8d91c6e32ca8a",
+      "profileId": "v-c6c6a0ac00af67fc",
+      "selectedWholeSettingsSha256": "c6c6a0ac00af67fc2cdf0acfa9fe8c1a08351906a3adf5913b38a94223da26d4",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-c7b8d91c6e32ca8a/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-3133d45344799df6",
+      "profileId": "v-4a2b71e1a65662bd",
+      "selectedWholeSettingsSha256": "4a2b71e1a65662bd850118fba1f2c331cc14f6fb6c04a8c4e223fed4976d5dc5",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-3133d45344799df6/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-45a77594a284944f",
+      "profileId": "v-7c54fc03d9fbce5e",
+      "selectedWholeSettingsSha256": "7c54fc03d9fbce5ec28560b8b20b34de7a87edd0ee25cb9dfa6d45944118721c",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-45a77594a284944f/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-61b8952807a6ae64",
+      "profileId": "v-384a4bc4a8eabb56",
+      "selectedWholeSettingsSha256": "384a4bc4a8eabb5653cf6f8582f5fa5b56b743f7fc5ca5f7cbd28b3db2a7554c",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-61b8952807a6ae64/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-32fdcf1249dece9d",
+      "profileId": "v-622d026aa858b089",
+      "selectedWholeSettingsSha256": "622d026aa858b089553ce63434cd90752f88f721619cee3ace34b90b31391825",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-32fdcf1249dece9d/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-e1dbc20e704941b2",
+      "profileId": "v-dcc66494f2abd8f7",
+      "selectedWholeSettingsSha256": "dcc66494f2abd8f74fc03fdcb9034e321d6afa89bec21e8d16a41ac793e5e90b",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-e1dbc20e704941b2/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-e7411fa0b80cc0f9",
+      "profileId": "v-61f4652426398e77",
+      "selectedWholeSettingsSha256": "61f4652426398e7749c1ead532eb0a9f5392fd39568d3d4c211b26e97fa5a6ce",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-e7411fa0b80cc0f9/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-d310fed664330657",
+      "profileId": "v-4332bc8053894f53",
+      "selectedWholeSettingsSha256": "4332bc8053894f53c84a993a964340694eeafbcc29b85fef42294069e07861b7",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-d310fed664330657/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-154143b8310b9830",
+      "profileId": "v-ab6c3c9a11207cae",
+      "selectedWholeSettingsSha256": "ab6c3c9a11207cae58372d9f644b101281dccc778bd1e36c4a1ac010529805fe",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-154143b8310b9830/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-111b291a945ce10c",
+      "profileId": "v-f67e8217e7b1ae16",
+      "selectedWholeSettingsSha256": "f67e8217e7b1ae1620936320a5c940da0ff6354f74f499b49c7a056be454b552",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-111b291a945ce10c/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-b269fb17dbd3632a",
+      "profileId": "v-5a3c5a98191826c8",
+      "selectedWholeSettingsSha256": "5a3c5a98191826c802c71cb9a6d20fd623a2b4c2e4ea5ba31886ed93b9911d54",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-b269fb17dbd3632a/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-0d6a21c1a0ffc5b0",
+      "profileId": "v-97739e468086dbc1",
+      "selectedWholeSettingsSha256": "97739e468086dbc11fe2c72e9145440ff53d49d8757764f79897739a4d2827ff",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-0d6a21c1a0ffc5b0/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-9b6265411874b424",
+      "profileId": "v-2ad8277b22a2d1dd",
+      "selectedWholeSettingsSha256": "2ad8277b22a2d1dd866c539cb086739c905dc621e9bb2ec135632bd3fa8922d8",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-9b6265411874b424/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-0979d52b234d6325",
+      "profileId": "v-51d27362f259b511",
+      "selectedWholeSettingsSha256": "51d27362f259b511927a0edf5c248f35c8f244208bde33312478e4236edeccbc",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-0979d52b234d6325/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-d595fc8a40ee1046",
+      "profileId": "v-7a6a65927f129867",
+      "selectedWholeSettingsSha256": "7a6a65927f129867a2f238e9675afadcf018121d88b0811bfdfab90645c6370d",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-d595fc8a40ee1046/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-1a0817aeebf4adf0",
+      "profileId": "v-687de7ca84aef6f7",
+      "selectedWholeSettingsSha256": "687de7ca84aef6f784dc120ddcf6066718303840d5bc8e2ec6729b2468b3b5cc",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-1a0817aeebf4adf0/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-65ef6291b92e8ef3",
+      "profileId": "v-8755828b499fa2be",
+      "selectedWholeSettingsSha256": "8755828b499fa2beb924a55d219455f6b32458e14ce42ec1cd0f30935441b83d",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-65ef6291b92e8ef3/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-012c80b3ee7c1ca9",
+      "profileId": "v-2ade35785f8a4570",
+      "selectedWholeSettingsSha256": "2ade35785f8a45702782cf2d2a746151187b22e1345601630186fa9e35037846",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-012c80b3ee7c1ca9/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-8635b62d60b3554c",
+      "profileId": "v-e41f7b45cbaf3110",
+      "selectedWholeSettingsSha256": "e41f7b45cbaf31101d42c042b80babb35fd01417b60aea3af63205b80a8fb616",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-8635b62d60b3554c/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-20297db6672709e9",
+      "profileId": "v-2386fd6854b381b0",
+      "selectedWholeSettingsSha256": "2386fd6854b381b0c8d09c48eafb1be9b6bf22694d5faa6ac1ef09cc9423245f",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-20297db6672709e9/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-e67fb33445d34a6c",
+      "profileId": "v-b6430dab7abad331",
+      "selectedWholeSettingsSha256": "b6430dab7abad331fdf14a01d1bb4b4033a85ffa301957c34c77d31680ab819e",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-e67fb33445d34a6c/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-034a34d6636f9f11",
+      "profileId": "v-22ea9e1109d1c758",
+      "selectedWholeSettingsSha256": "22ea9e1109d1c758aa4fa1e488344fd54692915d234cd3316d2cf73d8d154ab3",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-034a34d6636f9f11/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-9a99771bafcecf49",
+      "profileId": "v-f2bfdbd2f5c926cc",
+      "selectedWholeSettingsSha256": "f2bfdbd2f5c926ccb8328a6c0faeae661ac9ae75fdfeb6912faaf90ad2b31d3d",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-9a99771bafcecf49/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-7990b7f85c86658f",
+      "profileId": "v-3fcd2e20e8f6a673",
+      "selectedWholeSettingsSha256": "3fcd2e20e8f6a67391bc2f115677778211a772e07ac5101d3d1a30a50dd34da5",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-7990b7f85c86658f/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-41faa757cd9ee237",
+      "profileId": "v-1cadcb6d42fbd896",
+      "selectedWholeSettingsSha256": "1cadcb6d42fbd8960911be7e9ad5b2dc1daa2efe6c7dfd6b3a90d328074b10b6",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-41faa757cd9ee237/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-d730bfee84950ebe",
+      "profileId": "v-2ade35785f8a4570",
+      "selectedWholeSettingsSha256": "2ade35785f8a45702782cf2d2a746151187b22e1345601630186fa9e35037846",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-d730bfee84950ebe/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-6acadb04e08e5a37",
+      "profileId": "v-24ae168bc0826351",
+      "selectedWholeSettingsSha256": "24ae168bc0826351beaae838735bc9cef01eaba0def0884314b531cb2cf0cc04",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-6acadb04e08e5a37/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-ce4287919a2b4288",
+      "profileId": "v-ae0fa5513821151f",
+      "selectedWholeSettingsSha256": "ae0fa5513821151f9d5fe14554dfad25b5be72ca3418fdf3eab4b8be023d280c",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-ce4287919a2b4288/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-aebb7dbfafeb369f",
+      "profileId": "v-5840bb3016bd16ef",
+      "selectedWholeSettingsSha256": "5840bb3016bd16efc820f287d4d98f839a1c5e12c07c4a1e03437d15c1cc2bab",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-aebb7dbfafeb369f/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-ecb119b84d29252a",
+      "profileId": "v-2ade35785f8a4570",
+      "selectedWholeSettingsSha256": "2ade35785f8a45702782cf2d2a746151187b22e1345601630186fa9e35037846",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-ecb119b84d29252a/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-b07c1207100f06b1",
+      "profileId": "v-a6ef90e7a3f2b9d6",
+      "selectedWholeSettingsSha256": "a6ef90e7a3f2b9d6602c5377537e80810d81278d42fab2d801f3fcdd8c2abe8a",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-b07c1207100f06b1/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-e0d022fb56b5fbe8",
+      "profileId": "v-dbee72df867fc3d7",
+      "selectedWholeSettingsSha256": "dbee72df867fc3d76ce8a605af510e6a898df410de682cf5bffe1f6965ce1da9",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-e0d022fb56b5fbe8/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-79b0cc603f4fbf87",
+      "profileId": "v-97958117476b6c86",
+      "selectedWholeSettingsSha256": "97958117476b6c8615a68cfb195c6425819e688d1e338ea3a94e60313fc96d30",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-79b0cc603f4fbf87/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-f8ed7defa73c2402",
+      "profileId": "v-3498a6a25c30d03f",
+      "selectedWholeSettingsSha256": "3498a6a25c30d03ffbcccf6ed831ec57345bda281b00f34171ecbcc2bb3f916d",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-f8ed7defa73c2402/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-d3499a44279d5bc2",
+      "profileId": "v-4e989d6c79a912c7",
+      "selectedWholeSettingsSha256": "4e989d6c79a912c7f8e080c6555b6f76da75737e18a47a8460e5725a6c171bcf",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-d3499a44279d5bc2/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-37fafda2e058ba33",
+      "profileId": "v-ba3331347ca0f10e",
+      "selectedWholeSettingsSha256": "ba3331347ca0f10e07a14e54c98914c5591a0dd742d2ead00c6fd6c8fb543fb3",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-37fafda2e058ba33/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-a877dd2d2afaaf41",
+      "profileId": "v-ae974a82a7697b02",
+      "selectedWholeSettingsSha256": "ae974a82a7697b029f98534f4373791eba2dae153e6c87bca40220391b182b69",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-a877dd2d2afaaf41/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-47d280f3edb1cac9",
+      "profileId": "v-2ade35785f8a4570",
+      "selectedWholeSettingsSha256": "2ade35785f8a45702782cf2d2a746151187b22e1345601630186fa9e35037846",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-47d280f3edb1cac9/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-54b9344ebe322dc9",
+      "profileId": "v-af3f1e55971f194f",
+      "selectedWholeSettingsSha256": "af3f1e55971f194f86f6ad243ac95fa319c7da07205858376962c51f89fce98e",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-54b9344ebe322dc9/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-502c39268e68e3ef",
+      "profileId": "v-af7bbaf7bf7a0c31",
+      "selectedWholeSettingsSha256": "af7bbaf7bf7a0c31b867a814bc30441966c8edcc16d37a19791dfa66704b25c5",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-502c39268e68e3ef/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-54d350f9bfe13448",
+      "profileId": "v-4e475918bb45e3b2",
+      "selectedWholeSettingsSha256": "4e475918bb45e3b22a7a6f4d6debb7ee391a88c5c8a7ccb4ec330245ce45aaf2",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-54d350f9bfe13448/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-a8aecf9105975603",
+      "profileId": "v-d8900a81dc2d9334",
+      "selectedWholeSettingsSha256": "d8900a81dc2d9334d3db98aae266a43d7437e1184e412926bcd95b490fb194aa",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-a8aecf9105975603/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-ea96a0298d24e7b3",
+      "profileId": "v-d3f101816519da62",
+      "selectedWholeSettingsSha256": "d3f101816519da6253dcb8a851438f03ac503390772b1c288dd42d04e188a414",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-ea96a0298d24e7b3/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-ecf16c9b684e0347",
+      "profileId": "v-39c2255630b57c6f",
+      "selectedWholeSettingsSha256": "39c2255630b57c6fe7505ad95b201c31db2258bbc9470c2d2d417b4490c1e10a",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-ecf16c9b684e0347/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-b4e892429ff7af19",
+      "profileId": "v-42bd7fef7538bcfc",
+      "selectedWholeSettingsSha256": "42bd7fef7538bcfcfd1a10961db28b55f5b5b6a282f8c9763f0518eb72d7ae51",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-b4e892429ff7af19/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-abaf30c906eb3213",
+      "profileId": "v-a9138ed0cbb17003",
+      "selectedWholeSettingsSha256": "a9138ed0cbb17003e2eed1cd8a5b7cbce18062dae840ca645e9fdb718946ba41",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-abaf30c906eb3213/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-c84c09092850dde5",
+      "profileId": "v-53065d33d503920e",
+      "selectedWholeSettingsSha256": "53065d33d503920e8558f1f8234b493ce9f0d2ae144f1567bc2e830bf42d5b33",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-c84c09092850dde5/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-5e12bfd1495232c2",
+      "profileId": "v-f2d7db00f54176fc",
+      "selectedWholeSettingsSha256": "f2d7db00f54176fc8624fe2bc5cb87e130f69b5910ece6b4d9614741028f76cd",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-5e12bfd1495232c2/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-b2bf013dd65b73e6",
+      "profileId": "v-72ef2195fecc6b63",
+      "selectedWholeSettingsSha256": "72ef2195fecc6b63bd69dab387b8105041bc15870b44560f90887d933d4b04b5",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-b2bf013dd65b73e6/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-b9f7dff563f12066",
+      "profileId": "v-7416bb3c4c0e1890",
+      "selectedWholeSettingsSha256": "7416bb3c4c0e18907d505056384b158b59eec36fd0da01f1f9aa37dc97a74496",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-b9f7dff563f12066/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-7a9dc3364cb189d1",
+      "profileId": "v-0f5db76521280914",
+      "selectedWholeSettingsSha256": "0f5db76521280914c0195ba5966c3dd6452022e4ea7a65e05ebbaada65fa36aa",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-7a9dc3364cb189d1/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-ecb13abf6a54a6ec",
+      "profileId": "v-55f1711a7356bf22",
+      "selectedWholeSettingsSha256": "55f1711a7356bf22ea2fc9e3dfa532e39014ecfc856814f42eac01c1bd92e9cb",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-ecb13abf6a54a6ec/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-c8482b736ed56522",
+      "profileId": "v-d8806e38e9b347d6",
+      "selectedWholeSettingsSha256": "d8806e38e9b347d60e68b0eab45836342396edb8bfa36e3ac1c1156387f44a4b",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-c8482b736ed56522/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-6b7babe5458de645",
+      "profileId": "v-7a684888a2a928e6",
+      "selectedWholeSettingsSha256": "7a684888a2a928e6d76b354523d3b1c67718e9cf6b02d82a4cfa8e8e97bdc9e4",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-6b7babe5458de645/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-a0b9c19a66131792",
+      "profileId": "v-ab25056587262ee7",
+      "selectedWholeSettingsSha256": "ab25056587262ee7b7bc5529d7c0357390fc85d63ed6a4be1cbd39f16f2c797a",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-a0b9c19a66131792/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-f7874c1d6b49b6aa",
+      "profileId": "v-cfceede020f18eea",
+      "selectedWholeSettingsSha256": "cfceede020f18eead85323f1bb2f04c2cff8fd23d5bc26d9838d08e9161fc88b",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-f7874c1d6b49b6aa/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-7b7ab708c5208cf7",
+      "profileId": "v-e8e774580bf8020a",
+      "selectedWholeSettingsSha256": "e8e774580bf8020accf3630527330e06e99f4ddd0626651b90da00767583be3f",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-7b7ab708c5208cf7/buster-engine.config.json"
+    },
+    {
+      "fieldId": "DLV-B23-EMIT-e7c15e45c06e70a1",
+      "profileId": "v-b866b7756703227a",
+      "selectedWholeSettingsSha256": "b866b7756703227ab38d08f9afcb0fd75b79fa5ec7dec53d5da2fe6364c20bd1",
+      "originalVariantRef": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/provider-domain-corrections-21/B-buster-engine.config.json"
+    },
+    {
+      "fieldId": "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumSecretReferenceEntries",
+      "profileId": "v-070e0920b3744575",
+      "selectedWholeSettingsSha256": "070e0920b3744575efaee4727e8842c2f0d48a3d1ac53913dd8a3b6e0b7a22c0",
+      "originalVariantRef": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumSecretReferenceEntries/B/buster-engine.config.json",
+        "sha256": "6d7146f55b9f5e5f51bef6b94118b9aa53dfb5221107badf66c2661d7b4eec7c",
+        "selectedProfile": "local-A",
+        "fieldPointer": "/profiles/local-A/settings/clusterInvokers/kubernetesFixture/maximumSecretReferenceEntries",
+        "exactValue": 0,
+        "ownerDocumentContract": "pipeline-component.v3",
+        "owner": "buster-engine",
+        "selectedWholeProfileSha256": "a8c8b94b5c93696772f062da1b37593d5f9fdba4a01dc00e4edb7b978d3e2d1c",
+        "wholeOwnerDocumentSha256": "e971766df65ac529e9e08662dd0ad237d61d726fd675930bb3a4f7768a93a601"
+      }
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.stores.admission.lockWaitSeconds",
+      "profileId": "v-b3705c5f51c5b926",
+      "selectedWholeSettingsSha256": "b3705c5f51c5b926afd9a1bf57d694c8d78bcd8273b480610cdb982140fd7e32",
+      "originalVariantRef": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-execution.stores.admission.lockWaitSeconds/B/buster-engine.config.json",
+        "sha256": "a0ceb112d3620b2e9bb08779679356affc4b609ab8bba5839df5fe22b3581b07",
+        "selectedProfile": "local-A",
+        "fieldPointer": "/profiles/local-A/settings/execution/stores/admission/lockWaitSeconds",
+        "exactValue": 1,
+        "ownerDocumentContract": "pipeline-component.v3",
+        "owner": "buster-engine",
+        "selectedWholeProfileSha256": "3e4bf25e946a07890301486b9ad12c8248615104bd63f20162617817804c006f",
+        "wholeOwnerDocumentSha256": "fa50b943fb41270db2eaf4ead1adca027e6f7675af1401c2ed69bded6ec3cf64"
+      }
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.stores.admission.metadataReserveBytes",
+      "profileId": "v-bebf1354663e26be",
+      "selectedWholeSettingsSha256": "bebf1354663e26bef5fb367f3d0a3b349503e65935e41d3c18cf766a71ed1ff1",
+      "originalVariantRef": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-execution.stores.admission.metadataReserveBytes/B/buster-engine.config.json",
+        "sha256": "4e7b5d2a7cb3eab55fbe361d68161a688872a629c5a2441623d18671bd8683e3",
+        "selectedProfile": "local-A",
+        "fieldPointer": "/profiles/local-A/settings/execution/stores/admission/metadataReserveBytes",
+        "exactValue": 8192,
+        "ownerDocumentContract": "pipeline-component.v3",
+        "owner": "buster-engine",
+        "selectedWholeProfileSha256": "d51c046733eddeceddb2df6e79e22068575bd7b6e7bd326d6ab764e38d2cd277",
+        "wholeOwnerDocumentSha256": "e7f6515ca6a01805a46054c1288f4daae38cd6ae6b832ceae98fd4a4acd0feb1"
+      }
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.stores.admission.reasonPrefixCodeUnits",
+      "profileId": "v-17fc819431b60ffa",
+      "selectedWholeSettingsSha256": "17fc819431b60ffa0ed48aafd89555b9f2e6d4cd9cec255eb272e8f2408c3ff5",
+      "originalVariantRef": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-execution.stores.admission.reasonPrefixCodeUnits/B/buster-engine.config.json",
+        "sha256": "7ac366fa27f02976db7c30c3236e5426128ad60a95839ea4ddfb31ea26615037",
+        "selectedProfile": "local-A",
+        "fieldPointer": "/profiles/local-A/settings/execution/stores/admission/reasonPrefixCodeUnits",
+        "exactValue": 0,
+        "ownerDocumentContract": "pipeline-component.v3",
+        "owner": "buster-engine",
+        "selectedWholeProfileSha256": "9b8277d389bb513a06052764d31ebd916eb07b0fd94d6a500037628ca1c18a04",
+        "wholeOwnerDocumentSha256": "9ceefe7990b7d9250b2c99dbceb97479010095db1ae50c45b3f6d37bd6f7f340"
+      }
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.stores.admission.reasonThresholdCodeUnits",
+      "profileId": "v-a8274d882bf9f1d2",
+      "selectedWholeSettingsSha256": "a8274d882bf9f1d2b8ba6536a7eea65461f3b6f47ce225c3689be8c98116c70d",
+      "originalVariantRef": {
+        "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-16/corrected-pairs/CMP-buster-engine-execution.stores.admission.reasonThresholdCodeUnits/B/buster-engine.config.json",
+        "sha256": "35ff83d8b493aa80b948b0d2bd05528ebf5af408535d0b1dd388e38e28c771bf",
+        "selectedProfile": "local-A",
+        "fieldPointer": "/profiles/local-A/settings/execution/stores/admission/reasonThresholdCodeUnits",
+        "exactValue": 72,
+        "ownerDocumentContract": "pipeline-component.v3",
+        "owner": "buster-engine",
+        "selectedWholeProfileSha256": "a89620eaaabf65720d5ab7999b09c7d6106a03cdb0f1905092629c5ce444fa2d",
+        "wholeOwnerDocumentSha256": "925384075385744a1f18fa2aae62ed3ec5719308ce59c2836a68e5e66e069053"
+      }
+    },
+    {
+      "fieldId": "CMP-buster-engine-execution.stores.attempts.lockWaitSeconds",
+      "profileId": "v-ffb5b6de976e8ca4",
+      "selectedWholeSettingsSha256": "ffb5b6de976e8ca4ef383f8b47a9deb84e1fd34c3af66a7fb212fe8b22b7fe6f",
+      "originalVariantRef": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-execution.stores.attempts.lockWaitSeconds/B/buster-engine.config.json",
+        "sha256": "8a24dadd0a84ad05c2e7990d2692b602d446107dc970bd62611894a465deac02",
+        "selectedProfile": "local-A",
+        "fieldPointer": "/profiles/local-A/settings/execution/stores/attempts/lockWaitSeconds",
+        "exactValue": 1,
+        "ownerDocumentContract": "pipeline-component.v3",
+        "owner": "buster-engine",
+        "selectedWholeProfileSha256": "d7c05807844de8f458d99aca4ab75b55c89b6dc98d4a5bef91a1b05798b2ffd1",
+        "wholeOwnerDocumentSha256": "480286f1414254e48a1c09561764b9845b1f8719c29f3a17c9bf6cbb8ad37cbc"
+      }
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.attemptEvidenceBytes",
+      "profileId": "v-3793be64b1eabf50",
+      "selectedWholeSettingsSha256": "3793be64b1eabf50e5db59b62af942a951e98493860936fee7822cbfb9f3ddee",
+      "originalVariantRef": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-preparation.attemptEvidenceBytes/B/buster-engine.config.json",
+        "sha256": "6812edeada703e2bda953ac2071e00f7593c9c07a8de608e76ea51244fbdc7db",
+        "selectedProfile": "local-A",
+        "fieldPointer": "/profiles/local-A/settings/preparation/attemptEvidenceBytes",
+        "exactValue": 0,
+        "ownerDocumentContract": "pipeline-component.v3",
+        "owner": "buster-engine",
+        "selectedWholeProfileSha256": "b587e5ce390b540db4e7e681eb9972d5688049a565ad9f793854b5d34f3115c0",
+        "wholeOwnerDocumentSha256": "b603fe113ed2ae749761e003444673f94c2661158493d2fe61aafa8a2d8d194e"
+      }
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.attemptEvidenceFiles",
+      "profileId": "v-dc6a0c6da1f41b40",
+      "selectedWholeSettingsSha256": "dc6a0c6da1f41b40a645d465e2083519f8a93fdc06ec068766e0e45e0105cef3",
+      "originalVariantRef": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-preparation.attemptEvidenceFiles/B/buster-engine.config.json",
+        "sha256": "e2e20371d119aec21509117be59d6d25d424dac4a16974ee5d99e5973180aaec",
+        "selectedProfile": "local-A",
+        "fieldPointer": "/profiles/local-A/settings/preparation/attemptEvidenceFiles",
+        "exactValue": 0,
+        "ownerDocumentContract": "pipeline-component.v3",
+        "owner": "buster-engine",
+        "selectedWholeProfileSha256": "4d60384dbbea1208da3c8fec7c4ea5538451da385613ecd3bb3ec2ed575df684",
+        "wholeOwnerDocumentSha256": "063c7130c7996df07ea4b2e5feace1f204a45705532b891d51e6f251b7fc5677"
+      }
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.attemptLogBytes",
+      "profileId": "v-0ad84d217cc00c9e",
+      "selectedWholeSettingsSha256": "0ad84d217cc00c9ee952fc5cd0a06c85a507f935c2b2f60d724b9c9f4b0544d8",
+      "originalVariantRef": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-preparation.attemptLogBytes/B/buster-engine.config.json",
+        "sha256": "9f9f3bde5b1e35ac654840429f635aec35df4d9c4bd55b18916f303d623d9e11",
+        "selectedProfile": "local-A",
+        "fieldPointer": "/profiles/local-A/settings/preparation/attemptLogBytes",
+        "exactValue": 0,
+        "ownerDocumentContract": "pipeline-component.v3",
+        "owner": "buster-engine",
+        "selectedWholeProfileSha256": "2766337d4d8f55ec21a087194908ecfc99513883b7d4441125aa2cf021b61347",
+        "wholeOwnerDocumentSha256": "f3ebe7ac14dcf1581ce42ae0800cb58bd5e2f57fb745f5c1e6247ec2e586973e"
+      }
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.completionPhaseAllowance",
+      "profileId": "v-c3c56365fac260b8",
+      "selectedWholeSettingsSha256": "c3c56365fac260b8c8a8a433757cec572d51b0d9e6fb30d580fd811a712d7e46",
+      "originalVariantRef": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-preparation.completionPhaseAllowance/B/buster-engine.config.json",
+        "sha256": "9a867e3cd745c2dc2ed6f2cc15b69a381ce14a1e3a87edf52d7fe3b1d3fcdf6d",
+        "selectedProfile": "local-A",
+        "fieldPointer": "/profiles/local-A/settings/preparation/completionPhaseAllowance",
+        "exactValue": 9,
+        "ownerDocumentContract": "pipeline-component.v3",
+        "owner": "buster-engine",
+        "selectedWholeProfileSha256": "9a74563c6e68d5e55ce66dbb550554051b1a09b5ffb19530c74cac9517d8b4ae",
+        "wholeOwnerDocumentSha256": "2b9ddf3183a3e907885ac8e17fc707f42ed8763b34c7a73ba6205113cafa0ffc"
+      }
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.storeLockWaitSeconds",
+      "profileId": "v-c562b552e52575e8",
+      "selectedWholeSettingsSha256": "c562b552e52575e8642b0c56ed8bd73c506eb5304620d4e42b030a1aa4f46cc0",
+      "originalVariantRef": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-preparation.storeLockWaitSeconds/B/buster-engine.config.json",
+        "sha256": "f8435178ddd9a6011bff14f9a575544c9988fd96c3253dbcfd21a2ab8a742c13",
+        "selectedProfile": "local-A",
+        "fieldPointer": "/profiles/local-A/settings/preparation/storeLockWaitSeconds",
+        "exactValue": 1,
+        "ownerDocumentContract": "pipeline-component.v3",
+        "owner": "buster-engine",
+        "selectedWholeProfileSha256": "2b89174cfae92ae21f24240f073e6e8d33ced54b65025188afc488ec97174b0b",
+        "wholeOwnerDocumentSha256": "6d8b2fc088e00691d4fe20aeacb2e3de8789f46f625578640eefa0d47b0e94f0"
+      }
+    },
+    {
+      "fieldId": "CMP-buster-engine-preparation.tarDiagnosticCodeUnits",
+      "profileId": "v-2c12ac5d6634b127",
+      "selectedWholeSettingsSha256": "2c12ac5d6634b1275b55e06f5051a7511a051c191c7206983b52f62127374ad0",
+      "originalVariantRef": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-preparation.tarDiagnosticCodeUnits/B/buster-engine.config.json",
+        "sha256": "620547c31f540f85a27b47ceb9d7839136e3f72bd2edb6c8024258eca929de59",
+        "selectedProfile": "local-A",
+        "fieldPointer": "/profiles/local-A/settings/preparation/tarDiagnosticCodeUnits",
+        "exactValue": 1,
+        "ownerDocumentContract": "pipeline-component.v3",
+        "owner": "buster-engine",
+        "selectedWholeProfileSha256": "8804fa5db2fcd148559ad7ad5b307353ecb239f649355abcaf3bf773c6b3d466",
+        "wholeOwnerDocumentSha256": "79cbb6ddfeeddf364e1168bddac4eb02281d5d1664571fb44904ceaea61d229b"
+      }
+    },
+    {
+      "fieldId": "CMP7-PREPARATION-RESULT-RESERVE-MULTIPLIER",
+      "profileId": "v-3add766f6af568cd",
+      "selectedWholeSettingsSha256": "3add766f6af568cd694c307dc581247aabca7ca9539203119f6bd920e81edfb0",
+      "originalVariantRef": {
+        "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP7-PREPARATION-RESULT-RESERVE-MULTIPLIER/B/buster-engine.config.json",
+        "sha256": "d42669bebae8066394e8d6562ae45237b2b6d686c965d25c025a20d0927a34bd",
+        "selectedProfile": "local-A",
+        "fieldPointer": "/profiles/local-A/settings/preparation/resultInputReserveMultiplier",
+        "exactValue": 5,
+        "ownerDocumentContract": "pipeline-component.v3",
+        "owner": "buster-engine",
+        "selectedWholeProfileSha256": "74a14a61b5b167ac45f94d40f8aa5edadcbaeb16beee99ed26bb38db85deea08",
+        "wholeOwnerDocumentSha256": "5a59f42468c0d95f6f50b590e83dbcac93983cb7d9699463e0b84b559552bb1a"
+      }
+    }
+  ],
+  "wholeProfileSelection": "exact root tuple profileId; profiles complete, never merged",
+  "entryVersionDelta": "pipeline-entry.v4 selects six pipeline-component.v3 envelopes; C1 v3/v2 wire remains historical/value-preserving and separately scoped",
+  "implementationAuthorization": null,
+  "serviceVariants": [
+    {
+      "field": "host",
+      "profileId": "s-4740ae6347b0",
+      "A": {
+        "host": "0.0.0.0",
+        "port": 18891,
+        "recordLimits": {
+          "maximumRecords": 10000,
+          "maximumBytes": 1073741824,
+          "maximumRecordBytes": 67108864
+        },
+        "maximumResultBytes": 67108864,
+        "maximumResultStoreBytes": 1073741824,
+        "maximumResponseBytes": 67108864,
+        "shutdownTimeoutMs": 15000,
+        "allowedCapabilities": [
+          "command.execute",
+          "container.build",
+          "kubernetes.fixture",
+          "kubernetes.exposure",
+          "network.http",
+          "browser.axe",
+          "browser.lighthouse",
+          "browser.visual",
+          "browser.playwright",
+          "security.scan",
+          "kubernetes.runtime-security"
+        ]
+      },
+      "B": "127.0.0.1",
+      "wholeSettingsSha256": "b195aec0bb5219aac7f52f3d7c13a770dc6ddaadf99f13ef507fc849464e8742"
+    },
+    {
+      "field": "port",
+      "profileId": "s-f8d397a33fcb",
+      "A": {
+        "host": "0.0.0.0",
+        "port": 18891,
+        "recordLimits": {
+          "maximumRecords": 10000,
+          "maximumBytes": 1073741824,
+          "maximumRecordBytes": 67108864
+        },
+        "maximumResultBytes": 67108864,
+        "maximumResultStoreBytes": 1073741824,
+        "maximumResponseBytes": 67108864,
+        "shutdownTimeoutMs": 15000,
+        "allowedCapabilities": [
+          "command.execute",
+          "container.build",
+          "kubernetes.fixture",
+          "kubernetes.exposure",
+          "network.http",
+          "browser.axe",
+          "browser.lighthouse",
+          "browser.visual",
+          "browser.playwright",
+          "security.scan",
+          "kubernetes.runtime-security"
+        ]
+      },
+      "B": 18892,
+      "wholeSettingsSha256": "b58b1f382570db0d9437da3f7b5426a793b87d9966a771d67da61818e2e5fa9f"
+    },
+    {
+      "field": "recordLimits.maximumRecords",
+      "profileId": "s-648c6607853d",
+      "A": "exact pointer in local-A",
+      "B": 5000,
+      "wholeSettingsSha256": "4fd67fb74a27e70098c544f428c6d6321e5026b1a38ef4ad0282225b660580e3"
+    },
+    {
+      "field": "recordLimits.maximumBytes",
+      "profileId": "s-f3335aafd745",
+      "A": "exact pointer in local-A",
+      "B": 536870912,
+      "wholeSettingsSha256": "b42a709639a491ae7b887f363131d6742f4e585ae26b0cb99f8485521dcb768f"
+    },
+    {
+      "field": "recordLimits.maximumRecordBytes",
+      "profileId": "s-1092ebbb0c19",
+      "A": "exact pointer in local-A",
+      "B": 33554432,
+      "wholeSettingsSha256": "94e1be12511a04c1442af27ba0da9b94a1700b56b0f948c43048bb56e197b9fb"
+    },
+    {
+      "field": "maximumResultBytes",
+      "profileId": "s-7523b42a07dc",
+      "A": {
+        "host": "0.0.0.0",
+        "port": 18891,
+        "recordLimits": {
+          "maximumRecords": 10000,
+          "maximumBytes": 1073741824,
+          "maximumRecordBytes": 67108864
+        },
+        "maximumResultBytes": 67108864,
+        "maximumResultStoreBytes": 1073741824,
+        "maximumResponseBytes": 67108864,
+        "shutdownTimeoutMs": 15000,
+        "allowedCapabilities": [
+          "command.execute",
+          "container.build",
+          "kubernetes.fixture",
+          "kubernetes.exposure",
+          "network.http",
+          "browser.axe",
+          "browser.lighthouse",
+          "browser.visual",
+          "browser.playwright",
+          "security.scan",
+          "kubernetes.runtime-security"
+        ]
+      },
+      "B": 33554432,
+      "wholeSettingsSha256": "bc25d515c82d6750d37b28f363bb6248228c676b0e925164e5ba9dccffb2ebec"
+    },
+    {
+      "field": "maximumResultStoreBytes",
+      "profileId": "s-897a04fc6ee2",
+      "A": {
+        "host": "0.0.0.0",
+        "port": 18891,
+        "recordLimits": {
+          "maximumRecords": 10000,
+          "maximumBytes": 1073741824,
+          "maximumRecordBytes": 67108864
+        },
+        "maximumResultBytes": 67108864,
+        "maximumResultStoreBytes": 1073741824,
+        "maximumResponseBytes": 67108864,
+        "shutdownTimeoutMs": 15000,
+        "allowedCapabilities": [
+          "command.execute",
+          "container.build",
+          "kubernetes.fixture",
+          "kubernetes.exposure",
+          "network.http",
+          "browser.axe",
+          "browser.lighthouse",
+          "browser.visual",
+          "browser.playwright",
+          "security.scan",
+          "kubernetes.runtime-security"
+        ]
+      },
+      "B": 536870912,
+      "wholeSettingsSha256": "3d402d70001718f98ced0f72b5aac364e48f4f4061d3966163fe3db3a424db2b"
+    },
+    {
+      "field": "maximumResponseBytes",
+      "profileId": "s-543bff474a49",
+      "A": {
+        "host": "0.0.0.0",
+        "port": 18891,
+        "recordLimits": {
+          "maximumRecords": 10000,
+          "maximumBytes": 1073741824,
+          "maximumRecordBytes": 67108864
+        },
+        "maximumResultBytes": 67108864,
+        "maximumResultStoreBytes": 1073741824,
+        "maximumResponseBytes": 67108864,
+        "shutdownTimeoutMs": 15000,
+        "allowedCapabilities": [
+          "command.execute",
+          "container.build",
+          "kubernetes.fixture",
+          "kubernetes.exposure",
+          "network.http",
+          "browser.axe",
+          "browser.lighthouse",
+          "browser.visual",
+          "browser.playwright",
+          "security.scan",
+          "kubernetes.runtime-security"
+        ]
+      },
+      "B": 33554432,
+      "wholeSettingsSha256": "14d5aadb94315da330815a60439c9a659d578b275e0ac34f4a577f5f0cf8af04"
+    },
+    {
+      "field": "shutdownTimeoutMs",
+      "profileId": "s-017eabfd0aa9",
+      "A": {
+        "host": "0.0.0.0",
+        "port": 18891,
+        "recordLimits": {
+          "maximumRecords": 10000,
+          "maximumBytes": 1073741824,
+          "maximumRecordBytes": 67108864
+        },
+        "maximumResultBytes": 67108864,
+        "maximumResultStoreBytes": 1073741824,
+        "maximumResponseBytes": 67108864,
+        "shutdownTimeoutMs": 15000,
+        "allowedCapabilities": [
+          "command.execute",
+          "container.build",
+          "kubernetes.fixture",
+          "kubernetes.exposure",
+          "network.http",
+          "browser.axe",
+          "browser.lighthouse",
+          "browser.visual",
+          "browser.playwright",
+          "security.scan",
+          "kubernetes.runtime-security"
+        ]
+      },
+      "B": 10000,
+      "wholeSettingsSha256": "bd2bacaa9b6c2da949fc3e60ccb36fd80c9b43d87b0570c172273a5064be3857"
+    },
+    {
+      "field": "allowedCapabilities",
+      "profileId": "s-fc64e2c51ca4",
+      "A": {
+        "host": "0.0.0.0",
+        "port": 18891,
+        "recordLimits": {
+          "maximumRecords": 10000,
+          "maximumBytes": 1073741824,
+          "maximumRecordBytes": 67108864
+        },
+        "maximumResultBytes": 67108864,
+        "maximumResultStoreBytes": 1073741824,
+        "maximumResponseBytes": 67108864,
+        "shutdownTimeoutMs": 15000,
+        "allowedCapabilities": [
+          "command.execute",
+          "container.build",
+          "kubernetes.fixture",
+          "kubernetes.exposure",
+          "network.http",
+          "browser.axe",
+          "browser.lighthouse",
+          "browser.visual",
+          "browser.playwright",
+          "security.scan",
+          "kubernetes.runtime-security"
+        ]
+      },
+      "B": [
+        "command.execute",
+        "container.build",
+        "kubernetes.fixture",
+        "network.http",
+        "browser.axe",
+        "browser.lighthouse",
+        "browser.visual",
+        "browser.playwright",
+        "security.scan",
+        "kubernetes.runtime-security"
+      ],
+      "wholeSettingsSha256": "62da6373109d422dc05fec8ff2ff1bba3a5aa56f324516177e60f2096c5bd790"
+    }
+  ],
+  "componentAContrastProfiles": {
+    "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumSecretReferenceEntries": "local-A",
+    "CMP-buster-engine-execution.stores.admission.lockWaitSeconds": "local-A",
+    "CMP-buster-engine-execution.stores.admission.metadataReserveBytes": "local-A",
+    "CMP-buster-engine-execution.stores.admission.reasonPrefixCodeUnits": "local-A",
+    "CMP-buster-engine-execution.stores.admission.reasonThresholdCodeUnits": "reason-threshold-A",
+    "CMP-buster-engine-execution.stores.attempts.lockWaitSeconds": "local-A",
+    "CMP-buster-engine-preparation.attemptEvidenceBytes": "local-A",
+    "CMP-buster-engine-preparation.attemptEvidenceFiles": "local-A",
+    "CMP-buster-engine-preparation.attemptLogBytes": "local-A",
+    "CMP-buster-engine-preparation.completionPhaseAllowance": "local-A",
+    "CMP-buster-engine-preparation.storeLockWaitSeconds": "local-A",
+    "CMP-buster-engine-preparation.tarDiagnosticCodeUnits": "local-A",
+    "CMP7-PREPARATION-RESULT-RESERVE-MULTIPLIER": "local-A"
+  },
+  "activeOwnerRef": "c3-buster-complete-profile-02/config/components/buster-engine.config.json"
+}

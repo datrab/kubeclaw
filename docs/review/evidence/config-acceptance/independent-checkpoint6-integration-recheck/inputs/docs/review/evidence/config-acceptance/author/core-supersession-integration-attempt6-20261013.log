@@ -1,0 +1,40 @@
+{
+  "scope": "documentation consolidator supersession identity controls only",
+  "consolidatorSha256": "a7d9ed690d8677ceaea027ce49863795d716ab2fc07d0c83297ec57a404a9754",
+  "scriptSha256": "8add0e711f2ea064802f02458d33f56e72390fe710807d86153a36d1c4a4ceb6",
+  "activeReceipt": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/stable-material-correction-receipt.json",
+  "activeReceiptSha256": "27ad0c413a0ef8fb28af301634549fea76692c6fa68ad199dd719d43289798fe",
+  "preservedReceiptSha256": "b0f15920b3fd279fd25868d8f885bc0dade6b52adaeae4a165d77c6bbc7e81a1",
+  "inputIdentityCount": 304,
+  "observations": [
+    {
+      "id": "ACTIVE-SUPERSESSION-WITH-HISTORY",
+      "result": "passed"
+    },
+    {
+      "id": "REJECT-OLD-CORRECTION-DRIFT",
+      "result": "passed",
+      "intendedRejection": "CORE_SUPPLEMENTAL_INPUT_DRIFT:docs/review/evidence/config-acceptance/components/icq-corrections-20261013/retirement-complete-owner-profiles.json"
+    },
+    {
+      "id": "REJECT-PRESERVED-INDEPENDENT-REPORT-DRIFT",
+      "result": "passed",
+      "intendedRejection": "CORE_BOUNDARY_SUPERSESSION_INPUT_DRIFT:docs/review/evidence/config-acceptance/independent-core-icq-material-recheck-20261013/independent-material-review.json"
+    },
+    {
+      "id": "REJECT-NEW-BOUNDARY-INPUT-DRIFT",
+      "result": "passed",
+      "intendedRejection": "CORE_BOUNDARY_SUPERSESSION_INPUT_DRIFT:docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/admission-method-fixtures.json"
+    },
+    {
+      "id": "RESTORED-PACKAGE-BASELINE",
+      "result": "passed"
+    }
+  ],
+  "globalC0": "not-accepted",
+  "limitations": [
+    "no root matrix generation while other authors mutate",
+    "injected digest disagreement checks the documentation guard, not a production semantic mutant",
+    "no independent reviewer confirmation or canonical field-case coverage manufactured"
+  ]
+}

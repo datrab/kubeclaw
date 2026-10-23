@@ -1,0 +1,21 @@
+{
+  "verdict": "not-accepted-pending-reader-attribution-fix",
+  "findings": [
+    {
+      "id": "RGI21-001",
+      "severity": "material-bounded-source-attribution",
+      "candidateIds": [
+        "SRC-7d41f864f0fae325",
+        "SRC-f6b655d35e6d5252"
+      ],
+      "incorrectReaderLine": 489,
+      "actualReaderLines": [
+        490,
+        491
+      ],
+      "source": "charts/kubeclaw/templates/deployment.yaml"
+    }
+  ],
+  "runtimeResult": "not-run",
+  "globalC0Accepted": false
+}

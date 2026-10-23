@@ -4,7 +4,7 @@ import { maximumOwnershipDiagnosisUnits, maximumOwnershipHostIdentityCharacters,
   type WorkerOwnershipState } from './ownership-state.ts';
 
 const maximumInteger = Number.MAX_SAFE_INTEGER;
-const maximumDiagnosis = '\u0000'.repeat(maximumOwnershipDiagnosisUnits);
+
 const maximumHostIdentity = 'h'.repeat(maximumOwnershipHostIdentityCharacters);
 const maximumObservation = { unit: 'linux-tasks', cpuTimeMicroseconds: maximumInteger,
   maximumMemoryBytes: maximumInteger, maximumTasks: maximumInteger,
@@ -19,7 +19,7 @@ function terminalRepresentation(record: WorkerOwnershipRecord) {
   if (record.phase === 'disposed' || record.phase === 'abandoned') return record;
   const binding = record.binding ?? futureBinding(record.scopeName);
   return { ...record, revision: maximumInteger, phase: 'unresolved', binding,
-    diagnosis: maximumDiagnosis, finalObservation: record.finalObservation ?? maximumObservation,
+    diagnosis: '\u0000'.repeat(record.workerCore?.settings.runtime.ownership_diagnostic_units ?? maximumOwnershipDiagnosisUnits), finalObservation: record.finalObservation ?? maximumObservation,
     topology: { ...record.topology, children: record.topology.children.map(child => ({ ...child,
       binding: child.binding ?? { ...binding, scopeName: child.name,
         inode: binding.inode === maximumInteger ? maximumInteger - 1 : maximumInteger },

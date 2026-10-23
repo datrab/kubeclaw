@@ -1,0 +1,2997 @@
+{
+  "scope": "all current component refinement canonical specifications; documentation integrity only",
+  "checked": 148,
+  "errors": [
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.allowedHostSuffixes",
+      "field": "historical-requirements",
+      "reason": "missing historical text or original obligation lost"
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.allowedHostSuffixes",
+      "field": "active-requirements"
+    }
+  ],
+  "errorCount": 2,
+  "acceptedC0": false,
+  "inputIdentities": [
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-canonical-refinements.py",
+      "sha256": "b5b3535fc7e89e71823c2328654258983be7228670141d90efce13e38d9b1646"
+    },
+    {
+      "path": "/tmp/kubeclaw-rcore001-doc-mzu1ivsm/missing-historical-requirement.json",
+      "sha256": "a86629f92d76d81aeb7b3187ea07d431dd877025c35e6c870fdb95464a41f061"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/residual-fragment.json",
+      "sha256": "25ca9b453586600cb1bd3fe168fc5c6bb24304330e647a356d957929cb80ee8e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/active-case-specifications.json",
+      "sha256": "d36e64c1faf6500c0c30955784e50df2d30ab5e80a4a871b147225dc3c4151aa"
+    }
+  ],
+  "records": [
+    {
+      "caseId": "CMP-C1-EFFECT-prism-control-pipelinePreferenceSubject",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-control-artifactRoot",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-control-studioPublicUrl",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-control-port",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-control-dispatchTimeoutMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-studio-port",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-studio-controlTimeoutMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-studio-controlUrl",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-ingress.port",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-ingress.maximumActiveRequests",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-ingress.maximumProbeRequests",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-ingress.maximumConnections",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-ingress.requestTimeoutMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-ingress.shutdownTimeoutMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-ingress.maximumInputBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.uid",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.gid",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.maximumOwnershipRecords",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.maximumOwnershipBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.maximumOutputBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.maximumJournalBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.pollIntervalMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.drainTimeoutMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-worker-supervisor.closeTimeoutMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-execution-resourcePolicy.cpuTimeMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-execution-resourcePolicy.memoryBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-execution-resourcePolicy.tasks",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-prism-execution-maximumResultBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.resourcePolicy.cpuTimeMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.resourcePolicy.memoryBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.resourcePolicy.tasks",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.timeoutMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.cleanupTimeoutMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumActivePreparations",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumPendingAdmissions",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumRequestBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumArchiveBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumExtractedBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumHeaderBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumSourceBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumMetadataBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumRecords",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumOwnershipBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumJournalBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumInputBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumOutputBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumResultBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.pollIntervalMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.drainTimeoutMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.closeTimeoutMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.tarTimeoutMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumArchiveEntries",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumListingLineBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumTarStderrBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumSourceEntries",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.sourceEntryReservationBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-preparation.maximumOpenFiles",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-admission.maximumActiveJobs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-admission.maximumQueuedJobs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-admission.maximumConcurrentAttempts",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-dependencyReadiness.maximumExecutionMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-dependencyReadiness.maximumOutputBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.cleanupTimeoutMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.maximumResultBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.claimGraceMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.queueTimeoutMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.workerResultWrapperBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.maximumProtocolBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.terminationGraceMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.terminationTimeoutMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.capabilityDrainTimeoutMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.minimumHeapMiB",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.heapFraction",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.maximumPendingCapabilities",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.minimumOpenFiles",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.provider.artifactFileDescriptorReserve",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumAggregateResultBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumSourceBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumCases",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumFindings",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumCaseFindings",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumTimeoutMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.memoryBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.minimumCpuTimeMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.maximumOpenFiles",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.minimumOpenFiles",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.minimumHeapMiB",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.heapFraction",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.reports.runtimeMemoryReserveBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.observation.resourceSampleIntervalMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.observation.processSampleIntervalMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumEvidenceObjects",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumEvidenceBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumEvidenceObjectBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumResults",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumClosures",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumMetadataBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.attempts.maximumPendingEvidenceAgeMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.admission.maximumIngressBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.admission.maximumRecords",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.admission.maximumBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.admission.maximumQuarantineRecords",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.stores.admission.maximumQuarantineBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.processInput.cleanupTimeoutMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.processInput.terminationGraceMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-execution.processInput.acknowledgementPollMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.shared.kubectlExecutable",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.shared.leaseApiGroup",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.shared.leaseApiVersion",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.allowedNamespacePrefixes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.registryRepositoryPrefixes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.allowedSecretReferences",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.allowedStorageClasses",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.allowDefaultStorageClass",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.runnerServiceAccount",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.credentialReaderServiceAccount",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.maximumManifestBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.maximumResources",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeClaimBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeTotalBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.maximumRetentionSeconds",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.maximumExecutionMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.pollIntervalMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.shortCommandTimeoutMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.commandOutputManifestMultiplier",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.diagnosticCodeUnits",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumNodes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumDepth",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumAliases",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumFlattenVisits",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumFlattenPending",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.allowedNamespacePrefixes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.allowedHostSuffixes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.maximumExecutionMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.pollIntervalMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.shortCommandTimeoutMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.tailscaleExposure.maximumCommandOutputBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.allowedNamespacePrefixes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.maximumExecutionMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.maximumOutputBytes",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.pollIntervalMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.maximumObservationAgeMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.maximumFutureSkewMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.diagnosticCodeUnits",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.executableSearchPath",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-worker-core-localRuntime.drainTimeoutMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-worker-core-localRuntime.cancellationTimeoutMs",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    },
+    {
+      "caseId": "CMP-C1-EFFECT-worker-core-localRuntime.replayLimit",
+      "canonicalFieldsChecked": [
+        "inputProfile",
+        "inputConfigProfile",
+        "priorState",
+        "action",
+        "expectedEffectOrRejectingBoundary",
+        "exactProductiveBoundary",
+        "lifecycle",
+        "proposedInvocation",
+        "command"
+      ],
+      "historicalRequirementsPreserved": [
+        "F-EFFECT",
+        "F-AUTH",
+        "F-VAL",
+        "D17"
+      ]
+    }
+  ]
+}

@@ -1,21 +1,24 @@
+import { TEST_CORE_POLICY as TELEMETRY_TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
+const TEST_TELEMETRY_STORE_POLICY = TELEMETRY_TEST_CORE_POLICY.telemetryStore;
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { activate } from '../../../skills/common/plugins/telemetry-store/src/adapter.ts';
-import { TELEMETRY_JSON_MAX_DEPTH, TELEMETRY_JSON_MAX_NODES } from '../../../skills/common/plugins/telemetry-store/src/projection.ts';
+const { maxJsonDepth: TELEMETRY_JSON_MAX_DEPTH, maxJsonNodes: TELEMETRY_JSON_MAX_NODES } = TEST_TELEMETRY_STORE_POLICY;
 import { FileResourceLockManager } from '../../../skills/nova/core/effects/locks.ts';
 
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'telemetry-projection-'));
 const root = path.join(temporary, 'telemetry');
-const locks = new FileResourceLockManager(path.join(temporary, 'locks'));
+const locks = new FileResourceLockManager(path.join(temporary, 'locks'), TEST_CORE_POLICY);
 const resource = { type: 'telemetry.event', canonicalId: 'run.diagnostic' };
 const attempt = { runId: 'run:projection', stageId: 'observer:telemetry', attemptId: 'attempt:projection', attemptNumber: 1 };
 const lock = locks.acquire(resource, attempt.attemptId, 60000);
 // Direct adapter boundary uses the production file-backed fence and durable store.
 // No dependency callbacks or substitute adapter runtime are involved.
-const adapter = activate({ config: { root, maxRecordBytes: 2 * 1024 * 1024 } } as any);
+const adapter = activate({ config: { ...TEST_TELEMETRY_STORE_POLICY, root, maxRecordBytes: 2 * 1024 * 1024 } } as any);
 const invoke = (key: string, payload: any) => adapter.invoke({
   request: { idempotencyKey: key, attempt, capability: 'telemetry.emit', operation: 'append', resource, payload },
   fence: { token: lock.fencingToken, assertCurrent: () => locks.assertCurrent(lock.lockId, attempt.attemptId) },
@@ -73,7 +76,7 @@ try {
   assert.equal(stored()[3].payload.values.length, TELEMETRY_JSON_MAX_NODES - 2);
   // Exactly the byte limit remains accepted; oversize is rejected, never truncated.
   const exactRoot = path.join(temporary, 'exact');
-  const exact = activate({ config: { root: exactRoot, maxRecordBytes: 1024 } } as any);
+  const exact = activate({ config: { ...TEST_TELEMETRY_STORE_POLICY, root: exactRoot, maxRecordBytes: 1024 } } as any);
   try {
     await exact.ready();
     const exactPayload = { message: 'x'.repeat(1010) };

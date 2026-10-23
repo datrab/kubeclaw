@@ -1,0 +1,12 @@
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/config/native-worker.ts:10
+    throw new Error('PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED');
+          ^
+
+Error: PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED
+    at prismEngineContentDigest (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/config/native-worker.ts:10:11)
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/engine/worker-envelope.ts:10:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0

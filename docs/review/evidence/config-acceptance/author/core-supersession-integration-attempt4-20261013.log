@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-core-supersession-integration.py", line 20, in <module>
+    package = collect()
+              ^^^^^^^^^
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-core-supersession-integration.py", line 16, in collect
+    exec(compile(block, str(source_path), 'exec'), scope)
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/consolidate.py", line 61, in <module>
+    'IC0-002': 'Independent finding: shared lease protocol authority and aliases',
+                   ^^^^^^^^^^^^^^
+NameError: name 'bounded_review' is not defined

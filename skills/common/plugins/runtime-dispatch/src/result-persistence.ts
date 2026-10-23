@@ -42,7 +42,8 @@ function sameExisting(destination: string, content: Buffer): boolean {
 }
 
 /** Read an authorized worker result through the same pinned no-follow boundary. */
-export function readResult(root: string, relative: string, maximumBytes = 1_048_576): string | undefined {
+export function readResult(root: string, relative: string, maximumBytes: number): string | undefined {
+  if (!Number.isSafeInteger(maximumBytes) || maximumBytes < 1) throw new Error('OPENCLAW_RESULT_LIMIT_INVALID');
   const components = parts(relative);
   let directory = openRoot(root);
   try {

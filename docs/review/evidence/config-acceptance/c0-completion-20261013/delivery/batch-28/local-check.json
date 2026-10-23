@@ -1,0 +1,16 @@
+{
+  "originalBodiesPreserved": 20,
+  "changedDefinitionRows": 1,
+  "exactCappedMembers": [
+    "maximumRequestBytes",
+    "maximumArchiveBytes",
+    "maximumHeaderBytes",
+    "maximumInputBytes",
+    "maximumOutputBytes",
+    "maximumResultBytes"
+  ],
+  "schemaMaximaPreserved": true,
+  "capExpressionsMatchSource": true,
+  "parentOnly": true,
+  "nativeResult": "not-run"
+}

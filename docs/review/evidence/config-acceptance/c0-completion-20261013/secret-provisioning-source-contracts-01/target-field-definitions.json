@@ -1,0 +1,438 @@
+{
+  "status": "author definition, no canonical IDs fabricated; physical leaf/schema/caller/cases explicit",
+  "fields": [
+    {
+      "identity": {
+        "authorPointer": "/namespace",
+        "sourcePath": "my-values/setup-secrets.sh",
+        "sourceSha256": "d417ee6bb8f6ba1008ad077f7cb4bf6172891aa9d8753681701aad4697e1834c",
+        "lines": [
+          28
+        ]
+      },
+      "class": "operator-invocation-setting",
+      "soleAuthor": "my-values/infra/secret-provisioning.yaml#/profiles/<explicitSelectedProfile>/settings/namespace",
+      "typeUnitDomain": "string Kubernetes supported conservative DNS shape; actual installed API/native grant acceptance required",
+      "meaningAndReceiving": "Exact app target namespace; direct and deploy projections agree; original API scope",
+      "activation": "S deployment invocation projection + H installed/native/provider grant dependencies; R/J original authenticated provisioning operation captures once before any source/namespace/issuance/API action. No per-family/latest reload.",
+      "recovery": "Original task/code/profile/source/target/issuer/replacement/action/clock references retained; new publication cannot rotate/repoint original object or reset pending action/deadline.",
+      "caseIds": [
+        "SP-INVOCATION",
+        "SP-ERRORS",
+        "SP-RECOVERY"
+      ],
+      "result": "not-run",
+      "reviewStatus": "fresh OTHER independent review required"
+    },
+    {
+      "identity": {
+        "authorPointer": "/sourceNamespace",
+        "sourcePath": "my-values/setup-secrets.sh",
+        "sourceSha256": "d417ee6bb8f6ba1008ad077f7cb4bf6172891aa9d8753681701aad4697e1834c",
+        "lines": [
+          29
+        ]
+      },
+      "class": "operator-invocation-setting",
+      "soleAuthor": "my-values/infra/secret-provisioning.yaml#/profiles/<explicitSelectedProfile>/settings/sourceNamespace",
+      "typeUnitDomain": "string Kubernetes supported conservative DNS shape; actual installed API/native grant acceptance required",
+      "meaningAndReceiving": "Exact authorized source namespace; NotFound only versus API error; no copy from ambient current",
+      "activation": "S deployment invocation projection + H installed/native/provider grant dependencies; R/J original authenticated provisioning operation captures once before any source/namespace/issuance/API action. No per-family/latest reload.",
+      "recovery": "Original task/code/profile/source/target/issuer/replacement/action/clock references retained; new publication cannot rotate/repoint original object or reset pending action/deadline.",
+      "caseIds": [
+        "SP-INVOCATION",
+        "SP-ERRORS",
+        "SP-RECOVERY"
+      ],
+      "result": "not-run",
+      "reviewStatus": "fresh OTHER independent review required"
+    },
+    {
+      "identity": {
+        "authorPointer": "/operatorNamespace",
+        "sourcePath": "my-values/setup-secrets.sh",
+        "sourceSha256": "d417ee6bb8f6ba1008ad077f7cb4bf6172891aa9d8753681701aad4697e1834c",
+        "lines": [
+          30
+        ]
+      },
+      "class": "operator-invocation-setting",
+      "soleAuthor": "my-values/infra/secret-provisioning.yaml#/profiles/<explicitSelectedProfile>/settings/operatorNamespace",
+      "typeUnitDomain": "string Kubernetes supported conservative DNS shape; actual installed API/native grant acceptance required",
+      "meaningAndReceiving": "Distinct OAuth operator target namespace, no alias to app namespace",
+      "activation": "S deployment invocation projection + H installed/native/provider grant dependencies; R/J original authenticated provisioning operation captures once before any source/namespace/issuance/API action. No per-family/latest reload.",
+      "recovery": "Original task/code/profile/source/target/issuer/replacement/action/clock references retained; new publication cannot rotate/repoint original object or reset pending action/deadline.",
+      "caseIds": [
+        "SP-INVOCATION",
+        "SP-TAILSCALE",
+        "SP-RECOVERY"
+      ],
+      "result": "not-run",
+      "reviewStatus": "fresh OTHER independent review required"
+    },
+    {
+      "identity": {
+        "authorPointer": "/operatorSecretName",
+        "sourcePath": "my-values/setup-secrets.sh",
+        "sourceSha256": "d417ee6bb8f6ba1008ad077f7cb4bf6172891aa9d8753681701aad4697e1834c",
+        "lines": [
+          31
+        ]
+      },
+      "class": "operator-invocation-setting",
+      "soleAuthor": "my-values/infra/secret-provisioning.yaml#/profiles/<explicitSelectedProfile>/settings/operatorSecretName",
+      "typeUnitDomain": "string Kubernetes supported conservative DNS shape; actual installed API/native grant acceptance required",
+      "meaningAndReceiving": "Actual OAuth name input; same source/target name in existing copy branch; selected consumer must agree",
+      "activation": "S deployment invocation projection + H installed/native/provider grant dependencies; R/J original authenticated provisioning operation captures once before any source/namespace/issuance/API action. No per-family/latest reload.",
+      "recovery": "Original task/code/profile/source/target/issuer/replacement/action/clock references retained; new publication cannot rotate/repoint original object or reset pending action/deadline.",
+      "caseIds": [
+        "SP-INVOCATION",
+        "SP-TAILSCALE",
+        "SP-RECOVERY"
+      ],
+      "result": "not-run",
+      "reviewStatus": "fresh OTHER independent review required"
+    },
+    {
+      "identity": {
+        "authorPointer": "/sops",
+        "sourcePath": "my-values/setup-secrets.sh",
+        "sourceSha256": "d417ee6bb8f6ba1008ad077f7cb4bf6172891aa9d8753681701aad4697e1834c",
+        "lines": [
+          32,
+          281,
+          300,
+          438,
+          583
+        ]
+      },
+      "class": "operator-installed-reference-policy",
+      "soleAuthor": "my-values/infra/secret-provisioning.yaml#/profiles/<explicitSelectedProfile>/settings/sops",
+      "typeUnitDomain": "closed tagged object; nonempty public ref if enabled; actual source/ref/key error semantics in family contract",
+      "meaningAndReceiving": "Explicit disabled or selected original installed source ref, fixed supported software key map; H path/tool/revision authority captured, no HOME fallback",
+      "activation": "S deployment invocation projection + H installed/native/provider grant dependencies; R/J original authenticated provisioning operation captures once before any source/namespace/issuance/API action. No per-family/latest reload.",
+      "recovery": "Original task/code/profile/source/target/issuer/replacement/action/clock references retained; new publication cannot rotate/repoint original object or reset pending action/deadline.",
+      "caseIds": [
+        "SP-INVOCATION",
+        "SP-SHARED",
+        "SP-ERRORS",
+        "SP-RECOVERY"
+      ],
+      "result": "not-run",
+      "reviewStatus": "fresh OTHER independent review required"
+    },
+    {
+      "identity": {
+        "authorPointer": "/setupMode",
+        "sourcePath": "my-values/setup-secrets.sh",
+        "sourceSha256": "d417ee6bb8f6ba1008ad077f7cb4bf6172891aa9d8753681701aad4697e1834c",
+        "lines": [
+          34,
+          96,
+          104,
+          105
+        ]
+      },
+      "class": "operator-invocation-setting",
+      "soleAuthor": "my-values/infra/secret-provisioning.yaml#/profiles/<explicitSelectedProfile>/settings/setupMode",
+      "typeUnitDomain": "enum auto|interactive|noninteractive; no boolish aliases in target",
+      "meaningAndReceiving": "auto captures original read/writeTTY fact; interactive requires actual original TTY; noninteractive no prompt",
+      "activation": "S deployment invocation projection + H installed/native/provider grant dependencies; R/J original authenticated provisioning operation captures once before any source/namespace/issuance/API action. No per-family/latest reload.",
+      "recovery": "Original task/code/profile/source/target/issuer/replacement/action/clock references retained; new publication cannot rotate/repoint original object or reset pending action/deadline.",
+      "caseIds": [
+        "SP-INVOCATION",
+        "SP-GHCR",
+        "SP-READINESS"
+      ],
+      "result": "not-run",
+      "reviewStatus": "fresh OTHER independent review required"
+    },
+    {
+      "identity": {
+        "authorPointer": "/overwrite",
+        "sourcePath": "my-values/setup-secrets.sh",
+        "sourceSha256": "d417ee6bb8f6ba1008ad077f7cb4bf6172891aa9d8753681701aad4697e1834c",
+        "lines": [
+          35,
+          567,
+          613,
+          876,
+          969
+        ]
+      },
+      "class": "operator-invocation-setting",
+      "soleAuthor": "my-values/infra/secret-provisioning.yaml#/profiles/<explicitSelectedProfile>/settings/overwrite",
+      "typeUnitDomain": "boolean only; source true/false supported; unauthorized true rejected before mutation",
+      "meaningAndReceiving": "Select existing actual branch, never grants replacement; actual per-object original authorization+retained dependencies mandatory",
+      "activation": "S deployment invocation projection + H installed/native/provider grant dependencies; R/J original authenticated provisioning operation captures once before any source/namespace/issuance/API action. No per-family/latest reload.",
+      "recovery": "Original task/code/profile/source/target/issuer/replacement/action/clock references retained; new publication cannot rotate/repoint original object or reset pending action/deadline.",
+      "caseIds": [
+        "SP-INVOCATION",
+        "SP-ATTESTATION",
+        "SP-GHCR",
+        "SP-RECOVERY"
+      ],
+      "result": "not-run",
+      "reviewStatus": "fresh OTHER independent review required"
+    },
+    {
+      "identity": {
+        "authorPointer": "/components/postgresql",
+        "sourcePath": "my-values/setup-secrets.sh",
+        "sourceSha256": "d417ee6bb8f6ba1008ad077f7cb4bf6172891aa9d8753681701aad4697e1834c",
+        "lines": [
+          36
+        ]
+      },
+      "class": "operator-invocation-setting",
+      "soleAuthor": "my-values/infra/secret-provisioning.yaml#/profiles/<explicitSelectedProfile>/settings/components/postgresql",
+      "typeUnitDomain": "boolean, exact original dependency predicates",
+      "meaningAndReceiving": "PostgreSQL family selection; disabled with LiteLLM true requires explicit external DB authority",
+      "activation": "S deployment invocation projection + H installed/native/provider grant dependencies; R/J original authenticated provisioning operation captures once before any source/namespace/issuance/API action. No per-family/latest reload.",
+      "recovery": "Original task/code/profile/source/target/issuer/replacement/action/clock references retained; new publication cannot rotate/repoint original object or reset pending action/deadline.",
+      "caseIds": [
+        "SP-INVOCATION",
+        "SP-READINESS",
+        "SP-ASSOCIATION",
+        "SP-POSTGRESQL"
+      ],
+      "result": "not-run",
+      "reviewStatus": "fresh OTHER independent review required"
+    },
+    {
+      "identity": {
+        "authorPointer": "/components/litellm",
+        "sourcePath": "my-values/setup-secrets.sh",
+        "sourceSha256": "d417ee6bb8f6ba1008ad077f7cb4bf6172891aa9d8753681701aad4697e1834c",
+        "lines": [
+          37
+        ]
+      },
+      "class": "operator-invocation-setting",
+      "soleAuthor": "my-values/infra/secret-provisioning.yaml#/profiles/<explicitSelectedProfile>/settings/components/litellm",
+      "typeUnitDomain": "boolean, exact original dependency predicates",
+      "meaningAndReceiving": "LiteLLM+Google selection and shared litellmApiKey requiredness; no disabled branch useless generation",
+      "activation": "S deployment invocation projection + H installed/native/provider grant dependencies; R/J original authenticated provisioning operation captures once before any source/namespace/issuance/API action. No per-family/latest reload.",
+      "recovery": "Original task/code/profile/source/target/issuer/replacement/action/clock references retained; new publication cannot rotate/repoint original object or reset pending action/deadline.",
+      "caseIds": [
+        "SP-INVOCATION",
+        "SP-READINESS",
+        "SP-ASSOCIATION",
+        "SP-LITELLM"
+      ],
+      "result": "not-run",
+      "reviewStatus": "fresh OTHER independent review required"
+    },
+    {
+      "identity": {
+        "authorPointer": "/components/tailscale",
+        "sourcePath": "my-values/setup-secrets.sh",
+        "sourceSha256": "d417ee6bb8f6ba1008ad077f7cb4bf6172891aa9d8753681701aad4697e1834c",
+        "lines": [
+          38
+        ]
+      },
+      "class": "operator-invocation-setting",
+      "soleAuthor": "my-values/infra/secret-provisioning.yaml#/profiles/<explicitSelectedProfile>/settings/components/tailscale",
+      "typeUnitDomain": "boolean, exact original dependency predicates",
+      "meaningAndReceiving": "OAuth selection; false means no operator namespace/source/issuance effects",
+      "activation": "S deployment invocation projection + H installed/native/provider grant dependencies; R/J original authenticated provisioning operation captures once before any source/namespace/issuance/API action. No per-family/latest reload.",
+      "recovery": "Original task/code/profile/source/target/issuer/replacement/action/clock references retained; new publication cannot rotate/repoint original object or reset pending action/deadline.",
+      "caseIds": [
+        "SP-INVOCATION",
+        "SP-READINESS",
+        "SP-ASSOCIATION",
+        "SP-TAILSCALE"
+      ],
+      "result": "not-run",
+      "reviewStatus": "fresh OTHER independent review required"
+    },
+    {
+      "identity": {
+        "authorPointer": "/genericGeneration/entropyBytes",
+        "sourcePath": "my-values/setup-secrets.sh",
+        "sourceSha256": "d417ee6bb8f6ba1008ad077f7cb4bf6172891aa9d8753681701aad4697e1834c",
+        "lines": [
+          344,
+          347
+        ]
+      },
+      "class": "operator-issuance-policy",
+      "soleAuthor": "my-values/infra/secret-provisioning.yaml#/profiles/<explicitSelectedProfile>/settings/genericGeneration/entropyBytes",
+      "typeUnitDomain": "integer bytes singleton32 in this bounded domain, NOT universal protocol constant",
+      "meaningAndReceiving": "Source32 entropy argument explicit; no source-backed alternate quantity supplied; actual issuer/tool/limit grant required",
+      "activation": "S deployment invocation projection + H installed/native/provider grant dependencies; R/J original authenticated provisioning operation captures once before any source/namespace/issuance/API action. No per-family/latest reload.",
+      "recovery": "Original task/code/profile/source/target/issuer/replacement/action/clock references retained; new publication cannot rotate/repoint original object or reset pending action/deadline.",
+      "caseIds": [
+        "SP-ISSUANCE"
+      ],
+      "result": "not-run",
+      "reviewStatus": "fresh OTHER independent review required"
+    },
+    {
+      "identity": {
+        "authorPointer": "/genericGeneration/encoding",
+        "sourcePath": "my-values/setup-secrets.sh",
+        "sourceSha256": "d417ee6bb8f6ba1008ad077f7cb4bf6172891aa9d8753681701aad4697e1834c",
+        "lines": [
+          344,
+          347
+        ]
+      },
+      "class": "operator-issuance-policy",
+      "soleAuthor": "my-values/infra/secret-provisioning.yaml#/profiles/<explicitSelectedProfile>/settings/genericGeneration/encoding",
+      "typeUnitDomain": "hex|base64; decoded exactly32bytes, canonical64hex/44base64chars",
+      "meaningAndReceiving": "Two actual source encodings selected explicitly instead of tool-availability fallback",
+      "activation": "S deployment invocation projection + H installed/native/provider grant dependencies; R/J original authenticated provisioning operation captures once before any source/namespace/issuance/API action. No per-family/latest reload.",
+      "recovery": "Original task/code/profile/source/target/issuer/replacement/action/clock references retained; new publication cannot rotate/repoint original object or reset pending action/deadline.",
+      "caseIds": [
+        "SP-ISSUANCE"
+      ],
+      "result": "not-run",
+      "reviewStatus": "fresh OTHER independent review required"
+    },
+    {
+      "identity": {
+        "authorPointer": "/attestationGeneration",
+        "sourcePath": "my-values/setup-secrets.sh",
+        "sourceSha256": "d417ee6bb8f6ba1008ad077f7cb4bf6172891aa9d8753681701aad4697e1834c",
+        "lines": [
+          633,
+          634
+        ]
+      },
+      "class": "operator-issuance-policy",
+      "soleAuthor": "my-values/infra/secret-provisioning.yaml#/profiles/<explicitSelectedProfile>/settings/attestationGeneration",
+      "typeUnitDomain": "Ed25519 singleton source-supported algorithm, pair not independently tunable",
+      "meaningAndReceiving": "Source-supported Ed25519 matching pair only; retained original verifier/source authority",
+      "activation": "S deployment invocation projection + H installed/native/provider grant dependencies; R/J original authenticated provisioning operation captures once before any source/namespace/issuance/API action. No per-family/latest reload.",
+      "recovery": "Original task/code/profile/source/target/issuer/replacement/action/clock references retained; new publication cannot rotate/repoint original object or reset pending action/deadline.",
+      "caseIds": [
+        "SP-ATTESTATION",
+        "SP-ISSUANCE",
+        "SP-RECOVERY"
+      ],
+      "result": "not-run",
+      "reviewStatus": "fresh OTHER independent review required"
+    },
+    {
+      "identity": {
+        "authorPointer": "/fixtureProofBytes",
+        "sourcePath": "my-values/setup-secrets.sh",
+        "sourceSha256": "d417ee6bb8f6ba1008ad077f7cb4bf6172891aa9d8753681701aad4697e1834c",
+        "lines": [
+          1035
+        ]
+      },
+      "class": "operator-issuance-policy",
+      "soleAuthor": "my-values/infra/secret-provisioning.yaml#/profiles/<explicitSelectedProfile>/settings/fixtureProofBytes",
+      "typeUnitDomain": "integer bytes singleton32; source-backed domain only",
+      "meaningAndReceiving": "Actual isolated raw proof, not generic token encoding; existing object must validate",
+      "activation": "S deployment invocation projection + H installed/native/provider grant dependencies; R/J original authenticated provisioning operation captures once before any source/namespace/issuance/API action. No per-family/latest reload.",
+      "recovery": "Original task/code/profile/source/target/issuer/replacement/action/clock references retained; new publication cannot rotate/repoint original object or reset pending action/deadline.",
+      "caseIds": [
+        "SP-FIXTURE",
+        "SP-ISSUANCE"
+      ],
+      "result": "not-run",
+      "reviewStatus": "fresh OTHER independent review required"
+    },
+    {
+      "identity": {
+        "authorPointer": "/ghcr/server",
+        "sourcePath": "my-values/setup-secrets.sh",
+        "sourceSha256": "d417ee6bb8f6ba1008ad077f7cb4bf6172891aa9d8753681701aad4697e1834c",
+        "lines": [
+          913
+        ]
+      },
+      "class": "coupled-deployment-policy",
+      "soleAuthor": "my-values/infra/secret-provisioning.yaml#/profiles/<explicitSelectedProfile>/settings/ghcr/server",
+      "typeUnitDomain": "string ghcr.io; actual token/provider grant separate",
+      "meaningAndReceiving": "Actual Docker registry authority, constrained ghcr.io in this source cut; no alternate registry consumer invented",
+      "activation": "S deployment invocation projection + H installed/native/provider grant dependencies; R/J original authenticated provisioning operation captures once before any source/namespace/issuance/API action. No per-family/latest reload.",
+      "recovery": "Original task/code/profile/source/target/issuer/replacement/action/clock references retained; new publication cannot rotate/repoint original object or reset pending action/deadline.",
+      "caseIds": [
+        "SP-GHCR",
+        "SP-INVOCATION"
+      ],
+      "result": "not-run",
+      "reviewStatus": "fresh OTHER independent review required"
+    },
+    {
+      "identity": {
+        "authorPointer": "/ghcr/email",
+        "sourcePath": "my-values/setup-secrets.sh",
+        "sourceSha256": "d417ee6bb8f6ba1008ad077f7cb4bf6172891aa9d8753681701aad4697e1834c",
+        "lines": [
+          903,
+          906,
+          916
+        ]
+      },
+      "class": "operator-metadata-setting",
+      "soleAuthor": "my-values/infra/secret-provisioning.yaml#/profiles/<explicitSelectedProfile>/settings/ghcr/email",
+      "typeUnitDomain": "nonempty string under original provider/task byte limits; actual Docker parser domain",
+      "meaningAndReceiving": "Current empty prompt uses noreply@example.com; target explicit metadata no code fallback",
+      "activation": "S deployment invocation projection + H installed/native/provider grant dependencies; R/J original authenticated provisioning operation captures once before any source/namespace/issuance/API action. No per-family/latest reload.",
+      "recovery": "Original task/code/profile/source/target/issuer/replacement/action/clock references retained; new publication cannot rotate/repoint original object or reset pending action/deadline.",
+      "caseIds": [
+        "SP-GHCR",
+        "SP-INVOCATION"
+      ],
+      "result": "not-run",
+      "reviewStatus": "fresh OTHER independent review required"
+    },
+    {
+      "identity": {
+        "authorPointer": "/databaseNamespaceRewrite",
+        "sourcePath": "my-values/setup-secrets.sh",
+        "sourceSha256": "d417ee6bb8f6ba1008ad077f7cb4bf6172891aa9d8753681701aad4697e1834c",
+        "lines": [
+          813,
+          818,
+          820
+        ]
+      },
+      "class": "receiving-protocol-correction",
+      "soleAuthor": "my-values/infra/secret-provisioning.yaml#/profiles/<explicitSelectedProfile>/settings/databaseNamespaceRewrite",
+      "typeUnitDomain": "fixed tagged receiver parsed-exact-postgresql-host-only; actual schema target delta not current support",
+      "meaningAndReceiving": "Proposed structural host-only rewrite; no tunable unsafe global sed option retained",
+      "activation": "S deployment invocation projection + H installed/native/provider grant dependencies; R/J original authenticated provisioning operation captures once before any source/namespace/issuance/API action. No per-family/latest reload.",
+      "recovery": "Original task/code/profile/source/target/issuer/replacement/action/clock references retained; new publication cannot rotate/repoint original object or reset pending action/deadline.",
+      "caseIds": [
+        "SP-ASSOCIATION",
+        "SP-RECOVERY"
+      ],
+      "result": "not-run",
+      "reviewStatus": "fresh OTHER independent review required"
+    },
+    {
+      "identity": {
+        "authorPointer": "/completion",
+        "sourcePath": "my-values/setup-secrets.sh",
+        "sourceSha256": "d417ee6bb8f6ba1008ad077f7cb4bf6172891aa9d8753681701aad4697e1834c",
+        "lines": [
+          1081,
+          1082
+        ]
+      },
+      "class": "receiving-protocol-correction",
+      "soleAuthor": "my-values/infra/secret-provisioning.yaml#/profiles/<explicitSelectedProfile>/settings/completion",
+      "typeUnitDomain": "fixed tagged result rule all-enabled-required-targets-verified",
+      "meaningAndReceiving": "Proposed actual enabled-family readiness enforcement separate from log/exit status and consumer usability",
+      "activation": "S deployment invocation projection + H installed/native/provider grant dependencies; R/J original authenticated provisioning operation captures once before any source/namespace/issuance/API action. No per-family/latest reload.",
+      "recovery": "Original task/code/profile/source/target/issuer/replacement/action/clock references retained; new publication cannot rotate/repoint original object or reset pending action/deadline.",
+      "caseIds": [
+        "SP-READINESS"
+      ],
+      "result": "not-run",
+      "reviewStatus": "fresh OTHER independent review required"
+    }
+  ],
+  "nonEditableSoftwareVocabulary": [
+    "schemaVersion and exact keyABI/sops aliases are coordinated software interfaces",
+    "fixed target names remain source-coupled current domain; no unsupported independent rename claimed"
+  ],
+  "noSourceLedgerFabrication": "Original candidate-target joins cover actual237 IDs; additional source literal coordinates have exact source SHA/line, no borrowed SRC alias."
+}

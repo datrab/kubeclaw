@@ -1,0 +1,6 @@
+{
+  "routes": [
+    "/a"
+  ],
+  "endpointName": "service-b"
+}

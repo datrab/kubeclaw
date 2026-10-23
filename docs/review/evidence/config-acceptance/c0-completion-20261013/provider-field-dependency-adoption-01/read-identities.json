@@ -1,0 +1,74 @@
+{
+  "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-processing-adjudication.json": {
+    "sha256": "6f4b3749bf5c24ab3183af4673fe3d5457bd94a5575cdb44936cb13944bf0727",
+    "bytes": 44566
+  },
+  "docs/review/evidence/config-acceptance/c0-completion-20261013/field-activation-partition-02/field-map.json": {
+    "sha256": "860e60b25b8640d04af6e567fe936309d7e48bbb8edd238a051bf8c1b924b6e0",
+    "bytes": 26206600
+  },
+  "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/field-definitions.json": {
+    "sha256": "19c9b61497aecfc0097b167fffdc371afc179016ec1122626f196191cc96ae42",
+    "bytes": 1393650
+  },
+  "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/case-definitions.json": {
+    "sha256": "c10d2d79922b3fe1b54b9b6bc6a886bad3194461c297ffe3c6ab94ee5a46df45",
+    "bytes": 9017837
+  },
+  "docs/review/remediation/config-semantic-inventory.json": {
+    "sha256": "9d5e7372f87f6b4e79809cbcd29f239f34cdea3e8020b3c6dda19b17044dae7a",
+    "bytes": 37907068
+  },
+  "docs/review/remediation/config-acceptance-matrix.json": {
+    "sha256": "1867bdae578f47d19e558db024203f3bf0b39210081df40f19d68c2a98288992",
+    "bytes": 101612879
+  },
+  "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.api-flow.schema.json": {
+    "sha256": "feda3e42ced475a7d1c7b4e86fb4750946d622d0e801bf6d279da3e7189e5b31",
+    "bytes": 4959
+  },
+  "skills/buster/plugins/api-flow/src/provider.js": {
+    "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+    "bytes": 16126
+  },
+  "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/receiving-abi.md": {
+    "sha256": "8acd6af226dfd12024d44efe3742c110214605a596500eb03fb2f1f78668b416",
+    "bytes": 14240
+  },
+  "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/schemas/kubeclaw.openapi.schema.json": {
+    "sha256": "5a0a92ad66b8340579a9523854a8c8e5f4b4014ca72548702eb52a5526d52ac6",
+    "bytes": 5944
+  },
+  "skills/buster/plugins/openapi/src/provider.js": {
+    "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+    "bytes": 22774
+  },
+  "skills/buster/plugins/openapi/src/schema-support.js": {
+    "sha256": "05e27ae54dfd00cb9f1344eb171699a6e4fa87801f5c5f8ff97be18910377e4b",
+    "bytes": 3986
+  },
+  "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-field-activation-partition-review-02/README.md": {
+    "sha256": "e8d173851af20260486b5f0052cc387bb91a69212c7e8e127ac6d01e7a049c77",
+    "bytes": 12202
+  },
+  "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/artifact-identities.json": {
+    "sha256": "21f14842c3fc5c5b7480e7b134a54d09d686816cdd52bb9b63afdc99e0fdaa7b",
+    "bytes": 55711
+  },
+  "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-runtime-provider-contract-review-03/README.md": {
+    "sha256": "bee4775dd4e065c7f7f623c8b5a4d20b7183f2d2ad01c57ca0447fac9c87dd55",
+    "bytes": 10399
+  },
+  "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/c3-integrated-reference-generation.json": {
+    "sha256": "f8d9d08f60acfaf884c183b560398f018b5463b52a984214a4bbaa4d75dc993f",
+    "bytes": 1941
+  },
+  "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/source-consumer-contracts.md": {
+    "sha256": "46d5151c59161774c784b3329140bf04e890a3455a7d0a7bf11a012a331e17a7",
+    "bytes": 11204
+  },
+  "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-03/active-concordance-index.json": {
+    "sha256": "99f7272b9cccc46ab10824f0cbf869b07910fb3cf5039c42d7f588d473a9b557",
+    "bytes": 227220
+  }
+}

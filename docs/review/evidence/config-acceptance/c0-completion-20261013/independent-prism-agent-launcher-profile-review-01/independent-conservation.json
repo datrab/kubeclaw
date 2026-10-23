@@ -1,0 +1,320 @@
+{
+  "currentRootComparisons": [
+    {
+      "kind": "fields",
+      "id": "AUTH-PRISM-AGENT-LIMIT-timeoutMs",
+      "presentCurrentRoot": true,
+      "equalsCurrentRoot": true
+    },
+    {
+      "kind": "fields",
+      "id": "AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs",
+      "presentCurrentRoot": true,
+      "equalsCurrentRoot": true
+    },
+    {
+      "kind": "fields",
+      "id": "AUTH-PRISM-AGENT-LIMIT-logBytes",
+      "presentCurrentRoot": true,
+      "equalsCurrentRoot": true
+    },
+    {
+      "kind": "fields",
+      "id": "AUTH-PRISM-AGENT-LIMIT-resultBytes",
+      "presentCurrentRoot": true,
+      "equalsCurrentRoot": true
+    },
+    {
+      "kind": "fields",
+      "id": "AUTH-PRISM-AGENT-LIMIT-evidenceBytes",
+      "presentCurrentRoot": true,
+      "equalsCurrentRoot": true
+    },
+    {
+      "kind": "fields",
+      "id": "AUTH-PRISM-AGENT-LIMIT-evidenceFiles",
+      "presentCurrentRoot": true,
+      "equalsCurrentRoot": true
+    },
+    {
+      "kind": "fields",
+      "id": "AUTH-PRISM-AGENT-CLAIM-LIFETIME",
+      "presentCurrentRoot": true,
+      "equalsCurrentRoot": true
+    },
+    {
+      "kind": "fields",
+      "id": "AUTH-PRISM-AGENT-KILL-GRACE",
+      "presentCurrentRoot": true,
+      "equalsCurrentRoot": true
+    },
+    {
+      "kind": "fields",
+      "id": "AUTH-PRISM-AGENT-CLI-TIMEOUT",
+      "presentCurrentRoot": true,
+      "equalsCurrentRoot": true
+    },
+    {
+      "kind": "fields",
+      "id": "AUTH-PRISM-AGENT-CLI-OWNER",
+      "presentCurrentRoot": true,
+      "equalsCurrentRoot": true
+    },
+    {
+      "kind": "fields",
+      "id": "AUTH-PRISM-AGENT-CLAIM-HTTP",
+      "presentCurrentRoot": true,
+      "equalsCurrentRoot": true
+    },
+    {
+      "kind": "fields",
+      "id": "AUTH-PRISM-AGENT-FINISH-HTTP",
+      "presentCurrentRoot": true,
+      "equalsCurrentRoot": true
+    },
+    {
+      "kind": "cases",
+      "id": "AUTH-PRISM-AGENT-LIMIT-timeoutMs-EFFECT",
+      "presentCurrentRoot": true,
+      "equalsCurrentRoot": true
+    },
+    {
+      "kind": "cases",
+      "id": "AUTH-PRISM-AGENT-C0-DEFINITION",
+      "presentCurrentRoot": true,
+      "equalsCurrentRoot": true
+    },
+    {
+      "kind": "cases",
+      "id": "AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs-EFFECT",
+      "presentCurrentRoot": true,
+      "equalsCurrentRoot": true
+    },
+    {
+      "kind": "cases",
+      "id": "AUTH-PRISM-AGENT-LIMIT-logBytes-EFFECT",
+      "presentCurrentRoot": true,
+      "equalsCurrentRoot": true
+    },
+    {
+      "kind": "cases",
+      "id": "AUTH-PRISM-AGENT-LIMIT-resultBytes-EFFECT",
+      "presentCurrentRoot": true,
+      "equalsCurrentRoot": true
+    },
+    {
+      "kind": "cases",
+      "id": "AUTH-PRISM-AGENT-LIMIT-evidenceBytes-EFFECT",
+      "presentCurrentRoot": true,
+      "equalsCurrentRoot": true
+    },
+    {
+      "kind": "cases",
+      "id": "AUTH-PRISM-AGENT-LIMIT-evidenceFiles-EFFECT",
+      "presentCurrentRoot": true,
+      "equalsCurrentRoot": true
+    },
+    {
+      "kind": "cases",
+      "id": "AUTH-PRISM-AGENT-CLAIM-LIFETIME-EFFECT",
+      "presentCurrentRoot": true,
+      "equalsCurrentRoot": true
+    },
+    {
+      "kind": "cases",
+      "id": "AUTH-PRISM-AGENT-KILL-GRACE-EFFECT",
+      "presentCurrentRoot": true,
+      "equalsCurrentRoot": true
+    },
+    {
+      "kind": "cases",
+      "id": "AUTH-PRISM-AGENT-CLI-TIMEOUT-EFFECT",
+      "presentCurrentRoot": true,
+      "equalsCurrentRoot": true
+    },
+    {
+      "kind": "cases",
+      "id": "AUTH-PRISM-AGENT-CLI-OWNER-EFFECT",
+      "presentCurrentRoot": true,
+      "equalsCurrentRoot": true
+    },
+    {
+      "kind": "cases",
+      "id": "AUTH-PRISM-AGENT-CLAIM-HTTP-EFFECT",
+      "presentCurrentRoot": true,
+      "equalsCurrentRoot": true
+    },
+    {
+      "kind": "cases",
+      "id": "AUTH-PRISM-AGENT-FINISH-HTTP-EFFECT",
+      "presentCurrentRoot": true,
+      "equalsCurrentRoot": true
+    }
+  ],
+  "additiveBodyComparisons": [
+    {
+      "kind": "fields",
+      "id": "AUTH-PRISM-AGENT-LIMIT-timeoutMs",
+      "originalBodyEquals": true,
+      "hashMatches": true
+    },
+    {
+      "kind": "fields",
+      "id": "AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs",
+      "originalBodyEquals": true,
+      "hashMatches": true
+    },
+    {
+      "kind": "fields",
+      "id": "AUTH-PRISM-AGENT-LIMIT-logBytes",
+      "originalBodyEquals": true,
+      "hashMatches": true
+    },
+    {
+      "kind": "fields",
+      "id": "AUTH-PRISM-AGENT-LIMIT-resultBytes",
+      "originalBodyEquals": true,
+      "hashMatches": true
+    },
+    {
+      "kind": "fields",
+      "id": "AUTH-PRISM-AGENT-LIMIT-evidenceBytes",
+      "originalBodyEquals": true,
+      "hashMatches": true
+    },
+    {
+      "kind": "fields",
+      "id": "AUTH-PRISM-AGENT-LIMIT-evidenceFiles",
+      "originalBodyEquals": true,
+      "hashMatches": true
+    },
+    {
+      "kind": "fields",
+      "id": "AUTH-PRISM-AGENT-CLAIM-LIFETIME",
+      "originalBodyEquals": true,
+      "hashMatches": true
+    },
+    {
+      "kind": "fields",
+      "id": "AUTH-PRISM-AGENT-KILL-GRACE",
+      "originalBodyEquals": true,
+      "hashMatches": true
+    },
+    {
+      "kind": "fields",
+      "id": "AUTH-PRISM-AGENT-CLI-TIMEOUT",
+      "originalBodyEquals": true,
+      "hashMatches": true
+    },
+    {
+      "kind": "fields",
+      "id": "AUTH-PRISM-AGENT-CLI-OWNER",
+      "originalBodyEquals": true,
+      "hashMatches": true
+    },
+    {
+      "kind": "fields",
+      "id": "AUTH-PRISM-AGENT-CLAIM-HTTP",
+      "originalBodyEquals": true,
+      "hashMatches": true
+    },
+    {
+      "kind": "fields",
+      "id": "AUTH-PRISM-AGENT-FINISH-HTTP",
+      "originalBodyEquals": true,
+      "hashMatches": true
+    },
+    {
+      "kind": "cases",
+      "id": "AUTH-PRISM-AGENT-LIMIT-timeoutMs-EFFECT",
+      "originalBodyEquals": true,
+      "hashMatches": true,
+      "notRun": true
+    },
+    {
+      "kind": "cases",
+      "id": "AUTH-PRISM-AGENT-C0-DEFINITION",
+      "originalBodyEquals": true,
+      "hashMatches": true,
+      "notRun": true
+    },
+    {
+      "kind": "cases",
+      "id": "AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs-EFFECT",
+      "originalBodyEquals": true,
+      "hashMatches": true,
+      "notRun": true
+    },
+    {
+      "kind": "cases",
+      "id": "AUTH-PRISM-AGENT-LIMIT-logBytes-EFFECT",
+      "originalBodyEquals": true,
+      "hashMatches": true,
+      "notRun": true
+    },
+    {
+      "kind": "cases",
+      "id": "AUTH-PRISM-AGENT-LIMIT-resultBytes-EFFECT",
+      "originalBodyEquals": true,
+      "hashMatches": true,
+      "notRun": true
+    },
+    {
+      "kind": "cases",
+      "id": "AUTH-PRISM-AGENT-LIMIT-evidenceBytes-EFFECT",
+      "originalBodyEquals": true,
+      "hashMatches": true,
+      "notRun": true
+    },
+    {
+      "kind": "cases",
+      "id": "AUTH-PRISM-AGENT-LIMIT-evidenceFiles-EFFECT",
+      "originalBodyEquals": true,
+      "hashMatches": true,
+      "notRun": true
+    },
+    {
+      "kind": "cases",
+      "id": "AUTH-PRISM-AGENT-CLAIM-LIFETIME-EFFECT",
+      "originalBodyEquals": true,
+      "hashMatches": true,
+      "notRun": true
+    },
+    {
+      "kind": "cases",
+      "id": "AUTH-PRISM-AGENT-KILL-GRACE-EFFECT",
+      "originalBodyEquals": true,
+      "hashMatches": true,
+      "notRun": true
+    },
+    {
+      "kind": "cases",
+      "id": "AUTH-PRISM-AGENT-CLI-TIMEOUT-EFFECT",
+      "originalBodyEquals": true,
+      "hashMatches": true,
+      "notRun": true
+    },
+    {
+      "kind": "cases",
+      "id": "AUTH-PRISM-AGENT-CLI-OWNER-EFFECT",
+      "originalBodyEquals": true,
+      "hashMatches": true,
+      "notRun": true
+    },
+    {
+      "kind": "cases",
+      "id": "AUTH-PRISM-AGENT-CLAIM-HTTP-EFFECT",
+      "originalBodyEquals": true,
+      "hashMatches": true,
+      "notRun": true
+    },
+    {
+      "kind": "cases",
+      "id": "AUTH-PRISM-AGENT-FINISH-HTTP-EFFECT",
+      "originalBodyEquals": true,
+      "hashMatches": true,
+      "notRun": true
+    }
+  ],
+  "sameOriginalSnapshotAsPriorAdjudication": true
+}

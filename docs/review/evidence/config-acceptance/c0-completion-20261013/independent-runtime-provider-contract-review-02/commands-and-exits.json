@@ -1,0 +1,58 @@
+{
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "head": "d396d56ad1c92a82a3ebd8346eb6d4c5764db8da",
+  "qualification": "read-only source navigation and narrow pure replay only; invalid candidate profiles observed, never activated",
+  "commands": [
+    {
+      "toolReference": "a6fdd2",
+      "command": "Read02 files/README",
+      "exit": 0
+    },
+    {
+      "toolReference": "5bae8c",
+      "command": "Read02 receiving ABI/source-consumer contracts and attempted manifest.json",
+      "exit": 1,
+      "reason": "manifest.json absent; actual artifact-identities.json was subsequently read; navigation issue only, no schema/native operation"
+    },
+    {
+      "toolReference": "c26031",
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/independent-runtime-provider-contract-review-02/replay-author-pure.mjs",
+      "exit": 0,
+      "checks": 274,
+      "implementationCasesExecuted": 0
+    },
+    {
+      "toolReference": "ab0f85",
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/independent-runtime-provider-contract-review-02/additional-probes.mjs",
+      "exit": 0,
+      "checks": 182,
+      "counterexamples": 3
+    },
+    {
+      "toolReference": "9ac159",
+      "command": "python docs/review/evidence/config-acceptance/c0-completion-20261013/independent-runtime-provider-contract-review-02/capture.py",
+      "exit": 0,
+      "originalRows": 67,
+      "originalCases": 408,
+      "sourceCoordinates": 257,
+      "oldFrozenInputs": 318
+    },
+    {
+      "toolReference": "7a05d1",
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/independent-runtime-provider-contract-review-02/replay-author-pure.mjs > docs/review/evidence/config-acceptance/c0-completion-20261013/independent-runtime-provider-contract-review-02/author-replay.stdout 2> docs/review/evidence/config-acceptance/c0-completion-20261013/independent-runtime-provider-contract-review-02/author-replay.stderr",
+      "exit": 0,
+      "reason": "capture exact raw stdout/stderr for required evidence; no assertion/domain change"
+    },
+    {
+      "toolReference": "f6f09f",
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/independent-runtime-provider-contract-review-02/additional-probes.mjs > docs/review/evidence/config-acceptance/c0-completion-20261013/independent-runtime-provider-contract-review-02/additional-probes.stdout 2> docs/review/evidence/config-acceptance/c0-completion-20261013/independent-runtime-provider-contract-review-02/additional-probes.stderr",
+      "exit": 0,
+      "reason": "capture raw stdout/stderr, no assertion change"
+    }
+  ],
+  "reviewScriptSha256": {
+    "replay-author-pure.mjs": "0d08738208992a5cef677e7b3920e4774a6aef432c9f6f3e9017027ed525443d",
+    "additional-probes.mjs": "e06d2b47dcebf256ea1cf4b89f7db30d3e788626eb8b2a56d2b9ab9fee939921",
+    "capture.py": "30396247d696bc1d7b6d617e8cf10d6531e35afb239c5ba0125c51bddf9fce9c"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "verification": [
+    {
+      "command": [
+        "gofmt",
+        "-w",
+        "cmd/buster-namespace-controller/controller-policy.go",
+        "cmd/buster-namespace-controller/controller-policy_test.go",
+        "cmd/buster-namespace-controller/main.go",
+        "cmd/buster-namespace-controller/main_test.go"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-controller-finding-budgets-20261016/check-0.txt"
+    },
+    {
+      "command": [
+        "go",
+        "test",
+        "-json",
+        "./cmd/buster-namespace-controller"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-controller-finding-budgets-20261016/check-1.txt"
+    },
+    {
+      "command": [
+        "node",
+        "--test",
+        "tests/verification/deployment/buster-central-delivery.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-controller-finding-budgets-20261016/check-2.txt"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "log": "docs/review/remediation/config-controller-finding-budgets-20261016/check-3.txt"
+    }
+  ],
+  "independentAcceptance": "OPEN; no active independent CONFIG reviewer; unchanged EROFS initialization not retried",
+  "at": "2026-10-16T13:20:20.198723+00:00",
+  "change": "Selected deployment owner supplies count and serialized byte budgets to actual runtime-security status collector; original4096/524288 defaults removed from productive caller; original CRD4096 envelope and worst-case overflow representability validated before activation.",
+  "tests": {
+    "goPassEvents": 124,
+    "goFailEvents": 0,
+    "goSkippedEvents": 0,
+    "deliveryPass": 5
+  },
+  "capture": "A2/B4 count and A524288/B700 bytes captured before owner removal; real delivered Helm A10/1200 and B20/2400 received by Go loader and bounding caller; original regression retained.",
+  "nextAction": "Independent controller source review; continue controller ENV and remaining source reconciliation without all-repository completeness claim.",
+  "writerLock": "same shared nonblocking; released on process exit"
+}

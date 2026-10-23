@@ -37,7 +37,7 @@ async function executeDocument(
 ) {
   const { repository, artifacts, runWorker } = context;
 
-  const input = (await body(request)) as EngineInput;
+  const input = (await body(request, context.config.maximumJsonBodyBytes)) as EngineInput;
   const idempotencyKey =
     input.idempotencyKey ?? randomBytes(16).toString("hex");
   if (
@@ -72,6 +72,7 @@ async function executeDocument(
     engineInput.assetSources = await renderAssets(
       artifacts,
       requestDocument.document,
+      context.config.maximumRenderAssetBytes,
     );
   const values = await runWorker(operation, engineInput, idempotencyKey);
   await retainGeneratedRevision(
@@ -133,6 +134,7 @@ async function reviseWithAgent(
 async function renderAssets(
   artifacts: AuthenticatedControlContext["artifacts"],
   document: PrismDocument,
+  maximumRenderAssetBytes: number,
 ) {
   const assetSources: Record<string, string> = {};
   let totalBytes = 0;
@@ -142,8 +144,8 @@ async function renderAssets(
       throw new Error(`asset metadata is incomplete for ${assetId}`);
     const bytes = await artifacts.get(asset.artifact);
     totalBytes += bytes.byteLength;
-    if (totalBytes > 6_000_000)
-      throw new Error("render assets exceed the 6 MB baseline limit");
+    if (totalBytes > maximumRenderAssetBytes)
+      throw new Error(`render assets exceed the ${maximumRenderAssetBytes / 1_000_000} MB baseline limit`);
     assetSources[assetId] =
       `data:${asset.mediaType};base64,${Buffer.from(bytes).toString("base64")}`;
   }

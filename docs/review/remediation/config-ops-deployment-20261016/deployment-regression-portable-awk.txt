@@ -1,0 +1,16 @@
+✔ original deployment render entrypoints bind all roles, sidecars and bundles to the selected source (23790.748875ms)
+✔ deployment rejects missing receipts, source identity, mutable overrides and cross-source bundles before cluster access (13738.401304ms)
+✔ private operational overlays survive while replaced or removed runtime slots fail (15406.699682ms)
+✔ Prism and Ops reject image overrides even when another value could conceal them (21109.351918ms)
+✔ source configuration and materialized values are rechecked by actual deployment entrypoints (11128.388692ms)
+✔ private bundle URL and authentication survive while the selected revision stays fixed (11780.732404ms)
+✔ private extraEnv cannot shadow reserved runtime bundle controls (19943.103841ms)
+✔ noncanonical alias and indirect controls cannot stand in for bundle consumers (15651.62802ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 132621.705543

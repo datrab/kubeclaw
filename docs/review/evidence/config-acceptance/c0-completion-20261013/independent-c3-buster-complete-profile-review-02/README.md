@@ -1,0 +1,56 @@
+# Independent BC3-01..04 material recheck02
+
+Reviewer `/root/delivery_module_contract_review`, 2026-10-13. Independent bounded material recheck of c3-buster-complete-profile-02 against preserved proposal/review01 and actual sources. Only this review02 directory written. Authorized narrow pure collector was inspected before execution and independently replayed with --output-dir here. No productive runtime constructor activation/listener/store/provider/native/network/credential operation, private key/certificate read, production/schema/test edit or Eval.
+
+**Verdict: original BC3-01/03/04 corrected at bounded scope; BC3-02's source-layer/activation correction is substantive, but new registry-peer shape has one residual source-contract gap (BC3-R02-01). NOT ACCEPTED as closed complete WCR02 proposal yet.** No whole-C0, implementation/package/native acceptance.
+
+## Independent pure replay — actual evidence
+
+Command (repository cwd):
+
+```sh
+node docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/collect-definition-checks.mjs --output-dir docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c3-buster-complete-profile-review-02/replay
+```
+
+**Exit0,24 actual named pure controls passed**,96 whole owner profiles across six documents,91 generated runtime/registry pairs. Raw replay.stdout/replay.stderr (empty stderr), replay/definition-checks-02.json and commands-and-exits.json preserve exact command/exit/observations. Node v24.21.0 executable SHA, Ajv8.20.0 entry SHA, collector and160 recorded read input identities are in the replay receipt. Assertions were not modified or weakened by reviewer.
+
+Collector uses strict existing Ajv and current public schema/decoder/network option/constructor predicates only. I inspected the imports/calls: NetworkHttpCapabilityInvoker construction validates public options without invoke/listen/network; capabilitySources gets an empty supplied environment with inactive credential branch omitted; TLS checks validate public path-reference shape only. No actual credential/key/certificate or provider constructor effect was exercised. This is not the future C3 production.ts v2 reader/peer parameter delta or a native acceptance test.
+
+Actual replay covers six complete owners; six missing/alias/timer/response/capability/flag negatives; A/B root schemas; current pure network mapper/constructor and registry predicate; explicit false→native omission; all91 generated pairs/quota orderings; TLS public absolute/relative ref shape with missing/unknown negatives; network-only inactive source/current decoder and required-peer negatives; all13 original full component A/B couplings and all64 original full provider A/B couplings. These observations substantiate the new24 controls, not the old01 summary's unauthenticated17 execution claims.
+
+## New finding BC3-R02-01 — P1: exact registry-client peer shape omits productive custom-CA/optional-auth branches
+
+02 README/activation contract says registryPeer is the exact immutable projection of existing registry-client runtime receipt including named credential/**CA** refs; repeated active refs must agree with that one receipt. But closed generated-runtime.schema.json `registryPeer` and `securityScan.registry` permit only four fields and require all four: registryBaseUrl, registryReference, registryUsernameEnvironmentVariable, registryPasswordEnvironmentVariable. **registryCaFile is forbidden** by additionalProperties:false; no explicit custom-trust unsupported/disposition clause exists.
+
+Actual `scripts/registry-client-config.mjs::registryClientConfig:102–104` emits optional registryCaFile when original registry.caFile exists. Actual `production-config-values.ts::scannerRegistry` consumes that generated reference and forwards `registryAccess.caFile` to scanner options. This is productive reference behavior, not an imagined new policy. The same producer emits credential ENV-name refs only when original auth exists; public HTTP-lab/unauthenticated registry runtime receipts can consist of endpoint/reference without names. Actual RegistryHealthAccess validates HTTP-without-credentials, and independent collector's current network-only helper control used that public shape successfully. The proposed full registryPeer schema cannot represent it. Collector intentionally uses a separate public HTTP helper object, not the generated peer; it therefore does not prove this domain is supported by the new full schema.
+
+**Required correction:** define the exact supported generated peer transport/auth/CA domain at its one original registry source. Preserve optional custom-CA reference where supported, tie it to authentic provider root/ownership/revision/size/read-drift/history receipt and the actual scanner/Node client trust receiving boundary; distinguish worker registryCaFile from any separate Node trust receipt instead of inventing an unused NetworkHttp CA option. Define paired credentials conditional on actual transport/auth, or explicitly record a supported-domain exclusion with original source/case disposition and rejection/history oracle. No secret bytes or second registry writer. Add public reference-shape positive/negative controls for custom CA, unknown/escape/absent-auth versus half-pair and scanner/health consumers without actual TLS/credential/network activation. Keep actual C3 source/transport compatibility before effects and original archive-first semantics.
+
+This is a source-shape mismatch introduced/exposed by the new exact-peer contract, not rejection of the conditional capability design. It can be corrected locally without external credentials or runtime/native execution.
+
+## Original correction dispositions
+
+| Finding | Independent source/replay observations | Bounded disposition |
+|---|---|---|
+| BC3-01 TLS branch | Optional closed tls keyPath/certificatePath now exists; actual configuredRuntime→runtime→https.createServer branch named. Explicit cleartext/server-TLS role receipt, authorized original roots, relative generation base, regular no-follow capture/drift/provider revision and key-cert association before store/discovery/listen; public fixture contains references only. Shape positives absolute/relative and missing/unknown negatives replayed; historic A cannot fill B or omit TLS. | Corrected as proposed reference/admission contract. No key parsing/TLS listener/live provider proof performed. |
+| BC3-02 conditional source layer | Eight explicit if-active-required/else-forbidden sources in closed schema; clusterBindings required iff fixture/exposure/runtime-security. All owner policies remain complete/all-profile validated. Eligibility gate precedes current optional decoder, so inactive objects reject before realpath/browser/credential work. Independent network-only control decoded inactive sources null and accepted public pure network options; owner supports any nonempty emitted11-name subset, not blanket all-eight activation. | Original layer ambiguity corrected; new exact-peer domain gap BC3-R02-01 prevents full closure. |
+| BC3-03 execution provenance | Retained narrow collector/exact command/raw logs/input/tool identities; original01 summary explicitly historical/unverified, not retroactively authenticated. Early missing activation/strict keyword type failed attempts retained with attempted bytes and errors; no strict option/domain/causal assertion weakening. New independent replay exit0/24 controls. | Corrected for new pure observations. Original17 claims remain historical, not substituted runtime proof. |
+| BC3-04 causal threshold pair | Dedicated complete reason-threshold-A has prefix0/threshold256; old B prefix0/threshold72. General local-A prefix180 unchanged. Explicit full contrast map/root selection names dedicated A. Replay strips only new provider/service layers and compares every13 original complete A/B, not merely scalar values; all64 provider contrasts/couplings likewise compared. | Corrected; original EFFECT cases still not-run and need real serializer/consumer evidence later. |
+
+### Registry-peer and activation semantics otherwise verified
+
+Independent registryPeer requirement is triggered by container.build/security.scan/kubernetes.fixture or active network with emitted true health flag. Network-only health=true can have no containerBuild source; mapped network helper must receive captured peer via explicit future configuredCapabilities parameter delta. Fixture health similarly takes peer independently. Health=false omits native flag and health-only peer but preserves any other peer consumer. Network absent has no active health source regardless of stored complete owner policy flag. Current v1 is not claimed to implement these new conditional gates. A profile never installs/grants a provider; real registry/package/node grant/role/store/executable receipt remains required.
+
+The generated schema's conditions require allowedCapabilities presence and each active source, forbid inactive sources, and require emitted health flag for the health-only peer branch. No blanket requirement for unrelated browsers/container source remains. The separate full owner validation is not inactive physical/provider I/O. Actual new generated peer credential/CA receiving semantics still need the single corrective finding above.
+
+## Exact identities / preserved original obligations
+
+identity-and-conservation.json records51/51 current artifact matches,30/30 preserved01 artifact matches,26/26 source pins and4/4 frozen proposal/review references. All86 original Buster profile **settings** unchanged; five added profiles yield91 Buster/96 total. All91 settings receipts/service-policy projections match full selected profiles. Historical summaries/manifests/reviews/failed attempts were not overwritten.
+
+Read-only body/lifecycle checks matched all256 provider cases,34 Runtime16 bodies,10 transferred service bodies and original canonical service-case joins. Original IDs/requirements/results remain unchanged/not-run. The replay additionally proves complete13 component A/B and64 provider full coupling assertions. Canonical C0 gate flags remain not-run and implementationAuthorization null. Counts/digests do not replace the substantive source/decoder checks or real future tests. Final package/source/preserved01 read-input recheck was stable.
+
+## Limits / next work
+
+Only four material corrections and directly affected peer reference contract reviewed. Original97-byte fixed frame adequacy, serialized job/state/record/result/source/claim/retention accounting, key-before-store, native timer, tar-parent tool receipt and original grant/budget/archive/fixed Eval clauses remain carried forward; this replay does not execute those actual runtime/effect boundaries. Root.v4/component.v3/runtime.v2 remain proposed C3; no C1 backfill or generic Core box/default added.
+
+Correct BC3-R02-01 additively and obtain bounded independent material recheck. All genuine deployed/image/role/boot/provider/key/TLS/registry credential/CA revision, native pool/node/browser/tool/capacity and historical archive proofs remain external activation gates. No whole-C0/implementation/native acceptance inferred from this successful pure replay.

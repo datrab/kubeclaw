@@ -1,0 +1,30 @@
+{
+  "mode": "draft-structural",
+  "scope": "integrity only; independent semantic review remains mandatory",
+  "settings": 2409,
+  "cases": 6726,
+  "errorCount": 21,
+  "errors": [
+    "CMP-buster-engine-preparation.storeLockWaitSeconds: dangling requirement F-RECOVERY",
+    "CMP-buster-engine-execution.stores.admission.lockWaitSeconds: dangling requirement F-RECOVERY",
+    "CMP-buster-engine-execution.stores.attempts.lockWaitSeconds: dangling requirement F-RECOVERY",
+    "CMP-buster-engine-execution.stores.admission.reasonThresholdCodeUnits: dangling requirement F-RECOVERY",
+    "CMP-buster-engine-execution.stores.admission.reasonPrefixCodeUnits: dangling requirement F-RECOVERY",
+    "CMP-buster-engine-execution.stores.admission.metadataReserveBytes: dangling requirement F-RECOVERY",
+    "CMP-buster-engine-preparation.tarDiagnosticCodeUnits: dangling requirement F-RECOVERY",
+    "CMP-API-OUTBOX-EXISTING-MAXIMUMBYTES-READBOUND: dangling requirement F-RECOVERY",
+    "CMP-API-BLOB-EXISTING-TOTALBYTES-REQUIRED: dangling requirement F-RECOVERY",
+    "CMP-BUSTER-FIXTURE-QUANTITY-QUOTA-REPRESENTATION: dangling requirement F-RECOVERY",
+    "CMP-BUSTER-PROVIDER-RESOURCE-MEASUREMENT-PROVENANCE: dangling requirement F-RECOVERY",
+    "QC-FOUNDATION-FLOCK-WAIT-HISTORY: dangling requirement F-RECOVERY",
+    "QC-ADMISSION-REASON-LIMITS-HISTORY: dangling requirement F-RECOVERY",
+    "QC-ADMISSION-METADATA-RESERVE-ALL-WRITES: dangling requirement F-RECOVERY",
+    "QC-BUSTER-TAR-DIAGNOSTIC-BIND: dangling requirement F-RECOVERY",
+    "QC-OUTBOX-UNBOUNDED-READ-REPLAY: dangling requirement F-RECOVERY",
+    "QC-LATENT-UNBOUNDED-BLOB-API-API-AND-SEVEN: dangling requirement F-RECOVERY",
+    "QC-LATENT-UNBOUNDED-BLOB-API-HISTORY: dangling requirement F-RECOVERY",
+    "QC-FIXTURE-STORAGE-EXPONENT-POLICY-BIND: dangling requirement F-RECOVERY",
+    "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-RECOVERY-EVAL: dangling requirement F-RECOVERY",
+    "QC-BUSTER-TAR-LOCATOR-UNUSED-HISTORY: dangling requirement F-RECOVERY"
+  ]
+}

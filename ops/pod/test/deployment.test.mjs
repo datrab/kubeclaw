@@ -2,9 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { mkdtempSync, mkdirSync, copyFileSync, rmSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, copyFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { loadOpsMcpConfig } from '../../../tools/ops-mcp/src/config.mjs';
 import { parseAllDocuments } from 'yaml';
 
 const repo = fileURLToPath(new URL('../../../', import.meta.url));
@@ -96,9 +97,24 @@ test('the actual pinned Codex CLI accepts the installed MCP config and exposes p
 test('custom observer namespace is shared by MCP and the Codex verification process', () => {
   const resources = render(['--set', 'defaultNamespace=platform', '--set', 'rbac.namespaces[0]=platform']);
   const pod = resources.find(x => x.kind === 'StatefulSet').spec.template.spec;
+  const map = resources.find(x => x.kind === 'ConfigMap' && x.metadata.name === 'codex-ops-mcp-policy');
+  const selected = JSON.parse(map.data['policy.json']);
+  const dir = mkdtempSync(join(tmpdir(), 'ops-namespace-'));
+  try {
+    const file = join(dir, 'policy.json');
+    writeFileSync(file, map.data['policy.json']);
+    const config = loadOpsMcpConfig({ OPS_MCP_POLICY_FILE: file });
+    assert.equal(config.defaultNamespace, 'platform');
+    assert.deepEqual(config.namespaces, ['platform']);
+  } finally { rmSync(dir, { recursive: true, force: true }); }
+  assert.equal(selected.server.defaultNamespace, 'platform');
   for (const container of pod.containers) {
-    assert.equal(container.env.find(x => x.name === 'OPS_DEFAULT_NAMESPACE').value, 'platform');
+    assert.equal(container.env.find(x => x.name === 'OPS_MCP_POLICY_FILE').value, '/etc/kubeclaw/ops-mcp/policy.json');
+    assert.ok(container.volumeMounts.some(x => x.name === 'mcp-policy' && x.mountPath === '/etc/kubeclaw/ops-mcp' && x.readOnly));
   }
+  assert.equal(pod.containers.find(x => x.name === 'codex').env.find(x => x.name === 'OPS_DEFAULT_NAMESPACE').value, 'platform');
+  assert.ok(!pod.containers.find(x => x.name === 'ops-mcp').env.some(x => x.name === 'OPS_DEFAULT_NAMESPACE'));
+  assert.equal(pod.volumes.find(x => x.name === 'mcp-policy').configMap.name, map.metadata.name);
   assert.deepEqual(resources.filter(x => x.kind === 'RoleBinding' && x.roleRef.kind === 'ClusterRole').map(x => x.metadata.namespace), ['platform']);
 });
 
@@ -120,7 +136,8 @@ test('exec is namespace scoped, independent of observer discovery, and removable
   const codex = disabled.find(x => x.kind === 'StatefulSet').spec.template.spec.containers[0];
   assert.ok(!codex.volumeMounts.some(m => m.name === 'kube-api'));
   assert.ok(!codex.env.some(e => e.name === 'KUBECONFIG'));
-  assert.ok(!disabled.some(x => x.kind === 'ConfigMap'));
+  assert.ok(!disabled.some(x => x.kind === 'ConfigMap' && x.data?.config));
+  assert.deepEqual(disabled.filter(x => x.kind === 'ConfigMap').map(x => x.metadata.name), ['codex-ops-mcp-policy']);
   assert.equal(codex.env.find(e => e.name === 'OPS_EXEC_NAMESPACES').value, '');
   const custom = render(['--set-json', 'rbac.execNamespaces=["buster","prism"]']);
   assert.deepEqual(custom.filter(x => x.kind === 'Role').map(x => x.metadata.namespace), ['buster', 'prism']);

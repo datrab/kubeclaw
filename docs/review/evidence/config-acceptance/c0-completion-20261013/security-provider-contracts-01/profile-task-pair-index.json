@@ -1,0 +1,1134 @@
+[
+  {
+    "settingId": "RT-163ebc138c768e21",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-163ebc138c768e21-A",
+    "profileB": "RT-163ebc138c768e21-B",
+    "taskA": "task-fixtures/pairs/RT-163ebc138c768e21/A.json",
+    "taskB": "task-fixtures/pairs/RT-163ebc138c768e21/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-163ebc138c768e21-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-163ebc138c768e21-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-d233d3039be3adc4",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "A",
+    "profileB": "A",
+    "taskA": "task-fixtures/pairs/RT-d233d3039be3adc4/A.json",
+    "taskB": "task-fixtures/pairs/RT-d233d3039be3adc4/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-d233d3039be3adc4-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-d233d3039be3adc4-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-6eac87138fc57ac9",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "A",
+    "profileB": "A",
+    "taskA": "task-fixtures/pairs/RT-6eac87138fc57ac9/A.json",
+    "taskB": "task-fixtures/pairs/RT-6eac87138fc57ac9/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-6eac87138fc57ac9-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-6eac87138fc57ac9-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-6afb26eb1a7b7271",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-6afb26eb1a7b7271-A",
+    "profileB": "RT-6afb26eb1a7b7271-B",
+    "taskA": "task-fixtures/pairs/RT-6afb26eb1a7b7271/A.json",
+    "taskB": "task-fixtures/pairs/RT-6afb26eb1a7b7271/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-6afb26eb1a7b7271-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-6afb26eb1a7b7271-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-611f5b01895a7c90",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-611f5b01895a7c90-A",
+    "profileB": "RT-611f5b01895a7c90-B",
+    "taskA": "task-fixtures/pairs/RT-611f5b01895a7c90/A.json",
+    "taskB": "task-fixtures/pairs/RT-611f5b01895a7c90/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-611f5b01895a7c90-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-611f5b01895a7c90-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-93c925a29f21dd8d",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-93c925a29f21dd8d-A",
+    "profileB": "RT-93c925a29f21dd8d-B",
+    "taskA": "task-fixtures/pairs/RT-93c925a29f21dd8d/A.json",
+    "taskB": "task-fixtures/pairs/RT-93c925a29f21dd8d/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-93c925a29f21dd8d-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-93c925a29f21dd8d-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-d852318fd5b15892",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-d852318fd5b15892-A",
+    "profileB": "RT-d852318fd5b15892-B",
+    "taskA": "task-fixtures/pairs/RT-d852318fd5b15892/A.json",
+    "taskB": "task-fixtures/pairs/RT-d852318fd5b15892/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-d852318fd5b15892-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-d852318fd5b15892-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-cd92cb7109a38c4a",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-cd92cb7109a38c4a-A",
+    "profileB": "RT-cd92cb7109a38c4a-B",
+    "taskA": "task-fixtures/pairs/RT-cd92cb7109a38c4a/A.json",
+    "taskB": "task-fixtures/pairs/RT-cd92cb7109a38c4a/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-cd92cb7109a38c4a-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-cd92cb7109a38c4a-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-8a73cb4fa2939ad4",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-8a73cb4fa2939ad4-A",
+    "profileB": "RT-8a73cb4fa2939ad4-B",
+    "taskA": "task-fixtures/pairs/RT-8a73cb4fa2939ad4/A.json",
+    "taskB": "task-fixtures/pairs/RT-8a73cb4fa2939ad4/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-8a73cb4fa2939ad4-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-8a73cb4fa2939ad4-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-ebb85facca8d1b1b",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-ebb85facca8d1b1b-A",
+    "profileB": "RT-ebb85facca8d1b1b-B",
+    "taskA": "task-fixtures/pairs/RT-ebb85facca8d1b1b/A.json",
+    "taskB": "task-fixtures/pairs/RT-ebb85facca8d1b1b/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-ebb85facca8d1b1b-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-ebb85facca8d1b1b-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-d87b67b33610f619",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-d87b67b33610f619-A",
+    "profileB": "RT-d87b67b33610f619-B",
+    "taskA": "task-fixtures/pairs/RT-d87b67b33610f619/A.json",
+    "taskB": "task-fixtures/pairs/RT-d87b67b33610f619/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-d87b67b33610f619-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-d87b67b33610f619-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-ef66623413223fef",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-ef66623413223fef-A",
+    "profileB": "RT-ef66623413223fef-B",
+    "taskA": "task-fixtures/pairs/RT-ef66623413223fef/A.json",
+    "taskB": "task-fixtures/pairs/RT-ef66623413223fef/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-ef66623413223fef-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-ef66623413223fef-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-101f7a1f1f29236a",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-101f7a1f1f29236a-A",
+    "profileB": "RT-101f7a1f1f29236a-B",
+    "taskA": "task-fixtures/pairs/RT-101f7a1f1f29236a/A.json",
+    "taskB": "task-fixtures/pairs/RT-101f7a1f1f29236a/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-101f7a1f1f29236a-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-101f7a1f1f29236a-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-5118b56e0742663b",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-5118b56e0742663b-A",
+    "profileB": "RT-5118b56e0742663b-B",
+    "taskA": "task-fixtures/pairs/RT-5118b56e0742663b/A.json",
+    "taskB": "task-fixtures/pairs/RT-5118b56e0742663b/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-5118b56e0742663b-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-5118b56e0742663b-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-584baa9f0f15c058",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-584baa9f0f15c058-A",
+    "profileB": "RT-584baa9f0f15c058-B",
+    "taskA": "task-fixtures/pairs/RT-584baa9f0f15c058/A.json",
+    "taskB": "task-fixtures/pairs/RT-584baa9f0f15c058/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-584baa9f0f15c058-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-584baa9f0f15c058-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-6ecf22c1afd37e91",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-6ecf22c1afd37e91-A",
+    "profileB": "RT-6ecf22c1afd37e91-B",
+    "taskA": "task-fixtures/pairs/RT-6ecf22c1afd37e91/A.json",
+    "taskB": "task-fixtures/pairs/RT-6ecf22c1afd37e91/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-6ecf22c1afd37e91-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-6ecf22c1afd37e91-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-e702d189d1282e3b",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-e702d189d1282e3b-A",
+    "profileB": "RT-e702d189d1282e3b-B",
+    "taskA": "task-fixtures/pairs/RT-e702d189d1282e3b/A.json",
+    "taskB": "task-fixtures/pairs/RT-e702d189d1282e3b/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-e702d189d1282e3b-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-e702d189d1282e3b-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-58a77efdd8cd5820",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-58a77efdd8cd5820-A",
+    "profileB": "RT-58a77efdd8cd5820-B",
+    "taskA": "task-fixtures/pairs/RT-58a77efdd8cd5820/A.json",
+    "taskB": "task-fixtures/pairs/RT-58a77efdd8cd5820/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-58a77efdd8cd5820-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-58a77efdd8cd5820-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-95a1b17121581a49",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-95a1b17121581a49-A",
+    "profileB": "RT-95a1b17121581a49-B",
+    "taskA": "task-fixtures/pairs/RT-95a1b17121581a49/A.json",
+    "taskB": "task-fixtures/pairs/RT-95a1b17121581a49/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-95a1b17121581a49-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-95a1b17121581a49-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-f4e73c3bb3c19c65",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-f4e73c3bb3c19c65-A",
+    "profileB": "RT-f4e73c3bb3c19c65-B",
+    "taskA": "task-fixtures/pairs/RT-f4e73c3bb3c19c65/A.json",
+    "taskB": "task-fixtures/pairs/RT-f4e73c3bb3c19c65/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-f4e73c3bb3c19c65-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-f4e73c3bb3c19c65-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-0da96fe7ba066ccb",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-0da96fe7ba066ccb-A",
+    "profileB": "RT-0da96fe7ba066ccb-B",
+    "taskA": "task-fixtures/pairs/RT-0da96fe7ba066ccb/A.json",
+    "taskB": "task-fixtures/pairs/RT-0da96fe7ba066ccb/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-0da96fe7ba066ccb-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-0da96fe7ba066ccb-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-0c0b02b6fbc2160c",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-0c0b02b6fbc2160c-A",
+    "profileB": "RT-0c0b02b6fbc2160c-B",
+    "taskA": "task-fixtures/pairs/RT-0c0b02b6fbc2160c/A.json",
+    "taskB": "task-fixtures/pairs/RT-0c0b02b6fbc2160c/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-0c0b02b6fbc2160c-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-0c0b02b6fbc2160c-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-c9bc44d00a7b9c90",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-c9bc44d00a7b9c90-A",
+    "profileB": null,
+    "taskA": "task-fixtures/pairs/RT-c9bc44d00a7b9c90/A.json",
+    "taskB": "task-fixtures/pairs/RT-c9bc44d00a7b9c90/B.json",
+    "unsupportedAlternate": "strict-v1 is the only current policy model label; no distinct supported label B. Owned verdict/waiver fields remain meaningful, but original label ALT/F-EFFECT stays OPEN.",
+    "entries": {
+      "A": "fixtures/entries/RT-c9bc44d00a7b9c90-A.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-6b059c9d6ad52058",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-6b059c9d6ad52058-A",
+    "profileB": "RT-6b059c9d6ad52058-B",
+    "taskA": "task-fixtures/pairs/RT-6b059c9d6ad52058/A.json",
+    "taskB": "task-fixtures/pairs/RT-6b059c9d6ad52058/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-6b059c9d6ad52058-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-6b059c9d6ad52058-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-cdfcefd44e87996b",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-cdfcefd44e87996b-A",
+    "profileB": "RT-cdfcefd44e87996b-B",
+    "taskA": "task-fixtures/pairs/RT-cdfcefd44e87996b/A.json",
+    "taskB": "task-fixtures/pairs/RT-cdfcefd44e87996b/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-cdfcefd44e87996b-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-cdfcefd44e87996b-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-f365121af3c2af9e",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-f365121af3c2af9e-A",
+    "profileB": "RT-f365121af3c2af9e-B",
+    "taskA": "task-fixtures/pairs/RT-f365121af3c2af9e/A.json",
+    "taskB": "task-fixtures/pairs/RT-f365121af3c2af9e/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-f365121af3c2af9e-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-f365121af3c2af9e-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-3caa1e915a125dcd",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-3caa1e915a125dcd-A",
+    "profileB": "RT-3caa1e915a125dcd-B",
+    "taskA": "task-fixtures/pairs/RT-3caa1e915a125dcd/A.json",
+    "taskB": "task-fixtures/pairs/RT-3caa1e915a125dcd/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-3caa1e915a125dcd-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-3caa1e915a125dcd-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-ea0bcd6957dbc556",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-ea0bcd6957dbc556-A",
+    "profileB": "RT-ea0bcd6957dbc556-B",
+    "taskA": "task-fixtures/pairs/RT-ea0bcd6957dbc556/A.json",
+    "taskB": "task-fixtures/pairs/RT-ea0bcd6957dbc556/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-ea0bcd6957dbc556-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-ea0bcd6957dbc556-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-4c38b23dda98be93",
+    "registrationId": "kubeclaw.security-providers:dependency-trivy",
+    "profileA": "A",
+    "profileB": "A",
+    "taskA": "task-fixtures/pairs/RT-4c38b23dda98be93/A.json",
+    "taskB": "task-fixtures/pairs/RT-4c38b23dda98be93/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-4c38b23dda98be93-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-4c38b23dda98be93-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-0e050207e6faa65c",
+    "registrationId": "kubeclaw.security-providers:dependency-trivy",
+    "profileA": "RT-0e050207e6faa65c-A",
+    "profileB": "RT-0e050207e6faa65c-B",
+    "taskA": "task-fixtures/pairs/RT-0e050207e6faa65c/A.json",
+    "taskB": "task-fixtures/pairs/RT-0e050207e6faa65c/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-0e050207e6faa65c-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-0e050207e6faa65c-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-ec0fc91072a8b630",
+    "registrationId": "kubeclaw.security-providers:dependency-trivy",
+    "profileA": "RT-ec0fc91072a8b630-A",
+    "profileB": "RT-ec0fc91072a8b630-B",
+    "taskA": "task-fixtures/pairs/RT-ec0fc91072a8b630/A.json",
+    "taskB": "task-fixtures/pairs/RT-ec0fc91072a8b630/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-ec0fc91072a8b630-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-ec0fc91072a8b630-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-1242f6b3245f130e",
+    "registrationId": "kubeclaw.security-providers:dependency-trivy",
+    "profileA": "RT-1242f6b3245f130e-A",
+    "profileB": null,
+    "taskA": "task-fixtures/pairs/RT-1242f6b3245f130e/A.json",
+    "taskB": "task-fixtures/pairs/RT-1242f6b3245f130e/B.json",
+    "unsupportedAlternate": "strict-v1 is the only current policy model label; no distinct supported label B. Owned verdict/waiver fields remain meaningful, but original label ALT/F-EFFECT stays OPEN.",
+    "entries": {
+      "A": "fixtures/entries/RT-1242f6b3245f130e-A.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-3f66e997ecc380c1",
+    "registrationId": "kubeclaw.security-providers:dependency-trivy",
+    "profileA": "RT-3f66e997ecc380c1-A",
+    "profileB": "RT-3f66e997ecc380c1-B",
+    "taskA": "task-fixtures/pairs/RT-3f66e997ecc380c1/A.json",
+    "taskB": "task-fixtures/pairs/RT-3f66e997ecc380c1/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-3f66e997ecc380c1-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-3f66e997ecc380c1-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-81f4bdf5f3872b9e",
+    "registrationId": "kubeclaw.security-providers:dependency-trivy",
+    "profileA": "RT-81f4bdf5f3872b9e-A",
+    "profileB": "RT-81f4bdf5f3872b9e-B",
+    "taskA": "task-fixtures/pairs/RT-81f4bdf5f3872b9e/A.json",
+    "taskB": "task-fixtures/pairs/RT-81f4bdf5f3872b9e/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-81f4bdf5f3872b9e-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-81f4bdf5f3872b9e-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-4a23015d6ca86669",
+    "registrationId": "kubeclaw.security-providers:dependency-trivy",
+    "profileA": "RT-4a23015d6ca86669-A",
+    "profileB": "RT-4a23015d6ca86669-B",
+    "taskA": "task-fixtures/pairs/RT-4a23015d6ca86669/A.json",
+    "taskB": "task-fixtures/pairs/RT-4a23015d6ca86669/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-4a23015d6ca86669-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-4a23015d6ca86669-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-a3dc4204fd2dbc99",
+    "registrationId": "kubeclaw.security-providers:dependency-trivy",
+    "profileA": "RT-a3dc4204fd2dbc99-A",
+    "profileB": "RT-a3dc4204fd2dbc99-B",
+    "taskA": "task-fixtures/pairs/RT-a3dc4204fd2dbc99/A.json",
+    "taskB": "task-fixtures/pairs/RT-a3dc4204fd2dbc99/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-a3dc4204fd2dbc99-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-a3dc4204fd2dbc99-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-d912c283aeea31d8",
+    "registrationId": "kubeclaw.security-providers:dependency-trivy",
+    "profileA": "RT-d912c283aeea31d8-A",
+    "profileB": "RT-d912c283aeea31d8-B",
+    "taskA": "task-fixtures/pairs/RT-d912c283aeea31d8/A.json",
+    "taskB": "task-fixtures/pairs/RT-d912c283aeea31d8/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-d912c283aeea31d8-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-d912c283aeea31d8-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-25155a8525353895",
+    "registrationId": "kubeclaw.security-providers:image-trivy",
+    "profileA": "RT-25155a8525353895-A",
+    "profileB": "RT-25155a8525353895-B",
+    "taskA": "task-fixtures/pairs/RT-25155a8525353895/A.json",
+    "taskB": "task-fixtures/pairs/RT-25155a8525353895/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-25155a8525353895-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-25155a8525353895-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-513bbd46b45156b7",
+    "registrationId": "kubeclaw.security-providers:image-trivy",
+    "profileA": "RT-513bbd46b45156b7-A",
+    "profileB": "RT-513bbd46b45156b7-B",
+    "taskA": "task-fixtures/pairs/RT-513bbd46b45156b7/A.json",
+    "taskB": "task-fixtures/pairs/RT-513bbd46b45156b7/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-513bbd46b45156b7-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-513bbd46b45156b7-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-6d1bc088852536a7",
+    "registrationId": "kubeclaw.security-providers:image-trivy",
+    "profileA": "RT-6d1bc088852536a7-A",
+    "profileB": null,
+    "taskA": "task-fixtures/pairs/RT-6d1bc088852536a7/A.json",
+    "taskB": "task-fixtures/pairs/RT-6d1bc088852536a7/B.json",
+    "unsupportedAlternate": "strict-v1 is the only current policy model label; no distinct supported label B. Owned verdict/waiver fields remain meaningful, but original label ALT/F-EFFECT stays OPEN.",
+    "entries": {
+      "A": "fixtures/entries/RT-6d1bc088852536a7-A.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-2dc4f91b61e79184",
+    "registrationId": "kubeclaw.security-providers:image-trivy",
+    "profileA": "RT-2dc4f91b61e79184-A",
+    "profileB": "RT-2dc4f91b61e79184-B",
+    "taskA": "task-fixtures/pairs/RT-2dc4f91b61e79184/A.json",
+    "taskB": "task-fixtures/pairs/RT-2dc4f91b61e79184/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-2dc4f91b61e79184-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-2dc4f91b61e79184-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-bd7eee80bc8feca2",
+    "registrationId": "kubeclaw.security-providers:image-trivy",
+    "profileA": "RT-bd7eee80bc8feca2-A",
+    "profileB": "RT-bd7eee80bc8feca2-B",
+    "taskA": "task-fixtures/pairs/RT-bd7eee80bc8feca2/A.json",
+    "taskB": "task-fixtures/pairs/RT-bd7eee80bc8feca2/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-bd7eee80bc8feca2-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-bd7eee80bc8feca2-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-53653aa9d3f03c8f",
+    "registrationId": "kubeclaw.security-providers:image-trivy",
+    "profileA": "RT-53653aa9d3f03c8f-A",
+    "profileB": "RT-53653aa9d3f03c8f-B",
+    "taskA": "task-fixtures/pairs/RT-53653aa9d3f03c8f/A.json",
+    "taskB": "task-fixtures/pairs/RT-53653aa9d3f03c8f/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-53653aa9d3f03c8f-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-53653aa9d3f03c8f-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-376a55c52779beed",
+    "registrationId": "kubeclaw.security-providers:image-trivy",
+    "profileA": "RT-376a55c52779beed-A",
+    "profileB": "RT-376a55c52779beed-B",
+    "taskA": "task-fixtures/pairs/RT-376a55c52779beed/A.json",
+    "taskB": "task-fixtures/pairs/RT-376a55c52779beed/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-376a55c52779beed-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-376a55c52779beed-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-e8358fe85c80d3d0",
+    "registrationId": "kubeclaw.security-providers:image-trivy",
+    "profileA": "RT-e8358fe85c80d3d0-A",
+    "profileB": "RT-e8358fe85c80d3d0-B",
+    "taskA": "task-fixtures/pairs/RT-e8358fe85c80d3d0/A.json",
+    "taskB": "task-fixtures/pairs/RT-e8358fe85c80d3d0/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-e8358fe85c80d3d0-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-e8358fe85c80d3d0-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-2fe8190f12f15510",
+    "registrationId": "kubeclaw.security-providers:kubernetes-policy",
+    "profileA": "RT-2fe8190f12f15510-A",
+    "profileB": "RT-2fe8190f12f15510-B",
+    "taskA": "task-fixtures/pairs/RT-2fe8190f12f15510/A.json",
+    "taskB": "task-fixtures/pairs/RT-2fe8190f12f15510/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-2fe8190f12f15510-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-2fe8190f12f15510-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-8de947a02be68652",
+    "registrationId": "kubeclaw.security-providers:kubernetes-policy",
+    "profileA": "RT-8de947a02be68652-A",
+    "profileB": "RT-8de947a02be68652-B",
+    "taskA": "task-fixtures/pairs/RT-8de947a02be68652/A.json",
+    "taskB": "task-fixtures/pairs/RT-8de947a02be68652/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-8de947a02be68652-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-8de947a02be68652-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-76d0d20d46b9a8e6",
+    "registrationId": "kubeclaw.security-providers:kubernetes-policy",
+    "profileA": "RT-76d0d20d46b9a8e6-A",
+    "profileB": null,
+    "taskA": "task-fixtures/pairs/RT-76d0d20d46b9a8e6/A.json",
+    "taskB": "task-fixtures/pairs/RT-76d0d20d46b9a8e6/B.json",
+    "unsupportedAlternate": "strict-v1 is the only current policy model label; no distinct supported label B. Owned verdict/waiver fields remain meaningful, but original label ALT/F-EFFECT stays OPEN.",
+    "entries": {
+      "A": "fixtures/entries/RT-76d0d20d46b9a8e6-A.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-773179d734f2eb77",
+    "registrationId": "kubeclaw.security-providers:kubernetes-policy",
+    "profileA": "RT-773179d734f2eb77-A",
+    "profileB": "RT-773179d734f2eb77-B",
+    "taskA": "task-fixtures/pairs/RT-773179d734f2eb77/A.json",
+    "taskB": "task-fixtures/pairs/RT-773179d734f2eb77/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-773179d734f2eb77-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-773179d734f2eb77-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-9370858078281283",
+    "registrationId": "kubeclaw.security-providers:kubernetes-policy",
+    "profileA": "RT-9370858078281283-A",
+    "profileB": "RT-9370858078281283-B",
+    "taskA": "task-fixtures/pairs/RT-9370858078281283/A.json",
+    "taskB": "task-fixtures/pairs/RT-9370858078281283/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-9370858078281283-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-9370858078281283-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-f036e66205a0fa61",
+    "registrationId": "kubeclaw.security-providers:kubernetes-policy",
+    "profileA": "RT-f036e66205a0fa61-A",
+    "profileB": "RT-f036e66205a0fa61-B",
+    "taskA": "task-fixtures/pairs/RT-f036e66205a0fa61/A.json",
+    "taskB": "task-fixtures/pairs/RT-f036e66205a0fa61/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-f036e66205a0fa61-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-f036e66205a0fa61-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-ffc33c06d6b6a1c2",
+    "registrationId": "kubeclaw.security-providers:kubernetes-policy",
+    "profileA": "RT-ffc33c06d6b6a1c2-A",
+    "profileB": "RT-ffc33c06d6b6a1c2-B",
+    "taskA": "task-fixtures/pairs/RT-ffc33c06d6b6a1c2/A.json",
+    "taskB": "task-fixtures/pairs/RT-ffc33c06d6b6a1c2/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-ffc33c06d6b6a1c2-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-ffc33c06d6b6a1c2-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-0a39f16498c38979",
+    "registrationId": "kubeclaw.security-providers:kubernetes-policy",
+    "profileA": "RT-0a39f16498c38979-A",
+    "profileB": "RT-0a39f16498c38979-B",
+    "taskA": "task-fixtures/pairs/RT-0a39f16498c38979/A.json",
+    "taskB": "task-fixtures/pairs/RT-0a39f16498c38979/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-0a39f16498c38979-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-0a39f16498c38979-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-c00914a2402f91bf",
+    "registrationId": "kubeclaw.security-providers:kubernetes-runtime",
+    "profileA": "RT-c00914a2402f91bf-A",
+    "profileB": "RT-c00914a2402f91bf-B",
+    "taskA": "task-fixtures/pairs/RT-c00914a2402f91bf/A.json",
+    "taskB": "task-fixtures/pairs/RT-c00914a2402f91bf/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-c00914a2402f91bf-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-c00914a2402f91bf-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-8d1e26bc5360c737",
+    "registrationId": "kubeclaw.security-providers:kubernetes-runtime",
+    "profileA": "RT-8d1e26bc5360c737-A",
+    "profileB": "RT-8d1e26bc5360c737-B",
+    "taskA": "task-fixtures/pairs/RT-8d1e26bc5360c737/A.json",
+    "taskB": "task-fixtures/pairs/RT-8d1e26bc5360c737/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-8d1e26bc5360c737-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-8d1e26bc5360c737-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-ae78d041c3d0fbd6",
+    "registrationId": "kubeclaw.security-providers:kubernetes-runtime",
+    "profileA": "RT-ae78d041c3d0fbd6-A",
+    "profileB": null,
+    "taskA": "task-fixtures/pairs/RT-ae78d041c3d0fbd6/A.json",
+    "taskB": "task-fixtures/pairs/RT-ae78d041c3d0fbd6/B.json",
+    "unsupportedAlternate": "strict-v1 is the only current policy model label; no distinct supported label B. Owned verdict/waiver fields remain meaningful, but original label ALT/F-EFFECT stays OPEN.",
+    "entries": {
+      "A": "fixtures/entries/RT-ae78d041c3d0fbd6-A.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-9941fbebdaea1c41",
+    "registrationId": "kubeclaw.security-providers:kubernetes-runtime",
+    "profileA": "RT-9941fbebdaea1c41-A",
+    "profileB": "RT-9941fbebdaea1c41-B",
+    "taskA": "task-fixtures/pairs/RT-9941fbebdaea1c41/A.json",
+    "taskB": "task-fixtures/pairs/RT-9941fbebdaea1c41/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-9941fbebdaea1c41-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-9941fbebdaea1c41-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-2672b24a1df6464d",
+    "registrationId": "kubeclaw.security-providers:kubernetes-runtime",
+    "profileA": "RT-2672b24a1df6464d-A",
+    "profileB": "RT-2672b24a1df6464d-B",
+    "taskA": "task-fixtures/pairs/RT-2672b24a1df6464d/A.json",
+    "taskB": "task-fixtures/pairs/RT-2672b24a1df6464d/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-2672b24a1df6464d-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-2672b24a1df6464d-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-52731740c2eb92d2",
+    "registrationId": "kubeclaw.security-providers:kubernetes-runtime",
+    "profileA": "RT-52731740c2eb92d2-A",
+    "profileB": "RT-52731740c2eb92d2-B",
+    "taskA": "task-fixtures/pairs/RT-52731740c2eb92d2/A.json",
+    "taskB": "task-fixtures/pairs/RT-52731740c2eb92d2/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-52731740c2eb92d2-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-52731740c2eb92d2-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-cc64dd898be55e05",
+    "registrationId": "kubeclaw.security-providers:kubernetes-runtime",
+    "profileA": "RT-cc64dd898be55e05-A",
+    "profileB": "RT-cc64dd898be55e05-B",
+    "taskA": "task-fixtures/pairs/RT-cc64dd898be55e05/A.json",
+    "taskB": "task-fixtures/pairs/RT-cc64dd898be55e05/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-cc64dd898be55e05-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-cc64dd898be55e05-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-95d37d46c3d99337",
+    "registrationId": "kubeclaw.security-providers:kubernetes-runtime",
+    "profileA": "RT-95d37d46c3d99337-A",
+    "profileB": "RT-95d37d46c3d99337-B",
+    "taskA": "task-fixtures/pairs/RT-95d37d46c3d99337/A.json",
+    "taskB": "task-fixtures/pairs/RT-95d37d46c3d99337/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-95d37d46c3d99337-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-95d37d46c3d99337-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS-A",
+    "profileB": null,
+    "taskA": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS/A.json",
+    "taskB": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS/B.json",
+    "unsupportedAlternate": "Actual package supports only mandatory runner-log RETENTION selection; actual production is not guaranteed for quiet providers. No distinct valid evidence-type B; original ALT/F-EFFECT remains OPEN, never omit log or invent test-report.",
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONPASS-A.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL-A",
+    "profileB": null,
+    "taskA": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL/A.json",
+    "taskB": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL/B.json",
+    "unsupportedAlternate": "Actual package supports only mandatory runner-log RETENTION selection; actual production is not guaranteed for quiet providers. No distinct valid evidence-type B; original ALT/F-EFFECT remains OPEN, never omit log or invent test-report.",
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONFAIL-A.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR-A",
+    "profileB": null,
+    "taskA": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR/A.json",
+    "taskB": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR/B.json",
+    "unsupportedAlternate": "Actual package supports only mandatory runner-log RETENTION selection; actual production is not guaranteed for quiet providers. No distinct valid evidence-type B; original ALT/F-EFFECT remains OPEN, never omit log or invent test-report.",
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-HEADERS-EVIDENCEDEFAULTS-ONERROR-A.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE-A",
+    "profileB": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE-B",
+    "taskA": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE/A.json",
+    "taskB": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-RETRYSAFE-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS-A",
+    "profileB": null,
+    "taskA": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS/A.json",
+    "taskB": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS/B.json",
+    "unsupportedAlternate": "No distinct safe matrix selection. Headers manifest path is rejected/unread by actual paths task schema; others declare[]. No fabricated path\u2192paths repair or new package support. Original obligations OPEN.",
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-HEADERS-MATRIXFIELDS-A.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS",
+    "registrationId": "kubeclaw.security-providers:dependency-trivy",
+    "profileA": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS-A",
+    "profileB": null,
+    "taskA": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS/A.json",
+    "taskB": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS/B.json",
+    "unsupportedAlternate": "Actual package supports only mandatory runner-log RETENTION selection; actual production is not guaranteed for quiet providers. No distinct valid evidence-type B; original ALT/F-EFFECT remains OPEN, never omit log or invent test-report.",
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONPASS-A.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL",
+    "registrationId": "kubeclaw.security-providers:dependency-trivy",
+    "profileA": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL-A",
+    "profileB": null,
+    "taskA": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL/A.json",
+    "taskB": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL/B.json",
+    "unsupportedAlternate": "Actual package supports only mandatory runner-log RETENTION selection; actual production is not guaranteed for quiet providers. No distinct valid evidence-type B; original ALT/F-EFFECT remains OPEN, never omit log or invent test-report.",
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONFAIL-A.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR",
+    "registrationId": "kubeclaw.security-providers:dependency-trivy",
+    "profileA": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR-A",
+    "profileB": null,
+    "taskA": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR/A.json",
+    "taskB": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR/B.json",
+    "unsupportedAlternate": "Actual package supports only mandatory runner-log RETENTION selection; actual production is not guaranteed for quiet providers. No distinct valid evidence-type B; original ALT/F-EFFECT remains OPEN, never omit log or invent test-report.",
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-EVIDENCEDEFAULTS-ONERROR-A.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE",
+    "registrationId": "kubeclaw.security-providers:dependency-trivy",
+    "profileA": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE-A",
+    "profileB": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE-B",
+    "taskA": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE/A.json",
+    "taskB": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-RETRYSAFE-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS",
+    "registrationId": "kubeclaw.security-providers:dependency-trivy",
+    "profileA": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS-A",
+    "profileB": null,
+    "taskA": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS/A.json",
+    "taskB": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS/B.json",
+    "unsupportedAlternate": "No distinct safe matrix selection. Headers manifest path is rejected/unread by actual paths task schema; others declare[]. No fabricated path\u2192paths repair or new package support. Original obligations OPEN.",
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-DEPENDENCY-TRIVY-MATRIXFIELDS-A.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS",
+    "registrationId": "kubeclaw.security-providers:image-trivy",
+    "profileA": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS-A",
+    "profileB": null,
+    "taskA": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS/A.json",
+    "taskB": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS/B.json",
+    "unsupportedAlternate": "Actual package supports only mandatory runner-log RETENTION selection; actual production is not guaranteed for quiet providers. No distinct valid evidence-type B; original ALT/F-EFFECT remains OPEN, never omit log or invent test-report.",
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONPASS-A.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL",
+    "registrationId": "kubeclaw.security-providers:image-trivy",
+    "profileA": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL-A",
+    "profileB": null,
+    "taskA": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL/A.json",
+    "taskB": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL/B.json",
+    "unsupportedAlternate": "Actual package supports only mandatory runner-log RETENTION selection; actual production is not guaranteed for quiet providers. No distinct valid evidence-type B; original ALT/F-EFFECT remains OPEN, never omit log or invent test-report.",
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONFAIL-A.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR",
+    "registrationId": "kubeclaw.security-providers:image-trivy",
+    "profileA": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR-A",
+    "profileB": null,
+    "taskA": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR/A.json",
+    "taskB": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR/B.json",
+    "unsupportedAlternate": "Actual package supports only mandatory runner-log RETENTION selection; actual production is not guaranteed for quiet providers. No distinct valid evidence-type B; original ALT/F-EFFECT remains OPEN, never omit log or invent test-report.",
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-EVIDENCEDEFAULTS-ONERROR-A.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE",
+    "registrationId": "kubeclaw.security-providers:image-trivy",
+    "profileA": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE-A",
+    "profileB": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE-B",
+    "taskA": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE/A.json",
+    "taskB": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-RETRYSAFE-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS",
+    "registrationId": "kubeclaw.security-providers:image-trivy",
+    "profileA": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS-A",
+    "profileB": null,
+    "taskA": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS/A.json",
+    "taskB": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS/B.json",
+    "unsupportedAlternate": "No distinct safe matrix selection. Headers manifest path is rejected/unread by actual paths task schema; others declare[]. No fabricated path\u2192paths repair or new package support. Original obligations OPEN.",
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-IMAGE-TRIVY-MATRIXFIELDS-A.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS",
+    "registrationId": "kubeclaw.security-providers:kubernetes-policy",
+    "profileA": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS-A",
+    "profileB": null,
+    "taskA": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS/A.json",
+    "taskB": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS/B.json",
+    "unsupportedAlternate": "Actual package supports only mandatory runner-log RETENTION selection; actual production is not guaranteed for quiet providers. No distinct valid evidence-type B; original ALT/F-EFFECT remains OPEN, never omit log or invent test-report.",
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONPASS-A.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL",
+    "registrationId": "kubeclaw.security-providers:kubernetes-policy",
+    "profileA": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL-A",
+    "profileB": null,
+    "taskA": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL/A.json",
+    "taskB": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL/B.json",
+    "unsupportedAlternate": "Actual package supports only mandatory runner-log RETENTION selection; actual production is not guaranteed for quiet providers. No distinct valid evidence-type B; original ALT/F-EFFECT remains OPEN, never omit log or invent test-report.",
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONFAIL-A.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR",
+    "registrationId": "kubeclaw.security-providers:kubernetes-policy",
+    "profileA": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR-A",
+    "profileB": null,
+    "taskA": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR/A.json",
+    "taskB": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR/B.json",
+    "unsupportedAlternate": "Actual package supports only mandatory runner-log RETENTION selection; actual production is not guaranteed for quiet providers. No distinct valid evidence-type B; original ALT/F-EFFECT remains OPEN, never omit log or invent test-report.",
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-EVIDENCEDEFAULTS-ONERROR-A.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE",
+    "registrationId": "kubeclaw.security-providers:kubernetes-policy",
+    "profileA": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE-A",
+    "profileB": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE-B",
+    "taskA": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE/A.json",
+    "taskB": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-RETRYSAFE-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS",
+    "registrationId": "kubeclaw.security-providers:kubernetes-policy",
+    "profileA": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS-A",
+    "profileB": null,
+    "taskA": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS/A.json",
+    "taskB": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS/B.json",
+    "unsupportedAlternate": "No distinct safe matrix selection. Headers manifest path is rejected/unread by actual paths task schema; others declare[]. No fabricated path\u2192paths repair or new package support. Original obligations OPEN.",
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-POLICY-MATRIXFIELDS-A.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS",
+    "registrationId": "kubeclaw.security-providers:kubernetes-runtime",
+    "profileA": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS-A",
+    "profileB": null,
+    "taskA": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS/A.json",
+    "taskB": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS/B.json",
+    "unsupportedAlternate": "Actual package supports only mandatory runner-log RETENTION selection; actual production is not guaranteed for quiet providers. No distinct valid evidence-type B; original ALT/F-EFFECT remains OPEN, never omit log or invent test-report.",
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONPASS-A.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL",
+    "registrationId": "kubeclaw.security-providers:kubernetes-runtime",
+    "profileA": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL-A",
+    "profileB": null,
+    "taskA": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL/A.json",
+    "taskB": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL/B.json",
+    "unsupportedAlternate": "Actual package supports only mandatory runner-log RETENTION selection; actual production is not guaranteed for quiet providers. No distinct valid evidence-type B; original ALT/F-EFFECT remains OPEN, never omit log or invent test-report.",
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONFAIL-A.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR",
+    "registrationId": "kubeclaw.security-providers:kubernetes-runtime",
+    "profileA": "RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR-A",
+    "profileB": null,
+    "taskA": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR/A.json",
+    "taskB": "task-fixtures/pairs/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR/B.json",
+    "unsupportedAlternate": "Actual package supports only mandatory runner-log RETENTION selection; actual production is not guaranteed for quiet providers. No distinct valid evidence-type B; original ALT/F-EFFECT remains OPEN, never omit log or invent test-report.",
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-EVIDENCE-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-EVIDENCEDEFAULTS-ONERROR-A.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE",
+    "registrationId": "kubeclaw.security-providers:kubernetes-runtime",
+    "profileA": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE-A",
+    "profileB": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE-B",
+    "taskA": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE/A.json",
+    "taskB": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-RETRYSAFE-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS",
+    "registrationId": "kubeclaw.security-providers:kubernetes-runtime",
+    "profileA": "RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS-A",
+    "profileB": null,
+    "taskA": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS/A.json",
+    "taskB": "task-fixtures/pairs/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS/B.json",
+    "unsupportedAlternate": "No distinct safe matrix selection. Headers manifest path is rejected/unread by actual paths task schema; others declare[]. No fabricated path\u2192paths repair or new package support. Original obligations OPEN.",
+    "entries": {
+      "A": "fixtures/entries/RT-PROVIDER-CONTRACT-KUBECLAW-SECURITY-PROVIDERS-KUBERNETES-RUNTIME-MATRIXFIELDS-A.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-SECURITY-COMMON-BLOCKINGSEVERITIES",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-SECURITY-COMMON-BLOCKINGSEVERITIES-A",
+    "profileB": "RT-SECURITY-COMMON-BLOCKINGSEVERITIES-B",
+    "taskA": "task-fixtures/pairs/RT-SECURITY-COMMON-BLOCKINGSEVERITIES/A.json",
+    "taskB": "task-fixtures/pairs/RT-SECURITY-COMMON-BLOCKINGSEVERITIES/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-SECURITY-COMMON-BLOCKINGSEVERITIES-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-SECURITY-COMMON-BLOCKINGSEVERITIES-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-SECURITY-COMMON-BLOCKACTIVETHREATS",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-SECURITY-COMMON-BLOCKACTIVETHREATS-A",
+    "profileB": "RT-SECURITY-COMMON-BLOCKACTIVETHREATS-B",
+    "taskA": "task-fixtures/pairs/RT-SECURITY-COMMON-BLOCKACTIVETHREATS/A.json",
+    "taskB": "task-fixtures/pairs/RT-SECURITY-COMMON-BLOCKACTIVETHREATS/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-SECURITY-COMMON-BLOCKACTIVETHREATS-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-SECURITY-COMMON-BLOCKACTIVETHREATS-B.pipeline.config.json"
+    }
+  },
+  {
+    "settingId": "RT-SECURITY-COMMON-BLOCKMISSINGFIXES",
+    "registrationId": "kubeclaw.security-providers:headers",
+    "profileA": "RT-SECURITY-COMMON-BLOCKMISSINGFIXES-A",
+    "profileB": "RT-SECURITY-COMMON-BLOCKMISSINGFIXES-B",
+    "taskA": "task-fixtures/pairs/RT-SECURITY-COMMON-BLOCKMISSINGFIXES/A.json",
+    "taskB": "task-fixtures/pairs/RT-SECURITY-COMMON-BLOCKMISSINGFIXES/B.json",
+    "unsupportedAlternate": null,
+    "entries": {
+      "A": "fixtures/entries/RT-SECURITY-COMMON-BLOCKMISSINGFIXES-A.pipeline.config.json",
+      "B": "fixtures/entries/RT-SECURITY-COMMON-BLOCKMISSINGFIXES-B.pipeline.config.json"
+    }
+  }
+]

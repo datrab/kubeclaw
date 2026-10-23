@@ -1,0 +1,87 @@
+{
+  "inputs": [
+    {
+      "path": "docs/review/evidence/config-acceptance/author/prism-handoff-target-contracts-20261013.json",
+      "sha256": "61fff54f52aec11efbff691db0ea2ca5c0215a80dcbe122d593c33532dd3b4b5",
+      "snapshot": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/author/prism-handoff-target-contracts-20261013.json",
+      "scope": "author definition handoff only; other dirs may mutate; only snapshot exact frozen input, no Core selfapproval"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/prism-design-cardinality-proposal.json",
+      "sha256": "097b4b8b84214746be3e55810f58bd5f0798b7e486d531239f95f4ed80c6d1ff",
+      "snapshot": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/author/prism-design-cardinality-proposal.json",
+      "scope": "author definition handoff only; other dirs may mutate; only snapshot exact frozen input, no Core selfapproval"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/PRISM-HANDOFF-TARGET-20261013.md",
+      "sha256": "ca84be429d093bdcffd19cec0ee9f233e719cc6363ad09659b900aef5dbc142f",
+      "snapshot": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/author/PRISM-HANDOFF-TARGET-20261013.md",
+      "scope": "author definition handoff only; other dirs may mutate; only snapshot exact frozen input, no Core selfapproval"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-kubernetes-captured-injections-20261013.json",
+      "sha256": "a8b31a1c090152199a81248a397709d5071ea233184fb75642fb866c3d0689e9",
+      "snapshot": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/delivery/buster-kubernetes-captured-injections-20261013.json",
+      "scope": "author definition handoff only; other dirs may mutate; only snapshot exact frozen input, no Core selfapproval"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/buster-kube-capture-case-specification-20261013.json",
+      "sha256": "e1f8a70d6b76d2949e439cb498072e8b0b09724ff3242dd821a97b7bcd49d780",
+      "snapshot": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/delivery/buster-kube-capture-case-specification-20261013.json",
+      "scope": "author definition handoff only; other dirs may mutate; only snapshot exact frozen input, no Core selfapproval"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/native-provisioning-contracts-bce3f075.json",
+      "sha256": "ab4f6f4ee1b8d87e208770d9016cb7dceca5bafb3a4028781b9198387afb8433",
+      "snapshot": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/delivery/native-provisioning-contracts-bce3f075.json",
+      "scope": "author definition handoff only; other dirs may mutate; only snapshot exact frozen input, no Core selfapproval"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/native-host-target-case-specifications-20261013.json",
+      "sha256": "38fceb5362a5562d988a54f054279cde262727afc62ae685a4764b14df1ec14b",
+      "snapshot": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/delivery/native-host-target-case-specifications-20261013.json",
+      "scope": "author definition handoff only; other dirs may mutate; only snapshot exact frozen input, no Core selfapproval"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/dls-authority-corrections-20261013.json",
+      "sha256": "8897b5bf3614a62804c738a6e06def2d4c52b7f2477a8bfa44dc4b5cfd092e5c",
+      "snapshot": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/delivery/dls-authority-corrections-20261013.json",
+      "scope": "author definition handoff only; other dirs may mutate; only snapshot exact frozen input, no Core selfapproval"
+    }
+  ],
+  "questions": {
+    "CMP-SOURCE-PRISM-DESIGN-CARDINALITY": {
+      "primary": "AUTH-PRISM-DESIGN-CARDINALITY",
+      "owner": "parentPrism",
+      "status": "parentproposed2/3 and originalA3 preserved; boundedreviews notglobalbusiness/runtimeacceptance"
+    },
+    "CMP-SOURCE-PRISM-DEVELOPMENT-IDENTITY": {
+      "primary": "AUTH-PRISM-ENGINE-DEVELOPMENT-IDENTITY",
+      "deliveryAlias": "DLV-NATIVE-PRISM-ENGINE-DIGEST-PROJECTION",
+      "status": "OCI vs syntheticcode/currentnotinstalledproof; authentic provider physicalprerequisite; openPrismspoolquota remains explicit"
+    },
+    "CMP-SOURCE-BUSTER-KUBE-CREDENTIAL-ENV": {
+      "primaryIds": [
+        "DLV-BUSTER-KUBERNETES-CAPTURE-PATH",
+        "DLV-BUSTER-KUBERNETES-CAPTURE-KUBECONFIG",
+        "DLV-BUSTER-KUBERNETES-CAPTURE-KUBERNETES-SERVICE-HOST",
+        "DLV-BUSTER-KUBERNETES-CAPTURE-KUBERNETES-SERVICE-PORT"
+      ],
+      "caseId": "DLV-CASE-BUSTER-KUBERNETES-RUNTIME-CAPTURE",
+      "owner": "delivery existingBuster role injections; originalModule cleanup/grant parenthandoff stillunsettled",
+      "status": "frozen exactproposed definition not selfaccepted"
+    },
+    "CMP-SOURCE-GENERATED-HOST-SOURCE-PROVENANCE": {
+      "caseIds": [
+        "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+        "DLV-CASE-NATIVE-HOST-ACTIVATION",
+        "DLV-CASE-NATIVE-PROVISIONING-IDENTITY-CLOSURE"
+      ],
+      "periodPrimary": "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS",
+      "owner": "delivery hostpolicy/DLS exactrole; no equalvaluealias",
+      "status": "frozen proposed Hversion/poolmaintenance/render projections; authentic host observation futureprerequisite"
+    }
+  },
+  "deliverySnapshotRefinement": "Exact supplied stable fielddefinitions refreshed after delivery source-role/ENV-name refinement; prior snapshots retained. Whole deliverymanifest mutable/unfrozen, not Coreacceptance.",
+  "deliveryCredentialVariableDistinction": "Actual BUSTER_KUBERNETES_SERVICE_ACCOUNT_ROOT vs Docker/overlay BUSTER_V2_KUBERNETES_CREDENTIALS are distinct declaredgenerated reader/projection names; equalpath is notalias; capture contract exactfrozenhandoff."
+}

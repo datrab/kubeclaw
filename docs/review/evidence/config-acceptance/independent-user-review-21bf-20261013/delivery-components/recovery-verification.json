@@ -1,0 +1,88 @@
+{
+  "reviewer": "/root/recover_delivery_review",
+  "completedAt": "2026-10-13T06:45:23.558427+00:00",
+  "baselineHead": "21bf51bc2075abec1191fdc091952492b6cb484e",
+  "frozenInputCount": 286,
+  "drift": [],
+  "checks": [
+    {
+      "batch": "01",
+      "mode": "baseline",
+      "argv": [
+        "python3",
+        "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/check-01-baseline/check-bindings.py"
+      ],
+      "scriptIdenticalToOriginal": true,
+      "scriptSha256": "68f389dbe0358e90983e98463a7e2a01c5d24ead26348146c87d9ff9768ae263",
+      "exitCode": 0,
+      "stdout": "8 intended documentation negatives /2 positives; no emitter/behavior actions\n",
+      "stderr": ""
+    },
+    {
+      "batch": "01",
+      "mode": "member-loss",
+      "argv": [
+        "python3",
+        "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/check-01-member-loss/check-bindings.py"
+      ],
+      "scriptIdenticalToOriginal": true,
+      "scriptSha256": "68f389dbe0358e90983e98463a7e2a01c5d24ead26348146c87d9ff9768ae263",
+      "exitCode": 0,
+      "stdout": "8 intended documentation negatives /2 positives; no emitter/behavior actions\n",
+      "stderr": ""
+    },
+    {
+      "batch": "01",
+      "mode": "wrong-profile",
+      "argv": [
+        "python3",
+        "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/check-01-wrong-profile/check-bindings.py"
+      ],
+      "scriptIdenticalToOriginal": true,
+      "scriptSha256": "68f389dbe0358e90983e98463a7e2a01c5d24ead26348146c87d9ff9768ae263",
+      "exitCode": 0,
+      "stdout": "8 intended documentation negatives /2 positives; no emitter/behavior actions\n",
+      "stderr": ""
+    },
+    {
+      "batch": "02",
+      "mode": "baseline",
+      "argv": [
+        "python3",
+        "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/check-02-baseline/check-bindings.py"
+      ],
+      "scriptIdenticalToOriginal": true,
+      "scriptSha256": "7e68be4ed8f24b1c0f5e18eac7c69bf0a120c9a0a1377aedcb960d0480f794b2",
+      "exitCode": 0,
+      "stdout": "8 intended document negatives /2 positives; future consumer/emitter cases NOTRUN\n",
+      "stderr": ""
+    },
+    {
+      "batch": "02",
+      "mode": "member-loss",
+      "argv": [
+        "python3",
+        "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/check-02-member-loss/check-bindings.py"
+      ],
+      "scriptIdenticalToOriginal": true,
+      "scriptSha256": "7e68be4ed8f24b1c0f5e18eac7c69bf0a120c9a0a1377aedcb960d0480f794b2",
+      "exitCode": 0,
+      "stdout": "8 intended document negatives /2 positives; future consumer/emitter cases NOTRUN\n",
+      "stderr": ""
+    },
+    {
+      "batch": "02",
+      "mode": "wrong-profile",
+      "argv": [
+        "python3",
+        "docs/review/evidence/config-acceptance/independent-user-review-21bf-20261013/delivery-components/check-02-wrong-profile/check-bindings.py"
+      ],
+      "scriptIdenticalToOriginal": true,
+      "scriptSha256": "7e68be4ed8f24b1c0f5e18eac7c69bf0a120c9a0a1377aedcb960d0480f794b2",
+      "exitCode": 0,
+      "stdout": "8 intended document negatives /2 positives; future consumer/emitter cases NOTRUN\n",
+      "stderr": ""
+    }
+  ],
+  "scope": "Independent source inspection and reexecution of isolated validator copies; no authored/root/production changes or global acceptance"
+}

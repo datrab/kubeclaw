@@ -1,0 +1,227 @@
+{
+  "scope": "frozen proposal-coordinate reach only; not source/field/case closure",
+  "originalCandidates": 11624,
+  "originalIdsWithAnyProposal": 2326,
+  "originalIdsWithoutProposal": 9298,
+  "coordinatesWithMultipleProposals": 13,
+  "unmatchedOtherLedgerCoordinates": 29,
+  "errors": [],
+  "largestUnexaminedSources": [
+    {
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "count": 245
+    },
+    {
+      "path": "my-values/setup-secrets.sh",
+      "count": 237
+    },
+    {
+      "path": "package-lock.json",
+      "count": 150
+    },
+    {
+      "path": "tools/ops-mcp/src/server.mjs",
+      "count": 86
+    },
+    {
+      "path": "scripts/postgresql-recovery.sh",
+      "count": 81
+    },
+    {
+      "path": "skills/nova/core/test-gates/resolver.ts",
+      "count": 78
+    },
+    {
+      "path": "charts/kubeclaw/files/config/.semgrep.yml",
+      "count": 76
+    },
+    {
+      "path": "scripts/production-receipt-attestation.mjs",
+      "count": 68
+    },
+    {
+      "path": "spikes/prism/mobile-editor/package-lock.json",
+      "count": 64
+    },
+    {
+      "path": "spikes/prism/puck-adapter/package-lock.json",
+      "count": 64
+    },
+    {
+      "path": "docker/nova-tools/package-lock.json",
+      "count": 60
+    },
+    {
+      "path": "scripts/check-suite-migration-workflow.mjs",
+      "count": 58
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+      "count": 56
+    },
+    {
+      "path": "skills/nova/project_setup/tools/progress-scaffold-discovery.ts",
+      "count": 56
+    },
+    {
+      "path": "cmd/buster-namespace-controller/main.go",
+      "count": 55
+    },
+    {
+      "path": "scripts/observability-retirement/dispatch.mjs",
+      "count": 52
+    },
+    {
+      "path": "package.json",
+      "count": 48
+    },
+    {
+      "path": "skills/buster/plugins/size-budget/src/provider.js",
+      "count": 47
+    },
+    {
+      "path": "skills/buster/engine/test-gates/browser-visual-runtime.ts",
+      "count": 46
+    },
+    {
+      "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+      "count": 45
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "count": 43
+    },
+    {
+      "path": "skills/buster/plugins/http/src/provider.js",
+      "count": 43
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-observer/src/hook-payloads.ts",
+      "count": 43
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger-state.ts",
+      "count": 42
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
+      "count": 40
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+      "count": 39
+    },
+    {
+      "path": "skills/buster/engine/test-gates/container-build-runtime.ts",
+      "count": 38
+    },
+    {
+      "path": "skills/prism/studio/app.tsx",
+      "count": 37
+    },
+    {
+      "path": "skills/prism/studio/puck-adapter.ts",
+      "count": 37
+    },
+    {
+      "path": "skills/common/plugins/wait-store/src/adapter.ts",
+      "count": 36
+    },
+    {
+      "path": "skills/nova/core/state/read-run-evidence.ts",
+      "count": 36
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "count": 36
+    },
+    {
+      "path": "scripts/observability-retirement/operator-authority.mjs",
+      "count": 35
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-compaction.ts",
+      "count": 35
+    },
+    {
+      "path": "skills/buster/plugins/api-flow/src/provider.js",
+      "count": 35
+    },
+    {
+      "path": "skills/nova/plugins/review/scripts/evaluate-review-quality.mts",
+      "count": 35
+    },
+    {
+      "path": "scripts/redis-prepare-migration.sh",
+      "count": 34
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+      "count": 33
+    },
+    {
+      "path": "skills/nova/plugins/repository-adapter/src/revision-reader.ts",
+      "count": 33
+    },
+    {
+      "path": "skills/worker/core/worker/attempt-executor.ts",
+      "count": 33
+    }
+  ],
+  "originalIdentity": {
+    "path": "docs/review/evidence/config-acceptance/author/candidate-ledger.json",
+    "sha256": "a5066c74fe2dbd60c88c75d1e17264b98f05df352823cf3b6e39bc206fae09d1"
+  },
+  "inputIdentities": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/binding/nova-candidate-dispositions.json",
+      "sha256": "e075a91e996806376963a0ec3d05384c31c28cec8f61023fb61972f9beaaf8ac"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/candidate-dispositions.json",
+      "sha256": "b35562894a1b28e1806c76df32a77ba4124709d21a5b9db6c71403615cd438c6"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-02/candidate-dispositions.json",
+      "sha256": "8c9ca1545a191c255e0b7f96d0a985a6217d28e8412b42edcc10295c36f80b8f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-03/candidate-dispositions.json",
+      "sha256": "c3e42a6c0a55da36aab5d03e20d99a0d25907e5b383d4169cc6c47ac145aafc3"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-04/candidate-dispositions.json",
+      "sha256": "a41cc19f21270dc8ea7369745ed2417f2b4e93d87ac6e6b81d19bac6e6daba4d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-05/candidate-dispositions.json",
+      "sha256": "c133309647a8c83619791627fe3c98b4d299d74052ee181056ab03591da47c1c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-06/candidate-dispositions.json",
+      "sha256": "330f882c9a50be2f294fe72e84505289dbbc29089bdec8c64e00386c47803548"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-02/candidate-dispositions.json",
+      "sha256": "5d8ad26b025c06aecc6d4b6c7a01592637da9113a704db3e8690cd9d7489c91c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-03/candidate-dispositions.json",
+      "sha256": "1fcb1c011f34b32355efb6259dad756664d441c4b7e6a903bfb13cc62c4e2930"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/candidate-dispositions.json",
+      "sha256": "2d5267f5a7b0bbc80fd2ba8cf680011e59d7cbdb262e36c7e0031765dc0a2ad6"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/runtime/candidate-dispositions.json",
+      "sha256": "42b5350c58797f19a9a2241421cbf58b621d409c6539f908ad6e67f7b4a9386a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/batches/21bf51b-standalone-remote-19/combined-candidate-dispositions.json",
+      "sha256": "eabf8805cf71732ef3c32dad36c6e83713974e437f76f63fb4a5cc0e888748e5"
+    }
+  ],
+  "implementationAuthorization": null,
+  "globalC0Accepted": false
+}

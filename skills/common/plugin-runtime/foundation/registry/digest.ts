@@ -17,12 +17,22 @@ function packageFiles(root: string, relative = ''): string[] {
   });
 }
 
+function updatePackageDigest(hash: ReturnType<typeof crypto.createHash>, relative: string, bytes: Uint8Array): void {
+  hash.update(Buffer.from(`${Buffer.byteLength(relative)}:${relative}:${bytes.byteLength}:`));
+  hash.update(bytes);
+}
+
+/** Same existing codec over caller-retained bytes; no filesystem or trust inference. */
+export function computePackageFileSetDigest(files: Iterable<Readonly<{ relative: string; bytes: Uint8Array }>>): string {
+  const hash = crypto.createHash('sha256');
+  for (const { relative, bytes } of [...files].sort((a, b) => a.relative < b.relative ? -1 : a.relative > b.relative ? 1 : 0)) {
+    updatePackageDigest(hash, relative, bytes);
+  }
+  return `sha256:${hash.digest('hex')}`;
+}
+
 export function computePackageDigest(root: string): string {
   const hash = crypto.createHash('sha256');
-  for (const relative of packageFiles(root).sort()) {
-    const bytes = fs.readFileSync(path.join(root, relative));
-    hash.update(Buffer.from(`${Buffer.byteLength(relative)}:${relative}:${bytes.byteLength}:`));
-    hash.update(bytes);
-  }
+  for (const relative of packageFiles(root).sort()) updatePackageDigest(hash, relative, fs.readFileSync(path.join(root, relative)));
   return `sha256:${hash.digest('hex')}`;
 }

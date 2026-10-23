@@ -248,7 +248,7 @@ function emitBoundaryBatch(
   ), 0);
   const probe = job({ id: 'boundary-batch:000000', kind: 'boundary', sources,
     relationKeys: batch.relationKeys, relatedIds: [...batch.boundaryIds, ...batch.sliceIds] });
-  const payload = reserveReviewRuntimePrompt(buildScalableReviewDispatchPayload(probe), profile.tokenizerEncoding);
+  const payload = reserveReviewRuntimePrompt(buildScalableReviewDispatchPayload(probe), profile.tokenizerEncoding, profile.promptTokenBoundaryReserve);
   const maximumPayloadTokens = Math.min(profile.maxInputTokensPerJob,
     profile.maxContextTokensPerJob - profile.maxOutputTokensPerJob);
   const fits = sources.length <= profile.boundaryBudget.maxFiles && bytes <= profile.boundaryBudget.maxBytes
@@ -323,7 +323,7 @@ function holisticJobs(
   };
   const emit = (part: TopologyGroup): void => {
     const measured = reserveReviewRuntimePrompt(buildScalableReviewDispatchPayload(candidate(part)),
-      profile.tokenizerEncoding);
+      profile.tokenizerEncoding, profile.promptTokenBoundaryReserve);
     if (measured.bytes <= profile.maxPromptBytesPerJob && measured.tokens <= maximumPayloadTokens) {
       groups.push(part); return;
     }
@@ -354,7 +354,7 @@ function holisticJobs(
   };
   const measurePart = (part: AggregatePart): MeasuredAggregatePart => {
     const value = aggregateValue(part, 'system-path:aggregate:000000');
-    const measured = reserveReviewRuntimePrompt(buildScalableReviewDispatchPayload(value), profile.tokenizerEncoding);
+    const measured = reserveReviewRuntimePrompt(buildScalableReviewDispatchPayload(value), profile.tokenizerEncoding, profile.promptTokenBoundaryReserve);
     return Object.freeze({ ...part, bytes: measured.bytes, tokens: measured.tokens });
   };
   const parts: MeasuredAggregatePart[] = [];
@@ -390,7 +390,7 @@ function holisticJobs(
   }
   const aggregateJobs = packed.map((part, index) => {
     const value = aggregateValue(part, `system-path:aggregate:${String(index + 1).padStart(6, '0')}`);
-    const measured = reserveReviewRuntimePrompt(buildScalableReviewDispatchPayload(value), profile.tokenizerEncoding);
+    const measured = reserveReviewRuntimePrompt(buildScalableReviewDispatchPayload(value), profile.tokenizerEncoding, profile.promptTokenBoundaryReserve);
     if (measured.bytes > profile.maxPromptBytesPerJob || measured.tokens > maximumPayloadTokens) {
       throw new Error(`scalable review packed topology exceeds prompt budget: ${measured.bytes}:${measured.tokens}`);
     }

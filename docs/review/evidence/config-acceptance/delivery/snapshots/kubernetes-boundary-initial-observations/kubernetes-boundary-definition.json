@@ -1,0 +1,974 @@
+{
+  "scope": "actual local current Helm and exact selected Nova offline schema boundary only; NOT Go API validator execution, deployed Kubernetes, runtime admission/resources/Secrets/cron acceptance",
+  "records": [
+    {
+      "id": "DLV-C0-BOUNDARY-RENDER-PRISM-A",
+      "command": [
+        "helm",
+        "template",
+        "delivery-prism",
+        "charts/prism",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/profile-prism-A.json"
+      ],
+      "exit": 1,
+      "expectedExit": 0,
+      "expectedDiagnostic": null,
+      "result": "failed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-PRISM-A.stdout",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-PRISM-A.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-BOUNDARY-RENDER-PRISM-B",
+      "command": [
+        "helm",
+        "template",
+        "delivery-prism",
+        "charts/prism",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/profile-prism-B.json"
+      ],
+      "exit": 1,
+      "expectedExit": 0,
+      "expectedDiagnostic": null,
+      "result": "failed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-PRISM-B.stdout",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-PRISM-B.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-BOUNDARY-RENDER-OPS-POD-A",
+      "command": [
+        "helm",
+        "template",
+        "delivery-ops-pod",
+        "charts/ops-pod",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/profile-ops-pod-A.json"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "expectedDiagnostic": null,
+      "result": "passed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-OPS-POD-A.stdout",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-OPS-POD-A.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-BOUNDARY-SCHEMA-OPS-POD-A",
+      "command": [
+        "kubeconform",
+        "-strict",
+        "-summary",
+        "-kubernetes-version",
+        "1.35.6",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-OPS-POD-A.stdout"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "expectedDiagnostic": null,
+      "result": "passed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-SCHEMA-OPS-POD-A.stdout",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-SCHEMA-OPS-POD-A.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-BOUNDARY-RENDER-OPS-POD-B",
+      "command": [
+        "helm",
+        "template",
+        "delivery-ops-pod",
+        "charts/ops-pod",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/profile-ops-pod-B.json"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "expectedDiagnostic": null,
+      "result": "passed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-OPS-POD-B.stdout",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-OPS-POD-B.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-BOUNDARY-SCHEMA-OPS-POD-B",
+      "command": [
+        "kubeconform",
+        "-strict",
+        "-summary",
+        "-kubernetes-version",
+        "1.35.6",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-OPS-POD-B.stdout"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "expectedDiagnostic": null,
+      "result": "passed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-SCHEMA-OPS-POD-B.stdout",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-SCHEMA-OPS-POD-B.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-BOUNDARY-RENDER-KUBECLAW-A",
+      "command": [
+        "helm",
+        "template",
+        "delivery-kubeclaw",
+        "charts/kubeclaw",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/profile-kubeclaw-A.json"
+      ],
+      "exit": 1,
+      "expectedExit": 0,
+      "expectedDiagnostic": null,
+      "result": "failed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-KUBECLAW-A.stdout",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-KUBECLAW-A.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-BOUNDARY-RENDER-KUBECLAW-B",
+      "command": [
+        "helm",
+        "template",
+        "delivery-kubeclaw",
+        "charts/kubeclaw",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/profile-kubeclaw-B.json"
+      ],
+      "exit": 1,
+      "expectedExit": 0,
+      "expectedDiagnostic": null,
+      "result": "failed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-KUBECLAW-B.stdout",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-KUBECLAW-B.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-A",
+      "command": [
+        "helm",
+        "template",
+        "delivery-kubeclaw-buster",
+        "charts/kubeclaw",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/profile-kubeclaw-buster-A.json"
+      ],
+      "exit": 1,
+      "expectedExit": 0,
+      "expectedDiagnostic": null,
+      "result": "failed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-A.stdout",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-A.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-B",
+      "command": [
+        "helm",
+        "template",
+        "delivery-kubeclaw-buster",
+        "charts/kubeclaw",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/profile-kubeclaw-buster-B.json"
+      ],
+      "exit": 1,
+      "expectedExit": 0,
+      "expectedDiagnostic": null,
+      "result": "failed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-B.stdout",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-B.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-BOUNDARY-PRISM-NEGATIVE-INGESTION-QUANTITY",
+      "command": [
+        "helm",
+        "template",
+        "delivery-prism",
+        "charts/prism",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/profile-prism-A.json",
+        "--set-string",
+        "ingestion.resources.requests.cpu=bad"
+      ],
+      "exit": 1,
+      "expectedExit": 1,
+      "expectedDiagnostic": "ingestion.resources.requests.cpu",
+      "result": "passed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-PRISM-NEGATIVE-INGESTION-QUANTITY.stdout",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-PRISM-NEGATIVE-INGESTION-QUANTITY.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-BOUNDARY-PRISM-NEGATIVE-TOKEN-EXPIRY",
+      "command": [
+        "helm",
+        "template",
+        "delivery-prism",
+        "charts/prism",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/profile-prism-A.json",
+        "--set",
+        "control.productDecisions.tokenExpirationSeconds=599"
+      ],
+      "exit": 1,
+      "expectedExit": 1,
+      "expectedDiagnostic": "control.productDecisions.tokenExpirationSeconds",
+      "result": "passed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-PRISM-NEGATIVE-TOKEN-EXPIRY.stdout",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-PRISM-NEGATIVE-TOKEN-EXPIRY.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-BOUNDARY-OPS-MALFORMED-QUANTITY-PERMITTED",
+      "command": [
+        "helm",
+        "template",
+        "delivery-ops-pod",
+        "charts/ops-pod",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/profile-ops-pod-A.json",
+        "--set-string",
+        "resources.codex.requests.cpu=bad"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "expectedDiagnostic": null,
+      "result": "passed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-OPS-MALFORMED-QUANTITY-PERMITTED.stdout",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-OPS-MALFORMED-QUANTITY-PERMITTED.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-BOUNDARY-OPS-REQUEST-EXCEEDS-LIMIT-PERMITTED",
+      "command": [
+        "helm",
+        "template",
+        "delivery-ops-pod",
+        "charts/ops-pod",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/profile-ops-pod-A.json",
+        "--set-string",
+        "resources.codex.requests.cpu=2"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "expectedDiagnostic": null,
+      "result": "passed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-OPS-REQUEST-EXCEEDS-LIMIT-PERMITTED.stdout",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-OPS-REQUEST-EXCEEDS-LIMIT-PERMITTED.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-BOUNDARY-PRISM-BAD-CRON-PERMITTED",
+      "command": [
+        "helm",
+        "template",
+        "delivery-prism",
+        "charts/prism",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/profile-prism-A.json",
+        "--set-string",
+        "backup.schedule=not-a-cron"
+      ],
+      "exit": 1,
+      "expectedExit": 0,
+      "expectedDiagnostic": null,
+      "result": "failed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-PRISM-BAD-CRON-PERMITTED.stdout",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-PRISM-BAD-CRON-PERMITTED.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-BOUNDARY-OPS-MISSING-SECRET-REFERENCE-PERMITTED",
+      "command": [
+        "helm",
+        "template",
+        "delivery-ops-pod",
+        "charts/ops-pod",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/profile-ops-pod-A.json",
+        "--set-string",
+        "githubSecret=delivery-nonexistent-secret"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "expectedDiagnostic": null,
+      "result": "passed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-OPS-MISSING-SECRET-REFERENCE-PERMITTED.stdout",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-OPS-MISSING-SECRET-REFERENCE-PERMITTED.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-BOUNDARY-OPS-PULL-EMPTY-NAME-PERMITTED",
+      "command": [
+        "helm",
+        "template",
+        "delivery-ops-pod",
+        "charts/ops-pod",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/profile-ops-pod-A.json",
+        "--set-string",
+        "imagePullSecrets[0].name="
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "expectedDiagnostic": null,
+      "result": "passed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-OPS-PULL-EMPTY-NAME-PERMITTED.stdout",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-OPS-PULL-EMPTY-NAME-PERMITTED.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-BOUNDARY-OPS-NEGATIVE-PVC-SIZE-PERMITTED",
+      "command": [
+        "helm",
+        "template",
+        "delivery-ops-pod",
+        "charts/ops-pod",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/profile-ops-pod-A.json",
+        "--set-string",
+        "persistence.size=-1Gi"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "expectedDiagnostic": null,
+      "result": "passed",
+      "rawEvidencePaths": [
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-OPS-NEGATIVE-PVC-SIZE-PERMITTED.stdout",
+        "docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-OPS-NEGATIVE-PVC-SIZE-PERMITTED.stderr"
+      ]
+    }
+  ],
+  "tools": {
+    "helm": "v3.18.4+gd80839c",
+    "kubeconform": "v0.6.4",
+    "node": "v24.21.0"
+  },
+  "sourceAndCommandDigests": {
+    "charts/prism/values.yaml": "8b13da5c725b9eff02d1e12dae6f799ca74a6b01a83cb714a2777a915e98cee8",
+    "charts/ops-pod/values.yaml": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79",
+    "charts/kubeclaw/values.yaml": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+    "charts/prism/templates/_product-decisions.tpl": "bf5fb46a70cc33359e8cb08011c36ebdf27ca195960d4911ff49fc92ed1eee2c",
+    "charts/prism/templates/backup-storage-check.yaml": "706c9868b2e6aab791a28d129a62b4c07718c67130d202819d8d8e00ae5e07fc",
+    "charts/prism/templates/_swarm-bundle.tpl": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+    "charts/prism/templates/networkpolicy.yaml": "75d2770a9d4a008cc10f6e506717ba8832e52d27ac2bd583bfee57dbd76eaa9f",
+    "charts/prism/templates/_swarm-config.tpl": "e044387aa75a3f784ccd2a0d0f30d91f6e69b7e07e663ab2cc005417bff7265a",
+    "charts/prism/templates/serviceaccounts.yaml": "314f1d925e667fc98e5000486599431ea2ce7e189f420576378264c10e0f02be",
+    "charts/prism/templates/configmap-swarm-config.yaml": "75886e7ddea3625d4fa3af7eb866cd63c46ede89d89ca3718d4a022d7304e5e6",
+    "charts/prism/templates/configmap-worker-trust.yaml": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc",
+    "charts/prism/templates/jobs.yaml": "9ea1bcd344c7ccc2177836ea64adcf82fbdc7df451032c77f8245596ba96902c",
+    "charts/prism/templates/ingestion.yaml": "73f19bc39066d2f6f0944846c2784c193a4d1e59202ed737d3a6c6ff8ec77f98",
+    "charts/prism/templates/services.yaml": "abae201f362dacc4e4422c8867d57113483eb443d5cf964e2a65996bf9683a85",
+    "charts/prism/templates/_helpers.tpl": "33d5044abeae2faabd1202e544aeb33b34a30fb7afe9300b4bfb11d7ef914e49",
+    "charts/prism/templates/workloads.yaml": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+    "charts/prism/templates/postgresql.yaml": "e81248bfa623695e0e79f36ddf347ad75a1d7bc449a4250287a96a80e17742c1",
+    "charts/prism/templates/product-decisions-networkpolicy.yaml": "1a0764020a197daa59c240b2292e3317bedd9695817a2a48c819dcb344e88c7c",
+    "charts/prism/templates/_worker-trust-readiness.tpl": "9240a98b2ae24fa5002147972c6aa4eb8c11b89fab7f4ac392b692e4705fccd7",
+    "charts/prism/templates/backup.yaml": "c7fdc0b9524672ae49179eb258f0144c09774a56b5eb74a31f1a597ff2e88e9e",
+    "charts/ops-pod/templates/rbac.yaml": "103ed540a9b71ca0fdde5d693e5e4d07b2943910e79116bbd7206d528668874b",
+    "charts/ops-pod/templates/workload.yaml": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+    "charts/ops-pod/templates/network.yaml": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283",
+    "charts/ops-pod/templates/tailscale-storage.yaml": "1c040641f21fb057f454ad602bb7019802f31d06455d46850a84af5cdc669d2f",
+    "charts/ops-pod/templates/kubeconfig.yaml": "af3152d6d912c4f7a53505902fe03925d35abfeaf4edfd465482bf3cfec42911",
+    "charts/kubeclaw/templates/rbac.yaml": "45525f90703f76d3dbcfb67290599359b6366025bd6fdc77040c27d85da6f5e9",
+    "charts/kubeclaw/templates/configmap-skills.yaml": "0147b857c5c3659cfad74bf410a39e81f6187d5d1b7df2ebdb8d23c7595f7a6c",
+    "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45",
+    "charts/kubeclaw/templates/buster-namespace-controller.yaml": "e003c7bf4eb938988391d9af0c955b2338cef29781e1d8e932bdcc753ee50d13",
+    "charts/kubeclaw/templates/buster-namespace-fence.yaml": "405866681db66cc38aa8b9018cfdb18bff2fd6a56137ee39632b9eebd808b62d",
+    "charts/kubeclaw/templates/demo-ready-service.yaml": "770f0e10f731ec8881c879654147fd62b12b3c549e2f88288c561101956be5f1",
+    "charts/kubeclaw/templates/archviewer.yaml": "5a89affd7b25f63ff38a0de9bec61388927e06b5d20a7075f6af0a92d4c7cb2a",
+    "charts/kubeclaw/templates/_swarm-config.tpl": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+    "charts/kubeclaw/templates/service-extra-nodeports.yaml": "19a2c1d76de9c77a291036042a8d92b9c9f4df7d8b990d7e669217c98b1fcd17",
+    "charts/kubeclaw/templates/configmap-swarm-config.yaml": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875",
+    "charts/kubeclaw/templates/configmap-worker-trust.yaml": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be",
+    "charts/kubeclaw/templates/_demo-ready-client.tpl": "ac285eb2f3f3527bada6abc5338cf9b2d7c73b0518215281a8cbb614babe6536",
+    "charts/kubeclaw/templates/secret.yaml": "33a2926486d301371ffc741826079277a2a48daddbabe209d2b466f44c19a01f",
+    "charts/kubeclaw/templates/configmap-workspace.yaml": "0b84da5dcaa5c5a3c698f7b53b343882eeedb7cfda3275d2ee5e71fb94a2b647",
+    "charts/kubeclaw/templates/NOTES.txt": "9beb978bc26b4432f319992574860cce2fa041e5d3d5554415a59e2b6091a3cc",
+    "charts/kubeclaw/templates/pvc.yaml": "315dfd8674eb45996769d61323f268bbb77e33b48ee138f8dd227b8761343fa9",
+    "charts/kubeclaw/templates/_helpers.tpl": "69986722975a973479b9fb1a2c35ab1a1ecb972662e8c19dd03718ac441f5103",
+    "charts/kubeclaw/templates/_worker-trust-readiness.tpl": "f2a66ef5c8228675daa1ad16d29ffd71e298d9c65fefde19aa6588e457e4b67c",
+    "charts/kubeclaw/templates/buster-runtime-pvc.yaml": "cacf352b9b0ea8daa2f7d47f59ca00256cc8997621075441a22966da0aca8279",
+    "charts/kubeclaw/templates/_buster-native.tpl": "06eaa44435684f2af9a14365b149ecef0c5cab1a0929413d5edbc2b73e8247e6",
+    "charts/kubeclaw/templates/serviceaccount.yaml": "7b7b2e4ba4dc139f6d4953fa242ed70ea20de090bbe30287215f5c7f1349a13f",
+    "charts/kubeclaw/templates/_registry-clients.tpl": "dc91957992207dca9fd5f49a9a8cb77740312dba5f3f33c1cedd61b10b05a86b",
+    "charts/kubeclaw/templates/deployment.yaml": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+    "charts/kubeclaw/templates/service.yaml": "76a347213feffadad635311cc89fdbfb896c6a3f800e8e92528ec9efee280cc2",
+    "charts/kubeclaw/templates/configmap-gateway.yaml": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+    "charts/prism/values.schema.json": "7588db4e045bc4d52c1b46b4bbffeac238f12c9bd074b71aa9592c4ed24589c3",
+    "docs/review/evidence/config-acceptance/delivery/run-kubernetes-boundary-definition.py": "a0c9ca553f27a73948dae482698798bc1fc50e03fe885a2cc98ad19ae2e04af8",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/go.mod": "0032376ecb8246a023f905f3529f1543ad1da52cc7722e594adc0249ecc0b769",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/apis/core/validation/validation.go": "a9caab845cd895822bcdca6d3564022feb609a87a459c4e9c1a4e5fc7eebc80f",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/apis/batch/validation/validation.go": "84de54a1606bfa5aeeb39bab21b9c3978c41f7f9488a9704f14765f10130ef0d",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/kubelet/kubelet_pods.go": "985aaae74224e49b5fa9eb507e829e0aefa99538d69e1d6b22124e5324247c0a",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/volume/secret/secret.go": "2e2f3106fc656cc84ef38f1a4d922ae9ce1ccdbf2882ed3934c4c5c23d910c73",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go": "9fa46ba76f6dfb0aff6fd63cd7d288531b20ab902d96450980d62c7ee8078110",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/staging/src/k8s.io/apimachinery/pkg/api/validation/generic.go": "2c59b38f0a3ba3f3d09ccd1ebf0114a2e0c6f6acaad81aa3c12f2a3a075b6b78",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/staging/src/k8s.io/apimachinery/pkg/util/validation/validation.go": "5f4d8a4753853905faa387c0e8009a8d72900db24bb6b535de2eefcaeb30d8e2",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/apis/apps/validation/validation.go": "6e492d4084d0ed181b5ba547cb031a0df2a20f98ad8a2643fd554b5ae67ff2ea",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/go.mod": "c9495a2f01e6267bd898ab70714c58bf6f44465b51695448efe25e64e9dbd456",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/pkg/apis/core/validation/validation.go": "4b263eff73f9da9bbc288cef5052a20d599d57e15474ad91662a9c45b7a19aa1",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/pkg/apis/batch/validation/validation.go": "455918a16de1c14d7b1513d704255fcfd86b0476cc10eb8c90bb055d31fafe9d",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/pkg/kubelet/kubelet_pods.go": "83c560a26ddc7d57d9af411cbde465dceb93c3a2f7e47be1dba684e49d3dc655",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/pkg/volume/secret/secret.go": "2e2f3106fc656cc84ef38f1a4d922ae9ce1ccdbf2882ed3934c4c5c23d910c73",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go": "e8a6e80a3d3dd43f5c6d8edd2accbfccaf6db6792654d3bb6e0c44830a27af54",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/staging/src/k8s.io/apimachinery/pkg/api/validation/generic.go": "459f759b7f8f4938b5ac2f2b420c1dd0dcf808044ad167ad213bb71a55238eda",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/staging/src/k8s.io/apimachinery/pkg/util/validation/validation.go": "5c2a8c1bbe4916bcb0db626b5249ca83b7510b0e338978e6aab9bb8f6cd1a32f",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/pkg/apis/apps/validation/validation.go": "6e492d4084d0ed181b5ba547cb031a0df2a20f98ad8a2643fd554b5ae67ff2ea",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/deployment-apps-v1.json": "46dc7cc4bec2c9a62400491e2b8057635afbfa6838999c518f7bea5c621a989b",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/statefulset-apps-v1.json": "da78ed86dce07983c3e54c565def2c2e478fd458155ac7cd56cf671e88e16ee2",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/pod-v1.json": "ab3eec94c85e6b166a62312ddb919fb747a53d1f5701a77befb17419361b52b0",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/persistentvolumeclaim-v1.json": "6136871ac0337f11a48da5231a2807407c7386967e3432f344141b902f6a538c",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/serviceaccount-v1.json": "8193d6c3561475c6d3d5c44e1faedb1df53905373d904bc17015694326d659cf",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/cronjob-batch-v1.json": "df6e1fe99d94e35944027b7bc4317039f22f49cff40c4eb1dc0b54f02fcf8940",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/job-batch-v1.json": "514d04ed5540a4d6354bff1ace0bd5155c98c58bcd33a030d1500427387fa97f",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/configmap-v1.json": "e0eaddebd677c08aa092b2da2264d86ac4fc34eed112b9fac2945b3f00c1e9b1",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/service-v1.json": "8bf019854daed511e7c174896a898173fa65d88ec5937c687a37303d4cc9351b",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/ingress-networking-v1.json": "4e0f63ad84c2bf22565e489d1f4b885ddaa9f6bf7cff1ddd562553760afe4d79",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/networkpolicy-networking-v1.json": "f6324cc464f62228b0418f438d167208e4f86c7e3677ba30f608e79a8b26ba79",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/apis/core/v1/defaults.go": "e65ddb1a76ceb535ba09f7cc5be89a8205767b98aebbda5754edb01975deea5c",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/kubelet/kuberuntime/kuberuntime_container_linux.go": "2a46b075527ce32398fd87aee450b0de0bd52653cca6f559e3a1963dfb89b479",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/scheduler/framework/plugins/noderesources/fit.go": "a37af13c978c6f170de573a8b5e192ae6e9d00ec17611e164270de6e1d0df39e",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/util/parsers/parsers.go": "993af789dcfab15ab676039ffd7d77ffafe2a715abcceca67408d6b457787c46",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/pkg/apis/core/v1/defaults.go": "07960825580a31c1ccbf5c3609b0ef22042fee37912d6d5216e430b6ddc17967",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/pkg/kubelet/kuberuntime/kuberuntime_container_linux.go": "34da382831033eb2c0c2edf103a79742f444aa43f5008d7a54f95ea56c3932f7",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/pkg/scheduler/framework/plugins/noderesources/fit.go": "f5426dd4ae8404eb6bcffc3b640a79a05a87de8d279e5c03142dcc42da46ee0f",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/pkg/util/parsers/parsers.go": "1eaa6e9e940305b6d2a0556e5665cf69531b723be05e5892cc4c424825807409",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/controller/cronjob/cronjob_controllerv2.go": "02d99bfe1d6dcddcb37c5e2a68173405db6b5f00644786d8dbc15b8576086b06",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/pkg/controller/cronjob/cronjob_controllerv2.go": "77a058e317eb9745401d89ec9c813ac1c0e161645c03896009f7a323bafc662d",
+    "docs/review/evidence/config-acceptance/delivery/pinned-robfig-cron-v3.0.1/parser.go": "3133fdf1d1865fb2e45a0a3362a4d780d97ec7cd975c8c31b1d580005e2c7cf6",
+    "docs/review/evidence/config-acceptance/delivery/pinned-robfig-cron-v3.0.1/spec.go": "d238b062c0ab311d30d62b6ab54d505f0e613cd54826e225e14f708849f3bf98"
+  },
+  "profileDigests": {
+    "profile-kubeclaw-buster-A.json": "2506316c1c0f0e0000a62985b505d23e1d9796db8fff610ac64627bac39e4929",
+    "profile-kubeclaw-buster-B.json": "b9a3784aa44bd7efe9698d54a86cb8a1dae94dea31fb0a180ec086c45c87edcd",
+    "profile-kubeclaw-A.json": "8247702f33360b96d04249136050548e75ef71789aea97eee2483762aff4d39f",
+    "profile-prism-B.json": "b70c243e901f37054fba11c03e03a0f7bb4ee341ba22664f1159726abb5b9179",
+    "profile-prism-A.json": "105ee1085853d9083e8f73da55f9ab2114cc0840e08855329d0a108e114b65ea",
+    "profile-ops-pod-A.json": "159424e5b2b200e496adae930a43dd678d78798fe80ab66fd7def595fa74c6c6",
+    "profile-ops-pod-B.json": "a5c7500568511f617cca3f2e9e4c5b1369512253c66f4d6b153408132fa95517",
+    "profile-kubeclaw-B.json": "e0b5e39c84e3fb446ec67ee5c5e875718f3abbad5ba3343f3fb905b02355f770"
+  },
+  "fieldWitnesses": {
+    "ops-pod-A": [
+      {
+        "kind": "PersistentVolumeClaim",
+        "name": "delivery-ops-pod-tailscale",
+        "spec": {
+          "accessModes": [
+            "ReadWriteOnce"
+          ],
+          "storageClassName": "delivery-storage-a",
+          "resources": {
+            "requests": {
+              "storage": "1Gi"
+            }
+          }
+        }
+      },
+      {
+        "kind": "StatefulSet",
+        "name": "delivery-ops-pod",
+        "containerResources": {
+          "codex": {
+            "limits": {
+              "cpu": "1",
+              "memory": "1Gi"
+            },
+            "requests": {
+              "cpu": "100m",
+              "memory": "128Mi"
+            }
+          },
+          "ops-mcp": {
+            "limits": {
+              "cpu": "1",
+              "memory": "1Gi"
+            },
+            "requests": {
+              "cpu": "100m",
+              "memory": "128Mi"
+            }
+          },
+          "tailscale": {
+            "limits": {
+              "cpu": "1",
+              "memory": "1Gi"
+            },
+            "requests": {
+              "cpu": "100m",
+              "memory": "128Mi"
+            }
+          }
+        },
+        "imagePullSecrets": [
+          {
+            "name": "delivery-pull-a"
+          }
+        ],
+        "envSecretRefs": {
+          "codex": [
+            {
+              "env": "GH_TOKEN",
+              "ref": {
+                "name": "delivery-github-a",
+                "key": "token"
+              }
+            }
+          ],
+          "ops-mcp": [],
+          "tailscale": [
+            {
+              "env": "TS_AUTHKEY",
+              "ref": {
+                "name": "delivery-tailnet-a",
+                "key": "authkey"
+              }
+            }
+          ]
+        },
+        "secretVolumes": [
+          {
+            "name": "bearer",
+            "secret": {
+              "secretName": "delivery-bearer-a",
+              "defaultMode": 440
+            }
+          },
+          {
+            "name": "kube-api",
+            "projected": {
+              "defaultMode": 440,
+              "sources": [
+                {
+                  "serviceAccountToken": {
+                    "path": "token",
+                    "expirationSeconds": 3600
+                  }
+                },
+                {
+                  "downwardAPI": {
+                    "items": [
+                      {
+                        "path": "namespace",
+                        "fieldRef": {
+                          "fieldPath": "metadata.namespace"
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "configMap": {
+                    "name": "kube-root-ca.crt",
+                    "items": [
+                      {
+                        "key": "ca.crt",
+                        "path": "ca.crt"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "volumes": [
+          {
+            "name": "kubeconfig",
+            "configMap": {
+              "name": "delivery-ops-pod-kubeconfig"
+            }
+          },
+          {
+            "name": "bearer",
+            "secret": {
+              "secretName": "delivery-bearer-a",
+              "defaultMode": 440
+            }
+          },
+          {
+            "name": "kube-api",
+            "projected": {
+              "defaultMode": 440,
+              "sources": [
+                {
+                  "serviceAccountToken": {
+                    "path": "token",
+                    "expirationSeconds": 3600
+                  }
+                },
+                {
+                  "downwardAPI": {
+                    "items": [
+                      {
+                        "path": "namespace",
+                        "fieldRef": {
+                          "fieldPath": "metadata.namespace"
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "configMap": {
+                    "name": "kube-root-ca.crt",
+                    "items": [
+                      {
+                        "key": "ca.crt",
+                        "path": "ca.crt"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "codex-tmp",
+            "emptyDir": {
+              "sizeLimit": "1Gi"
+            }
+          },
+          {
+            "name": "tailscale-tmp",
+            "emptyDir": {
+              "sizeLimit": "64Mi"
+            }
+          },
+          {
+            "name": "tailscale-state",
+            "persistentVolumeClaim": {
+              "claimName": "delivery-ops-pod-tailscale"
+            }
+          }
+        ],
+        "volumeClaimTemplates": [
+          {
+            "metadata": {
+              "name": "home"
+            },
+            "spec": {
+              "accessModes": [
+                "ReadWriteOnce"
+              ],
+              "storageClassName": "delivery-storage-a",
+              "resources": {
+                "requests": {
+                  "storage": "2Gi"
+                }
+              }
+            }
+          },
+          {
+            "metadata": {
+              "name": "workspace"
+            },
+            "spec": {
+              "accessModes": [
+                "ReadWriteOnce"
+              ],
+              "storageClassName": "delivery-storage-a",
+              "resources": {
+                "requests": {
+                  "storage": "20Gi"
+                }
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "ops-pod-B": [
+      {
+        "kind": "PersistentVolumeClaim",
+        "name": "delivery-ops-pod-tailscale",
+        "spec": {
+          "accessModes": [
+            "ReadWriteOnce"
+          ],
+          "storageClassName": "delivery-storage-b",
+          "resources": {
+            "requests": {
+              "storage": "1Gi"
+            }
+          }
+        }
+      },
+      {
+        "kind": "StatefulSet",
+        "name": "delivery-ops-pod",
+        "containerResources": {
+          "codex": {
+            "limits": {
+              "cpu": "2",
+              "memory": "2Gi"
+            },
+            "requests": {
+              "cpu": "200m",
+              "memory": "256Mi"
+            }
+          },
+          "ops-mcp": {
+            "limits": {
+              "cpu": "2",
+              "memory": "2Gi"
+            },
+            "requests": {
+              "cpu": "200m",
+              "memory": "256Mi"
+            }
+          },
+          "tailscale": {
+            "limits": {
+              "cpu": "2",
+              "memory": "2Gi"
+            },
+            "requests": {
+              "cpu": "200m",
+              "memory": "256Mi"
+            }
+          }
+        },
+        "imagePullSecrets": [
+          {
+            "name": "delivery-pull-b"
+          }
+        ],
+        "envSecretRefs": {
+          "codex": [
+            {
+              "env": "GH_TOKEN",
+              "ref": {
+                "name": "delivery-github-b",
+                "key": "token"
+              }
+            }
+          ],
+          "ops-mcp": [],
+          "tailscale": [
+            {
+              "env": "TS_AUTHKEY",
+              "ref": {
+                "name": "delivery-tailnet-b",
+                "key": "authkey"
+              }
+            }
+          ]
+        },
+        "secretVolumes": [
+          {
+            "name": "bearer",
+            "secret": {
+              "secretName": "delivery-bearer-b",
+              "defaultMode": 440
+            }
+          },
+          {
+            "name": "kube-api",
+            "projected": {
+              "defaultMode": 440,
+              "sources": [
+                {
+                  "serviceAccountToken": {
+                    "path": "token",
+                    "expirationSeconds": 3600
+                  }
+                },
+                {
+                  "downwardAPI": {
+                    "items": [
+                      {
+                        "path": "namespace",
+                        "fieldRef": {
+                          "fieldPath": "metadata.namespace"
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "configMap": {
+                    "name": "kube-root-ca.crt",
+                    "items": [
+                      {
+                        "key": "ca.crt",
+                        "path": "ca.crt"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "volumes": [
+          {
+            "name": "kubeconfig",
+            "configMap": {
+              "name": "delivery-ops-pod-kubeconfig"
+            }
+          },
+          {
+            "name": "bearer",
+            "secret": {
+              "secretName": "delivery-bearer-b",
+              "defaultMode": 440
+            }
+          },
+          {
+            "name": "kube-api",
+            "projected": {
+              "defaultMode": 440,
+              "sources": [
+                {
+                  "serviceAccountToken": {
+                    "path": "token",
+                    "expirationSeconds": 3600
+                  }
+                },
+                {
+                  "downwardAPI": {
+                    "items": [
+                      {
+                        "path": "namespace",
+                        "fieldRef": {
+                          "fieldPath": "metadata.namespace"
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "configMap": {
+                    "name": "kube-root-ca.crt",
+                    "items": [
+                      {
+                        "key": "ca.crt",
+                        "path": "ca.crt"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "codex-tmp",
+            "emptyDir": {
+              "sizeLimit": "1Gi"
+            }
+          },
+          {
+            "name": "tailscale-tmp",
+            "emptyDir": {
+              "sizeLimit": "64Mi"
+            }
+          },
+          {
+            "name": "tailscale-state",
+            "persistentVolumeClaim": {
+              "claimName": "delivery-ops-pod-tailscale"
+            }
+          }
+        ],
+        "volumeClaimTemplates": [
+          {
+            "metadata": {
+              "name": "home"
+            },
+            "spec": {
+              "accessModes": [
+                "ReadWriteOnce"
+              ],
+              "storageClassName": "delivery-storage-b",
+              "resources": {
+                "requests": {
+                  "storage": "2Gi"
+                }
+              }
+            }
+          },
+          {
+            "metadata": {
+              "name": "workspace"
+            },
+            "spec": {
+              "accessModes": [
+                "ReadWriteOnce"
+              ],
+              "storageClassName": "delivery-storage-b",
+              "resources": {
+                "requests": {
+                  "storage": "40Gi"
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "resultCounts": {
+    "failed": 7,
+    "passed": 11
+  },
+  "implementationCases": "remain not-run; live selected apiserver/version/feature gates/Secret revisions/CSI/node admission prerequisites pending; no credential values generated or logged"
+}

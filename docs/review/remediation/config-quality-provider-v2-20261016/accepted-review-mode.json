@@ -1,0 +1,18 @@
+{
+  "findings": [
+    {
+      "title": "[P2] Enforce the v2 blocking Size limit requirement on restored plans",
+      "body": "A v2 Size policy with all numeric limits null and matchingFiles empty is valid for advisory use. If a restored plan uses that policy on a blocking node, resolvedTestPlanErrors accepts it because the no-limit check exists only in the resolver. The retained runner/loader checks also accept it. ProviderInvocationV1 carries no mode, so the Size provider's invocation.mode === 'blocking' guard never fires during normal execution; it measures the artifact and returns passed with no budget checks. Apply the same blocking-limit invariant during resolved-plan validation so restored and remote plans cannot bypass resolver admission.",
+      "priority": "P2",
+      "confidence": 0.96,
+      "category": "bug",
+      "code_location": {
+        "file_path": "contracts/pipeline-test-gate/v1/src/validation.ts",
+        "line": 156
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "The selected-policy transport and mandatory evidence checks are consistent, but restored blocking Size plans can bypass the new active-limit requirement and pass without evaluating a budget. Review was source-only; no tests or commands were executed.",
+  "overall_confidence": 0.93
+}

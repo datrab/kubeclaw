@@ -1,4 +1,3 @@
-busterComponentFile: files/config/buster-engine.config.json
 # =============================================================================
 # KubeClaw Helm Chart — Default Values
 # =============================================================================
@@ -404,6 +403,27 @@ busterNamespaceBroker:
   defaultTtlSeconds: 7200
   maxTtlSeconds: 86400
   controller:
+    # Sole author for controller runtime limits. Transported as JSON.
+    policy:
+      runtimeSecurityMaximumFindings: 4096
+      runtimeSecurityMaximumSerializedBytes: 524288
+      namespaceDeletionTimeoutSeconds: 120
+      httpClientTimeoutSeconds: 60
+      runtimeSecurityRefreshSeconds: 5
+      runtimeSecurityFutureSkewSeconds: 5
+      readyReadHeaderTimeoutSeconds: 5
+      readyReadTimeoutSeconds: 20
+      readyWriteTimeoutSeconds: 20
+      readyIdleTimeoutSeconds: 30
+      readyMaxHeaderBytes: 20480
+      readyHandlerTimeoutSeconds: 15
+      readyMaximumBodyBytes: 16384
+      defaultDemoRetentionSeconds: 604800
+      authorizationMaximumBytes: 16384
+      readyObservationMaximumAgeSeconds: 300
+      productHandlerTimeoutSeconds: 15
+      productMaximumBodyBytes: 16384
+      productDecisionMaximumValiditySeconds: 300
     # Independent human-decision authority; empty configuration denies all.
     productDecisions:
       enabled: false
@@ -542,3 +562,23 @@ busterNative:
   nodeName: ""
   namespace: ""
   policyDigest: ""
+
+# Generated transport of the exact immutable image receipt, never operator settings.
+pipelineDelivery: {}
+
+# Single author for the installed OpenClaw observer operating profile.
+agentObserverPolicy:
+  policyVersion: agent-observer-policy.v1
+  enabled: true
+  redisTls: false
+  redisNetworkIsolation: isolated
+  maxEventBytes: 3145728
+  maxQueuePerStream: 100
+  redisCommandTimeoutMs: 5000
+  streamMaxLen: 10000
+  deadLetterMaxLen: 1000
+  controlWriteMaxAttempts: 3
+  controlWriteRetryBaseMs: 100
+  controlWriteRetryMaxMs: 1000
+  hookPriority: -100
+  hookTimeoutMs: 1000

@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "swarm-component.v1",
+  "owner": "prism-worker",
+  "settings": {
+    "ingress": {
+      "port": 8080,
+      "maximumActiveRequests": 16,
+      "maximumProbeRequests": 4,
+      "maximumConnections": 128,
+      "requestTimeoutMs": 120000,
+      "shutdownTimeoutMs": 120000,
+      "maximumInputBytes": 16777216
+    },
+    "supervisor": {
+      "uid": 1000,
+      "gid": 1000,
+      "maximumOwnershipRecords": 65536,
+      "maximumOwnershipBytes": 67108864,
+      "maximumOutputBytes": 33554432,
+      "maximumJournalBytes": 68719476736,
+      "pollIntervalMs": 20,
+      "drainTimeoutMs": 10000,
+      "closeTimeoutMs": 105000
+    }
+  }
+}

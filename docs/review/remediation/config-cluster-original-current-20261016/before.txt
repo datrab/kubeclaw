@@ -1,0 +1,36 @@
+✔ actual kubectl diagnostic captures 16 code units (7.521696ms)
+✔ actual kubectl diagnostic captures 80 code units (1.578771ms)
+✔ public invoker maximumManifestBytes, low true (1.16248ms)
+✔ public invoker maximumManifestBytes, low false (2.439653ms)
+✔ public invoker maximumResources, low true (1.187151ms)
+✔ public invoker maximumResources, low false (1.360556ms)
+✔ actual YAML consumer maximumNodes (0.498433ms)
+✔ actual YAML consumer maximumDepth (0.35955ms)
+✔ actual YAML consumer maximumAliases (0.477162ms)
+✔ actual List consumer maximumFlattenVisits (0.40433ms)
+✔ actual List consumer maximumFlattenPending (0.290277ms)
+✔ shared lease version domain reaches both actual constructors: v1 (1.126159ms)
+✔ shared lease version domain reaches both actual constructors: v2 (0.631156ms)
+✔ shared lease version domain reaches both actual constructors: v1alpha1 (0.612366ms)
+✔ shared lease version domain reaches both actual constructors: v2beta12 (0.667987ms)
+✔ shared lease version domain reaches both actual constructors: v1alpha (0.825501ms)
+✔ shared lease version domain reaches both actual constructors: v1beta (0.518213ms)
+✔ shared lease version domain reaches both actual constructors: v1rc1 (0.498313ms)
+✔ shared lease version domain reaches both actual constructors: v1alpha1x (0.501283ms)
+✔ shared lease version domain reaches both actual constructors:  (0.532814ms)
+✔ actual kubernetes.fixture polling cadence 50 (108.270124ms)
+✔ actual kubernetes.fixture polling cadence 200 (403.809543ms)
+✔ actual kubernetes.exposure polling cadence 50 (104.887036ms)
+✔ actual kubernetes.exposure polling cadence 200 (403.658829ms)
+✔ kubernetes.fixture actual auth process uses short deadline 600 (623.418211ms)
+✔ kubernetes.fixture actual auth process uses short deadline 2000 (1036.245458ms)
+✔ kubernetes.exposure actual auth process uses short deadline 600 (619.383696ms)
+✔ kubernetes.exposure actual auth process uses short deadline 2000 (1035.571852ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8761.573238

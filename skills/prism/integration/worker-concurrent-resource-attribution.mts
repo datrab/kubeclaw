@@ -30,7 +30,7 @@ async function startControlledArtifactService(t: TestContext, store: ContentAddr
   const server = createServer((request, response) => {
     void (async () => {
       if (request.method !== 'GET') {
-        await handleInternalArtifact(request, response, new URL(request.url!, 'http://control'), {
+        await handleInternalArtifact(request, response, new URL(request.url!, 'http://control'), {maximumInternalEvidenceBytes: 134217728,
           artifacts: store, spiffeEnabled: false, workerSecret: 'local', trustedControlSpiffeId: '', trustedWorkerSpiffeId: '',
         }); return;
       }
@@ -67,7 +67,7 @@ await test('native attempt receipt excludes real concurrent supervisor-process C
     sizeBytes: input.byteLength,
     storageUrl: new URL(`/v1/internal/artifacts/${contentDigest}`, origin).href,
   };
-  const envelope = prismNativeAttempt('render', artifact, 'concurrent-resource-attribution', nativeResourcePolicy);
+  const envelope = prismNativeAttempt('render', artifact, 'concurrent-resource-attribution', nativeResourcePolicy, 600000, 300000, 10000, 1048576, 16777216, 134217728, 64);
   const worker = await nativeWorkerHarness(t, { mode: 'spiffe', trustedControlSpiffeId: 'spiffe://local/control' }, origin);
   t.after(() => rm(root, { recursive: true, force: true }));
   worker.listen(0, '127.0.0.1'); await once(worker, 'listening');

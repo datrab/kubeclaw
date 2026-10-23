@@ -1,0 +1,13 @@
+✔ v3 validates the complete owner, rejects missing/equal-old authors and unsafe SQL candidate product (80.604623ms)
+✔ original v2 reader remains closed and does not refill missing v3 policy (4.859663ms)
+✔ captured original ranking survives new B and author deletion without a current read (8.28571ms)
+✔ invalid or overflowing explicit ranking rejects before database I/O (0.500963ms)
+✔ embedded PostgreSQL/PGlite preserves A and exercises both SQL branches, coupled candidate bounds and RRF B (1857.13101ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2604.46731

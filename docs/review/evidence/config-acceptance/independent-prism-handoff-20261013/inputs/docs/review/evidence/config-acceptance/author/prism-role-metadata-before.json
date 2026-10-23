@@ -1,0 +1,134 @@
+{
+  "row": {
+    "id": "AUTH-PRISM-CONTROL-SESSION-DEFAULT-ROLES",
+    "owner": "prism-control",
+    "scope": {
+      "instance": "actual control service / worker-auth as identified",
+      "profile": "current code policy; complete target author generation not defined"
+    },
+    "class": "operator-setting",
+    "classificationReason": "Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.",
+    "source": {
+      "path": "skills/prism/control/session.ts",
+      "sha256": "0d4f5e3842275055aaf928b51580f3879655538584dfd607ff80b31fc2aef77b",
+      "field": "mintSession roles default"
+    },
+    "current": {
+      "valueOrDefault": [
+        "editor"
+      ],
+      "precedence": "Actual code default/constant; any distinct task override and shadowing recorded in validation below"
+    },
+    "typeUnitDomain": "Current value and actual boundary stated; proposed supported adjustable domain still open, no invented capacity or universal range",
+    "unit": "role identities",
+    "reader": "mintSession roles default",
+    "productiveCallerChain": [
+      "sessionRoutes",
+      "exchangeTailscaleIdentity",
+      "mintSession"
+    ],
+    "validation": {
+      "semantic": "Current mint default grants editor; roles array is verified but member types/allowed roles are not validated here. Target role-domain/security review remains open; changing default grants is not a harmless numeric profile change.",
+      "schema": "No selected central author or default-free target validator implemented"
+    },
+    "targetAuthorRef": "config/services/prism.config.json#/profiles/<selected>/controlPolicies/SESSION-DEFAULT-ROLES",
+    "activationScope": {
+      "current": "S security policy; existing signed tokens retain their issued roles",
+      "target": "Proposed scope above requires independent durable-binding review before implementation"
+    },
+    "recoveryRetryClaimDeadlineBudgetEffects": "Current mint default grants editor; roles array is verified but member types/allowed roles are not validated here. Target role-domain/security review remains open; changing default grants is not a harmless numeric profile change.",
+    "profileEvalSuitability": "Future full selected generation retained for Eval; task query/bytes are not operator profiles",
+    "migrationAction": "C3 explicit owner policy and productive parser/ranking/auth wiring; C5 binding of original accepted effects",
+    "requirementIds": [
+      "C0-A",
+      "C0-B",
+      "C0-C",
+      "C0-D",
+      "D17",
+      "D20",
+      "F-AUTH",
+      "F-VAL",
+      "F-EFFECT",
+      "F-BIND"
+    ],
+    "caseIds": [
+      "AUTH-PRISM-CONTROL-SESSION-DEFAULT-ROLES-IMPLEMENTATION",
+      "AUTH-PRISM-CONTROL-C0-CURRENT-SESSION-PARSER"
+    ],
+    "verifiedSourceEvidence": [
+      "docs/review/evidence/config-acceptance/author/prism-control-source-read.log"
+    ],
+    "semanticStatus": "source-traced-domains-complete-profiles-cases-review-open",
+    "c0Closed": false
+  },
+  "implementationCases": [
+    {
+      "id": "AUTH-PRISM-CONTROL-SESSION-DEFAULT-ROLES-IMPLEMENTATION",
+      "settingIds": [
+        "AUTH-PRISM-CONTROL-SESSION-DEFAULT-ROLES"
+      ],
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "local real control/worker service with disposable DB and genuine admission/dispatch/storage prerequisite where needed",
+      "productiveCaller": "sessionRoutes \u2192 exchangeTailscaleIdentity \u2192 mintSession",
+      "inputProfile": {
+        "currentPolicyValue": [
+          "editor"
+        ],
+        "A": "complete generation and justified domain pending",
+        "B": "materially different complete valid generation pending"
+      },
+      "priorState": "Record original accepted request/token/acquisition/nonce/query and config generation; preserve claim/deadline/budget on retry",
+      "expectedEffectOrRejectingBoundary": "Current mint default grants editor; roles array is verified but member types/allowed roles are not validated here. Target role-domain/security review remains open; changing default grants is not a harmless numeric profile change.",
+      "observerMethod": "Real identified reader output/rejection, persisted DB/token/revision effect and captured effective generation; no mocked claimed component",
+      "command": null,
+      "sourceIdentity": {
+        "sources": [
+          {
+            "path": "skills/prism/control/session.ts",
+            "sha256": "0d4f5e3842275055aaf928b51580f3879655538584dfd607ff80b31fc2aef77b"
+          },
+          {
+            "path": "skills/prism/server/session-routes.ts",
+            "sha256": "b89c1f560738fc6a990baa80eea255624eed2078b5b58205fff18ae7c95fd644"
+          },
+          {
+            "path": "skills/prism/server/control-server.ts",
+            "sha256": "079984af0571f48c51e191f099174c88922af6b6cfb392d56cce945b4688f5c3"
+          },
+          {
+            "path": "skills/prism/server/worker-readiness.ts",
+            "sha256": "b760fe315ee28b214d1309cb6ac85e16256581168d1bb27070de29ac956d233e"
+          },
+          {
+            "path": "skills/prism/server/corpus-routes.ts",
+            "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf"
+          },
+          {
+            "path": "skills/prism/corpus/index.ts",
+            "sha256": "99ee5eee2282734c9df492c5ac1219903b9680f3dff37f3c513bfa4cff2c6343"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "C3/C5 not approved; exact complete alternate profiles/domains/real harness and invocation unresolved",
+      "reviewerConfirmation": null,
+      "specificationStatus": "incomplete-explicit"
+    }
+  ],
+  "status": "Earlier source interpretation preserved; granting editor was not established by real authorization readers"
+}

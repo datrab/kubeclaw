@@ -1,0 +1,20 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: [{"instancePath":"/containerBuild","schemaPath":"#/allOf/1/then/properties/containerBuild/additionalProperties","keyword":"additionalProperties","params":{"additionalProperty":"registryCaFile"},"message":"must NOT have additional properties"},{"instancePath":"","schemaPath":"#/allOf/1/if","keyword":"if","params":{"failingKeyword":"then"},"message":"must match \"then\" schema"},{"instancePath":"/securityScan/registry","schemaPath":"#/allOf/7/then/properties/securityScan/properties/registry/additionalProperties","keyword":"additionalProperties","params":{"additionalProperty":"registryCaFile"},"message":"must NOT have additional properties"},{"instancePath":"","schemaPath":"#/allOf/7/if","keyword":"if","params":{"failingKeyword":"then"},"message":"must match \"then\" schema"},{"instancePath":"/registryPeer","schemaPath":"#/allOf/9/then/properties/registryPeer/additionalProperties","keyword":"additionalProperties","params":{"additionalProperty":"registryCaFile"},"message":"must NOT have additional properties"},{"instancePath":"","schemaPath":"#/allOf/9/if","keyword":"if","params":{"failingKeyword":"then"},"message":"must match \"then\" schema"}]
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-03/collect-definition-checks.mjs:35:236
+    at check (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-03/collect-definition-checks.mjs:11:41)
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-03/collect-definition-checks.mjs:35:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

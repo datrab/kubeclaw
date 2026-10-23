@@ -1,0 +1,7 @@
+{
+  "readOnlyCommand": "trivy --version",
+  "actualExecutable": "/usr/local/bin/trivy",
+  "sha256": "d89bcc6510a267f11b773398cbf1be5520ce39f9e8b6633178c4487f05b7d791",
+  "rawVersionLog": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-trivy-03/installed-tool-version.log",
+  "scope": "actual installed executable/read-only version identity only; no actual selected operator runtime profile/cache/grants/closedrole or genuineDB content identification, and no scan/effect acceptance"
+}

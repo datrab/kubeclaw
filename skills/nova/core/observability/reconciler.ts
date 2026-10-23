@@ -1,3 +1,4 @@
+import type { CoreRuntimePolicy } from '@kubeclaw/plugin-foundation/config/core-runtime-policy';
 import fs from "node:fs";
 import path from "node:path";
 import type { ObservabilityCompletenessV1 } from "@kubeclaw/pipeline-observability-contract";
@@ -111,11 +112,12 @@ export class NovaObservabilityReconciler {
     attemptStore: FileDurableAttemptStore;
     admissionStore: FileObservabilityAdmissionStore;
     journalFile: string;
+    journalAppendLockTimeoutMs: number;
     now?: () => Date;
   }) {
     this.#attempts = options.attemptStore;
     this.#admission = options.admissionStore;
-    this.#journal = new FileJournal(options.journalFile);
+    this.#journal = new FileJournal(options.journalFile, options.journalAppendLockTimeoutMs);
     this.#now = options.now ?? (() => new Date());
   }
   async reconcile(
@@ -314,23 +316,6 @@ interface PersistedReconciliationPlan {
   attempts: ReconciliationAttempt[];
 }
 
-const EMBEDDED_ATTEMPT_LIMITS = {
-  maximumEvidenceObjects: 100_000,
-  maximumEvidenceBytes: 10 * 1024 * 1024 * 1024,
-  maximumEvidenceObjectBytes: 1024 * 1024 * 1024,
-  maximumResults: 100_000,
-  maximumClosures: 100_000,
-  maximumMetadataBytes: 1024 * 1024 * 1024,
-  maximumPendingEvidenceAgeMs: 60 * 60 * 1000,
-} as const;
-const EMBEDDED_ADMISSION_LIMITS = {
-  maximumIngressBytes: 16 * 1024 * 1024,
-  maximumRecords: 1_000_000,
-  maximumBytes: 4 * 1024 * 1024 * 1024,
-  maximumQuarantineRecords: 10_000,
-  maximumQuarantineBytes: 1024 * 1024 * 1024,
-} as const;
-
 function observabilityRoot(runRoot: string): string {
   return path.join(runRoot, "observability");
 }
@@ -356,6 +341,7 @@ export async function persistNovaObservabilityPlan(
 export async function reconcileNovaObservabilityOnRecovery(
   runRoot: string,
   pipelineRunId: string,
+  policy: CoreRuntimePolicy,
   now?: () => Date,
 ): Promise<ReconciliationDecision[]> {
   const root = observabilityRoot(runRoot);
@@ -383,13 +369,14 @@ export async function reconcileNovaObservabilityOnRecovery(
   const reconciler = new NovaObservabilityReconciler({
     attemptStore: new FileDurableAttemptStore(
       path.join(root, "attempts"),
-      EMBEDDED_ATTEMPT_LIMITS,
+      policy.recovery.attempts,
     ),
     admissionStore: new FileObservabilityAdmissionStore(
       path.join(root, "admission"),
-      EMBEDDED_ADMISSION_LIMITS,
+      policy.recovery.admission,
     ),
     journalFile: path.join(root, "reconciliation.jsonl"),
+    journalAppendLockTimeoutMs: policy.journalAppendLockTimeoutMs,
     ...(now ? { now } : {}),
   });
   return reconciler.reconcile(parsed.attempts);

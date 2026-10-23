@@ -1,3 +1,4 @@
+import { retainedCoreRuntimePolicy } from '../skills/nova/core/execution/engine-snapshots.ts';
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -73,7 +74,7 @@ export async function retireNovaDispatch(input) {
   const scope = scopeValue(input), roots = existingDistinctStores(scope);
   const canonical = runRoot(scope.novaStorageRoot, scope.intent.runId, { maximumLegacyBytes: scope.inventoryLimits.maximumSnapshotBytes });
   if (scope.intent.runRoot !== canonical) throw new Error('NOVA_DISPATCH_RETENTION_FOREIGN_RUN');
-  return withRunMutationLock(canonical, async signal => {
+  return withRunMutationLock(canonical, retainedCoreRuntimePolicy(canonical), async signal => {
     signal.throwIfAborted();
     const initial = retainedRun(scope);
     const dispatch = new FileNovaRemotePlanStore(scope.intent.dispatchRoot, scope.dispatchOptions);

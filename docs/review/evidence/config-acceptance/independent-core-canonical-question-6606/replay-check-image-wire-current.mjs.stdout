@@ -1,0 +1,37 @@
+{
+  "scope": "actual source predicates/producers/copy + isolated unmodified private pure text function via TS transpile; no Go/controller/API/image action; syntax-domain strings NOT genuine installed/pullable2048 OCI image proof",
+  "node": "v24.21.0",
+  "identities": {
+    "skills/buster/engine/test-gates/kubernetes-runtime-security.ts": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004",
+    "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts": "1f41112db44a5135ff7c8d7a575e87699a854278a9e792d248ee91673d06fbd0",
+    "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45",
+    "cmd/buster-namespace-controller/main.go": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+    "skills/buster/engine/test-gates/kubernetes-fixture-values.ts": "bf0d1b34c387395c58be0b171741e2e338ec6f25449bdad4fbf2aeb3ff40f6ad",
+    "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/check-image-wire-current.mjs": "a0d3d73258fca60ab16a2fdaf3f60cd131605f798ce89f767b07066da5c0a5dd",
+    "package-lock.json": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+  },
+  "observations": [
+    {
+      "id": "same-field-source-copy-and-CRD-domain2048",
+      "result": "passed"
+    },
+    {
+      "id": "real-producer-generic-and-current-private-consumer-exact2048-positive2049-negative",
+      "result": "passed",
+      "ASCII": true,
+      "unitsAndCodepointsAndBytesEqual": true
+    },
+    {
+      "id": "current-Core-text-does-not-validate-OCI-syntax",
+      "result": "passed",
+      "opaqueNonemptyAccepted": true,
+      "emptyRejected": true
+    },
+    {
+      "id": "distinct-ready-status1024-not-alias",
+      "result": "passed"
+    }
+  ],
+  "passed": 4,
+  "failed": 0
+}

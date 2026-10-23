@@ -1,0 +1,34 @@
+{
+  "anonymousHttp": {
+    "schemaVersion": "registry-clients.v1",
+    "registry": {
+      "endpoint": "http://fixture-registry.invalid:5000",
+      "transport": "http-lab"
+    }
+  },
+  "authenticatedHttpsNamesOnly": {
+    "schemaVersion": "registry-clients.v1",
+    "registry": {
+      "endpoint": "https://fixture-registry.invalid",
+      "transport": "https",
+      "auth": {
+        "usernameEnvironmentVariable": "REGISTRY_USERNAME",
+        "passwordEnvironmentVariable": "REGISTRY_PASSWORD"
+      }
+    }
+  },
+  "customTrustNamesOnly": {
+    "schemaVersion": "registry-clients.v1",
+    "registry": {
+      "endpoint": "https://fixture-registry.invalid",
+      "transport": "https",
+      "auth": {
+        "usernameEnvironmentVariable": "REGISTRY_USERNAME",
+        "passwordEnvironmentVariable": "REGISTRY_PASSWORD"
+      },
+      "caFile": "/fixture/registry-trust/worker-ca.pem",
+      "nodeCaFile": "/fixture/registry-trust/node-ca.pem"
+    }
+  },
+  "qualification": "public references only; no credential/key/certificate/CA bytes"
+}

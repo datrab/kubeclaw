@@ -1,0 +1,39 @@
+{
+  "status": "passed documentation-reference and historical/active oracle integrity ONLY; no F-MUT/semantic/runtime acceptance",
+  "originalCasesReconstructedExactly": 668,
+  "oldResultRequirementsOraclesFullInputsDigestsRawPathsUnchanged": true,
+  "allCurrentCaseObservationReferences": {
+    "referenceOccurrencesValidated": 1094,
+    "artifacts": [
+      {
+        "path": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-artifact-budget-06/observations.json",
+        "sha256": "83cc6904fd0aa62078c07f0c2cee7f5396f1ebc1c773b89dc5cc94e370a48a43"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+        "sha256": "eb6aad6748b119c42123d0decb61516bc7177eb6c856238f4fc698af7f7a975d"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+        "sha256": "3de73701ff6809f698b97425df23d5c0b556b384f0fdb1ee8ade48ccde262601"
+      },
+      {
+        "path": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+        "sha256": "a66c02f3b610bd7e9f859e90adb7b180bb3f9d55ce03a35111acd6611fc01175"
+      }
+    ],
+    "limits": "Document observation integrity only; no runtime/config interpretation or semantic acceptance"
+  },
+  "testDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/check-integrity.py": "9d6d00a7cc31670e240c4bcb5ccdc28948cf91857bb27a03e651881f4226ab73"
+  },
+  "sourceDigests": {
+    "docs/review/evidence/config-acceptance/author/observation_references.py": "448c7931e5128deb7537a6d492ffed4a260fcfa19c8250f2a46cc49b914c422f"
+  },
+  "inputDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/activation-erratum.json": "97ef22f3fe10f5e7d9e059a4070bc8d3e36373bf6a2ebaa330be8b3b02df5f0e",
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/before-activation-case-proposals.json.gz": "dadd5c68e9fdf5e810d3085ce5e748c17de686fe44bbd53c70360b2470921ed3",
+    "docs/review/evidence/config-acceptance/runtime/case-proposals.json": "ee6bbe152d5d5c65b49669d9441a5fff2405603f546646c36f3a752298d6828b"
+  },
+  "reviewerConfirmation": "pending"
+}

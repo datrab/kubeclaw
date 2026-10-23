@@ -1,0 +1,745 @@
+✖ captured file kubernetes.fixture namespace governs actual commands after mutation (4.704572ms)
+✖ captured file kubernetes.fixture registry governs actual commands after mutation (1.830128ms)
+✖ captured file kubernetes.fixture secret governs actual commands after mutation (1.92623ms)
+✖ captured file kubernetes.fixture storage governs actual commands after mutation (1.693033ms)
+✖ captured file kubernetes.fixture manifest governs actual commands after mutation (16.670731ms)
+✖ captured file kubernetes.exposure namespace governs actual commands after mutation (2.272888ms)
+✖ captured file kubernetes.exposure host governs actual commands after mutation (2.128475ms)
+✖ captured caller kubernetes.fixture namespace governs actual commands after mutation (1.700024ms)
+✖ captured caller kubernetes.fixture registry governs actual commands after mutation (1.626632ms)
+✖ captured caller kubernetes.fixture secret governs actual commands after mutation (1.613151ms)
+✖ captured caller kubernetes.fixture storage governs actual commands after mutation (1.377406ms)
+✖ captured caller kubernetes.fixture manifest governs actual commands after mutation (1.336604ms)
+✖ captured caller kubernetes.exposure namespace governs actual commands after mutation (1.305254ms)
+✖ captured caller kubernetes.exposure host governs actual commands after mutation (1.333034ms)
+✖ real kubernetes.fixture output limit profile false (3.48505ms)
+✖ real kubernetes.fixture output limit profile true (1.391166ms)
+✖ real kubernetes.exposure output limit profile false (1.640272ms)
+✖ real kubernetes.exposure output limit profile true (1.612732ms)
+✔ required RuntimeSecurity field allowedNamespacePrefixes before filesystem access (3.406408ms)
+✔ required RuntimeSecurity field maximumExecutionMs before filesystem access (0.517244ms)
+✔ required RuntimeSecurity field maximumOutputBytes before filesystem access (0.451252ms)
+✔ required RuntimeSecurity field pollIntervalMs before filesystem access (0.438092ms)
+✔ required RuntimeSecurity field maximumObservationAgeMs before filesystem access (0.462962ms)
+✔ required RuntimeSecurity field maximumFutureSkewMs before filesystem access (0.478512ms)
+✔ required RuntimeSecurity field diagnosticCodeUnits before filesystem access (0.491873ms)
+✔ required RuntimeSecurity field executableSearchPath before filesystem access (0.431451ms)
+✖ complete bundle requires allowedNamespacePrefixes even with route disabled (2.29717ms)
+✖ complete bundle requires maximumExecutionMs even with route disabled (1.203441ms)
+✖ complete bundle requires maximumOutputBytes even with route disabled (1.023907ms)
+✖ complete bundle requires pollIntervalMs even with route disabled (1.044897ms)
+✖ complete bundle requires maximumObservationAgeMs even with route disabled (1.173811ms)
+✖ complete bundle requires maximumFutureSkewMs even with route disabled (0.923733ms)
+✖ complete bundle requires diagnosticCodeUnits even with route disabled (0.920394ms)
+✖ complete bundle requires executableSearchPath even with route disabled (0.978565ms)
+✔ reject invalid RuntimeSecurity allowedNamespacePrefixes [] (0.500583ms)
+✔ reject invalid RuntimeSecurity allowedNamespacePrefixes [""] (0.329339ms)
+✔ reject invalid RuntimeSecurity allowedNamespacePrefixes [42] (0.293618ms)
+✔ reject invalid RuntimeSecurity maximumExecutionMs 0 (0.345119ms)
+✔ reject invalid RuntimeSecurity maximumExecutionMs 2147483648 (0.304427ms)
+✔ reject invalid RuntimeSecurity maximumExecutionMs 1.5 (0.335389ms)
+✔ reject invalid RuntimeSecurity maximumOutputBytes 1023 (0.3917ms)
+✔ reject invalid RuntimeSecurity maximumOutputBytes 9007199254740992 (0.341569ms)
+✔ reject invalid RuntimeSecurity pollIntervalMs 9 (0.345709ms)
+✔ reject invalid RuntimeSecurity pollIntervalMs 10001 (0.327009ms)
+✔ reject invalid RuntimeSecurity maximumObservationAgeMs 999 (0.284838ms)
+✔ reject invalid RuntimeSecurity maximumObservationAgeMs 60001 (0.38261ms)
+✔ reject invalid RuntimeSecurity maximumFutureSkewMs -1 (0.302268ms)
+✔ reject invalid RuntimeSecurity maximumFutureSkewMs 2147483648 (0.285577ms)
+✔ reject invalid RuntimeSecurity diagnosticCodeUnits 0 (0.289517ms)
+✔ reject invalid RuntimeSecurity diagnosticCodeUnits 1.5 (0.309128ms)
+✔ reject invalid RuntimeSecurity executableSearchPath [] (0.319788ms)
+✔ reject invalid RuntimeSecurity executableSearchPath ["relative"] (0.372149ms)
+✔ reject invalid RuntimeSecurity executableSearchPath ["/bin:/escape"] (0.316188ms)
+✔ reject invalid RuntimeSecurity executableSearchPath ["/bin\u0000"] (0.306188ms)
+✔ retired RuntimeSecurity object null (0.210865ms)
+✔ retired RuntimeSecurity object {} (0.103543ms)
+✔ retired RuntimeSecurity object {"allowedNamespacePrefixes":["test"],"maximumExecutionMs":300000,"maximumOutputBytes":16777216,"pollIntervalMs":1000,"maximumObservationAgeMs":10000,"maximumFutureSkewMs":5000,"diagnosticCodeUnits":1024,"executableSearchPath":["/usr/local/bin","/usr/bin","/bin"]} (0.098882ms)
+✔ retired RuntimeSecurity object "invalid" (0.066372ms)
+✔ disabled RuntimeSecurity route has no binding or implicit activation (0.956105ms)
+✖ real execution deadline profile false (4.64574ms)
+✖ real combined output profile false (2.253918ms)
+✖ real observation age profile false (2.152676ms)
+✖ real future skew profile false (1.702344ms)
+✖ real diagnostic code units profile false (1.711085ms)
+✖ real PATH helper profile false (1.635912ms)
+✖ real execution deadline profile true (25.064578ms)
+✖ real combined output profile true (1.862588ms)
+✖ real observation age profile true (1.803617ms)
+✖ real future skew profile true (1.740805ms)
+✖ real diagnostic code units profile true (1.601051ms)
+✖ real PATH helper profile true (1.702644ms)
+▶ real polling profile changes command cadence; selected arrays and scalars captured
+  ✖ poll interval 50 (1.637913ms)
+  ✖ poll interval 1200 (1.279543ms)
+✖ real polling profile changes command cadence; selected arrays and scalars captured (3.49939ms)
+✖ real namespace profile false (1.345765ms)
+✖ real namespace profile true (1.291163ms)
+✖ preserve inspected namespace prefix aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa (1.347335ms)
+✖ preserve inspected namespace prefix test- (1.382865ms)
+✖ reloaded file changes real PATH and diagnostic consumers; old captured consumer stays unchanged (1.639403ms)
+ℹ tests 79
+ℹ suites 0
+ℹ pass 33
+ℹ fail 46
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2344.817882
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-cluster-capture.test.mjs:41:3
+✖ captured file kubernetes.fixture namespace governs actual commands after mutation (4.704572ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-capture.test.mjs:53:22
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/cluster-test-ownership.mjs:43:45
+
+test at tests/verification/contracts/buster-cluster-capture.test.mjs:41:3
+✖ captured file kubernetes.fixture registry governs actual commands after mutation (1.830128ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-capture.test.mjs:53:22
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/cluster-test-ownership.mjs:43:45
+
+test at tests/verification/contracts/buster-cluster-capture.test.mjs:41:3
+✖ captured file kubernetes.fixture secret governs actual commands after mutation (1.92623ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-capture.test.mjs:53:22
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/cluster-test-ownership.mjs:43:45
+
+test at tests/verification/contracts/buster-cluster-capture.test.mjs:41:3
+✖ captured file kubernetes.fixture storage governs actual commands after mutation (1.693033ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-capture.test.mjs:53:22
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/cluster-test-ownership.mjs:43:45
+
+test at tests/verification/contracts/buster-cluster-capture.test.mjs:41:3
+✖ captured file kubernetes.fixture manifest governs actual commands after mutation (16.670731ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-capture.test.mjs:53:22
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/cluster-test-ownership.mjs:43:45
+
+test at tests/verification/contracts/buster-cluster-capture.test.mjs:41:3
+✖ captured file kubernetes.exposure namespace governs actual commands after mutation (2.272888ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-capture.test.mjs:53:22
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/cluster-test-ownership.mjs:43:45
+
+test at tests/verification/contracts/buster-cluster-capture.test.mjs:41:3
+✖ captured file kubernetes.exposure host governs actual commands after mutation (2.128475ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-capture.test.mjs:53:22
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/cluster-test-ownership.mjs:43:45
+
+test at tests/verification/contracts/buster-cluster-capture.test.mjs:41:3
+✖ captured caller kubernetes.fixture namespace governs actual commands after mutation (1.700024ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-capture.test.mjs:53:22
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/cluster-test-ownership.mjs:43:45
+
+test at tests/verification/contracts/buster-cluster-capture.test.mjs:41:3
+✖ captured caller kubernetes.fixture registry governs actual commands after mutation (1.626632ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-capture.test.mjs:53:22
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/cluster-test-ownership.mjs:43:45
+
+test at tests/verification/contracts/buster-cluster-capture.test.mjs:41:3
+✖ captured caller kubernetes.fixture secret governs actual commands after mutation (1.613151ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-capture.test.mjs:53:22
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/cluster-test-ownership.mjs:43:45
+
+test at tests/verification/contracts/buster-cluster-capture.test.mjs:41:3
+✖ captured caller kubernetes.fixture storage governs actual commands after mutation (1.377406ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-capture.test.mjs:53:22
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/cluster-test-ownership.mjs:43:45
+
+test at tests/verification/contracts/buster-cluster-capture.test.mjs:41:3
+✖ captured caller kubernetes.fixture manifest governs actual commands after mutation (1.336604ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-capture.test.mjs:53:22
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/cluster-test-ownership.mjs:43:45
+
+test at tests/verification/contracts/buster-cluster-capture.test.mjs:41:3
+✖ captured caller kubernetes.exposure namespace governs actual commands after mutation (1.305254ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-capture.test.mjs:53:22
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/cluster-test-ownership.mjs:43:45
+
+test at tests/verification/contracts/buster-cluster-capture.test.mjs:41:3
+✖ captured caller kubernetes.exposure host governs actual commands after mutation (1.333034ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-capture.test.mjs:53:22
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/cluster-test-ownership.mjs:43:45
+
+test at tests/verification/contracts/buster-cluster-output-consumers.test.mjs:53:38
+✖ real kubernetes.fixture output limit profile false (3.48505ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-output-consumers.test.mjs:63:22)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at tests/verification/contracts/buster-cluster-output-consumers.test.mjs:53:38
+✖ real kubernetes.fixture output limit profile true (1.391166ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-output-consumers.test.mjs:63:22)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at tests/verification/contracts/buster-cluster-output-consumers.test.mjs:53:38
+✖ real kubernetes.exposure output limit profile false (1.640272ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-output-consumers.test.mjs:63:22)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-cluster-output-consumers.test.mjs:53:38
+✖ real kubernetes.exposure output limit profile true (1.612732ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-cluster-output-consumers.test.mjs:63:22)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:146:46
+✖ complete bundle requires allowedNamespacePrefixes even with route disabled (2.29717ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /SWARM_CONFIG_INVALID:component:buster-engine/. Input:
+  
+  'Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+        at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+        at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:23
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19)
+        at Test.run (node:internal/test_runner/test:1467:12),
+    expected: /SWARM_CONFIG_INVALID:component:buster-engine/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:146:46
+✖ complete bundle requires maximumExecutionMs even with route disabled (1.203441ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /SWARM_CONFIG_INVALID:component:buster-engine/. Input:
+  
+  'Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+        at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+        at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:23
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19)
+        at Test.run (node:internal/test_runner/test:1467:12),
+    expected: /SWARM_CONFIG_INVALID:component:buster-engine/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:146:46
+✖ complete bundle requires maximumOutputBytes even with route disabled (1.023907ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /SWARM_CONFIG_INVALID:component:buster-engine/. Input:
+  
+  'Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+        at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+        at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:23
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19)
+        at Test.run (node:internal/test_runner/test:1467:12),
+    expected: /SWARM_CONFIG_INVALID:component:buster-engine/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:146:46
+✖ complete bundle requires pollIntervalMs even with route disabled (1.044897ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /SWARM_CONFIG_INVALID:component:buster-engine/. Input:
+  
+  'Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+        at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+        at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:23
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19)
+        at Test.run (node:internal/test_runner/test:1467:12),
+    expected: /SWARM_CONFIG_INVALID:component:buster-engine/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:146:46
+✖ complete bundle requires maximumObservationAgeMs even with route disabled (1.173811ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /SWARM_CONFIG_INVALID:component:buster-engine/. Input:
+  
+  'Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+        at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+        at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:23
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19)
+        at Test.run (node:internal/test_runner/test:1467:12),
+    expected: /SWARM_CONFIG_INVALID:component:buster-engine/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:146:46
+✖ complete bundle requires maximumFutureSkewMs even with route disabled (0.923733ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /SWARM_CONFIG_INVALID:component:buster-engine/. Input:
+  
+  'Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+        at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+        at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:23
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19)
+        at Test.run (node:internal/test_runner/test:1467:12),
+    expected: /SWARM_CONFIG_INVALID:component:buster-engine/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:146:46
+✖ complete bundle requires diagnosticCodeUnits even with route disabled (0.920394ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /SWARM_CONFIG_INVALID:component:buster-engine/. Input:
+  
+  'Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+        at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+        at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:23
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19)
+        at Test.run (node:internal/test_runner/test:1467:12),
+    expected: /SWARM_CONFIG_INVALID:component:buster-engine/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:146:46
+✖ complete bundle requires executableSearchPath even with route disabled (0.978565ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /SWARM_CONFIG_INVALID:component:buster-engine/. Input:
+  
+  'Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture'
+  
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+        at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+        at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:23
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:152:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19)
+        at Test.run (node:internal/test_runner/test:1467:12),
+    expected: /SWARM_CONFIG_INVALID:component:buster-engine/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:179:3
+✖ real execution deadline profile false (4.64574ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:180:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:186:3
+✖ real combined output profile false (2.253918ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:187:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:197:3
+✖ real observation age profile false (2.152676ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:198:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:206:3
+✖ real future skew profile false (1.702344ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:207:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:215:3
+✖ real diagnostic code units profile false (1.711085ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:217:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:222:3
+✖ real PATH helper profile false (1.635912ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:223:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:179:3
+✖ real execution deadline profile true (25.064578ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:180:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:186:3
+✖ real combined output profile true (1.862588ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:187:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:197:3
+✖ real observation age profile true (1.803617ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:198:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:206:3
+✖ real future skew profile true (1.740805ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:207:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:215:3
+✖ real diagnostic code units profile true (1.601051ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:217:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:222:3
+✖ real PATH helper profile true (1.702644ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:223:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:237:13
+✖ poll interval 50 (1.637913ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:238:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at TestContext.test (node:internal/test_runner/test:400:20)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:237:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:237:13
+✖ poll interval 1200 (1.279543ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:238:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at TestContext.test (node:internal/test_runner/test:400:20)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:237:13)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:234:1
+✖ real polling profile changes command cadence; selected arrays and scalars captured (3.49939ms)
+  AssertionError [ERR_ASSERTION]: distinct authored poll effects: 
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:249:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:252:38
+✖ real namespace profile false (1.345765ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:253:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:252:38
+✖ real namespace profile true (1.291163ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:253:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:261:3
+✖ preserve inspected namespace prefix aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa (1.347335ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:262:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:261:3
+✖ preserve inspected namespace prefix test- (1.382865ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:262:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:268:1
+✖ reloaded file changes real PATH and diagnostic consumers; old captured consumer stays unchanged (1.639403ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at fixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:90:18)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/buster-runtime-security-policy.test.mjs:269:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

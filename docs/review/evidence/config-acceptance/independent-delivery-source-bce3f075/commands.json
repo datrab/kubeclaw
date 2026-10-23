@@ -1,0 +1,499 @@
+{
+  "commands": [
+    {
+      "command": [
+        "python3",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/enumerate-delivery.py"
+      ],
+      "raw": "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/enumeration.log",
+      "exit": 0
+    },
+    {
+      "command": [
+        "python3",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/reproduce-safe.py"
+      ],
+      "raw": "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/safe-reproductions.json",
+      "exit": 0
+    },
+    {
+      "command": [
+        "node",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/semgrep-shape.cjs"
+      ],
+      "raw": "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/semgrep-shape.log",
+      "exit": 0
+    }
+  ],
+  "safeNestedCommands": [
+    {
+      "id": "DLV-C0-BCE3R2-RENDER-NOVA-A",
+      "command": [
+        "helm",
+        "template",
+        "delivery-nova",
+        "charts/kubeclaw",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/NOVA-A.json"
+      ],
+      "exit": 0,
+      "raw": [
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-RENDER-NOVA-A.stdout",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-RENDER-NOVA-A.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-BCE3R2-SCHEMA-NOVA-A",
+      "command": [
+        "kubeconform",
+        "-strict",
+        "-summary",
+        "-kubernetes-version",
+        "1.35.6",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-RENDER-NOVA-A.yaml"
+      ],
+      "exit": 0,
+      "raw": [
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-SCHEMA-NOVA-A.stdout",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-SCHEMA-NOVA-A.stderr"
+      ],
+      "collection": [
+        9,
+        9,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "DLV-C0-BCE3R2-OUTPUT-NOVA-A",
+      "command": [
+        "node",
+        "-e",
+        "const fs=require('fs'),yaml=require('js-yaml'); const docs=yaml.loadAll(fs.readFileSync(process.argv[1],'utf8'));const c=docs.find(x=>x?.kind==='ConfigMap'&&x.data?.['openclaw.json']);const j=JSON.parse(c.data['openclaw.json']);const d=docs.find(x=>x?.kind==='Deployment'&&x.metadata.name==='agent-'+process.argv[2]);const main=d.spec.template.spec.containers.find(x=>x.name==='kubeclaw'); console.log(JSON.stringify({model:j.agents.defaults.model,gatewayPort:j.gateway.port,env:Object.fromEntries(main.env.filter(x=>x.value!==undefined).map(x=>[x.name,x.value]))}));",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-RENDER-NOVA-A.yaml",
+        "nova"
+      ],
+      "exit": 0,
+      "raw": [
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-OUTPUT-NOVA-A.stdout",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-OUTPUT-NOVA-A.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-BCE3R2-RENDER-NOVA-B",
+      "command": [
+        "helm",
+        "template",
+        "delivery-nova",
+        "charts/kubeclaw",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/NOVA-B.json"
+      ],
+      "exit": 0,
+      "raw": [
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-RENDER-NOVA-B.stdout",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-RENDER-NOVA-B.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-BCE3R2-SCHEMA-NOVA-B",
+      "command": [
+        "kubeconform",
+        "-strict",
+        "-summary",
+        "-kubernetes-version",
+        "1.35.6",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-RENDER-NOVA-B.yaml"
+      ],
+      "exit": 0,
+      "raw": [
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-SCHEMA-NOVA-B.stdout",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-SCHEMA-NOVA-B.stderr"
+      ],
+      "collection": [
+        9,
+        9,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "DLV-C0-BCE3R2-OUTPUT-NOVA-B",
+      "command": [
+        "node",
+        "-e",
+        "const fs=require('fs'),yaml=require('js-yaml'); const docs=yaml.loadAll(fs.readFileSync(process.argv[1],'utf8'));const c=docs.find(x=>x?.kind==='ConfigMap'&&x.data?.['openclaw.json']);const j=JSON.parse(c.data['openclaw.json']);const d=docs.find(x=>x?.kind==='Deployment'&&x.metadata.name==='agent-'+process.argv[2]);const main=d.spec.template.spec.containers.find(x=>x.name==='kubeclaw'); console.log(JSON.stringify({model:j.agents.defaults.model,gatewayPort:j.gateway.port,env:Object.fromEntries(main.env.filter(x=>x.value!==undefined).map(x=>[x.name,x.value]))}));",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-RENDER-NOVA-B.yaml",
+        "nova"
+      ],
+      "exit": 0,
+      "raw": [
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-OUTPUT-NOVA-B.stdout",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-OUTPUT-NOVA-B.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-BCE3R2-RENDER-BUSTER-A",
+      "command": [
+        "helm",
+        "template",
+        "delivery-buster",
+        "charts/kubeclaw",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/BUSTER-A.json"
+      ],
+      "exit": 0,
+      "raw": [
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-RENDER-BUSTER-A.stdout",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-RENDER-BUSTER-A.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-BCE3R2-SCHEMA-BUSTER-A",
+      "command": [
+        "kubeconform",
+        "-strict",
+        "-summary",
+        "-kubernetes-version",
+        "1.35.6",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-RENDER-BUSTER-A.yaml"
+      ],
+      "exit": 0,
+      "raw": [
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-SCHEMA-BUSTER-A.stdout",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-SCHEMA-BUSTER-A.stderr"
+      ],
+      "collection": [
+        21,
+        21,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "DLV-C0-BCE3R2-OUTPUT-BUSTER-A",
+      "command": [
+        "node",
+        "-e",
+        "const fs=require('fs'),yaml=require('js-yaml'); const docs=yaml.loadAll(fs.readFileSync(process.argv[1],'utf8'));const c=docs.find(x=>x?.kind==='ConfigMap'&&x.data?.['openclaw.json']);const j=JSON.parse(c.data['openclaw.json']);const d=docs.find(x=>x?.kind==='Deployment'&&x.metadata.name==='agent-'+process.argv[2]);const main=d.spec.template.spec.containers.find(x=>x.name==='kubeclaw'); console.log(JSON.stringify({model:j.agents.defaults.model,gatewayPort:j.gateway.port,env:Object.fromEntries(main.env.filter(x=>x.value!==undefined).map(x=>[x.name,x.value]))}));",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-RENDER-BUSTER-A.yaml",
+        "buster"
+      ],
+      "exit": 0,
+      "raw": [
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-OUTPUT-BUSTER-A.stdout",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-OUTPUT-BUSTER-A.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-BCE3R2-RENDER-BUSTER-B",
+      "command": [
+        "helm",
+        "template",
+        "delivery-buster",
+        "charts/kubeclaw",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/BUSTER-B.json"
+      ],
+      "exit": 0,
+      "raw": [
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-RENDER-BUSTER-B.stdout",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-RENDER-BUSTER-B.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-BCE3R2-SCHEMA-BUSTER-B",
+      "command": [
+        "kubeconform",
+        "-strict",
+        "-summary",
+        "-kubernetes-version",
+        "1.35.6",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-RENDER-BUSTER-B.yaml"
+      ],
+      "exit": 0,
+      "raw": [
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-SCHEMA-BUSTER-B.stdout",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-SCHEMA-BUSTER-B.stderr"
+      ],
+      "collection": [
+        21,
+        21,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "DLV-C0-BCE3R2-OUTPUT-BUSTER-B",
+      "command": [
+        "node",
+        "-e",
+        "const fs=require('fs'),yaml=require('js-yaml'); const docs=yaml.loadAll(fs.readFileSync(process.argv[1],'utf8'));const c=docs.find(x=>x?.kind==='ConfigMap'&&x.data?.['openclaw.json']);const j=JSON.parse(c.data['openclaw.json']);const d=docs.find(x=>x?.kind==='Deployment'&&x.metadata.name==='agent-'+process.argv[2]);const main=d.spec.template.spec.containers.find(x=>x.name==='kubeclaw'); console.log(JSON.stringify({model:j.agents.defaults.model,gatewayPort:j.gateway.port,env:Object.fromEntries(main.env.filter(x=>x.value!==undefined).map(x=>[x.name,x.value]))}));",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-RENDER-BUSTER-B.yaml",
+        "buster"
+      ],
+      "exit": 0,
+      "raw": [
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-OUTPUT-BUSTER-B.stdout",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-OUTPUT-BUSTER-B.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-BCE3R2-RENDER-PRISM-A",
+      "command": [
+        "helm",
+        "template",
+        "delivery-prism",
+        "charts/prism",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/PRISM-A.json"
+      ],
+      "exit": 0,
+      "raw": [
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-RENDER-PRISM-A.stdout",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-RENDER-PRISM-A.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-BCE3R2-SCHEMA-PRISM-A",
+      "command": [
+        "kubeconform",
+        "-strict",
+        "-summary",
+        "-kubernetes-version",
+        "1.35.6",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-RENDER-PRISM-A.yaml"
+      ],
+      "exit": 0,
+      "raw": [
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-SCHEMA-PRISM-A.stdout",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-SCHEMA-PRISM-A.stderr"
+      ],
+      "collection": [
+        45,
+        45,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "DLV-C0-BCE3R2-RENDER-PRISM-B",
+      "command": [
+        "helm",
+        "template",
+        "delivery-prism",
+        "charts/prism",
+        "--namespace",
+        "default",
+        "-f",
+        "docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/PRISM-B.json"
+      ],
+      "exit": 0,
+      "raw": [
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-RENDER-PRISM-B.stdout",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-RENDER-PRISM-B.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-BCE3R2-SCHEMA-PRISM-B",
+      "command": [
+        "kubeconform",
+        "-strict",
+        "-summary",
+        "-kubernetes-version",
+        "1.35.6",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "-schema-location",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/{{.ResourceKind}}{{.KindSuffix}}.json",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-RENDER-PRISM-B.yaml"
+      ],
+      "exit": 0,
+      "raw": [
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-SCHEMA-PRISM-B.stdout",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-SCHEMA-PRISM-B.stderr"
+      ],
+      "collection": [
+        45,
+        45,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "DLV-C0-BCE3R2-PACKAGE-KUBECLAW",
+      "command": [
+        "helm",
+        "package",
+        "charts/kubeclaw",
+        "--destination",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075"
+      ],
+      "exit": 0,
+      "raw": [
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-PACKAGE-KUBECLAW.stdout",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-PACKAGE-KUBECLAW.stderr"
+      ]
+    },
+    {
+      "id": "DLV-C0-BCE3R2-PACKAGE-PRISM",
+      "command": [
+        "helm",
+        "package",
+        "charts/prism",
+        "--destination",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075"
+      ],
+      "exit": 0,
+      "raw": [
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-PACKAGE-PRISM.stdout",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/DLV-C0-BCE3R2-PACKAGE-PRISM.stderr"
+      ]
+    },
+    {
+      "id": "native-render-A",
+      "command": [
+        "node",
+        "scripts/render-native-worker-node.mjs",
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.yaml",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/native-A"
+      ],
+      "exit": 0,
+      "raw": [
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/native-render-A.stdout",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/native-render-A.stderr"
+      ],
+      "bindingChecks": {
+        "samePoolDigest": true,
+        "nriBusterDigest": true,
+        "nriPrismDigest": true,
+        "setupBothLimits": true
+      }
+    },
+    {
+      "id": "native-render-B",
+      "command": [
+        "node",
+        "scripts/render-native-worker-node.mjs",
+        "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.yaml",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/native-B"
+      ],
+      "exit": 0,
+      "raw": [
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/native-render-B.stdout",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/native-render-B.stderr"
+      ],
+      "bindingChecks": {
+        "samePoolDigest": true,
+        "nriBusterDigest": true,
+        "nriPrismDigest": true,
+        "setupBothLimits": true
+      }
+    },
+    {
+      "id": "toml-A",
+      "profile": "docs/review/evidence/config-acceptance/delivery/codex-definition-profiles-bce3f075/A.toml",
+      "result": "passed",
+      "scope": "standard Python TOML syntax only"
+    },
+    {
+      "id": "toml-B-approval_policy",
+      "profile": "docs/review/evidence/config-acceptance/delivery/codex-definition-profiles-bce3f075/B-approval_policy.toml",
+      "result": "passed",
+      "scope": "standard Python TOML syntax only"
+    },
+    {
+      "id": "toml-B-cli_auth_credentials_store",
+      "profile": "docs/review/evidence/config-acceptance/delivery/codex-definition-profiles-bce3f075/B-cli_auth_credentials_store.toml",
+      "result": "passed",
+      "scope": "standard Python TOML syntax only"
+    },
+    {
+      "id": "toml-B-mcp_servers-kubeclaw_ops-bearer_token_env_var",
+      "profile": "docs/review/evidence/config-acceptance/delivery/codex-definition-profiles-bce3f075/B-mcp_servers-kubeclaw_ops-bearer_token_env_var.toml",
+      "result": "passed",
+      "scope": "standard Python TOML syntax only"
+    },
+    {
+      "id": "toml-B-mcp_servers-kubeclaw_ops-url",
+      "profile": "docs/review/evidence/config-acceptance/delivery/codex-definition-profiles-bce3f075/B-mcp_servers-kubeclaw_ops-url.toml",
+      "result": "passed",
+      "scope": "standard Python TOML syntax only"
+    },
+    {
+      "id": "toml-B-sandbox_mode",
+      "profile": "docs/review/evidence/config-acceptance/delivery/codex-definition-profiles-bce3f075/B-sandbox_mode.toml",
+      "result": "passed",
+      "scope": "standard Python TOML syntax only"
+    },
+    {
+      "id": "toml-B",
+      "profile": "docs/review/evidence/config-acceptance/delivery/codex-definition-profiles-bce3f075/B.toml",
+      "result": "passed",
+      "scope": "standard Python TOML syntax only"
+    },
+    {
+      "id": "eslint-A.eslint.config",
+      "command": [
+        "node",
+        "--check",
+        "docs/review/evidence/config-acceptance/delivery/lint-definition-profiles-bce3f075/A.eslint.config.mjs"
+      ],
+      "exit": 0,
+      "raw": [
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/eslint-A.eslint.config.stdout",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/eslint-A.eslint.config.stderr"
+      ]
+    },
+    {
+      "id": "eslint-B.eslint.config",
+      "command": [
+        "node",
+        "--check",
+        "docs/review/evidence/config-acceptance/delivery/lint-definition-profiles-bce3f075/B.eslint.config.mjs"
+      ],
+      "exit": 0,
+      "raw": [
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/eslint-B.eslint.config.stdout",
+        "docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/eslint-B.eslint.config.stderr"
+      ]
+    }
+  ],
+  "limits": "No author refiner/installer/service/build/acquisition executed. Earlier enumeration28multi-document setup diagnostics preserved under attempt1.snapshot; final safe multi-document parse successful."
+}

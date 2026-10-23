@@ -64,8 +64,7 @@
     "worker",
     "postgresql",
     "secrets",
-    "artifactStorage",
-    "busterComponentFile"
+    "artifactStorage"
   ],
   "properties": {
     "images": {
@@ -116,7 +115,6 @@
           "type": "object",
           "additionalProperties": false,
           "required": [
-            "enabled",
             "operators",
             "tokenExpirationSeconds",
             "issuer",
@@ -132,9 +130,6 @@
             "tokenAudience"
           ],
           "properties": {
-            "enabled": {
-              "type": "boolean"
-            },
             "operators": {
               "type": "array",
               "uniqueItems": true,
@@ -195,65 +190,7 @@
               "type": "string",
               "maxLength": 2048
             }
-          },
-          "allOf": [
-            {
-              "if": {
-                "properties": {
-                  "enabled": {
-                    "const": true
-                  }
-                }
-              },
-              "then": {
-                "properties": {
-                  "issuer": {
-                    "minLength": 1
-                  },
-                  "origin": {
-                    "minLength": 1,
-                    "pattern": "^https://[A-Za-z0-9](?:[A-Za-z0-9.-]*[A-Za-z0-9])?(?::[0-9]{1,5})?/?$"
-                  },
-                  "authorityRevision": {
-                    "minLength": 1
-                  },
-                  "signingSecretName": {
-                    "minLength": 1,
-                    "pattern": "^[a-z0-9](?:[-a-z0-9.]*[a-z0-9])?$"
-                  },
-                  "signingSecretKey": {
-                    "minLength": 1,
-                    "pattern": "^[A-Za-z0-9._-]+$"
-                  },
-                  "controllerUrl": {
-                    "minLength": 1,
-                    "pattern": "^https://[A-Za-z0-9](?:[A-Za-z0-9.-]*[A-Za-z0-9])?:8443/?$"
-                  },
-                  "controllerNamespace": {
-                    "minLength": 1,
-                    "pattern": "^[a-z0-9](?:[-a-z0-9.]*[a-z0-9])?$"
-                  },
-                  "controllerRelease": {
-                    "minLength": 1
-                  },
-                  "controllerCaSecretName": {
-                    "minLength": 1,
-                    "pattern": "^[a-z0-9](?:[-a-z0-9.]*[a-z0-9])?$"
-                  },
-                  "controllerCaSecretKey": {
-                    "minLength": 1,
-                    "pattern": "^[A-Za-z0-9._-]+$"
-                  },
-                  "tokenAudience": {
-                    "minLength": 1
-                  },
-                  "operators": {
-                    "minItems": 1
-                  }
-                }
-              }
-            }
-          ]
+          }
         }
       }
     },
@@ -305,8 +242,7 @@
       "type": "object",
       "required": [
         "enabled",
-        "replicas",
-        "quarantineTtlMs"
+        "replicas"
       ],
       "properties": {
         "enabled": {
@@ -315,11 +251,6 @@
         "replicas": {
           "type": "integer",
           "minimum": 0
-        },
-        "quarantineTtlMs": {
-          "type": "integer",
-          "minimum": 60000,
-          "maximum": 86400000
         },
         "resources": {
           "type": "object"
@@ -510,10 +441,6 @@
           "maxLength": 128
         }
       }
-    },
-    "busterComponentFile": {
-      "type": "string",
-      "pattern": "^files/config/(profiles/)?buster-engine([.][a-z0-9-]+)?[.]config[.]json$"
     }
   },
   "additionalProperties": false

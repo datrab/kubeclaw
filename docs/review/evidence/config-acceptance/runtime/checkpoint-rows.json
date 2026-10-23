@@ -1,0 +1,1575 @@
+{
+  "warning": "Targeted manual overrides to scanner rows; exact authoritative current checkpoint is inventory-fragment.json. Discovery replay is not acceptance.",
+  "globalAnnotations": {
+    "c0Closed": false,
+    "reviewerConfirmation": "pending material-correction/exhaustive independent review"
+  },
+  "rows": [
+    {
+      "id": "RT-ae11bf913a6050c6",
+      "owner": "kubeclaw.architecture-validator",
+      "scope": {
+        "registration": "kubeclaw.architecture-validator:architecture",
+        "kind": "stages",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "source": {
+        "path": "skills/nova/plugins/architecture-validator/schemas/config.schema.json",
+        "field": "#/properties/agentRole",
+        "sha256": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a"
+      },
+      "field": "agentRole",
+      "classification": "operator-setting",
+      "classificationReason": "Role label included in stage.started event by generic PipelineLoop. This alone does not select agent/model/provider or establish plugin-specific behavior. Plugin reader may remain absent.",
+      "current": {
+        "value": "instance-specific input; external deployed profile unknown",
+        "schemaDefault": null,
+        "precedence": "workflow stage.config or platform adapters/observers map then plugin parser/local fallbacks; registry validation does not apply defaults",
+        "requiredAtParent": "See owning schema document required/conditionals"
+      },
+      "domain": {
+        "type": "string",
+        "minLength": 1
+      },
+      "unit": "schema-defined",
+      "reader": {
+        "registrationEntry": "skills/nova/plugins/architecture-validator/src/stage.ts:execute",
+        "candidateLocations": [],
+        "verifiedFieldReader": null,
+        "genericCoreEventReader": [
+          {
+            "path": "skills/nova/core/execution/pipeline-loop.ts",
+            "line": 126,
+            "text": "      ...(typeof definition.config.agentRole === 'string' ? { agentRole: definition.config.agentRole } : {}), ...(override ? { administrativeOverride: true } : {}) });",
+            "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530"
+          }
+        ]
+      },
+      "productiveCallers": [
+        "skills/nova/core/cli.ts:runPipelineV2/recoverPipelineV2",
+        "skills/nova/core/execution/engine-run.ts:runNewPipeline/executePrepared",
+        "skills/nova/core/execution/runner.ts:PipelineRunner.run",
+        "skills/nova/core/execution/pipeline-loop.ts:PipelineLoop",
+        "skills/nova/core/execution/stage-executor.ts",
+        "skills/nova/plugins/architecture-validator/src/stage.ts:execute"
+      ],
+      "validation": {
+        "schema": "skills/nova/plugins/architecture-validator/schemas/config.schema.json",
+        "genericBoundary": "validateRuntimeRegistrationConfiguration or resolveTestProviderConfiguration; RegistryError REGISTRY_RESULT_INVALID/REGISTRY_MANIFEST_INVALID",
+        "semantic": "See candidate source lines; not yet independently closed for this field"
+      },
+      "targetAuthor": {
+        "proposal": "pipeline.config.json component/profile ref -> plugin-owned profiles/kubeclaw.architecture-validator.config.json",
+        "rule": "retain task inputs in workflow/plan; policy fields single plugin author; explicit secret references only"
+      },
+      "activation": "run graph stage config frozen; target module bound role label plus actual separate runtime target role if profile chooses it",
+      "recoveryEffects": "Current graph/runtime config/package pins reject drift; provider config digest persists in resolved plan. Module generation binding not implemented. Field-specific effects require review.",
+      "eval": "eligible policy profiles fixed generation; task data remains task-specific; no complete Evalrunner established",
+      "migration": "proposal only; remove schema/code default if policy; preserve task authority and finite protocol identities",
+      "requirements": [
+        "D17",
+        "D20",
+        "D21",
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F1",
+        "F2a",
+        "F3a",
+        "F4a"
+      ],
+      "cases": [
+        "RT-C0-SCHEMA-DISCOVERY"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/runtime/schema-roster.json",
+        "docs/review/evidence/config-acceptance/runtime/config-reader-search.log"
+      ],
+      "semanticStatus": "consumer-review-required",
+      "c0Closed": false,
+      "reviewerConfirmation": "pending material-correction/exhaustive independent review"
+    },
+    {
+      "id": "RT-078157b4efb99088",
+      "owner": "kubeclaw.buster-quality-gate",
+      "scope": {
+        "registration": "kubeclaw.buster-quality-gate:quality",
+        "kind": "stages",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "source": {
+        "path": "skills/nova/plugins/buster-quality-gate/schemas/config.schema.json",
+        "field": "#/properties/agentRole",
+        "sha256": "77f3bc2d1d9a25347219cbb5f11d8580e57390abee3936a6de044b6d5cea68c5"
+      },
+      "field": "agentRole",
+      "classification": "operator-setting",
+      "classificationReason": "Role label included in stage.started event by generic PipelineLoop. This alone does not select agent/model/provider or establish plugin-specific behavior. Plugin reader may remain absent.",
+      "current": {
+        "value": "instance-specific input; external deployed profile unknown",
+        "schemaDefault": null,
+        "precedence": "workflow stage.config or platform adapters/observers map then plugin parser/local fallbacks; registry validation does not apply defaults",
+        "requiredAtParent": "See owning schema document required/conditionals"
+      },
+      "domain": {
+        "type": "string",
+        "minLength": 1
+      },
+      "unit": "schema-defined",
+      "reader": {
+        "registrationEntry": "skills/nova/plugins/buster-quality-gate/src/stage.ts:execute",
+        "candidateLocations": [],
+        "verifiedFieldReader": null,
+        "genericCoreEventReader": [
+          {
+            "path": "skills/nova/core/execution/pipeline-loop.ts",
+            "line": 126,
+            "text": "      ...(typeof definition.config.agentRole === 'string' ? { agentRole: definition.config.agentRole } : {}), ...(override ? { administrativeOverride: true } : {}) });",
+            "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530"
+          }
+        ]
+      },
+      "productiveCallers": [
+        "skills/nova/core/cli.ts:runPipelineV2/recoverPipelineV2",
+        "skills/nova/core/execution/engine-run.ts:runNewPipeline/executePrepared",
+        "skills/nova/core/execution/runner.ts:PipelineRunner.run",
+        "skills/nova/core/execution/pipeline-loop.ts:PipelineLoop",
+        "skills/nova/core/execution/stage-executor.ts",
+        "skills/nova/plugins/buster-quality-gate/src/stage.ts:execute"
+      ],
+      "validation": {
+        "schema": "skills/nova/plugins/buster-quality-gate/schemas/config.schema.json",
+        "genericBoundary": "validateRuntimeRegistrationConfiguration or resolveTestProviderConfiguration; RegistryError REGISTRY_RESULT_INVALID/REGISTRY_MANIFEST_INVALID",
+        "semantic": "See candidate source lines; not yet independently closed for this field"
+      },
+      "targetAuthor": {
+        "proposal": "pipeline.config.json component/profile ref -> plugin-owned profiles/kubeclaw.buster-quality-gate.config.json",
+        "rule": "retain task inputs in workflow/plan; policy fields single plugin author; explicit secret references only"
+      },
+      "activation": "run graph stage config frozen; target module bound role label plus actual separate runtime target role if profile chooses it",
+      "recoveryEffects": "Current graph/runtime config/package pins reject drift; provider config digest persists in resolved plan. Module generation binding not implemented. Field-specific effects require review.",
+      "eval": "eligible policy profiles fixed generation; task data remains task-specific; no complete Evalrunner established",
+      "migration": "proposal only; remove schema/code default if policy; preserve task authority and finite protocol identities",
+      "requirements": [
+        "D17",
+        "D20",
+        "D21",
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F1",
+        "F2a",
+        "F3a",
+        "F4a"
+      ],
+      "cases": [
+        "RT-C0-SCHEMA-DISCOVERY"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/runtime/schema-roster.json",
+        "docs/review/evidence/config-acceptance/runtime/config-reader-search.log"
+      ],
+      "semanticStatus": "consumer-review-required",
+      "c0Closed": false,
+      "reviewerConfirmation": "pending material-correction/exhaustive independent review"
+    },
+    {
+      "id": "RT-6442142673149854",
+      "owner": "kubeclaw.implementation-agent",
+      "scope": {
+        "registration": "kubeclaw.implementation-agent:implementation",
+        "kind": "stages",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "source": {
+        "path": "skills/nova/plugins/implementation-agent/schemas/config.schema.json",
+        "field": "#/properties/agentRole",
+        "sha256": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a"
+      },
+      "field": "agentRole",
+      "classification": "operator-setting",
+      "classificationReason": "Role label included in stage.started event by generic PipelineLoop. This alone does not select agent/model/provider or establish plugin-specific behavior. Plugin reader may remain absent.",
+      "current": {
+        "value": "instance-specific input; external deployed profile unknown",
+        "schemaDefault": null,
+        "precedence": "workflow stage.config or platform adapters/observers map then plugin parser/local fallbacks; registry validation does not apply defaults",
+        "requiredAtParent": "See owning schema document required/conditionals"
+      },
+      "domain": {
+        "type": "string",
+        "minLength": 1
+      },
+      "unit": "schema-defined",
+      "reader": {
+        "registrationEntry": "skills/nova/plugins/implementation-agent/src/stage.ts:execute",
+        "candidateLocations": [],
+        "verifiedFieldReader": null,
+        "genericCoreEventReader": [
+          {
+            "path": "skills/nova/core/execution/pipeline-loop.ts",
+            "line": 126,
+            "text": "      ...(typeof definition.config.agentRole === 'string' ? { agentRole: definition.config.agentRole } : {}), ...(override ? { administrativeOverride: true } : {}) });",
+            "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530"
+          }
+        ]
+      },
+      "productiveCallers": [
+        "skills/nova/core/cli.ts:runPipelineV2/recoverPipelineV2",
+        "skills/nova/core/execution/engine-run.ts:runNewPipeline/executePrepared",
+        "skills/nova/core/execution/runner.ts:PipelineRunner.run",
+        "skills/nova/core/execution/pipeline-loop.ts:PipelineLoop",
+        "skills/nova/core/execution/stage-executor.ts",
+        "skills/nova/plugins/implementation-agent/src/stage.ts:execute"
+      ],
+      "validation": {
+        "schema": "skills/nova/plugins/implementation-agent/schemas/config.schema.json",
+        "genericBoundary": "validateRuntimeRegistrationConfiguration or resolveTestProviderConfiguration; RegistryError REGISTRY_RESULT_INVALID/REGISTRY_MANIFEST_INVALID",
+        "semantic": "See candidate source lines; not yet independently closed for this field"
+      },
+      "targetAuthor": {
+        "proposal": "pipeline.config.json component/profile ref -> plugin-owned profiles/kubeclaw.implementation-agent.config.json",
+        "rule": "retain task inputs in workflow/plan; policy fields single plugin author; explicit secret references only"
+      },
+      "activation": "run graph stage config frozen; target module bound role label plus actual separate runtime target role if profile chooses it",
+      "recoveryEffects": "Current graph/runtime config/package pins reject drift; provider config digest persists in resolved plan. Module generation binding not implemented. Field-specific effects require review.",
+      "eval": "eligible policy profiles fixed generation; task data remains task-specific; no complete Evalrunner established",
+      "migration": "proposal only; remove schema/code default if policy; preserve task authority and finite protocol identities",
+      "requirements": [
+        "D17",
+        "D20",
+        "D21",
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F1",
+        "F2a",
+        "F3a",
+        "F4a"
+      ],
+      "cases": [
+        "RT-C0-SCHEMA-DISCOVERY"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/runtime/schema-roster.json",
+        "docs/review/evidence/config-acceptance/runtime/config-reader-search.log"
+      ],
+      "semanticStatus": "consumer-review-required",
+      "c0Closed": false,
+      "reviewerConfirmation": "pending material-correction/exhaustive independent review"
+    },
+    {
+      "id": "RT-4c1a2b66cdab7e18",
+      "owner": "kubeclaw.pipeline-review",
+      "scope": {
+        "registration": "kubeclaw.pipeline-review:review",
+        "kind": "stages",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/schemas/config.schema.json",
+        "field": "#/properties/agentRole",
+        "sha256": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a"
+      },
+      "field": "agentRole",
+      "classification": "operator-setting",
+      "classificationReason": "Role label included in stage.started event by generic PipelineLoop. This alone does not select agent/model/provider or establish plugin-specific behavior. Plugin reader may remain absent.",
+      "current": {
+        "value": "instance-specific input; external deployed profile unknown",
+        "schemaDefault": null,
+        "precedence": "workflow stage.config or platform adapters/observers map then plugin parser/local fallbacks; registry validation does not apply defaults",
+        "requiredAtParent": "See owning schema document required/conditionals"
+      },
+      "domain": {
+        "type": "string",
+        "minLength": 1
+      },
+      "unit": "schema-defined",
+      "reader": {
+        "registrationEntry": "skills/nova/plugins/pipeline-review/src/stage.ts:execute",
+        "candidateLocations": [],
+        "verifiedFieldReader": null,
+        "genericCoreEventReader": [
+          {
+            "path": "skills/nova/core/execution/pipeline-loop.ts",
+            "line": 126,
+            "text": "      ...(typeof definition.config.agentRole === 'string' ? { agentRole: definition.config.agentRole } : {}), ...(override ? { administrativeOverride: true } : {}) });",
+            "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530"
+          }
+        ]
+      },
+      "productiveCallers": [
+        "skills/nova/core/cli.ts:runPipelineV2/recoverPipelineV2",
+        "skills/nova/core/execution/engine-run.ts:runNewPipeline/executePrepared",
+        "skills/nova/core/execution/runner.ts:PipelineRunner.run",
+        "skills/nova/core/execution/pipeline-loop.ts:PipelineLoop",
+        "skills/nova/core/execution/stage-executor.ts",
+        "skills/nova/plugins/pipeline-review/src/stage.ts:execute"
+      ],
+      "validation": {
+        "schema": "skills/nova/plugins/pipeline-review/schemas/config.schema.json",
+        "genericBoundary": "validateRuntimeRegistrationConfiguration or resolveTestProviderConfiguration; RegistryError REGISTRY_RESULT_INVALID/REGISTRY_MANIFEST_INVALID",
+        "semantic": "See candidate source lines; not yet independently closed for this field"
+      },
+      "targetAuthor": {
+        "proposal": "pipeline.config.json component/profile ref -> plugin-owned profiles/kubeclaw.pipeline-review.config.json",
+        "rule": "retain task inputs in workflow/plan; policy fields single plugin author; explicit secret references only"
+      },
+      "activation": "run graph stage config frozen; target module bound role label plus actual separate runtime target role if profile chooses it",
+      "recoveryEffects": "Current graph/runtime config/package pins reject drift; provider config digest persists in resolved plan. Module generation binding not implemented. Field-specific effects require review.",
+      "eval": "eligible policy profiles fixed generation; task data remains task-specific; no complete Evalrunner established",
+      "migration": "proposal only; remove schema/code default if policy; preserve task authority and finite protocol identities",
+      "requirements": [
+        "D17",
+        "D20",
+        "D21",
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F1",
+        "F2a",
+        "F3a",
+        "F4a"
+      ],
+      "cases": [
+        "RT-C0-SCHEMA-DISCOVERY"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/runtime/schema-roster.json",
+        "docs/review/evidence/config-acceptance/runtime/config-reader-search.log"
+      ],
+      "semanticStatus": "consumer-review-required",
+      "c0Closed": false,
+      "reviewerConfirmation": "pending material-correction/exhaustive independent review"
+    },
+    {
+      "id": "RT-2b6e3bc13743e80c",
+      "owner": "kubeclaw.project-summary",
+      "scope": {
+        "registration": "kubeclaw.project-summary:summary",
+        "kind": "stages",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "source": {
+        "path": "skills/nova/plugins/project-summary/schemas/config.schema.json",
+        "field": "#/properties/agentRole",
+        "sha256": "7c1bf8023f80f2bd5c3727b97636c804cd2c8b801fbe71fd8374a6edd7049bd9"
+      },
+      "field": "agentRole",
+      "classification": "operator-setting",
+      "classificationReason": "Role label included in stage.started event by generic PipelineLoop. This alone does not select agent/model/provider or establish plugin-specific behavior. Plugin reader may remain absent.",
+      "current": {
+        "value": "instance-specific input; external deployed profile unknown",
+        "schemaDefault": null,
+        "precedence": "workflow stage.config or platform adapters/observers map then plugin parser/local fallbacks; registry validation does not apply defaults",
+        "requiredAtParent": "See owning schema document required/conditionals"
+      },
+      "domain": {
+        "type": "string",
+        "minLength": 1
+      },
+      "unit": "schema-defined",
+      "reader": {
+        "registrationEntry": "skills/nova/plugins/project-summary/src/stage.ts:execute",
+        "candidateLocations": [
+          {
+            "path": "skills/nova/plugins/project-summary/src/stage.ts",
+            "line": 7,
+            "sha256": "b16533ade1d6bbf08c53d3c31bbe7102f5b67b785b1f928524ca9879a99a4fee",
+            "text": "if(keys.some(key=>!['agentRole','deliveryManifestEncoding'].includes(key)))throw new Error('DELIVERY_MANIFEST_CONFIG_INVALID');"
+          }
+        ],
+        "verifiedFieldReader": null,
+        "genericCoreEventReader": [
+          {
+            "path": "skills/nova/core/execution/pipeline-loop.ts",
+            "line": 126,
+            "text": "      ...(typeof definition.config.agentRole === 'string' ? { agentRole: definition.config.agentRole } : {}), ...(override ? { administrativeOverride: true } : {}) });",
+            "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530"
+          }
+        ]
+      },
+      "productiveCallers": [
+        "skills/nova/core/cli.ts:runPipelineV2/recoverPipelineV2",
+        "skills/nova/core/execution/engine-run.ts:runNewPipeline/executePrepared",
+        "skills/nova/core/execution/runner.ts:PipelineRunner.run",
+        "skills/nova/core/execution/pipeline-loop.ts:PipelineLoop",
+        "skills/nova/core/execution/stage-executor.ts",
+        "skills/nova/plugins/project-summary/src/stage.ts:execute"
+      ],
+      "validation": {
+        "schema": "skills/nova/plugins/project-summary/schemas/config.schema.json",
+        "genericBoundary": "validateRuntimeRegistrationConfiguration or resolveTestProviderConfiguration; RegistryError REGISTRY_RESULT_INVALID/REGISTRY_MANIFEST_INVALID",
+        "semantic": "See candidate source lines; not yet independently closed for this field"
+      },
+      "targetAuthor": {
+        "proposal": "pipeline.config.json component/profile ref -> plugin-owned profiles/kubeclaw.project-summary.config.json",
+        "rule": "retain task inputs in workflow/plan; policy fields single plugin author; explicit secret references only"
+      },
+      "activation": "run graph stage config frozen; target module bound role label plus actual separate runtime target role if profile chooses it",
+      "recoveryEffects": "Current graph/runtime config/package pins reject drift; provider config digest persists in resolved plan. Module generation binding not implemented. Field-specific effects require review.",
+      "eval": "eligible policy profiles fixed generation; task data remains task-specific; no complete Evalrunner established",
+      "migration": "proposal only; remove schema/code default if policy; preserve task authority and finite protocol identities",
+      "requirements": [
+        "D17",
+        "D20",
+        "D21",
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F1",
+        "F2a",
+        "F3a",
+        "F4a"
+      ],
+      "cases": [
+        "RT-C0-SCHEMA-DISCOVERY"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/runtime/schema-roster.json",
+        "docs/review/evidence/config-acceptance/runtime/config-reader-search.log"
+      ],
+      "semanticStatus": "consumer-review-required",
+      "c0Closed": false,
+      "reviewerConfirmation": "pending material-correction/exhaustive independent review"
+    },
+    {
+      "id": "RT-6f16c9b87b3bded5",
+      "owner": "kubeclaw.review",
+      "scope": {
+        "registration": "kubeclaw.review:repository-audit",
+        "kind": "stages",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "source": {
+        "path": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+        "field": "#/properties/reviewerModel",
+        "sha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785"
+      },
+      "field": "reviewerModel",
+      "classification": "operator-setting",
+      "classificationReason": "Config schema value affects the owned runtime behavior; per-field policy/task boundary needs consumer review.",
+      "current": {
+        "value": "instance-specific input; external deployed profile unknown",
+        "schemaDefault": null,
+        "precedence": "workflow stage.config or platform adapters/observers map then plugin parser/local fallbacks; registry validation does not apply defaults",
+        "requiredAtParent": "See owning schema document required/conditionals"
+      },
+      "domain": {
+        "type": "string",
+        "minLength": 1
+      },
+      "unit": "schema-defined",
+      "reader": {
+        "registrationEntry": "skills/nova/plugins/review/src/repository-audit-stage.ts:executeRepositoryAudit",
+        "candidateLocations": [
+          {
+            "path": "skills/nova/plugins/review/scripts/generate-policy-schema.mjs",
+            "line": 35,
+            "sha256": "7947d71484910e3433bc8eabac6ba00d79b37ce8f2f35643ac0b37a171a38c64",
+            "text": "required: ['agent', 'reviewerModel'],"
+          },
+          {
+            "path": "skills/nova/plugins/review/scripts/generate-policy-schema.mjs",
+            "line": 38,
+            "sha256": "7947d71484910e3433bc8eabac6ba00d79b37ce8f2f35643ac0b37a171a38c64",
+            "text": "reviewerModel: { type: 'string', minLength: 1,"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 35,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "readonly reviewerModel: string;"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 113,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "const agent = configText(value.agent), reviewerModel = configText(value.reviewerModel);"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 118,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "if (!agent || !reviewerModel || !['acp', 'subagent'].includes(String(reviewerRuntime))"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 122,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "return { agent, reviewerModel, reviewerRuntime: reviewerRuntime as ReviewRuntimeIdentity['runtime'],"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 345,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "model: config.reviewerModel, thinking: config.reviewerThinking });"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 623,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "return Object.freeze({ policyDigest, reviewerProtocol, reviewerModel: runtime.model,"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/review-content-cache.ts",
+            "line": 7,
+            "sha256": "aa4adcf19847251cc4b108ff0d3c3c299ce5f9c03a9843726cde4c0ad733a73a",
+            "text": "readonly reviewerModel: string;"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/review-content-cache.ts",
+            "line": 69,
+            "sha256": "aa4adcf19847251cc4b108ff0d3c3c299ce5f9c03a9843726cde4c0ad733a73a",
+            "text": "|| !exact(identity as Record<string, unknown>, ['policyDigest', 'reviewerProtocol', 'reviewerModel', 'reviewerRuntimeIdentityDigest', 'evidenceVersion'])"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
+            "line": 136,
+            "sha256": "6f8071ea095b3f912fc91e4c812bc7bd5c9cfd4077b48422e6eb4de1e0c70be7",
+            "text": "model: text(config.reviewerModel, 'config.reviewerModel'),"
+          }
+        ],
+        "verifiedFieldReader": null
+      },
+      "productiveCallers": [
+        "skills/nova/core/cli.ts:runPipelineV2/recoverPipelineV2",
+        "skills/nova/core/execution/engine-run.ts:runNewPipeline/executePrepared",
+        "skills/nova/core/execution/runner.ts:PipelineRunner.run",
+        "skills/nova/core/execution/pipeline-loop.ts:PipelineLoop",
+        "skills/nova/core/execution/stage-executor.ts",
+        "skills/nova/plugins/review/src/repository-audit-stage.ts:executeRepositoryAudit"
+      ],
+      "validation": {
+        "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+        "genericBoundary": "validateRuntimeRegistrationConfiguration or resolveTestProviderConfiguration; RegistryError REGISTRY_RESULT_INVALID/REGISTRY_MANIFEST_INVALID",
+        "semantic": "See candidate source lines; not yet independently closed for this field"
+      },
+      "targetAuthor": {
+        "proposal": "derived expected runtime identity from bound runtime-dispatch target profile, referenced by review profile",
+        "rule": "runtime-dispatch owns actual model/agent/runtime/thinking; reviewer expected cache/dispatch identity must be immutable projection of same owner, not independently editable duplicate"
+      },
+      "activation": "target module-start immutable binding; current stage graph/run adapter activation or resolved test plan",
+      "recoveryEffects": "These fields construct review runtime identity/cache keys/expected response identity; they do not directly override runtime-dispatch target.model/runtime/agentId/thinking. Mismatch must reject; target expected identity derives bound target closure.",
+      "eval": "eligible policy profiles fixed generation; task data remains task-specific; no complete Evalrunner established",
+      "migration": "proposal only; remove schema/code default if policy; preserve task authority and finite protocol identities",
+      "requirements": [
+        "D17",
+        "D20",
+        "D21",
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F1",
+        "F2a",
+        "F3a",
+        "F4a"
+      ],
+      "cases": [
+        "RT-C0-SCHEMA-DISCOVERY"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/runtime/schema-roster.json",
+        "docs/review/evidence/config-acceptance/runtime/config-reader-search.log"
+      ],
+      "semanticStatus": "consumer-review-required",
+      "c0Closed": false,
+      "reviewerConfirmation": "pending material-correction/exhaustive independent review"
+    },
+    {
+      "id": "RT-2330bdf275c4a50d",
+      "owner": "kubeclaw.review",
+      "scope": {
+        "registration": "kubeclaw.review:repository-audit",
+        "kind": "stages",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "source": {
+        "path": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+        "field": "#/properties/reviewerRuntime",
+        "sha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785"
+      },
+      "field": "reviewerRuntime",
+      "classification": "operator-setting",
+      "classificationReason": "Config schema value affects the owned runtime behavior; per-field policy/task boundary needs consumer review.",
+      "current": {
+        "value": "instance-specific input; external deployed profile unknown",
+        "schemaDefault": "subagent",
+        "precedence": "workflow stage.config or platform adapters/observers map then plugin parser/local fallbacks; registry validation does not apply defaults",
+        "requiredAtParent": "See owning schema document required/conditionals"
+      },
+      "domain": {
+        "enum": [
+          "acp",
+          "subagent"
+        ]
+      },
+      "unit": "schema-defined",
+      "reader": {
+        "registrationEntry": "skills/nova/plugins/review/src/repository-audit-stage.ts:executeRepositoryAudit",
+        "candidateLocations": [
+          {
+            "path": "skills/nova/plugins/review/scripts/generate-policy-schema.mjs",
+            "line": 40,
+            "sha256": "7947d71484910e3433bc8eabac6ba00d79b37ce8f2f35643ac0b37a171a38c64",
+            "text": "reviewerRuntime: { enum: ['acp', 'subagent'], default: 'subagent' },"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 36,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "readonly reviewerRuntime: ReviewRuntimeIdentity['runtime'];"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 114,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "const reviewerRuntime = value.reviewerRuntime === undefined ? 'subagent' : value.reviewerRuntime;"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 118,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "if (!agent || !reviewerModel || !['acp', 'subagent'].includes(String(reviewerRuntime))"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 122,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "return { agent, reviewerModel, reviewerRuntime: reviewerRuntime as ReviewRuntimeIdentity['runtime'],"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 344,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "runtime: config.reviewerRuntime, agentId: config.reviewerAgentId,"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
+            "line": 134,
+            "sha256": "6f8071ea095b3f912fc91e4c812bc7bd5c9cfd4077b48422e6eb4de1e0c70be7",
+            "text": "runtime: (config.reviewerRuntime ?? 'subagent') as ReviewRuntimeIdentity['runtime'],"
+          }
+        ],
+        "verifiedFieldReader": null
+      },
+      "productiveCallers": [
+        "skills/nova/core/cli.ts:runPipelineV2/recoverPipelineV2",
+        "skills/nova/core/execution/engine-run.ts:runNewPipeline/executePrepared",
+        "skills/nova/core/execution/runner.ts:PipelineRunner.run",
+        "skills/nova/core/execution/pipeline-loop.ts:PipelineLoop",
+        "skills/nova/core/execution/stage-executor.ts",
+        "skills/nova/plugins/review/src/repository-audit-stage.ts:executeRepositoryAudit"
+      ],
+      "validation": {
+        "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+        "genericBoundary": "validateRuntimeRegistrationConfiguration or resolveTestProviderConfiguration; RegistryError REGISTRY_RESULT_INVALID/REGISTRY_MANIFEST_INVALID",
+        "semantic": "See candidate source lines; not yet independently closed for this field"
+      },
+      "targetAuthor": {
+        "proposal": "derived expected runtime identity from bound runtime-dispatch target profile, referenced by review profile",
+        "rule": "runtime-dispatch owns actual model/agent/runtime/thinking; reviewer expected cache/dispatch identity must be immutable projection of same owner, not independently editable duplicate"
+      },
+      "activation": "target module-start immutable binding; current stage graph/run adapter activation or resolved test plan",
+      "recoveryEffects": "These fields construct review runtime identity/cache keys/expected response identity; they do not directly override runtime-dispatch target.model/runtime/agentId/thinking. Mismatch must reject; target expected identity derives bound target closure.",
+      "eval": "eligible policy profiles fixed generation; task data remains task-specific; no complete Evalrunner established",
+      "migration": "proposal only; remove schema/code default if policy; preserve task authority and finite protocol identities",
+      "requirements": [
+        "D17",
+        "D20",
+        "D21",
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F1",
+        "F2a",
+        "F3a",
+        "F4a"
+      ],
+      "cases": [
+        "RT-C0-SCHEMA-DISCOVERY"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/runtime/schema-roster.json",
+        "docs/review/evidence/config-acceptance/runtime/config-reader-search.log"
+      ],
+      "semanticStatus": "consumer-review-required",
+      "c0Closed": false,
+      "reviewerConfirmation": "pending material-correction/exhaustive independent review"
+    },
+    {
+      "id": "RT-d3d1c316303fc139",
+      "owner": "kubeclaw.review",
+      "scope": {
+        "registration": "kubeclaw.review:repository-audit",
+        "kind": "stages",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "source": {
+        "path": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+        "field": "#/properties/reviewerAgentId",
+        "sha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785"
+      },
+      "field": "reviewerAgentId",
+      "classification": "operator-setting",
+      "classificationReason": "Config schema value affects the owned runtime behavior; per-field policy/task boundary needs consumer review.",
+      "current": {
+        "value": "instance-specific input; external deployed profile unknown",
+        "schemaDefault": "codex",
+        "precedence": "workflow stage.config or platform adapters/observers map then plugin parser/local fallbacks; registry validation does not apply defaults",
+        "requiredAtParent": "See owning schema document required/conditionals"
+      },
+      "domain": {
+        "type": "string",
+        "minLength": 1
+      },
+      "unit": "schema-defined",
+      "reader": {
+        "registrationEntry": "skills/nova/plugins/review/src/repository-audit-stage.ts:executeRepositoryAudit",
+        "candidateLocations": [
+          {
+            "path": "skills/nova/plugins/review/scripts/generate-policy-schema.mjs",
+            "line": 41,
+            "sha256": "7947d71484910e3433bc8eabac6ba00d79b37ce8f2f35643ac0b37a171a38c64",
+            "text": "reviewerAgentId: { type: 'string', minLength: 1, default: 'codex' },"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 37,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "readonly reviewerAgentId: string;"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 115,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "const reviewerAgentId = configText(value.reviewerAgentId, 'codex');"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 119,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "|| !reviewerAgentId || !reviewerThinking || !profile) {"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 123,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "reviewerAgentId, reviewerThinking, profile,"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 344,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "runtime: config.reviewerRuntime, agentId: config.reviewerAgentId,"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
+            "line": 135,
+            "sha256": "6f8071ea095b3f912fc91e4c812bc7bd5c9cfd4077b48422e6eb4de1e0c70be7",
+            "text": "agentId: text(config.reviewerAgentId ?? 'codex', 'config.reviewerAgentId'),"
+          }
+        ],
+        "verifiedFieldReader": null
+      },
+      "productiveCallers": [
+        "skills/nova/core/cli.ts:runPipelineV2/recoverPipelineV2",
+        "skills/nova/core/execution/engine-run.ts:runNewPipeline/executePrepared",
+        "skills/nova/core/execution/runner.ts:PipelineRunner.run",
+        "skills/nova/core/execution/pipeline-loop.ts:PipelineLoop",
+        "skills/nova/core/execution/stage-executor.ts",
+        "skills/nova/plugins/review/src/repository-audit-stage.ts:executeRepositoryAudit"
+      ],
+      "validation": {
+        "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+        "genericBoundary": "validateRuntimeRegistrationConfiguration or resolveTestProviderConfiguration; RegistryError REGISTRY_RESULT_INVALID/REGISTRY_MANIFEST_INVALID",
+        "semantic": "See candidate source lines; not yet independently closed for this field"
+      },
+      "targetAuthor": {
+        "proposal": "derived expected runtime identity from bound runtime-dispatch target profile, referenced by review profile",
+        "rule": "runtime-dispatch owns actual model/agent/runtime/thinking; reviewer expected cache/dispatch identity must be immutable projection of same owner, not independently editable duplicate"
+      },
+      "activation": "target module-start immutable binding; current stage graph/run adapter activation or resolved test plan",
+      "recoveryEffects": "These fields construct review runtime identity/cache keys/expected response identity; they do not directly override runtime-dispatch target.model/runtime/agentId/thinking. Mismatch must reject; target expected identity derives bound target closure.",
+      "eval": "eligible policy profiles fixed generation; task data remains task-specific; no complete Evalrunner established",
+      "migration": "proposal only; remove schema/code default if policy; preserve task authority and finite protocol identities",
+      "requirements": [
+        "D17",
+        "D20",
+        "D21",
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F1",
+        "F2a",
+        "F3a",
+        "F4a"
+      ],
+      "cases": [
+        "RT-C0-SCHEMA-DISCOVERY"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/runtime/schema-roster.json",
+        "docs/review/evidence/config-acceptance/runtime/config-reader-search.log"
+      ],
+      "semanticStatus": "consumer-review-required",
+      "c0Closed": false,
+      "reviewerConfirmation": "pending material-correction/exhaustive independent review"
+    },
+    {
+      "id": "RT-5323309e862b72a1",
+      "owner": "kubeclaw.review",
+      "scope": {
+        "registration": "kubeclaw.review:repository-audit",
+        "kind": "stages",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "source": {
+        "path": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+        "field": "#/properties/reviewerThinking",
+        "sha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785"
+      },
+      "field": "reviewerThinking",
+      "classification": "operator-setting",
+      "classificationReason": "Config schema value affects the owned runtime behavior; per-field policy/task boundary needs consumer review.",
+      "current": {
+        "value": "instance-specific input; external deployed profile unknown",
+        "schemaDefault": "high",
+        "precedence": "workflow stage.config or platform adapters/observers map then plugin parser/local fallbacks; registry validation does not apply defaults",
+        "requiredAtParent": "See owning schema document required/conditionals"
+      },
+      "domain": {
+        "type": "string",
+        "minLength": 1
+      },
+      "unit": "schema-defined",
+      "reader": {
+        "registrationEntry": "skills/nova/plugins/review/src/repository-audit-stage.ts:executeRepositoryAudit",
+        "candidateLocations": [
+          {
+            "path": "skills/nova/plugins/review/scripts/generate-policy-schema.mjs",
+            "line": 42,
+            "sha256": "7947d71484910e3433bc8eabac6ba00d79b37ce8f2f35643ac0b37a171a38c64",
+            "text": "reviewerThinking: { type: 'string', minLength: 1, default: 'high' },"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 38,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "readonly reviewerThinking: string;"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 116,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "const reviewerThinking = configText(value.reviewerThinking, 'high');"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 119,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "|| !reviewerAgentId || !reviewerThinking || !profile) {"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 123,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "reviewerAgentId, reviewerThinking, profile,"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 345,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "model: config.reviewerModel, thinking: config.reviewerThinking });"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
+            "line": 137,
+            "sha256": "6f8071ea095b3f912fc91e4c812bc7bd5c9cfd4077b48422e6eb4de1e0c70be7",
+            "text": "thinking: text(config.reviewerThinking ?? 'high', 'config.reviewerThinking'),"
+          }
+        ],
+        "verifiedFieldReader": null
+      },
+      "productiveCallers": [
+        "skills/nova/core/cli.ts:runPipelineV2/recoverPipelineV2",
+        "skills/nova/core/execution/engine-run.ts:runNewPipeline/executePrepared",
+        "skills/nova/core/execution/runner.ts:PipelineRunner.run",
+        "skills/nova/core/execution/pipeline-loop.ts:PipelineLoop",
+        "skills/nova/core/execution/stage-executor.ts",
+        "skills/nova/plugins/review/src/repository-audit-stage.ts:executeRepositoryAudit"
+      ],
+      "validation": {
+        "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+        "genericBoundary": "validateRuntimeRegistrationConfiguration or resolveTestProviderConfiguration; RegistryError REGISTRY_RESULT_INVALID/REGISTRY_MANIFEST_INVALID",
+        "semantic": "See candidate source lines; not yet independently closed for this field"
+      },
+      "targetAuthor": {
+        "proposal": "derived expected runtime identity from bound runtime-dispatch target profile, referenced by review profile",
+        "rule": "runtime-dispatch owns actual model/agent/runtime/thinking; reviewer expected cache/dispatch identity must be immutable projection of same owner, not independently editable duplicate"
+      },
+      "activation": "target module-start immutable binding; current stage graph/run adapter activation or resolved test plan",
+      "recoveryEffects": "These fields construct review runtime identity/cache keys/expected response identity; they do not directly override runtime-dispatch target.model/runtime/agentId/thinking. Mismatch must reject; target expected identity derives bound target closure.",
+      "eval": "eligible policy profiles fixed generation; task data remains task-specific; no complete Evalrunner established",
+      "migration": "proposal only; remove schema/code default if policy; preserve task authority and finite protocol identities",
+      "requirements": [
+        "D17",
+        "D20",
+        "D21",
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F1",
+        "F2a",
+        "F3a",
+        "F4a"
+      ],
+      "cases": [
+        "RT-C0-SCHEMA-DISCOVERY"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/runtime/schema-roster.json",
+        "docs/review/evidence/config-acceptance/runtime/config-reader-search.log"
+      ],
+      "semanticStatus": "consumer-review-required",
+      "c0Closed": false,
+      "reviewerConfirmation": "pending material-correction/exhaustive independent review"
+    },
+    {
+      "id": "RT-b55382c2a16a1758",
+      "owner": "kubeclaw.review",
+      "scope": {
+        "registration": "kubeclaw.review:repository-revalidation",
+        "kind": "stages",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "source": {
+        "path": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+        "field": "#/properties/reviewerModel",
+        "sha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785"
+      },
+      "field": "reviewerModel",
+      "classification": "operator-setting",
+      "classificationReason": "Config schema value affects the owned runtime behavior; per-field policy/task boundary needs consumer review.",
+      "current": {
+        "value": "instance-specific input; external deployed profile unknown",
+        "schemaDefault": null,
+        "precedence": "workflow stage.config or platform adapters/observers map then plugin parser/local fallbacks; registry validation does not apply defaults",
+        "requiredAtParent": "See owning schema document required/conditionals"
+      },
+      "domain": {
+        "type": "string",
+        "minLength": 1
+      },
+      "unit": "schema-defined",
+      "reader": {
+        "registrationEntry": "skills/nova/plugins/review/src/repository-revalidation-stage.ts:executeRepositoryRevalidation",
+        "candidateLocations": [
+          {
+            "path": "skills/nova/plugins/review/scripts/generate-policy-schema.mjs",
+            "line": 35,
+            "sha256": "7947d71484910e3433bc8eabac6ba00d79b37ce8f2f35643ac0b37a171a38c64",
+            "text": "required: ['agent', 'reviewerModel'],"
+          },
+          {
+            "path": "skills/nova/plugins/review/scripts/generate-policy-schema.mjs",
+            "line": 38,
+            "sha256": "7947d71484910e3433bc8eabac6ba00d79b37ce8f2f35643ac0b37a171a38c64",
+            "text": "reviewerModel: { type: 'string', minLength: 1,"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 35,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "readonly reviewerModel: string;"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 113,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "const agent = configText(value.agent), reviewerModel = configText(value.reviewerModel);"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 118,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "if (!agent || !reviewerModel || !['acp', 'subagent'].includes(String(reviewerRuntime))"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 122,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "return { agent, reviewerModel, reviewerRuntime: reviewerRuntime as ReviewRuntimeIdentity['runtime'],"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 345,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "model: config.reviewerModel, thinking: config.reviewerThinking });"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 623,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "return Object.freeze({ policyDigest, reviewerProtocol, reviewerModel: runtime.model,"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/review-content-cache.ts",
+            "line": 7,
+            "sha256": "aa4adcf19847251cc4b108ff0d3c3c299ce5f9c03a9843726cde4c0ad733a73a",
+            "text": "readonly reviewerModel: string;"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/review-content-cache.ts",
+            "line": 69,
+            "sha256": "aa4adcf19847251cc4b108ff0d3c3c299ce5f9c03a9843726cde4c0ad733a73a",
+            "text": "|| !exact(identity as Record<string, unknown>, ['policyDigest', 'reviewerProtocol', 'reviewerModel', 'reviewerRuntimeIdentityDigest', 'evidenceVersion'])"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
+            "line": 136,
+            "sha256": "6f8071ea095b3f912fc91e4c812bc7bd5c9cfd4077b48422e6eb4de1e0c70be7",
+            "text": "model: text(config.reviewerModel, 'config.reviewerModel'),"
+          }
+        ],
+        "verifiedFieldReader": null
+      },
+      "productiveCallers": [
+        "skills/nova/core/cli.ts:runPipelineV2/recoverPipelineV2",
+        "skills/nova/core/execution/engine-run.ts:runNewPipeline/executePrepared",
+        "skills/nova/core/execution/runner.ts:PipelineRunner.run",
+        "skills/nova/core/execution/pipeline-loop.ts:PipelineLoop",
+        "skills/nova/core/execution/stage-executor.ts",
+        "skills/nova/plugins/review/src/repository-revalidation-stage.ts:executeRepositoryRevalidation"
+      ],
+      "validation": {
+        "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+        "genericBoundary": "validateRuntimeRegistrationConfiguration or resolveTestProviderConfiguration; RegistryError REGISTRY_RESULT_INVALID/REGISTRY_MANIFEST_INVALID",
+        "semantic": "See candidate source lines; not yet independently closed for this field"
+      },
+      "targetAuthor": {
+        "proposal": "derived expected runtime identity from bound runtime-dispatch target profile, referenced by review profile",
+        "rule": "runtime-dispatch owns actual model/agent/runtime/thinking; reviewer expected cache/dispatch identity must be immutable projection of same owner, not independently editable duplicate"
+      },
+      "activation": "target module-start immutable binding; current stage graph/run adapter activation or resolved test plan",
+      "recoveryEffects": "These fields construct review runtime identity/cache keys/expected response identity; they do not directly override runtime-dispatch target.model/runtime/agentId/thinking. Mismatch must reject; target expected identity derives bound target closure.",
+      "eval": "eligible policy profiles fixed generation; task data remains task-specific; no complete Evalrunner established",
+      "migration": "proposal only; remove schema/code default if policy; preserve task authority and finite protocol identities",
+      "requirements": [
+        "D17",
+        "D20",
+        "D21",
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F1",
+        "F2a",
+        "F3a",
+        "F4a"
+      ],
+      "cases": [
+        "RT-C0-SCHEMA-DISCOVERY"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/runtime/schema-roster.json",
+        "docs/review/evidence/config-acceptance/runtime/config-reader-search.log"
+      ],
+      "semanticStatus": "consumer-review-required",
+      "c0Closed": false,
+      "reviewerConfirmation": "pending material-correction/exhaustive independent review"
+    },
+    {
+      "id": "RT-47d637875afa3c78",
+      "owner": "kubeclaw.review",
+      "scope": {
+        "registration": "kubeclaw.review:repository-revalidation",
+        "kind": "stages",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "source": {
+        "path": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+        "field": "#/properties/reviewerRuntime",
+        "sha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785"
+      },
+      "field": "reviewerRuntime",
+      "classification": "operator-setting",
+      "classificationReason": "Config schema value affects the owned runtime behavior; per-field policy/task boundary needs consumer review.",
+      "current": {
+        "value": "instance-specific input; external deployed profile unknown",
+        "schemaDefault": "subagent",
+        "precedence": "workflow stage.config or platform adapters/observers map then plugin parser/local fallbacks; registry validation does not apply defaults",
+        "requiredAtParent": "See owning schema document required/conditionals"
+      },
+      "domain": {
+        "enum": [
+          "acp",
+          "subagent"
+        ]
+      },
+      "unit": "schema-defined",
+      "reader": {
+        "registrationEntry": "skills/nova/plugins/review/src/repository-revalidation-stage.ts:executeRepositoryRevalidation",
+        "candidateLocations": [
+          {
+            "path": "skills/nova/plugins/review/scripts/generate-policy-schema.mjs",
+            "line": 40,
+            "sha256": "7947d71484910e3433bc8eabac6ba00d79b37ce8f2f35643ac0b37a171a38c64",
+            "text": "reviewerRuntime: { enum: ['acp', 'subagent'], default: 'subagent' },"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 36,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "readonly reviewerRuntime: ReviewRuntimeIdentity['runtime'];"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 114,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "const reviewerRuntime = value.reviewerRuntime === undefined ? 'subagent' : value.reviewerRuntime;"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 118,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "if (!agent || !reviewerModel || !['acp', 'subagent'].includes(String(reviewerRuntime))"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 122,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "return { agent, reviewerModel, reviewerRuntime: reviewerRuntime as ReviewRuntimeIdentity['runtime'],"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 344,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "runtime: config.reviewerRuntime, agentId: config.reviewerAgentId,"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
+            "line": 134,
+            "sha256": "6f8071ea095b3f912fc91e4c812bc7bd5c9cfd4077b48422e6eb4de1e0c70be7",
+            "text": "runtime: (config.reviewerRuntime ?? 'subagent') as ReviewRuntimeIdentity['runtime'],"
+          }
+        ],
+        "verifiedFieldReader": null
+      },
+      "productiveCallers": [
+        "skills/nova/core/cli.ts:runPipelineV2/recoverPipelineV2",
+        "skills/nova/core/execution/engine-run.ts:runNewPipeline/executePrepared",
+        "skills/nova/core/execution/runner.ts:PipelineRunner.run",
+        "skills/nova/core/execution/pipeline-loop.ts:PipelineLoop",
+        "skills/nova/core/execution/stage-executor.ts",
+        "skills/nova/plugins/review/src/repository-revalidation-stage.ts:executeRepositoryRevalidation"
+      ],
+      "validation": {
+        "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+        "genericBoundary": "validateRuntimeRegistrationConfiguration or resolveTestProviderConfiguration; RegistryError REGISTRY_RESULT_INVALID/REGISTRY_MANIFEST_INVALID",
+        "semantic": "See candidate source lines; not yet independently closed for this field"
+      },
+      "targetAuthor": {
+        "proposal": "derived expected runtime identity from bound runtime-dispatch target profile, referenced by review profile",
+        "rule": "runtime-dispatch owns actual model/agent/runtime/thinking; reviewer expected cache/dispatch identity must be immutable projection of same owner, not independently editable duplicate"
+      },
+      "activation": "target module-start immutable binding; current stage graph/run adapter activation or resolved test plan",
+      "recoveryEffects": "These fields construct review runtime identity/cache keys/expected response identity; they do not directly override runtime-dispatch target.model/runtime/agentId/thinking. Mismatch must reject; target expected identity derives bound target closure.",
+      "eval": "eligible policy profiles fixed generation; task data remains task-specific; no complete Evalrunner established",
+      "migration": "proposal only; remove schema/code default if policy; preserve task authority and finite protocol identities",
+      "requirements": [
+        "D17",
+        "D20",
+        "D21",
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F1",
+        "F2a",
+        "F3a",
+        "F4a"
+      ],
+      "cases": [
+        "RT-C0-SCHEMA-DISCOVERY"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/runtime/schema-roster.json",
+        "docs/review/evidence/config-acceptance/runtime/config-reader-search.log"
+      ],
+      "semanticStatus": "consumer-review-required",
+      "c0Closed": false,
+      "reviewerConfirmation": "pending material-correction/exhaustive independent review"
+    },
+    {
+      "id": "RT-83758a651d569a1e",
+      "owner": "kubeclaw.review",
+      "scope": {
+        "registration": "kubeclaw.review:repository-revalidation",
+        "kind": "stages",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "source": {
+        "path": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+        "field": "#/properties/reviewerAgentId",
+        "sha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785"
+      },
+      "field": "reviewerAgentId",
+      "classification": "operator-setting",
+      "classificationReason": "Config schema value affects the owned runtime behavior; per-field policy/task boundary needs consumer review.",
+      "current": {
+        "value": "instance-specific input; external deployed profile unknown",
+        "schemaDefault": "codex",
+        "precedence": "workflow stage.config or platform adapters/observers map then plugin parser/local fallbacks; registry validation does not apply defaults",
+        "requiredAtParent": "See owning schema document required/conditionals"
+      },
+      "domain": {
+        "type": "string",
+        "minLength": 1
+      },
+      "unit": "schema-defined",
+      "reader": {
+        "registrationEntry": "skills/nova/plugins/review/src/repository-revalidation-stage.ts:executeRepositoryRevalidation",
+        "candidateLocations": [
+          {
+            "path": "skills/nova/plugins/review/scripts/generate-policy-schema.mjs",
+            "line": 41,
+            "sha256": "7947d71484910e3433bc8eabac6ba00d79b37ce8f2f35643ac0b37a171a38c64",
+            "text": "reviewerAgentId: { type: 'string', minLength: 1, default: 'codex' },"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 37,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "readonly reviewerAgentId: string;"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 115,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "const reviewerAgentId = configText(value.reviewerAgentId, 'codex');"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 119,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "|| !reviewerAgentId || !reviewerThinking || !profile) {"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 123,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "reviewerAgentId, reviewerThinking, profile,"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 344,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "runtime: config.reviewerRuntime, agentId: config.reviewerAgentId,"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
+            "line": 135,
+            "sha256": "6f8071ea095b3f912fc91e4c812bc7bd5c9cfd4077b48422e6eb4de1e0c70be7",
+            "text": "agentId: text(config.reviewerAgentId ?? 'codex', 'config.reviewerAgentId'),"
+          }
+        ],
+        "verifiedFieldReader": null
+      },
+      "productiveCallers": [
+        "skills/nova/core/cli.ts:runPipelineV2/recoverPipelineV2",
+        "skills/nova/core/execution/engine-run.ts:runNewPipeline/executePrepared",
+        "skills/nova/core/execution/runner.ts:PipelineRunner.run",
+        "skills/nova/core/execution/pipeline-loop.ts:PipelineLoop",
+        "skills/nova/core/execution/stage-executor.ts",
+        "skills/nova/plugins/review/src/repository-revalidation-stage.ts:executeRepositoryRevalidation"
+      ],
+      "validation": {
+        "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+        "genericBoundary": "validateRuntimeRegistrationConfiguration or resolveTestProviderConfiguration; RegistryError REGISTRY_RESULT_INVALID/REGISTRY_MANIFEST_INVALID",
+        "semantic": "See candidate source lines; not yet independently closed for this field"
+      },
+      "targetAuthor": {
+        "proposal": "derived expected runtime identity from bound runtime-dispatch target profile, referenced by review profile",
+        "rule": "runtime-dispatch owns actual model/agent/runtime/thinking; reviewer expected cache/dispatch identity must be immutable projection of same owner, not independently editable duplicate"
+      },
+      "activation": "target module-start immutable binding; current stage graph/run adapter activation or resolved test plan",
+      "recoveryEffects": "These fields construct review runtime identity/cache keys/expected response identity; they do not directly override runtime-dispatch target.model/runtime/agentId/thinking. Mismatch must reject; target expected identity derives bound target closure.",
+      "eval": "eligible policy profiles fixed generation; task data remains task-specific; no complete Evalrunner established",
+      "migration": "proposal only; remove schema/code default if policy; preserve task authority and finite protocol identities",
+      "requirements": [
+        "D17",
+        "D20",
+        "D21",
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F1",
+        "F2a",
+        "F3a",
+        "F4a"
+      ],
+      "cases": [
+        "RT-C0-SCHEMA-DISCOVERY"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/runtime/schema-roster.json",
+        "docs/review/evidence/config-acceptance/runtime/config-reader-search.log"
+      ],
+      "semanticStatus": "consumer-review-required",
+      "c0Closed": false,
+      "reviewerConfirmation": "pending material-correction/exhaustive independent review"
+    },
+    {
+      "id": "RT-35c1bfb7514c835f",
+      "owner": "kubeclaw.review",
+      "scope": {
+        "registration": "kubeclaw.review:repository-revalidation",
+        "kind": "stages",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "source": {
+        "path": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+        "field": "#/properties/reviewerThinking",
+        "sha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785"
+      },
+      "field": "reviewerThinking",
+      "classification": "operator-setting",
+      "classificationReason": "Config schema value affects the owned runtime behavior; per-field policy/task boundary needs consumer review.",
+      "current": {
+        "value": "instance-specific input; external deployed profile unknown",
+        "schemaDefault": "high",
+        "precedence": "workflow stage.config or platform adapters/observers map then plugin parser/local fallbacks; registry validation does not apply defaults",
+        "requiredAtParent": "See owning schema document required/conditionals"
+      },
+      "domain": {
+        "type": "string",
+        "minLength": 1
+      },
+      "unit": "schema-defined",
+      "reader": {
+        "registrationEntry": "skills/nova/plugins/review/src/repository-revalidation-stage.ts:executeRepositoryRevalidation",
+        "candidateLocations": [
+          {
+            "path": "skills/nova/plugins/review/scripts/generate-policy-schema.mjs",
+            "line": 42,
+            "sha256": "7947d71484910e3433bc8eabac6ba00d79b37ce8f2f35643ac0b37a171a38c64",
+            "text": "reviewerThinking: { type: 'string', minLength: 1, default: 'high' },"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 38,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "readonly reviewerThinking: string;"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 116,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "const reviewerThinking = configText(value.reviewerThinking, 'high');"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 119,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "|| !reviewerAgentId || !reviewerThinking || !profile) {"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 123,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "reviewerAgentId, reviewerThinking, profile,"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+            "line": 345,
+            "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+            "text": "model: config.reviewerModel, thinking: config.reviewerThinking });"
+          },
+          {
+            "path": "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
+            "line": 137,
+            "sha256": "6f8071ea095b3f912fc91e4c812bc7bd5c9cfd4077b48422e6eb4de1e0c70be7",
+            "text": "thinking: text(config.reviewerThinking ?? 'high', 'config.reviewerThinking'),"
+          }
+        ],
+        "verifiedFieldReader": null
+      },
+      "productiveCallers": [
+        "skills/nova/core/cli.ts:runPipelineV2/recoverPipelineV2",
+        "skills/nova/core/execution/engine-run.ts:runNewPipeline/executePrepared",
+        "skills/nova/core/execution/runner.ts:PipelineRunner.run",
+        "skills/nova/core/execution/pipeline-loop.ts:PipelineLoop",
+        "skills/nova/core/execution/stage-executor.ts",
+        "skills/nova/plugins/review/src/repository-revalidation-stage.ts:executeRepositoryRevalidation"
+      ],
+      "validation": {
+        "schema": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+        "genericBoundary": "validateRuntimeRegistrationConfiguration or resolveTestProviderConfiguration; RegistryError REGISTRY_RESULT_INVALID/REGISTRY_MANIFEST_INVALID",
+        "semantic": "See candidate source lines; not yet independently closed for this field"
+      },
+      "targetAuthor": {
+        "proposal": "derived expected runtime identity from bound runtime-dispatch target profile, referenced by review profile",
+        "rule": "runtime-dispatch owns actual model/agent/runtime/thinking; reviewer expected cache/dispatch identity must be immutable projection of same owner, not independently editable duplicate"
+      },
+      "activation": "target module-start immutable binding; current stage graph/run adapter activation or resolved test plan",
+      "recoveryEffects": "These fields construct review runtime identity/cache keys/expected response identity; they do not directly override runtime-dispatch target.model/runtime/agentId/thinking. Mismatch must reject; target expected identity derives bound target closure.",
+      "eval": "eligible policy profiles fixed generation; task data remains task-specific; no complete Evalrunner established",
+      "migration": "proposal only; remove schema/code default if policy; preserve task authority and finite protocol identities",
+      "requirements": [
+        "D17",
+        "D20",
+        "D21",
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F1",
+        "F2a",
+        "F3a",
+        "F4a"
+      ],
+      "cases": [
+        "RT-C0-SCHEMA-DISCOVERY"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/runtime/schema-roster.json",
+        "docs/review/evidence/config-acceptance/runtime/config-reader-search.log"
+      ],
+      "semanticStatus": "consumer-review-required",
+      "c0Closed": false,
+      "reviewerConfirmation": "pending material-correction/exhaustive independent review"
+    },
+    {
+      "id": "RT-ARTIFACT-METADATA-MAXIMUM-RECORD-BYTES",
+      "owner": "kubeclaw.artifact-store",
+      "scope": {
+        "registration": "kubeclaw.artifact-store:artifact-store",
+        "kind": "adapters",
+        "instance": "each configured stage/adapter/observer/test-provider invocation",
+        "profile": "selected by workflow or platform; no central author established"
+      },
+      "source": {
+        "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+        "field": "activate.FileDurableRecordStore.maximumRecordBytes",
+        "line": 171,
+        "sha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154"
+      },
+      "field": "maximumRecordBytes",
+      "classification": "operator-setting",
+      "classificationReason": "Durable artifact metadata record-size admission is storage capacity policy, not digest/wire protocol invariant",
+      "current": {
+        "value": 65536,
+        "default": 65536,
+        "precedence": "Source literal 64*1024 passed into actual durable metadata store, independent of maxArtifactBytes/maxStoreBytes; no current author field"
+      },
+      "domain": {
+        "type": "integer",
+        "minimum": 1,
+        "supportedMaximum": "positive safe integer; target numeric domain must preserve storage representation"
+      },
+      "unit": "bytes",
+      "reader": {
+        "verifiedFieldReader": [
+          {
+            "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+            "line": 171,
+            "sha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154"
+          },
+          {
+            "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+            "line": 75,
+            "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+          },
+          {
+            "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+            "line": 206,
+            "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+          }
+        ],
+        "productiveEntry": "AdapterStarter once-per-run activate -> artifact-store.activate constructs FileDurableRecordStore(maximumRecordBytes:65536) -> store append/transaction admission byte-length(canonicalJson(metadata))"
+      },
+      "productiveCallers": [
+        "skills/nova/core/execution/engine-runtime.ts:createAdapterRuntime",
+        "skills/nova/core/execution/adapters.ts:AdapterRuntime.start/invoke",
+        "skills/nova/core/execution/adapter-startup.ts:AdapterStarter.startAll",
+        "skills/common/plugins/artifact-store/src/adapter.ts:activate"
+      ],
+      "validation": {
+        "semantic": "FileDurableRecordStore constructor positiveInteger -> DURABLE_RECORD_LIMIT_INVALID; append/transact canonical metadata bytes>limit -> DURABLE_RECORD_SIZE_EXCEEDED. Different from actual blob maxArtifactBytes check."
+      },
+      "targetAuthor": {
+        "proposal": "artifact-store owned complete store profile maximumRecordBytes",
+        "rule": "one artifact-store author; generated adapter projection; no duplicate durable store default"
+      },
+      "activation": "run-owned adapter/observer activation today; target run-stable service/security/store policy, module-owned adapter tuning only with justified instance closure",
+      "recoveryEffects": "Current pinned runtime.configuration includes complete adapter/observer raw config; storage retention/ack/dedup/wait history preserved; new generation cannot free retained records or erase uncertain effects. Per-setting hot activation is not implemented.",
+      "eval": "eligible policy profiles fixed generation; task data remains task-specific; no complete Evalrunner established",
+      "migration": "proposal only; remove schema/code default if policy; preserve task authority and finite protocol identities",
+      "requirements": [
+        "D17",
+        "D20",
+        "D21",
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "F1",
+        "F2a",
+        "F3a",
+        "F4a",
+        "IC0-001"
+      ],
+      "cases": [
+        "RT-ARTIFACT-METADATA-MAXIMUM-RECORD-BYTES-MISSING",
+        "RT-ARTIFACT-METADATA-MAXIMUM-RECORD-BYTES-ALT",
+        "RT-ARTIFACT-METADATA-MAXIMUM-RECORD-BYTES-MUTANT"
+      ],
+      "evidence": [
+        "docs/review/evidence/config-acceptance/runtime/schema-roster.json",
+        "docs/review/evidence/config-acceptance/runtime/config-reader-search.log"
+      ],
+      "semanticStatus": "source-traced exact IC0-001 metadata reader; field cases and independent recheck pending",
+      "c0Closed": false,
+      "reviewerConfirmation": "pending material-correction/exhaustive independent review"
+    }
+  ],
+  "gaps": [
+    {
+      "id": "RT-SEMANTIC-CLOSURE",
+      "description": "Schema field rows deliberately consumer-review-required; lexical locations are not semantic closure."
+    },
+    {
+      "id": "RT-CODE-DEFAULT-DISPOSITION",
+      "description": "4642 code-default/config/input candidates require per-source/per-field semantic disposition; full candidates retained."
+    },
+    {
+      "id": "RT-EXTERNAL-PROFILE",
+      "description": "Deployed Nova/OpenClaw profile and installed external plugin roster are unavailable; no values inferred."
+    },
+    {
+      "id": "RT-EVAL-MODULE-BINDING",
+      "description": "Module generation binding and fixed CONFIG-generation Eval policy are proposed contracts; no complete implemented consumer established."
+    },
+    {
+      "id": "RT-RESOLVER-PRODUCTIVE-CALLER",
+      "description": "No in-repo production resolveTestPlan() caller found with tests/dist excluded; project compiler consumes already resolved plans. Externally authored plan/resolver invocation provenance must be bound; schema defaults only proven exported API behavior, not effective deployed project path."
+    },
+    {
+      "id": "RT-IC0-004-FIELD-CASES",
+      "description": "All schema rows and generated supplement cases need exact field-supported alternate profile, missing/inactive/type/unit/unknown owner/equal-old-author/error/activation/recovery/mutant/redaction executable specification. Current MISSING/ALT/MUTANT commands/observers are generic proposals and do not satisfy C0-E."
+    },
+    {
+      "id": "RT-IC0-001-LITERAL-EXPANSION",
+      "description": "Artifact metadata quota 65536 now separately inventoried; all other literal candidates still require semantic disposition, including prompt text, library limits, browser/visual profiles, review topology/scale caps, input policy defaults, storage/lock limits."
+    }
+  ]
+}

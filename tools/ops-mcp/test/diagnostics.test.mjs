@@ -21,3 +21,5 @@ test('content is not redacted and unavailable history is never called complete',
 test('tail saturation remains visible without assuming a full history', () => {
   assert.equal(logObservation('a\nb\n', { tailLines: 2 }).lineLimitReached, true);
 });
+
+test('selected A/B byte budgets control actual log output and sentinel truncation evidence',()=>{for(const limit of [10,100000]){const result=logObservation('x'.repeat(limit+1),{},limit);assert.equal(result.text.length,limit);assert.equal(result.byteLimited,true);}});

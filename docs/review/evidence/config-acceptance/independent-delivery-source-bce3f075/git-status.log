@@ -1,0 +1,125 @@
+ M docs/review/evidence/config-acceptance/author/main-fragment.json
+ M docs/review/evidence/config-acceptance/author/trace-prism-control-policies.py
+ M docs/review/evidence/config-acceptance/delivery/README.md
+ M docs/review/evidence/config-acceptance/delivery/collect-delivery.cjs
+ M docs/review/evidence/config-acceptance/delivery/delivery-surface-dispositions.json
+ M docs/review/evidence/config-acceptance/delivery/fragment-status.json
+ M docs/review/evidence/config-acceptance/delivery/inventory-fragment.json
+ M docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-source-observations.json
+ M docs/review/evidence/config-acceptance/delivery/open-row-backlog.json
+ M docs/review/evidence/config-acceptance/delivery/proposed-cases.json
+ M docs/review/evidence/config-acceptance/delivery/refine-buster-build-inputs.py
+ M docs/review/evidence/config-acceptance/delivery/refine-kubernetes-boundaries.py
+ M docs/review/evidence/config-acceptance/delivery/semantic-closure-artifact-digests.json
+ M docs/review/evidence/config-acceptance/delivery/semantic-closure-verification.json
+ M docs/review/evidence/config-acceptance/delivery/semantic-closure-verification.txt
+ M docs/review/evidence/config-acceptance/delivery/verify-semantic-closure.py
+ M docs/review/evidence/config-acceptance/runtime/README.md
+ M docs/review/evidence/config-acceptance/runtime/case-proposals.json
+ M docs/review/evidence/config-acceptance/runtime/inventory-fragment.json
+ M docs/review/evidence/config-acceptance/runtime/runtime-case-dispositions.json
+ M docs/review/remediation/config-definition-current.md
+?? docs/review/evidence/config-acceptance/author/check-prism-image-binding.mjs
+?? docs/review/evidence/config-acceptance/author/check-prism-role-metadata.mjs
+?? docs/review/evidence/config-acceptance/author/prism-design-cardinality-proposal.json
+?? docs/review/evidence/config-acceptance/author/prism-design-provenance-stand-bce3f075.patch.gz
+?? docs/review/evidence/config-acceptance/author/prism-role-metadata-before.json
+?? docs/review/evidence/config-acceptance/author/prism-role-metadata-stand.patch.gz
+?? docs/review/evidence/config-acceptance/author/prism-trust-source-current-receipt.json
+?? docs/review/evidence/config-acceptance/author/prism-trust-source-stand-checkpoint-5.patch.gz
+?? docs/review/evidence/config-acceptance/author/prism-trust-surface-dispositions.json
+?? docs/review/evidence/config-acceptance/author/trace-prism-trust-surfaces.py
+?? docs/review/evidence/config-acceptance/components/question-closure-bce3f075/
+?? docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/
+?? docs/review/evidence/config-acceptance/delivery/DELIVERY-CONTRACTS-BCE3F075.md
+?? docs/review/evidence/config-acceptance/delivery/acquire-codex-reader-bce3f075.py
+?? docs/review/evidence/config-acceptance/delivery/acquire-residual-readers-bce3f075.py
+?? docs/review/evidence/config-acceptance/delivery/buster-conditional-contracts-bce3f075.json
+?? docs/review/evidence/config-acceptance/delivery/buster-definition-profiles-bce3f075.json
+?? docs/review/evidence/config-acceptance/delivery/buster-definition-profiles-bce3f075.stderr
+?? docs/review/evidence/config-acceptance/delivery/buster-definition-profiles-bce3f075.stdout
+?? docs/review/evidence/config-acceptance/delivery/buster-definition-profiles-bce3f075/
+?? docs/review/evidence/config-acceptance/delivery/buster-refiner-repeat-bce3f075-corrected.stderr
+?? docs/review/evidence/config-acceptance/delivery/buster-refiner-repeat-bce3f075-corrected.stdout
+?? docs/review/evidence/config-acceptance/delivery/buster-refiner-repeat-bce3f075.stderr
+?? docs/review/evidence/config-acceptance/delivery/buster-refiner-repeat-bce3f075.stdout
+?? docs/review/evidence/config-acceptance/delivery/buster-runtime-contracts-bce3f075.json
+?? docs/review/evidence/config-acceptance/delivery/c0-residual-definition-cases-bce3f075.json
+?? docs/review/evidence/config-acceptance/delivery/case-links-bce3f075-final.stderr
+?? docs/review/evidence/config-acceptance/delivery/case-links-bce3f075-final.stdout
+?? docs/review/evidence/config-acceptance/delivery/chart-contracts-bce3f075.json
+?? docs/review/evidence/config-acceptance/delivery/chart-contracts-bce3f075.stderr
+?? docs/review/evidence/config-acceptance/delivery/chart-contracts-bce3f075.stdout
+?? docs/review/evidence/config-acceptance/delivery/chart-residuals-bce3f075.json
+?? docs/review/evidence/config-acceptance/delivery/chart-residuals-bce3f075.stderr
+?? docs/review/evidence/config-acceptance/delivery/chart-residuals-bce3f075.stdout
+?? docs/review/evidence/config-acceptance/delivery/check-definition-syntax-bce3f075.cjs
+?? docs/review/evidence/config-acceptance/delivery/check-parser-profile-syntax-bce3f075.py
+?? docs/review/evidence/config-acceptance/delivery/codex-definition-profiles-bce3f075/
+?? docs/review/evidence/config-acceptance/delivery/codex-native-contracts-bce3f075.json
+?? docs/review/evidence/config-acceptance/delivery/codex-reader-acquisitions-bce3f075.json
+?? docs/review/evidence/config-acceptance/delivery/collector-bce3f075-final.stderr
+?? docs/review/evidence/config-acceptance/delivery/collector-bce3f075-final.stdout
+?? docs/review/evidence/config-acceptance/delivery/collector-bce3f075-final2.stderr
+?? docs/review/evidence/config-acceptance/delivery/collector-bce3f075-final2.stdout
+?? docs/review/evidence/config-acceptance/delivery/collector-bce3f075-fixed-overlay-order.stderr
+?? docs/review/evidence/config-acceptance/delivery/collector-bce3f075-fixed-overlay-order.stdout
+?? docs/review/evidence/config-acceptance/delivery/collector-bce3f075.stderr
+?? docs/review/evidence/config-acceptance/delivery/collector-bce3f075.stdout
+?? docs/review/evidence/config-acceptance/delivery/definition-syntax-bce3f075.json
+?? docs/review/evidence/config-acceptance/delivery/definition-syntax-bce3f075.stderr
+?? docs/review/evidence/config-acceptance/delivery/definition-syntax-bce3f075.stdout
+?? docs/review/evidence/config-acceptance/delivery/delivery-remaining-obligations-bce3f075.json
+?? docs/review/evidence/config-acceptance/delivery/delivery-source-candidate-dispositions-bce3f075.json
+?? docs/review/evidence/config-acceptance/delivery/delivery-stable-completion-bce3f075-followup.json
+?? docs/review/evidence/config-acceptance/delivery/export-residual-definition-cases-bce3f075.py
+?? docs/review/evidence/config-acceptance/delivery/image-contracts-bce3f075.json
+?? docs/review/evidence/config-acceptance/delivery/lint-definition-profiles-bce3f075/
+?? docs/review/evidence/config-acceptance/delivery/lint-extension-contracts-bce3f075.json
+?? docs/review/evidence/config-acceptance/delivery/lint-reader-acquisitions-bce3f075.json
+?? docs/review/evidence/config-acceptance/delivery/materialize-buster-definition-profiles-bce3f075.cjs
+?? docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/
+?? docs/review/evidence/config-acceptance/delivery/native-host-definitions-bce3f075.json
+?? docs/review/evidence/config-acceptance/delivery/native-host-definitions-bce3f075.stderr
+?? docs/review/evidence/config-acceptance/delivery/native-host-definitions-bce3f075.stdout
+?? docs/review/evidence/config-acceptance/delivery/native-provisioning-contracts-bce3f075.json
+?? docs/review/evidence/config-acceptance/delivery/ops-reader-contracts-bce3f075.json
+?? docs/review/evidence/config-acceptance/delivery/parser-profile-syntax-bce3f075-corrected.stderr
+?? docs/review/evidence/config-acceptance/delivery/parser-profile-syntax-bce3f075-corrected.stdout
+?? docs/review/evidence/config-acceptance/delivery/parser-profile-syntax-bce3f075.json
+?? docs/review/evidence/config-acceptance/delivery/parser-profile-syntax-bce3f075.stderr
+?? docs/review/evidence/config-acceptance/delivery/parser-profile-syntax-bce3f075.stdout
+?? docs/review/evidence/config-acceptance/delivery/pinned-codex-reader-bce3f075/
+?? docs/review/evidence/config-acceptance/delivery/pinned-lint-reader-bce3f075/
+?? docs/review/evidence/config-acceptance/delivery/pinned-residual-bce3f075/
+?? docs/review/evidence/config-acceptance/delivery/record-candidate-dispositions-bce3f075.py
+?? docs/review/evidence/config-acceptance/delivery/refine-buster-conditional-contracts-bce3f075.py
+?? docs/review/evidence/config-acceptance/delivery/refine-buster-runtime-contracts-bce3f075.py
+?? docs/review/evidence/config-acceptance/delivery/refine-chart-contracts-bce3f075.py
+?? docs/review/evidence/config-acceptance/delivery/refine-chart-residuals-bce3f075.py
+?? docs/review/evidence/config-acceptance/delivery/refine-codex-contracts-bce3f075.py
+?? docs/review/evidence/config-acceptance/delivery/refine-image-contracts-bce3f075.py
+?? docs/review/evidence/config-acceptance/delivery/refine-lint-extension-contracts-bce3f075.py
+?? docs/review/evidence/config-acceptance/delivery/refine-native-provisioning-bce3f075.py
+?? docs/review/evidence/config-acceptance/delivery/refine-ops-reader-contracts-bce3f075.py
+?? docs/review/evidence/config-acceptance/delivery/refine-target-bindings-bce3f075.py
+?? docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2.json
+?? docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2.stderr
+?? docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2.stdout
+?? docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075-observer2/
+?? docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075.json
+?? docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075.stderr
+?? docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075.stdout
+?? docs/review/evidence/config-acceptance/delivery/residual-chart-definitions-bce3f075/
+?? docs/review/evidence/config-acceptance/delivery/residual-reader-acquisitions-bce3f075.json
+?? docs/review/evidence/config-acceptance/delivery/run-native-host-definitions-bce3f075.py
+?? docs/review/evidence/config-acceptance/delivery/run-residual-chart-definitions-bce3f075-observer2.py
+?? docs/review/evidence/config-acceptance/delivery/run-residual-chart-definitions-bce3f075.py
+?? docs/review/evidence/config-acceptance/delivery/snapshots/bce3f075-buster-profile-native-root-counterexample/
+?? docs/review/evidence/config-acceptance/delivery/snapshots/bce3f075-chart-opaque-object-diagnostic/
+?? docs/review/evidence/config-acceptance/delivery/snapshots/bce3f075-chart-schema-ref-diagnostic/
+?? docs/review/evidence/config-acceptance/delivery/snapshots/bce3f075-eslint-profile-empty-glob/
+?? docs/review/evidence/config-acceptance/delivery/snapshots/bce3f075-prior-artifact-manifest/
+?? docs/review/evidence/config-acceptance/delivery/target-binding-proposals-bce3f075.json
+?? docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075/
+?? docs/review/evidence/config-acceptance/runtime/batches/

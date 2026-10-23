@@ -1,3 +1,4 @@
+import {gateLimits} from './gate-limits.ts';
 import {verifiedArtifactJsonText} from '@kubeclaw/plugin-sdk';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -51,10 +52,11 @@ async function project(context:AdapterActivationContext,invocation:AdapterInvoca
 }
 
 export function activate(context:AdapterActivationContext):AdapterInstance {
+  const limits=gateLimits(context.config.gateLimits);
   const root=text(context.config.stateRoot);
   if(!path.isAbsolute(root)||path.normalize(root)!==root)throw new Error('DEMO_EVIDENCE_STORE_INVALID');
   text(context.config.manifestStageId);text(context.config.gateStageId);
-  const store=new FileNovaGateImportStore(path.join(root,'imports'),{recordLimits:{maximumRecords:10000,maximumBytes:1024**3,maximumRecordBytes:64*1024**2},maximumEvidenceStoreBytes:1024**3});
+  const store=new FileNovaGateImportStore(path.join(root,'imports'),{recordLimits:limits.recordLimits,maximumEvidenceStoreBytes:limits.maximumEvidenceStoreBytes});
   let stopping=false;
   return {async ready(){if(stopping)throw new Error('ADAPTER_SHUTTING_DOWN');},async invoke(invocation){
     if(!invocation.confidential)invocation.fence.assertCurrent();

@@ -1,0 +1,46 @@
+{
+  "controls": [
+    {
+      "control": "id-drift",
+      "rejected": true,
+      "error": "Unknown/duplicate boundary field: UNKNOWN"
+    },
+    {
+      "control": "original-drift",
+      "rejected": true,
+      "error": "Original identity/hash/cases drift: AUTH-PRISM-ENDPOINT-WORKER"
+    },
+    {
+      "control": "originalObjectSha256-drift",
+      "rejected": true,
+      "error": "Original identity/hash/cases drift: AUTH-PRISM-ENDPOINT-WORKER"
+    },
+    {
+      "control": "caseIds-drift",
+      "rejected": true,
+      "error": "Original identity/hash/cases drift: AUTH-PRISM-ENDPOINT-WORKER"
+    },
+    {
+      "control": "class-drift",
+      "rejected": true,
+      "error": "Original object/class/owner drift: AUTH-PRISM-ENDPOINT-WORKER"
+    },
+    {
+      "control": "owner-drift",
+      "rejected": true,
+      "error": "Original object/class/owner drift: AUTH-PRISM-ENDPOINT-WORKER"
+    },
+    {
+      "control": "duplicate-id",
+      "rejected": true,
+      "error": "Unknown/duplicate boundary field: AUTH-PRISM-ENDPOINT-WORKER"
+    },
+    {
+      "control": "missing-alternate-profile-leaf",
+      "rejected": true,
+      "error": "'workerUrl'"
+    }
+  ],
+  "restoredPositive": "PASS",
+  "qualification": "Matrix checks only; zero runtime/native/history cases executed"
+}

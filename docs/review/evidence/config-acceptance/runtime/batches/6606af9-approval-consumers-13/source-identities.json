@@ -1,0 +1,21 @@
+{
+  "skills/nova/plugins/human-approval/package.json": "875c50f61b076dd058328c8b7c73bba9877bbadc9614cd2add42097418fce306",
+  "skills/nova/plugins/human-approval/plugin.json": "a93144f20bcd0968995844516da5221e8d77aa5c559577c7f1165f00dfd0f4b8",
+  "skills/nova/plugins/human-approval/tsconfig.json": "14b157e19a12fc64deb926bf5abf286611c715f5a8475aa6408f037a5a09e472",
+  "skills/nova/plugins/human-approval/schemas/result.schema.json": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+  "skills/nova/plugins/human-approval/schemas/input.schema.json": "f4c7e20a48803202f36269ff3b04d3d8b4b4cea8dfdad4816fdddd5c063b3e2f",
+  "skills/nova/plugins/human-approval/schemas/config.schema.json": "45d20ce3dd08dcecb65fb0b0dbd76bf63b917038a968dce4d20963167b78f581",
+  "skills/nova/plugins/human-approval/schemas/architecture-input.schema.json": "028c18b6829fba9b2acfd72e197558d87ae14e7a56e9fbf6b16add6c7c5bc3ab",
+  "skills/nova/plugins/human-approval/src/approval.ts": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+  "skills/nova/plugins/human-approval/src/architecture-approval.ts": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+  "skills/nova/plugins/human-approval/src/stage.ts": "9e54e56d6b5acc631985cc2de9e9be943f3e8cdeaa09835dfdc1e402d67da8fd",
+  "skills/nova/plugins/prism-design/package.json": "54c0031ee6ce2b8bed687d805cadb90ea40c405df36cde653f99fab30303972d",
+  "skills/nova/plugins/prism-design/plugin.json": "063ef9316e7bfdbe8b2b9a0812bfc2a0b968294edc116d85e557d3e591dbf2d9",
+  "skills/nova/plugins/prism-design/tsconfig.json": "6fcce9b8c2807131e39d8aaed282eb5f03906dc757d09d8b4fe54c6460cab2f1",
+  "skills/nova/plugins/prism-design/schemas/result.schema.json": "3e80e0c6d65754ee88072b0d08c1780b6d196358d25f45175a7d2c8ff7d45fea",
+  "skills/nova/plugins/prism-design/schemas/input.schema.json": "0c636654897e05d3a4981009c4676e3a7fec517ff6c59822edd49259590fb66d",
+  "skills/nova/plugins/prism-design/schemas/config.schema.json": "15fc34fb28e0afe96ad1e248c32e6d9a9bb173bb731226fb52ccb78a8afcc61e",
+  "skills/nova/plugins/prism-design/src/architecture.ts": "bb4fab2431b51d68a787fefdaec95649678e86ede9961bc2fb1ad168b7eed10f",
+  "skills/nova/plugins/prism-design/src/archive.ts": "8875fcaa4c6efafa2f231c8e3fcc522dcd1ae1f23850a4d8941a89358726383e",
+  "skills/nova/plugins/prism-design/src/stage.ts": "20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88"
+}

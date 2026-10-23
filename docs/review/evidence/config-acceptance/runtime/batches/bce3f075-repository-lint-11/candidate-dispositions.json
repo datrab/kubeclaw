@@ -1,0 +1,456 @@
+{
+  "records": [
+    {
+      "id": "RT-CANDIDATE-c089d3ca5c42dca0",
+      "source": {
+        "path": "skills/nova/plugins/lint/src/adapter.ts",
+        "line": 10,
+        "text": "function configuredRoots(config: Readonly<Record<string, unknown>>, key: string): string[] {",
+        "sha256": "7d525ef53fc8a187eba48e7ee15ca7f8f2df1d00a4e23823de15bae47a1b49e4",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "7d525ef53fc8a187eba48e7ee15ca7f8f2df1d00a4e23823de15bae47a1b49e4",
+      "explicitReviewedReason": "Exact activation captured canonicalroot arrays and request canonical containment. Schema rejectsemptystring/rawduplicates but directparser realpath emptytocwd or aliasduplicates accepted; target canonicalunique grant-safe requirements explicit. No extra root inferred from request.",
+      "settings": [
+        "RT-0fb54476343394c5",
+        "RT-c72d89a17baccb7b",
+        "RT-39db4fe31eda9428",
+        "RT-76791de9a633c9ce"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/contracts.json",
+      "status": "explicit exact current reader/task/security disposition; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-93b7c75c9b17215d",
+      "source": {
+        "path": "skills/nova/plugins/lint/src/adapter.ts",
+        "line": 12,
+        "text": "if (!Array.isArray(value) || value.length === 0 || value.some((item) => typeof item !== 'string')) {",
+        "sha256": "7d525ef53fc8a187eba48e7ee15ca7f8f2df1d00a4e23823de15bae47a1b49e4",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "7d525ef53fc8a187eba48e7ee15ca7f8f2df1d00a4e23823de15bae47a1b49e4",
+      "explicitReviewedReason": "Exact activation captured canonicalroot arrays and request canonical containment. Schema rejectsemptystring/rawduplicates but directparser realpath emptytocwd or aliasduplicates accepted; target canonicalunique grant-safe requirements explicit. No extra root inferred from request.",
+      "settings": [
+        "RT-0fb54476343394c5",
+        "RT-c72d89a17baccb7b",
+        "RT-39db4fe31eda9428",
+        "RT-76791de9a633c9ce"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/contracts.json",
+      "status": "explicit exact current reader/task/security disposition; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a0f0058cdab3330d",
+      "source": {
+        "path": "skills/nova/plugins/lint/src/adapter.ts",
+        "line": 19,
+        "text": "if (typeof value !== 'string' || value.length === 0) throw new Error(`${label}_INVALID`);",
+        "sha256": "7d525ef53fc8a187eba48e7ee15ca7f8f2df1d00a4e23823de15bae47a1b49e4",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "7d525ef53fc8a187eba48e7ee15ca7f8f2df1d00a4e23823de15bae47a1b49e4",
+      "explicitReviewedReason": "Exact activation captured canonicalroot arrays and request canonical containment. Schema rejectsemptystring/rawduplicates but directparser realpath emptytocwd or aliasduplicates accepted; target canonicalunique grant-safe requirements explicit. No extra root inferred from request.",
+      "settings": [
+        "RT-0fb54476343394c5",
+        "RT-c72d89a17baccb7b",
+        "RT-39db4fe31eda9428",
+        "RT-76791de9a633c9ce"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/contracts.json",
+      "status": "explicit exact current reader/task/security disposition; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-5f2433873cfe7ca4",
+      "source": {
+        "path": "skills/nova/plugins/lint/src/adapter.ts",
+        "line": 21,
+        "text": "if (!roots.some((root) => canonical === root || canonical.startsWith(`${root}${path.sep}`))) {",
+        "sha256": "7d525ef53fc8a187eba48e7ee15ca7f8f2df1d00a4e23823de15bae47a1b49e4",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "7d525ef53fc8a187eba48e7ee15ca7f8f2df1d00a4e23823de15bae47a1b49e4",
+      "explicitReviewedReason": "Exact activation captured canonicalroot arrays and request canonical containment. Schema rejectsemptystring/rawduplicates but directparser realpath emptytocwd or aliasduplicates accepted; target canonicalunique grant-safe requirements explicit. No extra root inferred from request.",
+      "settings": [
+        "RT-0fb54476343394c5",
+        "RT-c72d89a17baccb7b",
+        "RT-39db4fe31eda9428",
+        "RT-76791de9a633c9ce"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/contracts.json",
+      "status": "explicit exact current reader/task/security disposition; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-d0267f3be77de4b8",
+      "source": {
+        "path": "skills/nova/plugins/lint/src/adapter.ts",
+        "line": 40,
+        "text": "if (request.capability !== 'lint.execute' || request.operation !== 'run_report') {",
+        "sha256": "7d525ef53fc8a187eba48e7ee15ca7f8f2df1d00a4e23823de15bae47a1b49e4",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "7d525ef53fc8a187eba48e7ee15ca7f8f2df1d00a4e23823de15bae47a1b49e4",
+      "explicitReviewedReason": "Exact supported lint.execute/run_report identity and optional40lowerhex tasksourceRevision. Protocol/task contract, not operator knob; actual revision creates temporary candidate worktree via withLintCandidate source identity; no tool/git execution or modelselector here.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exact supported lint.execute/run_report identity and optional40lowerhex tasksourceRevision. Protocol/task contract, not operator knob; actual revision creates temporary candidate worktree via withLintCandidate source identity; no tool/git execution or modelselector here.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/contracts.json",
+      "status": "explicit exact current reader/task/security disposition; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-3ccd8df31c33b8c1",
+      "source": {
+        "path": "skills/nova/plugins/lint/src/adapter.ts",
+        "line": 47,
+        "text": "if (revision !== undefined && (typeof revision !== 'string' || !/^[a-f0-9]{40}$/u.test(revision))) throw new Error('LINT_SOURCE_REVISION_INVALID');",
+        "sha256": "7d525ef53fc8a187eba48e7ee15ca7f8f2df1d00a4e23823de15bae47a1b49e4",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "7d525ef53fc8a187eba48e7ee15ca7f8f2df1d00a4e23823de15bae47a1b49e4",
+      "explicitReviewedReason": "Exact supported lint.execute/run_report identity and optional40lowerhex tasksourceRevision. Protocol/task contract, not operator knob; actual revision creates temporary candidate worktree via withLintCandidate source identity; no tool/git execution or modelselector here.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exact supported lint.execute/run_report identity and optional40lowerhex tasksourceRevision. Protocol/task contract, not operator knob; actual revision creates temporary candidate worktree via withLintCandidate source identity; no tool/git execution or modelselector here.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/contracts.json",
+      "status": "explicit exact current reader/task/security disposition; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-8cc52c2e7fd6ce9f",
+      "source": {
+        "path": "skills/nova/plugins/lint/src/request.ts",
+        "line": 4,
+        "text": "if (kubernetes !== undefined && (!kubernetes || typeof kubernetes !== 'object' || Array.isArray(kubernetes))) {",
+        "sha256": "68d31dbdfb0a48764b436307be6998cd21700091f9f06f306bdef34532fb2453",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "68d31dbdfb0a48764b436307be6998cd21700091f9f06f306bdef34532fb2453",
+      "explicitReviewedReason": "Exact optional Kubernetes taskobject/arrays and changedFiles stringarray shapes before executeLintReport. Task source selection, not config quota fallback. Nested policy/tool limits and task evidence remain separate original source backlog.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exact optional Kubernetes taskobject/arrays and changedFiles stringarray shapes before executeLintReport. Task source selection, not config quota fallback. Nested policy/tool limits and task evidence remain separate original source backlog.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/contracts.json",
+      "status": "explicit exact current reader/task/security disposition; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-274bc9586f971a7f",
+      "source": {
+        "path": "skills/nova/plugins/lint/src/request.ts",
+        "line": 20,
+        "text": "if (changedFiles !== undefined && (!Array.isArray(changedFiles) || changedFiles.some((item) => typeof item !== 'string'))) {",
+        "sha256": "68d31dbdfb0a48764b436307be6998cd21700091f9f06f306bdef34532fb2453",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "68d31dbdfb0a48764b436307be6998cd21700091f9f06f306bdef34532fb2453",
+      "explicitReviewedReason": "Exact optional Kubernetes taskobject/arrays and changedFiles stringarray shapes before executeLintReport. Task source selection, not config quota fallback. Nested policy/tool limits and task evidence remain separate original source backlog.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exact optional Kubernetes taskobject/arrays and changedFiles stringarray shapes before executeLintReport. Task source selection, not config quota fallback. Nested policy/tool limits and task evidence remain separate original source backlog.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/contracts.json",
+      "status": "explicit exact current reader/task/security disposition; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-1b174543caf98561",
+      "source": {
+        "path": "skills/nova/plugins/lint/src/stage.ts",
+        "line": 18,
+        "text": "function requiredConfig(config: Readonly<Record<string, unknown>>, key: string): string {",
+        "sha256": "6ba5172934f59d7b806e90ff1ce114feb8efe386a61ccedd8b86afc46b07d864",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "6ba5172934f59d7b806e90ff1ce114feb8efe386a61ccedd8b86afc46b07d864",
+      "explicitReviewedReason": "Exact required configstrings then payload; actual adapter containment and engine fullyvalidatedbundle/project govern use. No ENV/CLI fallback. Current path-only JSON doesnot prove immutable validbundle or tools/grants; genuine complete paired policyfixtures prerequisite remainsOPEN.",
+      "settings": [
+        "RT-861151f1c38043d9",
+        "RT-3868555514538d7c",
+        "RT-cdfe9d6d2726e553",
+        "RT-36a194a799b00dd6"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/contracts.json",
+      "status": "precise open complete policy/sourcefixture and immutablebundle/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-56b38efc46e1547f",
+      "source": {
+        "path": "skills/nova/plugins/lint/src/stage.ts",
+        "line": 20,
+        "text": "if (typeof value !== 'string' || value.length === 0) throw new Error(`lint config is invalid: ${key}`);",
+        "sha256": "6ba5172934f59d7b806e90ff1ce114feb8efe386a61ccedd8b86afc46b07d864",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "6ba5172934f59d7b806e90ff1ce114feb8efe386a61ccedd8b86afc46b07d864",
+      "explicitReviewedReason": "Exact required configstrings then payload; actual adapter containment and engine fullyvalidatedbundle/project govern use. No ENV/CLI fallback. Current path-only JSON doesnot prove immutable validbundle or tools/grants; genuine complete paired policyfixtures prerequisite remainsOPEN.",
+      "settings": [
+        "RT-861151f1c38043d9",
+        "RT-3868555514538d7c",
+        "RT-cdfe9d6d2726e553",
+        "RT-36a194a799b00dd6"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/contracts.json",
+      "status": "precise open complete policy/sourcefixture and immutablebundle/grant obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-343c30d2c34be53c",
+      "source": {
+        "path": "skills/nova/plugins/lint/src/stage.ts",
+        "line": 61,
+        "text": "const sourceRevision = input.sourceStageId !== undefined || input.revision !== undefined",
+        "sha256": "6ba5172934f59d7b806e90ff1ce114feb8efe386a61ccedd8b86afc46b07d864",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "6ba5172934f59d7b806e90ff1ce114feb8efe386a61ccedd8b86afc46b07d864",
+      "explicitReviewedReason": "Exact optional task sourceRevision resolution; canonicalId task project/workingDirectory routing and artifact namespace tier/project defaultlabel. input.project doesnot override policyProject; project label fallback is taskartifactidentity, not deployment config author. Source/revision/artifact bindings retained.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exact optional task sourceRevision resolution; canonicalId task project/workingDirectory routing and artifact namespace tier/project defaultlabel. input.project doesnot override policyProject; project label fallback is taskartifactidentity, not deployment config author. Source/revision/artifact bindings retained.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/contracts.json",
+      "status": "explicit exact current reader/task/security disposition; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-beb83fa614e1c1cf",
+      "source": {
+        "path": "skills/nova/plugins/lint/src/stage.ts",
+        "line": 65,
+        "text": "resource: { type: 'lint.project', canonicalId: input.project || input.workingDirectory },",
+        "sha256": "6ba5172934f59d7b806e90ff1ce114feb8efe386a61ccedd8b86afc46b07d864",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "6ba5172934f59d7b806e90ff1ce114feb8efe386a61ccedd8b86afc46b07d864",
+      "explicitReviewedReason": "Exact optional task sourceRevision resolution; canonicalId task project/workingDirectory routing and artifact namespace tier/project defaultlabel. input.project doesnot override policyProject; project label fallback is taskartifactidentity, not deployment config author. Source/revision/artifact bindings retained.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exact optional task sourceRevision resolution; canonicalId task project/workingDirectory routing and artifact namespace tier/project defaultlabel. input.project doesnot override policyProject; project label fallback is taskartifactidentity, not deployment config author. Source/revision/artifact bindings retained.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/contracts.json",
+      "status": "explicit exact current reader/task/security disposition; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-c1f253cdd0366eec",
+      "source": {
+        "path": "skills/nova/plugins/lint/src/stage.ts",
+        "line": 87,
+        "text": "resource: { type: 'artifact.object', canonicalId: `lint:${tier}:${input.project || 'project'}` },",
+        "sha256": "6ba5172934f59d7b806e90ff1ce114feb8efe386a61ccedd8b86afc46b07d864",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "6ba5172934f59d7b806e90ff1ce114feb8efe386a61ccedd8b86afc46b07d864",
+      "explicitReviewedReason": "Exact optional task sourceRevision resolution; canonicalId task project/workingDirectory routing and artifact namespace tier/project defaultlabel. input.project doesnot override policyProject; project label fallback is taskartifactidentity, not deployment config author. Source/revision/artifact bindings retained.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exact optional task sourceRevision resolution; canonicalId task project/workingDirectory routing and artifact namespace tier/project defaultlabel. input.project doesnot override policyProject; project label fallback is taskartifactidentity, not deployment config author. Source/revision/artifact bindings retained.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/contracts.json",
+      "status": "explicit exact current reader/task/security disposition; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-328803a370b93197",
+      "source": {
+        "path": "skills/nova/plugins/repository-adapter/src/adapter.ts",
+        "line": 62,
+        "text": "const resolved = value ?? fallback;",
+        "sha256": "657ec9c38069eead03aa531e5d5b60041c8fe34b643e2bab838eb0a80e12afcd",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "657ec9c38069eead03aa531e5d5b60041c8fe34b643e2bab838eb0a80e12afcd",
+      "explicitReviewedReason": "Exact current nullishfallback4194304/2048 and positive-safeinteger guard; owning schema rejectsnull/unknown but directparser nullfallsback. Actuallocalfile read8/9 plus capturedactivation observed; maxChangedPath Git effectsnot-run. Proposedrequired boundedfields remove fallback, nophysical capacity proof.",
+      "settings": [
+        "RT-1e54fe8d9c58d3f7",
+        "RT-9e5898da0a8f1aa3"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/contracts.json",
+      "status": "explicit exact current reader/task/security disposition; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-00b328010ecd9ca3",
+      "source": {
+        "path": "skills/nova/plugins/repository-adapter/src/adapter.ts",
+        "line": 63,
+        "text": "if (!Number.isSafeInteger(resolved) || Number(resolved) <= 0) throw new Error(`${label} is invalid`);",
+        "sha256": "657ec9c38069eead03aa531e5d5b60041c8fe34b643e2bab838eb0a80e12afcd",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "657ec9c38069eead03aa531e5d5b60041c8fe34b643e2bab838eb0a80e12afcd",
+      "explicitReviewedReason": "Exact current nullishfallback4194304/2048 and positive-safeinteger guard; owning schema rejectsnull/unknown but directparser nullfallsback. Actuallocalfile read8/9 plus capturedactivation observed; maxChangedPath Git effectsnot-run. Proposedrequired boundedfields remove fallback, nophysical capacity proof.",
+      "settings": [
+        "RT-1e54fe8d9c58d3f7",
+        "RT-9e5898da0a8f1aa3"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/contracts.json",
+      "status": "explicit exact current reader/task/security disposition; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-1dc42e48f3889a97",
+      "source": {
+        "path": "skills/nova/plugins/repository-adapter/src/adapter.ts",
+        "line": 68,
+        "text": "const configured = context.config.repositoryRoot;",
+        "sha256": "657ec9c38069eead03aa531e5d5b60041c8fe34b643e2bab838eb0a80e12afcd",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "657ec9c38069eead03aa531e5d5b60041c8fe34b643e2bab838eb0a80e12afcd",
+      "explicitReviewedReason": "Exact required canonical activationroot, finalsymlink and realpath!=resolve reject; ready directory and localfile NOFOLLOW traversal guard retain grant. Existing installationlocator field, no taskpayload rootoverride or SDKcodec selection.",
+      "settings": [
+        "RT-89d7ff67ced4d9b4"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/contracts.json",
+      "status": "explicit exact current reader/task/security disposition; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-58e33b01d514a8fa",
+      "source": {
+        "path": "skills/nova/plugins/repository-adapter/src/adapter.ts",
+        "line": 69,
+        "text": "if (typeof configured !== 'string' || configured.length === 0) throw new Error('repositoryRoot is required');",
+        "sha256": "657ec9c38069eead03aa531e5d5b60041c8fe34b643e2bab838eb0a80e12afcd",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "657ec9c38069eead03aa531e5d5b60041c8fe34b643e2bab838eb0a80e12afcd",
+      "explicitReviewedReason": "Exact required canonical activationroot, finalsymlink and realpath!=resolve reject; ready directory and localfile NOFOLLOW traversal guard retain grant. Existing installationlocator field, no taskpayload rootoverride or SDKcodec selection.",
+      "settings": [
+        "RT-89d7ff67ced4d9b4"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/contracts.json",
+      "status": "explicit exact current reader/task/security disposition; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-66cead056cb6376f",
+      "source": {
+        "path": "skills/nova/plugins/repository-adapter/src/adapter.ts",
+        "line": 70,
+        "text": "if (fs.lstatSync(configured).isSymbolicLink() || fs.realpathSync(configured) !== path.resolve(configured)) throw new Error('REPOSITORY_PATH_FORBIDDEN');",
+        "sha256": "657ec9c38069eead03aa531e5d5b60041c8fe34b643e2bab838eb0a80e12afcd",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "657ec9c38069eead03aa531e5d5b60041c8fe34b643e2bab838eb0a80e12afcd",
+      "explicitReviewedReason": "Exact required canonical activationroot, finalsymlink and realpath!=resolve reject; ready directory and localfile NOFOLLOW traversal guard retain grant. Existing installationlocator field, no taskpayload rootoverride or SDKcodec selection.",
+      "settings": [
+        "RT-89d7ff67ced4d9b4"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/contracts.json",
+      "status": "explicit exact current reader/task/security disposition; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a38c0d424d5c09a2",
+      "source": {
+        "path": "skills/nova/plugins/repository-adapter/src/repository-file.ts",
+        "line": 7,
+        "text": "function inside(candidate: string, root: string): boolean { return candidate === root || candidate.startsWith(`${root}${path.sep}`); }",
+        "sha256": "a6d8442958b8d90132a23d69449058c6d146aa170ad5f63a11433e42fb73277e",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "a6d8442958b8d90132a23d69449058c6d146aa170ad5f63a11433e42fb73277e",
+      "explicitReviewedReason": "Exact authorizedroot boundary/NOFOLLOW path safety/current stable statreadsize/ELOOP-ENOTDIR errortranslation. Security/data consistency guard, not adjustable pathescape permission. Current safe actualfile8positive9negative under8; UTF8returnedsize vs rawstat bytes distinct.",
+      "settings": [
+        "RT-89d7ff67ced4d9b4",
+        "RT-1e54fe8d9c58d3f7"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/contracts.json",
+      "status": "explicit exact current reader/task/security disposition; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-9b28d4fae8d048c0",
+      "source": {
+        "path": "skills/nova/plugins/repository-adapter/src/repository-file.ts",
+        "line": 9,
+        "text": "if (fs.lstatSync(root).isSymbolicLink() || fs.realpathSync(root) !== root) throw forbidden();",
+        "sha256": "a6d8442958b8d90132a23d69449058c6d146aa170ad5f63a11433e42fb73277e",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "a6d8442958b8d90132a23d69449058c6d146aa170ad5f63a11433e42fb73277e",
+      "explicitReviewedReason": "Exact authorizedroot boundary/NOFOLLOW path safety/current stable statreadsize/ELOOP-ENOTDIR errortranslation. Security/data consistency guard, not adjustable pathescape permission. Current safe actualfile8positive9negative under8; UTF8returnedsize vs rawstat bytes distinct.",
+      "settings": [
+        "RT-89d7ff67ced4d9b4",
+        "RT-1e54fe8d9c58d3f7"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/contracts.json",
+      "status": "explicit exact current reader/task/security disposition; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-f5a59391343c735f",
+      "source": {
+        "path": "skills/nova/plugins/repository-adapter/src/repository-file.ts",
+        "line": 56,
+        "text": "if (count !== stat.size || fs.fstatSync(descriptor).size !== stat.size) throw new Error('REPOSITORY_FILE_CHANGED_DURING_READ');",
+        "sha256": "a6d8442958b8d90132a23d69449058c6d146aa170ad5f63a11433e42fb73277e",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "a6d8442958b8d90132a23d69449058c6d146aa170ad5f63a11433e42fb73277e",
+      "explicitReviewedReason": "Exact authorizedroot boundary/NOFOLLOW path safety/current stable statreadsize/ELOOP-ENOTDIR errortranslation. Security/data consistency guard, not adjustable pathescape permission. Current safe actualfile8positive9negative under8; UTF8returnedsize vs rawstat bytes distinct.",
+      "settings": [
+        "RT-89d7ff67ced4d9b4",
+        "RT-1e54fe8d9c58d3f7"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/contracts.json",
+      "status": "explicit exact current reader/task/security disposition; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ec6285cfe54c515c",
+      "source": {
+        "path": "skills/nova/plugins/repository-adapter/src/repository-file.ts",
+        "line": 60,
+        "text": "if (['ELOOP', 'ENOTDIR'].includes((error as NodeJS.ErrnoException).code ?? '')) throw forbidden(error);",
+        "sha256": "a6d8442958b8d90132a23d69449058c6d146aa170ad5f63a11433e42fb73277e",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "a6d8442958b8d90132a23d69449058c6d146aa170ad5f63a11433e42fb73277e",
+      "explicitReviewedReason": "Exact authorizedroot boundary/NOFOLLOW path safety/current stable statreadsize/ELOOP-ENOTDIR errortranslation. Security/data consistency guard, not adjustable pathescape permission. Current safe actualfile8positive9negative under8; UTF8returnedsize vs rawstat bytes distinct.",
+      "settings": [
+        "RT-89d7ff67ced4d9b4",
+        "RT-1e54fe8d9c58d3f7"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-repository-lint-11/contracts.json",
+      "status": "explicit exact current reader/task/security disposition; independent review pending",
+      "countsTowardAcceptance": false
+    }
+  ],
+  "remainingUnreviewed": 3924,
+  "thisBatchCount": 22
+}

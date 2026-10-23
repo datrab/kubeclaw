@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -72,12 +73,12 @@ test('original importer retains approval, member, metadata, tag and corruption g
   assert.deepEqual(input, initial);
   const stored = await store.put(assembled.bytes);
   const response = {...stored, bundleDigest: assembled.bundleDigest, archiveBase64: assembled.bytes.toString('base64')};
-  assert.equal(verifyBaselineArchive(response, assembled.bundleDigest, 'project').bundleDigest, assembled.bundleDigest);
+  assert.equal(verifyBaselineArchive(response, assembled.bundleDigest, 'project', TEST_CORE_POLICY.prismDesignBudgets).bundleDigest, assembled.bundleDigest);
   const corrupt = async (label: string, mutate: (archive: any) => void, expected: RegExp) => {
     const archive = structuredClone(assembled.archive); mutate(archive);
     const bytes = Buffer.from(JSON.stringify(archive)); const persisted = await store.put(bytes);
     const loaded = Buffer.from(await store.get(persisted.artifactId));
-    assert.throws(() => verifyBaselineArchive({...persisted, bundleDigest: assembled.bundleDigest, archiveBase64: loaded.toString('base64')}, assembled.bundleDigest, 'project'), expected, label);
+    assert.throws(() => verifyBaselineArchive({...persisted, bundleDigest: assembled.bundleDigest, archiveBase64: loaded.toString('base64')}, assembled.bundleDigest, 'project', TEST_CORE_POLICY.prismDesignBudgets), expected, label);
     assert.deepEqual(Buffer.from(await store.get(persisted.artifactId)), bytes);
     assert.deepEqual(Buffer.from(await store.get(stored.artifactId)), assembled.bytes);
     console.log(JSON.stringify({rejected: label, originalCasUnchanged: true, mutatedCasUnchanged: true}));
@@ -106,13 +107,13 @@ test('original importer retains approval, member, metadata, tag and corruption g
   await corrupt('manifest assets', a => {a.manifest.assets.aa.digest = hash('wrong'); a.textFiles['manifest.json'] = JSON.stringify(a.manifest);}, /PRISM_ARCHIVE_ASSET_MISMATCH/u);
   await corrupt('required file reference', a => {a.manifest.designSpecification.path = 'absent'; a.textFiles['manifest.json'] = JSON.stringify(a.manifest);}, /PRISM_ARCHIVE_REQUIRED_FILE_MISSING/u);
   await corrupt('manifest revision', a => {a.manifest.revision++; a.textFiles['manifest.json'] = JSON.stringify(a.manifest);}, /PRISM_ARCHIVE_DOCUMENT_MISMATCH/u);
-  assert.throws(() => verifyBaselineArchive(response, hash('unapproved'), 'project'), /PRISM_DESIGN_APPROVED_BUNDLE_MISMATCH/u);
-  assert.throws(() => verifyBaselineArchive(response, assembled.bundleDigest, 'another-project'), /PRISM_ARCHIVE_MANIFEST_MISMATCH/u);
-  assert.throws(() => verifyBaselineArchive({...response, artifactId: `artifact:${hash('different')}`}, assembled.bundleDigest, 'project'), /PRISM_ARCHIVE_DIGEST_MISMATCH/u);
+  assert.throws(() => verifyBaselineArchive(response, hash('unapproved'), 'project', TEST_CORE_POLICY.prismDesignBudgets), /PRISM_DESIGN_APPROVED_BUNDLE_MISMATCH/u);
+  assert.throws(() => verifyBaselineArchive(response, assembled.bundleDigest, 'another-project', TEST_CORE_POLICY.prismDesignBudgets), /PRISM_ARCHIVE_MANIFEST_MISMATCH/u);
+  assert.throws(() => verifyBaselineArchive({...response, artifactId: `artifact:${hash('different')}`}, assembled.bundleDigest, 'project', TEST_CORE_POLICY.prismDesignBudgets), /PRISM_ARCHIVE_DIGEST_MISMATCH/u);
   const reordered = structuredClone(assembled.archive);
   checksums(reordered, c => {c.files = Object.fromEntries(Object.entries(c.files).reverse());});
   const reorderedBytes = Buffer.from(JSON.stringify(reordered)); const reorderedCas = await store.put(reorderedBytes);
-  assert.equal(verifyBaselineArchive({...reorderedCas, bundleDigest: assembled.bundleDigest, archiveBase64: Buffer.from(await store.get(reorderedCas.artifactId)).toString('base64')}, assembled.bundleDigest, 'project').bundleDigest, assembled.bundleDigest);
+  assert.equal(verifyBaselineArchive({...reorderedCas, bundleDigest: assembled.bundleDigest, archiveBase64: Buffer.from(await store.get(reorderedCas.artifactId)).toString('base64')}, assembled.bundleDigest, 'project', TEST_CORE_POLICY.prismDesignBudgets).bundleDigest, assembled.bundleDigest);
   console.log(JSON.stringify({reorderedChecksumMap: 'same v2 identity', originalCasUnchanged: true}));
 });
 
@@ -124,11 +125,11 @@ test('original size/member gates reject before unsafe transport acceptance', asy
   const response = {artifactId: `artifact:${hash(assembled.bytes)}`, bundleDigest: assembled.bundleDigest, archiveBase64: assembled.bytes.toString('base64')};
   // The original outer transport gate runs before CAS/content inspection; no
   // oversized temporary file or substituted store is necessary for rejection.
-  assert.throws(() => verifyBaselineArchive({...response, archiveBase64: 'A'.repeat(Math.ceil(32 * 1024 * 1024 / 3) * 4 + 1)}, assembled.bundleDigest, 'project'), /PRISM_ARCHIVE_SIZE_EXCEEDED/u);
+  assert.throws(() => verifyBaselineArchive({...response, archiveBase64: 'A'.repeat(Math.ceil(32 * 1024 * 1024 / 3) * 4 + 1)}, assembled.bundleDigest, 'project', TEST_CORE_POLICY.prismDesignBudgets), /PRISM_ARCHIVE_SIZE_EXCEEDED/u);
   const archive = structuredClone(assembled.archive);
   for (let i = 0; i < 4097; i++) archive.textFiles[`file-${i}`] = '';
   const bytes = Buffer.from(JSON.stringify(archive));
-  assert.throws(() => verifyBaselineArchive({artifactId: `artifact:${hash(bytes)}`, bundleDigest: assembled.bundleDigest, archiveBase64: bytes.toString('base64')}, assembled.bundleDigest, 'project'), /PRISM_ARCHIVE_FILE_SET_INVALID/u);
+  assert.throws(() => verifyBaselineArchive({artifactId: `artifact:${hash(bytes)}`, bundleDigest: assembled.bundleDigest, archiveBase64: bytes.toString('base64')}, assembled.bundleDigest, 'project', TEST_CORE_POLICY.prismDesignBudgets), /PRISM_ARCHIVE_FILE_SET_INVALID/u);
   assert.throws(() => assembleBaselineArchive({...input, profile: BASELINE_V2, textFiles: {...input.textFiles, 'checksums.json': '{}'}}), /PRISM_ARCHIVE_FILE_SET_INVALID/u);
 });
 
@@ -144,7 +145,7 @@ test('original semantic document and preview gates reject self-consistently hash
     const assembled = assembleBaselineArchive({...candidate, profile: BASELINE_V2});
     const stored = await store.put(assembled.bytes);
     const bytes = Buffer.from(await store.get(stored.artifactId));
-    assert.throws(() => verifyBaselineArchive({...stored, bundleDigest: assembled.bundleDigest, archiveBase64: bytes.toString('base64')}, assembled.bundleDigest, 'project'), expected, label);
+    assert.throws(() => verifyBaselineArchive({...stored, bundleDigest: assembled.bundleDigest, archiveBase64: bytes.toString('base64')}, assembled.bundleDigest, 'project', TEST_CORE_POLICY.prismDesignBudgets), expected, label);
     assert.deepEqual(Buffer.from(await store.get(stored.artifactId)), assembled.bytes);
     console.log(JSON.stringify({semanticRejected: label, realCasUnchanged: true}));
   };

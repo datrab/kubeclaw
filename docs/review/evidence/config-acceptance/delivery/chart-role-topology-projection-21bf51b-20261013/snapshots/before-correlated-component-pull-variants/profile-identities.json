@@ -1,0 +1,178 @@
+{
+  "scope": "pure source-defined profiles and correlations only; currentignored runtime.containerdVersion is DECLARED source copied into legacy whole-object digest, NOTinstalled or second targetV author; target soleversions field remains C3proposal/absentcurrentversions",
+  "baseline": "21bf51bc2075abec1191fdc091952492b6cb484e",
+  "records": [
+    {
+      "role": "nova",
+      "letter": "A",
+      "chart": "charts/kubeclaw",
+      "namespace": "kubeclaw",
+      "input": {
+        "path": "docs/review/evidence/config-acceptance/delivery/chart-topology-storage-profiles-6606af9-20261013/kubeclaw-A.json",
+        "sha256": "f812fd1424eb8c8422ade28b3c6baec5c9f68d854b35b96700bd4e10b51ca98a",
+        "immutableGitBlob": "21bf51bc2075abec1191fdc091952492b6cb484e:docs/review/evidence/config-acceptance/delivery/chart-topology-storage-profiles-6606af9-20261013/kubeclaw-A.json"
+      },
+      "profile": {
+        "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/kubeclaw-A.json",
+        "sha256": "f99fa2ab20b4e92683f4e4b486156b3b7f6a6bb548e4682596b9c47f9165116a"
+      },
+      "nativePolicy": {
+        "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/native-policy-A.json",
+        "sha256": "05b0e05d65b8c4cdf31d1ea5dcb9c419142eccdd9930496de0e95c02a0feffee"
+      },
+      "selectedReceipt": {
+        "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/synthetic-runtime-receipt-A.json",
+        "sha256": "667a5df24b48646bc403d32a6ee3c11220c1dc1a2563a68cd6a231b6cd5eb34a"
+      },
+      "scope": "complete flattened current Chart source-definition profile + actual pure native selection inputs; synthetic receipt/policy/node/reference data, NOT authentic selected image/code/native host/SA/RBAC/CSI/provider/capacity proof"
+    },
+    {
+      "role": "buster",
+      "letter": "A",
+      "chart": "charts/kubeclaw",
+      "namespace": "kubeclaw",
+      "input": {
+        "path": "docs/review/evidence/config-acceptance/delivery/chart-topology-storage-profiles-6606af9-20261013/kubeclaw-buster-A.json",
+        "sha256": "919f11657813f566b8bf586dd3ca54df61d9ad8c62dda796f52d52c025790715",
+        "immutableGitBlob": "21bf51bc2075abec1191fdc091952492b6cb484e:docs/review/evidence/config-acceptance/delivery/chart-topology-storage-profiles-6606af9-20261013/kubeclaw-buster-A.json"
+      },
+      "profile": {
+        "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/kubeclaw-buster-A.json",
+        "sha256": "d2f3b268804059c4031df798b28cde913b30680825112165774471e52cb7857a"
+      },
+      "nativePolicy": {
+        "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/native-policy-A.json",
+        "sha256": "05b0e05d65b8c4cdf31d1ea5dcb9c419142eccdd9930496de0e95c02a0feffee"
+      },
+      "selectedReceipt": {
+        "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/synthetic-runtime-receipt-A.json",
+        "sha256": "667a5df24b48646bc403d32a6ee3c11220c1dc1a2563a68cd6a231b6cd5eb34a"
+      },
+      "scope": "complete flattened current Chart source-definition profile + actual pure native selection inputs; synthetic receipt/policy/node/reference data, NOT authentic selected image/code/native host/SA/RBAC/CSI/provider/capacity proof"
+    },
+    {
+      "role": "prism",
+      "letter": "A",
+      "chart": "charts/prism",
+      "namespace": "kubeclaw",
+      "input": {
+        "path": "docs/review/evidence/config-acceptance/delivery/chart-topology-storage-profiles-6606af9-20261013/prism-A.json",
+        "sha256": "a464f28b4ea08cfed529f1cb58f89dbd133f2630fc0168f6dabe5a26b5624984",
+        "immutableGitBlob": "21bf51bc2075abec1191fdc091952492b6cb484e:docs/review/evidence/config-acceptance/delivery/chart-topology-storage-profiles-6606af9-20261013/prism-A.json"
+      },
+      "profile": {
+        "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/prism-A.json",
+        "sha256": "8c811a238f6d6bde7de5d9416aac902eb2c08e56b1fa3c90fe8fba206d350f86"
+      },
+      "nativePolicy": {
+        "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/native-policy-A.json",
+        "sha256": "05b0e05d65b8c4cdf31d1ea5dcb9c419142eccdd9930496de0e95c02a0feffee"
+      },
+      "selectedReceipt": {
+        "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/synthetic-runtime-receipt-A.json",
+        "sha256": "667a5df24b48646bc403d32a6ee3c11220c1dc1a2563a68cd6a231b6cd5eb34a"
+      },
+      "scope": "complete flattened current Chart source-definition profile + actual pure native selection inputs; synthetic receipt/policy/node/reference data, NOT authentic selected image/code/native host/SA/RBAC/CSI/provider/capacity proof"
+    },
+    {
+      "role": "nova",
+      "letter": "B",
+      "chart": "charts/kubeclaw",
+      "namespace": "kubeclaw",
+      "input": {
+        "path": "docs/review/evidence/config-acceptance/delivery/chart-topology-storage-profiles-6606af9-20261013/kubeclaw-B.json",
+        "sha256": "a62edc8f0497153e74f0aec7517e7472f054fa5e1bb9afbc5ac29f39c51cd3d6",
+        "immutableGitBlob": "21bf51bc2075abec1191fdc091952492b6cb484e:docs/review/evidence/config-acceptance/delivery/chart-topology-storage-profiles-6606af9-20261013/kubeclaw-B.json"
+      },
+      "profile": {
+        "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/kubeclaw-B.json",
+        "sha256": "dea0384074a9cb148a1508d8694e8354ffecb5f10ceb38d48614cceea1c022d3"
+      },
+      "nativePolicy": {
+        "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/native-policy-B.json",
+        "sha256": "3392aca30f82ceb92de48564c2b2b138ec7796cf3f940107a58f0a83796f1163"
+      },
+      "selectedReceipt": {
+        "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/synthetic-runtime-receipt-B.json",
+        "sha256": "c7e83c643d3a1815240105cebd154d7bd39a111362ed7b9fc495fdd675303d24"
+      },
+      "scope": "complete flattened current Chart source-definition profile + actual pure native selection inputs; synthetic receipt/policy/node/reference data, NOT authentic selected image/code/native host/SA/RBAC/CSI/provider/capacity proof"
+    },
+    {
+      "role": "buster",
+      "letter": "B",
+      "chart": "charts/kubeclaw",
+      "namespace": "kubeclaw",
+      "input": {
+        "path": "docs/review/evidence/config-acceptance/delivery/chart-topology-storage-profiles-6606af9-20261013/kubeclaw-buster-B.json",
+        "sha256": "b4c5dc06f7e3ae7e8c06c6a223ea3546c59dcae83bdec891fa57d93d7dcd44dc",
+        "immutableGitBlob": "21bf51bc2075abec1191fdc091952492b6cb484e:docs/review/evidence/config-acceptance/delivery/chart-topology-storage-profiles-6606af9-20261013/kubeclaw-buster-B.json"
+      },
+      "profile": {
+        "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/kubeclaw-buster-B.json",
+        "sha256": "c26167deab627dda1a4dabc37c6862d910abbc9834703ec8099acd0f2acf762a"
+      },
+      "nativePolicy": {
+        "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/native-policy-B.json",
+        "sha256": "3392aca30f82ceb92de48564c2b2b138ec7796cf3f940107a58f0a83796f1163"
+      },
+      "selectedReceipt": {
+        "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/synthetic-runtime-receipt-B.json",
+        "sha256": "c7e83c643d3a1815240105cebd154d7bd39a111362ed7b9fc495fdd675303d24"
+      },
+      "scope": "complete flattened current Chart source-definition profile + actual pure native selection inputs; synthetic receipt/policy/node/reference data, NOT authentic selected image/code/native host/SA/RBAC/CSI/provider/capacity proof"
+    },
+    {
+      "role": "prism",
+      "letter": "B",
+      "chart": "charts/prism",
+      "namespace": "kubeclaw",
+      "input": {
+        "path": "docs/review/evidence/config-acceptance/delivery/chart-topology-storage-profiles-6606af9-20261013/prism-B.json",
+        "sha256": "56702c1b1cd2dd156d0e6d094e9bd735ac7bf5e61332ad1d63570f804c688433",
+        "immutableGitBlob": "21bf51bc2075abec1191fdc091952492b6cb484e:docs/review/evidence/config-acceptance/delivery/chart-topology-storage-profiles-6606af9-20261013/prism-B.json"
+      },
+      "profile": {
+        "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/prism-B.json",
+        "sha256": "f2b528c8f5e36bd0026e0877f077c120dcf7fd5be4a7941fbf46044f5c3a9aac"
+      },
+      "nativePolicy": {
+        "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/native-policy-B.json",
+        "sha256": "3392aca30f82ceb92de48564c2b2b138ec7796cf3f940107a58f0a83796f1163"
+      },
+      "selectedReceipt": {
+        "path": "docs/review/evidence/config-acceptance/delivery/chart-role-topology-projection-21bf51b-20261013/profiles/synthetic-runtime-receipt-B.json",
+        "sha256": "c7e83c643d3a1815240105cebd154d7bd39a111362ed7b9fc495fdd675303d24"
+      },
+      "scope": "complete flattened current Chart source-definition profile + actual pure native selection inputs; synthetic receipt/policy/node/reference data, NOT authentic selected image/code/native host/SA/RBAC/CSI/provider/capacity proof"
+    }
+  ],
+  "sourceDigests": {
+    "scripts/native-worker-node-policy.mjs": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+    "scripts/native-buster-deployment-preflight.mjs": "23b5f629c97ea478a3a943b937548c9cf00f1f1348b9e405f24fb955a85991c9",
+    "scripts/native-worker-deployment-preflight.mjs": "d8e600f778bb999fb822b6aa67c3de937f87b45133ab7eef884d9dc8dc38c261",
+    "scripts/updates/deployment-release.mjs": "b7c0d0f8ea9d1fc216817f5974b91b26b43578a59fc5e02aaeba04eaeb09ebc6",
+    "scripts/updates/code-release.mjs": "bedd4f2a8668a27b675e53aa415451a4b428543e6fc6a99bc88988355bff3259",
+    "scripts/updates/runtime-inputs.mjs": "d846f387b74d9cd71cb7b4515eb99da238fb1ce54b072525a075ec0ed299232a",
+    "my-values/buster-values.yaml": "23106a0d42310ad7aa5e2ce22a7bc940e88beac0eb486130b6f728dd84e0472f",
+    "my-values/infra/native-worker-pools-ax41.yaml": "47b2aa2f998dd741a31a914cf3fb3a293a335863679734656de1a5b1c366696c",
+    "charts/kubeclaw/templates/_buster-native.tpl": "06eaa44435684f2af9a14365b149ecef0c5cab1a0929413d5edbc2b73e8247e6",
+    "charts/kubeclaw/templates/deployment.yaml": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+    "charts/kubeclaw/templates/serviceaccount.yaml": "7b7b2e4ba4dc139f6d4953fa242ed70ea20de090bbe30287215f5c7f1349a13f",
+    "charts/kubeclaw/templates/service.yaml": "76a347213feffadad635311cc89fdbfb896c6a3f800e8e92528ec9efee280cc2",
+    "charts/prism/templates/workloads.yaml": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+    "charts/prism/values.schema.json": "7588db4e045bc4d52c1b46b4bbffeac238f12c9bd074b71aa9592c4ed24589c3",
+    "charts/prism/templates/_helpers.tpl": "33d5044abeae2faabd1202e544aeb33b34a30fb7afe9300b4bfb11d7ef914e49",
+    "charts/kubeclaw/templates/_helpers.tpl": "69986722975a973479b9fb1a2c35ab1a1ecb972662e8c19dd03718ac441f5103",
+    "charts/kubeclaw/templates/_swarm-config.tpl": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+    "charts/prism/templates/_swarm-bundle.tpl": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+    "versions.json": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+  },
+  "sourceProjectionChanges": [
+    "Buster full actual role security/env/volume mounts copied from my-values/buster-values, image alone selected syntheticimmutable receipt, no editable deployment security override",
+    "native policyDigest computed by exact nativePoolPolicy whole JSON body, nodeName/pool namespace coherent across Chart/required affinity/host mounts",
+    "all protected kubeclaw roles keep serviceAccount.create=true; oldB false retained as source-render-only branch requiring distinct unresolved defaultSA/grant/provider proof, not target role identity positive",
+    "legacy current OCI/contentDigest equality checks are source facts, targetcode content identity/packagedsource/installedruntime split remains OPEN",
+    "original eight reader-source acquisitions/fourv1.34.11 schema404retained; no skip/permissive schema"
+  ]
+}

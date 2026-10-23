@@ -23,6 +23,7 @@ export interface ReviewAttemptReservation {
 
 export interface ReviewDispatchLimits {
   readonly tokenizerEncoding: ReviewTokenizerEncoding;
+  readonly promptTokenBoundaryReserve?: number | undefined;
   readonly maxPromptBytesPerJob: number;
   readonly maxInputTokensPerJob: number;
   readonly maxContextTokensPerJob: number;
@@ -37,7 +38,8 @@ export interface ReviewDispatchLimits {
 }
 
 const ENCODERS = new Map<ReviewTokenizerEncoding, ReturnType<typeof getEncoding>>();
-const PROMPT_TOKEN_BOUNDARY_RESERVE = 64;
+// Original v1/v2 captures retain this exact codec; current v3 owners author their reserve.
+const LEGACY_PROMPT_TOKEN_BOUNDARY_RESERVE = 64;
 
 export function countReviewTextTokens(text: string, encoding: ReviewTokenizerEncoding = 'o200k_base'): number {
   let encoder = ENCODERS.get(encoding);
@@ -57,21 +59,25 @@ export function measureReviewPayload(
 
 export function reserveReviewRuntimePrompt(
   payload: Readonly<Record<string, unknown>>, encoding: ReviewTokenizerEncoding,
+  promptTokenBoundaryReserve = LEGACY_PROMPT_TOKEN_BOUNDARY_RESERVE,
 ): ReviewPromptReservation {
+  if (!Number.isSafeInteger(promptTokenBoundaryReserve) || promptTokenBoundaryReserve < 0 || promptTokenBoundaryReserve > 1_000_000) {
+    throw new Error('REVIEW_PROMPT_RESERVE_INVALID');
+  }
   const measured = measureReviewPayload(payload, encoding);
   const emptyPayload = JSON.stringify({}, null, 2), fixedEnvelope = buildRuntimeAgentTask({}, '');
   const fixedBytes = Buffer.byteLength(fixedEnvelope, 'utf8') - Buffer.byteLength(emptyPayload, 'utf8');
   const fixedTokens = countReviewTextTokens(fixedEnvelope, encoding) - countReviewTextTokens(emptyPayload, encoding);
   return Object.freeze({ payloadBytes: measured.bytes, payloadTokens: measured.tokens,
     bytes: measured.bytes + fixedBytes + RUNTIME_RESULT_FILE_MAX_BYTES,
-    tokens: measured.tokens + fixedTokens + RUNTIME_RESULT_FILE_MAX_BYTES + PROMPT_TOKEN_BOUNDARY_RESERVE });
+    tokens: measured.tokens + fixedTokens + RUNTIME_RESULT_FILE_MAX_BYTES + promptTokenBoundaryReserve });
 }
 
 export function reserveReviewAttempts(
   payloads: readonly Readonly<Record<string, unknown>>[], encoding: ReviewTokenizerEncoding, maxRetries: number,
-  maxRetryAttempts = payloads.length * maxRetries,
+  maxRetryAttempts = payloads.length * maxRetries, promptTokenBoundaryReserve?: number | undefined,
 ): ReviewAttemptReservation {
-  const metrics = payloads.map((payload) => reserveReviewRuntimePrompt(payload, encoding));
+  const metrics = payloads.map((payload) => reserveReviewRuntimePrompt(payload, encoding, promptTokenBoundaryReserve));
   const retryTokens = metrics.flatMap(({ tokens }) => Array.from({ length: maxRetries }, () => tokens))
     .sort((left, right) => right - left).slice(0, maxRetryAttempts);
   return Object.freeze({ attempts: payloads.length + retryTokens.length,
@@ -126,7 +132,7 @@ export class ReviewDispatchBudget {
     payload: Readonly<Record<string, unknown>>, phase: ReviewDispatchPhase = 'initial',
   ): Readonly<Record<string, unknown>> {
     // runtimePromptBudget is adapter-only control data. The OpenClaw adapter strips it before it builds the model prompt.
-    const measured = reserveReviewRuntimePrompt(payload, this.#limits.tokenizerEncoding);
+    const measured = reserveReviewRuntimePrompt(payload, this.#limits.tokenizerEncoding, this.#limits.promptTokenBoundaryReserve);
     if (measured.bytes > this.#limits.maxPromptBytesPerJob) {
       throw new Error(`review dispatch byte budget exceeded: ${measured.bytes}:${this.#limits.maxPromptBytesPerJob}`);
     }

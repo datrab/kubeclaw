@@ -16,26 +16,38 @@
     "shutdownTimeoutMs",
     "effectLockTtlMs",
     "orchestratorIssuerId",
-    "administrativeDecisionIssuers"
+    "administrativeDecisionIssuers",
+    "corePolicySelection"
   ],
   "properties": {
-    "schemaVersion": { "const": "pipeline-platform.v2" },
+    "schemaVersion": {
+      "const": "pipeline-platform.v2"
+    },
     "installationRoots": {
       "type": "array",
       "minItems": 1,
       "uniqueItems": true,
-      "items": { "type": "string", "minLength": 1 }
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
     },
     "trustedBuiltinRoots": {
       "type": "array",
       "minItems": 1,
       "uniqueItems": true,
-      "items": { "type": "string", "minLength": 1 }
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
     },
     "externalTrust": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["allowedSourceDigests", "verifiedAttestations"],
+      "required": [
+        "allowedSourceDigests",
+        "verifiedAttestations"
+      ],
       "properties": {
         "allowedSourceDigests": {
           "type": "object",
@@ -43,19 +55,30 @@
             "type": "array",
             "minItems": 1,
             "uniqueItems": true,
-            "items": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+            "items": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            }
           }
         },
         "verifiedAttestations": {
           "type": "object",
-          "propertyNames": { "pattern": "^sha256:[a-f0-9]{64}$" },
-          "additionalProperties": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+          "propertyNames": {
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          }
         }
       }
     },
     "providers": {
       "type": "object",
-      "additionalProperties": { "type": "string", "minLength": 1 }
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
     },
     "grants": {
       "type": "object",
@@ -77,7 +100,10 @@
     "activeAdapters": {
       "type": "array",
       "uniqueItems": true,
-      "items": { "type": "string", "minLength": 1 }
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
     },
     "observers": {
       "type": "object",
@@ -89,23 +115,72 @@
     "isolation": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["cgroupRoot"],
-      "properties": { "cgroupRoot": { "type": "string", "minLength": 1 } }
+      "required": [
+        "cgroupRoot"
+      ],
+      "properties": {
+        "cgroupRoot": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
     },
-    "storageRoot": { "type": "string", "minLength": 1 },
-    "shutdownTimeoutMs": { "type": "integer", "minimum": 1 },
-    "effectLockTtlMs": { "type": "integer", "minimum": 60000, "maximum": 86400000 },
-    "orchestratorIssuerId": { "type": "string", "minLength": 1 },
+    "storageRoot": {
+      "type": "string",
+      "minLength": 1
+    },
+    "shutdownTimeoutMs": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "effectLockTtlMs": {
+      "type": "integer",
+      "minimum": 60000,
+      "maximum": 86400000
+    },
+    "orchestratorIssuerId": {
+      "type": "string",
+      "minLength": 1
+    },
     "administrativeDecisionIssuers": {
       "type": "array",
       "uniqueItems": true,
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["type", "id"],
+        "required": [
+          "type",
+          "id"
+        ],
         "properties": {
-          "type": { "enum": ["operator", "administrator"] },
-          "id": { "type": "string", "minLength": 1 }
+          "type": {
+            "enum": [
+              "operator",
+              "administrator"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "corePolicySelection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "file",
+        "profile"
+      ],
+      "properties": {
+        "file": {
+          "type": "string",
+          "minLength": 1
+        },
+        "profile": {
+          "type": "string",
+          "minLength": 1
         }
       }
     }

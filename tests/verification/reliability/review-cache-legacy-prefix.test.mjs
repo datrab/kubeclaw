@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY, TEST_CORE_POLICY_SELECTION } from '../../fixtures/core-runtime-policy.mjs';
 // Exact archived owning cache producer, current registered ArtifactStore and native process death.
 // Crash invocation uses the profile read from an original snapshot; full StageExecutor
 // propagation/checkpoint recovery is covered separately, not simulated by this context.
@@ -54,7 +55,7 @@ async function modules(root,version,old){
 }
 function platform(root){
   const roots=[path.join(source,'tests/fixtures/review-cache-stage'),path.join(source,'skills/common/plugins')];
-  return {schemaVersion:'pipeline-platform.v2',installationRoots:roots,trustedBuiltinRoots:roots,externalTrust:{allowedSourceDigests:{},verifiedAttestations:{}},
+  return {corePolicySelection: TEST_CORE_POLICY_SELECTION,schemaVersion:'pipeline-platform.v2',installationRoots:roots,trustedBuiltinRoots:roots,externalTrust:{allowedSourceDigests:{},verifiedAttestations:{}},
     providers:{'artifacts.read':'kubeclaw.artifact-store:artifact-store','artifacts.write':'kubeclaw.artifact-store:artifact-store'},
     grants:{'test.review-cache:cache':{'artifacts.read':{allowedNamespaces:['kubeclaw.review']},'artifacts.write':{allowedNamespaces:['kubeclaw.review']}}},
     adapters:{'kubeclaw.artifact-store:artifact-store':{artifactRoot:path.join(root,'artifacts')}},activeAdapters:[],observers:{},storageRoot:path.join(root,'state'),
@@ -71,8 +72,8 @@ if(process.argv[2]==='--child'){
   const audit=Object.fromEntries(['requested','accepted','completed'].map(phase=>[phase,request=>{
     if(phase===boundary){fs.writeSync(1,`CACHE_AUDIT:${phase}\n`);process.kill(process.pid,'SIGKILL');}
   }]));
-  const journal=new FileEffectJournal(journalFile),runtime=new AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(p.adapters)),
-    effects:new EffectCoordinator(journal,undefined,audit,new FileResourceLockManager(path.join(root,'locks')),lockTtlMs),shutdownTimeoutMs:ioTimeoutMs,async emitDomainEvent(){throw Error('UNEXPECTED_EVENT');}});
+  const journal=new FileEffectJournal(journalFile, TEST_CORE_POLICY),runtime=new AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(prepared.adapterConfigurations)),
+    effects:new EffectCoordinator(journal,undefined,audit,new FileResourceLockManager(path.join(root,'locks'), TEST_CORE_POLICY),lockTtlMs, TEST_CORE_POLICY.resourceAcquisition),shutdownTimeoutMs:ioTimeoutMs,async emitDomainEvent(){throw Error('UNEXPECTED_EVENT');}});
   await runtime.start();
   const {job,identity,value}=admittedCacheValue(),record=m.records.buildReviewCacheRecord(job,identity,value,profile);
   const attempt={runId:'run:cache-prefix',stageId:'review',attemptId:operation==='read'?'attempt:read':'attempt:write',attemptNumber:operation==='read'?2:1};

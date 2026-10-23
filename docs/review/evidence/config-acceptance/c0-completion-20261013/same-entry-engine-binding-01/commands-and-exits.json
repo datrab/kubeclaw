@@ -1,0 +1,50 @@
+{
+  "qualification": "Source-specific pure JSON/schema/selector/hash definitions; safety inspected. No productive imports/native/CLI/provider/renderer/database/network execution",
+  "finalRuns": [
+    {
+      "argv": [
+        "python3",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/author-generation.py"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exitCode": 0,
+      "elapsedSeconds": 2.470829725265503,
+      "scriptStartSha256": "b21d49c9a681ddc75ad3787bbe3db4b8738a60eeb3388dd18ae13af1d2731b55",
+      "scriptEndSha256": "b21d49c9a681ddc75ad3787bbe3db4b8738a60eeb3388dd18ae13af1d2731b55",
+      "stdout": "author-final.stdout",
+      "stderr": "author-final.stderr"
+    },
+    {
+      "argv": [
+        "node",
+        "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-engine-binding-01/check-generation.mjs"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exitCode": 0,
+      "elapsedSeconds": 5.695452690124512,
+      "scriptStartSha256": "2b87f52eed59ebf657315b716f103e8e845e017b224cd99579cdf9a28622eda2",
+      "scriptEndSha256": "2b87f52eed59ebf657315b716f103e8e845e017b224cd99579cdf9a28622eda2",
+      "stdout": "check-final.stdout.json",
+      "stderr": "check-final.stderr"
+    }
+  ],
+  "preservedEarlierFailures": [
+    {
+      "script": "author-generation-attempt1.py.snapshot",
+      "exitCode": 1,
+      "stdout": "author-generation-attempt1.stdout",
+      "stderr": "author-generation-attempt1.stderr",
+      "reason": "String packageIdentity handling corrected before finalized artifact"
+    },
+    {
+      "script": "check-generation-attempt1.mjs.snapshot",
+      "exitCode": 130,
+      "reason": "Uncached definition-only checker deliberately interrupted; copied immutable-input cache and fresh end hashes; not semantic native failure"
+    },
+    {
+      "stderr": "check-pathschema-failure.stderr",
+      "stdout": "check-pathschema-failure.stdout",
+      "observed": "Node schema assertion rejected captured-source-input relativePath; full v2 path schema corrected, original failure retained"
+    }
+  ]
+}

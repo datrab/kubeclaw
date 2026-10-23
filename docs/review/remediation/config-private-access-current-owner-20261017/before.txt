@@ -1,0 +1,40 @@
+✔ actual Nova Helm render exposes architecture only through its private authenticated service (108.973941ms)
+✔ actual Helm rejects credential omission and a carried-over legacy architecture NodePort (98.901672ms)
+✔ authored Argo ingress and operator values identify external OAuth and shared proxy tags (1.254833ms)
+✖ actual Prism render binds private Studio ingress to its Service and removes only ingress when disabled (43.630936ms)
+✔ actual Ops render exposes optional outbound SOCKS only and retains incoming deny policy (80.950899ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 4
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 407.133164
+
+✖ failing tests:
+
+test at tests/verification/contracts/infra-private-access.test.mjs:54:1
+✖ actual Prism render binds private Studio ingress to its Service and removes only ingress when disabled (43.630936ms)
+  Error: Command failed: helm template prism charts/prism --namespace default -f charts/prism/ci-values.yaml --set tailscale.enabled=true --set tailscale.hostname=private-studio-test
+  Error: execution error at (prism/templates/workloads.yaml:1:14): Prism release identity must match config/pipeline.config.json bindings; regenerate images and chart together
+  
+  Use --debug flag to render out invalid YAML
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/infra-private-access.test.mjs:57:33)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12) {
+    status: 1,
+    signal: null,
+    output: [ null, '', 'Error: execution error at (prism/templates/workloads.yaml:1:14): Prism release identity must match config/pipeline.config.json bindings; regenerate images and chart together\n\nUse --debug flag to render out invalid YAML\n' ],
+    pid: 2739192,
+    stdout: '',
+    stderr: 'Error: execution error at (prism/templates/workloads.yaml:1:14): Prism release identity must match config/pipeline.config.json bindings; regenerate images and chart together\n\nUse --debug flag to render out invalid YAML\n'
+  }

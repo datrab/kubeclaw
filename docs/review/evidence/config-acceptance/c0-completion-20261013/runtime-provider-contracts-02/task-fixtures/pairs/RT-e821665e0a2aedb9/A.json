@@ -1,0 +1,11 @@
+{
+  "path": "/ok",
+  "method": "GET",
+  "accept": "application/json",
+  "expectedStatuses": [
+    200
+  ],
+  "expectedText": "C0-local",
+  "expectedContentType": "application/json",
+  "endpointName": "service-a"
+}

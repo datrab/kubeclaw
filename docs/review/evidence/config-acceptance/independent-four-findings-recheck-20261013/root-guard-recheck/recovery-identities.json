@@ -1,0 +1,13 @@
+{
+  "checks": 18,
+  "negativeControls": 16,
+  "positives": 2,
+  "runtimeRowsIndependentlyConserved": 1248,
+  "allOriginalCandidateFilesUnchanged": true,
+  "initialReviewArtifactsUnchanged": true,
+  "checkerUnchangedDuringReview": true,
+  "originalAcceptanceAndDecisionsUnchanged": true,
+  "productionChanged": false,
+  "globalC0Accepted": false,
+  "isolatedInputsRemoved": true
+}

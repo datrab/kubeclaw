@@ -3,6 +3,10 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import yaml from 'js-yaml';
+import { validateBusterClusterInvokerSettings } from '../../../skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts';
+import { captureSwarmSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
+import { canonicalPipelineEntry, readTestPipeline, busterRuntimeSelection } from '../../fixtures/config/pipeline-components.mjs';
 import { loadPipelineTestScope, buildRegistry, discoverPackages, resolveTestPlan } from '@kubeclaw/nova-core';
 import { cleanupRealE2ERunWorkspace, createRealE2ERunWorkspace } from '../e2e/real-run-workspace.mjs';
 import { buildScaffold } from '../../../skills/nova/project_setup/tools/progress-scaffold-discovery.ts';
@@ -43,9 +47,16 @@ const runtimeEntrypoint = fs.readFileSync('docker/buster-runtime-entrypoint.sh',
 assert.match(runtimeEntrypoint, /buster-cluster-preflight\.mjs/u);
 assert.match(fs.readFileSync('skills/common/plugin-runtime/foundation/config/swarm.ts', 'utf8'), /BUSTER_ALLOWED_SOURCE_SECRETS/u);
 const busterValues = fs.readFileSync('my-values/buster-values.yaml', 'utf8');
-assert.match(busterValues, /busterComponentFile: files\/config\/profiles\/buster-engine\.runtime\.config\.json/u);
-const runtimeComponent = JSON.parse(fs.readFileSync('charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json', 'utf8'));
-assert.deepEqual(runtimeComponent.settings.clusterInvokers.kubernetesFixture.allowedSecretReferences,
+// Physical component locators are retired Helm authors. The real service tuple
+// selects the central runtime profile; do not reconstruct the former facade.
+assert.equal(Object.hasOwn(yaml.load(busterValues) as Record<string, unknown>, 'busterComponentFile'), false);
+const authored = readTestPipeline();
+const selected = busterRuntimeSelection(authored);
+assert.equal(selected.bindings.find(binding => binding.owner === 'buster-engine')?.profileId, 'runtime');
+const runtimeComponent = captureSwarmSettings(canonicalPipelineEntry, selected).components['buster-engine'];
+assert.ok(runtimeComponent);
+const clusterInvokers = validateBusterClusterInvokerSettings(runtimeComponent.settings.clusterInvokers);
+assert.deepEqual(clusterInvokers.kubernetesFixture.allowedSecretReferences,
   ['kubeclaw-fixture-preflight', 'prism-test-provider', 'prism-test-runtime', 'prism-test-postgresql-auth', 'prism-test-ghcr']);
 
 const scaffoldRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'kubernetes-fixture-scaffold-'));
@@ -139,8 +150,10 @@ try {
     schemaVersion: 'typed-link.v1', kind: 'value', from: { nodeId: 'container-build', output: 'image' },
     to: { nodeId: 'kubernetes-deployment', input: 'image' }, schemaId: 'kubeclaw.container-image@1',
   });
-  const wrongSchema = structuredClone(scope.declaration);
-  wrongSchema.fixtures!['kubernetes-deployment']!.inputs!.image = { from: 'tailscale-exposure', output: 'exposure' };
+  const originalFixture = scope.declaration.fixtures!['kubernetes-deployment']!;
+  const wrongSchema = { ...structuredClone(scope.declaration), fixtures: { ...scope.declaration.fixtures,
+    'kubernetes-deployment': { ...originalFixture, inputs: { ...originalFixture.inputs,
+      image: { from: 'tailscale-exposure', output: 'exposure' } } } } };
   assert.throws(() => resolve(wrongSchema), /TEST_PLAN_LINK_SCHEMA_MISMATCH/u);
 
   assert.equal(scope.declaration.tests?.health?.inputs?.deployment?.from, 'kubernetes-deployment');

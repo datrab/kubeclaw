@@ -1,0 +1,131 @@
+{
+  "scope": "actual existing SDK contract validator with synthetic JSON fixtures only",
+  "observations": [
+    {
+      "id": "SDK-CURRENT-STAGE-ENVELOPE",
+      "result": "passed",
+      "observed": "current contract accepts",
+      "limits": "Schema validation only, no actual stage/observer action."
+    },
+    {
+      "id": "SDK-NEW-MODULE-TYPE-UNSUPPORTED",
+      "result": "passed",
+      "observed": "current contract rejects at intended boundary",
+      "diagnostic": {
+        "definition": "lifecycleEvent",
+        "errors": [
+          {
+            "instancePath": "/type",
+            "schemaPath": "#/properties/type/enum",
+            "keyword": "enum",
+            "params": {
+              "allowedValues": [
+                "run.created",
+                "run.started",
+                "run.resumed",
+                "run.waiting",
+                "run.paused",
+                "run.succeeded",
+                "run.failed",
+                "run.blocked",
+                "run.cancelled",
+                "stage.scheduled",
+                "stage.started",
+                "stage.waiting",
+                "stage.retrying",
+                "stage.skipped",
+                "stage.succeeded",
+                "stage.failed",
+                "stage.blocked",
+                "stage.cancelled",
+                "attempt.created",
+                "attempt.dispatched",
+                "attempt.completed",
+                "attempt.timed_out",
+                "attempt.cancelled",
+                "effect.requested",
+                "effect.accepted",
+                "effect.completed",
+                "effect.failed",
+                "artifact.created",
+                "wait.created",
+                "wait.resolved",
+                "orchestrator.required"
+              ]
+            },
+            "message": "must be equal to one of the allowed values"
+          }
+        ]
+      }
+    },
+    {
+      "id": "SDK-NEW-MODULE-IDENTITY-UNSUPPORTED",
+      "result": "passed",
+      "observed": "current contract rejects at intended boundary",
+      "diagnostic": {
+        "definition": "lifecycleEvent",
+        "errors": [
+          {
+            "instancePath": "/identity",
+            "schemaPath": "#/additionalProperties",
+            "keyword": "additionalProperties",
+            "params": {
+              "additionalProperty": "moduleId"
+            },
+            "message": "must NOT have additional properties"
+          }
+        ]
+      }
+    },
+    {
+      "id": "SDK-TOPLEVEL-BINDING-UNSUPPORTED",
+      "result": "passed",
+      "observed": "current contract rejects at intended boundary",
+      "diagnostic": {
+        "definition": "lifecycleEvent",
+        "errors": [
+          {
+            "instancePath": "",
+            "schemaPath": "#/additionalProperties",
+            "keyword": "additionalProperties",
+            "params": {
+              "additionalProperty": "binding"
+            },
+            "message": "must NOT have additional properties"
+          }
+        ]
+      }
+    },
+    {
+      "id": "SDK-INNER-SEQUENCE-ZERO",
+      "result": "passed",
+      "observed": "current contract rejects at intended boundary",
+      "diagnostic": {
+        "definition": "lifecycleEvent",
+        "errors": [
+          {
+            "instancePath": "/sequence",
+            "schemaPath": "#/properties/sequence/minimum",
+            "keyword": "minimum",
+            "params": {
+              "comparison": ">=",
+              "limit": 1
+            },
+            "message": "must be >= 1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "SDK-GENERIC-PAYLOAD-NOT-TYPED-BINDING",
+      "result": "passed",
+      "observed": "current contract accepts",
+      "limits": "Generic payload acceptance does not validate owner/generation/membership/grant/quota or provide a module-binding event."
+    }
+  ],
+  "limits": [
+    "No new event/SDK/snapshot schema implemented",
+    "No Runner/FileJournal/observer/activation/recovery execution claimed",
+    "Typed module carrier, versioned reader migration, task partition and metadata accounting remain open"
+  ]
+}

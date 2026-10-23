@@ -1,0 +1,22 @@
+{
+  "fields": {
+    "Security": 89,
+    "Provider": 67
+  },
+  "caseMembers": {
+    "Security": 660,
+    "Provider": 454
+  },
+  "cases": {
+    "Security": 587,
+    "Provider": 408
+  },
+  "SecurityCurrentEntries": 163,
+  "inputMembers": 120,
+  "inputFiles": 465,
+  "currentRootRawSha256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011",
+  "inputGenerationSha256": "cc926a7171db521180bd2628ff690f558b1cc81df64a00d5d2821fd92e043289",
+  "globalC0Accepted": false,
+  "implementationAuthorization": false,
+  "freshIndependentMaterialReviewRequired": true
+}

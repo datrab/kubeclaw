@@ -1,3 +1,4 @@
+import { readWorkerCorePolicyCapture, type WorkerCorePolicyCapture } from '@kubeclaw/plugin-foundation/config/worker-core-policy';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -8,12 +9,13 @@ interface RuntimeIdentity {
 }
 
 /** Compare the actual namespace with root-managed host evidence; never enter a namespace here. */
-export function requireNativeWorkerRuntimeIdentity(file: string): void {
+export function requireNativeWorkerRuntimeIdentity(file: string, workerCore?: WorkerCorePolicyCapture): void {
+  const maximumBytes = workerCore === undefined ? 4096 : readWorkerCorePolicyCapture(workerCore).settings.runtime.runtime_identity_file_bytes;
   if (!path.isAbsolute(file)) throw new Error('WORKER_NATIVE_RUNTIME_IDENTITY_PATH_REQUIRED');
   const fd = fs.openSync(file, fs.constants.O_RDONLY | fs.constants.O_NOFOLLOW | fs.constants.O_NONBLOCK);
   try {
     const stat = fs.fstatSync(fd);
-    if (!stat.isFile() || stat.uid !== 0 || (stat.mode & 0o022) !== 0 || stat.size < 1 || stat.size > 4096) {
+    if (!stat.isFile() || stat.uid !== 0 || (stat.mode & 0o022) !== 0 || stat.size < 1 || stat.size > maximumBytes) {
       throw new Error('WORKER_NATIVE_RUNTIME_IDENTITY_NOT_TRUSTED');
     }
     const identity = JSON.parse(fs.readFileSync(fd, 'utf8')) as RuntimeIdentity;

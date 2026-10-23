@@ -1,0 +1,7 @@
+autoreview findings: 1
+[P2] P2 Bound notification display limits to the receiving payload contract
+skills/common/plugins/notification-observer/src/observer.ts:145
+The new policy accepts `maxTitleChars` and `maxReasonCodeChars` values up to Number.MAX_SAFE_INTEGER, and the observer uses those values when publishing notifications. However, the operator-messaging receiver still rejects titles longer than 512 characters and reason codes longer than 256 (`payload.ts` and `payload.schema.json`). For example, selecting `maxReasonCodeChars: 512` makes an event with a 300-character reason code fail delivery despite passing central policy validation. Bound these settings to the receiver's supported limits, or update the producer and consumer contracts consistently.
+
+overall: patch is incorrect (0.86)
+The externalized notification limits admit configurations that produce payloads rejected by the delivery receiver. Review was limited to the supplied bundle because local read-only shell inspection failed with a sandbox initialization error; the supplied diff was truncated.

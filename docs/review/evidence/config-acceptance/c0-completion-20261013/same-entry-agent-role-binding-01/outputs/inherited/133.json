@@ -1,0 +1,133 @@
+{
+  "schemaVersion": "provider-configuration.v2",
+  "contractId": "kubeclaw.lighthouse@1",
+  "taskSchemaDigest": "sha256:af48ed5d0ae3746d398d9a5843da298c438923ec63ee9b014008d30bdcc3e6ae",
+  "values": {
+    "purpose": "performance",
+    "url": "http://127.0.0.1:18080",
+    "routes": [
+      "/a"
+    ]
+  },
+  "selectedPolicy": {
+    "schemaVersion": "selected-registration-policy.v1",
+    "binding": {
+      "kind": "test-provider",
+      "packageId": "kubeclaw.lighthouse",
+      "registrationId": "kubeclaw.lighthouse:lighthouse",
+      "instanceId": "fixture.lighthouse",
+      "profileId": "RT-PROVIDER-EVIDENCE-KUBECLAW-LIGHTHOUSE-LIGHTHOUSE-EVIDENCEDEFAULTS-ONERROR-B",
+      "serviceInstanceId": "fixture.service.buster-browser-runtime",
+      "ownerPath": "plugins/kubeclaw.lighthouse.config.json",
+      "rootDigest": "sha256:db19d653e11c174afc535f90223e7db13197b40cb57c62e9041b132c15be9f1a",
+      "ownerDigest": "sha256:e61f45ecd72bfbaae5ebef256d997efdf9b533beef85382a1c9794343249c3bc",
+      "profileDigest": "sha256:5df30fd315cb9ab3d9f23c772585df3c93bff028484ae5e0b305db9a3def3a7c",
+      "packageVersion": "1.0.0",
+      "packageContentDigest": "sha256:c0b8f848ff18b35ee217246d6e38f2c70c1a49c9d9b81c8d8fb9a41261ae7d9c",
+      "ownerSchemaDigest": "sha256:df0b5256208f9eba4c23b30568cb05f89d42dad3fd90e98e9ab2d5dfc5e6dd1b",
+      "taskSchemaDigest": "sha256:af48ed5d0ae3746d398d9a5843da298c438923ec63ee9b014008d30bdcc3e6ae",
+      "readerVersion": "pipeline-entry.v9/provider-configuration.v2",
+      "c3RuntimeSchemaDigest": "sha256:af8e9bded1aef68ebe88e0ded835b202e0a4591099eda89fa4ea99a31b1b1740",
+      "c3ReferenceContractDigest": "sha256:d1ba44788070a8300c6081fb448184d8cba8d3a38a6d20ff11583cb64bfd38c2",
+      "runtimeRole": "buster",
+      "componentInstanceId": "fixture.service.buster-browser-runtime",
+      "componentProfileId": "browser-source-A",
+      "componentOwnerDigest": "sha256:db45c50264d80fad1972cae55d925bb281389ec02992b0f61f7be26b0dd07252",
+      "componentProfileDigest": "sha256:3f57729163ae695896028dddbc9a8565266a9a28f060c950ac3c3dfbe388ac67",
+      "workerComponentProfileDigest": "sha256:bd819145a22dcf8018de07820a9589f1901163b17df01208dc4591a8c74d9b5c",
+      "nativeResourcePolicyDigest": "sha256:8d8b0024a1f648df9b4ccf03098a2401259df311cf6a685284de1ae6d1252cd9"
+    },
+    "processing": {
+      "settings": {
+        "schemaVersion": "kubeclaw.lighthouse-settings.v1",
+        "profiles": {
+          "desktop": {
+            "formFactor": "desktop",
+            "screen": {
+              "width": 1440,
+              "height": 900,
+              "deviceScaleFactor": 1,
+              "mobile": false
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 100000,
+              "cpuSlowdownMultiplier": 1
+            }
+          },
+          "mobile": {
+            "formFactor": "mobile",
+            "screen": {
+              "width": 390,
+              "height": 844,
+              "deviceScaleFactor": 1,
+              "mobile": true
+            },
+            "throttling": {
+              "rttMs": 0,
+              "throughputKbps": 100000,
+              "cpuSlowdownMultiplier": 1
+            }
+          }
+        },
+        "budgets": {
+          "relaxed": {
+            "minimumScore": 80,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          },
+          "strict": {
+            "minimumScore": 90,
+            "maximumLcpMs": 3000,
+            "maximumCls": 1,
+            "maximumTbtMs": 1000
+          }
+        }
+      },
+      "byPurpose": {
+        "performance": {
+          "runs": 3,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": "relaxed",
+          "acceptances": []
+        },
+        "seo": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        },
+        "best-practices": {
+          "runs": 1,
+          "timeoutMs": 120000,
+          "selectedProfile": "desktop",
+          "selectedBudget": null,
+          "acceptances": []
+        }
+      }
+    },
+    "declarations": {
+      "retrySafe": true,
+      "matrixFields": [],
+      "evidenceDefaults": {
+        "onPass": [
+          "log",
+          "performance-report",
+          "performance-report-representative"
+        ],
+        "onFail": [
+          "log",
+          "performance-report",
+          "performance-report-representative"
+        ],
+        "onError": [
+          "log",
+          "performance-report"
+        ]
+      }
+    }
+  }
+}

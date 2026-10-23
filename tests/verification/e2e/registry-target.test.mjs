@@ -31,7 +31,8 @@ test('seed image cannot select another registry, mutable tag or malformed refere
 });
 
 test('original workspace and failure mutation select the same configured authority', () => {
-  const previous = Object.fromEntries(Object.keys(environment).map(key => [key, process.env[key]]));
+  const previous = Object.fromEntries([...Object.keys(environment), 'KUBECLAW_LOCAL_REGISTRY'].map(key => [key, process.env[key]]));
+  delete process.env.KUBECLAW_LOCAL_REGISTRY;
   Object.assign(process.env, environment);
   try {
     const progress = buildProgress({ projectName: 'registry-target-regression' });

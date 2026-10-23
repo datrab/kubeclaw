@@ -1,0 +1,11 @@
+{
+  "corrects": "ICQ-05",
+  "supersedes": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/dynamic-assigned-env.json",
+    "sha256": "33e2740fccfd15d8da2b776a004aa6ccad80374034c55e6c13389461c8803006"
+  },
+  "helperName": "environment",
+  "literalCallerExpansions": [],
+  "reason": "Supersedes empty expansion and everyliteralcaller claim in original frozen discovery. Five assigned and one launcher generated; original bytes retained.",
+  "sourceFieldHandoff": "Root-parent actual declared runtime key locator may read declared generatedenvironment; childhasclosed assignedprojection. Parent/Delivery trust/file/provider/source digest binding remains exact crossauthor handoff, not Core fake newauthor."
+}

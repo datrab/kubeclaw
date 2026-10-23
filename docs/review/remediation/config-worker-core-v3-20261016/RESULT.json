@@ -1,0 +1,67 @@
+{
+  "at": "2026-10-16T16:36:04.772072+00:00",
+  "status": "SOURCE_IMPLEMENTED_FOCUSED_VERIFIED_AND_INDEPENDENT_SOURCE_REVIEW_CLEAN",
+  "baseline": "2c06deda40f69d1012de06f7074f47b9178a45eb",
+  "owner": "config/components/worker-core.config.json",
+  "liveOwnerVersion": "pipeline-component.v3",
+  "rootVersion": "pipeline-entry.v3; v10 remains denied",
+  "originalCaptures": [
+    "worker-core-policy-capture.v1",
+    "native-attempt-journal.v2",
+    "worker-ownership-store.v4",
+    "native-journal-routing.v1 immutable epoch",
+    "published-json-pair.v2"
+  ],
+  "actualConsumers": [
+    "prism-native",
+    "prism-agent",
+    "buster-provider",
+    "buster-preparation",
+    "buster-historical-import",
+    "buster-source-cleanup"
+  ],
+  "checks": {
+    "focusedTests": {
+      "passed": 38,
+      "failed": 0
+    },
+    "scaffoldTests": {
+      "passed": 5,
+      "failed": 0
+    },
+    "rolePackageReadback": {
+      "passed": 2,
+      "qualification": "Actual emitted/installed Prism and Buster roles, both complete source-level role paths. Required full inert archive restoration subtest explicitly excluded from supported-environment run after retained ENOSPC failure; NOT whole-suite/native PASS."
+    },
+    "legacyExecutor": "exit0 original contract assertions preserved",
+    "typechecks": {
+      "worker": 0,
+      "foundation": 0,
+      "buster": 0,
+      "prism": 0,
+      "projectSetup": 0
+    },
+    "generatedChartProjectionChecks": 0,
+    "routingRegression": "pre-fix exit1; fixed exit0; real durable FS/flock scheduling witness"
+  },
+  "sourceReview": {
+    "engine": "codex via autoreview",
+    "findingCount": 0,
+    "sourceManifestMatchesCurrent": true,
+    "qualification": "Complete supplied source-only datasets; reviewer shell UID-map failure, no independent test/native execution."
+  },
+  "resolvedReviewFindings": [
+    "Unsupported Buster true-retention without actual writers now fails before admission/loading. Four dormant role controls remain explicit false; actual test no longer injects nonexistent Buster writers.",
+    "Routing epoch revalidated inside admission lock before lookup/reservation; deterministic pre-fix red/fixed-green interleaving control."
+  ],
+  "remaining": [
+    "Full original field/case/requirement reconciliation and integrated zero-author-context C6 acceptance",
+    "Actual isolated Linux Docker/UID1000/delegated writable cgroup native gates",
+    "Full original-source archive restore on a sufficiently large root-trusted writable parent (default /dev ENOSPC; disk-backed root parents EROFS; writable workspace ancestry fails required trust)"
+  ],
+  "externalInfrastructureOwner": "Raven; suitable isolated acceptance system requested earlier, no reply yet",
+  "taskComplete": false,
+  "deployment": false,
+  "mainMerge": false,
+  "sourceCommit": "980374793af8b8fdfc3a8eac218382533e46daa3"
+}

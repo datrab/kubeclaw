@@ -1,0 +1,101 @@
+{
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/compose-definition.py"
+      ],
+      "stdout": "compose.stdout",
+      "stderr": "compose.stderr",
+      "toolShellExit": 0,
+      "subprocessExit": "not separately captured by initial multi-command wrapper; successful artifacts/body identity are explicit, no runtime PASS claimed",
+      "meaning": "initial author composition, later explicit same-directory strict schema/projection/case edits are normative final reviewed inputs, not hidden productive implementation"
+    },
+    {
+      "argv": [
+        "node",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/check-local-definitions.mjs"
+      ],
+      "attempt": "initial schema compile",
+      "stdout": "check-attempt1.stdout",
+      "stderr": "check-attempt1.stderr",
+      "exitStatus": "not separately captured by initial wrapper; uncaught strictTypes compile failure retained, never PASS"
+    },
+    {
+      "argv": [
+        "node",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/check-local-definitions.mjs"
+      ],
+      "attempt": "intermediate47 observations",
+      "stdout": "check-attempt2.stdout",
+      "stderr": "check-attempt2.stderr",
+      "toolShellExit": 0,
+      "scope": "old47 pure proposed-definition observations, not final after domain corrections"
+    },
+    {
+      "argv": [
+        "node",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/controller-role-profile-01/check-local-definitions.mjs"
+      ],
+      "attempt": "final56 pure source-specific observations",
+      "stdout": "check-final.stdout",
+      "stderr": "check-final.stderr",
+      "exitStatus": 0,
+      "scope": "strict Ajv schema + source-derived local definition predicates only, zero native/business execution"
+    }
+  ],
+  "noEffects": [
+    "Go/controller/Helm/Kube/API/listener",
+    "credential/key/CA file reads",
+    "native/provider/CLI/model/Eval",
+    "source/schema/test/canonical/prior edits"
+  ],
+  "toolVersions": {
+    "python": "3.11.2",
+    "node": "v24.21.0",
+    "ajv": "8.20.0",
+    "GoControllerHelmKubernetes": "not executed; exact future installed compiler/OCI/API identity required"
+  },
+  "actualFinalInputDigests": [
+    {
+      "path": "check-local-definitions.mjs",
+      "sha256": "d5a2fae9566acc15bd489598d33c0ecb93520ff570ae16bcd766923a653f5f5f"
+    },
+    {
+      "path": "controller-role-profiles.schema.json",
+      "sha256": "745798dbf789c7789069fca891b11523c69df5bd054530ca9486768cc2257000"
+    },
+    {
+      "path": "co-selected-control-fixture-inputs.json",
+      "sha256": "c35eacedb96cf591d63cd13a7cfffbb7827319766f5bbb2b1c5ab66df6c012e0"
+    },
+    {
+      "path": "profiles/Ready-port-contrast.json",
+      "sha256": "6c8bbcd57f7551e04a592ac5073443f54aa0b4e86c0c27e8cfb9fa55915ea141"
+    },
+    {
+      "path": "profiles/ready-product-off.json",
+      "sha256": "41f7a6aec90a662ba757db0e8068f5f98f321ee6912cd09446f5dcfa80f01c86"
+    },
+    {
+      "path": "profiles/A.json",
+      "sha256": "3940482d5697bab7b1cc779c602714c43b6f99c68c4ca6b7ed735cf6cde6cc06"
+    },
+    {
+      "path": "profiles/B.json",
+      "sha256": "308ee851ccf6f70ed4b02cbb4f8e56c2614ab53eb3fad2656eb1a80b093b4f95"
+    },
+    {
+      "path": "profiles/role-off.json",
+      "sha256": "2154b03a6b2792d378357f5ca6a62de925634d668ada8cd3649675b49aba1c80"
+    }
+  ],
+  "meaning": "Raw attempts retained; final metadata navigation is not C0 semantic receipt",
+  "preservedIntermediateFinalStands": [
+    "stand50-* snapshots",
+    "stand54-* snapshots",
+    "check-attempt1 strict schema compile failure",
+    "check-attempt2 prior47 local observations"
+  ]
+}

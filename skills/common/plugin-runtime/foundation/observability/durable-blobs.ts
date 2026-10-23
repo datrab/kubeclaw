@@ -43,6 +43,8 @@ export class FileDurableBlobStore implements DurableBlobStore {
   }
 
   async put(input: Uint8Array): Promise<{ readonly digest: string; readonly sizeBytes: number }> {
+    // Reject before creating the budget-lock directory as well as before copy.
+    if (input.byteLength > this.#maximumBytes) throw new Error("DURABLE_BLOB_SIZE_EXCEEDED");
     if (this.#maximumTotalBytes === undefined) return this.#put(input);
     await ensureDirectoryDurable(this.#root);
     return withDurableStoreLock(path.join(this.#root, 'blob-budget'), () => this.#put(input));
@@ -65,6 +67,8 @@ export class FileDurableBlobStore implements DurableBlobStore {
   }
 
   async #put(input: Uint8Array): Promise<{ readonly digest: string; readonly sizeBytes: number }> {
+    // The policy bounds the copy itself, not just the subsequent write.
+    if (input.byteLength > this.#maximumBytes) throw new Error("DURABLE_BLOB_SIZE_EXCEEDED");
     const bytes = Buffer.from(input);
     if (bytes.byteLength > this.#maximumBytes) throw new Error("DURABLE_BLOB_SIZE_EXCEEDED");
     const digest = `sha256:${crypto.createHash("sha256").update(bytes).digest("hex")}`;

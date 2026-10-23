@@ -1,3 +1,4 @@
+import { workerCoreExecutionOptions } from '@kubeclaw/plugin-foundation/config/worker-core-policy';
 import fs from 'node:fs';
 import { WorkerAttemptExecutor, type WorkerAttemptOperation } from '@kubeclaw/worker-core';
 import type { WorkerAttemptEnvelopeV1, WorkerAttemptResultV1 } from '@kubeclaw/pipeline-worker-core-contract';
@@ -32,7 +33,7 @@ export async function executeRunnerAttempt(owner: ExecutionOwner, workerEnvelope
             envelope: workerEnvelope,
             operation,
             signal,
-            retainLogs: false,
+            ...workerCoreExecutionOptions(owner.options.workerCore, 'buster-provider', false),
             now: owner.now,
             id: owner.id,
             receiptNamespace: owner.authorityId,

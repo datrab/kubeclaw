@@ -1,0 +1,457 @@
+{
+  "records": [
+    {
+      "id": "RT-CANDIDATE-c471bd906aa45bab",
+      "source": {
+        "path": "skills/nova/plugins/architecture-validator/src/stage.ts",
+        "line": 9,
+        "text": "const subject = input.source ? await captureReviewSubject(input.source, {task:input.task,architecture:input.architecture ?? {}}, context) : undefined;",
+        "sha256": "1d078730d6c276cba32fbdded3b289bff155638490e7a5d191750732e13565bc",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "1d078730d6c276cba32fbdded3b289bff155638490e7a5d191750732e13565bc",
+      "explicitReviewedReason": "Actualoptionaltasksource capture orsourceBindingpreflight; absent architecture taskpayload{} is taskdata omission, not operatorconfig fallback. Verifiedsubject/currentcoverage before/afterdispatch retained; sourceauthority/taskoperator partition parentOPEN.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Actualoptionaltasksource capture orsourceBindingpreflight; absent architecture taskpayload{} is taskdata omission, not operatorconfig fallback. Verifiedsubject/currentcoverage before/afterdispatch retained; sourceauthority/taskoperator partition parentOPEN.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/contracts.json",
+      "status": "precise open task/source/role/grant/genuinefixture binding obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b1bdad16bd3ad5f5",
+      "source": {
+        "path": "skills/nova/plugins/architecture-validator/src/stage.ts",
+        "line": 14,
+        "text": "if (typeof agent !== 'string' || !agent.trim()) throw new Error('architecture validator agent is not configured');",
+        "sha256": "1d078730d6c276cba32fbdded3b289bff155638490e7a5d191750732e13565bc",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "1d078730d6c276cba32fbdded3b289bff155638490e7a5d191750732e13565bc",
+      "explicitReviewedReason": "Actualnonblanktrim-test agentretains originalstring toresource.runtime.agentcanonicalId. Owningtextshape mayacceptblank sourceguardrejects; actorTarget knownR/grants/role/sourceprovenance externalgenuineinput, SDKprofile wirecontract not backendmodelselector. Currentactualearlynegativeguard only, fullstage/source/effect future.",
+      "settings": [
+        "RT-c0a779743e7384ba"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/contracts.json",
+      "status": "exactsource/config/protocol/producer/presentation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-200da71f79c905a0",
+      "source": {
+        "path": "skills/nova/plugins/buster-quality-gate/src/stage.ts",
+        "line": 17,
+        "text": "if (testAgentEnabled && (typeof agent !== 'string' || !agent.trim())) throw new Error('quality evaluator agent is not configured');",
+        "sha256": "3b58135f8f95a089a7776ca76152d51ae394627f13ce0da1f362c90ab7b1ea76",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "3b58135f8f95a089a7776ca76152d51ae394627f13ce0da1f362c90ab7b1ea76",
+      "explicitReviewedReason": "Actualconditionalagentrequiredonlyevalenabled, flag !==false defaulttrue. Providerplan/mandatorycoverage/source and nativeexecution/decision alwaysrequired; falsedoesnotmakeinvalidnativeplanPass. Actualearlymissingprovidernegative underfalse/current{}defaulttrue observesnegativeprefix only; no realnative/providerjudgment.",
+      "settings": [
+        "RT-fc079b7fbe9926b7",
+        "RT-28c93b05e095eb31"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/contracts.json",
+      "status": "exactsource/config/protocol/producer/presentation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-3fa973f663b830a1",
+      "source": {
+        "path": "skills/nova/plugins/case-study/src/stage.ts",
+        "line": 5,
+        "text": "const agent=context.contract.config.agent;if(typeof agent!=='string'||!agent.trim())throw new Error('case study agent is not configured');",
+        "sha256": "a537e4028ddc30ea19ae7fa18e828c10745f08f14b0cf16e534ee8b42ea720b9",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "a537e4028ddc30ea19ae7fa18e828c10745f08f14b0cf16e534ee8b42ea720b9",
+      "explicitReviewedReason": "Actualsamecanonicaltarget selector/no defaultstring; sourcebundle/taskexecution/protocol parsed before genuine reportwrite. SupportedrealRtargets/grants/role/source fixture external; no unsupportedagentRole/modelparameter orcodec selector invented.",
+      "settings": [
+        "RT-8152550972f10185"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/contracts.json",
+      "status": "exactsource/config/protocol/producer/presentation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-fe1b6dc0b683843f",
+      "source": {
+        "path": "skills/nova/plugins/case-study/src/stage.ts",
+        "line": 22,
+        "text": "if(!value || typeof value!=='object')throw new Error('REPORT_ARTIFACT_INVALID');",
+        "sha256": "a537e4028ddc30ea19ae7fa18e828c10745f08f14b0cf16e534ee8b42ea720b9",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "a537e4028ddc30ea19ae7fa18e828c10745f08f14b0cf16e534ee8b42ea720b9",
+      "explicitReviewedReason": "Actualreturnedartifactobject andfullnamespace/id/media/digest/exactcanonicalUTF8bytes/activeattemptproducer binding beforefinalsuccess. Pureformat/sourcevalidation, not samevaluequota/field or actualphysicalstorage proof; matchingrealreport/evidence/provenance fixtures required.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Actualreturnedartifactobject andfullnamespace/id/media/digest/exactcanonicalUTF8bytes/activeattemptproducer binding beforefinalsuccess. Pureformat/sourcevalidation, not samevaluequota/field or actualphysicalstorage proof; matchingrealreport/evidence/provenance fixtures required.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/contracts.json",
+      "status": "exactsource/config/protocol/producer/presentation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-4003b878b25d9392",
+      "source": {
+        "path": "skills/nova/plugins/case-study/src/stage.ts",
+        "line": 25,
+        "text": "if(artifact.artifactId!==artifactId || artifact.namespace!=='kubeclaw.case-study' || artifact.mediaType!=='application/json'",
+        "sha256": "a537e4028ddc30ea19ae7fa18e828c10745f08f14b0cf16e534ee8b42ea720b9",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "a537e4028ddc30ea19ae7fa18e828c10745f08f14b0cf16e534ee8b42ea720b9",
+      "explicitReviewedReason": "Actualreturnedartifactobject andfullnamespace/id/media/digest/exactcanonicalUTF8bytes/activeattemptproducer binding beforefinalsuccess. Pureformat/sourcevalidation, not samevaluequota/field or actualphysicalstorage proof; matchingrealreport/evidence/provenance fixtures required.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Actualreturnedartifactobject andfullnamespace/id/media/digest/exactcanonicalUTF8bytes/activeattemptproducer binding beforefinalsuccess. Pureformat/sourcevalidation, not samevaluequota/field or actualphysicalstorage proof; matchingrealreport/evidence/provenance fixtures required.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/contracts.json",
+      "status": "exactsource/config/protocol/producer/presentation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-3a0afd21baefd021",
+      "source": {
+        "path": "skills/nova/plugins/case-study/src/stage.ts",
+        "line": 26,
+        "text": "|| artifact.digest!==sha256Text(bytes) || artifact.sizeBytes!==Buffer.byteLength(bytes)",
+        "sha256": "a537e4028ddc30ea19ae7fa18e828c10745f08f14b0cf16e534ee8b42ea720b9",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "a537e4028ddc30ea19ae7fa18e828c10745f08f14b0cf16e534ee8b42ea720b9",
+      "explicitReviewedReason": "Actualreturnedartifactobject andfullnamespace/id/media/digest/exactcanonicalUTF8bytes/activeattemptproducer binding beforefinalsuccess. Pureformat/sourcevalidation, not samevaluequota/field or actualphysicalstorage proof; matchingrealreport/evidence/provenance fixtures required.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Actualreturnedartifactobject andfullnamespace/id/media/digest/exactcanonicalUTF8bytes/activeattemptproducer binding beforefinalsuccess. Pureformat/sourcevalidation, not samevaluequota/field or actualphysicalstorage proof; matchingrealreport/evidence/provenance fixtures required.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/contracts.json",
+      "status": "exactsource/config/protocol/producer/presentation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-18617b1e0598746d",
+      "source": {
+        "path": "skills/nova/plugins/case-study/src/stage.ts",
+        "line": 27,
+        "text": "|| canonicalJson(artifact.producer)!==canonicalJson(execution))throw new Error('REPORT_ARTIFACT_BINDING_MISMATCH');",
+        "sha256": "a537e4028ddc30ea19ae7fa18e828c10745f08f14b0cf16e534ee8b42ea720b9",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "a537e4028ddc30ea19ae7fa18e828c10745f08f14b0cf16e534ee8b42ea720b9",
+      "explicitReviewedReason": "Actualreturnedartifactobject andfullnamespace/id/media/digest/exactcanonicalUTF8bytes/activeattemptproducer binding beforefinalsuccess. Pureformat/sourcevalidation, not samevaluequota/field or actualphysicalstorage proof; matchingrealreport/evidence/provenance fixtures required.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Actualreturnedartifactobject andfullnamespace/id/media/digest/exactcanonicalUTF8bytes/activeattemptproducer binding beforefinalsuccess. Pureformat/sourcevalidation, not samevaluequota/field or actualphysicalstorage proof; matchingrealreport/evidence/provenance fixtures required.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/contracts.json",
+      "status": "exactsource/config/protocol/producer/presentation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-5d3f60c102296f0b",
+      "source": {
+        "path": "skills/nova/plugins/implementation-agent/src/stage.ts",
+        "line": 26,
+        "text": "if (typeof created.sourceRevision !== 'string' || !/^[a-f0-9]{40}$/u.test(created.sourceRevision)) throw new Error('IMPLEMENTATION_SOURCE_REVISION_INVALID');",
+        "sha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870",
+      "explicitReviewedReason": "Exactgenuineworkspace/sourceRevision40hex/returnedruntimeWorkspace owneridentity, completion-readyintegrationconditional, commit/merge source and retainedfailedworkspace/reportportableencoding. Source/task/evidence/recovery invariants not operator tunables; actualgiteffects/role/sourcefixtures remainNOTRUN, no losing pendingA cleanup.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exactgenuineworkspace/sourceRevision40hex/returnedruntimeWorkspace owneridentity, completion-readyintegrationconditional, commit/merge source and retainedfailedworkspace/reportportableencoding. Source/task/evidence/recovery invariants not operator tunables; actualgiteffects/role/sourcefixtures remainNOTRUN, no losing pendingA cleanup.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/contracts.json",
+      "status": "exactsource/config/protocol/producer/presentation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-e705bb8abe27f363",
+      "source": {
+        "path": "skills/nova/plugins/implementation-agent/src/stage.ts",
+        "line": 28,
+        "text": "if (ref.repositoryRoot !== input.workspace.repositoryRoot || ref.workspacePath !== input.workspace.workspacePath",
+        "sha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870",
+      "explicitReviewedReason": "Exactgenuineworkspace/sourceRevision40hex/returnedruntimeWorkspace owneridentity, completion-readyintegrationconditional, commit/merge source and retainedfailedworkspace/reportportableencoding. Source/task/evidence/recovery invariants not operator tunables; actualgiteffects/role/sourcefixtures remainNOTRUN, no losing pendingA cleanup.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exactgenuineworkspace/sourceRevision40hex/returnedruntimeWorkspace owneridentity, completion-readyintegrationconditional, commit/merge source and retainedfailedworkspace/reportportableencoding. Source/task/evidence/recovery invariants not operator tunables; actualgiteffects/role/sourcefixtures remainNOTRUN, no losing pendingA cleanup.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/contracts.json",
+      "status": "exactsource/config/protocol/producer/presentation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-3a2be4ef8b5133df",
+      "source": {
+        "path": "skills/nova/plugins/implementation-agent/src/stage.ts",
+        "line": 29,
+        "text": "|| ref.branch !== input.workspace.branch || ref.sourceRevision !== created.sourceRevision) throw new Error('IMPLEMENTATION_WORKSPACE_REFERENCE_MISMATCH');",
+        "sha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870",
+      "explicitReviewedReason": "Exactgenuineworkspace/sourceRevision40hex/returnedruntimeWorkspace owneridentity, completion-readyintegrationconditional, commit/merge source and retainedfailedworkspace/reportportableencoding. Source/task/evidence/recovery invariants not operator tunables; actualgiteffects/role/sourcefixtures remainNOTRUN, no losing pendingA cleanup.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exactgenuineworkspace/sourceRevision40hex/returnedruntimeWorkspace owneridentity, completion-readyintegrationconditional, commit/merge source and retainedfailedworkspace/reportportableencoding. Source/task/evidence/recovery invariants not operator tunables; actualgiteffects/role/sourcefixtures remainNOTRUN, no losing pendingA cleanup.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/contracts.json",
+      "status": "exactsource/config/protocol/producer/presentation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-565e9a7d0160b65e",
+      "source": {
+        "path": "skills/nova/plugins/implementation-agent/src/stage.ts",
+        "line": 47,
+        "text": "if (!input.workspace || completion.status !== 'ready_for_testing') return undefined;",
+        "sha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870",
+      "explicitReviewedReason": "Exactgenuineworkspace/sourceRevision40hex/returnedruntimeWorkspace owneridentity, completion-readyintegrationconditional, commit/merge source and retainedfailedworkspace/reportportableencoding. Source/task/evidence/recovery invariants not operator tunables; actualgiteffects/role/sourcefixtures remainNOTRUN, no losing pendingA cleanup.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exactgenuineworkspace/sourceRevision40hex/returnedruntimeWorkspace owneridentity, completion-readyintegrationconditional, commit/merge source and retainedfailedworkspace/reportportableencoding. Source/task/evidence/recovery invariants not operator tunables; actualgiteffects/role/sourcefixtures remainNOTRUN, no losing pendingA cleanup.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/contracts.json",
+      "status": "exactsource/config/protocol/producer/presentation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-dc272968b1f81ddf",
+      "source": {
+        "path": "skills/nova/plugins/implementation-agent/src/stage.ts",
+        "line": 53,
+        "text": "if (typeof committed.sourceRevision !== 'string' || !/^[a-f0-9]{40}$/u.test(committed.sourceRevision)) throw new Error('IMPLEMENTATION_SOURCE_REVISION_INVALID');",
+        "sha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870",
+      "explicitReviewedReason": "Exactgenuineworkspace/sourceRevision40hex/returnedruntimeWorkspace owneridentity, completion-readyintegrationconditional, commit/merge source and retainedfailedworkspace/reportportableencoding. Source/task/evidence/recovery invariants not operator tunables; actualgiteffects/role/sourcefixtures remainNOTRUN, no losing pendingA cleanup.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exactgenuineworkspace/sourceRevision40hex/returnedruntimeWorkspace owneridentity, completion-readyintegrationconditional, commit/merge source and retainedfailedworkspace/reportportableencoding. Source/task/evidence/recovery invariants not operator tunables; actualgiteffects/role/sourcefixtures remainNOTRUN, no losing pendingA cleanup.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/contracts.json",
+      "status": "exactsource/config/protocol/producer/presentation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-5f06b60eabbab870",
+      "source": {
+        "path": "skills/nova/plugins/implementation-agent/src/stage.ts",
+        "line": 58,
+        "text": "if (typeof merged.sourceRevision !== 'string' || !/^[a-f0-9]{40}$/u.test(merged.sourceRevision)) throw new Error('IMPLEMENTATION_SOURCE_REVISION_INVALID');",
+        "sha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870",
+      "explicitReviewedReason": "Exactgenuineworkspace/sourceRevision40hex/returnedruntimeWorkspace owneridentity, completion-readyintegrationconditional, commit/merge source and retainedfailedworkspace/reportportableencoding. Source/task/evidence/recovery invariants not operator tunables; actualgiteffects/role/sourcefixtures remainNOTRUN, no losing pendingA cleanup.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exactgenuineworkspace/sourceRevision40hex/returnedruntimeWorkspace owneridentity, completion-readyintegrationconditional, commit/merge source and retainedfailedworkspace/reportportableencoding. Source/task/evidence/recovery invariants not operator tunables; actualgiteffects/role/sourcefixtures remainNOTRUN, no losing pendingA cleanup.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/contracts.json",
+      "status": "exactsource/config/protocol/producer/presentation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-c00a8509111a934a",
+      "source": {
+        "path": "skills/nova/plugins/implementation-agent/src/stage.ts",
+        "line": 77,
+        "text": "message: error?.message ?? 'implementation completion missing',",
+        "sha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870",
+      "explicitReviewedReason": "Absentcompletionerror message fallback presentation only; stillblocked/reconciliation andretainedworkspace reported. Not successfulresult fallback orCONFIG knob.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Absentcompletionerror message fallback presentation only; stillblocked/reconciliation andretainedworkspace reported. Not successfulresult fallback orCONFIG knob.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/contracts.json",
+      "status": "exactsource/config/protocol/producer/presentation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-55eb0e1b81816b53",
+      "source": {
+        "path": "skills/nova/plugins/implementation-agent/src/stage.ts",
+        "line": 86,
+        "text": "if (typeof agent !== 'string' || !agent.trim()) throw new Error('implementation agent is not configured');",
+        "sha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870",
+      "explicitReviewedReason": "Actualconfigurednonblankruntime.target locator; invocation-specificworkspacemutatedattemptidentity, approvedSource/repair/workspacebeforeagentdispatch not puremodelselection. No ENV/defaultagent; actualearlyblankguardnegative safelyobserved without workspacemutations/capcalls.",
+      "settings": [
+        "RT-34cb107ae059df42"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/contracts.json",
+      "status": "exactsource/config/protocol/producer/presentation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-051c887c5fdd02dc",
+      "source": {
+        "path": "skills/nova/plugins/implementation-agent/src/stage.ts",
+        "line": 114,
+        "text": "if (workspaceFailure || !completion) return blockedFailure(workspaceFailure, input, workspaceCreated && !workspaceIntegrated);",
+        "sha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870",
+      "explicitReviewedReason": "Exactgenuineworkspace/sourceRevision40hex/returnedruntimeWorkspace owneridentity, completion-readyintegrationconditional, commit/merge source and retainedfailedworkspace/reportportableencoding. Source/task/evidence/recovery invariants not operator tunables; actualgiteffects/role/sourcefixtures remainNOTRUN, no losing pendingA cleanup.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exactgenuineworkspace/sourceRevision40hex/returnedruntimeWorkspace owneridentity, completion-readyintegrationconditional, commit/merge source and retainedfailedworkspace/reportportableencoding. Source/task/evidence/recovery invariants not operator tunables; actualgiteffects/role/sourcefixtures remainNOTRUN, no losing pendingA cleanup.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/contracts.json",
+      "status": "exactsource/config/protocol/producer/presentation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-7c305bdb76e44259",
+      "source": {
+        "path": "skills/nova/plugins/implementation-agent/src/stage.ts",
+        "line": 125,
+        "text": "payload: { namespace: 'kubeclaw.implementation-agent', encoding: PORTABLE_JSON_ENCODING, mediaType: 'application/json', value: { ...completion, sourceRevision: workspaceIntegrated ?? null, headBefore: input.headBefore, ...(subjectDigest ? { subjectDigest } : {}),",
+        "sha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870",
+      "explicitReviewedReason": "Exactgenuineworkspace/sourceRevision40hex/returnedruntimeWorkspace owneridentity, completion-readyintegrationconditional, commit/merge source and retainedfailedworkspace/reportportableencoding. Source/task/evidence/recovery invariants not operator tunables; actualgiteffects/role/sourcefixtures remainNOTRUN, no losing pendingA cleanup.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Exactgenuineworkspace/sourceRevision40hex/returnedruntimeWorkspace owneridentity, completion-readyintegrationconditional, commit/merge source and retainedfailedworkspace/reportportableencoding. Source/task/evidence/recovery invariants not operator tunables; actualgiteffects/role/sourcefixtures remainNOTRUN, no losing pendingA cleanup.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/contracts.json",
+      "status": "exactsource/config/protocol/producer/presentation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-806ffab527ccff48",
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/stage.ts",
+        "line": 6,
+        "text": "if(typeof agent!=='string'||!agent.trim()) throw new Error('pipeline review agent is not configured');",
+        "sha256": "e2951394c77a1f57f8538dc8586fb6f8b571a5b2050b87fec65f42260055d51a",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "e2951394c77a1f57f8538dc8586fb6f8b571a5b2050b87fec65f42260055d51a",
+      "explicitReviewedReason": "Actualnonblankcfg agent\u2192resourcecanonicaltarget andwireprofile, generatedrealreviewresult sourcebundle/typedreport. FiveacceptedunusedagentRolekeys separatelytargetreject despite currentwholecfgdigests bindingthem; no businessrole effect.",
+      "settings": [
+        "RT-2d37a257c3d7dd45"
+      ],
+      "nonsettingOrUnresolvedSourceReason": null,
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/contracts.json",
+      "status": "exactsource/config/protocol/producer/presentation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-7c3f719d97025c92",
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/stage.ts",
+        "line": 26,
+        "text": "if(!value || typeof value!=='object')throw new Error('REPORT_ARTIFACT_INVALID');",
+        "sha256": "e2951394c77a1f57f8538dc8586fb6f8b571a5b2050b87fec65f42260055d51a",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "e2951394c77a1f57f8538dc8586fb6f8b571a5b2050b87fec65f42260055d51a",
+      "explicitReviewedReason": "Actualreturnedartifactobject andfullnamespace/id/media/digest/exactcanonicalUTF8bytes/activeattemptproducer binding beforefinalsuccess. Pureformat/sourcevalidation, not samevaluequota/field or actualphysicalstorage proof; matchingrealreport/evidence/provenance fixtures required.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Actualreturnedartifactobject andfullnamespace/id/media/digest/exactcanonicalUTF8bytes/activeattemptproducer binding beforefinalsuccess. Pureformat/sourcevalidation, not samevaluequota/field or actualphysicalstorage proof; matchingrealreport/evidence/provenance fixtures required.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/contracts.json",
+      "status": "exactsource/config/protocol/producer/presentation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-d0909399c5326cf1",
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/stage.ts",
+        "line": 29,
+        "text": "if(artifact.artifactId!==artifactId || artifact.namespace!=='kubeclaw.pipeline-review' || artifact.mediaType!=='application/json'",
+        "sha256": "e2951394c77a1f57f8538dc8586fb6f8b571a5b2050b87fec65f42260055d51a",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "e2951394c77a1f57f8538dc8586fb6f8b571a5b2050b87fec65f42260055d51a",
+      "explicitReviewedReason": "Actualreturnedartifactobject andfullnamespace/id/media/digest/exactcanonicalUTF8bytes/activeattemptproducer binding beforefinalsuccess. Pureformat/sourcevalidation, not samevaluequota/field or actualphysicalstorage proof; matchingrealreport/evidence/provenance fixtures required.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Actualreturnedartifactobject andfullnamespace/id/media/digest/exactcanonicalUTF8bytes/activeattemptproducer binding beforefinalsuccess. Pureformat/sourcevalidation, not samevaluequota/field or actualphysicalstorage proof; matchingrealreport/evidence/provenance fixtures required.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/contracts.json",
+      "status": "exactsource/config/protocol/producer/presentation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-467c8a9393c3d2f7",
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/stage.ts",
+        "line": 30,
+        "text": "|| artifact.digest!==sha256Text(bytes) || artifact.sizeBytes!==Buffer.byteLength(bytes)",
+        "sha256": "e2951394c77a1f57f8538dc8586fb6f8b571a5b2050b87fec65f42260055d51a",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "e2951394c77a1f57f8538dc8586fb6f8b571a5b2050b87fec65f42260055d51a",
+      "explicitReviewedReason": "Actualreturnedartifactobject andfullnamespace/id/media/digest/exactcanonicalUTF8bytes/activeattemptproducer binding beforefinalsuccess. Pureformat/sourcevalidation, not samevaluequota/field or actualphysicalstorage proof; matchingrealreport/evidence/provenance fixtures required.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Actualreturnedartifactobject andfullnamespace/id/media/digest/exactcanonicalUTF8bytes/activeattemptproducer binding beforefinalsuccess. Pureformat/sourcevalidation, not samevaluequota/field or actualphysicalstorage proof; matchingrealreport/evidence/provenance fixtures required.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/contracts.json",
+      "status": "exactsource/config/protocol/producer/presentation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-45c18f34f624d9f6",
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/stage.ts",
+        "line": 31,
+        "text": "|| canonicalJson(artifact.producer)!==canonicalJson(execution))throw new Error('REPORT_ARTIFACT_BINDING_MISMATCH');",
+        "sha256": "e2951394c77a1f57f8538dc8586fb6f8b571a5b2050b87fec65f42260055d51a",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "e2951394c77a1f57f8538dc8586fb6f8b571a5b2050b87fec65f42260055d51a",
+      "explicitReviewedReason": "Actualreturnedartifactobject andfullnamespace/id/media/digest/exactcanonicalUTF8bytes/activeattemptproducer binding beforefinalsuccess. Pureformat/sourcevalidation, not samevaluequota/field or actualphysicalstorage proof; matchingrealreport/evidence/provenance fixtures required.",
+      "settings": [],
+      "nonsettingOrUnresolvedSourceReason": "Actualreturnedartifactobject andfullnamespace/id/media/digest/exactcanonicalUTF8bytes/activeattemptproducer binding beforefinalsuccess. Pureformat/sourcevalidation, not samevaluequota/field or actualphysicalstorage proof; matchingrealreport/evidence/provenance fixtures required.",
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/contracts.json",
+      "status": "exactsource/config/protocol/producer/presentation disposition; independentreviewpending",
+      "countsTowardAcceptance": false
+    }
+  ],
+  "thisBatchCount": 23,
+  "additionalExactPolicyReaderSeams": [
+    {
+      "source": "skills/nova/plugins/buster-quality-gate/src/stage.ts",
+      "line": 16,
+      "settings": [
+        "RT-28c93b05e095eb31"
+      ],
+      "reason": "Actualunmatchedsyntax !==false defaulttrue, conditionalnativePassedafterdecision proof; no bypassrequiredproviderplan/coverage or fakeevaluatorresult",
+      "sha256": "3b58135f8f95a089a7776ca76152d51ae394627f13ce0da1f362c90ab7b1ea76"
+    },
+    {
+      "source": "skills/nova/plugins/project-summary/src/stage.ts",
+      "lines": [
+        5,
+        7,
+        8,
+        10,
+        17
+      ],
+      "settings": [
+        "RT-2b6e3bc13743e80c",
+        "RT-0086141ada6be298"
+      ],
+      "reason": "Actualknownkeys/portableJSON, agentRolebusinessunused, optionalhistoryformat vs implemented deliveryManifestEncodingconst/outerartifactencoding. Fullv2/v3semantic+artifact/sourceproof compatibility remainsOPEN; no arbitrarycodec/modelknob",
+      "sha256": "b16533ade1d6bbf08c53d3c31bbe7102f5b67b785b1f928524ca9879a99a4fee"
+    }
+  ]
+}

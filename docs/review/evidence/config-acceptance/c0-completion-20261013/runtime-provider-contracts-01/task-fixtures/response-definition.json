@@ -1,0 +1,14 @@
+{
+  "contentType": "application/json",
+  "smallBytes": 23,
+  "largeBytes": 256,
+  "sameParsedBusinessObject": true,
+  "sourceSpecificWitness": "Real future native network response counts raw delivered decompressed bytes, not reserialized business JSON. Request body schema assertions identical. Lower32responsecap rejects256 delivered bytes;2048upper accepts.",
+  "futureDeliveryVariants": [
+    "declared content-length256",
+    "chunked no declared length",
+    "compressed wire body decompresses to256 bytes"
+  ],
+  "networkExecuted": false,
+  "endpointAvailabilityProved": false
+}

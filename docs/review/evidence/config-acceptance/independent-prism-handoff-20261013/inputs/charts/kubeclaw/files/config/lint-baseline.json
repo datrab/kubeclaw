@@ -1,0 +1,18 @@
+{
+  "schema_version": "pipeline_lint_baseline.v2",
+  "groups": [
+    {
+      "tool": "trivy-kubernetes",
+      "owner": "pipeline-maintainers",
+      "reason": "Trivy KSV-0109 interprets secret-detection rule names embedded in the rendered lint-policy ConfigMap as credential values; the finding remains visible as audited debt without changing the reusable Kubernetes scanner.",
+      "created": "2026-08-04",
+      "expires": "2026-11-04",
+      "tracking": "trivy-ksv-0109-config-rule-text",
+      "approved_by": "Raven",
+      "approved_on": "2026-08-04",
+      "fingerprints": [
+        "0eaf571f14075f7ccbc609e5d52ac8c16118f2d1f32aa2a6df236659a231b82f"
+      ]
+    }
+  ]
+}

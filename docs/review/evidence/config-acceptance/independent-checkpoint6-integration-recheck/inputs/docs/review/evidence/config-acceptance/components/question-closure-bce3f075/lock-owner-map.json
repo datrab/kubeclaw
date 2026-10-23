@@ -1,0 +1,1497 @@
+{
+  "rows": [
+    {
+      "path": "skills/common/plugins/state-store/src/adapter.ts",
+      "line": 35,
+      "sha256": "1805e68a4d478af60df925fb6c38204344d53e17a8134fafdd47732263c473c7",
+      "sourceText": "  const store = new FileDurableRecordStore(configured, {",
+      "context": [
+        "  if (!Number.isSafeInteger(maxEntryBytes) || maxEntryBytes < 1) throw new Error('maxEntryBytes is invalid');",
+        "  if (!Number.isSafeInteger(maximumRecords) || maximumRecords < 1) throw new Error('maximumRecords is invalid');",
+        "  if (!Number.isSafeInteger(maximumStoreBytes) || maximumStoreBytes < 1) throw new Error('maximumStoreBytes is invalid');",
+        "  const store = new FileDurableRecordStore(configured, {",
+        "    maximumRecords,",
+        "    maximumBytes: maximumStoreBytes,",
+        "    maximumRecordBytes: maxEntryBytes,"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing registered state-store adapter config",
+      "targetField": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/common/plugins/wait-store/src/adapter.ts",
+      "line": 207,
+      "sha256": "9114197adde4307becd0d14548eef723804be8f051acef012abbcbf8c5b8b082",
+      "sourceText": "  const store = new FileDurableRecordStore(root, {",
+      "context": [
+        "  if (!Number.isSafeInteger(maxEntryBytes) || maxEntryBytes < 1) throw new Error('maxEntryBytes is invalid');",
+        "  if (!Number.isSafeInteger(maximumRecords) || maximumRecords < 1) throw new Error('maximumRecords is invalid');",
+        "  if (!Number.isSafeInteger(maximumStoreBytes) || maximumStoreBytes < 1) throw new Error('maximumStoreBytes is invalid');",
+        "  const store = new FileDurableRecordStore(root, {",
+        "    maximumRecords,",
+        "    maximumBytes: maximumStoreBytes,",
+        "    maximumRecordBytes: maxEntryBytes,"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing registered wait-store adapter config",
+      "targetField": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/common/plugins/telemetry-store/src/adapter.ts",
+      "line": 14,
+      "sha256": "f5a3ff64dce028471c800e9a5da01bcc3a405f26b1e68ccdd8e78cd54e00fb13",
+      "sourceText": "  const store = new FileDurableRecordStore(root, {",
+      "context": [
+        "  if (!Number.isSafeInteger(maxRecordBytes) || maxRecordBytes < 1) throw new Error('maxRecordBytes is invalid');",
+        "  if (!Number.isSafeInteger(maximumRecords) || maximumRecords < 1) throw new Error('maximumRecords is invalid');",
+        "  if (!Number.isSafeInteger(maximumStoreBytes) || maximumStoreBytes < 1) throw new Error('maximumStoreBytes is invalid');",
+        "  const store = new FileDurableRecordStore(root, {",
+        "    maximumRecords,",
+        "    maximumBytes: maximumStoreBytes,",
+        "    maximumRecordBytes: maxRecordBytes,"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing registered telemetry-store adapter config",
+      "targetField": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/common/plugins/operator-messaging/src/adapter.ts",
+      "line": 69,
+      "sha256": "a6d719a5e69b401a0696af9a74dcf358015cdc57bfa062cca0514c54410b3785",
+      "sourceText": "  const records = new FileDurableRecordStore(config.deliveryRoot, {",
+      "context": [
+        "export function activate(context: AdapterActivationContext): AdapterInstance {",
+        "  const config = parseConfig(context.config);",
+        "  const targets = config.targets;",
+        "  const records = new FileDurableRecordStore(config.deliveryRoot, {",
+        "    maximumRecords: config.maximumDeliveryRecords,",
+        "    maximumBytes: config.maximumDeliveryBytes,",
+        "    maximumRecordBytes: DELIVERY_RECORD_MAX_BYTES,"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing registered operator-messaging adapter config",
+      "targetField": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "line": 197,
+      "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31",
+      "sourceText": "  const records = new FileDurableRecordStore(config.deliveryRoot, {",
+      "context": [
+        "export function activate(context: AdapterActivationContext): AdapterInstance {",
+        "  const config = readConfig(context.config);",
+        "  const targets = config.targets;",
+        "  const records = new FileDurableRecordStore(config.deliveryRoot, {",
+        "    maximumRecords: config.maximumDeliveryRecords,",
+        "    maximumBytes: config.maximumDeliveryBytes,",
+        "    maximumRecordBytes: DELIVERY_RECORD_MAX_BYTES,"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing registered transport-publisher adapter config",
+      "targetField": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+      "line": 168,
+      "sha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154",
+      "sourceText": "  const records = new FileDurableRecordStore(configured, {",
+      "context": [
+        "  const maximumRecords = context.config.maximumRecords ?? DEFAULT_MAXIMUM_RECORDS;",
+        "  if (!Number.isSafeInteger(maximumStoreBytes) || Number(maximumStoreBytes) < 1) throw new Error('maximumStoreBytes is invalid');",
+        "  if (!Number.isSafeInteger(maximumRecords) || Number(maximumRecords) < 1) throw new Error('maximumRecords is invalid');",
+        "  const records = new FileDurableRecordStore(configured, {",
+        "    maximumRecords: Number(maximumRecords),",
+        "    maximumBytes: Number(maximumStoreBytes),",
+        "    maximumRecordBytes: 64 * 1024,"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing registered artifact-store adapter config",
+      "targetField": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+      "line": 173,
+      "sha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154",
+      "sourceText": "  const blobs = new FileDurableBlobStore(configured, Number(maximum), Number(maximumStoreBytes));",
+      "context": [
+        "    maximumBytes: Number(maximumStoreBytes),",
+        "    maximumRecordBytes: 64 * 1024,",
+        "  });",
+        "  const blobs = new FileDurableBlobStore(configured, Number(maximum), Number(maximumStoreBytes));",
+        "  return {",
+        "    async ready() { await records.read<ArtifactRef>('artifacts/readiness'); },",
+        "    async invoke(invocation) { return invokeArtifact(records, blobs, Number(maximum), invocation); },"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing registered artifact-store adapter config",
+      "targetField": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/published-pair.ts",
+      "line": 104,
+      "sha256": "c0c4fc08ae422962f201b4ec9f134ec03f8e3354c85316cb92657db18aafa27a",
+      "sourceText": "  await withDurableStoreLock(pointer,async()=>{",
+      "context": [
+        "  const base=path.join(root,DIRECTORY),pointer=path.join(base,'current.json');",
+        "  names.forEach(name=>targetValid(path.join(root,name)));targetValid(pointer);",
+        "  await ensureDirectoryDurable(base);",
+        "  await withDurableStoreLock(pointer,async()=>{",
+        "    const basePins=pins(base);names.forEach(name=>targetValid(path.join(root,name)));targetValid(pointer);",
+        "    const generation=path.join(base,manifest.generation);await ensureDirectoryDurable(generation);const generationPins=pins(generation);",
+        "    for(let index=0;index<2;index++)await immutableFile(path.join(generation,names[index]!),contents[index]!);"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing Nova PlatformConfig proposed projectScaffold policy; progress-scaffold.ts:142 only productive caller",
+      "targetField": "soleentry selectedNova projectScaffold.lockWaitSeconds ->checkedgeneratedprojection->requiredpublishJsonPair policy argument",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+      "line": 48,
+      "sha256": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea",
+      "sourceText": "    return withDurableStoreLock(path.join(this.#root, 'blob-budget'), () => this.#put(input));",
+      "context": [
+        "  async put(input: Uint8Array): Promise<{ readonly digest: string; readonly sizeBytes: number }> {",
+        "    if (this.#maximumTotalBytes === undefined) return this.#put(input);",
+        "    await ensureDirectoryDurable(this.#root);",
+        "    return withDurableStoreLock(path.join(this.#root, 'blob-budget'), () => this.#put(input));",
+        "  }",
+        "",
+        "  async #usedBytes(directory: string): Promise<number> {"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "reusable foundation implementation: policy must be passed from concrete caller owner; not a separate author",
+      "targetField": "requiredpassed lockWaitSeconds fromlisted concreteowner; no libraryfallback/sharedauthor",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 344,
+      "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+      "sourceText": "    const locked = () => withDurableStoreLock(this.#file, operation);",
+      "context": [
+        "    this.#limits = limits;",
+        "  }",
+        "  #serial<T>(operation: () => Promise<T>): Promise<T> {",
+        "    const locked = () => withDurableStoreLock(this.#file, operation);",
+        "    const result = this.#queue.then(locked, locked);",
+        "    this.#queue = result.then(",
+        "      () => undefined,"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "reusable foundation implementation: policy must be passed from concrete caller owner; not a separate author",
+      "targetField": "requiredpassed lockWaitSeconds fromlisted concreteowner; no libraryfallback/sharedauthor",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 458,
+      "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+      "sourceText": "    const locked = () => withDurableStoreLock(this.#file, operation);",
+      "context": [
+        "    return path.dirname(this.#file);",
+        "  }",
+        "  #serial<T>(operation: () => Promise<T>): Promise<T> {",
+        "    const locked = () => withDurableStoreLock(this.#file, operation);",
+        "    const result = this.#queue.then(locked, locked);",
+        "    this.#queue = result.then(",
+        "      () => undefined,"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "reusable foundation implementation: policy must be passed from concrete caller owner; not a separate author",
+      "targetField": "requiredpassed lockWaitSeconds fromlisted concreteowner; no libraryfallback/sharedauthor",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-state.ts",
+      "line": 53,
+      "sha256": "392ad6e2a590c964cc0d8cd1fe0c75237f240798e6d99ee2ed2b33da8047fdca",
+      "sourceText": "      withDurableStoreLock(this.file, async () => {",
+      "context": [
+        "  }",
+        "  serial<T>(operation: () => Promise<T>): Promise<T> {",
+        "    const locked = () =>",
+        "      withDurableStoreLock(this.file, async () => {",
+        "        await cleanupStaging(this.root);",
+        "        return operation();",
+        "      });"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "reusable foundation implementation: policy must be passed from concrete caller owner; not a separate author",
+      "targetField": "requiredpassed lockWaitSeconds fromlisted concreteowner; no libraryfallback/sharedauthor",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "line": 60,
+      "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+      "sourceText": "    const locked = () => withDurableStoreLock(this.#file, operation);",
+      "context": [
+        "  }",
+        "",
+        "  #serial<T>(operation: () => Promise<T>): Promise<T> {",
+        "    const locked = () => withDurableStoreLock(this.#file, operation);",
+        "    const result = this.#queue.then(locked, locked);",
+        "    this.#queue = result.then(() => undefined, () => undefined);",
+        "    return result;"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "reusable foundation implementation: policy must be passed from concrete caller owner; not a separate author",
+      "targetField": "requiredpassed lockWaitSeconds fromlisted concreteowner; no libraryfallback/sharedauthor",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/native-attempt-journal.ts",
+      "line": 32,
+      "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+      "sourceText": "    this.#records = new FileDurableRecordStore(path.join(this.#root, 'metadata'), {",
+      "context": [
+        "      throw new Error('WORKER_NATIVE_JOURNAL_CONFIG_INVALID');",
+        "    }",
+        "    this.#root = path.resolve(root); this.#limits = { ...limits };",
+        "    this.#records = new FileDurableRecordStore(path.join(this.#root, 'metadata'), {",
+        "      maximumRecords: limits.maximumRecords, maximumBytes: limits.maximumStateBytes, maximumRecordBytes: nativeJournalMaximumRecordBytes,",
+        "    });",
+        "    this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), Math.max(limits.maximumInputBytes, limits.maximumResultBytes), limits.maximumTotalBytes);"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "Reusable Corestore implementation; actual outercaller is parent Prism worker or Buster preparation, EACH ownexistingroleauthor; generated rootpolicy projection, no new globalCoreauthor",
+      "targetField": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/native-attempt-journal.ts",
+      "line": 35,
+      "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+      "sourceText": "    this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), Math.max(limits.maximumInputBytes, limits.maximumResultBytes), limits.maximumTotalBytes);",
+      "context": [
+        "    this.#records = new FileDurableRecordStore(path.join(this.#root, 'metadata'), {",
+        "      maximumRecords: limits.maximumRecords, maximumBytes: limits.maximumStateBytes, maximumRecordBytes: nativeJournalMaximumRecordBytes,",
+        "    });",
+        "    this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), Math.max(limits.maximumInputBytes, limits.maximumResultBytes), limits.maximumTotalBytes);",
+        "  }",
+        "",
+        "  async withAttempt<T>(input: WorkerAttemptEnvelopeV3,"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "Reusable Corestore implementation; actual outercaller is parent Prism worker or Buster preparation, EACH ownexistingroleauthor; generated rootpolicy projection, no new globalCoreauthor",
+      "targetField": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/native-attempt-journal.ts",
+      "line": 51,
+      "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+      "sourceText": "      return await withDurableStoreLock(path.join(this.#root, 'fences', key.slice(-2), 'lifetime'), async () => {",
+      "context": [
+        "    // serialize across real processes; unrelated stripes can execute together.",
+        "    let entered = false;",
+        "    try {",
+        "      return await withDurableStoreLock(path.join(this.#root, 'fences', key.slice(-2), 'lifetime'), async () => {",
+        "        entered = true;",
+        "        const reserved = await this.#reserve(envelope, bytes, validateNewAdmission);",
+        "        return operation({ envelope, newlyAccepted: reserved.newlyAccepted, acceptedAt: reserved.record.payload.acceptedAt,"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "Reusable Corestore implementation; actual outercaller is parent Prism worker or Buster preparation, EACH ownexistingroleauthor; generated rootpolicy projection, no new globalCoreauthor",
+      "targetField": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/native-attempt-journal.ts",
+      "line": 124,
+      "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+      "sourceText": "    return withDurableStoreLock(path.join(this.#root, 'admission', 'lifetime'), async () => {",
+      "context": [
+        "    if (!checkWorkerNativeResultBinding(envelope, result).ok) throw new Error('WORKER_NATIVE_JOURNAL_RESULT_BINDING_INVALID');",
+        "    const bytes = Buffer.from(canonicalJson(result));",
+        "    if (bytes.byteLength > this.#limits.maximumResultBytes) throw new Error('WORKER_NATIVE_JOURNAL_RESULT_LIMIT');",
+        "    return withDurableStoreLock(path.join(this.#root, 'admission', 'lifetime'), async () => {",
+        "      const record = await this.#required(envelope);",
+        "      if (record.payload.result) {",
+        "        if (record.payload.result.digest !== sha256Digest(result)) throw new Error('WORKER_NATIVE_JOURNAL_RESULT_ALREADY_SEALED');"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "Reusable Corestore implementation; actual outercaller is parent Prism worker or Buster preparation, EACH ownexistingroleauthor; generated rootpolicy projection, no new globalCoreauthor",
+      "targetField": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/native-attempt-journal.ts",
+      "line": 165,
+      "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+      "sourceText": "    return withDurableStoreLock(path.join(this.#root, 'admission', 'lifetime'), async () => {",
+      "context": [
+        "  }",
+        "",
+        "  async #reserve(envelope: WorkerAttemptEnvelopeV3, bytes: Buffer, validateNewAdmission: (envelope: WorkerAttemptEnvelopeV3) => void) {",
+        "    return withDurableStoreLock(path.join(this.#root, 'admission', 'lifetime'), async () => {",
+        "      const existing = await this.#lookup(envelope);",
+        "      if (existing) return { newlyAccepted: false, record: existing };",
+        "      // Reject expired or unsupported new work under the admission lock, before"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "Reusable Corestore implementation; actual outercaller is parent Prism worker or Buster preparation, EACH ownexistingroleauthor; generated rootpolicy projection, no new globalCoreauthor",
+      "targetField": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-store.ts",
+      "line": 75,
+      "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "sourceText": "    return withDurableStoreLock(this.#file, async () => structuredClone((await this.#read()).records));",
+      "context": [
+        "  }",
+        "",
+        "  async records(): Promise<readonly WorkerOwnershipRecord[]> {",
+        "    return withDurableStoreLock(this.#file, async () => structuredClone((await this.#read()).records));",
+        "  }",
+        "",
+        "  /** A changed boot is only a reboot proof after this store is bound to one host. */"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "Reusable Corestore implementation; actual outercaller is parent Prism worker or Buster preparation, EACH ownexistingroleauthor; generated rootpolicy projection, no new globalCoreauthor",
+      "targetField": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-store.ts",
+      "line": 82,
+      "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "sourceText": "    await withDurableStoreLock(this.#file, async () => {",
+      "context": [
+        "  async bindHostIdentity(hostIdentity: string, currentBootId: string): Promise<void> {",
+        "    validateOwnershipHostIdentity(hostIdentity);",
+        "    if (!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/u.test(currentBootId)) throw new Error('WORKER_OWNERSHIP_BOOT_IDENTITY_INVALID');",
+        "    await withDurableStoreLock(this.#file, async () => {",
+        "      const state = await this.#read();",
+        "      if (state.hostIdentity !== null) {",
+        "        if (state.hostIdentity !== hostIdentity) throw new Error('WORKER_OWNERSHIP_DIFFERENT_HOST_UNRESOLVED');"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "Reusable Corestore implementation; actual outercaller is parent Prism worker or Buster preparation, EACH ownexistingroleauthor; generated rootpolicy projection, no new globalCoreauthor",
+      "targetField": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-store.ts",
+      "line": 98,
+      "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "sourceText": "    return withDurableStoreLock(path.join(path.dirname(this.#file), 'supervisor', 'lifetime'), operation);",
+      "context": [
+        "",
+        "  /** Held for the entire supervisor lifetime, including recovery and admission. */",
+        "  async withSupervisor<T>(operation: () => Promise<T>): Promise<T> {",
+        "    return withDurableStoreLock(path.join(path.dirname(this.#file), 'supervisor', 'lifetime'), operation);",
+        "  }",
+        "",
+        "  async reserve(input: WorkerOwnershipIdentity): Promise<WorkerOwnershipRecord> {"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "Reusable Corestore implementation; actual outercaller is parent Prism worker or Buster preparation, EACH ownexistingroleauthor; generated rootpolicy projection, no new globalCoreauthor",
+      "targetField": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-store.ts",
+      "line": 104,
+      "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "sourceText": "    return withDurableStoreLock(this.#file, async () => {",
+      "context": [
+        "  async reserve(input: WorkerOwnershipIdentity): Promise<WorkerOwnershipRecord> {",
+        "    const identity = structuredClone(input);",
+        "    identityValid(identity);",
+        "    return withDurableStoreLock(this.#file, async () => {",
+        "      const state = await this.#read();",
+        "      const same = state.records.find(record => key(record.identity) === key(identity));",
+        "      if (same) {"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "Reusable Corestore implementation; actual outercaller is parent Prism worker or Buster preparation, EACH ownexistingroleauthor; generated rootpolicy projection, no new globalCoreauthor",
+      "targetField": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-store.ts",
+      "line": 134,
+      "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "sourceText": "    return withDurableStoreLock(this.#file, async () => {",
+      "context": [
+        "    const change = structuredClone(options);",
+        "    validateRecord(expected);",
+        "    if (!Object.hasOwn(transitions, phase)) throw new Error('WORKER_OWNERSHIP_PHASE_INVALID');",
+        "    return withDurableStoreLock(this.#file, async () => {",
+        "      const state = await this.#read();",
+        "      const index = state.records.findIndex(record => key(record.identity) === key(expected.identity));",
+        "      const current = state.records[index];"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "Reusable Corestore implementation; actual outercaller is parent Prism worker or Buster preparation, EACH ownexistingroleauthor; generated rootpolicy projection, no new globalCoreauthor",
+      "targetField": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-store.ts",
+      "line": 179,
+      "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "sourceText": "    return withDurableStoreLock(this.#file, async () => {",
+      "context": [
+        "    update: (current: WorkerOwnershipRecord) => WorkerScopeTopology['children'], admission: boolean): Promise<WorkerOwnershipRecord> {",
+        "    const expected = structuredClone(input);",
+        "    validateRecord(expected);",
+        "    return withDurableStoreLock(this.#file, async () => {",
+        "      const state = await this.#read();",
+        "      const index = state.records.findIndex(record => key(record.identity) === key(expected.identity));",
+        "      const current = state.records[index];"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "Reusable Corestore implementation; actual outercaller is parent Prism worker or Buster preparation, EACH ownexistingroleauthor; generated rootpolicy projection, no new globalCoreauthor",
+      "targetField": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+      "line": 45,
+      "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+      "sourceText": "  const records=new FileDurableRecordStore(config.stateRoot,{maximumRecords:10000,maximumBytes:64*1024**2,maximumRecordBytes:65536});",
+      "context": [
+        "}",
+        "export function activate(context:AdapterActivationContext):AdapterInstance {",
+        "  const config=configuration(context.config),stopping=new AbortController();",
+        "  const records=new FileDurableRecordStore(config.stateRoot,{maximumRecords:10000,maximumBytes:64*1024**2,maximumRecordBytes:65536});",
+        "  const execute=async(request:EffectRequest,signal:AbortSignal,recovery:boolean):Promise<Value|undefined>=>{",
+        "    assertRequest(request,config);signal.throwIfAborted();",
+        "    const reader:Reader={invoke:(capability,invocation)=>context.invoke(capability,invocation,{signal})};"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing registered demo-handoff adapter config; not a foundation owner",
+      "targetField": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/nova/core/test-gates/remote-result-import.ts",
+      "line": 100,
+      "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+      "sourceText": "    this.#records = new FileDurableRecordStore(root, options.recordLimits);",
+      "context": [
+        "  readonly #records: FileDurableRecordStore;",
+        "  readonly #blobs: FileDurableBlobStore;",
+        "  constructor(root: string, options: { recordLimits: DurableRecordLimits; maximumEvidenceStoreBytes: number }) {",
+        "    this.#records = new FileDurableRecordStore(root, options.recordLimits);",
+        "    // The importer enforces the per-job evidence limit; no blob can exceed the",
+        "    // store quota, and the third argument enforces that quota across all jobs.",
+        "    this.#blobs = new FileDurableBlobStore(root, options.maximumEvidenceStoreBytes, options.maximumEvidenceStoreBytes);"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "Reusable Nova gate store; source-specific standalone runtime-config author OR registered remote-test-gate adapter config determined by actual outercaller; same physicalroot requires identicalcapturedowner",
+      "targetField": "sameexisting standalone Nova runtime storeLockWaitSeconds OR registeredremote-test-gate config.storeLockWaitSeconds fromactualoutercaller; options.lockWaitSeconds",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/nova/core/test-gates/remote-result-import.ts",
+      "line": 103,
+      "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+      "sourceText": "    this.#blobs = new FileDurableBlobStore(root, options.maximumEvidenceStoreBytes, options.maximumEvidenceStoreBytes);",
+      "context": [
+        "    this.#records = new FileDurableRecordStore(root, options.recordLimits);",
+        "    // The importer enforces the per-job evidence limit; no blob can exceed the",
+        "    // store quota, and the third argument enforces that quota across all jobs.",
+        "    this.#blobs = new FileDurableBlobStore(root, options.maximumEvidenceStoreBytes, options.maximumEvidenceStoreBytes);",
+        "  }",
+        "  /** Read only a completed import under an exact caller-independent execution binding. */",
+        "  async readVerifiedResult(binding: { readonly jobId: string; readonly runId: string; readonly pipelineStageId: string;"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "Reusable Nova gate store; source-specific standalone runtime-config author OR registered remote-test-gate adapter config determined by actual outercaller; same physicalroot requires identicalcapturedowner",
+      "targetField": "sameexisting standalone Nova runtime storeLockWaitSeconds OR registeredremote-test-gate config.storeLockWaitSeconds fromactualoutercaller; options.lockWaitSeconds",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+      "line": 24,
+      "sha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+      "sourceText": "    this.#records = new FileDurableRecordStore(root, options.recordLimits);",
+      "context": [
+        "    if (!Number.isSafeInteger(options.maximumArchiveBytes) || options.maximumArchiveBytes < 1) {",
+        "      throw new Error('NOVA_REMOTE_PLAN_ARCHIVE_LIMIT_INVALID');",
+        "    }",
+        "    this.#records = new FileDurableRecordStore(root, options.recordLimits);",
+        "    this.#blobs = new FileDurableBlobStore(root, options.maximumArchiveBytes, options.maximumArchiveStoreBytes);",
+        "    this.#maximumArchiveBytes = options.maximumArchiveBytes;",
+        "  }"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "Reusable Nova gate store; source-specific standalone runtime-config author OR registered remote-test-gate adapter config determined by actual outercaller; same physicalroot requires identicalcapturedowner",
+      "targetField": "sameexisting standalone Nova runtime storeLockWaitSeconds OR registeredremote-test-gate config.storeLockWaitSeconds fromactualoutercaller; options.lockWaitSeconds",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+      "line": 25,
+      "sha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+      "sourceText": "    this.#blobs = new FileDurableBlobStore(root, options.maximumArchiveBytes, options.maximumArchiveStoreBytes);",
+      "context": [
+        "      throw new Error('NOVA_REMOTE_PLAN_ARCHIVE_LIMIT_INVALID');",
+        "    }",
+        "    this.#records = new FileDurableRecordStore(root, options.recordLimits);",
+        "    this.#blobs = new FileDurableBlobStore(root, options.maximumArchiveBytes, options.maximumArchiveStoreBytes);",
+        "    this.#maximumArchiveBytes = options.maximumArchiveBytes;",
+        "  }",
+        ""
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "Reusable Nova gate store; source-specific standalone runtime-config author OR registered remote-test-gate adapter config determined by actual outercaller; same physicalroot requires identicalcapturedowner",
+      "targetField": "sameexisting standalone Nova runtime storeLockWaitSeconds OR registeredremote-test-gate config.storeLockWaitSeconds fromactualoutercaller; options.lockWaitSeconds",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/nova/core/observability/reconciler.ts",
+      "line": 384,
+      "sha256": "61c65951f07d04e1767fdc3114a473183ed5b968ef8d68f665b4ec5d0661dd71",
+      "sourceText": "    attemptStore: new FileDurableAttemptStore(",
+      "context": [
+        "  )",
+        "    throw new Error(\"NOVA_OBSERVABILITY_PLAN_INVALID\");",
+        "  const reconciler = new NovaObservabilityReconciler({",
+        "    attemptStore: new FileDurableAttemptStore(",
+        "      path.join(root, \"attempts\"),",
+        "      EMBEDDED_ATTEMPT_LIMITS,",
+        "    ),"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing Nova PlatformConfig proposed observability policy; currently EMBEDDED constants, not observers map",
+      "targetField": "existing selectedNova observability.admission.lockWaitSeconds; attemptstore getsproposed observability.attempts.lockWaitSeconds completecompanion",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/nova/core/observability/reconciler.ts",
+      "line": 388,
+      "sha256": "61c65951f07d04e1767fdc3114a473183ed5b968ef8d68f665b4ec5d0661dd71",
+      "sourceText": "    admissionStore: new FileObservabilityAdmissionStore(",
+      "context": [
+        "      path.join(root, \"attempts\"),",
+        "      EMBEDDED_ATTEMPT_LIMITS,",
+        "    ),",
+        "    admissionStore: new FileObservabilityAdmissionStore(",
+        "      path.join(root, \"admission\"),",
+        "      EMBEDDED_ADMISSION_LIMITS,",
+        "    ),"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing Nova PlatformConfig proposed observability policy; currently EMBEDDED constants, not observers map",
+      "targetField": "existing selectedNova observability.admission.lockWaitSeconds; attemptstore getsproposed observability.attempts.lockWaitSeconds completecompanion",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+      "line": 46,
+      "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+      "sourceText": "    this.#records = new FileDurableRecordStore(root, options.recordLimits);",
+      "context": [
+        "    }",
+        "    this.#admissionLock = path.join(path.resolve(root), 'job-admission');",
+        "    this.#maximumResultStoreBytes = options.maximumResultStoreBytes;",
+        "    this.#records = new FileDurableRecordStore(root, options.recordLimits);",
+        "    this.#results = new FileDurableBlobStore(path.join(root, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);",
+        "    this.#maximumArchiveBytes = options.maximumArchiveBytes;",
+        "    this.#maximumResultBytes = options.maximumResultBytes;"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing buster-engine selected config/runtime store policy",
+      "targetField": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+      "line": 47,
+      "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+      "sourceText": "    this.#results = new FileDurableBlobStore(path.join(root, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);",
+      "context": [
+        "    this.#admissionLock = path.join(path.resolve(root), 'job-admission');",
+        "    this.#maximumResultStoreBytes = options.maximumResultStoreBytes;",
+        "    this.#records = new FileDurableRecordStore(root, options.recordLimits);",
+        "    this.#results = new FileDurableBlobStore(path.join(root, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);",
+        "    this.#maximumArchiveBytes = options.maximumArchiveBytes;",
+        "    this.#maximumResultBytes = options.maximumResultBytes;",
+        "    let sourcePublicKey: crypto.KeyObject;"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing buster-engine selected config/runtime store policy",
+      "targetField": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+      "line": 89,
+      "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+      "sourceText": "    return withDurableStoreLock(this.#admissionLock, () => this.#accept(job, now));",
+      "context": [
+        "",
+        "  async accept(job: RemotePlanJobV1, now: string): Promise<RemotePlanStatusV1> {",
+        "    this.#preflight(job);",
+        "    return withDurableStoreLock(this.#admissionLock, () => this.#accept(job, now));",
+        "  }",
+        "",
+        "  async #accept(job: RemotePlanJobV1, now: string): Promise<RemotePlanStatusV1> {"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing buster-engine selected config/runtime store policy",
+      "targetField": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+      "line": 185,
+      "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+      "sourceText": "    return withDurableStoreLock(this.#admissionLock, () => this.#complete(jobId, result, now));",
+      "context": [
+        "",
+        "  async complete(jobId: string, result: RemotePlanResultV1, now: string): Promise<RemotePlanStatusV1> {",
+        "    validatePipelineTestGateContract('remotePlanResult', result);",
+        "    return withDurableStoreLock(this.#admissionLock, () => this.#complete(jobId, result, now));",
+        "  }",
+        "",
+        "  async #complete(jobId: string, result: RemotePlanResultV1, now: string): Promise<RemotePlanStatusV1> {"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing buster-engine selected config/runtime store policy",
+      "targetField": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+      "line": 234,
+      "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+      "sourceText": "    return withDurableStoreLock(this.#admissionLock, async () => {",
+      "context": [
+        "    // Own the complete intent before validation or asynchronous lock acquisition.",
+        "    const intent = structuredClone(inputIntent);",
+        "    assertCompactionIntent(intent);",
+        "    return withDurableStoreLock(this.#admissionLock, async () => {",
+        "      const current = await this.get(intent.jobId);",
+        "      if (current.payload.schemaVersion === 'buster-plan-job-compacted-record.v1') {",
+        "        if (current.payload.compaction.intentDigest !== compactionDigest(intent)) throw new Error('BUSTER_COMPACTION_INTENT_CONFLICT');"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing buster-engine selected config/runtime store policy",
+      "targetField": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "line": 64,
+      "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a",
+      "sourceText": "      new FileDurableAttemptStore(path.join(observabilityRoot, \"attempts\"), executionPolicy.stores.attempts);",
+      "context": [
+        "    this.#customDurableAttemptStore = options.durableAttemptStore !== undefined;",
+        "    this.#durableAttemptStore =",
+        "      options.durableAttemptStore ??",
+        "      new FileDurableAttemptStore(path.join(observabilityRoot, \"attempts\"), executionPolicy.stores.attempts);",
+        "    this.#observabilityAdmissionStore =",
+        "      options.observabilityAdmissionStore ??",
+        "      new FileObservabilityAdmissionStore(path.join(observabilityRoot, \"admission\"), executionPolicy.stores.admission);"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing buster-engine selected config/runtime store policy",
+      "targetField": "settings.execution.stores.attempts.lockWaitSeconds or admission.lockWaitSeconds matching exact constructor",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "line": 67,
+      "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a",
+      "sourceText": "      new FileObservabilityAdmissionStore(path.join(observabilityRoot, \"admission\"), executionPolicy.stores.admission);",
+      "context": [
+        "      new FileDurableAttemptStore(path.join(observabilityRoot, \"attempts\"), executionPolicy.stores.attempts);",
+        "    this.#observabilityAdmissionStore =",
+        "      options.observabilityAdmissionStore ??",
+        "      new FileObservabilityAdmissionStore(path.join(observabilityRoot, \"admission\"), executionPolicy.stores.admission);",
+        "    this.#now = options.now ?? (() => new Date());",
+        "    this.#id = options.id ?? (() => crypto.randomUUID());",
+        "    this.#authorityId = `test-runner:${options.plan.planDigest}`;"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing buster-engine selected config/runtime store policy",
+      "targetField": "settings.execution.stores.attempts.lockWaitSeconds or admission.lockWaitSeconds matching exact constructor",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-publication.ts",
+      "line": 144,
+      "sha256": "53147aef26b51b977f07d9ab46fcee9a356ba9acfa19e041f8c3b99d1cbc0f19",
+      "sourceText": "  return withDurableStoreLock(file, async () => {",
+      "context": [
+        "  await retainPreparationGate(options.command.sourceRoot, receipt.importId, binding);",
+        "  const group = path.join(options.command.sourceRoot, receipt.importId);",
+        "  const file = path.join(group, 'historical-receipt.json');",
+        "  return withDurableStoreLock(file, async () => {",
+        "    if (reservation.phase === 'retained-historical') {",
+        "      if (reservation.groupReceiptDigest !== preparationDigest(receipt)) throw new Error('BUSTER_HISTORICAL_RECEIPT_CHANGED');",
+        "      const actual = await digestHistoricalFile(file, options.settings.maximumResultBytes);"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing buster-engine selected config/runtime store policy",
+      "targetField": "existing buster-engine settings.preparation.storeLockWaitSeconds ->ledger/preparationhistorical roothelper; not Core native storealias",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+      "line": 31,
+      "sha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+      "sourceText": "    this.#records = new FileDurableRecordStore(path.join(this.#root, 'metadata'), {",
+      "context": [
+        "      throw new Error('BUSTER_FIXTURE_JOURNAL_CONFIG_INVALID');",
+        "    }",
+        "    this.#root = path.resolve(root); this.#limits = { ...limits };",
+        "    this.#records = new FileDurableRecordStore(path.join(this.#root, 'metadata'), {",
+        "      maximumRecords: limits.maximumRecords, maximumBytes: limits.maximumStateBytes, maximumRecordBytes: 4096,",
+        "    });",
+        "    this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), limits.maximumBlobBytes, limits.maximumTotalBytes);"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing buster-engine selected config/runtime store policy",
+      "targetField": "required publiclimits.lockWaitSeconds fromexternalownercaller; no inrepo outerconstructor",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+      "line": 34,
+      "sha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+      "sourceText": "    this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), limits.maximumBlobBytes, limits.maximumTotalBytes);",
+      "context": [
+        "    this.#records = new FileDurableRecordStore(path.join(this.#root, 'metadata'), {",
+        "      maximumRecords: limits.maximumRecords, maximumBytes: limits.maximumStateBytes, maximumRecordBytes: 4096,",
+        "    });",
+        "    this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), limits.maximumBlobBytes, limits.maximumTotalBytes);",
+        "  }",
+        "",
+        "  async reserve(input: BusterFixtureAdmission): Promise<BusterFixtureState> {"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing buster-engine selected config/runtime store policy",
+      "targetField": "required publiclimits.lockWaitSeconds fromexternalownercaller; no inrepo outerconstructor",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+      "line": 125,
+      "sha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+      "sourceText": "    return withDurableStoreLock(path.join(this.#root, 'phases', 'lifetime'), operation);",
+      "context": [
+        "    catch (error) { if ((error as NodeJS.ErrnoException).code !== 'EEXIST') throw error; }",
+        "    const stat = await fs.lstat(this.#root);",
+        "    if (!stat.isDirectory() || stat.uid !== process.getuid!() || (stat.mode & 0o077)) throw new Error('BUSTER_FIXTURE_JOURNAL_NOT_PRIVATE');",
+        "    return withDurableStoreLock(path.join(this.#root, 'phases', 'lifetime'), operation);",
+        "  }",
+        "",
+        "  async #all(): Promise<readonly DurableRecord<BusterFixtureState>[]> {"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing buster-engine selected config/runtime store policy",
+      "targetField": "required publiclimits.lockWaitSeconds fromexternalownercaller; no inrepo outerconstructor",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "line": 71,
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+      "sourceText": "    this.#records = new FileDurableRecordStore(writableRoot, options.recordLimits);",
+      "context": [
+        "    const writableRoot = preparedPlanStateRoot(root);",
+        "    this.#admissionLock = path.join(writableRoot, 'job-admission');",
+        "    this.#maximumResultStoreBytes = options.maximumResultStoreBytes;",
+        "    this.#records = new FileDurableRecordStore(writableRoot, options.recordLimits);",
+        "    this.#results = new FileDurableBlobStore(path.join(writableRoot, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);",
+        "    this.#maximumResultBytes = options.maximumResultBytes;",
+        "    let sourcePublicKey: crypto.KeyObject;"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing buster-engine selected config/runtime store policy",
+      "targetField": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "line": 72,
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+      "sourceText": "    this.#results = new FileDurableBlobStore(path.join(writableRoot, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);",
+      "context": [
+        "    this.#admissionLock = path.join(writableRoot, 'job-admission');",
+        "    this.#maximumResultStoreBytes = options.maximumResultStoreBytes;",
+        "    this.#records = new FileDurableRecordStore(writableRoot, options.recordLimits);",
+        "    this.#results = new FileDurableBlobStore(path.join(writableRoot, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);",
+        "    this.#maximumResultBytes = options.maximumResultBytes;",
+        "    let sourcePublicKey: crypto.KeyObject;",
+        "    try { sourcePublicKey = crypto.createPublicKey(options.sourceAttestationPublicKey); }"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing buster-engine selected config/runtime store policy",
+      "targetField": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "line": 93,
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+      "sourceText": "    return withDurableStoreLock(this.#admissionLock, () => this.#accept(prepared, now));",
+      "context": [
+        "  async accept(input: BusterStagedAdmission, now: string): Promise<RemotePlanStatusV1> {",
+        "    const prepared = structuredClone(input);",
+        "    this.validate(prepared);",
+        "    return withDurableStoreLock(this.#admissionLock, () => this.#accept(prepared, now));",
+        "  }",
+        "",
+        "  async #accept(prepared: BusterStagedAdmission, now: string): Promise<RemotePlanStatusV1> {"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing buster-engine selected config/runtime store policy",
+      "targetField": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "line": 155,
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+      "sourceText": "    await withDurableStoreLock(this.#admissionLock, () => this.#attachSource(captured));",
+      "context": [
+        "",
+        "  async attachSource(prepared: PreparedAdmission): Promise<void> {",
+        "    const captured = structuredClone(prepared);",
+        "    await withDurableStoreLock(this.#admissionLock, () => this.#attachSource(captured));",
+        "  }",
+        "",
+        "  async #attachSource(prepared: PreparedAdmission): Promise<void> {"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing buster-engine selected config/runtime store policy",
+      "targetField": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "line": 173,
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+      "sourceText": "    return withDurableStoreLock(this.#admissionLock, async () => {",
+      "context": [
+        "",
+        "  /** Read the cancellation decision under the same fence as completion and source attachment. */",
+        "  async requestCancellation(jobId: string, now: string): Promise<RemotePlanStatusV1> {",
+        "    return withDurableStoreLock(this.#admissionLock, async () => {",
+        "      const current = await this.get(jobId);",
+        "      if (['completed', 'failed', 'cancelled', 'cancelling'].includes(current.payload.status.state)) {",
+        "        return current.payload.status;"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing buster-engine selected config/runtime store policy",
+      "targetField": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "line": 191,
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+      "sourceText": "    return withDurableStoreLock(this.#admissionLock,",
+      "context": [
+        "  ): Promise<RemotePlanStatusV1> {",
+        "    const capturedExpected = [...expected];",
+        "    const capturedTerminal = terminal === undefined ? undefined : structuredClone(terminal);",
+        "    return withDurableStoreLock(this.#admissionLock,",
+        "      () => this.#transitionStatus(jobId, capturedExpected, state, now, capturedTerminal));",
+        "  }",
+        ""
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing buster-engine selected config/runtime store policy",
+      "targetField": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "line": 238,
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+      "sourceText": "    return withDurableStoreLock(this.#admissionLock, () => this.#complete(jobId, result, now));",
+      "context": [
+        "  async complete(jobId: string, result: RemotePlanResultV1, now: string): Promise<RemotePlanStatusV1> {",
+        "    result = structuredClone(result);",
+        "    validatePipelineTestGateContract('remotePlanResult', result);",
+        "    return withDurableStoreLock(this.#admissionLock, () => this.#complete(jobId, result, now));",
+        "  }",
+        "",
+        "  async #complete(jobId: string, result: RemotePlanResultV1, now: string): Promise<RemotePlanStatusV1> {"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing buster-engine selected config/runtime store policy",
+      "targetField": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "line": 32,
+      "sha256": "e0631a2ec68d28a2eddbb62d37727db2fd71378ae48c0d879ee3aaadc56c92c5",
+      "sourceText": "    return withDurableStoreLock(this.#file, async () => {",
+      "context": [
+        "    profile = structuredClone(profile);",
+        "    now = new Date(now);",
+        "    if (!/^[a-f0-9]{32}$/u.test(admissionId)) throw new Error('BUSTER_PREPARATION_RESERVATION_INVALID');",
+        "    return withDurableStoreLock(this.#file, async () => {",
+        "      const state = await this.#read();",
+        "      const existing = state.reservations.find(item => item.admissionId === admissionId);",
+        "      if (existing) return structuredClone(existing.envelope);"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing buster-engine selected config/runtime store policy",
+      "targetField": "existing buster-engine settings.preparation.storeLockWaitSeconds ->ledger/preparationhistorical roothelper; not Core native storealias",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "line": 52,
+      "sha256": "e0631a2ec68d28a2eddbb62d37727db2fd71378ae48c0d879ee3aaadc56c92c5",
+      "sourceText": "    return withDurableStoreLock(this.#file, async () => {",
+      "context": [
+        "    profile = structuredClone(profile);",
+        "    now = new Date(now);",
+        "    assertHistoricalImportDescriptor(descriptor);",
+        "    return withDurableStoreLock(this.#file, async () => {",
+        "      const state = await this.#read();",
+        "      const existing = state.reservations.find(item => item.admissionId === importId);",
+        "      if (existing) {"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing buster-engine selected config/runtime store policy",
+      "targetField": "existing buster-engine settings.preparation.storeLockWaitSeconds ->ledger/preparationhistorical roothelper; not Core native storealias",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "line": 138,
+      "sha256": "e0631a2ec68d28a2eddbb62d37727db2fd71378ae48c0d879ee3aaadc56c92c5",
+      "sourceText": "    return withDurableStoreLock(this.#file, async () => {",
+      "context": [
+        "    profile = structuredClone(profile);",
+        "    now = new Date(now);",
+        "    assertBusterInput(staged.input, staged.job);",
+        "    return withDurableStoreLock(this.#file, async () => {",
+        "      const state = await this.#read();",
+        "      const key = preparationDigest(staged.input);",
+        "      await this.#validateRetainedInput(state, staged);"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing buster-engine selected config/runtime store policy",
+      "targetField": "existing buster-engine settings.preparation.storeLockWaitSeconds ->ledger/preparationhistorical roothelper; not Core native storealias",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "line": 289,
+      "sha256": "e0631a2ec68d28a2eddbb62d37727db2fd71378ae48c0d879ee3aaadc56c92c5",
+      "sourceText": "    return withDurableStoreLock(this.#file, async () => structuredClone((await this.#read()).reservations));",
+      "context": [
+        "  }",
+        "",
+        "  async reservations(): Promise<readonly SourceReservation[]> {",
+        "    return withDurableStoreLock(this.#file, async () => structuredClone((await this.#read()).reservations));",
+        "  }",
+        "",
+        "  async #transition(admissionId: string, update: (value: SourceReservation) => SourceReservation): Promise<void> {"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing buster-engine selected config/runtime store policy",
+      "targetField": "existing buster-engine settings.preparation.storeLockWaitSeconds ->ledger/preparationhistorical roothelper; not Core native storealias",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "line": 293,
+      "sha256": "e0631a2ec68d28a2eddbb62d37727db2fd71378ae48c0d879ee3aaadc56c92c5",
+      "sourceText": "    await withDurableStoreLock(this.#file, async () => {",
+      "context": [
+        "  }",
+        "",
+        "  async #transition(admissionId: string, update: (value: SourceReservation) => SourceReservation): Promise<void> {",
+        "    await withDurableStoreLock(this.#file, async () => {",
+        "      const state = await this.#read();",
+        "      const index = state.reservations.findIndex(item => item.admissionId === admissionId);",
+        "      if (index < 0) throw new Error('BUSTER_PREPARATION_RESERVATION_MISSING');"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "existing buster-engine selected config/runtime store policy",
+      "targetField": "existing buster-engine settings.preparation.storeLockWaitSeconds ->ledger/preparationhistorical roothelper; not Core native storealias",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "scripts/retire-wait-value.mjs",
+      "line": 94,
+      "sha256": "7a62bff9b58dbb5d4dbb6af8cdd3b3b7b64b5cdc2b536f23ea0ba1c0bb489102",
+      "sourceText": "    const waits = new FileDurableRecordStore(scope.intent.waitRoot, config.waitLimits);",
+      "context": [
+        "      ['signals.jsonl', source.signalsPrefixBytes]]) {",
+        "      if (fs.lstatSync(path.join(root, name)).size !== bytes) throw new Error('WAIT_RETENTION_CURRENT_PREFIX_REQUIRED');",
+        "    }",
+        "    const waits = new FileDurableRecordStore(scope.intent.waitRoot, config.waitLimits);",
+        "    const deliveries = new FileDurableRecordStore(scope.intent.deliveryRoot, config.deliveryLimits);",
+        "    const initialWaits = await waits.read('waits/all');",
+        "    const authority = operatorAuthority(initial.inventory, authorityScope, config, initialWaits);"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "captured original retirement scope store policy; script is reader, no new author",
+      "targetField": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "scripts/retire-wait-value.mjs",
+      "line": 95,
+      "sha256": "7a62bff9b58dbb5d4dbb6af8cdd3b3b7b64b5cdc2b536f23ea0ba1c0bb489102",
+      "sourceText": "    const deliveries = new FileDurableRecordStore(scope.intent.deliveryRoot, config.deliveryLimits);",
+      "context": [
+        "      if (fs.lstatSync(path.join(root, name)).size !== bytes) throw new Error('WAIT_RETENTION_CURRENT_PREFIX_REQUIRED');",
+        "    }",
+        "    const waits = new FileDurableRecordStore(scope.intent.waitRoot, config.waitLimits);",
+        "    const deliveries = new FileDurableRecordStore(scope.intent.deliveryRoot, config.deliveryLimits);",
+        "    const initialWaits = await waits.read('waits/all');",
+        "    const authority = operatorAuthority(initial.inventory, authorityScope, config, initialWaits);",
+        "    if (authority.waitEffectKey !== source.effectKey || authority.originalWaitPayloadDigest !== source.originalPayloadDigest"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "captured original retirement scope store policy; script is reader, no new author",
+      "targetField": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "scripts/retire-telemetry.mjs",
+      "line": 49,
+      "sha256": "050d770035a702a33e487ae06c7903aee6333cdbdf1f1e44dd4b5fcf7503c456",
+      "sourceText": "    const store = new FileDurableRecordStore(scope.telemetryRoot,scope.storeLimits);",
+      "context": [
+        "  return withRunMutationLock(root, async signal => {",
+        "    signal.throwIfAborted();",
+        "    const initial = retainedRun(scope,root);",
+        "    const store = new FileDurableRecordStore(scope.telemetryRoot,scope.storeLimits);",
+        "    return store.retire({operationId:scope.operationId,actor:scope.actor,owner:scope.runId,stream:STREAM,",
+        "      records:scope.records,evidence:initial.evidence}, async records => {",
+        "      signal.throwIfAborted();"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "captured original retirement scope store policy; script is reader, no new author",
+      "targetField": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "scripts/retire-operator-request.mjs",
+      "line": 65,
+      "sha256": "8aebd618c02dc8a898db323b99f7a0dee0abb27c470dda59a9bd3d7cde01dc21",
+      "sourceText": "    const waits = new FileDurableRecordStore(scope.intent.waitRoot, config.waitLimits);",
+      "context": [
+        "  return withRunMutationLock(canonical, async signal => {",
+        "    signal.throwIfAborted();",
+        "    const initial = retainedRun(scope), config = initial.configuration;",
+        "    const waits = new FileDurableRecordStore(scope.intent.waitRoot, config.waitLimits);",
+        "    const deliveries = new FileDurableRecordStore(scope.intent.deliveryRoot, config.deliveryLimits);",
+        "    return waits.withRecords('waits/all', async waitRecords => {",
+        "      const authority = operatorAuthority(initial.inventory, scope, config, waitRecords);"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "captured original retirement scope store policy; script is reader, no new author",
+      "targetField": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "scripts/retire-operator-request.mjs",
+      "line": 66,
+      "sha256": "8aebd618c02dc8a898db323b99f7a0dee0abb27c470dda59a9bd3d7cde01dc21",
+      "sourceText": "    const deliveries = new FileDurableRecordStore(scope.intent.deliveryRoot, config.deliveryLimits);",
+      "context": [
+        "    signal.throwIfAborted();",
+        "    const initial = retainedRun(scope), config = initial.configuration;",
+        "    const waits = new FileDurableRecordStore(scope.intent.waitRoot, config.waitLimits);",
+        "    const deliveries = new FileDurableRecordStore(scope.intent.deliveryRoot, config.deliveryLimits);",
+        "    return waits.withRecords('waits/all', async waitRecords => {",
+        "      const authority = operatorAuthority(initial.inventory, scope, config, waitRecords);",
+        "      return projectDeliveryRequest(deliveries, authority.request, scope.intent, authority.digest, records => {"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "captured original retirement scope store policy; script is reader, no new author",
+      "targetField": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "scripts/retire-admission.mjs",
+      "line": 53,
+      "sha256": "ac31444b3acdad697ec7317773fda4dfad48b4ee3a22a4eb2d329e73c5d30d96",
+      "sourceText": "    const attempts=new FileDurableAttemptStore(scope.attemptRoot,scope.attemptLimits);",
+      "context": [
+        "  }",
+        "  return withRunMutationLock(root,async signal=>{",
+        "    signal.throwIfAborted();const initial=retainedRun(scope,root);",
+        "    const attempts=new FileDurableAttemptStore(scope.attemptRoot,scope.attemptLimits);",
+        "    const admission=new FileObservabilityAdmissionStore(scope.admissionRoot,scope.admissionLimits);",
+        "    return attempts.retireAdmissionCompletion(admission,{pipelineRunId:scope.runId,attemptId:scope.attemptId,claimGeneration:scope.claimGeneration,",
+        "      recordDigest:scope.recordDigest,operationId:scope.operationId,actor:scope.actor,authority:{runRoot:root,journalHead:initial.evidence.journalHead,snapshotDigest:initial.evidence.snapshotDigest}},async()=>{"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "captured original retirement scope store policy; script is reader, no new author",
+      "targetField": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "scripts/retire-admission.mjs",
+      "line": 54,
+      "sha256": "ac31444b3acdad697ec7317773fda4dfad48b4ee3a22a4eb2d329e73c5d30d96",
+      "sourceText": "    const admission=new FileObservabilityAdmissionStore(scope.admissionRoot,scope.admissionLimits);",
+      "context": [
+        "  return withRunMutationLock(root,async signal=>{",
+        "    signal.throwIfAborted();const initial=retainedRun(scope,root);",
+        "    const attempts=new FileDurableAttemptStore(scope.attemptRoot,scope.attemptLimits);",
+        "    const admission=new FileObservabilityAdmissionStore(scope.admissionRoot,scope.admissionLimits);",
+        "    return attempts.retireAdmissionCompletion(admission,{pipelineRunId:scope.runId,attemptId:scope.attemptId,claimGeneration:scope.claimGeneration,",
+        "      recordDigest:scope.recordDigest,operationId:scope.operationId,actor:scope.actor,authority:{runRoot:root,journalHead:initial.evidence.journalHead,snapshotDigest:initial.evidence.snapshotDigest}},async()=>{",
+        "      signal.throwIfAborted();const current=retainedRun(scope,root);"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "captured original retirement scope store policy; script is reader, no new author",
+      "targetField": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "path": "scripts/retire-attempt-result.mjs",
+      "line": 59,
+      "sha256": "c84c13e778070012ca005b272f0bc0875b3a587e8623ddf5aee827f9b90ae61a",
+      "sourceText": "    const attempts=new FileDurableAttemptStore(scope.attemptRoot,scope.attemptLimits);",
+      "context": [
+        "  }",
+        "  return withRunMutationLock(canonical,async signal=>{",
+        "    signal.throwIfAborted();",
+        "    const attempts=new FileDurableAttemptStore(scope.attemptRoot,scope.attemptLimits);",
+        "    let initial;",
+        "    return attempts[kind==='closure'?'retireImportedClosure':'retireImportedResult'](scope.intent,operation=>new FileMutex(`${journal}.append-lock`,5000,'ATTEMPT_RETIREMENT_JOURNAL_LOCKED').withLock(operation),()=>{",
+        "      signal.throwIfAborted();const current=retainedAttemptRun(scope);"
+      ],
+      "scope": "productive-source",
+      "soleOwningAuthority": "captured original retirement scope store policy; script is reader, no new author",
+      "targetField": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+      "rootBinding": "one existingauthor perphysicalroot; per-operationcapturedgeneration; compatiblenewwaitB maycontendwithoriginalA withoutalteringit; storageformat/quota historycompatibility separatelyrequired",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    }
+  ],
+  "allCallersArtifact": "all-storage-and-lock-callers.json",
+  "externalInput": "installed external library consumers unknown; must declare existing owning policy, not silently inherit5",
+  "currentAuthorityAbsent": "No shared foundation CONFIG registration exists. Required caller-owned policy is a proposed extension of existing owners. Current literal is not accepted tunability.",
+  "outerConstructorChains": "outer-constructor-and-alias-chains.json",
+  "completeProfiles": "complete-profiles.json"
+}

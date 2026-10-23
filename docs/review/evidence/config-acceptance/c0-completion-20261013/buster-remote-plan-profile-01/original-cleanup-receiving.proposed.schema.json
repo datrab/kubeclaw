@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "originalTaskAuthorityRef",
+    "originalCleanupDeadlineMs",
+    "originalClockRef",
+    "originalServiceGenerationRef",
+    "originalStateWriterRef",
+    "authentication"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "buster-original-cleanup-receiving.v1-proposal"
+    },
+    "originalTaskAuthorityRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "originalCleanupDeadlineMs": {
+      "type": "integer",
+      "minimum": -8640000000000000,
+      "maximum": 8640000000000000
+    },
+    "originalClockRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "originalServiceGenerationRef": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "originalStateWriterRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "authentication": {
+      "const": "original-authority-required-before-effects"
+    }
+  }
+}

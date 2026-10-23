@@ -118,3 +118,12 @@ export function gateDecisionEvidence(decision: GateDecisionV1) {
     ...decision.nodes.map((node) => ({ suite: node.nodeId,
       passed: ['passed', 'advisory_failure', 'skipped'].includes(node.effect), summary: `${node.effect}: ${node.reason}` }))];
 }
+
+// Pure coverage/decision assertions for stage consumers; no package-root authority.
+export { assertCoveragePlan, assertCoverageExecution } from './coverage-expectation.ts';
+export type { ResolvedTestPlanV1 } from './types.ts';
+export type { GateCoverageV1 } from './coverage.ts';
+
+export { assertCoverageDecision, coverageReviewPrefixes, coverageReviewRequirements } from './coverage-expectation.ts';
+export { coveragePassed } from './coverage-result.ts';
+export { validatePipelineTestGateContract } from './validation.ts';

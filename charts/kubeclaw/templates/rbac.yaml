@@ -1,4 +1,4 @@
-{{- $clusterShared := (include "kubeclaw.swarmConfig" . | mustFromJson).operator.buster.clusterInvokers.shared -}}
+{{- $clusterShared := (include "kubeclaw.busterTopology" . | mustFromJson).clusterShared -}}
 {{- $leaseClientEnabled := and .Values.busterNamespaceBroker.enabled (or (eq .Values.agentRole "buster") .Values.busterNamespaceBroker.leaseClient.enabled) -}}
 {{- $verificationReadEnabled := and $leaseClientEnabled .Values.busterNamespaceBroker.leaseClient.verificationRead.enabled -}}
 {{- if and .Values.serviceAccount.create $leaseClientEnabled }}

@@ -1,0 +1,345 @@
+{
+  "scope": "fresh independent proposed schema/source membership/original cleanup time/public synthetic byte-chain and ephemeral in-memory Ed25519 only; NO Go/native/API/host/auth/grant/image/model action or physical capacity",
+  "records": [
+    {
+      "id": "principal-independent-grammar-0",
+      "result": "passed",
+      "value": {
+        "principal": "system:serviceaccount:n:s",
+        "valid": true,
+        "notAuthorization": true
+      }
+    },
+    {
+      "id": "principal-independent-grammar-1",
+      "result": "passed",
+      "value": {
+        "principal": "system:serviceaccount:nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn:sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
+        "valid": true,
+        "notAuthorization": true
+      }
+    },
+    {
+      "id": "principal-independent-grammar-2",
+      "result": "passed",
+      "value": {
+        "principal": "system:serviceaccount:n:ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss.two",
+        "valid": true,
+        "notAuthorization": true
+      }
+    },
+    {
+      "id": "principal-independent-grammar-3",
+      "result": "passed",
+      "value": {
+        "principal": "",
+        "valid": false,
+        "notAuthorization": true
+      }
+    },
+    {
+      "id": "principal-independent-grammar-4",
+      "result": "passed",
+      "value": {
+        "principal": "system:serviceaccount:n.:s",
+        "valid": false,
+        "notAuthorization": true
+      }
+    },
+    {
+      "id": "principal-independent-grammar-5",
+      "result": "passed",
+      "value": {
+        "principal": "system:serviceaccount:n:s..two",
+        "valid": false,
+        "notAuthorization": true
+      }
+    },
+    {
+      "id": "principal-independent-grammar-6",
+      "result": "passed",
+      "value": {
+        "principal": "system:serviceaccount:n:s_",
+        "valid": false,
+        "notAuthorization": true
+      }
+    },
+    {
+      "id": "principal-independent-grammar-7",
+      "result": "passed",
+      "value": {
+        "principal": "system:serviceaccount:n:ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
+        "valid": false,
+        "notAuthorization": true
+      }
+    },
+    {
+      "id": "principal-independent-grammar-8",
+      "result": "passed",
+      "value": {
+        "principal": "system:serviceaccount:nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn:s",
+        "valid": false,
+        "notAuthorization": true
+      }
+    },
+    {
+      "id": "principal-independent-grammar-9",
+      "result": "passed",
+      "value": {
+        "principal": "system:serviceaccount:n:s\n",
+        "valid": false,
+        "notAuthorization": true
+      }
+    },
+    {
+      "id": "complete-structural-template-ordinary-default",
+      "result": "passed",
+      "value": {
+        "sourceCompleteMemberShapes": true,
+        "notNativePositive": true
+      }
+    },
+    {
+      "id": "complete-structural-template-ordinary-explicit",
+      "result": "passed",
+      "value": {
+        "sourceCompleteMemberShapes": true,
+        "notNativePositive": true
+      }
+    },
+    {
+      "id": "complete-structural-template-ready-v1",
+      "result": "passed",
+      "value": {
+        "sourceCompleteMemberShapes": true,
+        "notNativePositive": true
+      }
+    },
+    {
+      "id": "complete-structural-template-ready-v2",
+      "result": "passed",
+      "value": {
+        "sourceCompleteMemberShapes": true,
+        "notNativePositive": true
+      }
+    },
+    {
+      "id": "complete-structural-template-product-extended",
+      "result": "passed",
+      "value": {
+        "sourceCompleteMemberShapes": true,
+        "notNativePositive": true
+      }
+    },
+    {
+      "id": "complete-structural-template-deleting",
+      "result": "passed",
+      "value": {
+        "sourceCompleteMemberShapes": true,
+        "notNativePositive": true
+      }
+    },
+    {
+      "id": "Ready-member-negative-retentionSeconds",
+      "result": "passed"
+    },
+    {
+      "id": "Ready-member-negative-namespace",
+      "result": "passed"
+    },
+    {
+      "id": "Ready-member-negative-schemaVersion",
+      "result": "passed"
+    },
+    {
+      "id": "Ready-member-negative-state",
+      "result": "passed"
+    },
+    {
+      "id": "Ready-member-negative-requestId",
+      "result": "passed"
+    },
+    {
+      "id": "Ready-member-negative-requestDigest",
+      "result": "passed"
+    },
+    {
+      "id": "Ready-member-negative-readyAt",
+      "result": "passed"
+    },
+    {
+      "id": "Ready-member-negative-expiresAt",
+      "result": "passed"
+    },
+    {
+      "id": "Ready-member-negative-runId",
+      "result": "passed"
+    },
+    {
+      "id": "Ready-member-negative-sourceRevision",
+      "result": "passed"
+    },
+    {
+      "id": "Ready-member-negative-candidateDigest",
+      "result": "passed"
+    },
+    {
+      "id": "Ready-member-negative-decisionDigest",
+      "result": "passed"
+    },
+    {
+      "id": "Ready-member-negative-resultDigest",
+      "result": "passed"
+    },
+    {
+      "id": "Ready-member-negative-leaseUID",
+      "result": "passed"
+    },
+    {
+      "id": "Ready-member-negative-immutableImage",
+      "result": "passed"
+    },
+    {
+      "id": "Ready-member-negative-manifestDigest",
+      "result": "passed"
+    },
+    {
+      "id": "Ready-member-negative-credentialDigest",
+      "result": "passed"
+    },
+    {
+      "id": "Ready-member-negative-secretUID",
+      "result": "passed"
+    },
+    {
+      "id": "Ready-member-negative-url",
+      "result": "passed"
+    },
+    {
+      "id": "Ready-member-negative-previousOwner",
+      "result": "passed"
+    },
+    {
+      "id": "Ready-member-negative-owner",
+      "result": "passed"
+    },
+    {
+      "id": "Ready-member-negative-exposureGeneration",
+      "result": "passed"
+    },
+    {
+      "id": "Ready-member-negative-exposureSpec",
+      "result": "passed"
+    },
+    {
+      "id": "Ready-member-negative-receipt",
+      "result": "passed"
+    },
+    {
+      "id": "Product-member-negative-schemaVersion",
+      "result": "passed"
+    },
+    {
+      "id": "Product-member-negative-decisionId",
+      "result": "passed"
+    },
+    {
+      "id": "Product-member-negative-payloadDigest",
+      "result": "passed"
+    },
+    {
+      "id": "Product-member-negative-action",
+      "result": "passed"
+    },
+    {
+      "id": "Product-member-negative-leaseName",
+      "result": "passed"
+    },
+    {
+      "id": "Product-member-negative-leaseUID",
+      "result": "passed"
+    },
+    {
+      "id": "Product-member-negative-readyDigest",
+      "result": "passed"
+    },
+    {
+      "id": "Product-member-negative-generation",
+      "result": "passed"
+    },
+    {
+      "id": "Product-member-negative-actorId",
+      "result": "passed"
+    },
+    {
+      "id": "Product-member-negative-issuer",
+      "result": "passed"
+    },
+    {
+      "id": "Product-member-negative-appliedAt",
+      "result": "passed"
+    },
+    {
+      "id": "Product-member-negative-previousExpiry",
+      "result": "passed"
+    },
+    {
+      "id": "Product-member-negative-expiresAt",
+      "result": "passed"
+    },
+    {
+      "id": "Product-member-negative-state",
+      "result": "passed"
+    },
+    {
+      "id": "Product-member-negative-envelope",
+      "result": "passed"
+    },
+    {
+      "id": "cleanup-original-negative-55",
+      "result": "passed"
+    },
+    {
+      "id": "cleanup-original-negative-56",
+      "result": "passed"
+    },
+    {
+      "id": "cleanup-original-negative-57",
+      "result": "passed"
+    },
+    {
+      "id": "cleanup-original-negative-58",
+      "result": "passed"
+    },
+    {
+      "id": "nanosecond-original120seconds-not-rounded",
+      "result": "passed"
+    },
+    {
+      "id": "fresh-synthetic-T0-full-dependent-public-byte-chain-BEFOREbaseline",
+      "result": "passed",
+      "value": {
+        "baselinePublicSyntheticStateDigest": "sha256:376d8b833a253322d7f511ac0d8a4616e27de6efdb5d148197297c24c13cfb28",
+        "T0": "2032-03-01T00:10:00Z",
+        "rawReadyDigest": "sha256:556690bd72f7c1fa6ec700ad7ac840aa9b4fec9d19bda699e0422c7458d971d8",
+        "productPayloadDigest": "sha256:293a8a49b5e7d6296992e247c4cd698714c640cc89b19110f3cda3de41ba2d6a",
+        "priorReadyLifecycleDigest": "sha256:fd19167b2608ba70c28f039ac17fd55311d00141f3bb4426c07a7c8f1ef523df",
+        "privateKeyNeverExported": true,
+        "retainedOriginalUnchanged": true,
+        "notAuthenticNativeFixture": true
+      }
+    },
+    {
+      "id": "12future-recipes-ordered-before-baseline-and-scope",
+      "result": "passed",
+      "value": {
+        "futureCases": 12,
+        "notNativeAcceptance": true
+      }
+    }
+  ],
+  "passed": 62,
+  "failed": 0,
+  "testSHA256": "sha256:aad12a2944c733c3e4c2b51555908863ae57a7e70a59965d174f4a4f3ca507c2",
+  "notGlobalC0": true
+}

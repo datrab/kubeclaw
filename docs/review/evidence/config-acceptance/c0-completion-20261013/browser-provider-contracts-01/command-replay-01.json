@@ -1,0 +1,9 @@
+{
+  "argv": [
+    "node",
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/browser-provider-contracts-01/check-definition.mjs"
+  ],
+  "exit": 1,
+  "stdout": "logs/replay-01.stdout",
+  "stderr": "logs/replay-01.stderr"
+}

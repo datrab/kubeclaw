@@ -1,0 +1,690 @@
+{
+  "schemaVersion": "pipeline-registration-policy.v1",
+  "packageId": "kubeclaw.openapi",
+  "registrationId": "kubeclaw.openapi:operations",
+  "instanceId": "fixture.openapi",
+  "profiles": {
+    "A": {
+      "processing": {
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSpecFileBytes": 4194304,
+        "maximumSelections": 128,
+        "maximumPatternCodeUnits": 256,
+        "maximumPatternQuantifier": 1024,
+        "maximumRequestTimeoutMs": 1000,
+        "maximumSchemaGraphDepth": 64,
+        "maximumRefChainDepth": 64,
+        "maximumPayloadDepth": 64
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": false,
+        "matrixFields": []
+      }
+    },
+    "B": {
+      "processing": {
+        "requestTimeoutMs": 500,
+        "maximumResponseBytes": 1024,
+        "maximumSpecFileBytes": 4194304,
+        "maximumSelections": 128,
+        "maximumPatternCodeUnits": 256,
+        "maximumPatternQuantifier": 1024,
+        "maximumRequestTimeoutMs": 1000,
+        "maximumSchemaGraphDepth": 64,
+        "maximumRefChainDepth": 64,
+        "maximumPayloadDepth": 64
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": false,
+        "matrixFields": []
+      }
+    },
+    "RT-550d941bb663f8fc-A": {
+      "processing": {
+        "requestTimeoutMs": 50,
+        "maximumResponseBytes": 2048,
+        "maximumSpecFileBytes": 4194304,
+        "maximumSelections": 128,
+        "maximumPatternCodeUnits": 256,
+        "maximumPatternQuantifier": 1024,
+        "maximumRequestTimeoutMs": 1000,
+        "maximumSchemaGraphDepth": 64,
+        "maximumRefChainDepth": 64,
+        "maximumPayloadDepth": 64
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": false,
+        "matrixFields": []
+      }
+    },
+    "RT-550d941bb663f8fc-B": {
+      "processing": {
+        "requestTimeoutMs": 500,
+        "maximumResponseBytes": 2048,
+        "maximumSpecFileBytes": 4194304,
+        "maximumSelections": 128,
+        "maximumPatternCodeUnits": 256,
+        "maximumPatternQuantifier": 1024,
+        "maximumRequestTimeoutMs": 1000,
+        "maximumSchemaGraphDepth": 64,
+        "maximumRefChainDepth": 64,
+        "maximumPayloadDepth": 64
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": false,
+        "matrixFields": []
+      }
+    },
+    "RT-63d5aafbda9b5281-A": {
+      "processing": {
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 32,
+        "maximumSpecFileBytes": 4194304,
+        "maximumSelections": 128,
+        "maximumPatternCodeUnits": 256,
+        "maximumPatternQuantifier": 1024,
+        "maximumRequestTimeoutMs": 1000,
+        "maximumSchemaGraphDepth": 64,
+        "maximumRefChainDepth": 64,
+        "maximumPayloadDepth": 64
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": false,
+        "matrixFields": []
+      }
+    },
+    "RT-63d5aafbda9b5281-B": {
+      "processing": {
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSpecFileBytes": 4194304,
+        "maximumSelections": 128,
+        "maximumPatternCodeUnits": 256,
+        "maximumPatternQuantifier": 1024,
+        "maximumRequestTimeoutMs": 1000,
+        "maximumSchemaGraphDepth": 64,
+        "maximumRefChainDepth": 64,
+        "maximumPayloadDepth": 64
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": false,
+        "matrixFields": []
+      }
+    },
+    "deadline-ceiling-A": {
+      "processing": {
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSpecFileBytes": 4194304,
+        "maximumSelections": 128,
+        "maximumPatternCodeUnits": 256,
+        "maximumPatternQuantifier": 1024,
+        "maximumRequestTimeoutMs": 1000,
+        "maximumSchemaGraphDepth": 64,
+        "maximumRefChainDepth": 64,
+        "maximumPayloadDepth": 64
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": false,
+        "matrixFields": []
+      }
+    },
+    "deadline-ceiling-B": {
+      "processing": {
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSpecFileBytes": 4194304,
+        "maximumSelections": 128,
+        "maximumPatternCodeUnits": 256,
+        "maximumPatternQuantifier": 1024,
+        "maximumRequestTimeoutMs": 500,
+        "maximumSchemaGraphDepth": 64,
+        "maximumRefChainDepth": 64,
+        "maximumPayloadDepth": 64
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": false,
+        "matrixFields": []
+      }
+    },
+    "maximumSpecFileBytes-A": {
+      "processing": {
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSpecFileBytes": 4194304,
+        "maximumSelections": 128,
+        "maximumPatternCodeUnits": 256,
+        "maximumPatternQuantifier": 1024,
+        "maximumRequestTimeoutMs": 1000,
+        "maximumSchemaGraphDepth": 64,
+        "maximumRefChainDepth": 64,
+        "maximumPayloadDepth": 64
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": false,
+        "matrixFields": []
+      }
+    },
+    "maximumSpecFileBytes-B": {
+      "processing": {
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSpecFileBytes": 512,
+        "maximumSelections": 128,
+        "maximumPatternCodeUnits": 256,
+        "maximumPatternQuantifier": 1024,
+        "maximumRequestTimeoutMs": 1000,
+        "maximumSchemaGraphDepth": 64,
+        "maximumRefChainDepth": 64,
+        "maximumPayloadDepth": 64
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": false,
+        "matrixFields": []
+      }
+    },
+    "maximumSelections-A": {
+      "processing": {
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSpecFileBytes": 4194304,
+        "maximumSelections": 128,
+        "maximumPatternCodeUnits": 256,
+        "maximumPatternQuantifier": 1024,
+        "maximumRequestTimeoutMs": 1000,
+        "maximumSchemaGraphDepth": 64,
+        "maximumRefChainDepth": 64,
+        "maximumPayloadDepth": 64
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": false,
+        "matrixFields": []
+      }
+    },
+    "maximumSelections-B": {
+      "processing": {
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSpecFileBytes": 4194304,
+        "maximumSelections": 1,
+        "maximumPatternCodeUnits": 256,
+        "maximumPatternQuantifier": 1024,
+        "maximumRequestTimeoutMs": 1000,
+        "maximumSchemaGraphDepth": 64,
+        "maximumRefChainDepth": 64,
+        "maximumPayloadDepth": 64
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": false,
+        "matrixFields": []
+      }
+    },
+    "maximumSchemaGraphDepth-A": {
+      "processing": {
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSpecFileBytes": 4194304,
+        "maximumSelections": 128,
+        "maximumPatternCodeUnits": 256,
+        "maximumPatternQuantifier": 1024,
+        "maximumRequestTimeoutMs": 1000,
+        "maximumSchemaGraphDepth": 64,
+        "maximumRefChainDepth": 64,
+        "maximumPayloadDepth": 64
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": false,
+        "matrixFields": []
+      }
+    },
+    "maximumSchemaGraphDepth-B": {
+      "processing": {
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSpecFileBytes": 4194304,
+        "maximumSelections": 128,
+        "maximumPatternCodeUnits": 256,
+        "maximumPatternQuantifier": 1024,
+        "maximumRequestTimeoutMs": 1000,
+        "maximumSchemaGraphDepth": 8,
+        "maximumRefChainDepth": 64,
+        "maximumPayloadDepth": 64
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": false,
+        "matrixFields": []
+      }
+    },
+    "maximumRefChainDepth-A": {
+      "processing": {
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSpecFileBytes": 4194304,
+        "maximumSelections": 128,
+        "maximumPatternCodeUnits": 256,
+        "maximumPatternQuantifier": 1024,
+        "maximumRequestTimeoutMs": 1000,
+        "maximumSchemaGraphDepth": 64,
+        "maximumRefChainDepth": 64,
+        "maximumPayloadDepth": 64
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": false,
+        "matrixFields": []
+      }
+    },
+    "maximumRefChainDepth-B": {
+      "processing": {
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSpecFileBytes": 4194304,
+        "maximumSelections": 128,
+        "maximumPatternCodeUnits": 256,
+        "maximumPatternQuantifier": 1024,
+        "maximumRequestTimeoutMs": 1000,
+        "maximumSchemaGraphDepth": 64,
+        "maximumRefChainDepth": 8,
+        "maximumPayloadDepth": 64
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": false,
+        "matrixFields": []
+      }
+    },
+    "maximumPayloadDepth-A": {
+      "processing": {
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSpecFileBytes": 4194304,
+        "maximumSelections": 128,
+        "maximumPatternCodeUnits": 256,
+        "maximumPatternQuantifier": 1024,
+        "maximumRequestTimeoutMs": 1000,
+        "maximumSchemaGraphDepth": 64,
+        "maximumRefChainDepth": 64,
+        "maximumPayloadDepth": 64
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": false,
+        "matrixFields": []
+      }
+    },
+    "maximumPayloadDepth-B": {
+      "processing": {
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSpecFileBytes": 4194304,
+        "maximumSelections": 128,
+        "maximumPatternCodeUnits": 256,
+        "maximumPatternQuantifier": 1024,
+        "maximumRequestTimeoutMs": 1000,
+        "maximumSchemaGraphDepth": 64,
+        "maximumRefChainDepth": 64,
+        "maximumPayloadDepth": 8
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": false,
+        "matrixFields": []
+      }
+    },
+    "maximumPatternCodeUnits-A": {
+      "processing": {
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSpecFileBytes": 4194304,
+        "maximumSelections": 128,
+        "maximumPatternCodeUnits": 256,
+        "maximumPatternQuantifier": 1024,
+        "maximumRequestTimeoutMs": 1000,
+        "maximumSchemaGraphDepth": 64,
+        "maximumRefChainDepth": 64,
+        "maximumPayloadDepth": 64
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": false,
+        "matrixFields": []
+      }
+    },
+    "maximumPatternCodeUnits-B": {
+      "processing": {
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSpecFileBytes": 4194304,
+        "maximumSelections": 128,
+        "maximumPatternCodeUnits": 8,
+        "maximumPatternQuantifier": 1024,
+        "maximumRequestTimeoutMs": 1000,
+        "maximumSchemaGraphDepth": 64,
+        "maximumRefChainDepth": 64,
+        "maximumPayloadDepth": 64
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": false,
+        "matrixFields": []
+      }
+    },
+    "maximumPatternQuantifier-A": {
+      "processing": {
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSpecFileBytes": 4194304,
+        "maximumSelections": 128,
+        "maximumPatternCodeUnits": 256,
+        "maximumPatternQuantifier": 1024,
+        "maximumRequestTimeoutMs": 1000,
+        "maximumSchemaGraphDepth": 64,
+        "maximumRefChainDepth": 64,
+        "maximumPayloadDepth": 64
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": false,
+        "matrixFields": []
+      }
+    },
+    "maximumPatternQuantifier-B": {
+      "processing": {
+        "requestTimeoutMs": 1000,
+        "maximumResponseBytes": 2048,
+        "maximumSpecFileBytes": 4194304,
+        "maximumSelections": 128,
+        "maximumPatternCodeUnits": 256,
+        "maximumPatternQuantifier": 8,
+        "maximumRequestTimeoutMs": 1000,
+        "maximumSchemaGraphDepth": 64,
+        "maximumRefChainDepth": 64,
+        "maximumPayloadDepth": 64
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "test-report"
+          ],
+          "onFail": [
+            "log",
+            "test-report"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": false,
+        "matrixFields": []
+      }
+    }
+  }
+}

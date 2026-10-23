@@ -1,3 +1,4 @@
+import { nativeEngineSettings } from './native/resource-policy.mts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createServer } from 'node:https';
@@ -40,7 +41,7 @@ for (const operation of ['ingest', 'propose'] as const) {
   test(`original ${operation} provider cancels an actual TLS response body after headers`, async t => {
     const f = await endpoint(t);
     const owner = new AbortController();
-    const engine = new PrismEngine(f.provider);
+    const engine = new PrismEngine(f.provider, nativeEngineSettings);
     const result = operation === 'ingest' ? engine.execute({ contract: 'kubeclaw.prism-design-engine@1', operation: 'ingest',
       input: { text: 'Local embedding cancellation' }, idempotencyKey: 'local' }, { signal: owner.signal })
       : f.provider.propose(validatePrism<PrismDocument>('designDocument', structuredClone(fixture)), 'Local proposal cancellation', owner.signal);

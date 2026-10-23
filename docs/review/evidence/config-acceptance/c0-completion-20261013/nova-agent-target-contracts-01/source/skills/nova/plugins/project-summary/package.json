@@ -1,0 +1,14 @@
+{
+  "name": "@kubeclaw/plugin-project-summary",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc --noEmit -p tsconfig.json",
+    "test": "node ../../../../tests/verification/integration/project-summary.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs"
+  },
+  "dependencies": {
+    "@kubeclaw/delivery-manifest-contract": "*",
+    "@kubeclaw/plugin-sdk": "*",
+    "@kubeclaw/pipeline-test-gate-contract": "*"
+  }
+}

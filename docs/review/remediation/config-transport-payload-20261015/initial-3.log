@@ -1,0 +1,15 @@
+✔ operator actual Nova delivery A/B store ceilings, real signed HTTP and retained A resume without B (4809.488516ms)
+✔ operator delivery policy leaves mandatory; malformed central/direct values and duplicate raw authors reject (4.029705ms)
+✔ publisher actual Nova delivery A/B store ceilings, real signed HTTP and retained A resume without B (4377.972323ms)
+✔ publisher delivery policy leaves mandatory; malformed central/direct values and duplicate raw authors reject (2.633989ms)
+✔ actual Nova HTTP request/response A/B boundaries and retained A selector+values without B (5278.752399ms)
+✔ actual HTTP receiver selects distinct byte profiles, captures immutable caps and restores positives (7.582627ms)
+✔ HTTP policy missing/invalid/legacy duplicates/profile bindings fail closed with restored positive (2.780322ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9692.025737

@@ -1,0 +1,277 @@
+{
+  "command": "node docs/review/evidence/config-acceptance/components/check-core-domain-definition.mjs",
+  "scope": "C0 actual constructor/FD/file/proc identity/record/journal/validator definitions in fresh temporary directory; no worker/host business dispatch, cgroup mutation or runtime CONFIG/EFFECT acceptance",
+  "identities": {
+    "head": "a07de5673e24ba99109833120d94417ebb0fc407",
+    "tree": "583a342afd982242d17788fc2d64bbe8b7fca7ef",
+    "node": "v24.21.0",
+    "uid": 0,
+    "platform": "linux",
+    "arch": "x64",
+    "bufferConstants": {
+      "MAX_LENGTH": 9007199254740991,
+      "MAX_STRING_LENGTH": 536870888
+    },
+    "files": {
+      "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+      "skills/worker/core/worker/native-pool-policy.ts": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+      "skills/worker/core/worker/native-runtime-identity.ts": "4bb8600bf48477411e75148e6edbd0dae345809316d60a3d3cd4b8ad6f8a057e",
+      "skills/worker/core/worker/native-node-identity.ts": "6ea78a96f82fa25ad27b26a2a48911e1e7a625fe9c0b25db76af39f49f2394f3",
+      "skills/worker/core/worker/native-journal-state.ts": "ae5cca21eb24261fa5389c7081bc3534e8e12b411d5bda0e97a69a94ead424d2",
+      "skills/worker/core/worker/native-journal-capacity.ts": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a",
+      "skills/worker/core/worker/native-attempt-journal.ts": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+      "skills/worker/core/worker/ownership-state.ts": "ef33d0452ca1c814430a4815d4bfa5fce85b8b2fa1217ccb171f6c942dc12f85",
+      "skills/worker/core/worker/ownership-capacity.ts": "4ff8bec1986def8a064b10e5e3ab1d1f3d6a4af0871ec5135f49903670aff309",
+      "skills/worker/core/worker/native-worker-ownership.ts": "52f2f06fe2f18a8cabd8426d360d756d01d34471e2f0015e8fe148e753238350",
+      "skills/worker/core/worker/native-resource-scope.ts": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+      "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+      "skills/buster/engine/test-gates/preparation-envelope.ts": "90112c33cc7ecd6f4c237e3234bb7ba9abc8cf07e17aa9deb882ffc5afdb17df",
+      "contracts/pipeline-worker-core/v1/src/digest.ts": "10c61ec122ca6e65c7deef2c059a19ad70627cf65bdf1eb65f0ac2539457d780",
+      "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts": "00332a01a4674616f0859a83d704771b497d0c0d4220629a35b9a7414f924784",
+      "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json": "debb2e5ca9ade4c30f5081d56b4596af4b295e282e2c099a6d1623b4b15c5cf3",
+      "docs/review/evidence/config-acceptance/components/check-core-domain-definition.mjs": "23b8781a29edccdbea4f96cfc7ace58c0a89f6f94fae5ee2ef7e28a92328c998",
+      "charts/kubeclaw/files/config/buster-engine.config.json": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+      "package-lock.json": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b",
+      "node_modules/ajv/package.json": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989"
+    },
+    "sourceDigests": {
+      "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+      "skills/worker/core/worker/native-pool-policy.ts": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+      "skills/worker/core/worker/native-runtime-identity.ts": "4bb8600bf48477411e75148e6edbd0dae345809316d60a3d3cd4b8ad6f8a057e",
+      "skills/worker/core/worker/native-node-identity.ts": "6ea78a96f82fa25ad27b26a2a48911e1e7a625fe9c0b25db76af39f49f2394f3",
+      "skills/worker/core/worker/native-journal-state.ts": "ae5cca21eb24261fa5389c7081bc3534e8e12b411d5bda0e97a69a94ead424d2",
+      "skills/worker/core/worker/native-journal-capacity.ts": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a",
+      "skills/worker/core/worker/native-attempt-journal.ts": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+      "skills/worker/core/worker/ownership-state.ts": "ef33d0452ca1c814430a4815d4bfa5fce85b8b2fa1217ccb171f6c942dc12f85",
+      "skills/worker/core/worker/ownership-capacity.ts": "4ff8bec1986def8a064b10e5e3ab1d1f3d6a4af0871ec5135f49903670aff309",
+      "skills/worker/core/worker/native-worker-ownership.ts": "52f2f06fe2f18a8cabd8426d360d756d01d34471e2f0015e8fe148e753238350",
+      "skills/worker/core/worker/native-resource-scope.ts": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+      "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+      "skills/buster/engine/test-gates/preparation-envelope.ts": "90112c33cc7ecd6f4c237e3234bb7ba9abc8cf07e17aa9deb882ffc5afdb17df",
+      "contracts/pipeline-worker-core/v1/src/digest.ts": "10c61ec122ca6e65c7deef2c059a19ad70627cf65bdf1eb65f0ac2539457d780",
+      "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts": "00332a01a4674616f0859a83d704771b497d0c0d4220629a35b9a7414f924784",
+      "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json": "debb2e5ca9ade4c30f5081d56b4596af4b295e282e2c099a6d1623b4b15c5cf3"
+    },
+    "testDigests": {
+      "docs/review/evidence/config-acceptance/components/check-core-domain-definition.mjs": "23b8781a29edccdbea4f96cfc7ace58c0a89f6f94fae5ee2ef7e28a92328c998"
+    },
+    "config": {
+      "author": "charts/kubeclaw/files/config/buster-engine.config.json",
+      "digest": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+      "settings": {
+        "resourcePolicy": {
+          "cpuTimeMs": 120000,
+          "memoryBytes": 8589934592,
+          "tasks": 64
+        },
+        "timeoutMs": 300000,
+        "cleanupTimeoutMs": 10000,
+        "maximumActivePreparations": 2,
+        "maximumPendingAdmissions": 16,
+        "maximumRequestBytes": 100663296,
+        "maximumArchiveBytes": 67108864,
+        "maximumExtractedBytes": 536870912,
+        "maximumHeaderBytes": 3145728,
+        "maximumSourceBytes": 1073741824,
+        "maximumMetadataBytes": 67108864,
+        "maximumRecords": 10000,
+        "maximumOwnershipBytes": 16777216,
+        "maximumJournalBytes": 268435456,
+        "maximumInputBytes": 65536,
+        "maximumOutputBytes": 8388608,
+        "maximumResultBytes": 4194304,
+        "pollIntervalMs": 25,
+        "drainTimeoutMs": 5000,
+        "closeTimeoutMs": 10000,
+        "tarTimeoutMs": 120000,
+        "maximumArchiveEntries": 200000,
+        "maximumListingLineBytes": 1048576,
+        "maximumTarStderrBytes": 65536,
+        "maximumSourceEntries": 400014,
+        "sourceEntryReservationBytes": 256,
+        "maximumOpenFiles": 64
+      }
+    }
+  },
+  "results": [
+    {
+      "id": "CMP-C0-CORE-INPUT-POSITIVE",
+      "result": "passed",
+      "observed": "actual preflight/strict contract constructor, no operation dispatch"
+    },
+    {
+      "id": "CMP-C0-CORE-INPUT-EXCESS",
+      "result": "passed",
+      "observed": "over16MiB canonical input rejected before schema/operation"
+    },
+    {
+      "id": "CMP-C0-CORE-NODES-BOUNDARY",
+      "result": "failed",
+      "error": "PipelineWorkerCoreContractError: Invalid pipeline worker-core workerAttemptEnvelope.v3: [{\"instancePath\":\"/operation/values/probe\",\"schemaPath\":\"#/oneOf/0/type\",\"keyword\":\"type\",\"params\":{\"type\":\"null\"},\"message\":\"must be null\"},{\"instancePath\":\"/operation/values/probe\",\"schemaPath\":\"#/oneOf/1/type\",\"keyword\":\"type\",\"params\":{\"type\":\"boolean\"},\"message\":\"must be boolean\"},{\"instancePath\":\"/operation/values/probe\",\"schemaPath\":\"#/oneOf/2/type\",\"keyword\":\"type\",\"params\":{\"type\":\"number\"},\"message\":\"must be number\"},{\"instancePath\":\"/operation/values/probe\",\"schemaPath\":\"#/oneOf/3/type\",\"keyword\":\"type\",\"params\":{\"type\":\"string\"},\"message\":\"must be string\"},{\"instancePath\":\"/operation/values/probe\",\"schemaPath\":\"#/oneOf/4/maxItems\",\"keyword\":\"maxItems\",\"params\":{\"limit\":1024},\"message\":\"must NOT have more than 1024 items\"},{\"instancePath\":\"/operation/values/probe\",\"schemaPath\":\"#/oneOf/5/type\",\"keyword\":\"type\",\"params\":{\"type\":\"object\"},\"message\":\"must be object\"},{\"instancePath\":\"/operation/values/probe\",\"schemaPath\":\"#/oneOf\",\"keyword\":\"oneOf\",\"params\":{\"passingSchemas\":null},\"message\":\"must match exactly one schema in oneOf\"}]\n    at validateWorkerResourceContractV3 (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts:51:26)\n    at validateEnvelopeDigests (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/worker/core/worker/attempt-executor.ts:188:60)\n    at new WorkerAttemptExecutor (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/worker/core/worker/attempt-executor.ts:223:5)\n    at constructor (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/check-core-domain-definition.mjs:17:72)\n    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/check-core-domain-definition.mjs:23:170\n    at record (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/check-core-domain-definition.mjs:16:99)\n    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/check-core-domain-definition.mjs:23:8"
+    },
+    {
+      "id": "CMP-C0-CORE-NODES-EXCESS",
+      "result": "passed",
+      "observed": "exact100001 values rejected"
+    },
+    {
+      "id": "CMP-C0-CORE-DEPTH-BOUNDARY",
+      "result": "passed",
+      "observed": "deepest object depth64 under actual root0/traversal counting"
+    },
+    {
+      "id": "CMP-C0-CORE-DEPTH-EXCESS",
+      "result": "passed",
+      "observed": "depth65 rejected before recursive freeze/digest/schema effect"
+    },
+    {
+      "id": "CMP-C0-CORE-POOL-SIZE-POSITIVE",
+      "result": "passed",
+      "observed": {
+        "observed": {
+          "schemaVersion": 1,
+          "role": "definition",
+          "nodeName": "definition-only",
+          "policyDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "cgroupRoot": "/tmp/core-domain-c0-RSXxQc/cgroup",
+          "ownershipRoot": "/tmp/core-domain-c0-RSXxQc/ownership",
+          "nodeIdentityFile": "/tmp/core-domain-c0-RSXxQc/node",
+          "runtimeIdentityFile": "/tmp/core-domain-c0-RSXxQc/runtime",
+          "maximumActiveScopes": 1,
+          "limits": {
+            "memoryBytes": 1,
+            "tasks": 1,
+            "cpuQuotaMicroseconds": 1000,
+            "cpuPeriodMicroseconds": 1000
+          }
+        },
+        "bytes": 65536,
+        "uid": 0,
+        "scope": "synthetic definition document/UUID parser only; no pool kernel or physical node claim"
+      }
+    },
+    {
+      "id": "CMP-C0-CORE-POOL-SIZE-EXCESS",
+      "result": "passed",
+      "observed": {
+        "bytes": 65537,
+        "diag": "WORKER_NATIVE_POOL_POLICY_NOT_TRUSTED",
+        "uid": 0
+      }
+    },
+    {
+      "id": "CMP-C0-CORE-RUNTIME-SIZE-POSITIVE",
+      "result": "passed",
+      "observed": {
+        "observed": "actual local boot/ns identity matches",
+        "bytes": 4096,
+        "uid": 0,
+        "scope": "actual local proc identity readback"
+      }
+    },
+    {
+      "id": "CMP-C0-CORE-RUNTIME-SIZE-EXCESS",
+      "result": "passed",
+      "observed": {
+        "bytes": 4097,
+        "diag": "WORKER_NATIVE_RUNTIME_IDENTITY_NOT_TRUSTED",
+        "uid": 0
+      }
+    },
+    {
+      "id": "CMP-C0-CORE-NODE-SIZE-POSITIVE",
+      "result": "passed",
+      "observed": {
+        "observed": "native-node:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "bytes": 128,
+        "uid": 0,
+        "scope": "synthetic definition document/UUID parser only; no pool kernel or physical node claim"
+      }
+    },
+    {
+      "id": "CMP-C0-CORE-NODE-SIZE-EXCESS",
+      "result": "passed",
+      "observed": {
+        "bytes": 129,
+        "diag": "WORKER_NATIVE_NODE_IDENTITY_NOT_TRUSTED",
+        "uid": 0
+      }
+    },
+    {
+      "id": "CMP-C0-CORE-JOURNAL-DIAG-POSITIVE",
+      "result": "passed",
+      "observed": "4096 UTF16 units accepted; zero counters are synthetic schema inputs, not measured host observations"
+    },
+    {
+      "id": "CMP-C0-CORE-JOURNAL-DIAG-EXCESS",
+      "result": "passed",
+      "observed": "4097 units rejected"
+    },
+    {
+      "id": "CMP-C0-CORE-OWNERSHIP-DIAG-POSITIVE",
+      "result": "passed",
+      "observed": "4096 units accepted by real retained ownership validator"
+    },
+    {
+      "id": "CMP-C0-CORE-OWNERSHIP-DIAG-EXCESS",
+      "result": "passed",
+      "observed": "4097 units rejected"
+    },
+    {
+      "id": "CMP-C0-CORE-JOURNAL-TERMINAL-POSITIVE",
+      "result": "passed",
+      "observed": {
+        "bytes": 5815,
+        "ceil": 67108864,
+        "scope": "actual future terminal metadata projection, not fabricated persisted observation"
+      }
+    },
+    {
+      "id": "CMP-C0-CORE-JOURNAL-TERMINAL-EXCESS",
+      "result": "passed",
+      "observed": "one-byte-short actual serialized terminal reservation rejected"
+    },
+    {
+      "id": "CMP-C0-CORE-OWNERSHIP-TERMINAL-POSITIVE",
+      "result": "passed",
+      "observed": {
+        "bytes": 25828,
+        "scope": "actual worst-case reserved diagnosis/host/topology metadata; no host launch"
+      }
+    },
+    {
+      "id": "CMP-C0-CORE-RECORD-SIZE-POSITIVE",
+      "result": "passed",
+      "observed": "exact65536 canonical payload bytes appended/fsynced at actual durable store; local flock helper only"
+    },
+    {
+      "id": "CMP-C0-CORE-RECORD-SIZE-EXCESS",
+      "result": "passed",
+      "observed": "65537 canonical payload bytes rejected prewrite"
+    },
+    {
+      "id": "CMP-C0-CORE-STRIPE-PROJECTION",
+      "result": "passed",
+      "observed": {
+        "suffix": "2e",
+        "routingWidth": 2,
+        "maxPotentialStripes": 256,
+        "scope": "real durable journal admission/replay without native process"
+      }
+    },
+    {
+      "id": "CMP-C0-CORE-LOG-PART-SOURCE",
+      "result": "passed",
+      "observed": "10000 operation chunks tracked even with retainLogs=false; real code source check, no fabricated operation/resource measurement"
+    },
+    {
+      "id": "CMP-C0-CORE-DRAIN-POLL-SOURCE",
+      "result": "passed",
+      "observed": "real kernel drain loop uses absolute deadline,10ms clamp independent of parent pollIntervalMs; no cgroup mutation/poll timing PASS"
+    }
+  ],
+  "passed": 23,
+  "failed": 1
+}

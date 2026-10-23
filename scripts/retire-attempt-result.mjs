@@ -1,3 +1,4 @@
+import { retainedCoreRuntimePolicy } from '../skills/nova/core/execution/engine-snapshots.ts';
 import fs from 'node:fs';
 import path from 'node:path';
 import {pathToFileURL} from 'node:url';
@@ -54,7 +55,7 @@ export async function retireAttemptProjection(input,kind) {
     const stat=fs.lstatSync(file);
     if(!stat.isFile()||stat.isSymbolicLink())throw new Error('ATTEMPT_RETIREMENT_SOURCE_REQUIRED');
   }
-  return withRunMutationLock(canonical,async signal=>{
+  return withRunMutationLock(canonical, retainedCoreRuntimePolicy(canonical),async signal=>{
     signal.throwIfAborted();
     const attempts=new FileDurableAttemptStore(scope.attemptRoot,scope.attemptLimits);
     let initial;

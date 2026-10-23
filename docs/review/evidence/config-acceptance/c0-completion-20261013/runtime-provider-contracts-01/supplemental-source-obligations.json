@@ -1,0 +1,51 @@
+{
+  "qualification": "Required extra source-policy coordinates and unresolved original candidate identity integration; not invented canonical field IDs. These profiles capture concrete proposed values but real reader injection/ID/case integration remains open.",
+  "sourcePolicyMembersWithoutResolvedOriginalId": [
+    {
+      "owner": "kubeclaw.api-flow",
+      "profileField": "processing.maximumFlowFileBytes",
+      "path": "skills/buster/plugins/api-flow/src/provider.js",
+      "line": 49,
+      "current": 1048576,
+      "sameCurrentHardMaximum": true,
+      "status": "explicit supplemental source obligation; original flowFile NETWORK05 cases retained, no claimquota same tasksettingID"
+    },
+    {
+      "owner": "kubeclaw.openapi",
+      "profileField": "processing.maximumSpecFileBytes",
+      "path": "skills/buster/plugins/openapi/src/provider.js",
+      "line": 193,
+      "current": 4194304,
+      "status": "extra processing policy source/candidate/case integration required"
+    },
+    {
+      "owner": "kubeclaw.openapi",
+      "profileField": "processing.maximumSelections",
+      "path": "skills/buster/plugins/openapi/src/provider.js",
+      "current": 128,
+      "status": "actual selection count plus task.operations max128; code coordinate in current-source-coordinates.json"
+    },
+    {
+      "owner": "kubeclaw.openapi",
+      "profileFields": [
+        "maximumSchemaDepth",
+        "maximumPatternCodeUnits",
+        "maximumPatternQuantifier"
+      ],
+      "current": [
+        64,
+        256,
+        1024
+      ],
+      "status": "local-ref/schema graph and regex safety responsibilities require separate invariant/operator adjudication; no silently weakened securitypattern safeguards"
+    }
+  ],
+  "otherExplicitSourceObligations": [
+    "API-flow header/variable/selector/ID/message type/count constraints and defaultminimumMessages taskcoverage semantics need exact operator/invariant/task disposition beyond original58scalar roster.",
+    "OpenAPI assertSupportedSchema keyword/dialect/ref/pattern guards not completed by root two-quota profiles; no all OpenAPI semantics acceptance.",
+    "Nova URI-schema and parse normalization vs operational timer/fetch/HTTP semantics; current schema has no timer max but AbortSignal.timeout/platform limits are later guards. No domain narrowed silently.",
+    "C3 component18 staged maximumExecutionMs<=120000 differs from native MAX_TIMER_MS2147483647 and schema/safeintegerrange support; localassociation1000fits both. Exact wholeC3 domain adjudication remains WCR02 dependency, not accidental global narrowing.",
+    "Evidence declarations and retrySafe/matrixFields alternatives need actual selected package/plan retry/expansion semantics; complete baselinecopies are not distincteffectproof.",
+    "Physical per-profile authorityproposal vs candidate combined content documents requires coherent selected-root/materializer implementation C4; no schema from this artifact is productive/approved."
+  ]
+}

@@ -1,0 +1,140 @@
+ M docs/review/evidence/config-acceptance/author/consolidate.py
+ M docs/review/evidence/config-acceptance/author/main-fragment.json
+ M docs/review/evidence/config-acceptance/delivery/README.md
+ M docs/review/evidence/config-acceptance/delivery/collect-delivery.cjs
+ M docs/review/evidence/config-acceptance/delivery/fragment-status.json
+ M docs/review/evidence/config-acceptance/delivery/inventory-fragment.json
+ M docs/review/evidence/config-acceptance/delivery/open-row-backlog.json
+ M docs/review/evidence/config-acceptance/delivery/proposed-cases.json
+ M docs/review/evidence/config-acceptance/runtime/README.md
+ M docs/review/evidence/config-acceptance/runtime/case-proposals.json
+ M docs/review/evidence/config-acceptance/runtime/inventory-fragment.json
+ M docs/review/remediation/config-acceptance-matrix.json
+ M docs/review/remediation/config-definition-current.md
+ M docs/review/remediation/config-semantic-inventory.json
+?? docs/review/evidence/config-acceptance/author/agent-definition-stand.patch
+?? docs/review/evidence/config-acceptance/author/check-agent-definition.mjs
+?? docs/review/evidence/config-acceptance/author/extend-prism-agent.py
+?? docs/review/evidence/config-acceptance/author/extend-prism-endpoints.py
+?? docs/review/evidence/config-acceptance/author/extend-prism-native.py
+?? docs/review/evidence/config-acceptance/components/RESIDUAL.md
+?? docs/review/evidence/config-acceptance/components/check-core-domain-closure.py
+?? docs/review/evidence/config-acceptance/components/check-core-domain-definition.mjs
+?? docs/review/evidence/config-acceptance/components/check-preparation-definition.mjs
+?? docs/review/evidence/config-acceptance/components/check-residual.py
+?? docs/review/evidence/config-acceptance/components/check-schema-closure.py
+?? docs/review/evidence/config-acceptance/components/complete-residual-links.py
+?? docs/review/evidence/config-acceptance/components/core-domain-closure-file-identities.json
+?? docs/review/evidence/config-acceptance/components/core-domain-definition-attempt1-script.snapshot.mjs
+?? docs/review/evidence/config-acceptance/components/core-policy-domain-closure.json
+?? docs/review/evidence/config-acceptance/components/core-policy-domains.md
+?? docs/review/evidence/config-acceptance/components/core-policy-domains.py
+?? docs/review/evidence/config-acceptance/components/preparation-cleanup-binding-definition.md
+?? docs/review/evidence/config-acceptance/components/preparation-closure-file-identities.json
+?? docs/review/evidence/config-acceptance/components/preparation-policy-binding.json
+?? docs/review/evidence/config-acceptance/components/preparation-policy-binding.py
+?? docs/review/evidence/config-acceptance/components/refine-case-boundaries.py
+?? docs/review/evidence/config-acceptance/components/refined-case-profiles.json
+?? docs/review/evidence/config-acceptance/components/residual-cases.py
+?? docs/review/evidence/config-acceptance/components/residual-collect.py
+?? docs/review/evidence/config-acceptance/components/residual-fragment.json
+?? docs/review/evidence/config-acceptance/components/residual-policy-corrections.py
+?? docs/review/evidence/config-acceptance/components/schema-closure-file-identities.json
+?? docs/review/evidence/config-acceptance/components/schema-definition-setup-observations.md
+?? docs/review/evidence/config-acceptance/components/schema-semantic-closure.json
+?? docs/review/evidence/config-acceptance/components/schema-semantics.py
+?? docs/review/evidence/config-acceptance/components/supported-domain-corrections.json
+?? docs/review/evidence/config-acceptance/components/validate-profile-definitions.mjs
+?? docs/review/evidence/config-acceptance/components/validate-refined-profile-definitions.mjs
+?? docs/review/evidence/config-acceptance/components/validate-schema-definitions.mjs
+?? docs/review/evidence/config-acceptance/components/worker-api-dispositions.json
+?? docs/review/evidence/config-acceptance/components/worker-api-dispositions.py
+?? docs/review/evidence/config-acceptance/components/worker-api-roster.json
+?? docs/review/evidence/config-acceptance/components/worker-api-roster.mjs
+?? docs/review/evidence/config-acceptance/delivery/acpx-runtime-acquisition.json
+?? docs/review/evidence/config-acceptance/delivery/acquire-kubernetes-sources.py
+?? docs/review/evidence/config-acceptance/delivery/build-input-predicate-observations.json
+?? docs/review/evidence/config-acceptance/delivery/build-input-predicate-observations.txt
+?? docs/review/evidence/config-acceptance/delivery/c0-definition-cases.json
+?? docs/review/evidence/config-acceptance/delivery/codex-pinned-package-metadata.json
+?? docs/review/evidence/config-acceptance/delivery/delivery-surface-dispositions.json
+?? docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition.json
+?? docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/
+?? docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-source-observations.json
+?? docs/review/evidence/config-acceptance/delivery/kubernetes-source-acquisitions.json
+?? docs/review/evidence/config-acceptance/delivery/official-plugin-pinned-acquisitions.json
+?? docs/review/evidence/config-acceptance/delivery/openclaw-pinned-acquisition.json
+?? docs/review/evidence/config-acceptance/delivery/openclaw-pinned-observations.json
+?? docs/review/evidence/config-acceptance/delivery/openclaw-pinned-package-metadata.json
+?? docs/review/evidence/config-acceptance/delivery/ops-chart-existing-tests.txt
+?? docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/
+?? docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/
+?? docs/review/evidence/config-acceptance/delivery/pinned-robfig-cron-v3.0.1/
+?? docs/review/evidence/config-acceptance/delivery/pinned-unused-inbound-worker-search.json
+?? docs/review/evidence/config-acceptance/delivery/prism-chart-definition.json
+?? docs/review/evidence/config-acceptance/delivery/prism-chart-definition/
+?? docs/review/evidence/config-acceptance/delivery/refine-case-links.py
+?? docs/review/evidence/config-acceptance/delivery/refine-kubernetes-boundaries.py
+?? docs/review/evidence/config-acceptance/delivery/refine-ops-delivery.py
+?? docs/review/evidence/config-acceptance/delivery/refine-pinned-openclaw.py
+?? docs/review/evidence/config-acceptance/delivery/refine-prism-chart.py
+?? docs/review/evidence/config-acceptance/delivery/refine-semantic-closure.py
+?? docs/review/evidence/config-acceptance/delivery/run-build-input-definitions.mjs
+?? docs/review/evidence/config-acceptance/delivery/run-kubernetes-boundary-definition.py
+?? docs/review/evidence/config-acceptance/delivery/run-prism-chart-definition.py
+?? docs/review/evidence/config-acceptance/delivery/semantic-closure-artifact-digests.json
+?? docs/review/evidence/config-acceptance/delivery/semantic-closure-source-observations.json
+?? docs/review/evidence/config-acceptance/delivery/semantic-closure-verification.json
+?? docs/review/evidence/config-acceptance/delivery/semantic-closure-verification.txt
+?? docs/review/evidence/config-acceptance/delivery/snapshots/kubernetes-boundary-initial-observations/
+?? docs/review/evidence/config-acceptance/delivery/snapshots/kubernetes-boundary-second-observations/
+?? docs/review/evidence/config-acceptance/delivery/snapshots/prism-chart-initial-diagnostic-observations/
+?? docs/review/evidence/config-acceptance/delivery/verify-semantic-closure.py
+?? docs/review/evidence/config-acceptance/independent-core-domain/
+?? docs/review/evidence/config-acceptance/runtime/artifact-metadata-cases.py
+?? docs/review/evidence/config-acceptance/runtime/artifact-metadata-definition-observations.json
+?? docs/review/evidence/config-acceptance/runtime/artifact-metadata-definition.mjs
+?? docs/review/evidence/config-acceptance/runtime/checkpoints/runtime-closure-input/
+?? docs/review/evidence/config-acceptance/runtime/common-case-integration.json
+?? docs/review/evidence/config-acceptance/runtime/common-complete-profiles.json
+?? docs/review/evidence/config-acceptance/runtime/common-current-schema-observations.json
+?? docs/review/evidence/config-acceptance/runtime/common-current-schema-profiles.json
+?? docs/review/evidence/config-acceptance/runtime/common-field-case-proposals.json
+?? docs/review/evidence/config-acceptance/runtime/common-field-contract-table.json
+?? docs/review/evidence/config-acceptance/runtime/common-field-contracts.py
+?? docs/review/evidence/config-acceptance/runtime/common-field-progress.json
+?? docs/review/evidence/config-acceptance/runtime/common-profile-schema-observations.json
+?? docs/review/evidence/config-acceptance/runtime/common-rest.snippet
+?? docs/review/evidence/config-acceptance/runtime/compiler-complete-policy-proposal.json
+?? docs/review/evidence/config-acceptance/runtime/compiler-contract-progress.json
+?? docs/review/evidence/config-acceptance/runtime/compiler-domain-observations.json
+?? docs/review/evidence/config-acceptance/runtime/compiler-domain-probes.mjs
+?? docs/review/evidence/config-acceptance/runtime/integrate-common-cases.py
+?? docs/review/evidence/config-acceptance/runtime/integrate-review-productive-contracts.py
+?? docs/review/evidence/config-acceptance/runtime/integrate-schema-field-definitions.py
+?? docs/review/evidence/config-acceptance/runtime/record-runtime-closure.py
+?? docs/review/evidence/config-acceptance/runtime/refine-compiler-contracts.py
+?? docs/review/evidence/config-acceptance/runtime/refine-review-policy-definition.py
+?? docs/review/evidence/config-acceptance/runtime/refine-review-registration-fields.py
+?? docs/review/evidence/config-acceptance/runtime/revalidation-config-readers.json
+?? docs/review/evidence/config-acceptance/runtime/revalidation-config-readers.mjs
+?? docs/review/evidence/config-acceptance/runtime/review-policy-contract-definition-observations.json
+?? docs/review/evidence/config-acceptance/runtime/review-policy-contracts.py
+?? docs/review/evidence/config-acceptance/runtime/review-policy-definition-observations.json
+?? docs/review/evidence/config-acceptance/runtime/review-policy-definition-progress.json
+?? docs/review/evidence/config-acceptance/runtime/review-policy-definition.mjs
+?? docs/review/evidence/config-acceptance/runtime/review-policy-productive-contracts.json
+?? docs/review/evidence/config-acceptance/runtime/review-productive-integration.json
+?? docs/review/evidence/config-acceptance/runtime/review-registration-progress.json
+?? docs/review/evidence/config-acceptance/runtime/review-runtime-identity-definition.mjs
+?? docs/review/evidence/config-acceptance/runtime/review-runtime-identity-observations.json
+?? docs/review/evidence/config-acceptance/runtime/runtime-closure-dirty.patch
+?? docs/review/evidence/config-acceptance/runtime/runtime-closure-identities.json
+?? docs/review/evidence/config-acceptance/runtime/runtime-closure-summary.json
+?? docs/review/evidence/config-acceptance/runtime/schema-case-integration.json
+?? docs/review/evidence/config-acceptance/runtime/schema-field-definition-observations.json
+?? docs/review/evidence/config-acceptance/runtime/schema-field-definitions.mjs
+?? docs/review/evidence/config-acceptance/runtime/validate-common-profiles.mjs
+?? docs/review/evidence/config-acceptance/runtime/validate-current-common-profiles.initial.mjs
+?? docs/review/evidence/config-acceptance/runtime/validate-current-common-profiles.mjs
+?? docs/review/evidence/config-acceptance/runtime/validate-review-policy-contracts.mjs

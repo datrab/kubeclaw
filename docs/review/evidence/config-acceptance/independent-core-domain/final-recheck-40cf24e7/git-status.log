@@ -1,0 +1,146 @@
+ M docs/review/evidence/config-acceptance/author/consolidate.py
+ M docs/review/evidence/config-acceptance/author/main-fragment.json
+ M docs/review/evidence/config-acceptance/components/RESIDUAL.md
+ M docs/review/evidence/config-acceptance/components/check-residual.py
+ M docs/review/evidence/config-acceptance/components/refined-case-profiles.json
+ M docs/review/evidence/config-acceptance/components/residual-fragment.json
+ M docs/review/evidence/config-acceptance/delivery/README.md
+ M docs/review/evidence/config-acceptance/delivery/acquire-kubernetes-sources.py
+ M docs/review/evidence/config-acceptance/delivery/c0-kubernetes-boundary-cases.json
+ M docs/review/evidence/config-acceptance/delivery/collect-delivery.cjs
+ M docs/review/evidence/config-acceptance/delivery/delivery-surface-dispositions.json
+ M docs/review/evidence/config-acceptance/delivery/fragment-status.json
+ M docs/review/evidence/config-acceptance/delivery/inventory-fragment.json
+ M docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition.json
+ M docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-A.stdout
+ M docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-A.yaml
+ M docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-B.stdout
+ M docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-RENDER-KUBECLAW-BUSTER-B.yaml
+ M docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-BUSTER-A.stdout
+ M docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BOUNDARY-SCHEMA-KUBECLAW-BUSTER-B.stdout
+ M docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/profile-kubeclaw-buster-A.json
+ M docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/profile-kubeclaw-buster-B.json
+ M docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/resource-projection-comparisons.json
+ M docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-source-observations.json
+ M docs/review/evidence/config-acceptance/delivery/kubernetes-source-acquisitions.json
+ M docs/review/evidence/config-acceptance/delivery/open-row-backlog.json
+ M docs/review/evidence/config-acceptance/delivery/proposed-cases.json
+ M docs/review/evidence/config-acceptance/delivery/refine-case-links.py
+ M docs/review/evidence/config-acceptance/delivery/refine-kubernetes-boundaries.py
+ M docs/review/evidence/config-acceptance/delivery/run-kubernetes-boundary-definition.py
+ M docs/review/evidence/config-acceptance/delivery/semantic-closure-artifact-digests.json
+ M docs/review/evidence/config-acceptance/delivery/semantic-closure-verification.json
+ M docs/review/evidence/config-acceptance/delivery/semantic-closure-verification.txt
+ M docs/review/evidence/config-acceptance/delivery/verify-semantic-closure.py
+ M docs/review/evidence/config-acceptance/runtime/README.md
+ M docs/review/evidence/config-acceptance/runtime/case-proposals.json
+ M docs/review/evidence/config-acceptance/runtime/inventory-fragment.json
+ M docs/review/evidence/config-acceptance/runtime/record-runtime-closure.py
+ M docs/review/evidence/config-acceptance/runtime/runtime-closure-dirty.patch
+ M docs/review/evidence/config-acceptance/runtime/runtime-closure-identities.json
+ M docs/review/evidence/config-acceptance/runtime/runtime-closure-integrity.log
+ M docs/review/evidence/config-acceptance/runtime/runtime-closure-summary.json
+ M docs/review/remediation/config-acceptance-matrix.json
+ M docs/review/remediation/config-definition-current.md
+ M docs/review/remediation/config-semantic-inventory.json
+ M docs/review/remediation/independent-config-c0-core-domain-a07de567.md
+?? docs/review/evidence/config-acceptance/author/check-canonical-refinements.py
+?? docs/review/evidence/config-acceptance/author/check-prism-cache-definition.mjs
+?? docs/review/evidence/config-acceptance/author/check-prism-control-definition.mjs
+?? docs/review/evidence/config-acceptance/author/prism-cache-applicability-corrections.json
+?? docs/review/evidence/config-acceptance/author/prism-cache-definition-dirty.patch
+?? docs/review/evidence/config-acceptance/author/prism-control-definition-dirty.patch.gz
+?? docs/review/evidence/config-acceptance/author/prism-control-policy-dispositions.json
+?? docs/review/evidence/config-acceptance/author/rcore001-before-config-acceptance-matrix.json.gz
+?? docs/review/evidence/config-acceptance/author/rcore001-before-consolidate.py.gz
+?? docs/review/evidence/config-acceptance/author/rcore001-before-identities.json
+?? docs/review/evidence/config-acceptance/author/rcore001-correction-controls.json
+?? docs/review/evidence/config-acceptance/author/refine-prism-cache-applicability.py
+?? docs/review/evidence/config-acceptance/author/trace-prism-control-policies-initial.py.snapshot
+?? docs/review/evidence/config-acceptance/author/trace-prism-control-policies.py
+?? docs/review/evidence/config-acceptance/components/active-case-specifications.json
+?? docs/review/evidence/config-acceptance/components/additional-schema-closure.json
+?? docs/review/evidence/config-acceptance/components/additional-schema-dispositions.py
+?? docs/review/evidence/config-acceptance/components/check-adjustability-source-controls.mjs
+?? docs/review/evidence/config-acceptance/components/check-icd-corrections.py
+?? docs/review/evidence/config-acceptance/components/check-rcore002-controls.py
+?? docs/review/evidence/config-acceptance/components/core-adjustability-current.md
+?? docs/review/evidence/config-acceptance/components/core-adjustable-profiles.json
+?? docs/review/evidence/config-acceptance/components/core-adjustable-target.schema.json
+?? docs/review/evidence/config-acceptance/components/correct-icd-findings.py
+?? docs/review/evidence/config-acceptance/components/finish-icd-corrections.py
+?? docs/review/evidence/config-acceptance/components/historical-case-specifications-40cf24.json
+?? docs/review/evidence/config-acceptance/components/historical-first-correction-working-snapshot.json
+?? docs/review/evidence/config-acceptance/components/historical-refined-case-profiles-a07de567.json
+?? docs/review/evidence/config-acceptance/components/icd-correction-ledger.json
+?? docs/review/evidence/config-acceptance/components/icd-correction-stable-receipt.json
+?? docs/review/evidence/config-acceptance/components/publish-icd-receipt.py
+?? docs/review/evidence/config-acceptance/components/rcore002-before/
+?? docs/review/evidence/config-acceptance/components/rcore002-conflicting-gap-negative-fixture.json
+?? docs/review/evidence/config-acceptance/components/rcore002-correction-stable-receipt.json
+?? docs/review/evidence/config-acceptance/components/validate-adjustable-core-definitions.mjs
+?? docs/review/evidence/config-acceptance/delivery/buster-build-source-observations.json
+?? docs/review/evidence/config-acceptance/delivery/buster-build-version-projection-check.json
+?? docs/review/evidence/config-acceptance/delivery/buster-build-version-projection-check.txt
+?? docs/review/evidence/config-acceptance/delivery/c0-buster-build-definition-cases.json
+?? docs/review/evidence/config-acceptance/delivery/delivery-stable-completion-40cf24e7-followup.json
+?? docs/review/evidence/config-acceptance/delivery/export-current-definition-cases.py
+?? docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BUSTER-GATEWAY-PARTIAL-MAP.stderr
+?? docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-BUSTER-GATEWAY-PARTIAL-MAP.stdout
+?? docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-PINNED-CRD-ALIAS-MISSING-SPEC.stderr
+?? docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-PINNED-CRD-ALIAS-MISSING-SPEC.stdout
+?? docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-PINNED-CRD-ALIAS-UNKNOWN.stderr
+?? docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-PINNED-CRD-ALIAS-UNKNOWN.stdout
+?? docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-PINNED-CRD-ALIAS-WRONG-TYPE.stderr
+?? docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/DLV-C0-PINNED-CRD-ALIAS-WRONG-TYPE.stdout
+?? docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/crd-alias-negative-MISSING-SPEC.yaml
+?? docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/crd-alias-negative-UNKNOWN.yaml
+?? docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/crd-alias-negative-WRONG-TYPE.yaml
+?? docs/review/evidence/config-acceptance/delivery/kubernetes-boundary-definition/profile-kubeclaw-buster-partial-overlay.json
+?? docs/review/evidence/config-acceptance/delivery/materialize-pinned-schema-alias.py
+?? docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/README.md
+?? docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-local/
+?? docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/_definitions.json
+?? docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/validatingadmissionpolicy-admissionregistration-v1.json
+?? docs/review/evidence/config-acceptance/delivery/pinned-kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.35.6-standalone-strict/validatingadmissionpolicybinding-admissionregistration-v1.json
+?? docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/pkg/kubelet/eviction/
+?? docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/pkg/kubelet/kubelet.go
+?? docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/kubelet/eviction/
+?? docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/kubelet/kubelet.go
+?? docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases.json
+?? docs/review/evidence/config-acceptance/delivery/pinned-schema-aliases/
+?? docs/review/evidence/config-acceptance/delivery/pinned-schema-directory-acquisition.json
+?? docs/review/evidence/config-acceptance/delivery/pinned-schema-full-directory-tree.json
+?? docs/review/evidence/config-acceptance/delivery/pinned-schema-root-tree.json
+?? docs/review/evidence/config-acceptance/delivery/refine-buster-build-inputs.py
+?? docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-crd-alias-initial-negative-diagnostics/
+?? docs/review/evidence/config-acceptance/delivery/snapshots/pr40cf24e7-kubernetes-boundary/
+?? docs/review/evidence/config-acceptance/delivery/v1.35.6-local-directory-tree.json
+?? docs/review/evidence/config-acceptance/delivery/v1.35.6-standalone-directory-tree.json
+?? docs/review/evidence/config-acceptance/independent-core-domain/erratum-publication-identities.json
+?? docs/review/evidence/config-acceptance/independent-core-domain/erratum-six-roots.json
+?? docs/review/evidence/config-acceptance/independent-core-domain/erratum-six-roots.py
+?? docs/review/evidence/config-acceptance/independent-core-domain/final-recheck-40cf24e7/
+?? docs/review/evidence/config-acceptance/independent-core-domain/recheck-40cf24e7/
+?? docs/review/evidence/config-acceptance/independent-core-domain/report-before-erratum.md.snapshot
+?? docs/review/evidence/config-acceptance/runtime/check-repository-grade-target.mjs
+?? docs/review/evidence/config-acceptance/runtime/checkpoints/40cf24e-grade-resume/
+?? docs/review/evidence/config-acceptance/runtime/define-repository-grade-target.py
+?? docs/review/evidence/config-acceptance/runtime/integrate-grade-codec-evidence.py
+?? docs/review/evidence/config-acceptance/runtime/integrate-repository-grade-contracts.py
+?? docs/review/evidence/config-acceptance/runtime/repository-grade-author.schema.json
+?? docs/review/evidence/config-acceptance/runtime/repository-grade-case-dispositions.json
+?? docs/review/evidence/config-acceptance/runtime/repository-grade-compiler-control.mjs
+?? docs/review/evidence/config-acceptance/runtime/repository-grade-compiler-observations.json
+?? docs/review/evidence/config-acceptance/runtime/repository-grade-context-delta.json
+?? docs/review/evidence/config-acceptance/runtime/repository-grade-contracts.json
+?? docs/review/evidence/config-acceptance/runtime/repository-grade-contracts.py
+?? docs/review/evidence/config-acceptance/runtime/repository-grade-definition-observations.json
+?? docs/review/evidence/config-acceptance/runtime/repository-grade-target-domain.json
+?? docs/review/evidence/config-acceptance/runtime/repository-grade-target-observations.json
+?? docs/review/evidence/config-acceptance/runtime/repository-grade-target.schema.json
+?? docs/review/evidence/config-acceptance/runtime/runtime-case-dispositions.json
+?? docs/review/evidence/config-acceptance/runtime/runtime-codec-target-erratum.json
+?? docs/review/evidence/config-acceptance/runtime/runtime-codec-target-erratum.mjs
+?? docs/review/evidence/config-acceptance/runtime/validate-repository-grade-contracts.mjs
+?? docs/review/remediation/independent-config-c0-core-recheck-40cf24e7.md

@@ -1,0 +1,228 @@
+{
+  "corrects": "ICQ-06",
+  "classification": "generated provenance data, not operator toggle",
+  "schema": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/provider-provenance.schema.json",
+    "sha256": "5478de721b33f2b8716c8e65a20ef03b033000a9ee12a0b2421723ac5d656344"
+  },
+  "specimens": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/provider-provenance-specimens.json",
+    "sha256": "69fec151a304efabdcc90e601933d3d3f906355e73f42c1cf1c575d81787b78e",
+    "allPhysicalNumbers": "Synthetic structural fixtures only, not procfs/provider measurements or installed grants"
+  },
+  "source": [
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-observation.ts",
+      "sha256": "eca305796cc719a34e1d8707db0c3a8b5421815ce092c6b12f136e6003762e92"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-provider-operation.ts",
+      "sha256": "332e73e5e35b28800ab7ad70331adf8c2ed683f819a0ea6504eea0abbb61645c"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-provider-state.ts",
+      "sha256": "f599ef7ca3920c4a0d8425c8892465034db7db94c592f32c53d9b72778f00f17"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-state.ts",
+      "sha256": "392ad6e2a590c964cc0d8cd1fe0c75237f240798e6d99ee2ed2b33da8047fdca"
+    }
+  ],
+  "targetStorage": "proposed providerProvenance in existing original AttemptState encoded metadata; schema/encode extension future. Not a sidecar/newstore/newquota/newauthor. All original records/projections/closures/evidence remain. References immutable originalbinding; no latest.",
+  "bindings": "launchBindingDigest hashes immutable canonical session+originalenvelope/claim/source/policy refs before spawn; snapshots reference this fixed binding not mutable current receipt, avoiding circular snapshot/receipt digest. lastSnapshotDigest points actual immutable canonical snapshot; no fake precomputed observation digest.",
+  "semanticRelations": [
+    "reserved-not-launched has null process identity and snapshots only no-launch-proven until ownership acquired; state alone is not proof of no launch",
+    "launched/failed/closed receipt must retain acquired boot+PID+starttime identity; no numericPID-only ownership; missing proof makes uncertain/unavailable, never no-launch",
+    "startTicks/pid validate safe exactintegers from real generated observations; unrepresentable/missing fails ownership before budgetsuccess; no guessed universalLinuxpidmax",
+    "procfs CPU current hardcoded100HZ is not universal clockproof; genuine kernel clock tick rate must be observed and bound before using tick conversion, otherwise partial/unavailable. Not a new configurable divisor",
+    "each observedvalue finite nonnegative safeinteger after unit conversion/ceil; CPU session sum safechecked; processcount launched>=1; no-launch allzero only proven beforeactual spawn",
+    "metric observed wholecontract requires realcomplete coverage; sampled tree/childown-only insufficient to assert universalpeak/tree budget; missing is unavailable, partial retains measuredlowerbound only",
+    "typedmeasurementerror follows existingV1 catch->undefined->WORKER_RESOURCE_MEASUREMENT_INVALID; no Pass/unrequestedV2 reclassification",
+    "confirmedclose preserves finalowned measurements; no sample reusedPID, no duplicate sessionsummedCPU; cleanup has freshsession andclaim but originaleffect tuple/ceiling; snapshotsequence safe checked",
+    "no arbitrarysnapshotcountcap: every retainedsession/snapshot charged to same originalmetadata quota before admission/append; unbounded recovery eventually FULL before launch/effect, not delete/reset/historyshrink"
+  ],
+  "accounting": {
+    "wholeStateBefore": {
+      "schemaVersion": "durable-attempt-store.v1",
+      "evidence": [],
+      "results": [],
+      "closures": []
+    },
+    "wholeStateAfter": {
+      "schemaVersion": "durable-attempt-store.v1",
+      "evidence": [],
+      "results": [],
+      "closures": [],
+      "providerProvenance": [
+        {
+          "launchReceipt": {
+            "schemaVersion": "buster-provider-launch.v1",
+            "launchBindingDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "sessionDigest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "envelopeDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "claimDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "sourceDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "policyDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "state": "reserved-not-launched",
+            "processIdentity": null,
+            "createdAt": "2026-10-13T00:00:00.000Z",
+            "lastSnapshotDigest": null
+          },
+          "snapshots": [
+            {
+              "schemaVersion": "buster-provider-measurement.v1",
+              "launchBindingDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "sessionDigest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "phase": "execute",
+              "sequence": 1,
+              "observedAt": "2026-10-13T00:00:01.000Z",
+              "ownership": "uncertain",
+              "processIdentity": {
+                "bootId": "00000000-0000-0000-0000-000000000001",
+                "pid": 12345,
+                "startTicks": 123456
+              },
+              "clockTicksPerSecond": 100,
+              "metrics": {
+                "cpuTimeMs": {
+                  "status": "unavailable",
+                  "source": "procfs-owned-tree",
+                  "coverage": "incomplete",
+                  "reason": "entry-disappeared"
+                },
+                "maximumMemoryBytes": {
+                  "status": "unavailable",
+                  "source": "procfs-owned-tree",
+                  "coverage": "incomplete",
+                  "reason": "entry-disappeared"
+                },
+                "maximumProcesses": {
+                  "status": "unavailable",
+                  "source": "procfs-owned-tree",
+                  "coverage": "incomplete",
+                  "reason": "entry-disappeared"
+                }
+              },
+              "disposal": "uncertain"
+            }
+          ]
+        }
+      ]
+    },
+    "exampleFieldGrowthBytes": 1630,
+    "rawReceiptBytes": 708,
+    "rawSnapshotBytes": 865,
+    "authority": "existing original maximumMetadataBytes from Buster execution.stores.attempts; samecap, no newbudget",
+    "exactRelation": "byteLength(canonicalJson(encodeAttemptState(all ORIGINAL retained state + proposed providerProvenance)))<=original.maximumMetadataBytes; refs and headers included. Rawreceipt/snapshot sums alone not totalquota proof. Candidatecheck/fence before mkdir/write/spawn.",
+    "preSpawnReservation": "For fixed v1 shape enumerate largest legal canonical receipt/nextfailure-final snapshot per each branch, safeinteger numeric width16, UUID36/digest71/date24/enummaximum widths; reserve actual whole encoded incremental maximum before spawn. Retained original state+existing projections included. If unavailable shape longer it must win bound; independently checked enumeration in proposeddefinition controls. No effect if originalremainingmetadata<computed requirement.",
+    "worstReceiptSpecimen": {
+      "schemaVersion": "buster-provider-launch.v1",
+      "launchBindingDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "sessionDigest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "envelopeDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "claimDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "sourceDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "policyDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "state": "initialization-failed",
+      "processIdentity": {
+        "bootId": "00000000-0000-0000-0000-000000000001",
+        "pid": 9007199254740991,
+        "startTicks": 9007199254740991
+      },
+      "createdAt": "2026-10-13T00:00:00.000Z",
+      "lastSnapshotDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "worstObservedSnapshotSpecimen": {
+      "schemaVersion": "buster-provider-measurement.v1",
+      "launchBindingDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "sessionDigest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "phase": "execute",
+      "sequence": 9007199254740991,
+      "observedAt": "2026-10-13T00:00:01.000Z",
+      "ownership": "owned-live",
+      "processIdentity": {
+        "bootId": "00000000-0000-0000-0000-000000000001",
+        "pid": 9007199254740991,
+        "startTicks": 9007199254740991
+      },
+      "clockTicksPerSecond": 9007199254740991,
+      "metrics": {
+        "cpuTimeMs": {
+          "status": "observed",
+          "source": "procfs-owned-tree",
+          "coverage": "complete-owned-contract",
+          "value": 9007199254740991
+        },
+        "maximumMemoryBytes": {
+          "status": "observed",
+          "source": "procfs-owned-tree",
+          "coverage": "complete-owned-contract",
+          "value": 9007199254740991
+        },
+        "maximumProcesses": {
+          "status": "observed",
+          "source": "procfs-owned-tree",
+          "coverage": "complete-owned-contract",
+          "value": 9007199254740991
+        }
+      },
+      "disposal": "pending"
+    },
+    "release": "Only confirmed terminalmetadata retention rules; receipt+snapshot reference/history not removed merelytofitB. Interrupteddispose retains charged ownership; quota failure afterspawn records reservedfailure branch withoutunaccountedwrite; reservation helduntilconfirmed reconciliation."
+  },
+  "cases": [
+    {
+      "id": "pre-spawn-full",
+      "prior": "exactwholeStateAfter + originalcap set to computed prospectivecandidatebytes-1",
+      "input": "genuine registered actualprovider initialize on sameapprovedsourcepackage",
+      "oracle": "reserve failure beforeconstruct/spawn; zeronewownedPID/output; retained originalstateSHA unchanged; restorecap at exactprospectivecandidatebytes admits structuralreservation then realprovider future"
+    },
+    {
+      "id": "abort-before-spawn",
+      "prior": "reservedReceipt + provenNoLaunchSnapshot specimen shape",
+      "input": "AbortSignal alreadyaborted at loaderentry",
+      "oracle": "no spawnownership; receipt bound originalA, provenzero numeric allowed but cancelledpreparefault remains, no completedwork"
+    },
+    {
+      "id": "abort-after-spawn-before-state-assignment",
+      "prior": "originalA reservedreceipt and realspawned session",
+      "input": "abort after constructor acquired realpid before loaderresolve/RunnerProviderState.instance assignment",
+      "oracle": "loader rejection carries same session/receipt/finaldisposal snapshot; no 0/0/0 fallback; unavailable requestedV1 throwsinvalidmeasurement; unaccounted metadata/effectzero"
+    },
+    {
+      "id": "initialize-failure",
+      "prior": "sameoriginalA receipt",
+      "input": "actual registeredprovider module initialize throws its actual failure using approved testfixture source digest",
+      "oracle": "receipt initialization-failed with originalrealPIDidentity, snapshot measured/partial/unavailable fromactualsource retained; resultpreparefault+invalidmeasure if coverage missing; future genuine packageprerequisite"
+    },
+    {
+      "id": "malformed-report",
+      "prior": "owned actualsession originalA",
+      "input": "at child report consumer reject string/negative/NaN/Infinity/unsafe/missing CPU/RSS individually; source malformedfixture actualtypedprotocol message (not fake measurement positive)",
+      "oracle": "missing/malformed never observedzero; validreal report restoredpositive; partialcoveragecannotbudgetPass"
+    },
+    {
+      "id": "recovery-A-publish-B",
+      "prior": "durable originalA launchreceipt+unavailableSnapshot exactschema after crash; acquiredPIDidentity retained",
+      "input": "publishcompleteB; recover originalA fixedtuple and originalsourcepackage",
+      "oracle": "unavailable cannot become zero/Pass; never sample reusedPID; same originalreceipt/session CPU contribution countedonce; no newA launch merelytosample, cleanup uses freshclaim/session boundoriginaleffect"
+    },
+    {
+      "id": "cleanup-recovery-two-sessions",
+      "prior": "A ownedsession finalobservedsource receipt + new actualcleanup session receipt; bothsame originalpolicy/source tuple, distinctsessiondigest",
+      "input": "repeat cleanup/recovery and same snapshot ref",
+      "oracle": "CPU sum once perunique session, memory/process max; finite/safe addition; unavailableone requestedphase rejectsV1, no doublecharge/release; interruptedcleanup retains charge"
+    },
+    {
+      "id": "fixed-Eval",
+      "prior": "fixed originalA fullprofile/envelope/source/schema/claim plus actualapproved compiledsandbox and registeredproviderpackage",
+      "input": "real successful/shortlived/failedinitialize/no-launch source runs; no synthetic counteroverride",
+      "oracle": "only real complete observations underdeclaredbudgetcontract certify; disappearance/incomplete fail; all receipt/snapshot bytes accounted under originalsamecap; structural specimens never installedproof"
+    }
+  ],
+  "physicalPrerequisite": "Absent compiledsandbox plus approved realprovider/registered package and actual kernel/procfs facts remain future execution prerequisites, NOT missing C1 implementation demanded for C0."
+}

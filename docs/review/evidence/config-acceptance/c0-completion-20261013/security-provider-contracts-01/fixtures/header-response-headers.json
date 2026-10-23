@@ -1,0 +1,9 @@
+{
+  "x-content-type-options": "nosniff",
+  "content-security-policy": "default-src 'none'",
+  "referrer-policy": "no-referrer",
+  "permissions-policy": "geolocation=()",
+  "x-custom": "a",
+  "strict-transport-security": "max-age=31536000",
+  "x-frame-options": "deny"
+}

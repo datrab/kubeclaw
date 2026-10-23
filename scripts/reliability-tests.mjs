@@ -3,7 +3,23 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
 
+// These originals require genuine root-owned files or fixed-UID transitions.
+// Entrypoint and v10 input-set originals also invoke the real generation
+// publisher, which must reject non-root-owned image/package trees.
+// Keep their original assertions in the disposable, accounted native CI scope.
 export const nativeTests = [
+  'buster-admission-cli.test.mjs',
+  'buster-historical-import.test.mts',
+  'buster-historical-identities.test.mts',
+  'original-boot-admission.test.mts',
+  'original-boot-metadata.test.mts',
+  'original-initial-state.test.mts',
+  'original-native-host.test.mjs',
+  'pipeline-boot.test.mjs',
+  'pipeline-role-readback.test.mjs',
+  'buster-cluster-entrypoint.test.mjs',
+  'pipeline-v10-input-set.test.mts',
+
   'prism-native-startup.test.mts', 'worker-native-contract.test.mts',
   'worker-native-launcher.test.mts', 'worker-native-observation.test.mts',
   'worker-observation-durability.test.mts',
@@ -24,6 +40,15 @@ export function selectTests(files, group, shard = 1, shards = 1) {
     .sort().filter((_file, index) => index % shards === shard - 1);
 }
 
+// The archived diagnostic cold-starts real compiler/CLI processes under its
+// unchanged 120-second deadline. Give it the runner without a competing file;
+// preserve the original shard membership, assertions and remaining originals.
+export function executionBatches(files) {
+  const isolated = files.filter(file => file === 'legacy-cli-diagnostic-reproducibility.test.mjs');
+  const concurrent = files.filter(file => file !== 'legacy-cli-diagnostic-reproducibility.test.mjs');
+  return [...isolated.map(file => [file]), ...(concurrent.length ? [concurrent] : [])];
+}
+
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
   const directory = 'tests/verification/reliability';
   const [group, shard = '1', shards = '1'] = process.argv.slice(2);
@@ -42,7 +67,14 @@ if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.ar
     fs.accessSync('skills/common/plugin-runtime/foundation/isolation/plugin-sandbox', fs.constants.X_OK);
   }
   console.log(`Reliability ${group} ${shard}/${shards}: ${files.length} files\n${files.join('\n')}`);
-  const result = spawnSync(process.execPath, ['--test', '--test-concurrency=2', ...files.map(file => `${directory}/${file}`)], { stdio: 'inherit' });
-  if (result.error) throw result.error;
-  process.exitCode = result.status ?? 1;
+  // Native CLI fixtures start the real root parent; its production guardian
+  // drops the service to UID1000. Dropping the harness first loses that parent.
+  let exitCode = 0;
+  for (const batch of executionBatches(files)) {
+    const result = spawnSync(process.execPath, ['--test', '--test-concurrency=2', ...batch.map(file => `${directory}/${file}`)], { stdio: 'inherit' });
+    if (result.error) throw result.error;
+    // An isolated failure must not be hidden or skip the remaining originals.
+    if (result.status !== 0) exitCode = result.status ?? 1;
+  }
+  process.exitCode = exitCode;
 }

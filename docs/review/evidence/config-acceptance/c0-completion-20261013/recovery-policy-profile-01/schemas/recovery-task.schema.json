@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kubeclaw.invalid/proposed/recovery-policy-profile-01/task",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation"
+      ],
+      "properties": {
+        "operation": {
+          "const": "backup"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation"
+      ],
+      "properties": {
+        "operation": {
+          "const": "scheduled"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation"
+      ],
+      "properties": {
+        "operation": {
+          "const": "verify"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "directory"
+      ],
+      "properties": {
+        "operation": {
+          "const": "restore"
+        },
+        "directory": {
+          "type": "string",
+          "pattern": "^/backups/litellm/backup-[^/\\u0000]*$"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "directory",
+        "sourceVersion"
+      ],
+      "properties": {
+        "operation": {
+          "const": "migrate"
+        },
+        "directory": {
+          "type": "string",
+          "pattern": "^/backups/litellm/backup-[^/\\u0000]*$"
+        },
+        "sourceVersion": {
+          "type": "integer",
+          "minimum": 100000,
+          "maximum": 9999999999999
+        }
+      }
+    }
+  ]
+}

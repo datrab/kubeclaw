@@ -1,0 +1,946 @@
+{
+  "actualReadsites": [
+    {
+      "source": "skills/buster/engine/test-gates/preparation-cleanup-host.ts",
+      "sourceSha256": "0318f48456c8a36005e70c1272bcf63050b54d60b8cc252d1f902d2f1bb2d242",
+      "line": 11,
+      "expression": "process.env[name]",
+      "computed": true,
+      "owner": "assigned",
+      "markerDispositions": [
+        {
+          "id": "SRC-4996f782bc71c950",
+          "status": "generated-assignment-source-disposed",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "Actual dynamic assigned(name) reader expanded to every literalBUSTER_PREPARATION_ASSIGNED_* call in thishost; soleproducer preparationCommand environment values: selectedsettings.maximumInputBytes, originalsourceRoot, realconfig.tarExecutable/currenthardcoded/usr/bin/tar, originalruntime trustedSourceAuthority/publickey. Requirespresentvalue, no fallback; gate actualscope separateC launcher assignment. Per-field expressions retained in dynamic-assigned-env.json; targetimmutablepolicy/effectbinding C5 notimplemented.",
+          "ref": []
+        }
+      ],
+      "computedExpansionArtifact": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/dynamic-assigned-env.json"
+    },
+    {
+      "source": "skills/buster/engine/test-gates/preparation-config.ts",
+      "sourceSha256": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835",
+      "line": 15,
+      "expression": "environment.BUSTER_NATIVE_POOL_POLICY_FILE",
+      "computed": false,
+      "owner": "nativeBusterPreparationConfig",
+      "markerDispositions": [
+        {
+          "id": "SRC-629f4ce41bb89fee",
+          "status": "upstream-current-producer-handoff",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": "DLV-NATIVE-BUSTER-POOL-POLICY-LOCATOR",
+          "reason": "Native role projects trusted readonly host pool policy; rejects old ENV/mount competition. Host renderer emits buster-pool.json selected role digest; pool reader validates actual owner/mode/node/runtime identity/cgroup bounds before launch. Locator is NOT an independent scheduler policy author.",
+          "ref": []
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/buster/engine/test-gates/preparation-config.ts",
+      "sourceSha256": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835",
+      "line": 21,
+      "expression": "environment.BUSTER_ENGINE_CONTENT_DIGEST",
+      "computed": false,
+      "owner": "nativeBusterPreparationConfig",
+      "markerDispositions": [
+        {
+          "id": "SRC-26b849bed2e1ac82",
+          "status": "upstream-current-producer-handoff",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": "DLV-NATIVE-BUSTER-ENGINE-DIGEST-PROJECTION",
+          "reason": "Native helper requires OCI digest-pinned sidecar and rejects competing ENV even equal; ENV naming does not attest engine packaged-code content digest. Preparation-config requires sha256 shape; native execution/registry/source revisions must remain independently bound. No new adjustable contentDigest field from image alias.",
+          "ref": []
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/buster/engine/test-gates/preparation-config.ts",
+      "sourceSha256": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835",
+      "line": 31,
+      "expression": "environment[publicKeyName]",
+      "computed": true,
+      "owner": "nativeBusterPreparationConfig",
+      "markerDispositions": [
+        {
+          "id": "SRC-fabc811c00c0d5a8",
+          "status": "manually-source-disposed",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "Actualroot runtime descriptor sourceAttestationPublicKeyEnvironmentVariable selects requiredreal ed25519 publickey (no secretcontentrecorded), stateRoot/runtimeRoot exactcomparefixed nativepaths; explicitSWARM_CONFIG selectedgeneration trustedread. Actual existing DLV fields source crosslink; tarExecutable is declaredunused and cannot serve actualtar hardcodedreader alias.",
+          "ref": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/loader-packaging-marker-semantics.json#/dispositions/63"
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/buster/engine/test-gates/preparation-config.ts",
+      "sourceSha256": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835",
+      "line": 62,
+      "expression": "environment.SWARM_CONFIG",
+      "computed": false,
+      "owner": "requireRootBusterSettings",
+      "markerDispositions": [
+        {
+          "id": "SRC-072db49d45d6ec00",
+          "status": "manually-source-disposed",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "Actualroot runtime descriptor sourceAttestationPublicKeyEnvironmentVariable selects requiredreal ed25519 publickey (no secretcontentrecorded), stateRoot/runtimeRoot exactcomparefixed nativepaths; explicitSWARM_CONFIG selectedgeneration trustedread. Actual existing DLV fields source crosslink; tarExecutable is declaredunused and cannot serve actualtar hardcodedreader alias.",
+          "ref": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/loader-packaging-marker-semantics.json#/dispositions/65"
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/buster/engine/test-gates/preparation-historical-host.ts",
+      "sourceSha256": "f8a008a3172e4bd4bdb84ea19f8435878a3c79d8f053d3a16a4f5ffcc084ea16",
+      "line": 14,
+      "expression": "process.env[name]",
+      "computed": true,
+      "owner": "assigned",
+      "markerDispositions": [
+        {
+          "id": "SRC-f39b03a94638fde4",
+          "status": "generated-assignment-source-disposed",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "Actual dynamic assigned(name) reader expanded to every literalBUSTER_PREPARATION_ASSIGNED_* call in thishost; soleproducer preparationCommand environment values: selectedsettings.maximumInputBytes, originalsourceRoot, realconfig.tarExecutable/currenthardcoded/usr/bin/tar, originalruntime trustedSourceAuthority/publickey. Requirespresentvalue, no fallback; gate actualscope separateC launcher assignment. Per-field expressions retained in dynamic-assigned-env.json; targetimmutablepolicy/effectbinding C5 notimplemented.",
+          "ref": []
+        }
+      ],
+      "computedExpansionArtifact": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/dynamic-assigned-env.json"
+    },
+    {
+      "source": "skills/buster/engine/test-gates/preparation-host.ts",
+      "sourceSha256": "960f4605605171a5c1745144321995c91dc9f571926d497df278f9f2974c7fcc",
+      "line": 28,
+      "expression": "process.env[name]",
+      "computed": true,
+      "owner": "environment",
+      "markerDispositions": [
+        {
+          "id": "SRC-ca412d0b6544afc3",
+          "status": "generated-assignment-source-disposed",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "Actual dynamic assigned(name) reader expanded to every literalBUSTER_PREPARATION_ASSIGNED_* call in thishost; soleproducer preparationCommand environment values: selectedsettings.maximumInputBytes, originalsourceRoot, realconfig.tarExecutable/currenthardcoded/usr/bin/tar, originalruntime trustedSourceAuthority/publickey. Requirespresentvalue, no fallback; gate actualscope separateC launcher assignment. Per-field expressions retained in dynamic-assigned-env.json; targetimmutablepolicy/effectbinding C5 notimplemented.",
+          "ref": []
+        }
+      ],
+      "computedExpansionArtifact": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/dynamic-assigned-env.json"
+    },
+    {
+      "source": "skills/buster/engine/test-gates/production.ts",
+      "sourceSha256": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005",
+      "line": 26,
+      "expression": "environment.KUBECLAW_BUILD_REVISION",
+      "computed": false,
+      "owner": "loadProductionBusterRemotePlanRuntime",
+      "markerDispositions": [
+        {
+          "id": "SRC-6b7b7c4b8d9bef51",
+          "status": "manually-source-disposed",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "Actual KUBECLAW_BUILD_REVISION regex40..64hex required then workerrevision captured in service; producerGitHub.sha\u2192Docker ARG/ENV traced by exact existing DLV row. No fixedsha default or Coreauthor.",
+          "ref": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/loader-packaging-marker-semantics.json#/dispositions/66"
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "sourceSha256": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc",
+      "line": 109,
+      "expression": "process.env.PATH",
+      "computed": false,
+      "owner": "constructor",
+      "markerDispositions": [
+        {
+          "id": "SRC-07f4019880385e8f",
+          "status": "uncovered-source-obligation",
+          "sourceQuestionId": "CMP-SOURCE-BUSTER-KUBE-CREDENTIAL-ENV",
+          "upstreamDispositionId": null,
+          "reason": "RealTailscale child whitelist copies ambient PATH/KUBECONFIG/KUBERNETES_SERVICE_HOST/PORT, unlike selectedruntimeSecurity executableSearchPath. Exact Kubernetes/runtime credential/reference/host injection authority and captured generation must be traced; no equal-name currentsecret/path author invented.",
+          "ref": []
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "sourceSha256": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc",
+      "line": 109,
+      "expression": "process.env.KUBECONFIG",
+      "computed": false,
+      "owner": "constructor",
+      "markerDispositions": [
+        {
+          "id": "SRC-07f4019880385e8f",
+          "status": "uncovered-source-obligation",
+          "sourceQuestionId": "CMP-SOURCE-BUSTER-KUBE-CREDENTIAL-ENV",
+          "upstreamDispositionId": null,
+          "reason": "RealTailscale child whitelist copies ambient PATH/KUBECONFIG/KUBERNETES_SERVICE_HOST/PORT, unlike selectedruntimeSecurity executableSearchPath. Exact Kubernetes/runtime credential/reference/host injection authority and captured generation must be traced; no equal-name currentsecret/path author invented.",
+          "ref": []
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "sourceSha256": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc",
+      "line": 110,
+      "expression": "process.env.KUBERNETES_SERVICE_HOST",
+      "computed": false,
+      "owner": "constructor",
+      "markerDispositions": [
+        {
+          "id": "SRC-8e00691c1409eab0",
+          "status": "uncovered-source-obligation",
+          "sourceQuestionId": "CMP-SOURCE-BUSTER-KUBE-CREDENTIAL-ENV",
+          "upstreamDispositionId": null,
+          "reason": "RealTailscale child whitelist copies ambient PATH/KUBECONFIG/KUBERNETES_SERVICE_HOST/PORT, unlike selectedruntimeSecurity executableSearchPath. Exact Kubernetes/runtime credential/reference/host injection authority and captured generation must be traced; no equal-name currentsecret/path author invented.",
+          "ref": []
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "sourceSha256": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc",
+      "line": 111,
+      "expression": "process.env.KUBERNETES_SERVICE_PORT",
+      "computed": false,
+      "owner": "constructor",
+      "markerDispositions": [
+        {
+          "id": "SRC-2b44fdf5a0a7aac9",
+          "status": "uncovered-source-obligation",
+          "sourceQuestionId": "CMP-SOURCE-BUSTER-KUBE-CREDENTIAL-ENV",
+          "upstreamDispositionId": null,
+          "reason": "RealTailscale child whitelist copies ambient PATH/KUBECONFIG/KUBERNETES_SERVICE_HOST/PORT, unlike selectedruntimeSecurity executableSearchPath. Exact Kubernetes/runtime credential/reference/host injection authority and captured generation must be traced; no equal-name currentsecret/path author invented.",
+          "ref": []
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "sourceSha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057",
+      "line": 95,
+      "expression": "environment[key]",
+      "computed": true,
+      "owner": "rejectLegacyClusterEnvironment",
+      "markerDispositions": [
+        {
+          "id": "SRC-182b813bc2dc7897",
+          "status": "manually-source-disposed",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "Whole selected cluster settings actualsemanticrelations: totalPVC>=singlePVC, manifest*outputmultiplier safe, poll<=execution, suffix no doubledot; dynamic retiredENV keys rejectpresence, notdefaultvalues. Real namespace/registry/secret/storage/timer/byte fields remain individual148ownersettings/disjoint productive capability readers.",
+          "ref": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/loader-packaging-marker-semantics.json#/dispositions/72"
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "sourceSha256": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1",
+      "line": 246,
+      "expression": "environment.SWARM_CONFIG",
+      "computed": false,
+      "owner": "loadSwarmSettings",
+      "markerDispositions": [
+        {
+          "id": "SRC-db0e4b61308dfc9a",
+          "status": "manually-source-disposed",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "Current strictselectedowner validation: artifactRoot normalizedabsolute/nonroot; upstream origin HTTP(S) nouserinfo/search/hash/path/controls; preparation archive/header/input/output/result/journal, aggregate source/reservation/entries7 relationships exactlyvalidate actualbounded serializations and requiredselectedvalues. Systementry read via explicitSWARM_CONFIG; every listedretiredENV rejects presenceevenequal. Literal4 conservative representationrelation/7 retainedsourceentries are currentsourcevalidator obligations, not newlyinventedlimits or targeteffect acceptance; actualformula refinement remains existingper-field cases.",
+          "ref": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/loader-packaging-marker-semantics.json#/dispositions/93"
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "sourceSha256": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1",
+      "line": 272,
+      "expression": "environment[key]",
+      "computed": true,
+      "owner": "rejectLegacyAuthors",
+      "markerDispositions": [
+        {
+          "id": "SRC-a14dcee3a0534e23",
+          "status": "manually-source-disposed",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "Current strictselectedowner validation: artifactRoot normalizedabsolute/nonroot; upstream origin HTTP(S) nouserinfo/search/hash/path/controls; preparation archive/header/input/output/result/journal, aggregate source/reservation/entries7 relationships exactlyvalidate actualbounded serializations and requiredselectedvalues. Systementry read via explicitSWARM_CONFIG; every listedretiredENV rejects presenceevenequal. Literal4 conservative representationrelation/7 retainedsourceentries are currentsourcevalidator obligations, not newlyinventedlimits or targeteffect acceptance; actualformula refinement remains existingper-field cases.",
+          "ref": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/loader-packaging-marker-semantics.json#/dispositions/94"
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/prism/config/native-worker.ts",
+      "sourceSha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "line": 8,
+      "expression": "environment.PRISM_ENGINE_CONTENT_DIGEST",
+      "computed": false,
+      "owner": "prismEngineContentDigest",
+      "markerDispositions": [
+        {
+          "id": "SRC-4f8c8a4d19440f36",
+          "status": "upstream-current-producer-handoff",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": "DLV-NATIVE-PRISM-ENGINE-DIGEST-PROJECTION",
+          "reason": "Chart emits OCI worker image digest into content-digest-named ENV; worker native execution envelope source uses named field. Current code does NOT establish packaged engine tree/contentDigest equivalence to OCI digest. Target must keep OCI receipt, engine package source/contentDigest and revision distinct, derive authentic package content receipt with same generation before native dispatch.",
+          "ref": []
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/prism/config/native-worker.ts",
+      "sourceSha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "line": 9,
+      "expression": "environment.NODE_ENV",
+      "computed": false,
+      "owner": "prismEngineContentDigest",
+      "markerDispositions": [
+        {
+          "id": "SRC-d4ff3975cafe2b4d",
+          "status": "upstream-current-producer-handoff",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": "DLV-NATIVE-PRISM-ENGINE-DIGEST-PROJECTION",
+          "reason": "Chart emits OCI worker image digest into content-digest-named ENV; worker native execution envelope source uses named field. Current code does NOT establish packaged engine tree/contentDigest equivalence to OCI digest. Target must keep OCI receipt, engine package source/contentDigest and revision distinct, derive authentic package content receipt with same generation before native dispatch.",
+          "ref": []
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/prism/config/native-worker.ts",
+      "sourceSha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "line": 16,
+      "expression": "environment.KUBECLAW_NATIVE_SCOPE",
+      "computed": false,
+      "owner": "nativePrismHostConfig",
+      "markerDispositions": [
+        {
+          "id": "SRC-75f11fa5bbe5695f",
+          "status": "manually-source-disposed",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "Exact parent source obligation(s): AUTH-PRISM-NATIVE-SCOPE: Not an operator-tunable arbitrary ENV path. Genuine host membership/recovery proof remains not-run; no cgroup mutation in this evidence.. Parent owns actual producer/reader/sole target-author relation; domains/profiles/future cases still open, no new Core/Buster author.",
+          "ref": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/schema-prism-source-semantics.json#/dispositions/156"
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/prism/config/native-worker.ts",
+      "sourceSha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "line": 18,
+      "expression": "environment.PRISM_NATIVE_MAXIMUM_INPUT_BYTES",
+      "computed": false,
+      "owner": "nativePrismHostConfig",
+      "markerDispositions": [
+        {
+          "id": "SRC-333e22a759079c75",
+          "status": "manually-source-disposed",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "StartupENV snapshot parameter API and required normalizednon-root locator helper; legacy PRISM_NATIVE_MAXIMUM_INPUT_BYTES rejects presence, assignedchildlimit comes from actual parentselected ingress. Actual current source fields/handoffs parent21 trustsurface, not optionalconfiguration returnedfrom missingroot.",
+          "ref": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/prism-contract-marker-semantics.json#/dispositions/26"
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/prism/config/native-worker.ts",
+      "sourceSha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "line": 19,
+      "expression": "environment.PRISM_NATIVE_ASSIGNED_INPUT_BYTES",
+      "computed": false,
+      "owner": "nativePrismHostConfig",
+      "markerDispositions": [
+        {
+          "id": "SRC-4fbf0a5caf987b5c",
+          "status": "individual-existing-disposition-linked",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "C1 preserve selected current values and single-generation packaging; C5 durable module/Eval binding. Do not enact D18 worker changes.",
+          "ref": [
+            {
+              "artifactPointer": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/semantic-fragment.json#/rows/18",
+              "kind": "component-setting-reader",
+              "currentAuthorityReason": "C1 preserve selected current values and single-generation packaging; C5 durable module/Eval binding. Do not enact D18 worker changes.",
+              "settingIds": [
+                "CMP-prism-worker-ingress.maximumInputBytes"
+              ],
+              "logicalRowId": "CMP-prism-worker-ingress.maximumInputBytes"
+            }
+          ]
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/prism/config/native-worker.ts",
+      "sourceSha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "line": 21,
+      "expression": "environment.PRISM_CONTROL_INTERNAL_URL",
+      "computed": false,
+      "owner": "nativePrismHostConfig",
+      "markerDispositions": [
+        {
+          "id": "SRC-c35ae370214c31f8",
+          "status": "manually-source-disposed",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "Native closedchild controlInternalUrl required from parentControl startup endpointprojection, no localhostdefault inhost; exactparent AUTH-PRISM-ENDPOINT-CONTROL-INTERNAL; workerrootfallbacksameconcept source next line17 explicitlylinked.",
+          "ref": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/loader-packaging-marker-semantics.json#/dispositions/95"
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/prism/config/native-worker.ts",
+      "sourceSha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "line": 22,
+      "expression": "environment.PRISM_WORKER_SECRET",
+      "computed": false,
+      "owner": "nativePrismHostConfig",
+      "markerDispositions": [
+        {
+          "id": "SRC-09a616db40d54f7d",
+          "status": "manually-source-disposed",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "Exact actual PRISM_WORKER_SECRET fieldconsumer linked parent AUTH-PRISM-SECRET-WORKER current source/producercontract. Secret-reference/principal/closedchildprojection author remains exact parent/deliveryboundrole, not a newCore writer; complete targetdomain/cases remain parentopen.",
+          "ref": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/prism-contract-marker-semantics.json#/dispositions/27"
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/prism/config/native-worker.ts",
+      "sourceSha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "line": 23,
+      "expression": "environment.WORKER_TRUST_SPIFFE_ENABLED",
+      "computed": false,
+      "owner": "nativePrismHostConfig",
+      "markerDispositions": [
+        {
+          "id": "SRC-9d0800ce86c4d585",
+          "status": "manually-source-disposed",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "Exact parent source obligation(s): AUTH-PRISM-TRUST-MODE: All control/worker/proxy projections must agree. False omits ENV and selects real HMAC secrets; true emits peer IDs/proxy and suppresses HMAC secret ENV. No per-request latest mode.. Parent owns actual producer/reader/sole target-author relation; domains/profiles/future cases still open, no new Core/Buster author.",
+          "ref": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/schema-prism-source-semantics.json#/dispositions/157"
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/prism/config/native-worker.ts",
+      "sourceSha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "line": 30,
+      "expression": "environment[name]",
+      "computed": true,
+      "owner": "nativePrismSupervisorConfig",
+      "markerDispositions": [
+        {
+          "id": "SRC-2a3d0ae32539f67e",
+          "status": "manually-source-disposed",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "StartupENV snapshot parameter API and required normalizednon-root locator helper; legacy PRISM_NATIVE_MAXIMUM_INPUT_BYTES rejects presence, assignedchildlimit comes from actual parentselected ingress. Actual current source fields/handoffs parent21 trustsurface, not optionalconfiguration returnedfrom missingroot.",
+          "ref": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/prism-contract-marker-semantics.json#/dispositions/29"
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/prism/config/native-worker.ts",
+      "sourceSha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "line": 46,
+      "expression": "environment.PLAYWRIGHT_BROWSERS_PATH",
+      "computed": false,
+      "owner": "nativePrismSupervisorConfig",
+      "markerDispositions": [
+        {
+          "id": "SRC-a0244fe26c2e44ac",
+          "status": "manually-source-disposed",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "Exact parent source obligation(s): AUTH-PRISM-BROWSER-ROOT: Native child cannot see later ambient path changes. Actual locked registry reader, architecture/package closure and complete alternative installation profile proof remain open.. Parent owns actual producer/reader/sole target-author relation; domains/profiles/future cases still open, no new Core/Buster author.",
+          "ref": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/schema-prism-source-semantics.json#/dispositions/158"
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/prism/server/control-config.ts",
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "line": 21,
+      "expression": "environment[name]",
+      "computed": true,
+      "owner": "required",
+      "markerDispositions": [
+        {
+          "id": "SRC-6aded341a1358075",
+          "status": "manually-source-disposed",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "ProcessEnv parameter defaults describe actual startup captured composition input, not fieldfallback. required(name) helper expands actual required secret names SESSION/INGRESS/DISPATCH/WORKER/INGESTION; SPIFFE-enabled branch requires actual parent principal bindings. Composition captures {...environment} once andloads both policies before construction. Product-config authority selection remains parent/runtime fieldscope, not silently ignored.",
+          "ref": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/prism-contract-marker-semantics.json#/dispositions/66"
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/prism/server/control-config.ts",
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "line": 27,
+      "expression": "environment.WORKER_TRUST_SPIFFE_ENABLED",
+      "computed": false,
+      "owner": "loadTrustConfig",
+      "markerDispositions": [
+        {
+          "id": "SRC-190e916ab8730172",
+          "status": "manually-source-disposed",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "Exact parent source obligation(s): AUTH-PRISM-TRUST-MODE: All control/worker/proxy projections must agree. False omits ENV and selects real HMAC secrets; true emits peer IDs/proxy and suppresses HMAC secret ENV. No per-request latest mode.. Parent owns actual producer/reader/sole target-author relation; domains/profiles/future cases still open, no new Core/Buster author.",
+          "ref": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/schema-prism-source-semantics.json#/dispositions/159"
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/prism/server/control-config.ts",
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "line": 28,
+      "expression": "environment.PRISM_TRUSTED_NOVA_SPIFFE_ID",
+      "computed": false,
+      "owner": "loadTrustConfig",
+      "markerDispositions": [
+        {
+          "id": "SRC-777168ed55408403",
+          "status": "manually-source-disposed",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "Exact parent source obligation(s): AUTH-PRISM-TRUST-PRINCIPAL-NOVA: Load checks presence only; actual guard validates syntax and exact peer membership. Not a separate editable identity author.. Parent owns actual producer/reader/sole target-author relation; domains/profiles/future cases still open, no new Core/Buster author.",
+          "ref": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/schema-prism-source-semantics.json#/dispositions/160"
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/prism/server/control-config.ts",
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "line": 29,
+      "expression": "environment.PRISM_TRUSTED_WORKER_SPIFFE_ID",
+      "computed": false,
+      "owner": "loadTrustConfig",
+      "markerDispositions": [
+        {
+          "id": "SRC-b4d7eebd548e9fdd",
+          "status": "manually-source-disposed",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "Exact parent source obligation(s): AUTH-PRISM-TRUST-PRINCIPAL-WORKER: Artifact route permits worker/control/optional agent peers; preserve exact selected identity and accepted artifact origin on retry.. Parent owns actual producer/reader/sole target-author relation; domains/profiles/future cases still open, no new Core/Buster author.",
+          "ref": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/schema-prism-source-semantics.json#/dispositions/161"
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/prism/server/control-config.ts",
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "line": 30,
+      "expression": "environment.PRISM_CONTROL_SPIFFE_ID",
+      "computed": false,
+      "owner": "loadTrustConfig",
+      "markerDispositions": [
+        {
+          "id": "SRC-65c588f79aa0f9ce",
+          "status": "manually-source-disposed",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "Exact actual PRISM_CONTROL_SPIFFE_ID fieldconsumer linked parent AUTH-PRISM-TRUST-PRINCIPAL-CONTROL current source/producercontract. Secret-reference/principal/closedchildprojection author remains exact parent/deliveryboundrole, not a newCore writer; complete targetdomain/cases remain parentopen.",
+          "ref": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/prism-contract-marker-semantics.json#/dispositions/67"
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/prism/server/control-config.ts",
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "line": 31,
+      "expression": "environment.PRISM_TRUSTED_AGENT_SPIFFE_ID",
+      "computed": false,
+      "owner": "loadTrustConfig",
+      "markerDispositions": [
+        {
+          "id": "SRC-3f80eb07f7f527cd",
+          "status": "manually-source-disposed",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "Exact parent source obligation(s): AUTH-PRISM-TRUST-PRINCIPAL-AGENT: This is the peer identity allowlist, not the runtime/model selector; artifact route includes it only when nonempty.. Parent owns actual producer/reader/sole target-author relation; domains/profiles/future cases still open, no new Core/Buster author.",
+          "ref": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/schema-prism-source-semantics.json#/dispositions/162"
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/prism/server/control-config.ts",
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "line": 38,
+      "expression": "environment.PRISM_TRUSTED_TEST_RUNNER_SPIFFE_ID",
+      "computed": false,
+      "owner": "loadTrustConfig",
+      "markerDispositions": [
+        {
+          "id": "SRC-8f7d1b3604e92bff",
+          "status": "manually-source-disposed",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "Exact parent source obligation(s): AUTH-PRISM-TRUST-PRINCIPAL-TEST-RUNNER: Distinct allowed caller, not a fabricated productive Core trust-envelope consumer.. Parent owns actual producer/reader/sole target-author relation; domains/profiles/future cases still open, no new Core/Buster author.",
+          "ref": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/schema-prism-source-semantics.json#/dispositions/163"
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/prism/server/control-config.ts",
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "line": 46,
+      "expression": "environment.PORT",
+      "computed": false,
+      "owner": "loadControlServerConfig",
+      "markerDispositions": [
+        {
+          "id": "SRC-b921122197b15eb9",
+          "status": "individual-existing-disposition-linked",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "C1 preserve selected current values and single-generation packaging; C5 durable module/Eval binding. Do not enact D18 worker changes.",
+          "ref": [
+            {
+              "artifactPointer": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/semantic-fragment.json#/rows/3",
+              "kind": "component-setting-reader",
+              "currentAuthorityReason": "C1 preserve selected current values and single-generation packaging; C5 durable module/Eval binding. Do not enact D18 worker changes.",
+              "settingIds": [
+                "CMP-prism-control-port"
+              ],
+              "logicalRowId": "CMP-prism-control-port"
+            }
+          ]
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/prism/server/control-config.ts",
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "line": 59,
+      "expression": "environment.PRISM_WORKER_URL",
+      "computed": false,
+      "owner": "loadControlServerConfig",
+      "markerDispositions": [
+        {
+          "id": "SRC-e847245f613d6525",
+          "status": "individual-existing-disposition-linked",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "C3 route author plus real proxy/listener/Service/NetworkPolicy/ENV changes; C5 preserve accepted binding through retry/cleanup",
+          "ref": [
+            {
+              "artifactPointer": "docs/review/remediation/config-semantic-inventory.json#/rows/2295",
+              "kind": "existing-primary-source",
+              "currentAuthorityReason": "C3 route author plus real proxy/listener/Service/NetworkPolicy/ENV changes; C5 preserve accepted binding through retry/cleanup",
+              "settingIds": [
+                "AUTH-PRISM-ENDPOINT-WORKER"
+              ],
+              "logicalRowId": "AUTH-PRISM-ENDPOINT-WORKER"
+            }
+          ]
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/prism/server/control-config.ts",
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "line": 60,
+      "expression": "environment.PRISM_INGESTION_URL",
+      "computed": false,
+      "owner": "loadControlServerConfig",
+      "markerDispositions": [
+        {
+          "id": "SRC-bd89428ef03ec943",
+          "status": "individual-existing-disposition-linked",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "C3 route author plus real proxy/listener/Service/NetworkPolicy/ENV changes; C5 preserve accepted binding through retry/cleanup",
+          "ref": [
+            {
+              "artifactPointer": "docs/review/remediation/config-semantic-inventory.json#/rows/2297",
+              "kind": "existing-primary-source",
+              "currentAuthorityReason": "C3 route author plus real proxy/listener/Service/NetworkPolicy/ENV changes; C5 preserve accepted binding through retry/cleanup",
+              "settingIds": [
+                "AUTH-PRISM-ENDPOINT-INGESTION"
+              ],
+              "logicalRowId": "AUTH-PRISM-ENDPOINT-INGESTION"
+            }
+          ]
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/prism/server/control-config.ts",
+      "sourceSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "line": 61,
+      "expression": "environment.PRISM_CONTROL_INTERNAL_URL",
+      "computed": false,
+      "owner": "loadControlServerConfig",
+      "markerDispositions": [
+        {
+          "id": "SRC-1170bc2ffc3afacb",
+          "status": "individual-existing-disposition-linked",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "C3 route author plus real proxy/listener/Service/NetworkPolicy/ENV changes; C5 preserve accepted binding through retry/cleanup",
+          "ref": [
+            {
+              "artifactPointer": "docs/review/remediation/config-semantic-inventory.json#/rows/2296",
+              "kind": "existing-primary-source",
+              "currentAuthorityReason": "C3 route author plus real proxy/listener/Service/NetworkPolicy/ENV changes; C5 preserve accepted binding through retry/cleanup",
+              "settingIds": [
+                "AUTH-PRISM-ENDPOINT-CONTROL-INTERNAL"
+              ],
+              "logicalRowId": "AUTH-PRISM-ENDPOINT-CONTROL-INTERNAL"
+            }
+          ]
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/prism/server/studio-config.ts",
+      "sourceSha256": "c2a7d42ae65d68da876c2efc64194effc969d90a1132d8677ec2190260391465",
+      "line": 8,
+      "expression": "environment[key]",
+      "computed": true,
+      "owner": "loadStudioConfig",
+      "markerDispositions": [
+        {
+          "id": "SRC-0abc3147adc01ba3",
+          "status": "manually-source-disposed",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "Dynamic legacyENV key guard expands PORT/PRISM_CONTROL_URL/PRISM_STUDIO_PROXY_TIMEOUT_MS and rejects presence, including equalvalues; actualauthorprism-studio ownersettings selected, not environmentfield reader fallback.",
+          "ref": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/prism-contract-marker-semantics.json#/dispositions/81"
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/prism/server/studio-config.ts",
+      "sourceSha256": "c2a7d42ae65d68da876c2efc64194effc969d90a1132d8677ec2190260391465",
+      "line": 12,
+      "expression": "environment.STUDIO_ROOT",
+      "computed": false,
+      "owner": "loadStudioConfig",
+      "markerDispositions": [
+        {
+          "id": "SRC-022b26370acd2e42",
+          "status": "manually-source-disposed",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "Exact parent source obligation(s): AUTH-PRISM-STUDIO-ASSET-ROOT: Package locator and actual files must be one delivered generation; no fake root/path-only success or unrelated asset rewrite.. Parent owns actual producer/reader/sole target-author relation; domains/profiles/future cases still open, no new Core/Buster author.",
+          "ref": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/schema-prism-source-semantics.json#/dispositions/164"
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/prism/server/studio-config.ts",
+      "sourceSha256": "c2a7d42ae65d68da876c2efc64194effc969d90a1132d8677ec2190260391465",
+      "line": 13,
+      "expression": "environment.PRISM_INGRESS_SECRET",
+      "computed": false,
+      "owner": "loadStudioConfig",
+      "markerDispositions": [
+        {
+          "id": "SRC-fab6139992582ef4",
+          "status": "individual-existing-disposition-linked",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "C1 preserve selected current values and single-generation packaging; C5 durable module/Eval binding. Do not enact D18 worker changes.",
+          "ref": [
+            {
+              "artifactPointer": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/semantic-fragment.json#/rows/9",
+              "kind": "component-setting-reader",
+              "currentAuthorityReason": "C1 preserve selected current values and single-generation packaging; C5 durable module/Eval binding. Do not enact D18 worker changes.",
+              "settingIds": [
+                "CMP-prism-studio-controlUrl"
+              ],
+              "logicalRowId": "CMP-prism-studio-controlUrl"
+            }
+          ]
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/prism/server/worker-config.ts",
+      "sourceSha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e",
+      "line": 6,
+      "expression": "environment.PORT",
+      "computed": false,
+      "owner": "loadWorkerConfig",
+      "markerDispositions": [
+        {
+          "id": "SRC-8d64c41475547f76",
+          "status": "individual-existing-disposition-linked",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "C1 preserve selected current values and single-generation packaging; C5 durable module/Eval binding. Do not enact D18 worker changes.",
+          "ref": [
+            {
+              "artifactPointer": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/semantic-fragment.json#/rows/12",
+              "kind": "component-setting-reader",
+              "currentAuthorityReason": "C1 preserve selected current values and single-generation packaging; C5 durable module/Eval binding. Do not enact D18 worker changes.",
+              "settingIds": [
+                "CMP-prism-worker-ingress.port"
+              ],
+              "logicalRowId": "CMP-prism-worker-ingress.port"
+            }
+          ]
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/prism/server/worker-config.ts",
+      "sourceSha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e",
+      "line": 7,
+      "expression": "environment.WORKER_TRUST_SPIFFE_ENABLED",
+      "computed": false,
+      "owner": "loadWorkerConfig",
+      "markerDispositions": [
+        {
+          "id": "SRC-fa5806b7f3892f57",
+          "status": "manually-source-disposed",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "Exact parent source obligation(s): AUTH-PRISM-TRUST-MODE: All control/worker/proxy projections must agree. False omits ENV and selects real HMAC secrets; true emits peer IDs/proxy and suppresses HMAC secret ENV. No per-request latest mode.. Parent owns actual producer/reader/sole target-author relation; domains/profiles/future cases still open, no new Core/Buster author.",
+          "ref": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/schema-prism-source-semantics.json#/dispositions/165"
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/prism/server/worker-config.ts",
+      "sourceSha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e",
+      "line": 8,
+      "expression": "environment.PRISM_WORKER_SECRET",
+      "computed": false,
+      "owner": "loadWorkerConfig",
+      "markerDispositions": [
+        {
+          "id": "SRC-4377d213dc3df8b1",
+          "status": "manually-source-disposed",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "Exact actual PRISM_WORKER_SECRET fieldconsumer linked parent AUTH-PRISM-SECRET-WORKER current source/producercontract. Secret-reference/principal/closedchildprojection author remains exact parent/deliveryboundrole, not a newCore writer; complete targetdomain/cases remain parentopen.",
+          "ref": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/prism-contract-marker-semantics.json#/dispositions/89"
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/prism/server/worker-config.ts",
+      "sourceSha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e",
+      "line": 10,
+      "expression": "environment.PRISM_TRUSTED_CONTROL_SPIFFE_ID",
+      "computed": false,
+      "owner": "loadWorkerConfig",
+      "markerDispositions": [
+        {
+          "id": "SRC-7865b1e2d5e706ab",
+          "status": "manually-source-disposed",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "Exact actual PRISM_TRUSTED_CONTROL_SPIFFE_ID fieldconsumer linked parent AUTH-PRISM-TRUST-PRINCIPAL-CONTROL current source/producercontract. Secret-reference/principal/closedchildprojection author remains exact parent/deliveryboundrole, not a newCore writer; complete targetdomain/cases remain parentopen.",
+          "ref": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/prism-contract-marker-semantics.json#/dispositions/90"
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/prism/server/worker-config.ts",
+      "sourceSha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e",
+      "line": 12,
+      "expression": "environment.DATABASE_URL",
+      "computed": false,
+      "owner": "loadWorkerConfig",
+      "markerDispositions": [
+        {
+          "id": "SRC-255b68e6d0427d7b",
+          "status": "manually-source-disposed",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "Exact actual DATABASE_URL fieldconsumer linked parent AUTH-PRISM-SECRET-DATABASE current source/producercontract. Secret-reference/principal/closedchildprojection author remains exact parent/deliveryboundrole, not a newCore writer; complete targetdomain/cases remain parentopen.",
+          "ref": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/prism-contract-marker-semantics.json#/dispositions/91"
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/prism/server/worker-config.ts",
+      "sourceSha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e",
+      "line": 17,
+      "expression": "environment.PRISM_CONTROL_INTERNAL_URL",
+      "computed": false,
+      "owner": "loadWorkerConfig",
+      "markerDispositions": [
+        {
+          "id": "SRC-4e73632b9cd30026",
+          "status": "manually-source-disposed",
+          "sourceQuestionId": null,
+          "upstreamDispositionId": null,
+          "reason": "Actualworker controlInternalUrl fallback current http://prism-control:8080 is sameControlendpoint role obligation; parent owns AUTH-PRISM-ENDPOINT-CONTROL-INTERNAL and wholeclosedchildprojection. Domain/freshprofile validation stillparentopen, no extra Coreendpointauthor.",
+          "ref": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/loader-packaging-marker-semantics.json#/dispositions/96"
+        }
+      ],
+      "computedExpansionArtifact": null
+    },
+    {
+      "source": "skills/worker/core/worker/native-worker-launcher.c",
+      "sourceSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "expression": "getenv(\"KUBECLAW_NATIVE_SUPERVISOR_PID\")",
+      "reader": "native-worker-launcher.c main",
+      "classification": "generated-binding",
+      "soleGeneratedAuthor": "native-worker-ownership.ts #startChild overwrites withString(process.pid)",
+      "aliasOfSettingIds": [
+        "CMP-WCORE-SUPERVISOR-PID"
+      ],
+      "validation": "identity positive<UINT_MAX then<=INT_MAX, actualgetppid/PDEATHSIG beforeandafterdrop; missingfails",
+      "proof": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/residual-fragment.json#/envReaderRoster"
+    }
+  ],
+  "syntaxReadsites": 45,
+  "CgetenvReadsites": 1,
+  "lexicalEnvironmentHits": 87,
+  "proofLimit": "JSON stringify/Object.entries/import/comment hits are not actual ENV accesses; lexical source markers independently disposed"
+}

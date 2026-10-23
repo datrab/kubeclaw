@@ -6,7 +6,7 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { test } from 'node:test';
-import { browsers, browserLock, installBrowsers, validateInstalledMetadata } from '../browser-archive-lock.mjs';
+import { browsers, browserLock, downloadArchive, installBrowsers, validateInstalledMetadata } from '../browser-archive-lock.mjs';
 
 function fixture(t) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'browser-lock-test-'));
@@ -101,4 +101,50 @@ test('BA06 both production Dockerfiles replace unverified archive installation',
     assert.match(source, /playwright\/cli.js install-deps/);
     assert.doesNotMatch(source, /playwright\/cli.js install(?: |$)/);
   }
+});
+
+
+test('BA07 unavailable dbazure route uses exact registry mirror within the same budget', async t => {
+  const f = fixture(t), calls = [];
+  const url = 'https://cdn.playwright.dev/dbazure/download/playwright/builds/ffmpeg/1011/ffmpeg-linux.zip';
+  t.mock.method(globalThis, 'fetch', async (source, options) => {
+    calls.push({ source, signal: options.signal });
+    if (calls.length === 1) throw new TypeError('explicit unavailable DNS fixture');
+    const response = new Response(f.bytes);
+    Object.defineProperty(response, 'url', { value: source });
+    return response;
+  });
+  const archive = path.join(f.root, 'archive.zip');
+  await downloadArchive(url, archive);
+  assert.deepEqual(calls.map(call => call.source), [url, 'https://cdn.playwright.dev/builds/ffmpeg/1011/ffmpeg-linux.zip']);
+  assert.equal(calls[0].signal, calls[1].signal);
+  assert.deepEqual(fs.readFileSync(archive), f.bytes);
+});
+
+test('BA07 unrelated routes do not gain arbitrary mirror retries', async t => {
+  const f = fixture(t), calls = [];
+  t.mock.method(globalThis, 'fetch', async source => { calls.push(source); throw new Error('explicit network failure'); });
+  const url = 'https://cdn.playwright.dev/builds/cft/151.0.7922.34/linux64/chrome-linux64.zip';
+  await assert.rejects(downloadArchive(url, path.join(f.root, 'archive.zip')), /explicit network failure/);
+  assert.deepEqual(calls, [url]);
+});
+
+test('BA07 mirror bytes still fail the original pinned integrity gate before extraction', async t => {
+  const f = fixture(t);
+  f.entries[0].url = 'https://cdn.playwright.dev/dbazure/download/playwright/builds/chromium/1/chromium.zip';
+  const calls = [];
+  t.mock.method(globalThis, 'fetch', async source => {
+    calls.push(source);
+    if (calls.length === 1) throw new TypeError('explicit unavailable DNS fixture');
+    const response = new Response(Buffer.alloc(f.bytes.length, 0));
+    Object.defineProperty(response, 'url', { value: source });
+    return response;
+  });
+  let extracted = false;
+  await assert.rejects(installBrowsers(f.lock, f.metadata, 'amd64', 'buster', f.destination,
+    async () => { extracted = true; }), /integrity mismatch/);
+  assert.equal(calls.length, 2);
+  assert.equal(extracted, false);
+  assert.equal(fs.existsSync(f.destination), false);
+  assert.equal(fs.existsSync(`${f.destination}.installing`), false);
 });

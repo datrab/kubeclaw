@@ -1,11 +1,23 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const outputPath = path.join(repoRoot, 'charts/kubeclaw/files/config/knip.json');
 const checkOnly = process.argv.includes('--check');
+
+// This is an exact retained upstream bundle, not a first-party API we may
+// tree-shake. Keep its bytes pinned before classifying only its export issues
+// as upstream-owned. All other issue types and all first-party exports remain
+// checked; no directory/glob exemption is generated.
+const upstreamNormalization = 'skills/common/plugin-runtime/foundation/config/string-coerce-CIXf7egm.mjs';
+const durationSources = readJson('skills/common/plugin-runtime/foundation/config/gateway-native-duration-sources.json');
+const normalizationDigest = createHash('sha256').update(fs.readFileSync(path.join(repoRoot, upstreamNormalization))).digest('hex');
+if (normalizationDigest !== durationSources['string-coerce-CIXf7egm.mjs']?.sha256) {
+  throw new Error('Knip upstream normalization ownership requires unchanged pinned source bytes');
+}
 
 function readJson(file) {
   return JSON.parse(fs.readFileSync(path.join(repoRoot, file), 'utf8'));
@@ -91,9 +103,21 @@ const pluginDirectories = [
 
 const workspaces = {
   '.': {
+    // Resolve the real installed preflight import to its role-bundle source.
+    // This keeps its exports checked through the productive caller, not ignored.
+    paths: {
+      '/app/skills/packages/buster-engine/test-gates/preparation-runtime-source.ts':
+        ['skills/buster/engine/test-gates/preparation-runtime-source.ts'],
+    },
     // The live Kubernetes fixture invokes this host executable via execFileSync;
     // it is not a JavaScript module import.
-    ignoreUnresolved: ['^/usr/local/bin/kubectl$'],
+    ignoreUnresolved: [
+      '^/usr/local/bin/kubectl$',
+      '^/usr/bin/systemd-notify$',
+      // Real image-only modules live under sealed role-package prefixes.
+      '^/app/skills/packages/plugin-foundation/config/(?:pipeline-boot\\.mjs|swarm\\.ts|pipeline-composition\\.ts)$',
+      '^/app/prism/skills/packages/plugin-foundation/config/pipeline-boot\\.mjs$',
+    ],
     entry: [
       'scripts/**/*.{mjs,cjs}',
       'charts/kubeclaw/files/config/eslint*.mjs',
@@ -140,7 +164,11 @@ const workspaces = {
     project: ['**/*.{ts,mjs}'],
   },
   'skills/buster/engine': {
-    entry: ['src/index.ts', 'test-gates/provider-child.mjs', 'test-gates/report-adapter-child.mjs'],
+    // Installed native executable, not an importable source module.
+    ignoreUnresolved: ['^/usr/local/libexec/kubeclaw-buster-lifetime-guardian$'],
+    // These subprocess entrypoints are spawned by pathname, not imported.
+    entry: ['src/index.ts', 'native-parent.ts', 'test-gates/preparation-supervisor.ts',
+      'test-gates/preparation-historical-host.ts', 'test-gates/provider-child.mjs', 'test-gates/report-adapter-child.mjs'],
     project: ['**/*.{ts,mjs}'],
   },
   'skills/common/plugin-runtime/sdk': {
@@ -149,9 +177,13 @@ const workspaces = {
   },
   'skills/prism': {
     entry: [...packageEntrypoints(readJson('skills/prism/package.json')),
-      'server/{control,worker,studio}.ts', 'server/agent-bridge.mjs',
+      'server/{control,worker,studio,ingestion-entry}.ts', 'server/agent-bridge.mjs', 'server/agent-bridge-entry.mjs',
       'tests/**/*.{ts,mts,mjs}', 'integration/*.mts', 'studio/*.test.tsx', 'studio/main.tsx'],
     project: ['**/*.{ts,tsx,mts,mjs}'],
+  },
+  'ops/pod': {
+    entry: ['test/*.test.mjs'],
+    project: ['test/**/*.mjs'],
   },
   'tools/ops-mcp': {
     entry: ['src/server.mjs', 'test/*.test.mjs'],
@@ -170,6 +202,7 @@ for (const directory of pluginDirectories) workspaces[directory] = pluginWorkspa
 
 const config = {
   $schema: 'https://unpkg.com/knip@6/schema.json',
+  ignoreIssues: { [upstreamNormalization]: ['exports'] },
   // Internal helpers are allowed to remain exported for package-local tests and
   // diagnostics; only symbols unused even inside their defining module matter.
   ignoreExportsUsedInFile: true,
@@ -180,6 +213,9 @@ const config = {
     'cc',
     'eslint',
     'gofmt',
+    'getcap',
+    'rg',
+    'setpriv',
     'flock',
     'systemd-analyze',
     'uv',
@@ -197,6 +233,8 @@ const config = {
     '**/generated/**',
     '**/node_modules/**',
     'Projects/**',
+    // Frozen source captures are evidence, not executable workspace modules.
+    'docs/review/**',
     'contracts/telemetry/v1/{bundle-types,telemetry-types}.ts',
   ],
   ignoreDependencies: [

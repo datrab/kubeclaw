@@ -1,0 +1,34 @@
+import pathlib,json,subprocess,re,hashlib,collections,yaml
+out=pathlib.Path('docs/review/evidence/config-acceptance/independent-delivery-source-bce3f075')
+author=pathlib.Path('docs/review/evidence/config-acceptance/delivery')
+rows=json.loads((author/'inventory-fragment.json').read_text())['rows']
+tracked=subprocess.check_output(['git','ls-files','-z']).decode().split('\0')
+paths=[p for p in tracked if p and (p.startswith(('docker/','charts/','scripts/','.github/workflows/','ops/pod/','tools/ops-mcp/','cmd/','my-values/','packaging/runtime/','releases/')) or p in ['.dockerignore','versions.json','package.json','package-lock.json']) and pathlib.Path(p).is_file()]
+sources={s['path'] for s in json.loads((author/'inventory-fragment.json').read_text())['sources']}
+paths=sorted(set(paths)|sources)
+leaves=[];candidates=[];failures=[];roster=[]
+def walk(p,x,parts):
+ if isinstance(x,dict) and x:
+  for k,v in x.items():walk(p,v,parts+[str(k)])
+ elif isinstance(x,list) and x:
+  for i,v in enumerate(x):walk(p,v,parts+[str(i)])
+ else:leaves.append({'path':p,'coordinate':'/'+ '/'.join(parts),'type':type(x).__name__})
+for p in paths:
+ f=pathlib.Path(p);roster.append({'path':p,'sha256':hashlib.sha256(f.read_bytes()).hexdigest(),'authorSourceListed':p in sources,'primaryRowIds':[r['id'] for r in rows if r['source']['path']==p]})
+ if f.suffix not in ['.json','.yaml','.yml','.mjs','.cjs','.js','.ts','.mts','.sh','.py','.go','.toml','.rs',''] and not f.name.startswith('Dockerfile'):continue
+ try:text=f.read_text()
+ except (UnicodeDecodeError,OSError):continue
+ if f.suffix in ['.yaml','.yml','.json'] and 'templates/' not in p:
+  try:
+   docs=[json.loads(text)] if f.suffix=='.json' else list(yaml.safe_load_all(text))
+   for index,doc in enumerate(docs):walk(p,doc,[] if len(docs)==1 else ['document'+str(index)])
+  except Exception as e:failures.append({'path':p,'error':str(e)})
+ for i,line in enumerate(text.splitlines(),1):
+  for kind,pat in [('env',r'process\.env(?:\.[A-Za-z_][A-Za-z0-9_]*|\[[^\]]+\])|\$\{[^}]+\}|os\.(?:Getenv|LookupEnv)\([^)]*\)|os\.environ[^\n;]*'),('template',r'(?:\.Values|\$[A-Za-z][A-Za-z0-9_]*)\.[A-Za-z0-9_.]+'),('default-or-policy',r'\?\?|\|\||(?:^|\s)(?:ARG|ENV|HEALTHCHECK|ENTRYPOINT|CMD)\s|default\s+[^|}\n]+|(?:timeout|maximum|limit|retry|poll|period|deadline|reserve|version|digest|paths|COPY)')]:
+   if re.search(pat,line):candidates.append({'path':p,'line':i,'kind':kind,'expression':line.strip()[:2000]})
+auth=json.loads((author/'delivery-source-candidate-dispositions-bce3f075.json').read_text())
+authorcoords={(r['path'],c['coordinate']) for r in auth['records'] for c in r['coordinates'] if 'coordinate' in c}
+currentcoords=[x for x in leaves if x['path'].startswith(('charts/','my-values/')) and pathlib.Path(x['path']).name=='values.yaml' or x['path'].startswith('my-values/')]
+summary={'sourceFiles':len(roster),'lexicalCandidates':len(candidates),'yamlJsonLeaves':len(leaves),'parseFailures':len(failures),'listedSourceFiles':sum(x['authorSourceListed'] for x in roster),'currentChartOverlayLeaves':len(currentcoords),'currentChartOverlayUnmatchedCoordinates':sum((x['path'],x['coordinate']) not in authorcoords for x in currentcoords),'limits':'Full conservative source obligations, not automatic settings counts or omitted-settings conclusions. Generated releases, schemas/task data/examples and lexical false positives need checked dispositions; all supplied leaf domains and dynamic refs remain separate.'}
+(out/'expected-source-field-candidate-obligations.json').write_text(json.dumps({'summary':summary,'sourceRoster':roster,'yamlJsonLeaves':leaves,'lexicalCandidates':candidates,'parseFailures':failures,'chartOverlayUnmatched':[x for x in currentcoords if (x['path'],x['coordinate']) not in authorcoords]},indent=2)+'\n')
+print(json.dumps(summary,indent=2))

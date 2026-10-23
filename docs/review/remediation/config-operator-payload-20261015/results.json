@@ -1,0 +1,62 @@
+[
+  {
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/reliability/nova-delivery-policy.test.mjs"
+    ],
+    "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-operator-payload-20261015/check-0.txt"
+  },
+  {
+    "command": [
+      "node",
+      "tests/live-function.test.ts"
+    ],
+    "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/operator-messaging",
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-operator-payload-20261015/check-1.txt"
+  },
+  {
+    "command": [
+      "node",
+      "tests/package-boundary.test.mjs"
+    ],
+    "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/operator-messaging",
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-operator-payload-20261015/check-2.txt"
+  },
+  {
+    "command": [
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "tsconfig.json"
+    ],
+    "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/operator-messaging",
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-operator-payload-20261015/check-3.txt"
+  },
+  {
+    "command": [
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "tsconfig.json"
+    ],
+    "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/nova/core",
+    "exitCode": 1,
+    "log": "docs/review/remediation/config-operator-payload-20261015/check-4.txt"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-operator-payload-20261015/check-5.txt"
+  }
+]

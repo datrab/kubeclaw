@@ -36,10 +36,14 @@ export class AttemptState {
   readonly root: string;
   readonly file: string;
   readonly limits: DurableAttemptStoreLimits;
+  readonly lockWaitSeconds: number;
   #queue: Promise<unknown> = Promise.resolve();
   closureProjections: ClosureProjections = new Map();
   projections: AttemptProjections = new Map();
-  constructor(root: string, limits: DurableAttemptStoreLimits) {
+  constructor(root: string, limits: DurableAttemptStoreLimits, lockWaitSeconds = 5) {
+    if (!Number.isSafeInteger(lockWaitSeconds) || lockWaitSeconds < 1 || lockWaitSeconds > 5)
+      throw new Error("OBSERVABILITY_STORE_LOCK_WAIT_INVALID");
+    this.lockWaitSeconds = lockWaitSeconds;
     if (!path.isAbsolute(root))
       throw new Error("OBSERVABILITY_ATTEMPT_STORE_ROOT_NOT_ABSOLUTE");
     if (Object.values(limits).some((value) => !validLimit(value)))
@@ -53,7 +57,7 @@ export class AttemptState {
       withDurableStoreLock(this.file, async () => {
         await cleanupStaging(this.root);
         return operation();
-      });
+      }, this.lockWaitSeconds);
     const result = this.#queue.then(locked, locked);
     this.#queue = result.then(
       () => undefined,

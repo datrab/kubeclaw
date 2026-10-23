@@ -1,3 +1,4 @@
+import { nativeEngineSettings } from '../../../skills/prism/tests/native/resource-policy.mts';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { validatePrism, validateNodeCatalog, validateEngineRequest, validateEngineResult, PrismContractError, PRISM_JSON_LIMITS } from '../../../contracts/prism/v1/src/index.ts';
@@ -58,7 +59,7 @@ assert.doesNotThrow(() => validatePrism('designDocument', deep));
 deep.views.home.mockData = { nested: JSON.parse('['.repeat(253) + '0' + ']'.repeat(253)) };
 assert.throws(() => validatePrism('designDocument', deep), (error) => error instanceof PrismContractError && error.code === 'JSON_DEPTH_EXCEEDED');
 const requestContract = engineRequestSchema('render');
-await assert.rejects(executePrismOperation(new PrismEngine(new DeterministicDesignProvider()), {
+await assert.rejects(executePrismOperation(new PrismEngine(new DeterministicDesignProvider(), nativeEngineSettings), {
   contractId: 'kubeclaw.prism-design-engine@1', inputSchemaId: requestContract.schemaId, inputSchemaDigest: requestContract.schemaDigest,
   values: { operation: 'render', input: { document: deep, view: 'home', state: 'default', viewport: 'wide' } },
 }, 'worker:complexity'), PrismContractError);

@@ -7,7 +7,7 @@ import { versionOutputs } from '../versions.mjs';
 const source = process.cwd();
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'updater-upstream-'));
 try {
-  for (const file of ['versions.json', 'ops/pod/kubectl-build/go.mod', ...versionOutputs(source).keys()]) {
+  for (const file of ['versions.json', 'package-lock.json', 'ops/pod/kubectl-build/go.mod', ...versionOutputs(source).keys()]) {
     fs.mkdirSync(path.dirname(path.join(root, file)), { recursive: true });
     fs.copyFileSync(file, path.join(root, file));
   }
@@ -22,5 +22,5 @@ try {
   fs.copyFileSync('versions.json', path.join(root, 'versions.json'));
   execFileSync(process.execPath, [path.join(source, 'scripts/updates/refresh-versions.mjs')], { cwd: root, stdio: 'inherit', timeout: 900000 });
   assert.deepEqual(JSON.parse(fs.readFileSync(path.join(root, 'versions.json'), 'utf8')), expected, 'Downloaded release checksums must match the independently committed pins');
-  console.log('Verified amd64 and arm64 release bytes for nine central tools and Ops Helm, the Ops kubectl source module version, and the GitHub CLI source archive checksum.');
+  console.log('Verified amd64 and arm64 release bytes for nine central tools, the Ops Helm source archive checksum, the Ops kubectl source module version, and the GitHub CLI source archive checksum.');
 } finally { fs.rmSync(root, { recursive: true, force: true }); }

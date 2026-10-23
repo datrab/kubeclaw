@@ -1,0 +1,109 @@
+{
+  "phase": "C3 resource policy association and C4 provider policies; C5 durable binding/recovery",
+  "soleC3Author": "config/components/buster-engine.config.json#/profiles/<selected>/settings/execution/capabilityProviders/networkHttp",
+  "sourceTransferredOriginalIds": [
+    "DLV-B23-EMIT-e7c15e45c06e70a1",
+    "DLV-B23-EMIT-154143b8310b9830",
+    "DLV-B23-EMIT-111b291a945ce10c",
+    "DLV-B23-EMIT-b269fb17dbd3632a",
+    "DLV-B23-EMIT-0d6a21c1a0ffc5b0",
+    "DLV-B23-EMIT-9b6265411874b424",
+    "DLV-B23-EMIT-0979d52b234d6325",
+    "DLV-B23-EMIT-d595fc8a40ee1046",
+    "DLV-B23-EMIT-1a0817aeebf4adf0",
+    "DLV-B23-EMIT-65ef6291b92e8ef3"
+  ],
+  "nativeResourcePolicy": {
+    "registryHealth": true,
+    "allowedOrigins": [
+      "https://fixture.invalid",
+      "https://alternate.fixture.invalid"
+    ],
+    "allowedHostSuffixes": [],
+    "allowedPorts": [
+      443
+    ],
+    "allowedMethods": [
+      "GET",
+      "HEAD",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE",
+      "OPTIONS"
+    ],
+    "allowedRequestHeaders": [
+      "accept",
+      "content-type",
+      "idempotency-key",
+      "x-proof"
+    ],
+    "allowWebSocket": true,
+    "maximumRequestBytes": 1048576,
+    "maximumResponseBytes": 4096,
+    "maximumExecutionMs": 1000
+  },
+  "wholeBusterC3Generation": "config/pipeline.config.json v5 binds exact copied C3 complete02 components; Buster runtime local-A selected; see receiving-abi.md. No installed/authenticated roster claimed.",
+  "providerC4Owners": [
+    {
+      "registrationId": "kubeclaw.api-flow:flow",
+      "soleAuthor": "config/plugins/kubeclaw.api-flow.config.json#/profiles/<selected>",
+      "instanceId": "fixture.api-flow",
+      "policyDocument": "config/plugins/kubeclaw.api-flow.config.json",
+      "logicalSelection": "pipeline.config.json selected plugin owner/profile/instance binding, no second system index; physical migration not implemented",
+      "historicalPerProfileAuthorityProposal": "config/plugins/kubeclaw.api-flow/profiles/<selected>.config.json",
+      "physicalAdjudication": "Sole full per-registration-instance owner document; old per-profilepath history only, not additional editable authority."
+    },
+    {
+      "registrationId": "kubeclaw.http:request",
+      "soleAuthor": "config/plugins/kubeclaw.http.config.json#/profiles/<selected>",
+      "instanceId": "fixture.http",
+      "policyDocument": "config/plugins/kubeclaw.http.config.json",
+      "logicalSelection": "pipeline.config.json selected plugin owner/profile/instance binding, no second system index; physical migration not implemented",
+      "historicalPerProfileAuthorityProposal": "config/plugins/kubeclaw.http/profiles/<selected>.config.json",
+      "physicalAdjudication": "Sole full per-registration-instance owner document; old per-profilepath history only, not additional editable authority."
+    },
+    {
+      "registrationId": "kubeclaw.openapi:operations",
+      "soleAuthor": "config/plugins/kubeclaw.openapi.config.json#/profiles/<selected>",
+      "instanceId": "fixture.openapi",
+      "policyDocument": "config/plugins/kubeclaw.openapi.config.json",
+      "logicalSelection": "pipeline.config.json selected plugin owner/profile/instance binding, no second system index; physical migration not implemented",
+      "historicalPerProfileAuthorityProposal": "config/plugins/kubeclaw.openapi/profiles/<selected>.config.json",
+      "physicalAdjudication": "Sole full per-registration-instance owner document; old per-profilepath history only, not additional editable authority."
+    }
+  ],
+  "novaAdapter": {
+    "registrationId": "kubeclaw.network-http:http",
+    "soleAuthor": "config/plugins/kubeclaw.network-http.config.json#/profiles/<selected>",
+    "currentSelection": "--platform adapters[kubeclaw.network-http:http] -> prepareRuntime/startAll -> activate once per run",
+    "NOT": "Buster NetworkHttpCapabilityInvoker",
+    "historicalPerProfileAuthorityProposal": "config/plugins/kubeclaw.network-http/profiles/<selected>.config.json"
+  },
+  "resourceTuple": {
+    "capability": "network.http",
+    "operation": [
+      "request",
+      "websocket"
+    ],
+    "resourceType": "network.url",
+    "fixtureOrigin": "https://fixture.invalid",
+    "installedOrGranted": false
+  },
+  "generatedRegistryHealthBinding": {
+    "requiredInputs": [
+      "actual registry origin",
+      "credential provider/reference revision",
+      "TLS/trust",
+      "native role/grant/identity generation"
+    ],
+    "values": null,
+    "status": "missing external activation inputs; registryHealth:true is source-derived policy flag, not generated credentials"
+  },
+  "compatibility": "Selected provider operator ceiling1000, requested/default <=1000, resource local-A timeout/response must be resolved and checked before invocation; native rejects excess without clamp. Target materializer exposes authentic bound resource ceiling for proposed min formula; current provider only clamps invocation.",
+  "futureCaseResults": "not-run",
+  "boundWholeBusterProfile": "provider-network-A",
+  "priorWholeBusterProfile": "local-A retained exact; new complete clone changes only networkHttp block and root selects it for runtime instance",
+  "activeC3ReceivingReference": "c3-integrated-reference-generation.json",
+  "priorC3ReceivingReference": "frozen02 runtime-schema/reference contract historical, no current latest lookup"
+}

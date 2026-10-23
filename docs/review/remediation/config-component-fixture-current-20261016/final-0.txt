@@ -1,0 +1,30 @@
+✔ explicit entry required; old inline authorship is rejected (17.640803ms)
+✔ prism-control: missing file, wrong owner, unknown envelope and reference rejected (26.624544ms)
+✔ prism-studio: missing file, wrong owner, unknown envelope and reference rejected (9.184076ms)
+✔ prism-worker: missing file, wrong owner, unknown envelope and reference rejected (9.422612ms)
+✔ prism-execution: missing file, wrong owner, unknown envelope and reference rejected (18.27472ms)
+✔ buster-engine: missing file, wrong owner, unknown envelope and reference rejected (19.272626ms)
+✔ worker-core: missing file, wrong owner, unknown envelope and reference rejected (19.112962ms)
+✔ every authored setting is required, including explicit nullable values (655.773594ms)
+ℹ Required-leaf deletion obligations checked: 461
+✔ both domains validate before selecting either and nested snapshots stay frozen (17.309285ms)
+✔ physical generation never borrows sibling files; entry and component aliases reject (5.393199ms)
+✔ Studio selects only its authored tuple while all six owners are captured (42.764439ms)
+✔ whole selected profiles change actual loaded values; no first-profile fallback (14.260766ms)
+✔ duplicate root tuple rejects even when profile is identical (4.500535ms)
+✔ unrelated selected owner and wrong service identity reject (1.789296ms)
+✔ unselected invalid profile rejects before returning Studio (3.585512ms)
+✔ retired filename, legacy schema, escaping references and tree symlinks reject (2.3283ms)
+✔ caller-role mismatch and competing selection fields reject (1.723134ms)
+✔ components directory replacement during capture rejects (4.840434ms)
+✔ intrinsic relations on an unselected owner reject before Studio projection (4.099116ms)
+✔ generation receipt binds all raw files, profile values and reader assets (16.714959ms)
+✔ closed service receipt detects alteration and fixes caller/package/generation association (5.854811ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1300.756811

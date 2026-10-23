@@ -1,0 +1,126 @@
+{
+  "authorCommands": [
+    {
+      "command": "python3 /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-01/compose.py",
+      "exit": 1,
+      "stdout": "compose.stdout.log",
+      "stderr": "compose.stderr.log",
+      "reason": "initial syntax brace error retained"
+    },
+    {
+      "command": "python3 /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-01/compose.py",
+      "exit": 0,
+      "stdout": "compose-02.stdout.log",
+      "stderr": "compose-02.stderr.log",
+      "qualification": "initial author composition, later source/schema/role/equality corrections are final artifact bytes, not claimed composer reproducer"
+    }
+  ],
+  "checks": [
+    {
+      "command": "node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-01/check-gateway-definition.mjs",
+      "exit": 1,
+      "stdout": "check-01.stdout.json",
+      "stderr": "check-01.stderr.log",
+      "scriptSha256AtRun": "86a6227370b1158e53bd82abf2cff4772d02abc719da358d173962de11622897",
+      "node": "v24.21.0",
+      "observations": 479,
+      "failed": 6,
+      "qualification": "pure source-specific schema/receiver/startup-js/fs-model evidence only; primary native parser/effects unrun"
+    },
+    {
+      "command": "node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-01/check-gateway-definition.mjs",
+      "exit": 0,
+      "stdout": "check-02.stdout.json",
+      "stderr": "check-02.stderr.log",
+      "scriptSha256AtRun": "d2f9e61a78c37d2a4629c7a95952366fc5ba64df0c82f500f74cc14cd7b095ce",
+      "node": "v24.21.0",
+      "observations": 479,
+      "failed": 0,
+      "qualification": "pure source-specific schema/receiver/startup-js/fs-model evidence only; primary native parser/effects unrun"
+    },
+    {
+      "command": "node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-01/check-gateway-definition.mjs",
+      "exit": 1,
+      "stdout": "check-03.stdout.json",
+      "stderr": "check-03.stderr.log",
+      "scriptSha256AtRun": "b02bbb8d9596df0b8e44e02e0a29af0b3becaa92d115bf89c17b207a002a08f3",
+      "node": "v24.21.0",
+      "observations": 479,
+      "failed": 3,
+      "qualification": "pure source-specific schema/receiver/startup-js/fs-model evidence only; primary native parser/effects unrun"
+    },
+    {
+      "command": "node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-01/check-gateway-definition.mjs",
+      "exit": 0,
+      "stdout": "check-04.stdout.json",
+      "stderr": "check-04.stderr.log",
+      "scriptSha256AtRun": "b02bbb8d9596df0b8e44e02e0a29af0b3becaa92d115bf89c17b207a002a08f3",
+      "node": "v24.21.0",
+      "observations": 479,
+      "failed": 0,
+      "qualification": "pure source-specific schema/receiver/startup-js/fs-model evidence only; primary native parser/effects unrun"
+    },
+    {
+      "command": "node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-01/check-gateway-definition.mjs",
+      "exit": 0,
+      "stdout": "check-05.stdout.json",
+      "stderr": "check-05.stderr.log",
+      "scriptSha256AtRun": "d75029a407f8c7c24ef7efdcf1abaa3d1ac60969853d5dd502e39ef38a8956d2",
+      "node": "v24.21.0",
+      "observations": 491,
+      "failed": 0,
+      "qualification": "pure source-specific schema/receiver/startup-js/fs-model evidence only; primary native parser/effects unrun"
+    },
+    {
+      "command": "node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-01/check-gateway-definition.mjs",
+      "exit": 0,
+      "stdout": "check-06.stdout.json",
+      "stderr": "check-06.stderr.log",
+      "scriptSha256AtRun": "b3ae2453190b2138b23fb6e9a2b64afd4e9efaf9a1a721beec45ded43eef2cdc",
+      "node": "v24.21.0",
+      "observations": 496,
+      "failed": 0,
+      "qualification": "pure source-specific schema/receiver/startup-js/fs-model evidence only; primary native parser/effects unrun"
+    },
+    {
+      "command": "node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-01/check-gateway-definition.mjs",
+      "exit": 0,
+      "stdout": "check-07.stdout.json",
+      "stderr": "check-07.stderr.log",
+      "scriptSha256AtRun": "b3ae2453190b2138b23fb6e9a2b64afd4e9efaf9a1a721beec45ded43eef2cdc",
+      "node": "v24.21.0",
+      "observations": 496,
+      "failed": 0,
+      "qualification": "pure source-specific schema/receiver/startup-js/fs-model evidence only; primary native parser/effects unrun"
+    },
+    {
+      "command": "node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-openclaw-profile-01/check-gateway-definition.mjs",
+      "exit": 0,
+      "stdout": "check-08.stdout.json",
+      "stderr": "check-08.stderr.log",
+      "scriptSha256AtRun": "b3ae2453190b2138b23fb6e9a2b64afd4e9efaf9a1a721beec45ded43eef2cdc",
+      "node": "v24.21.0",
+      "observations": 497,
+      "failed": 0,
+      "qualification": "pure source-specific schema/receiver/startup-js/fs-model evidence only; primary native parser/effects unrun"
+    }
+  ],
+  "tools": {
+    "nodeExecutable": "/usr/local/bin/node",
+    "nodeExecutableSha256": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c",
+    "ajv": {
+      "version": "8.20.0",
+      "packageSha256": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989"
+    },
+    "ajv-formats": {
+      "version": "3.0.1",
+      "packageSha256": "402fb4bcfa457f0226813f3976ac42839dd619907c075c108efba8600d7edb69"
+    },
+    "js-yaml": {
+      "version": "4.3.1",
+      "packageSha256": "82b932c87c5da7901c6a8f984698c57912570146fffd3156dcdc96a6c210d847"
+    }
+  },
+  "additionalSourceProjection": "inspected local js-yaml parsed only selected existing my-values commands/Discord source arrays into readonly public context; no Helm/native or generic config loader",
+  "nonEffects": "only new absolute gateway evidence dir written; no OpenClaw/native gateway/secret/channel/CLI/provider/process/Helm/staging/API/network/browser/credentials/Eval or canonical/old artifact mutation"
+}

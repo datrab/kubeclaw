@@ -1,8 +1,12 @@
+import {assertBusterChartProjection,busterChartProjection} from '../generate-buster-chart-config.mjs';
+import {validateBusterImageDelivery} from './buster-image-delivery.mjs';
+import path from 'node:path';
 import fs from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import yaml from 'js-yaml';
 import { selectedCode } from './code-release.mjs';
 import { verifyReleaseConfiguration } from './release-configuration.mjs';
+import { assertPrismChartProjection } from '../generate-prism-chart-config.mjs';
 const family = process.argv.includes('--family=ops') ? 'ops' : 'runtime';
 const release = JSON.parse(fs.readFileSync(`releases/${family}-images.json`, 'utf8'));
 if (release.schemaVersion !== 1 || !/^[a-f0-9]{40}$/.test(release.commit)) throw new Error('Invalid release manifest');
@@ -12,7 +16,10 @@ const sourceCommit = code?.commit ?? release.commit;
 // materialization/deployment must still require byte-matched current sources.
 const checkSelectedSource = process.argv.includes('--check-selected-source');
 if (checkSelectedSource && !process.argv.includes('--check')) throw new Error('SELECTED_SOURCE_CHECK_ONLY');
-if (!checkSelectedSource) verifyReleaseConfiguration(process.cwd(), sourceCommit, family);
+if (!checkSelectedSource) {
+  verifyReleaseConfiguration(process.cwd(), sourceCommit, family);
+  if (family === 'runtime') { assertPrismChartProjection(process.cwd()); assertBusterChartProjection(process.cwd()); }
+}
 const sourceValues = file => checkSelectedSource
   ? execFileSync('git', ['show', `${sourceCommit}:${file}`], { encoding: 'utf8' })
   : fs.readFileSync(file, 'utf8');
@@ -43,6 +50,12 @@ for (const role of family === 'ops' ? ['ops'] : ['nova', 'buster', 'prism-agent'
     const bundle = code.bundles[role === 'prism-agent' ? 'prism' : role];
     values.codeBundle = { ...values.codeBundle, enabled: true, archiveUrl: bundle.url, expectedCommit: code.commit,
       sha256: bundle.sha256, contractVersion: bundle.contractVersion };
+  }
+  if(role==='buster') {
+    const delivery=validateBusterImageDelivery(release.imageDeliveries?.['buster-runtime'],release.commit);
+    // Source replay checks still use receipt transport; never rebuild a role receipt here.
+    if(!checkSelectedSource){const topology=busterChartProjection(path.join(process.cwd(),'config'));if(delivery.expected.generationDigest!==topology.generationDigest||delivery.namespace!==topology.deployment.namespace||delivery.releaseName!==topology.deployment.releaseName)throw new Error('BUSTER_RELEASE_GENERATION_MISMATCH');}
+    values.pipelineDelivery={buster:delivery};
   }
   const output = `# Generated from release ${release.commit} and byte-matched source configuration; do not edit.\n${yaml.dump(values, { lineWidth: 120, noRefs: true })}`;
   const file = `releases/values/${role}.yaml`;

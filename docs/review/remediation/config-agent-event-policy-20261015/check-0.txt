@@ -1,0 +1,11 @@
+✔ actual source bounds accepted burst and drains accepted events into original durable journal after abort (37.425152ms)
+✔ byte admission and shutdown deadline are explicit and do not erase queued events (61.236956ms)
+✔ emit failure keeps original cause and a visible failed-event count (4.180627ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 555.91519

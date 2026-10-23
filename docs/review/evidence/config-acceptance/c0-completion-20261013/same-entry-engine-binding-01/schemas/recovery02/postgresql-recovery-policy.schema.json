@@ -1,0 +1,213 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "profiles"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "postgresql-recovery-policy.v2"
+    },
+    "profiles": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "settings"
+        ],
+        "properties": {
+          "settings": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "backupIntervalMinutes",
+              "verificationIntervalMinutes",
+              "maximumAgeSeconds",
+              "maximumDurationSeconds",
+              "verificationDeadlineSeconds",
+              "maximumBackupBytes",
+              "maximumRetainedBytes",
+              "reserveBytes",
+              "killAfterSeconds",
+              "connectionTimeoutSeconds",
+              "tocMaximumBytes",
+              "metadataMaximumBytesExclusive",
+              "checksumIndexMaximumBytesExclusive",
+              "cronJobDeadlineOverheadSeconds",
+              "persistence",
+              "resources",
+              "temporaryDirectorySize",
+              "successfulJobsHistoryLimit",
+              "failedJobsHistoryLimit"
+            ],
+            "properties": {
+              "backupIntervalMinutes": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 60
+              },
+              "verificationIntervalMinutes": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 30
+              },
+              "maximumAgeSeconds": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9999999999999
+              },
+              "maximumDurationSeconds": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9999999999999
+              },
+              "verificationDeadlineSeconds": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9999999999999
+              },
+              "maximumBackupBytes": {
+                "type": "integer",
+                "minimum": 1024,
+                "maximum": 9999999999999
+              },
+              "maximumRetainedBytes": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9999999999999
+              },
+              "reserveBytes": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9999999999999
+              },
+              "killAfterSeconds": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9999999999999
+              },
+              "connectionTimeoutSeconds": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 2147483647
+              },
+              "tocMaximumBytes": {
+                "type": "integer",
+                "minimum": 1024,
+                "maximum": 9999999999999
+              },
+              "metadataMaximumBytesExclusive": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9999999999999
+              },
+              "checksumIndexMaximumBytesExclusive": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9999999999999
+              },
+              "cronJobDeadlineOverheadSeconds": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9999999999999
+              },
+              "persistence": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "size",
+                  "storageClass"
+                ],
+                "properties": {
+                  "size": {
+                    "type": "string",
+                    "pattern": "^[1-9][0-9]*(?:Gi|Ti)$"
+                  },
+                  "storageClass": {
+                    "anyOf": [
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$"
+                      }
+                    ]
+                  }
+                }
+              },
+              "resources": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "requests",
+                  "limits"
+                ],
+                "properties": {
+                  "requests": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "cpu",
+                      "memory"
+                    ],
+                    "properties": {
+                      "cpu": {
+                        "type": "string",
+                        "pattern": "^(?:[+]?(?:[0-9]+(?:\\.[0-9]*)?|\\.[0-9]+))(?:[eE][+-]?[0-9]+|[numkMGTPE]|[KMGTPE]i)?$"
+                      },
+                      "memory": {
+                        "type": "string",
+                        "pattern": "^(?:[+]?(?:[0-9]+(?:\\.[0-9]*)?|\\.[0-9]+))(?:[eE][+-]?[0-9]+|[numkMGTPE]|[KMGTPE]i)?$"
+                      }
+                    }
+                  },
+                  "limits": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "cpu",
+                      "memory"
+                    ],
+                    "properties": {
+                      "cpu": {
+                        "type": "string",
+                        "pattern": "^(?:[+]?(?:[0-9]+(?:\\.[0-9]*)?|\\.[0-9]+))(?:[eE][+-]?[0-9]+|[numkMGTPE]|[KMGTPE]i)?$"
+                      },
+                      "memory": {
+                        "type": "string",
+                        "pattern": "^(?:[+]?(?:[0-9]+(?:\\.[0-9]*)?|\\.[0-9]+))(?:[eE][+-]?[0-9]+|[numkMGTPE]|[KMGTPE]i)?$"
+                      }
+                    }
+                  }
+                }
+              },
+              "temporaryDirectorySize": {
+                "type": "string",
+                "pattern": "^(?:[+]?(?:[0-9]+(?:\\.[0-9]*)?|\\.[0-9]+))(?:[eE][+-]?[0-9]+|[numkMGTPE]|[KMGTPE]i)?$"
+              },
+              "successfulJobsHistoryLimit": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 2147483647
+              },
+              "failedJobsHistoryLimit": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 2147483647
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kubeclaw.invalid/proposed/recovery-policy-profile-01/policy"
+}

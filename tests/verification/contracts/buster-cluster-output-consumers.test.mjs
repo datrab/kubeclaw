@@ -6,8 +6,8 @@ import path from 'node:path';
 import process from 'node:process';
 import { syncBuiltinESMExports } from 'node:module';
 import test from 'node:test';
-import { readTestBundle, writeTestBundle, canonicalSwarmEntry } from '../../fixtures/config/swarm-bundle.mjs';
-import { loadSwarmSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
+import { busterRuntimeSelection, readTestPipeline, writeTestPipeline, canonicalPipelineEntry } from '../../fixtures/config/pipeline-components.mjs';
+import { captureSwarmSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
 import { clusterRuntimeBinding, kubernetesFixtureOptions, tailscaleExposureOptions } from '../../../skills/buster/engine/test-gates/production-cluster-options.ts';
 import { createBusterCapabilityRuntime } from '../../../skills/buster/engine/test-gates/capability-runtime.ts';
 
@@ -53,20 +53,20 @@ for (const capability of ['kubernetes.fixture', 'kubernetes.exposure']) {
   for (const large of [false, true]) test(`real ${capability} output limit profile ${large}`, { timeout: 10000 }, async t => {
     const output = JSON.stringify({ metadata: { annotations: {} }, padding: 'x'.repeat(800) });
     const f = fixture(t, `process.stdout.write(${JSON.stringify(output)});`);
-    const documents = readTestBundle(canonicalSwarmEntry);
-    const selected = documents['buster-engine'].settings.clusterInvokers;
+    const documents = readTestPipeline(canonicalPipelineEntry);
+    const selected = documents['buster-engine'].profiles.runtime.settings.clusterInvokers;
     selected.shared.kubectlExecutable = f.binary;
     selected.kubernetesFixture.maximumManifestBytes = 256;
     selected.kubernetesFixture.commandOutputManifestMultiplier = large ? 8 : 1;
     selected.tailscaleExposure.maximumCommandOutputBytes = large ? 2048 : 256;
-    const entry = path.join(f.root, 'bundle/swarm.config.json'); writeTestBundle(entry, documents);
-    const snapshot = loadSwarmSettings({ SWARM_CONFIG: entry });
-    const policy = snapshot.buster.clusterInvokers;
+    const entry = path.join(f.root, 'bundle/pipeline.config.json'); writeTestPipeline(entry, documents);
+    const snapshot = captureSwarmSettings(entry, busterRuntimeSelection(documents));
+    const policy = snapshot.components['buster-engine'].settings.clusterInvokers;
     const binding = clusterRuntimeBinding({ controllerNamespace: 'test' }, policy);
     const options = { allowedCapabilities: new Set([capability]),
       ...kubernetesFixtureOptions(capability === 'kubernetes.fixture', policy, binding, 'https://registry.test'),
       ...tailscaleExposureOptions(capability === 'kubernetes.exposure', policy, binding) };
-    const runtime = createBusterCapabilityRuntime(options, { jobRoot: f.root, workspaceRoot: f.root }, snapshot.buster.execution.processInput);
+    const runtime = createBusterCapabilityRuntime(options, { jobRoot: f.root, workspaceRoot: f.root }, snapshot.components['buster-engine'].settings.execution.processInput);
     t.after(() => runtime.shutdown());
     // Mutate caller-owned options after construction; the actual command still uses the captured quota.
     if (options.kubernetesFixture) options.kubernetesFixture.commandOutputManifestMultiplier = large ? 1 : 8;

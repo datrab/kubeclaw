@@ -1,0 +1,18 @@
+// Pure proposed-domain controls; not installed native schema/API or host effects.
+const fs=require('fs'),path=require('path'),crypto=require('crypto'),yaml=require('js-yaml'),Ajv=require('ajv/dist/2020').default;
+const out=__dirname,repo=path.resolve(out,'../../../../..'),schemaPath=path.join(out,'target-native-host-schema-20261013.json');
+const schema=JSON.parse(fs.readFileSync(schemaPath)),ajv=new Ajv({strict:true,allErrors:true}),validate=ajv.compile(schema),records=[];
+const clone=x=>JSON.parse(JSON.stringify(x));
+function correlations(p){for(const key of ['cpuMillicores','memoryBytes','tasks'])if(BigInt(p.systemReserve[key])+BigInt(p.kubernetesReserve[key])+Object.values(p.pools).reduce((s,x)=>s+BigInt(x[key]),0n)>9007199254740991n)throw Error('NATIVE_NODE_TOTAL_RANGE_INVALID');for(const pool of Object.values(p.pools)){const product=BigInt(pool.cpuMillicores)*BigInt(pool.cpuPeriodMicroseconds);if(product%1000n||product/1000n<1000n||product/1000n>9007199254740991n)throw Error('NATIVE_NODE_CPU_QUOTA_RATE_INVALID');}}
+function observe(id,profile,expectedSchema,expectedSemantic=true){const valid=validate(profile),errors=clone(validate.errors);let semantic=true,diagnostic=null;if(valid)try{correlations(profile);}catch(e){semantic=false;diagnostic=e.message;}records.push({id,validSchema:valid,errors,validCorrelations:valid?semantic:null,diagnostic,expectedSchema,expectedSemantic,result:valid===expectedSchema&&(!valid||semantic===expectedSemantic)?'passed':'failed'});}
+const profiles={};for(const name of ['A','B']){profiles[name]=yaml.load(fs.readFileSync(path.join(out,'native-host-target-profiles-20261013',name+'.yaml'),'utf8'));observe('DLV-C0-DLS-HOST-TARGET-'+name,profiles[name],true);}
+let q=clone(profiles.A);q.runtime={containerdVersion:'2.2.0'};observe('DLV-C0-DLS-HOST-OLD-EQUAL-VERSION',q,false);
+q=clone(profiles.A);q.pools.third=clone(q.pools.buster);observe('DLV-C0-DLS-HOST-EXTRA-ROLE',q,false);
+q=clone(profiles.A);delete q.pools.buster.cpuPeriodMicroseconds;observe('DLV-C0-DLS-HOST-MISSING-PERIOD',q,false);
+q=clone(profiles.A);q.pools.buster.memoryBytes++;observe('DLV-C0-DLS-HOST-PAGE-MISALIGNMENT',q,false);
+q=clone(profiles.A);q.pools.buster.cpuPeriodMicroseconds=1000001;observe('DLV-C0-DLS-HOST-PERIOD-OUTSIDE',q,false);
+q=clone(profiles.A);q.pools.buster.cpuPeriodMicroseconds=100001;observe('DLV-C0-DLS-HOST-NONINTEGRAL-RATE',q,true,false);
+q=clone(profiles.A);q.pools.buster.cpuMillicores=1;q.pools.buster.cpuPeriodMicroseconds=1000;observe('DLV-C0-DLS-HOST-QUOTA-BELOW-NATIVE-MIN',q,true,false);
+q=clone(profiles.A);q.systemReserve.tasks=9007199254740991;observe('DLV-C0-DLS-HOST-AGGREGATE-OVERFLOW',q,true,false);
+const files=[schemaPath,__filename,...['A','B'].map(n=>path.join(out,'native-host-target-profiles-20261013',n+'.yaml'))],sourceDigests=Object.fromEntries(files.map(p=>[path.relative(repo,p),crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex')]));
+const result={scope:'actual pure proposed own target JSONschema and BigInt correlation controls only; native/API/kubelet/node installed/version/grants/host maintenance untouched; NOT primary Kubernetes schema replacement',records,sourceDigests,tools:{node:process.version,ajv:require('ajv/package.json').version,jsYaml:require('js-yaml/package.json').version},acceptance:'NOT ACCEPTED; independent material review pending'};fs.writeFileSync(path.join(out,'native-host-target-definition-controls-20261013.json'),JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify({records:records.length,failed:records.filter(x=>x.result==='failed').length,scope:result.scope}));if(records.some(x=>x.result==='failed'))process.exitCode=1;

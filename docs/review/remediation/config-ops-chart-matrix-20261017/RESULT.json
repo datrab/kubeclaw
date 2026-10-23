@@ -1,0 +1,222 @@
+{
+  "at": "2026-10-17T01:54:24.028428+00:00",
+  "scope": "Ops30 current chart source matrix only; no runtime implementation",
+  "checks": {
+    "passed": 46,
+    "total": 46,
+    "negativeControls": [
+      {
+        "name": "alter id",
+        "rejected": true
+      },
+      {
+        "name": "alter original",
+        "rejected": true
+      },
+      {
+        "name": "alter originalObjectSha256",
+        "rejected": true
+      },
+      {
+        "name": "alter caseIds",
+        "rejected": true
+      },
+      {
+        "name": "alter class",
+        "rejected": true
+      },
+      {
+        "name": "alter owner",
+        "rejected": true
+      },
+      {
+        "name": "alter currentValuePath",
+        "rejected": true
+      },
+      {
+        "name": "alter centralPhysicalAuthor",
+        "rejected": true
+      },
+      {
+        "name": "alter runtimeAcceptance",
+        "rejected": true
+      },
+      {
+        "name": "alter actualProjections",
+        "rejected": true
+      },
+      {
+        "name": "alter status",
+        "rejected": true
+      },
+      {
+        "name": "missing row",
+        "rejected": true
+      },
+      {
+        "name": "duplicate row",
+        "rejected": true
+      },
+      {
+        "name": "false full acceptance",
+        "rejected": true
+      },
+      {
+        "name": "false original pass",
+        "rejected": true
+      },
+      {
+        "name": "stale MCP ENV receiving",
+        "rejected": true
+      },
+      {
+        "name": "source identity DLV-CHART-OPS-POD-IMAGEPULLSECRETS",
+        "rejected": true
+      },
+      {
+        "name": "source identity DLV-CHART-OPS-POD-BEARERSECRET",
+        "rejected": true
+      },
+      {
+        "name": "source identity DLV-CHART-OPS-POD-GITHUBSECRET",
+        "rejected": true
+      },
+      {
+        "name": "source identity DLV-CHART-OPS-POD-PERSISTENCE-SIZE",
+        "rejected": true
+      },
+      {
+        "name": "source identity DLV-CHART-OPS-POD-PERSISTENCE-STORAGECLASS",
+        "rejected": true
+      },
+      {
+        "name": "source identity DLV-CHART-OPS-POD-RESOURCES-CODEX-REQUESTS-CPU",
+        "rejected": true
+      },
+      {
+        "name": "source identity DLV-CHART-OPS-POD-RESOURCES-CODEX-REQUESTS-MEMORY",
+        "rejected": true
+      },
+      {
+        "name": "source identity DLV-CHART-OPS-POD-RESOURCES-CODEX-LIMITS-CPU",
+        "rejected": true
+      },
+      {
+        "name": "source identity DLV-CHART-OPS-POD-RESOURCES-CODEX-LIMITS-MEMORY",
+        "rejected": true
+      },
+      {
+        "name": "source identity DLV-CHART-OPS-POD-RESOURCES-MCP-REQUESTS-CPU",
+        "rejected": true
+      },
+      {
+        "name": "source identity DLV-CHART-OPS-POD-RESOURCES-MCP-REQUESTS-MEMORY",
+        "rejected": true
+      },
+      {
+        "name": "source identity DLV-CHART-OPS-POD-RESOURCES-MCP-LIMITS-CPU",
+        "rejected": true
+      },
+      {
+        "name": "source identity DLV-CHART-OPS-POD-RESOURCES-MCP-LIMITS-MEMORY",
+        "rejected": true
+      },
+      {
+        "name": "source identity DLV-CHART-OPS-POD-RBAC-NAMESPACES",
+        "rejected": true
+      },
+      {
+        "name": "source identity DLV-CHART-OPS-POD-RBAC-EXECNAMESPACES",
+        "rejected": true
+      },
+      {
+        "name": "source identity DLV-CHART-OPS-POD-ARGONAMESPACE",
+        "rejected": true
+      },
+      {
+        "name": "source identity DLV-CHART-OPS-POD-DEFAULTNAMESPACE",
+        "rejected": true
+      },
+      {
+        "name": "source identity DLV-CHART-OPS-POD-NETWORKPOLICY-ENABLED",
+        "rejected": true
+      },
+      {
+        "name": "source identity DLV-CHART-OPS-POD-NETWORKPOLICY-CILIUM",
+        "rejected": true
+      },
+      {
+        "name": "source identity DLV-CHART-OPS-POD-NETWORKPOLICY-APISERVERCIDRS",
+        "rejected": true
+      },
+      {
+        "name": "source identity DLV-CHART-OPS-POD-NETWORKPOLICY-APISERVERPORT",
+        "rejected": true
+      },
+      {
+        "name": "source identity DLV-CHART-OPS-POD-TAILSCALE-ENABLED",
+        "rejected": true
+      },
+      {
+        "name": "source identity DLV-CHART-OPS-POD-TAILSCALE-IMAGE",
+        "rejected": true
+      },
+      {
+        "name": "source identity DLV-CHART-OPS-POD-TAILSCALE-AUTHSECRET",
+        "rejected": true
+      },
+      {
+        "name": "source identity DLV-CHART-OPS-POD-TAILSCALE-HOSTNAME",
+        "rejected": true
+      },
+      {
+        "name": "source identity DLV-CHART-OPS-POD-TAILSCALE-EXTRAARGS",
+        "rejected": true
+      },
+      {
+        "name": "source identity DLV-CHART-OPS-POD-TAILSCALE-RESOURCES-REQUESTS-CPU",
+        "rejected": true
+      },
+      {
+        "name": "source identity DLV-CHART-OPS-POD-TAILSCALE-RESOURCES-REQUESTS-MEMORY",
+        "rejected": true
+      },
+      {
+        "name": "source identity DLV-CHART-OPS-POD-TAILSCALE-RESOURCES-LIMITS-CPU",
+        "rejected": true
+      },
+      {
+        "name": "source identity DLV-CHART-OPS-POD-TAILSCALE-RESOURCES-LIMITS-MEMORY",
+        "rejected": true
+      }
+    ],
+    "restoredDeterministic": true,
+    "preservedCounts": {
+      "fields": 2409,
+      "cases": 6845,
+      "requirements": 50
+    },
+    "fullC0C6Complete": false,
+    "originalCasesNewlyAccepted": 0
+  },
+  "unchangedOtherHistoricalGroups": 44,
+  "changedHistoricalGroups": [
+    "config/deployment/ops-pod/<profile>.json"
+  ],
+  "remainingUnresolvedHistoricalGroups": 2,
+  "requiredRoster": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50
+  },
+  "centralReceivingResiduals": 30,
+  "originalCasesNewlyAccepted": 0,
+  "fullC0C6Complete": false,
+  "independentReview": "OPEN; fresh native spawn/reviewer discovery empty; CONFIG subagents0; no fresh independent output; unchanged same-surface EROFS not retried",
+  "externalOwner": "Raven",
+  "resumeCondition": "Unchanged isolated Linux Docker UID1000/GID1000 writable delegated cgroup, sufficient genuinely root-trusted archive storage and isolated migrated PostgreSQL",
+  "writerLock": "SAME nonblocking shared lock; released at command exit",
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false
+}

@@ -1,1 +1,44 @@
-{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","additionalProperties":false,"required":["root"],"properties":{"root":{"type":"string","minLength":1},"maxRecordBytes":{"type":"integer","minimum":1,"default":1048576},"maximumRecords":{"type":"integer","minimum":1,"default":100000},"maximumStoreBytes":{"type":"integer","minimum":1,"default":268435456}}}
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "root",
+    "maxRecordBytes",
+    "maximumRecords",
+    "maximumStoreBytes",
+    "maxJsonDepth",
+    "maxJsonNodes"
+  ],
+  "properties": {
+    "root": {
+      "type": "string",
+      "minLength": 1
+    },
+    "maxRecordBytes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "maximumRecords": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "maximumStoreBytes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "maxJsonDepth": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "maxJsonNodes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    }
+  }
+}

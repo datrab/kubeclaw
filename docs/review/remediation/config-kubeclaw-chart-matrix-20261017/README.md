@@ -1,0 +1,5 @@
+# Original Kubeclaw191 chart source navigation
+
+All191 original IDs/hashes/classes/owners/case memberships have exact pinned current direct or ancestor-object Helm source references. Ancestor references are navigation, not proof of descendant consumption. Normal deploy source lanes retain role release values, private overlays and generated image/code-bundle overrides. Existing component pipeline generation does not supply sole-root deployment receiving for these191 fields. No secret bytes copied; legacy inline secret lanes explicitly remain open. Resource references are not native effect proof.
+
+All45 historical locator groups now have explicit navigation/classification, not implementation completeness. All191 central deployment/schema/profile/file-set/history receivers remain OPEN. Full2409/6845/50 originals and outcomes unchanged; no runtime original case accepted. Independent complete-source/history/native/archive/full C0–C6 gates, genuine QB-R02/inputStore/Quality boot and coordinated sole-root/Nova receiving remain mandatory. No denied-v10 activation.

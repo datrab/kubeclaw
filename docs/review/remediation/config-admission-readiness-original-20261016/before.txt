@@ -1,0 +1,223 @@
+✖ canonical startup rejects missing/unknown/malformed admission and every retired ENV author (2.348221ms)
+✖ actual queue/drain/replay consumes authored profile {"maximumActiveJobs":1,"maximumQueuedJobs":1,"maximumConcurrentAttempts":3} (1.297064ms)
+✖ actual queue/drain/replay consumes authored profile {"maximumActiveJobs":3,"maximumQueuedJobs":2,"maximumConcurrentAttempts":3} (0.866702ms)
+✖ startup recovery durably rejects accepted jobs exceeding the newly authored concurrency limit (0.921864ms)
+✖ real factory/service/process honors execution policy {"maximumExecutionMs":300,"maximumOutputBytes":4096} (6.90018ms)
+✖ real factory/service/process honors execution policy {"maximumExecutionMs":2500,"maximumOutputBytes":4096} (2.461925ms)
+✖ real factory/service/process honors output policy {"maximumExecutionMs":2500,"maximumOutputBytes":64} (2.31729ms)
+✖ real factory/service/process honors output policy {"maximumExecutionMs":2500,"maximumOutputBytes":1024} (2.390513ms)
+✖ factory disabled capability does not execute configured dependency and rejects retired runtime authors (2.406933ms)
+✖ real service fails invalid policy before probe even when disabled; unavailable probe fences admission and accepted replay, not terminal replay (0.990096ms)
+{"fixture":"terminal-persistence-cut","timing":"during","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+✖ durable shutdown failure ownership: during (441.199057ms)
+{"fixture":"terminal-persistence-cut","timing":"after","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+✖ durable shutdown failure ownership: after (307.518941ms)
+{"fixture":"terminal-persistence-cut","timing":"queued","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+✖ durable shutdown failure ownership: queued (323.960101ms)
+{"fixture":"terminal-persistence-cut","timing":"admission","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+✖ durable shutdown failure ownership: admission (263.250664ms)
+{"fixture":"terminal-persistence-cut","timing":"read-failure","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+✖ durable shutdown failure ownership: read-failure (268.993684ms)
+{"fixture":"terminal-persistence-cut","timing":"healthy-terminal","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+✖ durable shutdown failure ownership: healthy-terminal (267.586037ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 0
+ℹ fail 16
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7811.265826
+
+✖ failing tests:
+
+test at tests/verification/reliability/buster-admission-config.test.mts:11:1
+✖ canonical startup rejects missing/unknown/malformed admission and every retired ENV author (2.348221ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at loadBusterSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:299:10)
+      at authoredBusterProfile (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/buster-admission.mts:19:38)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/buster-admission-config.test.mts:14:42)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at tests/verification/reliability/buster-admission-config.test.mts:49:3
+✖ actual queue/drain/replay consumes authored profile {"maximumActiveJobs":1,"maximumQueuedJobs":1,"maximumConcurrentAttempts":3} (1.297064ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at loadBusterSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:299:10)
+      at authoredBusterProfile (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/buster-admission.mts:19:38)
+      at admissionFixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/buster-admission.mts:24:19)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/buster-admission-config.test.mts:50:21)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+
+test at tests/verification/reliability/buster-admission-config.test.mts:49:3
+✖ actual queue/drain/replay consumes authored profile {"maximumActiveJobs":3,"maximumQueuedJobs":2,"maximumConcurrentAttempts":3} (0.866702ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at loadBusterSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:299:10)
+      at authoredBusterProfile (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/buster-admission.mts:19:38)
+      at admissionFixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/buster-admission.mts:24:19)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/buster-admission-config.test.mts:50:21)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+
+test at tests/verification/reliability/buster-admission-config.test.mts:80:1
+✖ startup recovery durably rejects accepted jobs exceeding the newly authored concurrency limit (0.921864ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at loadBusterSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:299:10)
+      at authoredBusterProfile (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/buster-admission.mts:19:38)
+      at admissionFixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/buster-admission.mts:24:19)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/buster-admission-config.test.mts:81:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+
+test at tests/verification/reliability/buster-readiness-consumer.test.mts:22:3
+✖ real factory/service/process honors execution policy {"maximumExecutionMs":300,"maximumOutputBytes":4096} (6.90018ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at readinessRuntime (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/buster-readiness-profile.mts:28:20)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/buster-readiness-consumer.test.mts:25:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at tests/verification/reliability/buster-readiness-consumer.test.mts:22:3
+✖ real factory/service/process honors execution policy {"maximumExecutionMs":2500,"maximumOutputBytes":4096} (2.461925ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at readinessRuntime (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/buster-readiness-profile.mts:28:20)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/buster-readiness-consumer.test.mts:25:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at tests/verification/reliability/buster-readiness-consumer.test.mts:22:3
+✖ real factory/service/process honors output policy {"maximumExecutionMs":2500,"maximumOutputBytes":64} (2.31729ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at readinessRuntime (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/buster-readiness-profile.mts:28:20)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/buster-readiness-consumer.test.mts:25:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/reliability/buster-readiness-consumer.test.mts:22:3
+✖ real factory/service/process honors output policy {"maximumExecutionMs":2500,"maximumOutputBytes":1024} (2.390513ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at readinessRuntime (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/buster-readiness-profile.mts:28:20)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/buster-readiness-consumer.test.mts:25:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/reliability/buster-readiness-consumer.test.mts:51:1
+✖ factory disabled capability does not execute configured dependency and rejects retired runtime authors (2.406933ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at readinessRuntime (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/buster-readiness-profile.mts:28:20)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/buster-readiness-consumer.test.mts:53:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/reliability/buster-readiness-consumer.test.mts:74:1
+✖ real service fails invalid policy before probe even when disabled; unavailable probe fences admission and accepted replay, not terminal replay (0.990096ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at loadBusterSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:299:10)
+      at authoredBusterProfile (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/buster-admission.mts:19:38)
+      at admissionFixture (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/fixtures/test-gate/buster-admission.mts:24:19)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/buster-readiness-consumer.test.mts:75:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+
+test at tests/verification/reliability/buster-shutdown-storage.test.mts:20:102
+✖ durable shutdown failure ownership: during (441.199057ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at loadBusterSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:299:10)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/buster-shutdown-storage.test.mts:67:141)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at tests/verification/reliability/buster-shutdown-storage.test.mts:20:102
+✖ durable shutdown failure ownership: after (307.518941ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at loadBusterSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:299:10)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/buster-shutdown-storage.test.mts:67:141)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/reliability/buster-shutdown-storage.test.mts:20:102
+✖ durable shutdown failure ownership: queued (323.960101ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at loadBusterSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:299:10)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/buster-shutdown-storage.test.mts:67:141)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/reliability/buster-shutdown-storage.test.mts:20:102
+✖ durable shutdown failure ownership: admission (263.250664ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at loadBusterSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:299:10)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/buster-shutdown-storage.test.mts:67:141)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/reliability/buster-shutdown-storage.test.mts:20:102
+✖ durable shutdown failure ownership: read-failure (268.993684ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at loadBusterSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:299:10)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/buster-shutdown-storage.test.mts:67:141)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/reliability/buster-shutdown-storage.test.mts:20:102
+✖ durable shutdown failure ownership: healthy-terminal (267.586037ms)
+  Error: SWARM_CONFIG_RETIRED_FULL_FACADE:use a verified consumed-owner startup capture
+      at loadSwarmSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:375:9)
+      at loadBusterSettings (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/swarm.ts:299:10)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/buster-shutdown-storage.test.mts:67:141)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

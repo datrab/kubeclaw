@@ -1,0 +1,12 @@
+{
+  "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+  "baselineTree": "47ce9b9c092dcd534eb55ddaebaab010e270a5af",
+  "changedInput": "docs/review/evidence/config-acceptance/delivery/define-controller-targets-20261013.py",
+  "baselineSha256": "eb813fb1c23b7287bccc97cd8886465e68cc6fefd1caca6aa6cc353faff0f109",
+  "defect": "independent second if/elif/else overwrites numeric/array/shared-group/version domains with generic string fallback; immutable git blob preserves original bytes",
+  "action": "join native producer/text/ref/listen clauses into first exclusive domain dispatch; remove redundant class-only clause already handled before dispatch",
+  "finalGeneratorSha256": "1edee22c5853ed4a1fe6ddc4f1362ef9bb4ff3b947efe1fbb8181a9061b3217e",
+  "finalPatchSha256": "f92d418dcae1b469ab13bf9a78b82c7ef10eb73fb11869bb5cc4a555f0f595a9",
+  "initialPatchSha256": "05ff867b595e47f6679e511dfe853beb3d3e8121b9a9e2e58070f425ba7ff6b6",
+  "collectorScope": "base42 excludes7separatebudget/epochsourcefields so repeatedcollectioncannot generic-fallbackoverwrite newdomains"
+}

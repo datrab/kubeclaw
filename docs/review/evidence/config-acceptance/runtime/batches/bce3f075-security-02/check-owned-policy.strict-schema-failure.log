@@ -1,0 +1,15 @@
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/registry/schema.ts:113
+    throw new RegistryError('REGISTRY_MANIFEST_INVALID', `Invalid JSON Schema in ${schemaPath}`, {
+          ^
+
+RegistryError: Invalid JSON Schema in /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/runtime/batches/bce3f075-security-02/owned-policy.schema.json
+    at validateReferencedSchema (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/registry/schema.ts:113:11)
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/runtime/batches/bce3f075-security-02/check-owned-policy.mjs:2:399 {
+  code: 'REGISTRY_MANIFEST_INVALID',
+  details: {
+    schemaPath: '/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/runtime/batches/bce3f075-security-02/owned-policy.schema.json',
+    cause: 'strict mode: required property "value" is not defined at "#/properties/headerRules/items/allOf/0/then/not" (strictRequired)'
+  }
+}
+
+Node.js v24.21.0

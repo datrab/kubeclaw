@@ -1,0 +1,163 @@
+{
+  "status": "stable bounded approval source/definition milestone; NOT ACCEPTED",
+  "UTC": "2026-10-13T03:38:41.215596+00:00",
+  "head": "6606af9e590032f328f330ecb3d953b1eef027e3",
+  "tree": "47ce9b9c092dcd534eb55ddaebaab010e270a5af",
+  "committedBaselineReferences": {
+    "docs/review/evidence/config-acceptance/runtime/inventory-fragment.json": {
+      "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "blob": "188c10cc8dd25afb162e8cc1cc793fce68ee5d4d",
+      "sha256": "0847f5fe3e8cf3ead350fe7daa6deffad35975c98cecda52888f46f0cd9ea23e"
+    },
+    "docs/review/evidence/config-acceptance/runtime/case-proposals.json": {
+      "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "blob": "454a20ee388a7813c03b80f81f120941a95df91b",
+      "sha256": "113c662242195c821e3a0d1623283f643b428e1126818126f9dd509aec8a493c"
+    },
+    "docs/review/evidence/config-acceptance/runtime/runtime-case-dispositions.json": {
+      "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "blob": "feb9c567e8d1d8549443fb4fb6ae485a014b2b51",
+      "sha256": "3b3a5f6c03a74619b737131d2ff3ff6eabe4d1d350629d250e7644958e4101d8"
+    }
+  },
+  "summary": {
+    "status": "stable conditional approval consumer/source/domain definitions only; NOT ACCEPTED",
+    "rows": 1248,
+    "cases": 5863,
+    "caseResults": {
+      "not-run": 4411,
+      "passed": 1452
+    },
+    "schemaRowsRefined": 10,
+    "newNarrowCurrentDefinitionCases": 10,
+    "newFutureNotRunCases": 60,
+    "oldCaseBodiesUnchanged": 5793,
+    "immutableObservationReferenceOccurrences": 2239,
+    "allC0ClosedFalse": true,
+    "remainingConsumerReviewRows": 51,
+    "remainingUntouchedOriginalSupplementalSourceTracedRows": 102,
+    "manualCandidatesThisBatch": 37,
+    "manualCandidatesCombined": 755,
+    "remainingUnreviewedCandidates": 3887,
+    "reviewedOpenCandidates": 136,
+    "remaining": "51 schema consumers,102 untouchedoriginal supplemental plus95 priorunaccepteddeclarations and all priorrefinedsemanticobligations. Human/architecture/Prism reference/text processingbounds remainexplicitOPEN. Sourcehelpers arenot signedissuer/waitoperator/nativebundle/grant effects. Parent typedfirstmodulecarrier/task-operator partition/quota/realmanifests/crossreaders OPEN; alloldA6/codec/context/sourcebinding constraints retained. Historical269map parentintegration/independentreview pending. No globalC0acceptance/implementationapproval."
+  },
+  "rawDirtyPatchSha256": "c4ec53d1c6202cd3f35fadbc3c35073851aa15869cd093b0ad0def4667e9302f",
+  "compressedDirtyPatchSha256": "5af3d536e8abd8938ca16082827f4cc5051a98dcaffa0fe06b64924837430a8a",
+  "ownedPublishedFiles": {
+    "docs/review/evidence/config-acceptance/runtime/README.md": "7346a1d0224b192adf5be50120f7f70585b212dfe9f7a0fbcadba5b3e3a6b04e",
+    "docs/review/evidence/config-acceptance/runtime/inventory-fragment.json": "3400874169b97587baa7418e8de86d1830417361765455e2c8611d1924e86f68",
+    "docs/review/evidence/config-acceptance/runtime/case-proposals.json": "27c59407e202cc54092c19a4ce1c11441975990dc2cf00976778560d71e1d2b0",
+    "docs/review/evidence/config-acceptance/runtime/runtime-case-dispositions.json": "64b32a229ace4a4c7c9feadf47ec53cb5e1576f574299c9591aa6a2fb8de58eb"
+  },
+  "commands": [
+    {
+      "argv": [
+        "node",
+        "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/check.mjs"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exit": 0,
+      "stdout": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/check-attempt1.log",
+      "stderr": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/check-attempt1.stderr.log"
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/check-integrity.py"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+      "exit": 0,
+      "stdout": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/check-integrity.log",
+      "stderr": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/check-integrity.stderr.log"
+    }
+  ],
+  "untrackedDeliveryIdentities": {
+    "docs/review/evidence/config-acceptance/author/nova-sdk-envelope-current-6606/README.md": "f6d1b12f144f97e4de165c3042534981c40cd0c5a78e6e7eed18d9d88b39a456",
+    "docs/review/evidence/config-acceptance/author/nova-sdk-envelope-current-6606/check-current-sdk-envelope.mjs": "0ff4475ee9bf64b9d74210be3a105c957a54e0d5b3cbe3e8715258c6a1f8abea",
+    "docs/review/evidence/config-acceptance/author/nova-sdk-envelope-current-6606/source-and-check-identities.json": "abf54d73e0f0b822d236b33d02cda92d4f59dbb0f1b136c73fab0ee251a2316e",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/active-case-input-contracts.json": "6c75f666bd2cb05e0b7737bb4967b1a65784cd930f929416e7d7a5da8e0082e7",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/build-mapping.py": "2fb991ce192e79631c8f015ea6c43ab5cf269981ccfe4d66d86515104b341198",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/canonical-question-fragment.json": "eed1cf39c917cd3b5431c900b3425f414e535196f540021c8ffff3ae83f71e4f",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/check-secret-current-reader.mjs": "c423d50992fb09d0a763c72cb9417114965fd5dd59e31ebf37733cdb17262344",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/committed-input-reference-receipt.json": "cd5c0cbcdc3d6eaeb55308c4dcb50cacda4109a687bcaf22d24ad38a30c1cd2a",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/metadata-reference-authenticity-accounting.json": "31b62814005a81240edf4be6750c7d1fbaede2e1c2896da5781bba62f990d415",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/question-canonical-field-case-links.json": "4754e97be01601df1e418914e64564a51e77a191a6e0d705c5d0d84bf56bcae3",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/remaining-backlog.json": "10e32edae93a023021a929d666d273cccf85cd81752e8e227302423f8eb0ef01",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/secret-entry-complete-profiles.json": "5ed77ad3850c7488ddd9257171ab0dca10d12cdc49a0c8f05deb09a99ad78038",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/source-default-env-cli-projection.json": "a520970d2cc065fbda081c165612684f56df1698a8a8bc70001f5e2fd6d37495",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/source-marker-canonical-projection.json": "f17549a2507f1a6337536e0c59e3b7105b3d1f4c2882b28f664e04c1f6839cc1",
+    "docs/review/evidence/config-acceptance/delivery/controller-domain-correction-6606af9-20261013.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/delivery/controller-domain-correction-6606af9-20261013.stdout": "671eb77dc388042719f823cc15ea03a1f47734944870400c0f4db5d2c7839b01",
+    "docs/review/evidence/config-acceptance/delivery/controller-domain-dispatch-correction-6606af9-20261013.json": "38cdfebbacec92d9e9703861fc74f1b239f42b8b6e04c66d6cc6b893e857548c",
+    "docs/review/evidence/config-acceptance/delivery/controller-domain-dispatch-correction-6606af9-20261013.patch": "05ff867b595e47f6679e511dfe853beb3d3e8121b9a9e2e58070f425ba7ff6b6",
+    "docs/review/evidence/config-acceptance/delivery/controller-response-epoch-contracts-6606af9-20261013.json": "7c39b278009697b219fdb0401d25b1a3095a8ac15a73ebf262c2b24773ba5e40",
+    "docs/review/evidence/config-acceptance/delivery/controller-response-epoch-definition-6606af9-20261013-attempt1.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/delivery/controller-response-epoch-definition-6606af9-20261013-attempt1.stdout": "90d8a6b298987d234d36c48e39409da85552c091ad2f161584cdafb51523b088",
+    "docs/review/evidence/config-acceptance/delivery/controller-response-epoch-definition-6606af9-20261013-corrected.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/delivery/controller-response-epoch-definition-6606af9-20261013-corrected.stdout": "90d8a6b298987d234d36c48e39409da85552c091ad2f161584cdafb51523b088",
+    "docs/review/evidence/config-acceptance/delivery/controller-response-epoch-definition-schema-6606af9-20261013.json": "e122724fea861ad5ce8751f6ed89778230c0a24631b097d967bf891d66642d8d",
+    "docs/review/evidence/config-acceptance/delivery/controller-response-epoch-profiles-6606af9-20261013/A.json": "f0f06e5ff1ae1fd60e95b5458fc18d1e9201c05c276120a95cc22637b0fc4d5f",
+    "docs/review/evidence/config-acceptance/delivery/controller-response-epoch-profiles-6606af9-20261013/B.json": "bbc6325e1a443ebe28319a1e9a6c666b01915fd5305a7e28485e0f1f298f6de9",
+    "docs/review/evidence/config-acceptance/delivery/define-controller-response-epoch-6606af9-20261013.py": "f0e32d4469b6bd7f43c78744cf3f43ffc763e9afb6d691b5d55dddc7a9b8fc33",
+    "docs/review/evidence/config-acceptance/delivery/snapshots/controller-response-epoch-definition-attempt1-20261013/controller-response-epoch-contracts-6606af9-20261013.json": "b686a83a0ae04ee778cdc8f8d14b9c0ca29e6989f92fa474dcfe3fd29fb1dab5",
+    "docs/review/evidence/config-acceptance/delivery/snapshots/controller-response-epoch-definition-attempt1-20261013/controller-response-epoch-definition-6606af9-20261013-attempt1.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/delivery/snapshots/controller-response-epoch-definition-attempt1-20261013/controller-response-epoch-definition-6606af9-20261013-attempt1.stdout": "90d8a6b298987d234d36c48e39409da85552c091ad2f161584cdafb51523b088",
+    "docs/review/evidence/config-acceptance/delivery/snapshots/controller-response-epoch-definition-attempt1-20261013/define-controller-response-epoch-6606af9-20261013.py": "d2c33f13f03306c124e710abffd14b419006c9c93822c8af23ba405cae839076",
+    "docs/review/evidence/config-acceptance/delivery/snapshots/controller-response-epoch-definition-attempt1-20261013/identities.json": "1d4d72576758ade39d463936ba104b7af3eff13d2bd4bda420fc44c32c1ff5fc",
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/README.md": "3225c0d271ba8eb968d6a14dfcbb56f43368123fc6264cd665709984d1ac5e23",
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/build.py": "aca484cf697944febeb05a2c4176c6cd452da398ab5e6522eecb71c853747096",
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/candidate-dispositions.json": "4dd3c46f2796a2a71ec928f5a8c97f88ea4bf90985d2587d79db8307b1f31d14",
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/candidate-dispositions.py": "6e7ed63c783a40df2cd39f6d9f4c57a7999cb9e9d3b56e25f492a72a0c5637fa",
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/changed-rows-before.json.gz": "2ba25da9ca1956a3b844f7abffee0f86aec6a2a14ddcfbe0cee27db27dda8295",
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/check-integrity.py": "e546d7080887759ff9d162d2b05c4907a7c41eae819ace6f92b919f9572150b0",
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/check.mjs": "867966554451e085ed702f83a1c8ec7492602529cdf97ab484e01eac6c454bad",
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/combined-candidate-dispositions.json": "6591316b9f69167c3c2e0d0e4afcc8164ed1db2e64604dd65405a7ec298187a8",
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/committed-baseline-inputs.json": "f3cf4cb58ab7b9ad03b19a42258aa5e5eb79b66d4e3267df6c1c43f0ba0b5cc0",
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/complete-profiles.json": "39d7e9821ec4cb8d77106a587756d1c92ce47b68a726942d09e00bc72c2d7525",
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/contracts.json": "6748df8524c02ede8f07482fab20cc07ef39b49d4cfec5656e1f969d7e2d7b04",
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/dirty-delivery.patch.gz": "5af3d536e8abd8938ca16082827f4cc5051a98dcaffa0fe06b64924837430a8a",
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/integrate.py": "6f71a0939837b5b006c2465d710329179a2abeb0f270c7621837dc6ddfed4093",
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/observations.json": "2677012e39db6cb364574f9a33b6d446d3ac5f841f40f33a3a54ae451c990ff1",
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/source-identities.json": "fa822e6ac164995aa7edec5f5e61543a6015eb51f78df855f65974274a8df5dc",
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-approval-consumers-13/summary.json": "c9d58c6e91b7da0c06db7ae13ac922b184fed97655bd8b0c90c9d2cd2c220189",
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-historical-case-links-12/README.md": "aa53358e40e10be543d39082755a55f0f75f9000ba15d145b09bd87cf716d0a1",
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-historical-case-links-12/baseline-committed-input-identities.json": "569c8ef44bad3e3d6bef8854525b9564e7679ebcf83f4b67b2260f6825e7fc19",
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-historical-case-links-12/build-map.py": "e65d68a320c02ed90085624fce7f4d47146332b33abea8e3f9396e4d58964e20",
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-historical-case-links-12/check-current-profile-readers.mjs": "5d962fdab178f3a8092ff0b396c611f1788e8af81c0d1546e85e567b3dd02e88",
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-historical-case-links-12/current-profile-reader-observations.json": "855394c4b92115b2108fad3e07eea49096d599a0d3036d70fcafcf029d89e4e2",
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-historical-case-links-12/dirty-delivery.patch.gz": "eba4e8f413224b547a7c015572cf6dfc3ccf47307ebbc3a683593fe1bd0679a6",
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-historical-case-links-12/native-historical-successor-map.json": "1c0cf5830f0c91a0c3a5000831fb7be98ce278255a44050673491923e2ca9ad3",
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-historical-case-links-12/stable-milestone-receipt.json": "c28364abb8e336693adbf7c6fdbe27eee04f701281d3d3a61142a0538ca7a0ac"
+  },
+  "artifacts": {
+    "check.mjs": "867966554451e085ed702f83a1c8ec7492602529cdf97ab484e01eac6c454bad",
+    "integrate.py": "6f71a0939837b5b006c2465d710329179a2abeb0f270c7621837dc6ddfed4093",
+    "check-integrity.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "candidate-dispositions.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "README.md": "3225c0d271ba8eb968d6a14dfcbb56f43368123fc6264cd665709984d1ac5e23",
+    "check-integrity.log": "c9d58c6e91b7da0c06db7ae13ac922b184fed97655bd8b0c90c9d2cd2c220189",
+    "check-attempt1.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "observations.json": "2677012e39db6cb364574f9a33b6d446d3ac5f841f40f33a3a54ae451c990ff1",
+    "integrate.log": "5899ebdea390744e04189346a9f21081ebd40cc9726b8a9a790c8bb73fa36d05",
+    "candidate-dispositions.json": "4dd3c46f2796a2a71ec928f5a8c97f88ea4bf90985d2587d79db8307b1f31d14",
+    "contracts.json": "6748df8524c02ede8f07482fab20cc07ef39b49d4cfec5656e1f969d7e2d7b04",
+    "candidate-dispositions.log": "8405ac56e4195ace0b87433377475648731cb09d32f0322f9cdd0ed899de1116",
+    "check-attempt1.log": "2677012e39db6cb364574f9a33b6d446d3ac5f841f40f33a3a54ae451c990ff1",
+    "changed-rows-before.json.gz": "2ba25da9ca1956a3b844f7abffee0f86aec6a2a14ddcfbe0cee27db27dda8295",
+    "candidate-dispositions.py": "6e7ed63c783a40df2cd39f6d9f4c57a7999cb9e9d3b56e25f492a72a0c5637fa",
+    "combined-candidate-dispositions.json": "6591316b9f69167c3c2e0d0e4afcc8164ed1db2e64604dd65405a7ec298187a8",
+    "integrate.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "dirty-delivery.patch.gz": "5af3d536e8abd8938ca16082827f4cc5051a98dcaffa0fe06b64924837430a8a",
+    "build.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "check-integrity.py": "e546d7080887759ff9d162d2b05c4907a7c41eae819ace6f92b919f9572150b0",
+    "source-identities.json": "fa822e6ac164995aa7edec5f5e61543a6015eb51f78df855f65974274a8df5dc",
+    "complete-profiles.json": "39d7e9821ec4cb8d77106a587756d1c92ce47b68a726942d09e00bc72c2d7525",
+    "committed-baseline-inputs.json": "f3cf4cb58ab7b9ad03b19a42258aa5e5eb79b66d4e3267df6c1c43f0ba0b5cc0",
+    "build.py": "aca484cf697944febeb05a2c4176c6cd452da398ab5e6522eecb71c853747096",
+    "full-numbered-sources.log": "2532850ae16bfe112ba3a4a84b75169f97b08e523c7551063865e3f11c02b6df",
+    "summary.json": "c9d58c6e91b7da0c06db7ae13ac922b184fed97655bd8b0c90c9d2cd2c220189",
+    "build.log": "f6f217e95a679ff67862ef1a80198ef4fa52698de72d59c92df3c056c2362976"
+  },
+  "noAcceptance": true
+}

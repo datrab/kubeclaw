@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -12,11 +13,11 @@ const [root, phase] = process.argv.slice(2);
 const saved = JSON.parse(fs.readFileSync(path.join(root, 'saved.json'), 'utf8'));
 const adapter = activate({ config: { artifactRoot: path.join(root, 'artifacts') } });
 const coordinator = new EffectCoordinator(
-  new FileEffectJournal(path.join(root, `history-${phase}.jsonl`)),
+  new FileEffectJournal(path.join(root, `history-${phase}.jsonl`), TEST_CORE_POLICY),
   undefined,
   undefined,
-  new FileResourceLockManager(path.join(root, `history-${phase}-locks`)), 300_000,
-);
+  new FileResourceLockManager(path.join(root, `history-${phase}-locks`), TEST_CORE_POLICY), 300_000,
+ TEST_CORE_POLICY.resourceAcquisition);
 const adapterOwner = {
   pluginId: 'kubeclaw.artifact-store',
   apiVersion: 'pipeline-plugin-v2',

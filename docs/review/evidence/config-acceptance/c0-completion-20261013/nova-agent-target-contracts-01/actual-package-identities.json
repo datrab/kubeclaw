@@ -1,0 +1,178 @@
+[
+  {
+    "packageId": "kubeclaw.architecture-validator",
+    "packageVersion": "1.0.0",
+    "packageRoot": "skills/nova/plugins/architecture-validator",
+    "packageDigest": "sha256:ffa7efacb8497f87a6ecd866d8f25cf83b49bdcee05316abba13030affff73ec",
+    "manifestSha256": "915926814bba76b52d9cce47961da67e43cf5ade85c077a417272023c5730792",
+    "registrations": [
+      {
+        "id": "architecture",
+        "type": "kubeclaw.validate.architecture",
+        "module": "src/stage.ts",
+        "export": "execute",
+        "requiredCapabilities": [
+          "runtime.dispatch",
+          "artifacts.write",
+          "git.repository.read",
+          "artifacts.read"
+        ],
+        "configSchema": "schemas/config.schema.json",
+        "inputSchema": "schemas/input.schema.json",
+        "resultSchema": "schemas/result.schema.json",
+        "kind": "stage",
+        "moduleSha256": "1d078730d6c276cba32fbdded3b289bff155638490e7a5d191750732e13565bc"
+      }
+    ],
+    "qualification": "Actual package/source bytes computed by existing pure foundation digest; not installed/activated/attested/granted ownership proof."
+  },
+  {
+    "packageId": "kubeclaw.implementation-agent",
+    "packageVersion": "1.0.0",
+    "packageRoot": "skills/nova/plugins/implementation-agent",
+    "packageDigest": "sha256:0b8bbc234e78ec83e75cedcf6deb4044872e05e9e04f5b59d39d2ac7be18dc16",
+    "manifestSha256": "fde7e60285cf1fd687b85e9ce2372b1aaa02d7bbf35bced1b8741c073493e5c9",
+    "registrations": [
+      {
+        "id": "implementation",
+        "type": "kubeclaw.agent.implementation",
+        "module": "src/stage.ts",
+        "export": "execute",
+        "requiredCapabilities": [
+          "runtime.dispatch",
+          "git.workspace.create",
+          "git.workspace.remove",
+          "git.commit",
+          "git.merge",
+          "artifacts.read",
+          "artifacts.write"
+        ],
+        "configSchema": "schemas/config.schema.json",
+        "inputSchema": "schemas/input.schema.json",
+        "resultSchema": "schemas/result.schema.json",
+        "kind": "stage",
+        "moduleSha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870"
+      }
+    ],
+    "qualification": "Actual package/source bytes computed by existing pure foundation digest; not installed/activated/attested/granted ownership proof."
+  },
+  {
+    "packageId": "kubeclaw.pipeline-review",
+    "packageVersion": "1.0.0",
+    "packageRoot": "skills/nova/plugins/pipeline-review",
+    "packageDigest": "sha256:048324d887003b639bfd6c650c0a696168c08980fbf9684764fde647398bf8f2",
+    "manifestSha256": "113fad3ba88ebc4db595fd411230d3288a28e8dfc99583e5495cf34da2483cab",
+    "registrations": [
+      {
+        "id": "review",
+        "type": "kubeclaw.report.pipeline-review",
+        "module": "src/stage.ts",
+        "export": "execute",
+        "requiredCapabilities": [
+          "runtime.dispatch",
+          "artifacts.write",
+          "report.evidence.read"
+        ],
+        "configSchema": "schemas/config.schema.json",
+        "inputSchema": "schemas/input.schema.json",
+        "resultSchema": "schemas/result.schema.json",
+        "kind": "stage",
+        "moduleSha256": "e2951394c77a1f57f8538dc8586fb6f8b571a5b2050b87fec65f42260055d51a"
+      },
+      {
+        "id": "evidence",
+        "module": "src/evidence-adapter.ts",
+        "export": "activate",
+        "providesCapabilities": [
+          "report.evidence.read"
+        ],
+        "requiredCapabilities": [
+          "artifacts.read"
+        ],
+        "configSchema": "schemas/evidence-config.schema.json",
+        "kind": "adapter",
+        "moduleSha256": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c"
+      }
+    ],
+    "qualification": "Actual package/source bytes computed by existing pure foundation digest; not installed/activated/attested/granted ownership proof."
+  },
+  {
+    "packageId": "kubeclaw.prism-design",
+    "packageVersion": "1.0.0",
+    "packageRoot": "skills/nova/plugins/prism-design",
+    "packageDigest": "sha256:5d651e51e04ae22dadeac5154ede4c78fd98a01c25a32ad8b40cc94e33f1776b",
+    "manifestSha256": "063ef9316e7bfdbe8b2b9a0812bfc2a0b968294edc116d85e557d3e591dbf2d9",
+    "registrations": [
+      {
+        "id": "design",
+        "type": "kubeclaw.design.prism",
+        "module": "src/stage.ts",
+        "export": "execute",
+        "requiredCapabilities": [
+          "runtime.dispatch",
+          "artifacts.read",
+          "artifacts.write",
+          "operator.request",
+          "signal.wait"
+        ],
+        "configSchema": "schemas/config.schema.json",
+        "inputSchema": "schemas/input.schema.json",
+        "resultSchema": "schemas/result.schema.json",
+        "kind": "stage",
+        "moduleSha256": "20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88"
+      }
+    ],
+    "qualification": "Actual package/source bytes computed by existing pure foundation digest; not installed/activated/attested/granted ownership proof."
+  },
+  {
+    "packageId": "kubeclaw.project-summary",
+    "packageVersion": "1.0.0",
+    "packageRoot": "skills/nova/plugins/project-summary",
+    "packageDigest": "sha256:b624083c7d9f196c72bd31fd913670c611932982ac476ba9584ab49f173106bb",
+    "manifestSha256": "995ddb9dec1c6ad6ea9e55c7ed667e560a045365fcc6e4721908bd86b63b0454",
+    "registrations": [
+      {
+        "id": "summary",
+        "type": "kubeclaw.report.project-summary",
+        "module": "src/stage.ts",
+        "export": "execute",
+        "requiredCapabilities": [
+          "artifacts.read",
+          "artifacts.write"
+        ],
+        "configSchema": "schemas/config.schema.json",
+        "inputSchema": "schemas/input.schema.json",
+        "resultSchema": "schemas/result.schema.json",
+        "kind": "stage",
+        "moduleSha256": "b16533ade1d6bbf08c53d3c31bbe7102f5b67b785b1f928524ca9879a99a4fee"
+      }
+    ],
+    "qualification": "Actual package/source bytes computed by existing pure foundation digest; not installed/activated/attested/granted ownership proof."
+  },
+  {
+    "packageId": "kubeclaw.case-study",
+    "packageVersion": "1.0.0",
+    "packageRoot": "skills/nova/plugins/case-study",
+    "packageDigest": "sha256:a48224a175039afc1856ea71f0f4ae765dc3671048553125c6713251db078463",
+    "manifestSha256": "e18697e96655c6b0fcf775de0a898a18821d7bd1c9e1960fdd150d18f9f68b8e",
+    "registrations": [
+      {
+        "id": "case-study",
+        "type": "kubeclaw.report.case-study",
+        "module": "src/stage.ts",
+        "export": "execute",
+        "requiredCapabilities": [
+          "runtime.dispatch",
+          "artifacts.write",
+          "report.evidence.read"
+        ],
+        "configSchema": "schemas/config.schema.json",
+        "inputSchema": "schemas/input.schema.json",
+        "resultSchema": "schemas/result.schema.json",
+        "kind": "stage",
+        "moduleSha256": "a537e4028ddc30ea19ae7fa18e828c10745f08f14b0cf16e534ee8b42ea720b9"
+      }
+    ],
+    "qualification": "Actual package/source bytes computed by existing pure foundation digest; not installed/activated/attested/granted ownership proof."
+  }
+]

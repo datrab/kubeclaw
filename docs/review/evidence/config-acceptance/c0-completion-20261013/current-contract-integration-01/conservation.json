@@ -1,0 +1,20 @@
+{
+  "canonicalRoots": "Both exact bytes equal checkpoint18;2409originalfields/6845cases/50requirements unchanged",
+  "c1Membership": "160fieldIds/229caseIds/originalphasepartition exactly unchanged",
+  "currentScopeRef": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-package-draft/scope.json",
+    "sha256": "d6e562a1be3a7744d3066bb41d9dec47b1d40e0625356f61bd204533a190de55"
+  },
+  "frozenEarlierScopeMeaning": "03 overlaybaseScope points to exact older reviewedinput; latestscope adds reference metadata only. Immutable old03 pin is NOT replaced or silently claimedcurrent.",
+  "linkedReferencesChecked": 8,
+  "nativeExecution": "not-run",
+  "globalC0Accepted": false,
+  "scopeConservation": "All original scope properties exact18, excluding explicitly evolving reference-only currentCaseDefinitionEvidence and newactiveContractIntegration metadata",
+  "frozenEarlierScopeByteRef": {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/current-contract-integration-01/frozen-scope-checkpoint18.json",
+    "sha256": "86edcbc5500f69d603765fa1dd6682534cd41692c3ab446906cae675ab21159c",
+    "originalPath": "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-package-draft/scope.json",
+    "gitCommit": "06bb0b0b8f9253029c260cd3cb59458cd0c02fff",
+    "meaning": "Exact earlier03 overlay baseline bytes, historical resolver only, not a second editable scope author."
+  }
+}

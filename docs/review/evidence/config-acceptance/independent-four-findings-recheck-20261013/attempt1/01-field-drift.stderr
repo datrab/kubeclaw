@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/checkpoint21bf-source-links-01/check-bindings.py", line 6, in <module>
+    runpy.run_path(str(helper))["run"]("01")
+  File "/tmp/independent-four-review-dvppn644/docs/review/evidence/config-acceptance/four-findings-fix-20261013/components/validate-bindings.py", line 217, in run
+    result = validate(json.loads(args.input.read_text()), batch)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/independent-four-review-dvppn644/docs/review/evidence/config-acceptance/four-findings-fix-20261013/components/validate-bindings.py", line 200, in validate
+    validate_member(actual, required, batch, profiles)
+  File "/tmp/independent-four-review-dvppn644/docs/review/evidence/config-acceptance/four-findings-fix-20261013/components/validate-bindings.py", line 146, in validate_member
+    require(member[fieldkey] == row["source"]["field"] and member["reader"] == row["reader"], "field/reader drift")
+  File "/tmp/independent-four-review-dvppn644/docs/review/evidence/config-acceptance/four-findings-fix-20261013/components/validate-bindings.py", line 21, in require
+    raise ValueError("CANONICAL_BINDING:" + message)
+ValueError: CANONICAL_BINDING:field/reader drift

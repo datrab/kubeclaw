@@ -1,0 +1,52 @@
+{
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "head": "19b1da7f75f51a05a16e25a7ce3d5421768f7c3a",
+  "node": "v24.21.0",
+  "commands": [
+    {
+      "toolReference": "f88fff",
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/independent-runtime-provider-contract-review-03/replay-pure.mjs > docs/review/evidence/config-acceptance/c0-completion-20261013/independent-runtime-provider-contract-review-03/replay.stdout 2> docs/review/evidence/config-acceptance/c0-completion-20261013/independent-runtime-provider-contract-review-03/replay.stderr",
+      "exit": 0,
+      "checks": 1074,
+      "implementationCasesExecuted": 0,
+      "outputOnlyChange": "final author observation destination relocated into independent review directory; assertions and inputs unchanged"
+    },
+    {
+      "toolReference": "219b54",
+      "command": "python docs/review/evidence/config-acceptance/c0-completion-20261013/independent-runtime-provider-contract-review-03/capture.py > docs/review/evidence/config-acceptance/c0-completion-20261013/independent-runtime-provider-contract-review-03/capture.stdout 2> docs/review/evidence/config-acceptance/c0-completion-20261013/independent-runtime-provider-contract-review-03/capture.stderr",
+      "exit": 0,
+      "artifactPins": 204,
+      "historicalPins": 917,
+      "coordinates": 257
+    },
+    {
+      "toolReference": "22f91e",
+      "command": "Read history/task/ABI records; attempted rg of runtime-provider-contracts-03/define-corrections.py",
+      "exit": 2,
+      "reason": "Requested navigation filename absent; actual03 check-corrections.mjs inspected and used. No schema/runtime/harness failure."
+    },
+    {
+      "toolReference": "5ce96a",
+      "command": "Read-only Python JSON/byte audit of original01/02/03 bodies, historical refs, C3 copied schemas/reference/review pins and generated views",
+      "exit": 0,
+      "rawResult": "additional-identity-audit.json",
+      "allReportedRelations": true
+    },
+    {
+      "toolReference": "f13cc2",
+      "command": "Read-only byte comparisons02 vs03 source-processing/evidence contracts",
+      "exit": 0
+    },
+    {
+      "toolReference": "bb5008",
+      "command": "diff -u02/03 source-consumer-contracts.md; read receiving-abi.md78..112",
+      "exit": 0,
+      "note": "diff showed only explicit03/deadline/reference updates, then successful source read; no production mutations"
+    }
+  ],
+  "scriptIdentities": {
+    "replay-pure.mjs": "fdd735acac3438c644f3f9d1f74800be27982f5d1507a19d70f0751ad98212ad",
+    "capture.py": "ef22a4b7790649c9ea688d950bf9a54f07877a255169ed6acd8cd4ec47489763"
+  },
+  "noRuntimeOrImplementationCasesExecuted": true
+}

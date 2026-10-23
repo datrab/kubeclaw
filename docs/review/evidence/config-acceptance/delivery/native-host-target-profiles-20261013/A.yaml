@@ -1,0 +1,25 @@
+schemaVersion: 1
+nodeName: dlv-native-a
+systemReserve:
+  cpuMillicores: 100
+  memoryBytes: 1048576
+  tasks: 16
+kubernetesReserve:
+  cpuMillicores: 100
+  memoryBytes: 1048576
+  tasks: 16
+pools:
+  buster:
+    namespace: dlv-buster-a
+    cpuMillicores: 500
+    memoryBytes: 67108864
+    tasks: 32
+    maximumActiveScopes: 2
+    cpuPeriodMicroseconds: 100000
+  prism:
+    namespace: dlv-prism-a
+    cpuMillicores: 500
+    memoryBytes: 67108864
+    tasks: 32
+    maximumActiveScopes: 2
+    cpuPeriodMicroseconds: 100000

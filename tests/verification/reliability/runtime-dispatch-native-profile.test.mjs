@@ -1,3 +1,5 @@
+import { materializeHistoricalRuntime } from '../../fixtures/historical-runtime-producers.mjs';
+import { TEST_CORE_POLICY, TEST_CORE_POLICY_SELECTION } from '../../fixtures/core-runtime-policy.mjs';
 // Actual original run creation, registered adapters, HTTP and process death.
 // The 503 ACP receiver is deliberately NOT a Gateway; no session success claim.
 import test from 'node:test';
@@ -26,17 +28,24 @@ const definition={schemaVersion:'pipeline-definition.v2',id:'pipeline:profile',m
 function platform(root,origin,kind){
   const runtimeId=`kubeclaw.runtime-dispatch:${kind==='generic'?'runtime':'openclaw'}`;
   const roots=['common','nova'].map(role=>path.join(source,'skills',role,'plugins'));
-  return {schemaVersion:'pipeline-platform.v2',installationRoots:roots,trustedBuiltinRoots:roots,
+  const owner=JSON.parse(fs.readFileSync(TEST_CORE_POLICY_SELECTION.file,'utf8'));
+  // Preserve the original bounded I/O timings in the explicit complete owner,
+  // never as a second inline adapter author or a production default change.
+  owner.profiles.standard.settings.openClawDispatch.targetTimingProfiles.fixture={spawnIntervalMs:0,pollMs:10,maxPollMs:10,maxPolls:1,sessionTimeoutMs:ioTimeoutMs};
+  owner.profiles.standard.settings.reviewPolicySelection.file=path.resolve(path.dirname(TEST_CORE_POLICY_SELECTION.file),owner.profiles.standard.settings.reviewPolicySelection.file);
+  const ownerFile=path.join(root,'core.config.json');
+  if(!fs.existsSync(ownerFile))fs.writeFileSync(ownerFile,JSON.stringify(owner));
+  return {corePolicySelection: {file:ownerFile,profile:'standard'},schemaVersion:'pipeline-platform.v2',installationRoots:roots,trustedBuiltinRoots:roots,
     externalTrust:{allowedSourceDigests:{},verifiedAttestations:{}},providers:{'runtime.dispatch':runtimeId,
       'network.http':'kubeclaw.network-http:http','secrets.read':'kubeclaw.secret-resolver:secrets',
       'git.repository.read':'kubeclaw.repository-adapter:repository','artifacts.read':'kubeclaw.artifact-store:artifact-store','artifacts.write':'kubeclaw.artifact-store:artifact-store'},
     grants:{'kubeclaw.architecture-validator:architecture':{'runtime.dispatch':{allowedAgents:['agent']},
       'git.repository.read':{allowedPrefixes:['.']},'artifacts.read':{allowedNamespaces:['kubeclaw.architecture-validator']},'artifacts.write':{allowedNamespaces:['kubeclaw.architecture-validator']}},
       [runtimeId]:{'network.http':{allowedOrigins:[origin]},'secrets.read':{allowedNames:['runtime.token']},...(kind==='generic'?{}:{'git.repository.read':{allowedPrefixes:['.']}})}},
-    adapters:{[runtimeId]:{targets:{agent:kind==='generic'?{endpoint:origin+'/ack',tokenSecret:'runtime.token'}:
+    adapters:{[runtimeId]:{targets:{agent:kind==='generic'?{endpoint:origin+'/ack',tokenSecret:'runtime.token',byteProfile:'standard'}:
       {endpoint:origin+'/fault',tokenSecret:'runtime.token',runtime:'acp',agentId:'audit',agentRole:'architecture',model:'audit/model',cwd:root,
-        repositoryRoot:root,resultPathPrefix:'results',spawnIntervalMs:0,pollMs:10,maxPollMs:10,maxPolls:1,sessionTimeoutMs:ioTimeoutMs}}},
-      'kubeclaw.network-http:http':{allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['authorization','content-type','idempotency-key','x-kubeclaw-signature'],timeoutMs:ioTimeoutMs},
+        repositoryRoot:root,resultPathPrefix:'results',timingProfile:'fixture'}}},
+      'kubeclaw.network-http:http':{allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['authorization','content-type','idempotency-key','x-kubeclaw-signature']},
       'kubeclaw.secret-resolver:secrets':{environment:{'runtime.token':'KUBECLAW_PROFILE_LOCAL_TOKEN'}},
       'kubeclaw.repository-adapter:repository':{repositoryRoot:root},'kubeclaw.artifact-store:artifact-store':{artifactRoot:path.join(root,'artifacts')}},
     activeAdapters:[],observers:{},storageRoot:path.join(root,'state'),shutdownTimeoutMs:ioTimeoutMs,effectLockTtlMs:lockTtlMs,
@@ -44,26 +53,7 @@ function platform(root,origin,kind){
 }
 function archivedCore(root,version){
   if(version==='v4')return path.join(source,'skills/nova/core');
-  const target=path.join(root,'archived-core');
-  if(!fs.existsSync(target)){
-    fs.cpSync(path.join(source,'skills/nova/core'),target,{recursive:true,filter:file=>!file.split(path.sep).includes('node_modules')});
-    fs.symlinkSync(path.join(source,'node_modules'),path.join(target,'node_modules'),'dir');
-    const old=version==='v1'?path.join(fixtures,'legacy-source-producer/core/execution/engine-snapshots.ts.txt'):
-      version==='v2'?path.join(fixtures,'legacy-transport-profile/engine-snapshots-v2.ts.txt'):
-      path.join(fixtures,'legacy-review-cache/engine-snapshots.ts.txt');
-    const manifest=JSON.parse(fs.readFileSync(path.join(fixtures,version==='v1'?'legacy-source-producer/provenance.json':
-      version==='v2'?'legacy-transport-profile/provenance.json':'legacy-review-cache/provenance.json'),'utf8'));
-    const verify=(file,sha)=>{const bytes=fs.readFileSync(file);assert.equal(crypto.createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex'),sha);};
-    verify(old,version==='v1'?manifest.files.find(x=>x.archivePath==='core/execution/engine-snapshots.ts.txt').gitBlobSha1:
-      version==='v2'?manifest.gitBlobSha1:manifest.files.find(x=>x.archivePath==='engine-snapshots.ts.txt').gitBlobSha1);
-    fs.copyFileSync(old,path.join(target,'execution/engine-snapshots.ts'));
-    if(version==='v1'){
-      const graph=path.join(fixtures,'legacy-source-producer/core/execution/graph.ts.txt');
-      verify(graph,manifest.files.find(x=>x.archivePath==='core/execution/graph.ts.txt').gitBlobSha1);
-      fs.copyFileSync(graph,path.join(target,'execution/graph.ts'));
-    }
-  }
-  return target;
+  return materializeHistoricalRuntime(root,version,source);
 }
 if(process.argv[2]==='--child'){
   const [root,origin,version,mode,boundary,localeJournal]=process.argv.slice(3);
@@ -74,6 +64,17 @@ if(process.argv[2]==='--child'){
   const {runRoot}=await import(pathToFileURL(path.join(source,'skills/nova/core/execution/run-root.ts')));
   const {buildArchitectureRequest}=await import(pathToFileURL(path.join(source,'skills/nova/plugins/architecture-validator/src/protocol.ts')));
   const p=platform(root,origin,mode==='prefix'||mode.startsWith('helper-')?'generic':'acp');
+  if((mode==='pipeline'||mode==='recover')&&version!=='v4'){
+    const original=path.resolve(archivedCore(root,version),'../../..');
+    p.installationRoots=['common','nova'].map(role=>path.join(original,'skills',role,'plugins'));
+    p.trustedBuiltinRoots=p.installationRoots;
+    // Historical wire predates timing-profile selection. Preserve the same
+    // explicit fixture owner values when invoking its original typed parser.
+    const target=p.adapters['kubeclaw.runtime-dispatch:openclaw'].targets.agent;
+    const owner=JSON.parse(fs.readFileSync(p.corePolicySelection.file,'utf8'));
+    const timing=owner.profiles.standard.settings.openClawDispatch.targetTimingProfiles[target.timingProfile];
+    delete target.timingProfile;Object.assign(target,timing);
+  }
   const location=runRoot(p.storageRoot,runId);
   if(mode.startsWith('helper-')){
     const sdk=await import('@kubeclaw/plugin-sdk');
@@ -95,9 +96,9 @@ if(process.argv[2]==='--child'){
       changeRelation:'introduced',scopeRelation:'inside',evidenceStrength:'direct',rootCauseHint:'unconditional-throw'};
     const proposal={id:sdk.sha256Text(sdk.canonicalJson(finding)),jobId:jobs[0].id,jobDigest:jobs[0].digest,finding};
     const verificationJobs=verification.buildScalableVerificationJobs({proposals:[proposal],integrityIssues:[],incompleteJobs:[]},jobs,sdk.sha256Text('policy'));
-    const prepared=await prepareRuntime(p,definition),journal=new core.FileEffectJournal(path.join(root,'helper-effects.jsonl'));
-    const runtime=new core.AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(p.adapters)),
-      effects:new core.EffectCoordinator(journal,undefined,undefined,new core.FileResourceLockManager(path.join(root,'locks')),lockTtlMs),shutdownTimeoutMs:ioTimeoutMs,
+    const prepared=await prepareRuntime(p,definition),journal=new core.FileEffectJournal(path.join(root,'helper-effects.jsonl'), TEST_CORE_POLICY);
+    const runtime=new core.AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(prepared.adapterConfigurations)),
+      effects:new core.EffectCoordinator(journal,undefined,undefined,new core.FileResourceLockManager(path.join(root,'locks'), TEST_CORE_POLICY),lockTtlMs,prepared.corePolicy.resourceAcquisition),shutdownTimeoutMs:ioTimeoutMs,
       async emitDomainEvent(){throw Error('UNEXPECTED_EVENT');}});
     await runtime.start();const checked=[];
     try{
@@ -119,9 +120,14 @@ if(process.argv[2]==='--child'){
     }finally{await runtime.shutdown();}
     process.stdout.write(JSON.stringify({helper:mode,checked,nativeModel:false}));
   }else if(mode==='pipeline'||mode==='recover'){
-    // Historical source writer is archived byte-for-byte; current source is used
-    // for all package resolution. No old local Git object or fabricated journal.
-    const engine=await import(pathToFileURL(path.join(mode==='pipeline'?archivedCore(root,version):path.join(source,'skills/nova/core'),'execution/engine.ts')));
+    // Genuine pre-CONFIG runs have no captured Core policy: maintained source
+    // must deny execution, never refill the absent policy from current B.
+    // Reopen their terminal state through the authentic original runtime.
+    if(mode==='recover'&&version!=='v4'){
+      const maintained=await import(pathToFileURL(path.join(source,'skills/nova/core/execution/engine.ts')));
+      await assert.rejects(maintained.recoverPipelineV2(p,definition,runId),/RECOVERY_CORE_POLICY_MISSING/);
+    }
+    const engine=await import(pathToFileURL(path.join(archivedCore(root,version),'execution/engine.ts')));
     let result,error;
     try{result=await(mode==='pipeline'?engine.runPipelineV2(p,definition,runId):engine.recoverPipelineV2(p,definition,runId));}
     catch(e){error=e.message;}
@@ -129,7 +135,7 @@ if(process.argv[2]==='--child'){
     if(mode==='pipeline'&&result.status!=='blocked')assert.fail(JSON.stringify({result,
       events:fs.readFileSync(path.join(location,'events.jsonl'),'utf8').trim().split('\n').slice(-5).map(line=>JSON.parse(line))}));
     const snapshot=snapshots.readRunSnapshot(location);
-    const journal=new core.FileEffectJournal(path.join(location,'effects.jsonl'));
+    const journal=new core.FileEffectJournal(path.join(location,'effects.jsonl'), TEST_CORE_POLICY);
     const request=(await journal.recoveryEntries()).find(x=>x.request.capability==='runtime.dispatch')?.request;
     assert.ok(request,'actual original stage dispatched');
     assert.equal(Object.hasOwn(request,'runtimeDispatchProfile'),['v3','v4'].includes(version));
@@ -152,15 +158,15 @@ if(process.argv[2]==='--child'){
         fs.writeSync(1,`AUDIT_BOUNDARY:${name}\n`);process.kill(process.pid,'SIGKILL');
       }
     }]));
-    const runtime=new core.AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(p.adapters)),
-      effects:new core.EffectCoordinator(new core.FileEffectJournal(journalPath),undefined,audit,new core.FileResourceLockManager(path.join(root,'locks')),lockTtlMs),
+    const runtime=new core.AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(prepared.adapterConfigurations)),
+      effects:new core.EffectCoordinator(new core.FileEffectJournal(journalPath, TEST_CORE_POLICY),undefined,audit,new core.FileResourceLockManager(path.join(root,'locks'), TEST_CORE_POLICY),lockTtlMs,prepared.corePolicy.resourceAcquisition),
       shutdownTimeoutMs:ioTimeoutMs,async emitDomainEvent(){throw Error('UNEXPECTED_EVENT');}});
     await runtime.start();let result,error;
     const payload=buildArchitectureRequest('agent',definition.stages[0].input,undefined);
     try{result=await runtime.invoke('runtime.dispatch',{runId,stageId:'architecture',attemptId:'attempt:profile',attemptNumber:1},key,
       {operation:'dispatch',resource:{type:'runtime.agent',canonicalId:'agent'},payload,...(profile?{runtimeDispatchProfile:profile}:{})},new AbortController().signal);}
     catch(e){error=e.message;}finally{await runtime.shutdown();}
-    const journal=new core.FileEffectJournal(journalPath),request=await journal.request(key),receipt=await journal.receipt(key);
+    const journal=new core.FileEffectJournal(journalPath, TEST_CORE_POLICY),request=await journal.request(key),receipt=await journal.receipt(key);
     assert.equal(Object.hasOwn(request,'runtimeDispatchProfile'),['v3','v4'].includes(version));
     process.stdout.write(JSON.stringify({result,error,request,receipt,snapshotVersion:snapshot.schemaVersion}));
   }

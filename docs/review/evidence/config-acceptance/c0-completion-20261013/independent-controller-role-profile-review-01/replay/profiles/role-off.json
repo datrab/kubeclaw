@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "controller-role-profile.v1-proposal",
+  "profileId": "role-off",
+  "role": "buster",
+  "settings": {
+    "busterNamespaceBroker": {
+      "enabled": false
+    }
+  },
+  "readonlyBindings": {
+    "roleApplicability": "controller-omitted",
+    "sharedLease": {
+      "apiGroup": "kubeclaw.forgestack.ai",
+      "apiVersion": "v1alpha1",
+      "groupSettingId": "CMP-buster-engine-clusterInvokers.shared.leaseApiGroup",
+      "versionSettingId": "CMP-buster-engine-clusterInvokers.shared.leaseApiVersion"
+    },
+    "activationGate": "no-active-original-leases-or-explicit-original-A-recovery-drain"
+  }
+}

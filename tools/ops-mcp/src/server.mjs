@@ -11,12 +11,12 @@ import * as z from 'zod/v4';
 const config = loadOpsMcpConfig();
 const PORT = config.port;
 const HOST = config.host;
-const kubeRequest = createKubeRequest();
+const kubeRequest = createKubeRequest(config.kubernetes);
 const DEFAULT_NAMESPACE = config.defaultNamespace;
 const ARGO_NAMESPACE = config.argoNamespace;
-const MAX_LOG_BYTES = 64 * 1024;
+const MAX_LOG_BYTES = config.selectedPolicy ? config.presentation.maxLogBytes : 64 * 1024;
 const kubeList = createKubeList(kubeRequest);
-const EVENT_PAGE_SIZE = 500;
+const EVENT_PAGE_SIZE = config.selectedPolicy ? config.presentation.eventPageSize : 500;
 
 const authentication = createBearerAuthorization(config.bearer);
 const namespaceSchema = z.enum(config.namespaces).default(DEFAULT_NAMESPACE);
@@ -193,6 +193,8 @@ function buildServer() {
       version: '0.2.0',
     },
     {
+      // Fixed security ceilings, not operator-tunable capacity defaults.
+      maxToolInputElements: 1024,
       instructions:
         'Read-only operations interface for the kubeclaw Kubernetes cluster. ' +
         'Correlate Argo CD, Kubernetes workload state, events, bounded pod logs and bounded Hubble network flows. ' +
@@ -443,7 +445,7 @@ function buildServer() {
         `/api/v1/namespaces/${encodeURIComponent(namespace)}/pods/${encodeURIComponent(pod)}/log?${params.toString()}`,
         { asText: true },
       );
-      const observation = logObservation(logs, { sinceTime, tailLines: effectiveTailLines });
+      const observation = logObservation(logs, { sinceTime, tailLines: effectiveTailLines },MAX_LOG_BYTES);
       logs = observation.text;
 
       return jsonText({
@@ -484,14 +486,14 @@ function buildServer() {
       },
     },
     async args => {
-      return jsonText(await getHubbleFlows(args, hubbleFlowSummary));
+      return jsonText(await getHubbleFlows(args, hubbleFlowSummary,config.hubble));
     },
   );
 
   return server;
 }
 
-const mcpHandler = createMcpHandler(buildServer, { responseMode: 'json' });
+const mcpHandler = createMcpHandler(buildServer, { responseMode: 'json', maxRequestBodySize: 64 * 1024 });
 const nodeMcpHandler = toNodeHandler(mcpHandler);
 
 function requestAuthorized(req) {

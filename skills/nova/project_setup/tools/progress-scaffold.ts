@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { loadWorkerCorePolicy } from '@kubeclaw/plugin-foundation/config/worker-core-policy';
 
 import fs from 'node:fs';
 import {publishJsonPair} from '@kubeclaw/plugin-foundation/config/published-pair';
@@ -26,6 +27,7 @@ Options:
   --project <name>       Project under Projects/<name>/src/.swarm
   --swarm <path>         Use an explicit .swarm directory instead of --project
   --repo <path>          Repository root. Defaults to nearest parent with .git
+  --worker-core-file <absolute owner> --worker-core-profile <profile>  Capture selected v3 publication limits
   --scaffold <path>      Scaffold file. Defaults to .swarm/progress.scaffold.json
   --apply                Validate scaffold and write progress.json plus pipeline.json
   --check                Validate scaffold/progress without writing
@@ -50,12 +52,16 @@ function parseArgs(argv: string[]): Args {
     repo: null,
     swarm: null,
     scaffold: null,
+    workerCoreFile: null,
+    workerCoreProfile: null,
   };
-  const valueFlags: Record<string, keyof Pick<Args, 'project' | 'repo' | 'swarm' | 'scaffold'>> = {
+  const valueFlags: Record<string, keyof Pick<Args, 'project' | 'repo' | 'swarm' | 'scaffold' | 'workerCoreFile' | 'workerCoreProfile'>> = {
     '--project': 'project',
     '--repo': 'repo',
     '--swarm': 'swarm',
     '--scaffold': 'scaffold',
+    '--worker-core-file': 'workerCoreFile',
+    '--worker-core-profile': 'workerCoreProfile',
   };
   for (let index = 0; index < argv.length; index += 1) {
     const argument = argv[index];
@@ -66,6 +72,7 @@ function parseArgs(argv: string[]): Args {
     else if (argument && valueFlags[argument]) args[valueFlags[argument]] = requireValue(argv, ++index, argument);
     else throw new Error(`Unknown argument: ${argument}`);
   }
+  if (Boolean(args.workerCoreFile) !== Boolean(args.workerCoreProfile)) throw new Error('Both --worker-core-file and --worker-core-profile are required for selected policy');
   if (args.apply && args.check) throw new Error('Use either --apply or --check, not both.');
   if (!args.help && !args.project && !args.swarm) throw new Error('Provide --project <name> or --swarm <path>.');
   return args;
@@ -102,6 +109,7 @@ function resolveContext(args: Args): Context {
   const project = args.project ?? inferProject(swarmDir);
   if (!project) throw new Error('Cannot infer project name from --swarm; pass --project too.');
   return {
+    ...(args.workerCoreFile ? {workerCore:loadWorkerCorePolicy(path.resolve(args.workerCoreFile), args.workerCoreProfile!)} : {}),
     repoRoot,
     project,
     swarmDir,
@@ -139,7 +147,7 @@ async function applyScaffold(args: Args, context: Context) {
     return 0;
   }
   console.log(diffSummary(readJsonIfExists(context.progressFile), progress));
-  await publishJsonPair(context.swarmDir,['progress.json','pipeline.json'],[progress,pipeline]);
+  await publishJsonPair(context.swarmDir,['progress.json','pipeline.json'],[progress,pipeline],context.workerCore);
   console.log(`wrote ${relFromRepo(context.repoRoot, context.progressFile)}`);
   console.log(`wrote ${relFromRepo(context.repoRoot, context.pipelineFile)}`);
   return 0;

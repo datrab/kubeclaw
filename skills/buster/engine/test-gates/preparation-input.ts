@@ -1,9 +1,11 @@
+import { captureBusterPreparationV10 } from '@kubeclaw/plugin-foundation/config/buster-preparation-v10';
+import { validateBusterPreparationSettings } from '@kubeclaw/plugin-foundation/config/swarm';
 import { assertHistoricalInput, type HistoricalStagedAdmission, type HistoricalInputReference } from './preparation-historical-reference.ts';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import type { RemotePlanJobV1 } from '@kubeclaw/pipeline-test-gate-contract';
-import type { BusterPreparationSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+import type { BusterPreparationSettings } from '@kubeclaw/plugin-foundation/config/swarm';
 import { assertPreparationSlot, type PreparationSlot } from './preparation-slots.ts';
 import {
   assertPreparedHeader, preparedPlanHeader, preparationDigest, type PreparedPlanJob,
@@ -65,7 +67,11 @@ async function durableExclusive(file: string, bytes: Uint8Array): Promise<void> 
 
 /** Produced by the owned validator before allocating source storage. */
 export function stagedInputMetadata(job: RemotePlanJobV1, wire: Buffer,
-  admissionId: string, attemptSpecDigest: string, settings: BusterPreparationSettings): StagedAdmission {
+  admissionId: string, attemptSpecDigest: string, settings: BusterPreparationSettings, version: 'legacy' | 'v10' = 'legacy'): StagedAdmission {
+  if (!['legacy', 'v10'].includes(version)) throw new Error('BUSTER_PREPARATION_VERSION_INVALID');
+  const v10 = version === 'v10' ? captureBusterPreparationV10(settings) : null;
+  if (!v10) validateBusterPreparationSettings(settings);
+  const reserveMultiplier = v10 ? v10.resultInputReserveMultiplier : 4;
   const preparationUid = process.getuid?.();
   assertPreparationSlot(preparationUid);
   if (process.getgid?.() !== preparationUid) throw new Error('BUSTER_PREPARATION_SLOT_INVALID');
@@ -79,7 +85,7 @@ export function stagedInputMetadata(job: RemotePlanJobV1, wire: Buffer,
   const metadata = Buffer.from(JSON.stringify(staged));
   if (wire.byteLength > settings.maximumRequestBytes
     || Buffer.byteLength(JSON.stringify(header)) > settings.maximumHeaderBytes
-    || metadata.byteLength + 4 * settings.maximumInputBytes > settings.maximumResultBytes) {
+    || metadata.byteLength + reserveMultiplier * settings.maximumInputBytes > settings.maximumResultBytes) {
     throw new Error('BUSTER_PREPARATION_RESULT_CAPACITY');
   }
   return staged;

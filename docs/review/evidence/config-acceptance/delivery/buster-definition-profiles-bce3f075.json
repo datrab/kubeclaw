@@ -1,0 +1,56 @@
+{
+  "sourceSha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+  "method": "current JSON author expressions evaluated in synthetic no-effect VM only; no native/runtime acceptance",
+  "profiles": [
+    {
+      "profile": "A",
+      "syntheticEnvironmentBindings": {
+        "RUNTIME_CONFIG_ROOT": "/run/kubeclaw-buster/config",
+        "REGISTRY_REFERENCE": "registry-a.delivery.invalid:443",
+        "REGISTRY_CLIENT_RUNTIME": "/fixtures/a/registry.json",
+        "CONTROLLER_NAMESPACE": "dlv-a",
+        "BUSTER_PLAN_PORT": "18891",
+        "BUSTER_TRUSTED_PEER_SPIFFE_ID": "spiffe://delivery.invalid/ns/dlv-a/sa/nova",
+        "BUSTER_PLAN_TRUSTED_SOURCE_AUTHORITY": "nova:delivery-a",
+        "BUSTER_V2_STATE_DIR": "/var/lib/buster-v2/plan-jobs",
+        "BUSTER_V2_RUN_DIR": "/var/lib/buster-v2/runs",
+        "BUILDKIT_HOST": "unix:///fixtures/a/buildkit.sock",
+        "BUSTER_NETWORK_HTTP_EXACT_ORIGINS": "https://http-a.delivery.invalid",
+        "BUSTER_BROWSER_AXE_EXACT_ORIGINS": "http://browser-a.delivery.invalid:18080",
+        "BUSTER_NETWORK_HTTP_ALLOW_WEBSOCKET": "false",
+        "BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT": "/fixtures/a/delegated-cgroup"
+      },
+      "files": {
+        "buster-definition-profiles-bce3f075/A/platform.json": "50cb9040a72d48c4618e04546e28f15c742108106aab005ddab34888af316f3c",
+        "buster-definition-profiles-bce3f075/A/runtime.json": "7f73c23a4f3ffe1873f8a4ad5c5082015dd3083ba9ebcde2da1e33385bfd800a"
+      },
+      "prerequisites": "Native fixed config/state/run roots retained. Config root ancestors rootowned/no groupworldwrite; runtime file rootowned regular NOFOLLOW,nlink1,bounded bytes. Exact ed25519 key/native pool launcher/runtime+engine identity required. Real isolated native fixture must provision executable/browser/package/CA/public signature key/registry/controller grants/cgroup/state roots and identities. No fixture exists or worker executed here. A/B are complete definition JSON witnesses, not validated native profiles.",
+      "limit": "Current author-expression evaluation with no productive imports/effects; B subsequent bounded policy variant, protocol and actual identity bindings retained."
+    },
+    {
+      "profile": "B",
+      "syntheticEnvironmentBindings": {
+        "RUNTIME_CONFIG_ROOT": "/run/kubeclaw-buster/config",
+        "REGISTRY_REFERENCE": "registry-b.delivery.invalid:443",
+        "REGISTRY_CLIENT_RUNTIME": "/fixtures/b/registry.json",
+        "CONTROLLER_NAMESPACE": "dlv-b",
+        "BUSTER_PLAN_PORT": "18892",
+        "BUSTER_TRUSTED_PEER_SPIFFE_ID": "spiffe://delivery.invalid/ns/dlv-b/sa/nova",
+        "BUSTER_PLAN_TRUSTED_SOURCE_AUTHORITY": "nova:delivery-b",
+        "BUSTER_V2_STATE_DIR": "/var/lib/buster-v2/plan-jobs",
+        "BUSTER_V2_RUN_DIR": "/var/lib/buster-v2/runs",
+        "BUILDKIT_HOST": "unix:///fixtures/b/buildkit.sock",
+        "BUSTER_NETWORK_HTTP_EXACT_ORIGINS": "https://http-b.delivery.invalid",
+        "BUSTER_BROWSER_AXE_EXACT_ORIGINS": "http://browser-b.delivery.invalid:18080",
+        "BUSTER_NETWORK_HTTP_ALLOW_WEBSOCKET": "false",
+        "BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT": "/fixtures/b/delegated-cgroup"
+      },
+      "files": {
+        "buster-definition-profiles-bce3f075/B/platform.json": "a92f7cb4e93fc1ed29f7a2f13e18d3af8145c6dd7e65938ae7e35e98b2bb42f7",
+        "buster-definition-profiles-bce3f075/B/runtime.json": "c1a409b9e921416296c0a929adaa4fa49c4e1f82df4da55b609951398169b1bc"
+      },
+      "prerequisites": "Native fixed config/state/run roots retained. Config root ancestors rootowned/no groupworldwrite; runtime file rootowned regular NOFOLLOW,nlink1,bounded bytes. Exact ed25519 key/native pool launcher/runtime+engine identity required. Real isolated native fixture must provision executable/browser/package/CA/public signature key/registry/controller grants/cgroup/state roots and identities. No fixture exists or worker executed here. A/B are complete definition JSON witnesses, not validated native profiles.",
+      "limit": "Current author-expression evaluation with no productive imports/effects; B subsequent bounded policy variant, protocol and actual identity bindings retained."
+    }
+  ]
+}

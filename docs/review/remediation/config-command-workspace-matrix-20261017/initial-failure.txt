@@ -1,0 +1,1 @@
+Initial preservation control failed for RT-91ddf4c78b4c536b: generic additionalProperties handling changed the preexisting transport-publisher container navigation. Scoped the new exact child handling to command/workspace only. Original prior32 preservation oracle unchanged. No production or original case result changed.

@@ -1,0 +1,23 @@
+{
+  "members": [
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 114,
+      "member": "readDurableState.maximumBytes?",
+      "sourceQuestionId": "CMP-SOURCE-OUTBOX-UNBOUNDED-READ"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+      "line": 32,
+      "member": "FileDurableBlobStore.maximumTotalBytes?",
+      "sourceQuestionId": "CMP-SOURCE-LATENT-UNBOUNDED-BLOB-API"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+      "line": 72,
+      "member": "readAttemptJournalPrefix.prefixBytes?",
+      "reason": "Absentusesactualstat.size, stillboundedrequiredmaximumBytes; retainedimmutableprefixsuppliedwhenreferenced."
+    }
+  ],
+  "notCaughtByInitializerOnlyAST": true
+}

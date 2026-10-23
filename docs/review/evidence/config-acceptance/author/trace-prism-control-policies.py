@@ -1,0 +1,111 @@
+"""Append source-traced control policies, without claiming semantic acceptance."""
+import hashlib
+import gzip
+import json
+import subprocess
+from pathlib import Path
+
+root = Path.cwd()
+base = Path('docs/review/evidence/config-acceptance/author')
+path = base / 'main-fragment.json'
+data = json.loads(path.read_text())
+files = [
+    'skills/prism/server/control-http.ts', 'skills/prism/control/session.ts',
+    'skills/prism/server/session-routes.ts', 'skills/prism/server/control-context.ts',
+    'skills/prism/server/control-server.ts', 'skills/prism/server/internal-auth.ts',
+    'skills/prism/server/worker-readiness.ts', 'skills/prism/server/corpus-routes.ts',
+    'skills/prism/corpus/index.ts',
+]
+digests = [{'path': p, 'sha256': hashlib.sha256((root/p).read_bytes()).hexdigest()} for p in files]
+raw = base / 'prism-control-source-read.log'
+raw.write_text(''.join(f'\nSOURCE {d["path"]} sha256:{d["sha256"]}\n' + ''.join(
+    f'{i:5d} {line}\n' for i, line in enumerate((root/d['path']).read_text().splitlines(), 1)) for d in digests))
+definitions = [
+    ('SESSION-TTL', files[1], 'mintSession expiresAt', 900000, 'milliseconds', 'control-server.sessionRoutes → exchangeTailscaleIdentity → mintSession; authenticatedControlContext/product decisions → verifySession', 'Token expiry now+TTL; verifier rejects expiresAt<=now. Cookie Max-Age=900 is separately hardcoded in session-routes twice, requiring one author and seconds projection, not three independent authors.', 'S authentication policy; minted token retains its original expiry after publication'),
+    ('SESSION-DEFAULT-ROLES', files[1], 'mintSession roles default', ['editor'], 'role identities', 'sessionRoutes → exchangeTailscaleIdentity → mintSession', 'Current mint default produces signed editor metadata; no tracked Prism role authorization predicate consumes it. Product operators allowlist is separate; member types/vocabulary/external consumers and target metadata domain remain open.', 'S signed metadata policy, not established grants; existing signed tokens retain their issued roles'),
+    ('HTTP-BODY-BYTES', files[0], 'body maxBytes default', 2000000, 'wire bytes', 'control-server → document/direction/approval/project/engine/corpus routes → body', 'Accumulator rejects size>maxBytes before JSON parse; explicit artifact call overrides to8500000. Content-type check uses startsWith(application/json), not exact parsed media-type equality.', 'S parser policy, J accepted-operation input binding must preserve original accepted bytes'),
+    ('ARTIFACT-WIRE-BYTES', files[7], 'uploadArtifact body(request,8500000)', 8500000, 'wire bytes', 'control-server → corpusRoutes POST /v1/artifacts → uploadArtifact → body', 'JSON/base64 wire budget differs from decoded artifact budget. Required coupled-domain review must account for base64 expansion and JSON overhead; no arbitrary safe integer maximum asserted.', 'S upload admission policy'),
+    ('ARTIFACT-DECODED-BYTES', files[7], 'uploadArtifact decoded.byteLength', 6000000, 'decoded bytes', 'corpusRoutes → uploadArtifact → artifacts.put', 'Reject decoded>6000000 or noncanonical base64 before artifacts.put. Other render/baseline/ingestion caps are separate readers, not implicitly proven aliases.', 'S artifact admission policy'),
+    ('SEARCH-DEFAULT-LIMIT', files[7], 'searchCorpus limit default; search limit default', 10, 'result slots', 'corpusRoutes GET /v1/corpus/search → runWorker ingest → corpus.search', 'Request limit is task data; omitted default10 is policy duplicated in route and exported search. Actual route Number/Math clamp admits NaN/fractions to downstream rather than enforcing a supported safe-integer domain.', 'S query-default policy; each accepted query remains task data'),
+    ('SEARCH-MAX-LIMIT', files[7], 'searchCorpus Math.min(50,...)', 50, 'result slots', 'corpusRoutes → searchCorpus → corpus.search and coverageGap', 'Route clamp1..50 is operator capacity policy; duplicate coverageGap clamp must use identical effective limit. Direct exported search has no same upper clamp.', 'S query admission policy'),
+    ('SEARCH-FAMILY-DEFAULT', files[7], 'searchCorpus sourceFamilyLimit ??2; search options fallback', 2, 'results per source family', 'searchCorpus → corpus.search → selected families Map', 'Default2 duplicated in HTTP and corpus search. Task requested sourceFamilyLimit is distinct; fallback changes diversity. No current integer/type validator.', 'S query-default policy'),
+    ('SEARCH-FAMILY-MAX', files[7], 'sourceFamilyLimit Math.min(10,...)', 10, 'results per source family', 'searchCorpus → corpus.search familyLimit → selection loop', 'HTTP clamps1..10; direct corpus.search only Math.max(1,options.sourceFamilyLimit??2). These domains are not identical or interchangeable validators.', 'S query admission policy'),
+    ('SEARCH-CANDIDATE-FLOOR', files[8], 'SQL LIMIT100 and Math.max(limit*10,100)', 100, 'candidate rows', 'searchCorpus → corpus.search → pool.query hybrid/text SQL', 'Hybrid text_rank/vector_rank each cap100 while outer result floor100. Three real readers need one explicit justified policy or separate scope if domains differ; DB behavior not executed here.', 'S ranking resource policy; query input remains J data'),
+    ('SEARCH-CANDIDATE-MULTIPLIER', files[8], 'Math.max(limit*10,100)', 10, 'candidate rows per requested slot', 'corpus.search → hybrid/text SQL bound parameter', 'Both branches oversample result candidates; role of hybrid inner100 cap differs from outer multiplier. DB domain and cost witness remain open.', 'S ranking resource policy'),
+    ('SEARCH-RRF-DAMPING', files[8], '1.0/(60+rank)', 60, 'rank damping factor', 'corpus.search hybrid fused SQL → selected results', 'Ranking hyperparameter affects ordering/score, not protocol constant solely because output label hybrid-rrf-v1 is versioned. Version/profile compatibility requires explicit definition.', 'S ranking policy; algorithm label is separate version contract'),
+    ('CORPUS-ACQUIRE-TIMEOUT', files[7], 'acquireCorpus AbortSignal.timeout', 30000, 'milliseconds', 'corpusRoutes POST /v1/corpus → ingestCorpus → acquireCorpus fetch', 'Current POST abort budget30s; no persisted config generation. Must preserve original accepted ingestion endpoint, secret reference and uncertain acquisition effects on retry.', 'J acquisition/cleanup workflow closure; service policy captured before dispatch'),
+    ('CORPUS-CLEANUP-TIMEOUT', files[7], 'cleanAcquisition AbortSignal.timeout', 10000, 'milliseconds', 'ingestCorpus → cleanAcquisition DELETE → revision-specific activation', 'DELETE must finish before exact stored revision activation; publication and cleanup errors retained together. Future cleanup timeout must not adopt Latest or reset claim/budget.', 'J original acquisition cleanup closure'),
+    ('HMAC-WINDOW', files[5], 'WINDOW_MS verification and nonce expiresAt', 300000, 'milliseconds', 'worker-service auth.database.authenticate → worker-readiness authenticate → real PostgresNonceStore + verifyInternalRequest', 'Absolute timestamp skew>window rejects; same window computes stored nonce expiry. Timestamp itself safe integer. Signature/nonce wire shapes are distinct protocol invariants. Replay DB behavior not executed here.', 'S trust policy; durable nonce retention must cover originally accepted window'),
+    ('NONCE-CLEANUP-BATCH', files[5], 'PostgresNonceStore.consume DELETE LIMIT1000', 1000, 'expired rows per authentication', 'worker-readiness run → PostgresNonceStore.consume → DELETE then ON CONFLICT INSERT', 'Cleanup throughput policy; DELETE only already expired rows. Database semantics/concurrency proof and proposed domain unresolved, not protocol const.', 'S storage maintenance policy; nonce identity/audience retained across retry'),
+]
+requirement_ids = ['C0-A', 'C0-B', 'C0-C', 'C0-D', 'D17', 'D20', 'F-AUTH', 'F-VAL', 'F-EFFECT', 'F-BIND']
+new_rows = []
+new_cases = []
+for name, source, field, value, unit, chain, contract, activation in definitions:
+    sid = 'AUTH-PRISM-CONTROL-' + name
+    cid = sid + '-IMPLEMENTATION'
+    digest = next(d for d in digests if d['path'] == source)
+    related = [digest] + [d for d in digests if d['path'] in (files[4], files[7], files[8], files[2], files[6]) and d != digest]
+    new_rows.append({
+        'id': sid, 'owner': 'prism-control' if name not in ('HMAC-WINDOW','NONCE-CLEANUP-BATCH') else 'prism-worker-auth',
+        'scope': {'instance':'actual control service / worker-auth as identified', 'profile':'current code policy; complete target author generation not defined'},
+        'class':'operator-setting', 'classificationReason':'Literal controls admission, ranking, trust or maintenance policy at identified productive reader; not classified immutable merely because current code has no override.',
+        'source': {**digest, 'field':field},
+        'current': {'valueOrDefault':value, 'precedence':'Actual code default/constant; any distinct task override and shadowing recorded in validation below'},
+        'typeUnitDomain':'Current value and actual boundary stated; proposed supported adjustable domain still open, no invented capacity or universal range', 'unit':unit,
+        'reader':field, 'productiveCallerChain':chain.split(' → '),
+        'validation': {'semantic':contract, 'schema':'No selected central author or default-free target validator implemented'},
+        'targetAuthorRef':'config/services/prism.config.json#/profiles/<selected>/controlPolicies/'+name,
+        'activationScope': {'current':activation, 'target':'Proposed scope above requires independent durable-binding review before implementation'},
+        'recoveryRetryClaimDeadlineBudgetEffects':contract,
+        'profileEvalSuitability':'Future full selected generation retained for Eval; task query/bytes are not operator profiles',
+        'migrationAction':'C3 explicit owner policy and productive parser/ranking/auth wiring; C5 binding of original accepted effects',
+        'requirementIds':requirement_ids, 'caseIds':[cid],
+        'verifiedSourceEvidence':[str(raw)], 'semanticStatus':'source-traced-domains-complete-profiles-cases-review-open', 'c0Closed':False,
+    })
+    new_cases.append({
+        'id':cid, 'settingIds':[sid], 'requirementIds':requirement_ids, 'phase':'implementation-proposal',
+        'scope':'local real control/worker service with disposable DB and genuine admission/dispatch/storage prerequisite where needed',
+        'productiveCaller':chain, 'inputProfile':{'currentPolicyValue':value,'A':'complete generation and justified domain pending','B':'materially different complete valid generation pending'},
+        'priorState':'Record original accepted request/token/acquisition/nonce/query and config generation; preserve claim/deadline/budget on retry',
+        'expectedEffectOrRejectingBoundary':contract,
+        'observerMethod':'Real identified reader output/rejection, persisted DB/token/revision effect and captured effective generation; no mocked claimed component',
+        'command':None, 'sourceIdentity':{'sources':related}, 'testDigests':[], 'toolDependencyImageConfigIdentities':None,
+        'rawEvidencePath':None, 'result':'not-run', 'reason':'C3/C5 not approved; exact complete alternate profiles/domains/real harness and invocation unresolved',
+        'reviewerConfirmation':None, 'specificationStatus':'incomplete-explicit',
+    })
+old_ids = {r['id'] for r in new_rows}
+data['rows'] = [r for r in data['rows'] if r['id'] not in old_ids] + new_rows
+new_ids = {c['id'] for c in new_cases}
+data['cases'] = [c for c in data['cases'] if c['id'] not in new_ids] + new_cases
+by_path = {d['path']:d for d in data['sources']}
+by_path.update({d['path']:d for d in digests})
+data['sources'] = list(by_path.values())
+log = base/'prism-control-definition.log'
+observed = json.loads(log.read_text())
+cid = 'AUTH-PRISM-CONTROL-C0-CURRENT-SESSION-PARSER'
+rows = ['AUTH-PRISM-CONTROL-'+v for v in ('SESSION-TTL','SESSION-DEFAULT-ROLES','HTTP-BODY-BYTES')]
+patch = base/'prism-control-definition-dirty.patch.gz'
+patch_bytes = subprocess.check_output(['git','diff','--binary','HEAD'])
+patch.write_bytes(gzip.compress(patch_bytes,mtime=0))
+identity = observed['identity']
+identity['dirtyStand'] = {'patchPath':str(patch),'patchSha256':hashlib.sha256(patch.read_bytes()).hexdigest(),'decompressedPatchSha256':hashlib.sha256(patch_bytes).hexdigest(),
+    'untrackedInputs':[{'path':str(p),'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in (Path(__file__),raw,base/'check-prism-control-definition.mjs',log)],
+    'capture':'post-command exact tracked patch plus all executed untracked inputs; productive sources unchanged'}
+case = {'id':cid,'settingIds':rows,'requirementIds':['C0-A','C0-C','A2','A4','A5'],'phase':'C0','scope':'local current session exports and genuine loopback HTTP parser',
+    'productiveCaller':'Current exported mintSession/verifySession/body; actual application caller chains retained in rows, not a complete control-server composition test',
+    'inputProfile':{'currentTTL':900000,'defaultBodyBytes':2000000,'wirePositiveBytes':2000000,'wireNegativeBytes':2000001},
+    'priorState':'Disposable fresh local signing key; explicit now; no deployed secrets, DB, gateway, worker or paid provider',
+    'expectedEffectOrRejectingBoundary':'Session accepts at expiry-1 and rejects at expiry; wrong signing key rejects; actual parser accepts exact2000000 JSON wire bytes and rejects2000001; wrong media type rejects',
+    'observerMethod':observed['observations'],'command':'node '+str(base/'check-prism-control-definition.mjs'),
+    'sourceIdentity':identity,'testDigests':[identity['sources'][0]],'toolDependencyImageConfigIdentities':{'node':identity['node'],'sources':identity['sources']},
+    'rawEvidencePath':str(log),'rawEvidenceSha256':hashlib.sha256(log.read_bytes()).hexdigest(),'result':'passed','reason':observed['limits'],
+    'reviewerConfirmation':None,'specificationStatus':'executed-current-definition-only'}
+data['cases'] = [c for c in data['cases'] if c['id'] != cid]+[case]
+for row in data['rows']:
+    if row['id'] in rows: row['caseIds'].append(cid)
+gap = {'id':'AUTH-PRISM-CONTROL-POLICIES','reason':'Sixteen additional productive literal policies traced; actual six parser/session controls do not close adjustable domains, whole owner profiles, DB replay/ranking, alias authority, API grants, complete future executable specifications or independent review.'}
+data['gaps'] = [g for g in data['gaps'] if g['id'] != gap['id']] + [gap]
+path.write_text(json.dumps(data,indent=2)+'\n')
+(base/'prism-control-policy-dispositions.json').write_text(json.dumps({'sourceIdentity':digests,'settings':sorted(old_ids),'definitionCase':cid,'status':'C0 open, source traced; no implementation acceptance'},indent=2)+'\n')
+print(json.dumps({'addedRows':len(new_rows),'actualControls':len(observed['observations']),'C0Accepted':False}))

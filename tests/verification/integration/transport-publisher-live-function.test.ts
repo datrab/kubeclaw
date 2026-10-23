@@ -1,0 +1,455 @@
+import { TEST_CORE_POLICY as DELIVERY_TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
+const TEST_PUBLISHER_STORE_POLICY = {...DELIVERY_TEST_CORE_POLICY.transportPublisherStore,...DELIVERY_TEST_CORE_POLICY.transportPublisherFailure,...DELIVERY_TEST_CORE_POLICY.transportPublisherStructure,targetPayloadProfiles:{...DELIVERY_TEST_CORE_POLICY.transportPublisherPayload.targetPayloadProfiles,small:{maxPayloadBytes:128},maximum:{maxPayloadBytes:1_048_576}}};
+import assert from 'node:assert/strict';
+import crypto from 'node:crypto';
+import fs from 'node:fs';
+import http from 'node:http';
+import os from 'node:os';
+import path from 'node:path';
+import { pathToFileURL } from 'node:url';
+
+const signingKey = 'transport-test-signing-key';
+process.env.KUBECLAW_TRANSPORT_TEST_KEY = signingKey;
+
+const received = [];
+const server = http.createServer((request, response) => {
+  const chunks = [];
+  request.on('data', (chunk) => chunks.push(chunk));
+  request.on('end', () => {
+    const rawBody = Buffer.concat(chunks).toString('utf8');
+    const target = String(request.headers['x-kubeclaw-target'] ?? '');
+    const idempotencyKey = String(request.headers['idempotency-key'] ?? '');
+    const expected = crypto
+      .createHmac('sha256', signingKey)
+      .update(`${target}\n${idempotencyKey}\n${rawBody}`)
+      .digest('hex');
+    received.push({
+      url: request.url,
+      method: request.method,
+      target,
+      idempotencyKey,
+      signature: request.headers['x-kubeclaw-signature'],
+      expected: `sha256=${expected}`,
+      body: JSON.parse(rawBody),
+    });
+    response.setHeader('content-type', 'application/json');
+    if (request.url === '/rejected') {
+      response.end(JSON.stringify({ accepted: false, publicationId: 'rejected' }));
+    } else if (request.url === '/malformed') {
+      response.end(JSON.stringify({ accepted: true, publicationId: 'ok', unexpected: true }));
+    } else if (request.url === '/unavailable') {
+      response.writeHead(503).end(JSON.stringify({ error: 'unavailable' }));
+    } else {
+      response.end(JSON.stringify({ accepted: true, publicationId: `publication:${received.length}` }));
+    }
+  });
+});
+
+await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
+const address = server.address();
+if (!address || typeof address === 'string') throw new Error('test server did not bind');
+const origin = `http://127.0.0.1:${address.port}`;
+
+const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'transport-publisher-test-'));
+const consumerRoot = path.join(temporary, 'plugins', 'consumer');
+fs.mkdirSync(path.join(consumerRoot, 'dist'), { recursive: true });
+fs.mkdirSync(path.join(consumerRoot, 'schemas'), { recursive: true });
+fs.writeFileSync(path.join(consumerRoot, 'dist', 'stage.js'), `
+  export async function execute() {
+    return { schemaVersion: 'stage-result.v2', outcome: 'passed', artifacts: [] };
+  }
+`);
+for (const name of ['config', 'input', 'result']) {
+  fs.writeFileSync(path.join(consumerRoot, 'schemas', `${name}.json`), JSON.stringify({
+    $schema: 'https://json-schema.org/draft/2020-12/schema',
+    type: 'object',
+    additionalProperties: false,
+  }));
+}
+fs.writeFileSync(path.join(consumerRoot, 'plugin.json'), JSON.stringify({
+  id: 'test.transport-consumer',
+  apiVersion: 'pipeline-plugin-v2',
+  packageVersion: '1.0.0',
+  stages: [{
+    id: 'consumer',
+    type: 'test.transport.consumer',
+    module: 'dist/stage.js',
+    export: 'execute',
+    requiredCapabilities: ['transport.publish'],
+    configSchema: 'schemas/config.json',
+    inputSchema: 'schemas/input.json',
+    resultSchema: 'schemas/result.json',
+  }],
+  observers: [],
+  adapters: [],
+}));
+
+const core = await import(pathToFileURL(path.resolve('../../../nova/core/src/index.ts')).href);
+const packages = core.discoverPackages({
+  installationRoots: ['../../plugins', path.join(temporary, 'plugins')],
+  trustPolicy: {
+    trustedBuiltinRoots: ['../../plugins', path.join(temporary, 'plugins')],
+    allowedSourceDigests: new Map(),
+    verifiedAttestations: new Map(),
+    verifierId: 'test:transport-publisher',
+  },
+  now: () => new Date('2026-07-26T16:00:00Z'),
+});
+const snapshot = core.buildRegistry(packages);
+const publisherId = 'kubeclaw.transport-publisher:publisher';
+const secretId = 'kubeclaw.secret-resolver:secrets';
+const networkId = 'kubeclaw.network-http:http';
+const consumerId = 'test.transport-consumer:consumer';
+const granted = core.resolveCapabilityGrants(snapshot, {
+  enabledRegistrations: new Set([consumerId]),
+  providers: new Map([
+    ['transport.publish', publisherId],
+    ['secrets.read', secretId],
+    ['network.http', networkId],
+  ]),
+  grants: new Map([
+    [consumerId, new Map([
+      ['transport.publish', { allowedTargets: ['audit', 'rejected', 'malformed', 'unavailable'] }],
+    ])],
+    [publisherId, new Map([
+      ['secrets.read', { allowedNames: ['transport.signing'] }],
+      ['network.http', { allowedOrigins: [origin] }],
+    ])],
+  ]),
+});
+const activated = await core.activateRegistry(snapshot, new Set(granted.grants.keys()));
+const journal = new core.MemoryEffectJournal();
+const adapters = new core.AdapterRuntime({
+  granted,
+  activated,
+  configs: new Map([
+    [publisherId, { ...TEST_PUBLISHER_STORE_POLICY,
+      deliveryRoot: path.join(temporary, 'deliveries'),
+      targets: {
+        audit: {
+          endpoint: `${origin}/publish`,
+          signingSecret: 'transport.signing',
+          payloadProfile: 'small',
+        },
+        rejected: {
+          endpoint: `${origin}/rejected`,
+          signingSecret: 'transport.signing',
+        payloadProfile: 'standard',
+        },
+        malformed: {
+          endpoint: `${origin}/malformed`,
+          signingSecret: 'transport.signing',
+        payloadProfile: 'standard',
+        },
+        unavailable: {
+          endpoint: `${origin}/unavailable`,
+          signingSecret: 'transport.signing',
+        payloadProfile: 'standard',
+        },
+      },
+    }],
+    [secretId, {
+      environment: {
+        'transport.signing': 'KUBECLAW_TRANSPORT_TEST_KEY',
+      },
+    }],
+    [networkId, {
+      ...DELIVERY_TEST_CORE_POLICY.networkHttp,
+      allowedOrigins: [origin],
+      allowedMethods: ['POST'],
+      allowedHeaders: [
+        'content-type',
+        'idempotency-key',
+        'x-kubeclaw-target',
+        'x-kubeclaw-signature',
+      ],
+      maxRequestBytes: 1024,
+      maxResponseBytes: 1024,
+      timeoutMs: 1000,
+    }],
+  ]),
+  effects: new core.EffectCoordinator(journal, undefined, undefined, new core.MemoryResourceLockManager(), 300_000, DELIVERY_TEST_CORE_POLICY.resourceAcquisition),
+  shutdownTimeoutMs: 1000,
+  async emitDomainEvent() {},
+});
+
+const attempt = {
+  runId: 'run:transport',
+  stageId: 'transport',
+  attemptId: 'attempt:transport',
+  attemptNumber: 1,
+};
+let sequence = 0;
+const publish = (target, payload, options = {}) => {
+  sequence += 1;
+  return adapters.invoke(
+    'transport.publish',
+    attempt,
+    options.idempotencyKey ?? `transport:${sequence}`,
+    {
+      operation: options.operation ?? 'publish',
+      resource: { type: options.resourceType ?? 'transport.target', canonicalId: target },
+      payload,
+    },
+    options.signal ?? new AbortController().signal,
+  );
+};
+
+try {
+  await adapters.start();
+
+  const first = await publish('audit', { message: { event: 'completed', sequence: 7 } }, {
+    idempotencyKey: 'transport:stable',
+  });
+  assert.deepEqual(first, {
+    accepted: true,
+    target: 'audit',
+    publicationId: 'publication:1',
+    status: 200,
+  });
+  assert.equal(received.length, 1);
+  assert.equal(received[0].method, 'POST');
+  assert.equal(received[0].target, 'audit');
+  assert.equal(received[0].idempotencyKey, 'transport:stable');
+  assert.equal(received[0].signature, received[0].expected);
+  assert.deepEqual(received[0].body, { message: { event: 'completed', sequence: 7 } });
+
+  const replay = await publish('audit', { message: { event: 'completed', sequence: 7 } }, {
+    idempotencyKey: 'transport:stable',
+  });
+  assert.deepEqual(replay, first);
+  assert.equal(received.length, 1, 'outer effect receipt must make publication idempotent');
+
+  await assert.rejects(publish('missing', { message: {} }), /TRANSPORT_TARGET_UNKNOWN/);
+  await assert.rejects(publish('audit', { message: {}, extra: true }), /TRANSPORT_PAYLOAD_UNKNOWN_FIELD/);
+  await assert.rejects(
+    publish('audit', { message: { content: 'x'.repeat(256) } }),
+    /TRANSPORT_PAYLOAD_SIZE_EXCEEDED/,
+  );
+  await assert.rejects(publish('rejected', { message: {} }), /TRANSPORT_PUBLICATION_REJECTED/);
+  await assert.rejects(publish('malformed', { message: {} }), /TRANSPORT_RESPONSE_BODY_INVALID/);
+  await assert.rejects(publish('unavailable', { message: {} }), /HTTP_503/);
+  await assert.rejects(
+    publish('audit', { message: {} }, { operation: 'read' }),
+    /TRANSPORT_OPERATION_UNSUPPORTED/,
+  );
+  await assert.rejects(
+    publish('audit', { message: {} }, { resourceType: 'network.url' }),
+    /TRANSPORT_RESOURCE_TYPE_INVALID/,
+  );
+
+  const beforeCancellation = received.length;
+  const cancelled = new AbortController();
+  cancelled.abort();
+  await assert.rejects(
+    publish('audit', { message: {} }, { signal: cancelled.signal }),
+    /^Error: EFFECT_RESOURCE_WAIT_CANCELLED$/,
+  );
+
+  assert.equal(received.length, beforeCancellation, 'pre-aborted publication must not reach the receiver');
+
+  const persisted = JSON.stringify(journal.entries());
+  assert.doesNotMatch(persisted, new RegExp(signingKey), 'secret must never enter durable effect requests');
+  assert.match(persisted, /sha256=[a-f0-9]{64}/, 'auditable request retains only the HMAC');
+
+  const { activate: activateDirect } = await import(pathToFileURL(path.resolve('src/adapter.ts')).href);
+  let directSends = 0;
+  const direct = activateDirect({
+    registration: {},
+    config: { ...TEST_PUBLISHER_STORE_POLICY,
+      deliveryRoot: path.join(temporary, 'direct-deliveries'),
+      targets: {
+        retry: {
+          endpoint: `${origin}/direct-retry`,
+          signingSecret: 'transport.signing',
+        payloadProfile: 'standard',
+        },
+      },
+    },
+    async emit() {},
+    async invoke(capability) {
+      if (capability === 'secrets.read') return { value: signingKey };
+      if (capability === 'network.http') {
+        directSends += 1;
+        if (directSends === 1) throw new Error('HTTP_503');
+        return { status: 200, body: { accepted: true, publicationId: 'publication:direct-retry' } };
+      }
+      throw new Error(`unexpected dependency:${capability}`);
+    },
+  });
+  const directPayload = { message: { event: 'retry-across-attempts' } };
+  const directInvoke = (
+    retryAttempt,
+    idempotencyKey = 'transport:retry-across-attempts',
+    message = directPayload,
+  ) => direct.invoke({
+    request: {
+      requestId: `request:${retryAttempt.attemptNumber}`,
+      idempotencyKey,
+      attempt: retryAttempt,
+      capability: 'transport.publish',
+      operation: 'publish',
+      resource: { type: 'transport.target', canonicalId: 'retry' },
+      payload: message,
+    },
+    signal: new AbortController().signal,
+    fence: { assertCurrent() {} },
+  });
+  await assert.rejects(directInvoke(attempt), /HTTP_503/);
+  const directRetried = await directInvoke({
+    ...attempt,
+    attemptId: 'attempt:transport-retry',
+    attemptNumber: 2,
+  });
+  assert.equal(directRetried.accepted, true);
+  assert.equal(directSends, 2);
+  await assert.rejects(
+    directInvoke(attempt, 'transport:retry-across-attempts', { message: { event: 'changed' } }),
+    /DURABLE_RECORD_IDEMPOTENCY_CONFLICT/,
+  );
+  assert.equal((await directInvoke(attempt, 'a'.repeat(256))).accepted, true);
+  assert.equal(directSends, 3, 'a distinct delivery key must not reuse an unrelated receipt');
+  await direct.shutdown();
+
+  let capacitySends = 0;
+  const capacity = activateDirect({
+    registration: {},
+    config: { ...TEST_PUBLISHER_STORE_POLICY,
+      deliveryRoot: path.join(temporary, 'capacity-deliveries'),
+      maximumDeliveryRecords: 1,
+      targets: {
+        retry: {
+          endpoint: `${origin}/capacity`,
+          signingSecret: 'transport.signing',
+        payloadProfile: 'standard',
+        },
+      },
+    },
+    async emit() {},
+    async invoke(capability) {
+      if (capability === 'secrets.read') return { value: signingKey };
+      if (capability === 'network.http') {
+        capacitySends += 1;
+        return { status: 200, body: { accepted: true, publicationId: 'must-not-send' } };
+      }
+      throw new Error(`unexpected dependency:${capability}`);
+    },
+  });
+  await assert.rejects(capacity.invoke({
+    request: {
+      requestId: 'request:capacity',
+      idempotencyKey: 'transport:capacity',
+      attempt,
+      capability: 'transport.publish',
+      operation: 'publish',
+      resource: { type: 'transport.target', canonicalId: 'retry' },
+      payload: directPayload,
+    },
+    signal: new AbortController().signal,
+    fence: { assertCurrent() {} },
+  }), /DURABLE_RECORD_STORE_FULL/);
+  assert.equal(capacitySends, 0, 'terminal capacity must be reserved before network delivery');
+  await capacity.shutdown();
+
+  let concurrentSends = 0;
+  const concurrent = activateDirect({
+    registration: {},
+    config: { ...TEST_PUBLISHER_STORE_POLICY,
+      deliveryRoot: path.join(temporary, 'concurrent-deliveries'),
+      targets: {
+        retry: {
+          endpoint: `${origin}/concurrent`,
+          signingSecret: 'transport.signing',
+        payloadProfile: 'standard',
+        },
+      },
+    },
+    async emit() {},
+    async invoke(capability) {
+      if (capability === 'secrets.read') return { value: signingKey };
+      if (capability === 'network.http') {
+        concurrentSends += 1;
+        const call = concurrentSends;
+        await new Promise((resolve) => setTimeout(resolve, call === 1 ? 10 : 30));
+        if (call === 1) throw new Error('HTTP_503');
+        return { status: 200, body: { accepted: true, publicationId: 'publication:concurrent' } };
+      }
+      throw new Error(`unexpected dependency:${capability}`);
+    },
+  });
+  const concurrentInvoke = () => concurrent.invoke({
+    request: {
+      requestId: `request:concurrent:${crypto.randomUUID()}`,
+      idempotencyKey: 'transport:concurrent',
+      attempt,
+      capability: 'transport.publish',
+      operation: 'publish',
+      resource: { type: 'transport.target', canonicalId: 'retry' },
+      payload: directPayload,
+    },
+    signal: new AbortController().signal,
+    fence: { assertCurrent() {} },
+  });
+  const concurrentResults = await Promise.allSettled([concurrentInvoke(), concurrentInvoke()]);
+  assert.equal(concurrentResults.filter((result) => result.status === 'fulfilled').length, 1);
+  assert.equal(concurrentResults.filter((result) => result.status === 'rejected').length, 1);
+  assert.equal((await concurrentInvoke()).accepted, true);
+  assert.equal(concurrentSends, 2, 'the durable success must win over a concurrent failure');
+  await concurrent.shutdown();
+
+  let boundarySends = 0;
+  const boundary = activateDirect({
+    registration: {},
+    config: { ...TEST_PUBLISHER_STORE_POLICY,
+      deliveryRoot: path.join(temporary, 'boundary-deliveries'),
+      targets: {
+        retry: {
+          endpoint: `${origin}/boundary`,
+          signingSecret: 'transport.signing',
+          payloadProfile: 'maximum',
+        },
+      },
+    },
+    async emit() {},
+    async invoke(capability) {
+      if (capability === 'secrets.read') return { value: signingKey };
+      if (capability === 'network.http') {
+        boundarySends += 1;
+        return { status: 200, body: { accepted: true, publicationId: 'publication:boundary' } };
+      }
+      throw new Error(`unexpected dependency:${capability}`);
+    },
+  });
+  const boundaryResult = await boundary.invoke({
+    request: {
+      requestId: 'request:boundary',
+      idempotencyKey: 'transport:boundary',
+      attempt,
+      capability: 'transport.publish',
+      operation: 'publish',
+      resource: { type: 'transport.target', canonicalId: 'retry' },
+      payload: { message: { content: 'x'.repeat(1_048_400) } },
+    },
+    signal: new AbortController().signal,
+    fence: { assertCurrent() {} },
+  });
+  assert.equal(boundaryResult.accepted, true);
+  assert.equal(boundarySends, 1);
+  await boundary.shutdown();
+} finally {
+  await adapters.shutdown();
+  await assert.rejects(
+    publish('audit', { message: {} }),
+    /ADAPTER_RUNTIME_STOPPING/,
+  );
+  delete process.env.KUBECLAW_TRANSPORT_TEST_KEY;
+  await new Promise((resolve) => server.close(resolve));
+  fs.rmSync(temporary, { recursive: true, force: true });
+}
+
+console.log(JSON.stringify({
+  ok: true,
+  plugin: 'kubeclaw.transport-publisher',
+  suite: 'live-function',
+  publications: received.length,
+}));

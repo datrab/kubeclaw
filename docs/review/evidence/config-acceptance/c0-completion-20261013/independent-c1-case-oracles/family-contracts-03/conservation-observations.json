@@ -1,0 +1,12 @@
+{
+  "scope": "Evidence references and original lifecycle conservation only, no executable semantic acceptance",
+  "originalIDs": 229,
+  "familyContracts": 58,
+  "historicPassed": 28,
+  "futureNotRun": 201,
+  "G5": "OPEN",
+  "independentNativeEffectImpossibleThroughCurrentCallerOriginalIDsRemainOpen": [
+    "CMP-C1-EFFECT-buster-engine-execution.reports.minimumOpenFiles",
+    "CMP-C1-EFFECT-buster-engine-execution.reports.runtimeMemoryReserveBytes"
+  ]
+}

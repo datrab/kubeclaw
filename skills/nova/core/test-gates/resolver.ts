@@ -1,9 +1,11 @@
 import crypto from 'node:crypto';
 import {
   resolvedTestPlanDigest,
+  providerPolicyModeErrors,
   stableTestIdentity,
   validatePipelineTestGateContract,
   type DependencyV1,
+  type SelectedProviderPolicyV1,
   type EvidencePolicyV1,
   type ExecutionLimitsV1,
   type JsonValue,
@@ -476,14 +478,19 @@ function validateResolverFacts(input: ResolveTestPlanInput): void {
   }
 }
 
-function evidencePolicy(provider: TestProviderRegistryEntry, override: EvidenceOverride | undefined, nodeId: string): EvidencePolicyV1 {
+function evidencePolicy(provider: TestProviderRegistryEntry, override: EvidenceOverride | undefined, nodeId: string, selected?: SelectedProviderPolicyV1): EvidencePolicyV1 {
   const policy = {
-    onPass: [...(override?.onPass ?? provider.registration.evidenceDefaults.onPass)],
-    onFail: [...(override?.onFail ?? provider.registration.evidenceDefaults.onFail)],
-    onError: [...(override?.onError ?? provider.registration.evidenceDefaults.onError)],
+    onPass: [...(override?.onPass ?? selected?.declarations.evidenceDefaults.onPass ?? provider.registration.evidenceDefaults.onPass)],
+    onFail: [...(override?.onFail ?? selected?.declarations.evidenceDefaults.onFail ?? provider.registration.evidenceDefaults.onFail)],
+    onError: [...(override?.onError ?? selected?.declarations.evidenceDefaults.onError ?? provider.registration.evidenceDefaults.onError)],
   };
   const supported = new Set(provider.registration.evidenceTypes);
   for (const type of [...policy.onPass, ...policy.onFail, ...policy.onError]) if (!supported.has(type)) fail('TEST_PLAN_EVIDENCE_INVALID', `${nodeId}:${type}`);
+  if (selected && [policy.onPass, policy.onFail, policy.onError].some(types => !types.includes('log'))) fail('TEST_PLAN_EVIDENCE_INVALID', `${nodeId}:mandatory-log-evidence`);
+  if (selected && provider.registration.contractId === 'kubeclaw.size-budget@1'
+    && (!policy.onPass.includes('size-budget-baseline') || !policy.onFail.includes('size-budget-baseline') || !policy.onError.includes('log'))) {
+    fail('TEST_PLAN_EVIDENCE_INVALID', `${nodeId}:mandatory-size-evidence`);
+  }
   return policy;
 }
 
@@ -543,7 +550,19 @@ function expandNodes(input: ResolveTestPlanInput, drafts: readonly DraftNode[]):
     if (provider.registration.kind !== draft.kind) fail('TEST_PLAN_PROVIDER_KIND_INVALID', draft.id);
     if (draft.kind === 'fixture' && draft.declaration.mode !== undefined) fail('TEST_PLAN_MODE_INVALID', draft.id);
     if (draft.kind === 'fixture' && draft.declaration.review !== undefined) fail('TEST_PLAN_REVIEW_INVALID', draft.id);
-    const variations = matrixValues(draft, provider, input.policy.maximumMatrixSize);
+    const selectedPolicy = input.selectedProviderPolicies?.get(provider.registration.contractId);
+    // An explicit generation selection must never reopen the old task-policy
+    // author for a missing Quality member. Absence of the entire map alone
+    // identifies the historical v1 calling convention.
+    if (input.selectedProviderPolicies !== undefined && selectedPolicy === undefined
+      && ['kubeclaw.size-budget@1', 'kubeclaw.coverage-budget@1'].includes(provider.registration.contractId)) {
+      fail('TEST_PLAN_SELECTED_POLICY_MISSING', `${draft.id}:${provider.registration.contractId}`);
+    }
+    const effectiveProvider = selectedPolicy ? { ...provider, registration: { ...provider.registration,
+      retrySafe: provider.registration.retrySafe && selectedPolicy.declarations.retrySafe,
+      matrixFields: provider.registration.matrixFields.filter(field => selectedPolicy.declarations.matrixFields.includes(field)),
+    } } : provider;
+    const variations = matrixValues(draft, effectiveProvider, input.policy.maximumMatrixSize);
     const items = variations.map((variation, index): ExpandedNode => {
       const hasMatrix = Object.keys(variation).length > 0;
       const id = hasMatrix ? `${draft.id}/matrix-${String(index + 1).padStart(3, '0')}` : draft.id;
@@ -554,21 +573,22 @@ function expandNodes(input: ResolveTestPlanInput, drafts: readonly DraftNode[]):
       if (!Number.isSafeInteger(requestedTimeout) || requestedTimeout < 1 || requestedTimeout > input.policy.maximumTimeoutMs) fail('TEST_PLAN_TIMEOUT_INVALID', id);
       const requestedRetries = draft.declaration.retries;
       let retryCount = requestedRetries ?? DEFAULT_RETRY_COUNT;
-      if (!provider.registration.retrySafe && requestedRetries === undefined) retryCount = 0;
+      if (!effectiveProvider.registration.retrySafe && requestedRetries === undefined) retryCount = 0;
       if (!Number.isSafeInteger(retryCount) || retryCount < 0 || retryCount > input.policy.maximumRetryCount) fail('TEST_PLAN_RETRY_INVALID', id);
-      if (!provider.registration.retrySafe && retryCount > 0 && draft.declaration.acceptUnsafeRetry !== true) fail('TEST_PLAN_RETRY_UNSAFE', id);
+      if (!effectiveProvider.registration.retrySafe && retryCount > 0 && draft.declaration.acceptUnsafeRetry !== true) fail('TEST_PLAN_RETRY_UNSAFE', id);
       const config = deepMerge(draft.declaration.config ?? {}, variation);
       let configuration;
       try {
-        configuration = resolveTestProviderConfiguration(input.registry, provider.registration.contractId, config);
+        configuration = resolveTestProviderConfiguration(input.registry, provider.registration.contractId, config, selectedPolicy);
       } catch (error) {
         fail('TEST_PLAN_CONFIGURATION_INVALID', `${id}:${error instanceof Error ? error.message : String(error)}`);
       }
       const mode = draft.kind === 'test' ? draft.declaration.mode ?? 'blocking' : null;
       if (provider.registration.contractId === 'kubeclaw.coverage-budget@1'
-        && mode === 'blocking' && configuration.values.minimumLinePercent === undefined) {
+        && mode === 'blocking' && configuration.schemaVersion === 'provider-configuration.v1' && configuration.values.minimumLinePercent === undefined) {
         fail('TEST_PLAN_COVERAGE_MINIMUM_REQUIRED', id);
       }
+      if (providerPolicyModeErrors(configuration, mode).length) fail('TEST_PLAN_SIZE_LIMIT_REQUIRED', id);
       if (provider.registration.contractId === 'kubeclaw.lighthouse@1'
         && mode === 'blocking' && configuration.values.purpose === 'performance'
         && configuration.values.budget === undefined) {
@@ -593,7 +613,7 @@ function expandNodes(input: ResolveTestPlanInput, drafts: readonly DraftNode[]):
         concurrencyGroup: draft.declaration.concurrencyGroup ?? null,
         parentNodeId: hasMatrix ? draft.id : null,
         variation,
-        evidence: evidencePolicy(provider, draft.declaration.evidence, id),
+        evidence: evidencePolicy(provider, draft.declaration.evidence, id, selectedPolicy),
         skipReason: skipReason(draft.declaration.when, input),
       };
       return { baseId: draft.id, node, declaration: draft.declaration, provider };

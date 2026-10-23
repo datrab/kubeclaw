@@ -1,0 +1,30 @@
+[
+  {
+    "command": [
+      "node",
+      "docs/review/remediation/config-prism-shutdown-current-owner-20261017/source-input-controls.mjs"
+    ],
+    "exitCode": 0,
+    "log": "source-input-controls.txt"
+  },
+  {
+    "command": [
+      "node",
+      "node_modules/typescript/bin/tsc",
+      "-p",
+      "skills/prism/tsconfig.json",
+      "--noEmit"
+    ],
+    "exitCode": 0,
+    "log": "typecheck.txt"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "log": "diff-check.txt"
+  }
+]

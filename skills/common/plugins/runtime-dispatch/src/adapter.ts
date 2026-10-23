@@ -11,10 +11,10 @@ interface Target {
   readonly maxResponseBytes: number;
 }
 
-function boundedInteger(value: unknown, fallback: number, id: string, label: string): number {
-  const parsed = Number(value ?? fallback);
-  if (!Number.isSafeInteger(parsed) || parsed < 1 || parsed > 8_388_608) throw new Error(`RUNTIME_CONFIG_INVALID:${label}:${id}`);
-  return parsed;
+function boundedInteger(value: unknown, id: string, label: string): number {
+  const parsed = value;
+  if (!Number.isSafeInteger(parsed) || Number(parsed) < 1 || Number(parsed) > 8_388_608) throw new Error(`RUNTIME_CONFIG_INVALID:${label}:${id}`);
+  return Number(parsed);
 }
 
 function endpointFrom(value: unknown, id: string): URL {
@@ -42,28 +42,29 @@ function scalar(value: unknown): boolean {
 }
 
 // eslint-disable-next-line complexity -- Recursive JSON validation checks every supported scalar and container bound.
-function json(value: unknown, depth = 0): void {
-  if (depth > 20) throw new Error('RUNTIME_PAYLOAD_DEPTH_EXCEEDED');
+type PayloadStructure = Readonly<{maximumDepth: number; maximumArrayEntries: number; maximumObjectProperties: number}>;
+function json(value: unknown, limits: PayloadStructure, depth = 0): void {
+  if (depth > limits.maximumDepth) throw new Error('RUNTIME_PAYLOAD_DEPTH_EXCEEDED');
   if (scalar(value)) return;
   if (Array.isArray(value)) {
-    if (value.length > 1_000) throw new Error('RUNTIME_PAYLOAD_ARRAY_EXCEEDED');
-    value.forEach((entry) => json(entry, depth + 1));
+    if (value.length > limits.maximumArrayEntries) throw new Error('RUNTIME_PAYLOAD_ARRAY_EXCEEDED');
+    value.forEach((entry) => json(entry, limits, depth + 1));
     return;
   }
   if (!record(value)) throw new Error('RUNTIME_PAYLOAD_INVALID');
-  if (Object.keys(value).length > 1_000) throw new Error('RUNTIME_PAYLOAD_OBJECT_EXCEEDED');
+  if (Object.keys(value).length > limits.maximumObjectProperties) throw new Error('RUNTIME_PAYLOAD_OBJECT_EXCEEDED');
   for (const [key, entry] of Object.entries(value)) {
     if (!key || key.length > 128 || ['__proto__', 'constructor', 'prototype'].includes(key)) {
       throw new Error('RUNTIME_PAYLOAD_KEY_INVALID');
     }
-    json(entry, depth + 1);
+    json(entry, limits, depth + 1);
   }
 }
 
-function targetFrom(id: string, value: unknown): Target {
+function targetFrom(id: string, value: unknown, profiles: ReadonlyMap<string,Readonly<{maxRequestBytes:number;maxResponseBytes:number}>>): Target {
     if (!ID.test(id) || !record(value)) throw new Error(`RUNTIME_CONFIG_INVALID:target:${id}`);
     exact(value, new Set([
-      'endpoint', 'tokenSecret', 'maxRequestBytes', 'maxResponseBytes',
+      'endpoint', 'tokenSecret', 'byteProfile',
       'authentication',
     ]), 'RUNTIME_CONFIG_UNKNOWN_TARGET_FIELD');
     const endpoint = endpointFrom(value.endpoint, id);
@@ -78,21 +79,28 @@ function targetFrom(id: string, value: unknown): Target {
       && !loopback(endpoint)) {
       throw new Error(`RUNTIME_CONFIG_INVALID:spiffeProxy:${id}`);
     }
-    const maxRequestBytes = boundedInteger(value.maxRequestBytes, 1_048_576, id, 'maxRequestBytes');
-    const maxResponseBytes = boundedInteger(value.maxResponseBytes, 1_048_576, id, 'maxResponseBytes');
-    return {
+    if (typeof value.byteProfile !== 'string' || !profiles.has(value.byteProfile)) throw new Error(`RUNTIME_CONFIG_INVALID:byteProfile:${id}`);
+    const {maxRequestBytes,maxResponseBytes} = profiles.get(value.byteProfile)!;
+    return Object.freeze({
       endpoint: endpoint.href,
       authentication,
       ...(authentication === 'hmac' ? { tokenSecret: value.tokenSecret as string } : {}),
       maxRequestBytes,
       maxResponseBytes,
-    };
+    });
 }
 
 function config(raw: Readonly<Record<string, unknown>>): ReadonlyMap<string, Target> {
-  exact(raw as Record<string, unknown>, new Set(['targets']), 'RUNTIME_CONFIG_UNKNOWN_FIELD');
+  exact(raw as Record<string, unknown>, new Set(['targets','targetByteProfiles','payloadStructure']), 'RUNTIME_CONFIG_UNKNOWN_FIELD');
   if (!record(raw.targets) || Object.keys(raw.targets).length === 0) throw new Error('RUNTIME_CONFIG_INVALID:targets');
-  return new Map(Object.entries(raw.targets).map(([id, value]) => [id, targetFrom(id, value)]));
+  if (!record(raw.targetByteProfiles) || Object.keys(raw.targetByteProfiles).length === 0) throw new Error('RUNTIME_CONFIG_INVALID:targetByteProfiles');
+  const profiles = new Map<string,Readonly<{maxRequestBytes:number;maxResponseBytes:number}>>();
+  for (const [id,value] of Object.entries(raw.targetByteProfiles)) {
+    if (!/^[a-z][a-z0-9._-]{0,127}$/.test(id) || !record(value)) throw new Error('RUNTIME_CONFIG_INVALID:targetByteProfiles');
+    exact(value,new Set(['maxRequestBytes','maxResponseBytes']),'RUNTIME_CONFIG_UNKNOWN_PROFILE_FIELD');
+    profiles.set(id,Object.freeze({maxRequestBytes:boundedInteger(value.maxRequestBytes,id,'maxRequestBytes'),maxResponseBytes:boundedInteger(value.maxResponseBytes,id,'maxResponseBytes')}));
+  }
+  return new Map(Object.entries(raw.targets).map(([id, value]) => [id, targetFrom(id, value,profiles)]));
 }
 
 function assertRequest(request: EffectRequest): void {
@@ -104,11 +112,21 @@ function assertRequest(request: EffectRequest): void {
   }
 }
 
+function capturePayloadStructure(value: unknown): PayloadStructure {
+  if (!record(value)) throw new Error('RUNTIME_CONFIG_INVALID:payloadStructure');
+  exact(value, new Set(['maximumDepth','maximumArrayEntries','maximumObjectProperties']), 'RUNTIME_CONFIG_UNKNOWN_STRUCTURE_FIELD');
+  for (const [key, maximum] of Object.entries({maximumDepth:20,maximumArrayEntries:1000,maximumObjectProperties:1000})) {
+    if (!Number.isSafeInteger(value[key]) || Number(value[key]) < (key === 'maximumDepth' ? 0 : 1) || Number(value[key]) > maximum) throw new Error(`RUNTIME_CONFIG_INVALID:payloadStructure:${key}`);
+  }
+  return Object.freeze({...value}) as PayloadStructure;
+}
+
 export function activate(context: AdapterActivationContext): AdapterInstance {
+  const structure = capturePayloadStructure(context.config.payloadStructure);
   const targets = config(context.config);
   // eslint-disable-next-line complexity -- Authentication, size, signature, and response checks share one dispatch boundary.
   return createDispatchAdapter(context, targets, assertRequest, async ({ request, signal, target }) => {
-      json(request.payload);
+      json(request.payload, structure);
       runtimeDispatchProfileFields(request, request.capability);
       const body = JSON.stringify(request.payload);
       if (Buffer.byteLength(body, 'utf8') > target.maxRequestBytes) throw new Error('RUNTIME_REQUEST_SIZE_EXCEEDED');
@@ -138,7 +156,7 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
         throw new Error('RUNTIME_RESPONSE_STATUS_INVALID');
       }
       if (!record(response.body)) throw new Error('RUNTIME_RESPONSE_BODY_INVALID');
-      json(response.body);
+      json(response.body, structure);
       if (Buffer.byteLength(JSON.stringify(response.body), 'utf8') > target.maxResponseBytes) {
         throw new Error('RUNTIME_RESPONSE_SIZE_EXCEEDED');
       }

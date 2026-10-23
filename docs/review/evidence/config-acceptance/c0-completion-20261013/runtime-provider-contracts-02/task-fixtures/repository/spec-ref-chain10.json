@@ -1,0 +1,63 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "C0 local task definition",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/ok": {
+      "get": {
+        "operationId": "checkOk",
+        "tags": [
+          "proof"
+        ],
+        "responses": {
+          "200": {
+            "description": "expected task response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/R0"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "R0": {
+        "$ref": "#/components/schemas/R1"
+      },
+      "R1": {
+        "$ref": "#/components/schemas/R2"
+      },
+      "R2": {
+        "$ref": "#/components/schemas/R3"
+      },
+      "R3": {
+        "$ref": "#/components/schemas/R4"
+      },
+      "R4": {
+        "$ref": "#/components/schemas/R5"
+      },
+      "R5": {
+        "$ref": "#/components/schemas/R6"
+      },
+      "R6": {
+        "$ref": "#/components/schemas/R7"
+      },
+      "R7": {
+        "$ref": "#/components/schemas/R8"
+      },
+      "R8": {
+        "$ref": "#/components/schemas/R9"
+      },
+      "R9": {
+        "type": "string"
+      }
+    }
+  }
+}

@@ -1,0 +1,140 @@
+{
+  "status": "material correction proposal only, independentreviewpending",
+  "futureControls": "NOTRUN/notimplemented; documentationcanonical/schema/hash/contradiction controls separate",
+  "preservation": "97old correction artifacts+145oldquestion/source+Core13three+independentreport unchanged",
+  "boundaries": {
+    "normal-admit": {
+      "positive": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/normal-admit-positive-original.json",
+        "sha256": "22666cc88a25590b0ed0dfd394f89545a5be1c5b00abf2122f597ae5724ff322",
+        "sizeBytes": 8310
+      },
+      "positivePrior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admit-positive-prior.json",
+        "sha256": "6a3c832dce2d58f7210baca59da72e560ac4b7fa164168685afc586d876bc378",
+        "sizeBytes": 707
+      },
+      "negative": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/normal-admit-negative-original.json",
+        "sha256": "8a4bb7b4c2271d9a4280e717c2ed59baf0c6c85860199baaceae10364a2f2ada",
+        "sizeBytes": 8310
+      }
+    },
+    "normal-admitAndRead": {
+      "positive": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/normal-admitAndRead-positive-original.json",
+        "sha256": "0ac6bda9b0ef1e8f876d7f26b975aff200661cea3f48993fc41a72189609ffb0",
+        "sizeBytes": 8324
+      },
+      "positivePrior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admitAndRead-positive-prior.json",
+        "sha256": "1460732c86063c2bf5cce72dabf36109b171e80f00c85360aa20e7c9083e637e",
+        "sizeBytes": 707
+      },
+      "negative": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/normal-admitAndRead-negative-original.json",
+        "sha256": "1d0b8f68c77fd1f8fa786d4ec786c749658d792f7d0dfa0b33ead4565c59be28",
+        "sizeBytes": 8324
+      }
+    },
+    "duplicate": {
+      "positive": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/duplicate-positive-original.json",
+        "sha256": "28bc43d9a21570e463aeacf4a4eac7eb2ee9d78bf71260ac7164c48d42e67ece",
+        "sizeBytes": 8304
+      },
+      "positivePrior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/duplicate-positive-prior.json",
+        "sha256": "a9248a57ef5877c31cd29527aadd9980ed93d7c9f595dafcfec9cf23f9738eb9",
+        "sizeBytes": 1934
+      },
+      "negative": null
+    },
+    "quarantine": {
+      "positive": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/quarantine-positive-original.json",
+        "sha256": "09460d174a29232aac137414cb8f3d0393d2504fb390c402c9b7eecb76799c4d",
+        "sizeBytes": 8306
+      },
+      "positivePrior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/quarantine-positive-prior.json",
+        "sha256": "fe21ed2dd211577b929d57bc6683f6ccd15a2ef6cf15e5dd3e6896a4b79a5d94",
+        "sizeBytes": 1934
+      },
+      "negative": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/quarantine-negative-original.json",
+        "sha256": "d1c94ca5c4b7f26f96d267d06daf10c18c50e6a0144b05b71d20ac25ced1e493",
+        "sizeBytes": 8306
+      }
+    },
+    "overflow": {
+      "positive": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/overflow-positive-original.json",
+        "sha256": "4260f6d01ef345481835bac5a0ad35cd9871f5141d5fa8b90a1bf90c44ee6c16",
+        "sizeBytes": 8306
+      },
+      "positivePrior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/overflow-positive-prior.json",
+        "sha256": "c0e1ef388f03ca775a04086a37ccd42afc23a4bf2d8d958660d321b122f4193a",
+        "sizeBytes": 3075
+      },
+      "negative": null
+    },
+    "recordGap": {
+      "positive": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/recordGap-positive-original.json",
+        "sha256": "7fb6125679ecf0b400b58da3f0137818177d2e581e76b6b370f4258f4126f0dd",
+        "sizeBytes": 8304
+      },
+      "positivePrior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/recordGap-positive-prior.json",
+        "sha256": "1129cc37e95ffec6ef0a3943d0bc0797d993b2739d45fe7c25fad73b9da290c8",
+        "sizeBytes": 1934
+      },
+      "negative": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/recordGap-negative-original.json",
+        "sha256": "bbb6922707d7a5b2302e0a6de331f604dc5e0ead56e6f9ef2d533584745451a4",
+        "sizeBytes": 8304
+      }
+    },
+    "gap-restoration-unproved": {
+      "positive": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/gap-restoration-unproved-positive-original.json",
+        "sha256": "a5d864c2c2cc023d6e2cfeb21b5a2fd7e99adfbdfe719b4e4cf8a6c32fb1cfb5",
+        "sizeBytes": 8334
+      },
+      "positivePrior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/gap-restoration-unproved-positive-prior.json",
+        "sha256": "9b13ba9e7be48cb3d6269d0c801491212f609a2434dd6d3c73661e28ef4f7330",
+        "sizeBytes": 2193
+      },
+      "negative": null
+    },
+    "oversized-history": {
+      "positive": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/oversized-history-positive-original.json",
+        "sha256": "c215814d9ff4c2e5c6d0be784a9097a0861e3738729b5abf2d1f45a0e0959580",
+        "sizeBytes": 8320
+      },
+      "positivePrior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/oversized-history-positive-prior.json",
+        "sha256": "9c1e7b00ae3fde46d5a68281122066a331fea92cfe879149bd961a485f9e82b9",
+        "sizeBytes": 1934
+      },
+      "negative": null
+    },
+    "counter-overflow": {
+      "positive": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/counter-overflow-positive-original.json",
+        "sha256": "4ef205998f19d4ef7623885adaad5a4bc4ed3d01c58e5cf1771d0400312a8013",
+        "sizeBytes": 8322
+      },
+      "positivePrior": {
+        "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/counter-overflow-positive-prior.json",
+        "sha256": "e35b918f26f588a0c9596600b8153211486b216311511fa6113c64874527f759",
+        "sizeBytes": 3550
+      },
+      "negative": null
+    }
+  }
+}

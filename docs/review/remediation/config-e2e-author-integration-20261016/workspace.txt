@@ -1,0 +1,783 @@
+✔ Tailscale operator capability probe matches Helm pod label shape (51.365181ms)
+✔ reused matrix capability probe preserves structured failures (0.334359ms)
+✖ configured Codex capability probe follows production smoke dispatch (1.583661ms)
+✖ configured capability probe rejects non-Spark model overrides (0.666227ms)
+✖ actual Git baseline survives later commits and scoped resume without inventing coverage (38.58228ms)
+✖ production harness validates native module gates and rejects counter-based repair fixtures (3.629124ms)
+✔ real e2e generation requires a published immutable deployment image (2.003461ms)
+✖ generated real e2e config defaults to provider-qualified gpt-5.3-codex-spark with thinking none (0.365879ms)
+✔ generated real e2e seed requires publishable case study output (42.029128ms)
+✖ non-smoke suite profile disables optional terminal extras canonically (0.186185ms)
+✖ module execution boundary disables terminal extras without env override (0.228916ms)
+✖ final-review execution boundary keeps summary scope without optional terminal extras (0.192585ms)
+✖ scenario module scope keeps module retry cases to the exercised module (0.179655ms)
+✖ architecture validator scenario keeps its owned phase enabled at a module boundary (0.164295ms)
+✖ scenario module scope preserves the full graph for graph-owned scenarios (0.211746ms)
+✖ module-review boundary stops after scoped module review gate (0.338229ms)
+✖ final-buster boundary stops after scoped final Buster gate (0.185354ms)
+✔ run config runtime normalization refreshes terminal generator models (0.227566ms)
+✖ pipeline review timeout scenario uses run config as the only pipeline review authority (0.134613ms)
+✖ suite execution boundary narrows generated progress order canonically (0.151574ms)
+✖ generated real e2e seed declares intentional minimal fixture architecture (0.138353ms)
+✖ generated real e2e seed declares explicit static serving contracts (0.143224ms)
+✔ real e2e model preflight permits only the canonical Spark model (0.119413ms)
+✖ generated real e2e module and Buster gate use bounded internal timeouts (0.110533ms)
+✖ checkpoint restore normalization refreshes harness-owned runtime defaults before scenario overrides (0.141054ms)
+✖ generated approval gate config uses production lowercase timeout policy (0.118003ms)
+✖ approval timeout scenarios preserve production lowercase timeout policy (0.103043ms)
+✖ approval behavior scenarios exercise operator gate before any Forge module (0.133294ms)
+✖ retry-buster-pass-echo-rejects keeps canonical echo reviewer configured (0.120853ms)
+✖ retry-buster-pass-echo-rejects materializes canonical swarm review instructions (0.322788ms)
+✖ retry malformed-output scenarios use a one-shot command fault without restoring legacy unit (0.122073ms)
+✖ Buster gate failure configures a remaining legacy API failure (0.112593ms)
+✖ namespace lease denied scenario preserves intentional invalid prefix through final Buster (0.159874ms)
+✖ scenario setup preflight rejects drift before pipeline execution (0.125993ms)
+✖ scenario setup preflight validates swarm-owned fixture files under swarm dir (0.313498ms)
+✖ k8s pod never ready scenario preserves intentional readiness failure through review (0.155174ms)
+✖ Kubernetes fixture policy scenario uses a denied namespace prefix (0.141074ms)
+✖ registry pull failure targets the executed Kubernetes fixture image (0.159924ms)
+✖ multi-module instructions declare distinct module-owned surfaces (0.166844ms)
+✖ success seed uses a four-module DAG with sequential and parallel module work (0.191465ms)
+✖ expected-failure scenarios use the smallest canonical module scope (0.139894ms)
+✖ generated real e2e run config excludes the deleted Buster queue contract (0.136324ms)
+✖ generated nginx fixture keeps the reproducible run id placeholder (0.130704ms)
+✖ generated review contract assigns Kubernetes fixture authority to final Buster (0.349599ms)
+✖ generated fixture declares canonical artifact, runtime, review, and preview contracts (0.280048ms)
+✔ real e2e runner auto-approves architecture findings through a separate gate state (0.239277ms)
+✖ generated final review does not require post-final-review v2 report artifacts (0.144734ms)
+✖ generated final review requires the exact immutable deployment artifact (0.171124ms)
+✖ tailscale exposure unreachable scenario uses an explicit unreachable HTTP target (0.147343ms)
+✖ tailscale exposure wrong content scenario changes the public HTTP marker (0.139153ms)
+✔ buster infra failure declares module-Buster fixture without source mutation (1.209761ms)
+✔ redis unavailable scenario configures production Redis clients directly (0.113063ms)
+✔ architecture branch names are project scoped and remote cleanup guarded (0.194006ms)
+✔ architecture seed refuses to commit from non-e2e worktree branches (0.236836ms)
+✔ run branch publishing is guarded to generated e2e branches (0.150754ms)
+✖ run-scoped origin makes architecture branch fetchable before module release (31.27422ms)
+✖ git push failure scenarios keep setup Git remotes canonical (0.365519ms)
+✖ git commit failure scenario keeps setup hooks untouched (0.126703ms)
+✖ git failure scenarios do not write harness fault intent into progress or run config (0.122684ms)
+✖ git merge conflict fixture preserves architecture branch in scenario origin (15.465601ms)
+✔ nginx fixture listens on the configured Buster health port (0.347759ms)
+✔ nginx fixture pins its base image and verifies production contract fields (617.620217ms)
+✖ generated real e2e progress omits retired health and preview configuration (0.274267ms)
+✖ final deployment uses the fixture provider and a dependent HTTP check (0.362529ms)
+✔ real e2e fixture delegates lease cleanup to the provider lifecycle (0.314958ms)
+✔ namespace controller waits for namespace deletion before removing cleanup finalizer (0.344799ms)
+✔ namespace controller keeps credential delivery separate from preview exposure (0.343029ms)
+✔ operator registry projection does not resolve or expose credentials (1.827837ms)
+✔ seed image cannot select another registry, mutable tag or malformed reference (0.854722ms)
+✖ original workspace and failure mutation select the same configured authority (0.527904ms)
+ℹ tests 70
+ℹ suites 0
+ℹ pass 19
+ℹ fail 51
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2102.610739
+
+✖ failing tests:
+
+test at tests/verification/e2e/check-real-e2e-capabilities.test.mjs:70:1
+✖ configured Codex capability probe follows production smoke dispatch (1.583661ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at generatedProbeProject (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/check-real-e2e-capabilities.test.mjs:60:72)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/check-real-e2e-capabilities.test.mjs:73:38)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+
+test at tests/verification/e2e/check-real-e2e-capabilities.test.mjs:81:1
+✖ configured capability probe rejects non-Spark model overrides (0.666227ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at generatedProbeProject (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/check-real-e2e-capabilities.test.mjs:60:72)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/check-real-e2e-capabilities.test.mjs:82:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+
+test at tests/verification/e2e/fixture-coverage.test.mjs:13:1
+✖ actual Git baseline survives later commits and scoped resume without inventing coverage (38.58228ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/fixture-coverage.test.mjs:23:22)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at tests/verification/e2e/production-graph-validation.test.mts:13:1
+✖ production harness validates native module gates and rejects counter-based repair fixtures (3.629124ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/production-graph-validation.test.mts:25:22)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:64:1
+✖ generated real e2e config defaults to provider-qualified gpt-5.3-codex-spark with thinking none (0.365879ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:65:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:99:1
+✖ non-smoke suite profile disables optional terminal extras canonically (0.186185ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:101:22
+      at withEnv (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:48:12)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:100:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:113:1
+✖ module execution boundary disables terminal extras without env override (0.228916ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:115:22
+      at withEnv (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:48:12)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:114:56
+      at withEnv (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:48:12)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:114:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:128:1
+✖ final-review execution boundary keeps summary scope without optional terminal extras (0.192585ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:130:22
+      at withEnv (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:48:12)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:129:56
+      at withEnv (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:48:12)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:129:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:154:1
+✖ scenario module scope keeps module retry cases to the exercised module (0.179655ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:157:39
+      at withEnv (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:48:12)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:155:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:174:1
+✖ architecture validator scenario keeps its owned phase enabled at a module boundary (0.164295ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:176:54
+      at withEnv (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:48:12)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:175:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:185:1
+✖ scenario module scope preserves the full graph for graph-owned scenarios (0.211746ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:188:39
+      at withEnv (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:48:12)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:186:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:202:1
+✖ module-review boundary stops after scoped module review gate (0.338229ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:205:39
+      at withEnv (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:48:12)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:203:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:221:1
+✖ final-buster boundary stops after scoped final Buster gate (0.185354ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:223:54
+      at withEnv (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:48:12)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:222:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:272:1
+✖ pipeline review timeout scenario uses run config as the only pipeline review authority (0.134613ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:274:5)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:287:1
+✖ suite execution boundary narrows generated progress order canonically (0.151574ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:289:22
+      at withEnv (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:48:12)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:288:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:316:1
+✖ generated real e2e seed declares intentional minimal fixture architecture (0.138353ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:317:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:330:1
+✖ generated real e2e seed declares explicit static serving contracts (0.143224ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:331:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:362:1
+✖ generated real e2e module and Buster gate use bounded internal timeouts (0.110533ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:363:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:376:1
+✖ checkpoint restore normalization refreshes harness-owned runtime defaults before scenario overrides (0.141054ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:377:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:415:1
+✖ generated approval gate config uses production lowercase timeout policy (0.118003ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at approvalTimeoutPolicyForScenario (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:410:16)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:416:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:419:1
+✖ approval timeout scenarios preserve production lowercase timeout policy (0.103043ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at approvalTimeoutPolicyForScenario (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:410:16)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:420:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:423:1
+✖ approval behavior scenarios exercise operator gate before any Forge module (0.133294ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:425:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:436:1
+✖ retry-buster-pass-echo-rejects keeps canonical echo reviewer configured (0.120853ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:437:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:447:1
+✖ retry-buster-pass-echo-rejects materializes canonical swarm review instructions (0.322788ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at createRealE2ERunWorkspace (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:1541:3)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:450:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:465:1
+✖ retry malformed-output scenarios use a one-shot command fault without restoring legacy unit (0.122073ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:467:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:478:1
+✖ Buster gate failure configures a remaining legacy API failure (0.112593ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:479:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:487:1
+✖ namespace lease denied scenario preserves intentional invalid prefix through final Buster (0.159874ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:488:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:508:1
+✖ scenario setup preflight rejects drift before pipeline execution (0.125993ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:509:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:532:1
+✖ scenario setup preflight validates swarm-owned fixture files under swarm dir (0.313498ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:537:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:560:1
+✖ k8s pod never ready scenario preserves intentional readiness failure through review (0.155174ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at createRealE2ERunWorkspace (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:1541:3)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:563:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:576:1
+✖ Kubernetes fixture policy scenario uses a denied namespace prefix (0.141074ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at createRealE2ERunWorkspace (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:1541:3)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:579:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:589:1
+✖ registry pull failure targets the executed Kubernetes fixture image (0.159924ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:590:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:609:1
+✖ multi-module instructions declare distinct module-owned surfaces (0.166844ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at createRealE2ERunWorkspace (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:1541:3)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:612:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:631:1
+✖ success seed uses a four-module DAG with sequential and parallel module work (0.191465ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at createRealE2ERunWorkspace (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:1541:3)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:634:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:678:1
+✖ expected-failure scenarios use the smallest canonical module scope (0.139894ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at createRealE2ERunWorkspace (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:1541:3)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:681:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:700:1
+✖ generated real e2e run config excludes the deleted Buster queue contract (0.136324ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at createRealE2ERunWorkspace (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:1541:3)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:703:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:716:1
+✖ generated nginx fixture keeps the reproducible run id placeholder (0.130704ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at createRealE2ERunWorkspace (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:1541:3)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:719:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:729:1
+✖ generated review contract assigns Kubernetes fixture authority to final Buster (0.349599ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at createRealE2ERunWorkspace (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:1541:3)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:732:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:838:1
+✖ generated fixture declares canonical artifact, runtime, review, and preview contracts (0.280048ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at createRealE2ERunWorkspace (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:1541:3)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:841:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:952:1
+✖ generated final review does not require post-final-review v2 report artifacts (0.144734ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at createRealE2ERunWorkspace (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:1541:3)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:955:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:968:1
+✖ generated final review requires the exact immutable deployment artifact (0.171124ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at createRealE2ERunWorkspace (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:1541:3)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:971:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:988:1
+✖ tailscale exposure unreachable scenario uses an explicit unreachable HTTP target (0.147343ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:989:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:1007:1
+✖ tailscale exposure wrong content scenario changes the public HTTP marker (0.139153ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:1008:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:1101:1
+✖ run-scoped origin makes architecture branch fetchable before module release (31.27422ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at createRealE2ERunWorkspace (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:1541:3)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:1107:23)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:1129:1
+✖ git push failure scenarios keep setup Git remotes canonical (0.365519ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at createRealE2ERunWorkspace (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:1541:3)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:1132:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:1167:1
+✖ git commit failure scenario keeps setup hooks untouched (0.126703ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at createRealE2ERunWorkspace (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:1541:3)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:1170:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:1178:1
+✖ git failure scenarios do not write harness fault intent into progress or run config (0.122684ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:1179:45)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:1190:1
+✖ git merge conflict fixture preserves architecture branch in scenario origin (15.465601ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at createRealE2ERunWorkspace (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:1541:3)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:1199:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:1282:1
+✖ generated real e2e progress omits retired health and preview configuration (0.274267ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:1283:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+test at tests/verification/e2e/real-run-workspace.test.mjs:1290:1
+✖ final deployment uses the fixture provider and a dependent HTTP check (0.362529ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at createRealE2ERunWorkspace (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:1541:3)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.test.mjs:1293:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+test at tests/verification/e2e/registry-target.test.mjs:33:1
+✖ original workspace and failure mutation select the same configured authority (0.527904ms)
+  Error: REAL_E2E_LEGACY_REGISTRY_OVERRIDE: use KUBECLAW_REGISTRY_CONFIG
+      at realE2ERegistryTarget (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:6:11)
+      at realE2EDeploymentImage (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.mjs:20:29)
+      at buildProgress (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/real-run-workspace.mjs:771:33)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/e2e/registry-target.test.mjs:37:22)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

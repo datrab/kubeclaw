@@ -1,0 +1,5 @@
+npm notice run test
+npm notice run node ../../../../tests/verification/integration/project-summary.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs
+{"ok":true,"suite":"delivery-artifact-contract","providerExecution":false,"agentExecution":false}
+{"ok":true,"plugin":"kubeclaw.project-summary","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.project-summary","suite":"package-boundary"}

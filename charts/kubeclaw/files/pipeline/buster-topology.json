@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "pipeline-buster-chart-projection.v1",
+  "generatedFrom": "config/pipeline.config.json",
+  "generationDigest": "sha256:58c4a15d908a6781b326fcc2a1a77a8b6ed3f6a46f45d557c595f1828b389db3",
+  "deployment": {
+    "namespace": "kubeclaw",
+    "releaseName": "agent-buster"
+  },
+  "clusterShared": {
+    "kubectlExecutable": "/usr/local/bin/kubectl",
+    "leaseApiGroup": "kubeclaw.forgestack.ai",
+    "leaseApiVersion": "v1alpha1"
+  }
+}

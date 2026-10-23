@@ -1,0 +1,515 @@
+{
+  "inputs": [
+    {
+      "path": "/app/dist/agent-id-D1-Q6vR4.mjs",
+      "startSha256": "0bfc668f6d2faddb17e5301d824375789f164041fbb0c6e2492dc5088545612d",
+      "endSha256": "0bfc668f6d2faddb17e5301d824375789f164041fbb0c6e2492dc5088545612d",
+      "unchanged": true
+    },
+    {
+      "path": "/app/dist/agent-via-gateway-B72P8dV8.mjs",
+      "startSha256": "f946dcaa9e695f74801fa431eab6274f0d1c50ed84e46179fb567045502612ff",
+      "endSha256": "f946dcaa9e695f74801fa431eab6274f0d1c50ed84e46179fb567045502612ff",
+      "unchanged": true
+    },
+    {
+      "path": "/app/dist/number-coercion-Dq1l5muL.mjs",
+      "startSha256": "8216506195f90a94dd6e4ea489ffbcafcfff0bf608867a0a4667d820c34191f3",
+      "endSha256": "8216506195f90a94dd6e4ea489ffbcafcfff0bf608867a0a4667d820c34191f3",
+      "unchanged": true
+    },
+    {
+      "path": "/app/dist/register.agent-turn-BI3P2wW6.mjs",
+      "startSha256": "c19e4993adc80287d6ad7e4286fc6f2bedb7471554cd7e1eef30618b690dcdb1",
+      "endSha256": "c19e4993adc80287d6ad7e4286fc6f2bedb7471554cd7e1eef30618b690dcdb1",
+      "unchanged": true
+    },
+    {
+      "path": "/app/dist/string-coerce-6kR-86XC.mjs",
+      "startSha256": "291f7bc4c89888444e4754689b4bda1694a10b977dda364f1038c415502d8f3b",
+      "endSha256": "291f7bc4c89888444e4754689b4bda1694a10b977dda364f1038c415502d8f3b",
+      "unchanged": true
+    },
+    {
+      "path": "/app/package.json",
+      "startSha256": "09f313df5a3b93723c7f408bba1887e9978156bbcfd4fa0b3c3bccb61c4779c8",
+      "endSha256": "09f313df5a3b93723c7f408bba1887e9978156bbcfd4fa0b3c3bccb61c4779c8",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v2.schema.json",
+      "startSha256": "26e936fbd954562547e7c0548085ae65ceb22394061d956532730a17ced42f7c",
+      "endSha256": "26e936fbd954562547e7c0548085ae65ceb22394061d956532730a17ced42f7c",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/contracts/pipeline-worker-core/v1/src/digest.ts",
+      "startSha256": "10c61ec122ca6e65c7deef2c059a19ad70627cf65bdf1eb65f0ac2539457d780",
+      "endSha256": "10c61ec122ca6e65c7deef2c059a19ad70627cf65bdf1eb65f0ac2539457d780",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/contracts/pipeline-worker-core/v1/src/resource-types-v2.ts",
+      "startSha256": "e75e058344978e1a94856c05caf03cfcff92ccb67e6fefe5c91249d4bc3e5fc8",
+      "endSha256": "e75e058344978e1a94856c05caf03cfcff92ccb67e6fefe5c91249d4bc3e5fc8",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/contracts/pipeline-worker-core/v1/src/resource-validation-v2.ts",
+      "startSha256": "9c75271a9830c86faa484acaaa52e042d03a56c53b027d4aeae5f8531d06e54e",
+      "endSha256": "9c75271a9830c86faa484acaaa52e042d03a56c53b027d4aeae5f8531d06e54e",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/README.md",
+      "startSha256": "ce95f0a13a69c7fc0be286c219b7d3c6e9e8215b9f627efd6d31e050b2e1823c",
+      "endSha256": "ce95f0a13a69c7fc0be286c219b7d3c6e9e8215b9f627efd6d31e050b2e1823c",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/author-definition.py",
+      "startSha256": "eb9904534f2dddade1ca5184d45064c60b821500a49954a4135980e12c033e92",
+      "endSha256": "eb9904534f2dddade1ca5184d45064c60b821500a49954a4135980e12c033e92",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/author-receipt.json",
+      "startSha256": "110febb5e1c9a322430e9178618e2d2fd593b4cfb7e7c3770dd913dd524bb3ac",
+      "endSha256": "110febb5e1c9a322430e9178618e2d2fd593b4cfb7e7c3770dd913dd524bb3ac",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/case-contracts.json",
+      "startSha256": "bd2447e5f6db32ba8681f28093b1d4eb55d17f2d66004d9344c3dfce8299c5f3",
+      "endSha256": "bd2447e5f6db32ba8681f28093b1d4eb55d17f2d66004d9344c3dfce8299c5f3",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/checks.stderr",
+      "startSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "endSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/checks.stdout",
+      "startSha256": "bd240126aca37125745cc2817d5bd9e8b0ff1bf152386f4f020c1cd9bc0cccd2",
+      "endSha256": "bd240126aca37125745cc2817d5bd9e8b0ff1bf152386f4f020c1cd9bc0cccd2",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/commands-and-exits.json",
+      "startSha256": "486b9df27bc19e573f47ba09bfd4953af47b515163de76ad45882eb42be94c4f",
+      "endSha256": "486b9df27bc19e573f47ba09bfd4953af47b515163de76ad45882eb42be94c4f",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/definition-check-attempt1.mjs.snapshot",
+      "startSha256": "b3c8dc978fe6b258ef707e707c683acc4ed9fdcd2357f74b76e8280b2a8bc70d",
+      "endSha256": "b3c8dc978fe6b258ef707e707c683acc4ed9fdcd2357f74b76e8280b2a8bc70d",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/definition-check-attempt1.stderr",
+      "startSha256": "a321a47c79a8f55d0c2bf9bdd243241d47bcb17f6594a6541a0b1c4dfaf7d590",
+      "endSha256": "a321a47c79a8f55d0c2bf9bdd243241d47bcb17f6594a6541a0b1c4dfaf7d590",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/definition-check-attempt1.stdout",
+      "startSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "endSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/definition-check.mjs",
+      "startSha256": "a097fdf054783b74b4a5b1e024b9dad4eadc694e69a5521bfaafb79fbdd95227",
+      "endSha256": "a097fdf054783b74b4a5b1e024b9dad4eadc694e69a5521bfaafb79fbdd95227",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/definition.stderr",
+      "startSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "endSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/definition.stdout",
+      "startSha256": "46d426ffa79ba73b084d45e6ddf3219d8c407c002eff0782e2a955ea3d870ce2",
+      "endSha256": "46d426ffa79ba73b084d45e6ddf3219d8c407c002eff0782e2a955ea3d870ce2",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/extracted-host-timeout-helpers.mjs",
+      "startSha256": "57dff5653c661c0e437ecaed09c5d3f6739cca3ad7bde84fd5849f393b0a8cca",
+      "endSha256": "57dff5653c661c0e437ecaed09c5d3f6739cca3ad7bde84fd5849f393b0a8cca",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/field-contracts.json",
+      "startSha256": "0111239c60bb337ec9cedd6a1301425649c024b8d3a3a8823017b81291d4e9eb",
+      "endSha256": "0111239c60bb337ec9cedd6a1301425649c024b8d3a3a8823017b81291d4e9eb",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/diagnostic-timeout.config.json",
+      "startSha256": "b70ed6d4caaee65317ccd84e3cefd01c6ce2c8b479df51e03e2570982efc1c2e",
+      "endSha256": "b70ed6d4caaee65317ccd84e3cefd01c6ce2c8b479df51e03e2570982efc1c2e",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-CLAIM-HTTP.config.json",
+      "startSha256": "7990e21259237f4107a5664a6c79ff8ae22095c9e7574b45fa782e9889f5ce7e",
+      "endSha256": "7990e21259237f4107a5664a6c79ff8ae22095c9e7574b45fa782e9889f5ce7e",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-CLAIM-LIFETIME.config.json",
+      "startSha256": "ae31df073bb51bf22878313942be710b0660b09257cb269f3d53655a53a8a72e",
+      "endSha256": "ae31df073bb51bf22878313942be710b0660b09257cb269f3d53655a53a8a72e",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-CLI-OWNER.config.json",
+      "startSha256": "6ad3564edab7146824e7a1e03b8d02b4e138d54a545fec4d9850cd5dd46465b4",
+      "endSha256": "6ad3564edab7146824e7a1e03b8d02b4e138d54a545fec4d9850cd5dd46465b4",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-FINISH-HTTP.config.json",
+      "startSha256": "73158771fc70d8f6815ada23514ba6f7293b4b20ea7eeb06595384d80cef6a8a",
+      "endSha256": "73158771fc70d8f6815ada23514ba6f7293b4b20ea7eeb06595384d80cef6a8a",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-KILL-GRACE.config.json",
+      "startSha256": "459905eba990086c7bda0545d8f4ff94d62aac2cdab4f13507f20405f53b73ad",
+      "endSha256": "459905eba990086c7bda0545d8f4ff94d62aac2cdab4f13507f20405f53b73ad",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-cleanupTimeoutMs.config.json",
+      "startSha256": "2c787dc3575461c525e69588ae23281ebee2d6e41596625e1b098a33561d5559",
+      "endSha256": "2c787dc3575461c525e69588ae23281ebee2d6e41596625e1b098a33561d5559",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-evidenceBytes.config.json",
+      "startSha256": "1a4b917907b7b8082e4b7ba6ba405a6d259ccec0bd452da05785b85d55684531",
+      "endSha256": "1a4b917907b7b8082e4b7ba6ba405a6d259ccec0bd452da05785b85d55684531",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-evidenceFiles.config.json",
+      "startSha256": "40cfe910f350424b1f81e9d9b86d943ebb4c3d2b4d36b53199e04fc6bdd8782d",
+      "endSha256": "40cfe910f350424b1f81e9d9b86d943ebb4c3d2b4d36b53199e04fc6bdd8782d",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-logBytes.config.json",
+      "startSha256": "c44c44f98a93170a4c9c62b4d2c5d0df2ed231988f5d07669d229601f5b88d11",
+      "endSha256": "c44c44f98a93170a4c9c62b4d2c5d0df2ed231988f5d07669d229601f5b88d11",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-resultBytes.config.json",
+      "startSha256": "1fcacf179733110663be2411dadcd231b744a2d9ef74061a6a28f325131735d3",
+      "endSha256": "1fcacf179733110663be2411dadcd231b744a2d9ef74061a6a28f325131735d3",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/pairs/AUTH-PRISM-AGENT-LIMIT-timeoutMs.config.json",
+      "startSha256": "151c77066b5e7a124b15e65e29ce306b1130a27e965525513e9e2c0dbd198732",
+      "endSha256": "151c77066b5e7a124b15e65e29ce306b1130a27e965525513e9e2c0dbd198732",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/fixtures/prism-agent.config.json",
+      "startSha256": "b6309c71d73c87a5598f00f2f16612c4b8bed2d705da84ca782459b4d5902f39",
+      "endSha256": "b6309c71d73c87a5598f00f2f16612c4b8bed2d705da84ca782459b4d5902f39",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/host-helper-extraction.json",
+      "startSha256": "feb8b501446cd1600030dd1e3cce1c49562b082ddb816deec4390244906aa250",
+      "endSha256": "feb8b501446cd1600030dd1e3cce1c49562b082ddb816deec4390244906aa250",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/input-identities.json",
+      "startSha256": "040080ba0b82d22864cf32cafb0d63dc2234722a6f3e06d94b65856a1fc8bf66",
+      "endSha256": "040080ba0b82d22864cf32cafb0d63dc2234722a6f3e06d94b65856a1fc8bf66",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/manifest.json",
+      "startSha256": "c77f3e65cc0f9f73bc64d62bec345188de878733f714a46b4b9fe701659a6261",
+      "endSha256": "c77f3e65cc0f9f73bc64d62bec345188de878733f714a46b4b9fe701659a6261",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/original-bodies.json",
+      "startSha256": "7d62d7c6818869f2c54328d479675a195ddc32e80b57cfa3fa37dc3c8e3b4d76",
+      "endSha256": "7d62d7c6818869f2c54328d479675a195ddc32e80b57cfa3fa37dc3c8e3b4d76",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/profile-index.json",
+      "startSha256": "304d84bc57e3c9350e5254d00d6306be952d2ff0afb2fa19ed0e0e007ed57463",
+      "endSha256": "304d84bc57e3c9350e5254d00d6306be952d2ff0afb2fa19ed0e0e007ed57463",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/receiving-contract.json",
+      "startSha256": "2881fa4f68a44b1e874ed9d1bc12443c14edce6738e8c9892dcf71767f48cd8d",
+      "endSha256": "2881fa4f68a44b1e874ed9d1bc12443c14edce6738e8c9892dcf71767f48cd8d",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/schemas/launcher-policy-binding.schema.json",
+      "startSha256": "ef9b31532a3a4fc0b340996dd20fcb8933f9f050a7bb1a702c417caa07151918",
+      "endSha256": "ef9b31532a3a4fc0b340996dd20fcb8933f9f050a7bb1a702c417caa07151918",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/schemas/prism-agent-launcher.schema.json",
+      "startSha256": "6515bd1a041dfb885c157e9b1ebcca4eee455c81fd01f4265cbb6930e666b97d",
+      "endSha256": "6515bd1a041dfb885c157e9b1ebcca4eee455c81fd01f4265cbb6930e666b97d",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/serialization-witnesses.json",
+      "startSha256": "c249d6b05671023845414a2ea547e3b1963cd12856cd14f6e7ac5f71378723a5",
+      "endSha256": "c249d6b05671023845414a2ea547e3b1963cd12856cd14f6e7ac5f71378723a5",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-profile-01/source-witnesses.json",
+      "startSha256": "072c6453c6828befe522f682ac3f3cbbc3e46c2fdaa687322517352a13eeda04",
+      "endSha256": "072c6453c6828befe522f682ac3f3cbbc3e46c2fdaa687322517352a13eeda04",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-source-adjudication-01/README.md",
+      "startSha256": "a47b72a80c8bf8f4c877ff583c7873fa4bfa85bcf20e28483bf573d9b5e689eb",
+      "endSha256": "a47b72a80c8bf8f4c877ff583c7873fa4bfa85bcf20e28483bf573d9b5e689eb",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-source-adjudication-01/manifest.json",
+      "startSha256": "1a29786ce3b4ac53e18b3f8420f2b51f3e9e904f816f6df7692d7a3b284e8798",
+      "endSha256": "1a29786ce3b4ac53e18b3f8420f2b51f3e9e904f816f6df7692d7a3b284e8798",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-source-adjudication-01/original-bodies.json",
+      "startSha256": "7d62d7c6818869f2c54328d479675a195ddc32e80b57cfa3fa37dc3c8e3b4d76",
+      "endSha256": "7d62d7c6818869f2c54328d479675a195ddc32e80b57cfa3fa37dc3c8e3b4d76",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/prism-agent-launcher-source-adjudication-01/source-identities.json",
+      "startSha256": "3335718db0f4529a603e501fd3f22dc38745acc651d28836dc74745856337cc9",
+      "endSha256": "3335718db0f4529a603e501fd3f22dc38745acc651d28836dc74745856337cc9",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-01/README.md",
+      "startSha256": "dcae60fb7244eb4981eaad9ffd5889c2afb9d2be648a8f0f3ee2faa65c9a7a0e",
+      "endSha256": "dcae60fb7244eb4981eaad9ffd5889c2afb9d2be648a8f0f3ee2faa65c9a7a0e",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/root-dependency-rejoin.json",
+      "startSha256": "47dda0d831702bfd94751af788fefa14f3ec328d810a9a3b07a106d932f1d780",
+      "endSha256": "47dda0d831702bfd94751af788fefa14f3ec328d810a9a3b07a106d932f1d780",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/schemas/pipeline-entry.schema.json",
+      "startSha256": "85f1aef770211378cd277afca9764af2db1e021cfeba489fa6fcd022f361047e",
+      "endSha256": "85f1aef770211378cd277afca9764af2db1e021cfeba489fa6fcd022f361047e",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-deployment-binding-02/stand/config/pipeline.config.json",
+      "startSha256": "0571c257b9bea46dcd4e43c40c60d34ad695921f193f1b3694a5a240b16604f4",
+      "endSha256": "0571c257b9bea46dcd4e43c40c60d34ad695921f193f1b3694a5a240b16604f4",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/remediation/GOAL-START.md",
+      "startSha256": "688334e1ccaa30fd9497e605ef0a9de1fb67fbeae51c4a312b15e15a12fa085b",
+      "endSha256": "688334e1ccaa30fd9497e605ef0a9de1fb67fbeae51c4a312b15e15a12fa085b",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/remediation/OPENCLAW-CONFIG-GOAL.md",
+      "startSha256": "fe9215a2674b95facef1d6fe0920eab2fa1f4830e765624692152a28b1731127",
+      "endSha256": "fe9215a2674b95facef1d6fe0920eab2fa1f4830e765624692152a28b1731127",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/control/agent-admission.ts",
+      "startSha256": "e54b1502044c54a674dffe22895b1530fdf415e292a984569f90ecafe07f99b5",
+      "endSha256": "e54b1502044c54a674dffe22895b1530fdf415e292a984569f90ecafe07f99b5",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/control/agent-jobs.ts",
+      "startSha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334",
+      "endSha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/agent-attempt.ts",
+      "startSha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+      "endSha256": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/agent-bridge.mjs",
+      "startSha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c",
+      "endSha256": "f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/agent-job-routes.ts",
+      "startSha256": "cf4dcb8dcd817106028b018453871accf46eec1c996fa940cac3315790abaaa0",
+      "endSha256": "cf4dcb8dcd817106028b018453871accf46eec1c996fa940cac3315790abaaa0",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/agent-job-runner.mjs",
+      "startSha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+      "endSha256": "f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/agent-process.ts",
+      "startSha256": "1d3486c1ada0851150257a4ef197d62f523924e2c01da3e7a7c53ad06fb1102b",
+      "endSha256": "1d3486c1ada0851150257a4ef197d62f523924e2c01da3e7a7c53ad06fb1102b",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/agent-prompt.mjs",
+      "startSha256": "3bcd6b4b2bb25d82c9ec767a03fd08ea1c17420eca3ce1742410359ed2d1aea9",
+      "endSha256": "3bcd6b4b2bb25d82c9ec767a03fd08ea1c17420eca3ce1742410359ed2d1aea9",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/agent-routes.ts",
+      "startSha256": "55c4c77fc4ff7b981287c433c126d9754dffd3df1de464ec0d83bb0294caec17",
+      "endSha256": "55c4c77fc4ff7b981287c433c126d9754dffd3df1de464ec0d83bb0294caec17",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/agent-session.ts",
+      "startSha256": "9369e1852f7698c04744a435a43dd92d3a5ba3746de3b4ad375b82b5bcb228d2",
+      "endSha256": "9369e1852f7698c04744a435a43dd92d3a5ba3746de3b4ad375b82b5bcb228d2",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/control-context.ts",
+      "startSha256": "2444e6f0f22860aea6f109c984be4747a13421da2d33dd738ef7c29b71f04d02",
+      "endSha256": "2444e6f0f22860aea6f109c984be4747a13421da2d33dd738ef7c29b71f04d02",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/internal-artifacts.ts",
+      "startSha256": "16750a5eecea51781dc67e271cfc331550f1a0a03460917133226cd9c975dab8",
+      "endSha256": "16750a5eecea51781dc67e271cfc331550f1a0a03460917133226cd9c975dab8",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/preference-prompt.mjs",
+      "startSha256": "0a607949b4ae13bd5636cc02798e63bbcb8aae9f7b944f3bea9ea47a8f40e145",
+      "endSha256": "0a607949b4ae13bd5636cc02798e63bbcb8aae9f7b944f3bea9ea47a8f40e145",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/server/worker-artifacts.ts",
+      "startSha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950",
+      "endSha256": "01590555f760fde93addcaccefe6d7fec3c38415e5e37e17086f82748a01e950",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/storage/index.ts",
+      "startSha256": "e5105909e5f1abf1eb2178270dd63d1b8e2aa337177dcb620b6ae43199a3a199",
+      "endSha256": "e5105909e5f1abf1eb2178270dd63d1b8e2aa337177dcb620b6ae43199a3a199",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/storage/migrations/014_agent_jobs.sql",
+      "startSha256": "723f518c0a9fc8d80f5b0191c36834e061ab74871067ea77830262fc6fac450a",
+      "endSha256": "723f518c0a9fc8d80f5b0191c36834e061ab74871067ea77830262fc6fac450a",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/tests/agent-job-http.test.mts",
+      "startSha256": "293dd48bee6175d1eb467694e0a473ab3e86fe09a08ca9862cb5e8cc8e6c26fd",
+      "endSha256": "293dd48bee6175d1eb467694e0a473ab3e86fe09a08ca9862cb5e8cc8e6c26fd",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/tests/agent-jobs.test.mts",
+      "startSha256": "bb6ff7ce6f1df432e50f4d92bd563388b0037737b9e91d1d96dff3fe3b289110",
+      "endSha256": "bb6ff7ce6f1df432e50f4d92bd563388b0037737b9e91d1d96dff3fe3b289110",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/tests/agent-process.test.mts",
+      "startSha256": "8eff8fba328604f2a00521afec7fad805d65f50d0f7c502a39eb412ba7aa523a",
+      "endSha256": "8eff8fba328604f2a00521afec7fad805d65f50d0f7c502a39eb412ba7aa523a",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/prism/tests/agent-resource-contract.test.mts",
+      "startSha256": "82008f914fd5c3a6e38da10514aa1fd3fc644a558ead6081d372578ab48f12ce",
+      "endSha256": "82008f914fd5c3a6e38da10514aa1fd3fc644a558ead6081d372578ab48f12ce",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/worker/core/src/index.ts",
+      "startSha256": "d1fdfef010a187fbcba74044215741edc538bfb046bcb5e946406ce0de5d016a",
+      "endSha256": "d1fdfef010a187fbcba74044215741edc538bfb046bcb5e946406ce0de5d016a",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/worker/core/worker/attempt-executor.ts",
+      "startSha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+      "endSha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/worker/core/worker/phase-deadline.ts",
+      "startSha256": "13ead2817f0277f8bb7a45b09f42df228bc62e8a0d43e26eabbcbc4f2365e456",
+      "endSha256": "13ead2817f0277f8bb7a45b09f42df228bc62e8a0d43e26eabbcbc4f2365e456",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/worker/core/worker/resource-accounting.ts",
+      "startSha256": "eaed91f776bfdbf1daac4faa7b2e56848b5f1b1f83d2737622048cd4426837ef",
+      "endSha256": "eaed91f776bfdbf1daac4faa7b2e56848b5f1b1f83d2737622048cd4426837ef",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/contracts/check-prism-postgres-transactions.mts",
+      "startSha256": "85e8fab3340bffd4fe2693f75b8af0a5fe053d3662e018d78aace337aaa2e860",
+      "endSha256": "85e8fab3340bffd4fe2693f75b8af0a5fe053d3662e018d78aace337aaa2e860",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/remediation/config-semantic-inventory.json",
+      "startSha256": "c6316b87f87b292db0ae1165eb3178ae0a32bf8db3111294398139c3f112be63",
+      "endSha256": "c6316b87f87b292db0ae1165eb3178ae0a32bf8db3111294398139c3f112be63",
+      "unchanged": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/remediation/config-acceptance-matrix.json",
+      "startSha256": "ab559aee906e4f72085031a84bb618c01941bc6e2d613175f235af0a18289227",
+      "endSha256": "ab559aee906e4f72085031a84bb618c01941bc6e2d613175f235af0a18289227",
+      "unchanged": true
+    }
+  ],
+  "drift": []
+}

@@ -1,0 +1,415 @@
+{
+  "links": [
+    {
+      "questionId": "CMP-SOURCE-FOUNDATION-FLOCK-WAIT",
+      "sourceCandidateReferences": [
+        {
+          "id": "SRC-06c636ac0d298ac6",
+          "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+          "line": 192,
+          "kinds": [
+            "policy-or-input"
+          ],
+          "sourceSha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+          "disposition": "unresolved",
+          "settingIds": [],
+          "reason": "Current real kernel lock acquisition timeout5seconds consumed by durable record/blob/attempt/admission/outbox stores; cannot be equated with Core native routing width or taskexecutiontimeout. Shared caller/component author and target wait-vs-originalclaim/IO closure relation unresolved.",
+          "exactText": "      \"--timeout\",",
+          "enclosingReader": {
+            "name": "acquireKernelLock",
+            "parents": [],
+            "startLine": 185,
+            "endLine": 229
+          },
+          "status": "uncovered-source-obligation",
+          "existingReferences": [],
+          "scope": "Source/candidate definition only; links remain independently challengeable, never runtime acceptance",
+          "sourceQuestionId": "CMP-SOURCE-FOUNDATION-FLOCK-WAIT"
+        }
+      ],
+      "meaning": "Exact stored questionreference match. No hit means nonmarker/API/default question; sourceEvidence andcurrent declaration remain primary, no fabricatedcandidate ID.",
+      "definition": "question-definitions.json#CMP-SOURCE-FOUNDATION-FLOCK-WAIT",
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ]
+    },
+    {
+      "questionId": "CMP-SOURCE-ADMISSION-REASON-LIMITS",
+      "sourceCandidateReferences": [],
+      "meaning": "Exact stored questionreference match. No hit means nonmarker/API/default question; sourceEvidence andcurrent declaration remain primary, no fabricatedcandidate ID.",
+      "definition": "question-definitions.json#CMP-SOURCE-ADMISSION-REASON-LIMITS",
+      "caseIds": [
+        "QC-ADMISSION-REASON-LIMITS-VAL",
+        "QC-ADMISSION-REASON-LIMITS-FORMAT",
+        "QC-ADMISSION-REASON-LIMITS-HISTORY"
+      ]
+    },
+    {
+      "questionId": "CMP-SOURCE-ADMISSION-METADATA-RESERVE",
+      "sourceCandidateReferences": [
+        {
+          "id": "SRC-5b26df8a5e07d3f4",
+          "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+          "line": 447,
+          "kinds": [
+            "fallback-or-expression",
+            "policy-or-input"
+          ],
+          "sourceSha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+          "disposition": "unresolved",
+          "settingIds": [],
+          "reason": "Current1024-byte metadata headroom controls actual admission/quarantine capacity; actual overflow canonical UTF8 representation and chosen diagnostic/attributed producer/run fields must be projected together. Constant1024 not established sufficient/fundamental by constructorpositive alone.",
+          "exactText": "      Object.values(limits).some((value) => !validLimit(value)) ||",
+          "enclosingReader": {
+            "name": "constructor",
+            "parents": [],
+            "startLine": 445,
+            "endLine": 453
+          },
+          "status": "uncovered-source-obligation",
+          "existingReferences": [],
+          "scope": "Source/candidate definition only; links remain independently challengeable, never runtime acceptance",
+          "sourceQuestionId": "CMP-SOURCE-ADMISSION-METADATA-RESERVE"
+        }
+      ],
+      "meaning": "Exact stored questionreference match. No hit means nonmarker/API/default question; sourceEvidence andcurrent declaration remain primary, no fabricatedcandidate ID.",
+      "definition": "question-definitions.json#CMP-SOURCE-ADMISSION-METADATA-RESERVE",
+      "caseIds": [
+        "QC-ADMISSION-METADATA-RESERVE-VAL",
+        "QC-ADMISSION-METADATA-RESERVE-OVERFLOW",
+        "QC-ADMISSION-METADATA-RESERVE-ALL-WRITES"
+      ]
+    },
+    {
+      "questionId": "CMP-SOURCE-OUTBOX-UNBOUNDED-READ",
+      "sourceCandidateReferences": [],
+      "meaning": "Exact stored questionreference match. No hit means nonmarker/API/default question; sourceEvidence andcurrent declaration remain primary, no fabricatedcandidate ID.",
+      "definition": "question-definitions.json#CMP-SOURCE-OUTBOX-UNBOUNDED-READ",
+      "caseIds": [
+        "QC-OUTBOX-UNBOUNDED-READ-FOUR-METHODS",
+        "QC-OUTBOX-UNBOUNDED-READ-REPLAY"
+      ]
+    },
+    {
+      "questionId": "CMP-SOURCE-LATENT-UNBOUNDED-BLOB-API",
+      "sourceCandidateReferences": [],
+      "meaning": "Exact stored questionreference match. No hit means nonmarker/API/default question; sourceEvidence andcurrent declaration remain primary, no fabricatedcandidate ID.",
+      "definition": "question-definitions.json#CMP-SOURCE-LATENT-UNBOUNDED-BLOB-API",
+      "caseIds": [
+        "QC-LATENT-UNBOUNDED-BLOB-API-API-AND-SEVEN",
+        "QC-LATENT-UNBOUNDED-BLOB-API-HISTORY"
+      ]
+    },
+    {
+      "questionId": "CMP-SOURCE-BUSTER-TAR-DIAGNOSTIC",
+      "sourceCandidateReferences": [
+        {
+          "id": "SRC-d16a5635264cbda9",
+          "source": "skills/buster/engine/test-gates/preparation-archive.ts",
+          "line": 51,
+          "kinds": [
+            "fallback-or-expression"
+          ],
+          "sourceSha256": "a3f47267addf5e371faff3896521eb3aac35b49523275a7766ed29c8d1d42f6a",
+          "disposition": "unresolved",
+          "settingIds": [],
+          "reason": "Actual failedtar process stderr decodedUTF8 then trailing4096UTF16 units copied to BUSTER_REMOTE_TAR_FAILED. Selected archive/header limits bound process I/O but do not author this diagnostic cap; same4096Core diagnosis value doesnot establish same contract.",
+          "exactText": "      else if (code !== 0) reject(new Error(`BUSTER_REMOTE_TAR_FAILED:${code}:${terminationSignal ?? ''}:${stderr.toString('utf8').slice(-4096)}`));",
+          "enclosingReader": {
+            "name": "runTar",
+            "parents": [],
+            "startLine": 7,
+            "endLine": 55
+          },
+          "status": "uncovered-source-obligation",
+          "existingReferences": [],
+          "scope": "Source/candidate definition only; links remain independently challengeable, never runtime acceptance",
+          "sourceQuestionId": "CMP-SOURCE-BUSTER-TAR-DIAGNOSTIC"
+        }
+      ],
+      "meaning": "Exact stored questionreference match. No hit means nonmarker/API/default question; sourceEvidence andcurrent declaration remain primary, no fabricatedcandidate ID.",
+      "definition": "question-definitions.json#CMP-SOURCE-BUSTER-TAR-DIAGNOSTIC",
+      "caseIds": [
+        "QC-BUSTER-TAR-DIAGNOSTIC-VAL",
+        "QC-BUSTER-TAR-DIAGNOSTIC-REAL-TAR",
+        "QC-BUSTER-TAR-DIAGNOSTIC-BIND"
+      ]
+    },
+    {
+      "questionId": "CMP-SOURCE-BUSTER-TAR-LOCATOR-UNUSED",
+      "sourceCandidateReferences": [],
+      "meaning": "Exact stored questionreference match. No hit means nonmarker/API/default question; sourceEvidence andcurrent declaration remain primary, no fabricatedcandidate ID.",
+      "definition": "question-definitions.json#CMP-SOURCE-BUSTER-TAR-LOCATOR-UNUSED",
+      "caseIds": [
+        "QC-BUSTER-TAR-LOCATOR-UNUSED-PAIRED-PROVISION",
+        "QC-BUSTER-TAR-LOCATOR-UNUSED-HISTORY"
+      ]
+    },
+    {
+      "questionId": "CMP-SOURCE-FIXTURE-STORAGE-EXPONENT",
+      "sourceCandidateReferences": [
+        {
+          "id": "SRC-855939e7c7117675",
+          "source": "skills/buster/engine/test-gates/kubernetes-fixture-storage.ts",
+          "line": 19,
+          "kinds": [
+            "fallback-or-expression"
+          ],
+          "sourceSha256": "da2858e192df14fc5d457ebd1f3414696c5a3be116f611216c214c0b6b194f1f",
+          "disposition": "unresolved",
+          "settingIds": [],
+          "reason": "Current quantitytextmax64 and BigInt decimal exponent magnitude<=63 parser gate. Need exact actual Kubernetes quantity/control capability contract vs resource-cost policy classification; do not invent63 as universal Kubernetes maximum.",
+          "exactText": "    if (!Number.isSafeInteger(exponent) || Math.abs(exponent) > 63) {",
+          "enclosingReader": {
+            "name": "storageBytes",
+            "parents": [],
+            "startLine": 3,
+            "endLine": 30
+          },
+          "status": "uncovered-source-obligation",
+          "existingReferences": [],
+          "scope": "Source/candidate definition only; links remain independently challengeable, never runtime acceptance",
+          "sourceQuestionId": "CMP-SOURCE-FIXTURE-STORAGE-EXPONENT"
+        }
+      ],
+      "meaning": "Exact stored questionreference match. No hit means nonmarker/API/default question; sourceEvidence andcurrent declaration remain primary, no fabricatedcandidate ID.",
+      "definition": "question-definitions.json#CMP-SOURCE-FIXTURE-STORAGE-EXPONENT",
+      "caseIds": [
+        "QC-FIXTURE-STORAGE-EXPONENT-REPRESENTATION",
+        "QC-FIXTURE-STORAGE-EXPONENT-POLICY-BIND"
+      ]
+    },
+    {
+      "questionId": "CMP-SOURCE-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS",
+      "sourceCandidateReferences": [
+        {
+          "id": "SRC-47868de3fa93c260",
+          "source": "skills/buster/engine/test-gates/provider-process-session.ts",
+          "line": 253,
+          "kinds": [
+            "fallback-or-expression"
+          ],
+          "sourceSha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d",
+          "disposition": "unresolved",
+          "settingIds": [],
+          "reason": "Current provider resources combine sampledactual counters and reportedmissing defaults0/1; operation missinginstance returns0 measurements. Determine actual no-launch/failedinitialize/sampling/close branches before saying these numbers are real measurements. Never authorize CONFIG to fill unavailable observation or claim completed requested-budget success.",
+          "exactText": "      cpuTimeMs: Math.max(this.#resources.cpuTimeMs, Number(reported.cpuTimeMs ?? 0)),",
+          "enclosingReader": {
+            "name": "#reportedResources",
+            "parents": [],
+            "startLine": 250,
+            "endLine": 257
+          },
+          "status": "uncovered-source-obligation",
+          "existingReferences": [],
+          "scope": "Source/candidate definition only; links remain independently challengeable, never runtime acceptance",
+          "sourceQuestionId": "CMP-SOURCE-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS"
+        },
+        {
+          "id": "SRC-aace7b633d4f4233",
+          "source": "skills/buster/engine/test-gates/provider-process-session.ts",
+          "line": 254,
+          "kinds": [
+            "fallback-or-expression"
+          ],
+          "sourceSha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d",
+          "disposition": "unresolved",
+          "settingIds": [],
+          "reason": "Current provider resources combine sampledactual counters and reportedmissing defaults0/1; operation missinginstance returns0 measurements. Determine actual no-launch/failedinitialize/sampling/close branches before saying these numbers are real measurements. Never authorize CONFIG to fill unavailable observation or claim completed requested-budget success.",
+          "exactText": "      maximumMemoryBytes: Math.max(this.#resources.maximumMemoryBytes, Number(reported.maximumMemoryBytes ?? 0)),",
+          "enclosingReader": {
+            "name": "#reportedResources",
+            "parents": [],
+            "startLine": 250,
+            "endLine": 257
+          },
+          "status": "uncovered-source-obligation",
+          "existingReferences": [],
+          "scope": "Source/candidate definition only; links remain independently challengeable, never runtime acceptance",
+          "sourceQuestionId": "CMP-SOURCE-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS"
+        },
+        {
+          "id": "SRC-53650dec38669e97",
+          "source": "skills/buster/engine/test-gates/provider-process-session.ts",
+          "line": 255,
+          "kinds": [
+            "fallback-or-expression"
+          ],
+          "sourceSha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d",
+          "disposition": "unresolved",
+          "settingIds": [],
+          "reason": "Current provider resources combine sampledactual counters and reportedmissing defaults0/1; operation missinginstance returns0 measurements. Determine actual no-launch/failedinitialize/sampling/close branches before saying these numbers are real measurements. Never authorize CONFIG to fill unavailable observation or claim completed requested-budget success.",
+          "exactText": "      maximumProcesses: Math.max(this.#resources.maximumProcesses, Number(reported.maximumProcesses ?? 1)),",
+          "enclosingReader": {
+            "name": "#reportedResources",
+            "parents": [],
+            "startLine": 250,
+            "endLine": 257
+          },
+          "status": "uncovered-source-obligation",
+          "existingReferences": [],
+          "scope": "Source/candidate definition only; links remain independently challengeable, never runtime acceptance",
+          "sourceQuestionId": "CMP-SOURCE-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS"
+        }
+      ],
+      "meaning": "Exact stored questionreference match. No hit means nonmarker/API/default question; sourceEvidence andcurrent declaration remain primary, no fabricatedcandidate ID.",
+      "definition": "question-definitions.json#CMP-SOURCE-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS",
+      "caseIds": [
+        "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-REAL-PROVENANCE",
+        "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-RECOVERY-EVAL"
+      ]
+    },
+    {
+      "questionId": "CMP-SOURCE-FIXTURE-SECRET-REFERENCE-CARDINALITY",
+      "sourceCandidateReferences": [],
+      "meaning": "Exact stored questionreference match. No hit means nonmarker/API/default question; sourceEvidence andcurrent declaration remain primary, no fabricatedcandidate ID.",
+      "definition": "question-definitions.json#CMP-SOURCE-FIXTURE-SECRET-REFERENCE-CARDINALITY",
+      "caseIds": []
+    },
+    {
+      "questionId": "CMP-SOURCE-PRISM-DESIGN-CARDINALITY",
+      "sourceCandidateReferences": [
+        {
+          "id": "SRC-c288cf95ed130752",
+          "source": "skills/prism/server/agent-routes.ts",
+          "line": 60,
+          "kinds": [
+            "fallback-or-expression"
+          ],
+          "sourceSha256": "55c4c77fc4ff7b981287c433c126d9754dffd3df1de464ec0d83bb0294caec17",
+          "disposition": "unresolved",
+          "settingIds": [],
+          "reason": "Productive designrounds guard exact3designs; no source invariant identified that makes3 untunable. Parent must trace generation/prompt/service/UI contract and decide policy vs versionedcontract without Buster authority.",
+          "exactText": "  if (!input.projectId || input.designs?.length !== 3)",
+          "enclosingReader": {
+            "name": "createAgentDesignSet",
+            "parents": [],
+            "startLine": 43,
+            "endLine": 95
+          },
+          "status": "uncovered-source-obligation",
+          "existingReferences": [],
+          "scope": "Source/candidate definition only; links remain independently challengeable, never runtime acceptance",
+          "sourceQuestionId": "CMP-SOURCE-PRISM-DESIGN-CARDINALITY"
+        }
+      ],
+      "meaning": "Exact stored questionreference match. No hit means nonmarker/API/default question; sourceEvidence andcurrent declaration remain primary, no fabricatedcandidate ID.",
+      "definition": "question-definitions.json#CMP-SOURCE-PRISM-DESIGN-CARDINALITY",
+      "caseIds": []
+    },
+    {
+      "questionId": "CMP-SOURCE-PRISM-DEVELOPMENT-IDENTITY",
+      "sourceCandidateReferences": [
+        {
+          "id": "SRC-5032e9ec4eadff56",
+          "source": "skills/prism/engine/worker-envelope.ts",
+          "line": 11,
+          "kinds": [
+            "fallback-or-expression"
+          ],
+          "sourceSha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+          "disposition": "unresolved",
+          "settingIds": [],
+          "reason": "Production requires syntax-validsha256 from OCI projection; development fallback hashes synthetic engineId/version/development object, not package bytes. Preserve dev-vs-production source distinction and authentic implementation binding beforedispatch; do not use fallback as code-tree proof.",
+          "exactText": "  || sha256Digest({ engineId: \"prism-design-engine\", engineVersion: \"1.0.0\", development: true });",
+          "enclosingReader": null,
+          "status": "uncovered-source-obligation",
+          "existingReferences": [],
+          "scope": "Source/candidate definition only; links remain independently challengeable, never runtime acceptance",
+          "sourceQuestionId": "CMP-SOURCE-PRISM-DEVELOPMENT-IDENTITY"
+        }
+      ],
+      "meaning": "Exact stored questionreference match. No hit means nonmarker/API/default question; sourceEvidence andcurrent declaration remain primary, no fabricatedcandidate ID.",
+      "definition": "question-definitions.json#CMP-SOURCE-PRISM-DEVELOPMENT-IDENTITY",
+      "caseIds": []
+    },
+    {
+      "questionId": "CMP-SOURCE-BUSTER-KUBE-CREDENTIAL-ENV",
+      "sourceCandidateReferences": [
+        {
+          "id": "SRC-07f4019880385e8f",
+          "source": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+          "line": 109,
+          "kinds": [
+            "environment"
+          ],
+          "sourceSha256": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc",
+          "disposition": "unresolved",
+          "settingIds": [],
+          "reason": "RealTailscale child whitelist copies ambient PATH/KUBECONFIG/KUBERNETES_SERVICE_HOST/PORT, unlike selectedruntimeSecurity executableSearchPath. Exact Kubernetes/runtime credential/reference/host injection authority and captured generation must be traced; no equal-name currentsecret/path author invented.",
+          "exactText": "    this.#environment = { PATH: process.env.PATH, KUBECONFIG: process.env.KUBECONFIG,",
+          "enclosingReader": {
+            "name": "constructor",
+            "parents": [],
+            "startLine": 85,
+            "endLine": 112
+          },
+          "status": "uncovered-source-obligation",
+          "existingReferences": [],
+          "scope": "Source/candidate definition only; links remain independently challengeable, never runtime acceptance",
+          "sourceQuestionId": "CMP-SOURCE-BUSTER-KUBE-CREDENTIAL-ENV"
+        },
+        {
+          "id": "SRC-8e00691c1409eab0",
+          "source": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+          "line": 110,
+          "kinds": [
+            "environment"
+          ],
+          "sourceSha256": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc",
+          "disposition": "unresolved",
+          "settingIds": [],
+          "reason": "RealTailscale child whitelist copies ambient PATH/KUBECONFIG/KUBERNETES_SERVICE_HOST/PORT, unlike selectedruntimeSecurity executableSearchPath. Exact Kubernetes/runtime credential/reference/host injection authority and captured generation must be traced; no equal-name currentsecret/path author invented.",
+          "exactText": "      KUBERNETES_SERVICE_HOST: process.env.KUBERNETES_SERVICE_HOST,",
+          "enclosingReader": {
+            "name": "constructor",
+            "parents": [],
+            "startLine": 85,
+            "endLine": 112
+          },
+          "status": "uncovered-source-obligation",
+          "existingReferences": [],
+          "scope": "Source/candidate definition only; links remain independently challengeable, never runtime acceptance",
+          "sourceQuestionId": "CMP-SOURCE-BUSTER-KUBE-CREDENTIAL-ENV"
+        },
+        {
+          "id": "SRC-2b44fdf5a0a7aac9",
+          "source": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+          "line": 111,
+          "kinds": [
+            "environment"
+          ],
+          "sourceSha256": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc",
+          "disposition": "unresolved",
+          "settingIds": [],
+          "reason": "RealTailscale child whitelist copies ambient PATH/KUBECONFIG/KUBERNETES_SERVICE_HOST/PORT, unlike selectedruntimeSecurity executableSearchPath. Exact Kubernetes/runtime credential/reference/host injection authority and captured generation must be traced; no equal-name currentsecret/path author invented.",
+          "exactText": "      KUBERNETES_SERVICE_PORT: process.env.KUBERNETES_SERVICE_PORT };",
+          "enclosingReader": {
+            "name": "constructor",
+            "parents": [],
+            "startLine": 85,
+            "endLine": 112
+          },
+          "status": "uncovered-source-obligation",
+          "existingReferences": [],
+          "scope": "Source/candidate definition only; links remain independently challengeable, never runtime acceptance",
+          "sourceQuestionId": "CMP-SOURCE-BUSTER-KUBE-CREDENTIAL-ENV"
+        }
+      ],
+      "meaning": "Exact stored questionreference match. No hit means nonmarker/API/default question; sourceEvidence andcurrent declaration remain primary, no fabricatedcandidate ID.",
+      "definition": "question-definitions.json#CMP-SOURCE-BUSTER-KUBE-CREDENTIAL-ENV",
+      "caseIds": []
+    },
+    {
+      "questionId": "CMP-SOURCE-GENERATED-HOST-SOURCE-PROVENANCE",
+      "sourceCandidateReferences": [],
+      "meaning": "Exact stored questionreference match. No hit means nonmarker/API/default question; sourceEvidence andcurrent declaration remain primary, no fabricatedcandidate ID.",
+      "definition": "question-definitions.json#CMP-SOURCE-GENERATED-HOST-SOURCE-PROVENANCE",
+      "caseIds": []
+    }
+  ],
+  "frozenCandidateArtifact": "docs/review/evidence/config-acceptance/components/source-candidates-bce3f075/candidate-dispositions.json",
+  "sha256": "b30dcc79c8a5f6c6e67cb56a91f55eba9720ca4158ce9aee85f7ede0e42a8a05"
+}

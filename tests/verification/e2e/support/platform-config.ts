@@ -1,7 +1,9 @@
-import { loadSwarmSettings } from '../../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
+import { captureSwarmSettings } from '../../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+
+import { declaredPipelineServices } from '../../../../scripts/updates/pipeline-generation.mjs';
 
 import { selectDefinedValue, selectTruthyValue } from './optional-absence.ts';
 const STANDARD_PROFILE_NAME = 'standard';
@@ -161,9 +163,15 @@ function hasCompactConfigAuthority(config: AnyRecord) {
   return false;
 }
 
-/** Validate shared authorship before deriving the legacy E2E-only profile input. */
+/** Validate every central profile using the actual E2E Buster runtime tuple.
+ * Only root E2E metadata escapes; this is not a boot receipt or a full facade. */
 export function pipelineProfileFromSwarm(file: string): AnyRecord {
-  const snapshot = loadSwarmSettings({ SWARM_CONFIG: path.resolve(file) });
+  const entry = path.resolve(file);
+  const selection = declaredPipelineServices(path.dirname(entry), {
+    role: 'buster', namespace: 'kubeclaw', releaseName: 'agent-buster',
+  }).find(service => service.callerId === 'buster-runtime');
+  if (!selection) throw new Error('E2E_BUSTER_RUNTIME_SELECTION_REQUIRED');
+  const snapshot = captureSwarmSettings(entry, selection);
   return { ...cloneJson(snapshot.profile), _doc: snapshot.profile._doc };
 }
 

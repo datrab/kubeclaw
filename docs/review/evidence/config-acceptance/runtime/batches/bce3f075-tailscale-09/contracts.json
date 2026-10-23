@@ -1,0 +1,685 @@
+{
+  "entries": [
+    {
+      "setting": "RT-f1e7350413f49db3",
+      "field": "retentionMode",
+      "completeA": {
+        "retentionMode": "release",
+        "endpointName": "service-a",
+        "hostname": "public-a",
+        "path": "/",
+        "readinessTimeoutSeconds": 1
+      },
+      "completeB": {
+        "retentionMode": "await-readiness",
+        "endpointName": "service-a",
+        "hostname": "public-a",
+        "path": "/",
+        "readinessTimeoutSeconds": 1
+      },
+      "completeNegative": {
+        "retentionMode": "other",
+        "endpointName": "service-a",
+        "hostname": "public-a",
+        "path": "/",
+        "readinessTimeoutSeconds": 1
+      },
+      "exactDeploymentSourceInput": {
+        "schemaVersion": "kubernetes-deployment-fixture.v1",
+        "leaseName": "lease-a",
+        "namespace": "test-a",
+        "expiresAt": "2099-01-01T00:00:00Z",
+        "endpoints": [
+          {
+            "name": "service-a",
+            "url": "http://service-a.test-a.svc.cluster.local:80/"
+          },
+          {
+            "name": "service-b",
+            "url": "http://service-b.test-a.svc.cluster.local:81/"
+          }
+        ]
+      },
+      "readers": [
+        {
+          "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+          "line": 11,
+          "text": "  if (!['release','await-readiness'].includes(value)) throw new Error('TAILSCALE_EXPOSURE_RETENTION_INVALID');",
+          "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+        },
+        {
+          "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+          "line": 12,
+          "text": "  return value;",
+          "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+        },
+        {
+          "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+          "line": 13,
+          "text": "}",
+          "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+        },
+        {
+          "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+          "line": 77,
+          "text": "          readinessTimeoutMs: Math.min(invocation.timeoutMs, config.readinessTimeoutSeconds * 1000) },",
+          "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+        },
+        {
+          "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+          "line": 87,
+          "text": "      if(config.retentionMode==='await-readiness' && (result.handoff?.phase!=='awaiting-readiness'||!Number.isSafeInteger(result.handoff.exposureGeneration)||result.handoff.exposureGeneration<1))throw new Error('TAILSCALE_EXPOSURE_HANDOFF_MISSING');",
+          "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+        },
+        {
+          "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+          "line": 101,
+          "text": "          ...(config.retentionMode === 'await-readiness' ? {retentionMode:config.retentionMode} : {}) } });",
+          "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+        }
+      ],
+      "semantics": "owned module exposure lifecycle policy release versus await-readiness; current absent=>release only undefined default, null rejects. Await branch requires deployment cleanupPolicy retain, real lease UID+image+manifest binding, sourceOwner/sourceRequest transfer/observed controller generation. Cleanup reuses original owner; transferred successor returns superseded and is not switched off. Not namespace TTL, no new expiry.",
+      "classification": "owned-exposure-lifecycle-or-requested-wait-policy",
+      "targetOwner": "existing kubeclaw.tailscale-exposure exposure registration instance profile under sole pipeline.config.json; owned policy fields required and no competing task override, even equal. Endpoint/hostname/path task identity remains task authority. Existing Buster component/native service authority/grants/caps remain distinct; no new global selector",
+      "proposedCorrelatedCompleteProfile": {
+        "registration": "kubeclaw.tailscale-exposure:exposure",
+        "instance": "c0-exposure",
+        "A": {
+          "policy": {
+            "retentionMode": "release",
+            "readinessTimeoutSeconds": 1
+          },
+          "task": {
+            "endpointName": "service-a",
+            "hostname": "public-a",
+            "path": "/"
+          }
+        },
+        "B": {
+          "policy": {
+            "retentionMode": "await-readiness",
+            "readinessTimeoutSeconds": 1
+          },
+          "task": {
+            "endpointName": "service-a",
+            "hostname": "public-a",
+            "path": "/"
+          }
+        },
+        "currentCompleteBusterAuthor": {
+          "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+          "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+        },
+        "nativeBindingDefinition": {
+          "controllerNamespace": "c0-controller",
+          "kubectlExecutable": "/usr/local/bin/kubectl",
+          "leaseApiGroup": "kubeclaw.forgestack.ai",
+          "leaseApiVersion": "v1alpha1",
+          "allowedNamespacePrefixes": [
+            "test"
+          ],
+          "allowedHostSuffixes": [
+            ".ts.net"
+          ],
+          "source": "synthetic local source/parser stand only, never claimed deployed namespace/RBAC/Tailscale",
+          "quotas": "exact selected complete Buster clusterInvokers.tailscaleExposure + execution.processInput unchanged"
+        },
+        "genuineMissingInputs": [
+          "actual controller/CRD and Tailscale identity/suffix availability",
+          "existing deployed full Buster runtime/role/native tool/RBAC/service options/immutable config generation",
+          "genuine checked deployment/image/manifest/source/effect/grant/leaseUID/resourceVersion/observed controller history",
+          "original native ambient credential environment revisions/capture under delivery owner",
+          "module/claim deadline and spent-budget receipts"
+        ]
+      }
+    },
+    {
+      "setting": "RT-acb2956bc0d67093",
+      "field": "endpointName",
+      "completeA": {
+        "retentionMode": "release",
+        "endpointName": "service-a",
+        "hostname": "public-a",
+        "path": "/",
+        "readinessTimeoutSeconds": 1
+      },
+      "completeB": {
+        "retentionMode": "release",
+        "endpointName": "service-b",
+        "hostname": "public-a",
+        "path": "/",
+        "readinessTimeoutSeconds": 1
+      },
+      "completeNegative": {
+        "retentionMode": "release",
+        "endpointName": "BAD NAME",
+        "hostname": "public-a",
+        "path": "/",
+        "readinessTimeoutSeconds": 1
+      },
+      "exactDeploymentSourceInput": {
+        "schemaVersion": "kubernetes-deployment-fixture.v1",
+        "leaseName": "lease-a",
+        "namespace": "test-a",
+        "expiresAt": "2099-01-01T00:00:00Z",
+        "endpoints": [
+          {
+            "name": "service-a",
+            "url": "http://service-a.test-a.svc.cluster.local:80/"
+          },
+          {
+            "name": "service-b",
+            "url": "http://service-b.test-a.svc.cluster.local:81/"
+          }
+        ]
+      },
+      "readers": [
+        {
+          "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+          "line": 17,
+          "text": "  const endpointName = value.endpointName;",
+          "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+        },
+        {
+          "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+          "line": 22,
+          "text": "  if (endpointName !== undefined && (typeof endpointName !== 'string' || !DNS_LABEL.test(endpointName))) throw new Error('TAILSCALE_EXPOSURE_ENDPOINT_NAME_INVALID');",
+          "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+        },
+        {
+          "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+          "line": 43,
+          "text": "  const endpoints = value.endpoints.map((entry) => object(entry, 'endpoint'));",
+          "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+        },
+        {
+          "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+          "line": 44,
+          "text": "  const selected = endpointName === undefined",
+          "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+        },
+        {
+          "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+          "line": 45,
+          "text": "    ? (endpoints.length === 1 ? endpoints[0] : null)",
+          "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+        },
+        {
+          "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+          "line": 46,
+          "text": "    : endpoints.find((entry) => entry.name === endpointName);",
+          "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+        },
+        {
+          "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+          "line": 71,
+          "text": "      const config = configuration(invocation);",
+          "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+        },
+        {
+          "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+          "line": 72,
+          "text": "      const deployment = deploymentInput(invocation, config.endpointName);",
+          "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+        },
+        {
+          "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+          "line": 73,
+          "text": "      const result = await context.invoke('kubernetes.exposure', {",
+          "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+        }
+      ],
+      "semantics": "task dependency Service endpoint selector; omitted chooses only singleton, multiple ambiguous; declared matching DNS name selected by first find. Current duplicate matching names are not rejected by provider, genuine checked producer/native lease binding required; target duplicate endpoint identities reject beforeeffects.",
+      "classification": "task-deployment-endpoint-hostname-route-intent",
+      "targetOwner": "existing kubeclaw.tailscale-exposure exposure registration instance profile under sole pipeline.config.json; owned policy fields required and no competing task override, even equal. Endpoint/hostname/path task identity remains task authority. Existing Buster component/native service authority/grants/caps remain distinct; no new global selector",
+      "proposedCorrelatedCompleteProfile": {
+        "registration": "kubeclaw.tailscale-exposure:exposure",
+        "instance": "c0-exposure",
+        "A": {
+          "policy": {
+            "retentionMode": "release",
+            "readinessTimeoutSeconds": 1
+          },
+          "task": {
+            "endpointName": "service-a",
+            "hostname": "public-a",
+            "path": "/"
+          }
+        },
+        "B": {
+          "policy": {
+            "retentionMode": "release",
+            "readinessTimeoutSeconds": 1
+          },
+          "task": {
+            "endpointName": "service-b",
+            "hostname": "public-a",
+            "path": "/"
+          }
+        },
+        "currentCompleteBusterAuthor": {
+          "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+          "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+        },
+        "nativeBindingDefinition": {
+          "controllerNamespace": "c0-controller",
+          "kubectlExecutable": "/usr/local/bin/kubectl",
+          "leaseApiGroup": "kubeclaw.forgestack.ai",
+          "leaseApiVersion": "v1alpha1",
+          "allowedNamespacePrefixes": [
+            "test"
+          ],
+          "allowedHostSuffixes": [
+            ".ts.net"
+          ],
+          "source": "synthetic local source/parser stand only, never claimed deployed namespace/RBAC/Tailscale",
+          "quotas": "exact selected complete Buster clusterInvokers.tailscaleExposure + execution.processInput unchanged"
+        },
+        "genuineMissingInputs": [
+          "actual controller/CRD and Tailscale identity/suffix availability",
+          "existing deployed full Buster runtime/role/native tool/RBAC/service options/immutable config generation",
+          "genuine checked deployment/image/manifest/source/effect/grant/leaseUID/resourceVersion/observed controller history",
+          "original native ambient credential environment revisions/capture under delivery owner",
+          "module/claim deadline and spent-budget receipts"
+        ]
+      }
+    },
+    {
+      "setting": "RT-46e7265d0dd6458d",
+      "field": "hostname",
+      "completeA": {
+        "retentionMode": "release",
+        "endpointName": "service-a",
+        "hostname": "public-a",
+        "path": "/",
+        "readinessTimeoutSeconds": 1
+      },
+      "completeB": {
+        "retentionMode": "release",
+        "endpointName": "service-a",
+        "hostname": "public-b",
+        "path": "/",
+        "readinessTimeoutSeconds": 1
+      },
+      "completeNegative": {
+        "retentionMode": "release",
+        "endpointName": "service-a",
+        "hostname": "BAD NAME",
+        "path": "/",
+        "readinessTimeoutSeconds": 1
+      },
+      "exactDeploymentSourceInput": {
+        "schemaVersion": "kubernetes-deployment-fixture.v1",
+        "leaseName": "lease-a",
+        "namespace": "test-a",
+        "expiresAt": "2099-01-01T00:00:00Z",
+        "endpoints": [
+          {
+            "name": "service-a",
+            "url": "http://service-a.test-a.svc.cluster.local:80/"
+          },
+          {
+            "name": "service-b",
+            "url": "http://service-b.test-a.svc.cluster.local:81/"
+          }
+        ]
+      },
+      "readers": [
+        {
+          "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+          "line": 18,
+          "text": "  const hostname = value.hostname;",
+          "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+        },
+        {
+          "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+          "line": 23,
+          "text": "  if (hostname !== undefined && (typeof hostname !== 'string' || !DNS_LABEL.test(hostname))) throw new Error('TAILSCALE_EXPOSURE_HOSTNAME_INVALID');",
+          "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+        },
+        {
+          "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+          "line": 76,
+          "text": "          ...(config.retentionMode === 'await-readiness' ? {retentionMode:config.retentionMode} : {}),",
+          "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+        },
+        {
+          "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+          "line": 100,
+          "text": "        payload: { ...deployment, path: config.path, ...(config.hostname ? { hostname: config.hostname } : {}),",
+          "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+        }
+      ],
+      "semantics": "task requested Tailscale hostname DNS label; absent lets real controller choose host. Current null rejects. Native publicURL requires https allowed suffix, status host and declared prefix/domain relation; codec notbackend/generationselector. Actual Tailscale availability/controller grants unknown.",
+      "classification": "task-deployment-endpoint-hostname-route-intent",
+      "targetOwner": "existing kubeclaw.tailscale-exposure exposure registration instance profile under sole pipeline.config.json; owned policy fields required and no competing task override, even equal. Endpoint/hostname/path task identity remains task authority. Existing Buster component/native service authority/grants/caps remain distinct; no new global selector",
+      "proposedCorrelatedCompleteProfile": {
+        "registration": "kubeclaw.tailscale-exposure:exposure",
+        "instance": "c0-exposure",
+        "A": {
+          "policy": {
+            "retentionMode": "release",
+            "readinessTimeoutSeconds": 1
+          },
+          "task": {
+            "endpointName": "service-a",
+            "hostname": "public-a",
+            "path": "/"
+          }
+        },
+        "B": {
+          "policy": {
+            "retentionMode": "release",
+            "readinessTimeoutSeconds": 1
+          },
+          "task": {
+            "endpointName": "service-a",
+            "hostname": "public-b",
+            "path": "/"
+          }
+        },
+        "currentCompleteBusterAuthor": {
+          "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+          "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+        },
+        "nativeBindingDefinition": {
+          "controllerNamespace": "c0-controller",
+          "kubectlExecutable": "/usr/local/bin/kubectl",
+          "leaseApiGroup": "kubeclaw.forgestack.ai",
+          "leaseApiVersion": "v1alpha1",
+          "allowedNamespacePrefixes": [
+            "test"
+          ],
+          "allowedHostSuffixes": [
+            ".ts.net"
+          ],
+          "source": "synthetic local source/parser stand only, never claimed deployed namespace/RBAC/Tailscale",
+          "quotas": "exact selected complete Buster clusterInvokers.tailscaleExposure + execution.processInput unchanged"
+        },
+        "genuineMissingInputs": [
+          "actual controller/CRD and Tailscale identity/suffix availability",
+          "existing deployed full Buster runtime/role/native tool/RBAC/service options/immutable config generation",
+          "genuine checked deployment/image/manifest/source/effect/grant/leaseUID/resourceVersion/observed controller history",
+          "original native ambient credential environment revisions/capture under delivery owner",
+          "module/claim deadline and spent-budget receipts"
+        ]
+      }
+    },
+    {
+      "setting": "RT-b96960e386a14721",
+      "field": "path",
+      "completeA": {
+        "retentionMode": "release",
+        "endpointName": "service-a",
+        "hostname": "public-a",
+        "path": "/",
+        "readinessTimeoutSeconds": 1
+      },
+      "completeB": {
+        "retentionMode": "release",
+        "endpointName": "service-a",
+        "hostname": "public-a",
+        "path": "/ready",
+        "readinessTimeoutSeconds": 1
+      },
+      "completeNegative": {
+        "retentionMode": "release",
+        "endpointName": "service-a",
+        "hostname": "public-a",
+        "path": "//outside",
+        "readinessTimeoutSeconds": 1
+      },
+      "exactDeploymentSourceInput": {
+        "schemaVersion": "kubernetes-deployment-fixture.v1",
+        "leaseName": "lease-a",
+        "namespace": "test-a",
+        "expiresAt": "2099-01-01T00:00:00Z",
+        "endpoints": [
+          {
+            "name": "service-a",
+            "url": "http://service-a.test-a.svc.cluster.local:80/"
+          },
+          {
+            "name": "service-b",
+            "url": "http://service-b.test-a.svc.cluster.local:81/"
+          }
+        ]
+      },
+      "readers": [
+        {
+          "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+          "line": 19,
+          "text": "  const path = value.path ?? '/';",
+          "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+        },
+        {
+          "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+          "line": 24,
+          "text": "  if (typeof path !== 'string' || !path.startsWith('/') || path.startsWith('//') || path.length > 1024",
+          "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+        },
+        {
+          "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+          "line": 25,
+          "text": "    || /[\\0\\r\\n?#]/u.test(path)) throw new Error('TAILSCALE_EXPOSURE_PATH_INVALID');",
+          "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+        },
+        {
+          "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+          "line": 76,
+          "text": "          ...(config.retentionMode === 'await-readiness' ? {retentionMode:config.retentionMode} : {}),",
+          "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+        },
+        {
+          "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+          "line": 100,
+          "text": "        payload: { ...deployment, path: config.path, ...(config.hostname ? { hostname: config.hostname } : {}),",
+          "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+        }
+      ],
+      "semantics": "task HTTP route absent/null / fallback; current slash/no double slash/no NUL CRLF query fragment and UTF16 length<=1024. Own schema uses codepoint maxLength and permits embedded NUL; native parser string guard stronger. Target explicit resolved route and configured processing guard separately, no global target URI author.",
+      "classification": "task-deployment-endpoint-hostname-route-intent",
+      "targetOwner": "existing kubeclaw.tailscale-exposure exposure registration instance profile under sole pipeline.config.json; owned policy fields required and no competing task override, even equal. Endpoint/hostname/path task identity remains task authority. Existing Buster component/native service authority/grants/caps remain distinct; no new global selector",
+      "proposedCorrelatedCompleteProfile": {
+        "registration": "kubeclaw.tailscale-exposure:exposure",
+        "instance": "c0-exposure",
+        "A": {
+          "policy": {
+            "retentionMode": "release",
+            "readinessTimeoutSeconds": 1
+          },
+          "task": {
+            "endpointName": "service-a",
+            "hostname": "public-a",
+            "path": "/"
+          }
+        },
+        "B": {
+          "policy": {
+            "retentionMode": "release",
+            "readinessTimeoutSeconds": 1
+          },
+          "task": {
+            "endpointName": "service-a",
+            "hostname": "public-a",
+            "path": "/ready"
+          }
+        },
+        "currentCompleteBusterAuthor": {
+          "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+          "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+        },
+        "nativeBindingDefinition": {
+          "controllerNamespace": "c0-controller",
+          "kubectlExecutable": "/usr/local/bin/kubectl",
+          "leaseApiGroup": "kubeclaw.forgestack.ai",
+          "leaseApiVersion": "v1alpha1",
+          "allowedNamespacePrefixes": [
+            "test"
+          ],
+          "allowedHostSuffixes": [
+            ".ts.net"
+          ],
+          "source": "synthetic local source/parser stand only, never claimed deployed namespace/RBAC/Tailscale",
+          "quotas": "exact selected complete Buster clusterInvokers.tailscaleExposure + execution.processInput unchanged"
+        },
+        "genuineMissingInputs": [
+          "actual controller/CRD and Tailscale identity/suffix availability",
+          "existing deployed full Buster runtime/role/native tool/RBAC/service options/immutable config generation",
+          "genuine checked deployment/image/manifest/source/effect/grant/leaseUID/resourceVersion/observed controller history",
+          "original native ambient credential environment revisions/capture under delivery owner",
+          "module/claim deadline and spent-budget receipts"
+        ]
+      }
+    },
+    {
+      "setting": "RT-11582110acd39d2a",
+      "field": "readinessTimeoutSeconds",
+      "completeA": {
+        "retentionMode": "release",
+        "endpointName": "service-a",
+        "hostname": "public-a",
+        "path": "/",
+        "readinessTimeoutSeconds": 1
+      },
+      "completeB": {
+        "retentionMode": "release",
+        "endpointName": "service-a",
+        "hostname": "public-a",
+        "path": "/",
+        "readinessTimeoutSeconds": 2
+      },
+      "completeNegative": {
+        "retentionMode": "release",
+        "endpointName": "service-a",
+        "hostname": "public-a",
+        "path": "/",
+        "readinessTimeoutSeconds": 0
+      },
+      "exactDeploymentSourceInput": {
+        "schemaVersion": "kubernetes-deployment-fixture.v1",
+        "leaseName": "lease-a",
+        "namespace": "test-a",
+        "expiresAt": "2099-01-01T00:00:00Z",
+        "endpoints": [
+          {
+            "name": "service-a",
+            "url": "http://service-a.test-a.svc.cluster.local:80/"
+          },
+          {
+            "name": "service-b",
+            "url": "http://service-b.test-a.svc.cluster.local:81/"
+          }
+        ]
+      },
+      "readers": [
+        {
+          "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+          "line": 20,
+          "text": "  const readinessTimeoutSeconds = value.readinessTimeoutSeconds ?? 120;",
+          "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+        },
+        {
+          "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+          "line": 26,
+          "text": "  if (!Number.isSafeInteger(readinessTimeoutSeconds) || readinessTimeoutSeconds < 1 || readinessTimeoutSeconds > 3600) {",
+          "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+        },
+        {
+          "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+          "line": 27,
+          "text": "    throw new Error('TAILSCALE_EXPOSURE_READINESS_TIMEOUT_INVALID');",
+          "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+        },
+        {
+          "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+          "line": 28,
+          "text": "  }",
+          "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+        },
+        {
+          "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+          "line": 78,
+          "text": "      });",
+          "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+        }
+      ],
+      "semantics": "owned requested wait policy current absent/null120 seconds; integer1..3600. Provider min(invocation.timeoutMs,N*1000), native accepts milliseconds1..capturedJ maximumExecutionMs. Native first wait and handoff second wait EACH get timeoutMs; auth/patch/rollback/release own bounded commands, not proven total module spentbudget. Retain absoluteexpiry/claim and original budget beforeeffects.",
+      "classification": "owned-exposure-lifecycle-or-requested-wait-policy",
+      "targetOwner": "existing kubeclaw.tailscale-exposure exposure registration instance profile under sole pipeline.config.json; owned policy fields required and no competing task override, even equal. Endpoint/hostname/path task identity remains task authority. Existing Buster component/native service authority/grants/caps remain distinct; no new global selector",
+      "proposedCorrelatedCompleteProfile": {
+        "registration": "kubeclaw.tailscale-exposure:exposure",
+        "instance": "c0-exposure",
+        "A": {
+          "policy": {
+            "retentionMode": "release",
+            "readinessTimeoutSeconds": 1
+          },
+          "task": {
+            "endpointName": "service-a",
+            "hostname": "public-a",
+            "path": "/"
+          }
+        },
+        "B": {
+          "policy": {
+            "retentionMode": "release",
+            "readinessTimeoutSeconds": 2
+          },
+          "task": {
+            "endpointName": "service-a",
+            "hostname": "public-a",
+            "path": "/"
+          }
+        },
+        "currentCompleteBusterAuthor": {
+          "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+          "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+        },
+        "nativeBindingDefinition": {
+          "controllerNamespace": "c0-controller",
+          "kubectlExecutable": "/usr/local/bin/kubectl",
+          "leaseApiGroup": "kubeclaw.forgestack.ai",
+          "leaseApiVersion": "v1alpha1",
+          "allowedNamespacePrefixes": [
+            "test"
+          ],
+          "allowedHostSuffixes": [
+            ".ts.net"
+          ],
+          "source": "synthetic local source/parser stand only, never claimed deployed namespace/RBAC/Tailscale",
+          "quotas": "exact selected complete Buster clusterInvokers.tailscaleExposure + execution.processInput unchanged"
+        },
+        "genuineMissingInputs": [
+          "actual controller/CRD and Tailscale identity/suffix availability",
+          "existing deployed full Buster runtime/role/native tool/RBAC/service options/immutable config generation",
+          "genuine checked deployment/image/manifest/source/effect/grant/leaseUID/resourceVersion/observed controller history",
+          "original native ambient credential environment revisions/capture under delivery owner",
+          "module/claim deadline and spent-budget receipts"
+        ]
+      }
+    }
+  ],
+  "sourceDigests": {
+    "skills/buster/plugins/tailscale-exposure/src/provider.js": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0",
+    "skills/buster/plugins/tailscale-exposure/schemas/config.schema.json": "0ffe60c3f3b2ab2fa054a239892663c20bb59621b9e5fdbf05541d862a986ccd",
+    "skills/buster/plugins/tailscale-exposure/plugin.json": "c61695a3a068a240a335949e27287829fa8183b465bd648662525da67fc9648b",
+    "skills/buster/plugins/tailscale-exposure/package.json": "3918395fcd44dfcba85323354798768a11c9d4219e4284769579f02913d84f9d",
+    "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc",
+    "skills/buster/engine/test-gates/tailscale-operation-policy.ts": "cf35868ce909f53a05fae0e8a4bdf81f0e8c030850d569839f13d47f5efa4607",
+    "skills/buster/engine/test-gates/exposure-generation.ts": "cbaed4e6debf9e225c0c5aab51ecc8383bed69ff3b5dc4f7fe7c18a0ee02a360",
+    "skills/buster/engine/test-gates/exposure-handoff.ts": "4e725c913e11f5eb11a4444c9a96373e423c06b2da33287e5269fbe1401b9e83",
+    "skills/buster/engine/test-gates/production-cluster-options.ts": "eb4448a7250ed6e2adbff8ec47956ba5c4d253d198697c344f75274eb3d61bff",
+    "skills/buster/engine/test-gates/capability-runtime.ts": "3615780a7c173fc3f43f0510e208378e276a9e34f71c8a7c1c643fde296ded11",
+    "skills/buster/engine/test-gates/remote-prepared-execution.ts": "832631872e86addc6ae98516f63c191e403675b679c795ad3d47a2fdb8350dde",
+    "skills/buster/engine/test-gates/provider-process-session.ts": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d",
+    "skills/buster/engine/test-gates/runner-provider-operation.ts": "332e73e5e35b28800ab7ad70331adf8c2ed683f819a0ea6504eea0abbb61645c",
+    "skills/buster/engine/test-gates/runner-values.ts": "e0d381931d7e580113faaafb8ae05fa0e9431e15202a23b97bbc1fb974e27021",
+    "charts/kubeclaw/files/config/buster-engine.config.json": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+    "skills/common/plugin-runtime/foundation/registry/schema.ts": "eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557",
+    "package-lock.json": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+  },
+  "sourceCommit": "bce3f075156a86be345821499c04628cb35c2762",
+  "sourceTree": "a8b0adf641de573565360b0c4eb577d6bc7545c3",
+  "fixtureScope": "synthetic exact task/source inputs support actual parser/helper projections and captureSTOP only; not authentic prior controller deployment"
+}

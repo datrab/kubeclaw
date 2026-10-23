@@ -1,135 +1,65 @@
-import { SIMPLIFICATION_RULE_IDS, type ReviewPolicy } from './review-policy-contract.ts';
-import { parseReviewPolicy } from './review-policy-parser.ts';
+import type {ReviewPolicy} from './review-policy-contract.ts';
+import {parseReviewPolicy} from './review-policy-parser.ts';
+import {getReviewPolicyProfile as legacyProfile} from './legacy-review-policy-profiles.ts';
+export {REVIEW_POLICY_PROFILE_IDS, REVIEW_POLICY_PROFILES} from './legacy-review-policy-profiles.ts';
+export type {ReviewPolicyProfileId} from './legacy-review-policy-profiles.ts';
 
-export const REVIEW_POLICY_PROFILE_IDS = ['gate', 'lean', 'audit'] as const;
-export type ReviewPolicyProfileId = typeof REVIEW_POLICY_PROFILE_IDS[number];
-
-const priorityWeights = { P0: 1000, P1: 500, P2: 100, P3: 10 } as const;
-const categoryWeights = {
-  correctness: 1000,
-  security: 1000,
-  contract: 900,
-  architecture: 100,
-  simplification: 10,
-} as const;
-
-function checked(value: unknown): ReviewPolicy {
-  const parsed = parseReviewPolicy(value);
-  if (!parsed.ok) throw new Error(`built-in review policy is invalid: ${parsed.error}`);
-  return parsed.value;
+/** Original callers keep their pinned builtin generation. The selected path
+ * receives the complete original owner snapshot and never reads a live file. */
+export function getReviewPolicyProfile(profile: string, owned?: unknown): ReviewPolicy {
+  if (owned === undefined) return legacyProfile(profile);
+  if (!owned || typeof owned !== 'object' || Array.isArray(owned)
+    || !['profiles,schemaVersion','profiles,repositoryGrades,schemaVersion','profiles,promptTokenBoundaryReserve,repositoryGrades,schemaVersion','cacheReadConcurrency,profiles,promptTokenBoundaryReserve,repositoryGrades,schemaVersion','cacheReadConcurrency,profiles,promptTokenBoundaryReserve,repositoryGrades,revalidation,schemaVersion'].includes(Object.keys(owned).sort().join(','))) throw new Error('REVIEW_OWNED_POLICY_INVALID');
+  const value=owned as Record<string,unknown>;
+  if(!['review-owned-decision-profiles.v1','review-owned-decision-profiles.v2','review-owned-decision-profiles.v3','review-owned-decision-profiles.v4','review-owned-decision-profiles.v5'].includes(String(value.schemaVersion)) || !value.profiles || typeof value.profiles!=='object' || Array.isArray(value.profiles)
+    || Object.keys(value.profiles).sort().join(',')!=='audit,gate,lean')throw new Error('REVIEW_OWNED_POLICY_INVALID');
+  const reserveVersion=['review-owned-decision-profiles.v3','review-owned-decision-profiles.v4','review-owned-decision-profiles.v5'].includes(String(value.schemaVersion));
+  const v5=value.schemaVersion==='review-owned-decision-profiles.v5';
+  const v4=v5 || value.schemaVersion==='review-owned-decision-profiles.v4';
+  const keys=v5?'cacheReadConcurrency,profiles,promptTokenBoundaryReserve,repositoryGrades,revalidation,schemaVersion':v4?'cacheReadConcurrency,profiles,promptTokenBoundaryReserve,repositoryGrades,schemaVersion':'profiles,promptTokenBoundaryReserve,repositoryGrades,schemaVersion';
+  if(reserveVersion && (Object.keys(value).sort().join(',')!==keys || !Number.isSafeInteger(value.promptTokenBoundaryReserve) || Number(value.promptTokenBoundaryReserve)<0 || Number(value.promptTokenBoundaryReserve)>1_000_000))throw new Error('REVIEW_OWNED_POLICY_INVALID');
+  if(!reserveVersion && Object.hasOwn(value,'promptTokenBoundaryReserve'))throw new Error('REVIEW_OWNED_POLICY_INVALID');
+  if(v4 && (!Number.isSafeInteger(value.cacheReadConcurrency) || Number(value.cacheReadConcurrency)<1 || Number(value.cacheReadConcurrency)>1024))throw new Error('REVIEW_OWNED_POLICY_INVALID');
+  if(!v4 && Object.hasOwn(value,'cacheReadConcurrency'))throw new Error('REVIEW_OWNED_POLICY_INVALID');
+  if(v5) validateRevalidationLimits(value.revalidation);
+  if(!v5 && Object.hasOwn(value,'revalidation'))throw new Error('REVIEW_OWNED_POLICY_INVALID');
+  const profiles=value.profiles as Record<string,unknown>;
+  const parsed=new Map<string,ReviewPolicy>();
+  for(const name of ['gate','lean','audit']) {
+    const result=parseReviewPolicy(profiles[name]);
+    if(!result.ok || result.value.profile!==name)throw new Error(`REVIEW_OWNED_POLICY_INVALID:${name}`);
+    parsed.set(name,result.value);
+  }
+  if(!parsed.has(profile))throw new Error(`unknown review policy profile: ${profile}`);
+  return parsed.get(profile)!;
 }
 
-const gate = checked({
-  schemaVersion: 'review-policy.v2',
-  profile: 'gate',
-  blocking: {
-    priorities: ['P0'],
-    categories: ['correctness', 'security', 'contract'],
-    requireIntroducedByDiff: true,
-    requireDirectEvidence: true,
-  },
-  limits: {
-    maxProposals: 64, maxRootCauses: 5, maxInstancesPerCluster: 100,
-    maxBundleBytes: 4 * 1024 * 1024,
-    maxContextFiles: 48, maxInitialContextFiles: 40, maxContextFileBytes: 512 * 1024,
-    maxContextBytes: 3 * 1024 * 1024, maxInitialContextBytes: 2 * 1024 * 1024,
-    maxDependencyDepth: 2, maxExpansionFiles: 8,
-    maxAdvisories: 0,
-  },
-  scope: {
-    outsideScope: 'orchestrator_required', unknownScope: 'blocked',
-    retainPreExisting: false,
-  },
-  verification: {
-    semanticVerifier: 'p0-only', insufficientFindingEvidence: 'orchestrator_required',
-    unverifiedRequirement: 'blocked',
-  },
-  simplification: {
-    enabled: false, registryVersion: 'simplification-rules.v1', enabledRules: [],
-    maxRecommendations: 0, minimumConfidence: 'high',
-  },
-  ranking: {
-    priorityWeights, categoryWeights, introducedByDiffBonus: 100,
-    directEvidenceBonus: 100,
-  },
-  followUp: { retainedPriorities: ['P1', 'P2', 'P3'], maxItems: 100 },
-  governor: { maxRepairCycles: 2, fileGrowthMultiplier: 2, nonTestLocGrowthMultiplier: 2, absoluteFileAllowance: 2, absoluteNonTestLocAllowance: 100 },
-});
+/** Historical captures keep the original operational limit, never the current author. */
+export function selectedReviewCacheReadConcurrency(config: Readonly<Record<string, unknown>>): number {
+  const owned = config.ownedPolicyProfiles as Record<string, unknown> | undefined;
+  if (owned !== undefined) getReviewPolicyProfile('gate', owned);
+  return ['review-owned-decision-profiles.v4','review-owned-decision-profiles.v5'].includes(String(owned?.schemaVersion)) ? Number(owned!.cacheReadConcurrency) : 16;
+}
 
-const lean = checked({
-  schemaVersion: 'review-policy.v2',
-  profile: 'lean',
-  blocking: {
-    priorities: ['P0'],
-    categories: ['correctness', 'security', 'contract'],
-    requireIntroducedByDiff: true,
-    requireDirectEvidence: true,
-  },
-  limits: {
-    maxProposals: 64, maxRootCauses: 5, maxInstancesPerCluster: 100,
-    maxBundleBytes: 6 * 1024 * 1024,
-    maxContextFiles: 64, maxInitialContextFiles: 52, maxContextFileBytes: 768 * 1024,
-    maxContextBytes: 5 * 1024 * 1024, maxInitialContextBytes: 4 * 1024 * 1024,
-    maxDependencyDepth: 2, maxExpansionFiles: 12,
-    maxAdvisories: 3,
-  },
-  scope: { outsideScope: 'follow_up', unknownScope: 'blocked', retainPreExisting: false },
-  verification: {
-    semanticVerifier: 'p0-only', insufficientFindingEvidence: 'follow_up',
-    unverifiedRequirement: 'blocked',
-  },
-  simplification: {
-    enabled: true, registryVersion: 'simplification-rules.v1',
-    enabledRules: SIMPLIFICATION_RULE_IDS, maxRecommendations: 3, minimumConfidence: 'high',
-  },
-  ranking: {
-    priorityWeights, categoryWeights, introducedByDiffBonus: 100,
-    directEvidenceBonus: 100,
-  },
-  followUp: { retainedPriorities: ['P1', 'P2', 'P3'], maxItems: 100 },
-  governor: { maxRepairCycles: 2, fileGrowthMultiplier: 2, nonTestLocGrowthMultiplier: 2, absoluteFileAllowance: 2, absoluteNonTestLocAllowance: 100 },
-});
-
-const audit = checked({
-  schemaVersion: 'review-policy.v2',
-  profile: 'audit',
-  blocking: {
-    priorities: ['P0'],
-    categories: ['correctness', 'security', 'contract'],
-    requireIntroducedByDiff: true,
-    requireDirectEvidence: true,
-  },
-  limits: {
-    maxProposals: 128, maxRootCauses: 20, maxInstancesPerCluster: 1000,
-    maxBundleBytes: 16 * 1024 * 1024,
-    maxContextFiles: 256, maxInitialContextFiles: 240, maxContextFileBytes: 2 * 1024 * 1024,
-    maxContextBytes: 14 * 1024 * 1024, maxInitialContextBytes: 12 * 1024 * 1024,
-    maxDependencyDepth: 8, maxExpansionFiles: 16,
-    maxAdvisories: 100,
-  },
-  scope: { outsideScope: 'follow_up', unknownScope: 'follow_up', retainPreExisting: true },
-  verification: {
-    semanticVerifier: 'all-blockers', insufficientFindingEvidence: 'follow_up',
-    unverifiedRequirement: 'orchestrator_required',
-  },
-  simplification: {
-    enabled: true, registryVersion: 'simplification-rules.v1',
-    enabledRules: SIMPLIFICATION_RULE_IDS, maxRecommendations: 10, minimumConfidence: 'medium',
-  },
-  ranking: {
-    priorityWeights, categoryWeights, introducedByDiffBonus: 100,
-    directEvidenceBonus: 100,
-  },
-  followUp: { retainedPriorities: ['P0', 'P1', 'P2', 'P3'], maxItems: 1000 },
-  governor: { maxRepairCycles: 2, fileGrowthMultiplier: 2, nonTestLocGrowthMultiplier: 2, absoluteFileAllowance: 2, absoluteNonTestLocAllowance: 100 },
-});
-
-export const REVIEW_POLICY_PROFILES: Readonly<Record<ReviewPolicyProfileId, ReviewPolicy>> =
-  Object.freeze({ gate, lean, audit });
-
-export function getReviewPolicyProfile(profile: string): ReviewPolicy {
-  if (!REVIEW_POLICY_PROFILE_IDS.includes(profile as ReviewPolicyProfileId)) {
-    throw new Error(`unknown review policy profile: ${profile}`);
+export interface ReviewRevalidationLimits {
+  readonly maximumBaselineBytes: number;
+  readonly maximumBaselineRelations: number;
+}
+function validateRevalidationLimits(raw: unknown): ReviewRevalidationLimits {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) throw new Error('REVIEW_REVALIDATION_LIMITS_INVALID');
+  const value = raw as Record<string, unknown>;
+  if (Object.keys(value).sort().join(',') !== 'maximumBaselineBytes,maximumBaselineRelations'
+    || !Number.isSafeInteger(value.maximumBaselineBytes) || Number(value.maximumBaselineBytes) < 1 || Number(value.maximumBaselineBytes) > 134217728
+    || !Number.isSafeInteger(value.maximumBaselineRelations) || Number(value.maximumBaselineRelations) < 1 || Number(value.maximumBaselineRelations) > 100000) {
+    throw new Error('REVIEW_REVALIDATION_LIMITS_INVALID');
   }
-  return REVIEW_POLICY_PROFILES[profile as ReviewPolicyProfileId];
+  return Object.freeze({ maximumBaselineBytes: Number(value.maximumBaselineBytes), maximumBaselineRelations: Number(value.maximumBaselineRelations) });
+}
+/** Retained v1-v4 owners keep their original codec, never the live v5 author. */
+export function selectedReviewRevalidationLimits(config: Readonly<Record<string, unknown>>): ReviewRevalidationLimits {
+  const owned = config.ownedPolicyProfiles as Record<string, unknown> | undefined;
+  if (owned !== undefined) getReviewPolicyProfile('gate', owned);
+  return owned?.schemaVersion === 'review-owned-decision-profiles.v5'
+    ? validateRevalidationLimits(owned.revalidation)
+    : Object.freeze({ maximumBaselineBytes: 134217728, maximumBaselineRelations: 100000 });
 }

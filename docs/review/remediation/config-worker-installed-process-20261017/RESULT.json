@@ -1,0 +1,74 @@
+{
+  "at": "2026-10-17T03:11:41.570222+00:00",
+  "status": "WORKER_INSTALLED_SHUTDOWN_TRANSPORT_SOURCE_IMPLEMENTED_SIX_NATIVE_CASES_UNVERIFIED",
+  "sourceCommit": "d2e5dfbbdc275e5b98eedf56c2cbdc35158f8b10",
+  "verifiedRemoteHead": "d2e5dfbbdc275e5b98eedf56c2cbdc35158f8b10",
+  "sourceRemoteVerified": true,
+  "evidence": "docs/review/remediation/config-worker-installed-process-20261017",
+  "change": "All six original Worker signal/read/upload/PostgreSQL-drain cases now use genuine complete selected generation publication and the SAME fixed-path installed Worker entrypoint. Central selected prism-control owner supplies actual loopback controlInternalUrl; coupled worker ingress/supervisor profiles conserved. Actual role built once in suite before hook outside unchanged12s case deadlines, copied and genuinely authenticated on each publication. Explicit genuine native engine identity/pool/launcher environment retained; retired policy ENV and source entrypoint removed. No production defaults/authority/activation change.",
+  "checks": {
+    "authenticWorkerPublicationProfiles": 2,
+    "coupledShutdownCloseDrainAndControlURL": true,
+    "completeSourceConservation": true,
+    "actualWorkerConsumer": true,
+    "immutableCapture": true,
+    "legacyPORTAndControlURLRejected": true,
+    "actualEntrypointMutationRejectedAndRestored": true,
+    "reusedBuiltPackageByteMutationRejectedAndRestoredPublication": true,
+    "strictPrismTypecheck": true,
+    "syntaxAndDiff": true,
+    "originalAssertionsAndDeadlines": {
+      "originalAssertions": {
+        "unchanged": true,
+        "lines": 21
+      },
+      "originalTestDeadlines": {
+        "unchanged": true,
+        "lines": 2
+      },
+      "originalReadinessDeadline": {
+        "unchanged": true,
+        "lines": 1
+      }
+    }
+  },
+  "originalRoster": {
+    "fields": {
+      "required": 2409,
+      "sha256": "444e0c8e77c8275c4db45d8c5946569924f0f069ecb166071ca34ef1bdb6f84e",
+      "unchanged": true
+    },
+    "cases": {
+      "required": 6845,
+      "sha256": "5d93688cec44512539dc44e9f2bd281b6f92e34c5a6677d6dedd6e1c6ba5d566",
+      "unchanged": true
+    },
+    "requirements": {
+      "required": 50,
+      "sha256": "89ab6863642522b4bb43442c6f204b64a1fbefdc44140c30d923188d11c69add",
+      "unchanged": true
+    }
+  },
+  "originalNativeGate": {
+    "status": "NOT_RUN_NOT_VERIFIED",
+    "cases": 6,
+    "reason": "No genuine isolated writable installed guest/native pool/capabilities/cgroup. This run never installs shared /app,/etc,/run. Local publication checks do not execute original processes.",
+    "resume": "On actual isolated root test guest with native engine digest, genuine pool policy, trusted launcher/capabilities/delegated cgroup and absent fixed installations: PRISM_NATIVE_ISOLATED_TEST_POOL=true node --test --test-concurrency=1 skills/prism/tests/worker-process-shutdown-native.mts; preserve all original12s/5s/2s bounds."
+  },
+  "retainedVerificationCorrections": [
+    "Initial author check used settings.supervisor instead of actual settings.native.supervisor; corrected check, not production.",
+    "Initial extra SWARM_CONFIG rejection assertion did not belong to loadWorkerConfig; removed incorrect oracle. Actual legacy PORT/control URL controls retained. No claim of SWARM_CONFIG rejection by this consumer."
+  ],
+  "independentReview": "OPEN: no callable native spawn/reviewer/collaboration tool in current discovery; CONFIG subagents0, parent terminal, no fresh output. Known unchanged same-surface app-server EROFS not replayed. Author execution only.",
+  "originalCasesNewlyAccepted": 0,
+  "originalResultsChanged": false,
+  "fullC0C6Complete": false,
+  "qualityActivationAllowed": false,
+  "sealedInputStoreImplemented": false,
+  "productiveQualityBootImplemented": false,
+  "nextAction": "Migrate remaining original worker-listener negative process fixtures without replacing actual entrypoint assertions. Complete authentic QB-R02 source/producer/build/baseline inputStore reservation/accounting/sealed-byte publication plus coordinated sole-root/all-profile/schema/file-set boot+Nova receiving. Preserve BUDGET_SOURCE_RECEIPT_REQUIRED and denied-v10. All independent/original/history/native/archive/full C0-C6 gates OPEN.",
+  "externalOwner": "Raven",
+  "resumeCondition": "Suitable isolated Linux Docker UID/GID1000 delegated writable cgroup/native pool and genuine privileged root guest for fixed-path transport; sufficiently large genuinely root-trusted archive storage, migrated isolated PostgreSQL and original history CHOWN SETUID/SETGID authority. No spoof or skipped acceptance.",
+  "writerLock": "SAME shared exclusive nonblocking repository writer lock for mutations/checks/commits/push; released at bounded command exit",
+  "noHistoricalFollowup": true
+}

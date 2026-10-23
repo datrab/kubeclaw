@@ -1,0 +1,43 @@
+✔ explicit entry required; old inline authorship is rejected (10.02612ms)
+✔ prism-control: missing file, wrong owner, unknown envelope and reference rejected (28.499869ms)
+✔ prism-studio: missing file, wrong owner, unknown envelope and reference rejected (51.704431ms)
+✔ prism-worker: missing file, wrong owner, unknown envelope and reference rejected (9.933107ms)
+✔ prism-execution: missing file, wrong owner, unknown envelope and reference rejected (19.880596ms)
+✔ buster-engine: missing file, wrong owner, unknown envelope and reference rejected (20.44405ms)
+✔ worker-core: missing file, wrong owner, unknown envelope and reference rejected (56.366192ms)
+✔ every authored setting is required, including explicit nullable values (1237.306293ms)
+ℹ Required-leaf deletion obligations checked: 461
+✔ both domains validate before selecting either and nested snapshots stay frozen (15.42486ms)
+✔ physical generation never borrows sibling files; entry and component aliases reject (6.579571ms)
+✔ physical generation retains complete old authors during delivery alias replacement (97.9616ms)
+✔ removing a selected generation component after reading entry rejects (3.510201ms)
+✔ changing an already read component during later reads rejects the local bundle (6.347944ms)
+✔ readonly packaged-reader core verifies complete receipts and installed code readback (1480.757506ms)
+✔ self-consistent hashes do not validate a two-field fake package manifest (754.137104ms)
+✔ changed installed code and additional unreceipted code files reject (503.272099ms)
+✔ stale expected generation cannot admit changed profile content (508.797503ms)
+✔ writable files and escaping expected-receipt atomic-writer target reject (421.371765ms)
+✔ inventory retains early file observations until all members have been read (454.439553ms)
+✔ package observations remain alive until boot capture is branded (468.911348ms)
+✔ self-consistent receipts reject nonexistent facade and open metadata records (451.649791ms)
+✔ an off-tree reader copy cannot borrow a genuine installed package receipt (621.163806ms)
+✔ expected-delivery alias replacement during boot rejects, next boot validates the selected receipt (596.162098ms)
+✔ Studio selects only its authored tuple while all six owners are captured (36.114997ms)
+✔ whole selected profiles change actual loaded values; no first-profile fallback (14.796763ms)
+✔ duplicate root tuple rejects even when profile is identical (4.470675ms)
+✔ unrelated selected owner and wrong service identity reject (2.128856ms)
+✔ unselected invalid profile rejects before returning Studio (3.612044ms)
+✔ retired filename, legacy schema, escaping references and tree symlinks reject (27.417791ms)
+✔ caller-role mismatch and competing selection fields reject (1.751186ms)
+✔ components directory replacement during capture rejects (6.376686ms)
+✔ intrinsic relations on an unselected owner reject before Studio projection (6.449067ms)
+✔ generation receipt binds all raw files, profile values and reader assets (21.761004ms)
+✔ closed service receipt detects alteration and fixes caller/package/generation association (7.010502ms)
+ℹ tests 34
+ℹ suites 0
+ℹ pass 34
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6379.28729

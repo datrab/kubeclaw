@@ -1,0 +1,131 @@
+{
+  "UTC": "2026-10-13T05:08:18.841167+00:00",
+  "head": "6606af9e590032f328f330ecb3d953b1eef027e3",
+  "tree": "47ce9b9c092dcd534eb55ddaebaab010e270a5af",
+  "summary": {
+    "verdict": "no new actionable material finding at bounded frozen canonical mapping/definition scope; NOT wholeC0/rootprojection/implementation acceptance",
+    "rowsReviewed": 13,
+    "questionsReviewed": 14,
+    "futureCasesNotRun": 25,
+    "narrowCurrentCases": 2,
+    "independentDefinitionControls": 13,
+    "independentPureControls": 16,
+    "authorSafeReplayControls": {
+      "check-secret-current-reader.mjs": 6,
+      "check-ownership-current-reader.mjs": 4,
+      "check-image-wire-current.mjs": 4,
+      "check-target-profiles.mjs": 11
+    },
+    "unresolvedCrossOwnerAliases": 60,
+    "remainingExactSourceLinkObligations": 808,
+    "frozenPackageFiles": 72,
+    "frozenSourceReferenceFiles": 390,
+    "protectedCoreInputsUnchanged": 157,
+    "primarySourcesUnchanged": 173,
+    "RuntimePausedInputsUnchanged": 4,
+    "drift": {
+      "packageFiles": [],
+      "selectedSourceAndReferenceFiles": [],
+      "pausedRuntimeInputs": []
+    },
+    "wholeC0Accepted": false,
+    "rootProjectionReviewed": false,
+    "RuntimeSelfReviewed": false
+  },
+  "frozenIdentityReceiptSHA256": "dd0db635b246b8ef3a38fef7e35ff8f5af4f4fb14f6035872c630cf16085d403",
+  "afterIdentityReceiptSHA256": "7c6d5ef33ba98772316dffc8bbe3b5d16c9761277ef3caf236080a5082fb306b",
+  "artifacts": {
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/finish-review.stdout": "55b832d740b0d95e7d888433768bca2371054684e0cce35a3efa680ee11f5de1",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/check-independent-pure-attempt1.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/freeze-inputs.log": "5f83522a79416ed359b0fffe587024d77eef4cde62a405802ffc04e162ad8080",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/frozen-input-identities.json": "dd0db635b246b8ef3a38fef7e35ff8f5af4f4fb14f6035872c630cf16085d403",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/audit-definition-attempt2.stderr": "5eba92b1f2b864478af9e223693b610eb1ca0da55b90df5beff879550c83cee3",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/REPORT.md": "0afbc5dd854edb2050a8303c911947d1444031f980b91786a0c82a402434b26c",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/after-input-identities.json": "7c6d5ef33ba98772316dffc8bbe3b5d16c9761277ef3caf236080a5082fb306b",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/audit-definition-attempt3.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/independent-pure-observations.json": "aa2ed06c5d4cea36e65e0311db7bfa71a593db5cc73f59c50db9be5ff081ef8b",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/audit-definition-attempt2.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/check-independent-pure-attempt1.stdout": "aa2ed06c5d4cea36e65e0311db7bfa71a593db5cc73f59c50db9be5ff081ef8b",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/replay-check-image-wire-current.mjs.stdout": "871e4ff93b57817acb529978bb2a135d76e7db21fa0e827994e6ae4e417025ab",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/audit-definition.py": "a8c334a3187c5029dc55d0d61acb6a7d15f9441f2614e077d612f8c26917d7ca",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/replay-check-ownership-current-reader.mjs.stdout": "4e2631663603519c98b413783476cab4e7a99299fcb376710f6dec15373024ab",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/replay-check-secret-current-reader.mjs.stdout": "f2b0fd2c5b33be3a98ba7a8ffc96ae34ff552c1f866873ece39017a45d8e0fa8",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/replay-check-ownership-current-reader.mjs.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/audit-attempt1-termination.json": "60e37d3ce43e1cd0ead512cd3d0531cb3a155713ea8ea783751908a1ad02a48d",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/replay-check-target-profiles.mjs.stdout": "c02d602d17540da80218075b66049935f4d602dfa5016c753eeb421ff9de5de7",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/audit-definition-attempt2.py.snapshot": "70fb3dd0cd8bf305101b55b79cf7c1025479876da787fe86d17ade82d3822111",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/audit-definition-attempt1.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/review-summary.json": "999843ee6ba172b9c4fa588a5e5782f7acbb583ef42a98bc34dc6b1e8cc8a027",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/finish-review.py": "f8426de1b4ddac534567a5c39a58ba20713d3d2cccbe95c92d88994217f4c43d",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/independent-definition-observations.json": "706b3d5015c1c843837ef254c82adfd2e83110092944d4ffa20e81a1ceedbe6e",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/audit-definition-attempt3.stdout": "83d6e2a3b02638f4272e7862662f660da6c0980ca49436d36115b2cf9dd93f23",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/replay-check-secret-current-reader.mjs.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/audit-definition-attempt1.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/freeze-inputs.py": "c77c12104accd3ab347508bf20bf8cc0575e9004827554c73a9ae342b930c523",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/finish-review.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/frozen-author-and-selected-inputs.tar.gz": "baca5ae26c0c709df2bf92126b78b60bd790305102f921a83d3a45dcbbec3352",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/check-independent-pure.mjs": "afa1b0d062f9f61eb5e35fc06d1b8f74f64a9453c77393347c67fbbd12aac2b2",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/audit-definition-attempt1.py.snapshot": "926a607178f8e338cd45811e8af6c30745c7de4ccead9ceb54634cb8cd1d21d2",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/replay-check-image-wire-current.mjs.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/replay-check-target-profiles.mjs.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/freeze-inputs.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "commands": [
+    {
+      "argv": [
+        "node",
+        "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/check-secret-current-reader.mjs"
+      ],
+      "exit": 0,
+      "stdout": "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/replay-check-secret-current-reader.mjs.stdout",
+      "stderr": "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/replay-check-secret-current-reader.mjs.stderr"
+    },
+    {
+      "argv": [
+        "node",
+        "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/check-ownership-current-reader.mjs"
+      ],
+      "exit": 0,
+      "stdout": "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/replay-check-ownership-current-reader.mjs.stdout",
+      "stderr": "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/replay-check-ownership-current-reader.mjs.stderr"
+    },
+    {
+      "argv": [
+        "node",
+        "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/check-image-wire-current.mjs"
+      ],
+      "exit": 0,
+      "stdout": "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/replay-check-image-wire-current.mjs.stdout",
+      "stderr": "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/replay-check-image-wire-current.mjs.stderr"
+    },
+    {
+      "argv": [
+        "node",
+        "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/check-target-profiles.mjs"
+      ],
+      "exit": 0,
+      "stdout": "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/replay-check-target-profiles.mjs.stdout",
+      "stderr": "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/replay-check-target-profiles.mjs.stderr"
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/audit-definition.py"
+      ],
+      "exit": 0,
+      "stdout": "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/audit-definition-attempt3.stdout",
+      "stderr": "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/audit-definition-attempt3.stderr"
+    },
+    {
+      "argv": [
+        "node",
+        "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/check-independent-pure.mjs"
+      ],
+      "exit": 0,
+      "stdout": "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/check-independent-pure-attempt1.stdout",
+      "stderr": "docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/check-independent-pure-attempt1.stderr"
+    }
+  ],
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "noOtherAuthorEditsOrExternalActions": true
+}

@@ -1,0 +1,87 @@
+{
+  "method": "read-onlyHTTPS exact pinned existing commit; no build/install/source execution, allfailed raw bodies retained",
+  "existingPinSource": {
+    "path": "docs/review/evidence/config-acceptance/delivery/kubernetes-source-acquisitions.json",
+    "sha256": "53411516c2d2f383743d585c3162b024595c6a6adef3500879a7246085ea28a5"
+  },
+  "records": [
+    {
+      "repository": "kubernetes/kubernetes",
+      "version": "v1.35.6",
+      "commit": "fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26",
+      "path": "pkg/kubelet/prober/worker.go",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26/pkg/kubelet/prober/worker.go",
+      "scope": "pinned source consumer only, not actual deployed kubelet/CRI/API version",
+      "status": 200,
+      "sha256": "7fa8ae1ba6b791edfe7316bef284a0f3ca26bdef1fe4cc0c5b0fb7edb4c49e2a",
+      "bytes": 13783,
+      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-kubelet-probers-20261013/v1.35.6/pkg/kubelet/prober/worker.go",
+      "result": "acquired"
+    },
+    {
+      "repository": "kubernetes/kubernetes",
+      "version": "v1.35.6",
+      "commit": "fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26",
+      "path": "pkg/kubelet/prober/prober.go",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26/pkg/kubelet/prober/prober.go",
+      "scope": "pinned source consumer only, not actual deployed kubelet/CRI/API version",
+      "status": 200,
+      "sha256": "157e3c725da14ff479f48cf34e626a76c39099075f2bd4d76602a9217889e31d",
+      "bytes": 10161,
+      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-kubelet-probers-20261013/v1.35.6/pkg/kubelet/prober/prober.go",
+      "result": "acquired"
+    },
+    {
+      "repository": "kubernetes/kubernetes",
+      "version": "v1.35.6",
+      "commit": "fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26",
+      "path": "staging/src/k8s.io/api/core/v1/types.go",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/fc0e7a6ca50f7ce368f9a5516e1716b473ed3a26/staging/src/k8s.io/api/core/v1/types.go",
+      "scope": "pinned source consumer only, not actual deployed kubelet/CRI/API version",
+      "status": 200,
+      "sha256": "3ce00ec375ddbab52daf76d30421b1065fa9bcf34fe5e0ef94dc14b8475d1506",
+      "bytes": 445653,
+      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-kubelet-probers-20261013/v1.35.6/staging/src/k8s.io/api/core/v1/types.go",
+      "result": "acquired"
+    },
+    {
+      "repository": "kubernetes/kubernetes",
+      "version": "v1.34.11",
+      "commit": "3a634765b787dd069f7f714fa77d767cb7d43795",
+      "path": "pkg/kubelet/prober/worker.go",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/3a634765b787dd069f7f714fa77d767cb7d43795/pkg/kubelet/prober/worker.go",
+      "scope": "pinned source consumer only, not actual deployed kubelet/CRI/API version",
+      "status": 200,
+      "sha256": "96e394050b3ec695853021d4da076e5fbd1e016ba200182d91d057df7f5b31e0",
+      "bytes": 12222,
+      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-kubelet-probers-20261013/v1.34.11/pkg/kubelet/prober/worker.go",
+      "result": "acquired"
+    },
+    {
+      "repository": "kubernetes/kubernetes",
+      "version": "v1.34.11",
+      "commit": "3a634765b787dd069f7f714fa77d767cb7d43795",
+      "path": "pkg/kubelet/prober/prober.go",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/3a634765b787dd069f7f714fa77d767cb7d43795/pkg/kubelet/prober/prober.go",
+      "scope": "pinned source consumer only, not actual deployed kubelet/CRI/API version",
+      "status": 200,
+      "sha256": "2f9884bfd8bba6f2505996047cee3b14e821128117c39e86da42c07b0647ab69",
+      "bytes": 9788,
+      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-kubelet-probers-20261013/v1.34.11/pkg/kubelet/prober/prober.go",
+      "result": "acquired"
+    },
+    {
+      "repository": "kubernetes/kubernetes",
+      "version": "v1.34.11",
+      "commit": "3a634765b787dd069f7f714fa77d767cb7d43795",
+      "path": "staging/src/k8s.io/api/core/v1/types.go",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/3a634765b787dd069f7f714fa77d767cb7d43795/staging/src/k8s.io/api/core/v1/types.go",
+      "scope": "pinned source consumer only, not actual deployed kubelet/CRI/API version",
+      "status": 200,
+      "sha256": "7f239e9466a8594d51e8fbd4965735951b9d969b550da0e31140db766faddf48",
+      "bytes": 441323,
+      "localPath": "docs/review/evidence/config-acceptance/delivery/pinned-kubelet-probers-20261013/v1.34.11/staging/src/k8s.io/api/core/v1/types.go",
+      "result": "acquired"
+    }
+  ]
+}

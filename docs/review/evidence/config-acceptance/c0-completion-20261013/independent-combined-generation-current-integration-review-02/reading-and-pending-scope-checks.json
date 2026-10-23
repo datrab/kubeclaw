@@ -1,0 +1,22 @@
+{
+  "contractBeforeMetadataExactlyHistorical": true,
+  "oldV7ScopeStrictSubset": true,
+  "pendingNova18ExactOriginalRoster": true,
+  "pendingNova18DisjointFromAdoptedFields": true,
+  "pendingGatewayRoles": "Not declared/supported/adopted in this Buster-only Gateway cut; exact original source/context/native bootstrap/model/plugin/credential fields/cases need own local role definitions. Native authentic grant/image/retention facts remain separate.",
+  "flags": {
+    "referenceOnly": true,
+    "nativeActivationAllowed": false,
+    "globalC0Accepted": false,
+    "implementationAuthorization": null
+  },
+  "acceptanceGates": {
+    "C0-A": "not-run",
+    "C0-B": "not-run",
+    "C0-C": "not-run",
+    "C0-D": "not-run",
+    "C0-E": "not-run"
+  },
+  "currentReadingRule": "Exact reference-only proposed v8 metadata adoption. Stable contract precedes new descriptor integrationContract, separate after-root receipt prevents a hash cycle. Original identities/properties/results/requirements remain immutable.",
+  "supersessionRule": "Within exactly scoped IDs, the bounded reviewed v8 proposed root/schema/typed receiving contexts replace v7 current reference identity. Previous v7/v5/v6 root contexts are immutable history, not parallel writers; currentProviderFieldAdoption and every original source/domain/activation/requirements/result/body/history property remain exactly unchanged. Inherited immutable scalar dependencies retain exact pinned source meanings; no latest-fill/adoption outside scope."
+}

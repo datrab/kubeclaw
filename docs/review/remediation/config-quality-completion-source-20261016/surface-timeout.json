@@ -1,0 +1,5 @@
+{
+  "firstAttempt": "90-second dynamic tool-call timeout; original runner result not collected; not passed",
+  "recovery": "bounded detached original unchanged runner with durable output/result and 210-second process deadline",
+  "pid": 2465967
+}

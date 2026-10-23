@@ -1,43 +1,47 @@
-// Runs inside the built prism-worker and prism-control images through check-built-runtime-image.sh.
+// Runs against the authenticated generation and code actually installed in the image.
 import assert from 'node:assert/strict';
-import { readTestBundle, projectTestBundle } from '/app/prism/tests/fixtures/config/swarm-bundle.mjs';
-const file = process.env.SWARM_CONFIG;
-const settings = projectTestBundle(readTestBundle(file)).operator.prism;
-const role = process.argv[2];
-assert.ok(['prism-control', 'prism-worker', 'prism-studio'].includes(role), 'explicit image role required');
-if (role === 'prism-worker') {
-const {loadWorkerConfig} = await import('/app/prism/skills/prism/server/worker-config.ts');
-const expected = settings.worker;
-const actual = loadWorkerConfig({ ...process.env, SWARM_CONFIG: file, WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://image-proof/control' });
-const { shutdownTimeoutMs, port, ...ingress } = expected;
-assert.equal(actual.port, port);
-for (const legacy of [String(port), '']) {
-  assert.throws(() => loadWorkerConfig({ ...process.env, SWARM_CONFIG: file, PORT: legacy }), /SWARM_CONFIG_LEGACY_OVERRIDE/);
+import { fileURLToPath } from 'node:url';
+import { resolve } from 'node:path';
+
+export async function verifyPrismImageConfiguration(capture, role, environment) {
+  assert.ok(['prism-control', 'prism-worker', 'prism-studio', 'prism-ingestion'].includes(role), 'explicit image role required');
+  const server = '/app/prism/skills/packages/prism-engine/server';
+  let actual;
+  if (role === 'prism-worker') {
+    const { loadWorkerConfig } = await import(`${server}/worker-config.ts`);
+    actual = loadWorkerConfig(capture, { ...environment, WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://image-proof/control' });
+    assert.deepEqual(actual.ingress, Object.fromEntries(Object.entries(capture.components['prism-worker'].settings.ingress).filter(([key]) => !['port', 'shutdownTimeoutMs'].includes(key))));
+    assert.equal(actual.port, capture.components['prism-worker'].settings.ingress.port);
+    assert.equal(actual.maximumArtifactAcknowledgmentBytes, capture.components['prism-control'].settings.maximumArtifactAcknowledgmentBytes);
+  } else if (role === 'prism-control') {
+    const { loadControlServerConfig } = await import(`${server}/control-config.ts`);
+    actual = loadControlServerConfig(capture, { ...environment, PRISM_SESSION_SECRET: 'image-proof', PRISM_INGRESS_SECRET: 'image-proof', PRISM_INGESTION_SECRET: 'image-proof', PRISM_DISPATCH_SECRET: 'image-proof', PRISM_WORKER_SECRET: 'image-proof' });
+    const expected = capture.components['prism-control'].settings;
+    for (const key of ['artifactRoot', 'studioPublicUrl', 'port', 'maximumArtifactAcknowledgmentBytes']) assert.equal(actual[key], expected[key]);
+    assert.equal(actual.pipelinePreferenceSubject, expected.pipelinePreferenceSubject ?? undefined);
+    assert.equal(actual.maximumWorkerResponseBytes, capture.components['prism-execution'].settings.maximumResultBytes);
+    assert.equal(actual.nativeWorkerDispatchTimeoutMs, expected.dispatchTimeoutMs);
+  } else if (role === 'prism-studio') {
+    const { loadStudioConfig } = await import(`${server}/studio-config.ts`);
+    actual = loadStudioConfig(capture, environment);
+    const expected = capture.components['prism-studio'].settings;
+    assert.equal(actual.port, expected.port); assert.equal(actual.controlTimeoutMs, expected.controlTimeoutMs);
+    assert.equal(actual.control.href, new URL(expected.controlUrl).href);
+  } else {
+    const { loadIngestionConfig } = await import(`${server}/ingestion-config.ts`);
+    actual = loadIngestionConfig(capture, { ...environment, PRISM_INGESTION_SECRET: 'image-proof' });
+    for (const [key, value] of Object.entries(capture.components['prism-control'].settings.ingestionServer)) assert.deepEqual(actual[key], value);
+  }
+  assert(Object.isFrozen(actual));
+  return actual;
 }
-assert.equal(actual.shutdownTimeoutMs, shutdownTimeoutMs);
-assert.deepEqual(actual.ingress, ingress);
-assert.throws(() => loadWorkerConfig({ ...process.env, SWARM_CONFIG: file, WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://image-proof/control', PRISM_WORKER_SHUTDOWN_TIMEOUT_MS: String(shutdownTimeoutMs) }), /SWARM_CONFIG_LEGACY_OVERRIDE/);
-assert.deepEqual(actual.native, settings.native);
+
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  const role = process.argv[2];
+  assert.ok(['prism-control', 'prism-worker', 'prism-studio', 'prism-ingestion'].includes(role), 'explicit image role required');
+  assert.equal(process.getuid?.(), 1000, 'actual image runtime UID1000 must read the root-owned delivery');
+  const { verifyPipelineBootReceipt } = await import('/app/prism/skills/packages/plugin-foundation/config/pipeline-boot.mjs');
+  const capture = verifyPipelineBootReceipt('/run/pipeline-delivery', role);
+  await verifyPrismImageConfiguration(capture, role, process.env);
+  console.log('PRISM_SWARM_IMAGE_LOADER_VERIFIED');
 }
-if (role === 'prism-control') {
-const {loadControlServerConfig} = await import('/app/prism/skills/prism/server/control-config.ts');
-const control = loadControlServerConfig({ ...process.env, SWARM_CONFIG: file, PRISM_SESSION_SECRET: 'image-proof', PRISM_INGRESS_SECRET: 'image-proof',
-  PRISM_INGESTION_SECRET: 'image-proof', PRISM_DISPATCH_SECRET: 'image-proof', PRISM_WORKER_SECRET: 'image-proof' });
-assert.equal(control.maximumWorkerResponseBytes, settings.native.maximumResultBytes);
-assert.equal(control.nativeWorkerDispatchTimeoutMs, settings.native.dispatchTimeoutMs);
-assert.equal(control.artifactRoot, settings.control.artifactRoot);
-assert.equal(control.studioPublicUrl, settings.control.studioPublicUrl);
-assert.equal(control.pipelinePreferenceSubject, settings.control.pipelinePreferenceSubject ?? undefined);
-assert.equal(control.port, settings.control.port);
-}
-if (role === 'prism-studio') {
-const {loadStudioConfig} = await import('/app/prism/skills/prism/server/studio-config.ts');
-const actual = loadStudioConfig({...process.env, SWARM_CONFIG: file});
-assert.equal(actual.port, settings.studio.port);
-assert.equal(actual.controlTimeoutMs, settings.studio.controlTimeoutMs);
-assert.equal(actual.control.href, new URL(settings.studio.controlUrl).href);
-for (const key of ['PORT', 'PRISM_CONTROL_URL', 'PRISM_CONTROL_TIMEOUT_MS']) {
-  assert.throws(() => loadStudioConfig({...process.env, SWARM_CONFIG: file, [key]: ''}), /SWARM_CONFIG_LEGACY_OVERRIDE/);
-}
-}
-console.log('PRISM_SWARM_IMAGE_LOADER_VERIFIED');

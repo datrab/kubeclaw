@@ -1,5 +1,5 @@
 import { validateTailscaleOperationPolicy } from './tailscale-operation-policy.ts';
-import { validateBusterProcessInputSettings, type BusterProcessInputSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
+import { validateBusterProcessInputSettings, type BusterProcessInputSettings } from '@kubeclaw/plugin-foundation/config/buster-execution';
 import { runProcessInput } from './process-input.ts';
 import { assertHandoffSourceRequest,existingExposureHandoff,exposureHandoffPatch,observedExposureHandoff } from './exposure-handoff.ts';
 import { EXPOSURE_OWNER_ANNOTATION, EXPOSURE_REQUEST_ANNOTATION, EXPOSURE_PREDECESSORS_ANNOTATION, exposurePredecessors, exposureIdentity, generationObserved, assertExposureRequest, assertRequestedExposure, ownedReleaseAction } from './exposure-generation.ts';

@@ -1,0 +1,352 @@
+[
+  {
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+    "term": "KUBECLAW_HEALTH_TIMEOUT_MS",
+    "observations": [
+      {
+        "line": 712,
+        "text": "const timeoutMs = Number.parseInt(process.env.KUBECLAW_HEALTH_TIMEOUT_MS || '5000', 10);"
+      },
+      {
+        "line": 1373,
+        "text": "- name: KUBECLAW_HEALTH_TIMEOUT_MS"
+      }
+    ],
+    "inventoryTextMatches": []
+  },
+  {
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+    "term": "KUBECLAW_HEALTH_REDIS_STREAM_MAX_LEN",
+    "observations": [
+      {
+        "line": 835,
+        "text": "const maxLen = String(Number.parseInt(process.env.KUBECLAW_HEALTH_REDIS_STREAM_MAX_LEN || '1000', 10));"
+      },
+      {
+        "line": 1389,
+        "text": "- name: KUBECLAW_HEALTH_REDIS_STREAM_MAX_LEN"
+      }
+    ],
+    "inventoryTextMatches": []
+  },
+  {
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+    "term": "KUBECLAW_HEALTH_STARTUP_STATUS_PATH",
+    "observations": [
+      {
+        "line": 713,
+        "text": "const startupStatusPath = process.env.KUBECLAW_HEALTH_STARTUP_STATUS_PATH || '/home/node/.openclaw/logs/startup-verification.json';"
+      },
+      {
+        "line": 1375,
+        "text": "- name: KUBECLAW_HEALTH_STARTUP_STATUS_PATH"
+      }
+    ],
+    "inventoryTextMatches": []
+  },
+  {
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+    "term": "KUBECLAW_HEALTH_REDIS_STREAM",
+    "observations": [
+      {
+        "line": 834,
+        "text": "const stream = process.env.KUBECLAW_HEALTH_REDIS_STREAM || `kubeclaw:health:${agent}`;"
+      },
+      {
+        "line": 835,
+        "text": "const maxLen = String(Number.parseInt(process.env.KUBECLAW_HEALTH_REDIS_STREAM_MAX_LEN || '1000', 10));"
+      },
+      {
+        "line": 1387,
+        "text": "- name: KUBECLAW_HEALTH_REDIS_STREAM"
+      },
+      {
+        "line": 1389,
+        "text": "- name: KUBECLAW_HEALTH_REDIS_STREAM_MAX_LEN"
+      }
+    ],
+    "inventoryTextMatches": []
+  },
+  {
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+    "term": "KUBECLAW_DRAIN_FILE",
+    "observations": [
+      {
+        "line": 870,
+        "text": "const path = process.env.KUBECLAW_DRAIN_FILE || '/tmp/kubeclaw-draining';"
+      },
+      {
+        "line": 1369,
+        "text": "- name: KUBECLAW_DRAIN_FILE"
+      },
+      {
+        "line": 1459,
+        "text": "DRAIN_FILE=\"${KUBECLAW_DRAIN_FILE:-/tmp/kubeclaw-draining}\""
+      },
+      {
+        "line": 1467,
+        "text": "DRAIN_FILE=\"${KUBECLAW_DRAIN_FILE:-/tmp/kubeclaw-draining}\""
+      }
+    ],
+    "inventoryTextMatches": []
+  },
+  {
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+    "term": "gemini-embedding-001",
+    "observations": [
+      {
+        "line": 74,
+        "text": "\"model\": \"gemini-embedding-001\""
+      }
+    ],
+    "inventoryTextMatches": []
+  },
+  {
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+    "term": "thinkingDefault",
+    "observations": [
+      {
+        "line": 82,
+        "text": "\"thinkingDefault\": \"off\","
+      }
+    ],
+    "inventoryTextMatches": []
+  },
+  {
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+    "term": "reasoningDefault",
+    "observations": [
+      {
+        "line": 83,
+        "text": "\"reasoningDefault\": \"off\","
+      }
+    ],
+    "inventoryTextMatches": []
+  },
+  {
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+    "term": "modelPolicy",
+    "observations": [
+      {
+        "line": 92,
+        "text": "\"modelPolicy\": {"
+      }
+    ],
+    "inventoryTextMatches": []
+  },
+  {
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+    "term": "keepRecentTokens",
+    "observations": [
+      {
+        "line": 130,
+        "text": "\"keepRecentTokens\": 140000,"
+      }
+    ],
+    "inventoryTextMatches": []
+  },
+  {
+    "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+    "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+    "term": "\"ttl\": \"2h\"",
+    "observations": [
+      {
+        "line": 126,
+        "text": "\"ttl\": \"2h\""
+      }
+    ],
+    "inventoryTextMatches": []
+  },
+  {
+    "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+    "sha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154",
+    "term": "maximumRecordBytes: 64 * 1024",
+    "observations": [
+      {
+        "line": 171,
+        "text": "maximumRecordBytes: 64 * 1024,"
+      }
+    ],
+    "inventoryTextMatches": []
+  },
+  {
+    "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+    "sha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154",
+    "term": "const maximumRecords",
+    "observations": [
+      {
+        "line": 165,
+        "text": "const maximumRecords = context.config.maximumRecords ?? DEFAULT_MAXIMUM_RECORDS;"
+      }
+    ],
+    "inventoryTextMatches": [
+      "RT-8aa1a4b60a163ab6",
+      "RT-5f36465bf8d033ab",
+      "RT-f89653920cb975db",
+      "RT-80439809374a261c"
+    ]
+  },
+  {
+    "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+    "sha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154",
+    "term": "const maximumStoreBytes",
+    "observations": [
+      {
+        "line": 164,
+        "text": "const maximumStoreBytes = context.config.maximumStoreBytes ?? DEFAULT_MAXIMUM_STORE_BYTES;"
+      }
+    ],
+    "inventoryTextMatches": [
+      "RT-1406e4999334624a",
+      "RT-c4b0dc6ba04e97d6",
+      "RT-f5fb18d184bb95bf",
+      "RT-7f6c0b7c5e08a96d"
+    ]
+  },
+  {
+    "path": "cmd/buster-namespace-controller/main.go",
+    "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+    "term": "runtimeSecurityRefreshAfter",
+    "observations": [
+      {
+        "line": 29,
+        "text": "runtimeSecurityRefreshAfter = 5 * time.Second"
+      },
+      {
+        "line": 398,
+        "text": "return now.Sub(observedAt) >= runtimeSecurityRefreshAfter"
+      }
+    ],
+    "inventoryTextMatches": []
+  },
+  {
+    "path": "cmd/buster-namespace-controller/main.go",
+    "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+    "term": "Timeout: 60 * time.Second",
+    "observations": [
+      {
+        "line": 213,
+        "text": "Timeout: 60 * time.Second,"
+      }
+    ],
+    "inventoryTextMatches": []
+  },
+  {
+    "path": "cmd/buster-namespace-controller/main.go",
+    "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+    "term": "apiGroup :=",
+    "observations": [
+      {
+        "line": 141,
+        "text": "apiGroup := env(\"BUSTER_LEASE_API_GROUP\", \"kubeclaw.forgestack.ai\")"
+      }
+    ],
+    "inventoryTextMatches": []
+  },
+  {
+    "path": "cmd/buster-namespace-controller/main.go",
+    "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+    "term": "apiVersion :=",
+    "observations": [
+      {
+        "line": 142,
+        "text": "apiVersion := env(\"BUSTER_LEASE_API_VERSION\", \"v1alpha1\")"
+      }
+    ],
+    "inventoryTextMatches": []
+  },
+  {
+    "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml",
+    "sha256": "e003c7bf4eb938988391d9af0c955b2338cef29781e1d8e932bdcc753ee50d13",
+    "term": "name: BUSTER_LEASE_API_GROUP",
+    "observations": [
+      {
+        "line": 212,
+        "text": "- name: BUSTER_LEASE_API_GROUP"
+      }
+    ],
+    "inventoryTextMatches": []
+  },
+  {
+    "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml",
+    "sha256": "e003c7bf4eb938988391d9af0c955b2338cef29781e1d8e932bdcc753ee50d13",
+    "term": "value: {{ $clusterShared.leaseApiGroup",
+    "observations": [
+      {
+        "line": 213,
+        "text": "value: {{ $clusterShared.leaseApiGroup | quote }}"
+      }
+    ],
+    "inventoryTextMatches": []
+  },
+  {
+    "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml",
+    "sha256": "e003c7bf4eb938988391d9af0c955b2338cef29781e1d8e932bdcc753ee50d13",
+    "term": "name: BUSTER_LEASE_API_VERSION",
+    "observations": [
+      {
+        "line": 214,
+        "text": "- name: BUSTER_LEASE_API_VERSION"
+      }
+    ],
+    "inventoryTextMatches": []
+  },
+  {
+    "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml",
+    "sha256": "e003c7bf4eb938988391d9af0c955b2338cef29781e1d8e932bdcc753ee50d13",
+    "term": "value: {{ $clusterShared.leaseApiVersion",
+    "observations": [
+      {
+        "line": 215,
+        "text": "value: {{ $clusterShared.leaseApiVersion | quote }}"
+      }
+    ],
+    "inventoryTextMatches": []
+  },
+  {
+    "path": "skills/nova/core/execution/adapter-startup.ts",
+    "sha256": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0",
+    "term": "const existing = this.#instances.get",
+    "observations": [
+      {
+        "line": 37,
+        "text": "const existing = this.#instances.get(adapterId); if (existing) return existing;"
+      }
+    ],
+    "inventoryTextMatches": []
+  },
+  {
+    "path": "skills/nova/core/execution/adapter-startup.ts",
+    "sha256": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0",
+    "term": "const config = this.#options.runtime.configs.get",
+    "observations": [
+      {
+        "line": 53,
+        "text": "const config = this.#options.runtime.configs.get(adapterId) ?? Object.freeze({});"
+      }
+    ],
+    "inventoryTextMatches": []
+  },
+  {
+    "path": "skills/common/plugins/secret-resolver/src/adapter.ts",
+    "sha256": "89e997cbc5c533ab70b5c17e71f29e72ce26a49263345ae635ad9a41f8b56eb3",
+    "term": "const value = process.env[environmentName]",
+    "observations": [
+      {
+        "line": 17,
+        "text": "const value = process.env[environmentName];"
+      }
+    ],
+    "inventoryTextMatches": []
+  }
+]

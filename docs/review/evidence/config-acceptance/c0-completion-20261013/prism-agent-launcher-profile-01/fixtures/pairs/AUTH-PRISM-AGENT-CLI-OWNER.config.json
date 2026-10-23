@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "prism-agent-launcher.v1",
+  "owner": "prism-agent-launcher",
+  "profiles": {
+    "standard": {
+      "limits": {
+        "timeoutMs": 900000,
+        "cleanupTimeoutMs": 10000,
+        "logBytes": 1048576,
+        "resultBytes": 1048576,
+        "evidenceBytes": 2097152,
+        "evidenceFiles": 2
+      },
+      "claimLifetimeMs": 960000,
+      "terminationGraceMs": 1000,
+      "agentId": "main",
+      "claimHttpTimeoutMs": 10000,
+      "finishHttpTimeoutMs": 10000
+    },
+    "runtime": {
+      "limits": {
+        "timeoutMs": 900000,
+        "cleanupTimeoutMs": 10000,
+        "logBytes": 1048576,
+        "resultBytes": 1048576,
+        "evidenceBytes": 2097152,
+        "evidenceFiles": 2
+      },
+      "claimLifetimeMs": 960000,
+      "terminationGraceMs": 1000,
+      "agentId": "main",
+      "claimHttpTimeoutMs": 10000,
+      "finishHttpTimeoutMs": 10000
+    }
+  }
+}

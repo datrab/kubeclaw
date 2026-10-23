@@ -1,0 +1,14 @@
+{
+  "findings": [
+    "RPR02-01",
+    "RPR02-02"
+  ],
+  "originalRows": 67,
+  "originalCases": 408,
+  "completeOwnerProfiles": 60,
+  "activeMemberBindings": 454,
+  "authorStatus": "finite correction definition prepared; fresh independent material recheck REQUIRED",
+  "futureCases": "not-run",
+  "implementationAuthorization": null,
+  "globalC0Accepted": false
+}

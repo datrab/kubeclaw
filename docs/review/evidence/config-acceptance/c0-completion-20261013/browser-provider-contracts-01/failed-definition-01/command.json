@@ -1,0 +1,9 @@
+{
+  "argv": [
+    "python3",
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/browser-provider-contracts-01/define.py"
+  ],
+  "exit": 1,
+  "tool": "ab3e8a",
+  "reason": "Exact JSON pointer helper did not handle allOf array index; source/schema/domain unchanged"
+}

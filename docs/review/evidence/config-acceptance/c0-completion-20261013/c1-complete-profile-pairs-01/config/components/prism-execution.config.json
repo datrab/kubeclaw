@@ -1,0 +1,56 @@
+{
+  "schemaVersion": "pipeline-component.v2",
+  "owner": "prism-execution",
+  "profiles": {
+    "baseline-A": {
+      "settings": {
+        "resourcePolicy": {
+          "cpuTimeMs": 60000,
+          "memoryBytes": 8589934592,
+          "tasks": 2048
+        },
+        "maximumResultBytes": 67108864
+      }
+    },
+    "b-fabd09ad9d9f53ae": {
+      "settings": {
+        "resourcePolicy": {
+          "cpuTimeMs": 45000,
+          "memoryBytes": 8589934592,
+          "tasks": 2048
+        },
+        "maximumResultBytes": 67108864
+      }
+    },
+    "b-9d99647858fc94bc": {
+      "settings": {
+        "resourcePolicy": {
+          "cpuTimeMs": 60000,
+          "memoryBytes": 6442450944,
+          "tasks": 2048
+        },
+        "maximumResultBytes": 67108864
+      }
+    },
+    "b-85070373f276e47a": {
+      "settings": {
+        "resourcePolicy": {
+          "cpuTimeMs": 60000,
+          "memoryBytes": 8589934592,
+          "tasks": 1536
+        },
+        "maximumResultBytes": 67108864
+      }
+    },
+    "b-73f1325f2910407e": {
+      "settings": {
+        "resourcePolicy": {
+          "cpuTimeMs": 60000,
+          "memoryBytes": 8589934592,
+          "tasks": 2048
+        },
+        "maximumResultBytes": 50331648
+      }
+    }
+  }
+}

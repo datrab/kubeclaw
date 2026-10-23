@@ -1,0 +1,16 @@
+{
+  "specFile": "spec-a.json",
+  "operations": [
+    {
+      "operationId": "checkOk",
+      "pathParameters": {},
+      "query": {},
+      "headers": {},
+      "cleanup": false,
+      "expectedStatuses": [
+        200
+      ]
+    }
+  ],
+  "endpointName": "service-b"
+}

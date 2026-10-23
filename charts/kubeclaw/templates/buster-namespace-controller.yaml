@@ -1,5 +1,13 @@
-{{- $clusterShared := (include "kubeclaw.swarmConfig" . | mustFromJson).operator.buster.clusterInvokers.shared -}}
+{{- $clusterShared := (include "kubeclaw.busterTopology" . | mustFromJson).clusterShared -}}
 {{- if and .Values.busterNamespaceBroker.enabled (eq .Values.agentRole "buster") -}}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "kubeclaw.fullname" . }}-controller-policy
+  namespace: {{ .Release.Namespace }}
+data:
+  controller-policy.json: {{ required "Controller policy is required" .Values.busterNamespaceBroker.controller.policy | toJson | quote }}
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -163,6 +171,8 @@ spec:
       app.kubernetes.io/component: buster-namespace-controller
   template:
     metadata:
+      annotations:
+        checksum/controller-policy: {{ .Values.busterNamespaceBroker.controller.policy | toJson | sha256sum }}
       labels:
         app.kubernetes.io/name: kubeclaw
         app.kubernetes.io/instance: {{ .Release.Name }}
@@ -187,6 +197,8 @@ spec:
           command:
             - /app/buster-namespace-controller
           env:
+            - name: BUSTER_CONTROLLER_POLICY_FILE
+              value: /etc/kubeclaw/controller/controller-policy.json
             - name: KUBECLAW_NAMESPACE
               value: {{ .Release.Namespace | quote }}
             - name: BUSTER_CONTROLLER_SERVICE_ACCOUNT
@@ -255,14 +267,20 @@ spec:
           {{- if .Values.busterNamespaceBroker.controller.readiness.enabled }}
           ports:
             - { name: demo-ready, containerPort: 8443, protocol: TCP }
-          volumeMounts:
-            - { name: demo-ready-server, mountPath: /var/run/kubeclaw/ready-server, readOnly: true }
           {{- end }}
-      {{- if .Values.busterNamespaceBroker.controller.readiness.enabled }}
+          volumeMounts:
+            - { name: controller-policy, mountPath: /etc/kubeclaw/controller, readOnly: true }
+            {{- if .Values.busterNamespaceBroker.controller.readiness.enabled }}
+            - { name: demo-ready-server, mountPath: /var/run/kubeclaw/ready-server, readOnly: true }
+            {{- end }}
       volumes:
+        - name: controller-policy
+          configMap:
+            name: {{ include "kubeclaw.fullname" . }}-controller-policy
+        {{- if .Values.busterNamespaceBroker.controller.readiness.enabled }}
         - name: demo-ready-server
           secret:
             secretName: {{ required "Ready TLS Secret is required" .Values.busterNamespaceBroker.controller.readiness.tlsSecretName | quote }}
             defaultMode: 0440
-      {{- end }}
+        {{- end }}
 {{- end }}

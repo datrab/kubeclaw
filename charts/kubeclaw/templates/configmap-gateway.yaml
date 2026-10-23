@@ -301,20 +301,7 @@ data:
           {{- if eq (.Values.agentRole | default "") "buster" }},
           "kubeclaw-agent-observer": {
             "enabled": true,
-            "config": {
-              "enabled": true,
-              "redisNetworkIsolation": "isolated",
-              "maxEventBytes": 3145728,
-              "maxQueuePerStream": 100,
-              "redisCommandTimeoutMs": 5000,
-              "streamMaxLen": 10000,
-              "deadLetterMaxLen": 1000,
-              "controlWriteMaxAttempts": 3,
-              "controlWriteRetryBaseMs": 100,
-              "controlWriteRetryMaxMs": 1000,
-              "hookPriority": -100,
-              "hookTimeoutMs": 1000
-            },
+            "config": {{ required "Central agentObserverPolicy is required" .Values.agentObserverPolicy | toJson }},
             "hooks": {
               "allowConversationAccess": true
             }
@@ -324,7 +311,9 @@ data:
           "kubeclaw-prism": {
             "enabled": true,
             "config": {
-              "controlUrl": "http://127.0.0.1:28080"
+              {{- $tools := mustFromJson (required "central Prism tool projection required; run npm run config:prism:sync" (.Files.Get "files/pipeline/prism-agent-tools.json")) }}
+              {{- if or (ne $tools.namespace .Release.Namespace) (ne $tools.releaseName .Release.Name) }}{{ fail "Prism tool release identity must match central bindings" }}{{ end }}
+              "controlUrl": {{ required "Prism tool controlUrl required" $tools.controlUrl | quote }}
             }
           }
           {{- end }}

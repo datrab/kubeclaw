@@ -1,0 +1,72 @@
+[
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-cluster-poll-consumers.test.mjs",
+      "tests/verification/contracts/buster-cluster-timing-consumers.test.mjs",
+      "tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs"
+    ],
+    "exitCode": 0,
+    "seconds": 8.83,
+    "log": "before.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-cluster-poll-consumers.test.mjs",
+      "tests/verification/contracts/buster-cluster-timing-consumers.test.mjs",
+      "tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs"
+    ],
+    "exitCode": 0,
+    "seconds": 8.88,
+    "log": "after.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "tests/verification/contracts/buster-cluster-poll-consumers.test.mjs"
+    ],
+    "exitCode": 0,
+    "log": "syntax-0.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "tests/verification/contracts/buster-cluster-timing-consumers.test.mjs"
+    ],
+    "exitCode": 0,
+    "log": "syntax-1.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs"
+    ],
+    "exitCode": 0,
+    "log": "syntax-2.txt"
+  },
+  {
+    "command": [
+      "python3",
+      "docs/review/remediation/config-final-reconciliation-20261016/reconcile.py"
+    ],
+    "exitCode": 0,
+    "log": "roster.txt"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "log": "diff.txt"
+  }
+]

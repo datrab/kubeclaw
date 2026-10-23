@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "dlv-ops-supervisor-policy.v1",
+  "supervisor": {
+    "controlSocketProbeTimeoutSeconds": 1.0,
+    "controlStartupTimeoutSeconds": 40,
+    "controlStartupPollSeconds": 0.4,
+    "controlCommandTimeoutSeconds": 40,
+    "loginStatusTimeoutSeconds": 30,
+    "loginRetryWaitSeconds": 10,
+    "controlHealthPollSeconds": 4,
+    "controlTerminationTimeoutSeconds": 20,
+    "restartWaitSeconds": 20
+  },
+  "binding": {
+    "source": {
+      "path": "ops/pod/supervisor.py",
+      "sha256": "e8000383c5736777562bf805cfd9d3b4e1dce4f0e720be264231b0ab91e3cf99"
+    },
+    "runtime": "actual selected Ops image immutable OCI/installed Python platform/version primitive support receipt, before future spawn",
+    "credentialProvider": "original selected Ops token-file/PVC/account-provider revision references, no bytes; once-read ENV vs server every-request rotation unchanged",
+    "socket": "$HOME/.codex/app-server-control/app-server-control.sock exact existing control transport, bound original HOME/PVC/daemon identity; stale socket file is not readiness",
+    "CodexPolicy": "same existing native TOML owner generation, no editable duplicate daemon permission/model author"
+  },
+  "correlations": [
+    "startupPollSeconds <= startupTimeoutSeconds and socketProbeTimeoutSeconds <= startupTimeoutSeconds; all fields finite positive seconds before Python primitive calls",
+    "supported range must fit selected interpreter/platform socket.settimeout/Event.wait/Popen.wait and monotonic arithmetic; captured concrete threading.TIMEOUT_MAX and Python/runtime source/ABI before future effect; no Node timer cap guessed for Python",
+    "active command/process and stopping A keep A deadlines from admitted process generation; B new superviseddaemon only",
+    "termination budget must fit actual selected Pod grace/drain plan and process tree; actual signal/process death/readback required, not status file or chosen numeric value"
+  ]
+}

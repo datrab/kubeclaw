@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY_SELECTION } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import fs from 'node:fs';
@@ -32,7 +33,7 @@ assert.throws(() => artifactFromWrite(sampleAttempt, sampleRequest,
 assert.equal(artifactFromWrite(sampleAttempt, { ...sampleRequest,
   payload: { ...sampleRequest.payload, checkpoint: false } }, { artifact: sampleArtifact }), undefined);
 
-const platform = {
+const platform = {corePolicySelection: TEST_CORE_POLICY_SELECTION,
   schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000,
   installationRoots: [path.resolve('tests/fixtures/plugin-system-v2'), path.resolve('skills/common/plugins')],
   trustedBuiltinRoots: [path.resolve('tests/fixtures/plugin-system-v2'), path.resolve('skills/common/plugins')],

@@ -1,0 +1,17 @@
+✔ coverage sparse oversize input is rejected before any read/allocation (4.961468ms)
+✔ coverage real AbortSignal interrupts read and closes descriptor (5.226515ms)
+✔ coverage real AbortSignal interrupts parse and closes descriptor (7.180796ms)
+✔ size tar measurement detects same-inode mutation after initial verification (10.634074ms)
+✔ size file measurement detects same-inode mutation after initial verification (7.138585ms)
+✔ baseline parsing uses the bytes that were actually digest-verified (6.638701ms)
+✔ bounded coverage parser preserves literal LF/CRLF, duplicate-max and genuine-zero semantics (3.267674ms)
+✔ size file cancellation during final eof prevents baseline publication (6.154369ms)
+✔ size file cancellation during final close prevents baseline publication (5.629905ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 165.430644

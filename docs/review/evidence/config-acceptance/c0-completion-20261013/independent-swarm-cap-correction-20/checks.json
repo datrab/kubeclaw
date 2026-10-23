@@ -1,0 +1,409 @@
+{
+  "checks": [
+    {
+      "check": "unchanged since review19: charts/kubeclaw/files/config/swarm-components.schema.json",
+      "pass": true
+    },
+    {
+      "check": "unchanged since review19: charts/kubeclaw/templates/_swarm-config.tpl",
+      "pass": true
+    },
+    {
+      "check": "unchanged since review19: docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-27/README.md",
+      "pass": true
+    },
+    {
+      "check": "unchanged since review19: docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-27/define.py",
+      "pass": true
+    },
+    {
+      "check": "unchanged since review19: docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-27/local-check.json",
+      "pass": true
+    },
+    {
+      "check": "unchanged since review19: docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-27/package-manifest.json",
+      "pass": true
+    },
+    {
+      "check": "unchanged since review19: docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-27/source-field-definitions.json",
+      "pass": true
+    },
+    {
+      "check": "unchanged since review19: docs/review/remediation/GOAL-START.md",
+      "pass": true
+    },
+    {
+      "check": "unchanged since review19: docs/review/remediation/OPENCLAW-CONFIG-GOAL.md",
+      "pass": true
+    },
+    {
+      "check": "exact twenty row IDs and ordering retained",
+      "pass": true
+    },
+    {
+      "check": "original body conserved: SRC-ae3c2b0bb81275f6",
+      "pass": true
+    },
+    {
+      "check": "original body conserved: SRC-eac5ec66c49e4c61",
+      "pass": true
+    },
+    {
+      "check": "original body conserved: SRC-4531f56429cdcc26",
+      "pass": true
+    },
+    {
+      "check": "original body conserved: SRC-fa5d875cf1fc1453",
+      "pass": true
+    },
+    {
+      "check": "original body conserved: SRC-e95d781b7945c3ca",
+      "pass": true
+    },
+    {
+      "check": "original body conserved: SRC-fd03cb740079506d",
+      "pass": true
+    },
+    {
+      "check": "original body conserved: SRC-ea5d74692fd5fcdd",
+      "pass": true
+    },
+    {
+      "check": "original body conserved: SRC-3b4dfcac94af3ad0",
+      "pass": true
+    },
+    {
+      "check": "original body conserved: SRC-13c8327678d63641",
+      "pass": true
+    },
+    {
+      "check": "original body conserved: SRC-c63f4f93fa7cdd5c",
+      "pass": true
+    },
+    {
+      "check": "original body conserved: SRC-a9734a7cd38b3ac8",
+      "pass": true
+    },
+    {
+      "check": "original body conserved: SRC-b56d3dbbda2be12a",
+      "pass": true
+    },
+    {
+      "check": "original body conserved: SRC-e6907369daeea5f0",
+      "pass": true
+    },
+    {
+      "check": "original body conserved: SRC-bd47d110c9c2cd08",
+      "pass": true
+    },
+    {
+      "check": "original body conserved: SRC-a366c6559124018b",
+      "pass": true
+    },
+    {
+      "check": "original body conserved: SRC-2ca0c163bfd57e6a",
+      "pass": true
+    },
+    {
+      "check": "original body conserved: SRC-a33bbe84d92a0346",
+      "pass": true
+    },
+    {
+      "check": "original body conserved: SRC-3b703d3eda783cd9",
+      "pass": true
+    },
+    {
+      "check": "original body conserved: SRC-34575fbfcf7ce405",
+      "pass": true
+    },
+    {
+      "check": "original body conserved: SRC-4281f12995569fb2",
+      "pass": true
+    },
+    {
+      "check": "exactly one changed row, other nineteen byte-equivalent JSON values",
+      "pass": true
+    },
+    {
+      "check": "actual line214 enumerates exactly six required members",
+      "pass": true
+    },
+    {
+      "check": "actual line215 strictly rejects above2147483647",
+      "pass": true
+    },
+    {
+      "check": "aggregate gate members/max/source refs truthful",
+      "pass": true
+    },
+    {
+      "check": "all26 preparation members retained",
+      "pass": true
+    },
+    {
+      "check": "truthful unchanged schemaDomain: timeoutMs",
+      "pass": true
+    },
+    {
+      "check": "non-capped member unchanged: timeoutMs",
+      "pass": true
+    },
+    {
+      "check": "truthful unchanged schemaDomain: cleanupTimeoutMs",
+      "pass": true
+    },
+    {
+      "check": "non-capped member unchanged: cleanupTimeoutMs",
+      "pass": true
+    },
+    {
+      "check": "truthful unchanged schemaDomain: maximumActivePreparations",
+      "pass": true
+    },
+    {
+      "check": "non-capped member unchanged: maximumActivePreparations",
+      "pass": true
+    },
+    {
+      "check": "truthful unchanged schemaDomain: maximumPendingAdmissions",
+      "pass": true
+    },
+    {
+      "check": "non-capped member unchanged: maximumPendingAdmissions",
+      "pass": true
+    },
+    {
+      "check": "truthful unchanged schemaDomain: maximumRequestBytes",
+      "pass": true
+    },
+    {
+      "check": "explicit effective cap with exact source refs: maximumRequestBytes",
+      "pass": true
+    },
+    {
+      "check": "capped member otherwise unchanged: maximumRequestBytes",
+      "pass": true
+    },
+    {
+      "check": "truthful unchanged schemaDomain: maximumArchiveBytes",
+      "pass": true
+    },
+    {
+      "check": "explicit effective cap with exact source refs: maximumArchiveBytes",
+      "pass": true
+    },
+    {
+      "check": "capped member otherwise unchanged: maximumArchiveBytes",
+      "pass": true
+    },
+    {
+      "check": "truthful unchanged schemaDomain: maximumExtractedBytes",
+      "pass": true
+    },
+    {
+      "check": "non-capped member unchanged: maximumExtractedBytes",
+      "pass": true
+    },
+    {
+      "check": "truthful unchanged schemaDomain: maximumHeaderBytes",
+      "pass": true
+    },
+    {
+      "check": "explicit effective cap with exact source refs: maximumHeaderBytes",
+      "pass": true
+    },
+    {
+      "check": "capped member otherwise unchanged: maximumHeaderBytes",
+      "pass": true
+    },
+    {
+      "check": "truthful unchanged schemaDomain: maximumSourceBytes",
+      "pass": true
+    },
+    {
+      "check": "non-capped member unchanged: maximumSourceBytes",
+      "pass": true
+    },
+    {
+      "check": "truthful unchanged schemaDomain: maximumMetadataBytes",
+      "pass": true
+    },
+    {
+      "check": "non-capped member unchanged: maximumMetadataBytes",
+      "pass": true
+    },
+    {
+      "check": "truthful unchanged schemaDomain: maximumRecords",
+      "pass": true
+    },
+    {
+      "check": "non-capped member unchanged: maximumRecords",
+      "pass": true
+    },
+    {
+      "check": "truthful unchanged schemaDomain: maximumOwnershipBytes",
+      "pass": true
+    },
+    {
+      "check": "non-capped member unchanged: maximumOwnershipBytes",
+      "pass": true
+    },
+    {
+      "check": "truthful unchanged schemaDomain: maximumJournalBytes",
+      "pass": true
+    },
+    {
+      "check": "non-capped member unchanged: maximumJournalBytes",
+      "pass": true
+    },
+    {
+      "check": "truthful unchanged schemaDomain: maximumInputBytes",
+      "pass": true
+    },
+    {
+      "check": "explicit effective cap with exact source refs: maximumInputBytes",
+      "pass": true
+    },
+    {
+      "check": "capped member otherwise unchanged: maximumInputBytes",
+      "pass": true
+    },
+    {
+      "check": "truthful unchanged schemaDomain: maximumOutputBytes",
+      "pass": true
+    },
+    {
+      "check": "explicit effective cap with exact source refs: maximumOutputBytes",
+      "pass": true
+    },
+    {
+      "check": "capped member otherwise unchanged: maximumOutputBytes",
+      "pass": true
+    },
+    {
+      "check": "truthful unchanged schemaDomain: maximumResultBytes",
+      "pass": true
+    },
+    {
+      "check": "explicit effective cap with exact source refs: maximumResultBytes",
+      "pass": true
+    },
+    {
+      "check": "capped member otherwise unchanged: maximumResultBytes",
+      "pass": true
+    },
+    {
+      "check": "truthful unchanged schemaDomain: pollIntervalMs",
+      "pass": true
+    },
+    {
+      "check": "non-capped member unchanged: pollIntervalMs",
+      "pass": true
+    },
+    {
+      "check": "truthful unchanged schemaDomain: drainTimeoutMs",
+      "pass": true
+    },
+    {
+      "check": "non-capped member unchanged: drainTimeoutMs",
+      "pass": true
+    },
+    {
+      "check": "truthful unchanged schemaDomain: closeTimeoutMs",
+      "pass": true
+    },
+    {
+      "check": "non-capped member unchanged: closeTimeoutMs",
+      "pass": true
+    },
+    {
+      "check": "truthful unchanged schemaDomain: tarTimeoutMs",
+      "pass": true
+    },
+    {
+      "check": "non-capped member unchanged: tarTimeoutMs",
+      "pass": true
+    },
+    {
+      "check": "truthful unchanged schemaDomain: maximumArchiveEntries",
+      "pass": true
+    },
+    {
+      "check": "non-capped member unchanged: maximumArchiveEntries",
+      "pass": true
+    },
+    {
+      "check": "truthful unchanged schemaDomain: maximumListingLineBytes",
+      "pass": true
+    },
+    {
+      "check": "non-capped member unchanged: maximumListingLineBytes",
+      "pass": true
+    },
+    {
+      "check": "truthful unchanged schemaDomain: maximumTarStderrBytes",
+      "pass": true
+    },
+    {
+      "check": "non-capped member unchanged: maximumTarStderrBytes",
+      "pass": true
+    },
+    {
+      "check": "truthful unchanged schemaDomain: maximumSourceEntries",
+      "pass": true
+    },
+    {
+      "check": "non-capped member unchanged: maximumSourceEntries",
+      "pass": true
+    },
+    {
+      "check": "truthful unchanged schemaDomain: sourceEntryReservationBytes",
+      "pass": true
+    },
+    {
+      "check": "non-capped member unchanged: sourceEntryReservationBytes",
+      "pass": true
+    },
+    {
+      "check": "truthful unchanged schemaDomain: maximumOpenFiles",
+      "pass": true
+    },
+    {
+      "check": "non-capped member unchanged: maximumOpenFiles",
+      "pass": true
+    },
+    {
+      "check": "only documented cap/member additions and relation clarification in changed row",
+      "pass": true
+    },
+    {
+      "check": "2147483648 static scalar witness satisfies schema and exceeds cap",
+      "pass": true
+    },
+    {
+      "check": "bounded gates unchanged and runtime not-run",
+      "pass": true
+    },
+    {
+      "check": "batch28 manifest identity: docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-28/README.md",
+      "pass": true
+    },
+    {
+      "check": "batch28 manifest identity: docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-28/local-check.json",
+      "pass": true
+    },
+    {
+      "check": "batch28 manifest identity: docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-28/source-field-definitions.json",
+      "pass": true
+    },
+    {
+      "check": "superseded batch27 definition hash correct",
+      "pass": true
+    }
+  ],
+  "passed": 100,
+  "failed": 0,
+  "verdict": "PASS bounded SWARM19-001 correction",
+  "nativeOrHelmExecuted": false,
+  "globalC0Accepted": false
+}

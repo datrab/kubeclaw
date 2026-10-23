@@ -1,0 +1,106 @@
+{
+  "schemaVersion": "pipeline-registration-policy.v1",
+  "packageId": "kubeclaw.size-budget",
+  "registrationId": "kubeclaw.size-budget:artifact",
+  "instanceId": "fixture.size-budget",
+  "profiles": {
+    "A": {
+      "processing": {
+        "format": "auto",
+        "maximumTotalBytes": 600,
+        "maximumFileCount": 3,
+        "matchingFiles": [
+          {
+            "id": "scripts",
+            "pattern": "assets/*.js",
+            "maximumBytes": 300,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 0,
+        "maximumGrowthPercent": 0,
+        "largestFiles": 10
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "size-budget-baseline"
+          ],
+          "onFail": [
+            "log",
+            "size-budget-baseline"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": true,
+        "matrixFields": []
+      }
+    },
+    "B": {
+      "processing": {
+        "format": "auto",
+        "maximumTotalBytes": 599,
+        "maximumFileCount": 3,
+        "matchingFiles": [
+          {
+            "id": "scripts",
+            "pattern": "assets/*.js",
+            "maximumBytes": 299,
+            "requireMatch": true
+          }
+        ],
+        "maximumGrowthBytes": 0,
+        "maximumGrowthPercent": 0,
+        "largestFiles": 10
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "size-budget-baseline"
+          ],
+          "onFail": [
+            "log",
+            "size-budget-baseline"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": true,
+        "matrixFields": []
+      }
+    },
+    "facts": {
+      "processing": {
+        "format": "auto",
+        "maximumTotalBytes": null,
+        "maximumFileCount": null,
+        "matchingFiles": [],
+        "maximumGrowthBytes": null,
+        "maximumGrowthPercent": null,
+        "largestFiles": 10
+      },
+      "declarations": {
+        "evidenceDefaults": {
+          "onPass": [
+            "log",
+            "size-budget-baseline"
+          ],
+          "onFail": [
+            "log",
+            "size-budget-baseline"
+          ],
+          "onError": [
+            "log"
+          ]
+        },
+        "retrySafe": true,
+        "matrixFields": []
+      }
+    }
+  }
+}

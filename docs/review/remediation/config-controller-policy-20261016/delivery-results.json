@@ -1,0 +1,20 @@
+[
+  {
+    "command": [
+      "gofmt",
+      "-w",
+      "cmd/buster-namespace-controller/controller-policy_test.go"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-controller-policy-20261016/delivery-0.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/deployment/buster-central-delivery.test.mjs"
+    ],
+    "exitCode": 1,
+    "log": "docs/review/remediation/config-controller-policy-20261016/delivery-1.txt"
+  }
+]

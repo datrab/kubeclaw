@@ -1,0 +1,1 @@
+Inspection-only metadata print attempted x['name']; helper metadata uses 'function'. Python KeyError: 'name', exit1. Follow-up read used actual keys and completed. No source mutation or productive execution occurred.

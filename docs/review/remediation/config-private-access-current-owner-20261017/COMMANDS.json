@@ -1,0 +1,39 @@
+[
+  {
+    "argv": [
+      "node",
+      "--test",
+      "tests/verification/contracts/infra-private-access.test.mjs"
+    ],
+    "exitCode": 1,
+    "log": "tests.txt"
+  },
+  {
+    "argv": [
+      "node_modules/.bin/tsc",
+      "--noEmit",
+      "-p",
+      "tests/verification/contracts/tsconfig.buster-cluster-policy.json"
+    ],
+    "exitCode": 0,
+    "log": "typecheck.txt"
+  },
+  {
+    "argv": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "log": "diff-check.txt"
+  },
+  {
+    "argv": [
+      "node",
+      "--test",
+      "tests/verification/contracts/infra-private-access.test.mjs"
+    ],
+    "exitCode": 0,
+    "log": "corrected.txt"
+  }
+]

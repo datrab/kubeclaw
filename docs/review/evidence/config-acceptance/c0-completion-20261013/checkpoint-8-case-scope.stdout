@@ -1,0 +1,159 @@
+{
+  "controls": [
+    {
+      "id": "future source artifact verified without fabricated executable-test digest",
+      "result": "passed"
+    },
+    {
+      "id": "historical failure changed to retrospective pass",
+      "result": "passed",
+      "boundary": "HISTORY_CHANGED"
+    },
+    {
+      "id": "historical original phase rewritten",
+      "result": "passed",
+      "boundary": "HISTORY_CHANGED"
+    },
+    {
+      "id": "historical native map deleted",
+      "result": "passed",
+      "boundary": "HISTORY_CHANGED"
+    },
+    {
+      "id": "scope derivation cannot rewrite original scope",
+      "result": "passed",
+      "boundary": "SCOPE_HISTORY_CHANGED"
+    },
+    {
+      "id": "scope derivation needs a reason",
+      "result": "passed",
+      "boundary": "SCOPE_REASON_MISSING"
+    },
+    {
+      "id": "scope derivation needs pinned evidence",
+      "result": "passed",
+      "boundary": "SCOPE_EVIDENCE_MISSING"
+    },
+    {
+      "id": "descriptive historical scope retained with explicit evidenced local derivation",
+      "result": "passed"
+    },
+    {
+      "id": "original requirements dropped",
+      "result": "passed",
+      "boundary": "ORIGINAL_OR_DANGLING_REQUIREMENTIDS"
+    },
+    {
+      "id": "IC10 null placeholder is not software identity",
+      "result": "passed",
+      "boundary": "IDENTITIES_SOFTWARE"
+    },
+    {
+      "id": "IC10 config identity needs a concrete nonnull revision",
+      "result": "passed",
+      "boundary": "IDENTITY_REVISION_INVALID"
+    },
+    {
+      "id": "unapproved future runtime PASS",
+      "result": "passed",
+      "boundary": "UNAPPROVED_RUNTIME_RESULT"
+    },
+    {
+      "id": "original runtime case cannot masquerade as a C0 observation",
+      "result": "passed",
+      "boundary": "ORIGINAL_RUNTIME_CASE_RECLASSIFIED"
+    },
+    {
+      "id": "future case fabricates execution evidence",
+      "result": "passed",
+      "boundary": "UNAPPROVED_RUNTIME_RESULT"
+    },
+    {
+      "id": "missing proposed harness",
+      "result": "passed",
+      "boundary": "PLANNED_TEST_MISSING"
+    },
+    {
+      "id": "fake actual digest on planned test",
+      "result": "passed",
+      "boundary": "PLANNED_TEST_INVALID"
+    },
+    {
+      "id": "planned test path/source mismatch",
+      "result": "passed",
+      "boundary": "PLANNED_TEST_SOURCE_MISMATCH"
+    },
+    {
+      "id": "required mutation specification dropped",
+      "result": "passed",
+      "boundary": "PLANNED_OBLIGATIONS_INVALID"
+    },
+    {
+      "id": "required restoration specification dropped",
+      "result": "passed",
+      "boundary": "PLANNED_OBLIGATIONS_INVALID"
+    },
+    {
+      "id": "invariant substitution silently drops former case",
+      "result": "passed",
+      "boundary": "INVARIANT_OBLIGATIONS_MISSING"
+    },
+    {
+      "id": "invariant replacement loses requirements",
+      "result": "passed",
+      "boundary": "INVARIANT_REQUIREMENTS_LOST"
+    },
+    {
+      "id": "requirement labels alone cannot replace an executable case",
+      "result": "passed",
+      "boundary": "INVARIANT_REPLACEMENT_CONTEXT_MISSING"
+    },
+    {
+      "id": "explicit invariant replacement preserves all requirements and original failed history",
+      "result": "passed"
+    },
+    {
+      "id": "invariant replacement must have complete planned executable harness",
+      "result": "passed",
+      "boundary": "PLANNED_TEST_MISSING"
+    },
+    {
+      "id": "actual structural observation source/test/stdout/stderr identity metadata verified",
+      "result": "passed"
+    },
+    {
+      "id": "IC10 executed tool version cannot be null",
+      "result": "passed",
+      "boundary": "C0_TOOL_REVISION_INVALID"
+    },
+    {
+      "id": "C0 observation without actual executed-test identity",
+      "result": "passed",
+      "boundary": "C0_TEST_IDENTITY_MISSING"
+    },
+    {
+      "id": "Boolean cannot masquerade as execution exit code",
+      "result": "passed",
+      "boundary": "C0_EXECUTION_INVALID"
+    },
+    {
+      "id": "empty C0 observation is not passed evidence",
+      "result": "passed",
+      "boundary": "C0_OBSERVATION_EMPTY"
+    },
+    {
+      "id": "original C0 observation cannot be hidden as future not-run work",
+      "result": "passed",
+      "boundary": "ORIGINAL_DEFINITION_PHASE_LOST"
+    },
+    {
+      "id": "known original C3 obligation cannot shift to C4",
+      "result": "passed",
+      "boundary": "ORIGINAL_IMPLEMENTATION_SLICE_CHANGED"
+    }
+  ],
+  "passed": 31,
+  "failed": 0,
+  "globalC0Accepted": false,
+  "qualification": "case contract candidate only; metadata identity is not semantic proof; not integrated into strict acceptance"
+}

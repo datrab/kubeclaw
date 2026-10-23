@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -89,7 +90,7 @@ test('no byte saving, stale store, source mismatch and run fence fail before mut
     await assert.rejects(retireAttemptClosure({...f.closureScope,intent:{...f.closureScope.intent,...change}}));
     assert.deepEqual(fs.readFileSync(f.file),before);
   }
-  await withRunMutationLock(f.run,()=>assert.rejects(retireAttemptClosure(f.closureScope),/PIPELINE_RUN_MUTATION_LOCKED/));
+  await withRunMutationLock(f.run, TEST_CORE_POLICY,()=>assert.rejects(retireAttemptClosure(f.closureScope),/PIPELINE_RUN_MUTATION_LOCKED/));
   await store.resumeCompletion(f.runId,f.result.attemptId,1,f.admission);
   assert.deepEqual(fs.readFileSync(f.file),before);
   assert.equal((await retireAttemptClosure(f.closureScope)).newlyRetired,true);

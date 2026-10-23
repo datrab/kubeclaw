@@ -1,0 +1,26 @@
+# Original author source lanes — 2026-10-17
+
+Exact original identities/classes/cases retained for four fields. Product decision TTL is already selected from `config/components/prism-control.config.json` in both complete profiles, through authenticated boot projection and actual Control server -> durable intent signer. Actor expiry and second flooring remain unchanged. This source join does not prove history/native/independent acceptance.
+
+Three explicit central receiving residuals: Product enable still reads `PRISM_PRODUCT_DECISIONS_ENABLED` (not a secret); the optional HTTP Design provider still embeds its system instruction (not productive model composition); Review prompt boundary reserve still adds the source literal64 to shared envelope reservation. Do not invent a disconnected owner, silently substitute current values into history, promote denied-v10, or erase original effect obligations as nonapplicable.
+
+The executable matrix checks all2409 fields,6845 cases and50 requirements against their pinned original objects, and rejects16 identity/case/false-PASS/invented-author mutations. Whole semantic navigation conserves all45 historical groups;7 remain unresolved. No original case accepted and no productive source implementation added. Required independent complete-source, original/history/native/archive and full C0-C6 gates remain OPEN. No deploy/main merge/paid Evals/D18/refactor.
+
+
+## Product enablement source continuation — 2026-10-22
+
+The Product enablement residual now has an end-to-end implementation: the existing
+Control owner component-v5 requires `productDecisionsEnabled` on every profile.
+Both shipped profiles explicitly select false. The actual authenticated Control
+composition snapshots the selection before key I/O; the same generated topology
+selects Helm environment, mounts and egress without a second values/ENV switch.
+Historical component-v2/v3/v4 codecs remain unchanged and independently exercised.
+The frozen original v10 catalogs and all original field/case identities are unchanged.
+
+Bounded proof is retained under `tmp/config-resume-0816-oct22`: genuine installed
+Prism role/generation readback, real Control HTTP/SQL/signing/restart composition,
+Helm package/render and central required-leaf/legacy compatibility checks. The
+unrelated original Buster inert-archive restoration attempt failed locally with
+ENOSPC; its raw failed run remains retained, not accepted or skipped as proof.
+This source continuation does not accept any original C0–C6/native/archive case.
+The optional Design instruction and Review reserve source lanes remain separate.

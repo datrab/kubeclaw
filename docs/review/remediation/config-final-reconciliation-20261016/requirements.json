@@ -1,0 +1,352 @@
+[
+  {
+    "id": "A1",
+    "original": "D227#/requirements/0",
+    "originalObjectSha256": "a1836d129af6292903433dc989463003858a12749678b86b4f54dbd3f3391663",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "A2",
+    "original": "D227#/requirements/1",
+    "originalObjectSha256": "03be010a5e3e60b4d59c5e1032fd518ddb1fe03b419a14267ba880778fadd682",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "A3",
+    "original": "D227#/requirements/2",
+    "originalObjectSha256": "6e361435cf8245db6a032a5f0b7352c67d276eeda9831923bccb6bfacf1ec200",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "A4",
+    "original": "D227#/requirements/3",
+    "originalObjectSha256": "7c461d86b247cdbf1392325d1b44c853883bfd0ecd96d35800f248d93f6bd387",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "A5",
+    "original": "D227#/requirements/4",
+    "originalObjectSha256": "2387d8da929171b18b74e2278c06039afc18c572dc2544b08a9fb44c008b0a06",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "A6",
+    "original": "D227#/requirements/5",
+    "originalObjectSha256": "7cc85e170f7626292def08245e65f0df921017c1291c0321a29bc3163d668cfa",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "A7",
+    "original": "D227#/requirements/6",
+    "originalObjectSha256": "dfa3cd102665bb5465d4d8de06ca9ee8ca2568f128f1ba41a64f184195c43673",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "A8",
+    "original": "D227#/requirements/7",
+    "originalObjectSha256": "82f2074eaf968ad1b2874e1656e364ba812758dc5562a6a6a6c1022c7489dc74",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "D17",
+    "original": "D227#/requirements/8",
+    "originalObjectSha256": "52d96e36940f045ca61e8c4a2dc33baf4aefc9760e4255528d5fb86a7dd8547d",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "D18",
+    "original": "D227#/requirements/9",
+    "originalObjectSha256": "610666c31ed424a4c8a1ef8dcd98bdb24bcb9552d45261f497b5fd6a557336d9",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "D19",
+    "original": "D227#/requirements/10",
+    "originalObjectSha256": "9144d99c49904d2824fba01b53eca71ff9d5bac81b6a2f3b58f90e5b6c3e1c6d",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "D20",
+    "original": "D227#/requirements/11",
+    "originalObjectSha256": "4101ffe27d1d8cf22443fb4981e6a49ea6663a2fa0c8a1d0633eaa531ee7c040",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "D21",
+    "original": "D227#/requirements/12",
+    "originalObjectSha256": "2bc6ece14abb29cba4c1f101a734fdbec581926a7db86b4a8bcbc69b90d93112",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "D22",
+    "original": "D227#/requirements/13",
+    "originalObjectSha256": "3d9198aee7dbe8b6a9f4ea8b7f6467774bd7988c30e7cd6174691fae59b50691",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "F1",
+    "original": "D227#/requirements/14",
+    "originalObjectSha256": "141e54d0ae5e0fbb2873af2064d95cadacff177bae3fffbf2eef646cd8f3570b",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "F2",
+    "original": "D227#/requirements/15",
+    "originalObjectSha256": "946c94eb87cea9b3c6e4d590379591364300ba1be7ebbe1a6a57e0b58499cb0d",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "F2a",
+    "original": "D227#/requirements/16",
+    "originalObjectSha256": "1f5f767bf26246d14dbdc2088c4b15404527ebf1381dbbd858f45a0f54466080",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "F3",
+    "original": "D227#/requirements/17",
+    "originalObjectSha256": "37d86b5f3919dc60a56d3d41edcb4875d931d516aa242a1de9554ef81976f5ed",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "F3a",
+    "original": "D227#/requirements/18",
+    "originalObjectSha256": "b6cfe811e1e7e13261a6734e44e9accdaf1bd0c34d2bbee58bad6755a63c0349",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "F4",
+    "original": "D227#/requirements/19",
+    "originalObjectSha256": "86bffb257bddcca146d91c595ebadfce3ba7e22b5b0967776f9f82ccb7b7a159",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "F4a",
+    "original": "D227#/requirements/20",
+    "originalObjectSha256": "2b8a0a04b4947f72529dfff33281e95ba99731103aaa5bd8e15a3128316020f6",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "F5",
+    "original": "D227#/requirements/21",
+    "originalObjectSha256": "b80643fe2844ad794e5aa21b8df6769d27d5fe50dfd3f95c3ebe4bdf3c1f9af1",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "F5a",
+    "original": "D227#/requirements/22",
+    "originalObjectSha256": "3642457eea7012d26af07c57921f05348c7381fca1869fc1850d4e50764daa59",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "F6",
+    "original": "D227#/requirements/23",
+    "originalObjectSha256": "a787c9142c5cd58a5de27a93f68228a21e3a3bbec1f1a4253eef52c56514b844",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "F-DOC",
+    "original": "D227#/requirements/24",
+    "originalObjectSha256": "49ccb184355691b4b493f16f5c47d983d4d44c74ef2a0e91263c0b17ed7255ee",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "F-DOCa",
+    "original": "D227#/requirements/25",
+    "originalObjectSha256": "6e9f0f7eefa4a5f27c2cae4661e754f082b835975d1ddd0d3e6172874e5be84a",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "C0-A",
+    "original": "D227#/requirements/26",
+    "originalObjectSha256": "0b8f0b717aad62cb8ead0709a20d00a3b768885e78e53f6165f290aa852c5ac9",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "C0-B",
+    "original": "D227#/requirements/27",
+    "originalObjectSha256": "0dbd29219678c38ce37ed1dedd8a8b1eaf5f764fd6ab6141798778f209a7c8b9",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "C0-C",
+    "original": "D227#/requirements/28",
+    "originalObjectSha256": "3c1a62679c35076e33b10aa263086e3093471f8d2ca8ce45fd0f61653bc40ef3",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "C0-D",
+    "original": "D227#/requirements/29",
+    "originalObjectSha256": "8ea1ab9cdbac1a0196c9d608df1af422fbad7e55f201552fc3959eaafffbe068",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "C0-E",
+    "original": "D227#/requirements/30",
+    "originalObjectSha256": "a48d6f720bc8bd1032aa6ddc18311855ee96bd4d0485f9b3bacbd4f09e2029d3",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "F-AUTH",
+    "original": "D227#/requirements/31",
+    "originalObjectSha256": "7f1297e644be72b2ee0da53cddb88e62d5ad3f843469f554154d7d51e46e64a1",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "F-VAL",
+    "original": "D227#/requirements/32",
+    "originalObjectSha256": "9274f81055e3a1b37099d76b82963fe751bedef309c82f8d4cf3231a9786bc2d",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "F-EFFECT",
+    "original": "D227#/requirements/33",
+    "originalObjectSha256": "5047e886119ee7b57a9773f0e076f37a7d448df87ef0b94d22ddfcbc08720499",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "F-DELIVERY",
+    "original": "D227#/requirements/34",
+    "originalObjectSha256": "ad85365725363c909da6e1cffb08733db22180637d8225f8065a1039bd52eeae",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "F-BIND",
+    "original": "D227#/requirements/35",
+    "originalObjectSha256": "ce264d207ac63ce6fa72c505aaa3546c66d867c56cbd8518abbf3ebc2476219e",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "F-RECOVERY",
+    "original": "D227#/requirements/36",
+    "originalObjectSha256": "91dbeed5e077aef4a3f2bbf38d96bee3c3a0c8cbd50f485ea2622a3db376cbfc",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "F-MUT",
+    "original": "D227#/requirements/37",
+    "originalObjectSha256": "e6375d09fe413b013e55e76ec00426396a76da068bf3850b33f5f2437965c68a",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "F-CODE",
+    "original": "D227#/requirements/38",
+    "originalObjectSha256": "dcf8a5349741d3026cc4be4f777da13fc22a4111af8465c7e6da7880aca92616",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "IC0-001",
+    "original": "D227#/requirements/39",
+    "originalObjectSha256": "db68a156801942f1c254fda5fcc39714684a7386bcd849236e942f94be3746b6",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "IC0-002",
+    "original": "D227#/requirements/40",
+    "originalObjectSha256": "a09f6e56cdb326c637ed2bad8d7d0c4cd605fbdbd36f3d12d180dd3d4264fe07",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "IC0-003",
+    "original": "D227#/requirements/41",
+    "originalObjectSha256": "06a2b61f584b3d75e1442873b1cc11cd5cff9ae68eb788689f293b4de1699bca",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "IC0-004",
+    "original": "D227#/requirements/42",
+    "originalObjectSha256": "ae08861847f2b928eb992c66eaa78e2a2064fa193bc791d174d16e53704bebac",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "IC0-005",
+    "original": "D227#/requirements/43",
+    "originalObjectSha256": "24ef907fedbca4c5c6352b8f147bcf3472dc507629d7ac2d65704eb9f6c7bff5",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "IC0-006",
+    "original": "D227#/requirements/44",
+    "originalObjectSha256": "3d7c0043cebe40fbcd26825c54af4516a343f60636583044b59d38ec255fc093",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "ICD-001",
+    "original": "D227#/requirements/45",
+    "originalObjectSha256": "33472b2b16864545956ae77ec38ef076e3a946c8964319de166d1778c6f98d21",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "ICD-002",
+    "original": "D227#/requirements/46",
+    "originalObjectSha256": "c18a395ca2b564149fd5a69653becfb1aaae9b8861bef9d0057ed61e0d8901f4",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "ICD-003",
+    "original": "D227#/requirements/47",
+    "originalObjectSha256": "9e64ef61ef0c2969a351c71bac973da10ec63ad7de7890c6a6f8716259872f75",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "ICD-004",
+    "original": "D227#/requirements/48",
+    "originalObjectSha256": "86717d51d57bc5b28d71fe12f4c72c9460238e13ab0ece35cff72df6d858fb71",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  },
+  {
+    "id": "F-EVAL",
+    "original": "D227#/requirements/49",
+    "originalObjectSha256": "d109aae52b67206a232e73c22915e34c2f85eeea0f7947a28fc3ad723662db1e",
+    "preserved": true,
+    "runtimeAcceptance": "NOT_INFERRED_BY_PRESERVATION_AUDIT"
+  }
+]

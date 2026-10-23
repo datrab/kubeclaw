@@ -1,0 +1,356 @@
+---
+# Source: kubeclaw-ops/templates/network.yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: {name: delivery-ops-pod}
+spec:
+  podSelector:
+    matchLabels: {app.kubernetes.io/name: delivery-ops-pod}
+  policyTypes: [Ingress, Egress]
+  ingress: []
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels: {kubernetes.io/metadata.name: kube-system}
+          podSelector:
+            matchLabels: {k8s-app: kube-dns}
+      ports: [{protocol: UDP, port: 53}, {protocol: TCP, port: 53}]
+    - to:
+        - ipBlock: {cidr: "192.0.2.10/32"}
+      ports: [{protocol: TCP, port: 443}, {protocol: TCP, port: 6443}]
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+            except: [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16, 100.64.0.0/10, 169.254.0.0/16, 127.0.0.0/8]
+      ports: [{protocol: TCP, port: 443}]
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+            except: [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16, 169.254.0.0/16, 127.0.0.0/8]
+      ports: [{protocol: UDP, port: 3478}, {protocol: UDP, port: 41641}]
+---
+# Source: kubeclaw-ops/templates/rbac.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata: {name: delivery-ops-pod}
+automountServiceAccountToken: false
+---
+# Source: kubeclaw-ops/templates/kubeconfig.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: delivery-ops-pod-kubeconfig
+data:
+  config: |
+    apiVersion: v1
+    kind: Config
+    clusters:
+      - name: in-cluster
+        cluster:
+          server: https://kubernetes.default.svc
+          certificate-authority: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+    users:
+      - name: ops
+        user:
+          tokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+    contexts:
+      - name: ops
+        context:
+          cluster: in-cluster
+          user: ops
+          namespace: "default"
+    current-context: ops
+---
+# Source: kubeclaw-ops/templates/tailscale-storage.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: delivery-ops-pod-tailscale
+  annotations:
+    helm.sh/resource-policy: keep
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: "delivery-storage-a"
+  resources:
+    requests:
+      storage: 1Gi
+---
+# Source: kubeclaw-ops/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata: {name: default-delivery-ops-pod-reader}
+rules:
+  - apiGroups: [""]
+    resources: [pods, pods/log, services, events, persistentvolumeclaims]
+    verbs: [get, list]
+  - apiGroups: [apps]
+    resources: [deployments, statefulsets, daemonsets, replicasets]
+    verbs: [get, list]
+  - apiGroups: [batch]
+    resources: [jobs, cronjobs]
+    verbs: [get, list]
+  - apiGroups: [networking.k8s.io]
+    resources: [ingresses, networkpolicies]
+    verbs: [get, list]
+  - apiGroups: [cilium.io]
+    resources: [ciliumnetworkpolicies]
+    verbs: [get, list]
+  - apiGroups: [argoproj.io]
+    resources: [applications]
+    verbs: [get, list]
+---
+# Source: kubeclaw-ops/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata: {name: default-delivery-ops-pod-cluster-reader}
+rules:
+  - apiGroups: [""]
+    resources: [nodes]
+    verbs: [get, list]
+  - apiGroups: [cilium.io]
+    resources: [ciliumclusterwidenetworkpolicies]
+    verbs: [get, list]
+---
+# Source: kubeclaw-ops/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata: {name: default-delivery-ops-pod-cluster-reader}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: default-delivery-ops-pod-cluster-reader
+subjects:
+  - {kind: ServiceAccount, name: delivery-ops-pod, namespace: default}
+---
+# Source: kubeclaw-ops/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: default-delivery-ops-pod-exec
+  namespace: default
+rules:
+  - apiGroups: [""]
+    resources: [pods]
+    verbs: [get, list]
+  - apiGroups: [""]
+    resources: [pods/exec]
+    verbs: [get, create]
+---
+# Source: kubeclaw-ops/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: default-delivery-ops-pod-reader
+  namespace: default
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: default-delivery-ops-pod-reader
+subjects:
+  - {kind: ServiceAccount, name: delivery-ops-pod, namespace: default}
+---
+# Source: kubeclaw-ops/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: default-delivery-ops-pod-reader
+  namespace: argocd
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: default-delivery-ops-pod-reader
+subjects:
+  - {kind: ServiceAccount, name: delivery-ops-pod, namespace: default}
+---
+# Source: kubeclaw-ops/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: default-delivery-ops-pod-exec
+  namespace: default
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: default-delivery-ops-pod-exec
+subjects:
+  - {kind: ServiceAccount, name: delivery-ops-pod, namespace: default}
+---
+# Source: kubeclaw-ops/templates/workload.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: delivery-ops-pod
+spec:
+  clusterIP: None
+  selector: {app.kubernetes.io/name: delivery-ops-pod}
+  ports:
+    - name: health
+      port: 8080
+      targetPort: 8080
+---
+# Source: kubeclaw-ops/templates/workload.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: delivery-ops-pod
+spec:
+  serviceName: delivery-ops-pod
+  replicas: 1
+  revisionHistoryLimit: 3
+  # A single persistent CLI identity/workspace must never have two writers.
+  updateStrategy: {type: RollingUpdate}
+  selector:
+    matchLabels: {app.kubernetes.io/name: delivery-ops-pod}
+  template:
+    metadata:
+      labels: {app.kubernetes.io/name: delivery-ops-pod}
+    spec:
+      serviceAccountName: delivery-ops-pod
+      automountServiceAccountToken: false
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: {type: RuntimeDefault}
+      imagePullSecrets: 
+        - name: delivery-pull-a
+      containers:
+        - name: codex
+          image: "ghcr.io/datrab/kubeclaw-ops-codex@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          env:
+            - {name: HOME, value: /home/node}
+            - {name: OPS_DEFAULT_NAMESPACE, value: "default"}
+            - {name: OPS_EXEC_NAMESPACES, value: "default"}
+            - {name: KUBECONFIG, value: /var/run/kubeclaw-ops/kubeconfig/config}
+            - name: GH_TOKEN
+              valueFrom:
+                secretKeyRef: {name: delivery-github-a, key: token}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: [ALL]}
+          resources: 
+            limits:
+              cpu: "1"
+              memory: 1Gi
+            requests:
+              cpu: bad
+              memory: 128Mi
+          volumeMounts:
+            - {name: home, mountPath: /home/node}
+            - {name: workspace, mountPath: /workspace}
+            - {name: codex-tmp, mountPath: /tmp}
+            - {name: bearer, mountPath: /var/run/kubeclaw-ops/bearer, readOnly: true}
+            - {name: kube-api, mountPath: /var/run/secrets/kubernetes.io/serviceaccount, readOnly: true}
+            - {name: kubeconfig, mountPath: /var/run/kubeclaw-ops/kubeconfig, readOnly: true}
+          readinessProbe:
+            exec:
+              command: [python3, -c, "import json; s=json.load(open('/tmp/codex-ops-status.json')); raise SystemExit(0 if s['phase']=='remote-process-running' else 1)"]
+            periodSeconds: 10
+            timeoutSeconds: 3
+          # No auth/relay/API dependent liveness probe: kubectl exec must remain
+          # available while login/pairing or the OpenAI service is unavailable.
+        - name: ops-mcp
+          image: "ghcr.io/datrab/kubeclaw-ops-mcp@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          env:
+            - {name: HOST, value: "127.0.0.1"}
+            - {name: OPS_LOCAL_ONLY, value: "1"}
+            - {name: OPS_DEFAULT_NAMESPACE, value: "default"}
+            - {name: OPS_ALLOWED_NAMESPACES, value: "default,argocd"}
+            - {name: ARGOCD_NAMESPACE, value: "argocd"}
+            - {name: OPS_MCP_BEARER_TOKEN_FILE, value: /var/run/kubeclaw-ops/bearer/token}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: [ALL]}
+          resources: 
+            limits:
+              cpu: "1"
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          volumeMounts:
+            - {name: kube-api, mountPath: /var/run/secrets/kubernetes.io/serviceaccount, readOnly: true}
+            - {name: bearer, mountPath: /var/run/kubeclaw-ops/bearer, readOnly: true}
+          readinessProbe:
+            exec:
+              command: [node, -e, "fetch('http://127.0.0.1:8080/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+            periodSeconds: 10
+            timeoutSeconds: 3
+          livenessProbe:
+            exec:
+              command: [node, -e, "fetch('http://127.0.0.1:8080/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+            initialDelaySeconds: 20
+            periodSeconds: 20
+            timeoutSeconds: 3
+        - name: tailscale
+          image: "ghcr.io/tailscale/tailscale:v1.102.3"
+          env:
+            - {name: TS_USERSPACE, value: "true"}
+            - {name: TS_AUTH_ONCE, value: "true"}
+            - {name: TS_KUBE_SECRET, value: ""}
+            - {name: TS_STATE_DIR, value: /var/lib/tailscale}
+            - {name: TS_SOCKET, value: /tmp/tailscaled.sock}
+            - {name: TS_SOCKS5_SERVER, value: "127.0.0.1:1055"}
+            - {name: TS_HOSTNAME, value: "kubeclaw-ops"}
+            - {name: TS_EXTRA_ARGS, value: "--accept-dns=false"}
+            - name: TS_AUTHKEY
+              valueFrom:
+                secretKeyRef: {name: delivery-tailnet-a, key: authkey}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: [ALL]}
+          resources: 
+            limits:
+              cpu: "1"
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          volumeMounts:
+            - {name: tailscale-state, mountPath: /var/lib/tailscale}
+            - {name: tailscale-tmp, mountPath: /tmp}
+      volumes:
+        - name: kubeconfig
+          configMap:
+            name: delivery-ops-pod-kubeconfig
+        - name: bearer
+          secret:
+            secretName: delivery-bearer-a
+            defaultMode: 0440
+        - name: kube-api
+          projected:
+            defaultMode: 0440
+            sources:
+              - serviceAccountToken: {path: token, expirationSeconds: 3600}
+              - downwardAPI:
+                  items:
+                    - path: namespace
+                      fieldRef: {fieldPath: metadata.namespace}
+              - configMap:
+                  name: kube-root-ca.crt
+                  items: [{key: ca.crt, path: ca.crt}]
+        - {name: codex-tmp, emptyDir: {sizeLimit: 1Gi}}
+        - {name: tailscale-tmp, emptyDir: {sizeLimit: 64Mi}}
+        - name: tailscale-state
+          persistentVolumeClaim: {claimName: delivery-ops-pod-tailscale}
+  volumeClaimTemplates:
+    - metadata: {name: home}
+      spec:
+        accessModes: [ReadWriteOnce]
+        storageClassName: "delivery-storage-a"
+        resources:
+          requests:
+            storage: 2Gi
+    - metadata: {name: workspace}
+      spec:
+        accessModes: [ReadWriteOnce]
+        storageClassName: "delivery-storage-a"
+        resources:
+          requests:
+            storage: 20Gi

@@ -1,0 +1,1094 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "binding",
+        "configuration",
+        "authentication"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "nova-registration-policy.v1"
+        },
+        "binding": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "packageId",
+            "registrationId",
+            "instanceId",
+            "ownerPath",
+            "profileId",
+            "serviceInstanceId",
+            "rootVersion",
+            "rootRawSha256",
+            "inputGenerationSha256",
+            "ownerRawSha256",
+            "ownerSchemaSha256",
+            "profileSha256",
+            "manifestSha256",
+            "sourcePackageDigest",
+            "runtimeDispatchOwnerRawSha256"
+          ],
+          "properties": {
+            "kind": {
+              "const": "stage"
+            },
+            "packageId": {
+              "const": "kubeclaw.architecture-validator"
+            },
+            "registrationId": {
+              "const": "kubeclaw.architecture-validator:architecture"
+            },
+            "instanceId": {
+              "const": "fixture.architecture-validator"
+            },
+            "ownerPath": {
+              "const": "plugins/kubeclaw.architecture-validator.config.json"
+            },
+            "profileId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+            },
+            "serviceInstanceId": {
+              "const": "fixture.service.nova-runtime"
+            },
+            "rootVersion": {
+              "const": "pipeline-entry.v9"
+            },
+            "rootRawSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "inputGenerationSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "ownerRawSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "ownerSchemaSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "profileSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "manifestSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "sourcePackageDigest": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            },
+            "runtimeDispatchOwnerRawSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          }
+        },
+        "configuration": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "agent"
+          ],
+          "properties": {
+            "agent": {
+              "type": "string",
+              "pattern": "^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$"
+            },
+            "agentRole": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "authentication": {
+          "const": "public-unsealed"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "binding",
+        "configuration",
+        "authentication"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "nova-registration-policy.v1"
+        },
+        "binding": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "packageId",
+            "registrationId",
+            "instanceId",
+            "ownerPath",
+            "profileId",
+            "serviceInstanceId",
+            "rootVersion",
+            "rootRawSha256",
+            "inputGenerationSha256",
+            "ownerRawSha256",
+            "ownerSchemaSha256",
+            "profileSha256",
+            "manifestSha256",
+            "sourcePackageDigest",
+            "runtimeDispatchOwnerRawSha256"
+          ],
+          "properties": {
+            "kind": {
+              "const": "stage"
+            },
+            "packageId": {
+              "const": "kubeclaw.implementation-agent"
+            },
+            "registrationId": {
+              "const": "kubeclaw.implementation-agent:implementation"
+            },
+            "instanceId": {
+              "const": "fixture.implementation-agent"
+            },
+            "ownerPath": {
+              "const": "plugins/kubeclaw.implementation-agent.config.json"
+            },
+            "profileId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+            },
+            "serviceInstanceId": {
+              "const": "fixture.service.nova-runtime"
+            },
+            "rootVersion": {
+              "const": "pipeline-entry.v9"
+            },
+            "rootRawSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "inputGenerationSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "ownerRawSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "ownerSchemaSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "profileSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "manifestSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "sourcePackageDigest": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            },
+            "runtimeDispatchOwnerRawSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          }
+        },
+        "configuration": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "agent"
+          ],
+          "properties": {
+            "agent": {
+              "type": "string",
+              "pattern": "^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$"
+            },
+            "agentRole": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "authentication": {
+          "const": "public-unsealed"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "binding",
+        "configuration",
+        "authentication"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "nova-registration-policy.v1"
+        },
+        "binding": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "packageId",
+            "registrationId",
+            "instanceId",
+            "ownerPath",
+            "profileId",
+            "serviceInstanceId",
+            "rootVersion",
+            "rootRawSha256",
+            "inputGenerationSha256",
+            "ownerRawSha256",
+            "ownerSchemaSha256",
+            "profileSha256",
+            "manifestSha256",
+            "sourcePackageDigest",
+            "runtimeDispatchOwnerRawSha256"
+          ],
+          "properties": {
+            "kind": {
+              "const": "stage"
+            },
+            "packageId": {
+              "const": "kubeclaw.pipeline-review"
+            },
+            "registrationId": {
+              "const": "kubeclaw.pipeline-review:review"
+            },
+            "instanceId": {
+              "const": "fixture.pipeline-review"
+            },
+            "ownerPath": {
+              "const": "plugins/kubeclaw.pipeline-review.config.json"
+            },
+            "profileId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+            },
+            "serviceInstanceId": {
+              "const": "fixture.service.nova-runtime"
+            },
+            "rootVersion": {
+              "const": "pipeline-entry.v9"
+            },
+            "rootRawSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "inputGenerationSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "ownerRawSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "ownerSchemaSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "profileSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "manifestSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "sourcePackageDigest": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            },
+            "runtimeDispatchOwnerRawSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          }
+        },
+        "configuration": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "agent"
+          ],
+          "properties": {
+            "agent": {
+              "type": "string",
+              "pattern": "^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$"
+            },
+            "agentRole": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "authentication": {
+          "const": "public-unsealed"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "binding",
+        "configuration",
+        "authentication"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "nova-registration-policy.v1"
+        },
+        "binding": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "packageId",
+            "registrationId",
+            "instanceId",
+            "ownerPath",
+            "profileId",
+            "serviceInstanceId",
+            "rootVersion",
+            "rootRawSha256",
+            "inputGenerationSha256",
+            "ownerRawSha256",
+            "ownerSchemaSha256",
+            "profileSha256",
+            "manifestSha256",
+            "sourcePackageDigest",
+            "runtimeDispatchOwnerRawSha256"
+          ],
+          "properties": {
+            "kind": {
+              "const": "adapter"
+            },
+            "packageId": {
+              "const": "kubeclaw.pipeline-review"
+            },
+            "registrationId": {
+              "const": "kubeclaw.pipeline-review:evidence"
+            },
+            "instanceId": {
+              "const": "fixture.pipeline-review"
+            },
+            "ownerPath": {
+              "const": "plugins/kubeclaw.pipeline-review.config.json"
+            },
+            "profileId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+            },
+            "serviceInstanceId": {
+              "const": "fixture.service.nova-runtime"
+            },
+            "rootVersion": {
+              "const": "pipeline-entry.v9"
+            },
+            "rootRawSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "inputGenerationSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "ownerRawSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "ownerSchemaSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "profileSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "manifestSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "sourcePackageDigest": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            },
+            "runtimeDispatchOwnerRawSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          }
+        },
+        "configuration": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "storageRoot",
+            "orchestratorIssuerId",
+            "maximumJournalBytes",
+            "maximumArtifactBytes",
+            "maximumBundleBytes"
+          ],
+          "properties": {
+            "storageRoot": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^/",
+              "readOnly": true
+            },
+            "orchestratorIssuerId": {
+              "type": "string",
+              "minLength": 1,
+              "readOnly": true
+            },
+            "maximumJournalBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumArtifactBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "maximumBundleBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          }
+        },
+        "authentication": {
+          "const": "public-unsealed"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "binding",
+        "configuration",
+        "authentication"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "nova-registration-policy.v1"
+        },
+        "binding": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "packageId",
+            "registrationId",
+            "instanceId",
+            "ownerPath",
+            "profileId",
+            "serviceInstanceId",
+            "rootVersion",
+            "rootRawSha256",
+            "inputGenerationSha256",
+            "ownerRawSha256",
+            "ownerSchemaSha256",
+            "profileSha256",
+            "manifestSha256",
+            "sourcePackageDigest",
+            "runtimeDispatchOwnerRawSha256"
+          ],
+          "properties": {
+            "kind": {
+              "const": "stage"
+            },
+            "packageId": {
+              "const": "kubeclaw.prism-design"
+            },
+            "registrationId": {
+              "const": "kubeclaw.prism-design:design"
+            },
+            "instanceId": {
+              "const": "fixture.prism-design"
+            },
+            "ownerPath": {
+              "const": "plugins/kubeclaw.prism-design.config.json"
+            },
+            "profileId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+            },
+            "serviceInstanceId": {
+              "const": "fixture.service.nova-runtime"
+            },
+            "rootVersion": {
+              "const": "pipeline-entry.v9"
+            },
+            "rootRawSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "inputGenerationSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "ownerRawSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "ownerSchemaSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "profileSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "manifestSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "sourcePackageDigest": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            },
+            "runtimeDispatchOwnerRawSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          }
+        },
+        "configuration": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "agent",
+            "target",
+            "issuerId",
+            "timeoutMinutes"
+          ],
+          "properties": {
+            "agent": {
+              "const": "prism"
+            },
+            "target": {
+              "type": "string",
+              "minLength": 1
+            },
+            "issuerId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "timeoutMinutes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 525600
+            }
+          }
+        },
+        "authentication": {
+          "const": "public-unsealed"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "binding",
+        "configuration",
+        "authentication"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "nova-registration-policy.v1"
+        },
+        "binding": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "packageId",
+            "registrationId",
+            "instanceId",
+            "ownerPath",
+            "profileId",
+            "serviceInstanceId",
+            "rootVersion",
+            "rootRawSha256",
+            "inputGenerationSha256",
+            "ownerRawSha256",
+            "ownerSchemaSha256",
+            "profileSha256",
+            "manifestSha256",
+            "sourcePackageDigest",
+            "runtimeDispatchOwnerRawSha256"
+          ],
+          "properties": {
+            "kind": {
+              "const": "stage"
+            },
+            "packageId": {
+              "const": "kubeclaw.project-summary"
+            },
+            "registrationId": {
+              "const": "kubeclaw.project-summary:summary"
+            },
+            "instanceId": {
+              "const": "fixture.project-summary"
+            },
+            "ownerPath": {
+              "const": "plugins/kubeclaw.project-summary.config.json"
+            },
+            "profileId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+            },
+            "serviceInstanceId": {
+              "const": "fixture.service.nova-runtime"
+            },
+            "rootVersion": {
+              "const": "pipeline-entry.v9"
+            },
+            "rootRawSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "inputGenerationSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "ownerRawSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "ownerSchemaSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "profileSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "manifestSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "sourcePackageDigest": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            },
+            "runtimeDispatchOwnerRawSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          }
+        },
+        "configuration": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "agentRole": {
+              "type": "string",
+              "minLength": 1
+            },
+            "deliveryManifestEncoding": {
+              "const": "delivery-manifest.utf16-v1"
+            }
+          }
+        },
+        "authentication": {
+          "const": "public-unsealed"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "binding",
+        "configuration",
+        "authentication"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "nova-registration-policy.v1"
+        },
+        "binding": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "packageId",
+            "registrationId",
+            "instanceId",
+            "ownerPath",
+            "profileId",
+            "serviceInstanceId",
+            "rootVersion",
+            "rootRawSha256",
+            "inputGenerationSha256",
+            "ownerRawSha256",
+            "ownerSchemaSha256",
+            "profileSha256",
+            "manifestSha256",
+            "sourcePackageDigest",
+            "runtimeDispatchOwnerRawSha256"
+          ],
+          "properties": {
+            "kind": {
+              "const": "stage"
+            },
+            "packageId": {
+              "const": "kubeclaw.case-study"
+            },
+            "registrationId": {
+              "const": "kubeclaw.case-study:case-study"
+            },
+            "instanceId": {
+              "const": "fixture.case-study"
+            },
+            "ownerPath": {
+              "const": "plugins/kubeclaw.case-study.config.json"
+            },
+            "profileId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+            },
+            "serviceInstanceId": {
+              "const": "fixture.service.nova-runtime"
+            },
+            "rootVersion": {
+              "const": "pipeline-entry.v9"
+            },
+            "rootRawSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "inputGenerationSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "ownerRawSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "ownerSchemaSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "profileSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "manifestSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "sourcePackageDigest": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            },
+            "runtimeDispatchOwnerRawSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          }
+        },
+        "configuration": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "agent"
+          ],
+          "properties": {
+            "agent": {
+              "type": "string",
+              "pattern": "^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$"
+            }
+          }
+        },
+        "authentication": {
+          "const": "public-unsealed"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "binding",
+        "configuration",
+        "authentication"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "nova-registration-policy.v1"
+        },
+        "binding": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "packageId",
+            "registrationId",
+            "instanceId",
+            "ownerPath",
+            "profileId",
+            "serviceInstanceId",
+            "rootVersion",
+            "rootRawSha256",
+            "inputGenerationSha256",
+            "ownerRawSha256",
+            "ownerSchemaSha256",
+            "profileSha256",
+            "manifestSha256",
+            "sourcePackageDigest",
+            "runtimeDispatchOwnerRawSha256"
+          ],
+          "properties": {
+            "kind": {
+              "const": "adapter"
+            },
+            "packageId": {
+              "const": "kubeclaw.runtime-dispatch"
+            },
+            "registrationId": {
+              "const": "kubeclaw.runtime-dispatch:openclaw"
+            },
+            "instanceId": {
+              "const": "fixture.runtime-dispatch"
+            },
+            "ownerPath": {
+              "const": "plugins/kubeclaw.runtime-dispatch.config.json"
+            },
+            "profileId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+            },
+            "serviceInstanceId": {
+              "const": "fixture.service.nova-runtime"
+            },
+            "rootVersion": {
+              "const": "pipeline-entry.v9"
+            },
+            "rootRawSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "inputGenerationSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "ownerRawSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "ownerSchemaSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "profileSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "manifestSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "sourcePackageDigest": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            },
+            "runtimeDispatchOwnerRawSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          }
+        },
+        "configuration": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "targets"
+          ],
+          "properties": {
+            "targets": {
+              "type": "object",
+              "minProperties": 1,
+              "additionalProperties": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "endpoint",
+                  "tokenSecret",
+                  "runtime",
+                  "agentId",
+                  "agentRole",
+                  "model",
+                  "thinking",
+                  "collectorMode",
+                  "spawnIntervalMs",
+                  "tokenizerEncoding",
+                  "maxPromptBytes",
+                  "maxInputTokens",
+                  "maxOutputTokens",
+                  "maxContextTokens",
+                  "cwd",
+                  "repositoryRoot",
+                  "workspaceRoot",
+                  "pollMs",
+                  "maxPollMs",
+                  "maxPolls",
+                  "sessionTimeoutMs",
+                  "resultPathPrefix"
+                ],
+                "properties": {
+                  "endpoint": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "tokenSecret": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "runtime": {
+                    "enum": [
+                      "acp",
+                      "subagent"
+                    ]
+                  },
+                  "agentId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "agentRole": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "model": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "thinking": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "controllerSessionKey": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "collectorMode": {
+                    "type": "boolean"
+                  },
+                  "spawnIntervalMs": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 60000
+                  },
+                  "tokenizerEncoding": {
+                    "const": "o200k_base"
+                  },
+                  "maxPromptBytes": {
+                    "const": 900000
+                  },
+                  "maxInputTokens": {
+                    "const": 120000
+                  },
+                  "maxOutputTokens": {
+                    "const": 6000
+                  },
+                  "maxContextTokens": {
+                    "const": 128000
+                  },
+                  "cwd": {
+                    "type": "string",
+                    "pattern": "^/"
+                  },
+                  "repositoryRoot": {
+                    "type": "string",
+                    "pattern": "^/"
+                  },
+                  "workspaceRoot": {
+                    "type": "string",
+                    "pattern": "^/",
+                    "description": "Trusted Git workspace root required for attempt-owned runtime workspaces."
+                  },
+                  "pollMs": {
+                    "type": "integer",
+                    "minimum": 10
+                  },
+                  "maxPollMs": {
+                    "type": "integer",
+                    "minimum": 10
+                  },
+                  "maxPolls": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "sessionTimeoutMs": {
+                    "type": "integer",
+                    "minimum": 10,
+                    "maximum": 86400000
+                  },
+                  "resultPathPrefix": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+                  },
+                  "resultEndpoint": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "resultTokenSecret": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "dependentRequired": {
+                  "resultEndpoint": [
+                    "resultTokenSecret"
+                  ],
+                  "resultTokenSecret": [
+                    "resultEndpoint"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "authentication": {
+          "const": "public-unsealed"
+        }
+      }
+    }
+  ],
+  "readOnly": true
+}

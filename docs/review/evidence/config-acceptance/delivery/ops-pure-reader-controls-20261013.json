@@ -1,0 +1,145 @@
+{
+  "scope": "current pure config/auth/window/HTTPS constructor observations, including weak source counterexamples; no credential file/APIrequest/network/childprocess/native service/account/image action",
+  "records": [
+    {
+      "id": "DLV-C0-DLS-OPS-HTTPS-CONSTRUCTOR",
+      "expected": "accept",
+      "observedType": "function",
+      "diagnostic": null,
+      "result": "passed",
+      "scope": "actual pure current source parser/constructor only; no invocation/request/readFile/spawn/listen or deployed/nativegrant effect"
+    },
+    {
+      "id": "DLV-C0-DLS-OPS-ORIGIN-PLAINHTTP",
+      "expected": "KUBERNETES_API_URL must be an HTTPS origin without credentials or a path",
+      "observedType": "undefined",
+      "diagnostic": "KUBERNETES_API_URL must be an HTTPS origin without credentials or a path",
+      "result": "passed",
+      "scope": "actual pure current source parser/constructor only; no invocation/request/readFile/spawn/listen or deployed/nativegrant effect"
+    },
+    {
+      "id": "DLV-C0-DLS-OPS-ORIGIN-PATH",
+      "expected": "KUBERNETES_API_URL must be an HTTPS origin without credentials or a path",
+      "observedType": "undefined",
+      "diagnostic": "KUBERNETES_API_URL must be an HTTPS origin without credentials or a path",
+      "result": "passed",
+      "scope": "actual pure current source parser/constructor only; no invocation/request/readFile/spawn/listen or deployed/nativegrant effect"
+    },
+    {
+      "id": "DLV-C0-DLS-OPS-ORIGIN-USERINFO",
+      "expected": "KUBERNETES_API_URL must be an HTTPS origin without credentials or a path",
+      "observedType": "undefined",
+      "diagnostic": "KUBERNETES_API_URL must be an HTTPS origin without credentials or a path",
+      "result": "passed",
+      "scope": "actual pure current source parser/constructor only; no invocation/request/readFile/spawn/listen or deployed/nativegrant effect"
+    },
+    {
+      "id": "DLV-C0-DLS-OPS-ORIGIN-QUERY",
+      "expected": "KUBERNETES_API_URL must be an HTTPS origin without credentials or a path",
+      "observedType": "undefined",
+      "diagnostic": "KUBERNETES_API_URL must be an HTTPS origin without credentials or a path",
+      "result": "passed",
+      "scope": "actual pure current source parser/constructor only; no invocation/request/readFile/spawn/listen or deployed/nativegrant effect"
+    },
+    {
+      "id": "DLV-C0-DLS-OPS-ORIGIN-HASH",
+      "expected": "KUBERNETES_API_URL must be an HTTPS origin without credentials or a path",
+      "observedType": "undefined",
+      "diagnostic": "KUBERNETES_API_URL must be an HTTPS origin without credentials or a path",
+      "result": "passed",
+      "scope": "actual pure current source parser/constructor only; no invocation/request/readFile/spawn/listen or deployed/nativegrant effect"
+    },
+    {
+      "id": "DLV-C0-DLS-OPS-WEAK-ZERO-TIMEOUT-COUNTEREXAMPLE",
+      "expected": "accept",
+      "observedType": "function",
+      "diagnostic": null,
+      "result": "passed",
+      "scope": "actual pure current source parser/constructor only; no invocation/request/readFile/spawn/listen or deployed/nativegrant effect"
+    },
+    {
+      "id": "DLV-C0-DLS-OPS-WEAK-NEGATIVE-BYTES-COUNTEREXAMPLE",
+      "expected": "accept",
+      "observedType": "function",
+      "diagnostic": null,
+      "result": "passed",
+      "scope": "actual pure current source parser/constructor only; no invocation/request/readFile/spawn/listen or deployed/nativegrant effect"
+    },
+    {
+      "id": "DLV-C0-DLS-OPS-PORT-OUTSIDE",
+      "expected": "Invalid Ops MCP listen port",
+      "observedType": "undefined",
+      "diagnostic": "Invalid Ops MCP listen port",
+      "result": "passed",
+      "scope": "actual pure current source parser/constructor only; no invocation/request/readFile/spawn/listen or deployed/nativegrant effect"
+    },
+    {
+      "id": "DLV-C0-DLS-OPS-CURRENT-PORT-ZERO",
+      "expected": "accept",
+      "observedType": "object",
+      "diagnostic": null,
+      "result": "passed",
+      "scope": "actual pure current source parser/constructor only; no invocation/request/readFile/spawn/listen or deployed/nativegrant effect"
+    },
+    {
+      "id": "DLV-C0-DLS-OPS-LOCALONLY-HOST",
+      "expected": "Local-only MCP requires HOST=127.0.0.1",
+      "observedType": "undefined",
+      "diagnostic": "Local-only MCP requires HOST=127.0.0.1",
+      "result": "passed",
+      "scope": "actual pure current source parser/constructor only; no invocation/request/readFile/spawn/listen or deployed/nativegrant effect"
+    },
+    {
+      "id": "DLV-C0-DLS-OPS-MISSING-DEFAULT-NAMESPACE",
+      "expected": "OPS_ALLOWED_NAMESPACES must contain valid, explicit namespaces including OPS_DEFAULT_NAMESPACE",
+      "observedType": "undefined",
+      "diagnostic": "OPS_ALLOWED_NAMESPACES must contain valid, explicit namespaces including OPS_DEFAULT_NAMESPACE",
+      "result": "passed",
+      "scope": "actual pure current source parser/constructor only; no invocation/request/readFile/spawn/listen or deployed/nativegrant effect"
+    },
+    {
+      "id": "DLV-C0-DLS-OPS-AUTH-BOTH-SOURCES",
+      "expected": "Configure exactly one Ops MCP bearer token source",
+      "observedType": "undefined",
+      "diagnostic": "Configure exactly one Ops MCP bearer token source",
+      "result": "passed",
+      "scope": "actual pure current source parser/constructor only; no invocation/request/readFile/spawn/listen or deployed/nativegrant effect"
+    },
+    {
+      "id": "DLV-C0-DLS-OPS-AUTH-MISSING",
+      "expected": "Ops MCP requires a bearer token of 32–512 URL-safe characters",
+      "observedType": "undefined",
+      "diagnostic": "Ops MCP requires a bearer token of 32–512 URL-safe characters",
+      "result": "passed",
+      "scope": "actual pure current source parser/constructor only; no invocation/request/readFile/spawn/listen or deployed/nativegrant effect"
+    },
+    {
+      "id": "DLV-C0-DLS-OPS-WINDOW-POSITIVE",
+      "expected": "accept",
+      "observedType": "object",
+      "diagnostic": null,
+      "result": "passed",
+      "scope": "actual pure current source parser/constructor only; no invocation/request/readFile/spawn/listen or deployed/nativegrant effect"
+    },
+    {
+      "id": "DLV-C0-DLS-OPS-WINDOW-OUTSIDE",
+      "expected": "Choose startTime < endTime with at most 15 minutes per query. Older absolute windows are allowed.",
+      "observedType": "undefined",
+      "diagnostic": "Choose startTime < endTime with at most 15 minutes per query. Older absolute windows are allowed.",
+      "result": "passed",
+      "scope": "actual pure current source parser/constructor only; no invocation/request/readFile/spawn/listen or deployed/nativegrant effect"
+    }
+  ],
+  "sourceDigests": {
+    "docs/review/evidence/config-acceptance/delivery/check-ops-pure-readers-20261013.mjs": "60b4f1db7cdc5adc3ef0c9f6cff524cce5a2bb8fd7e3bc608cde634c10923781",
+    "tools/ops-mcp/src/kubernetes.mjs": "449e55709e017f53790539a83936f0471915850180ec9b08fc589251ab5e987b",
+    "tools/ops-mcp/src/config.mjs": "3bb1b2b4caf43be233ad6fafaccf644702507442b93de1139e1be8babd9f529c",
+    "tools/ops-mcp/src/authentication.mjs": "d816c6dd9354166a009ffdfc5db423f030345b94a16c4009e2aec639d57d0049",
+    "tools/ops-mcp/src/hubble.mjs": "d4e60f2801e3c66ded259f420c1a9faca0071fa084dc198a35433f8c9cb4f599",
+    "tools/ops-mcp/src/diagnostics.mjs": "5755bd2d6c6da697c102e4e585989ea1e696934d27f518c0a3147e7ca488f60f"
+  },
+  "tools": {
+    "node": "v24.21.0"
+  },
+  "acceptance": "NOT ACCEPTED; future target rejection/effect controls remain not-run"
+}

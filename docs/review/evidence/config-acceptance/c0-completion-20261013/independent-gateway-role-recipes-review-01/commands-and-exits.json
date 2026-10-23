@@ -1,0 +1,19 @@
+{
+  "scope": "unchanged existing finite Gateway role-source checker; only pure native source helpers and in-memory doctor/setup/tool-registration models",
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "replays": [
+    {
+      "cmd": "node /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/gateway-role-recipes-01/check-gateway-definition.mjs > /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-role-recipes-review-01/replay.stdout.json 2> /home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-role-recipes-review-01/replay.stderr",
+      "chunk_id": "c7113b",
+      "wall_time_seconds": 0.401163625,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    }
+  ],
+  "rawStdout": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-role-recipes-review-01/replay.stdout.json",
+  "rawStderr": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-role-recipes-review-01/replay.stderr",
+  "inputToolAndMetadataIdentity": "initial-identities.json and end-identities.json",
+  "productiveCasesExecuted": 0,
+  "noOtherRuntimeExecution": true
+}

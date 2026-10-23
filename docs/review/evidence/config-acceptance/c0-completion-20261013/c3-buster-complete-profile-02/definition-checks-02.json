@@ -1,0 +1,780 @@
+{
+  "recordedAt": "2026-10-13T23:18:21.642Z",
+  "qualification": "New02 execution only; cannot retroactively authenticate historical01 summary. No listener/store/network/browser/child/native effects or credentials.",
+  "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/collect-definition-checks.mjs",
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "node": "v24.21.0",
+  "nodeExecutable": "/usr/local/bin/node",
+  "nodeExecutableSha256": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c",
+  "ajvEntry": "/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/ajv/dist/2020.js",
+  "ajvEntrySha256": "908e9670b478b2ba126802a221b7e47006f50cf467e2c5dd7935d3dbef10a20a",
+  "ajvVersion": "8.20.0",
+  "inputs": [
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/buster-engine.config.json",
+      "sha256": "6dc049adadb3f3627a7b8501a17553df8fc7702a2bfb0ab605007fefbb5472ab"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/prism-control.config.json",
+      "sha256": "524ca90d6b62c656b5f279c27b8b49250d93869636aa71f73d5891429e01e1e4"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/prism-execution.config.json",
+      "sha256": "225d2d31235f0996196da2f2b7d25a0605d59087427b997ab487d648ddf89ce3"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/prism-studio.config.json",
+      "sha256": "b41a9113d26384ee0dd07d5defac180b8a52d67315c738d0a5459c49bead0fac"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/prism-worker.config.json",
+      "sha256": "61da3c7b2b81033ed9c350f593cf1ab58f3630a39b109a9b251f1b2e0ba28220"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/worker-core.config.json",
+      "sha256": "f59c7ec6798e853f9fb87a494cdd245193c50d19f90275fe5b530706adcb8934"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/pipeline.config.json",
+      "sha256": "cada42fed522b74b554d77048b14288eef5af45bb10708f3650f0d03ac11b992"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/buster-engine.schema.json",
+      "sha256": "115982f18efb75f7ea5e2e05a5dee7a574707400469aaf5de4b88721d3b9cb97"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/generated-platform-registry.schema.json",
+      "sha256": "da52233feab2a0981d1580056a2537aeff3af1b162082fe774f414f603351f87"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/generated-runtime.schema.json",
+      "sha256": "04c9792b471810c1accaf9f3ec1684dd691fc428a784af2989fe0c35de557f6b"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/pipeline-entry.schema.json",
+      "sha256": "0cc304a9c5ccf13605fb683568d18dff403508c8d3aef529f0cc5751656cbbce"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/prism-control.schema.json",
+      "sha256": "235717a7621de85c3933b095b0724c53eb27afa791ed5f094bf47a53bee39d85"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/prism-execution.schema.json",
+      "sha256": "c6dfe88a3518f6819f5840b7e6739796c6fc0e6a0711ab1fc42cf19df4e76cbe"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/prism-studio.schema.json",
+      "sha256": "72921bb9de970f5eccec5b7889a26501c8614e96304179dc54a5eef0375abe7b"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/prism-worker.schema.json",
+      "sha256": "5b7fca15563fb20ad2b5dcef67724b62c68648a67fa7e5b0d34276f5472faa5b"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/worker-core.schema.json",
+      "sha256": "22c665a659ae8af436b642ef8959e3f2ca6aebcefd1e9858ff718386dbd65630"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/generated-role-projections.json",
+      "sha256": "064c9c0a09a156ac9b7a6382a36054d6cabe0a639c6531580a48762454278071"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/whole-profile-index.json",
+      "sha256": "d048dcd6399aa3bd47d8119d75b4dadf32bac4cb4e0d917afd297698c9a7958f"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/collect-definition-checks.mjs",
+      "sha256": "2fb7afa0889971c3ac2a3dfb1be079daeb35e3e3080942507500c7a50cffab1c"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/engine/test-gates/production.ts",
+      "sha256": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/engine/test-gates/production-config-values.ts",
+      "sha256": "8311e1cc957e0691fd904be4f042bb5003b58cfacf00992921f0873418cda63f"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/engine/test-gates/production-capability-sources.ts",
+      "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/engine/test-gates/production-command-options.ts",
+      "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/engine/test-gates/production-browser-options.ts",
+      "sha256": "846a6488bf66ab4a84d8fb79db7cd88ddcaf69b77707bda9a116ed567fa38cdd"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/engine/test-gates/remote-plan-runtime.ts",
+      "sha256": "dae94180e4c734b9fbd853329c9fa8b8dcf6e90fa71fee96255123384e45ea8c"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/engine/test-gates/remote-plan-http.ts",
+      "sha256": "324de9b8f48e607819b1616c67090b32ada8950c3e1d11dcb653e36f8edf3ac2"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/engine/test-gates/remote-plan-service.ts",
+      "sha256": "e375000b0e256497409276093ad5375c32285475c87a33d337bef3124be456b7"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/engine/test-gates/registry-health-access.ts",
+      "sha256": "34f7cab5f360c415f5817ad0d5a0fcc76835c6046018d3779f185b2ad33c3f8c"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/engine/test-gates/preparation-config.ts",
+      "sha256": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/engine/test-gates/preparation-extraction.ts",
+      "sha256": "10f495344bc139291bfd127662682bd35b601d9643b915b5016e49334a3523ca"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/engine/test-gates/remote-prepared-execution.ts",
+      "sha256": "832631872e86addc6ae98516f63c191e403675b679c795ad3d47a2fdb8350dde"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/engine/test-gates/capability-runtime.ts",
+      "sha256": "3615780a7c173fc3f43f0510e208378e276a9e34f71c8a7c1c643fde296ded11"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/buster/engine/test-gates/network-http-runtime.ts",
+      "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docker/buster-runtime-entrypoint.sh",
+      "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/registry-client-config.mjs",
+      "sha256": "e67a3568c4a6a33ad23bd2b47b6479ed694b79d25e03fcc5dc461532a8cea1c2"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/registry/build.ts",
+      "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-17/active-component-semantic-bodies.json",
+      "sha256": "d7d402e328eab25d1d61cbfd70861bdde8d700090d94aad63f35c3057bdc688b"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/provider-field-definitions.json",
+      "sha256": "6ecd92ce1994c16f1bde69bd99a37449086f04d4ef6bc41dcba3fe06398c77ec"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/provider-domain-corrections-21/C3-buster-engine.schema.json",
+      "sha256": "af815b3cdba9de16923a52904e9cae445f126dd96a1b5f15e926788cb37676ae"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/runtime/batch-16-runtime-emitter-joins/active-emitter-definitions.json",
+      "sha256": "9886bedd78e2c9364e2c6eadc085e78a262d105c4c2e964a44e0a8bbc6ae8ba9"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-whole-c0-readiness-review-01/WCR02-physical-full-profile-author-task.json",
+      "sha256": "fdc977492a906337203a39bb29d26d20f601bdc4ec8b76b4eac3a4006338cb12"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/platform.schema.json",
+      "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/buster-engine.config.json",
+      "sha256": "6dc049adadb3f3627a7b8501a17553df8fc7702a2bfb0ab605007fefbb5472ab"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/buster-engine.schema.json",
+      "sha256": "115982f18efb75f7ea5e2e05a5dee7a574707400469aaf5de4b88721d3b9cb97"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/worker-core.config.json",
+      "sha256": "f59c7ec6798e853f9fb87a494cdd245193c50d19f90275fe5b530706adcb8934"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/worker-core.schema.json",
+      "sha256": "22c665a659ae8af436b642ef8959e3f2ca6aebcefd1e9858ff718386dbd65630"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/prism-control.config.json",
+      "sha256": "524ca90d6b62c656b5f279c27b8b49250d93869636aa71f73d5891429e01e1e4"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/prism-control.schema.json",
+      "sha256": "235717a7621de85c3933b095b0724c53eb27afa791ed5f094bf47a53bee39d85"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/prism-worker.config.json",
+      "sha256": "61da3c7b2b81033ed9c350f593cf1ab58f3630a39b109a9b251f1b2e0ba28220"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/prism-worker.schema.json",
+      "sha256": "5b7fca15563fb20ad2b5dcef67724b62c68648a67fa7e5b0d34276f5472faa5b"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/prism-studio.config.json",
+      "sha256": "b41a9113d26384ee0dd07d5defac180b8a52d67315c738d0a5459c49bead0fac"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/prism-studio.schema.json",
+      "sha256": "72921bb9de970f5eccec5b7889a26501c8614e96304179dc54a5eef0375abe7b"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/components/prism-execution.config.json",
+      "sha256": "225d2d31235f0996196da2f2b7d25a0605d59087427b997ab487d648ddf89ce3"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/prism-execution.schema.json",
+      "sha256": "c6dfe88a3518f6819f5840b7e6739796c6fc0e6a0711ab1fc42cf19df4e76cbe"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/pipeline-entry.schema.json",
+      "sha256": "0cc304a9c5ccf13605fb683568d18dff403508c8d3aef529f0cc5751656cbbce"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/config/pipeline.config.json",
+      "sha256": "cada42fed522b74b554d77048b14288eef5af45bb10708f3650f0d03ac11b992"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/fixtures/root-B.json",
+      "sha256": "0005a791f6088f500a3c8d6c9e6988a9b6bb64298afb9cbcec49e7136c01a49e"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/generated-role-projections.json",
+      "sha256": "064c9c0a09a156ac9b7a6382a36054d6cabe0a639c6531580a48762454278071"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/generated-runtime.schema.json",
+      "sha256": "04c9792b471810c1accaf9f3ec1684dd691fc428a784af2989fe0c35de557f6b"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/schemas/generated-platform-registry.schema.json",
+      "sha256": "da52233feab2a0981d1580056a2537aeff3af1b162082fe774f414f603351f87"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/fixtures/generated-tls-runtime.json",
+      "sha256": "a97f4d3322c663831c362babbe8faa89b7bcf93d0564b2c244a29cf6fcde16a3"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/whole-profile-index.json",
+      "sha256": "d048dcd6399aa3bd47d8119d75b4dadf32bac4cb4e0d917afd297698c9a7958f"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-17/active-component-semantic-bodies.json",
+      "sha256": "d7d402e328eab25d1d61cbfd70861bdde8d700090d94aad63f35c3057bdc688b"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumSecretReferenceEntries/A/buster-engine.config.json",
+      "sha256": "5e95c1b381f35fe97f5377c2417394f675ded6ba5c0fed56d270b0f3ebd6e794"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumSecretReferenceEntries/B/buster-engine.config.json",
+      "sha256": "6d7146f55b9f5e5f51bef6b94118b9aa53dfb5221107badf66c2661d7b4eec7c"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-execution.stores.admission.lockWaitSeconds/A/buster-engine.config.json",
+      "sha256": "5e95c1b381f35fe97f5377c2417394f675ded6ba5c0fed56d270b0f3ebd6e794"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-execution.stores.admission.lockWaitSeconds/B/buster-engine.config.json",
+      "sha256": "a0ceb112d3620b2e9bb08779679356affc4b609ab8bba5839df5fe22b3581b07"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-execution.stores.admission.metadataReserveBytes/A/buster-engine.config.json",
+      "sha256": "5e95c1b381f35fe97f5377c2417394f675ded6ba5c0fed56d270b0f3ebd6e794"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-execution.stores.admission.metadataReserveBytes/B/buster-engine.config.json",
+      "sha256": "4e7b5d2a7cb3eab55fbe361d68161a688872a629c5a2441623d18671bd8683e3"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-execution.stores.admission.reasonPrefixCodeUnits/A/buster-engine.config.json",
+      "sha256": "5e95c1b381f35fe97f5377c2417394f675ded6ba5c0fed56d270b0f3ebd6e794"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-execution.stores.admission.reasonPrefixCodeUnits/B/buster-engine.config.json",
+      "sha256": "7ac366fa27f02976db7c30c3236e5426128ad60a95839ea4ddfb31ea26615037"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-16/corrected-pairs/CMP-buster-engine-execution.stores.admission.reasonThresholdCodeUnits/A/buster-engine.config.json",
+      "sha256": "7ac366fa27f02976db7c30c3236e5426128ad60a95839ea4ddfb31ea26615037"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-16/corrected-pairs/CMP-buster-engine-execution.stores.admission.reasonThresholdCodeUnits/B/buster-engine.config.json",
+      "sha256": "35ff83d8b493aa80b948b0d2bd05528ebf5af408535d0b1dd388e38e28c771bf"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-execution.stores.attempts.lockWaitSeconds/A/buster-engine.config.json",
+      "sha256": "5e95c1b381f35fe97f5377c2417394f675ded6ba5c0fed56d270b0f3ebd6e794"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-execution.stores.attempts.lockWaitSeconds/B/buster-engine.config.json",
+      "sha256": "8a24dadd0a84ad05c2e7990d2692b602d446107dc970bd62611894a465deac02"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-preparation.attemptEvidenceBytes/A/buster-engine.config.json",
+      "sha256": "5e95c1b381f35fe97f5377c2417394f675ded6ba5c0fed56d270b0f3ebd6e794"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-preparation.attemptEvidenceBytes/B/buster-engine.config.json",
+      "sha256": "6812edeada703e2bda953ac2071e00f7593c9c07a8de608e76ea51244fbdc7db"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-preparation.attemptEvidenceFiles/A/buster-engine.config.json",
+      "sha256": "5e95c1b381f35fe97f5377c2417394f675ded6ba5c0fed56d270b0f3ebd6e794"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-preparation.attemptEvidenceFiles/B/buster-engine.config.json",
+      "sha256": "e2e20371d119aec21509117be59d6d25d424dac4a16974ee5d99e5973180aaec"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-preparation.attemptLogBytes/A/buster-engine.config.json",
+      "sha256": "5e95c1b381f35fe97f5377c2417394f675ded6ba5c0fed56d270b0f3ebd6e794"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-preparation.attemptLogBytes/B/buster-engine.config.json",
+      "sha256": "9f9f3bde5b1e35ac654840429f635aec35df4d9c4bd55b18916f303d623d9e11"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-preparation.completionPhaseAllowance/A/buster-engine.config.json",
+      "sha256": "5e95c1b381f35fe97f5377c2417394f675ded6ba5c0fed56d270b0f3ebd6e794"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-preparation.completionPhaseAllowance/B/buster-engine.config.json",
+      "sha256": "9a867e3cd745c2dc2ed6f2cc15b69a381ce14a1e3a87edf52d7fe3b1d3fcdf6d"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-preparation.storeLockWaitSeconds/A/buster-engine.config.json",
+      "sha256": "5e95c1b381f35fe97f5377c2417394f675ded6ba5c0fed56d270b0f3ebd6e794"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-preparation.storeLockWaitSeconds/B/buster-engine.config.json",
+      "sha256": "f8435178ddd9a6011bff14f9a575544c9988fd96c3253dbcfd21a2ab8a742c13"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-preparation.tarDiagnosticCodeUnits/A/buster-engine.config.json",
+      "sha256": "5e95c1b381f35fe97f5377c2417394f675ded6ba5c0fed56d270b0f3ebd6e794"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP-buster-engine-preparation.tarDiagnosticCodeUnits/B/buster-engine.config.json",
+      "sha256": "620547c31f540f85a27b47ceb9d7839136e3f72bd2edb6c8024258eca929de59"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP7-PREPARATION-RESULT-RESERVE-MULTIPLIER/A/buster-engine.config.json",
+      "sha256": "5e95c1b381f35fe97f5377c2417394f675ded6ba5c0fed56d270b0f3ebd6e794"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/CMP7-PREPARATION-RESULT-RESERVE-MULTIPLIER/B/buster-engine.config.json",
+      "sha256": "d42669bebae8066394e8d6562ae45237b2b6d686c965d25c025a20d0927a34bd"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/complete-profile-index.json",
+      "sha256": "d9ef3441a4d5ae22e1652c2593a8b0c82bc19fad64818b3993ad8c3b1a51ccab"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/provider-domain-corrections-21/A-buster-engine.config.json",
+      "sha256": "a6de14be81a7bb051c437bb7d1cb2ecbe24e82f83951e04197dc29d4432e1440"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-9bc7dd684bcc0ac9/buster-engine.config.json",
+      "sha256": "9a4131e525a276af624fb72f020650da36e5e05b764c0f8e48c2861495a4db42"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-e353921f59b947d2/buster-engine.config.json",
+      "sha256": "d2e75d68b4287ad43418b9a4526e957eaad4410830f8114d23835755665d8d4c"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-f3e081a10a005c6d/buster-engine.config.json",
+      "sha256": "4f6143b3112ab5bac86f82b30a72fef54024024996a92b50c108103561499600"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-8223d4f82ad78940/buster-engine.config.json",
+      "sha256": "fdf55d381070e41a446ddbea44c91ad4ed77933576303028181845cf8bd6ec6b"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-15761fa4d74cfd14/buster-engine.config.json",
+      "sha256": "90a329d5bedb58082ce808efe4fe3a6470d4a60b294eca7a8c41c21bbd4476c7"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-9e703e930074d2d9/buster-engine.config.json",
+      "sha256": "4fbb1ef403cdff0af25b616ed37e8481bd89273818f310294a4895c87e896869"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-c7b8d91c6e32ca8a/buster-engine.config.json",
+      "sha256": "380b89234bc0eb1011dd035a1da19fb325aa9b9bb9a263ac2e60133f383e6a5a"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-3133d45344799df6/buster-engine.config.json",
+      "sha256": "5edab43b8dd201ae9ebebaff1e949afb340f9c101ed87b693d56e8aff1b52567"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-45a77594a284944f/buster-engine.config.json",
+      "sha256": "662e96990da8ff6a8ea6a240de4d7aa893dff697089e82f29ceb2a80ff23a3e0"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-61b8952807a6ae64/buster-engine.config.json",
+      "sha256": "cf9521f64ce622a5204c2f26b026afba8efee8a3e0241d93d3890729786e67e5"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-32fdcf1249dece9d/buster-engine.config.json",
+      "sha256": "67d7365b0d551506490c1ec70b6bb04f01845354978c5c43745e8e10cf3c9192"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-e1dbc20e704941b2/buster-engine.config.json",
+      "sha256": "b40ea0d9dfe93f0c50ba07ee472f3b505694055fb889bbef26bf461bdc77efc7"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-e7411fa0b80cc0f9/buster-engine.config.json",
+      "sha256": "912a08b8d298f0588c34d9ae9c5bf02265e129e8e38b1c84b3bbe59924570e08"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-d310fed664330657/buster-engine.config.json",
+      "sha256": "77db8acab794de242ff70a746efd185944f9642788d800fcd7722fab435a508a"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-154143b8310b9830/buster-engine.config.json",
+      "sha256": "fc23f50f40e6b493e2b34cbfc1ae2ce44b0a0f5ab52f6c87d61c341b0e1f4e4a"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-111b291a945ce10c/buster-engine.config.json",
+      "sha256": "3a4d752a8de391eab8c39e831262462cbd6c61f5f1b8899c2e0769fbd0ffcab4"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-b269fb17dbd3632a/buster-engine.config.json",
+      "sha256": "f61cd1cd1ccf8602f61e5e5f4f8a0f65da206adefe3cb4f4b281dad6940a9c2b"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-0d6a21c1a0ffc5b0/buster-engine.config.json",
+      "sha256": "fc19171682dd538ec147b0afd122c41be19a2b659be852e2f353d3f6fd18a645"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-9b6265411874b424/buster-engine.config.json",
+      "sha256": "22cf9211e3c64a1795143ab48ee99eb8518358828d36dababcd2d83e4d33e96c"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-0979d52b234d6325/buster-engine.config.json",
+      "sha256": "89eaed668373ef6352dba96cb9109b9b3a764ab8a9452dfeeb82805e16a60a9f"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-d595fc8a40ee1046/buster-engine.config.json",
+      "sha256": "7782b67cb73929bf5c937554a0aba53c9a8e546ac3e8a9b2e034b12c52be25b3"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-1a0817aeebf4adf0/buster-engine.config.json",
+      "sha256": "f9d95552f81581360270eab74c65a565cd8990477bd7bfdacb62ce616f4bb365"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-65ef6291b92e8ef3/buster-engine.config.json",
+      "sha256": "3e69dffc2c259edb141d8d1668a42291e6018abd086de8f5d92bb0b017188f00"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-012c80b3ee7c1ca9/buster-engine.config.json",
+      "sha256": "651d5b59e55ca2b31dbc88c6318f916f1b3cbaa96e2b6e7ffe6022d20804d04f"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-8635b62d60b3554c/buster-engine.config.json",
+      "sha256": "8dcb8c0f7b407bd52fcb549117644aaa2909033b04a92990ca5f1b5070418d40"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-20297db6672709e9/buster-engine.config.json",
+      "sha256": "af33914cc3f400d344e91e85fc09a8435b1ff4c9fbfef9b3d0ca3651f9092d1c"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-e67fb33445d34a6c/buster-engine.config.json",
+      "sha256": "bc41d723b60ae43acffb8e83c929ac8be82b98308c64e4e6bc8491258b58de63"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-034a34d6636f9f11/buster-engine.config.json",
+      "sha256": "bcc75e4a0c6b93e7307e631c3697425425a04d8bd37c39721c39595800105441"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-9a99771bafcecf49/buster-engine.config.json",
+      "sha256": "aefeb935e78b48568cf61d8556a555c21a59e2c8084c8dee91514871f6a1d7eb"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-7990b7f85c86658f/buster-engine.config.json",
+      "sha256": "dcbbd282211bb2851953058a89c79a91a1d0dd557c779bfb3b7cb7c9f76cb647"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-41faa757cd9ee237/buster-engine.config.json",
+      "sha256": "2e62e021be4550178e6b93d1ee347463ef2c6af09b83bd8227e5be4898ccd21e"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-d730bfee84950ebe/buster-engine.config.json",
+      "sha256": "651d5b59e55ca2b31dbc88c6318f916f1b3cbaa96e2b6e7ffe6022d20804d04f"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-6acadb04e08e5a37/buster-engine.config.json",
+      "sha256": "0b8825709176a86ea5791d8d4aacd3d484da97c3c9aecb5105d183022e2856f0"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-ce4287919a2b4288/buster-engine.config.json",
+      "sha256": "f7865ffb88555e1a0ac8d02e7f8f8f489c84b894d77e6eb09c5bf8ae97f04b7c"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-aebb7dbfafeb369f/buster-engine.config.json",
+      "sha256": "9fe8be3bbd43dc29c2f86c71816b0a0a1c99dd6ee3834043aca9896a94368bc5"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-ecb119b84d29252a/buster-engine.config.json",
+      "sha256": "651d5b59e55ca2b31dbc88c6318f916f1b3cbaa96e2b6e7ffe6022d20804d04f"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-b07c1207100f06b1/buster-engine.config.json",
+      "sha256": "32c730c02a7e8a4898972299a9332a0f7fabf0604334309889a1220555c5a099"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-e0d022fb56b5fbe8/buster-engine.config.json",
+      "sha256": "1ca23570b99876ea0fac1d4ffca075d3197730bb9c867af1ca4e763ebce8e5bb"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-79b0cc603f4fbf87/buster-engine.config.json",
+      "sha256": "c6ecb073e283d1e62ea98456f847c740f28d7b4ebdfb251e4a72fe3ce119860d"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-f8ed7defa73c2402/buster-engine.config.json",
+      "sha256": "e6f029273954785fcb77b03bc59a1b289e2638e511277ea030ca90a2f4753bca"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-d3499a44279d5bc2/buster-engine.config.json",
+      "sha256": "e41dfce9c80d06df0913f72ac070885994094adc69206de848a8753c0fe2ecb0"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-37fafda2e058ba33/buster-engine.config.json",
+      "sha256": "71a36546e92775aa4b8dcf6b45dd0b2dfd7c796906d108ce4bbbf3ebb79c2063"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-a877dd2d2afaaf41/buster-engine.config.json",
+      "sha256": "0d5dab798956c46f2fc3faf7d2b4b72e589eac90afa87d078ea631cdf607b608"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-47d280f3edb1cac9/buster-engine.config.json",
+      "sha256": "651d5b59e55ca2b31dbc88c6318f916f1b3cbaa96e2b6e7ffe6022d20804d04f"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-54b9344ebe322dc9/buster-engine.config.json",
+      "sha256": "d7da23fe88631f2f250dde3ba7d3dd1e0907566bc377c58618bcca917f247bce"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-502c39268e68e3ef/buster-engine.config.json",
+      "sha256": "d6a73952267296da8aeafdd781923797f7e16eb6e8e698e17d4468b58e86bb36"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-54d350f9bfe13448/buster-engine.config.json",
+      "sha256": "c938bb5b670a48fb9358be04a22833cb0801ee3244faa8da1bc1ea41ea24d2d2"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-a8aecf9105975603/buster-engine.config.json",
+      "sha256": "28c84966179a1f384d6d76b1754e4a11d41afdfdfbf46d8fbb5d4fe589396055"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-ea96a0298d24e7b3/buster-engine.config.json",
+      "sha256": "f9563e2215598dcacaed2b51c1a140649fb81ec3a93daea2dcc065bc6a73b3a8"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-ecf16c9b684e0347/buster-engine.config.json",
+      "sha256": "26fa32889023068def50c407e0d6937aa99039eb7bd59be1dfdff46b38d78817"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-b4e892429ff7af19/buster-engine.config.json",
+      "sha256": "ee360584f4a9a118935debd17e4457a69720d609e7e9a5504413ecc47b75a46a"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-abaf30c906eb3213/buster-engine.config.json",
+      "sha256": "8e47c5ac6a94411643093dc86ebd70697674a548a9047a82289e48807fcafa59"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-c84c09092850dde5/buster-engine.config.json",
+      "sha256": "17eb62be93136452648f9d73c6a9d6ac24981a1fee0ce05f24220cb416887210"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-5e12bfd1495232c2/buster-engine.config.json",
+      "sha256": "de7042e636b32f0c4b55ea2e38b61c420aea789993362e4b8941d5f4d98039f8"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-b2bf013dd65b73e6/buster-engine.config.json",
+      "sha256": "9aeb0f84b709dbf104d27aef0ef15e124cbc8710e908d901a7359870aecb9ef7"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-b9f7dff563f12066/buster-engine.config.json",
+      "sha256": "e03a0c51cbd523c8277496dfd7810c1df9b553760dcab417f49b8248e71c91d9"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-7a9dc3364cb189d1/buster-engine.config.json",
+      "sha256": "3dbffdf9b5d580e2c8c794cf78c441166998786025ba3c14b959d023f11b3634"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-ecb13abf6a54a6ec/buster-engine.config.json",
+      "sha256": "67e4495dfa1d6f0857c642f8e9a5de2ad309b9be413eabea6a5852173b3b38b6"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-c8482b736ed56522/buster-engine.config.json",
+      "sha256": "48c7907903561eb0a79b8a8fbce73ffc56fc02a682e7fca44b23dce3df979a1a"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-6b7babe5458de645/buster-engine.config.json",
+      "sha256": "8cce5611715e406b7e8545e237a2d929afd3e3ffc170eddfadae1a29d8dc5ae7"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-a0b9c19a66131792/buster-engine.config.json",
+      "sha256": "4c57fa95f7d20c4b5812e365b2d09ef2406fc9a80c48827472375f4580a23ff0"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-f7874c1d6b49b6aa/buster-engine.config.json",
+      "sha256": "4ec9a704efe1c216799d22c9b72653675885a5134178f5ff90aee6d8b1a4f414"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/fixtures/variants/DLV-B23-EMIT-7b7ab708c5208cf7/buster-engine.config.json",
+      "sha256": "0e7ce8c0299d2949b8f6948f67df3dcccf74c8b6ecde09e1ae2ec0ce95d14503"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-18/provider-field-definitions.json",
+      "sha256": "6ecd92ce1994c16f1bde69bd99a37449086f04d4ef6bc41dcba3fe06398c77ec"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/components/provider-domain-corrections-21/B-buster-engine.config.json",
+      "sha256": "1d9a299db841f484be68da7ce90ff0429ef07d1daa24ab42e5129c11e1b81504"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-02/source-pins.json",
+      "sha256": "ba5d16283101736a72c34f68c20c824d0c67929d8ef8050cf51ecddf03c9d4a0"
+    }
+  ],
+  "controls": [
+    {
+      "id": "full-owner-buster-engine",
+      "result": "passed",
+      "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+    },
+    {
+      "id": "full-owner-worker-core",
+      "result": "passed",
+      "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+    },
+    {
+      "id": "full-owner-prism-control",
+      "result": "passed",
+      "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+    },
+    {
+      "id": "full-owner-prism-worker",
+      "result": "passed",
+      "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+    },
+    {
+      "id": "full-owner-prism-studio",
+      "result": "passed",
+      "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+    },
+    {
+      "id": "full-owner-prism-execution",
+      "result": "passed",
+      "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+    },
+    {
+      "id": "full-owner-negative-missingremote",
+      "result": "passed",
+      "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+    },
+    {
+      "id": "full-owner-negative-oldalias",
+      "result": "passed",
+      "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+    },
+    {
+      "id": "full-owner-negative-timerOverflow",
+      "result": "passed",
+      "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+    },
+    {
+      "id": "full-owner-negative-tinyresponse",
+      "result": "passed",
+      "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+    },
+    {
+      "id": "full-owner-negative-unsupportedcapability",
+      "result": "passed",
+      "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+    },
+    {
+      "id": "full-owner-negative-wrongflag",
+      "result": "passed",
+      "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+    },
+    {
+      "id": "root-config/pipeline.config.json",
+      "result": "passed",
+      "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+    },
+    {
+      "id": "root-fixtures/root-B.json",
+      "result": "passed",
+      "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+    },
+    {
+      "id": "actual-current-network-mapper-constructor-noIO",
+      "result": "passed",
+      "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+    },
+    {
+      "id": "actual-current-registry-peer-predicate-noIO",
+      "result": "passed",
+      "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+    },
+    {
+      "id": "required-false-projects-native-omission",
+      "result": "passed",
+      "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+    },
+    {
+      "id": "all-generated-pairs-after-material-correction",
+      "result": "passed",
+      "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+    },
+    {
+      "id": "TLS-ref-shape-positive-no-private-key-read",
+      "result": "passed",
+      "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+    },
+    {
+      "id": "TLS-ref-missing-and-unknown-negatives",
+      "result": "passed",
+      "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+    },
+    {
+      "id": "inactive-capability-source-layer-and-current-decoder-noIO",
+      "result": "passed",
+      "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+    },
+    {
+      "id": "inactive-object-and-required-peer-negatives",
+      "result": "passed",
+      "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+    },
+    {
+      "id": "all13-original-full-A-B-couplings-preserved",
+      "result": "passed",
+      "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+    },
+    {
+      "id": "all64-original-provider-whole-A-B-couplings-preserved",
+      "result": "passed",
+      "qualification": "actual narrowly scoped pure definition/current-source predicate, no target activation/native/credentials/IO"
+    }
+  ],
+  "ownerProfiles": 96,
+  "busterProfiles": 91,
+  "generatedPairs": 91,
+  "futureImplementationResults": "not-run"
+}

@@ -1,0 +1,16 @@
+{
+  "specFile": "spec-ref-chain10.json",
+  "url": "https://fixture.invalid",
+  "operations": [
+    {
+      "operationId": "checkOk",
+      "pathParameters": {},
+      "query": {},
+      "headers": {},
+      "cleanup": false,
+      "expectedStatuses": [
+        200
+      ]
+    }
+  ]
+}

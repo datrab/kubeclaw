@@ -1,0 +1,26 @@
+{"produced":{"locale":"en-US","digest":"sha256:332c701d9c2896b952cda3f88bfc072c98871cb01a39bbdd567fa940677882f9"},"english":{"locale":"en-US","digest":"sha256:332c701d9c2896b952cda3f88bfc072c98871cb01a39bbdd567fa940677882f9","legacyUnicodeAccepted":true,"strippedAcceptedWithDifferentDigest":false},"swedish":{"locale":"sv-SE","digest":"sha256:332c701d9c2896b952cda3f88bfc072c98871cb01a39bbdd567fa940677882f9","legacyUnicodeAccepted":false,"strippedAcceptedWithDifferentDigest":true},"boundary":"original parser, closed schemas, snapshot and disk ArtifactStore; no LLM/gateway completion"}
+✔ independent original parser/bundle/schema/snapshot/ArtifactStore roundtrip across locales (3041.353458ms)
+{"ok":true,"plugin":"kubeclaw.review","suite":"live-function","portableEvidence":true,"portableReports":false,"locale":"en-US","nativeGatewayOrModelProof":false}
+{"ok":true,"plugin":"kubeclaw.review","suite":"live-function","portableEvidence":true,"portableReports":false,"locale":"sv-SE","nativeGatewayOrModelProof":false}
+✔ original compiler module-review graph remains recoverable under its existing source version (877.585666ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1470.046871
+✔ original review stage, Git, HTTP and persisted bundle preserve portable evidence under en-US (11200.900858ms)
+✔ original review stage, Git, HTTP and persisted bundle preserve portable evidence under sv-SE (11692.184716ms)
+✔ original review-enabled compiler snapshot recovers without changing graph identity (1510.775559ms)
+{"strictCurrentSchema":true,"comparedOriginalDomainVectors":384,"extraFieldNegatives":384}
+✔ strict changed-path schema preserves original accepted domain across conditional branches (202.877404ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 24498.443049

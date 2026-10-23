@@ -1,0 +1,533 @@
+{
+  "rows": [
+    {
+      "id": "AUTH-PRISM-DESIGN-CARDINALITY",
+      "owner": "prism-control",
+      "scope": {
+        "instance": "agent design-set round and generated prompt/tool/service/repository/client copies",
+        "profile": "complete six-owner proposed A3/B2; current allcopies3"
+      },
+      "class": "operator-setting",
+      "classificationReason": "operator-owned business workflow policy with generated tool/prompt/service/UI projections, not an immutable protocol invariant solely because copies are3",
+      "source": {
+        "path": "skills/prism/server/agent-routes.ts",
+        "sha256": "55c4c77fc4ff7b981287c433c126d9754dffd3df1de464ec0d83bb0294caec17",
+        "field": "createAgentDesignSet designs.length and unique keys3"
+      },
+      "current": {
+        "valueOrDefault": 3,
+        "precedence": "No override; repeated independently enforced literal guards plus prompt/schema/UI copies"
+      },
+      "typeUnitDomain": {
+        "type": "integer",
+        "enum": [
+          2,
+          3
+        ],
+        "justification": "Two is the minimal pairwise comparison count; it reduces work versus current3 and current diversity helper/repository iteration are cardinality-generic except explicit3guards. Maximum3 preserves existing workload cap. Current API/tool still reject2; enum is a new proposed domain, not current support or approved reduction.",
+        "originalScopePreserved": "All legacy/current A three-design obligations remain exact; B two-design cases are additional explicitly count2-bound tasks, never a partial completion of an accepted three-design task. Independent A6/business-domain review pending."
+      },
+      "unit": "complete materially distinct design documents per accepted round",
+      "reader": "agent tool/prompt \u2192 authenticated agentRoutes \u2192 diversity \u2192 RevisionRepository \u2192 Studio round state",
+      "productiveCallerChain": [
+        "skills/prism/server/agent-routes.ts",
+        "skills/prism/server/agent-prompt.mjs",
+        "skills/prism/server/preference-prompt.mjs",
+        "skills/prism/openclaw-plugin/index.mjs",
+        "skills/prism/storage/index.ts",
+        "skills/prism/directions/index.ts",
+        "skills/prism/studio/design-round-client.ts",
+        "skills/prism/studio/app.tsx",
+        "skills/prism/control/agent-jobs.ts",
+        "skills/prism/control/design-generations.ts"
+      ],
+      "validation": {
+        "current": "Exactly3 in HTTP/tool/repository; keys distinct/project matching; real document schema and pairwise material diversity required",
+        "target": "Proposed required enum2/3 plus accepted job/fence/generation boundcount and generated tool supported-domain compatibility, all before effects"
+      },
+      "targetAuthorRef": "prism-control.config.json#/profiles/<selected>/settings/designPolicy/count",
+      "activationScope": {
+        "selectedCount": "M/J design-set module accepted before dispatch, one immutable count in existing agent_job.request/config closure and request digest",
+        "toolSchema": "R captured supported domain2..3 generated from same schema; request/body count must equal persisted job selectedCount at real handler. Existing exact3-only old registration cannot execute selected2: fail compatibility before external action. No SDK codec field repurposed as selection.",
+        "prompt": "Original accepted job count drives exact numeric instruction and generated template, no ambient latest count",
+        "apiRepository": "Validate job/fence/round association and original bound count before any new document transaction; uniqueness equals selectedCount, not stale3",
+        "client": "Persist original expectedCount/generation in PendingRound response; completion/reject-all use that original round boundcount, not current global policy",
+        "recovery": "Publish B never changes startedA count/profile/tool compatibility, originalclaim/deadline/budget, uncertain effect or result replay. Missing legacy closure fails NeedsNova/reconciliation before new effects; do not infer3 from latest/default. Completed historical directions are data, not config fallback. Fixed EvalA stays3."
+      },
+      "recoveryRetryClaimDeadlineBudgetEffects": "Publish B never changes startedA count/profile/tool compatibility, originalclaim/deadline/budget, uncertain effect or result replay. Missing legacy closure fails NeedsNova/reconciliation before new effects; do not infer3 from latest/default. Completed historical directions are data, not config fallback. Fixed EvalA stays3.",
+      "profileEvalSuitability": "Fixed generationA acceptedcount3; distinct new Bcount2 is not a shortened original A task",
+      "migrationAction": "C4 generated agent/prompt/tool policy plus C3 server/repository/client coupling; C5 original accepted round closure. No UI redesign or agent/model replacement.",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND",
+        "F-DELIVERY",
+        "A6"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-DESIGN-CARDINALITY-FUTURE",
+        "AUTH-PRISM-C0-CURRENT-DESIGN-DEFINITIONS"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-design-provenance-source-read-bce3f075.log"
+      ],
+      "semanticStatus": "source-traced-proposed-count-domain-coupling-review-open",
+      "c0Closed": false
+    },
+    {
+      "id": "AUTH-PRISM-ENGINE-DEVELOPMENT-IDENTITY",
+      "owner": "prism-engine-profile",
+      "scope": {
+        "instance": "native producer/host profile at module import",
+        "profile": "production projected OCI binding vs explicitly nonproduction synthetic fixture"
+      },
+      "class": "generated-binding",
+      "classificationReason": "Current production receives OCI worker-image digest from Chart, not recomputed package/code bytes. Nonproduction fallback is a synthetic engineId/version/development hash, not operator default or production content proof.",
+      "source": {
+        "path": "skills/prism/engine/worker-envelope.ts",
+        "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+        "field": "module engineContentDigest = prismEngineContentDigest() || synthetic dev hash"
+      },
+      "current": {
+        "valueOrDefault": "OCI projection in production; synthetic hash only outside production",
+        "precedence": "Trim ENV; production missing/malformed rejects at native helper. Global profile materializes once per module import; no per-module dynamic config selection today."
+      },
+      "typeUnitDomain": "Production sha256:[a-f0-9]{64}; syntax does not authenticate installed OCI/package bytes. Dev hashed fixture provenance explicit.",
+      "reader": "prismNativeWorkerProfile engine.contentDigest \u2192 real workerProfileDigest \u2192 accepted native envelope/host profile equality",
+      "productiveCallerChain": [
+        "Chart images.worker.digest",
+        "prismEngineContentDigest / engine worker-envelope module import",
+        "control accepted native attempt",
+        "native-worker-execution profile equality and dedicated native host"
+      ],
+      "validation": {
+        "current": "Production regex at helper, derived profile digest/equality; no code-tree recomputation",
+        "target": "Explicit selected delivered role/image/code/config identity tuple, grants/compatibility beforedispatch; nonproduction fixtures tagged, never synthetic fallback for missing original production binding"
+      },
+      "targetAuthorRef": "aliasOf:DLV-NATIVE-PRISM-ENGINE-DIGEST-PROJECTION; original immutable native role profile binding",
+      "activationScope": "Current R/S imported profile and installed image; target J captured compatible immutable generation, no ambient reload",
+      "recoveryRetryClaimDeadlineBudgetEffects": "Original profile/image/config binding retained for replay/retry; cannot synthesize missing history fromdevelopment/latestimage",
+      "profileEvalSuitability": "Fixed real generation for Eval; synthetic fixture is not live compatible image",
+      "migrationAction": "C3 explicit immutable image/profile provenance and C5 original bound history; separate OCI digest from package tree hash",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "F-AUTH",
+        "F-BIND",
+        "F-DELIVERY"
+      ],
+      "caseIds": [
+        "AUTH-PRISM-C0-IMAGE-BINDING-SYNTAX"
+      ],
+      "verifiedSourceEvidence": [
+        "docs/review/evidence/config-acceptance/author/prism-design-provenance-source-read-bce3f075.log"
+      ],
+      "semanticStatus": "source-traced-OCI-vs-dev-corrected-target-provenance-review-open",
+      "c0Closed": false
+    }
+  ],
+  "cases": [
+    {
+      "id": "AUTH-PRISM-DESIGN-CARDINALITY-FUTURE",
+      "settingIds": [
+        "AUTH-PRISM-DESIGN-CARDINALITY"
+      ],
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "C0-D",
+        "D17",
+        "D20",
+        "F-AUTH",
+        "F-VAL",
+        "F-EFFECT",
+        "F-BIND",
+        "F-DELIVERY",
+        "A6"
+      ],
+      "phase": "implementation-proposal",
+      "scope": "real local Control/repository plus genuine agent/tool registration fixture; live model only with genuine authorized prerequisite",
+      "productiveCaller": [
+        "skills/prism/server/agent-routes.ts",
+        "skills/prism/server/agent-prompt.mjs",
+        "skills/prism/server/preference-prompt.mjs",
+        "skills/prism/openclaw-plugin/index.mjs",
+        "skills/prism/storage/index.ts",
+        "skills/prism/directions/index.ts",
+        "skills/prism/studio/design-round-client.ts",
+        "skills/prism/studio/app.tsx",
+        "skills/prism/control/agent-jobs.ts",
+        "skills/prism/control/design-generations.ts"
+      ],
+      "inputProfile": {
+        "path": "docs/review/evidence/config-acceptance/author/prism-design-cardinality-proposal.json",
+        "profiles": [
+          "A",
+          "B"
+        ]
+      },
+      "priorState": "Persist acceptedAcount3 round/job/fence/preferences+originalclaim/budget; publish completeBcount2 whileA pending; start separate eligible B task; fixed EvalA; retain uncertain results and old payloads",
+      "expectedEffectOrRejectingBoundary": "A requires3 complete valid pairwise-diverse designs; newB requires2 with same document/schema/diversity/resource guards.3-only registration+B2 rejects before action. Missingcount/1/4/string/unknownprofile/incompatiblemanifest/generation/duplicatekeys/wrongproject reject before document effects; bothvalidsameboundarypositive. StartedA/resume/replay remains3. Missing original closure rejects, not latestfill. No target API accepts2 today.",
+      "observerMethod": "Real tool manifest/acceptedjob/prompt/request/transaction/durable result and clientpending round read originalgeneration; countadditional persisted documents, no mocked DB or agent for claimed integration",
+      "command": "node --test --test-name-pattern=^AUTH-PRISM-DESIGN-CARDINALITY-FUTURE$ tests/verification/reliability/config-prism-design-policy.test.mts",
+      "proposedInvocation": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=^AUTH-PRISM-DESIGN-CARDINALITY-FUTURE$",
+          "tests/verification/reliability/config-prism-design-policy.test.mts"
+        ],
+        "prerequisites": [
+          "Approved C3/C4/C5 implementation and real harness; file not implemented in C0",
+          "Genuine matching role/tool/database binding fixtures; paid/live provider remains separately authorized"
+        ],
+        "requiredCollection": {
+          "expectedCaseId": "AUTH-PRISM-DESIGN-CARDINALITY-FUTURE",
+          "positiveCollectionRequired": true,
+          "skipsTimeoutSetupNeverPass": true
+        }
+      },
+      "sourceIdentity": {
+        "sources": [
+          {
+            "path": "skills/prism/server/agent-routes.ts",
+            "sha256": "55c4c77fc4ff7b981287c433c126d9754dffd3df1de464ec0d83bb0294caec17"
+          },
+          {
+            "path": "skills/prism/server/agent-prompt.mjs",
+            "sha256": "3bcd6b4b2bb25d82c9ec767a03fd08ea1c17420eca3ce1742410359ed2d1aea9"
+          },
+          {
+            "path": "skills/prism/server/preference-prompt.mjs",
+            "sha256": "0a607949b4ae13bd5636cc02798e63bbcb8aae9f7b944f3bea9ea47a8f40e145"
+          },
+          {
+            "path": "skills/prism/openclaw-plugin/index.mjs",
+            "sha256": "97a30daa0a042f2cd9416746caffe9207828dd9a587e3a6c3e8de481f5d0640e"
+          },
+          {
+            "path": "skills/prism/storage/index.ts",
+            "sha256": "e5105909e5f1abf1eb2178270dd63d1b8e2aa337177dcb620b6ae43199a3a199"
+          },
+          {
+            "path": "skills/prism/directions/index.ts",
+            "sha256": "8f787b1ec48c8a0b876f754260d2702ae1c65bc8f2a031b897a989bcb8b973eb"
+          },
+          {
+            "path": "skills/prism/studio/design-round-client.ts",
+            "sha256": "0a37517165fad75fd049dafc9a3519cbd8a7c0f2351c6adaeaab4c4fc2281f46"
+          },
+          {
+            "path": "skills/prism/studio/app.tsx",
+            "sha256": "5ee08fa855120dfb53f44aa8a5aa48979674d3f4a0ba8c13c2f4717d2663c092"
+          },
+          {
+            "path": "skills/prism/control/agent-jobs.ts",
+            "sha256": "ff62ef04432ebb67c700c4a25103a0477096f588c2cc3f34f3fab0b776860334"
+          },
+          {
+            "path": "skills/prism/control/design-generations.ts",
+            "sha256": "cd32799fdb1eacbaf40c968b101badcfbedc0f8ce9b12ab045e82ae2e632cbfd"
+          },
+          {
+            "path": "skills/prism/engine/worker-envelope.ts",
+            "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941"
+          },
+          {
+            "path": "skills/prism/config/native-worker.ts",
+            "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+          },
+          {
+            "path": "charts/prism/templates/workloads.yaml",
+            "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+          },
+          {
+            "path": "contracts/prism/v1/fixtures/minimal-web.json",
+            "sha256": "716e4beaf38dc49be48fdca6da5c2f0ca53e55692a3f1cbb7200879247e049e5"
+          },
+          {
+            "path": "skills/prism/openclaw-plugin/index.test.mjs",
+            "sha256": "0c5f68f6ca9cbbbdec820d619392a3b489a1302dedd309cf0eff67e566923114"
+          },
+          {
+            "path": "skills/prism/tests/directions.test.mts",
+            "sha256": "29f1b9e783bea0b0a3cee331c021dfe039e9a9262461d27e4513feedf1bde7d6"
+          }
+        ]
+      },
+      "testDigests": [],
+      "toolDependencyImageConfigIdentities": null,
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reason": "Unapproved proposed domain and future implementation/harness; original three-design scope retained, no A6 waiver or current two-design support claim",
+      "reviewerConfirmation": null,
+      "specificationStatus": "concrete-proposed-boundary-invocation-semantic-review-open"
+    },
+    {
+      "id": "AUTH-PRISM-C0-IMAGE-BINDING-SYNTAX",
+      "settingIds": [
+        "AUTH-PRISM-ENGINE-DEVELOPMENT-IDENTITY"
+      ],
+      "requirementIds": [
+        "C0-A",
+        "C0-C",
+        "A2",
+        "A4",
+        "A5"
+      ],
+      "phase": "C0",
+      "scope": "actual current module-import/profile hashing only",
+      "productiveCaller": "real prismNativeWorkerProfile import with explicit isolated child ENV; no installed image/service/worker",
+      "inputProfile": {
+        "A": "synthetic sha256:a*64",
+        "B": "synthetic sha256:b*64",
+        "dev": "test mode missing input; actual synthetic development fallback"
+      },
+      "priorState": "Fresh child process for each module import; no ambient credentials in child ENV",
+      "expectedEffectOrRejectingBoundary": "Production absent/malformed digest rejects precise native identity required error; valid opaque A/B echo into engine contentDigest and distinct actual derived profile hashes; nonproduction fallback has syntax-valid synthetic identity, not real content proof",
+      "observerMethod": [
+        {
+          "id": "production-absent-rejection",
+          "observed": {
+            "error": "PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED"
+          },
+          "result": "passed"
+        },
+        {
+          "id": "production-malformed-rejection",
+          "observed": {
+            "error": "PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED"
+          },
+          "result": "passed"
+        },
+        {
+          "id": "opaque-projected-digest-changes-profile",
+          "observed": {
+            "A": {
+              "engine": {
+                "engineId": "prism-design-engine",
+                "contractId": "kubeclaw.prism-design-engine@1",
+                "engineVersion": "1.0.0",
+                "contentDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              },
+              "profileDigest": "sha256:bc0ddcf2c4265207c733f6e63da4d9b6724b50f2e45223ffb6d979539c9fa8e6"
+            },
+            "B": {
+              "engine": {
+                "engineId": "prism-design-engine",
+                "contractId": "kubeclaw.prism-design-engine@1",
+                "engineVersion": "1.0.0",
+                "contentDigest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+              },
+              "profileDigest": "sha256:c26cb80b4839eff4a96087a7b916dd64071a78c5ed557452a4c70f201ca14768"
+            }
+          },
+          "result": "passed"
+        },
+        {
+          "id": "development-synthetic-identity",
+          "observed": {
+            "engine": {
+              "engineId": "prism-design-engine",
+              "contractId": "kubeclaw.prism-design-engine@1",
+              "engineVersion": "1.0.0",
+              "contentDigest": "sha256:2841affba4a9298a20fa3632303512516ad9c227b2abdb6a437eebe2d601cd54"
+            },
+            "profileDigest": "sha256:a9421761d66b760b64742e3c7c5c21b766c9e053ebf1f3082df9bceb9d83a17c"
+          },
+          "result": "passed"
+        }
+      ],
+      "command": "node docs/review/evidence/config-acceptance/author/check-prism-image-binding.mjs",
+      "sourceIdentity": {
+        "node": "v24.21.0",
+        "commit": "bce3f075156a86be345821499c04628cb35c2762",
+        "tree": "a8b0adf641de573565360b0c4eb577d6bc7545c3",
+        "sources": [
+          {
+            "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-prism-image-binding.mjs",
+            "sha256": "5db339a9bb8f319c313321709ccdecf1ec0ccaa2613c799ed92fb6c811deeb63"
+          },
+          {
+            "path": "skills/prism/engine/worker-envelope.ts",
+            "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941"
+          },
+          {
+            "path": "skills/prism/config/native-worker.ts",
+            "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+          },
+          {
+            "path": "charts/prism/templates/workloads.yaml",
+            "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+          },
+          {
+            "path": "package-lock.json",
+            "sha256": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+          }
+        ],
+        "dirtyStand": {
+          "patchPath": "docs/review/evidence/config-acceptance/author/prism-design-provenance-stand-bce3f075.patch.gz",
+          "compressedSha256": "ef28fb7186486f5714da545a7118d73064f90a6e472a82dd48ecf1c652048d17",
+          "decompressedSha256": "4e811a8c182e8fc9a48cc8a4f22cbd624884b12dabea2efe3dbd36fb4988652d",
+          "untrackedExecutedInputs": [
+            {
+              "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-prism-image-binding.mjs",
+              "sha256": "5db339a9bb8f319c313321709ccdecf1ec0ccaa2613c799ed92fb6c811deeb63"
+            }
+          ],
+          "capture": "Post-command; actuallyexecutedscript/sources unchanged, concurrentdocumentation-onlydelta retained"
+        }
+      },
+      "testDigests": [
+        {
+          "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-prism-image-binding.mjs",
+          "sha256": "5db339a9bb8f319c313321709ccdecf1ec0ccaa2613c799ed92fb6c811deeb63"
+        }
+      ],
+      "toolDependencyImageConfigIdentities": {
+        "node": "v24.21.0",
+        "inputs": [
+          {
+            "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/author/check-prism-image-binding.mjs",
+            "sha256": "5db339a9bb8f319c313321709ccdecf1ec0ccaa2613c799ed92fb6c811deeb63"
+          },
+          {
+            "path": "skills/prism/engine/worker-envelope.ts",
+            "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941"
+          },
+          {
+            "path": "skills/prism/config/native-worker.ts",
+            "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+          },
+          {
+            "path": "charts/prism/templates/workloads.yaml",
+            "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+          },
+          {
+            "path": "package-lock.json",
+            "sha256": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+          }
+        ]
+      },
+      "rawEvidencePath": "docs/review/evidence/config-acceptance/author/prism-image-binding-current-bce3f075.log",
+      "rawEvidenceSha256": "62fd74b29c87dcd1fdf4d963ec9711be512dfb80b65c3c9060eb0cc4644493e0",
+      "result": "passed",
+      "reason": "Actual current module import/profile digest controls; A/B are synthetic format-valid inputs, NOT real OCI images or packaged code-tree hashes. Development synthetic fallback is not production content proof. No image/API/service/worker executed.",
+      "reviewerConfirmation": null,
+      "specificationStatus": "current-syntax-profile-definition-not-provenance-effect-proof"
+    },
+    {
+      "id": "AUTH-PRISM-C0-CURRENT-DESIGN-DEFINITIONS",
+      "settingIds": [
+        "AUTH-PRISM-DESIGN-CARDINALITY"
+      ],
+      "requirementIds": [
+        "C0-A",
+        "C0-C",
+        "A2",
+        "A4",
+        "A5"
+      ],
+      "phase": "C0",
+      "scope": "Existing unchanged four real diversity-function and one tool-schema definition test; not actual OpenClaw registration/service/DB/model behavior",
+      "productiveCaller": "assertMaterialDirectionDiversity/directionSignature actual pure functions; existing register(api) test records tool declarations with callback fixture, not genuine gateway enforcement",
+      "inputProfile": "Tracked exact minimal-web fixture, current count3 tool-schema and source-generated visual/copy/key-order variants; not proposedB2 API support",
+      "priorState": "No runningservice, secrets, tool dispatch, DB, externalmodel or rolefixture; explicit test inputs from immutable tracked tests",
+      "expectedEffectOrRejectingBoundary": "All five original cases collect/pass; copy-only and one cosmetic change reject current diversity rule, material visual change passes, property order invariant; current declared tool minItems=maxItems3 retained",
+      "observerMethod": "Original named assertions/raw logs; fixture registry capture explicitly not SDK/runtime acceptance",
+      "command": "env -u NODE_ENV -u SWARM_CONFIG node --test skills/prism/tests/directions.test.mts skills/prism/openclaw-plugin/index.test.mjs",
+      "sourceIdentity": {
+        "commit": "bce3f075156a86be345821499c04628cb35c2762",
+        "tree": "a8b0adf641de573565360b0c4eb577d6bc7545c3",
+        "sources": [
+          {
+            "path": "skills/prism/tests/directions.test.mts",
+            "sha256": "29f1b9e783bea0b0a3cee331c021dfe039e9a9262461d27e4513feedf1bde7d6"
+          },
+          {
+            "path": "skills/prism/openclaw-plugin/index.test.mjs",
+            "sha256": "0c5f68f6ca9cbbbdec820d619392a3b489a1302dedd309cf0eff67e566923114"
+          },
+          {
+            "path": "skills/prism/directions/index.ts",
+            "sha256": "8f787b1ec48c8a0b876f754260d2702ae1c65bc8f2a031b897a989bcb8b973eb"
+          },
+          {
+            "path": "skills/prism/openclaw-plugin/index.mjs",
+            "sha256": "97a30daa0a042f2cd9416746caffe9207828dd9a587e3a6c3e8de481f5d0640e"
+          },
+          {
+            "path": "contracts/prism/v1/fixtures/minimal-web.json",
+            "sha256": "716e4beaf38dc49be48fdca6da5c2f0ca53e55692a3f1cbb7200879247e049e5"
+          },
+          {
+            "path": "package-lock.json",
+            "sha256": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+          }
+        ],
+        "dirtyStand": {
+          "patchPath": "docs/review/evidence/config-acceptance/author/prism-design-current-stand-bce3f075.patch.gz",
+          "compressedSha256": "b096d02c718f231f8f796737265e567bd9cc18d4d1a62351d6951ec1c15802d5",
+          "decompressedSha256": "a02f4db9c7427781360223dc54e7658aa1d771895e90e6118273bd25dcaa7498",
+          "untrackedExecutedInputs": [],
+          "capture": "Post-command full tracked patch; every executed source/test/config input verified identical toHEAD; concurrent documentation-only changes retained"
+        }
+      },
+      "testDigests": [
+        {
+          "path": "skills/prism/tests/directions.test.mts",
+          "sha256": "29f1b9e783bea0b0a3cee331c021dfe039e9a9262461d27e4513feedf1bde7d6"
+        },
+        {
+          "path": "skills/prism/openclaw-plugin/index.test.mjs",
+          "sha256": "0c5f68f6ca9cbbbdec820d619392a3b489a1302dedd309cf0eff67e566923114"
+        }
+      ],
+      "toolDependencyImageConfigIdentities": {
+        "node": "v24.21.0",
+        "inputs": [
+          {
+            "path": "skills/prism/tests/directions.test.mts",
+            "sha256": "29f1b9e783bea0b0a3cee331c021dfe039e9a9262461d27e4513feedf1bde7d6"
+          },
+          {
+            "path": "skills/prism/openclaw-plugin/index.test.mjs",
+            "sha256": "0c5f68f6ca9cbbbdec820d619392a3b489a1302dedd309cf0eff67e566923114"
+          },
+          {
+            "path": "skills/prism/directions/index.ts",
+            "sha256": "8f787b1ec48c8a0b876f754260d2702ae1c65bc8f2a031b897a989bcb8b973eb"
+          },
+          {
+            "path": "skills/prism/openclaw-plugin/index.mjs",
+            "sha256": "97a30daa0a042f2cd9416746caffe9207828dd9a587e3a6c3e8de481f5d0640e"
+          },
+          {
+            "path": "contracts/prism/v1/fixtures/minimal-web.json",
+            "sha256": "716e4beaf38dc49be48fdca6da5c2f0ca53e55692a3f1cbb7200879247e049e5"
+          },
+          {
+            "path": "package-lock.json",
+            "sha256": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+          }
+        ]
+      },
+      "rawEvidencePath": "docs/review/evidence/config-acceptance/author/prism-design-policy-current-bce3f075.log",
+      "rawEvidenceSha256": "e7b999d21c6fb46d97221f9c0323301cc06ec3c454dddf50ec39fa220929a3fd",
+      "result": "passed",
+      "reason": "Current source/definition checks only; no proposed2-design workflow/service/gateway/DB/model acceptance",
+      "reviewerConfirmation": null,
+      "specificationStatus": "executed-current-definition-only"
+    }
+  ]
+}

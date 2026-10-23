@@ -1,0 +1,359 @@
+{
+  "status": "partial current reader closure; NOT C0 acceptance or implementation",
+  "sourceCommit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+  "records": [
+    {
+      "id": "LOOP-ATTEMPT-ADMISSION",
+      "source": {
+        "path": "skills/nova/core/execution/pipeline-loop.ts",
+        "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530",
+        "lines": [
+          {
+            "line": 120,
+            "text": "    if (current.attemptsUsed >= definition.execution.maxAttempts && !override) return { definition, administrativeOverride: false, decision: {"
+          }
+        ]
+      },
+      "readerFields": [
+        "execution.maxAttempts"
+      ],
+      "currentMeaning": "Loop receives a graph StageDefinition and compares retained attemptsUsed; administrative override is a separately authorized path, not M budget rebasing.",
+      "status": "source-traced-current-reader; independent definition review pending",
+      "targetObligation": "Resolve original authenticated module/stage view consistently before the reader; classify task/operator/protocol/generated inputs and preserve original R foundation, retained state and uncertainty.",
+      "behaviorResult": "not-run"
+    },
+    {
+      "id": "LOOP-AGENTROLE-DIAGNOSTIC",
+      "source": {
+        "path": "skills/nova/core/execution/pipeline-loop.ts",
+        "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530",
+        "lines": [
+          {
+            "line": 125,
+            "text": "    this.#services.append('stage.started', { runId, stageId: definition.id }, { stageType: definition.type,"
+          },
+          {
+            "line": 126,
+            "text": "      ...(typeof definition.config.agentRole === 'string' ? { agentRole: definition.config.agentRole } : {}), ...(override ? { administrativeOverride: true } : {}) });"
+          }
+        ]
+      },
+      "readerFields": [
+        "config.agentRole"
+      ],
+      "currentMeaning": "Current diagnostic/event consumer exists even when business plugins ignore agentRole; retirement must preserve or explicitly migrate generated identity without creating a business selector.",
+      "status": "source-traced-current-reader; independent definition review pending",
+      "targetObligation": "Resolve original authenticated module/stage view consistently before the reader; classify task/operator/protocol/generated inputs and preserve original R foundation, retained state and uncertainty.",
+      "behaviorResult": "not-run"
+    },
+    {
+      "id": "EXECUTOR-DEFINITION-REFETCH",
+      "source": {
+        "path": "skills/nova/core/execution/stage-executor.ts",
+        "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb",
+        "lines": [
+          {
+            "line": 36,
+            "text": "    const definition = this.#options.graph.stage(state.stageId);"
+          },
+          {
+            "line": 58,
+            "text": "    const definition = this.#options.graph.stage(state.stageId); const now = this.#options.now();"
+          }
+        ]
+      },
+      "readerFields": [
+        "id",
+        "type",
+        "config",
+        "input",
+        "execution"
+      ],
+      "currentMeaning": "Executor performs independent graph lookups for execution/runtime construction; modifying only the loop argument or invocation context leaves mixed policy readers.",
+      "status": "source-traced-current-reader; independent definition review pending",
+      "targetObligation": "Resolve original authenticated module/stage view consistently before the reader; classify task/operator/protocol/generated inputs and preserve original R foundation, retained state and uncertainty.",
+      "behaviorResult": "not-run"
+    },
+    {
+      "id": "EXECUTOR-INVOKE-AND-TIMER",
+      "source": {
+        "path": "skills/nova/core/execution/stage-executor.ts",
+        "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb",
+        "lines": [
+          {
+            "line": 44,
+            "text": "      result = await this.#invoke(activated.execute(definition.input, runtime.context, runtime.controller.signal) as Promise<StageResult>, definition.execution.timeoutMs, runtime);"
+          },
+          {
+            "line": 123,
+            "text": "    const deadline = new Promise<never>((_, reject) => { timeout = setTimeout(() => { runtime.controller.abort(new Error('PLUGIN_ATTEMPT_TIMEOUT')); reject(new Error('PLUGIN_ATTEMPT_TIMEOUT')); }, timeoutMs); timeout.unref(); });"
+          }
+        ]
+      },
+      "readerFields": [
+        "input",
+        "execution.timeoutMs"
+      ],
+      "currentMeaning": "Original activated function and result-schema provenance remain R; input/context/timer need the same accepted original stage view.",
+      "status": "source-traced-current-reader; independent definition review pending",
+      "targetObligation": "Resolve original authenticated module/stage view consistently before the reader; classify task/operator/protocol/generated inputs and preserve original R foundation, retained state and uncertainty.",
+      "behaviorResult": "not-run"
+    },
+    {
+      "id": "LEASE-POLICY-AND-FRESH-FACTS",
+      "source": {
+        "path": "skills/nova/core/execution/stage-executor.ts",
+        "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb",
+        "lines": [
+          {
+            "line": 60,
+            "text": "      schemaVersion: 'invocation-lease.v2', leaseId: `lease:${crypto.randomUUID()}`, attempt, registration: owner.provenance, status: 'active',"
+          },
+          {
+            "line": 62,
+            "text": "      limits: Object.freeze({ wallTimeMs: definition.execution.timeoutMs, memoryBytes: 512 * 1024 * 1024, cpuMillis: definition.execution.timeoutMs }),"
+          },
+          {
+            "line": 63,
+            "text": "      issuedAt: now.toISOString(), expiresAt: new Date(now.getTime() + definition.execution.timeoutMs).toISOString(),"
+          }
+        ]
+      },
+      "readerFields": [
+        "execution.timeoutMs",
+        "lease.limits.memoryBytes",
+        "lease.issuedAt",
+        "lease.expiresAt"
+      ],
+      "currentMeaning": "Timeout is currently per invocation; cpuMillis equals configured timeout, not measured CPU. Attempt/lease IDs and issuedAt are fresh generated facts, not new operator authors. Do not invent a current whole-module deadline. Memory policy crosslinks existing RT-CORE-LEASE-MEMORY, not duplicate WorkerCore authority.",
+      "status": "source-traced-current-reader; independent definition review pending",
+      "targetObligation": "Resolve original authenticated module/stage view consistently before the reader; classify task/operator/protocol/generated inputs and preserve original R foundation, retained state and uncertainty.",
+      "behaviorResult": "not-run"
+    },
+    {
+      "id": "CONTEXT-AND-LIFECYCLE",
+      "source": {
+        "path": "skills/nova/core/execution/stage-executor.ts",
+        "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb",
+        "lines": [
+          {
+            "line": 71,
+            "text": "      schemaVersion: 'plugin-context.v2', lease: leaseContract, config: definition.config, input: definition.input,"
+          },
+          {
+            "line": 75,
+            "text": "      stageLifecycle: Object.freeze({ attemptsUsed: state.attemptsUsed, remediationCyclesUsed: state.remediationCyclesUsed,"
+          },
+          {
+            "line": 76,
+            "text": "        maxAttempts: definition.execution.maxAttempts, maxRemediationCycles: definition.execution.maxRemediationCycles }),"
+          }
+        ]
+      },
+      "readerFields": [
+        "config",
+        "input",
+        "stageLifecycle.maxAttempts",
+        "stageLifecycle.maxRemediationCycles",
+        "stageLifecycle.attemptsUsed",
+        "stageLifecycle.remediationCyclesUsed"
+      ],
+      "currentMeaning": "Effective policy and retained counters travel together. No counter reset or latest-profile lifecycle maximum on retry.",
+      "status": "source-traced-current-reader; independent definition review pending",
+      "targetObligation": "Resolve original authenticated module/stage view consistently before the reader; classify task/operator/protocol/generated inputs and preserve original R foundation, retained state and uncertainty.",
+      "behaviorResult": "not-run"
+    },
+    {
+      "id": "REDUCER-ATTEMPT-ORCHESTRATION",
+      "source": {
+        "path": "skills/nova/core/lifecycle/reducer.ts",
+        "sha256": "13982ba82b9b619f5df89dc0b9932c7802f0b78968e450263ab302726d4f552d",
+        "lines": [
+          {
+            "line": 70,
+            "text": "  return attempted.attemptsUsed >= definition.execution.maxAttempts"
+          },
+          {
+            "line": 81,
+            "text": "  definition.execution.orchestratorAfterAttempt === attempted.attemptsUsed"
+          }
+        ]
+      },
+      "readerFields": [
+        "execution.maxAttempts",
+        "execution.orchestratorAfterAttempt"
+      ],
+      "currentMeaning": "Post-result budget/orchestration decisions must use the same original policy as admission and executor, not latest graph policy.",
+      "status": "source-traced-current-reader; independent definition review pending",
+      "targetObligation": "Resolve original authenticated module/stage view consistently before the reader; classify task/operator/protocol/generated inputs and preserve original R foundation, retained state and uncertainty.",
+      "behaviorResult": "not-run"
+    },
+    {
+      "id": "REDUCER-REPAIR-AND-TECHNICAL-RETRY",
+      "source": {
+        "path": "skills/nova/core/lifecycle/reducer.ts",
+        "sha256": "13982ba82b9b619f5df89dc0b9932c7802f0b78968e450263ab302726d4f552d",
+        "lines": [
+          {
+            "line": 88,
+            "text": "  const target = definition.on?.request_fix;"
+          },
+          {
+            "line": 90,
+            "text": "  const exhausted = attempted.attemptsUsed >= definition.execution.maxAttempts"
+          },
+          {
+            "line": 91,
+            "text": "    || (!definition.execution.repairCategory && remediationCyclesUsed > definition.execution.maxRemediationCycles);"
+          },
+          {
+            "line": 129,
+            "text": "  if (definition.execution.maxTechnicalRetries !== undefined && ['retry', 'rate_limited'].includes(result.outcome)) {"
+          },
+          {
+            "line": 132,
+            "text": "    if (technicalRetriesUsed > definition.execution.maxTechnicalRetries) return { state: { ...attempted, status: 'blocked' }, action: { type: 'stop' } };"
+          }
+        ]
+      },
+      "readerFields": [
+        "on.request_fix",
+        "execution.maxAttempts",
+        "execution.maxRemediationCycles",
+        "execution.repairCategory",
+        "execution.maxTechnicalRetries"
+      ],
+      "currentMeaning": "Task repair target/category must be partitioned separately from operator ceilings; related stage/module membership is explicit, never inferred from stage-name prefix. Accumulated technical/remediation counters remain original.",
+      "status": "source-traced-current-reader; independent definition review pending",
+      "targetObligation": "Resolve original authenticated module/stage view consistently before the reader; classify task/operator/protocol/generated inputs and preserve original R foundation, retained state and uncertainty.",
+      "behaviorResult": "not-run"
+    },
+    {
+      "id": "RECOVERY-RESULT-AND-REPAIR",
+      "source": {
+        "path": "skills/nova/core/lifecycle/recovery-state.ts",
+        "sha256": "bc20a1e3f27ba2f4f67ce0f33df0f41bc4ebadcc40dcce8606ba37213660c99f",
+        "lines": [
+          {
+            "line": 53,
+            "text": "  const stage = definition.stages.find(({ id }) => id === current.stageId);"
+          },
+          {
+            "line": 57,
+            "text": "    ...current,"
+          },
+          {
+            "line": 58,
+            "text": "    attemptNumber: Math.max(0, current.attemptNumber - 1),"
+          },
+          {
+            "line": 61,
+            "text": "  const decision = budgetedRepairDecision(definition.stages, states, stage, original, result, event.identity.runId, identity);"
+          },
+          {
+            "line": 66,
+            "text": "    applyRepair(states, decision.action.repairRequest ?? repairRequest(definition.stages, stage.id,"
+          }
+        ]
+      },
+      "readerFields": [
+        "definition.stages",
+        "attemptNumber",
+        "attemptsUsed",
+        "repair relationships"
+      ],
+      "currentMeaning": "Replay reconstructs prior counters before applyStageResult to avoid double counting; this legitimate temporary minus-one arithmetic is not a fresh allowance or permission to rebase original history.",
+      "status": "source-traced-current-reader; independent definition review pending",
+      "targetObligation": "Resolve original authenticated module/stage view consistently before the reader; classify task/operator/protocol/generated inputs and preserve original R foundation, retained state and uncertainty.",
+      "behaviorResult": "not-run"
+    },
+    {
+      "id": "REGISTRY-GRANT-FOUNDATION",
+      "source": {
+        "path": "skills/nova/core/execution/engine-snapshots.ts",
+        "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd",
+        "lines": [
+          {
+            "line": 128,
+            "text": "  };"
+          },
+          {
+            "line": 129,
+            "text": "  return Object.freeze({ effectAuditVersion: 'coordinator-mode.v1', dependencyIdentityVersion: 'parent-invocation.v1', configuration: runtime.configuration, apiVersion: runtime.snapshot.apiVersion, packages: [...runtime.snapshot.packages].map(([id, pkg]) => [id, pkg.provenance]), registrations,"
+          },
+          {
+            "line": 130,
+            "text": "    enabledRegistrations: [...runtime.granted.enabledRegistrations].sort(), grants: [...runtime.granted.grants],"
+          },
+          {
+            "line": 131,
+            "text": "    selectedProviders: [...runtime.granted.selectedProviders].map(([capability, entry]) => ({ capability, provider: entry.provenance })),"
+          },
+          {
+            "line": 132,
+            "text": "    executionGraph: { pipelineId: graph.pipelineId, digest: graph.digest }, configuredStages: definition.stages.map((stage) => {"
+          },
+          {
+            "line": 133,
+            "text": "      const owner = runtime.snapshot.stages.get(stage.type)!; return { stageId: stage.id, stageType: stage.type, owner: owner.provenance };"
+          }
+        ]
+      },
+      "readerFields": [
+        "runtime.configuration",
+        "registry provenance",
+        "enabledRegistrations",
+        "grants",
+        "selectedProviders",
+        "graph.digest",
+        "stage owner provenance"
+      ],
+      "currentMeaning": "Original transport/code/package/grants and graph foundation are distinct from M invocation fields. New profile selection does not authorize new imports, grants, provider, or SDK codec.",
+      "status": "source-traced-current-reader; independent definition review pending",
+      "targetObligation": "Resolve original authenticated module/stage view consistently before the reader; classify task/operator/protocol/generated inputs and preserve original R foundation, retained state and uncertainty.",
+      "behaviorResult": "not-run"
+    }
+  ],
+  "sources": [
+    {
+      "path": "skills/nova/core/execution/pipeline-loop.ts",
+      "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530"
+    },
+    {
+      "path": "skills/nova/core/execution/stage-executor.ts",
+      "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb"
+    },
+    {
+      "path": "skills/nova/core/lifecycle/reducer.ts",
+      "sha256": "13982ba82b9b619f5df89dc0b9932c7802f0b78968e450263ab302726d4f552d"
+    },
+    {
+      "path": "skills/nova/core/lifecycle/recovery-state.ts",
+      "sha256": "bc20a1e3f27ba2f4f67ce0f33df0f41bc4ebadcc40dcce8606ba37213660c99f"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-snapshots.ts",
+      "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd"
+    }
+  ],
+  "proofScope": "Exact current source lines and hashes only; no StageExecutor/PipelineLoop/reducer/recovery/plugin/journal invocation, no native/provider/host actions.",
+  "openObligations": [
+    "Complete compiler/registration leaf partition and all transitive readers, not only these ten seams.",
+    "Versioned SDK/stage-view/carrier/membership schemas and whole correlated profiles; no new version selected by this ledger.",
+    "Authentic original module lookup before current B, durable pre-action acceptance/accounting, graph/task/repair/provenance bindings.",
+    "Actual grant/manifest/quota/secret/observer/isolated-worker/cleanup compatibility and concrete future behavior case execution after approval.",
+    "Fresh independent definition review; source trace is not semantic coverage."
+  ],
+  "crossOwnerNotes": [
+    {
+      "owner": "Runtime",
+      "existingId": "RT-CORE-LEASE-MEMORY",
+      "noNewAuthor": true
+    },
+    {
+      "owner": "Runtime",
+      "area": "five business-unused agentRole rows",
+      "note": "Operational PipelineLoop event reader notified; business-unused is not zero readers."
+    }
+  ]
+}

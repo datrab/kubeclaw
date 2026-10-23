@@ -1,0 +1,258 @@
+{
+  "gate": {
+    "profile": "gate",
+    "blocking": {
+      "priorities": [
+        "P0"
+      ],
+      "categories": [
+        "correctness",
+        "security",
+        "contract"
+      ],
+      "requireIntroducedByDiff": true,
+      "requireDirectEvidence": true
+    },
+    "limits": {
+      "maxProposals": 64,
+      "maxRootCauses": 5,
+      "maxInstancesPerCluster": 100,
+      "maxBundleBytes": 4194304,
+      "maxContextFiles": 48,
+      "maxInitialContextFiles": 40,
+      "maxContextFileBytes": 524288,
+      "maxContextBytes": 3145728,
+      "maxInitialContextBytes": 2097152,
+      "maxDependencyDepth": 2,
+      "maxExpansionFiles": 8,
+      "maxAdvisories": 0
+    },
+    "scope": {
+      "outsideScope": "orchestrator_required",
+      "unknownScope": "blocked",
+      "retainPreExisting": false
+    },
+    "verification": {
+      "semanticVerifier": "p0-only",
+      "insufficientFindingEvidence": "orchestrator_required",
+      "unverifiedRequirement": "blocked"
+    },
+    "ranking": {
+      "priorityWeights": {
+        "P0": 1000,
+        "P1": 500,
+        "P2": 100,
+        "P3": 10
+      },
+      "categoryWeights": {
+        "correctness": 1000,
+        "security": 1000,
+        "contract": 900,
+        "architecture": 100,
+        "simplification": 10
+      },
+      "introducedByDiffBonus": 100,
+      "directEvidenceBonus": 100
+    },
+    "followUp": {
+      "retainedPriorities": [
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "maxItems": 100
+    },
+    "governor": {
+      "maxRepairCycles": 2,
+      "fileGrowthMultiplier": 2,
+      "nonTestLocGrowthMultiplier": 2,
+      "absoluteFileAllowance": 2,
+      "absoluteNonTestLocAllowance": 100
+    },
+    "authorSchemaVersion": "review-policy-author.v1",
+    "wireSchemaVersion": "review-policy.v2",
+    "simplificationRegistryVersion": "simplification-rules.v1",
+    "simplification": {
+      "mode": "disabled"
+    }
+  },
+  "lean": {
+    "profile": "lean",
+    "blocking": {
+      "priorities": [
+        "P0"
+      ],
+      "categories": [
+        "correctness",
+        "security",
+        "contract"
+      ],
+      "requireIntroducedByDiff": true,
+      "requireDirectEvidence": true
+    },
+    "limits": {
+      "maxProposals": 64,
+      "maxRootCauses": 5,
+      "maxInstancesPerCluster": 100,
+      "maxBundleBytes": 6291456,
+      "maxContextFiles": 64,
+      "maxInitialContextFiles": 52,
+      "maxContextFileBytes": 786432,
+      "maxContextBytes": 5242880,
+      "maxInitialContextBytes": 4194304,
+      "maxDependencyDepth": 2,
+      "maxExpansionFiles": 12,
+      "maxAdvisories": 3
+    },
+    "scope": {
+      "outsideScope": "follow_up",
+      "unknownScope": "blocked",
+      "retainPreExisting": false
+    },
+    "verification": {
+      "semanticVerifier": "p0-only",
+      "insufficientFindingEvidence": "follow_up",
+      "unverifiedRequirement": "blocked"
+    },
+    "ranking": {
+      "priorityWeights": {
+        "P0": 1000,
+        "P1": 500,
+        "P2": 100,
+        "P3": 10
+      },
+      "categoryWeights": {
+        "correctness": 1000,
+        "security": 1000,
+        "contract": 900,
+        "architecture": 100,
+        "simplification": 10
+      },
+      "introducedByDiffBonus": 100,
+      "directEvidenceBonus": 100
+    },
+    "followUp": {
+      "retainedPriorities": [
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "maxItems": 100
+    },
+    "governor": {
+      "maxRepairCycles": 2,
+      "fileGrowthMultiplier": 2,
+      "nonTestLocGrowthMultiplier": 2,
+      "absoluteFileAllowance": 2,
+      "absoluteNonTestLocAllowance": 100
+    },
+    "authorSchemaVersion": "review-policy-author.v1",
+    "wireSchemaVersion": "review-policy.v2",
+    "simplificationRegistryVersion": "simplification-rules.v1",
+    "simplification": {
+      "mode": "enabled",
+      "enabledRules": [
+        "SIM001",
+        "SIM002",
+        "SIM003",
+        "SIM004",
+        "SIM005",
+        "SIM006",
+        "SIM007",
+        "SIM008"
+      ],
+      "maxRecommendations": 3,
+      "minimumConfidence": "high"
+    }
+  },
+  "audit": {
+    "profile": "audit",
+    "blocking": {
+      "priorities": [
+        "P0"
+      ],
+      "categories": [
+        "correctness",
+        "security",
+        "contract"
+      ],
+      "requireIntroducedByDiff": true,
+      "requireDirectEvidence": true
+    },
+    "limits": {
+      "maxProposals": 128,
+      "maxRootCauses": 20,
+      "maxInstancesPerCluster": 1000,
+      "maxBundleBytes": 16777216,
+      "maxContextFiles": 256,
+      "maxInitialContextFiles": 240,
+      "maxContextFileBytes": 2097152,
+      "maxContextBytes": 14680064,
+      "maxInitialContextBytes": 12582912,
+      "maxDependencyDepth": 8,
+      "maxExpansionFiles": 16,
+      "maxAdvisories": 100
+    },
+    "scope": {
+      "outsideScope": "follow_up",
+      "unknownScope": "follow_up",
+      "retainPreExisting": true
+    },
+    "verification": {
+      "semanticVerifier": "all-blockers",
+      "insufficientFindingEvidence": "follow_up",
+      "unverifiedRequirement": "orchestrator_required"
+    },
+    "ranking": {
+      "priorityWeights": {
+        "P0": 1000,
+        "P1": 500,
+        "P2": 100,
+        "P3": 10
+      },
+      "categoryWeights": {
+        "correctness": 1000,
+        "security": 1000,
+        "contract": 900,
+        "architecture": 100,
+        "simplification": 10
+      },
+      "introducedByDiffBonus": 100,
+      "directEvidenceBonus": 100
+    },
+    "followUp": {
+      "retainedPriorities": [
+        "P0",
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "maxItems": 1000
+    },
+    "governor": {
+      "maxRepairCycles": 2,
+      "fileGrowthMultiplier": 2,
+      "nonTestLocGrowthMultiplier": 2,
+      "absoluteFileAllowance": 2,
+      "absoluteNonTestLocAllowance": 100
+    },
+    "authorSchemaVersion": "review-policy-author.v1",
+    "wireSchemaVersion": "review-policy.v2",
+    "simplificationRegistryVersion": "simplification-rules.v1",
+    "simplification": {
+      "mode": "enabled",
+      "enabledRules": [
+        "SIM001",
+        "SIM002",
+        "SIM003",
+        "SIM004",
+        "SIM005",
+        "SIM006",
+        "SIM007",
+        "SIM008"
+      ],
+      "maxRecommendations": 10,
+      "minimumConfidence": "medium"
+    }
+  }
+}

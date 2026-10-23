@@ -1,50 +1,81 @@
-import { readTestBundle, writeTestBundle } from '../../../tests/fixtures/config/swarm-bundle.mjs';
+import { publishedControlConfig } from './fixtures/published-config.mjs';
+import { fileURLToPath } from 'node:url';
+import { captureSwarmSettings, type PrismWorkerSettings, type PrismSupervisorSettings, type PrismNonceDatabaseSettings, type PrismNativeSettings } from '../../common/plugin-runtime/foundation/config/swarm.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { loadWorkerConfig } from '../server/worker-config.ts';
 import { prismSupervisorSettings, type nativePrismSupervisorConfig } from '../config/native-worker.ts';
 import { nativePrismCommand } from '../server/native-worker-execution.ts';
 import { NativeWorkerOutputSpool } from '../../worker/core/worker/native-output-spool.ts';
-const authored = readTestBundle(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url));
-const defaults = authored['prism-worker'].settings.supervisor;
+const configRoot = fileURLToPath(new URL('../../../config/', import.meta.url));
+const defaults = JSON.parse(fs.readFileSync(path.join(configRoot, 'components/prism-worker.config.json'), 'utf8')).profiles.standard.settings.supervisor;
 const legacy = ['UID', 'GID', 'MAXIMUM_OWNERSHIP_RECORDS', 'MAXIMUM_OWNERSHIP_BYTES', 'MAXIMUM_OUTPUT_BYTES',
   'MAXIMUM_JOURNAL_BYTES', 'POLL_INTERVAL_MS', 'DRAIN_TIMEOUT_MS', 'CLOSE_TIMEOUT_MS'].map(key => `PRISM_NATIVE_${key}`);
 function fixture(t: test.TestContext, supervisor: unknown) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'prism-supervisor-'));
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
-  const value = structuredClone(authored); value['prism-worker'].settings.supervisor = supervisor;
-  const file = path.join(root, 'swarm.config.json'); writeTestBundle(file, value);
-  return { root, file, value, env: { SWARM_CONFIG: file, PRISM_WORKER_SECRET: 'test', DATABASE_URL: 'postgresql://not-opened' } };
+  fs.cpSync(configRoot, root, { recursive: true });
+  const file = path.join(root, 'components/prism-worker.config.json');
+  const value = JSON.parse(fs.readFileSync(file, 'utf8'));
+  value.profiles.standard.settings.supervisor = supervisor;
+  fs.writeFileSync(file, JSON.stringify(value));
+  const load = () => {
+    const entryFile = path.join(root, 'pipeline.config.json');
+    const entry = JSON.parse(fs.readFileSync(entryFile, 'utf8'));
+    const instanceId = 'kubeclaw/prism/prism-worker';
+    const captured = captureSwarmSettings(entryFile, { role: 'prism', callerId: 'prism-worker', serviceInstanceId: instanceId,
+      bindings: entry.bindings.filter((binding: { instanceId: string }) => binding.instanceId === instanceId)
+        .map(({ role: _role, ...binding }: { role: string; owner: string; instanceId: string; profileId: string }) => binding) });
+    const worker = captured.components['prism-worker']!.settings as unknown as {
+      ingress: PrismWorkerSettings; supervisor: PrismSupervisorSettings; nonceDatabase: PrismNonceDatabaseSettings };
+    const execution = captured.components['prism-execution']!.settings as unknown as Pick<PrismNativeSettings, 'resourcePolicy' | 'maximumResultBytes'>;
+    const control = captured.components['prism-control']!.settings;
+    // Consumer regression only; no verified boot or privileged native-host capability.
+    return Object.freeze({ ingress: worker.ingress, port: worker.ingress.port, shutdownTimeoutMs: worker.ingress.shutdownTimeoutMs,
+      native: Object.freeze({ ...execution, supervisor: worker.supervisor, dispatchTimeoutMs: control.dispatchTimeoutMs as number }),
+      nonceDatabase: worker.nonceDatabase, controlInternalUrl: new URL(control.controlInternalUrl as string),
+      spiffeEnabled: false, workerSecret: 'test', trustedControlSpiffeId: '', databaseUrl: 'postgresql://not-opened' });
+  };
+  return { root, file, value, load, env: { PRISM_WORKER_SECRET: 'test', DATABASE_URL: 'postgresql://not-opened' } };
 }
 for (const key of Object.keys(defaults)) for (const invalid of [undefined, null, '1', 0, -1, 1.5,
   key === 'maximumJournalBytes' ? Number.MAX_SAFE_INTEGER + 1 : 2147483648]) {
-  test(`CS1 supervisor ${key} rejects ${String(invalid)}`, t => {
-    const f = fixture(t, { ...defaults, [key]: invalid });
-    assert.throws(() => loadWorkerConfig(f.env), /SWARM_CONFIG_INVALID/);
+  test(`CS1 supervisor ${key} rejects ${String(invalid)}`, async t => {
+    await assert.rejects(() => publishedControlConfig(t, {}, { supervisor: { ...defaults, [key]: invalid } }), /SWARM_CONFIG_INVALID/);
   });
 }
-for (const value of [undefined, null, { ...defaults, unknown: 1 }]) test('CS1 strict supervisor object', t => {
-  assert.throws(() => loadWorkerConfig(fixture(t, value).env), /SWARM_CONFIG_INVALID/);
+for (const value of [undefined, null, { ...defaults, unknown: 1 }]) test('CS1 strict supervisor object', async t => {
+  await assert.rejects(() => publishedControlConfig(t, {}, { supervisor: value }), /SWARM_CONFIG_INVALID/);
 });
-for (const key of legacy) test(`CS2 old ${key} is rejected even empty`, t => {
-  const f = fixture(t, defaults);
-  for (const value of ['', '1']) assert.throws(() => loadWorkerConfig({ ...f.env, [key]: value }), /SWARM_CONFIG_LEGACY_OVERRIDE/);
+for (const key of legacy) test(`CS2 old ${key} is rejected even empty`, async t => {
+  const {workerCapture, loadWorkerConfig: configured} = await publishedControlConfig(t, {}, {});
+  const environment = { WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://local/control' };
+  for (const value of ['', '1']) assert.throws(() => configured(workerCapture, { ...environment, [key]: value }), /SWARM_CONFIG_LEGACY_OVERRIDE/);
 });
-for (const drainTimeoutMs of [14999, 15000, 15001]) test(`CS4 combined close plus drain ${drainTimeoutMs}`, t => {
-  const f = fixture(t, { ...defaults, drainTimeoutMs });
-  if (drainTimeoutMs < 15000) assert.equal(loadWorkerConfig(f.env).shutdownTimeoutMs, 120000);
-  else assert.throws(() => loadWorkerConfig(f.env), /SHUTDOWN_BUDGET_INVALID/);
+for (const drainTimeoutMs of [14999, 15000, 15001]) test(`CS4 combined close plus drain ${drainTimeoutMs}`, async t => {
+  const publication = () => publishedControlConfig(t, {}, { supervisor: { ...defaults, drainTimeoutMs } });
+  if (drainTimeoutMs < 15000) {
+    const f = await publication();
+    const worker = f.loadWorkerConfig(f.workerCapture, { WORKER_TRUST_SPIFFE_ENABLED: 'true',
+      PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://local/control' });
+    assert.equal(worker.shutdownTimeoutMs, 120000);
+    assert.equal(prismSupervisorSettings(worker).drainTimeoutMs, drainTimeoutMs);
+  } else await assert.rejects(publication(), /SHUTDOWN_BUDGET_INVALID/);
 });
 for (const factor of [1, 2]) test(`CS3 production mapping and actual output spool profile ${factor}`, async t => {
   const supervisor = { uid: 1000 + factor, gid: 2000 + factor, maximumOwnershipRecords: factor,
     maximumOwnershipBytes: 8192 * factor, maximumOutputBytes: 8 * factor, maximumJournalBytes: 16384 * factor,
     pollIntervalMs: 3 * factor, drainTimeoutMs: 7 * factor, closeTimeoutMs: 11 * factor };
-  const f = fixture(t, supervisor), worker = loadWorkerConfig(f.env);
+  const f = await publishedControlConfig(t, {}, { supervisor });
+  const worker = f.loadWorkerConfig(f.workerCapture, { WORKER_TRUST_SPIFFE_ENABLED: 'true',
+    PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://local/control' });
   assert.ok(Object.isFrozen(worker.native.supervisor));
-  f.value['prism-worker'].settings.supervisor = defaults; writeTestBundle(f.file, f.value);
+  const authorFile = path.join(f.author, 'components/prism-worker.config.json');
+  const authorValue = JSON.parse(fs.readFileSync(authorFile, 'utf8'));
+  authorValue.profiles.standard.settings.supervisor = defaults;
+  fs.writeFileSync(authorFile, JSON.stringify(authorValue));
   const native = prismSupervisorSettings(worker);
   assert.equal(native.uid, supervisor.uid); assert.equal(native.gid, supervisor.gid);
   assert.equal(native.maximumRecords, supervisor.maximumOwnershipRecords); assert.equal(native.maximumBytes, supervisor.maximumOwnershipBytes);
@@ -64,8 +95,11 @@ for (const factor of [1, 2]) test(`CS3 production mapping and actual output spoo
     await assert.rejects(spool.append('stdout', Buffer.alloc(1)), /WORKER_OUTPUT_SPOOL_LIMIT/);
   } finally { await spool.close(); }
 });
-test('CS2 startup snapshot ignores later legacy environment changes', t => {
-  const f = fixture(t, defaults), worker = loadWorkerConfig(f.env), before = prismSupervisorSettings(worker);
+test('CS2 startup snapshot ignores later legacy environment changes', async t => {
+  const f = await publishedControlConfig(t, {}, {});
+  const worker = f.loadWorkerConfig(f.workerCapture, { WORKER_TRUST_SPIFFE_ENABLED: 'true',
+    PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://local/control' });
+  const before = prismSupervisorSettings(worker);
   const previous = legacy.map(key => process.env[key]);
   try {
     for (const key of legacy) process.env[key] = 'invalid';
@@ -76,9 +110,12 @@ test('CS2 startup snapshot ignores later legacy environment changes', t => {
     }
   }
 });
-test('CS1 journal safe-integer ceiling and timer/identity integer ceilings remain distinct', t => {
+test('CS1 journal safe-integer ceiling and timer/identity integer ceilings remain distinct', async t => {
   const value = { ...defaults, uid: 2147483647, gid: 2147483647, maximumOwnershipRecords: 2147483647,
     maximumOwnershipBytes: 2147483647, maximumOutputBytes: 2147483647, maximumJournalBytes: Number.MAX_SAFE_INTEGER,
     pollIntervalMs: 2147483647 };
-  assert.deepEqual(loadWorkerConfig(fixture(t, value).env).native.supervisor, value);
+  const f = await publishedControlConfig(t, {}, { supervisor: value });
+  const worker = f.loadWorkerConfig(f.workerCapture, { WORKER_TRUST_SPIFFE_ENABLED: 'true',
+    PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://local/control' });
+  assert.deepEqual(worker.native.supervisor, value);
 });

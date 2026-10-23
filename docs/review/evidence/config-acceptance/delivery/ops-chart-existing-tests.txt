@@ -1,0 +1,56 @@
+Error: execution error at (kubeclaw-ops/templates/rbac.yaml:65:4): rbac.execNamespaces must contain valid namespace names
+
+Use --debug flag to render out invalid YAML
+✔ real Helm render isolates credentials and persists a single non-root Codex identity (63.641342ms)
+✔ optional Tailscale and Cilium render without privileged access or operator dependency (51.214401ms)
+✔ mutable images and undiscovered API endpoints are rejected before deployment (74.146595ms)
+✖ the actual pinned Codex CLI accepts the installed MCP config and exposes pairing/device auth (11.282952ms)
+✔ custom observer namespace is shared by MCP and the Codex verification process (46.748729ms)
+✔ exec is namespace scoped, independent of observer discovery, and removable (177.669035ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 5
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 500.84487
+
+✖ failing tests:
+
+test at ops/pod/test/deployment.test.mjs:77:1
+✖ the actual pinned Codex CLI accepts the installed MCP config and exposes pairing/device auth (11.282952ms)
+  Error: spawnSync /home/node/.openclaw/workspace/kubeclaw-config-c0/ops/pod/node_modules/.bin/codex ENOENT
+      at Object.spawnSync (node:internal/child_process:1160:20)
+      at spawnSync (node:child_process:928:24)
+      at execFileSync (node:child_process:971:15)
+      at run (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/ops/pod/test/deployment.test.mjs:83:22)
+      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/ops/pod/test/deployment.test.mjs:84:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'spawnSync /home/node/.openclaw/workspace/kubeclaw-config-c0/ops/pod/node_modules/.bin/codex',
+    path: '/home/node/.openclaw/workspace/kubeclaw-config-c0/ops/pod/node_modules/.bin/codex',
+    spawnargs: [ '--version' ],
+    error: Error: spawnSync /home/node/.openclaw/workspace/kubeclaw-config-c0/ops/pod/node_modules/.bin/codex ENOENT
+        at Object.spawnSync (node:internal/child_process:1160:20)
+        at spawnSync (node:child_process:928:24)
+        at execFileSync (node:child_process:971:15)
+        at run (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/ops/pod/test/deployment.test.mjs:83:22)
+        at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/ops/pod/test/deployment.test.mjs:84:18)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19)
+        at Test.run (node:internal/test_runner/test:1467:12),
+    status: null,
+    signal: null,
+    output: null,
+    pid: 0,
+    stdout: undefined,
+    stderr: undefined
+  }

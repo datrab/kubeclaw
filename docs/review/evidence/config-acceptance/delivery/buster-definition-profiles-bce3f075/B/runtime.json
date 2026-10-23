@@ -1,0 +1,227 @@
+{
+  "schemaVersion": "buster-remote-plan-runtime.v1",
+  "platformConfig": "./platform.json",
+  "host": "0.0.0.0",
+  "port": 18892,
+  "trustedPeerSpiffeIds": [
+    "spiffe://delivery.invalid/ns/dlv-b/sa/nova"
+  ],
+  "sourceAttestationPublicKeyEnvironmentVariable": "BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY",
+  "trustedSourceAuthority": "nova:delivery-b",
+  "stateRoot": "/var/lib/buster-v2/plan-jobs",
+  "runtimeRoot": "/var/lib/buster-v2/runs",
+  "tarExecutable": "/usr/bin/tar",
+  "recordLimits": {
+    "maximumRecords": 10000,
+    "maximumBytes": 1073741824,
+    "maximumRecordBytes": 67108864
+  },
+  "maximumResultBytes": 33554432,
+  "maximumResultStoreBytes": 536870912,
+  "maximumResponseBytes": 33554432,
+  "shutdownTimeoutMs": 15000,
+  "allowedCapabilities": [
+    "command.execute",
+    "container.build",
+    "kubernetes.fixture",
+    "kubernetes.exposure",
+    "network.http",
+    "browser.axe",
+    "browser.lighthouse",
+    "browser.visual",
+    "browser.playwright",
+    "security.scan",
+    "kubernetes.runtime-security"
+  ],
+  "directCommand": {
+    "executableCatalog": {
+      "node": "/usr/local/bin/node",
+      "npm": "/usr/local/bin/npm",
+      "python3": "/usr/bin/python3",
+      "tar": "/usr/bin/tar",
+      "cp": "/usr/bin/cp"
+    },
+    "executableSearchPath": [
+      "/usr/local/bin",
+      "/usr/bin",
+      "/bin"
+    ],
+    "runtimeReadRoots": [
+      "/usr/local/bin",
+      "/usr/local/lib/node_modules",
+      "/usr/bin",
+      "/bin",
+      "/usr/lib",
+      "/lib",
+      "/lib64",
+      "/etc/ssl",
+      "/etc/alternatives"
+    ],
+    "maximumOutputBytes": 8388608,
+    "maximumExecutionMs": 450000,
+    "maximumProcesses": 64,
+    "maximumMemoryBytes": 2147483648,
+    "maximumCpuMillis": 450000,
+    "terminationGraceMs": 1000,
+    "allowSampledProcessLimit": true
+  },
+  "containerBuild": {
+    "buildctlExecutable": "/usr/local/bin/buildctl",
+    "buildkitHost": "unix:///fixtures/b/buildkit.sock",
+    "registryBaseUrl": "https://registry-b.delivery.invalid:443",
+    "registryReference": "registry-b.delivery.invalid:443",
+    "registryUsernameEnvironmentVariable": "DLV_REGISTRY_USERNAME",
+    "registryPasswordEnvironmentVariable": "DLV_REGISTRY_PASSWORD",
+    "registryCaFile": "/fixtures/b/registry-ca.crt",
+    "repositoryPrefix": "kubeclaw/pipeline",
+    "allowedPlatforms": [
+      "linux/amd64",
+      "linux/arm64"
+    ],
+    "allowedBuildArguments": [
+      "NODE_ENV"
+    ],
+    "maximumLogBytes": 4194304,
+    "maximumExecutionMs": 450000,
+    "maximumManifestBytes": 8388608
+  },
+  "clusterBindings": {
+    "controllerNamespace": "dlv-b"
+  },
+  "networkHttp": {
+    "registryHealth": true,
+    "allowedOrigins": [
+      "https://http-b.delivery.invalid"
+    ],
+    "allowedHostSuffixes": [
+      ".svc.cluster.local",
+      ".ts.net"
+    ],
+    "allowedPorts": [
+      80,
+      443
+    ],
+    "allowedMethods": [
+      "DELETE",
+      "GET",
+      "HEAD",
+      "OPTIONS",
+      "PATCH",
+      "POST",
+      "PUT"
+    ],
+    "allowedRequestHeaders": [
+      "accept",
+      "authorization",
+      "content-type",
+      "cookie",
+      "x-api-key"
+    ],
+    "allowWebSocket": false,
+    "maximumRequestBytes": 524288,
+    "maximumResponseBytes": 8388608,
+    "maximumExecutionMs": 60000
+  },
+  "browserAxe": {
+    "allowedOrigins": [
+      "http://browser-b.delivery.invalid:18080"
+    ],
+    "allowedBrowsers": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "maximumCombinations": 16,
+    "maximumConcurrency": 2,
+    "maximumExecutionMs": 60000,
+    "maximumResultBytes": 8388608,
+    "maximumScreenshots": 8,
+    "maximumScreenshotBytes": 4194304
+  },
+  "browserLighthouse": {
+    "allowedOrigins": [
+      "http://browser-b.delivery.invalid:18080"
+    ],
+    "chromeExecutable": "/ms-playwright/selected-chromium/chrome",
+    "maximumRuns": 40,
+    "maximumExecutionMs": 90000,
+    "maximumResultBytes": 33554432
+  },
+  "browserVisual": {
+    "allowedOrigins": [
+      "http://browser-b.delivery.invalid:18080"
+    ],
+    "allowedBrowsers": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "maximumCombinations": 32,
+    "maximumConcurrency": 2,
+    "maximumExecutionMs": 60000,
+    "maximumResultBytes": 67108864,
+    "maximumScreenshotBytes": 8388608,
+    "maximumMasksPerCombination": 16
+  },
+  "browserPlaywright": {
+    "allowedOrigins": [
+      "http://browser-b.delivery.invalid:18080"
+    ],
+    "allowedTargetPorts": [
+      18080
+    ],
+    "playwrightExecutable": "/app/node_modules/.bin/playwright",
+    "sandboxExecutable": "/opt/kubeclaw-trusted/plugin-sandbox",
+    "runtimeNodeModules": "/app/node_modules",
+    "browsersPath": "/ms-playwright",
+    "readOnlyRoots": [
+      "/app",
+      "/ms-playwright",
+      "/usr",
+      "/lib",
+      "/lib64",
+      "/etc/fonts",
+      "/etc/hosts",
+      "/etc/nsswitch.conf",
+      "/etc/resolv.conf",
+      "/etc/ssl",
+      "/proc",
+      "/sys",
+      "/dev"
+    ],
+    "maximumWorkers": 2,
+    "maximumExecutionMs": 450000,
+    "maximumOutputBytes": 8388608,
+    "maximumResultBytes": 33554432,
+    "maximumArtifactBytes": 134217728,
+    "maximumArtifactFiles": 128,
+    "maximumProcesses": 64,
+    "maximumMemoryBytes": 2147483648,
+    "maximumCpuMillis": 450000,
+    "terminationGraceMs": 2500,
+    "cgroupRoot": "/fixtures/b/delegated-cgroup",
+    "runAsUid": 1001,
+    "runAsGid": 1000
+  },
+  "securityScan": {
+    "registry": {
+      "registryBaseUrl": "https://registry-b.delivery.invalid:443",
+      "registryReference": "registry-b.delivery.invalid:443",
+      "registryUsernameEnvironmentVariable": "DLV_REGISTRY_USERNAME",
+      "registryPasswordEnvironmentVariable": "DLV_REGISTRY_PASSWORD",
+      "registryCaFile": "/fixtures/b/registry-ca.crt"
+    },
+    "trivyExecutable": "/usr/local/bin/trivy",
+    "allowedRegistryPrefixes": [
+      "registry-b.delivery.invalid:443/kubeclaw"
+    ],
+    "maximumExecutionMs": 450000,
+    "maximumOutputBytes": 33554432,
+    "cacheDirectory": "/home/builder/.cache/trivy",
+    "databasePolicy": {
+      "maximumVulnerabilityAgeMs": 86400000,
+      "maximumJavaAgeMs": 259200000,
+      "maximumDatabaseBytes": 4294967296
+    }
+  }
+}

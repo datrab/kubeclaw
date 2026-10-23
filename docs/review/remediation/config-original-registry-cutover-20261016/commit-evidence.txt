@@ -1,0 +1,25 @@
+[codex/config-c0-semantic-inventory-20261012 4c3ab7180] docs(config): record original registry and Kubernetes cutover evidence
+ 24 files changed, 857 insertions(+), 3 deletions(-)
+ create mode 100644 docs/review/remediation/config-original-registry-cutover-20261016/COMMANDS.json
+ create mode 100644 docs/review/remediation/config-original-registry-cutover-20261016/FINAL-COMMANDS.json
+ create mode 100644 docs/review/remediation/config-original-registry-cutover-20261016/README.md
+ create mode 100644 docs/review/remediation/config-original-registry-cutover-20261016/RESULT.json
+ create mode 100644 docs/review/remediation/config-original-registry-cutover-20261016/commit-source.txt
+ create mode 100644 docs/review/remediation/config-original-registry-cutover-20261016/cutover-after.txt
+ create mode 100644 docs/review/remediation/config-original-registry-cutover-20261016/cutover-before.txt
+ create mode 100644 docs/review/remediation/config-original-registry-cutover-20261016/cutover-clean-environment.txt
+ create mode 100644 docs/review/remediation/config-original-registry-cutover-20261016/cutover-final.txt
+ create mode 100644 docs/review/remediation/config-original-registry-cutover-20261016/cutover-verified.txt
+ create mode 100644 docs/review/remediation/config-original-registry-cutover-20261016/diff-final.txt
+ create mode 100644 docs/review/remediation/config-original-registry-cutover-20261016/diff.txt
+ create mode 100644 docs/review/remediation/config-original-registry-cutover-20261016/push-source.txt
+ create mode 100644 docs/review/remediation/config-original-registry-cutover-20261016/reader-classification.json
+ create mode 100644 docs/review/remediation/config-original-registry-cutover-20261016/registry-after.txt
+ create mode 100644 docs/review/remediation/config-original-registry-cutover-20261016/registry-before.txt
+ create mode 100644 docs/review/remediation/config-original-registry-cutover-20261016/roster.txt
+ create mode 100644 docs/review/remediation/config-original-registry-cutover-20261016/source-remote.txt
+ create mode 100644 docs/review/remediation/config-original-registry-cutover-20261016/source-sha.txt
+ create mode 100644 docs/review/remediation/config-original-registry-cutover-20261016/stage-source.txt
+ create mode 100644 docs/review/remediation/config-original-registry-cutover-20261016/tsconfig.json
+ create mode 100644 docs/review/remediation/config-original-registry-cutover-20261016/typecheck-final.txt
+ create mode 100644 docs/review/remediation/config-original-registry-cutover-20261016/typecheck.txt

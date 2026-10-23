@@ -1,0 +1,13 @@
+{
+  "mode": "draft-structural",
+  "scope": "integrity only; independent semantic review remains mandatory",
+  "settings": 2409,
+  "cases": 6725,
+  "errorCount": 4,
+  "errors": [
+    "Core canonical question field/case projection omitted",
+    "CMP-buster-engine-preparation.storeLockWaitSeconds: dangling case QC-FOUNDATION-FLOCK-WAIT-VAL",
+    "CMP-buster-engine-execution.stores.admission.lockWaitSeconds: dangling case QC-FOUNDATION-FLOCK-WAIT-VAL",
+    "CMP-buster-engine-execution.stores.attempts.lockWaitSeconds: dangling case QC-FOUNDATION-FLOCK-WAIT-VAL"
+  ]
+}

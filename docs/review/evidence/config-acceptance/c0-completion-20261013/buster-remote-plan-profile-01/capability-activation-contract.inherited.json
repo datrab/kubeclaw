@@ -1,0 +1,77 @@
+{
+  "status": "exact C3 newgeneratedv2source-presence contract; ownerprofile alwayscomplete, selectedeligibilityseparate",
+  "schema": "schemas/generated-runtime.schema.json",
+  "eightSources": [
+    {
+      "capability": "command.execute",
+      "source": "directCommand",
+      "ownerPolicyRequired": "always, everydeclaredprofile",
+      "generatedWhenActive": "required full object",
+      "generatedWhenInactive": "forbidden/omitted",
+      "decoder": "capabilitySources returnsnull foromitted; configuredCapabilities/options return{}; no constructor/path/credentialresolution forinactive branch"
+    },
+    {
+      "capability": "container.build",
+      "source": "containerBuild",
+      "ownerPolicyRequired": "always, everydeclaredprofile",
+      "generatedWhenActive": "required full object",
+      "generatedWhenInactive": "forbidden/omitted",
+      "decoder": "capabilitySources returnsnull foromitted; configuredCapabilities/options return{}; no constructor/path/credentialresolution forinactive branch"
+    },
+    {
+      "capability": "network.http",
+      "source": "networkHttp",
+      "ownerPolicyRequired": "always, everydeclaredprofile",
+      "generatedWhenActive": "required full object",
+      "generatedWhenInactive": "forbidden/omitted",
+      "decoder": "capabilitySources returnsnull foromitted; configuredCapabilities/options return{}; no constructor/path/credentialresolution forinactive branch"
+    },
+    {
+      "capability": "browser.axe",
+      "source": "browserAxe",
+      "ownerPolicyRequired": "always, everydeclaredprofile",
+      "generatedWhenActive": "required full object",
+      "generatedWhenInactive": "forbidden/omitted",
+      "decoder": "capabilitySources returnsnull foromitted; configuredCapabilities/options return{}; no constructor/path/credentialresolution forinactive branch"
+    },
+    {
+      "capability": "browser.lighthouse",
+      "source": "browserLighthouse",
+      "ownerPolicyRequired": "always, everydeclaredprofile",
+      "generatedWhenActive": "required full object",
+      "generatedWhenInactive": "forbidden/omitted",
+      "decoder": "capabilitySources returnsnull foromitted; configuredCapabilities/options return{}; no constructor/path/credentialresolution forinactive branch"
+    },
+    {
+      "capability": "browser.visual",
+      "source": "browserVisual",
+      "ownerPolicyRequired": "always, everydeclaredprofile",
+      "generatedWhenActive": "required full object",
+      "generatedWhenInactive": "forbidden/omitted",
+      "decoder": "capabilitySources returnsnull foromitted; configuredCapabilities/options return{}; no constructor/path/credentialresolution forinactive branch"
+    },
+    {
+      "capability": "browser.playwright",
+      "source": "browserPlaywright",
+      "ownerPolicyRequired": "always, everydeclaredprofile",
+      "generatedWhenActive": "required full object",
+      "generatedWhenInactive": "forbidden/omitted",
+      "decoder": "capabilitySources returnsnull foromitted; configuredCapabilities/options return{}; no constructor/path/credentialresolution forinactive branch"
+    },
+    {
+      "capability": "security.scan",
+      "source": "securityScan",
+      "ownerPolicyRequired": "always, everydeclaredprofile",
+      "generatedWhenActive": "required full object",
+      "generatedWhenInactive": "forbidden/omitted",
+      "decoder": "capabilitySources returnsnull foromitted; configuredCapabilities/options return{}; no constructor/path/credentialresolution forinactive branch"
+    }
+  ],
+  "clusterBindings": "required iff any kubernetes.fixture/kubernetes.exposure/kubernetes.runtime-security, otherwise omitted. Actual clusterInvoker selectedpolicy/namespace/brokergrant remains authoritative.",
+  "registryPeer": "required iff container.build OR security.scan OR kubernetes.fixture OR (network.http AND selectedrequired registryHealth=true), otherwise omitted. Peer is exact generated existing registry-client runtime reference, NOT container.build activation/installation; aliases in active source refs must equal originalpeerreceipt.",
+  "registryHealthFlag": "Ownerflagrequired eveninactive. Inactive network emitsno networkHttp. Activenetwork true emitsnative true+exactregistryPeer; false omitsnativeflag, notfalse fallback. true withoutcontainer.build fullysupported independentpeer; true withoutnetwork hasnoactive healthroute.",
+  "actualC3Delta": "production.ts configuredCapabilities/configuredClusterCapabilities must take capturedRegistryPeer instead of assumingcontainerBuildSource exists; credentialnames resolved only forselectedactiveconsumer underoriginalgrant, not through inactivecommandSources. No newwriter/transportauthor. Newruntimev2closed schema enforcesconditional presence beforecapabilitySources/options; v1reader notassertedsupport.",
+  "domain": "Every nonempty supported11 capabilitysubset remains owner-schema-valid; actualregistry/package/nodegrant/role/store/source/executable constraints gate activation. No arbitrarysubsetnarrowing tofixschema.",
+  "inactiveIOMeaning": "Fullprofile validatesmetadata/policy; doesnot stat/realpath/resolveENV/browser/tool/providerforinactive sources. Reference/schema/source provenance identities stayavailable butnoactivation.",
+  "implementationAuthorization": null
+}

@@ -1,0 +1,56 @@
+{
+  "time": "2026-10-14T02:57:22.391323+00:00",
+  "readPinCount": 370,
+  "inheritedReadPinCount": 233,
+  "changedInputs": [],
+  "original70FieldBodyMismatch": [],
+  "original75CaseBodyMismatch": [],
+  "fullCanonicalBodyConservation": [
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "sha256": "c6316b87f87b292db0ae1165eb3178ae0a32bf8db3111294398139c3f112be63",
+      "arrays": {
+        "rows": {
+          "exactBodyEqual": true,
+          "members": 2409
+        }
+      }
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "sha256": "ab559aee906e4f72085031a84bb618c01941bc6e2d613175f235af0a18289227",
+      "arrays": {
+        "cases": {
+          "exactBodyEqual": true,
+          "members": 6845
+        },
+        "requirements": {
+          "exactBodyEqual": true,
+          "members": 50
+        }
+      }
+    }
+  ],
+  "archiveMemberEquality": [
+    {
+      "member": "package/dist/parse-duration-DBWI377R.mjs",
+      "archiveSha256": "1fb6ef4fae447af14f1e3b1028334f39146d181a66a4cce2848d4f741c636340",
+      "bytesEqual": true,
+      "memberSha256": "1090c987bb219e1cf966eb508856a202c6b7737534186af7b3f6eace6c3709d9"
+    },
+    {
+      "member": "package/dist/string-coerce-CIXf7egm.mjs",
+      "archiveSha256": "1fb6ef4fae447af14f1e3b1028334f39146d181a66a4cce2848d4f741c636340",
+      "bytesEqual": true,
+      "memberSha256": "db70aa59f984a63935d147b6ac11b50a90f21b726998853ef3455451f1e622e7"
+    },
+    {
+      "member": "package/package.json",
+      "archiveSha256": "1fb6ef4fae447af14f1e3b1028334f39146d181a66a4cce2848d4f741c636340",
+      "bytesEqual": true,
+      "memberSha256": "fe24be9aa953aa41d10da28162bd1221034c4a7983f447f4f861b1452156fd85"
+    }
+  ],
+  "globalC0Accepted": false,
+  "freshIndependentReviewRequired": true
+}

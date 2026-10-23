@@ -1,0 +1,15 @@
+✔ actual Nova state/wait A/B entry policies reach both real adapters and retained A resumes without B (5090.205545ms)
+✔ selected state and wait entry bytes, records and store capacities enforce actual boundaries and restore positives (471.06335ms)
+✔ all six central leaves are mandatory; malformed, missing and raw duplicate authors reject without defaults (6.011885ms)
+✔ original durable store roots survive B relocation without effects at B; grants still bind (2604.381147ms)
+{"proof":"original-human-approval-http-receipt-local-issuer-authorized-resume","httpPosts":1,"coreStatus":"succeeded","attempts":["wait","passed"],"deliveryRecords":2,"deliveryBytes":10137,"projectionImplemented":false,"externalAuthenticationProved":false}
+✔ original human approval, real signed HTTP receipt and issuer-authorized Core resume supply distinct causal attempts (9328.245718ms)
+✔ Core exposes retained Wait resolver only to the selected original built-in and revokes it on shutdown (5088.742195ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 23995.469938

@@ -1,0 +1,52 @@
+{
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "head": "d2b8b25ba3da515ac5b9d233a0cbfba4df20faa4",
+  "node": "v24.21.0",
+  "commands": [
+    {
+      "toolReference": "7acc2c",
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/independent-security-provider-contract-review-02/replay-pure.mjs > docs/review/evidence/config-acceptance/c0-completion-20261013/independent-security-provider-contract-review-02/replay.stdout 2> docs/review/evidence/config-acceptance/c0-completion-20261013/independent-security-provider-contract-review-02/replay.stderr",
+      "exit": 0,
+      "checks": 4606,
+      "productiveActions": 0,
+      "outputOnlyChange": true
+    },
+    {
+      "toolReference": "2b6152/bd9801",
+      "command": "python docs/review/evidence/config-acceptance/c0-completion-20261013/independent-security-provider-contract-review-02/capture.py > docs/review/evidence/config-acceptance/c0-completion-20261013/independent-security-provider-contract-review-02/capture.stdout 2> docs/review/evidence/config-acceptance/c0-completion-20261013/independent-security-provider-contract-review-02/capture.stderr",
+      "exit": 0,
+      "pins02": 53,
+      "pins01": 476,
+      "oldHistoryPins": 978,
+      "frozen01ReviewPins": 1706,
+      "sourcePins": 36
+    },
+    {
+      "toolReference": "b2e2ae",
+      "command": "Read02README/files and attempted check-corrections.mjs",
+      "exit": 1,
+      "reason": "Correct actual collector is check-definition.mjs; inspected it before execution. Navigation filename failure only."
+    },
+    {
+      "toolReference": "ea878f",
+      "command": "Initial inline normative metadata pointer audit",
+      "exit": 1,
+      "reason": "KeyError: activeCases. Actual JSON member is originalCases. Corrected metadata key only; no schema/domain/assertion weakening."
+    },
+    {
+      "toolReference": "b0381d/a7102a",
+      "command": "python docs/review/evidence/config-acceptance/c0-completion-20261013/independent-security-provider-contract-review-02/audit.py > docs/review/evidence/config-acceptance/c0-completion-20261013/independent-security-provider-contract-review-02/audit.stdout 2> docs/review/evidence/config-acceptance/c0-completion-20261013/independent-security-provider-contract-review-02/audit.stderr",
+      "exit": 0,
+      "normativeFields": 89,
+      "originalCasePointers": 587,
+      "fullReceivingClosures": 163
+    }
+  ],
+  "scriptHashes": {
+    "replay-pure.mjs": "8152ab918982a8233459f5848a0fa30772bdedeb473c7441f3e580fe67bcb616",
+    "capture.py": "66d6b6c1b15f11ddfea73e658c74c3bf0e865976588383a968523441a87c4043",
+    "audit.py": "e22d0328e1a624ac5a889d8dd863bd4bb1958f348a7fca0f1991a519f1a6b594"
+  },
+  "nativePureHelper": "Actual responseHeaderNames source slice; only TypeScript annotations erased. No class/constructor/invoke/transport evaluated.",
+  "prohibitedOperationsExecuted": false
+}

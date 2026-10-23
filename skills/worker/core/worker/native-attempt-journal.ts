@@ -1,3 +1,5 @@
+import { readNativeJournalRouting, publishNativeJournalRouting, verifyNativeJournalRoutingEpoch, type NativeJournalRouting, type NativeJournalSupervisor } from './native-journal-routing.ts';
+import { readWorkerCorePolicyCapture, type WorkerCorePolicyCapture } from '@kubeclaw/plugin-foundation/config/worker-core-policy';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { FileDurableRecordStore, FileDurableBlobStore, type DurableRecord } from '@kubeclaw/plugin-foundation/observability/durable-records';
@@ -17,42 +19,73 @@ export class NativeWorkerAttemptBusy extends Error {
   constructor() { super('WORKER_NATIVE_ATTEMPT_BUSY'); }
 }
 
+/** Trusted coordinator capability, never decoded from an attempt/control wire.
+ * bind fsyncs original provenance before admission; verify denies missing A
+ * without repairing it from current settings.
+ */
+export interface NativeAttemptBootAssociation {
+  readonly bind: (envelope: WorkerAttemptEnvelopeV3) => Promise<void>;
+  readonly verify: (envelope: WorkerAttemptEnvelopeV3) => Promise<void>;
+}
+
 /** Accepted identity, original output and sealed result outlive the serving process. */
 export class NativeAttemptJournal {
   readonly #root: string;
   readonly #limits: NativeAttemptJournalLimits;
   readonly #records: FileDurableRecordStore;
   readonly #blobs: FileDurableBlobStore;
+  readonly #originalBoot: NativeAttemptBootAssociation | undefined;
+  readonly #workerCore: WorkerCorePolicyCapture | undefined;
+  #routing: NativeJournalRouting | undefined;
 
-  constructor(root: string, limits: NativeAttemptJournalLimits) {
+  constructor(root: string, limits: NativeAttemptJournalLimits, originalBoot?: NativeAttemptBootAssociation, workerCore?: WorkerCorePolicyCapture) {
     if (!path.isAbsolute(root) || Object.values(limits).some(value => !Number.isSafeInteger(value) || value < 1)) {
       throw new Error('WORKER_NATIVE_JOURNAL_CONFIG_INVALID');
     }
     this.#root = path.resolve(root); this.#limits = { ...limits };
+    this.#originalBoot = originalBoot;
+    this.#workerCore = workerCore === undefined ? undefined : readWorkerCorePolicyCapture(workerCore);
     this.#records = new FileDurableRecordStore(path.join(this.#root, 'metadata'), {
       maximumRecords: limits.maximumRecords, maximumBytes: limits.maximumStateBytes, maximumRecordBytes: nativeJournalMaximumRecordBytes,
     });
     this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), Math.max(limits.maximumInputBytes, limits.maximumResultBytes), limits.maximumTotalBytes);
   }
 
+  async configureRouting(authority: NativeJournalSupervisor, generation: string, transition = false): Promise<void> {
+    if (!this.#workerCore) return;
+    await this.#initialize();
+    await withDurableStoreLock(path.join(this.#root, 'admission', 'lifetime'), async () => {
+      const terminal = (await this.#all()).every(record => record.payload.result !== null);
+      this.#routing = await publishNativeJournalRouting(this.#root, authority, generation,
+        this.#workerCore!.settings.runtime.journalLockHexDigits, terminal, transition);
+    });
+  }
+
+  async #verifyRouting(): Promise<void> {
+    const current = await readNativeJournalRouting(this.#root);
+    if (this.#workerCore ? !this.#routing || current?.routingDigest !== this.#routing.routingDigest : current !== undefined) throw new Error('WORKER_NATIVE_JOURNAL_ROUTING_CONFLICT');
+  }
+
   async withAttempt<T>(input: WorkerAttemptEnvelopeV3,
-    operation: (context: { envelope: WorkerAttemptEnvelopeV3; newlyAccepted: boolean; acceptedAt: string; outputRoot: string }) => Promise<T>,
+    operation: (context: { envelope: WorkerAttemptEnvelopeV3; newlyAccepted: boolean; acceptedAt: string; outputRoot: string; workerCore: WorkerCorePolicyCapture | undefined }) => Promise<T>,
     validateNewAdmission: (envelope: WorkerAttemptEnvelopeV3) => void = () => {}): Promise<T> {
     const envelope = structuredClone(input);
     validateWorkerResourceContractV3('workerAttemptEnvelope', envelope);
     const bytes = Buffer.from(canonicalJson(envelope));
-    if (bytes.byteLength > this.#limits.maximumInputBytes) throw new Error('WORKER_NATIVE_JOURNAL_INPUT_LIMIT');
+
     await this.#initialize();
+    await this.#verifyRouting();
     const key = journalKey(envelope);
     // 256 fixed lock stripes bound rejected-request lock metadata. Equal claims
     // serialize across real processes; unrelated stripes can execute together.
     let entered = false;
     try {
-      return await withDurableStoreLock(path.join(this.#root, 'fences', key.slice(-2), 'lifetime'), async () => {
+      return await withDurableStoreLock(path.join(this.#root, 'fences', key.slice(-(this.#routing?.journalLockHexDigits ?? 2)), 'lifetime'), async () => {
         entered = true;
+        await this.#verifyRouting();
         const reserved = await this.#reserve(envelope, bytes, validateNewAdmission);
         return operation({ envelope, newlyAccepted: reserved.newlyAccepted, acceptedAt: reserved.record.payload.acceptedAt,
-          outputRoot: this.outputRoot(envelope) });
+          outputRoot: this.outputRoot(envelope), workerCore: reserved.record.payload.workerCore === undefined ? undefined : readWorkerCorePolicyCapture(reserved.record.payload.workerCore) });
       });
     } catch (error) {
       if (!entered && error instanceof Error && error.message.startsWith('OBSERVABILITY_STORE_LOCK_FAILED:')
@@ -72,6 +105,7 @@ export class NativeAttemptJournal {
       validateWorkerResourceContractV3('workerAttemptEnvelope', envelope);
       if (journalKey(envelope) !== record.idempotencyKey || sha256Digest(envelope) !== record.payload.envelopeDigest
         || canonicalJson(journalIdentity(envelope)) !== canonicalJson(record.payload.identity)) throw new Error('WORKER_NATIVE_JOURNAL_IDENTITY_CONFLICT');
+      await this.#originalBoot?.verify(envelope);
       yield envelope;
     }
   }
@@ -143,7 +177,14 @@ export class NativeAttemptJournal {
 
   async #all(): Promise<readonly DurableRecord<NativeAttemptJournalState>[]> {
     const records = await this.#records.read<NativeAttemptJournalState>(stream);
-    for (const record of records) validateJournalState(record.payload);
+    const verifiedRouting = new Set<string>();
+    for (const record of records) {
+      validateJournalState(record.payload);
+      if (record.payload.routingDigest && !verifiedRouting.has(record.payload.routingDigest)) {
+        await verifyNativeJournalRoutingEpoch(this.#root, record.payload.routingDigest);
+        verifiedRouting.add(record.payload.routingDigest);
+      }
+    }
     return records;
   }
 
@@ -152,6 +193,7 @@ export class NativeAttemptJournal {
     const record = (await this.#all()).find(record => record.idempotencyKey === journalKey(envelope));
     if (record && (record.payload.envelopeDigest !== sha256Digest(envelope)
       || canonicalJson(record.payload.identity) !== canonicalJson(journalIdentity(envelope)))) throw new Error('WORKER_NATIVE_JOURNAL_IDENTITY_CONFLICT');
+    if (record) await this.#originalBoot?.verify(envelope);
     return record;
   }
 
@@ -163,20 +205,27 @@ export class NativeAttemptJournal {
 
   async #reserve(envelope: WorkerAttemptEnvelopeV3, bytes: Buffer, validateNewAdmission: (envelope: WorkerAttemptEnvelopeV3) => void) {
     return withDurableStoreLock(path.join(this.#root, 'admission', 'lifetime'), async () => {
+      // Routing may change after the outer stripe check but before this fence.
+      // Recheck under the same admission lock that serializes epoch publication.
+      await this.#verifyRouting();
       const existing = await this.#lookup(envelope);
       if (existing) return { newlyAccepted: false, record: existing };
       // Reject expired or unsupported new work under the admission lock, before
       // retaining input or accepting an identity. Historical replay bypasses it.
+      if (this.#workerCore && this.#routing?.journalLockHexDigits !== this.#workerCore.settings.runtime.journalLockHexDigits) throw new Error('WORKER_NATIVE_JOURNAL_ROUTING_CONFLICT');
       validateNewAdmission(envelope);
-      const reservationBytes = bytes.byteLength + this.#limits.maximumOutputBytes + this.#limits.maximumResultBytes + 65536;
+      if (bytes.byteLength > Math.min(this.#limits.maximumInputBytes, this.#workerCore?.settings.runtime.input_bytes ?? this.#limits.maximumInputBytes)) throw new Error('WORKER_NATIVE_JOURNAL_INPUT_LIMIT');
+      const reservationBytes = bytes.byteLength + this.#limits.maximumOutputBytes + this.#limits.maximumResultBytes + (this.#workerCore?.settings.runtime.journal_record_bytes ?? nativeJournalMaximumRecordBytes);
       const records = await this.#all();
       const pending = records.filter(record => record.payload.result === null).reduce((sum, record) => sum + record.payload.reservationBytes, 0);
       const requested = await usedJournalBytes(this.#root) + pending + reservationBytes + 2 * this.#limits.maximumStateBytes;
       if (!Number.isSafeInteger(requested) || requested > this.#limits.maximumTotalBytes) throw new Error('WORKER_NATIVE_JOURNAL_CAPACITY_EXCEEDED');
-      const payload: NativeAttemptJournalState = { schemaVersion: 'native-attempt-journal.v1', identity: journalIdentity(envelope),
+      const payload: NativeAttemptJournalState = { schemaVersion: this.#workerCore ? 'native-attempt-journal.v2' : 'native-attempt-journal.v1',
+        ...(this.#workerCore ? {workerCore: this.#workerCore, routingDigest: this.#routing!.routingDigest} : {}), identity: journalIdentity(envelope),
         envelopeDigest: sha256Digest(envelope), envelope: { digest: sha256Digest(envelope), sizeBytes: bytes.byteLength },
         acceptedAt: new Date().toISOString(), reservationBytes, process: null, processCompletedAt: null, result: null };
       const owner = `native-worker:${sha256Digest(envelope.claim.workerId).slice(7)}`;
+      await this.#originalBoot?.bind(envelope);
       await reserveNativeJournalMetadata(path.join(this.#root, 'metadata', 'records', 'store.json'),
         payload, journalKey(envelope), owner, this.#limits);
       // The global admission lock holds the checked disk reservation while the

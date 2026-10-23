@@ -6,11 +6,12 @@ if [ "${BUSTER_PLAN_CONFIG_ROOT+x}" = x ]; then
   exit 1
 fi
 # Capture a validated physical generation before the first runtime effect.
-SWARM_CONFIG="$(node /app/scripts/buster-cluster-preflight.mjs)"
-export SWARM_CONFIG
-runtime_config_root="$(node /usr/local/libexec/buster-runtime-config-root.mjs)"
+node /opt/buster-image-tools/scripts/buster-cluster-preflight.mjs
+# Initialize only the stable lock, then acquire authority before config-root mutations.
+node /usr/local/libexec/buster-runtime-config-root.mjs --lifetime-lock >/dev/null
 exec 9<>/run/kubeclaw-buster/lifetime.lock
 flock -n 9 || { echo "Buster runtime is already active" >&2; exit 1; }
+runtime_config_root="$(node /usr/local/libexec/buster-runtime-config-root.mjs)"
 
 worker_token="${BUSTER_V2_TOKEN:?BUSTER_V2_TOKEN is required when SPIFFE transport is unavailable}"
 trusted_peer_spiffe_id="${BUSTER_TRUSTED_PEER_SPIFFE_ID:-}"
@@ -23,8 +24,8 @@ registry_client_dir="$(mktemp -d /tmp/registry-clients.XXXXXX)"
 registry_contract="$registry_client_dir/input.json"
 printf '%s' "${KUBECLAW_REGISTRY_CONFIG:?Explicit registry endpoint/transport/auth configuration is required; see docs/operations/registry-clients.md}" >"$registry_contract"
 chmod 0600 "$registry_contract"
-node /app/scripts/registry-client-config.mjs "$registry_contract" buildkit "$registry_client_dir/buildkit.toml"
-node /app/scripts/registry-client-config.mjs "$registry_contract" runtime "$registry_client_dir/runtime.json"
+node /opt/buster-image-tools/scripts/registry-client-config.mjs "$registry_contract" buildkit "$registry_client_dir/buildkit.toml"
+node /opt/buster-image-tools/scripts/registry-client-config.mjs "$registry_contract" runtime "$registry_client_dir/runtime.json"
 registry="$(node -e 'process.stdout.write(JSON.parse(require("node:fs").readFileSync(process.argv[1],"utf8")).registryReference)' "$registry_client_dir/runtime.json")"
 config="$runtime_config_root/buildkit.toml"
 buildkit_log="$runtime_config_root/buildkit.log"
@@ -172,18 +173,22 @@ RUNTIME_CONFIG_ROOT="$runtime_config_root" REGISTRY_CLIENT_RUNTIME="$registry_cl
   BUSTER_BROWSER_AXE_EXACT_ORIGINS="${BUSTER_BROWSER_AXE_EXACT_ORIGINS:-}" \
   BUSTER_NETWORK_HTTP_ALLOW_WEBSOCKET="${BUSTER_NETWORK_HTTP_ALLOW_WEBSOCKET:-false}" \
   BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT="$browser_playwright_cgroup_root" \
-  BUSTER_V2_STATE_DIR="$plan_state_dir" BUSTER_V2_RUN_DIR="$plan_run_dir" node <<'NODE'
+  BUSTER_V2_TOKEN="$worker_token" node <<'NODE'
 const fs = require('fs');
 const path = require('path');
+const { projectLegacyBusterPreparationSource } = require('/app/skills/packages/buster-engine/test-gates/preparation-runtime-source.ts');
+const preparationSource = projectLegacyBusterPreparationSource(process.env);
 const root = process.env.RUNTIME_CONFIG_ROOT;
 const registry = process.env.REGISTRY_REFERENCE;
-const plugins = '/app/skills/buster/plugins';
+const registryPeer = JSON.parse(fs.readFileSync(process.env.REGISTRY_CLIENT_RUNTIME, 'utf8'));
+const plugins = '/app/skills/plugins';
 const exactHttpOrigins = (process.env.BUSTER_NETWORK_HTTP_EXACT_ORIGINS || '')
   .split(',').map((value) => value.trim()).filter(Boolean);
 const exactBrowserOrigins = (process.env.BUSTER_BROWSER_AXE_EXACT_ORIGINS || '')
   .split(',').map((value) => value.trim()).filter(Boolean);
 fs.writeFileSync(path.join(root, 'platform.json'), `${JSON.stringify({
   schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000,
+  corePolicySelection: { file: '/etc/kubeclaw/nova/core.config.json', profile: 'standard' },
   installationRoots: [plugins], trustedBuiltinRoots: [plugins],
   externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },
   providers: {}, grants: {}, adapters: {}, activeAdapters: [], observers: {},
@@ -193,18 +198,11 @@ fs.writeFileSync(path.join(root, 'platform.json'), `${JSON.stringify({
 fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
   schemaVersion: 'buster-remote-plan-runtime.v1', platformConfig: './platform.json',
   host: '0.0.0.0', port: Number(process.env.BUSTER_PLAN_PORT || 18891),
-  ...(process.env.BUSTER_TRUSTED_PEER_SPIFFE_ID
-    ? { trustedPeerSpiffeIds: [process.env.BUSTER_TRUSTED_PEER_SPIFFE_ID] }
-    : { tokenEnvironmentVariable: 'BUSTER_V2_TOKEN' }),
-  sourceAttestationPublicKeyEnvironmentVariable: 'BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY',
-  trustedSourceAuthority: process.env.BUSTER_PLAN_TRUSTED_SOURCE_AUTHORITY || 'nova:production',
-  stateRoot: process.env.BUSTER_V2_STATE_DIR,
-  runtimeRoot: process.env.BUSTER_V2_RUN_DIR,
-  tarExecutable: '/usr/bin/tar',
+  ...preparationSource,
+  registryPeer,
   recordLimits: { maximumRecords: 10000, maximumBytes: 1073741824, maximumRecordBytes: 67108864 },
   maximumResultBytes: 67108864, maximumResultStoreBytes: 1073741824,
   maximumResponseBytes: 67108864,
-  shutdownTimeoutMs: 15000,
   allowedCapabilities: ['command.execute', 'container.build', 'kubernetes.fixture', 'kubernetes.exposure', 'network.http', 'browser.axe', 'browser.lighthouse', 'browser.visual', 'browser.playwright', 'security.scan', 'kubernetes.runtime-security'],
   directCommand: {
     executableCatalog: {
@@ -229,7 +227,7 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
   },
   containerBuild: {
     buildctlExecutable: '/usr/local/bin/buildctl', buildkitHost: process.env.BUILDKIT_HOST,
-    ...JSON.parse(fs.readFileSync(process.env.REGISTRY_CLIENT_RUNTIME, 'utf8')),
+    ...registryPeer,
     repositoryPrefix: 'kubeclaw/pipeline', allowedPlatforms: ['linux/amd64', 'linux/arm64'],
     allowedBuildArguments: ['NODE_ENV'], maximumLogBytes: 8388608,
     maximumExecutionMs: 900000, maximumManifestBytes: 16777216,
@@ -255,7 +253,7 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
   },
   browserLighthouse: {
     allowedOrigins: exactBrowserOrigins,
-    chromeExecutable: require('/app/node_modules/playwright').chromium.executablePath(),
+    chromeExecutable: require('/app/skills/node_modules/playwright').chromium.executablePath(),
     maximumRuns: 80,
     maximumExecutionMs: 180000,
     maximumResultBytes: 67108864,
@@ -273,9 +271,9 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
   browserPlaywright: {
     allowedOrigins: exactBrowserOrigins,
     allowedTargetPorts: [18080],
-    playwrightExecutable: '/app/node_modules/.bin/playwright',
+    playwrightExecutable: '/app/skills/node_modules/playwright/cli.js',
     sandboxExecutable: '/opt/kubeclaw-trusted/plugin-sandbox',
-    runtimeNodeModules: '/app/node_modules',
+    runtimeNodeModules: '/app/skills/node_modules',
     browsersPath: '/ms-playwright',
     readOnlyRoots: ['/app', '/ms-playwright', '/usr', '/lib', '/lib64', '/etc/fonts', '/etc/hosts', '/etc/nsswitch.conf', '/etc/resolv.conf', '/etc/ssl', '/proc', '/sys', '/dev'],
     maximumWorkers: 4,
@@ -293,7 +291,7 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
     runAsGid: 1000,
   },
   securityScan: {
-    registry: JSON.parse(fs.readFileSync(process.env.REGISTRY_CLIENT_RUNTIME, 'utf8')),
+    registry: registryPeer,
     trivyExecutable: '/usr/local/bin/trivy',
     allowedRegistryPrefixes: [`${registry}/kubeclaw`],
     maximumExecutionMs: 900000,
@@ -313,10 +311,10 @@ chown root:builder "$runtime_config_root" "$runtime_config_root/platform.json" "
 
 if [ -n "$trusted_peer_spiffe_id" ]; then
   BUSTER_TRUSTED_PEER_SPIFFE_ID="$trusted_peer_spiffe_id" KUBECONFIG="$kubeconfig" \
-    node /app/skills/buster/engine/native-parent.ts 9>&- &
+    node /app/skills/packages/buster-engine/native-parent.ts &
 else
   BUSTER_V2_TOKEN="$worker_token" KUBECONFIG="$kubeconfig" \
-    node /app/skills/buster/engine/native-parent.ts 9>&- &
+    node /app/skills/packages/buster-engine/native-parent.ts &
 fi
 worker_pid=$!
 

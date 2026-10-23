@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "projectId",
+    "modules",
+    "final"
+  ],
+  "properties": {
+    "projectId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "modules": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 128,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "sourceStageId",
+          "testStageId",
+          "moduleId",
+          "expectedCoverage"
+        ],
+        "properties": {
+          "sourceStageId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "testStageId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "moduleId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "expectedCoverage": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "final": {
+      "type": "object",
+      "additionalProperties": false,
+      "dependentRequired": {
+        "reviewArtifactEncoding": ["reviewStageId"],
+        "reviewSemanticEncoding": ["reviewStageId"]
+      },
+      "required": [
+        "sourceStageId",
+        "lintStageId",
+        "testStageId",
+        "expectedCoverage"
+      ],
+      "properties": {
+        "sourceStageId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "lintStageId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "reviewStageId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "reviewArtifactEncoding": {
+          "const": "kubeclaw-json.utf16.v1"
+        },
+        "reviewSemanticEncoding": {
+          "const": "review-semantics.utf16-v1"
+        },
+        "testStageId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "expectedCoverage": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}

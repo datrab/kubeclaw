@@ -55,7 +55,7 @@ for (const capability of ['kubernetes.fixture', 'kubernetes.exposure']) {
       kubernetesFixture: { ...common, pollIntervalMs: 1000, runnerSubject: 'test/agent-buster', credentialReaderSubject: 'test/agent-nova',
         shortCommandTimeoutMs: 15000, commandOutputManifestMultiplier: 2, diagnosticCodeUnits: 4096,
         manifest: { maximumNodes: 100000, maximumDepth: 64, maximumAliases: 1000, maximumFlattenVisits: 100000, maximumFlattenPending: 100000 }, allowedRegistryPrefixes: ['registry.test/app'], allowedSecretReferences: [],
-        allowedStorageClasses: [], allowDefaultStorageClass: false, maximumManifestBytes: 4096, maximumResources: 1,
+        allowedStorageClasses: [], allowDefaultStorageClass: false, maximumSecretReferenceEntries: 32, maximumManifestBytes: 4096, maximumResources: 1,
         maximumPersistentVolumeClaimBytes: 1, maximumPersistentVolumeTotalBytes: 1, maximumRetentionSeconds: 60 },
       tailscaleExposure: { ...common, shortCommandTimeoutMs: 15000, maximumCommandOutputBytes: 1048576, allowedHostSuffixes: ['.ts.net'], pollIntervalMs: 100 },
     }, { jobRoot: f.root, workspaceRoot: f.root }, policy);

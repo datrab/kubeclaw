@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -83,7 +84,7 @@ export async function importCompletion(f, attempts = f.attempts) {
     claimExpiresAt: '2100-01-01T00:00:00Z', gateClass: 'authoritative-final',
     requiredClosures: [{closureId: f.closure.closureId, producer: f.closure.producer}],
   };
-  const reconciler = new NovaObservabilityReconciler({attemptStore: attempts, admissionStore: f.admission, journalFile});
+  const reconciler = new NovaObservabilityReconciler({journalAppendLockTimeoutMs: TEST_CORE_POLICY.journalAppendLockTimeoutMs,attemptStore: attempts, admissionStore: f.admission, journalFile});
   const imported = await reconciler.reconcile([desired]);
   assert.equal(imported[0].action, 'imported');
   assert.equal(imported[0].completeness.state, 'complete');

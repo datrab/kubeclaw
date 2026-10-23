@@ -1,0 +1,133 @@
+✔ CC1 Control pipelinePreferenceSubject rejects undefined (21.474093ms)
+✔ CC1 Control pipelinePreferenceSubject rejects "" (3.190573ms)
+✔ CC1 Control pipelinePreferenceSubject rejects "operator:test" (2.816782ms)
+✔ CC1 Control pipelinePreferenceSubject rejects "user-abc" (2.548745ms)
+✔ CC1 Control pipelinePreferenceSubject rejects 1 (2.34242ms)
+✔ CC1 Control pipelinePreferenceSubject rejects false (2.30202ms)
+✔ CC1 Control artifactRoot rejects undefined (4.830384ms)
+✔ CC1 Control artifactRoot rejects null (1.91978ms)
+✔ CC1 Control artifactRoot rejects "" (2.048453ms)
+✔ CC1 Control artifactRoot rejects "/" (2.005112ms)
+✔ CC1 Control artifactRoot rejects "relative" (1.92723ms)
+✔ CC1 Control artifactRoot rejects "/tmp/../artifacts" (14.683458ms)
+✔ CC1 Control artifactRoot rejects "/tmp/artifacts/" (5.975974ms)
+✔ CC1 Control artifactRoot rejects "/tmp//artifacts" (4.975538ms)
+✔ CC1 Control artifactRoot rejects "/tmp/\u0000artifacts" (1.921339ms)
+✔ CC1 Control artifactRoot rejects 1 (1.883608ms)
+✔ CC1 Control studioPublicUrl rejects undefined (1.94909ms)
+✔ CC1 Control studioPublicUrl rejects null (1.840887ms)
+✔ CC1 Control studioPublicUrl rejects "" (2.132655ms)
+✔ CC1 Control studioPublicUrl rejects "relative" (1.911969ms)
+✔ CC1 Control studioPublicUrl rejects "file:///tmp" (2.264598ms)
+✔ CC1 Control studioPublicUrl rejects "https://" (2.099854ms)
+✔ CC1 Control studioPublicUrl rejects "https://user:pass@studio" (2.187247ms)
+✔ CC1 Control studioPublicUrl rejects "https://studio?query=1" (1.95591ms)
+✔ CC1 Control studioPublicUrl rejects "https://studio#fragment" (2.161556ms)
+✔ CC1 Control studioPublicUrl rejects "https://bad host" (1.91927ms)
+✔ CC1 Control studioPublicUrl rejects 1 (1.910219ms)
+✔ CC1 strict Control object (2.229668ms)
+✔ CC1 strict Control object (1.898388ms)
+✔ CC1 strict Control object (1.905909ms)
+✔ CC1 strict Control object (1.896189ms)
+✔ CC2 retired PRISM_PIPELINE_PREFERENCE_SUBJECT rejects even empty (1.843938ms)
+✔ CC2 retired ARTIFACT_ROOT rejects even empty (1.541089ms)
+✔ CC2 retired PRISM_STUDIO_PUBLIC_URL rejects even empty (1.460018ms)
+✔ CC2 authored Control snapshot survives file mutation (16.872375ms)
+✔ CI03 original HTTP body boundary follows authored 64 bytes (80.194115ms)
+✔ CI03 original HTTP body boundary follows authored 128 bytes (17.635484ms)
+✔ CI04 production command and real host parser use assigned 64 bytes (1177.195826ms)
+✔ CI04 production command and real host parser use assigned 128 bytes (1198.432964ms)
+✔ CR01 both selected consumer snapshots use authored {"maximumResultBytes":64,"dispatchTimeoutMs":100} (15.122449ms)
+✔ CR01 both selected consumer snapshots use authored {"maximumResultBytes":128,"dispatchTimeoutMs":2000} (8.124659ms)
+✔ CR01 both roles reject maximumResultBytes=undefined (4.569108ms)
+✔ CR01 both roles reject maximumResultBytes=null (3.926212ms)
+✔ CR01 both roles reject maximumResultBytes=5 (4.032704ms)
+✔ CR01 both roles reject maximumResultBytes=0 (3.917541ms)
+✔ CR01 both roles reject maximumResultBytes=-1 (4.136796ms)
+✔ CR01 both roles reject maximumResultBytes=1.5 (4.396373ms)
+✔ CR01 both roles reject maximumResultBytes=2147483648 (4.591259ms)
+✔ CR01 both roles reject dispatchTimeoutMs=undefined (2.643279ms)
+✔ CR01 both roles reject dispatchTimeoutMs=null (2.613107ms)
+✔ CR01 both roles reject dispatchTimeoutMs=5 (2.389812ms)
+✔ CR01 both roles reject dispatchTimeoutMs=0 (2.370451ms)
+✔ CR01 both roles reject dispatchTimeoutMs=-1 (2.412043ms)
+✔ CR01 both roles reject dispatchTimeoutMs=1.5 (2.367681ms)
+✔ CR01 both roles reject dispatchTimeoutMs=2147483648 (2.412992ms)
+✔ CR01 both roles reject missing or unsupported native section (3.469489ms)
+✔ CR01 both roles reject missing or unsupported native section (3.444579ms)
+✔ CR01 both roles reject missing or unsupported native section (3.905901ms)
+✔ CR02 both roles reject PRISM_NATIVE_MAXIMUM_RESULT_BYTES (1.842348ms)
+✔ CR02 both roles reject PRISM_NATIVE_DISPATCH_TIMEOUT_MS (1.617911ms)
+✔ CR03 original HTTP transport enforces 8 UTF-8 bytes (34.712074ms)
+✔ CR03 original HTTP transport enforces 9 UTF-8 bytes (11.940138ms)
+✔ CR04 real headers deadline follows short and long author budgets (389.577343ms)
+✔ CR04 real body deadline follows short and long author budgets (392.97781ms)
+✔ CR01 inactive control profile cannot replace selected transport; invalid inactive profile rejects (17.564402ms)
+✔ CP03 original Control persists and dispatches startup budgets and preserves admitted retry identity (10727.596048ms)
+✔ CP01 both roles reject cpuTimeMs=undefined (33.087222ms)
+✔ CP01 both roles reject cpuTimeMs=null (5.81113ms)
+✔ CP01 both roles reject cpuTimeMs=5 (6.756574ms)
+✔ CP01 both roles reject cpuTimeMs=0 (5.43918ms)
+✔ CP01 both roles reject cpuTimeMs=-1 (5.83014ms)
+✔ CP01 both roles reject cpuTimeMs=1.5 (5.321147ms)
+✔ CP01 both roles reject cpuTimeMs=9007199254740992 (4.67341ms)
+✔ CP01 both roles reject memoryBytes=undefined (4.453405ms)
+✔ CP01 both roles reject memoryBytes=null (4.136397ms)
+✔ CP01 both roles reject memoryBytes=5 (8.952831ms)
+✔ CP01 both roles reject memoryBytes=0 (5.002488ms)
+✔ CP01 both roles reject memoryBytes=-1 (4.153057ms)
+✔ CP01 both roles reject memoryBytes=1.5 (4.037044ms)
+✔ CP01 both roles reject memoryBytes=9007199254740992 (5.04561ms)
+✔ CP01 both roles reject tasks=undefined (4.046264ms)
+✔ CP01 both roles reject tasks=null (4.311621ms)
+✔ CP01 both roles reject tasks=5 (4.031204ms)
+✔ CP01 both roles reject tasks=0 (4.067775ms)
+✔ CP01 both roles reject tasks=-1 (3.87169ms)
+✔ CP01 both roles reject tasks=1.5 (3.830699ms)
+✔ CP01 both roles reject tasks=9007199254740992 (3.962442ms)
+✔ CP01 missing or competing resource policy fails (3.994612ms)
+✔ CP01 missing or competing resource policy fails (3.595473ms)
+✔ CP01 missing or competing resource policy fails (3.745246ms)
+✔ CP02 rejects PRISM_NATIVE_CPU_TIME_MS even empty (1.787966ms)
+✔ CP02 rejects PRISM_NATIVE_MEMORY_BYTES even empty (1.396356ms)
+✔ CP02 rejects PRISM_NATIVE_TASKS even empty (1.382566ms)
+✔ CP04 actual admission maps authored policy {"cpuTimeMs":123,"memoryBytes":4096,"tasks":7} (45.481042ms)
+✔ CP04 actual admission maps authored policy {"cpuTimeMs":456,"memoryBytes":8192,"tasks":11} (9.451433ms)
+✔ CP01 resource safe-integer ceiling is independent of transport timer ceiling (7.991946ms)
+✔ CP02 a loaded producer never consults later legacy environment changes (4.161357ms)
+✔ CR05 real journal consumes authored 2053 byte result limit (126.629091ms)
+✔ CR05 real journal consumes authored 2054 byte result limit (162.343801ms)
+
+Interrupted while running:
+
+⚠ skills/prism/tests/swarm-supervisor-config.test.mts (skills/prism/tests/swarm-supervisor-config.test.mts:1:1)
+✖ skills/prism/tests/swarm-supervisor-config.test.mts (281659.590701ms)
+✖ skills/prism/tests/swarm-supervisor-consumers.test.mts
+✖ skills/prism/tests/swarm-worker-behavior.test.mts
+✖ skills/prism/tests/swarm-worker-config.test.mts
+ℹ tests 103
+ℹ suites 0
+ℹ pass 99
+ℹ fail 0
+ℹ cancelled 4
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 299972.385451
+
+✖ failing tests:
+
+test at skills/prism/tests/swarm-supervisor-config.test.mts:1:1
+✖ skills/prism/tests/swarm-supervisor-config.test.mts (281659.590701ms)
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at skills/prism/tests/swarm-supervisor-consumers.test.mts:1:1
+✖ skills/prism/tests/swarm-supervisor-consumers.test.mts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at skills/prism/tests/swarm-worker-behavior.test.mts:1:1
+✖ skills/prism/tests/swarm-worker-behavior.test.mts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at skills/prism/tests/swarm-worker-config.test.mts:1:1
+✖ skills/prism/tests/swarm-worker-config.test.mts
+  'Promise resolution is still pending but the event loop has already resolved'

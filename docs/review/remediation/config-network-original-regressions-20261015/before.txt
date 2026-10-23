@@ -1,0 +1,26 @@
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/runtime-dispatch/src/adapter.ts:95
+  if (!record(raw.targetByteProfiles) || Object.keys(raw.targetByteProfiles).length === 0) throw new Error('RUNTIME_CONFIG_INVALID:targetByteProfiles');
+                                                                                                 ^
+
+Error: RUNTIME_CONFIG_INVALID:targetByteProfiles
+    at config (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/runtime-dispatch/src/adapter.ts:95:98)
+    at activate (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/runtime-dispatch/src/adapter.ts:115:19)
+    at worker (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/effect-identity-version.test.mts:34:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/effect-identity-version.test.mts:91:39
+
+Node.js v24.21.0
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/runtime-dispatch/src/adapter.ts:95
+  if (!record(raw.targetByteProfiles) || Object.keys(raw.targetByteProfiles).length === 0) throw new Error('RUNTIME_CONFIG_INVALID:targetByteProfiles');
+                                                                                                 ^
+
+Error: RUNTIME_CONFIG_INVALID:targetByteProfiles
+    at config (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/runtime-dispatch/src/adapter.ts:95:98)
+    at activate (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/runtime-dispatch/src/adapter.ts:115:19)
+    at worker (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/effect-identity-version.test.mts:34:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async file:///home/node/.openclaw/workspace/kubeclaw-config-c0/tests/verification/reliability/effect-identity-version.test.mts:91:39
+
+Node.js v24.21.0
+✖ original recorded legacy journal prefixes recover without identity migration across native locales (376.612685ms)
+✖ new original durable producers and completed replay use the same explicit portable identity in both locale directions (361.525776ms)

@@ -1,0 +1,7 @@
+{
+  "command": "python3 docs/review/evidence/config-acceptance/c0-completion-20261013/runtime-provider-contracts-02/define-corrections.py",
+  "exit": 1,
+  "stderr": "TypeError: list indices must be integers or slices, not str at exact schema pointer navigation",
+  "cause": "metadata pointer traversed allOf array using string index",
+  "correction": "numeric index for existing schema array; no schema/domain/source alteration"
+}

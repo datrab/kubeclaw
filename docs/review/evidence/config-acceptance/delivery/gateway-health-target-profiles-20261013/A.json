@@ -1,0 +1,69 @@
+{
+  "schemaVersion": "dlv-health-definition.v1",
+  "settings": {
+    "KUBECLAW_HEALTH_TIMEOUT_MS": 1000,
+    "redisMaxRetriesPerRequest": 1,
+    "redisEnableReadyCheck": true,
+    "KUBECLAW_HEALTH_REQUIRE_STARTUP_MARKER": true
+  },
+  "readonlyBindings": {
+    "KUBECLAW_HEALTH_REDIS_STREAM": "dlv:health:nova:a",
+    "KUBECLAW_HEALTH_REDIS_STREAM_MAX_LEN": 1000,
+    "KUBECLAW_HEALTH_REGISTRIES": [
+      "http://127.0.0.1:15001"
+    ],
+    "REDIS_HOST": "127.0.0.1",
+    "REDIS_PORT": 6379,
+    "REDIS_USERNAME": {
+      "providerRef": "dlv-redis-a",
+      "field": "username"
+    },
+    "REDIS_PASSWORD": {
+      "providerRef": "dlv-redis-a",
+      "field": "password"
+    },
+    "OPENCLAW_GATEWAY_URL": "http://127.0.0.1:18789",
+    "GATEWAY_PORT": 18789,
+    "OPENCLAW_GATEWAY_TOKEN": {
+      "providerRef": "dlv-gateway-a",
+      "field": "gatewayToken"
+    },
+    "LITELLM_URL": "http://127.0.0.1:14000",
+    "LITELLM_API_KEY": {
+      "providerRef": "dlv-litellm-a",
+      "field": "litellmApiKey"
+    },
+    "KUBECLAW_CODE_BUNDLE_ENABLED": true,
+    "KUBECLAW_CODE_BUNDLE_AGENT": "nova",
+    "KUBECLAW_CODE_BUNDLE_EXPECTED_COMMIT": {
+      "sourceCommitRef": "actual selected immutable code bundle commit and byte-matched fullcontext receipt; required lowercase40hex, not fabricated text"
+    },
+    "KUBECLAW_CODE_BUNDLE_CONTRACT_VERSION": "v2",
+    "mode": "startup",
+    "AGENT_NAME": "agent-nova",
+    "KUBECLAW_CONTAINER_ROLE": "agent",
+    "HOSTNAME": "dlv-nova-a",
+    "KUBECLAW_HEALTH_STARTUP_STATUS_PATH": "/home/node/.openclaw/logs/startup-verification.json",
+    "KUBECLAW_HEALTH_STARTUP_EVENT_LOG_PATH": "/home/node/.openclaw/logs/startup-verification.jsonl",
+    "KUBECLAW_DRAIN_FILE": "/tmp/kubeclaw-draining",
+    "KUBECLAW_CODE_BUNDLE_MANIFEST": "/runtime-config/code-bundle-manifest.json",
+    "SWARM_CONFIG": "/etc/kubeclaw/swarm/swarm.config.json",
+    "KUBECLAW_HEALTH_CHECK_GATEWAY": true,
+    "KUBECLAW_HEALTH_CHECK_REDIS": true,
+    "KUBECLAW_HEALTH_CHECK_REDIS_STREAM": true,
+    "KUBECLAW_HEALTH_CHECK_LITELLM": true,
+    "KUBECLAW_HEALTH_CHECK_REGISTRIES": true
+  },
+  "wholeProbeBudget": {
+    "kubeletExecTimeoutSeconds": 20,
+    "primaryField": "charts/kubeclaw/values.yaml#/profiles/<selected>/settings/probes/<selectedmode>.timeoutSeconds",
+    "correlation": "exact selected startup/readiness/liveness mode budget must cover its actual sequential check/Redisconnect+command+quit/retry/HTTP abort/markerFS+teardown worstcase; fixtures declare200ms per bounded localFS operation. No actual deployed deadline/capacity proof."
+  },
+  "source": {
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+  },
+  "fixture": "future isolated same real generated kubeclaw-health.mjs in selected compatible image; authenticated native OpenClaw /health, actual locked ioredis+isolated Redis, compatible LiteLLM health endpoint, registry-v2 server configured401positive. Actual trusted Pod mounts/provider references inject no Secret bytes into artifacts. Port availability positive first, collision is setupfailure. Full source/role/package/code/installed/tool/ABI receipt verifies BEFORE business engine imports or first new input materialization.",
+  "limits": "startup-status, liveness, startup, readiness modes run separately; both whole definitions are test fixture selection proposals, not already native-validated deployed profiles; same role and exact source/provenance closure mandatory",
+  "priorState": "A Pod/nativeprocess/provider/namespace/startupmarker/status+event records/code/manifest/Redisstream/grants/cleanup identities retained. B next deployment generation cannot retarget activeA; immutableparent originalModule/grants/cleanup contract pending."
+}

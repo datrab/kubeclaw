@@ -1,0 +1,118 @@
+[
+  {
+    "line": 2,
+    "expected": [
+      490,
+      491,
+      494,
+      497
+    ],
+    "actual": [
+      490,
+      491,
+      494,
+      497
+    ],
+    "matches": true
+  },
+  {
+    "line": 67,
+    "expected": [
+      528,
+      530,
+      531
+    ],
+    "actual": [
+      528,
+      530,
+      531
+    ],
+    "matches": true
+  },
+  {
+    "line": 84,
+    "expected": [
+      510,
+      513
+    ],
+    "actual": [
+      510,
+      513
+    ],
+    "matches": true
+  },
+  {
+    "line": 157,
+    "expected": [
+      546,
+      547,
+      548,
+      549,
+      555,
+      567
+    ],
+    "actual": [
+      546,
+      547,
+      548,
+      549,
+      555,
+      567
+    ],
+    "matches": true
+  },
+  {
+    "line": 190,
+    "expected": [
+      490,
+      491
+    ],
+    "actual": [
+      490,
+      491
+    ],
+    "matches": true
+  },
+  {
+    "line": 192,
+    "expected": [
+      490,
+      491
+    ],
+    "actual": [
+      490,
+      491
+    ],
+    "matches": true
+  },
+  {
+    "line": 217,
+    "expected": [
+      494,
+      497
+    ],
+    "actual": [
+      494,
+      497
+    ],
+    "matches": true
+  },
+  {
+    "line": 240,
+    "expected": [
+      494,
+      497
+    ],
+    "actual": [
+      494,
+      497
+    ],
+    "matches": true
+  },
+  {
+    "line": 246,
+    "expected": [],
+    "actual": [],
+    "matches": true
+  }
+]

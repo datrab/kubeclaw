@@ -18,7 +18,7 @@ if (process.argv[2] === 'child') {
       allowedNamespacePrefixes: ['test'], allowedRegistryPrefixes: ['registry.local/app'], allowedSecretReferences: [],
       allowedStorageClasses: ['fast'], allowDefaultStorageClass: false,
       maximumPersistentVolumeClaimBytes: 1024 ** 3, maximumPersistentVolumeTotalBytes: 1024 ** 3,
-      maximumManifestBytes: 1024 * 1024, maximumResources: 8, maximumRetentionSeconds: 3600, maximumExecutionMs: 10_000 });
+      maximumSecretReferenceEntries: 32, maximumManifestBytes: 1024 * 1024, maximumResources: 8, maximumRetentionSeconds: 3600, maximumExecutionMs: 10_000 });
     let dag = 'a: &a {kind: List, items: []}\n';
     let previous = 'a';
     for (let index = 0; index < 25; index += 1) { const name = `n${index}`; dag += `${name}: &${name} {kind: List, items: [*${previous}, *${previous}]}\n`; previous = name; }

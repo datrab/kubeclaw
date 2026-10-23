@@ -1,0 +1,232 @@
+name: Build Runtime Images And Skill Bundles
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+env:
+  REGISTRY: ghcr.io
+jobs:
+  update-policy:
+    uses: ./.github/workflows/update-checks.yaml
+    permissions:
+      contents: read
+      actions: read
+  reliability:
+    uses: ./.github/workflows/pipeline-reliability.yaml
+    permissions:
+      contents: read
+  detect-build-inputs:
+    name: Detect Image Build Inputs
+    runs-on: ubuntu-latest
+    outputs:
+      image_inputs_changed: ${{ steps.filter.outputs.image_inputs }}
+      deployment_inputs_changed: ${{ steps.filter.outputs.deployment_inputs }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 24
+      - name: Detect image and deployment inputs separately
+        id: filter
+        run: node scripts/updates/runtime-inputs.mjs
+  build:
+    name: Build & Verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [detect-build-inputs, reliability, update-policy]
+    if: |
+      always() && needs.reliability.result == 'success' && needs.update-policy.result == 'success' &&
+      needs.detect-build-inputs.outputs.image_inputs_changed == 'true'
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      fail-fast: false
+      matrix:
+        name: [nova, prism-agent, buster-gateway, buster-runtime, namespace-controller, archviewer, prism-control, prism-studio, prism-worker, prism-ingestion]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Provision image build capacity
+        run: bash scripts/prepare-image-build-runner.sh
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e # v4
+      - name: Login to GHCR
+        uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Generate tags
+        id: meta
+        uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6
+        with:
+          images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/kubeclaw-${{ matrix.name }}
+          tags: |
+            type=sha,prefix=candidate-,format=long
+      - name: Build & Push
+        id: build
+        uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7
+        with:
+          context: .
+          file: docker/Dockerfile.${{ matrix.name }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          cache-from: type=gha,scope=${{ matrix.name }}
+          cache-to: type=gha,scope=${{ matrix.name }},mode=min,ignore-error=true
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            KUBECLAW_BUILD_REVISION=${{ github.sha }}
+          provenance: mode=max
+          sbom: true
+      - name: Verify the exact published artifact
+        if: contains(fromJSON('["nova","prism-agent","buster-gateway","buster-runtime"]'), matrix.name)
+        env:
+          IMAGE: ${{ env.REGISTRY }}/${{ github.repository_owner }}/kubeclaw-${{ matrix.name }}@${{ steps.build.outputs.digest }}
+          ROLE: ${{ matrix.name }}
+        run: |
+          docker pull "$IMAGE"
+          bash scripts/check-built-runtime-image.sh "$ROLE" "$IMAGE"
+      - name: Record immutable build receipt
+        env:
+          IMAGE: ${{ env.REGISTRY }}/${{ github.repository_owner }}/kubeclaw-${{ matrix.name }}@${{ steps.build.outputs.digest }}
+          IMAGE_NAME: ${{ matrix.name }}
+        run: |
+          mkdir -p dist/image-receipts
+          node -e 'require("fs").writeFileSync(`dist/image-receipts/${process.env.IMAGE_NAME}.json`, JSON.stringify({name:process.env.IMAGE_NAME,image:process.env.IMAGE,commit:process.env.GITHUB_SHA})+"\n")'
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: image-receipt-${{ matrix.name }}
+          path: dist/image-receipts/*.json
+          if-no-files-found: error
+      - name: Summary
+        run: |
+          echo "### ${{ matrix.name }} image pushed" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "${{ steps.meta.outputs.tags }}" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "- Digest: \`${{ steps.build.outputs.digest }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- BuildKit provenance and SBOM: published with the image" >> $GITHUB_STEP_SUMMARY
+          echo "- Local scan: \`npm run scan:images -- ${{ env.REGISTRY }}/${{ github.repository_owner }}/kubeclaw-${{ matrix.name }}@${{ steps.build.outputs.digest }}\`" >> $GITHUB_STEP_SUMMARY
+  bundle-skills:
+    name: Package & Publish Skill Bundles
+    runs-on: ubuntu-latest
+    needs: [detect-build-inputs, build, reliability, update-policy]
+    if: |
+      always() && needs.reliability.result == 'success' && needs.update-policy.result == 'success' &&
+      needs.detect-build-inputs.outputs.deployment_inputs_changed == 'true' &&
+      (needs.build.result == 'success' ||
+       (needs.build.result == 'skipped' && needs.detect-build-inputs.outputs.image_inputs_changed == 'false')) &&
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    permissions:
+      contents: write
+    env:
+      BUNDLE_RELEASE_TAG: code-bundles-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install bundle dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Build plugin isolation launcher
+        run: npm run plugin-system:sandbox:build
+
+      - name: Build Nova, Buster, and Prism bundles
+        run: |
+          mkdir -p dist
+          bash ./scripts/package-agent-skill-bundle.sh nova "dist/nova-${GITHUB_SHA}.tgz" "${GITHUB_SHA}"
+          bash ./scripts/package-agent-skill-bundle.sh buster "dist/buster-${GITHUB_SHA}.tgz" "${GITHUB_SHA}"
+          bash ./scripts/package-agent-skill-bundle.sh prism "dist/prism-${GITHUB_SHA}.tgz" "${GITHUB_SHA}"
+          (
+            cd dist
+            sha256sum "nova-${GITHUB_SHA}.tgz" "buster-${GITHUB_SHA}.tgz" "prism-${GITHUB_SHA}.tgz" > "SHA256SUMS-${GITHUB_SHA}.txt"
+          )
+
+      - name: Record bundle checksums and source identity
+        run: node scripts/updates/code-release.mjs dist "$GITHUB_SHA" "$GITHUB_REPOSITORY"
+
+      - name: Ensure bundle release exists
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view "$BUNDLE_RELEASE_TAG" >/dev/null 2>&1 \
+            || gh release create "$BUNDLE_RELEASE_TAG" \
+              --target "$GITHUB_SHA" \
+              --title "Agent code bundles $GITHUB_RUN_ID/$GITHUB_RUN_ATTEMPT" \
+              --notes "Durable Nova, Buster, and Prism runtime bundle release assets."
+
+      - name: Upload bundle assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload "$BUNDLE_RELEASE_TAG" \
+            "dist/nova-${GITHUB_SHA}.tgz#nova-${GITHUB_SHA}.tgz" \
+            "dist/buster-${GITHUB_SHA}.tgz#buster-${GITHUB_SHA}.tgz" \
+            "dist/prism-${GITHUB_SHA}.tgz#prism-${GITHUB_SHA}.tgz" \
+            "dist/SHA256SUMS-${GITHUB_SHA}.txt#SHA256SUMS-${GITHUB_SHA}.txt" \
+            "dist/runtime-code.json#runtime-code.json"
+
+      - name: Summary
+        run: |
+          echo "### Skill bundles published" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- https://github.com/${{ github.repository }}/releases/download/${BUNDLE_RELEASE_TAG}/nova-${GITHUB_SHA}.tgz" >> $GITHUB_STEP_SUMMARY
+          echo "- https://github.com/${{ github.repository }}/releases/download/${BUNDLE_RELEASE_TAG}/buster-${GITHUB_SHA}.tgz" >> $GITHUB_STEP_SUMMARY
+          echo "- https://github.com/${{ github.repository }}/releases/download/${BUNDLE_RELEASE_TAG}/prism-${GITHUB_SHA}.tgz" >> $GITHUB_STEP_SUMMARY
+          echo "- https://github.com/${{ github.repository }}/releases/download/${BUNDLE_RELEASE_TAG}/SHA256SUMS-${GITHUB_SHA}.txt" >> $GITHUB_STEP_SUMMARY
+  prism-live-acceptance:
+    name: Prism leased-namespace service smoke
+    runs-on: ubuntu-latest
+    needs: build
+    if: ${{ vars.PRISM_LIVE_ACCEPTANCE_ENABLED == 'true' }}
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: azure/setup-kubectl@776406bce94f63e41d621b960d78ee25c8b76ede # v4
+      - uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4 # v4
+      - name: Configure controller-lease client
+        env:
+          KUBECONFIG_B64: ${{ secrets.PRISM_TEST_KUBECONFIG_B64 }}
+        run: |
+          set -euo pipefail
+          test -n "$KUBECONFIG_B64"
+          mkdir -p "$HOME/.kube"
+          printf '%s' "$KUBECONFIG_B64" | base64 -d > "$HOME/.kube/config"
+          chmod 600 "$HOME/.kube/config"
+          test "$(kubectl auth can-i create namespaces)" = no
+          test "$(kubectl auth can-i create busternamespaceleases.kubeclaw.forgestack.ai -n kubeclaw)" = yes
+      - name: Configure published Prism images
+        run: |
+          set -euo pipefail
+          tag="candidate-${GITHUB_SHA}"
+          for kind in control studio worker ingestion; do
+            upper="${kind^^}"
+            echo "PRISM_${upper}_IMAGE_REPOSITORY=ghcr.io/${GITHUB_REPOSITORY_OWNER}/kubeclaw-prism-${kind}" >> "$GITHUB_ENV"
+            echo "PRISM_${upper}_IMAGE_TAG=${tag}" >> "$GITHUB_ENV"
+          done
+      - name: Run real Prism acceptance
+        env:
+          PRISM_E2E_USER: ${{ secrets.PRISM_E2E_USER }}
+          PRISM_E2E_USE_LEASE: "true"
+        run: bash scripts/deploy.sh prism-e2e
+  preserve-receipts:
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    uses: ./.github/workflows/publish-image-receipts.yaml
+    with:
+      family: runtime
+    permissions:
+      contents: write
+      actions: read

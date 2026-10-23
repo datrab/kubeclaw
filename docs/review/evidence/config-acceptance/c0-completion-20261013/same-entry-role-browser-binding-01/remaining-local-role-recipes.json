@@ -1,0 +1,540 @@
+{
+  "status": "Not declared/supported in this combined cut. LOCAL explicit source recipe completion, not generic external blocker",
+  "roles": [
+    "nova",
+    "prism"
+  ],
+  "originalGatewayFieldIds": [
+    "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-ENABLED",
+    "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-EXPERIMENTAL-SESSIONMEMORY",
+    "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-SOURCES",
+    "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-PROVIDER",
+    "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-BASEURL",
+    "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-SOURCE",
+    "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-PROVIDER",
+    "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-REMOTE-APIKEY-ID",
+    "DLV-GATEWAY-OPENCLAW-MEMORY-SEARCH-MODEL",
+    "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-THINKINGDEFAULT",
+    "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-REASONINGDEFAULT",
+    "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELPOLICY-ALLOW",
+    "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-6-ASTRA-AGENTRUNTIME-ID",
+    "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-6-SOL-AGENTRUNTIME-ID",
+    "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-5-AGENTRUNTIME-ID",
+    "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-WORKSPACE",
+    "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-EMBEDDEDAGENT-EXECUTIONCONTRACT",
+    "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-MODE",
+    "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTPRUNING-TTL",
+    "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MODE",
+    "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-KEEPRECENTTOKENS",
+    "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-COMPACTION-MEMORYFLUSH-ENABLED",
+    "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXCONCURRENT",
+    "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-ARCHIVEAFTERMINUTES",
+    "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-RUNTIMEOUTSECONDS",
+    "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-SUBAGENTS-MAXSPAWNDEPTH",
+    "DLV-GATEWAY-OPENCLAW-AGENTS-DEFAULTS-CONTEXTINJECTION",
+    "DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SUBAGENTS-ALLOWAGENTS",
+    "DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLS",
+    "DLV-GATEWAY-OPENCLAW-AGENTS-ENTRIES-MAIN-SKILLSLIMITS-MAXSKILLSPROMPTCHARS",
+    "DLV-GATEWAY-OPENCLAW-ACP-ENABLED",
+    "DLV-GATEWAY-OPENCLAW-ACP-BACKEND",
+    "DLV-GATEWAY-OPENCLAW-ACP-DEFAULTAGENT",
+    "DLV-GATEWAY-OPENCLAW-ACP-ALLOWEDAGENTS",
+    "DLV-GATEWAY-OPENCLAW-TOOLS-PROFILE",
+    "DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-VISIBILITY",
+    "DLV-GATEWAY-OPENCLAW-TOOLS-SESSIONS-SPAWN-ATTACHMENTS-ENABLED",
+    "DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-TIMEOUTSECONDS",
+    "DLV-GATEWAY-OPENCLAW-TOOLS-EXEC-MODE",
+    "DLV-GATEWAY-OPENCLAW-TOOLS-AGENTTOAGENT-ENABLED",
+    "DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVE",
+    "DLV-GATEWAY-OPENCLAW-COMMANDS-NATIVESKILLS",
+    "DLV-GATEWAY-OPENCLAW-COMMANDS-RESTART",
+    "DLV-GATEWAY-OPENCLAW-SESSION-DMSCOPE",
+    "DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-MODE",
+    "DLV-GATEWAY-OPENCLAW-SESSION-RESETBYTYPE-GROUP-IDLEMINUTES",
+    "DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-ENABLED",
+    "DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-IDLEHOURS",
+    "DLV-GATEWAY-OPENCLAW-SESSION-THREADBINDINGS-MAXAGEHOURS",
+    "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GROUPPOLICY",
+    "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-STREAMING-MODE",
+    "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-INBOUNDWORKER-RUNTIMEOUTMS",
+    "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-GUILDS-REQUIREMENTION",
+    "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-ENABLED",
+    "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-IDLEHOURS",
+    "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-THREADBINDINGS-SPAWNSESSIONS",
+    "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-ENABLED",
+    "DLV-GATEWAY-OPENCLAW-CHANNELS-DISCORD-EXECAPPROVALS-TARGET",
+    "DLV-GATEWAY-OPENCLAW-GATEWAY-MODE",
+    "DLV-GATEWAY-OPENCLAW-GATEWAY-BIND",
+    "DLV-GATEWAY-OPENCLAW-GATEWAY-CONTROLUI-DANGEROUSLYALLOWHOSTHEADERORIGINFALLBACK",
+    "DLV-GATEWAY-OPENCLAW-GATEWAY-AUTH-MODE",
+    "DLV-GATEWAY-OPENCLAW-GATEWAY-TOOLS-ALLOW",
+    "DLV-GATEWAY-OPENCLAW-GATEWAY-TAILSCALE-MODE",
+    "DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-ENABLED",
+    "DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-ACPX-CONFIG-PERMISSIONMODE",
+    "DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-OPENAI-ENABLED",
+    "DLV-GATEWAY-OPENCLAW-PLUGINS-ENTRIES-CODEX-ENABLED",
+    "DLV-GATEWAY-OPENCLAW-MESSAGES-GROUPCHAT-VISIBLEREPLIES",
+    "DLV-NATIVE-OPENCLAW-AGENTS-DEFAULTS-TIMEOUTSECONDS"
+  ],
+  "originalGatewayCaseIds": [
+    "DLV-CASE-GATEWAY-POLICY-PROFILES",
+    "DLV-CASE-GATEWAY-PERSISTENT-AUTHORITY",
+    "DLV-CASE-GATEWAY-PINNED-VALIDATION",
+    "DLV-GW-FIELD-MEMORY-SEARCH-ENABLED",
+    "DLV-GW-FIELD-MEMORY-SEARCH-EXPERIMENTAL-SESSIONMEMORY",
+    "DLV-GW-FIELD-MEMORY-SEARCH-SOURCES",
+    "DLV-GW-FIELD-MEMORY-SEARCH-PROVIDER",
+    "DLV-GW-FIELD-MEMORY-SEARCH-REMOTE-BASEURL",
+    "DLV-GW-FIELD-MEMORY-SEARCH-REMOTE-APIKEY-SOURCE",
+    "DLV-GW-FIELD-MEMORY-SEARCH-REMOTE-APIKEY-PROVIDER",
+    "DLV-GW-FIELD-MEMORY-SEARCH-REMOTE-APIKEY-ID",
+    "DLV-GW-FIELD-MEMORY-SEARCH-MODEL",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-THINKINGDEFAULT",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-REASONINGDEFAULT",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-MODELPOLICY-ALLOW",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-6-ASTRA-AGENTRUNTIME-ID",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-6-SOL-AGENTRUNTIME-ID",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-MODELS-OPENAI-GPT-5-5-AGENTRUNTIME-ID",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-WORKSPACE",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-EMBEDDEDAGENT-EXECUTIONCONTRACT",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-CONTEXTPRUNING-MODE",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-CONTEXTPRUNING-TTL",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-COMPACTION-MODE",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-COMPACTION-KEEPRECENTTOKENS",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-COMPACTION-MEMORYFLUSH-ENABLED",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-SUBAGENTS-MAXCONCURRENT",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-SUBAGENTS-ARCHIVEAFTERMINUTES",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-SUBAGENTS-RUNTIMEOUTSECONDS",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-SUBAGENTS-MAXSPAWNDEPTH",
+    "DLV-GW-FIELD-AGENTS-DEFAULTS-CONTEXTINJECTION",
+    "DLV-GW-FIELD-AGENTS-ENTRIES-MAIN-SUBAGENTS-ALLOWAGENTS",
+    "DLV-GW-FIELD-AGENTS-ENTRIES-MAIN-SKILLS",
+    "DLV-GW-FIELD-AGENTS-ENTRIES-MAIN-SKILLSLIMITS-MAXSKILLSPROMPTCHARS",
+    "DLV-GW-FIELD-ACP-ENABLED",
+    "DLV-GW-FIELD-ACP-BACKEND",
+    "DLV-GW-FIELD-ACP-DEFAULTAGENT",
+    "DLV-GW-FIELD-ACP-ALLOWEDAGENTS",
+    "DLV-GW-FIELD-TOOLS-PROFILE",
+    "DLV-GW-FIELD-TOOLS-SESSIONS-VISIBILITY",
+    "DLV-GW-FIELD-TOOLS-SESSIONS-SPAWN-ATTACHMENTS-ENABLED",
+    "DLV-GW-FIELD-TOOLS-EXEC-TIMEOUTSECONDS",
+    "DLV-GW-FIELD-TOOLS-EXEC-MODE",
+    "DLV-GW-FIELD-TOOLS-AGENTTOAGENT-ENABLED",
+    "DLV-GW-FIELD-COMMANDS-NATIVE",
+    "DLV-GW-FIELD-COMMANDS-NATIVESKILLS",
+    "DLV-GW-FIELD-COMMANDS-RESTART",
+    "DLV-GW-FIELD-SESSION-DMSCOPE",
+    "DLV-GW-FIELD-SESSION-RESETBYTYPE-GROUP-MODE",
+    "DLV-GW-FIELD-SESSION-RESETBYTYPE-GROUP-IDLEMINUTES",
+    "DLV-GW-FIELD-SESSION-THREADBINDINGS-ENABLED",
+    "DLV-GW-FIELD-SESSION-THREADBINDINGS-IDLEHOURS",
+    "DLV-GW-FIELD-SESSION-THREADBINDINGS-MAXAGEHOURS",
+    "DLV-GW-FIELD-CHANNELS-DISCORD-GROUPPOLICY",
+    "DLV-GW-FIELD-CHANNELS-DISCORD-STREAMING-MODE",
+    "DLV-GW-FIELD-CHANNELS-DISCORD-INBOUNDWORKER-RUNTIMEOUTMS",
+    "DLV-GW-FIELD-CHANNELS-DISCORD-GUILDS-REQUIREMENTION",
+    "DLV-GW-FIELD-CHANNELS-DISCORD-THREADBINDINGS-ENABLED",
+    "DLV-GW-FIELD-CHANNELS-DISCORD-THREADBINDINGS-IDLEHOURS",
+    "DLV-GW-FIELD-CHANNELS-DISCORD-THREADBINDINGS-SPAWNSESSIONS",
+    "DLV-GW-FIELD-CHANNELS-DISCORD-EXECAPPROVALS-ENABLED",
+    "DLV-GW-FIELD-CHANNELS-DISCORD-EXECAPPROVALS-TARGET",
+    "DLV-GW-FIELD-GATEWAY-MODE",
+    "DLV-GW-FIELD-GATEWAY-BIND",
+    "DLV-GW-FIELD-GATEWAY-CONTROLUI-DANGEROUSLYALLOWHOSTHEADERORIGINFALLBACK",
+    "DLV-GW-FIELD-GATEWAY-AUTH-MODE",
+    "DLV-GW-FIELD-GATEWAY-TOOLS-ALLOW",
+    "DLV-GW-FIELD-GATEWAY-TAILSCALE-MODE",
+    "DLV-GW-FIELD-PLUGINS-ENTRIES-ACPX-ENABLED",
+    "DLV-GW-FIELD-PLUGINS-ENTRIES-ACPX-CONFIG-PERMISSIONMODE",
+    "DLV-GW-FIELD-PLUGINS-ENTRIES-OPENAI-ENABLED",
+    "DLV-GW-FIELD-PLUGINS-ENTRIES-CODEX-ENABLED",
+    "DLV-GW-FIELD-MESSAGES-GROUPCHAT-VISIBLEREPLIES",
+    "DLV-CASE-AGENT-TIMEOUT-PROFILES",
+    "DLV-CASE-AGENT-TIMEOUT-MISSING-OVERRIDE-RECOVERY",
+    "DLV-GW-FIELD-DLV-NATIVE-OPENCLAW-AGENTS-DEFAULTS-TIMEOUTSECONDS"
+  ],
+  "actualSourceInputs": [
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/templates/configmap-gateway.yaml",
+      "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4",
+      "lines": [
+        {
+          "line": 278,
+          "text": "          {{- if eq (.Values.agentRole | default \"\") \"buster\" }},"
+        },
+        {
+          "line": 279,
+          "text": "          \"kubeclaw-agent-observer\""
+        },
+        {
+          "line": 281,
+          "text": "          {{- if eq (.Values.agentRole | default \"\") \"prism\" }},"
+        },
+        {
+          "line": 282,
+          "text": "          \"kubeclaw-prism\""
+        },
+        {
+          "line": 301,
+          "text": "          {{- if eq (.Values.agentRole | default \"\") \"buster\" }},"
+        },
+        {
+          "line": 302,
+          "text": "          \"kubeclaw-agent-observer\": {"
+        },
+        {
+          "line": 323,
+          "text": "          {{- if eq (.Values.agentRole | default \"\") \"prism\" }},"
+        },
+        {
+          "line": 324,
+          "text": "          \"kubeclaw-prism\": {"
+        }
+      ]
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/templates/deployment.yaml",
+      "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+      "lines": [
+        {
+          "line": 6,
+          "text": "  {{- if eq .Values.agentRole \"prism\" }}"
+        },
+        {
+          "line": 27,
+          "text": "        {{- if eq .Values.agentRole \"buster\" }}"
+        },
+        {
+          "line": 46,
+          "text": "      {{- if eq .Values.agentRole \"buster\" }}"
+        },
+        {
+          "line": 237,
+          "text": "              if (process.env.AGENT_ROLE === 'buster') managedPluginAllow.push('kubeclaw-agent-observer');"
+        },
+        {
+          "line": 238,
+          "text": "              if (process.env.AGENT_ROLE === 'prism') managedPluginAllow.push('kubeclaw-prism');"
+        },
+        {
+          "line": 247,
+          "text": "                  && config.plugins.entries['kubeclaw-agent-observer']) {"
+        },
+        {
+          "line": 248,
+          "text": "                delete config.plugins.entries['kubeclaw-agent-observer'];"
+        },
+        {
+          "line": 250,
+          "text": "                console.log('==> Removed Buster-only observer configuration from non-Buster agent');"
+        },
+        {
+          "line": 253,
+          "text": "                  && config?.plugins?.entries?.['kubeclaw-prism']) {"
+        },
+        {
+          "line": 254,
+          "text": "                delete config.plugins.entries['kubeclaw-prism'];"
+        },
+        {
+          "line": 266,
+          "text": "              exec node /app/openclaw.mjs doctor --fix --non-interactive"
+        },
+        {
+          "line": 277,
+          "text": "              value: {{ .Values.agentRole | default \"default\" | quote }}"
+        },
+        {
+          "line": 443,
+          "text": "              echo \"==> 4. Config Setup\""
+        },
+        {
+          "line": 457,
+          "text": "              const obsolete = '/app/openclaw-plugins/kubeclaw-agent-observer';"
+        },
+        {
+          "line": 467,
+          "text": "                console.log('    removed obsolete kubeclaw-agent-observer plugin load path');"
+        },
+        {
+          "line": 1152,
+          "text": "              value: {{ .Values.agentRole | default \"default\" | quote }}"
+        },
+        {
+          "line": 1154,
+          "text": "              value: {{ .Values.agentRole | default \"default\" | quote }}"
+        },
+        {
+          "line": 1175,
+          "text": "            {{- if .Values.codeBundle.auth.existingSecret }}"
+        },
+        {
+          "line": 1179,
+          "text": "                  name: {{ .Values.codeBundle.auth.existingSecret }}"
+        },
+        {
+          "line": 1180,
+          "text": "                  key: {{ .Values.codeBundle.auth.existingSecretKey | default \"token\" }}"
+        },
+        {
+          "line": 1193,
+          "text": "            {{- if .Values.stitch.existingSecret }}"
+        },
+        {
+          "line": 1246,
+          "text": "      shareProcessNamespace: {{ ne (lower (.Values.agentRole | default \"nova\")) \"buster\" }}"
+        },
+        {
+          "line": 1265,
+          "text": "              value: {{ .Values.agentRole | default \"default\" | quote }}"
+        },
+        {
+          "line": 1267,
+          "text": "              value: {{ .Values.agentRole | default \"default\" | quote }}"
+        },
+        {
+          "line": 1279,
+          "text": "              value: {{ .Values.agentRole | default \"default\" | quote }}"
+        },
+        {
+          "line": 1314,
+          "text": "            {{- $agentRole := required (printf \"capabilityProviders.%s.agentRole is required\" $providerId) $provider.agentRole }}"
+        },
+        {
+          "line": 1315,
+          "text": "            {{- $service := include \"kubeclaw.agentServiceName\" $agentRole }}"
+        },
+        {
+          "line": 1345,
+          "text": "            {{- $_ := set $catalog $providerId (dict \"agentRole\" $agentRole \"capabilities\" $routes) }}"
+        },
+        {
+          "line": 1528,
+          "text": "        {{- if or (gt (int $registryWorkers) 1) (and (eq .Values.agentRole \"buster\") (ne (int $registryWorkers) 1)) }}"
+        },
+        {
+          "line": 1542,
+          "text": "          args: [\"-c\", \"/etc/kubeclaw-worker-trust/envoy.yaml\", \"--service-cluster\", {{ printf \"kubeclaw-%s\" .Values.agentRole | quote }}]"
+        },
+        {
+          "line": 1545,
+          "text": "            {{- if eq .Values.agentRole \"buster\" }}"
+        },
+        {
+          "line": 1547,
+          "text": "            {{- else if eq .Values.agentRole \"prism\" }}"
+        },
+        {
+          "line": 1581,
+          "text": "        {{- if eq .Values.agentRole \"buster\" }}"
+        },
+        {
+          "line": 1626,
+          "text": "            secretName: {{ .Values.agent.git.secretName | default (printf \"git-deploy-key-%s\" (.Values.agentRole | default \"default\")) }}"
+        },
+        {
+          "line": 1662,
+          "text": "            secretName: {{ required \"archviewer.existingSecret is required\" .Values.archviewer.existingSecret | quote }}"
+        }
+      ]
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/values.yaml",
+      "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+      "lines": [
+        {
+          "line": 11,
+          "text": "#   - agentRole"
+        },
+        {
+          "line": 12,
+          "text": "#   - auth.existingSecret + auth.existingSecretKey"
+        },
+        {
+          "line": 13,
+          "text": "#   - litellm.existingSecret + litellm.existingSecretKey"
+        },
+        {
+          "line": 18,
+          "text": "agentRole: \"nova\""
+        },
+        {
+          "line": 43,
+          "text": "    existingSecret: \"\""
+        },
+        {
+          "line": 44,
+          "text": "    existingSecretKey: \"token\""
+        },
+        {
+          "line": 73,
+          "text": "  # Run OpenClaw doctor --fix as a blocking init migration while the gateway is"
+        },
+        {
+          "line": 121,
+          "text": "  #   agentRole: buster"
+        },
+        {
+          "line": 152,
+          "text": "# REQUIRED: Provide either token directly or via existingSecret."
+        },
+        {
+          "line": 153,
+          "text": "# For production, always use existingSecret with SOPS or sealed-secrets."
+        },
+        {
+          "line": 159,
+          "text": "  existingSecret: \"\""
+        },
+        {
+          "line": 160,
+          "text": "  existingSecretKey: \"gatewayToken\""
+        },
+        {
+          "line": 173,
+          "text": "  existingSecret: \"\""
+        },
+        {
+          "line": 174,
+          "text": "  existingSecretKey: \"litellmApiKey\""
+        },
+        {
+          "line": 182,
+          "text": "  existingSecret: \"\""
+        },
+        {
+          "line": 183,
+          "text": "  existingSecretKey: \"stitchApiKey\""
+        },
+        {
+          "line": 197,
+          "text": "  existingSecret: \"\""
+        },
+        {
+          "line": 198,
+          "text": "  existingSecretKey: \"discordToken\""
+        },
+        {
+          "line": 211,
+          "text": "  model:"
+        },
+        {
+          "line": 212,
+          "text": "    primary: \"openai/gpt-5.6-sol\""
+        },
+        {
+          "line": 519,
+          "text": "# Supply Secret/<existingSecret> with an htpasswd key outside the repository."
+        },
+        {
+          "line": 524,
+          "text": "  existingSecret: \"\""
+        }
+      ]
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/my-values/nova-values.yaml",
+      "sha256": "0fcc239368db8830868f38d7be350580575e8c241bd6435f79c9f9b931ff6140",
+      "lines": [
+        {
+          "line": 6,
+          "text": "agentRole: \"nova\""
+        },
+        {
+          "line": 37,
+          "text": "    existingSecret: \"github-bundle-reader\""
+        },
+        {
+          "line": 38,
+          "text": "    existingSecretKey: \"token\""
+        },
+        {
+          "line": 41,
+          "text": "  existingSecret: \"openclaw-shared-secrets\""
+        },
+        {
+          "line": 42,
+          "text": "  existingSecretKey: \"gatewayToken-nova\""
+        },
+        {
+          "line": 45,
+          "text": "  existingSecret: \"openclaw-shared-secrets\""
+        },
+        {
+          "line": 46,
+          "text": "  existingSecretKey: \"stitchApiKey\""
+        },
+        {
+          "line": 49,
+          "text": "  existingSecret: \"openclaw-shared-secrets\""
+        },
+        {
+          "line": 50,
+          "text": "  existingSecretKey: \"litellmApiKey\""
+        },
+        {
+          "line": 54,
+          "text": "  existingSecret: \"openclaw-shared-secrets\""
+        },
+        {
+          "line": 55,
+          "text": "  existingSecretKey: \"discordToken-nova\""
+        },
+        {
+          "line": 71,
+          "text": "  model:"
+        },
+        {
+          "line": 72,
+          "text": "    primary: \"openai/gpt-6-astra\""
+        },
+        {
+          "line": 92,
+          "text": "  existingSecret: nova-archviewer-auth"
+        },
+        {
+          "line": 98,
+          "text": "    agentRole: buster"
+        },
+        {
+          "line": 109,
+          "text": "    agentRole: prism"
+        }
+      ]
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/my-values/prism-values.yaml",
+      "sha256": "9462337fa87add8927e3e4eb9888fa197a25dea40c1598fa5017b7e5d26b11d2",
+      "lines": [
+        {
+          "line": 4,
+          "text": "    repository: ghcr.io/datrab/kubeclaw-prism-control"
+        },
+        {
+          "line": 8,
+          "text": "    repository: ghcr.io/datrab/kubeclaw-prism-studio"
+        },
+        {
+          "line": 12,
+          "text": "    repository: ghcr.io/datrab/kubeclaw-prism-worker"
+        },
+        {
+          "line": 16,
+          "text": "    repository: ghcr.io/datrab/kubeclaw-prism-ingestion"
+        },
+        {
+          "line": 30,
+          "text": "  existingSecret: prism-postgresql-auth"
+        }
+      ]
+    }
+  ],
+  "finiteNextDefinition": [
+    "For each actual selected role/instance produce a complete sameexistingChartprofile, own generated source/context ref +closed contextschema arm, selected model/endpoint sameauthor aliases and actual conditional Astra branch",
+    "Derive role plugin entries/allowlist/skills from exact actual Chart ConfigMap+startup and image/source inventory. Nova neither Buster observer nor Prism plugin; Prism has exact kubeclaw-prism controlUrl branch. No fabricated installed membership",
+    "Same original SOURCE/PROVIDER/ID and provider allowlist/native refinement/confidential revision-retention/access grants; role-specific Secret locator receipts never resourceVersion/latest or credential bytes",
+    "Full source native bootstrap/model/commands/Discord rules and doctor ordering for the role; unknown roles and borrowed B contexts reject before any caller",
+    "Add explicit sameversion root schema/owner/profile/context equality, complete known role A/B and negative cases tied to original roster; authentic image/installation/source/grants remain activation receipts"
+  ],
+  "wholeGatewayC0Closed": false
+}

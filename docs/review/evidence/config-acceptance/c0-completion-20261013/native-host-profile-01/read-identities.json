@@ -1,0 +1,311 @@
+{
+  "time": "2026-10-14T04:45:37.745394+00:00",
+  "inputs": [
+    {
+      "path": "scripts/native-worker-node-policy.mjs",
+      "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+      "bytes": 3383
+    },
+    {
+      "path": "scripts/native-worker-node-capacity.mjs",
+      "sha256": "ad4635917bf9d1679eeb427e933fe423ed63f604b0cf57cc09c40be497d0e149",
+      "bytes": 4800
+    },
+    {
+      "path": "scripts/render-native-worker-node.mjs",
+      "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc",
+      "bytes": 3979
+    },
+    {
+      "path": "scripts/prepare-native-worker-pools.mjs",
+      "sha256": "af6c04981c6876e4617aed8a3c95027a5d3a066489c880825a730a528f9a94d3",
+      "bytes": 9521
+    },
+    {
+      "path": "scripts/native-worker-node-preflight.mjs",
+      "sha256": "e17c6c2570d3a4926b063330adfbdb67f3c0014915f570d6ad8b95333e1c2e56",
+      "bytes": 3497
+    },
+    {
+      "path": "scripts/native-worker-deployment-preflight.mjs",
+      "sha256": "d8e600f778bb999fb822b6aa67c3de937f87b45133ab7eef884d9dc8dc38c261",
+      "bytes": 3236
+    },
+    {
+      "path": "scripts/native-buster-deployment-preflight.mjs",
+      "sha256": "23b5f629c97ea478a3a943b937548c9cf00f1f1348b9e405f24fb955a85991c9",
+      "bytes": 3250
+    },
+    {
+      "path": "scripts/install-native-worker-pools-stage.sh",
+      "sha256": "e70f3fb2c1be7c2d90d5e686851e5b8e61c3a3ef64b3365eb20f960b89e4491a",
+      "bytes": 3637
+    },
+    {
+      "path": "scripts/activate-native-worker-ax41.sh",
+      "sha256": "61d6a0ee66a726237b81a14b1b29b3bf074af15040f65ac0eeb5b9b4cc94f7cd",
+      "bytes": 6676
+    },
+    {
+      "path": "scripts/build-native-worker-nri.mjs",
+      "sha256": "f74f19215dbf5a6f6fff57aa7444d47f0051f2c20fb50c85a09a459b888a54db",
+      "bytes": 1185
+    },
+    {
+      "path": "scripts/repair-native-worker-pools-lifetime.sh",
+      "sha256": "c01a7b8f1e16e3bcf649a78ca5dd561404edb43632173a63c5d76013cb24c423",
+      "bytes": 2949
+    },
+    {
+      "path": "scripts/prepare-ax41-buster-browser.sh",
+      "sha256": "13524f59b026a81254ea8435d2d60a0b977382f137fb8632687816eeb3b98ae8",
+      "bytes": 1484
+    },
+    {
+      "path": "scripts/install/README.md",
+      "sha256": "c04e1aabd8e5591034e7c36343759a869f4c72e863b99cea0ccd864be6adc6d7",
+      "bytes": 7282
+    },
+    {
+      "path": "scripts/gitops.mjs",
+      "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+      "bytes": 15348
+    },
+    {
+      "path": "my-values/infra/native-worker-pools.yaml",
+      "sha256": "3fdf392b1e755b7b3a5b29954b0feb786140956209de6f6011adc2412aeb0888",
+      "bytes": 831
+    },
+    {
+      "path": "my-values/infra/native-worker-pools-ax41.yaml",
+      "sha256": "47b2aa2f998dd741a31a914cf3fb3a293a335863679734656de1a5b1c366696c",
+      "bytes": 851
+    },
+    {
+      "path": "charts/kubeclaw/templates/_buster-native.tpl",
+      "sha256": "06eaa44435684f2af9a14365b149ecef0c5cab1a0929413d5edbc2b73e8247e6",
+      "bytes": 2737
+    },
+    {
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+      "bytes": 85514
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+      "bytes": 14944
+    },
+    {
+      "path": "gitops/production/overlays/prism-ax41.yaml",
+      "sha256": "df419646a27cd9542cb2fbda446423e336b4777bac89d6e840f94c136132e401",
+      "bytes": 311
+    },
+    {
+      "path": "tools/native-worker-nri/main.go",
+      "sha256": "3d0c3149fc703f6c8e2fd3392b7f8e2e1bbd1df1b18215c2857cb2cddf417531",
+      "bytes": 5682
+    },
+    {
+      "path": "tools/native-worker-nri/go.mod",
+      "sha256": "2e4ff78b7fb9a5cd83284d4b002104d7035c67d404de25082c3681945419bd73",
+      "bytes": 1039
+    },
+    {
+      "path": "versions.json",
+      "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d",
+      "bytes": 12594
+    },
+    {
+      "path": "skills/worker/core/worker/native-pool-policy.ts",
+      "sha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+      "bytes": 2508
+    },
+    {
+      "path": "skills/worker/core/worker/native-runtime-identity.ts",
+      "sha256": "4bb8600bf48477411e75148e6edbd0dae345809316d60a3d3cd4b8ad6f8a057e",
+      "bytes": 1345
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-pool.ts",
+      "sha256": "2a002b796bae216210186f258d32f5dd267ec10a4940f4d0fc2f12ea72bd93ee",
+      "bytes": 3100
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-scope.ts",
+      "sha256": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c",
+      "bytes": 9294
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-observation.ts",
+      "sha256": "903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c",
+      "bytes": 3048
+    },
+    {
+      "path": "skills/worker/core/worker/resource-reservations.ts",
+      "sha256": "781ba82f68942a44ba3c40652adffb76d8ceb369c279909dc826fbc361fd63e9",
+      "bytes": 1474
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-launcher.c",
+      "sha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "bytes": 5297
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-store.ts",
+      "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "bytes": 11075
+    },
+    {
+      "path": "skills/worker/core/worker/native-owned-children.ts",
+      "sha256": "631594461634def759607c57e4a7407c062bd1d5e837a28d7f83c5fcde5e204d",
+      "bytes": 4305
+    },
+    {
+      "path": "skills/worker/core/worker/native-hierarchy-events.ts",
+      "sha256": "de9626356ef4ffca272c1bb534b29e13c9a3845df0ff34b33783b71320e32aea",
+      "bytes": 1517
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-config.ts",
+      "sha256": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835",
+      "bytes": 4936
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad",
+      "bytes": 5244
+    },
+    {
+      "path": "skills/prism/config/native-worker.ts",
+      "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+      "bytes": 3841
+    },
+    {
+      "path": "skills/prism/config/resource-policy.ts",
+      "sha256": "46d4daca088d7f716a202abc5e94794830d601db47518479da19056ed5fc652f",
+      "bytes": 1300
+    },
+    {
+      "path": "skills/prism/server/worker.ts",
+      "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d",
+      "bytes": 2915
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-whole-c0-readiness-review-01/whole-universe-structural-navigation.json",
+      "sha256": "a41d6c7b0fa2e2fb35e20ecab4de05d195192db473896d13ad451e32d1b69ea1",
+      "bytes": 16902205
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-03/package-manifest.json",
+      "sha256": "ea11b5dad12b6432da0150c3f4f4ae9179a4b3107c4e79ba2519708bdeddc4b1",
+      "bytes": 12889
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c3-buster-complete-profile-03/README.md",
+      "sha256": "d841d2c90ada3ca962f8ef17ce315bba469812ad213452666c464b352f4bb525",
+      "bytes": 10684
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/manifest.json",
+      "sha256": "0fcb939f4b2df3e4de37962259bf98114af4711b85c3186d435a5561871f40c1",
+      "bytes": 40620
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/buster-remote-plan-profile-01/RECEIVING-CONTRACT.md",
+      "sha256": "60120777ccc06ce7d1f1edd95a6fdc9198f06ddba1760576359a80d155f1ed65",
+      "bytes": 17821
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-buster-remote-plan-profile-review-01/README.md",
+      "sha256": "c6ab5a04c887e359edf1ba6f8e406b960fee18a194e1f6e7b70b4eba075abb47",
+      "bytes": 13443
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/four-source-boundary-contracts-01/README.md",
+      "sha256": "c5752106300921c931b13ebd74edbfc71ee0b20f825a59633851a4326c9fff90",
+      "bytes": 7836
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/manifest.json",
+      "sha256": "519426534936fe7409a8386220b7a497ae5a781b0f855b14cb1de7ed93b54834",
+      "bytes": 172840
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/config/pipeline.config.json",
+      "sha256": "05addb8209de125deee1f5c2ad67528e0ae3b26b04c2994c021c8389ceebe5fa",
+      "bytes": 8634
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/config/components/buster-engine.config.json",
+      "sha256": "db45c50264d80fad1972cae55d925bb281389ec02992b0f61f7be26b0dd07252",
+      "bytes": 1177495
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/stand/config/components/prism-worker.config.json",
+      "sha256": "61da3c7b2b81033ed9c350f593cf1ab58f3630a39b109a9b251f1b2e0ba28220",
+      "bytes": 1581
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/schemas/pipeline-entry.schema.json",
+      "sha256": "145773dc274eb2bc6b12ea868f2fb7299a64b6a83f7419401685184829056017",
+      "bytes": 10346
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/file-set-stand.json",
+      "sha256": "ec250f06fca25db3f9e2423b0be60cfff6bc3a2fdf0a53bd475d73e4ed5104ce",
+      "bytes": 73490
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-role-browser-binding-01/RECEIVING-ABI.md",
+      "sha256": "6ae06d66e7a67931ad7240e53a7c3a4419923a4efa12f6643a75e3d1345edf4a",
+      "bytes": 11837
+    },
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "sha256": "5f6ccfc4f00b08b8f3e6a80400cde0708b768161363ada396f6764ef7c8ff387",
+      "bytes": 38136508
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "sha256": "1e8be6e5bf7c327cc6a429bbc4005740f3f77408d4a44394420033991ec6c32d",
+      "bytes": 101842319
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/target-native-host-schema-20261013.json",
+      "sha256": "1ddbd67b3c3e62228c0354a3082454a61f9cbdb46848c13997c7a6a8d95799b6",
+      "bytes": 4455
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/A.yaml",
+      "sha256": "82d666d4d3794a43d1b9375e16317244fc09cc3634985cdb4b4e576fdd55be20",
+      "bytes": 483
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/native-host-definition-profiles-bce3f075/B.yaml",
+      "sha256": "97bf3708d7f47ce8a867b20db053dd40077d56aea1787df947a51f290f758394",
+      "bytes": 487
+    },
+    {
+      "path": "skills/worker/core/worker/native-node-identity.ts",
+      "sha256": "6ea78a96f82fa25ad27b26a2a48911e1e7a625fe9c0b25db76af39f49f2394f3",
+      "bytes": 923
+    },
+    {
+      "path": "node_modules/ajv/dist/2020.js",
+      "sha256": "908e9670b478b2ba126802a221b7e47006f50cf467e2c5dd7935d3dbef10a20a",
+      "bytes": 2894
+    },
+    {
+      "path": "node_modules/ajv/package.json",
+      "sha256": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989",
+      "bytes": 4405
+    },
+    {
+      "path": "node_modules/yaml/package.json",
+      "sha256": "20b8b197cbd10dad245d45e463dfe58e4c8c25a47e24bc4256ad9ab58bf35683",
+      "bytes": 3254
+    }
+  ],
+  "qualification": "source/YAML/JSON reads only; no native host/proc/cgroup/filesystem probe or renderer/systemd/Kube/API/CLI/provider activation"
+}

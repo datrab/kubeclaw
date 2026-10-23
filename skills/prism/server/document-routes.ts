@@ -9,7 +9,7 @@ import { body, json } from "./control-http.ts";
 type RouteContext = Pick<
   AuthenticatedControlContext,
   "pool" | "repository" | "actor"
->;
+ | "config">;
 
 export async function documentRoutes(
   context: RouteContext,
@@ -30,7 +30,7 @@ async function createDocument(
 ) {
   const { pool, repository, actor } = context;
 
-  const input = (await body(request)) as {
+  const input = (await body(request, context.config.maximumJsonBodyBytes)) as {
     projectId?: string;
     key?: string;
     document?: PrismDocument;
@@ -100,7 +100,7 @@ export async function documentHistoryRoutes(
       200,
       await repository.apply(
         operations[1]!,
-        (await body(request)) as never,
+        (await body(request, context.config.maximumJsonBodyBytes)) as never,
         actor.user,
       ),
     );

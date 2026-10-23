@@ -1,0 +1,60 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "onPass": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {
+        "enum": [
+          "log"
+        ]
+      },
+      "allOf": [
+        {
+          "contains": {
+            "const": "log"
+          }
+        }
+      ]
+    },
+    "onFail": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {
+        "enum": [
+          "log"
+        ]
+      },
+      "allOf": [
+        {
+          "contains": {
+            "const": "log"
+          }
+        }
+      ]
+    },
+    "onError": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {
+        "enum": [
+          "log"
+        ]
+      },
+      "allOf": [
+        {
+          "contains": {
+            "const": "log"
+          }
+        }
+      ]
+    }
+  }
+}

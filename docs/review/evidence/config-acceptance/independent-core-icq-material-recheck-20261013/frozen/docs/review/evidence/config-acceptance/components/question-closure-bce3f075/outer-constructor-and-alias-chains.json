@@ -1,0 +1,132 @@
+{
+  "outerConstructors": [
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+      "line": 82,
+      "sha256": "19a9a9ad9e3a3bbb876d2b846a3e97b738a1e9c2586e37c4bb2a80a960d46d20",
+      "sourceText": "    this.#state = new AttemptState(root, limits);"
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+      "line": 57,
+      "sha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+      "sourceText": "  const store=new FileNovaGateImportStore(path.join(root,'imports'),{recordLimits:{maximumRecords:10000,maximumBytes:1024**3,maximumRecordBytes:64*1024**2},maximumEvidenceStoreBytes:1024**3});"
+    },
+    {
+      "path": "skills/nova/core/test-gates/production.ts",
+      "line": 103,
+      "sha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1",
+      "sourceText": "    store: new FileNovaRemotePlanStore(path.join(options.stateRoot, 'dispatch'), {"
+    },
+    {
+      "path": "skills/nova/core/test-gates/production.ts",
+      "line": 112,
+      "sha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1",
+      "sourceText": "    store: new FileNovaGateImportStore(path.join(options.stateRoot, 'imports'), {"
+    },
+    {
+      "path": "skills/nova/core/observability/reconciler.ts",
+      "line": 384,
+      "sha256": "61c65951f07d04e1767fdc3114a473183ed5b968ef8d68f665b4ec5d0661dd71",
+      "sourceText": "    attemptStore: new FileDurableAttemptStore("
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "line": 64,
+      "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a",
+      "sourceText": "      new FileDurableAttemptStore(path.join(observabilityRoot, \"attempts\"), executionPolicy.stores.attempts);"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "line": 52,
+      "sha256": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005",
+      "sourceText": "    store: new FileBusterPlanJobStore(stateRoot, {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "line": 30,
+      "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad",
+      "sourceText": "  const store = new FileWorkerOwnershipStore(native.pool.ownershipRoot, {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "line": 36,
+      "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad",
+      "sourceText": "    const journal = new NativeAttemptJournal(path.join(native.pool.ownershipRoot, 'preparation-journal'), {"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "line": 42,
+      "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad",
+      "sourceText": "      owner, journal, settings, ledger: new PreparationSourceLedger(preparationSourceRoot, settings),"
+    },
+    {
+      "path": "skills/prism/server/worker.ts",
+      "line": 17,
+      "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d",
+      "sourceText": "  const store = new FileWorkerOwnershipStore(native.ownershipRoot, {"
+    },
+    {
+      "path": "skills/prism/server/native-worker-execution.ts",
+      "line": 13,
+      "sha256": "d87eb7d05cdc40f3eb353dba63236fa8c20a02adf1b70512c81944bb7cb71a56",
+      "sourceText": "  const journal = new NativeAttemptJournal(path.join(native.ownershipRoot, 'attempt-journal'), {"
+    },
+    {
+      "path": "scripts/compact-buster-job.mjs",
+      "line": 45,
+      "sha256": "bf10ee8da2de22ac7463be04b77401ff71e4ee89632bf66b61c5852cf02bed47",
+      "sourceText": "  const store = new HistoricalBusterPlanJobStore(input.storeRoot, { ...input.storeOptions, sourceAttestationPublicKey: publicKey });"
+    },
+    {
+      "path": "scripts/retire-admission.mjs",
+      "line": 53,
+      "sha256": "ac31444b3acdad697ec7317773fda4dfad48b4ee3a22a4eb2d329e73c5d30d96",
+      "sourceText": "    const attempts=new FileDurableAttemptStore(scope.attemptRoot,scope.attemptLimits);"
+    },
+    {
+      "path": "scripts/retire-nova-dispatch.mjs",
+      "line": 79,
+      "sha256": "96c2616a01b2169c4c6d16503013c74640700455d53dde0ed689f3b7eabc6fc4",
+      "sourceText": "    const dispatch = new FileNovaRemotePlanStore(scope.intent.dispatchRoot, scope.dispatchOptions);"
+    },
+    {
+      "path": "scripts/retire-nova-dispatch.mjs",
+      "line": 80,
+      "sha256": "96c2616a01b2169c4c6d16503013c74640700455d53dde0ed689f3b7eabc6fc4",
+      "sourceText": "    const imports = new FileNovaGateImportStore(scope.intent.importRoot, scope.importOptions);"
+    },
+    {
+      "path": "scripts/retire-attempt-result.mjs",
+      "line": 59,
+      "sha256": "c84c13e778070012ca005b272f0bc0875b3a587e8623ddf5aee827f9b90ae61a",
+      "sourceText": "    const attempts=new FileDurableAttemptStore(scope.attemptRoot,scope.attemptLimits);"
+    }
+  ],
+  "aliases": [
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "line": 21,
+      "sha256": "e375000b0e256497409276093ad5375c32285475c87a33d337bef3124be456b7",
+      "binding": "PreparedBusterPlanJobStore as FileBusterPlanJobStore -> production.ts:52"
+    },
+    {
+      "path": "skills/nova/core/test-gates/remote-dispatch.ts",
+      "line": 21,
+      "sha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+      "binding": "FileNovaRemotePlanStore reexport -> production.ts:103/retire-nova-dispatch.mjs:79"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/package.json",
+      "line": 10,
+      "sha256": "d2639c87351035eb4ed0d34569934d18151b4024ec81a7604680ad3a6ae71ae2",
+      "binding": "public wildcardobservability exports; externalinstalled/dynamicconsumer roster unknown"
+    }
+  ],
+  "boundedSiteDistinctions": {
+    "FileBusterFixtureJournal": "bounded nestedconstructor only; no productive outerconstructor found; publictyped injection site, externalcaller unknown",
+    "HistoricalBusterPlanJobStore": "maintenance compact-buster-job.mjs outerconstructor, not evidence of currentnormal writer",
+    "NovaImportStore": "production standalone runtime/registeredremote-test-gate adapter/evidenceadapter plusretirement paths have DISTINCT existingauthors; no one universalNovaquotaauthor"
+  },
+  "externalUnknown": "Repository source cannot prove installed external/dynamic consumers absent. They must provideown existingquota/lock policy before targetactivation."
+}

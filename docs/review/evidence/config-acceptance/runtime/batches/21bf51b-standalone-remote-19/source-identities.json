@@ -1,0 +1,20 @@
+{
+  "skills/nova/core/test-gates/runtime-config.ts": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a",
+  "skills/nova/core/test-gates/remote-gate-cli.ts": "e40718d15fff2d21f7fe60e920b968677321b5c318bf18476e7c0b1569f4690c",
+  "skills/nova/core/test-gates/production.ts": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1",
+  "skills/nova/core/test-gates/secure-endpoint.ts": "788109a387b6dd67fad7e5695312198a6b65ca3c0bd43ce7deaf416a2d75ac5a",
+  "skills/nova/core/test-gates/remote-dispatch.ts": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+  "skills/nova/core/test-gates/dispatch-operation.ts": "ba74467ce360528872aea28dd54822a1c2b936098447ba34d92e54ae0306f85a",
+  "skills/nova/core/test-gates/deadline.ts": "27bb55650cfa85943f64843b523b671460f86a93b173f2233ffe31cdf72d182b",
+  "skills/nova/core/test-gates/http-response.ts": "03da46c89c22facbf8970a363288f29addc6171cea2b65d0286696e8ff9da74b",
+  "skills/nova/core/test-gates/remote-dispatch-store.ts": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+  "skills/nova/core/test-gates/remote-result-import.ts": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+  "skills/nova/core/test-gates/source-snapshot.ts": "dddba2b8b5d9be5a098108b85f5134f6a93b05bc560d0f1a3c318d60cae860f2",
+  "skills/nova/core/test-gates/source-git.ts": "869044fecd888a1e4ded10059c8f6a5ec4510d1ca9c277507de545538f1fb90c",
+  "skills/nova/plugins/remote-test-gate/src/adapter.ts": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+  "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+  "skills/common/plugin-runtime/foundation/observability/durable-records.ts": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+  "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea",
+  "skills/nova/core/execution/engine-runtime.ts": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613",
+  "skills/nova/core/execution/engine-snapshots.ts": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd"
+}

@@ -1,12 +1,15 @@
-import {demoStages,normalizeDemo} from './demo.ts';
-import {sourceStages} from './source.ts';
-import { cumulativeStages, projectCoverage, testConfiguration } from './coverage.ts';
+import {captureCoreRuntimePolicy, type ProjectCompilerRuntimePolicy} from '@kubeclaw/plugin-foundation/config/core-runtime-policy';
+import {demoStages,demoStagesWithExecutionGroups,normalizeDemo} from './demo.ts';
+import {sourceStages,sourceStagesWithExecutionGroups} from './source.ts';
+import { cumulativeStages, cumulativeStagesWithExecutionGroups, projectCoverage, testConfiguration } from './coverage.ts';
 import { assertProjectReviewModes, projectReviewConfig, type ProjectReviewSemanticMode } from './review-semantics.ts';
 import path from 'node:path';
 import { PORTABLE_JSON_ENCODING, canonicalJson, sha256Text, type SourceBinding, type PipelineDefinition, type StageDefinition } from '@kubeclaw/plugin-sdk';
 import { validateContractValue } from '@kubeclaw/plugin-foundation/registry/schema';
 import { coverageReviewPrefixes, coverageReviewRequirements, validatePipelineTestGateContract, resolvedTestPlanDigest, type ResolvedTestPlanV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import { assertProjectDeliveryManifestMode, type ProjectDeliveryManifestMode } from './delivery-manifest.ts';
+import {resolveProjectCompilerPolicy} from './compiler-policy.ts';
+import {inspectProjectMembershipCandidate,projectMembershipGroupCandidate,type ProjectMembershipGroupCandidate} from './membership-candidate.ts';
 
 type ObjectValue = Record<string, any>;
 function object(value: unknown, fields: string[], label: string): ObjectValue {
@@ -44,8 +47,35 @@ function agent(value: unknown): ObjectValue {
   return config;
 }
 
-interface ModuleContext { readonly reviewSemanticMode: ProjectReviewSemanticMode; readonly reportArtifactEncoding: 'legacy' | typeof PORTABLE_JSON_ENCODING; readonly sourceBinding: SourceBinding; readonly projectId: string; readonly runId: string; readonly repository: string; readonly workspaces: string; readonly baseline: string; readonly previousGate: string | undefined; }
+export interface ModuleContext { readonly reviewSemanticMode: ProjectReviewSemanticMode; readonly reportArtifactEncoding: 'legacy' | typeof PORTABLE_JSON_ENCODING; readonly sourceBinding: SourceBinding; readonly projectId: string; readonly runId: string; readonly repository: string; readonly workspaces: string; readonly baseline: string; readonly previousGate: string | undefined; }
 function moduleStages(module: ObjectValue, context: ModuleContext): StageDefinition[] {
+  const categories = { lint: 2, ...(module.review ? { review: 2 } : {}), test: 2 };
+  const repairBudget = { categories, maximumOrchestratorOrders: 1 };
+  // The former maxAttempts:2 allowed one technical retry. Preserve that
+  // allowance independently of initial work, repair orders and rechecks.
+  const maxTechnicalRetries = 1;
+  const maximumOrders = Object.values(categories).reduce((sum, limit) => sum + limit, 0) + 1;
+  const execution = { maxAttempts: 1 + maximumOrders + maxTechnicalRetries,
+    maxRemediationCycles: maximumOrders, maxTechnicalRetries, timeoutMs: 1_800_000 };
+  return buildModuleStages(module,context,execution,repairBudget);
+}
+
+/** Effect-free candidate only, NOT new-start/publication/source/task/R/caller
+ * admission. The complete project/source/ownership context still needs genuine
+ * original validation. Current compileProject keeps its historical entry.
+ */
+export function moduleStagesWithCompilerPolicy(moduleInput: unknown, contextInput: ModuleContext, policy: unknown) {
+  const context=structuredClone(contextInput);
+  const modules=projectModules({modules:[structuredClone(moduleInput)]},context.runId,context.projectId);
+  const module=[...modules.values()][0]!;
+  const resolved=resolveProjectCompilerPolicy(policy,Boolean(module.review));
+  const {repairBudget,...execution}=resolved.moduleExecution;
+  const stages=buildModuleStages(module,context,execution,repairBudget);
+  return Object.freeze({stages:Object.freeze(stages),originalAuthorizationVerified:false as const,activationAllowed:false as const});
+}
+
+function buildModuleStages(module:ObjectValue,context:ModuleContext,execution:StageDefinition['execution'],
+  repairBudget:NonNullable<StageDefinition['execution']['repairBudget']>):StageDefinition[] {
   const { projectId, runId, repository, workspaces, baseline, previousGate } = context;
   const runNamespace = sha256Text(runId).slice(7, 23);
   const stages: StageDefinition[] = [];
@@ -55,14 +85,6 @@ function moduleStages(module: ObjectValue, context: ModuleContext): StageDefinit
   const testId = `test-${module.id}`;
   const evidence = { projectId, moduleId: module.id, baseRevision: baseline, requirements: module.requirements };
   const expectedCoverage = projectCoverage(projectId, baseline, [module], module.test);
-  const categories = { lint: 2, ...(module.review ? { review: 2 } : {}), test: 2 };
-  const repairBudget = { categories, maximumOrchestratorOrders: 1 };
-  // The former maxAttempts:2 allowed one technical retry. Preserve that
-  // allowance independently of initial work, repair orders and rechecks.
-  const maxTechnicalRetries = 1;
-  const maximumOrders = Object.values(categories).reduce((sum, limit) => sum + limit, 0) + 1;
-  const execution = { maxAttempts: 1 + maximumOrders + maxTechnicalRetries,
-    maxRemediationCycles: maximumOrders, maxTechnicalRetries, timeoutMs: 1_800_000 };
   stages.push({ id: implementationId, type: 'kubeclaw.agent.implementation',
     dependsOn: [...new Set([...(previousGate ? [previousGate] : []), ...module.dependsOn.map((dependency: string) => `test-${dependency}`)])].sort(),
     config: module.implementation, input: { runId, moduleId: module.id, attempt: 1, headBefore: baseline, sourceBinding: context.sourceBinding,
@@ -157,6 +179,50 @@ export function compileProject(value: unknown, sourceIdentity: 'legacy' | typeof
   reportArtifactEncoding: 'legacy' | typeof PORTABLE_JSON_ENCODING = PORTABLE_JSON_ENCODING,
   reviewSemanticMode: ProjectReviewSemanticMode = 'legacy',
   deliveryManifestEncoding: ProjectDeliveryManifestMode = 'legacy'): { runId: string; definition: PipelineDefinition } {
+  return buildProject(value,{kind:'legacy'},sourceIdentity,reportArtifactEncoding,reviewSemanticMode,deliveryManifestEncoding);
+}
+
+/** Whole-graph candidate only: never writes/publishes/activates. Complete task
+ * shape/dependency/ownership/plan validation is reused, but genuine Core owner/
+ * source/task/R/caller admission is still missing. One explicit policy must
+ * match EVERY module review branch; no inferred per-module profile mapping.
+ */
+export function compileProjectWithCompilerPolicyCandidate(value:unknown,policy:unknown,
+  sourceIdentity:'legacy'|typeof PORTABLE_JSON_ENCODING=PORTABLE_JSON_ENCODING,
+  reportArtifactEncoding:'legacy'|typeof PORTABLE_JSON_ENCODING=PORTABLE_JSON_ENCODING,
+  reviewSemanticMode:ProjectReviewSemanticMode='legacy',deliveryManifestEncoding:ProjectDeliveryManifestMode='legacy') {
+  const result=buildProject(structuredClone(value),{kind:'explicit',policy:structuredClone(policy)},
+    sourceIdentity,reportArtifactEncoding,reviewSemanticMode,deliveryManifestEncoding);
+  if(!('membershipCandidate' in result))throw new Error('PROJECT_MEMBERSHIP_PRODUCER_REQUIRED');
+  return Object.freeze({...result,originalAuthorizationVerified:false as const,activationAllowed:false as const});
+}
+
+/** Productive selected-owner path. Candidate admission flags are not reused.
+ * Review presence stays task-owned; the sole authored review budget applies
+ * only to modules that actually declare review, including mixed projects.
+ */
+export function compileProjectWithCorePolicy(value: unknown, corePolicy: unknown,
+  sourceIdentity: 'legacy' | typeof PORTABLE_JSON_ENCODING = PORTABLE_JSON_ENCODING,
+  reportArtifactEncoding: 'legacy' | typeof PORTABLE_JSON_ENCODING = PORTABLE_JSON_ENCODING,
+  reviewSemanticMode: ProjectReviewSemanticMode = 'legacy', deliveryManifestEncoding: ProjectDeliveryManifestMode = 'legacy') {
+  const selected = captureCoreRuntimePolicy(corePolicy);
+  if (!['nova-core-runtime-policy.v2', 'nova-core-runtime-policy.v3'].includes(selected.policyVersion ?? '') || !selected.projectCompiler) throw new Error('PROJECT_COMPILER_SELECTION_REQUIRED');
+  return buildProject(value, {kind: 'selected', policy: selected.projectCompiler}, sourceIdentity,
+    reportArtifactEncoding, reviewSemanticMode, deliveryManifestEncoding);
+}
+
+function selectedModuleExecution(policy: ProjectCompilerRuntimePolicy, hasReview: boolean) {
+  const categories = {lint: policy.repairBudget.categories.lint,
+    ...(hasReview ? {review: policy.repairBudget.categories.review} : {}), test: policy.repairBudget.categories.test};
+  const maximumOrders = Object.values(categories).reduce((sum, value) => sum + value, 0) + policy.repairBudget.maximumOrchestratorOrders;
+  return {maxAttempts: 1 + maximumOrders + policy.execution.maxTechnicalRetries, maxRemediationCycles: maximumOrders,
+    ...policy.execution, repairBudget: {categories, maximumOrchestratorOrders: policy.repairBudget.maximumOrchestratorOrders}};
+}
+
+type ProjectBuildMode={kind:'legacy'}|{kind:'explicit';policy:unknown}|{kind:'selected';policy:ProjectCompilerRuntimePolicy};
+function buildProject(value:unknown,mode:ProjectBuildMode,sourceIdentity:'legacy'|typeof PORTABLE_JSON_ENCODING,
+  reportArtifactEncoding:'legacy'|typeof PORTABLE_JSON_ENCODING,reviewSemanticMode:ProjectReviewSemanticMode,
+  deliveryManifestEncoding:ProjectDeliveryManifestMode) {
   assertProjectReviewModes(reportArtifactEncoding, reviewSemanticMode);
   assertProjectDeliveryManifestMode(deliveryManifestEncoding);
   const project = object(value, ['schemaVersion', 'id', 'runId', 'repositoryRoot', 'workspaceRoot', 'baseRevision', 'modules', 'final', 'architecture', 'demo'], 'project');
@@ -176,18 +242,45 @@ export function compileProject(value: unknown, sourceIdentity: 'legacy' | typeof
   if (final.review !== undefined) { object(final.review, ['agent'], 'final.review'); text(final.review.agent, 'final.review.agent'); }
   object(final.test, ['agent', 'agentRole', 'testAgentEnabled', 'requiredChecks', 'providerPlan'], 'final.test');
   object(final.test.providerPlan, ['repositoryId', 'plan', 'grants', 'maximumConcurrency', 'submittedAt', 'timeoutMs'], 'final.providerPlan');
+  // Resolve all branches BEFORE constructing any graph. Missing explicit policy
+  // is invalid, never a signal to fall back to historical compiler defaults.
+  const received=mode.kind==='explicit'?ordered.map(module=>resolveProjectCompilerPolicy(mode.policy,Boolean(module.review))):undefined;
   const demo = normalizeDemo(project.demo);
-  const source = sourceStages(project, ordered, demo, sourceIdentity);
+  const executionGroups = mode.kind === 'selected' ? mode.policy.executionGroups : received?.[0]?.executionGroups;
+  const source = mode.kind!=='legacy'
+    ?sourceStagesWithExecutionGroups(project,ordered,executionGroups,demo,sourceIdentity)
+    :sourceStages(project, ordered, demo, sourceIdentity);
   const stages: StageDefinition[] = [...source.stages];
+  const groups:ProjectMembershipGroupCandidate[]=[];
+  if(mode.kind==='explicit')groups.push(projectMembershipGroupCandidate('foundation','foundation',source.stages));
   let previousGate: string | undefined = 'blueprint-sync';
   for (const module of ordered) {
-    stages.push(...moduleStages(module, { projectId, runId, repository, workspaces, baseline, previousGate, sourceBinding: source.binding, reportArtifactEncoding, reviewSemanticMode }));
+    const context={ projectId, runId, repository, workspaces, baseline, previousGate, sourceBinding: source.binding, reportArtifactEncoding, reviewSemanticMode };
+    let emitted: readonly StageDefinition[];
+    if (mode.kind === 'selected') {
+      const {repairBudget, ...execution} = selectedModuleExecution(mode.policy, Boolean(module.review));
+      emitted = buildModuleStages(module, context, execution, repairBudget);
+    } else emitted = mode.kind === 'explicit' ? moduleStagesWithCompilerPolicy(module,context,mode.policy).stages : moduleStages(module,context);
+    stages.push(...emitted);
+    if(mode.kind==='explicit')groups.push(projectMembershipGroupCandidate(`module:${module.id}`,'implementation',emitted));
     previousGate = `test-${module.id}`;
   }
-  stages.push(...cumulativeStages(project, ordered, `implement-${ordered.at(-1)!.id}`, reportArtifactEncoding,
-    reviewSemanticMode, deliveryManifestEncoding));
-  stages.push(...demoStages(demo,final.test.providerPlan.plan));
+  if(mode.kind!=='legacy') {
+    const cumulative=cumulativeStagesWithExecutionGroups(project,ordered,`implement-${ordered.at(-1)!.id}`,executionGroups,
+      reportArtifactEncoding,reviewSemanticMode,deliveryManifestEncoding);
+    const delivery=demoStagesWithExecutionGroups(demo,final.test.providerPlan.plan,executionGroups);
+    stages.push(...cumulative,...delivery);
+    // The original cumulative producer emits project-summary in the delivery
+    // group. Use its exact declared ID, not a runtime prefix/group inference.
+    if(mode.kind==='explicit') groups.push(projectMembershipGroupCandidate('integration','integration',cumulative.filter(stage=>stage.id!=='project-summary')));
+    if(mode.kind==='explicit') groups.push(projectMembershipGroupCandidate('delivery','delivery',[...cumulative.filter(stage=>stage.id==='project-summary'),...delivery]));
+  } else {
+    stages.push(...cumulativeStages(project, ordered, `implement-${ordered.at(-1)!.id}`, reportArtifactEncoding,
+      reviewSemanticMode, deliveryManifestEncoding));
+    stages.push(...demoStages(demo,final.test.providerPlan.plan));
+  }
   const definition = { schemaVersion: 'pipeline-definition.v2', id: `project:${projectId}`, maxConcurrency: 1, stages } as PipelineDefinition;
   validateContractValue('pipelineDefinition', definition);
-  return { runId, definition: structuredClone(definition) };
+  const result={runId,definition:structuredClone(definition)};
+  return mode.kind==='explicit'?{...result,membershipCandidate:inspectProjectMembershipCandidate(definition,groups)}:result;
 }

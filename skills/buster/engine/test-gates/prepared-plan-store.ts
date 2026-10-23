@@ -1,3 +1,4 @@
+import { readBusterOriginalExecution, type BusterOriginalExecution } from './original-execution.ts';
 import { preparedPlanStateRoot } from './prepared-plan-paths.ts';
 import { assertPreparedResultOrigin, type PreparedResultOrigin } from './preparation-result-origin.ts';
 import { assertImportedTerminalPlanJobRecord, type ImportedTerminalPlanJobRecord } from './preparation-historical-terminal.ts';
@@ -14,8 +15,10 @@ import type { PreparedAdmission } from './preparation-client.ts';
 import { assertBusterInput, type BusterStagedAdmission } from './preparation-input.ts';
 import type { PreparedSourceReference } from './preparation-header.ts';
 
-export type PreparedPlanJobRecord = BusterStagedAdmission & {
-  readonly schemaVersion: 'buster-plan-job-record.v2';
+export type PreparedPlanJobRecord = BusterStagedAdmission & (
+  { readonly schemaVersion: 'buster-plan-job-record.v2' }
+  | { readonly schemaVersion: 'buster-plan-job-record.v3'; readonly originalExecution: BusterOriginalExecution }
+) & {
   readonly source: PreparedSourceReference | null;
   readonly resultOrigin: PreparedResultOrigin;
   readonly status: RemotePlanStatusV1;
@@ -24,11 +27,15 @@ export type StoredPreparedPlanJob = PreparedPlanJobRecord | ImportedTerminalPlan
 
 export function assertPreparedPlanJobRecord(value: unknown): asserts value is PreparedPlanJobRecord {
   if (!value || typeof value !== 'object' || Array.isArray(value)
-    || Object.keys(value).sort().join(',') !== 'input,job,resultOrigin,schemaVersion,source,status') {
+    || Object.keys(value).sort().join(',') !== (
+      'schemaVersion' in value && value.schemaVersion === 'buster-plan-job-record.v3'
+        ? 'input,job,originalExecution,resultOrigin,schemaVersion,source,status'
+        : 'input,job,resultOrigin,schemaVersion,source,status')) {
     throw new Error('BUSTER_JOB_RECORD_INVALID');
   }
   const payload = value as PreparedPlanJobRecord;
-  if (payload.schemaVersion !== 'buster-plan-job-record.v2') throw new Error('BUSTER_JOB_RECORD_INVALID');
+  if (payload.schemaVersion === 'buster-plan-job-record.v3') readBusterOriginalExecution(payload.originalExecution);
+  else if (payload.schemaVersion !== 'buster-plan-job-record.v2') throw new Error('BUSTER_JOB_RECORD_INVALID');
   assertBusterInput(payload.input, payload.job);
   if (payload.source !== null) assertPreparedSource(payload.source, payload.job);
   validatePipelineTestGateContract('remotePlanStatus', payload.status);
@@ -87,13 +94,14 @@ export class PreparedBusterPlanJobStore {
       this.#trustedSourceAuthority, this.#sourceAttestationPublicKey)) throw new Error('BUSTER_SOURCE_ATTESTATION_INVALID');
   }
 
-  async accept(input: BusterStagedAdmission, now: string): Promise<RemotePlanStatusV1> {
+  async accept(input: BusterStagedAdmission, now: string, originalExecution?: BusterOriginalExecution): Promise<RemotePlanStatusV1> {
     const prepared = structuredClone(input);
+    const original = originalExecution === undefined ? undefined : readBusterOriginalExecution(originalExecution);
     this.validate(prepared);
-    return withDurableStoreLock(this.#admissionLock, () => this.#accept(prepared, now));
+    return withDurableStoreLock(this.#admissionLock, () => this.#accept(prepared, now, original));
   }
 
-  async #accept(prepared: BusterStagedAdmission, now: string): Promise<RemotePlanStatusV1> {
+  async #accept(prepared: BusterStagedAdmission, now: string, originalExecution?: BusterOriginalExecution): Promise<RemotePlanStatusV1> {
     const { job, input } = prepared;
     const records = await this.records();
     const existingRecord = records.find((item) => item.idempotencyKey === job.idempotencyKey);
@@ -114,7 +122,9 @@ export class PreparedBusterPlanJobStore {
       updatedAt: now, result: null, error: null,
     };
     validatePipelineTestGateContract('remotePlanStatus', status);
-    const payload: PreparedPlanJobRecord = { schemaVersion: 'buster-plan-job-record.v2', ...prepared, source: null, resultOrigin: null, status };
+    const payload: PreparedPlanJobRecord = { ...prepared, ...(originalExecution
+      ? { schemaVersion: 'buster-plan-job-record.v3' as const, originalExecution }
+      : { schemaVersion: 'buster-plan-job-record.v2' as const }), source: null, resultOrigin: null, status };
     let stored: Awaited<ReturnType<FileDurableRecordStore['append']>>;
     try {
       stored = await this.#records.append('buster-plan-jobs', job.idempotencyKey, payload);

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "commit": "21bf51bc2075abec1191fdc091952492b6cb484e",
+  "sourceRunId": 101,
+  "sourceRunAttempt": 1,
+  "images": {
+    "nova": "ghcr.io/datrab/kubeclaw-nova@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "prism-agent": "ghcr.io/datrab/kubeclaw-prism-agent@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "buster-gateway": "ghcr.io/datrab/kubeclaw-buster-gateway@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "buster-runtime": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "namespace-controller": "ghcr.io/datrab/kubeclaw-namespace-controller@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "archviewer": "ghcr.io/datrab/kubeclaw-archviewer@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "prism-control": "ghcr.io/datrab/kubeclaw-prism-control@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "prism-studio": "ghcr.io/datrab/kubeclaw-prism-studio@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "prism-worker": "ghcr.io/datrab/kubeclaw-prism-worker@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "prism-ingestion": "ghcr.io/datrab/kubeclaw-prism-ingestion@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  }
+}

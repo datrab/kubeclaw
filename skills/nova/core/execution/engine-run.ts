@@ -1,3 +1,4 @@
+import type {CoreRuntimePolicy} from '@kubeclaw/plugin-foundation/config/core-runtime-policy';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -11,34 +12,39 @@ import { FileJournal } from '../state/journal.ts';
 import type { PipelineRunResult, PipelineRunnerOptions } from './runner.ts';
 import { PipelineRunner } from './runner.ts';
 import { createAdapterRuntime, prepareRuntime, serializedObserverDrainer, type PreparedRuntime } from './engine-runtime.ts';
-import { canonicalJson, deepFreeze, frozenRegistryRecord, graphSnapshot, readRunSnapshot, recordedPackageUpgrades, validateSignal, verifyPinnedGraph, verifyPinnedPackages, writeRunSnapshots } from './engine-snapshots.ts';
+import { canonicalJson, deepFreeze, frozenRegistryRecord, graphSnapshot, readRunSnapshot, retainedRuntimePolicies, recordedPackageUpgrades, validateSignal, verifyPinnedGraph, verifyPinnedPackages, writeRunSnapshots } from './engine-snapshots.ts';
 import { withRunMutationLock } from './run-mutation.ts';
 import { runRoot as resolveRunRoot } from './run-root.ts';
 import { reconcileNovaObservabilityOnRecovery } from '../observability/reconciler.ts';
 
 export interface ExecutionContext { readonly platform: PlatformConfig; readonly definition: PipelineDefinition; readonly runtime: PreparedRuntime; readonly runId: string; readonly runRoot: string; readonly leaseSignal: AbortSignal; readonly events: FileJournal<LifecycleEvent | PluginDomainEvent> }
 
-export async function executePrepared(context: ExecutionContext, options: Omit<PipelineRunnerOptions, 'definition' | 'registry' | 'activated' | 'adapters' | 'journal' | 'orchestratorIssuerId' | 'signal' | 'onEventsCommitted' | 'runtimeDispatchProfile' | 'reviewCacheProfile'>): Promise<PipelineRunResult> {
+export async function executePrepared(context: ExecutionContext, options: Omit<PipelineRunnerOptions, 'definition' | 'registry' | 'activated' | 'adapters' | 'journal' | 'orchestratorIssuerId' | 'signal' | 'onEventsCommitted' | 'runtimeDispatchProfile' | 'reviewCacheProfile' | 'stageMemoryBytes' | 'approvalTimeoutMinutes' | 'prismDesignBudgets' | 'reviewPolicyCapture' | 'reviewRuntimeBinding'>): Promise<PipelineRunResult> {
   const pinnedGraph = verifyPinnedGraph(context.runRoot, context.definition);
   const snapshot = readRunSnapshot(context.runRoot);
   const runtimeDispatchProfile = snapshot.schemaVersion === 'run-snapshot.v3' || snapshot.schemaVersion === 'run-snapshot.v4' ? snapshot.runtimeDispatchProfile : undefined;
   const reviewCacheProfile = snapshot.schemaVersion === 'run-snapshot.v4' ? snapshot.reviewCacheProfile : undefined;
-  await assertEffectRecoverySafe(context.runRoot, context.runId, context.definition, context.events);
+  await assertEffectRecoverySafe(context.runRoot, context.runId, context.definition, context.events, context.runtime.corePolicy);
   const adapters = createAdapterRuntime(context.platform, context.runRoot, context.runtime, context.events); await adapters.start();
   const flush = serializedObserverDrainer(context.platform, context.runRoot, context.runtime, adapters, context.events);
-  try { return await new PipelineRunner({ definition: context.definition, registry: context.runtime.granted, activated: context.runtime.activated,
+  try { return await new PipelineRunner({reviewRuntimeBinding:context.runtime.reviewRuntimeBinding, ...(context.runtime.corePolicy.reviewPolicyCapture === undefined ? {} : {reviewPolicyCapture:context.runtime.corePolicy.reviewPolicyCapture}), prismDesignBudgets: context.runtime.corePolicy.prismDesignBudgets, approvalTimeoutMinutes: context.runtime.corePolicy.humanApproval.defaultTimeoutMinutes, stageMemoryBytes: context.runtime.corePolicy.stageMemoryBytes, definition: context.definition, registry: context.runtime.granted, activated: context.runtime.activated,
     adapters, journal: context.events, orchestratorIssuerId: context.platform.orchestratorIssuerId, signal: context.leaseSignal,
     onEventsCommitted: flush, ...options, graphSnapshotVersion: pinnedGraph.schemaVersion,
     runtimeDispatchProfile, reviewCacheProfile }).run(context.runId); }
   finally { try { await flush(); } finally { await adapters.shutdown(); } }
 }
 
-export async function runNewPipeline(platform: PlatformConfig, definitionInput: PipelineDefinition, runId?: string, signal?: AbortSignal): Promise<PipelineRunResult> {
-  const definition = deepFreeze(structuredClone(definitionInput)); const runtime = await prepareRuntime(platform, definition);
+export async function runNewPipeline(platform: PlatformConfig, definitionInput: PipelineDefinition, runId?: string, signal?: AbortSignal, selectedCorePolicy?: CoreRuntimePolicy): Promise<PipelineRunResult> {
+  const definition = deepFreeze(structuredClone(definitionInput)); const runtime = await prepareRuntime(platform, definition, selectedCorePolicy);
   const effectiveRunId = runId ?? `run:${crypto.randomUUID()}`; const runRoot = resolveRunRoot(platform.storageRoot, effectiveRunId);
-  return withRunMutationLock(runRoot, async (leaseSignal) => {
-    fs.mkdirSync(runRoot, { recursive: true }); const graph = graphSnapshot(definition); writeRunSnapshots(runRoot, graph, frozenRegistryRecord(runtime, definition, graph));
-    const events = new FileJournal<LifecycleEvent | PluginDomainEvent>(path.join(runRoot, 'events.jsonl'));
+  return withRunMutationLock(runRoot, runtime.corePolicy, async (leaseSignal) => {
+    fs.mkdirSync(runRoot, { recursive: true }); const graph = graphSnapshot(definition); writeRunSnapshots(runRoot, graph, {
+      ...frozenRegistryRecord(runtime, definition, graph),
+      // Only the explicit project compiler handoff records this discriminator.
+      // A generic/legacy graph using a v2 Core policy is not a selected compilation.
+      ...(selectedCorePolicy?.projectCompiler ? {projectCompilerVersion: selectedCorePolicy.projectCompiler.schemaVersion} : {}),
+    });
+    const events = new FileJournal<LifecycleEvent | PluginDomainEvent>(path.join(runRoot, 'events.jsonl'), runtime.corePolicy.journalAppendLockTimeoutMs);
     return executePrepared({ platform, definition, runtime, runId: effectiveRunId, runRoot, leaseSignal: signal ? AbortSignal.any([signal, leaseSignal]) : leaseSignal, events }, {});
   });
 }
@@ -54,15 +60,21 @@ function recoveryStates(definition: PipelineDefinition, events: FileJournal<Life
 }
 
 export async function recoverPipeline(platform: PlatformConfig, definitionInput: PipelineDefinition, runId: string): Promise<PipelineRunResult> {
-  const definition = deepFreeze(structuredClone(definitionInput)); const runtime = await prepareRuntime(platform, definition);
+  const definition = deepFreeze(structuredClone(definitionInput));
   const runRoot = resolveRunRoot(platform.storageRoot, runId);
-  return withRunMutationLock(runRoot, async (leaseSignal) => {
-    const decisions = new FileJournal<AdministrativeReopenDecision>(path.join(runRoot, 'administrative-decisions.jsonl'));
+  // Reject a replacement graph against the retained original before policy
+  // restoration, package discovery or plugin activation. Keep the locked
+  // recheck below: this early check does not replace mutation-time validation.
+  verifyPinnedGraph(runRoot, definition);
+  const retained = retainedRuntimePolicies(runRoot);
+  const runtime = await prepareRuntime(platform, definition, retained.corePolicy, retained.timingSelections, retained.httpSelections, retained.publisherSelections, retained.operatorSelections, retained.reviewRuntimeBinding, retained.redisBindings, retained.operatorBindings, retained.publisherBindings, retained.gitBindings, retained.httpBindings, retained.storeBindings);
+  return withRunMutationLock(runRoot, runtime.corePolicy, async (leaseSignal) => {
+    const decisions = new FileJournal<AdministrativeReopenDecision>(path.join(runRoot, 'administrative-decisions.jsonl'), runtime.corePolicy.journalAppendLockTimeoutMs);
     verifyPinnedPackages(runRoot, runtime, recordedPackageUpgrades(decisions.records().map(({ entry }) => entry))); verifyPinnedGraph(runRoot, definition);
-    const events = new FileJournal<LifecycleEvent | PluginDomainEvent>(path.join(runRoot, 'events.jsonl')); assertRecoverableRun(events, runId, 'RECOVERY');
+    const events = new FileJournal<LifecycleEvent | PluginDomainEvent>(path.join(runRoot, 'events.jsonl'), runtime.corePolicy.journalAppendLockTimeoutMs); assertRecoverableRun(events, runId, 'RECOVERY');
     // Phase 7 persists this run's test-attempt reconciliation plan before
     // dispatch. The recovery hook is active now; it is a no-op for legacy runs.
-    await reconcileNovaObservabilityOnRecovery(runRoot, runId);
+    await reconcileNovaObservabilityOnRecovery(runRoot, runId, runtime.corePolicy);
     const initialStates = dueRecoveryStates(recoveryStates(definition, events, runId, platform.orchestratorIssuerId));
     const wait = [...initialStates.values()].find((state) => state.wait)?.wait; if (wait) throw new Error(`RECOVERY_SIGNAL_REQUIRED:${wait.waitId}`);
     return executePrepared({ platform, definition, runtime, runId, runRoot, leaseSignal, events }, { initialStates, resume: true, resumePayload: { recovery: 'journal' } });
@@ -80,16 +92,22 @@ function dueRecoveryStates(recovered: ReadonlyMap<string, StageRuntimeState>): M
 }
 
 export async function resumePipeline(platform: PlatformConfig, definitionInput: PipelineDefinition, runId: string, signal: ResumeSignal): Promise<PipelineRunResult> {
-  const definition = deepFreeze(structuredClone(definitionInput)); const runtime = await prepareRuntime(platform, definition);
+  const definition = deepFreeze(structuredClone(definitionInput));
   const runRoot = resolveRunRoot(platform.storageRoot, runId);
-  return withRunMutationLock(runRoot, async (leaseSignal) => {
-    const decisions = new FileJournal<AdministrativeReopenDecision>(path.join(runRoot, 'administrative-decisions.jsonl'));
+  // Reject a replacement graph against the retained original before policy
+  // restoration, package discovery or plugin activation. Keep the locked
+  // recheck below: this early check does not replace mutation-time validation.
+  verifyPinnedGraph(runRoot, definition);
+  const retained = retainedRuntimePolicies(runRoot);
+  const runtime = await prepareRuntime(platform, definition, retained.corePolicy, retained.timingSelections, retained.httpSelections, retained.publisherSelections, retained.operatorSelections, retained.reviewRuntimeBinding, retained.redisBindings, retained.operatorBindings, retained.publisherBindings, retained.gitBindings, retained.httpBindings, retained.storeBindings);
+  return withRunMutationLock(runRoot, runtime.corePolicy, async (leaseSignal) => {
+    const decisions = new FileJournal<AdministrativeReopenDecision>(path.join(runRoot, 'administrative-decisions.jsonl'), runtime.corePolicy.journalAppendLockTimeoutMs);
     verifyPinnedPackages(runRoot, runtime, recordedPackageUpgrades(decisions.records().map(({ entry }) => entry))); verifyPinnedGraph(runRoot, definition);
-    const events = new FileJournal<LifecycleEvent | PluginDomainEvent>(path.join(runRoot, 'events.jsonl')); assertRecoverableRun(events, runId, 'WAIT');
+    const events = new FileJournal<LifecycleEvent | PluginDomainEvent>(path.join(runRoot, 'events.jsonl'), runtime.corePolicy.journalAppendLockTimeoutMs); assertRecoverableRun(events, runId, 'WAIT');
     const recovered = recoveryStates(definition, events, runId, platform.orchestratorIssuerId); const waiting = recoveredWait(recovered, signal.waitId);
     const created = validateWaitHistory(events, runId, signal.waitId, definition, platform.orchestratorIssuerId); validateSignal(waiting.wait!, signal, created.entry.occurredAt); leaseSignal.throwIfAborted();
     authorizedRepair(definition.stages, recovered, waiting, signal);
-    recordSignal(runRoot, signal); recordWaitResolution(events, runId, waiting, signal, leaseSignal);
+    recordSignal(runRoot, signal, runtime.corePolicy.journalAppendLockTimeoutMs); recordWaitResolution(events, runId, waiting, signal, leaseSignal);
     const initialStates = recoveryStates(definition, events, runId, platform.orchestratorIssuerId);
     return executePrepared({ platform, definition, runtime, runId, runRoot, leaseSignal, events }, { initialStates,
       resumeGuidance: new Map([[waiting.stageId, signal.payload]]), resume: true });
@@ -106,8 +124,8 @@ function validateWaitHistory(events: FileJournal<LifecycleEvent | PluginDomainEv
   if (terminal && (!created || created.sequence <= terminal.sequence)) throw new Error(`WAIT_INVALIDATED_BY_TERMINAL_RUN:${waitId}`);
   if (!created) throw new Error(`WAIT_CREATION_RECORD_MISSING:${waitId}`); return created;
 }
-function recordSignal(runRoot: string, signal: ResumeSignal): void {
-  new FileJournal<ResumeSignal>(path.join(runRoot, 'signals.jsonl')).transact((records, append) => {
+function recordSignal(runRoot: string, signal: ResumeSignal, appendLockTimeoutMs: number): void {
+  new FileJournal<ResumeSignal>(path.join(runRoot, 'signals.jsonl'), appendLockTimeoutMs).transact((records, append) => {
     const duplicate = records.find(({ entry }) => entry.idempotencyKey === signal.idempotencyKey)?.entry;
     if (duplicate) { if (canonicalJson(duplicate) !== canonicalJson(signal)) throw new Error(`WAIT_SIGNAL_CONFLICT:${signal.idempotencyKey}`); return; }
     if (records.some(({ entry }) => entry.waitId === signal.waitId)) throw new Error(`WAIT_ALREADY_RESOLVED:${signal.waitId}`); append(signal);

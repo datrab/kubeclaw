@@ -1,0 +1,39 @@
+{
+  "dispositions": [
+    {
+      "candidateId": "SRC-cbff79476941c576",
+      "source": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "line": 108,
+      "sourceSha256": "1f41112db44a5135ff7c8d7a575e87699a854278a9e792d248ee91673d06fbd0",
+      "exactText": "    const secretReferences = stringArray(payload.secretReferences ?? [], 'secretReferences', 32, SECRET_NAME);",
+      "reader": {
+        "name": "readRequest",
+        "parents": [],
+        "startLine": 77,
+        "endLine": 121
+      },
+      "classification": "duplicate-current-domain-validator",
+      "settingIds": [
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedSecretReferences"
+      ],
+      "reason": "Actual request stringArray maximum32 mirrors exact current selected allowedSecretReferences catalogue domain maxItems32. Every legitimate unique authorized requested set has<=32 members; rawduplicate33 arrays rejectbefore Set normalization as currentrequestconformance. This is a current duplicate domain/selectedallowlist reader, not evidence for a separatelyeditable requestcountauthor, not a universal/fundamental32 limit or futureexpanded cataloguesupport. Existing per-field allowlist cases remain canonical.",
+      "proof": {
+        "artifact": "docs/review/evidence/config-acceptance/components/semantic-fragment.json",
+        "pointer": "/rows/119",
+        "resolvedDomain": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 32,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9._-]+$"
+          }
+        }
+      },
+      "status": "source-basedcurrentdomaincorrection; independent review pending"
+    }
+  ],
+  "previousQuestion": "CMP-SOURCE-FIXTURE-SECRET-REFERENCE-CARDINALITY",
+  "scope": "Current source relationship only; does not promote alltarget/currentruntimecases"
+}

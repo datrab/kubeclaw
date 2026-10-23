@@ -1,0 +1,43 @@
+{
+  "scope": "actual static SHA/link and reviewed original payload encoding verification only",
+  "issues": [],
+  "rows": 832,
+  "canonicalFutureCases": 204,
+  "futureResults": {
+    "not-run": 204
+  },
+  "domainPresence": {
+    "proposed": 602,
+    "missing": 230,
+    "meaning": "presence not completeness/review/acceptance"
+  },
+  "missingByOwner": {
+    "openclaw-agent-observer": 17,
+    "openclaw-prism": 1,
+    "role-package-nova": 7,
+    "role-package-prism": 7,
+    "role-package-buster": 7,
+    "delivery": 6,
+    "chart-kubeclaw": 104,
+    "chart-prism": 34,
+    "chart-ops-pod": 14,
+    "chart-gitops": 8,
+    "ops-deployer": 15,
+    "native-delivery-projection": 10
+  },
+  "pureControls": 105,
+  "futureCorrectionSubcases": 12,
+  "reviewedOriginalPayloadsPreserved": 73,
+  "boundaryFiles": {
+    "docs/review/evidence/config-acceptance/delivery/inventory-fragment.json": "9d339998171fc352cda8199123ca3a0c2e0c41c2e0692084d2b1cc9c42e588a8",
+    "docs/review/evidence/config-acceptance/delivery/proposed-cases.json": "746fe7ed15c113da3d6e07613f4b9eace83275a493efb1f6df8c4bd7580c9d57",
+    "docs/review/evidence/config-acceptance/delivery/fragment-status.json": "a49539aec415978f8eb9c6ce9dc6d034a268e71a657f4009b6c192b4910d5102",
+    "docs/review/evidence/config-acceptance/delivery/open-row-backlog.json": "6fb5733195f7abaec5169b28ac3c81de2ae7f40e436241975d10349ffadeec35",
+    "docs/review/evidence/config-acceptance/delivery/delivery-specification-obligations-20261013.json": "ca538f4bd691a10f7020d7e0ca09d69944c576fded61d2d45c98a7046adfad0e",
+    "docs/review/evidence/config-acceptance/delivery/future-case-invocation-specifications-20261013.json": "adde1ed53196df4fefdff4f79c38f7935d5b6bb0174e3f0ff43995a50e010f1a",
+    "docs/review/evidence/config-acceptance/delivery/delivery-surface-dispositions.json": "933d81485c2ec1a2fdaa7e3a76fb1cbcc15e0db91969a8dedad41da4b5460dd4",
+    "docs/review/evidence/config-acceptance/delivery/semantic-closure-verification.json": "84ab18786bd87c34a46e7b6153f6b24073aa265e61969dcd377b8e5934a82811",
+    "docs/review/evidence/config-acceptance/delivery/c0-controller-material-correction-cases-6606-20261013.json": "03be1df591838cc150259c164bb0b940a5241bb4f9b72f93bd448910e9781b52"
+  },
+  "status": "NOT ACCEPTED; independent material recheck pending"
+}

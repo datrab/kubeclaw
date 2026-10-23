@@ -1,11 +1,19 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
+  "ignoreIssues": {
+    "skills/common/plugin-runtime/foundation/config/string-coerce-CIXf7egm.mjs": [
+      "exports"
+    ]
+  },
   "ignoreExportsUsedInFile": true,
   "ignoreBinaries": [
     "buildctl",
     "cc",
     "eslint",
     "gofmt",
+    "getcap",
+    "rg",
+    "setpriv",
     "flock",
     "systemd-analyze",
     "uv",
@@ -23,6 +31,7 @@
     "**/generated/**",
     "**/node_modules/**",
     "Projects/**",
+    "docs/review/**",
     "contracts/telemetry/v1/{bundle-types,telemetry-types}.ts"
   ],
   "ignoreDependencies": [
@@ -40,8 +49,16 @@
   ],
   "workspaces": {
     ".": {
+      "paths": {
+        "/app/skills/packages/buster-engine/test-gates/preparation-runtime-source.ts": [
+          "skills/buster/engine/test-gates/preparation-runtime-source.ts"
+        ]
+      },
       "ignoreUnresolved": [
-        "^/usr/local/bin/kubectl$"
+        "^/usr/local/bin/kubectl$",
+        "^/usr/bin/systemd-notify$",
+        "^/app/skills/packages/plugin-foundation/config/(?:pipeline-boot\\.mjs|swarm\\.ts|pipeline-composition\\.ts)$",
+        "^/app/prism/skills/packages/plugin-foundation/config/pipeline-boot\\.mjs$"
       ],
       "entry": [
         "scripts/**/*.{mjs,cjs}",
@@ -93,9 +110,23 @@
         "tests/**/*.mts"
       ]
     },
+    "ops/pod": {
+      "entry": [
+        "test/*.test.mjs"
+      ],
+      "project": [
+        "test/**/*.mjs"
+      ]
+    },
     "skills/buster/engine": {
+      "ignoreUnresolved": [
+        "^/usr/local/libexec/kubeclaw-buster-lifetime-guardian$"
+      ],
       "entry": [
         "src/index.ts",
+        "native-parent.ts",
+        "test-gates/preparation-supervisor.ts",
+        "test-gates/preparation-historical-host.ts",
         "test-gates/provider-child.mjs",
         "test-gates/report-adapter-child.mjs"
       ],
@@ -750,8 +781,9 @@
         "runtime.ts",
         "domain/index.ts",
         "renderer/index.ts",
-        "server/{control,worker,studio}.ts",
+        "server/{control,worker,studio,ingestion-entry}.ts",
         "server/agent-bridge.mjs",
+        "server/agent-bridge-entry.mjs",
         "tests/**/*.{ts,mts,mjs}",
         "integration/*.mts",
         "studio/*.test.tsx",

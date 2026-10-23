@@ -1,0 +1,1332 @@
+[
+  {
+    "originalSettingId": "DLV-NATIVE-HOST-SCHEMAVERSION",
+    "originalCases": [
+      "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+      "DLV-CASE-NATIVE-HOST-ACTIVATION"
+    ],
+    "originalRequirements": [
+      "C0-A",
+      "C0-B",
+      "C0-C",
+      "F-AUTH",
+      "F-VAL",
+      "F-EFFECT",
+      "F-DELIVERY"
+    ],
+    "originalBodyRef": {
+      "path": "original19-field-bodies.json",
+      "pointer": "/rows/0"
+    },
+    "fullProfileA": "source-model-A",
+    "fullProfileB": "source-model-B",
+    "currentSourceProfile": "ax41-current",
+    "coupledRequestedProfile": "ax41-coupled-request",
+    "sourceReader": "validateNativeNodePolicy identity check; protocol format version, not adjustable operator policy",
+    "sourceCaseInputsAndOracle": [
+      "fixed schema1 protocol across original raw policy/pool/setup/NRI outputs",
+      "noteditable hotM; version2/oldflat/unknownauthor rejection beforeanyeffects"
+    ],
+    "futureValidateRenderAction": "after future original same-generation loader approved: complete original hostprofile/source/meta validation, exact policy/projection/rolevalues/NRI/reservation/unit source outputs; actual production renderer onlyin separately authorized phase. Missing/unknown/equaloldauthor/selectedANDunselected/schema/type/alignment/overflow/runtime/caller wrongsource tests. Current isolatedpuretests here arenot fullrenderer acceptance.",
+    "futureActivationAction": "genuine originalHost/admin grant and retainedsource/boot/identity/kernel capacity/service/policy/image/Node/NRI/role/pool/mount/launcher proof first; original workload source/capacity and oldownership/claim/deadline/grants before stage/native effects; never substitute these public model facts",
+    "futureArgv": [
+      [
+        "node",
+        "scripts/render-native-worker-node.mjs",
+        "<exact-original-selected-policy-YAML>",
+        "<exclusive-new-reviewed-output-directory>"
+      ],
+      [
+        "/usr/local/bin/node",
+        "/opt/kubeclaw/native/prepare-native-worker-pools.mjs",
+        "/etc/kubeclaw/native-node-policy.json",
+        "--serve"
+      ],
+      [
+        "node",
+        "scripts/native-worker-node-preflight.mjs",
+        "<same-original-selected-policy-YAML>"
+      ],
+      [
+        "/opt/nri/plugins/10-kubeclaw-native",
+        "--check-policy",
+        "/etc/kubeclaw/native-nri.json"
+      ]
+    ],
+    "argvQualification": "actual existing source paths/args, future only notexecuted; installer/activate/Go/Helm/probes forbiddenin thisauthor task",
+    "observer": "actual original generation/policy/order digest, exact source output/role/workload/image/mount/counter/capacity/caller identities at productive boundary; native FEffect requires genuine kernel/Node/readback/action, not source/labels/schema/parser counts",
+    "mutants": [
+      "currenttarget omitsruntime or editsderivedcpuPeriod",
+      "wrongnode/namespace/role/container/image/root/policyDigest/source revision",
+      "reserve incorrectlydoublecounts or excludes pools/PIDs, precision round/overflow",
+      "current source acceptsunknownfield changesdigest, sorted digest incorrectlysubstituted",
+      "CPU rate treatedas CPUtimems or tasks treatedas processes",
+      "serviceoneshot/RemainAfterExit oradminreinitialize destroys pool lifetime",
+      "newB pool/ENV/currentboot replaces retainedAoriginalclaim/grants/deadline/history",
+      "missingnativepeak/counter defaults0, uncertainownership released/GCed"
+    ],
+    "recoveryRestartFixedEval": "fence newadmission; retain originalRsource/claim/taskclock/grants/leases/totalbudget/ownership/store/retention/counters/cleanup acrosscrash/retry/restart. Only authenticatedoriginalquiescence releasespending/reserved/descendantownership. Boot/root/source/runtime mismatch missingoriginal rejects, no currentB rehoming/newepoch/ledger. Genuine mutant-kill/restored original receiver+fixed original Eval remain mandatory and not-run.",
+    "result": "not-run",
+    "testDigest": null
+  },
+  {
+    "originalSettingId": "DLV-NATIVE-HOST-NODENAME",
+    "originalCases": [
+      "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+      "DLV-CASE-NATIVE-HOST-ACTIVATION"
+    ],
+    "originalRequirements": [
+      "C0-A",
+      "C0-B",
+      "C0-C",
+      "F-AUTH",
+      "F-VAL",
+      "F-EFFECT",
+      "F-DELIVERY"
+    ],
+    "originalBodyRef": {
+      "path": "original19-field-bodies.json",
+      "pointer": "/rows/1"
+    },
+    "fullProfileA": "source-model-A",
+    "fullProfileB": "source-model-B",
+    "currentSourceProfile": "ax41-current",
+    "coupledRequestedProfile": "ax41-coupled-request",
+    "sourceReader": "renderNativeWorkerNode busterNative/worker.native.nodeName placement projection; selected node physical capacity separately verified",
+    "sourceCaseInputsAndOracle": [
+      "explicit DNS source field and exact pool/placement/Node name UID/machine/boot/digest, genuinecapacitysource",
+      "field/source/configstring nothostidentity, wrongnode/boot/reresourceVersion drift stops beforeeffects"
+    ],
+    "futureValidateRenderAction": "after future original same-generation loader approved: complete original hostprofile/source/meta validation, exact policy/projection/rolevalues/NRI/reservation/unit source outputs; actual production renderer onlyin separately authorized phase. Missing/unknown/equaloldauthor/selectedANDunselected/schema/type/alignment/overflow/runtime/caller wrongsource tests. Current isolatedpuretests here arenot fullrenderer acceptance.",
+    "futureActivationAction": "genuine originalHost/admin grant and retainedsource/boot/identity/kernel capacity/service/policy/image/Node/NRI/role/pool/mount/launcher proof first; original workload source/capacity and oldownership/claim/deadline/grants before stage/native effects; never substitute these public model facts",
+    "futureArgv": [
+      [
+        "node",
+        "scripts/render-native-worker-node.mjs",
+        "<exact-original-selected-policy-YAML>",
+        "<exclusive-new-reviewed-output-directory>"
+      ],
+      [
+        "/usr/local/bin/node",
+        "/opt/kubeclaw/native/prepare-native-worker-pools.mjs",
+        "/etc/kubeclaw/native-node-policy.json",
+        "--serve"
+      ],
+      [
+        "node",
+        "scripts/native-worker-node-preflight.mjs",
+        "<same-original-selected-policy-YAML>"
+      ],
+      [
+        "/opt/nri/plugins/10-kubeclaw-native",
+        "--check-policy",
+        "/etc/kubeclaw/native-nri.json"
+      ]
+    ],
+    "argvQualification": "actual existing source paths/args, future only notexecuted; installer/activate/Go/Helm/probes forbiddenin thisauthor task",
+    "observer": "actual original generation/policy/order digest, exact source output/role/workload/image/mount/counter/capacity/caller identities at productive boundary; native FEffect requires genuine kernel/Node/readback/action, not source/labels/schema/parser counts",
+    "mutants": [
+      "currenttarget omitsruntime or editsderivedcpuPeriod",
+      "wrongnode/namespace/role/container/image/root/policyDigest/source revision",
+      "reserve incorrectlydoublecounts or excludes pools/PIDs, precision round/overflow",
+      "current source acceptsunknownfield changesdigest, sorted digest incorrectlysubstituted",
+      "CPU rate treatedas CPUtimems or tasks treatedas processes",
+      "serviceoneshot/RemainAfterExit oradminreinitialize destroys pool lifetime",
+      "newB pool/ENV/currentboot replaces retainedAoriginalclaim/grants/deadline/history",
+      "missingnativepeak/counter defaults0, uncertainownership released/GCed"
+    ],
+    "recoveryRestartFixedEval": "fence newadmission; retain originalRsource/claim/taskclock/grants/leases/totalbudget/ownership/store/retention/counters/cleanup acrosscrash/retry/restart. Only authenticatedoriginalquiescence releasespending/reserved/descendantownership. Boot/root/source/runtime mismatch missingoriginal rejects, no currentB rehoming/newepoch/ledger. Genuine mutant-kill/restored original receiver+fixed original Eval remain mandatory and not-run.",
+    "result": "not-run",
+    "testDigest": null
+  },
+  {
+    "originalSettingId": "DLV-NATIVE-HOST-SYSTEMRESERVE-CPUMILLICORES",
+    "originalCases": [
+      "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+      "DLV-CASE-NATIVE-HOST-ACTIVATION"
+    ],
+    "originalRequirements": [
+      "C0-A",
+      "C0-B",
+      "C0-C",
+      "F-AUTH",
+      "F-VAL",
+      "F-EFFECT",
+      "F-DELIVERY"
+    ],
+    "originalBodyRef": {
+      "path": "original19-field-bodies.json",
+      "pointer": "/rows/2"
+    },
+    "fullProfileA": "source-model-A",
+    "fullProfileB": "source-model-B",
+    "currentSourceProfile": "ax41-current",
+    "coupledRequestedProfile": "ax41-coupled-request",
+    "sourceReader": "nativeNodeReservation systemReserve+all pool resources \u2192 kubelet-reservations.json systemReserved (CPU millicores suffixm,memory bytes,pid tasks)",
+    "sourceCaseInputsAndOracle": [
+      "exact CPUm/unit quota\u00b5s*100 and fixed100000\u00b5s period or original kubelet withholding sum; sourceCPU1 acceptsbutnativepoolrejects100\u00b5s; unsafe multiplication/total rejected",
+      "genuine selected Node CPUcapacity/allocatable/reservations exact BigInt quantities and kernel worker cpu.stat usage_usec; cannot substitute CPUtimems/quality knob"
+    ],
+    "futureValidateRenderAction": "after future original same-generation loader approved: complete original hostprofile/source/meta validation, exact policy/projection/rolevalues/NRI/reservation/unit source outputs; actual production renderer onlyin separately authorized phase. Missing/unknown/equaloldauthor/selectedANDunselected/schema/type/alignment/overflow/runtime/caller wrongsource tests. Current isolatedpuretests here arenot fullrenderer acceptance.",
+    "futureActivationAction": "genuine originalHost/admin grant and retainedsource/boot/identity/kernel capacity/service/policy/image/Node/NRI/role/pool/mount/launcher proof first; original workload source/capacity and oldownership/claim/deadline/grants before stage/native effects; never substitute these public model facts",
+    "futureArgv": [
+      [
+        "node",
+        "scripts/render-native-worker-node.mjs",
+        "<exact-original-selected-policy-YAML>",
+        "<exclusive-new-reviewed-output-directory>"
+      ],
+      [
+        "/usr/local/bin/node",
+        "/opt/kubeclaw/native/prepare-native-worker-pools.mjs",
+        "/etc/kubeclaw/native-node-policy.json",
+        "--serve"
+      ],
+      [
+        "node",
+        "scripts/native-worker-node-preflight.mjs",
+        "<same-original-selected-policy-YAML>"
+      ],
+      [
+        "/opt/nri/plugins/10-kubeclaw-native",
+        "--check-policy",
+        "/etc/kubeclaw/native-nri.json"
+      ]
+    ],
+    "argvQualification": "actual existing source paths/args, future only notexecuted; installer/activate/Go/Helm/probes forbiddenin thisauthor task",
+    "observer": "actual original generation/policy/order digest, exact source output/role/workload/image/mount/counter/capacity/caller identities at productive boundary; native FEffect requires genuine kernel/Node/readback/action, not source/labels/schema/parser counts",
+    "mutants": [
+      "currenttarget omitsruntime or editsderivedcpuPeriod",
+      "wrongnode/namespace/role/container/image/root/policyDigest/source revision",
+      "reserve incorrectlydoublecounts or excludes pools/PIDs, precision round/overflow",
+      "current source acceptsunknownfield changesdigest, sorted digest incorrectlysubstituted",
+      "CPU rate treatedas CPUtimems or tasks treatedas processes",
+      "serviceoneshot/RemainAfterExit oradminreinitialize destroys pool lifetime",
+      "newB pool/ENV/currentboot replaces retainedAoriginalclaim/grants/deadline/history",
+      "missingnativepeak/counter defaults0, uncertainownership released/GCed"
+    ],
+    "recoveryRestartFixedEval": "fence newadmission; retain originalRsource/claim/taskclock/grants/leases/totalbudget/ownership/store/retention/counters/cleanup acrosscrash/retry/restart. Only authenticatedoriginalquiescence releasespending/reserved/descendantownership. Boot/root/source/runtime mismatch missingoriginal rejects, no currentB rehoming/newepoch/ledger. Genuine mutant-kill/restored original receiver+fixed original Eval remain mandatory and not-run.",
+    "result": "not-run",
+    "testDigest": null
+  },
+  {
+    "originalSettingId": "DLV-NATIVE-HOST-SYSTEMRESERVE-MEMORYBYTES",
+    "originalCases": [
+      "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+      "DLV-CASE-NATIVE-HOST-ACTIVATION"
+    ],
+    "originalRequirements": [
+      "C0-A",
+      "C0-B",
+      "C0-C",
+      "F-AUTH",
+      "F-VAL",
+      "F-EFFECT",
+      "F-DELIVERY"
+    ],
+    "originalBodyRef": {
+      "path": "original19-field-bodies.json",
+      "pointer": "/rows/3"
+    },
+    "fullProfileA": "source-model-A",
+    "fullProfileB": "source-model-B",
+    "currentSourceProfile": "ax41-current",
+    "coupledRequestedProfile": "ax41-coupled-request",
+    "sourceReader": "nativeNodeReservation systemReserve+all pool resources \u2192 kubelet-reservations.json systemReserved (CPU millicores suffixm,memory bytes,pid tasks)",
+    "sourceCaseInputsAndOracle": [
+      "4096alignment whole source and totals; role memory.max/swap0 or system/kubelet reserve quantities",
+      "genuine exact Node memory capacity/allocatable/currentreservation and original kernel memory.peak/oomKill, retained pending native reservations; no sampled0/missingcounter fallback"
+    ],
+    "futureValidateRenderAction": "after future original same-generation loader approved: complete original hostprofile/source/meta validation, exact policy/projection/rolevalues/NRI/reservation/unit source outputs; actual production renderer onlyin separately authorized phase. Missing/unknown/equaloldauthor/selectedANDunselected/schema/type/alignment/overflow/runtime/caller wrongsource tests. Current isolatedpuretests here arenot fullrenderer acceptance.",
+    "futureActivationAction": "genuine originalHost/admin grant and retainedsource/boot/identity/kernel capacity/service/policy/image/Node/NRI/role/pool/mount/launcher proof first; original workload source/capacity and oldownership/claim/deadline/grants before stage/native effects; never substitute these public model facts",
+    "futureArgv": [
+      [
+        "node",
+        "scripts/render-native-worker-node.mjs",
+        "<exact-original-selected-policy-YAML>",
+        "<exclusive-new-reviewed-output-directory>"
+      ],
+      [
+        "/usr/local/bin/node",
+        "/opt/kubeclaw/native/prepare-native-worker-pools.mjs",
+        "/etc/kubeclaw/native-node-policy.json",
+        "--serve"
+      ],
+      [
+        "node",
+        "scripts/native-worker-node-preflight.mjs",
+        "<same-original-selected-policy-YAML>"
+      ],
+      [
+        "/opt/nri/plugins/10-kubeclaw-native",
+        "--check-policy",
+        "/etc/kubeclaw/native-nri.json"
+      ]
+    ],
+    "argvQualification": "actual existing source paths/args, future only notexecuted; installer/activate/Go/Helm/probes forbiddenin thisauthor task",
+    "observer": "actual original generation/policy/order digest, exact source output/role/workload/image/mount/counter/capacity/caller identities at productive boundary; native FEffect requires genuine kernel/Node/readback/action, not source/labels/schema/parser counts",
+    "mutants": [
+      "currenttarget omitsruntime or editsderivedcpuPeriod",
+      "wrongnode/namespace/role/container/image/root/policyDigest/source revision",
+      "reserve incorrectlydoublecounts or excludes pools/PIDs, precision round/overflow",
+      "current source acceptsunknownfield changesdigest, sorted digest incorrectlysubstituted",
+      "CPU rate treatedas CPUtimems or tasks treatedas processes",
+      "serviceoneshot/RemainAfterExit oradminreinitialize destroys pool lifetime",
+      "newB pool/ENV/currentboot replaces retainedAoriginalclaim/grants/deadline/history",
+      "missingnativepeak/counter defaults0, uncertainownership released/GCed"
+    ],
+    "recoveryRestartFixedEval": "fence newadmission; retain originalRsource/claim/taskclock/grants/leases/totalbudget/ownership/store/retention/counters/cleanup acrosscrash/retry/restart. Only authenticatedoriginalquiescence releasespending/reserved/descendantownership. Boot/root/source/runtime mismatch missingoriginal rejects, no currentB rehoming/newepoch/ledger. Genuine mutant-kill/restored original receiver+fixed original Eval remain mandatory and not-run.",
+    "result": "not-run",
+    "testDigest": null
+  },
+  {
+    "originalSettingId": "DLV-NATIVE-HOST-SYSTEMRESERVE-TASKS",
+    "originalCases": [
+      "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+      "DLV-CASE-NATIVE-HOST-ACTIVATION"
+    ],
+    "originalRequirements": [
+      "C0-A",
+      "C0-B",
+      "C0-C",
+      "F-AUTH",
+      "F-VAL",
+      "F-EFFECT",
+      "F-DELIVERY"
+    ],
+    "originalBodyRef": {
+      "path": "original19-field-bodies.json",
+      "pointer": "/rows/4"
+    },
+    "fullProfileA": "source-model-A",
+    "fullProfileB": "source-model-B",
+    "currentSourceProfile": "ax41-current",
+    "coupledRequestedProfile": "ax41-coupled-request",
+    "sourceReader": "nativeNodeReservation systemReserve+all pool resources \u2192 kubelet-reservations.json systemReserved (CPU millicores suffixm,memory bytes,pid tasks)",
+    "sourceCaseInputsAndOracle": [
+      "Linux tasks/PIDs, includes threads; independent role pids.max or exact system/kubelet pid withholding",
+      "genuine pid_max/threads-max/Pod pids.max and pids.peak/events, source distinction fromV1 maximumProcesses; pending allocations count"
+    ],
+    "futureValidateRenderAction": "after future original same-generation loader approved: complete original hostprofile/source/meta validation, exact policy/projection/rolevalues/NRI/reservation/unit source outputs; actual production renderer onlyin separately authorized phase. Missing/unknown/equaloldauthor/selectedANDunselected/schema/type/alignment/overflow/runtime/caller wrongsource tests. Current isolatedpuretests here arenot fullrenderer acceptance.",
+    "futureActivationAction": "genuine originalHost/admin grant and retainedsource/boot/identity/kernel capacity/service/policy/image/Node/NRI/role/pool/mount/launcher proof first; original workload source/capacity and oldownership/claim/deadline/grants before stage/native effects; never substitute these public model facts",
+    "futureArgv": [
+      [
+        "node",
+        "scripts/render-native-worker-node.mjs",
+        "<exact-original-selected-policy-YAML>",
+        "<exclusive-new-reviewed-output-directory>"
+      ],
+      [
+        "/usr/local/bin/node",
+        "/opt/kubeclaw/native/prepare-native-worker-pools.mjs",
+        "/etc/kubeclaw/native-node-policy.json",
+        "--serve"
+      ],
+      [
+        "node",
+        "scripts/native-worker-node-preflight.mjs",
+        "<same-original-selected-policy-YAML>"
+      ],
+      [
+        "/opt/nri/plugins/10-kubeclaw-native",
+        "--check-policy",
+        "/etc/kubeclaw/native-nri.json"
+      ]
+    ],
+    "argvQualification": "actual existing source paths/args, future only notexecuted; installer/activate/Go/Helm/probes forbiddenin thisauthor task",
+    "observer": "actual original generation/policy/order digest, exact source output/role/workload/image/mount/counter/capacity/caller identities at productive boundary; native FEffect requires genuine kernel/Node/readback/action, not source/labels/schema/parser counts",
+    "mutants": [
+      "currenttarget omitsruntime or editsderivedcpuPeriod",
+      "wrongnode/namespace/role/container/image/root/policyDigest/source revision",
+      "reserve incorrectlydoublecounts or excludes pools/PIDs, precision round/overflow",
+      "current source acceptsunknownfield changesdigest, sorted digest incorrectlysubstituted",
+      "CPU rate treatedas CPUtimems or tasks treatedas processes",
+      "serviceoneshot/RemainAfterExit oradminreinitialize destroys pool lifetime",
+      "newB pool/ENV/currentboot replaces retainedAoriginalclaim/grants/deadline/history",
+      "missingnativepeak/counter defaults0, uncertainownership released/GCed"
+    ],
+    "recoveryRestartFixedEval": "fence newadmission; retain originalRsource/claim/taskclock/grants/leases/totalbudget/ownership/store/retention/counters/cleanup acrosscrash/retry/restart. Only authenticatedoriginalquiescence releasespending/reserved/descendantownership. Boot/root/source/runtime mismatch missingoriginal rejects, no currentB rehoming/newepoch/ledger. Genuine mutant-kill/restored original receiver+fixed original Eval remain mandatory and not-run.",
+    "result": "not-run",
+    "testDigest": null
+  },
+  {
+    "originalSettingId": "DLV-NATIVE-HOST-KUBERNETESRESERVE-CPUMILLICORES",
+    "originalCases": [
+      "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+      "DLV-CASE-NATIVE-HOST-ACTIVATION"
+    ],
+    "originalRequirements": [
+      "C0-A",
+      "C0-B",
+      "C0-C",
+      "F-AUTH",
+      "F-VAL",
+      "F-EFFECT",
+      "F-DELIVERY"
+    ],
+    "originalBodyRef": {
+      "path": "original19-field-bodies.json",
+      "pointer": "/rows/5"
+    },
+    "fullProfileA": "source-model-A",
+    "fullProfileB": "source-model-B",
+    "currentSourceProfile": "ax41-current",
+    "coupledRequestedProfile": "ax41-coupled-request",
+    "sourceReader": "nativeNodeReservation kubernetesReserve \u2192 kubelet-reservations.json kubeReserved (CPU millicores suffixm,memory bytes,pid tasks)",
+    "sourceCaseInputsAndOracle": [
+      "exact CPUm/unit quota\u00b5s*100 and fixed100000\u00b5s period or original kubelet withholding sum; sourceCPU1 acceptsbutnativepoolrejects100\u00b5s; unsafe multiplication/total rejected",
+      "genuine selected Node CPUcapacity/allocatable/reservations exact BigInt quantities and kernel worker cpu.stat usage_usec; cannot substitute CPUtimems/quality knob"
+    ],
+    "futureValidateRenderAction": "after future original same-generation loader approved: complete original hostprofile/source/meta validation, exact policy/projection/rolevalues/NRI/reservation/unit source outputs; actual production renderer onlyin separately authorized phase. Missing/unknown/equaloldauthor/selectedANDunselected/schema/type/alignment/overflow/runtime/caller wrongsource tests. Current isolatedpuretests here arenot fullrenderer acceptance.",
+    "futureActivationAction": "genuine originalHost/admin grant and retainedsource/boot/identity/kernel capacity/service/policy/image/Node/NRI/role/pool/mount/launcher proof first; original workload source/capacity and oldownership/claim/deadline/grants before stage/native effects; never substitute these public model facts",
+    "futureArgv": [
+      [
+        "node",
+        "scripts/render-native-worker-node.mjs",
+        "<exact-original-selected-policy-YAML>",
+        "<exclusive-new-reviewed-output-directory>"
+      ],
+      [
+        "/usr/local/bin/node",
+        "/opt/kubeclaw/native/prepare-native-worker-pools.mjs",
+        "/etc/kubeclaw/native-node-policy.json",
+        "--serve"
+      ],
+      [
+        "node",
+        "scripts/native-worker-node-preflight.mjs",
+        "<same-original-selected-policy-YAML>"
+      ],
+      [
+        "/opt/nri/plugins/10-kubeclaw-native",
+        "--check-policy",
+        "/etc/kubeclaw/native-nri.json"
+      ]
+    ],
+    "argvQualification": "actual existing source paths/args, future only notexecuted; installer/activate/Go/Helm/probes forbiddenin thisauthor task",
+    "observer": "actual original generation/policy/order digest, exact source output/role/workload/image/mount/counter/capacity/caller identities at productive boundary; native FEffect requires genuine kernel/Node/readback/action, not source/labels/schema/parser counts",
+    "mutants": [
+      "currenttarget omitsruntime or editsderivedcpuPeriod",
+      "wrongnode/namespace/role/container/image/root/policyDigest/source revision",
+      "reserve incorrectlydoublecounts or excludes pools/PIDs, precision round/overflow",
+      "current source acceptsunknownfield changesdigest, sorted digest incorrectlysubstituted",
+      "CPU rate treatedas CPUtimems or tasks treatedas processes",
+      "serviceoneshot/RemainAfterExit oradminreinitialize destroys pool lifetime",
+      "newB pool/ENV/currentboot replaces retainedAoriginalclaim/grants/deadline/history",
+      "missingnativepeak/counter defaults0, uncertainownership released/GCed"
+    ],
+    "recoveryRestartFixedEval": "fence newadmission; retain originalRsource/claim/taskclock/grants/leases/totalbudget/ownership/store/retention/counters/cleanup acrosscrash/retry/restart. Only authenticatedoriginalquiescence releasespending/reserved/descendantownership. Boot/root/source/runtime mismatch missingoriginal rejects, no currentB rehoming/newepoch/ledger. Genuine mutant-kill/restored original receiver+fixed original Eval remain mandatory and not-run.",
+    "result": "not-run",
+    "testDigest": null
+  },
+  {
+    "originalSettingId": "DLV-NATIVE-HOST-KUBERNETESRESERVE-MEMORYBYTES",
+    "originalCases": [
+      "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+      "DLV-CASE-NATIVE-HOST-ACTIVATION"
+    ],
+    "originalRequirements": [
+      "C0-A",
+      "C0-B",
+      "C0-C",
+      "F-AUTH",
+      "F-VAL",
+      "F-EFFECT",
+      "F-DELIVERY"
+    ],
+    "originalBodyRef": {
+      "path": "original19-field-bodies.json",
+      "pointer": "/rows/6"
+    },
+    "fullProfileA": "source-model-A",
+    "fullProfileB": "source-model-B",
+    "currentSourceProfile": "ax41-current",
+    "coupledRequestedProfile": "ax41-coupled-request",
+    "sourceReader": "nativeNodeReservation kubernetesReserve \u2192 kubelet-reservations.json kubeReserved (CPU millicores suffixm,memory bytes,pid tasks)",
+    "sourceCaseInputsAndOracle": [
+      "4096alignment whole source and totals; role memory.max/swap0 or system/kubelet reserve quantities",
+      "genuine exact Node memory capacity/allocatable/currentreservation and original kernel memory.peak/oomKill, retained pending native reservations; no sampled0/missingcounter fallback"
+    ],
+    "futureValidateRenderAction": "after future original same-generation loader approved: complete original hostprofile/source/meta validation, exact policy/projection/rolevalues/NRI/reservation/unit source outputs; actual production renderer onlyin separately authorized phase. Missing/unknown/equaloldauthor/selectedANDunselected/schema/type/alignment/overflow/runtime/caller wrongsource tests. Current isolatedpuretests here arenot fullrenderer acceptance.",
+    "futureActivationAction": "genuine originalHost/admin grant and retainedsource/boot/identity/kernel capacity/service/policy/image/Node/NRI/role/pool/mount/launcher proof first; original workload source/capacity and oldownership/claim/deadline/grants before stage/native effects; never substitute these public model facts",
+    "futureArgv": [
+      [
+        "node",
+        "scripts/render-native-worker-node.mjs",
+        "<exact-original-selected-policy-YAML>",
+        "<exclusive-new-reviewed-output-directory>"
+      ],
+      [
+        "/usr/local/bin/node",
+        "/opt/kubeclaw/native/prepare-native-worker-pools.mjs",
+        "/etc/kubeclaw/native-node-policy.json",
+        "--serve"
+      ],
+      [
+        "node",
+        "scripts/native-worker-node-preflight.mjs",
+        "<same-original-selected-policy-YAML>"
+      ],
+      [
+        "/opt/nri/plugins/10-kubeclaw-native",
+        "--check-policy",
+        "/etc/kubeclaw/native-nri.json"
+      ]
+    ],
+    "argvQualification": "actual existing source paths/args, future only notexecuted; installer/activate/Go/Helm/probes forbiddenin thisauthor task",
+    "observer": "actual original generation/policy/order digest, exact source output/role/workload/image/mount/counter/capacity/caller identities at productive boundary; native FEffect requires genuine kernel/Node/readback/action, not source/labels/schema/parser counts",
+    "mutants": [
+      "currenttarget omitsruntime or editsderivedcpuPeriod",
+      "wrongnode/namespace/role/container/image/root/policyDigest/source revision",
+      "reserve incorrectlydoublecounts or excludes pools/PIDs, precision round/overflow",
+      "current source acceptsunknownfield changesdigest, sorted digest incorrectlysubstituted",
+      "CPU rate treatedas CPUtimems or tasks treatedas processes",
+      "serviceoneshot/RemainAfterExit oradminreinitialize destroys pool lifetime",
+      "newB pool/ENV/currentboot replaces retainedAoriginalclaim/grants/deadline/history",
+      "missingnativepeak/counter defaults0, uncertainownership released/GCed"
+    ],
+    "recoveryRestartFixedEval": "fence newadmission; retain originalRsource/claim/taskclock/grants/leases/totalbudget/ownership/store/retention/counters/cleanup acrosscrash/retry/restart. Only authenticatedoriginalquiescence releasespending/reserved/descendantownership. Boot/root/source/runtime mismatch missingoriginal rejects, no currentB rehoming/newepoch/ledger. Genuine mutant-kill/restored original receiver+fixed original Eval remain mandatory and not-run.",
+    "result": "not-run",
+    "testDigest": null
+  },
+  {
+    "originalSettingId": "DLV-NATIVE-HOST-KUBERNETESRESERVE-TASKS",
+    "originalCases": [
+      "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+      "DLV-CASE-NATIVE-HOST-ACTIVATION"
+    ],
+    "originalRequirements": [
+      "C0-A",
+      "C0-B",
+      "C0-C",
+      "F-AUTH",
+      "F-VAL",
+      "F-EFFECT",
+      "F-DELIVERY"
+    ],
+    "originalBodyRef": {
+      "path": "original19-field-bodies.json",
+      "pointer": "/rows/7"
+    },
+    "fullProfileA": "source-model-A",
+    "fullProfileB": "source-model-B",
+    "currentSourceProfile": "ax41-current",
+    "coupledRequestedProfile": "ax41-coupled-request",
+    "sourceReader": "nativeNodeReservation kubernetesReserve \u2192 kubelet-reservations.json kubeReserved (CPU millicores suffixm,memory bytes,pid tasks)",
+    "sourceCaseInputsAndOracle": [
+      "Linux tasks/PIDs, includes threads; independent role pids.max or exact system/kubelet pid withholding",
+      "genuine pid_max/threads-max/Pod pids.max and pids.peak/events, source distinction fromV1 maximumProcesses; pending allocations count"
+    ],
+    "futureValidateRenderAction": "after future original same-generation loader approved: complete original hostprofile/source/meta validation, exact policy/projection/rolevalues/NRI/reservation/unit source outputs; actual production renderer onlyin separately authorized phase. Missing/unknown/equaloldauthor/selectedANDunselected/schema/type/alignment/overflow/runtime/caller wrongsource tests. Current isolatedpuretests here arenot fullrenderer acceptance.",
+    "futureActivationAction": "genuine originalHost/admin grant and retainedsource/boot/identity/kernel capacity/service/policy/image/Node/NRI/role/pool/mount/launcher proof first; original workload source/capacity and oldownership/claim/deadline/grants before stage/native effects; never substitute these public model facts",
+    "futureArgv": [
+      [
+        "node",
+        "scripts/render-native-worker-node.mjs",
+        "<exact-original-selected-policy-YAML>",
+        "<exclusive-new-reviewed-output-directory>"
+      ],
+      [
+        "/usr/local/bin/node",
+        "/opt/kubeclaw/native/prepare-native-worker-pools.mjs",
+        "/etc/kubeclaw/native-node-policy.json",
+        "--serve"
+      ],
+      [
+        "node",
+        "scripts/native-worker-node-preflight.mjs",
+        "<same-original-selected-policy-YAML>"
+      ],
+      [
+        "/opt/nri/plugins/10-kubeclaw-native",
+        "--check-policy",
+        "/etc/kubeclaw/native-nri.json"
+      ]
+    ],
+    "argvQualification": "actual existing source paths/args, future only notexecuted; installer/activate/Go/Helm/probes forbiddenin thisauthor task",
+    "observer": "actual original generation/policy/order digest, exact source output/role/workload/image/mount/counter/capacity/caller identities at productive boundary; native FEffect requires genuine kernel/Node/readback/action, not source/labels/schema/parser counts",
+    "mutants": [
+      "currenttarget omitsruntime or editsderivedcpuPeriod",
+      "wrongnode/namespace/role/container/image/root/policyDigest/source revision",
+      "reserve incorrectlydoublecounts or excludes pools/PIDs, precision round/overflow",
+      "current source acceptsunknownfield changesdigest, sorted digest incorrectlysubstituted",
+      "CPU rate treatedas CPUtimems or tasks treatedas processes",
+      "serviceoneshot/RemainAfterExit oradminreinitialize destroys pool lifetime",
+      "newB pool/ENV/currentboot replaces retainedAoriginalclaim/grants/deadline/history",
+      "missingnativepeak/counter defaults0, uncertainownership released/GCed"
+    ],
+    "recoveryRestartFixedEval": "fence newadmission; retain originalRsource/claim/taskclock/grants/leases/totalbudget/ownership/store/retention/counters/cleanup acrosscrash/retry/restart. Only authenticatedoriginalquiescence releasespending/reserved/descendantownership. Boot/root/source/runtime mismatch missingoriginal rejects, no currentB rehoming/newepoch/ledger. Genuine mutant-kill/restored original receiver+fixed original Eval remain mandatory and not-run.",
+    "result": "not-run",
+    "testDigest": null
+  },
+  {
+    "originalSettingId": "DLV-NATIVE-HOST-POOLS-BUSTER-NAMESPACE",
+    "originalCases": [
+      "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+      "DLV-CASE-NATIVE-HOST-ACTIVATION"
+    ],
+    "originalRequirements": [
+      "C0-A",
+      "C0-B",
+      "C0-C",
+      "F-AUTH",
+      "F-VAL",
+      "F-EFFECT",
+      "F-DELIVERY"
+    ],
+    "originalBodyRef": {
+      "path": "original19-field-bodies.json",
+      "pointer": "/rows/8"
+    },
+    "fullProfileA": "source-model-A",
+    "fullProfileB": "source-model-B",
+    "currentSourceProfile": "ax41-current",
+    "coupledRequestedProfile": "ax41-coupled-request",
+    "sourceReader": "nriPolicy roles.namespace \u2192 native-nri.json; rendered native Chart namespace; role admission identity",
+    "sourceCaseInputsAndOracle": [
+      "same original NRI selector/workload namespace, exact role/policyDigest and replicas/node/image/hostmount closure",
+      "notnetworknamespace; NRI onlycgroup namespace adjustment, wrongnamespace/role/barelabel nevergrant"
+    ],
+    "futureValidateRenderAction": "after future original same-generation loader approved: complete original hostprofile/source/meta validation, exact policy/projection/rolevalues/NRI/reservation/unit source outputs; actual production renderer onlyin separately authorized phase. Missing/unknown/equaloldauthor/selectedANDunselected/schema/type/alignment/overflow/runtime/caller wrongsource tests. Current isolatedpuretests here arenot fullrenderer acceptance.",
+    "futureActivationAction": "genuine originalHost/admin grant and retainedsource/boot/identity/kernel capacity/service/policy/image/Node/NRI/role/pool/mount/launcher proof first; original workload source/capacity and oldownership/claim/deadline/grants before stage/native effects; never substitute these public model facts",
+    "futureArgv": [
+      [
+        "node",
+        "scripts/render-native-worker-node.mjs",
+        "<exact-original-selected-policy-YAML>",
+        "<exclusive-new-reviewed-output-directory>"
+      ],
+      [
+        "/usr/local/bin/node",
+        "/opt/kubeclaw/native/prepare-native-worker-pools.mjs",
+        "/etc/kubeclaw/native-node-policy.json",
+        "--serve"
+      ],
+      [
+        "node",
+        "scripts/native-worker-node-preflight.mjs",
+        "<same-original-selected-policy-YAML>"
+      ],
+      [
+        "/opt/nri/plugins/10-kubeclaw-native",
+        "--check-policy",
+        "/etc/kubeclaw/native-nri.json"
+      ]
+    ],
+    "argvQualification": "actual existing source paths/args, future only notexecuted; installer/activate/Go/Helm/probes forbiddenin thisauthor task",
+    "observer": "actual original generation/policy/order digest, exact source output/role/workload/image/mount/counter/capacity/caller identities at productive boundary; native FEffect requires genuine kernel/Node/readback/action, not source/labels/schema/parser counts",
+    "mutants": [
+      "currenttarget omitsruntime or editsderivedcpuPeriod",
+      "wrongnode/namespace/role/container/image/root/policyDigest/source revision",
+      "reserve incorrectlydoublecounts or excludes pools/PIDs, precision round/overflow",
+      "current source acceptsunknownfield changesdigest, sorted digest incorrectlysubstituted",
+      "CPU rate treatedas CPUtimems or tasks treatedas processes",
+      "serviceoneshot/RemainAfterExit oradminreinitialize destroys pool lifetime",
+      "newB pool/ENV/currentboot replaces retainedAoriginalclaim/grants/deadline/history",
+      "missingnativepeak/counter defaults0, uncertainownership released/GCed"
+    ],
+    "recoveryRestartFixedEval": "fence newadmission; retain originalRsource/claim/taskclock/grants/leases/totalbudget/ownership/store/retention/counters/cleanup acrosscrash/retry/restart. Only authenticatedoriginalquiescence releasespending/reserved/descendantownership. Boot/root/source/runtime mismatch missingoriginal rejects, no currentB rehoming/newepoch/ledger. Genuine mutant-kill/restored original receiver+fixed original Eval remain mandatory and not-run.",
+    "result": "not-run",
+    "testDigest": null
+  },
+  {
+    "originalSettingId": "DLV-NATIVE-HOST-POOLS-BUSTER-CPUMILLICORES",
+    "originalCases": [
+      "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+      "DLV-CASE-NATIVE-HOST-ACTIVATION"
+    ],
+    "originalRequirements": [
+      "C0-A",
+      "C0-B",
+      "C0-C",
+      "F-AUTH",
+      "F-VAL",
+      "F-EFFECT",
+      "F-DELIVERY"
+    ],
+    "originalBodyRef": {
+      "path": "original19-field-bodies.json",
+      "pointer": "/rows/9"
+    },
+    "fullProfileA": "source-model-A",
+    "fullProfileB": "source-model-B",
+    "currentSourceProfile": "ax41-current",
+    "coupledRequestedProfile": "ax41-coupled-request",
+    "sourceReader": "nativePoolPolicy limits: memoryBytes\u2192memory.max; tasks\u2192pids.max; cpuMillicores*100\u2192cpu.max quota /100000us period \u2192 prepare controls; plus nativeNodeReservation systemReserved pool sum",
+    "sourceCaseInputsAndOracle": [
+      "exact CPUm/unit quota\u00b5s*100 and fixed100000\u00b5s period or original kubelet withholding sum; sourceCPU1 acceptsbutnativepoolrejects100\u00b5s; unsafe multiplication/total rejected",
+      "genuine selected Node CPUcapacity/allocatable/reservations exact BigInt quantities and kernel worker cpu.stat usage_usec; cannot substitute CPUtimems/quality knob"
+    ],
+    "futureValidateRenderAction": "after future original same-generation loader approved: complete original hostprofile/source/meta validation, exact policy/projection/rolevalues/NRI/reservation/unit source outputs; actual production renderer onlyin separately authorized phase. Missing/unknown/equaloldauthor/selectedANDunselected/schema/type/alignment/overflow/runtime/caller wrongsource tests. Current isolatedpuretests here arenot fullrenderer acceptance.",
+    "futureActivationAction": "genuine originalHost/admin grant and retainedsource/boot/identity/kernel capacity/service/policy/image/Node/NRI/role/pool/mount/launcher proof first; original workload source/capacity and oldownership/claim/deadline/grants before stage/native effects; never substitute these public model facts",
+    "futureArgv": [
+      [
+        "node",
+        "scripts/render-native-worker-node.mjs",
+        "<exact-original-selected-policy-YAML>",
+        "<exclusive-new-reviewed-output-directory>"
+      ],
+      [
+        "/usr/local/bin/node",
+        "/opt/kubeclaw/native/prepare-native-worker-pools.mjs",
+        "/etc/kubeclaw/native-node-policy.json",
+        "--serve"
+      ],
+      [
+        "node",
+        "scripts/native-worker-node-preflight.mjs",
+        "<same-original-selected-policy-YAML>"
+      ],
+      [
+        "/opt/nri/plugins/10-kubeclaw-native",
+        "--check-policy",
+        "/etc/kubeclaw/native-nri.json"
+      ]
+    ],
+    "argvQualification": "actual existing source paths/args, future only notexecuted; installer/activate/Go/Helm/probes forbiddenin thisauthor task",
+    "observer": "actual original generation/policy/order digest, exact source output/role/workload/image/mount/counter/capacity/caller identities at productive boundary; native FEffect requires genuine kernel/Node/readback/action, not source/labels/schema/parser counts",
+    "mutants": [
+      "currenttarget omitsruntime or editsderivedcpuPeriod",
+      "wrongnode/namespace/role/container/image/root/policyDigest/source revision",
+      "reserve incorrectlydoublecounts or excludes pools/PIDs, precision round/overflow",
+      "current source acceptsunknownfield changesdigest, sorted digest incorrectlysubstituted",
+      "CPU rate treatedas CPUtimems or tasks treatedas processes",
+      "serviceoneshot/RemainAfterExit oradminreinitialize destroys pool lifetime",
+      "newB pool/ENV/currentboot replaces retainedAoriginalclaim/grants/deadline/history",
+      "missingnativepeak/counter defaults0, uncertainownership released/GCed"
+    ],
+    "recoveryRestartFixedEval": "fence newadmission; retain originalRsource/claim/taskclock/grants/leases/totalbudget/ownership/store/retention/counters/cleanup acrosscrash/retry/restart. Only authenticatedoriginalquiescence releasespending/reserved/descendantownership. Boot/root/source/runtime mismatch missingoriginal rejects, no currentB rehoming/newepoch/ledger. Genuine mutant-kill/restored original receiver+fixed original Eval remain mandatory and not-run.",
+    "result": "not-run",
+    "testDigest": null
+  },
+  {
+    "originalSettingId": "DLV-NATIVE-HOST-POOLS-BUSTER-MEMORYBYTES",
+    "originalCases": [
+      "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+      "DLV-CASE-NATIVE-HOST-ACTIVATION"
+    ],
+    "originalRequirements": [
+      "C0-A",
+      "C0-B",
+      "C0-C",
+      "F-AUTH",
+      "F-VAL",
+      "F-EFFECT",
+      "F-DELIVERY"
+    ],
+    "originalBodyRef": {
+      "path": "original19-field-bodies.json",
+      "pointer": "/rows/10"
+    },
+    "fullProfileA": "source-model-A",
+    "fullProfileB": "source-model-B",
+    "currentSourceProfile": "ax41-current",
+    "coupledRequestedProfile": "ax41-coupled-request",
+    "sourceReader": "nativePoolPolicy limits: memoryBytes\u2192memory.max; tasks\u2192pids.max; cpuMillicores*100\u2192cpu.max quota /100000us period \u2192 prepare controls; plus nativeNodeReservation systemReserved pool sum",
+    "sourceCaseInputsAndOracle": [
+      "4096alignment whole source and totals; role memory.max/swap0 or system/kubelet reserve quantities",
+      "genuine exact Node memory capacity/allocatable/currentreservation and original kernel memory.peak/oomKill, retained pending native reservations; no sampled0/missingcounter fallback"
+    ],
+    "futureValidateRenderAction": "after future original same-generation loader approved: complete original hostprofile/source/meta validation, exact policy/projection/rolevalues/NRI/reservation/unit source outputs; actual production renderer onlyin separately authorized phase. Missing/unknown/equaloldauthor/selectedANDunselected/schema/type/alignment/overflow/runtime/caller wrongsource tests. Current isolatedpuretests here arenot fullrenderer acceptance.",
+    "futureActivationAction": "genuine originalHost/admin grant and retainedsource/boot/identity/kernel capacity/service/policy/image/Node/NRI/role/pool/mount/launcher proof first; original workload source/capacity and oldownership/claim/deadline/grants before stage/native effects; never substitute these public model facts",
+    "futureArgv": [
+      [
+        "node",
+        "scripts/render-native-worker-node.mjs",
+        "<exact-original-selected-policy-YAML>",
+        "<exclusive-new-reviewed-output-directory>"
+      ],
+      [
+        "/usr/local/bin/node",
+        "/opt/kubeclaw/native/prepare-native-worker-pools.mjs",
+        "/etc/kubeclaw/native-node-policy.json",
+        "--serve"
+      ],
+      [
+        "node",
+        "scripts/native-worker-node-preflight.mjs",
+        "<same-original-selected-policy-YAML>"
+      ],
+      [
+        "/opt/nri/plugins/10-kubeclaw-native",
+        "--check-policy",
+        "/etc/kubeclaw/native-nri.json"
+      ]
+    ],
+    "argvQualification": "actual existing source paths/args, future only notexecuted; installer/activate/Go/Helm/probes forbiddenin thisauthor task",
+    "observer": "actual original generation/policy/order digest, exact source output/role/workload/image/mount/counter/capacity/caller identities at productive boundary; native FEffect requires genuine kernel/Node/readback/action, not source/labels/schema/parser counts",
+    "mutants": [
+      "currenttarget omitsruntime or editsderivedcpuPeriod",
+      "wrongnode/namespace/role/container/image/root/policyDigest/source revision",
+      "reserve incorrectlydoublecounts or excludes pools/PIDs, precision round/overflow",
+      "current source acceptsunknownfield changesdigest, sorted digest incorrectlysubstituted",
+      "CPU rate treatedas CPUtimems or tasks treatedas processes",
+      "serviceoneshot/RemainAfterExit oradminreinitialize destroys pool lifetime",
+      "newB pool/ENV/currentboot replaces retainedAoriginalclaim/grants/deadline/history",
+      "missingnativepeak/counter defaults0, uncertainownership released/GCed"
+    ],
+    "recoveryRestartFixedEval": "fence newadmission; retain originalRsource/claim/taskclock/grants/leases/totalbudget/ownership/store/retention/counters/cleanup acrosscrash/retry/restart. Only authenticatedoriginalquiescence releasespending/reserved/descendantownership. Boot/root/source/runtime mismatch missingoriginal rejects, no currentB rehoming/newepoch/ledger. Genuine mutant-kill/restored original receiver+fixed original Eval remain mandatory and not-run.",
+    "result": "not-run",
+    "testDigest": null
+  },
+  {
+    "originalSettingId": "DLV-NATIVE-HOST-POOLS-BUSTER-TASKS",
+    "originalCases": [
+      "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+      "DLV-CASE-NATIVE-HOST-ACTIVATION"
+    ],
+    "originalRequirements": [
+      "C0-A",
+      "C0-B",
+      "C0-C",
+      "F-AUTH",
+      "F-VAL",
+      "F-EFFECT",
+      "F-DELIVERY"
+    ],
+    "originalBodyRef": {
+      "path": "original19-field-bodies.json",
+      "pointer": "/rows/11"
+    },
+    "fullProfileA": "source-model-A",
+    "fullProfileB": "source-model-B",
+    "currentSourceProfile": "ax41-current",
+    "coupledRequestedProfile": "ax41-coupled-request",
+    "sourceReader": "nativePoolPolicy limits: memoryBytes\u2192memory.max; tasks\u2192pids.max; cpuMillicores*100\u2192cpu.max quota /100000us period \u2192 prepare controls; plus nativeNodeReservation systemReserved pool sum",
+    "sourceCaseInputsAndOracle": [
+      "Linux tasks/PIDs, includes threads; independent role pids.max or exact system/kubelet pid withholding",
+      "genuine pid_max/threads-max/Pod pids.max and pids.peak/events, source distinction fromV1 maximumProcesses; pending allocations count"
+    ],
+    "futureValidateRenderAction": "after future original same-generation loader approved: complete original hostprofile/source/meta validation, exact policy/projection/rolevalues/NRI/reservation/unit source outputs; actual production renderer onlyin separately authorized phase. Missing/unknown/equaloldauthor/selectedANDunselected/schema/type/alignment/overflow/runtime/caller wrongsource tests. Current isolatedpuretests here arenot fullrenderer acceptance.",
+    "futureActivationAction": "genuine originalHost/admin grant and retainedsource/boot/identity/kernel capacity/service/policy/image/Node/NRI/role/pool/mount/launcher proof first; original workload source/capacity and oldownership/claim/deadline/grants before stage/native effects; never substitute these public model facts",
+    "futureArgv": [
+      [
+        "node",
+        "scripts/render-native-worker-node.mjs",
+        "<exact-original-selected-policy-YAML>",
+        "<exclusive-new-reviewed-output-directory>"
+      ],
+      [
+        "/usr/local/bin/node",
+        "/opt/kubeclaw/native/prepare-native-worker-pools.mjs",
+        "/etc/kubeclaw/native-node-policy.json",
+        "--serve"
+      ],
+      [
+        "node",
+        "scripts/native-worker-node-preflight.mjs",
+        "<same-original-selected-policy-YAML>"
+      ],
+      [
+        "/opt/nri/plugins/10-kubeclaw-native",
+        "--check-policy",
+        "/etc/kubeclaw/native-nri.json"
+      ]
+    ],
+    "argvQualification": "actual existing source paths/args, future only notexecuted; installer/activate/Go/Helm/probes forbiddenin thisauthor task",
+    "observer": "actual original generation/policy/order digest, exact source output/role/workload/image/mount/counter/capacity/caller identities at productive boundary; native FEffect requires genuine kernel/Node/readback/action, not source/labels/schema/parser counts",
+    "mutants": [
+      "currenttarget omitsruntime or editsderivedcpuPeriod",
+      "wrongnode/namespace/role/container/image/root/policyDigest/source revision",
+      "reserve incorrectlydoublecounts or excludes pools/PIDs, precision round/overflow",
+      "current source acceptsunknownfield changesdigest, sorted digest incorrectlysubstituted",
+      "CPU rate treatedas CPUtimems or tasks treatedas processes",
+      "serviceoneshot/RemainAfterExit oradminreinitialize destroys pool lifetime",
+      "newB pool/ENV/currentboot replaces retainedAoriginalclaim/grants/deadline/history",
+      "missingnativepeak/counter defaults0, uncertainownership released/GCed"
+    ],
+    "recoveryRestartFixedEval": "fence newadmission; retain originalRsource/claim/taskclock/grants/leases/totalbudget/ownership/store/retention/counters/cleanup acrosscrash/retry/restart. Only authenticatedoriginalquiescence releasespending/reserved/descendantownership. Boot/root/source/runtime mismatch missingoriginal rejects, no currentB rehoming/newepoch/ledger. Genuine mutant-kill/restored original receiver+fixed original Eval remain mandatory and not-run.",
+    "result": "not-run",
+    "testDigest": null
+  },
+  {
+    "originalSettingId": "DLV-NATIVE-HOST-POOLS-BUSTER-MAXIMUMACTIVESCOPES",
+    "originalCases": [
+      "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+      "DLV-CASE-NATIVE-HOST-ACTIVATION"
+    ],
+    "originalRequirements": [
+      "C0-A",
+      "C0-B",
+      "C0-C",
+      "F-AUTH",
+      "F-VAL",
+      "F-EFFECT",
+      "F-DELIVERY"
+    ],
+    "originalBodyRef": {
+      "path": "original19-field-bodies.json",
+      "pointer": "/rows/12"
+    },
+    "fullProfileA": "source-model-A",
+    "fullProfileB": "source-model-B",
+    "currentSourceProfile": "ax41-current",
+    "coupledRequestedProfile": "ax41-coupled-request",
+    "sourceReader": "nativePoolPolicy maximumActiveScopes \u2192 <role>-pool.json \u2192 worker native scope admission; not prepare cgroup control",
+    "sourceCaseInputsAndOracle": [
+      "independent count ceiling, pending+running reservation and idempotent release onlyafter originalquiescence",
+      "Aactualax41Buster1 incompatiblecurrentC3prep2, explicitrequested2 profile metadata compatible but8GiBaggregate doesnot promise2x8GiB concurrently; memory/PIDs ceilings stilldeny"
+    ],
+    "futureValidateRenderAction": "after future original same-generation loader approved: complete original hostprofile/source/meta validation, exact policy/projection/rolevalues/NRI/reservation/unit source outputs; actual production renderer onlyin separately authorized phase. Missing/unknown/equaloldauthor/selectedANDunselected/schema/type/alignment/overflow/runtime/caller wrongsource tests. Current isolatedpuretests here arenot fullrenderer acceptance.",
+    "futureActivationAction": "genuine originalHost/admin grant and retainedsource/boot/identity/kernel capacity/service/policy/image/Node/NRI/role/pool/mount/launcher proof first; original workload source/capacity and oldownership/claim/deadline/grants before stage/native effects; never substitute these public model facts",
+    "futureArgv": [
+      [
+        "node",
+        "scripts/render-native-worker-node.mjs",
+        "<exact-original-selected-policy-YAML>",
+        "<exclusive-new-reviewed-output-directory>"
+      ],
+      [
+        "/usr/local/bin/node",
+        "/opt/kubeclaw/native/prepare-native-worker-pools.mjs",
+        "/etc/kubeclaw/native-node-policy.json",
+        "--serve"
+      ],
+      [
+        "node",
+        "scripts/native-worker-node-preflight.mjs",
+        "<same-original-selected-policy-YAML>"
+      ],
+      [
+        "/opt/nri/plugins/10-kubeclaw-native",
+        "--check-policy",
+        "/etc/kubeclaw/native-nri.json"
+      ]
+    ],
+    "argvQualification": "actual existing source paths/args, future only notexecuted; installer/activate/Go/Helm/probes forbiddenin thisauthor task",
+    "observer": "actual original generation/policy/order digest, exact source output/role/workload/image/mount/counter/capacity/caller identities at productive boundary; native FEffect requires genuine kernel/Node/readback/action, not source/labels/schema/parser counts",
+    "mutants": [
+      "currenttarget omitsruntime or editsderivedcpuPeriod",
+      "wrongnode/namespace/role/container/image/root/policyDigest/source revision",
+      "reserve incorrectlydoublecounts or excludes pools/PIDs, precision round/overflow",
+      "current source acceptsunknownfield changesdigest, sorted digest incorrectlysubstituted",
+      "CPU rate treatedas CPUtimems or tasks treatedas processes",
+      "serviceoneshot/RemainAfterExit oradminreinitialize destroys pool lifetime",
+      "newB pool/ENV/currentboot replaces retainedAoriginalclaim/grants/deadline/history",
+      "missingnativepeak/counter defaults0, uncertainownership released/GCed"
+    ],
+    "recoveryRestartFixedEval": "fence newadmission; retain originalRsource/claim/taskclock/grants/leases/totalbudget/ownership/store/retention/counters/cleanup acrosscrash/retry/restart. Only authenticatedoriginalquiescence releasespending/reserved/descendantownership. Boot/root/source/runtime mismatch missingoriginal rejects, no currentB rehoming/newepoch/ledger. Genuine mutant-kill/restored original receiver+fixed original Eval remain mandatory and not-run.",
+    "result": "not-run",
+    "testDigest": null
+  },
+  {
+    "originalSettingId": "DLV-NATIVE-HOST-POOLS-PRISM-NAMESPACE",
+    "originalCases": [
+      "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+      "DLV-CASE-NATIVE-HOST-ACTIVATION"
+    ],
+    "originalRequirements": [
+      "C0-A",
+      "C0-B",
+      "C0-C",
+      "F-AUTH",
+      "F-VAL",
+      "F-EFFECT",
+      "F-DELIVERY"
+    ],
+    "originalBodyRef": {
+      "path": "original19-field-bodies.json",
+      "pointer": "/rows/13"
+    },
+    "fullProfileA": "source-model-A",
+    "fullProfileB": "source-model-B",
+    "currentSourceProfile": "ax41-current",
+    "coupledRequestedProfile": "ax41-coupled-request",
+    "sourceReader": "nriPolicy roles.namespace \u2192 native-nri.json; rendered native Chart namespace; role admission identity",
+    "sourceCaseInputsAndOracle": [
+      "same original NRI selector/workload namespace, exact role/policyDigest and replicas/node/image/hostmount closure",
+      "notnetworknamespace; NRI onlycgroup namespace adjustment, wrongnamespace/role/barelabel nevergrant"
+    ],
+    "futureValidateRenderAction": "after future original same-generation loader approved: complete original hostprofile/source/meta validation, exact policy/projection/rolevalues/NRI/reservation/unit source outputs; actual production renderer onlyin separately authorized phase. Missing/unknown/equaloldauthor/selectedANDunselected/schema/type/alignment/overflow/runtime/caller wrongsource tests. Current isolatedpuretests here arenot fullrenderer acceptance.",
+    "futureActivationAction": "genuine originalHost/admin grant and retainedsource/boot/identity/kernel capacity/service/policy/image/Node/NRI/role/pool/mount/launcher proof first; original workload source/capacity and oldownership/claim/deadline/grants before stage/native effects; never substitute these public model facts",
+    "futureArgv": [
+      [
+        "node",
+        "scripts/render-native-worker-node.mjs",
+        "<exact-original-selected-policy-YAML>",
+        "<exclusive-new-reviewed-output-directory>"
+      ],
+      [
+        "/usr/local/bin/node",
+        "/opt/kubeclaw/native/prepare-native-worker-pools.mjs",
+        "/etc/kubeclaw/native-node-policy.json",
+        "--serve"
+      ],
+      [
+        "node",
+        "scripts/native-worker-node-preflight.mjs",
+        "<same-original-selected-policy-YAML>"
+      ],
+      [
+        "/opt/nri/plugins/10-kubeclaw-native",
+        "--check-policy",
+        "/etc/kubeclaw/native-nri.json"
+      ]
+    ],
+    "argvQualification": "actual existing source paths/args, future only notexecuted; installer/activate/Go/Helm/probes forbiddenin thisauthor task",
+    "observer": "actual original generation/policy/order digest, exact source output/role/workload/image/mount/counter/capacity/caller identities at productive boundary; native FEffect requires genuine kernel/Node/readback/action, not source/labels/schema/parser counts",
+    "mutants": [
+      "currenttarget omitsruntime or editsderivedcpuPeriod",
+      "wrongnode/namespace/role/container/image/root/policyDigest/source revision",
+      "reserve incorrectlydoublecounts or excludes pools/PIDs, precision round/overflow",
+      "current source acceptsunknownfield changesdigest, sorted digest incorrectlysubstituted",
+      "CPU rate treatedas CPUtimems or tasks treatedas processes",
+      "serviceoneshot/RemainAfterExit oradminreinitialize destroys pool lifetime",
+      "newB pool/ENV/currentboot replaces retainedAoriginalclaim/grants/deadline/history",
+      "missingnativepeak/counter defaults0, uncertainownership released/GCed"
+    ],
+    "recoveryRestartFixedEval": "fence newadmission; retain originalRsource/claim/taskclock/grants/leases/totalbudget/ownership/store/retention/counters/cleanup acrosscrash/retry/restart. Only authenticatedoriginalquiescence releasespending/reserved/descendantownership. Boot/root/source/runtime mismatch missingoriginal rejects, no currentB rehoming/newepoch/ledger. Genuine mutant-kill/restored original receiver+fixed original Eval remain mandatory and not-run.",
+    "result": "not-run",
+    "testDigest": null
+  },
+  {
+    "originalSettingId": "DLV-NATIVE-HOST-POOLS-PRISM-CPUMILLICORES",
+    "originalCases": [
+      "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+      "DLV-CASE-NATIVE-HOST-ACTIVATION"
+    ],
+    "originalRequirements": [
+      "C0-A",
+      "C0-B",
+      "C0-C",
+      "F-AUTH",
+      "F-VAL",
+      "F-EFFECT",
+      "F-DELIVERY"
+    ],
+    "originalBodyRef": {
+      "path": "original19-field-bodies.json",
+      "pointer": "/rows/14"
+    },
+    "fullProfileA": "source-model-A",
+    "fullProfileB": "source-model-B",
+    "currentSourceProfile": "ax41-current",
+    "coupledRequestedProfile": "ax41-coupled-request",
+    "sourceReader": "nativePoolPolicy limits: memoryBytes\u2192memory.max; tasks\u2192pids.max; cpuMillicores*100\u2192cpu.max quota /100000us period \u2192 prepare controls; plus nativeNodeReservation systemReserved pool sum",
+    "sourceCaseInputsAndOracle": [
+      "exact CPUm/unit quota\u00b5s*100 and fixed100000\u00b5s period or original kubelet withholding sum; sourceCPU1 acceptsbutnativepoolrejects100\u00b5s; unsafe multiplication/total rejected",
+      "genuine selected Node CPUcapacity/allocatable/reservations exact BigInt quantities and kernel worker cpu.stat usage_usec; cannot substitute CPUtimems/quality knob"
+    ],
+    "futureValidateRenderAction": "after future original same-generation loader approved: complete original hostprofile/source/meta validation, exact policy/projection/rolevalues/NRI/reservation/unit source outputs; actual production renderer onlyin separately authorized phase. Missing/unknown/equaloldauthor/selectedANDunselected/schema/type/alignment/overflow/runtime/caller wrongsource tests. Current isolatedpuretests here arenot fullrenderer acceptance.",
+    "futureActivationAction": "genuine originalHost/admin grant and retainedsource/boot/identity/kernel capacity/service/policy/image/Node/NRI/role/pool/mount/launcher proof first; original workload source/capacity and oldownership/claim/deadline/grants before stage/native effects; never substitute these public model facts",
+    "futureArgv": [
+      [
+        "node",
+        "scripts/render-native-worker-node.mjs",
+        "<exact-original-selected-policy-YAML>",
+        "<exclusive-new-reviewed-output-directory>"
+      ],
+      [
+        "/usr/local/bin/node",
+        "/opt/kubeclaw/native/prepare-native-worker-pools.mjs",
+        "/etc/kubeclaw/native-node-policy.json",
+        "--serve"
+      ],
+      [
+        "node",
+        "scripts/native-worker-node-preflight.mjs",
+        "<same-original-selected-policy-YAML>"
+      ],
+      [
+        "/opt/nri/plugins/10-kubeclaw-native",
+        "--check-policy",
+        "/etc/kubeclaw/native-nri.json"
+      ]
+    ],
+    "argvQualification": "actual existing source paths/args, future only notexecuted; installer/activate/Go/Helm/probes forbiddenin thisauthor task",
+    "observer": "actual original generation/policy/order digest, exact source output/role/workload/image/mount/counter/capacity/caller identities at productive boundary; native FEffect requires genuine kernel/Node/readback/action, not source/labels/schema/parser counts",
+    "mutants": [
+      "currenttarget omitsruntime or editsderivedcpuPeriod",
+      "wrongnode/namespace/role/container/image/root/policyDigest/source revision",
+      "reserve incorrectlydoublecounts or excludes pools/PIDs, precision round/overflow",
+      "current source acceptsunknownfield changesdigest, sorted digest incorrectlysubstituted",
+      "CPU rate treatedas CPUtimems or tasks treatedas processes",
+      "serviceoneshot/RemainAfterExit oradminreinitialize destroys pool lifetime",
+      "newB pool/ENV/currentboot replaces retainedAoriginalclaim/grants/deadline/history",
+      "missingnativepeak/counter defaults0, uncertainownership released/GCed"
+    ],
+    "recoveryRestartFixedEval": "fence newadmission; retain originalRsource/claim/taskclock/grants/leases/totalbudget/ownership/store/retention/counters/cleanup acrosscrash/retry/restart. Only authenticatedoriginalquiescence releasespending/reserved/descendantownership. Boot/root/source/runtime mismatch missingoriginal rejects, no currentB rehoming/newepoch/ledger. Genuine mutant-kill/restored original receiver+fixed original Eval remain mandatory and not-run.",
+    "result": "not-run",
+    "testDigest": null
+  },
+  {
+    "originalSettingId": "DLV-NATIVE-HOST-POOLS-PRISM-MEMORYBYTES",
+    "originalCases": [
+      "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+      "DLV-CASE-NATIVE-HOST-ACTIVATION"
+    ],
+    "originalRequirements": [
+      "C0-A",
+      "C0-B",
+      "C0-C",
+      "F-AUTH",
+      "F-VAL",
+      "F-EFFECT",
+      "F-DELIVERY"
+    ],
+    "originalBodyRef": {
+      "path": "original19-field-bodies.json",
+      "pointer": "/rows/15"
+    },
+    "fullProfileA": "source-model-A",
+    "fullProfileB": "source-model-B",
+    "currentSourceProfile": "ax41-current",
+    "coupledRequestedProfile": "ax41-coupled-request",
+    "sourceReader": "nativePoolPolicy limits: memoryBytes\u2192memory.max; tasks\u2192pids.max; cpuMillicores*100\u2192cpu.max quota /100000us period \u2192 prepare controls; plus nativeNodeReservation systemReserved pool sum",
+    "sourceCaseInputsAndOracle": [
+      "4096alignment whole source and totals; role memory.max/swap0 or system/kubelet reserve quantities",
+      "genuine exact Node memory capacity/allocatable/currentreservation and original kernel memory.peak/oomKill, retained pending native reservations; no sampled0/missingcounter fallback"
+    ],
+    "futureValidateRenderAction": "after future original same-generation loader approved: complete original hostprofile/source/meta validation, exact policy/projection/rolevalues/NRI/reservation/unit source outputs; actual production renderer onlyin separately authorized phase. Missing/unknown/equaloldauthor/selectedANDunselected/schema/type/alignment/overflow/runtime/caller wrongsource tests. Current isolatedpuretests here arenot fullrenderer acceptance.",
+    "futureActivationAction": "genuine originalHost/admin grant and retainedsource/boot/identity/kernel capacity/service/policy/image/Node/NRI/role/pool/mount/launcher proof first; original workload source/capacity and oldownership/claim/deadline/grants before stage/native effects; never substitute these public model facts",
+    "futureArgv": [
+      [
+        "node",
+        "scripts/render-native-worker-node.mjs",
+        "<exact-original-selected-policy-YAML>",
+        "<exclusive-new-reviewed-output-directory>"
+      ],
+      [
+        "/usr/local/bin/node",
+        "/opt/kubeclaw/native/prepare-native-worker-pools.mjs",
+        "/etc/kubeclaw/native-node-policy.json",
+        "--serve"
+      ],
+      [
+        "node",
+        "scripts/native-worker-node-preflight.mjs",
+        "<same-original-selected-policy-YAML>"
+      ],
+      [
+        "/opt/nri/plugins/10-kubeclaw-native",
+        "--check-policy",
+        "/etc/kubeclaw/native-nri.json"
+      ]
+    ],
+    "argvQualification": "actual existing source paths/args, future only notexecuted; installer/activate/Go/Helm/probes forbiddenin thisauthor task",
+    "observer": "actual original generation/policy/order digest, exact source output/role/workload/image/mount/counter/capacity/caller identities at productive boundary; native FEffect requires genuine kernel/Node/readback/action, not source/labels/schema/parser counts",
+    "mutants": [
+      "currenttarget omitsruntime or editsderivedcpuPeriod",
+      "wrongnode/namespace/role/container/image/root/policyDigest/source revision",
+      "reserve incorrectlydoublecounts or excludes pools/PIDs, precision round/overflow",
+      "current source acceptsunknownfield changesdigest, sorted digest incorrectlysubstituted",
+      "CPU rate treatedas CPUtimems or tasks treatedas processes",
+      "serviceoneshot/RemainAfterExit oradminreinitialize destroys pool lifetime",
+      "newB pool/ENV/currentboot replaces retainedAoriginalclaim/grants/deadline/history",
+      "missingnativepeak/counter defaults0, uncertainownership released/GCed"
+    ],
+    "recoveryRestartFixedEval": "fence newadmission; retain originalRsource/claim/taskclock/grants/leases/totalbudget/ownership/store/retention/counters/cleanup acrosscrash/retry/restart. Only authenticatedoriginalquiescence releasespending/reserved/descendantownership. Boot/root/source/runtime mismatch missingoriginal rejects, no currentB rehoming/newepoch/ledger. Genuine mutant-kill/restored original receiver+fixed original Eval remain mandatory and not-run.",
+    "result": "not-run",
+    "testDigest": null
+  },
+  {
+    "originalSettingId": "DLV-NATIVE-HOST-POOLS-PRISM-TASKS",
+    "originalCases": [
+      "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+      "DLV-CASE-NATIVE-HOST-ACTIVATION"
+    ],
+    "originalRequirements": [
+      "C0-A",
+      "C0-B",
+      "C0-C",
+      "F-AUTH",
+      "F-VAL",
+      "F-EFFECT",
+      "F-DELIVERY"
+    ],
+    "originalBodyRef": {
+      "path": "original19-field-bodies.json",
+      "pointer": "/rows/16"
+    },
+    "fullProfileA": "source-model-A",
+    "fullProfileB": "source-model-B",
+    "currentSourceProfile": "ax41-current",
+    "coupledRequestedProfile": "ax41-coupled-request",
+    "sourceReader": "nativePoolPolicy limits: memoryBytes\u2192memory.max; tasks\u2192pids.max; cpuMillicores*100\u2192cpu.max quota /100000us period \u2192 prepare controls; plus nativeNodeReservation systemReserved pool sum",
+    "sourceCaseInputsAndOracle": [
+      "Linux tasks/PIDs, includes threads; independent role pids.max or exact system/kubelet pid withholding",
+      "genuine pid_max/threads-max/Pod pids.max and pids.peak/events, source distinction fromV1 maximumProcesses; pending allocations count"
+    ],
+    "futureValidateRenderAction": "after future original same-generation loader approved: complete original hostprofile/source/meta validation, exact policy/projection/rolevalues/NRI/reservation/unit source outputs; actual production renderer onlyin separately authorized phase. Missing/unknown/equaloldauthor/selectedANDunselected/schema/type/alignment/overflow/runtime/caller wrongsource tests. Current isolatedpuretests here arenot fullrenderer acceptance.",
+    "futureActivationAction": "genuine originalHost/admin grant and retainedsource/boot/identity/kernel capacity/service/policy/image/Node/NRI/role/pool/mount/launcher proof first; original workload source/capacity and oldownership/claim/deadline/grants before stage/native effects; never substitute these public model facts",
+    "futureArgv": [
+      [
+        "node",
+        "scripts/render-native-worker-node.mjs",
+        "<exact-original-selected-policy-YAML>",
+        "<exclusive-new-reviewed-output-directory>"
+      ],
+      [
+        "/usr/local/bin/node",
+        "/opt/kubeclaw/native/prepare-native-worker-pools.mjs",
+        "/etc/kubeclaw/native-node-policy.json",
+        "--serve"
+      ],
+      [
+        "node",
+        "scripts/native-worker-node-preflight.mjs",
+        "<same-original-selected-policy-YAML>"
+      ],
+      [
+        "/opt/nri/plugins/10-kubeclaw-native",
+        "--check-policy",
+        "/etc/kubeclaw/native-nri.json"
+      ]
+    ],
+    "argvQualification": "actual existing source paths/args, future only notexecuted; installer/activate/Go/Helm/probes forbiddenin thisauthor task",
+    "observer": "actual original generation/policy/order digest, exact source output/role/workload/image/mount/counter/capacity/caller identities at productive boundary; native FEffect requires genuine kernel/Node/readback/action, not source/labels/schema/parser counts",
+    "mutants": [
+      "currenttarget omitsruntime or editsderivedcpuPeriod",
+      "wrongnode/namespace/role/container/image/root/policyDigest/source revision",
+      "reserve incorrectlydoublecounts or excludes pools/PIDs, precision round/overflow",
+      "current source acceptsunknownfield changesdigest, sorted digest incorrectlysubstituted",
+      "CPU rate treatedas CPUtimems or tasks treatedas processes",
+      "serviceoneshot/RemainAfterExit oradminreinitialize destroys pool lifetime",
+      "newB pool/ENV/currentboot replaces retainedAoriginalclaim/grants/deadline/history",
+      "missingnativepeak/counter defaults0, uncertainownership released/GCed"
+    ],
+    "recoveryRestartFixedEval": "fence newadmission; retain originalRsource/claim/taskclock/grants/leases/totalbudget/ownership/store/retention/counters/cleanup acrosscrash/retry/restart. Only authenticatedoriginalquiescence releasespending/reserved/descendantownership. Boot/root/source/runtime mismatch missingoriginal rejects, no currentB rehoming/newepoch/ledger. Genuine mutant-kill/restored original receiver+fixed original Eval remain mandatory and not-run.",
+    "result": "not-run",
+    "testDigest": null
+  },
+  {
+    "originalSettingId": "DLV-NATIVE-HOST-POOLS-PRISM-MAXIMUMACTIVESCOPES",
+    "originalCases": [
+      "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+      "DLV-CASE-NATIVE-HOST-ACTIVATION"
+    ],
+    "originalRequirements": [
+      "C0-A",
+      "C0-B",
+      "C0-C",
+      "F-AUTH",
+      "F-VAL",
+      "F-EFFECT",
+      "F-DELIVERY"
+    ],
+    "originalBodyRef": {
+      "path": "original19-field-bodies.json",
+      "pointer": "/rows/17"
+    },
+    "fullProfileA": "source-model-A",
+    "fullProfileB": "source-model-B",
+    "currentSourceProfile": "ax41-current",
+    "coupledRequestedProfile": "ax41-coupled-request",
+    "sourceReader": "nativePoolPolicy maximumActiveScopes \u2192 <role>-pool.json \u2192 worker native scope admission; not prepare cgroup control",
+    "sourceCaseInputsAndOracle": [
+      "independent count ceiling, pending+running reservation and idempotent release onlyafter originalquiescence",
+      "Aactualax41Buster1 incompatiblecurrentC3prep2, explicitrequested2 profile metadata compatible but8GiBaggregate doesnot promise2x8GiB concurrently; memory/PIDs ceilings stilldeny"
+    ],
+    "futureValidateRenderAction": "after future original same-generation loader approved: complete original hostprofile/source/meta validation, exact policy/projection/rolevalues/NRI/reservation/unit source outputs; actual production renderer onlyin separately authorized phase. Missing/unknown/equaloldauthor/selectedANDunselected/schema/type/alignment/overflow/runtime/caller wrongsource tests. Current isolatedpuretests here arenot fullrenderer acceptance.",
+    "futureActivationAction": "genuine originalHost/admin grant and retainedsource/boot/identity/kernel capacity/service/policy/image/Node/NRI/role/pool/mount/launcher proof first; original workload source/capacity and oldownership/claim/deadline/grants before stage/native effects; never substitute these public model facts",
+    "futureArgv": [
+      [
+        "node",
+        "scripts/render-native-worker-node.mjs",
+        "<exact-original-selected-policy-YAML>",
+        "<exclusive-new-reviewed-output-directory>"
+      ],
+      [
+        "/usr/local/bin/node",
+        "/opt/kubeclaw/native/prepare-native-worker-pools.mjs",
+        "/etc/kubeclaw/native-node-policy.json",
+        "--serve"
+      ],
+      [
+        "node",
+        "scripts/native-worker-node-preflight.mjs",
+        "<same-original-selected-policy-YAML>"
+      ],
+      [
+        "/opt/nri/plugins/10-kubeclaw-native",
+        "--check-policy",
+        "/etc/kubeclaw/native-nri.json"
+      ]
+    ],
+    "argvQualification": "actual existing source paths/args, future only notexecuted; installer/activate/Go/Helm/probes forbiddenin thisauthor task",
+    "observer": "actual original generation/policy/order digest, exact source output/role/workload/image/mount/counter/capacity/caller identities at productive boundary; native FEffect requires genuine kernel/Node/readback/action, not source/labels/schema/parser counts",
+    "mutants": [
+      "currenttarget omitsruntime or editsderivedcpuPeriod",
+      "wrongnode/namespace/role/container/image/root/policyDigest/source revision",
+      "reserve incorrectlydoublecounts or excludes pools/PIDs, precision round/overflow",
+      "current source acceptsunknownfield changesdigest, sorted digest incorrectlysubstituted",
+      "CPU rate treatedas CPUtimems or tasks treatedas processes",
+      "serviceoneshot/RemainAfterExit oradminreinitialize destroys pool lifetime",
+      "newB pool/ENV/currentboot replaces retainedAoriginalclaim/grants/deadline/history",
+      "missingnativepeak/counter defaults0, uncertainownership released/GCed"
+    ],
+    "recoveryRestartFixedEval": "fence newadmission; retain originalRsource/claim/taskclock/grants/leases/totalbudget/ownership/store/retention/counters/cleanup acrosscrash/retry/restart. Only authenticatedoriginalquiescence releasespending/reserved/descendantownership. Boot/root/source/runtime mismatch missingoriginal rejects, no currentB rehoming/newepoch/ledger. Genuine mutant-kill/restored original receiver+fixed original Eval remain mandatory and not-run.",
+    "result": "not-run",
+    "testDigest": null
+  },
+  {
+    "originalSettingId": "DLV-NATIVE-HOST-RUNTIME-CONTAINERDVERSION",
+    "originalCases": [
+      "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+      "DLV-CASE-NATIVE-HOST-ACTIVATION"
+    ],
+    "originalRequirements": [
+      "C0-A",
+      "C0-B",
+      "C0-C",
+      "F-AUTH",
+      "F-VAL",
+      "F-EFFECT",
+      "F-DELIVERY"
+    ],
+    "originalBodyRef": {
+      "path": "original19-field-bodies.json",
+      "pointer": "/rows/18"
+    },
+    "fullProfileA": "source-model-A",
+    "fullProfileB": "source-model-B",
+    "currentSourceProfile": "ax41-current",
+    "coupledRequestedProfile": "ax41-coupled-request",
+    "sourceReader": "nriPolicy render-only validator, NOT validateNativeNodePolicy \u2192 native-nri.json/containerd native verification",
+    "sourceCaseInputsAndOracle": [
+      "actualNRIclosed2.xminor>=2regex and exact Node/NRI Configure reportedversion comparison stripsoptionalv",
+      "no hostupgrade/latest/3.x broadsemver claim; native runtime/ABI required, source current validator omission notsupportedstartup"
+    ],
+    "futureValidateRenderAction": "after future original same-generation loader approved: complete original hostprofile/source/meta validation, exact policy/projection/rolevalues/NRI/reservation/unit source outputs; actual production renderer onlyin separately authorized phase. Missing/unknown/equaloldauthor/selectedANDunselected/schema/type/alignment/overflow/runtime/caller wrongsource tests. Current isolatedpuretests here arenot fullrenderer acceptance.",
+    "futureActivationAction": "genuine originalHost/admin grant and retainedsource/boot/identity/kernel capacity/service/policy/image/Node/NRI/role/pool/mount/launcher proof first; original workload source/capacity and oldownership/claim/deadline/grants before stage/native effects; never substitute these public model facts",
+    "futureArgv": [
+      [
+        "node",
+        "scripts/render-native-worker-node.mjs",
+        "<exact-original-selected-policy-YAML>",
+        "<exclusive-new-reviewed-output-directory>"
+      ],
+      [
+        "/usr/local/bin/node",
+        "/opt/kubeclaw/native/prepare-native-worker-pools.mjs",
+        "/etc/kubeclaw/native-node-policy.json",
+        "--serve"
+      ],
+      [
+        "node",
+        "scripts/native-worker-node-preflight.mjs",
+        "<same-original-selected-policy-YAML>"
+      ],
+      [
+        "/opt/nri/plugins/10-kubeclaw-native",
+        "--check-policy",
+        "/etc/kubeclaw/native-nri.json"
+      ]
+    ],
+    "argvQualification": "actual existing source paths/args, future only notexecuted; installer/activate/Go/Helm/probes forbiddenin thisauthor task",
+    "observer": "actual original generation/policy/order digest, exact source output/role/workload/image/mount/counter/capacity/caller identities at productive boundary; native FEffect requires genuine kernel/Node/readback/action, not source/labels/schema/parser counts",
+    "mutants": [
+      "currenttarget omitsruntime or editsderivedcpuPeriod",
+      "wrongnode/namespace/role/container/image/root/policyDigest/source revision",
+      "reserve incorrectlydoublecounts or excludes pools/PIDs, precision round/overflow",
+      "current source acceptsunknownfield changesdigest, sorted digest incorrectlysubstituted",
+      "CPU rate treatedas CPUtimems or tasks treatedas processes",
+      "serviceoneshot/RemainAfterExit oradminreinitialize destroys pool lifetime",
+      "newB pool/ENV/currentboot replaces retainedAoriginalclaim/grants/deadline/history",
+      "missingnativepeak/counter defaults0, uncertainownership released/GCed"
+    ],
+    "recoveryRestartFixedEval": "fence newadmission; retain originalRsource/claim/taskclock/grants/leases/totalbudget/ownership/store/retention/counters/cleanup acrosscrash/retry/restart. Only authenticatedoriginalquiescence releasespending/reserved/descendantownership. Boot/root/source/runtime mismatch missingoriginal rejects, no currentB rehoming/newepoch/ledger. Genuine mutant-kill/restored original receiver+fixed original Eval remain mandatory and not-run.",
+    "result": "not-run",
+    "testDigest": null
+  }
+]

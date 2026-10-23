@@ -1,0 +1,33 @@
+{
+  "qualification": "Source-specific pure C0 input association only; normal parent generation must materialize and authenticate selected original owner before actual receiving projection. No new system index/author.",
+  "profiles": {
+    "local-A": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/AUTH-PRISM-PRODUCT-ENABLE/A/prism-control.config.json",
+      "sha256": "524ca90d6b62c656b5f279c27b8b49250d93869636aa71f73d5891429e01e1e4",
+      "pointer": "/profiles/local-A/settings/productAuthority/enabled",
+      "expected": true,
+      "meaning": "exact C0 fixture co-selected original source owner, not another runtime author, actor/grant/installed generation proof"
+    },
+    "local-B": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/AUTH-PRISM-PRODUCT-ENABLE/A/prism-control.config.json",
+      "sha256": "524ca90d6b62c656b5f279c27b8b49250d93869636aa71f73d5891429e01e1e4",
+      "pointer": "/profiles/local-A/settings/productAuthority/enabled",
+      "expected": true,
+      "meaning": "exact C0 fixture co-selected original source owner, not another runtime author, actor/grant/installed generation proof"
+    },
+    "Ready-port-contrast": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/AUTH-PRISM-PRODUCT-ENABLE/A/prism-control.config.json",
+      "sha256": "524ca90d6b62c656b5f279c27b8b49250d93869636aa71f73d5891429e01e1e4",
+      "pointer": "/profiles/local-A/settings/productAuthority/enabled",
+      "expected": true,
+      "meaning": "exact C0 fixture co-selected original source owner, not another runtime author, actor/grant/installed generation proof"
+    },
+    "ready-product-off": {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/components/batch-15/fixtures/variants/AUTH-PRISM-PRODUCT-ENABLE/B/prism-control.config.json",
+      "sha256": "6f76ce3cd6dc016b2266e795c266edc567d11b27d7e96f29b50d659b961bd012",
+      "pointer": "/profiles/local-A/settings/productAuthority/enabled",
+      "expected": false,
+      "meaning": "exact C0 fixture co-selected original source owner, not another runtime author, actor/grant/installed generation proof"
+    }
+  }
+}

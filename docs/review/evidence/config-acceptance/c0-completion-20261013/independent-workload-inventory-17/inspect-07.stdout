@@ -1,0 +1,781 @@
+import { loadProductConfig, type ProductConfig } from '../control/product-decisions.ts';
+import { authorizePipelinePreferenceSubject } from '../control/pipeline-preference-subject.ts';
+import { loadPrismSettings } from '../../common/plugin-runtime/foundation/config/swarm.ts';
+
+export interface ControlConfig {
+  readonly pipelinePreferenceSubject: string | undefined;
+}
+
+/** Load and validate platform-owned Control configuration once at startup. */
+export function loadControlConfig(environment: NodeJS.ProcessEnv = process.env): ControlConfig {
+  return controlPolicy(loadPrismSettings(environment).control);
+}
+
+function controlPolicy(settings: ReturnType<typeof loadPrismSettings>['control']): ControlConfig {
+  const pipelinePreferenceSubject = settings.pipelinePreferenceSubject ?? undefined;
+  authorizePipelinePreferenceSubject(undefined, pipelinePreferenceSubject);
+  return Object.freeze({pipelinePreferenceSubject});
+}
+
+function required(environment: NodeJS.ProcessEnv, name: string): string {
+  const value = environment[name];
+  if (!value) throw new Error(`${name} is required`);
+  return value;
+}
+
+function loadTrustConfig(environment: NodeJS.ProcessEnv) {
+  const spiffeEnabled = environment.WORKER_TRUST_SPIFFE_ENABLED === 'true';
+  const trustedNovaSpiffeId = environment.PRISM_TRUSTED_NOVA_SPIFFE_ID ?? '';
+  const trustedWorkerSpiffeId = environment.PRISM_TRUSTED_WORKER_SPIFFE_ID ?? '';
+  const trustedControlSpiffeId = environment.PRISM_CONTROL_SPIFFE_ID ?? '';
+  const trustedPrismAgentSpiffeId = environment.PRISM_TRUSTED_AGENT_SPIFFE_ID ?? '';
+  if (spiffeEnabled && (!trustedNovaSpiffeId || !trustedWorkerSpiffeId || !trustedControlSpiffeId || !trustedPrismAgentSpiffeId)) {
+    throw new Error('Prism SPIFFE trust policy is incomplete');
+  }
+  return {
+    spiffeEnabled, trustedNovaSpiffeId, trustedWorkerSpiffeId,
+    trustedControlSpiffeId, trustedPrismAgentSpiffeId,
+    trustedTestRunnerSpiffeId: environment.PRISM_TRUSTED_TEST_RUNNER_SPIFFE_ID ?? '',
+    dispatchSecret: spiffeEnabled ? '' : required(environment, 'PRISM_DISPATCH_SECRET'),
+    workerSecret: spiffeEnabled ? '' : required(environment, 'PRISM_WORKER_SECRET'),
+  };
+}
+
+/** Resolve authored native settings and service credentials once, at composition. */
+export function loadControlServerConfig(environment: NodeJS.ProcessEnv = process.env) {
+  if (environment.PORT !== undefined) throw new Error("SWARM_CONFIG_LEGACY_OVERRIDE:PORT:use prism-control.config.json settings.port");
+  const { native: settings, control } = loadPrismSettings(environment);
+  return Object.freeze({
+    ...controlPolicy(control),
+    port: control.port,
+    nativeResourcePolicy: settings.resourcePolicy,
+    maximumWorkerResponseBytes: settings.maximumResultBytes,
+    nativeWorkerDispatchTimeoutMs: settings.dispatchTimeoutMs,
+    sessionSecret: required(environment, 'PRISM_SESSION_SECRET'),
+    ingressSecret: required(environment, 'PRISM_INGRESS_SECRET'),
+    ...loadTrustConfig(environment),
+    ingestionSecret: required(environment, 'PRISM_INGESTION_SECRET'),
+    artifactRoot: control.artifactRoot,
+    workerUrl: new URL(environment.PRISM_WORKER_URL ?? 'http://prism-worker:8080'),
+    ingestionUrl: new URL(environment.PRISM_INGESTION_URL ?? 'http://prism-ingestion:8080'),
+    controlInternalUrl: new URL(environment.PRISM_CONTROL_INTERNAL_URL ?? 'http://prism-control:8080'),
+    studioPublicUrl: control.studioPublicUrl,
+  });
+}
+
+export function loadProductAuthorityConfig(environment: NodeJS.ProcessEnv = process.env): Promise<ProductConfig | undefined> {
+  return loadProductConfig(environment);
+}
+
+/** Capture one startup configuration before asynchronous signing-key I/O. */
+export async function loadControlCompositionConfig(environment: NodeJS.ProcessEnv = process.env) {
+  const snapshot = {...environment};
+  const service = loadControlServerConfig(snapshot);
+  const product = await loadProductAuthorityConfig(snapshot);
+  return Object.freeze({service, product, listener: Object.freeze({port: service.port, databaseUrl: snapshot.DATABASE_URL})});
+}
+import { loadPrismSettings, loadPrismWorkerSettings, type PrismWorkerSettings } from '../../common/plugin-runtime/foundation/config/swarm.ts';
+
+/** Platform-owned configuration is captured once before starting the worker. */
+
+export function loadWorkerConfig(environment: NodeJS.ProcessEnv = process.env) {
+  if (environment.PORT !== undefined) throw new Error('SWARM_CONFIG_LEGACY_OVERRIDE:PORT moved to prism-worker.config.json settings.ingress.port');
+  const spiffeEnabled = environment.WORKER_TRUST_SPIFFE_ENABLED === 'true';
+  const workerSecret = environment.PRISM_WORKER_SECRET ?? '';
+  if (!spiffeEnabled && !workerSecret) throw new Error('PRISM_WORKER_SECRET is required');
+  const trustedControlSpiffeId = environment.PRISM_TRUSTED_CONTROL_SPIFFE_ID ?? '';
+  if (spiffeEnabled && !trustedControlSpiffeId) throw new Error('Prism worker SPIFFE trust policy is incomplete');
+  const databaseUrl = environment.DATABASE_URL ?? '';
+  if (!spiffeEnabled && !databaseUrl) throw new Error('DATABASE_URL is required');
+  const snapshot = loadPrismSettings(environment);
+  const settings = snapshot.worker;
+  return Object.freeze({ spiffeEnabled, workerSecret, trustedControlSpiffeId, databaseUrl, shutdownTimeoutMs: settings.shutdownTimeoutMs,
+    controlInternalUrl: new URL(environment.PRISM_CONTROL_INTERNAL_URL ?? 'http://prism-control:8080'),
+    native: snapshot.native, port: settings.port, ingress: ingressLimits(settings),
+  });
+}
+
+export function workerIngressLimits(environment: NodeJS.ProcessEnv = process.env) {
+  return ingressLimits(loadPrismWorkerSettings(environment));
+}
+
+function ingressLimits(settings: PrismWorkerSettings) {
+  return Object.freeze({
+    maximumActiveRequests: settings.maximumActiveRequests,
+    maximumProbeRequests: settings.maximumProbeRequests,
+    maximumConnections: settings.maximumConnections,
+    maximumInputBytes: settings.maximumInputBytes,
+    requestTimeoutMs: settings.requestTimeoutMs,
+  });
+}
+import { type IncomingMessage, type ServerResponse } from "node:http";
+import {
+  validateWorkerResourceContractV3,
+  type WorkerAttemptEnvelopeV3, type WorkerAttemptResultV3,
+} from "@kubeclaw/pipeline-worker-core-contract";
+import { type WorkerNonceDatabase, WorkerDependencyUnavailable } from "./worker-readiness.ts";
+import { createManagedWorkerServer } from "./worker-lifecycle.ts";
+import { authorizeProxiedSpiffePeer, NativeWorkerAttemptBusy } from "@kubeclaw/worker-core";
+import { workerIngressLimits } from './worker-config.ts';
+
+export type WorkerAuthentication =
+  | { mode: "hmac"; secret: string; database: WorkerNonceDatabase }
+  | { mode: "spiffe"; trustedControlSpiffeId: string };
+
+export interface NativePrismWorkerExecution {
+  ready(): boolean;
+  execute(envelope: WorkerAttemptEnvelopeV3, signal: AbortSignal): Promise<WorkerAttemptResultV3>;
+}
+
+export function createWorkerServer(auth: WorkerAuthentication, execution: NativePrismWorkerExecution, limits = workerIngressLimits()) {
+  return createManagedWorkerServer(
+    (request, response, signal) => handleWorkerRequest(auth, request, response, signal, { maximumInputBytes: limits.maximumInputBytes, native: execution }),
+    () => auth.mode === 'hmac' ? auth.database.close() : Promise.resolve(),
+    limits,
+  );
+}
+
+async function handleWorkerRequest(auth: WorkerAuthentication,
+  request: IncomingMessage, response: ServerResponse, signal: AbortSignal,
+  { maximumInputBytes, native }: { maximumInputBytes: number; native: NativePrismWorkerExecution }): Promise<WorkerAttemptResultV3 | void> {
+  if (serveLocalHealth(request, response, native)) return;
+  if (request.url === '/ready') return serveReadiness(auth, response, signal, native);
+  if (request.url !== "/v1/attempts" || request.method !== "POST") {
+    response.writeHead(404);
+    return void response.end();
+  }
+  try {
+    if (
+      !(request.headers["content-type"] ?? "")
+        .toString()
+        .toLowerCase()
+        .startsWith("application/json")
+    ) {
+      response.writeHead(415);
+      return void response.end();
+    }
+    const chunks: Buffer[] = [];
+    let size = 0;
+    for await (const chunk of request) {
+      size += chunk.length;
+      if (size > maximumInputBytes)
+        throw new Error("Prism attempt request is too large");
+      chunks.push(chunk);
+    }
+    const raw = Buffer.concat(chunks);
+    if (auth.mode === "spiffe") authorizeProxiedSpiffePeer(request.headers, request.socket.remoteAddress, new Set([auth.trustedControlSpiffeId]));
+    else await auth.database.authenticate(auth.secret, raw, request.headers, signal);
+    const result = await dispatchAttempt(JSON.parse(raw.toString('utf8')), signal, native);
+    response.writeHead(200, { "content-type": "application/json" });
+    response.end(JSON.stringify(result));
+    return result;
+  } catch (error) {
+    response.writeHead(error instanceof WorkerDependencyUnavailable || error instanceof NativeWorkerAttemptBusy ? 503 : 422, { "content-type": "application/json" });
+    response.end(
+      JSON.stringify({
+        error: error instanceof Error ? error.message : "failed",
+      }),
+    );
+  }
+}
+
+async function serveReadiness(auth: WorkerAuthentication, response: ServerResponse, signal: AbortSignal,
+  native: NativePrismWorkerExecution): Promise<void> {
+  if (!native.ready()) {
+    response.writeHead(503, { 'content-type': 'application/json' });
+    response.end('{"status":"not-ready","error":"PRISM_NATIVE_RECONCILIATION_REQUIRED"}');
+    return;
+  }
+  try {
+    if (auth.mode === 'hmac') await auth.database.check(signal);
+    response.writeHead(200, { 'content-type': 'application/json' });
+    response.end('{"status":"ready"}');
+  } catch {
+    response.writeHead(503, { 'content-type': 'application/json' });
+    response.end('{"status":"not-ready","error":"PRISM_NONCE_DATABASE_UNAVAILABLE"}');
+  }
+}
+
+async function dispatchAttempt(input: unknown, signal: AbortSignal, native: NativePrismWorkerExecution): Promise<WorkerAttemptResultV3> {
+  validateWorkerResourceContractV3('workerAttemptEnvelope', input);
+  if (!native.ready()) throw new Error('PRISM_NATIVE_RECONCILIATION_REQUIRED');
+  return native.execute(input as WorkerAttemptEnvelopeV3, signal);
+}
+
+function serveLocalHealth(request: IncomingMessage, response: ServerResponse, native: NativePrismWorkerExecution): boolean {
+  if (request.url === "/health" || request.url === "/bootstrap") {
+    if (request.url === '/bootstrap' && !native.ready()) {
+      response.writeHead(503, { 'content-type': 'application/json' });
+      response.end('{"status":"not-ready","error":"PRISM_NATIVE_RECONCILIATION_REQUIRED"}');
+      return true;
+    }
+    response.writeHead(200, { "content-type": "application/json" });
+    response.end(JSON.stringify({ status: request.url === "/health" ? "alive" : "initialized" }));
+    return true;
+  }
+  return false;
+}
+import { validatePrism } from "@kubeclaw/prism-contracts-v1";
+import { authorizeProxiedSpiffePeer } from "@kubeclaw/worker-core";
+import { createHmac, randomUUID, timingSafeEqual } from "node:crypto";
+import { type IncomingMessage, type ServerResponse } from "node:http";
+import { admitDesignAgent } from "../control/agent-admission.ts";
+import {
+  approvedRoundBaseline,
+  assertArchitectureTransition,
+  startDesignRound,
+} from "../control/design-generations.ts";
+import { authorizePipelinePreferenceSubject } from "../control/pipeline-preference-subject.ts";
+import { inTransaction } from "../storage/index.ts";
+
+import type { ControlContext } from "./control-context.ts";
+import { json } from "./control-http.ts";
+type RouteContext = Pick<ControlContext, "config" | "pool" | "artifacts">;
+
+export async function dispatchRoute(
+  context: RouteContext,
+  request: IncomingMessage,
+  response: ServerResponse,
+  url: URL,
+): Promise<boolean> {
+  if (url.pathname === "/v1/dispatch" && request.method === "POST") {
+    await dispatchDesign(context, request, response);
+    return true;
+  }
+  return false;
+}
+async function dispatchDesign(
+  context: RouteContext,
+  request: IncomingMessage,
+  response: ServerResponse,
+) {
+  const controlConfig = context.config;
+  const { pool, artifacts } = context;
+  const { trustedControlSpiffeId } = context.config;
+
+  const { raw, key } = await authenticateDispatch(context.config, request);
+  const payload = JSON.parse(raw.toString("utf8")) as DispatchPayload;
+  const preferenceSubjectId = authorizePipelinePreferenceSubject(
+    payload.preferenceSubjectId,
+    controlConfig.pipelinePreferenceSubject,
+  );
+  const designRequest = validatePrism<DesignRequest>(
+    "designRequest",
+    payload.request,
+  );
+  const projectKey = designRequest.projectId;
+  const project = await persistDesignRequest(pool, designRequest);
+  if (!designRequest.approvalId) {
+    const preferences = await startDesignRound(pool, {
+      projectId: projectKey,
+      subjectId: preferenceSubjectId,
+      startKey: `dispatch:${key}`,
+      architectureDigest: designRequest.architecture.contentDigest,
+      architectureRevision: designRequest.architecture.revision,
+    });
+    const agent = await admitDesignAgent(
+      pool,
+      `${trustedControlSpiffeId}/prism/main/v2`,
+      projectKey,
+      preferences,
+    );
+    return json(response, 202, {
+      result: { status: "waiting", projectId: project.rows[0]!.id },
+      preferences,
+      agent,
+    });
+  }
+  const baseline = await approvedRoundBaseline(
+    pool,
+    project.rows[0]!.id,
+    designRequest.approvalId,
+  );
+  if (!baseline.rows[0]) throw new Error("approved Prism baseline not found");
+  return json(response, 200, {
+    result: {
+      bundleDigest: baseline.rows[0].bundle_digest,
+      artifactId: baseline.rows[0].bundle_artifact_id,
+      archiveBase64: Buffer.from(
+        await artifacts.get(baseline.rows[0].bundle_artifact_id),
+      ).toString("base64"),
+    },
+  });
+}
+
+async function authenticateDispatch(
+  config: ControlContext["config"],
+  request: IncomingMessage,
+) {
+  const {
+    spiffeEnabled,
+    dispatchSecret,
+    trustedNovaSpiffeId,
+    trustedPrismAgentSpiffeId,
+    trustedTestRunnerSpiffeId,
+  } = config;
+  if (spiffeEnabled) {
+    try {
+      authorizeProxiedSpiffePeer(
+        request.headers,
+        request.socket.remoteAddress,
+        new Set(
+          [
+            trustedNovaSpiffeId,
+            trustedPrismAgentSpiffeId,
+            trustedTestRunnerSpiffeId,
+          ].filter(Boolean),
+        ),
+      );
+    } catch {
+      throw new Error("invalid dispatch identity");
+    }
+  }
+  if (
+    !(request.headers["content-type"] ?? "")
+      .toString()
+      .toLowerCase()
+      .startsWith("application/json")
+  )
+    throw new Error("application/json is required");
+  const chunks: Buffer[] = [];
+  let size = 0;
+  for await (const chunk of request) {
+    size += chunk.length;
+    if (size > 2_000_000) throw new Error("request too large");
+    chunks.push(chunk);
+  }
+  const raw = Buffer.concat(chunks);
+  const key = String(request.headers["idempotency-key"] ?? "");
+  if (!key) throw new Error("invalid dispatch idempotency key");
+  if (!spiffeEnabled) {
+    const supplied = String(
+      request.headers["x-kubeclaw-signature"] ?? "",
+    ).replace(/^v1=/, "");
+    const expected = createHmac("sha256", dispatchSecret)
+      .update(`${key}.${raw.toString("utf8")}`)
+      .digest();
+    const actual = Buffer.from(supplied, "hex");
+    if (actual.length !== expected.length || !timingSafeEqual(actual, expected))
+      throw new Error("invalid dispatch signature");
+  }
+  return { raw, key };
+}
+
+type DesignRequest = {
+  schema: "prism.design-request.v1";
+  projectId: string;
+  architecture: { artifactId: string; contentDigest: string; revision: number };
+  architectureContent: Record<string, unknown>;
+  approvalId?: string;
+};
+async function persistDesignRequest(
+  pool: ControlContext["pool"],
+  designRequest: DesignRequest,
+) {
+  const projectKey = designRequest.projectId;
+  const project = await pool.query<{ id: string }>(
+    "INSERT INTO prism.project(id,external_id,name) VALUES($1,$2,$3) ON CONFLICT(external_id) DO UPDATE SET updated_at=now() RETURNING id",
+    [randomUUID(), projectKey, projectKey],
+  );
+  await inTransaction(pool, async (requestClient) => {
+    await requestClient.query(
+      "SELECT id FROM prism.project WHERE id=$1 FOR UPDATE",
+      [project.rows[0]!.id],
+    );
+    const active = await requestClient.query<{
+      architecture_digest: string;
+      architecture_revision: number | string;
+      request: Record<string, unknown>;
+    }>(
+      "SELECT architecture_digest,architecture_revision,request FROM prism.design_request WHERE project_id=$1 AND status='active' ORDER BY architecture_revision DESC LIMIT 1",
+      [project.rows[0]!.id],
+    );
+    if (active.rows[0])
+      assertArchitectureTransition(active.rows[0], designRequest);
+    await requestClient.query(
+      "UPDATE prism.design_request SET status='superseded' WHERE project_id=$1 AND architecture_revision<$2 AND status='active'",
+      [project.rows[0]!.id, designRequest.architecture.revision],
+    );
+    await requestClient.query(
+      "INSERT INTO prism.design_request(id,project_id,architecture_artifact_id,architecture_digest,architecture_revision,request,status) VALUES($1,$2,$3,$4,$5,$6::jsonb,'active') ON CONFLICT(project_id,architecture_revision) DO UPDATE SET architecture_artifact_id=excluded.architecture_artifact_id,architecture_digest=excluded.architecture_digest,request=excluded.request,status='active'",
+      [
+        randomUUID(),
+        project.rows[0]!.id,
+        designRequest.architecture.artifactId,
+        designRequest.architecture.contentDigest,
+        designRequest.architecture.revision,
+        JSON.stringify(designRequest),
+      ],
+    );
+  });
+  return project;
+}
+
+interface DispatchPayload {
+  preferenceSubjectId?: string;
+  request?: {
+    projectId?: string;
+    approvalId?: string;
+    schema?: string;
+    architecture?: { artifactId?: string; contentDigest?: string };
+    architectureContent?: unknown;
+  };
+}
+import type { IncomingMessage, ServerResponse } from 'node:http';
+import { createHash, timingSafeEqual } from 'node:crypto';
+import { authorizeProxiedSpiffePeer } from '@kubeclaw/worker-core';
+import type { ContentAddressedArtifactStore } from '../storage/artifacts.ts';
+
+export interface InternalArtifactOptions {
+  readonly artifacts: ContentAddressedArtifactStore;
+  readonly spiffeEnabled: boolean;
+  readonly workerSecret: string;
+  readonly trustedWorkerSpiffeId: string;
+  readonly trustedControlSpiffeId: string;
+  readonly trustedPrismAgentSpiffeId?: string;
+}
+function json(response: ServerResponse, status: number, value: unknown): void {
+  response.writeHead(status, { 'content-type': 'application/json' }); response.end(JSON.stringify(value));
+}
+function authorized(request: IncomingMessage, options: InternalArtifactOptions): boolean {
+  if (options.spiffeEnabled) {
+    try {
+      authorizeProxiedSpiffePeer(request.headers, request.socket.remoteAddress,
+        new Set([options.trustedWorkerSpiffeId, options.trustedControlSpiffeId,...(options.trustedPrismAgentSpiffeId?[options.trustedPrismAgentSpiffeId]:[])]));
+      return true;
+    } catch { return false; }
+  }
+  const supplied = Buffer.from(String(request.headers.authorization ?? '').replace(/^Bearer /u, ''));
+  const expected = Buffer.from(options.workerSecret);
+  return expected.length > 0 && supplied.length === expected.length && timingSafeEqual(supplied, expected);
+}
+/** The actual Control artifact route, shared with native HTTP integration tests. */
+export async function handleInternalArtifact(request: IncomingMessage, response: ServerResponse,
+  url: URL, options: InternalArtifactOptions): Promise<boolean> {
+  const match = /^\/v1\/internal\/artifacts\/(sha256:[a-f0-9]{64})$/u.exec(url.pathname);
+  if (!match) return false;
+  if (!authorized(request, options)) { json(response, 401, { error: 'unauthorized' }); return true; }
+  if (url.search || url.hash) throw new Error('Prism artifact URL must be canonical');
+  if (request.method === 'GET') {
+    const bytes = await options.artifacts.get(`artifact:${match[1]}`);
+    response.writeHead(200, { 'content-type': 'application/octet-stream', 'cache-control': 'no-store' });
+    response.end(bytes); return true;
+  }
+  if (request.method === 'POST') {
+    const chunks: Buffer[] = []; let size = 0;
+    for await (const chunk of request) {
+      size += chunk.length;
+      if (size > 134_217_728) throw new Error('evidence is too large');
+      chunks.push(chunk);
+    }
+    const bytes = Buffer.concat(chunks);
+    if (`sha256:${createHash('sha256').update(bytes).digest('hex')}` !== match[1]) throw new Error('evidence digest does not match URL');
+    const stored = await options.artifacts.put(bytes); json(response, 201, stored); return true;
+  }
+  json(response, 405, { error: 'method not allowed' }); return true;
+}
+import {
+  validatePrism,
+  type PrismDocument,
+} from "@kubeclaw/prism-contracts-v1";
+import { randomBytes } from "node:crypto";
+import { type IncomingMessage, type ServerResponse } from "node:http";
+import {
+  agentReceipt,
+  startAgentRevision,
+} from "../control/agent-admission.ts";
+
+import type { AuthenticatedControlContext } from "./control-context.ts";
+import { body, json, userKey } from "./control-http.ts";
+type RouteContext = Pick<
+  AuthenticatedControlContext,
+  "pool" | "repository" | "artifacts" | "actor" | "config" | "runWorker"
+>;
+
+export async function engineRoute(
+  context: RouteContext,
+  request: IncomingMessage,
+  response: ServerResponse,
+  url: URL,
+): Promise<boolean> {
+  const execute = /^\/v1\/documents\/([0-9a-f-]+)\/engine$/.exec(url.pathname);
+  if (execute && request.method === "POST") {
+    await executeDocument(context, request, response, execute);
+    return true;
+  }
+  return false;
+}
+async function executeDocument(
+  context: RouteContext,
+  request: IncomingMessage,
+  response: ServerResponse,
+  execute: RegExpExecArray,
+) {
+  const { repository, artifacts, runWorker } = context;
+
+  const input = (await body(request)) as EngineInput;
+  const idempotencyKey =
+    input.idempotencyKey ?? randomBytes(16).toString("hex");
+  if (
+    !["generate", "render", "evaluate", "publish"].includes(
+      input.operation ?? "",
+    )
+  )
+    throw new Error("unsupported Prism engine operation");
+  if (
+    !Number.isSafeInteger(input.baseRevision) ||
+    Number(input.baseRevision) < 1
+  )
+    throw new Error("baseRevision is required");
+  const requestDocument = await repository.revision(
+    execute[1]!,
+    Number(input.baseRevision),
+  );
+  const operation = input.operation as
+    "generate" | "render" | "evaluate" | "publish";
+  if (operation === "generate")
+    return reviseWithAgent(context, response, input, execute, requestDocument);
+  const defaults =
+    operation === "render"
+      ? { view: "home", state: "default", viewport: "wide" }
+      : {};
+  const engineInput: Record<string, unknown> = {
+    ...defaults,
+    ...input.input,
+    document: requestDocument.document,
+  };
+  if (operation === "render")
+    engineInput.assetSources = await renderAssets(
+      artifacts,
+      requestDocument.document,
+    );
+  const values = await runWorker(operation, engineInput, idempotencyKey);
+  await retainGeneratedRevision(
+    context,
+    execute,
+    input,
+    values,
+    idempotencyKey,
+  );
+  return json(response, 200, {
+    state: "completed",
+    specialistResult: { values },
+  });
+}
+
+interface EngineInput {
+  operation?: string;
+  input?: Record<string, unknown>;
+  idempotencyKey?: string;
+  baseRevision?: number;
+}
+type Revision = Awaited<
+  ReturnType<AuthenticatedControlContext["repository"]["revision"]>
+>;
+async function reviseWithAgent(
+  context: Pick<AuthenticatedControlContext, "pool" | "actor" | "config">,
+  response: ServerResponse,
+  input: EngineInput,
+  execute: RegExpExecArray,
+  requestDocument: Revision,
+) {
+  const { pool, actor } = context;
+  const { trustedControlSpiffeId } = context.config;
+
+  const owner = await pool.query<{ external_id: string }>(
+    "SELECT p.external_id FROM prism.design_document d JOIN prism.project p ON p.id=d.project_id WHERE d.id=$1",
+    [execute[1]],
+  );
+  if (!owner.rows[0]) throw new Error("Prism project not found");
+  const instruction = String(input.input?.instruction ?? "").trim();
+  if (!instruction) throw new Error("Prism revision instruction is required");
+  if (!input.idempotencyKey)
+    throw new Error("agent revision idempotency key is required");
+  const job = await startAgentRevision(
+    pool,
+    `${trustedControlSpiffeId}/prism/main/v2`,
+    userKey(actor.user),
+    input.idempotencyKey,
+    {
+      projectId: owner.rows[0].external_id,
+      documentId: execute[1]!,
+      expectedRevision: Number(input.baseRevision),
+      instruction,
+      document: requestDocument.document,
+    },
+  );
+  return json(response, 202, agentReceipt(job));
+}
+async function renderAssets(
+  artifacts: AuthenticatedControlContext["artifacts"],
+  document: PrismDocument,
+) {
+  const assetSources: Record<string, string> = {};
+  let totalBytes = 0;
+  for (const [assetId, rawAsset] of Object.entries(document.assets)) {
+    const asset = rawAsset as { artifact?: string; mediaType?: string };
+    if (!asset.artifact || !asset.mediaType)
+      throw new Error(`asset metadata is incomplete for ${assetId}`);
+    const bytes = await artifacts.get(asset.artifact);
+    totalBytes += bytes.byteLength;
+    if (totalBytes > 6_000_000)
+      throw new Error("render assets exceed the 6 MB baseline limit");
+    assetSources[assetId] =
+      `data:${asset.mediaType};base64,${Buffer.from(bytes).toString("base64")}`;
+  }
+  return assetSources;
+}
+async function retainGeneratedRevision(
+  context: Pick<AuthenticatedControlContext, "repository" | "actor">,
+  execute: RegExpExecArray,
+  input: EngineInput,
+  values: Record<string, unknown>,
+  idempotencyKey: string,
+) {
+  const { repository, actor } = context;
+  const generated = values.document;
+  if (input.operation !== "generate" || !generated) return;
+  validatePrism<PrismDocument>("designDocument", generated);
+  const currentDocument = await repository.current(execute[1]!);
+  if (currentDocument.document.meta.revision === input.baseRevision) {
+    try {
+      await repository.replace(
+        execute[1]!,
+        currentDocument.id,
+        generated as PrismDocument,
+        { type: "engine.generate", idempotencyKey },
+        actor.user,
+      );
+    } catch (error) {
+      if (!(await repository.includesOperation(execute[1]!, idempotencyKey)))
+        throw error;
+    }
+  } else if (currentDocument.document.meta.revision < input.baseRevision!)
+    throw new Error("design revision moved backwards");
+  else if (!(await repository.includesOperation(execute[1]!, idempotencyKey)))
+    throw new Error(
+      "revision conflict: generated proposal is based on a stale design",
+    );
+}
+const SPIFFE_ID = /^spiffe:\/\/[a-z0-9.-]+\/[A-Za-z0-9._~!$&'()*+,;=:@%/-]+$/u;
+
+export interface WorkerPrincipal {
+  readonly authentication: 'spiffe-x509-svid';
+  readonly spiffeId: string;
+}
+
+function headerValue(
+  headers: Readonly<Record<string, string | string[] | undefined>>,
+  name: string,
+): string {
+  const value = headers[name] ?? headers[name.toLowerCase()];
+  if (Array.isArray(value)) return value.join(',');
+  return value ?? '';
+}
+
+export function spiffePeerFromForwardedClientCertificate(
+  headers: Readonly<Record<string, string | string[] | undefined>>,
+): WorkerPrincipal {
+  const forwarded = headerValue(headers, 'x-forwarded-client-cert');
+  if (!forwarded || forwarded.includes(',')) throw new Error('WORKER_TRUST_PEER_MISSING');
+  const uriFields = forwarded.split(';').map((field) => field.trim())
+    .filter((field) => field.startsWith('URI='));
+  if (uriFields.length !== 1) throw new Error('WORKER_TRUST_PEER_INVALID');
+  const match = /^URI=(?:"([^"]+)"|([^";]+))$/u.exec(uriFields[0]!);
+  const spiffeId = (match?.[1] ?? match?.[2] ?? '').trim();
+  if (!SPIFFE_ID.test(spiffeId)) throw new Error('WORKER_TRUST_PEER_INVALID');
+  return Object.freeze({ authentication: 'spiffe-x509-svid', spiffeId });
+}
+
+export function authorizeSpiffePeer(
+  headers: Readonly<Record<string, string | string[] | undefined>>,
+  allowedSpiffeIds: ReadonlySet<string>,
+): WorkerPrincipal {
+  if (allowedSpiffeIds.size === 0 || [...allowedSpiffeIds].some((id) => !SPIFFE_ID.test(id))) {
+    throw new Error('WORKER_TRUST_POLICY_INVALID');
+  }
+  const principal = spiffePeerFromForwardedClientCertificate(headers);
+  if (!allowedSpiffeIds.has(principal.spiffeId)) throw new Error('WORKER_TRUST_PEER_FORBIDDEN');
+  return principal;
+}
+
+export function authorizeProxiedSpiffePeer(
+  headers: Readonly<Record<string, string | string[] | undefined>>,
+  remoteAddress: string | undefined,
+  allowedSpiffeIds: ReadonlySet<string>,
+): WorkerPrincipal {
+  if (!remoteAddress || !['127.0.0.1', '::1', '::ffff:127.0.0.1'].includes(remoteAddress)) {
+    throw new Error('WORKER_TRUST_PROXY_REQUIRED');
+  }
+  return authorizeSpiffePeer(headers, allowedSpiffeIds);
+}
+import { FileWorkerOwnershipStore, NativeWorkerOwnership, requireNativeWorkerSupervisorAuthority, requireNativeWorkerLauncher } from '@kubeclaw/worker-core';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
+import { nativePrismSupervisorConfig } from '../config/native-worker.ts';
+import { nativePrismExecution } from './native-worker-execution.ts';
+import { createWorkerServer } from './worker-service.ts';
+import type { ManagedWorkerServer } from './worker-lifecycle.ts';
+import { WorkerNonceDatabase } from './worker-readiness.ts';
+import { loadWorkerConfig } from './worker-config.ts';
+
+/** Native-only startup: durable ownership and journal recovery precede HTTP admission. */
+export async function runNativePrismWorker(): Promise<void> {
+  const config = loadWorkerConfig();
+  const native = nativePrismSupervisorConfig(config);
+  requireNativeWorkerSupervisorAuthority();
+  requireNativeWorkerLauncher(native.launcher);
+  const store = new FileWorkerOwnershipStore(native.ownershipRoot, {
+    maximumRecords: native.maximumRecords, maximumBytes: native.maximumBytes,
+  });
+  await NativeWorkerOwnership.supervise({ ...native, store }, async owner => {
+    const execution = await nativePrismExecution(owner, native, config);
+    const authentication = config.spiffeEnabled
+      ? { mode: 'spiffe' as const, trustedControlSpiffeId: config.trustedControlSpiffeId }
+      : { mode: 'hmac' as const, secret: config.workerSecret, database: new WorkerNonceDatabase(config.databaseUrl) };
+    const server = createWorkerServer(authentication, execution, config.ingress);
+    await serve(server, owner, config);
+  });
+}
+
+async function serve(server: ManagedWorkerServer, owner: NativeWorkerOwnership, config: ReturnType<typeof loadWorkerConfig>): Promise<void> {
+  let stop: () => void = () => {};
+  try {
+    await new Promise<void>((resolve, reject) => {
+      let stopping = false;
+      stop = () => {
+        if (stopping) return;
+        stopping = true;
+        owner.fenceAdmission();
+        void server.shutdown(config.shutdownTimeoutMs).then(resolve, reject);
+      };
+      process.once('SIGTERM', stop); process.once('SIGINT', stop);
+      server.once('error', reject);
+      server.listen(config.port, '0.0.0.0');
+    });
+  } finally {
+    owner.fenceAdmission();
+    process.removeListener('SIGTERM', stop); process.removeListener('SIGINT', stop);
+    await server.shutdown(config.shutdownTimeoutMs);
+  }
+}
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  runNativePrismWorker().then(() => {
+    process.stderr.write('{"event":"prism_native_worker_shutdown","state":"ownership_reconciled"}\n');
+  }, (error: unknown) => {
+    process.stderr.write(`${JSON.stringify({ event: 'prism_native_worker_failure',
+      code: error instanceof Error ? error.message : 'PRISM_NATIVE_UNKNOWN_FAILURE' })}\n`);
+    process.exitCode = 1;
+  });
+}
+import { Pool } from "pg";
+import { createConfiguredControlServer } from "./control-server.ts";
+import { loadControlCompositionConfig } from "./control-config.ts";
+
+const composition = await loadControlCompositionConfig();
+const config = composition.listener;
+const pool = new Pool({ connectionString: config.databaseUrl });
+const server = createConfiguredControlServer(pool, composition);
+server.listen(config.port, "0.0.0.0");
+process.on("SIGTERM", () => server.close(() => { void pool.end(); }));

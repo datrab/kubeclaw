@@ -1,0 +1,25 @@
+{
+  "savedCount": 75,
+  "savedCounts": {
+    "workerTrustEnvelope": 13,
+    "workerRegistration": 21,
+    "workerHealth": 9,
+    "attemptProgressEvent": 13,
+    "workerLogPart": 12,
+    "workerCancellationRequest": 7
+  },
+  "rerunCount": 75,
+  "sameFieldSet": true,
+  "identities": {
+    "docs/review/evidence/config-acceptance/independent-core-domain/expected-schema-obligations.json": "b227271570a0940d2764cd80773d691d91dac32d3c735602c2f070ffc46fe91b",
+    "docs/review/evidence/config-acceptance/independent-core-domain/enumerate-schema.py": "df6a445abb92f7aa8ccc879781e3c594b030ba4d8e2550d67d1f658f6a4119eb",
+    "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+    "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+    "contracts/pipeline-worker-core/v1/src/trust.ts": "c650fdbe7f43b422f36d050df291d2a00fdd4bc694a1dae5d6236b4814743cd5",
+    "contracts/pipeline-worker-core/v1/src/index.ts": "013609ae51e836644640820de878378c0cbc797d6c299f06d926925790676c72",
+    "skills/worker/core/worker/local-runtime.ts": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+    "skills/worker/core/worker/trust.ts": "722f48ca75fb8546dbc4f4c9cc8eab8e31dfdfeafec7ea7aab587045e78b23fe",
+    "skills/worker/core/worker/attempt-executor.ts": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+    "tests/verification/contracts/check-pipeline-worker-core-contracts.mts": "a2eabfd0752ff2fcd6133277be19e8e68a7200b51cd6d1998ab72f21ee12a110"
+  }
+}

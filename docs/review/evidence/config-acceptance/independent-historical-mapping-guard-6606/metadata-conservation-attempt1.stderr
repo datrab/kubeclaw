@@ -1,0 +1,1 @@
+Reviewer setup failure: canonical root cases use 'requirementIds', not native 'requirements'. Metadata comparison aborted with KeyError: 'requirements'; no guard rejection or author mutation.

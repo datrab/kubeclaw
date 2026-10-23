@@ -80,7 +80,7 @@ async function startDirectionRound(
   const { pool, actor } = context;
   const { trustedControlSpiffeId } = context.config;
 
-  const input = (await body(request)) as {
+  const input = (await body(request, context.config.maximumJsonBodyBytes)) as {
     documentId?: string;
     expectedRevision?: number;
     parentRoundId?: string;
@@ -137,7 +137,7 @@ async function recordDirectionFeedback(
 ) {
   const { pool, actor } = context;
 
-  const input = (await body(request)) as {
+  const input = (await body(request, context.config.maximumJsonBodyBytes)) as {
     action?: "rejected" | "liked" | "disliked" | "preserved";
     trait?: string;
   };
@@ -166,7 +166,7 @@ async function selectDesignDirection(
 ) {
   const { pool, actor } = context;
 
-  const input = (await body(request)) as { documentId?: string };
+  const input = (await body(request, context.config.maximumJsonBodyBytes)) as { documentId?: string };
   if (!input.documentId) throw new Error("documentId is required");
   const result = await decideDirection(
     pool,

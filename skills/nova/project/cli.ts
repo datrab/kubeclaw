@@ -1,3 +1,4 @@
+import {loadCoreRuntimePolicy} from '@kubeclaw/plugin-foundation/config/core-runtime-policy';
 import { runLegacyImportCLI } from './legacy-import-cli.ts';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -7,7 +8,7 @@ import { runPipelineV2, recoverPipelineV2, resumePipelineV2, validatePipelineRun
 import { canonicalJson, PORTABLE_JSON_ENCODING, sha256Text, type ResumeSignal } from '@kubeclaw/plugin-sdk';
 import { PROJECT_REVIEW_SEMANTIC_ENCODING } from './review-semantics.ts';
 import { DELIVERY_MANIFEST_ENCODING } from './delivery-manifest.ts';
-import { compileProject } from './compiler.ts';
+import { compileProject, compileProjectWithCorePolicy } from './compiler.ts';
 import { compileProjectRecovery } from './recovery.ts';
 
 // Explicit pipeline graphs retain the existing core command surface.
@@ -30,13 +31,16 @@ if (process.argv.includes('--import-legacy')) {
     if ([args['--compile'], args['--recover'], args['--signal']].filter(Boolean).length > 1) throw new Error('PROJECT_COMMAND_CONFLICT');
     const project = JSON.parse(fs.readFileSync(path.resolve(args['--project']), 'utf8'));
     const platform = loadPlatformConfig(path.resolve(args['--platform']));
+    const selectedCorePolicy = args['--recover'] || args['--signal'] ? undefined : loadCoreRuntimePolicy(platform.corePolicySelection);
     const { runId, definition } = args['--recover'] || args['--signal']
       ? compileProjectRecovery(project, platform.storageRoot)
-      : compileProject(project, PORTABLE_JSON_ENCODING, PORTABLE_JSON_ENCODING, PROJECT_REVIEW_SEMANTIC_ENCODING,
+      : selectedCorePolicy?.projectCompiler
+        ? compileProjectWithCorePolicy(project, selectedCorePolicy, PORTABLE_JSON_ENCODING, PORTABLE_JSON_ENCODING, PROJECT_REVIEW_SEMANTIC_ENCODING, DELIVERY_MANIFEST_ENCODING)
+        : compileProject(project, PORTABLE_JSON_ENCODING, PORTABLE_JSON_ENCODING, PROJECT_REVIEW_SEMANTIC_ENCODING,
         DELIVERY_MANIFEST_ENCODING);
     // Validate every stage's input, registration and grants from the actual
     // installed role before writing a graph or starting any external operation.
-    await validatePipelineRuntimeV2(platform, definition);
+    if (!args['--recover'] && !args['--signal']) await validatePipelineRuntimeV2(platform, definition, selectedCorePolicy);
     if (args['--compile']) {
       fs.writeFileSync(path.resolve(args['--compile']), `${canonicalJson(definition)}\n`, { flag: 'wx' });
       process.stdout.write(`${JSON.stringify({ status: 'compiled', completionScope: project.demo === undefined ? 'technical-only' : 'demo-handoff', runId, stageCount: definition.stages.length, definitionDigest: sha256Text(canonicalJson(definition)) })}\n`);
@@ -51,7 +55,7 @@ if (process.argv.includes('--import-legacy')) {
       const result = args['--recover'] ? await recoverPipelineV2(platform, definition, runId)
         : args['--signal'] ? await resumePipelineV2(platform, definition, runId,
           JSON.parse(fs.readFileSync(path.resolve(args['--signal']), 'utf8')) as ResumeSignal)
-        : await runPipelineV2(platform, definition, runId);
+        : await runPipelineV2(platform, definition, runId, undefined, selectedCorePolicy);
       process.stdout.write(`${JSON.stringify({ runId: result.runId, status: result.status, completionScope: project.demo === undefined ? 'technical-only' : 'demo-handoff', acceptanceReadiness: project.demo === undefined ? 'not-established' : result.status === 'succeeded' ? 'ready-for-acceptance' : 'not-established', stages: Object.fromEntries(result.stages) })}\n`);
       process.exitCode = result.status === 'succeeded' ? 0 : 1;
     }

@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "pipeline-component.v2",
+  "owner": "prism-control",
+  "profiles": {
+    "baseline-A": {
+      "settings": {
+        "pipelinePreferenceSubject": null,
+        "artifactRoot": "/var/lib/prism/artifacts",
+        "studioPublicUrl": "https://prism-studio",
+        "port": 8080,
+        "dispatchTimeoutMs": 900000
+      }
+    },
+    "b-11dc2ac4dd6e4ae8": {
+      "settings": {
+        "pipelinePreferenceSubject": "user-aaaaaaaaaaaaaaaaaaaaaaaa",
+        "artifactRoot": "/var/lib/prism/artifacts",
+        "studioPublicUrl": "https://prism-studio",
+        "port": 8080,
+        "dispatchTimeoutMs": 900000
+      }
+    },
+    "b-717ef02b29001d11": {
+      "settings": {
+        "pipelinePreferenceSubject": null,
+        "artifactRoot": "/var/lib/prism/config-acceptance-artifacts",
+        "studioPublicUrl": "https://prism-studio",
+        "port": 8080,
+        "dispatchTimeoutMs": 900000
+      }
+    },
+    "b-691eb4190aef3983": {
+      "settings": {
+        "pipelinePreferenceSubject": null,
+        "artifactRoot": "/var/lib/prism/artifacts",
+        "studioPublicUrl": "https://config-acceptance-studio.example",
+        "port": 8080,
+        "dispatchTimeoutMs": 900000
+      }
+    },
+    "b-7871c6b7240102ff": {
+      "settings": {
+        "pipelinePreferenceSubject": null,
+        "artifactRoot": "/var/lib/prism/artifacts",
+        "studioPublicUrl": "https://prism-studio",
+        "port": 6060,
+        "dispatchTimeoutMs": 900000
+      }
+    },
+    "b-d71eefb5eaa2da90": {
+      "settings": {
+        "pipelinePreferenceSubject": null,
+        "artifactRoot": "/var/lib/prism/artifacts",
+        "studioPublicUrl": "https://prism-studio",
+        "port": 8080,
+        "dispatchTimeoutMs": 675000
+      }
+    }
+  }
+}

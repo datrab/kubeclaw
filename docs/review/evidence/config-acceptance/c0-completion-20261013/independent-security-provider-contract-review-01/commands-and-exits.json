@@ -1,0 +1,53 @@
+{
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "head": "60d520177c3de2e33a8c397e3d6e5f9e8e8e7bbf",
+  "node": "v24.21.0",
+  "commands": [
+    {
+      "toolReference": "1cc4e2",
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/independent-security-provider-contract-review-01/replay-pure.mjs > docs/review/evidence/config-acceptance/c0-completion-20261013/independent-security-provider-contract-review-01/replay.stdout 2> docs/review/evidence/config-acceptance/c0-completion-20261013/independent-security-provider-contract-review-01/replay.stderr",
+      "exit": 0,
+      "checks": 3085,
+      "productiveCases": 0,
+      "outputChangeOnly": true
+    },
+    {
+      "toolReference": "8d9db5",
+      "command": "node docs/review/evidence/config-acceptance/c0-completion-20261013/independent-security-provider-contract-review-01/probes.mjs > docs/review/evidence/config-acceptance/c0-completion-20261013/independent-security-provider-contract-review-01/probes.stdout 2> docs/review/evidence/config-acceptance/c0-completion-20261013/independent-security-provider-contract-review-01/probes.stderr",
+      "exit": 0,
+      "probes": 3,
+      "counterexamplesConfirmed": 3
+    },
+    {
+      "toolReference": "89e023/3ab65f",
+      "command": "python docs/review/evidence/config-acceptance/c0-completion-20261013/independent-security-provider-contract-review-01/capture.py > docs/review/evidence/config-acceptance/c0-completion-20261013/independent-security-provider-contract-review-01/capture.stdout 2> docs/review/evidence/config-acceptance/c0-completion-20261013/independent-security-provider-contract-review-01/capture.stderr",
+      "exit": 0,
+      "currentPins": 476,
+      "historyPins": 978,
+      "sourcePins": 33,
+      "fieldBodies": 89,
+      "canonicalAndNativeCaseBodies": 587,
+      "activeMembers": 660,
+      "receivingNodes": 101
+    },
+    {
+      "toolReference": "be2ebd",
+      "command": "Source/schema reads including attempted schemas/policy.schema.json",
+      "exit": 0,
+      "navigationError": "Shared policy is inlined per source schema; requested standalone policy.schema.json absent. Subsequent source/actual inline schema reads used; not hidden native/schema test failure."
+    },
+    {
+      "toolReference": "390beb",
+      "command": "Read scope/identity/body metadata; attempted optional end-input-stability.json read",
+      "exit": 1,
+      "reason": "Requested optional author filename absent; exact actual artifact/source/frozen pins and independent end stability used. No schema/assertion change."
+    }
+  ],
+  "scriptHashes": {
+    "replay-pure.mjs": "228ec7f99fe561977c9e85f79462f2f6ef51327516e9cde32fd68fe183795810",
+    "probes.mjs": "9eaabdcdbf9013cab8dde8b3f9d86e8ba2bb7eba6707e084a3cbbb47466f7185",
+    "capture.py": "6905a13595f8ee71096be951857157a4c556ab4d59392640c3a48e5f291a7c9c"
+  },
+  "nativePureProbe": "Exact network-http responseHeaderNames function isolated; TypeScript argument/return annotations erased only. No class/constructor/invoke/network evaluated.",
+  "prohibitedOperationsExecuted": false
+}

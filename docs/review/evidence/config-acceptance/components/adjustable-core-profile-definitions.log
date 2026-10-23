@@ -1,0 +1,1366 @@
+{
+  "command": "node docs/review/evidence/config-acceptance/components/validate-adjustable-core-definitions.mjs",
+  "scope": "C0 proposed adjustable complete-profile definition only; no business dispatch/kernel/CONFIG implementation; coupled future payload data synthetic never persisted",
+  "identities": {
+    "head": "40cf24e77388bced59475ece9651c9c94d848368",
+    "tree": "efe3b346df6ce0396f1187271863cf91564fcc1f",
+    "node": "v24.21.0",
+    "files": {
+      "skills/common/plugin-runtime/foundation/config/swarm.ts": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1",
+      "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts": "8f29590beaa082f4bdb51741aebefca4f917c280e4fdbf153b7aca0f92d434b3",
+      "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json": "51e7bc64a25fd6cc67d465ebe46bab170a6c9b7215423147ab3f15777dc58968",
+      "skills/worker/core/worker/native-journal-capacity.ts": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a",
+      "skills/worker/core/worker/native-journal-state.ts": "ae5cca21eb24261fa5389c7081bc3534e8e12b411d5bda0e97a69a94ead424d2",
+      "contracts/pipeline-worker-core/v1/src/digest.ts": "10c61ec122ca6e65c7deef2c059a19ad70627cf65bdf1eb65f0ac2539457d780",
+      "docs/review/evidence/config-acceptance/components/validate-adjustable-core-definitions.mjs": "788e0662e1ea0d9cc66d2ccee2435a2b2edabd8560d5ef5693ef0f12f5a409f0",
+      "docs/review/evidence/config-acceptance/components/core-adjustable-profiles.json": "e67b9a96ee0737e99b03a20f5887034f40802d7f4d6a1df7ff46e10932283f43",
+      "docs/review/evidence/config-acceptance/components/core-adjustable-target.schema.json": "695ea10b3c08a72f93098665e7d4a0b83947a5f436241adc0447c048aabfd1be",
+      "charts/kubeclaw/files/config/swarm.config.json": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58",
+      "package-lock.json": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b",
+      "node_modules/ajv/package.json": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989"
+    },
+    "sourceDigests": {
+      "skills/common/plugin-runtime/foundation/config/swarm.ts": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1",
+      "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts": "8f29590beaa082f4bdb51741aebefca4f917c280e4fdbf153b7aca0f92d434b3",
+      "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json": "51e7bc64a25fd6cc67d465ebe46bab170a6c9b7215423147ab3f15777dc58968",
+      "skills/worker/core/worker/native-journal-capacity.ts": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a",
+      "skills/worker/core/worker/native-journal-state.ts": "ae5cca21eb24261fa5389c7081bc3534e8e12b411d5bda0e97a69a94ead424d2",
+      "contracts/pipeline-worker-core/v1/src/digest.ts": "10c61ec122ca6e65c7deef2c059a19ad70627cf65bdf1eb65f0ac2539457d780"
+    },
+    "testDigests": {
+      "docs/review/evidence/config-acceptance/components/validate-adjustable-core-definitions.mjs": "788e0662e1ea0d9cc66d2ccee2435a2b2edabd8560d5ef5693ef0f12f5a409f0"
+    }
+  },
+  "results": [
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+      "policyId": "CMP-WCORE-INPUT-BYTES",
+      "variant": "A",
+      "result": "passed",
+      "delta": {
+        "field": "settings.runtime.input_bytes",
+        "A": 16777216,
+        "B": 12582912
+      },
+      "projection": {
+        "payloadBytes": 51273,
+        "framedTerminalStateBytes": 51774
+      },
+      "currentOwnerContextIdentity": {
+        "entry": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-INPUT-BYTES/A/swarm.config.json",
+        "generationDirectory": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-INPUT-BYTES/A",
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "f1946f0e25739b034f0da8e7d66523b79b108282d2f509d427f7c5e3cc4fcfca"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "proofLimit": "Target strict owner schema+actual canonical terminal projection; existing loader validates old owner context ONLY after explicitly removing new runtime field. NOT current target CONFIG loader/projection/EFFECT acceptance."
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+      "policyId": "CMP-WCORE-INPUT-BYTES",
+      "variant": "B",
+      "result": "passed",
+      "delta": {
+        "field": "settings.runtime.input_bytes",
+        "A": 16777216,
+        "B": 12582912
+      },
+      "projection": {
+        "payloadBytes": 51273,
+        "framedTerminalStateBytes": 51774
+      },
+      "currentOwnerContextIdentity": {
+        "entry": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-INPUT-BYTES/B/swarm.config.json",
+        "generationDirectory": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-INPUT-BYTES/B",
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "f1946f0e25739b034f0da8e7d66523b79b108282d2f509d427f7c5e3cc4fcfca"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "proofLimit": "Target strict owner schema+actual canonical terminal projection; existing loader validates old owner context ONLY after explicitly removing new runtime field. NOT current target CONFIG loader/projection/EFFECT acceptance."
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+      "policyId": "CMP-WCORE-JSON-NODES",
+      "variant": "A",
+      "result": "passed",
+      "delta": {
+        "field": "settings.runtime.json_nodes",
+        "A": 100000,
+        "B": 75000
+      },
+      "projection": {
+        "payloadBytes": 51273,
+        "framedTerminalStateBytes": 51774
+      },
+      "currentOwnerContextIdentity": {
+        "entry": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-JSON-NODES/A/swarm.config.json",
+        "generationDirectory": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-JSON-NODES/A",
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "f1946f0e25739b034f0da8e7d66523b79b108282d2f509d427f7c5e3cc4fcfca"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "proofLimit": "Target strict owner schema+actual canonical terminal projection; existing loader validates old owner context ONLY after explicitly removing new runtime field. NOT current target CONFIG loader/projection/EFFECT acceptance."
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+      "policyId": "CMP-WCORE-JSON-NODES",
+      "variant": "B",
+      "result": "passed",
+      "delta": {
+        "field": "settings.runtime.json_nodes",
+        "A": 100000,
+        "B": 75000
+      },
+      "projection": {
+        "payloadBytes": 51273,
+        "framedTerminalStateBytes": 51774
+      },
+      "currentOwnerContextIdentity": {
+        "entry": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-JSON-NODES/B/swarm.config.json",
+        "generationDirectory": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-JSON-NODES/B",
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "f1946f0e25739b034f0da8e7d66523b79b108282d2f509d427f7c5e3cc4fcfca"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "proofLimit": "Target strict owner schema+actual canonical terminal projection; existing loader validates old owner context ONLY after explicitly removing new runtime field. NOT current target CONFIG loader/projection/EFFECT acceptance."
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+      "policyId": "CMP-WCORE-JSON-DEPTH",
+      "variant": "A",
+      "result": "passed",
+      "delta": {
+        "field": "settings.runtime.json_depth",
+        "A": 64,
+        "B": 48
+      },
+      "projection": {
+        "payloadBytes": 51273,
+        "framedTerminalStateBytes": 51774
+      },
+      "currentOwnerContextIdentity": {
+        "entry": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-JSON-DEPTH/A/swarm.config.json",
+        "generationDirectory": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-JSON-DEPTH/A",
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "f1946f0e25739b034f0da8e7d66523b79b108282d2f509d427f7c5e3cc4fcfca"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "proofLimit": "Target strict owner schema+actual canonical terminal projection; existing loader validates old owner context ONLY after explicitly removing new runtime field. NOT current target CONFIG loader/projection/EFFECT acceptance."
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+      "policyId": "CMP-WCORE-JSON-DEPTH",
+      "variant": "B",
+      "result": "passed",
+      "delta": {
+        "field": "settings.runtime.json_depth",
+        "A": 64,
+        "B": 48
+      },
+      "projection": {
+        "payloadBytes": 51273,
+        "framedTerminalStateBytes": 51774
+      },
+      "currentOwnerContextIdentity": {
+        "entry": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-JSON-DEPTH/B/swarm.config.json",
+        "generationDirectory": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-JSON-DEPTH/B",
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "f1946f0e25739b034f0da8e7d66523b79b108282d2f509d427f7c5e3cc4fcfca"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "proofLimit": "Target strict owner schema+actual canonical terminal projection; existing loader validates old owner context ONLY after explicitly removing new runtime field. NOT current target CONFIG loader/projection/EFFECT acceptance."
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+      "policyId": "CMP-WCORE-LOG-PARTS",
+      "variant": "A",
+      "result": "passed",
+      "delta": {
+        "field": "settings.runtime.log_parts",
+        "A": 10000,
+        "B": 7500
+      },
+      "projection": {
+        "payloadBytes": 51273,
+        "framedTerminalStateBytes": 51774
+      },
+      "currentOwnerContextIdentity": {
+        "entry": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-LOG-PARTS/A/swarm.config.json",
+        "generationDirectory": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-LOG-PARTS/A",
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "f1946f0e25739b034f0da8e7d66523b79b108282d2f509d427f7c5e3cc4fcfca"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "proofLimit": "Target strict owner schema+actual canonical terminal projection; existing loader validates old owner context ONLY after explicitly removing new runtime field. NOT current target CONFIG loader/projection/EFFECT acceptance."
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+      "policyId": "CMP-WCORE-LOG-PARTS",
+      "variant": "B",
+      "result": "passed",
+      "delta": {
+        "field": "settings.runtime.log_parts",
+        "A": 10000,
+        "B": 7500
+      },
+      "projection": {
+        "payloadBytes": 51273,
+        "framedTerminalStateBytes": 51774
+      },
+      "currentOwnerContextIdentity": {
+        "entry": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-LOG-PARTS/B/swarm.config.json",
+        "generationDirectory": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-LOG-PARTS/B",
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "f1946f0e25739b034f0da8e7d66523b79b108282d2f509d427f7c5e3cc4fcfca"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "proofLimit": "Target strict owner schema+actual canonical terminal projection; existing loader validates old owner context ONLY after explicitly removing new runtime field. NOT current target CONFIG loader/projection/EFFECT acceptance."
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+      "policyId": "CMP-WCORE-RETAIN-LOGS",
+      "variant": "A",
+      "result": "passed",
+      "delta": {
+        "field": "settings.runtime.retain_logs",
+        "A": {
+          "prism-native": true,
+          "prism-agent": true,
+          "buster-provider": false,
+          "buster-preparation": false,
+          "buster-historical-import": false,
+          "buster-source-cleanup": false
+        },
+        "B": {
+          "prism-native": false,
+          "prism-agent": false,
+          "buster-provider": false,
+          "buster-preparation": false,
+          "buster-historical-import": false,
+          "buster-source-cleanup": false
+        }
+      },
+      "projection": {
+        "payloadBytes": 51273,
+        "framedTerminalStateBytes": 51774
+      },
+      "currentOwnerContextIdentity": {
+        "entry": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-RETAIN-LOGS/A/swarm.config.json",
+        "generationDirectory": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-RETAIN-LOGS/A",
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "f1946f0e25739b034f0da8e7d66523b79b108282d2f509d427f7c5e3cc4fcfca"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "proofLimit": "Target strict owner schema+actual canonical terminal projection; existing loader validates old owner context ONLY after explicitly removing new runtime field. NOT current target CONFIG loader/projection/EFFECT acceptance."
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+      "policyId": "CMP-WCORE-RETAIN-LOGS",
+      "variant": "B",
+      "result": "passed",
+      "delta": {
+        "field": "settings.runtime.retain_logs",
+        "A": {
+          "prism-native": true,
+          "prism-agent": true,
+          "buster-provider": false,
+          "buster-preparation": false,
+          "buster-historical-import": false,
+          "buster-source-cleanup": false
+        },
+        "B": {
+          "prism-native": false,
+          "prism-agent": false,
+          "buster-provider": false,
+          "buster-preparation": false,
+          "buster-historical-import": false,
+          "buster-source-cleanup": false
+        }
+      },
+      "projection": {
+        "payloadBytes": 51273,
+        "framedTerminalStateBytes": 51774
+      },
+      "currentOwnerContextIdentity": {
+        "entry": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-RETAIN-LOGS/B/swarm.config.json",
+        "generationDirectory": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-RETAIN-LOGS/B",
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "f1946f0e25739b034f0da8e7d66523b79b108282d2f509d427f7c5e3cc4fcfca"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "proofLimit": "Target strict owner schema+actual canonical terminal projection; existing loader validates old owner context ONLY after explicitly removing new runtime field. NOT current target CONFIG loader/projection/EFFECT acceptance."
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+      "policyId": "CMP-WCORE-DRAIN-POLL-MS",
+      "variant": "A",
+      "result": "passed",
+      "delta": {
+        "field": "settings.runtime.drain_poll_ms",
+        "A": 10,
+        "B": 20
+      },
+      "projection": {
+        "payloadBytes": 51273,
+        "framedTerminalStateBytes": 51774
+      },
+      "currentOwnerContextIdentity": {
+        "entry": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-DRAIN-POLL-MS/A/swarm.config.json",
+        "generationDirectory": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-DRAIN-POLL-MS/A",
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "f1946f0e25739b034f0da8e7d66523b79b108282d2f509d427f7c5e3cc4fcfca"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "proofLimit": "Target strict owner schema+actual canonical terminal projection; existing loader validates old owner context ONLY after explicitly removing new runtime field. NOT current target CONFIG loader/projection/EFFECT acceptance."
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+      "policyId": "CMP-WCORE-DRAIN-POLL-MS",
+      "variant": "B",
+      "result": "passed",
+      "delta": {
+        "field": "settings.runtime.drain_poll_ms",
+        "A": 10,
+        "B": 20
+      },
+      "projection": {
+        "payloadBytes": 51273,
+        "framedTerminalStateBytes": 51774
+      },
+      "currentOwnerContextIdentity": {
+        "entry": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-DRAIN-POLL-MS/B/swarm.config.json",
+        "generationDirectory": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-DRAIN-POLL-MS/B",
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "f1946f0e25739b034f0da8e7d66523b79b108282d2f509d427f7c5e3cc4fcfca"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "proofLimit": "Target strict owner schema+actual canonical terminal projection; existing loader validates old owner context ONLY after explicitly removing new runtime field. NOT current target CONFIG loader/projection/EFFECT acceptance."
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+      "policyId": "CMP-WCORE-POOL-FILE-BYTES",
+      "variant": "A",
+      "result": "passed",
+      "delta": {
+        "field": "settings.runtime.pool_file_bytes",
+        "A": 65536,
+        "B": 32768
+      },
+      "projection": {
+        "payloadBytes": 51273,
+        "framedTerminalStateBytes": 51774
+      },
+      "currentOwnerContextIdentity": {
+        "entry": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-POOL-FILE-BYTES/A/swarm.config.json",
+        "generationDirectory": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-POOL-FILE-BYTES/A",
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "f1946f0e25739b034f0da8e7d66523b79b108282d2f509d427f7c5e3cc4fcfca"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "proofLimit": "Target strict owner schema+actual canonical terminal projection; existing loader validates old owner context ONLY after explicitly removing new runtime field. NOT current target CONFIG loader/projection/EFFECT acceptance."
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+      "policyId": "CMP-WCORE-POOL-FILE-BYTES",
+      "variant": "B",
+      "result": "passed",
+      "delta": {
+        "field": "settings.runtime.pool_file_bytes",
+        "A": 65536,
+        "B": 32768
+      },
+      "projection": {
+        "payloadBytes": 51273,
+        "framedTerminalStateBytes": 51774
+      },
+      "currentOwnerContextIdentity": {
+        "entry": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-POOL-FILE-BYTES/B/swarm.config.json",
+        "generationDirectory": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-POOL-FILE-BYTES/B",
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "f1946f0e25739b034f0da8e7d66523b79b108282d2f509d427f7c5e3cc4fcfca"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "proofLimit": "Target strict owner schema+actual canonical terminal projection; existing loader validates old owner context ONLY after explicitly removing new runtime field. NOT current target CONFIG loader/projection/EFFECT acceptance."
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+      "policyId": "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES",
+      "variant": "A",
+      "result": "passed",
+      "delta": {
+        "field": "settings.runtime.runtime_identity_file_bytes",
+        "A": 4096,
+        "B": 2048
+      },
+      "projection": {
+        "payloadBytes": 51273,
+        "framedTerminalStateBytes": 51774
+      },
+      "currentOwnerContextIdentity": {
+        "entry": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES/A/swarm.config.json",
+        "generationDirectory": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES/A",
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "f1946f0e25739b034f0da8e7d66523b79b108282d2f509d427f7c5e3cc4fcfca"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "proofLimit": "Target strict owner schema+actual canonical terminal projection; existing loader validates old owner context ONLY after explicitly removing new runtime field. NOT current target CONFIG loader/projection/EFFECT acceptance."
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+      "policyId": "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES",
+      "variant": "B",
+      "result": "passed",
+      "delta": {
+        "field": "settings.runtime.runtime_identity_file_bytes",
+        "A": 4096,
+        "B": 2048
+      },
+      "projection": {
+        "payloadBytes": 51273,
+        "framedTerminalStateBytes": 51774
+      },
+      "currentOwnerContextIdentity": {
+        "entry": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES/B/swarm.config.json",
+        "generationDirectory": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES/B",
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "f1946f0e25739b034f0da8e7d66523b79b108282d2f509d427f7c5e3cc4fcfca"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "proofLimit": "Target strict owner schema+actual canonical terminal projection; existing loader validates old owner context ONLY after explicitly removing new runtime field. NOT current target CONFIG loader/projection/EFFECT acceptance."
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+      "policyId": "CMP-WCORE-NODE-IDENTITY-FILE-BYTES",
+      "variant": "A",
+      "result": "passed",
+      "delta": {
+        "field": "settings.runtime.node_identity_file_bytes",
+        "A": 128,
+        "B": 64
+      },
+      "projection": {
+        "payloadBytes": 51273,
+        "framedTerminalStateBytes": 51774
+      },
+      "currentOwnerContextIdentity": {
+        "entry": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-NODE-IDENTITY-FILE-BYTES/A/swarm.config.json",
+        "generationDirectory": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-NODE-IDENTITY-FILE-BYTES/A",
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "f1946f0e25739b034f0da8e7d66523b79b108282d2f509d427f7c5e3cc4fcfca"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "proofLimit": "Target strict owner schema+actual canonical terminal projection; existing loader validates old owner context ONLY after explicitly removing new runtime field. NOT current target CONFIG loader/projection/EFFECT acceptance."
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+      "policyId": "CMP-WCORE-NODE-IDENTITY-FILE-BYTES",
+      "variant": "B",
+      "result": "passed",
+      "delta": {
+        "field": "settings.runtime.node_identity_file_bytes",
+        "A": 128,
+        "B": 64
+      },
+      "projection": {
+        "payloadBytes": 51273,
+        "framedTerminalStateBytes": 51774
+      },
+      "currentOwnerContextIdentity": {
+        "entry": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-NODE-IDENTITY-FILE-BYTES/B/swarm.config.json",
+        "generationDirectory": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-NODE-IDENTITY-FILE-BYTES/B",
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "f1946f0e25739b034f0da8e7d66523b79b108282d2f509d427f7c5e3cc4fcfca"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "proofLimit": "Target strict owner schema+actual canonical terminal projection; existing loader validates old owner context ONLY after explicitly removing new runtime field. NOT current target CONFIG loader/projection/EFFECT acceptance."
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+      "policyId": "CMP-WCORE-JOURNAL-RECORD-BYTES",
+      "variant": "A",
+      "result": "passed",
+      "delta": {
+        "field": "settings.runtime.journal_record_bytes",
+        "A": 65536,
+        "B": 32768
+      },
+      "projection": {
+        "payloadBytes": 51273,
+        "framedTerminalStateBytes": 51774
+      },
+      "currentOwnerContextIdentity": {
+        "entry": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-JOURNAL-RECORD-BYTES/A/swarm.config.json",
+        "generationDirectory": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-JOURNAL-RECORD-BYTES/A",
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "f1946f0e25739b034f0da8e7d66523b79b108282d2f509d427f7c5e3cc4fcfca"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "proofLimit": "Target strict owner schema+actual canonical terminal projection; existing loader validates old owner context ONLY after explicitly removing new runtime field. NOT current target CONFIG loader/projection/EFFECT acceptance."
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+      "policyId": "CMP-WCORE-JOURNAL-RECORD-BYTES",
+      "variant": "B",
+      "result": "passed",
+      "delta": {
+        "field": "settings.runtime.journal_record_bytes",
+        "A": 65536,
+        "B": 32768
+      },
+      "projection": {
+        "payloadBytes": 26697,
+        "framedTerminalStateBytes": 27198
+      },
+      "currentOwnerContextIdentity": {
+        "entry": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-JOURNAL-RECORD-BYTES/B/swarm.config.json",
+        "generationDirectory": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-JOURNAL-RECORD-BYTES/B",
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "f1946f0e25739b034f0da8e7d66523b79b108282d2f509d427f7c5e3cc4fcfca"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "proofLimit": "Target strict owner schema+actual canonical terminal projection; existing loader validates old owner context ONLY after explicitly removing new runtime field. NOT current target CONFIG loader/projection/EFFECT acceptance."
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+      "policyId": "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS",
+      "variant": "A",
+      "result": "passed",
+      "delta": {
+        "field": "settings.runtime.journal_diagnostic_units",
+        "A": 4096,
+        "B": 2048
+      },
+      "projection": {
+        "payloadBytes": 51273,
+        "framedTerminalStateBytes": 51774
+      },
+      "currentOwnerContextIdentity": {
+        "entry": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS/A/swarm.config.json",
+        "generationDirectory": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS/A",
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "eb782f0fd94cafb31535458d793d198566f108e73135e933ae50797287eb2b89"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "f1946f0e25739b034f0da8e7d66523b79b108282d2f509d427f7c5e3cc4fcfca"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "proofLimit": "Target strict owner schema+actual canonical terminal projection; existing loader validates old owner context ONLY after explicitly removing new runtime field. NOT current target CONFIG loader/projection/EFFECT acceptance."
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+      "policyId": "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS",
+      "variant": "B",
+      "result": "passed",
+      "delta": {
+        "field": "settings.runtime.journal_diagnostic_units",
+        "A": 4096,
+        "B": 2048
+      },
+      "projection": {
+        "payloadBytes": 26697,
+        "framedTerminalStateBytes": 27198
+      },
+      "currentOwnerContextIdentity": {
+        "entry": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS/B/swarm.config.json",
+        "generationDirectory": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS/B",
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "eb782f0fd94cafb31535458d793d198566f108e73135e933ae50797287eb2b89"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "f1946f0e25739b034f0da8e7d66523b79b108282d2f509d427f7c5e3cc4fcfca"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "proofLimit": "Target strict owner schema+actual canonical terminal projection; existing loader validates old owner context ONLY after explicitly removing new runtime field. NOT current target CONFIG loader/projection/EFFECT acceptance."
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+      "policyId": "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS",
+      "variant": "A",
+      "result": "passed",
+      "delta": {
+        "field": "settings.runtime.ownership_diagnostic_units",
+        "A": 4096,
+        "B": 2048
+      },
+      "projection": {
+        "payloadBytes": 26697,
+        "framedTerminalStateBytes": 27198
+      },
+      "currentOwnerContextIdentity": {
+        "entry": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS/A/swarm.config.json",
+        "generationDirectory": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS/A",
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "0a31ce213b64df16807c8326915bc235018988c5c23e66ef2c719c4fb0aa3e5a"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "f1946f0e25739b034f0da8e7d66523b79b108282d2f509d427f7c5e3cc4fcfca"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "proofLimit": "Target strict owner schema+actual canonical terminal projection; existing loader validates old owner context ONLY after explicitly removing new runtime field. NOT current target CONFIG loader/projection/EFFECT acceptance."
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+      "policyId": "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS",
+      "variant": "B",
+      "result": "passed",
+      "delta": {
+        "field": "settings.runtime.ownership_diagnostic_units",
+        "A": 4096,
+        "B": 2048
+      },
+      "projection": {
+        "payloadBytes": 26697,
+        "framedTerminalStateBytes": 27198
+      },
+      "currentOwnerContextIdentity": {
+        "entry": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS/B/swarm.config.json",
+        "generationDirectory": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS/B",
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "0a31ce213b64df16807c8326915bc235018988c5c23e66ef2c719c4fb0aa3e5a"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "f1946f0e25739b034f0da8e7d66523b79b108282d2f509d427f7c5e3cc4fcfca"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "proofLimit": "Target strict owner schema+actual canonical terminal projection; existing loader validates old owner context ONLY after explicitly removing new runtime field. NOT current target CONFIG loader/projection/EFFECT acceptance."
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+      "policyId": "CMP-WCORE-LOCK-STRIPES",
+      "variant": "A",
+      "result": "passed",
+      "delta": {
+        "field": "settings.runtime.journalLockHexDigits",
+        "A": 2,
+        "B": 1
+      },
+      "projection": {
+        "payloadBytes": 51273,
+        "framedTerminalStateBytes": 51774
+      },
+      "currentOwnerContextIdentity": {
+        "entry": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-LOCK-STRIPES/A/swarm.config.json",
+        "generationDirectory": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-LOCK-STRIPES/A",
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "f1946f0e25739b034f0da8e7d66523b79b108282d2f509d427f7c5e3cc4fcfca"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "proofLimit": "Target strict owner schema+actual canonical terminal projection; existing loader validates old owner context ONLY after explicitly removing new runtime field. NOT current target CONFIG loader/projection/EFFECT acceptance."
+    },
+    {
+      "id": "CMP-C0-CORE-ADJUSTABLE-PROFILES",
+      "policyId": "CMP-WCORE-LOCK-STRIPES",
+      "variant": "B",
+      "result": "passed",
+      "delta": {
+        "field": "settings.runtime.journalLockHexDigits",
+        "A": 2,
+        "B": 1
+      },
+      "projection": {
+        "payloadBytes": 51273,
+        "framedTerminalStateBytes": 51774
+      },
+      "currentOwnerContextIdentity": {
+        "entry": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-LOCK-STRIPES/B/swarm.config.json",
+        "generationDirectory": "/tmp/core-adjustability-def-CqUByr/CMP-WCORE-LOCK-STRIPES/B",
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "f1946f0e25739b034f0da8e7d66523b79b108282d2f509d427f7c5e3cc4fcfca"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "proofLimit": "Target strict owner schema+actual canonical terminal projection; existing loader validates old owner context ONLY after explicitly removing new runtime field. NOT current target CONFIG loader/projection/EFFECT acceptance."
+    }
+  ],
+  "passed": 26,
+  "failed": 0
+}

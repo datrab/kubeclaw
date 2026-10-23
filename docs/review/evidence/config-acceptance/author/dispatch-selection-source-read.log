@@ -1,0 +1,881 @@
+{"path": "skills/common/plugin-runtime/sdk/src/runtime-dispatch-profile.ts", "sha256": "13f61a984922b7fa815e084b6a5a20238fd0da67aed5959bdc8b061a8e3173fb"}
+1: import { CURRENT_RUNTIME_DISPATCH_PROFILE, type RuntimeDispatchProfile } from './generated/contracts.ts';
+2: import { portableJson } from './values.ts';
+3: import type { CapabilityInvocation } from './runtime.ts';
+4: 
+5: const PROFILE_BYTES = portableJson(CURRENT_RUNTIME_DISPATCH_PROFILE);
+6: 
+7: /** Exact finite canonical contract, generated from the owning schema, not a fallback codec. */
+8: export function parseRuntimeDispatchProfile(value: unknown): RuntimeDispatchProfile {
+9:   if (portableJson(value) !== PROFILE_BYTES) throw new Error('RUNTIME_DISPATCH_PROFILE_INVALID');
+10:   return CURRENT_RUNTIME_DISPATCH_PROFILE;
+11: }
+12: 
+13: /** Producers select the frozen run profile before effect admission. Historical absence is unchanged. */
+14: export function withRuntimeDispatchProfile(
+15:   request: CapabilityInvocation, profile?: RuntimeDispatchProfile,
+16: ): CapabilityInvocation {
+17:   if (profile === undefined) return request;
+18:   const selected = parseRuntimeDispatchProfile(profile);
+19:   portableJson(request);
+20:   if (Object.hasOwn(request, 'runtimeDispatchProfile')) throw new Error('RUNTIME_DISPATCH_PROFILE_ALREADY_BOUND');
+21:   return Object.freeze({ ...request, runtimeDispatchProfile: selected });
+22: }
+23: 
+24: /** Only closed invocation metadata is control. An identically named model key is ordinary data. */
+25: export function runtimeDispatchProfileFields(request: object, capability?: string): Readonly<{ runtimeDispatchProfile?: RuntimeDispatchProfile }> {
+26:   portableJson(request);
+27:   if (!Object.hasOwn(request, 'runtimeDispatchProfile')) return {};
+28:   if (capability !== undefined && capability !== 'runtime.dispatch') throw new Error('RUNTIME_DISPATCH_PROFILE_CAPABILITY_INVALID');
+29:   return { runtimeDispatchProfile: parseRuntimeDispatchProfile((request as CapabilityInvocation).runtimeDispatchProfile) };
+30: }
+{"path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts", "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1"}
+1: // Generated from skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json. Do not edit.
+2: 
+3: /**
+4:  * Explicit immutable run-owned review cache producer profile. Historical absence preserves review-content-cache.v1 and its original effect operations.
+5:  */
+6: export type ReviewCacheProfile = {
+7:   schemaVersion: 'review-cache-profile.v1';
+8:   recordVersion: 'review-content-cache.v2';
+9:   encoding: 'json-utf16-v1';
+10: };
+11: /**
+12:  * Explicit current runtime transport producer profile. Absence in historical contexts preserves the legacy producer; no profile is inferred from another digest version.
+13:  */
+14: export type RuntimeDispatchProfile = {schemaVersion: 'runtime-dispatch-profile.v1'; encoding: 'json-utf16-v1'};
+15: export type CapabilityInvocation = {
+16:   [k: string]: any;
+17: } & {
+18:   operation: string;
+19:   resource: ResourceIdentity;
+20:   payload: JsonObject;
+21:   runtimeDispatchProfile?: RuntimeDispatchProfile;
+22: };
+23: export type NamespacedId = string;
+24: export type OpaqueId = string;
+25: /**
+26:  * Existing opaque keys, plus the exact historical adapter dependency producer grammar. Package/capability names retain their 160-character bounds and registration its 96-character bound. New dependency keys are compact opaque IDs.
+27:  */
+28: export type EffectIdempotencyKey = OpaqueId;
+29: /**
+30:  * The original public adapter dependency delivery token: nonblank and at most 512 characters. Observer delivery contracts remain opaque IDs.
+31:  */
+32: export type EffectDeliveryId = string;
+33: export type EffectAttemptIdentity =
+34:   | AttemptIdentity
+35:   | {
+36:       runId: AdapterActivationId;
+37:       stageId: 'adapter-activation';
+38:       attemptId: AdapterActivationId;
+39:       attemptNumber: 1;
+40:     };
+41: export type LocalId = string;
+42: export type AdapterActivationId = string;
+43: export type TestContractId = string;
+44: export type RelativeModulePath = string;
+45: export type RelativeSchemaPath = string;
+46: export type TestProviderPort =
+47:   | {
+48:       name: LocalId;
+49:       kind: 'value';
+50:       required: boolean;
+51:       schemaId: TestContractId;
+52:     }
+53:   | {
+54:       name: LocalId;
+55:       kind: 'artifact';
+56:       required: boolean;
+57:       schemaId?: TestContractId;
+58:       /**
+59:        * @minItems 1
+60:        * @maxItems 32
+61:        */
+62:       mediaTypes: [string, ...string[]];
+63:     };
+64: export type PluginManifest = PluginManifest1 & {
+65:   id: NamespacedId;
+66:   apiVersion: 'pipeline-plugin-v2';
+67:   packageVersion: string;
+68:   stages: StageRegistration[];
+69:   observers: ObserverRegistration[];
+70:   adapters: AdapterRegistration[];
+71:   testProviders?: TestProviderRegistration[];
+72:   reportAdapters?: ReportAdapterRegistration[];
+73: };
+74: export type PluginManifest1 =
+75:   | {
+76:       /**
+77:        * @minItems 1
+78:        */
+79:       stages: [any, ...any[]];
+80:       [k: string]: any;
+81:     }
+82:   | {
+83:       /**
+84:        * @minItems 1
+85:        */
+86:       observers: [any, ...any[]];
+87:       [k: string]: any;
+88:     }
+89:   | {
+90:       /**
+91:        * @minItems 1
+92:        */
+93:       adapters: [any, ...any[]];
+94:       [k: string]: any;
+95:     }
+96:   | {
+97:       /**
+98:        * @minItems 1
+99:        */
+100:       testProviders: [any, ...any[]];
+101:       [k: string]: any;
+102:     }
+103:   | {
+104:       /**
+105:        * @minItems 1
+106:        */
+107:       reportAdapters: [any, ...any[]];
+108:       [k: string]: any;
+109:     };
+110: export type StageResult =
+111:   | (ResultBase & {
+112:       schemaVersion: 'stage-result.v2';
+113:       outcome: 'passed';
+114:       artifacts: ArtifactRef[];
+115:       facts?: DecisionFacts;
+116:     })
+117:   | (ResultBase & {
+118:       schemaVersion: 'stage-result.v2';
+119:       outcome: 'retry' | 'request_fix' | 'blocked' | 'failed' | 'timed_out' | 'cancelled';
+120:       reason: Reason;
+121:       artifacts: ArtifactRef[];
+122:     })
+123:   | (ResultBase & {
+124:       schemaVersion: 'stage-result.v2';
+125:       outcome: 'wait' | 'orchestrator_required';
+126:       reason: Reason;
+127:       artifacts: ArtifactRef[];
+128:       wait: WaitRequest;
+129:     })
+130:   | (ResultBase & {
+131:       schemaVersion: 'stage-result.v2';
+132:       outcome: 'rate_limited';
+133:       reason: Reason;
+134:       artifacts: ArtifactRef[];
+135:       retryAt: string;
+136:     });
+137: export type EffectRequest = {
+138:   [k: string]: any;
+139: } & {
+140:   runtimeDispatchProfile?: RuntimeDispatchProfile;
+141:   schemaVersion: 'effect-request.v2';
+142:   effectId: OpaqueId;
+143:   idempotencyKey: EffectIdempotencyKey;
+144:   deliveryId?: EffectDeliveryId;
+145:   attempt: EffectAttemptIdentity;
+146:   capability: NamespacedId;
+147:   operation: LocalId;
+148:   resource: ResourceIdentity;
+149:   payload: JsonObject;
+150:   requestedAt: string;
+151: };
+152: export type EffectReceipt = {
+153:   [k: string]: any;
+154: } & {
+155:   schemaVersion: 'effect-receipt.v2';
+156:   effectId: OpaqueId;
+157:   idempotencyKey: EffectIdempotencyKey;
+158:   adapter: PackageResolution;
+159:   status: 'accepted' | 'completed' | 'failed';
+160:   result?: JsonObject;
+161:   error?: Reason;
+162:   recordedAt: string;
+163: };
+164: export type AdministrativeReopenDecision =
+165:   | {
+166:       schemaVersion: 'administrative-reopen.v2';
+167:       decisionId: OpaqueId;
+168:       idempotencyKey: OpaqueId;
+169:       runId: OpaqueId;
+170:       stageId: LocalId;
+171:       actor: {
+172:         type: 'operator' | 'administrator';
+173:         id: OpaqueId;
+174:       };
+175:       reason: Reason;
+176:       continuation: 'remediation';
+177:       remediationStageId: LocalId;
+178:       decidedAt: string;
+179:     }
+180:   | {
+181:       schemaVersion: 'administrative-reopen.v2';
+182:       decisionId: OpaqueId;
+183:       idempotencyKey: OpaqueId;
+184:       runId: OpaqueId;
+185:       stageId: LocalId;
+186:       actor: {
+187:         type: 'operator' | 'administrator';
+188:         id: OpaqueId;
+189:       };
+190:       reason: Reason;
+191:       continuation: 'retry' | 'cancel';
+192:       /**
+193:        * @minItems 1
+194:        */
+195:       packageUpgrades?: [
+196:         {
+197:           pluginId: NamespacedId;
+198:           from: PackageIdentity;
+199:           to: PackageIdentity;
+200:         },
+201:         ...{
+202:           pluginId: NamespacedId;
+203:           from: PackageIdentity;
+204:           to: PackageIdentity;
+205:         }[]
+206:       ];
+207:       decidedAt: string;
+208:     };
+209: export type InvocationLease = {
+210:   [k: string]: any;
+211: } & {
+212:   schemaVersion: 'invocation-lease.v2';
+213:   leaseId: OpaqueId;
+214:   attempt: AttemptIdentity;
+215:   registration: RegistrationProvenance;
+216:   status: 'active' | 'revoked';
+217:   grants: CapabilityGrant[];
+218:   limits: {
+219:     wallTimeMs: number;
+220:     memoryBytes: number;
+221:     cpuMillis: number;
+222:   };
+223:   issuedAt: string;
+224:   expiresAt: string;
+225:   revokedAt?: string;
+226:   revocationReason?: Reason;
+227: };
+228: export type AdapterLifecycle = {
+229:   [k: string]: any;
+230: } & {
+231:   schemaVersion: 'adapter-lifecycle.v2';
+232:   provider: RegistrationProvenance;
+233:   status: 'activating' | 'ready' | 'degraded' | 'stopping' | 'stopped' | 'failed';
+234:   changedAt: string;
+235:   reason?: Reason;
+236: };
+237: 
+238: export interface PluginSystemV2 {
+239:   reviewCacheProfile?: ReviewCacheProfile;
+240:   runtimeDispatchProfile?: RuntimeDispatchProfile;
+241:   capabilityInvocation?: CapabilityInvocation;
+242:   runtimeRunGraph?: RuntimeRunGraph;
+243:   runtimeRunEdge?: RuntimeRunEdge;
+244:   runtimeRunSnapshot?: RuntimeRunSnapshot;
+245:   runtimeRunSnapshotV4?: RuntimeRunSnapshotV4;
+246:   effectIdempotencyKey?: EffectIdempotencyKey;
+247:   resourceIdentity?: ResourceIdentity;
+248:   effectDeliveryId?: EffectDeliveryId;
+249:   effectAttemptIdentity?: EffectAttemptIdentity;
+250:   adapterActivationId?: AdapterActivationId;
+251:   testContractId?: TestContractId;
+252:   packageIdentity?: PackageIdentity;
+253:   packageResolution?: PackageResolution;
+254:   stageRegistration?: StageRegistration;
+255:   observerRegistration?: ObserverRegistration;
+256:   adapterRegistration?: AdapterRegistration;
+257:   testProviderPort?: TestProviderPort;
+258:   testEvidencePolicy?: TestEvidencePolicy;
+259:   testProviderRegistration?: TestProviderRegistration;
+260:   reportAdapterRegistration?: ReportAdapterRegistration;
+261:   pluginManifest?: PluginManifest;
+262:   stageDefinition?: StageDefinition;
+263:   pipelineDefinition?: PipelineDefinition;
+264:   attemptIdentity?: AttemptIdentity;
+265:   stageAttempt?: StageAttempt;
+266:   artifactRef?: ArtifactRef;
+267:   decisionFacts?: DecisionFacts;
+268:   stageResult?: StageResult;
+269:   effectRequest?: EffectRequest;
+270:   effectReceipt?: EffectReceipt;
+271:   waitRequest?: WaitRequest;
+272:   resumeSignal?: ResumeSignal;
+273:   administrativeReopenDecision?: AdministrativeReopenDecision;
+274:   packageProvenance?: PackageProvenance;
+275:   registrationProvenance?: RegistrationProvenance;
+276:   capabilityGrant?: CapabilityGrant;
+277:   invocationLease?: InvocationLease;
+278:   pluginContext?: PluginContext;
+279:   eventIdentity?: EventIdentity;
+280:   lifecycleEvent?: LifecycleEvent;
+281:   pluginDomainEvent?: PluginDomainEvent;
+282:   observerDelivery?: ObserverDelivery;
+283:   observerCheckpoint?: ObserverCheckpoint;
+284:   adapterLifecycle?: AdapterLifecycle;
+285:   resourceLock?: ResourceLock;
+286:   pluginStateEntry?: PluginStateEntry;
+287: }
+288: /**
+289:  * Capability-owned resource names include URLs, absolute paths, dot and catalog keys. Capability implementations retain their own URL, path and authorization constraints.
+290:  */
+291: export interface ResourceIdentity {
+292:   type: NamespacedId;
+293:   canonicalId: string;
+294: }
+295: export interface JsonObject {
+296:   [k: string]: any;
+297: }
+298: export interface RuntimeRunGraph {
+299:   schemaVersion: 'execution-graph-snapshot.v2' | 'execution-graph-snapshot.v3';
+300:   pipelineId: OpaqueId;
+301:   maxConcurrency: number;
+302:   nodes: JsonObject[];
+303:   ordinaryEdges: RuntimeRunEdge[];
+304:   remediationEdges: RuntimeRunEdge[];
+305:   digest: string;
+306: }
+307: export interface RuntimeRunEdge {
+308:   from: string;
+309:   to: string;
+310: }
+311: export interface RuntimeRunSnapshot {
+312:   schemaVersion: 'run-snapshot.v3';
+313:   graph: RuntimeRunGraph;
+314:   registry: JsonObject;
+315:   digest: string;
+316:   runtimeDispatchProfile: RuntimeDispatchProfile;
+317: }
+318: export interface RuntimeRunSnapshotV4 {
+319:   schemaVersion: 'run-snapshot.v4';
+320:   graph: RuntimeRunGraph;
+321:   registry: JsonObject;
+322:   digest: string;
+323:   runtimeDispatchProfile: RuntimeDispatchProfile;
+324:   reviewCacheProfile: ReviewCacheProfile;
+325: }
+326: export interface AttemptIdentity {
+327:   runId: OpaqueId;
+328:   stageId: LocalId;
+329:   attemptId: OpaqueId;
+330:   attemptNumber: number;
+331: }
+332: export interface PackageIdentity {
+333:   pluginId: NamespacedId;
+334:   apiVersion: 'pipeline-plugin-v2';
+335:   packageVersion: string;
+336:   contentDigest: string;
+337: }
+338: export interface PackageResolution {
+339:   pluginId: NamespacedId;
+340:   apiVersion: 'pipeline-plugin-v2';
+341:   packageVersion: string;
+342:   contentDigest: string;
+343:   registrationId: LocalId;
+344: }
+345: export interface StageRegistration {
+346:   id: LocalId;
+347:   type: NamespacedId;
+348:   module: RelativeModulePath;
+349:   export: string;
+350:   requiredCapabilities: NamespacedId[];
+351:   configSchema: RelativeSchemaPath;
+352:   inputSchema: RelativeSchemaPath;
+353:   resultSchema: RelativeSchemaPath;
+354: }
+355: export interface ObserverRegistration {
+356:   id: LocalId;
+357:   module: RelativeModulePath;
+358:   export: string;
+359:   /**
+360:    * @minItems 1
+361:    */
+362:   subscriptions: [NamespacedId, ...NamespacedId[]];
+363:   delivery: 'at_least_once';
+364:   ordering: 'per_run';
+365:   failurePolicy: {
+366:     mode: 'best_effort' | 'required';
+367:     maxAttempts: number;
+368:     backoffMs: number;
+369:     timeoutMs: number;
+370:   };
+371:   requiredCapabilities: NamespacedId[];
+372:   configSchema: RelativeSchemaPath;
+373:   checkpointSchema: RelativeSchemaPath;
+374: }
+375: export interface AdapterRegistration {
+376:   id: LocalId;
+377:   module: RelativeModulePath;
+378:   export: string;
+379:   /**
+380:    * @minItems 1
+381:    */
+382:   providesCapabilities: [NamespacedId, ...NamespacedId[]];
+383:   requiredCapabilities: NamespacedId[];
+384:   configSchema: RelativeSchemaPath;
+385: }
+386: export interface TestEvidencePolicy {
+387:   /**
+388:    * @maxItems 128
+389:    */
+390:   onPass: LocalId[];
+391:   /**
+392:    * @maxItems 128
+393:    */
+394:   onFail: LocalId[];
+395:   /**
+396:    * @maxItems 128
+397:    */
+398:   onError: LocalId[];
+399: }
+400: export interface TestProviderRegistration {
+401:   id: LocalId;
+402:   contractId: TestContractId;
+403:   kind: 'test' | 'fixture';
+404:   module: RelativeModulePath;
+405:   export: string;
+406:   configSchema: RelativeSchemaPath;
+407:   /**
+408:    * @maxItems 128
+409:    */
+410:   inputs: TestProviderPort[];
+411:   /**
+412:    * @maxItems 128
+413:    */
+414:   outputs: TestProviderPort[];
+415:   /**
+416:    * @maxItems 128
+417:    */
+418:   requiredCapabilities: NamespacedId[];
+419:   retrySafe: boolean;
+420:   /**
+421:    * @maxItems 64
+422:    */
+423:   matrixFields: LocalId[];
+424:   /**
+425:    * @maxItems 32
+426:    */
+427:   reportFormats: LocalId[];
+428:   /**
+429:    * @maxItems 128
+430:    */
+431:   evidenceTypes: LocalId[];
+432:   evidenceDefaults: TestEvidencePolicy;
+433: }
+434: export interface ReportAdapterRegistration {
+435:   id: LocalId;
+436:   format: LocalId;
+437:   contractVersion: number;
+438:   module: RelativeModulePath;
+439:   export: string;
+440:   /**
+441:    * @minItems 1
+442:    * @maxItems 32
+443:    */
+444:   mediaTypes: [string, ...string[]];
+445: }
+446: export interface StageDefinition {
+447:   id: LocalId;
+448:   type: NamespacedId;
+449:   dependsOn: LocalId[];
+450:   config: JsonObject;
+451:   input: JsonObject;
+452:   activation?: {
+453:     sourceStage: LocalId;
+454:     fact: NamespacedId;
+455:     equals: string | number | boolean | null;
+456:   };
+457:   execution: {
+458:     maxAttempts: number;
+459:     maxRemediationCycles: number;
+460:     maxTechnicalRetries?: number;
+461:     repairCategory?: LocalId;
+462:     repairBudget?: {
+463:       categories: {
+464:         [k: string]: number;
+465:       };
+466:       maximumOrchestratorOrders: number;
+467:     };
+468:     orchestratorAfterAttempt?: number;
+469:     timeoutMs: number;
+470:   };
+471:   on?: {
+472:     request_fix?: LocalId;
+473:   };
+474: }
+475: export interface PipelineDefinition {
+476:   schemaVersion: 'pipeline-definition.v2';
+477:   id: OpaqueId;
+478:   maxConcurrency: number;
+479:   /**
+480:    * @minItems 1
+481:    */
+482:   stages: [StageDefinition, ...StageDefinition[]];
+483: }
+484: export interface StageAttempt {
+485:   schemaVersion: 'stage-attempt.v2';
+486:   identity: AttemptIdentity;
+487:   owner: PackageResolution;
+488:   stageType: NamespacedId;
+489:   leaseId: OpaqueId;
+490:   status: 'created' | 'dispatched' | 'completed' | 'timed_out' | 'cancelled';
+491:   retryBudgetUsed: number;
+492:   remediationBudgetUsed: number;
+493:   createdAt: string;
+494:   dispatchedAt?: string;
+495:   finishedAt?: string;
+496: }
+497: export interface ArtifactRef {
+498:   encoding?: 'kubeclaw-json.utf16.v1';
+499:   artifactId: OpaqueId;
+500:   namespace: NamespacedId;
+501:   mediaType: string;
+502:   digest: string;
+503:   sizeBytes: number;
+504:   producer: AttemptIdentity;
+505: }
+506: export interface DecisionFacts {
+507:   [k: string]: string | number | boolean | null;
+508: }
+509: export interface ResultBase {
+510:   schemaVersion: 'stage-result.v2';
+511:   outcome:
+512:     | 'passed'
+513:     | 'retry'
+514:     | 'request_fix'
+515:     | 'wait'
+516:     | 'orchestrator_required'
+517:     | 'blocked'
+518:     | 'failed'
+519:     | 'timed_out'
+520:     | 'rate_limited'
+521:     | 'cancelled';
+522:   reason?: Reason;
+523:   artifacts: ArtifactRef[];
+524:   [k: string]: any;
+525: }
+526: export interface Reason {
+527:   code: NamespacedId;
+528:   message?: string;
+529:   details?: JsonObject;
+530: }
+531: export interface WaitRequest {
+532:   schemaVersion: 'wait-request.v2';
+533:   waitId: OpaqueId;
+534:   kind: 'signal' | 'orchestrator';
+535:   signalType: NamespacedId;
+536:   authorizedIssuer: {
+537:     type: 'orchestrator' | 'operator' | 'adapter';
+538:     id: OpaqueId;
+539:   };
+540:   expiresAt: string | null;
+541:   request?: JsonObject;
+542: }
+543: export interface ResumeSignal {
+544:   schemaVersion: 'resume-signal.v2';
+545:   signalId: OpaqueId;
+546:   idempotencyKey: OpaqueId;
+547:   waitId: OpaqueId;
+548:   signalType: NamespacedId;
+549:   issuer: {
+550:     type: 'orchestrator' | 'operator' | 'adapter';
+551:     id: OpaqueId;
+552:   };
+553:   issuedAt: string;
+554:   payload: JsonObject;
+555: }
+556: export interface PackageProvenance {
+557:   schemaVersion: 'package-provenance.v2';
+558:   package: PackageIdentity;
+559:   source: {
+560:     type: 'builtin' | 'local' | 'git' | 'registry';
+561:     canonicalReference: string;
+562:   };
+563:   canonicalPath: string;
+564:   trustScope: 'trusted_first_party' | 'isolated_external';
+565:   trustEvidence: {
+566:     [k: string]: any;
+567:   };
+568:   resolvedAt: string;
+569: }
+570: export interface RegistrationProvenance {
+571:   schemaVersion: 'registration-provenance.v2';
+572:   package: PackageProvenance;
+573:   surface: 'stage' | 'observer' | 'adapter' | 'test_provider' | 'report_adapter';
+574:   registrationId: LocalId;
+575: }
+576: export interface CapabilityGrant {
+577:   capability: NamespacedId;
+578:   provider: PackageResolution;
+579:   constraints: JsonObject;
+580: }
+581: export interface PluginContext {
+582:   schemaVersion: 'plugin-context.v2';
+583:   runtimeDispatchProfile?: RuntimeDispatchProfile;
+584:   lease: InvocationLease;
+585:   reviewCacheProfile?: ReviewCacheProfile;
+586:   config: JsonObject;
+587:   input: JsonObject;
+588:   guidance?: JsonObject;
+589:   stageLifecycle?: {
+590:     attemptsUsed: number;
+591:     remediationCyclesUsed: number;
+592:     maxAttempts: number;
+593:     maxRemediationCycles: number;
+594:   };
+595:   artifacts: ArtifactRef[];
+596: }
+597: export interface EventIdentity {
+598:   runId: OpaqueId;
+599:   stageId?: LocalId;
+600:   attemptId?: OpaqueId;
+601:   effectId?: OpaqueId;
+602:   waitId?: OpaqueId;
+603:   artifactId?: OpaqueId;
+604: }
+605: export interface LifecycleEvent {
+606:   schemaVersion: 'lifecycle-event.v2';
+607:   eventId: OpaqueId;
+608:   sequence: number;
+609:   type:
+610:     | 'run.created'
+611:     | 'run.started'
+612:     | 'run.resumed'
+613:     | 'run.waiting'
+614:     | 'run.paused'
+615:     | 'run.succeeded'
+616:     | 'run.failed'
+617:     | 'run.blocked'
+618:     | 'run.cancelled'
+619:     | 'stage.scheduled'
+620:     | 'stage.started'
+621:     | 'stage.waiting'
+622:     | 'stage.retrying'
+623:     | 'stage.skipped'
+624:     | 'stage.succeeded'
+625:     | 'stage.failed'
+626:     | 'stage.blocked'
+627:     | 'stage.cancelled'
+628:     | 'attempt.created'
+629:     | 'attempt.dispatched'
+630:     | 'attempt.completed'
+631:     | 'attempt.timed_out'
+632:     | 'attempt.cancelled'
+633:     | 'effect.requested'
+634:     | 'effect.accepted'
+635:     | 'effect.completed'
+636:     | 'effect.failed'
+637:     | 'artifact.created'
+638:     | 'wait.created'
+639:     | 'wait.resolved'
+640:     | 'orchestrator.required';
+641:   identity: EventIdentity;
+642:   occurredAt: string;
+643:   causationId: OpaqueId | null;
+644:   payload: JsonObject;
+645: }
+646: export interface PluginDomainEvent {
+647:   schemaVersion: 'plugin-domain-event.v2';
+648:   eventId: OpaqueId;
+649:   sequence: number;
+650:   type: string;
+651:   producer: RegistrationProvenance;
+652:   identity: EventIdentity;
+653:   occurredAt: string;
+654:   causationId: OpaqueId | null;
+655:   payload: JsonObject;
+656: }
+657: export interface ObserverDelivery {
+658:   schemaVersion: 'observer-delivery.v2';
+659:   deliveryId: OpaqueId;
+660:   observer: RegistrationProvenance;
+661:   attemptNumber: number;
+662:   event: LifecycleEvent | PluginDomainEvent;
+663:   deliveredAt: string;
+664: }
+665: export interface ObserverCheckpoint {
+666:   schemaVersion: 'observer-checkpoint.v2';
+667:   observer: RegistrationProvenance;
+668:   runId: OpaqueId;
+669:   sequence: number;
+670:   eventId: OpaqueId | null;
+671:   updatedAt: string;
+672: }
+673: export interface ResourceLock {
+674:   schemaVersion: 'resource-lock.v2';
+675:   lockId: OpaqueId;
+676:   resource: ResourceIdentity;
+677:   ownerLeaseId: OpaqueId | AdapterActivationId;
+678:   fencingToken: number;
+679:   status: 'active' | 'released' | 'expired';
+680:   acquiredAt: string;
+681:   expiresAt: string;
+682:   releasedAt?: string;
+683: }
+684: export interface PluginStateEntry {
+685:   schemaVersion: 'plugin-state-entry.v2';
+686:   entryId: OpaqueId;
+687:   sequence: number;
+688:   namespace: NamespacedId;
+689:   registration: RegistrationProvenance;
+690:   attempt?: AttemptIdentity | null;
+691:   entryType: NamespacedId;
+692:   entrySchemaVersion?: NamespacedId;
+693:   idempotencyKey: OpaqueId;
+694:   occurredAt: string;
+695:   payload: JsonObject;
+696: }
+697: 
+698: export const CURRENT_RUNTIME_DISPATCH_PROFILE = Object.freeze({"schemaVersion":"runtime-dispatch-profile.v1","encoding":"json-utf16-v1"} as const);
+699: export const CURRENT_REVIEW_CACHE_PROFILE = Object.freeze({"schemaVersion":"review-cache-profile.v1","recordVersion":"review-content-cache.v2","encoding":"json-utf16-v1"} as const);
+{"path": "skills/common/plugins/runtime-dispatch/src/dispatch-adapter.ts", "sha256": "16ccaa5e974de17c36d20078fb2912ddd9d2fa1c6a0a677af760e242ce3cd33a"}
+1: import type {
+2:   AdapterActivationContext,
+3:   AdapterInstance,
+4:   EffectRequest,
+5: } from '@kubeclaw/plugin-sdk';
+6: 
+7: interface DispatchInvocation<Target> {
+8:   readonly context: AdapterActivationContext;
+9:   readonly target: Target;
+10:   readonly request: EffectRequest;
+11:   readonly signal: AbortSignal;
+12: }
+13: 
+14: export function createDispatchAdapter<Target>(
+15:   context: AdapterActivationContext,
+16:   targets: ReadonlyMap<string, Target>,
+17:   assertRequest: (request: EffectRequest) => void,
+18:   dispatch: (invocation: DispatchInvocation<Target>) => Promise<Readonly<Record<string, unknown>>>,
+19: ): AdapterInstance {
+20:   let shuttingDown = false;
+21:   return {
+22:     async ready() {
+23:       if (shuttingDown) throw new Error('ADAPTER_SHUTTING_DOWN');
+24:     },
+25:     async invoke({ request, signal, confidential, fence }) {
+26:       if (!confidential) fence.assertCurrent();
+27:       if (shuttingDown) throw new Error('ADAPTER_SHUTTING_DOWN');
+28:       if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
+29:       assertRequest(request);
+30:       const target = targets.get(request.resource.canonicalId);
+31:       if (!target) throw new Error(`RUNTIME_TARGET_DENIED:${request.resource.canonicalId}`);
+32:       return dispatch({ context, target, request, signal });
+33:     },
+34:     async shutdown() {
+35:       shuttingDown = true;
+36:     },
+37:   };
+38: }
+{"path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts", "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4"}
+1: import { runtimeDispatchProfileFields, type AdapterActivationContext, type AdapterInstance, type EffectRequest } from '@kubeclaw/plugin-sdk';
+2: import { createDispatchAdapter } from './dispatch-adapter.ts';
+3: import { dispatchOpenClaw } from './openclaw.ts';
+4: import { targetsFrom, validTargetId } from './openclaw-config.ts';
+5: import { workspaceTarget } from './workspace-target.ts';
+6: 
+7: function assertRequest(request: EffectRequest): void {
+8:   if (
+9:     request.capability !== 'runtime.dispatch'
+10:     || request.operation !== 'dispatch'
+11:     || request.resource.type !== 'runtime.agent'
+12:     || !validTargetId(request.resource.canonicalId)
+13:   ) {
+14:     throw new Error('RUNTIME_OPERATION_UNSUPPORTED');
+15:   }
+16: }
+17: 
+18: export function activate(context: AdapterActivationContext): AdapterInstance {
+19:   const targets = targetsFrom(context.config);
+20:   return createDispatchAdapter(context, targets, assertRequest, async ({ request, signal, target }) => (
+21:     dispatchOpenClaw(context, request.resource.canonicalId, workspaceTarget(target, request),
+22:       request.payload as Record<string, unknown>, signal, request.idempotencyKey, runtimeDispatchProfileFields(request, request.capability).runtimeDispatchProfile)
+23:   ));
+24: }
+{"path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts", "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1"}
+1: import type { OpenClawTarget } from './openclaw.ts';
+2: 
+3: const ID = /^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$/;
+4: const KEYS = new Set(['endpoint', 'tokenSecret', 'runtime', 'agentId', 'agentRole', 'model', 'thinking', 'controllerSessionKey', 'collectorMode', 'spawnIntervalMs', 'cwd', 'repositoryRoot', 'workspaceRoot', 'pollMs', 'maxPollMs', 'maxPolls', 'sessionTimeoutMs', 'resultPathPrefix', 'resultEndpoint', 'resultTokenSecret', 'tokenizerEncoding', 'maxPromptBytes', 'maxInputTokens', 'maxOutputTokens', 'maxContextTokens']);
+5: 
+6: function record(value: unknown): value is Record<string, unknown> { return value !== null && typeof value === 'object' && !Array.isArray(value); }
+7: function exact(value: Record<string, unknown>, allowed: ReadonlySet<string>, code: string): void { for (const key of Object.keys(value)) if (!allowed.has(key)) throw new Error(`${code}:${key}`); }
+8: function optionalUrl(value: unknown): string | undefined { return typeof value === 'string' ? new URL(value).href.replace(/\/+$/u, '') : undefined; }
+9: function validHttp(value: URL): boolean { return ['http:', 'https:'].includes(value.protocol) && !value.username && !value.password && !value.hash; }
+10: function validInteger(value: number, minimum: number, maximum = Number.MAX_SAFE_INTEGER): boolean { return Number.isSafeInteger(value) && value >= minimum && value <= maximum; }
+11: function text(value: unknown, fallback = ''): string { return typeof value === 'string' ? value.trim() : fallback; }
+12: function idValue(value: unknown, fallback: string): string { return typeof value === 'string' && ID.test(value) ? value : fallback; }
+13: function absolute(value: unknown): string { return typeof value === 'string' && value.startsWith('/') ? value : ''; }
+14: function endpointValue(value: unknown): URL | null { return typeof value === 'string' ? new URL(value) : null; }
+15: function optionalText(value: unknown): string | undefined { return typeof value === 'string' ? value : undefined; }
+16: function controllerSessionKey(value: unknown, agentId: string): string | undefined {
+17:   if (value === undefined) return undefined;
+18:   if (typeof value !== 'string' || value.length > 512 || !value.startsWith(`agent:${agentId}:`)) return '';
+19:   return value;
+20: }
+21: function numberValue(value: unknown, fallback: number): number { return Number(value === undefined ? fallback : value); }
+22: function encodingValue(value: unknown): OpenClawTarget['tokenizerEncoding'] {
+23:   return (value === undefined ? 'o200k_base' : value) as OpenClawTarget['tokenizerEncoding'];
+24: }
+25: function prefixValue(value: unknown): string {
+26:   if (typeof value !== 'string' || value.length === 0 || value.startsWith('/') || value.split('/').includes('..')) return '';
+27:   return value.replace(/\/+$/u, '');
+28: }
+29: function timingValid(target: OpenClawTarget): boolean {
+30:   return validInteger(target.spawnIntervalMs, 0, 60_000)
+31:     && validInteger(target.pollMs, 10) && validInteger(target.maxPollMs, target.pollMs)
+32:     && validInteger(target.maxPolls, 1) && validInteger(target.sessionTimeoutMs, target.pollMs, 86_400_000);
+33: }
+34: function resultValid(target: OpenClawTarget): boolean {
+35:   return ((target.resultEndpoint === undefined) === (target.resultTokenSecret === undefined))
+36:     && (target.resultTokenSecret === undefined || ID.test(target.resultTokenSecret));
+37: }
+38: function targetValid(target: OpenClawTarget, endpoint: URL | null): boolean {
+39:   return [
+40:     endpoint !== null && validHttp(endpoint), ID.test(target.tokenSecret),
+41:     ['acp', 'subagent'].includes(target.runtime), Boolean(target.model), Boolean(target.cwd),
+42:     Boolean(target.repositoryRoot), Boolean(target.resultPathPrefix), resultValid(target), timingValid(target),
+43:     target.tokenizerEncoding === 'o200k_base',
+44:     target.maxPromptBytes === 900_000, target.maxInputTokens === 120_000,
+45:     target.maxOutputTokens === 6_000, target.maxContextTokens === 128_000,
+46:     target.maxInputTokens + target.maxOutputTokens <= target.maxContextTokens,
+47:     target.collectorMode !== true || target.runtime === 'subagent',
+48:   ].every(Boolean);
+49: }
+50: 
+51: function parseTarget(id: string, raw: unknown): OpenClawTarget {
+52:   if (!ID.test(id) || !record(raw)) throw new Error(`RUNTIME_CONFIG_INVALID:target:${id}`);
+53:   exact(raw, KEYS, 'RUNTIME_CONFIG_UNKNOWN_TARGET_FIELD');
+54:   const endpoint = endpointValue(raw.endpoint);
+55:   const target: OpenClawTarget = {
+56:     endpoint: endpoint?.href ?? '', tokenSecret: text(raw.tokenSecret),
+57:     runtime: raw.runtime as 'acp' | 'subagent',
+58:     agentId: idValue(raw.agentId, 'codex'), agentRole: idValue(raw.agentRole, id), model: text(raw.model),
+59:     thinking: text(raw.thinking, 'high'), cwd: absolute(raw.cwd), repositoryRoot: absolute(raw.repositoryRoot),
+60:     ...(raw.workspaceRoot === undefined ? {} : { workspaceRoot: absolute(raw.workspaceRoot) }),
+61:     pollMs: numberValue(raw.pollMs, 1_000), maxPollMs: numberValue(raw.maxPollMs, 15_000),
+62:     maxPolls: numberValue(raw.maxPolls, 1_800), sessionTimeoutMs: numberValue(raw.sessionTimeoutMs, 1_800_000),
+63:     resultPathPrefix: prefixValue(raw.resultPathPrefix), resultEndpoint: optionalUrl(raw.resultEndpoint),
+64:     resultTokenSecret: optionalText(raw.resultTokenSecret),
+65:     collectorMode: raw.collectorMode === true,
+66:     spawnIntervalMs: numberValue(raw.spawnIntervalMs, 1_500),
+67:     tokenizerEncoding: encodingValue(raw.tokenizerEncoding),
+68:     maxPromptBytes: numberValue(raw.maxPromptBytes, 900_000), maxInputTokens: numberValue(raw.maxInputTokens, 120_000),
+69:     maxOutputTokens: numberValue(raw.maxOutputTokens, 6_000), maxContextTokens: numberValue(raw.maxContextTokens, 128_000),
+70:   };
+71:   const sessionKey = controllerSessionKey(raw.controllerSessionKey, target.agentId);
+72:   if (sessionKey === '') throw new Error(`RUNTIME_CONFIG_INVALID:controllerSessionKey:${id}`);
+73:   if (sessionKey) Object.assign(target, { controllerSessionKey: sessionKey });
+74:   if (!targetValid(target, endpoint)) throw new Error(`RUNTIME_CONFIG_INVALID:openclaw:${id}`);
+75:   if (raw.workspaceRoot !== undefined && !target.workspaceRoot) throw new Error(`RUNTIME_CONFIG_INVALID:workspaceRoot:${id}`);
+76:   return target;
+77: }
+78: 
+79: export function targetsFrom(raw: Readonly<Record<string, unknown>>): ReadonlyMap<string, OpenClawTarget> {
+80:   exact(raw as Record<string, unknown>, new Set(['targets']), 'RUNTIME_CONFIG_UNKNOWN_FIELD');
+81:   if (!record(raw.targets) || Object.keys(raw.targets).length === 0) throw new Error('RUNTIME_CONFIG_INVALID:targets');
+82:   return new Map(Object.entries(raw.targets).map(([id, target]) => [id, parseTarget(id, target)]));
+83: }
+84: 
+85: export function validTargetId(value: string): boolean { return ID.test(value); }

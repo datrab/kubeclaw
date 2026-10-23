@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "c0-question-remaining.v1",
+  "assignedSourceDefinitions": "Nine source-based definitions prepared for fresh independent challenge, not author acceptance",
+  "otherAuthorQuestions": [
+    {
+      "id": "CMP-SOURCE-PRISM-DESIGN-CARDINALITY",
+      "owner": "parent Prism",
+      "currentProposal": "docs/review/evidence/config-acceptance/author/prism-design-cardinality-proposal.json",
+      "remaining": "Parent exact complete business-cardinality schemas/profiles/cases/readers; no child change or count-based closure"
+    },
+    {
+      "id": "CMP-SOURCE-PRISM-DEVELOPMENT-IDENTITY",
+      "owner": "parent Prism",
+      "remaining": "Parent development/devdigest generation/production boundary and exact domain/completeprofile cases"
+    },
+    {
+      "id": "CMP-SOURCE-BUSTER-KUBE-CREDENTIAL-ENV",
+      "owner": "delivery Buster deployment/runtime",
+      "remaining": "Exact Buster tailscale kubectl PATH,KUBECONFIG,KUBERNETES_SERVICE_HOST/PORT paired selectedauthor/capturedgeneration binding; Ops MCP contracts do NOT establish this"
+    },
+    {
+      "id": "CMP-SOURCE-GENERATED-HOST-SOURCE-PROVENANCE",
+      "owner": "delivery nativehost",
+      "linked": "delivery-linked-handoff.json",
+      "remaining": "Native19 targetphysicalprofile/YAML sourcecontrols retained; actual host page/controller/readback/nodeidentity/CLIsetup observations remain physicalfuturecase prerequisites, no guessed universal4096page"
+    }
+  ],
+  "genuineExternalInputs": [
+    "actual deployed complete Nova profile and externally installed/dynamic plugin/library consumer roster",
+    "genuine alternate tar executable disposable image root/owner/mode/content identity",
+    "real compiled provider sandbox and realprovider package/ownedprocess observations",
+    "physical selected native node/host controller/page/quota/identity readback"
+  ],
+  "requiredFutureImplementationCases": {
+    "artifact": "question-case-specs.json",
+    "all22": "not-implemented/not-run; exact proposed harness invocation/inputs/state/oracles specified; no F-EFFECT/F-BIND/acceptance promotion"
+  },
+  "unapprovedBehaviorChanges": [
+    "Metadatareserve8192/16384 lowersusablepayload under unchanged existingwholecaps; retain originalhistory/claimedgeneration",
+    "required caller-owned lock fields/project-scaffold soleentry locator and immutableprojection; nofallback/currentCLIclaim",
+    "strict providerprovenance/invalidreportedfields and lostfailedload snapshot preservation; missingdata notzero",
+    "unusedtarfield actual-reader repair and genuine pairedprovisioning",
+    "quota-derived storagequantity normalization, not new exponentsetting",
+    "public outbox caprepair/mandatoryblobtotal API compatibility with externalconsumers"
+  ],
+  "notWaived": [
+    "parent runtime target-only plugin schema/field obligations",
+    "original verifiedCore13/retention/schemaAPI obligations and history",
+    "all actual negative/recovery/Eval/realconsumercases before implementationacceptance",
+    "fresh independent fullsource semantic review"
+  ]
+}

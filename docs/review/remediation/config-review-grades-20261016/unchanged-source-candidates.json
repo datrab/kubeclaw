@@ -1,0 +1,558 @@
+{
+  "qualification": "Non-exhaustive triage candidates only; unchanged author JSON, configuration readers and vocabulary key schemas are not automatically residual hardcoded values. No completion inferred.",
+  "paths": [
+    {
+      "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+      "ids": [
+        "CMP-buster-engine-preparation.resourcePolicy.cpuTimeMs",
+        "CMP-buster-engine-preparation.resourcePolicy.memoryBytes",
+        "CMP-buster-engine-preparation.resourcePolicy.tasks",
+        "CMP-buster-engine-preparation.timeoutMs",
+        "CMP-buster-engine-preparation.cleanupTimeoutMs",
+        "CMP-buster-engine-preparation.maximumActivePreparations",
+        "CMP-buster-engine-preparation.maximumPendingAdmissions",
+        "CMP-buster-engine-preparation.maximumRequestBytes",
+        "CMP-buster-engine-preparation.maximumArchiveBytes",
+        "CMP-buster-engine-preparation.maximumExtractedBytes",
+        "CMP-buster-engine-preparation.maximumHeaderBytes",
+        "CMP-buster-engine-preparation.maximumSourceBytes",
+        "CMP-buster-engine-preparation.maximumMetadataBytes",
+        "CMP-buster-engine-preparation.maximumRecords",
+        "CMP-buster-engine-preparation.maximumOwnershipBytes",
+        "CMP-buster-engine-preparation.maximumJournalBytes",
+        "CMP-buster-engine-preparation.maximumInputBytes",
+        "CMP-buster-engine-preparation.maximumOutputBytes",
+        "CMP-buster-engine-preparation.maximumResultBytes",
+        "CMP-buster-engine-preparation.pollIntervalMs",
+        "CMP-buster-engine-preparation.drainTimeoutMs",
+        "CMP-buster-engine-preparation.closeTimeoutMs",
+        "CMP-buster-engine-preparation.tarTimeoutMs",
+        "CMP-buster-engine-preparation.maximumArchiveEntries",
+        "CMP-buster-engine-preparation.maximumListingLineBytes",
+        "CMP-buster-engine-preparation.maximumTarStderrBytes",
+        "CMP-buster-engine-preparation.maximumSourceEntries",
+        "CMP-buster-engine-preparation.sourceEntryReservationBytes",
+        "CMP-buster-engine-preparation.maximumOpenFiles",
+        "CMP-buster-engine-admission.maximumActiveJobs",
+        "CMP-buster-engine-admission.maximumQueuedJobs",
+        "CMP-buster-engine-admission.maximumConcurrentAttempts",
+        "CMP-buster-engine-dependencyReadiness.maximumExecutionMs",
+        "CMP-buster-engine-dependencyReadiness.maximumOutputBytes",
+        "CMP-buster-engine-execution.provider.cleanupTimeoutMs",
+        "CMP-buster-engine-execution.provider.maximumResultBytes",
+        "CMP-buster-engine-execution.provider.claimGraceMs",
+        "CMP-buster-engine-execution.provider.queueTimeoutMs",
+        "CMP-buster-engine-execution.provider.workerResultWrapperBytes",
+        "CMP-buster-engine-execution.provider.maximumProtocolBytes",
+        "CMP-buster-engine-execution.provider.terminationGraceMs",
+        "CMP-buster-engine-execution.provider.terminationTimeoutMs",
+        "CMP-buster-engine-execution.provider.capabilityDrainTimeoutMs",
+        "CMP-buster-engine-execution.provider.minimumHeapMiB",
+        "CMP-buster-engine-execution.provider.heapFraction",
+        "CMP-buster-engine-execution.provider.maximumPendingCapabilities",
+        "CMP-buster-engine-execution.provider.minimumOpenFiles",
+        "CMP-buster-engine-execution.provider.artifactFileDescriptorReserve",
+        "CMP-buster-engine-execution.reports.maximumAggregateResultBytes",
+        "CMP-buster-engine-execution.reports.maximumSourceBytes",
+        "CMP-buster-engine-execution.reports.maximumCases",
+        "CMP-buster-engine-execution.reports.maximumFindings",
+        "CMP-buster-engine-execution.reports.maximumCaseFindings",
+        "CMP-buster-engine-execution.reports.maximumTimeoutMs",
+        "CMP-buster-engine-execution.reports.memoryBytes",
+        "CMP-buster-engine-execution.reports.minimumCpuTimeMs",
+        "CMP-buster-engine-execution.reports.maximumOpenFiles",
+        "CMP-buster-engine-execution.reports.minimumOpenFiles",
+        "CMP-buster-engine-execution.reports.minimumHeapMiB",
+        "CMP-buster-engine-execution.reports.heapFraction",
+        "CMP-buster-engine-execution.reports.runtimeMemoryReserveBytes",
+        "CMP-buster-engine-execution.observation.resourceSampleIntervalMs",
+        "CMP-buster-engine-execution.observation.processSampleIntervalMs",
+        "CMP-buster-engine-execution.stores.attempts.maximumEvidenceObjects",
+        "CMP-buster-engine-execution.stores.attempts.maximumEvidenceBytes",
+        "CMP-buster-engine-execution.stores.attempts.maximumEvidenceObjectBytes",
+        "CMP-buster-engine-execution.stores.attempts.maximumResults",
+        "CMP-buster-engine-execution.stores.attempts.maximumClosures",
+        "CMP-buster-engine-execution.stores.attempts.maximumMetadataBytes",
+        "CMP-buster-engine-execution.stores.attempts.maximumPendingEvidenceAgeMs",
+        "CMP-buster-engine-execution.stores.admission.maximumIngressBytes",
+        "CMP-buster-engine-execution.stores.admission.maximumRecords",
+        "CMP-buster-engine-execution.stores.admission.maximumBytes",
+        "CMP-buster-engine-execution.stores.admission.maximumQuarantineRecords",
+        "CMP-buster-engine-execution.stores.admission.maximumQuarantineBytes",
+        "CMP-buster-engine-execution.processInput.cleanupTimeoutMs",
+        "CMP-buster-engine-execution.processInput.terminationGraceMs",
+        "CMP-buster-engine-execution.processInput.acknowledgementPollMs",
+        "CMP-buster-engine-clusterInvokers.shared.kubectlExecutable",
+        "CMP-buster-engine-clusterInvokers.shared.leaseApiGroup",
+        "CMP-buster-engine-clusterInvokers.shared.leaseApiVersion",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedNamespacePrefixes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.registryRepositoryPrefixes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedStorageClasses",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowDefaultStorageClass",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.runnerServiceAccount",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.credentialReaderServiceAccount",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumManifestBytes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumResources",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeClaimBytes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeTotalBytes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumRetentionSeconds",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumExecutionMs",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.pollIntervalMs",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.shortCommandTimeoutMs",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.commandOutputManifestMultiplier",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.diagnosticCodeUnits",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumNodes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumDepth",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumAliases",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumFlattenVisits",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.manifest.maximumFlattenPending",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.allowedNamespacePrefixes",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.allowedHostSuffixes",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.maximumExecutionMs",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.pollIntervalMs",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.shortCommandTimeoutMs",
+        "CMP-buster-engine-clusterInvokers.tailscaleExposure.maximumCommandOutputBytes",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.allowedNamespacePrefixes",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumExecutionMs",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumOutputBytes",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.pollIntervalMs",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumObservationAgeMs",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumFutureSkewMs",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.diagnosticCodeUnits",
+        "CMP-buster-engine-clusterInvokers.runtimeSecurity.executableSearchPath"
+      ]
+    },
+    {
+      "path": "charts/kubeclaw/files/config/prism-execution.config.json",
+      "ids": [
+        "CMP-prism-execution-resourcePolicy.cpuTimeMs",
+        "CMP-prism-execution-resourcePolicy.memoryBytes",
+        "CMP-prism-execution-resourcePolicy.tasks",
+        "CMP-prism-execution-maximumResultBytes"
+      ]
+    },
+    {
+      "path": "charts/kubeclaw/files/config/prism-studio.config.json",
+      "ids": [
+        "CMP-prism-studio-port",
+        "CMP-prism-studio-controlTimeoutMs",
+        "CMP-prism-studio-controlUrl"
+      ]
+    },
+    {
+      "path": "charts/kubeclaw/files/config/prism-worker.config.json",
+      "ids": [
+        "CMP-prism-worker-ingress.port",
+        "CMP-prism-worker-ingress.maximumActiveRequests",
+        "CMP-prism-worker-ingress.maximumProbeRequests",
+        "CMP-prism-worker-ingress.maximumConnections",
+        "CMP-prism-worker-ingress.requestTimeoutMs",
+        "CMP-prism-worker-ingress.shutdownTimeoutMs",
+        "CMP-prism-worker-ingress.maximumInputBytes",
+        "CMP-prism-worker-supervisor.uid",
+        "CMP-prism-worker-supervisor.gid",
+        "CMP-prism-worker-supervisor.maximumOwnershipRecords",
+        "CMP-prism-worker-supervisor.maximumOwnershipBytes",
+        "CMP-prism-worker-supervisor.maximumOutputBytes",
+        "CMP-prism-worker-supervisor.maximumJournalBytes",
+        "CMP-prism-worker-supervisor.pollIntervalMs",
+        "CMP-prism-worker-supervisor.drainTimeoutMs",
+        "CMP-prism-worker-supervisor.closeTimeoutMs"
+      ]
+    },
+    {
+      "path": "charts/kubeclaw/files/config/worker-core.config.json",
+      "ids": [
+        "CMP-worker-core-localRuntime.drainTimeoutMs",
+        "CMP-worker-core-localRuntime.cancellationTimeoutMs",
+        "CMP-worker-core-localRuntime.replayLimit"
+      ]
+    },
+    {
+      "path": "charts/ops-pod/values.yaml",
+      "ids": [
+        "DLV-CHART-OPS-POD-PERSISTENCE-SIZE",
+        "DLV-CHART-OPS-POD-PERSISTENCE-STORAGECLASS",
+        "DLV-CHART-OPS-POD-RESOURCES-CODEX-REQUESTS-CPU",
+        "DLV-CHART-OPS-POD-RESOURCES-CODEX-REQUESTS-MEMORY",
+        "DLV-CHART-OPS-POD-RESOURCES-CODEX-LIMITS-CPU",
+        "DLV-CHART-OPS-POD-RESOURCES-CODEX-LIMITS-MEMORY",
+        "DLV-CHART-OPS-POD-RESOURCES-MCP-REQUESTS-CPU",
+        "DLV-CHART-OPS-POD-RESOURCES-MCP-REQUESTS-MEMORY",
+        "DLV-CHART-OPS-POD-RESOURCES-MCP-LIMITS-CPU",
+        "DLV-CHART-OPS-POD-RESOURCES-MCP-LIMITS-MEMORY",
+        "DLV-CHART-OPS-POD-RBAC-NAMESPACES",
+        "DLV-CHART-OPS-POD-RBAC-EXECNAMESPACES",
+        "DLV-CHART-OPS-POD-ARGONAMESPACE",
+        "DLV-CHART-OPS-POD-DEFAULTNAMESPACE",
+        "DLV-CHART-OPS-POD-NETWORKPOLICY-ENABLED",
+        "DLV-CHART-OPS-POD-NETWORKPOLICY-CILIUM",
+        "DLV-CHART-OPS-POD-TAILSCALE-ENABLED",
+        "DLV-CHART-OPS-POD-TAILSCALE-EXTRAARGS",
+        "DLV-CHART-OPS-POD-TAILSCALE-RESOURCES-REQUESTS-CPU",
+        "DLV-CHART-OPS-POD-TAILSCALE-RESOURCES-REQUESTS-MEMORY",
+        "DLV-CHART-OPS-POD-TAILSCALE-RESOURCES-LIMITS-CPU",
+        "DLV-CHART-OPS-POD-TAILSCALE-RESOURCES-LIMITS-MEMORY"
+      ]
+    },
+    {
+      "path": "cmd/buster-namespace-controller/demo-product.go",
+      "ids": [
+        "DLV-NAMESPACE-CONTROLLER-PRODUCTHANDLERTIMEOUTSECONDS",
+        "DLV-NAMESPACE-CONTROLLER-PRODUCTMAXIMUMBODYBYTES",
+        "DLV-NAMESPACE-CONTROLLER-PRODUCT-DECISION-MAXIMUM-VALIDITY-SECONDS"
+      ]
+    },
+    {
+      "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+      "ids": [
+        "DLV-NAMESPACE-CONTROLLER-READYREADHEADERTIMEOUTSECONDS",
+        "DLV-NAMESPACE-CONTROLLER-READYREADTIMEOUTSECONDS",
+        "DLV-NAMESPACE-CONTROLLER-READYWRITETIMEOUTSECONDS",
+        "DLV-NAMESPACE-CONTROLLER-READYIDLETIMEOUTSECONDS",
+        "DLV-NAMESPACE-CONTROLLER-READYMAXHEADERBYTES"
+      ]
+    },
+    {
+      "path": "cmd/buster-namespace-controller/demo-readiness.go",
+      "ids": [
+        "DLV-NAMESPACE-CONTROLLER-READYHANDLERTIMEOUTSECONDS",
+        "DLV-NAMESPACE-CONTROLLER-READYMAXIMUMBODYBYTES",
+        "DLV-NAMESPACE-CONTROLLER-AUTHORIZATION-MAXIMUM-BYTES",
+        "DLV-NAMESPACE-CONTROLLER-READY-OBSERVATION-MAXIMUM-AGE-SECONDS"
+      ]
+    },
+    {
+      "path": "cmd/buster-namespace-controller/demo-retention.go",
+      "ids": [
+        "DLV-NAMESPACE-CONTROLLER-DEFAULTDEMORETENTIONSECONDS"
+      ]
+    },
+    {
+      "path": "cmd/buster-namespace-controller/main.go",
+      "ids": [
+        "DLV-NAMESPACE-CONTROLLER-HTTPCLIENTTIMEOUTSECONDS",
+        "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYREFRESHSECONDS",
+        "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYFUTURESKEWSECONDS",
+        "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYMAXIMUMFINDINGS",
+        "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYMAXIMUMSERIALIZEDBYTES",
+        "DLV-NAMESPACE-CONTROLLER-API-RESPONSE-MAXIMUM-BYTES",
+        "DLV-NAMESPACE-CONTROLLER-API-REQUEST-MAXIMUM-BYTES",
+        "DLV-NAMESPACE-CONTROLLER-API-DIAGNOSTIC-MAXIMUM-BYTES",
+        "DLV-NAMESPACE-CONTROLLER-NAMESPACE-DELETION-TIMEOUT-SECONDS"
+      ]
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-openclaw-2026.9.5/dist/timeout-Bjg7ga80.mjs",
+      "ids": [
+        "DLV-NATIVE-OPENCLAW-AGENTS-DEFAULTS-TIMEOUTSECONDS"
+      ]
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/pinned-robfig-cron-v3.0.1/parser.go",
+      "ids": [
+        "DLV-PRISM-BACKUP-CONTROLLER-TIMEZONE"
+      ]
+    },
+    {
+      "path": "ops/pod/bootstrap.py",
+      "ids": [
+        "DLV-OPS-DEPLOYER-KUBECTLREQUESTTIMEOUT",
+        "DLV-OPS-DEPLOYER-OPS-READ-NAMESPACES",
+        "DLV-OPS-DEPLOYER-OPS-COPY-PULL-SECRET",
+        "DLV-OPS-DEPLOYER-BEARERTOKENENTROPYBYTES"
+      ]
+    },
+    {
+      "path": "ops/pod/config.toml",
+      "ids": [
+        "DLV-OPS-CODEX-SANDBOX-MODE",
+        "DLV-OPS-CODEX-APPROVAL-POLICY",
+        "DLV-OPS-CODEX-CLI-AUTH-CREDENTIALS-STORE"
+      ]
+    },
+    {
+      "path": "ops/pod/supervisor.py",
+      "ids": [
+        "DLV-OPS-CODEX-SUPERVISOR-CONTROLSOCKETPROBETIMEOUTSECONDS",
+        "DLV-OPS-CODEX-SUPERVISOR-CONTROLSTARTUPTIMEOUTSECONDS",
+        "DLV-OPS-CODEX-SUPERVISOR-CONTROLSTARTUPPOLLSECONDS",
+        "DLV-OPS-CODEX-SUPERVISOR-CONTROLCOMMANDTIMEOUTSECONDS",
+        "DLV-OPS-CODEX-SUPERVISOR-LOGINSTATUSTIMEOUTSECONDS",
+        "DLV-OPS-CODEX-SUPERVISOR-LOGINRETRYWAITSECONDS",
+        "DLV-OPS-CODEX-SUPERVISOR-CONTROLHEALTHPOLLSECONDS",
+        "DLV-OPS-CODEX-SUPERVISOR-CONTROLTERMINATIONTIMEOUTSECONDS",
+        "DLV-OPS-CODEX-SUPERVISOR-RESTARTWAITSECONDS"
+      ]
+    },
+    {
+      "path": "scripts/deploy-ops-pod.sh",
+      "ids": [
+        "DLV-OPS-DEPLOYER-OPS-NAMESPACE",
+        "DLV-OPS-DEPLOYER-OPS-RELEASE",
+        "DLV-OPS-DEPLOYER-OPS-POD-VALUES",
+        "DLV-OPS-DEPLOYER-HELMHISTORYMAX"
+      ]
+    },
+    {
+      "path": "scripts/native-worker-node-policy.mjs",
+      "ids": [
+        "DLV-NATIVE-HOST-NODENAME",
+        "DLV-NATIVE-HOST-SYSTEMRESERVE-CPUMILLICORES",
+        "DLV-NATIVE-HOST-SYSTEMRESERVE-MEMORYBYTES",
+        "DLV-NATIVE-HOST-SYSTEMRESERVE-TASKS",
+        "DLV-NATIVE-HOST-KUBERNETESRESERVE-CPUMILLICORES",
+        "DLV-NATIVE-HOST-KUBERNETESRESERVE-MEMORYBYTES",
+        "DLV-NATIVE-HOST-KUBERNETESRESERVE-TASKS",
+        "DLV-NATIVE-HOST-POOLS-BUSTER-NAMESPACE",
+        "DLV-NATIVE-HOST-POOLS-BUSTER-CPUMILLICORES",
+        "DLV-NATIVE-HOST-POOLS-BUSTER-MEMORYBYTES",
+        "DLV-NATIVE-HOST-POOLS-BUSTER-TASKS",
+        "DLV-NATIVE-HOST-POOLS-BUSTER-MAXIMUMACTIVESCOPES",
+        "DLV-NATIVE-HOST-POOLS-PRISM-NAMESPACE",
+        "DLV-NATIVE-HOST-POOLS-PRISM-CPUMILLICORES",
+        "DLV-NATIVE-HOST-POOLS-PRISM-MEMORYBYTES",
+        "DLV-NATIVE-HOST-POOLS-PRISM-TASKS",
+        "DLV-NATIVE-HOST-POOLS-PRISM-MAXIMUMACTIVESCOPES",
+        "DLV-NATIVE-HOST-POOL-CPU-PERIOD-PROJECTION"
+      ]
+    },
+    {
+      "path": "scripts/prepare-native-worker-pools.mjs",
+      "ids": [
+        "DLV-NATIVE-SETUP-POLICY-DOCUMENT-BYTES"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "ids": [
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumSecretReferenceEntries"
+      ]
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "ids": [
+        "CMP-buster-engine-execution.stores.admission.lockWaitSeconds",
+        "CMP-buster-engine-execution.stores.attempts.lockWaitSeconds"
+      ]
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "ids": [
+        "CMP-buster-engine-execution.stores.admission.reasonThresholdCodeUnits",
+        "CMP-buster-engine-execution.stores.admission.reasonPrefixCodeUnits",
+        "CMP-buster-engine-execution.stores.admission.metadataReserveBytes"
+      ]
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+      "ids": [
+        "RT-GRANT-REPORT-EVIDENCE-READ-ALLOWEDRUNIDS",
+        "RT-GRANT-STATE-READ-ALLOWEDNAMESPACES",
+        "RT-GRANT-STATE-APPEND-ALLOWEDNAMESPACES",
+        "RT-GRANT-ARTIFACTS-READ-ALLOWEDNAMESPACES",
+        "RT-GRANT-ARTIFACTS-WRITE-ALLOWEDNAMESPACES",
+        "RT-GRANT-RUNTIME-DISPATCH-ALLOWEDAGENTS",
+        "RT-GRANT-GIT-REPOSITORY-READ-ALLOWEDPREFIXES",
+        "RT-GRANT-GIT-WORKSPACE-CREATE-ALLOWEDROOTS",
+        "RT-GRANT-GIT-WORKSPACE-CREATE-ALLOWEDWORKSPACEROOTS",
+        "RT-GRANT-GIT-WORKSPACE-REMOVE-ALLOWEDROOTS",
+        "RT-GRANT-GIT-WORKSPACE-REMOVE-ALLOWEDWORKSPACEROOTS",
+        "RT-GRANT-GIT-COMMIT-ALLOWEDROOTS",
+        "RT-GRANT-GIT-MERGE-ALLOWEDROOTS",
+        "RT-GRANT-GIT-SYNC-ALLOWEDROOTS",
+        "RT-GRANT-SIGNAL-WAIT-ALLOWEDSIGNALTYPES",
+        "RT-GRANT-SIGNAL-WAIT-ALLOWEDISSUERIDS",
+        "RT-GRANT-OPERATOR-RECEIPT-ALLOWEDTARGETS",
+        "RT-GRANT-DEMO-HANDOFF-ALLOWEDNAMESPACES",
+        "RT-GRANT-OPERATOR-REQUEST-ALLOWEDTARGETS",
+        "RT-GRANT-TELEMETRY-EMIT-ALLOWEDEVENTPREFIXES",
+        "RT-GRANT-SECRETS-READ-ALLOWEDNAMES",
+        "RT-GRANT-NETWORK-HTTP-ALLOWEDORIGINS",
+        "RT-GRANT-COMMAND-EXECUTE-ALLOWEDEXECUTABLES",
+        "RT-GRANT-COMMAND-EXECUTE-ALLOWEDWORKINGROOTS",
+        "RT-GRANT-CONTAINER-BUILD-ALLOWEDPLATFORMS",
+        "RT-GRANT-CONTAINER-BUILD-ALLOWEDWORKSPACEROOTS",
+        "RT-GRANT-KUBERNETES-FIXTURE-ALLOWEDNAMESPACEPREFIXES",
+        "RT-GRANT-KUBERNETES-FIXTURE-ALLOWEDWORKSPACEROOTS",
+        "RT-GRANT-KUBERNETES-EXPOSURE-ALLOWEDNAMESPACEPREFIXES",
+        "RT-GRANT-LINT-EXECUTE-ALLOWEDPROJECTS",
+        "RT-GRANT-LINT-EXECUTE-ALLOWEDROOTS",
+        "RT-GRANT-LINT-EXECUTE-ALLOWEDPOLICYROOTS",
+        "RT-GRANT-TEST-PLAN-EVIDENCE-ALLOWEDNAMESPACES",
+        "RT-GRANT-TEST-PLAN-EXECUTE-ALLOWEDROOTS",
+        "RT-GRANT-TRANSPORT-PUBLISH-ALLOWEDTARGETS",
+        "RT-GRANT-AGENT-EVENTS-SUBSCRIBE-ALLOWEDSOURCES"
+      ]
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/runtime-agent-task.ts",
+      "ids": [
+        "RT-RUNTIME-RESULT-PATH-BYTES"
+      ]
+    },
+    {
+      "path": "skills/common/plugins/agent-observability/plugin.json",
+      "ids": [
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-INGESTER-SUBSCRIPTIONS",
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-INGESTER-FAILUREPOLICY-MODE",
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-INGESTER-FAILUREPOLICY-MAXATTEMPTS",
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-INGESTER-FAILUREPOLICY-BACKOFFMS",
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-INGESTER-FAILUREPOLICY-TIMEOUTMS",
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-EVIDENCE-SUBSCRIPTIONS",
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-EVIDENCE-FAILUREPOLICY-MODE",
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-EVIDENCE-FAILUREPOLICY-MAXATTEMPTS",
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-EVIDENCE-FAILUREPOLICY-BACKOFFMS",
+        "RT-OBSERVER-KUBECLAW-AGENT-OBSERVABILITY-EVIDENCE-FAILUREPOLICY-TIMEOUTMS"
+      ]
+    },
+    {
+      "path": "skills/common/plugins/notification-observer/plugin.json",
+      "ids": [
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-NOTIFICATIONS-SUBSCRIPTIONS",
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-NOTIFICATIONS-FAILUREPOLICY-MODE",
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-NOTIFICATIONS-FAILUREPOLICY-MAXATTEMPTS",
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-NOTIFICATIONS-FAILUREPOLICY-BACKOFFMS",
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-NOTIFICATIONS-FAILUREPOLICY-TIMEOUTMS",
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-PREVIEW-DELIVERY-SUBSCRIPTIONS",
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-PREVIEW-DELIVERY-FAILUREPOLICY-MODE",
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-PREVIEW-DELIVERY-FAILUREPOLICY-MAXATTEMPTS",
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-PREVIEW-DELIVERY-FAILUREPOLICY-BACKOFFMS",
+        "RT-OBSERVER-KUBECLAW-NOTIFICATION-OBSERVER-PREVIEW-DELIVERY-FAILUREPOLICY-TIMEOUTMS"
+      ]
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-observer/src/config.ts",
+      "ids": [
+        "DLV-OPENCLAW-AGENT-OBSERVER-ENABLED",
+        "DLV-OPENCLAW-AGENT-OBSERVER-REDISHOST",
+        "DLV-OPENCLAW-AGENT-OBSERVER-REDISPORT",
+        "DLV-OPENCLAW-AGENT-OBSERVER-REDISUSERNAME",
+        "DLV-OPENCLAW-AGENT-OBSERVER-REDISTLS",
+        "DLV-OPENCLAW-AGENT-OBSERVER-REDISNETWORKISOLATION",
+        "DLV-OPENCLAW-AGENT-OBSERVER-MAXEVENTBYTES",
+        "DLV-OPENCLAW-AGENT-OBSERVER-MAXQUEUEPERSTREAM",
+        "DLV-OPENCLAW-AGENT-OBSERVER-REDISCOMMANDTIMEOUTMS",
+        "DLV-OPENCLAW-AGENT-OBSERVER-STREAMMAXLEN",
+        "DLV-OPENCLAW-AGENT-OBSERVER-DEADLETTERMAXLEN",
+        "DLV-OPENCLAW-AGENT-OBSERVER-CONTROLWRITEMAXATTEMPTS",
+        "DLV-OPENCLAW-AGENT-OBSERVER-CONTROLWRITERETRYBASEMS",
+        "DLV-OPENCLAW-AGENT-OBSERVER-CONTROLWRITERETRYMAXMS",
+        "DLV-OPENCLAW-AGENT-OBSERVER-HOOKPRIORITY",
+        "DLV-OPENCLAW-AGENT-OBSERVER-HOOKTIMEOUTMS"
+      ]
+    },
+    {
+      "path": "skills/common/plugins/telemetry-observer/plugin.json",
+      "ids": [
+        "RT-OBSERVER-KUBECLAW-TELEMETRY-OBSERVER-TELEMETRY-SUBSCRIPTIONS",
+        "RT-OBSERVER-KUBECLAW-TELEMETRY-OBSERVER-TELEMETRY-FAILUREPOLICY-MODE",
+        "RT-OBSERVER-KUBECLAW-TELEMETRY-OBSERVER-TELEMETRY-FAILUREPOLICY-MAXATTEMPTS",
+        "RT-OBSERVER-KUBECLAW-TELEMETRY-OBSERVER-TELEMETRY-FAILUREPOLICY-BACKOFFMS",
+        "RT-OBSERVER-KUBECLAW-TELEMETRY-OBSERVER-TELEMETRY-FAILUREPOLICY-TIMEOUTMS"
+      ]
+    },
+    {
+      "path": "skills/nova/core/test-gates/resolver.ts",
+      "ids": [
+        "RT-RESOLVER-RETRY-DEFAULT"
+      ]
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-prompt-budget.ts",
+      "ids": [
+        "RT-REVIEW-PROMPT-BOUNDARY-RESERVE"
+      ]
+    },
+    {
+      "path": "skills/prism/engine/design-providers.ts",
+      "ids": [
+        "AUTH-PRISM-DESIGN-PROVIDER-TIMEOUT",
+        "AUTH-PRISM-DESIGN-SYSTEM-PROMPT"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/attempt-executor.ts",
+      "ids": [
+        "CMP-WCORE-INPUT-BYTES",
+        "CMP-WCORE-JSON-NODES",
+        "CMP-WCORE-JSON-DEPTH",
+        "CMP-WCORE-LOG-PARTS",
+        "CMP-WCORE-RETAIN-LOGS"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-capacity.ts",
+      "ids": [
+        "CMP-WCORE-JOURNAL-RECORD-BYTES"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-state.ts",
+      "ids": [
+        "CMP-WCORE-JOURNAL-DIAGNOSTIC-UNITS"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/native-node-identity.ts",
+      "ids": [
+        "CMP-WCORE-NODE-IDENTITY-FILE-BYTES"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/native-pool-policy.ts",
+      "ids": [
+        "CMP-WCORE-POOL-FILE-BYTES"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-scope.ts",
+      "ids": [
+        "CMP-WCORE-DRAIN-POLL-MS"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/native-runtime-identity.ts",
+      "ids": [
+        "CMP-WCORE-RUNTIME-IDENTITY-FILE-BYTES"
+      ]
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-state.ts",
+      "ids": [
+        "CMP-WCORE-OWNERSHIP-DIAGNOSTIC-UNITS"
+      ]
+    },
+    {
+      "path": "tests/verification/live/prism-nova-production-e2e.mjs",
+      "ids": [
+        "AUTH-PRISM-ENDPOINT-AGENT-LIVE-RUNNER"
+      ]
+    },
+    {
+      "path": "tools/ops-mcp/src/config.mjs",
+      "ids": [
+        "DLV-OPS-MCP-PORT",
+        "DLV-OPS-MCP-HOST",
+        "DLV-OPS-MCP-OPS-LOCAL-ONLY",
+        "DLV-OPS-MCP-OPS-DEFAULT-NAMESPACE",
+        "DLV-OPS-MCP-ARGOCD-NAMESPACE",
+        "DLV-OPS-MCP-OPS-ALLOWED-NAMESPACES",
+        "DLV-OPS-MCP-MCP-ALLOWED-ORIGINS"
+      ]
+    },
+    {
+      "path": "tools/ops-mcp/src/hubble.mjs",
+      "ids": [
+        "DLV-OPS-MCP-TIMEOUT"
+      ]
+    },
+    {
+      "path": "tools/ops-mcp/src/kubernetes.mjs",
+      "ids": [
+        "DLV-OPS-MCP-TIMEOUTMS",
+        "DLV-OPS-MCP-KUBERNETES-MAXBYTES"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "files": [
+    {
+      "relativePath": "README.md",
+      "byteLength": 4020,
+      "sha256": "36bc2bdd387cf9a5343fea6443dd6a27a253c95575840edafb45bca57290aa86"
+    },
+    {
+      "relativePath": "check-before-policyprojection.stderr",
+      "byteLength": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "relativePath": "check-before-policyprojection.stdout.json",
+      "byteLength": 289864,
+      "sha256": "e254115a058200139708a3a447e89bbaacd14133509c82a1ff00e1fd3f1eb285"
+    },
+    {
+      "relativePath": "check-correction.mjs",
+      "byteLength": 28407,
+      "sha256": "5b4d985620bdb662ef8f90e170fa7c7b201b0e5a3f23d008f8c13c2159712a67"
+    },
+    {
+      "relativePath": "check-correction.stderr",
+      "byteLength": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "relativePath": "check-correction.stdout.json",
+      "byteLength": 290109,
+      "sha256": "092411d4f4663c9701fe297bd835e3583cb1e4ebe7b19da249a22358dbe912f1"
+    },
+    {
+      "relativePath": "commands-and-exits.json",
+      "byteLength": 1458,
+      "sha256": "9df34d9c9aa2e5fbf2804ba1ba9b3cce2733973c3423eaaa26d74ef3210ef387"
+    },
+    {
+      "relativePath": "conservation-and-historical-contrast.json",
+      "byteLength": 172387,
+      "sha256": "df24a9625c295c5444dd4a634e3773172598a385e0bed6f15c3499f88d5c8db4"
+    },
+    {
+      "relativePath": "correction-contract.json",
+      "byteLength": 700,
+      "sha256": "b42aa53104b48a4be36ac4342d5b50357f09a7d55452b9ee460180a81e0c34d0"
+    },
+    {
+      "relativePath": "end-input-identities.json",
+      "byteLength": 404693,
+      "sha256": "8c1fb369fe521cd6f693a5953343624512bdc4f7a0afcda541e16495d44ebf65"
+    },
+    {
+      "relativePath": "frozen-input-identities.json",
+      "byteLength": 318113,
+      "sha256": "efbb832e0cee30fddaf140317ded70902e9532a7c79cb0cbb2b530b1e8c4f339"
+    }
+  ],
+  "counts": {
+    "observations": 1565,
+    "failed": 0,
+    "frozenOldInputs": 962,
+    "originalFields": 168,
+    "originalCases": 1008
+  },
+  "freshIndependentReviewRequired": true,
+  "globalAcceptance": false
+}

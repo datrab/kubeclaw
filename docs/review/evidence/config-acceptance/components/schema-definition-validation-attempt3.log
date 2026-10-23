@@ -1,0 +1,381 @@
+{
+  "command": "PRISM_ENGINE_CONTENT_DIGEST=<recorded synthetic definition identity> node docs/review/evidence/config-acceptance/components/validate-schema-definitions.mjs",
+  "scope": "C0 actual producer/contract/policy-predicate definition checks; synthetic task inputs only, NO dispatch/kernel/database/runtime EFFECT or CONFIG binding acceptance",
+  "identities": {
+    "head": "a07de5673e24ba99109833120d94417ebb0fc407",
+    "tree": "583a342afd982242d17788fc2d64bbe8b7fca7ef",
+    "node": "v24.21.0",
+    "sourceDigests": {
+      "skills/prism/engine/worker-envelope.ts": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+      "skills/prism/server/agent-attempt.ts": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+      "skills/buster/engine/test-gates/preparation-envelope.ts": "90112c33cc7ecd6f4c237e3234bb7ba9abc8cf07e17aa9deb882ffc5afdb17df",
+      "skills/buster/engine/test-gates/runner-attempt-envelope.ts": "15994d9caebf7f98f2e23740a66ad105ec721c0ebbe01aba22def8a9e4c5bad4",
+      "skills/buster/engine/test-gates/runner-worker-profile.ts": "4e7cc1f1206047bf768b1826d979fc5384fe1edc7e3e4fa9bb71e24e5d31a648",
+      "skills/prism/config/resource-policy.ts": "46d4daca088d7f716a202abc5e94794830d601db47518479da19056ed5fc652f",
+      "skills/worker/core/worker/resource-accounting.ts": "eaed91f776bfdbf1daac4faa7b2e56848b5f1b1f83d2737622048cd4426837ef",
+      "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+      "contracts/pipeline-worker-core/v1/src/resource-validation-v2.ts": "9c75271a9830c86faa484acaaa52e042d03a56c53b027d4aeae5f8531d06e54e",
+      "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts": "00332a01a4674616f0859a83d704771b497d0c0d4220629a35b9a7414f924784",
+      "contracts/pipeline-worker-core/v1/src/digest.ts": "10c61ec122ca6e65c7deef2c059a19ad70627cf65bdf1eb65f0ac2539457d780",
+      "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v2.schema.json": "26e936fbd954562547e7c0548085ae65ceb22394061d956532730a17ced42f7c",
+      "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json": "debb2e5ca9ade4c30f5081d56b4596af4b295e282e2c099a6d1623b4b15c5cf3"
+    },
+    "testDigests": {
+      "docs/review/evidence/config-acceptance/components/validate-schema-definitions.mjs": "8ecc99206cf5a9f08d933dfa950a080999a1dd65f2432a6c3735d5154670e452"
+    },
+    "files": {
+      "skills/prism/engine/worker-envelope.ts": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+      "skills/prism/server/agent-attempt.ts": "3e27552ab5cbc3d1c357df81a3ba92b5928feaeb4df36d054c174b9c2f7d0de8",
+      "skills/buster/engine/test-gates/preparation-envelope.ts": "90112c33cc7ecd6f4c237e3234bb7ba9abc8cf07e17aa9deb882ffc5afdb17df",
+      "skills/buster/engine/test-gates/runner-attempt-envelope.ts": "15994d9caebf7f98f2e23740a66ad105ec721c0ebbe01aba22def8a9e4c5bad4",
+      "skills/buster/engine/test-gates/runner-worker-profile.ts": "4e7cc1f1206047bf768b1826d979fc5384fe1edc7e3e4fa9bb71e24e5d31a648",
+      "skills/prism/config/resource-policy.ts": "46d4daca088d7f716a202abc5e94794830d601db47518479da19056ed5fc652f",
+      "skills/worker/core/worker/resource-accounting.ts": "eaed91f776bfdbf1daac4faa7b2e56848b5f1b1f83d2737622048cd4426837ef",
+      "contracts/pipeline-worker-core/v1/src/validation.ts": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+      "contracts/pipeline-worker-core/v1/src/resource-validation-v2.ts": "9c75271a9830c86faa484acaaa52e042d03a56c53b027d4aeae5f8531d06e54e",
+      "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts": "00332a01a4674616f0859a83d704771b497d0c0d4220629a35b9a7414f924784",
+      "contracts/pipeline-worker-core/v1/src/digest.ts": "10c61ec122ca6e65c7deef2c059a19ad70627cf65bdf1eb65f0ac2539457d780",
+      "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v2.schema.json": "26e936fbd954562547e7c0548085ae65ceb22394061d956532730a17ced42f7c",
+      "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json": "debb2e5ca9ade4c30f5081d56b4596af4b295e282e2c099a6d1623b4b15c5cf3",
+      "docs/review/evidence/config-acceptance/components/validate-schema-definitions.mjs": "8ecc99206cf5a9f08d933dfa950a080999a1dd65f2432a6c3735d5154670e452",
+      "package-lock.json": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b",
+      "node_modules/ajv/package.json": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989",
+      "node_modules/ajv-formats/package.json": "402fb4bcfa457f0226813f3976ac42839dd619907c075c108efba8600d7edb69",
+      "charts/kubeclaw/files/config/buster-engine.config.json": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+      "charts/kubeclaw/files/config/prism-control.config.json": "5e41d7612926ce4d3bfad195d79649e106b54cd59c23de64afad1e9c43e1dcd0",
+      "charts/kubeclaw/files/config/prism-execution.config.json": "94f1a8eece3aa58db89907accd846d471d17263557c8e0925cc1caae6ec0034f",
+      "charts/kubeclaw/files/config/prism-studio.config.json": "c38ba184a0dcbdd4b11c86f99eb39b2dd7c0ec72bd697fce7f7a1fa32f750fdb",
+      "charts/kubeclaw/files/config/prism-worker.config.json": "6d263c2f1844e4bc117ec25504ccb9d6644a5272611de031a2027d5a55d7c834",
+      "charts/kubeclaw/files/config/swarm.config.json": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58",
+      "charts/kubeclaw/files/config/worker-core.config.json": "08a6c89490442803c2d4178608832fb0a8147be1a83bb6027a7a00f3d81dc615"
+    },
+    "config": {
+      "entry": "/home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/files/config/swarm.config.json",
+      "generationDirectory": "/home/node/.openclaw/workspace/kubeclaw-config-c0/charts/kubeclaw/files/config",
+      "files": [
+        {
+          "name": "swarm.config.json",
+          "sha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58"
+        },
+        {
+          "name": "prism-control.config.json",
+          "sha256": "5e41d7612926ce4d3bfad195d79649e106b54cd59c23de64afad1e9c43e1dcd0"
+        },
+        {
+          "name": "prism-studio.config.json",
+          "sha256": "c38ba184a0dcbdd4b11c86f99eb39b2dd7c0ec72bd697fce7f7a1fa32f750fdb"
+        },
+        {
+          "name": "prism-worker.config.json",
+          "sha256": "6d263c2f1844e4bc117ec25504ccb9d6644a5272611de031a2027d5a55d7c834"
+        },
+        {
+          "name": "prism-execution.config.json",
+          "sha256": "94f1a8eece3aa58db89907accd846d471d17263557c8e0925cc1caae6ec0034f"
+        },
+        {
+          "name": "buster-engine.config.json",
+          "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+        },
+        {
+          "name": "worker-core.config.json",
+          "sha256": "08a6c89490442803c2d4178608832fb0a8147be1a83bb6027a7a00f3d81dc615"
+        }
+      ]
+    }
+  },
+  "results": [
+    {
+      "id": "CMP-C0-SCHEMA-prism-POSITIVE",
+      "result": "passed",
+      "observed": {
+        "schemaVersion": "worker-attempt-envelope.v3",
+        "claim": {
+          "schemaVersion": "attempt-claim.v1",
+          "claimId": "claim-9d68effe-342d-4e74-a583-8209c7124f4e",
+          "attemptId": "attempt-5b5510f6-b5b3-4bbc-9cf7-0848e1c66a4b",
+          "generation": 1,
+          "workerId": "prism-worker",
+          "claimedAt": "2026-10-12T20:13:28.025Z",
+          "expiresAt": "2026-10-12T20:23:28.025Z"
+        },
+        "limits": {
+          "timeoutMs": 300000,
+          "cleanupTimeoutMs": 10000,
+          "logBytes": 1048576,
+          "resultBytes": 16777216,
+          "evidenceBytes": 134217728,
+          "evidenceFiles": 64
+        },
+        "resourceBudgets": {
+          "schemaVersion": "worker-resource-budgets.v2",
+          "cpuTimeMs": {
+            "state": "requested",
+            "limit": 60000
+          },
+          "maximumMemoryBytes": {
+            "state": "requested",
+            "limit": 8589934592
+          },
+          "maximumTasks": {
+            "state": "requested",
+            "limit": 2048
+          }
+        },
+        "profileDigest": "sha256:bc0ddcf2c4265207c733f6e63da4d9b6724b50f2e45223ffb6d979539c9fa8e6",
+        "attemptSpecDigest": "sha256:3b74f74a85f1e1dbefff3ffbc507a422af7ed7ab277be31dcb7292db6580db3d"
+      }
+    },
+    {
+      "id": "CMP-C0-SCHEMA-prism-CLAIM",
+      "result": "passed",
+      "observed": {
+        "ok": false,
+        "errors": [
+          "/claim/attemptId must match /attemptId"
+        ]
+      }
+    },
+    {
+      "id": "CMP-C0-SCHEMA-prism-GRANT",
+      "result": "passed",
+      "observed": {
+        "ok": false,
+        "errors": [
+          "/grantedCapabilities must be supported by /profile/capabilities"
+        ]
+      }
+    },
+    {
+      "id": "CMP-C0-SCHEMA-prism-DIGEST",
+      "result": "passed",
+      "observed": {
+        "ok": false,
+        "errors": [
+          "/attemptSpecDigest does not match the attempt contents"
+        ]
+      }
+    },
+    {
+      "id": "CMP-C0-SCHEMA-agent-POSITIVE",
+      "result": "passed",
+      "observed": {
+        "schemaVersion": "worker-attempt-envelope.v2",
+        "claim": {
+          "schemaVersion": "attempt-claim.v1",
+          "claimId": "definition-fence",
+          "attemptId": "definition-fence",
+          "generation": 1,
+          "workerId": "definition-runner",
+          "claimedAt": "2026-10-12T20:13:28.027Z",
+          "expiresAt": "2026-10-12T20:29:28.025Z"
+        },
+        "limits": {
+          "timeoutMs": 900000,
+          "cleanupTimeoutMs": 10000,
+          "logBytes": 1048576,
+          "resultBytes": 1048576,
+          "evidenceBytes": 2097152,
+          "evidenceFiles": 2
+        },
+        "resourceBudgets": {
+          "schemaVersion": "worker-resource-budgets.v1",
+          "cpuTimeMs": {
+            "state": "unrequested"
+          },
+          "maximumMemoryBytes": {
+            "state": "unrequested"
+          },
+          "maximumProcesses": {
+            "state": "unrequested"
+          }
+        },
+        "profileDigest": "sha256:b9f17efc898888cfd75686688f1440a01ebdf7bea39fa038064ddaee3dd401da",
+        "attemptSpecDigest": "sha256:1b964e992060e71306afbc9ca58aeed1cf690d79d9a38fe471f4c8980da0c4de"
+      }
+    },
+    {
+      "id": "CMP-C0-SCHEMA-agent-CLAIM",
+      "result": "passed",
+      "observed": {
+        "ok": false,
+        "errors": [
+          "/claim/attemptId must match /attemptId"
+        ]
+      }
+    },
+    {
+      "id": "CMP-C0-SCHEMA-agent-GRANT",
+      "result": "passed",
+      "observed": {
+        "ok": false,
+        "errors": [
+          "/grantedCapabilities must be supported by /profile/capabilities"
+        ]
+      }
+    },
+    {
+      "id": "CMP-C0-SCHEMA-agent-DIGEST",
+      "result": "passed",
+      "observed": {
+        "ok": false,
+        "errors": [
+          "/attemptSpecDigest does not match the attempt contents"
+        ]
+      }
+    },
+    {
+      "id": "CMP-C0-SCHEMA-preparation-POSITIVE",
+      "result": "passed",
+      "observed": {
+        "schemaVersion": "worker-attempt-envelope.v3",
+        "claim": {
+          "schemaVersion": "attempt-claim.v1",
+          "claimId": "claim-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "attemptId": "prepare-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "generation": 1,
+          "workerId": "buster-preparation",
+          "claimedAt": "2026-10-12T20:13:28.025Z",
+          "expiresAt": "2026-10-12T20:19:48.025Z"
+        },
+        "limits": {
+          "timeoutMs": 300000,
+          "cleanupTimeoutMs": 10000,
+          "logBytes": 1,
+          "resultBytes": 4194304,
+          "evidenceBytes": 1,
+          "evidenceFiles": 1
+        },
+        "resourceBudgets": {
+          "schemaVersion": "worker-resource-budgets.v2",
+          "cpuTimeMs": {
+            "state": "requested",
+            "limit": 120000
+          },
+          "maximumMemoryBytes": {
+            "state": "requested",
+            "limit": 8589934592
+          },
+          "maximumTasks": {
+            "state": "requested",
+            "limit": 64
+          }
+        },
+        "profileDigest": "sha256:1ffc8721cc8401bb39928508f8947ed3fdfc6a9cef00abb498045efceec3f123",
+        "attemptSpecDigest": "sha256:8475d8545420ee36f2e85e2719366c325dec0a05aca966f2fd09638b70f45114"
+      }
+    },
+    {
+      "id": "CMP-C0-SCHEMA-preparation-CLAIM",
+      "result": "passed",
+      "observed": {
+        "ok": false,
+        "errors": [
+          "/claim/attemptId must match /attemptId"
+        ]
+      }
+    },
+    {
+      "id": "CMP-C0-SCHEMA-preparation-GRANT",
+      "result": "passed",
+      "observed": {
+        "ok": false,
+        "errors": [
+          "/grantedCapabilities must be supported by /profile/capabilities"
+        ]
+      }
+    },
+    {
+      "id": "CMP-C0-SCHEMA-preparation-DIGEST",
+      "result": "passed",
+      "observed": {
+        "ok": false,
+        "errors": [
+          "/attemptSpecDigest does not match the attempt contents"
+        ]
+      }
+    },
+    {
+      "id": "CMP-C0-SCHEMA-buster-POSITIVE",
+      "result": "passed",
+      "observed": {
+        "schemaVersion": "worker-attempt-envelope.v1",
+        "claim": {
+          "schemaVersion": "attempt-claim.v1",
+          "claimId": "claim:attempt-definition",
+          "attemptId": "attempt-definition",
+          "generation": 1,
+          "workerId": "worker:buster:local",
+          "claimedAt": "2026-10-12T20:13:28.025Z",
+          "expiresAt": "2026-10-12T20:16:58.025Z"
+        },
+        "limits": {
+          "timeoutMs": 60000,
+          "cleanupTimeoutMs": 30000,
+          "cpuMillis": 1000,
+          "memoryBytes": 134217728,
+          "processes": 8,
+          "logBytes": 1048576,
+          "resultBytes": 16782336,
+          "evidenceBytes": 1048576,
+          "evidenceFiles": 8
+        },
+        "profileDigest": "sha256:8c70f679114789cf1a0e0525019ea2669eecd0f470f0d4f0c47e3fd928b38125",
+        "attemptSpecDigest": "sha256:71d6aa133580be0deb89d7ce9ac455f103aed843eff07c0d284400d7f2f3f1a9"
+      }
+    },
+    {
+      "id": "CMP-C0-SCHEMA-buster-CLAIM",
+      "result": "passed",
+      "observed": {
+        "ok": false,
+        "errors": [
+          "/claim/attemptId must match /attemptId"
+        ]
+      }
+    },
+    {
+      "id": "CMP-C0-SCHEMA-buster-GRANT",
+      "result": "passed",
+      "observed": {
+        "ok": false,
+        "errors": [
+          "/grantedCapabilities must be supported by /profile/capabilities"
+        ]
+      }
+    },
+    {
+      "id": "CMP-C0-SCHEMA-buster-DIGEST",
+      "result": "passed",
+      "observed": {
+        "ok": false,
+        "errors": [
+          "/attemptSpecDigest does not match the attempt contents"
+        ]
+      }
+    },
+    {
+      "id": "CMP-C0-SCHEMA-PRISM-NEW-BUDGET",
+      "result": "passed",
+      "observed": "new attempt above selected policy rejected"
+    },
+    {
+      "id": "CMP-C0-SCHEMA-PRISM-RECOVERED-BUDGET",
+      "result": "passed",
+      "observed": {
+        "cpuTimeMs": 60000,
+        "memoryBytes": 8589934592,
+        "tasks": 2048
+      }
+    },
+    {
+      "id": "CMP-C0-SCHEMA-AGENT-UNAVAILABLE",
+      "result": "passed",
+      "observed": "schema permits requested budget; actual executor prelaunch unavailable-measurement predicate rejects it, not fake zero"
+    }
+  ],
+  "passed": 19,
+  "failed": 0
+}

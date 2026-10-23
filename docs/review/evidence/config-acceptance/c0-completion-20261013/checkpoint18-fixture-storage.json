@@ -1,0 +1,54 @@
+{
+  "scope": "Selective checkpoint storage, not semantic/native acceptance or input alteration",
+  "omittedLargeDeterministicFixtureInputs": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/provider/below-B/playwright-report.json",
+      "bytes": 8255629,
+      "sha256": "9e8441aaacf9f3a2f6d0d63d81997aca7be905f3bb4fbc90a126735f3c977558",
+      "disposition": "Preserved local exact input; omitted from small checkpoint. Regeneration contract and observations committed separately, not an assertion of native execution."
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/provider/below-B/provider-result.json",
+      "bytes": 12577880,
+      "sha256": "66c872378ff1e1a4339baca9ceff82bad99c566fe83e719610dd9a4e79c8758a",
+      "disposition": "Preserved local exact input; omitted from small checkpoint. Regeneration contract and observations committed separately, not an assertion of native execution."
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/provider/above-B/playwright-report.json",
+      "bytes": 8259861,
+      "sha256": "91eb03e0dceb4d951fc05070549c97c68bb4189ecc0752d6b1750b059131862a",
+      "disposition": "Preserved local exact input; omitted from small checkpoint. Regeneration contract and observations committed separately, not an assertion of native execution."
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/provider/above-B/provider-result.json",
+      "bytes": 12584327,
+      "sha256": "092cee125a38e2abc9013f1a53b77cf7ea940602bc30e925aaa299c96301dd07",
+      "disposition": "Preserved local exact input; omitted from small checkpoint. Regeneration contract and observations committed separately, not an assertion of native execution."
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/archives/entries-150001.tar.gz",
+      "bytes": 1431727,
+      "sha256": "480e3dd92e03ef87b658f324e778f5b9617b8c4f565f876073e979bdee062902",
+      "disposition": "Preserved local exact input; omitted from small checkpoint. Regeneration contract and observations committed separately, not an assertion of native execution."
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/archives/expanded-402653185.tar.gz",
+      "bytes": 1757157,
+      "sha256": "e8472e772882bc85095c65d4f013e108ddbe09f466bc84a22bde3b762144cd04",
+      "disposition": "Preserved local exact input; omitted from small checkpoint. Regeneration contract and observations committed separately, not an assertion of native execution."
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/archives/archive-bytes-50335744-body.tar.gz",
+      "bytes": 50351267,
+      "sha256": "dadd6d625fab14a876b9fc3ec40d1deca8b615f4ed0da69745ee84b109ea7d14",
+      "disposition": "Preserved local exact input; omitted from small checkpoint. Regeneration contract and observations committed separately, not an assertion of native execution."
+    }
+  ],
+  "generatorRefs": [
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/archive-generate.py",
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/provider-result-definitions.mjs"
+  ],
+  "definitionObservations": "All original observations and identities retained; fixture source collectors explicitly separate pure source slices/current-wire/schema checks from native operations",
+  "largeLocalInputBytes": 95217848,
+  "allLocalInputsDeleted": false
+}

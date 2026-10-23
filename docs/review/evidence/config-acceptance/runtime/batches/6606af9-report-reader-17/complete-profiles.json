@@ -1,0 +1,17 @@
+{
+  "A": {
+    "storageRoot": "/fixture/nova/run-state-A",
+    "orchestratorIssuerId": "issuer:original-A",
+    "maximumJournalBytes": 1048576,
+    "maximumArtifactBytes": 1048576,
+    "maximumBundleBytes": 65536
+  },
+  "B": {
+    "storageRoot": "/fixture/nova/run-state-A",
+    "orchestratorIssuerId": "issuer:original-A",
+    "maximumJournalBytes": 2097152,
+    "maximumArtifactBytes": 2097152,
+    "maximumBundleBytes": 131072
+  },
+  "correlatedFixtures": "Authentic original completed coordinator-mode auditedrun, exactevents.jsonl+run-snapshot.json+effects.jsonl/head/digest/stats, realtypedsourceartifact plusrealrequiredlint/nativecoverage/evidence and selectedref latestattempt/run. Sourcefixture bytes mustbepinned before cases; A/B sameactualsource task andtypedbundle, no report source fabricated bytransportstub. Budgetpositives needactualsum andadjacentnegative sameowningmethod; remainNOTRUN prereq. StorageRoot/orchestrator identity have no independentB undersamehistory; deriveoriginalwriterrole, not secondeditableauthor."
+}

@@ -1,0 +1,30 @@
+{
+  "identity": {
+    "commit": "9452d35524192f8665bc87254b3c63a361e7bd4a",
+    "tree": "89fa8e4d683cf442deb189d60ce8b7cc1ff05327",
+    "agent": "/root/delivery_inventory",
+    "date": "2026-10-12",
+    "status": "incremental C0; not exhaustive acceptance"
+  },
+  "duplicateIds": [],
+  "duplicateCheck": "passed",
+  "opsTargetArchUniqueRows": 1,
+  "opsTargetArchRepeatedOccurrences": 2,
+  "sharedLeaseLinks": [
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-LEASE-API-GROUP",
+      "linked": "CMP-buster-engine-clusterInvokers.shared.leaseApiGroup",
+      "expected": "CMP-buster-engine-clusterInvokers.shared.leaseApiGroup",
+      "result": "passed"
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-LEASE-API-VERSION",
+      "linked": "CMP-buster-engine-clusterInvokers.shared.leaseApiVersion",
+      "expected": "CMP-buster-engine-clusterInvokers.shared.leaseApiVersion",
+      "result": "passed"
+    }
+  ],
+  "sourceDigestDrift": [],
+  "resultMeaning": "artifact consistency/current source checks only; no semantic completeness/implementation PASS",
+  "reviewerConfirmation": "pending"
+}

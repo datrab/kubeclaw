@@ -1,0 +1,47 @@
+[
+  {
+    "argv": [
+      "node",
+      "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/current-reader-controls.mjs"
+    ],
+    "exit": 0,
+    "stdoutSha256": "504ae8128e7391027ab1277b8e1e96d82e4f101bdd26bbde00e800cfeaa88dc9",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "node",
+      "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/current-formatter-control.mjs"
+    ],
+    "exit": 0,
+    "stdoutSha256": "e489ca366d7410310097be3c2a956da9af03b906539be195c64676ee6416eccf",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "node",
+      "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/kernel-projection-controls.mjs"
+    ],
+    "exit": 0,
+    "stdoutSha256": "41df7b76b48fcd63c6a089f9a2e724bba11f9c461367a5b03ae45969f4b6c3c7",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "node",
+      "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/validate-proposed-definitions.mjs"
+    ],
+    "exit": 0,
+    "stdoutSha256": "6f01ab2c1829bbfded44caa5f32e3ca038bf7cca52b424a7e4fe9408018b612a",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "python3",
+      "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/check-question-definition-integrity.py"
+    ],
+    "exit": 0,
+    "stdoutSha256": "833dc50b83383a9c751deb6d2f0670b71a611d7050437546019d4bcb8efb63b5",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

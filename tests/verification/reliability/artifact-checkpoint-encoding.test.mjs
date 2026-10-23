@@ -1,3 +1,6 @@
+import { TEST_CORE_POLICY as ARTIFACT_TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
+const TEST_ARTIFACT_STORE_POLICY = ARTIFACT_TEST_CORE_POLICY.artifactStore;
+import { TEST_CORE_POLICY } from '../../fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -14,7 +17,7 @@ const value = { z: 1, ä: 2, Z: { ö: 3, a: 4 } };
 
 async function withStore(body) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'checkpoint-encoding-'));
-  const store = activate({ config: { artifactRoot: path.join(root, 'artifacts') } });
+  const store = activate({ config: { ...TEST_ARTIFACT_STORE_POLICY, artifactRoot: path.join(root, 'artifacts') } });
   await store.ready();
   const write = async (id, encoding, payload = value) => {
     const request = { capability: 'artifacts.write', operation: 'put_json',
@@ -28,7 +31,7 @@ async function withStore(body) {
 }
 
 function recorder(file) {
-  const journal = new FileJournal(file);
+  const journal = new FileJournal(file, TEST_CORE_POLICY.journalAppendLockTimeoutMs);
   const append = (type, identity, payload, causationId) => {
     let event;
     journal.appendSequenced(sequence => event = { schemaVersion: 'lifecycle-event.v2',
@@ -52,7 +55,7 @@ test('real portable ArtifactStore write checkpoints and reopens unchanged across
     const code = `import {artifactFromWrite,ArtifactCheckpointRecorder} from ${JSON.stringify(module)};
       import {FileJournal} from ${JSON.stringify(journalModule)};
       const ref=artifactFromWrite(${JSON.stringify(attempt)},${JSON.stringify(request)},${JSON.stringify(response)});
-      const recorder=new ArtifactCheckpointRecorder(new FileJournal(${JSON.stringify(journal)}),()=>{throw Error('duplicate append');});
+      const recorder=new ArtifactCheckpointRecorder(new FileJournal(${JSON.stringify(journal)}, ${JSON.stringify(TEST_CORE_POLICY.journalAppendLockTimeoutMs)}),()=>{throw Error('duplicate append');});
       recorder.checkpoint(ref);recorder.result(ref);
       process.stdout.write(JSON.stringify({locale:Intl.DateTimeFormat().resolvedOptions().locale,refs:recorder.artifacts()}));`;
     for (const [locale, expected] of [['en_US.UTF-8', 'en-US'], ['sv_SE.UTF-8', 'sv-SE']]) {

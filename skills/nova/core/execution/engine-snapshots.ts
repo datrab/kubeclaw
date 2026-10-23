@@ -1,3 +1,11 @@
+import { captureStoreRuntimeBindings, type StoreRuntimeBindings } from './store-runtime-binding.ts';
+import { captureHttpRuntimeBindings, type HttpRuntimeBindings } from './http-runtime-binding.ts';
+import { captureGitRuntimeBindings, type GitRuntimeBindings } from './git-runtime-binding.ts';
+import { capturePublisherRuntimeBindings, type PublisherRuntimeBindings } from './publisher-runtime-binding.ts';
+import { captureOperatorRuntimeBindings, type OperatorRuntimeBindings } from './operator-runtime-binding.ts';
+import { captureRedisRuntimeBindings, type RedisRuntimeBindings } from './redis-runtime-binding.ts';
+import type {ReviewRuntimeBinding} from './review-runtime-targets.ts';
+import { captureCoreRuntimePolicy, type CoreRuntimePolicy } from '@kubeclaw/plugin-foundation/config/core-runtime-policy';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -141,4 +149,64 @@ export function validateSignal(wait: NonNullable<StageRuntimeState['wait']>, sig
   if (signal.issuer.type !== wait.authorizedIssuer.type || signal.issuer.id !== wait.authorizedIssuer.id) throw new Error(`WAIT_ISSUER_DENIED:${signal.issuer.type}:${signal.issuer.id}`);
   if (wait.expiresAt !== null && Date.now() >= Date.parse(wait.expiresAt)) throw new Error(`WAIT_EXPIRED:${wait.waitId}`);
   if (Date.parse(signal.issuedAt) < Date.parse(waitCreatedAt)) throw new Error(`WAIT_SIGNAL_STALE:${signal.signalId}`);
+}
+
+/** Retained settings are selected before mutation locks, journals or runtime activation. */
+export function retainedCoreRuntimePolicy(runRoot: string): CoreRuntimePolicy {
+  const configuration = readRunSnapshot(runRoot).registry.configuration as { corePolicy?: unknown } | undefined;
+  if (configuration?.corePolicy === undefined) throw new Error('RECOVERY_CORE_POLICY_MISSING:use original runtime; current-policy fallback is forbidden');
+  return captureCoreRuntimePolicy(configuration.corePolicy);
+}
+
+
+/** Capture selected policy and timing references from ONE original run snapshot.
+ * Original v1 keeps the established selection-only behavior. Explicit review
+ * grades v2 restore the actual original OpenClaw targets for activation; no
+ * current target/model values are merged into the original run. Redis restores
+ * both complete original targets independently of current Platform values. The
+ * Operator and transport Publisher target sets and durable-store locations also remain original. */
+export function retainedRuntimePolicies(runRoot: string): Readonly<{storeBindings:StoreRuntimeBindings;httpBindings:HttpRuntimeBindings;gitBindings:GitRuntimeBindings;publisherBindings:PublisherRuntimeBindings;operatorBindings:OperatorRuntimeBindings;redisBindings:RedisRuntimeBindings;reviewRuntimeBinding?:ReviewRuntimeBinding;corePolicy: CoreRuntimePolicy; timingSelections: Readonly<Record<string,string>>; httpSelections: Readonly<Record<string,string>>; publisherSelections: Readonly<Record<string,string>>; operatorSelections: Readonly<Record<string,string>>}> {
+  const configuration = readRunSnapshot(runRoot).registry.configuration as {corePolicy?: unknown; providers?:Record<string,string>;activeAdapters?:readonly string[];adapters?: Record<string,{targets?: unknown}>} | undefined;
+  if (configuration?.corePolicy === undefined) throw new Error('RECOVERY_CORE_POLICY_MISSING:use original runtime; current-policy fallback is forbidden');
+  const corePolicy = captureCoreRuntimePolicy(configuration.corePolicy);
+  const targetConfig = configuration.adapters?.['kubeclaw.runtime-dispatch:openclaw'];
+  const selections: Record<string,string> = {};
+  if (targetConfig !== undefined) {
+    if (!targetConfig.targets || typeof targetConfig.targets !== 'object' || Array.isArray(targetConfig.targets)) throw new Error('RECOVERY_TARGET_TIMING_SELECTION_MISSING:use original runtime');
+    for (const [id, target] of Object.entries(targetConfig.targets)) {
+      if (!target || typeof target !== 'object' || typeof target.timingProfile !== 'string') throw new Error('RECOVERY_TARGET_TIMING_SELECTION_MISSING:use original runtime');
+      Object.defineProperty(selections,id,{value:target.timingProfile,enumerable:true});
+    }
+  }
+  const httpSelections: Record<string,string> = {};
+  const httpConfig = configuration.adapters?.['kubeclaw.runtime-dispatch:runtime'];
+  if (httpConfig !== undefined) {
+    if (!httpConfig.targets || typeof httpConfig.targets !== 'object' || Array.isArray(httpConfig.targets)) throw new Error('RECOVERY_TARGET_BYTE_SELECTION_MISSING:use original runtime');
+    for (const [id,target] of Object.entries(httpConfig.targets)) {
+      if (!target || typeof target !== 'object' || typeof target.byteProfile !== 'string') throw new Error('RECOVERY_TARGET_BYTE_SELECTION_MISSING:use original runtime');
+      Object.defineProperty(httpSelections,id,{value:target.byteProfile,enumerable:true});
+    }
+  }
+  const publisherSelections: Record<string,string> = {};
+  const publisherConfig = configuration.adapters?.['kubeclaw.transport-publisher:publisher'];
+  if (publisherConfig !== undefined) {
+    if (!publisherConfig.targets || typeof publisherConfig.targets !== 'object' || Array.isArray(publisherConfig.targets)) throw new Error('RECOVERY_TARGET_PAYLOAD_SELECTION_MISSING:use original runtime');
+    for (const [id,target] of Object.entries(publisherConfig.targets)) {
+      if (!target || typeof target !== 'object' || typeof target.payloadProfile !== 'string') throw new Error('RECOVERY_TARGET_PAYLOAD_SELECTION_MISSING:use original runtime');
+      Object.defineProperty(publisherSelections,id,{value:target.payloadProfile,enumerable:true});
+    }
+  }
+  const operatorSelections: Record<string,string> = {};
+  const operatorConfig = configuration.adapters?.['kubeclaw.operator-messaging:operator'];
+  if (operatorConfig !== undefined) {
+    if (!operatorConfig.targets || typeof operatorConfig.targets !== 'object' || Array.isArray(operatorConfig.targets)) throw new Error('RECOVERY_OPERATOR_PAYLOAD_SELECTION_MISSING:use original runtime');
+    for (const [id,target] of Object.entries(operatorConfig.targets)) {
+      if (!target || typeof target !== 'object' || typeof target.payloadProfile !== 'string') throw new Error('RECOVERY_OPERATOR_PAYLOAD_SELECTION_MISSING:use original runtime');
+      Object.defineProperty(operatorSelections,id,{value:target.payloadProfile,enumerable:true});
+    }
+  }
+  const provider=configuration.providers?.['runtime.dispatch'];
+  const reviewRuntimeBinding=['review-owned-decision-profiles.v2','review-owned-decision-profiles.v3','review-owned-decision-profiles.v4','review-owned-decision-profiles.v5'].includes(String(corePolicy.reviewPolicyCapture?.settings.schemaVersion)) && provider==='kubeclaw.runtime-dispatch:openclaw' && configuration.activeAdapters?.includes(provider)
+    ? {provider,configuration:deepFreeze(structuredClone(configuration.adapters?.[provider] ?? {}))} : undefined;
+  return Object.freeze({storeBindings:captureStoreRuntimeBindings(configuration.adapters ?? {},corePolicy),httpBindings:captureHttpRuntimeBindings(configuration.adapters ?? {},corePolicy),gitBindings:captureGitRuntimeBindings(configuration.adapters ?? {},corePolicy),publisherBindings:capturePublisherRuntimeBindings(configuration.adapters ?? {},corePolicy),operatorBindings:captureOperatorRuntimeBindings(configuration.adapters ?? {},corePolicy),redisBindings:captureRedisRuntimeBindings(configuration.adapters ?? {},corePolicy),reviewRuntimeBinding,corePolicy,operatorSelections:Object.freeze(operatorSelections),publisherSelections:Object.freeze(publisherSelections),timingSelections:Object.freeze(selections),httpSelections:Object.freeze(httpSelections)});
 }

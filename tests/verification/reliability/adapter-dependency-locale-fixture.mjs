@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY_SELECTION } from '../../fixtures/core-runtime-policy.mjs';
 // Actual registered consumer + original Core/HTTP adapter/journal; disposable local receiver.
 import fs from 'node:fs';
 import os from 'node:os';
@@ -32,7 +33,7 @@ function fixture(name,origin) {
   write('result.json',{$schema:'https://json-schema.org/draft/2020-12/schema',$ref:'https://kubeclaw.dev/contracts/plugin-system/v2/plugin-system-v2.schema.json#/$defs/stageResult'});
   write('config.json',{type:'object',properties:{endpoint:{type:'string'}},required:['endpoint'],additionalProperties:false});
   const roots=[path.join(sourceRoot,'skills/common/plugins'),pluginRoot],adapter='test.locale-dependency:consumer';
-  const platform={schemaVersion:'pipeline-platform.v2', effectLockTtlMs: 300_000,shutdownTimeoutMs:1000,administrativeDecisionIssuers:[],storageRoot:path.join(directory,'state'),installationRoots:roots,trustedBuiltinRoots:roots,
+  const platform={corePolicySelection: TEST_CORE_POLICY_SELECTION,schemaVersion:'pipeline-platform.v2', effectLockTtlMs: 300_000,shutdownTimeoutMs:1000,administrativeDecisionIssuers:[],storageRoot:path.join(directory,'state'),installationRoots:roots,trustedBuiltinRoots:roots,
     externalTrust:{allowedSourceDigests:{},verifiedAttestations:{}},orchestratorIssuerId:'test:operator',activeAdapters:[],observers:{},
     providers:{'runtime.dispatch':adapter,'network.http':'kubeclaw.network-http:http'},
     grants:{'test.locale-dependency:stage':{'runtime.dispatch':{allowedAgents:['probe']}},[adapter]:{'network.http':{allowedOrigins:[origin]}}},
@@ -45,8 +46,8 @@ const core=JSON.stringify(pathToFileURL(path.join(runtimeRoot,'skills/nova/core/
 const engine=JSON.stringify(pathToFileURL(path.join(runtimeRoot,'skills/nova/core/execution/engine-runtime.ts')).href);
 const worker=`import fs from 'node:fs';import path from 'node:path';import * as core from ${core};import {prepareRuntime} from ${engine};
   const directory=process.argv[1],{platform,definition}=JSON.parse(fs.readFileSync(path.join(directory,'fixture.json'))),prepared=await prepareRuntime(platform,definition);
-  const runtime=new core.AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(platform.adapters)),shutdownTimeoutMs:1000,
-    async emitDomainEvent(){throw new Error('UNEXPECTED_DOMAIN_EVENT');},effects:new core.EffectCoordinator(new core.FileEffectJournal(path.join(directory,'effects.jsonl')),undefined,undefined,new core.FileResourceLockManager(path.join(directory,'locks')),1000)});
+  const runtime=new core.AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(prepared.adapterConfigurations)),shutdownTimeoutMs:1000,
+    async emitDomainEvent(){throw new Error('UNEXPECTED_DOMAIN_EVENT');},effects:new core.EffectCoordinator(new core.FileEffectJournal(path.join(directory,'effects.jsonl'),prepared.corePolicy),undefined,undefined,new core.FileResourceLockManager(path.join(directory,'locks'),prepared.corePolicy),platform.effectLockTtlMs,prepared.corePolicy.resourceAcquisition)});
   await runtime.start();try{const result=await runtime.invoke('runtime.dispatch',{runId:'run:locale',stageId:'one',attemptId:'attempt:one',attemptNumber:1},'parent:one',{operation:'dispatch',resource:{type:'runtime.agent',canonicalId:'probe'},payload:{}},new AbortController().signal);process.stdout.write(JSON.stringify({locale:Intl.DateTimeFormat().resolvedOptions().locale,result}));}finally{await runtime.shutdown();}`;
 
   const child=spawn(process.execPath,['--input-type=module','-e',worker,directory],{cwd:runtimeRoot,env:{...process.env,LANG:locale,LC_ALL:locale},stdio:['ignore','pipe','pipe']});

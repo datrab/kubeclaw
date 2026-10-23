@@ -1,0 +1,390 @@
+{
+  "fields": [
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-KUBERNETES-SERVICE-PORT",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-LEASE-API-GROUP",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-LEASE-API-VERSION",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-NAMESPACE-PREFIXES",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-DEFAULT-TTL-SECONDS",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-MAX-TTL-SECONDS",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-CONTROLLER-SERVICE-ACCOUNT",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-SECRET-ROLE-NAME",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-DEPLOYER-ROLE-NAME",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-TESTER-ROLE-NAME",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-ACCESS-JSON",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-KUBECLAW-NAMESPACE",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-CONTROLLER-POLL-MS",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-KUBERNETES-SERVICE-HOST",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-SOURCE-SECRETS",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-LISTEN",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-AUDIENCE",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-PRODUCER",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-TLS-CERT",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-READY-TLS-KEY",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ENABLED",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-VERIFY-KEY",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-AUDIENCE",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-PRODUCER",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ISSUER",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ACTORS-JSON",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-HTTPCLIENTTIMEOUTSECONDS",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYREFRESHSECONDS",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYFUTURESKEWSECONDS",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYMAXIMUMFINDINGS",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYMAXIMUMSERIALIZEDBYTES",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYREADHEADERTIMEOUTSECONDS",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYREADTIMEOUTSECONDS",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYWRITETIMEOUTSECONDS",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYIDLETIMEOUTSECONDS",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYMAXHEADERBYTES",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYHANDLERTIMEOUTSECONDS",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READYMAXIMUMBODYBYTES",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-PRODUCTHANDLERTIMEOUTSECONDS",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-PRODUCTMAXIMUMBODYBYTES",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-DEFAULTDEMORETENTIONSECONDS",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-MAXIMUMDEMORETENTIONSECONDS",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-API-RESPONSE-MAXIMUM-BYTES",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-API-REQUEST-MAXIMUM-BYTES",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-API-DIAGNOSTIC-MAXIMUM-BYTES",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-AUTHORIZATION-MAXIMUM-BYTES",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-NAMESPACE-DELETION-TIMEOUT-SECONDS",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-READY-OBSERVATION-MAXIMUM-AGE-SECONDS",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    },
+    {
+      "id": "DLV-NAMESPACE-CONTROLLER-PRODUCT-DECISION-MAXIMUM-VALIDITY-SECONDS",
+      "sameIdentity": true,
+      "allNonReceivingPropertiesUnchanged": true,
+      "originalEqualsCurrentRoot": true,
+      "originalBodyShaMatches": true
+    }
+  ],
+  "cases": [
+    {
+      "id": "DLV-CASE-ALTERNATE-PROFILES",
+      "originalEqualsCurrentRoot": true,
+      "shaMatches": true
+    },
+    {
+      "id": "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+      "originalEqualsCurrentRoot": true,
+      "shaMatches": true
+    },
+    {
+      "id": "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
+      "originalEqualsCurrentRoot": true,
+      "shaMatches": true
+    },
+    {
+      "id": "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT",
+      "originalEqualsCurrentRoot": true,
+      "shaMatches": true
+    },
+    {
+      "id": "DLV-CASE-MISSING-OLD-AUTHOR",
+      "originalEqualsCurrentRoot": true,
+      "shaMatches": true
+    },
+    {
+      "id": "DLV-CASE-SHARED-LEASE-PROTOCOL",
+      "originalEqualsCurrentRoot": true,
+      "shaMatches": true
+    }
+  ],
+  "originalCaseRefinementsEntiretyUnchanged": true,
+  "rootMetadataOnlyDrift": [
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "onlyAddedCurrentProviderFieldAdoption": true
+    },
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "onlyAddedCurrentProviderFieldAdoption": true
+    }
+  ]
+}

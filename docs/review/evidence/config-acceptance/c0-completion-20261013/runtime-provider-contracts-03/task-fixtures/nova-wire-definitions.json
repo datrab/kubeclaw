@@ -1,0 +1,12 @@
+{
+  "source": "skills/common/plugins/network-http/src/adapter.ts",
+  "requestBytesAfterActualJSONstringify": 524289,
+  "responseDeliveredDecompressedBytes": 524289,
+  "lowerProfileCap": 524288,
+  "upperProfileCap": 1048576,
+  "requestCompetingGate": "Both exact field-maxRequestBytes A/B profiles allowPOST before body gate. GenericbaselineA(GETonly) is NOT used for this byte test.",
+  "responseBusinessJSONUnchanged": true,
+  "activation": "Once-per-run originalA remains acrossstartedmodules; newRunB only",
+  "futureResult": "not-run",
+  "networkExecuted": false
+}

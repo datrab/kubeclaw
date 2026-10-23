@@ -1,0 +1,125 @@
+[
+  {
+    "schemaVersion": "buster-service-policy.v1-proposal",
+    "authentication": "public-unsealed",
+    "rootRawSha256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011",
+    "inputGenerationSha256": "cc926a7171db521180bd2628ff690f558b1cc81df64a00d5d2821fd92e043289",
+    "ownerRawSha256": "849d4848f2dccfe19d5d6c4a421b6001ee0f59ff4905b646b9dd3b93f3b0cc84",
+    "selectedProfileSha256": "175ed82ea18b5f32a59e77b15712e75fc80791ac57d09ab73be72ef68db0dff5",
+    "binding": {
+      "role": "buster",
+      "owner": "buster-engine",
+      "instanceId": "fixture.service.buster-preparation",
+      "profileId": "local-A"
+    },
+    "policy": {
+      "host": "0.0.0.0",
+      "port": 18891,
+      "recordLimits": {
+        "maximumRecords": 10000,
+        "maximumBytes": 1073741824,
+        "maximumRecordBytes": 67108864
+      },
+      "maximumResultBytes": 67108864,
+      "maximumResultStoreBytes": 1073741824,
+      "maximumResponseBytes": 67108864,
+      "shutdownTimeoutMs": 15000,
+      "allowedCapabilities": [
+        "command.execute",
+        "container.build",
+        "kubernetes.fixture",
+        "kubernetes.exposure",
+        "network.http",
+        "browser.axe",
+        "browser.lighthouse",
+        "browser.visual",
+        "browser.playwright",
+        "security.scan",
+        "kubernetes.runtime-security"
+      ]
+    },
+    "activationAllowed": false
+  },
+  {
+    "schemaVersion": "buster-service-policy.v1-proposal",
+    "authentication": "public-unsealed",
+    "rootRawSha256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011",
+    "inputGenerationSha256": "cc926a7171db521180bd2628ff690f558b1cc81df64a00d5d2821fd92e043289",
+    "ownerRawSha256": "849d4848f2dccfe19d5d6c4a421b6001ee0f59ff4905b646b9dd3b93f3b0cc84",
+    "selectedProfileSha256": "7337769dbef63bfb2c829ef864adf13d5a6860d0d2e13a99d429cfbcf639e392",
+    "binding": {
+      "role": "buster",
+      "owner": "buster-engine",
+      "instanceId": "fixture.service.buster-runtime",
+      "profileId": "provider-network-A"
+    },
+    "policy": {
+      "host": "0.0.0.0",
+      "port": 18891,
+      "recordLimits": {
+        "maximumRecords": 10000,
+        "maximumBytes": 1073741824,
+        "maximumRecordBytes": 67108864
+      },
+      "maximumResultBytes": 67108864,
+      "maximumResultStoreBytes": 1073741824,
+      "maximumResponseBytes": 67108864,
+      "shutdownTimeoutMs": 15000,
+      "allowedCapabilities": [
+        "command.execute",
+        "container.build",
+        "kubernetes.fixture",
+        "kubernetes.exposure",
+        "network.http",
+        "browser.axe",
+        "browser.lighthouse",
+        "browser.visual",
+        "browser.playwright",
+        "security.scan",
+        "kubernetes.runtime-security"
+      ]
+    },
+    "activationAllowed": false
+  },
+  {
+    "schemaVersion": "buster-service-policy.v1-proposal",
+    "authentication": "public-unsealed",
+    "rootRawSha256": "2147cfa1eaf53ed57928563212442f13aaef735e4733178a8579b0f2308e4011",
+    "inputGenerationSha256": "cc926a7171db521180bd2628ff690f558b1cc81df64a00d5d2821fd92e043289",
+    "ownerRawSha256": "849d4848f2dccfe19d5d6c4a421b6001ee0f59ff4905b646b9dd3b93f3b0cc84",
+    "selectedProfileSha256": "d175b18a3f39ebc87655dd39c0e4d845095b962e98938ea73af95a14bae577d9",
+    "binding": {
+      "role": "buster",
+      "owner": "buster-engine",
+      "instanceId": "fixture.service.buster-security-runtime",
+      "profileId": "security-source-A"
+    },
+    "policy": {
+      "host": "0.0.0.0",
+      "port": 18891,
+      "recordLimits": {
+        "maximumRecords": 10000,
+        "maximumBytes": 1073741824,
+        "maximumRecordBytes": 67108864
+      },
+      "maximumResultBytes": 67108864,
+      "maximumResultStoreBytes": 1073741824,
+      "maximumResponseBytes": 67108864,
+      "shutdownTimeoutMs": 15000,
+      "allowedCapabilities": [
+        "command.execute",
+        "container.build",
+        "kubernetes.fixture",
+        "kubernetes.exposure",
+        "network.http",
+        "browser.axe",
+        "browser.lighthouse",
+        "browser.visual",
+        "browser.playwright",
+        "security.scan",
+        "kubernetes.runtime-security"
+      ]
+    },
+    "activationAllowed": false
+  }
+]

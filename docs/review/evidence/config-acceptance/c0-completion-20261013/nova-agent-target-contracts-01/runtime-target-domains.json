@@ -1,0 +1,330 @@
+{
+  "qualification": "Current complete source-supported target domain, not arbitrary model/backend capability or proposed Runtime08 tuning implemented. No native installed roster or stopping max_tokens forwarded.",
+  "fields": [
+    {
+      "field": "endpoint",
+      "currentOwningNode": {
+        "type": "string",
+        "format": "uri"
+      },
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "fallbackOrSemanticDomain": "new URL, HTTP(S), no username/password/hash; query/path source supported",
+      "soleAuthor": "config/plugins/kubeclaw.runtime-dispatch.config.json#/profiles/<selected>/processing/targets/<authorized original resource>",
+      "admission": "schema AND current source parser relational/domain checks, exact original selected native target/resource/schema/host/model/SDK/tokenizer/tool/secret/grant receipts; no task override, default fill or alternate provider routing",
+      "lifecycle": "literal receiving dependency, not new original field ID, native behavior not-run"
+    },
+    {
+      "field": "tokenSecret",
+      "currentOwningNode": {
+        "type": "string",
+        "minLength": 1
+      },
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "fallbackOrSemanticDomain": "trim canonical ID string; actual revision/grant original native source",
+      "soleAuthor": "config/plugins/kubeclaw.runtime-dispatch.config.json#/profiles/<selected>/processing/targets/<authorized original resource>",
+      "admission": "schema AND current source parser relational/domain checks, exact original selected native target/resource/schema/host/model/SDK/tokenizer/tool/secret/grant receipts; no task override, default fill or alternate provider routing",
+      "lifecycle": "literal receiving dependency, not new original field ID, native behavior not-run"
+    },
+    {
+      "field": "runtime",
+      "currentOwningNode": {
+        "enum": [
+          "acp",
+          "subagent"
+        ]
+      },
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "fallbackOrSemanticDomain": null,
+      "soleAuthor": "config/plugins/kubeclaw.runtime-dispatch.config.json#/profiles/<selected>/processing/targets/<authorized original resource>",
+      "admission": "schema AND current source parser relational/domain checks, exact original selected native target/resource/schema/host/model/SDK/tokenizer/tool/secret/grant receipts; no task override, default fill or alternate provider routing",
+      "lifecycle": "literal receiving dependency, not new original field ID, native behavior not-run"
+    },
+    {
+      "field": "agentId",
+      "currentOwningNode": {
+        "type": "string",
+        "minLength": 1
+      },
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "fallbackOrSemanticDomain": "invalid/missing -> codex (idValue); strict selected author must not silently fall back",
+      "soleAuthor": "config/plugins/kubeclaw.runtime-dispatch.config.json#/profiles/<selected>/processing/targets/<authorized original resource>",
+      "admission": "schema AND current source parser relational/domain checks, exact original selected native target/resource/schema/host/model/SDK/tokenizer/tool/secret/grant receipts; no task override, default fill or alternate provider routing",
+      "lifecycle": "literal receiving dependency, not new original field ID, native behavior not-run"
+    },
+    {
+      "field": "agentRole",
+      "currentOwningNode": {
+        "type": "string",
+        "minLength": 1
+      },
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "fallbackOrSemanticDomain": "invalid/missing -> target map key (session label ONLY)",
+      "soleAuthor": "config/plugins/kubeclaw.runtime-dispatch.config.json#/profiles/<selected>/processing/targets/<authorized original resource>",
+      "admission": "schema AND current source parser relational/domain checks, exact original selected native target/resource/schema/host/model/SDK/tokenizer/tool/secret/grant receipts; no task override, default fill or alternate provider routing",
+      "lifecycle": "literal receiving dependency, not new original field ID, native behavior not-run"
+    },
+    {
+      "field": "model",
+      "currentOwningNode": {
+        "type": "string",
+        "minLength": 1
+      },
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "fallbackOrSemanticDomain": "trim string, nonblank required, no real installed model inferred",
+      "soleAuthor": "config/plugins/kubeclaw.runtime-dispatch.config.json#/profiles/<selected>/processing/targets/<authorized original resource>",
+      "admission": "schema AND current source parser relational/domain checks, exact original selected native target/resource/schema/host/model/SDK/tokenizer/tool/secret/grant receipts; no task override, default fill or alternate provider routing",
+      "lifecycle": "literal receiving dependency, not new original field ID, native behavior not-run"
+    },
+    {
+      "field": "thinking",
+      "currentOwningNode": {
+        "type": "string",
+        "minLength": 1
+      },
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "fallbackOrSemanticDomain": "nonstring/missing -> high; strings trimmed; direct empty allowed, owning schema forbids empty; no current enum",
+      "soleAuthor": "config/plugins/kubeclaw.runtime-dispatch.config.json#/profiles/<selected>/processing/targets/<authorized original resource>",
+      "admission": "schema AND current source parser relational/domain checks, exact original selected native target/resource/schema/host/model/SDK/tokenizer/tool/secret/grant receipts; no task override, default fill or alternate provider routing",
+      "lifecycle": "literal receiving dependency, not new original field ID, native behavior not-run"
+    },
+    {
+      "field": "controllerSessionKey",
+      "currentOwningNode": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "fallbackOrSemanticDomain": "optional string <=512 starts agent:${agentId}: exactly",
+      "soleAuthor": "config/plugins/kubeclaw.runtime-dispatch.config.json#/profiles/<selected>/processing/targets/<authorized original resource>",
+      "admission": "schema AND current source parser relational/domain checks, exact original selected native target/resource/schema/host/model/SDK/tokenizer/tool/secret/grant receipts; no task override, default fill or alternate provider routing",
+      "lifecycle": "literal receiving dependency, not new original field ID, native behavior not-run"
+    },
+    {
+      "field": "collectorMode",
+      "currentOwningNode": {
+        "type": "boolean",
+        "default": false
+      },
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "fallbackOrSemanticDomain": "only raw===true, otherwise false; schema rejects nonbool",
+      "soleAuthor": "config/plugins/kubeclaw.runtime-dispatch.config.json#/profiles/<selected>/processing/targets/<authorized original resource>",
+      "admission": "schema AND current source parser relational/domain checks, exact original selected native target/resource/schema/host/model/SDK/tokenizer/tool/secret/grant receipts; no task override, default fill or alternate provider routing",
+      "lifecycle": "literal receiving dependency, not new original field ID, native behavior not-run"
+    },
+    {
+      "field": "spawnIntervalMs",
+      "currentOwningNode": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 60000,
+        "default": 1500
+      },
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "fallbackOrSemanticDomain": "Number(raw === undefined ?1500:raw), safe0..60000",
+      "soleAuthor": "config/plugins/kubeclaw.runtime-dispatch.config.json#/profiles/<selected>/processing/targets/<authorized original resource>",
+      "admission": "schema AND current source parser relational/domain checks, exact original selected native target/resource/schema/host/model/SDK/tokenizer/tool/secret/grant receipts; no task override, default fill or alternate provider routing",
+      "lifecycle": "literal receiving dependency, not new original field ID, native behavior not-run"
+    },
+    {
+      "field": "tokenizerEncoding",
+      "currentOwningNode": {
+        "const": "o200k_base",
+        "default": "o200k_base"
+      },
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "fallbackOrSemanticDomain": "undefined -> o200k_base; current guard accepts only that one",
+      "soleAuthor": "config/plugins/kubeclaw.runtime-dispatch.config.json#/profiles/<selected>/processing/targets/<authorized original resource>",
+      "admission": "schema AND current source parser relational/domain checks, exact original selected native target/resource/schema/host/model/SDK/tokenizer/tool/secret/grant receipts; no task override, default fill or alternate provider routing",
+      "lifecycle": "literal receiving dependency, not new original field ID, native behavior not-run"
+    },
+    {
+      "field": "maxPromptBytes",
+      "currentOwningNode": {
+        "const": 900000,
+        "default": 900000
+      },
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "fallbackOrSemanticDomain": "undefined ->900000; current guard EXACT900000",
+      "soleAuthor": "config/plugins/kubeclaw.runtime-dispatch.config.json#/profiles/<selected>/processing/targets/<authorized original resource>",
+      "admission": "schema AND current source parser relational/domain checks, exact original selected native target/resource/schema/host/model/SDK/tokenizer/tool/secret/grant receipts; no task override, default fill or alternate provider routing",
+      "lifecycle": "literal receiving dependency, not new original field ID, native behavior not-run"
+    },
+    {
+      "field": "maxInputTokens",
+      "currentOwningNode": {
+        "const": 120000,
+        "default": 120000
+      },
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "fallbackOrSemanticDomain": "undefined ->120000; current guard EXACT120000",
+      "soleAuthor": "config/plugins/kubeclaw.runtime-dispatch.config.json#/profiles/<selected>/processing/targets/<authorized original resource>",
+      "admission": "schema AND current source parser relational/domain checks, exact original selected native target/resource/schema/host/model/SDK/tokenizer/tool/secret/grant receipts; no task override, default fill or alternate provider routing",
+      "lifecycle": "literal receiving dependency, not new original field ID, native behavior not-run"
+    },
+    {
+      "field": "maxOutputTokens",
+      "currentOwningNode": {
+        "const": 6000,
+        "default": 6000
+      },
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "fallbackOrSemanticDomain": "undefined ->6000; current guard EXACT6000",
+      "soleAuthor": "config/plugins/kubeclaw.runtime-dispatch.config.json#/profiles/<selected>/processing/targets/<authorized original resource>",
+      "admission": "schema AND current source parser relational/domain checks, exact original selected native target/resource/schema/host/model/SDK/tokenizer/tool/secret/grant receipts; no task override, default fill or alternate provider routing",
+      "lifecycle": "literal receiving dependency, not new original field ID, native behavior not-run"
+    },
+    {
+      "field": "maxContextTokens",
+      "currentOwningNode": {
+        "const": 128000,
+        "default": 128000
+      },
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "fallbackOrSemanticDomain": "undefined ->128000; current guard EXACT128000",
+      "soleAuthor": "config/plugins/kubeclaw.runtime-dispatch.config.json#/profiles/<selected>/processing/targets/<authorized original resource>",
+      "admission": "schema AND current source parser relational/domain checks, exact original selected native target/resource/schema/host/model/SDK/tokenizer/tool/secret/grant receipts; no task override, default fill or alternate provider routing",
+      "lifecycle": "literal receiving dependency, not new original field ID, native behavior not-run"
+    },
+    {
+      "field": "cwd",
+      "currentOwningNode": {
+        "type": "string",
+        "pattern": "^/"
+      },
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "fallbackOrSemanticDomain": "absolute starts /; canonical containment/trusted workspace actual later source guards",
+      "soleAuthor": "config/plugins/kubeclaw.runtime-dispatch.config.json#/profiles/<selected>/processing/targets/<authorized original resource>",
+      "admission": "schema AND current source parser relational/domain checks, exact original selected native target/resource/schema/host/model/SDK/tokenizer/tool/secret/grant receipts; no task override, default fill or alternate provider routing",
+      "lifecycle": "literal receiving dependency, not new original field ID, native behavior not-run"
+    },
+    {
+      "field": "repositoryRoot",
+      "currentOwningNode": {
+        "type": "string",
+        "pattern": "^/"
+      },
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "fallbackOrSemanticDomain": "absolute starts /; real immutable source identity required",
+      "soleAuthor": "config/plugins/kubeclaw.runtime-dispatch.config.json#/profiles/<selected>/processing/targets/<authorized original resource>",
+      "admission": "schema AND current source parser relational/domain checks, exact original selected native target/resource/schema/host/model/SDK/tokenizer/tool/secret/grant receipts; no task override, default fill or alternate provider routing",
+      "lifecycle": "literal receiving dependency, not new original field ID, native behavior not-run"
+    },
+    {
+      "field": "workspaceRoot",
+      "currentOwningNode": {
+        "type": "string",
+        "pattern": "^/",
+        "description": "Trusted Git workspace root required for attempt-owned runtime workspaces."
+      },
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "fallbackOrSemanticDomain": "optional absolute starts /; attempt reference must satisfy actual workspace-target source guards",
+      "soleAuthor": "config/plugins/kubeclaw.runtime-dispatch.config.json#/profiles/<selected>/processing/targets/<authorized original resource>",
+      "admission": "schema AND current source parser relational/domain checks, exact original selected native target/resource/schema/host/model/SDK/tokenizer/tool/secret/grant receipts; no task override, default fill or alternate provider routing",
+      "lifecycle": "literal receiving dependency, not new original field ID, native behavior not-run"
+    },
+    {
+      "field": "pollMs",
+      "currentOwningNode": {
+        "type": "integer",
+        "minimum": 10,
+        "default": 1000
+      },
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "fallbackOrSemanticDomain": "Number(undefined?1000:raw), safeinteger >=10",
+      "soleAuthor": "config/plugins/kubeclaw.runtime-dispatch.config.json#/profiles/<selected>/processing/targets/<authorized original resource>",
+      "admission": "schema AND current source parser relational/domain checks, exact original selected native target/resource/schema/host/model/SDK/tokenizer/tool/secret/grant receipts; no task override, default fill or alternate provider routing",
+      "lifecycle": "literal receiving dependency, not new original field ID, native behavior not-run"
+    },
+    {
+      "field": "maxPollMs",
+      "currentOwningNode": {
+        "type": "integer",
+        "minimum": 10,
+        "default": 15000
+      },
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "fallbackOrSemanticDomain": "Number(undefined?15000:raw), safeinteger >= pollMs",
+      "soleAuthor": "config/plugins/kubeclaw.runtime-dispatch.config.json#/profiles/<selected>/processing/targets/<authorized original resource>",
+      "admission": "schema AND current source parser relational/domain checks, exact original selected native target/resource/schema/host/model/SDK/tokenizer/tool/secret/grant receipts; no task override, default fill or alternate provider routing",
+      "lifecycle": "literal receiving dependency, not new original field ID, native behavior not-run"
+    },
+    {
+      "field": "maxPolls",
+      "currentOwningNode": {
+        "type": "integer",
+        "minimum": 1,
+        "default": 1800
+      },
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "fallbackOrSemanticDomain": "Number(undefined?1800:raw), positive safeinteger",
+      "soleAuthor": "config/plugins/kubeclaw.runtime-dispatch.config.json#/profiles/<selected>/processing/targets/<authorized original resource>",
+      "admission": "schema AND current source parser relational/domain checks, exact original selected native target/resource/schema/host/model/SDK/tokenizer/tool/secret/grant receipts; no task override, default fill or alternate provider routing",
+      "lifecycle": "literal receiving dependency, not new original field ID, native behavior not-run"
+    },
+    {
+      "field": "sessionTimeoutMs",
+      "currentOwningNode": {
+        "type": "integer",
+        "minimum": 10,
+        "maximum": 86400000,
+        "default": 1800000
+      },
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "fallbackOrSemanticDomain": "Number(undefined?1800000:raw), safeinteger >=pollMs and <=86400000",
+      "soleAuthor": "config/plugins/kubeclaw.runtime-dispatch.config.json#/profiles/<selected>/processing/targets/<authorized original resource>",
+      "admission": "schema AND current source parser relational/domain checks, exact original selected native target/resource/schema/host/model/SDK/tokenizer/tool/secret/grant receipts; no task override, default fill or alternate provider routing",
+      "lifecycle": "literal receiving dependency, not new original field ID, native behavior not-run"
+    },
+    {
+      "field": "resultPathPrefix",
+      "currentOwningNode": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+      },
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "fallbackOrSemanticDomain": "nonempty relative, no .. segment, trailing slash removed; later resultFile<=2048UTF8 and containment",
+      "soleAuthor": "config/plugins/kubeclaw.runtime-dispatch.config.json#/profiles/<selected>/processing/targets/<authorized original resource>",
+      "admission": "schema AND current source parser relational/domain checks, exact original selected native target/resource/schema/host/model/SDK/tokenizer/tool/secret/grant receipts; no task override, default fill or alternate provider routing",
+      "lifecycle": "literal receiving dependency, not new original field ID, native behavior not-run"
+    },
+    {
+      "field": "resultEndpoint",
+      "currentOwningNode": {
+        "type": "string",
+        "format": "uri"
+      },
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "fallbackOrSemanticDomain": "optional URL normalized paired with resultTokenSecret; actual response/HTTP grants source separately constrain usable endpoint",
+      "soleAuthor": "config/plugins/kubeclaw.runtime-dispatch.config.json#/profiles/<selected>/processing/targets/<authorized original resource>",
+      "admission": "schema AND current source parser relational/domain checks, exact original selected native target/resource/schema/host/model/SDK/tokenizer/tool/secret/grant receipts; no task override, default fill or alternate provider routing",
+      "lifecycle": "literal receiving dependency, not new original field ID, native behavior not-run"
+    },
+    {
+      "field": "resultTokenSecret",
+      "currentOwningNode": {
+        "type": "string",
+        "minLength": 1
+      },
+      "source": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "fallbackOrSemanticDomain": "optional canonical ID paired with resultEndpoint",
+      "soleAuthor": "config/plugins/kubeclaw.runtime-dispatch.config.json#/profiles/<selected>/processing/targets/<authorized original resource>",
+      "admission": "schema AND current source parser relational/domain checks, exact original selected native target/resource/schema/host/model/SDK/tokenizer/tool/secret/grant receipts; no task override, default fill or alternate provider routing",
+      "lifecycle": "literal receiving dependency, not new original field ID, native behavior not-run"
+    }
+  ],
+  "crossFieldRelations": [
+    "maxPollMs>=pollMs",
+    "sessionTimeoutMs>=pollMs and <=86400000",
+    "maxInputTokens+maxOutputTokens<=maxContextTokens, current fixed tuple",
+    "collectorMode true only subagent",
+    "controllerSessionKey exact actual agentId prefix",
+    "resultEndpoint/resultTokenSecret paired",
+    "real target ID in exact retained R map AND actual original native grant",
+    "actual prompt wrapper bytes<=900000/input actual o200k<=120000/input+6000<=128000 before spawn",
+    "runtimePromptBudget encoding exact target; output cap equal, reserved actual measured<=declared limits, deadline absolute remaining, original native ceilings also required",
+    "returned output o200k count <= min(target cap,declared cap) AFTER generation; no provider stopping/native resource proof",
+    "Runtime08 cost/wall/throughput/quote fields remain estimates and separately reviewed domain dependency, no cap widening or native replenishment"
+  ]
+}

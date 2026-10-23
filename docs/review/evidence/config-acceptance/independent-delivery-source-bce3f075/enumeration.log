@@ -1,0 +1,10 @@
+{
+  "sourceFiles": 649,
+  "lexicalCandidates": 26622,
+  "yamlJsonLeaves": 42294,
+  "parseFailures": 0,
+  "listedSourceFiles": 312,
+  "currentChartOverlayLeaves": 1470,
+  "currentChartOverlayUnmatchedCoordinates": 701,
+  "limits": "Full conservative source obligations, not automatic settings counts or omitted-settings conclusions. Generated releases, schemas/task data/examples and lexical false positives need checked dispositions; all supplied leaf domains and dynamic refs remain separate."
+}

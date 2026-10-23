@@ -1,0 +1,58 @@
+{
+  "checks": [
+    {
+      "id": "proposal",
+      "passed": true
+    },
+    {
+      "id": "independentFinding",
+      "passed": true
+    },
+    {
+      "id": "originalProposal",
+      "passed": true
+    },
+    {
+      "id": "historicalJournalEvidence",
+      "passed": true
+    },
+    {
+      "id": "unchangedCurrentCheck",
+      "passed": true
+    },
+    {
+      "id": "unchangedCurrentLog",
+      "passed": true
+    },
+    {
+      "id": "exact-original-proposal-snapshot-matches-first-review",
+      "passed": true
+    },
+    {
+      "id": "unchanged-source-control:docs/review/evidence/config-acceptance/author/check-nova-journal-binding-seam.mjs",
+      "passed": true
+    },
+    {
+      "id": "unchanged-source-control:docs/review/evidence/config-acceptance/author/nova-journal-binding-seam-attempt1-20261013.log",
+      "passed": true
+    },
+    {
+      "id": "unchanged-source-control:docs/review/evidence/config-acceptance/author/nova-journal-binding-seam-identities-20261013.json",
+      "passed": true
+    },
+    {
+      "id": "unchanged-source-control:skills/nova/core/state/journal.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged-source-control:skills/nova/core/execution/run-mutation.ts",
+      "passed": true
+    },
+    {
+      "id": "unchanged-source-control:skills/nova/core/telemetry/observers.ts",
+      "passed": true
+    }
+  ],
+  "passed": 13,
+  "scope": "Exact hash/history/sourceidentity controls, no runtimeacceptance"
+}

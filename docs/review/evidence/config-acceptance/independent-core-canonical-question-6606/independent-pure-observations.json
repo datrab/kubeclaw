@@ -1,0 +1,162 @@
+{
+  "scope": "fresh independent exact unchanged pure readers and source wire regex, controlled isolated ENV helper only; source transformations limited TypeScript erasure of exact single pure function. No host/image/API/grant/model/credential/action or C1 target implementation; no F-MUT",
+  "observations": [
+    {
+      "id": "secret-raw-count-boundary-0",
+      "result": "passed",
+      "value": {
+        "cap": 0,
+        "positiveRaw": 0,
+        "negativeRaw": 1,
+        "rawDuplicatesStillCount": true,
+        "scope": "actual generic helper only; productive readRequest still32"
+      }
+    },
+    {
+      "id": "secret-raw-count-boundary-1",
+      "result": "passed",
+      "value": {
+        "cap": 1,
+        "positiveRaw": 1,
+        "negativeRaw": 2,
+        "rawDuplicatesStillCount": true,
+        "scope": "actual generic helper only; productive readRequest still32"
+      }
+    },
+    {
+      "id": "secret-raw-count-boundary-16",
+      "result": "passed",
+      "value": {
+        "cap": 16,
+        "positiveRaw": 16,
+        "negativeRaw": 17,
+        "rawDuplicatesStillCount": true,
+        "scope": "actual generic helper only; productive readRequest still32"
+      }
+    },
+    {
+      "id": "secret-raw-count-boundary-32",
+      "result": "passed",
+      "value": {
+        "cap": 32,
+        "positiveRaw": 32,
+        "negativeRaw": 33,
+        "rawDuplicatesStillCount": true,
+        "scope": "actual generic helper only; productive readRequest still32"
+      }
+    },
+    {
+      "id": "secret-member-shape-negative-restored",
+      "result": "passed"
+    },
+    {
+      "id": "ownership-current-byte-boundary-null",
+      "result": "passed",
+      "value": {
+        "bytes": 332,
+        "negative": 331,
+        "omittedArgumentCurrentlyAccepted": true,
+        "noDeployedRoleProfile": true
+      }
+    },
+    {
+      "id": "ownership-current-byte-boundary-actual-host-fixture",
+      "result": "passed",
+      "value": {
+        "bytes": 95,
+        "negative": 94,
+        "omittedArgumentCurrentlyAccepted": true,
+        "noDeployedRoleProfile": true
+      }
+    },
+    {
+      "id": "image-exact-upstream-ascii-wire-and-core-2047",
+      "result": "passed",
+      "value": {
+        "bytes": 2047,
+        "utf16": 2047,
+        "codepoints": 2047,
+        "notInstalledPullableImage": true
+      }
+    },
+    {
+      "id": "image-exact-upstream-ascii-wire-and-core-2048",
+      "result": "passed",
+      "value": {
+        "bytes": 2048,
+        "utf16": 2048,
+        "codepoints": 2048,
+        "notInstalledPullableImage": true
+      }
+    },
+    {
+      "id": "image2049-negative-restored-and-Core-opaque-distinct",
+      "result": "passed"
+    },
+    {
+      "id": "computedENV-controlled-pure-reader-BUSTER_PREPARATION_ASSIGNED_INPUT_BYTES",
+      "result": "passed",
+      "value": {
+        "actualHelperExactSource": true,
+        "noActualProcessEnvironmentRead": true,
+        "noHostExecution": true
+      }
+    },
+    {
+      "id": "computedENV-controlled-pure-reader-BUSTER_PREPARATION_ASSIGNED_SOURCE_ROOT",
+      "result": "passed",
+      "value": {
+        "actualHelperExactSource": true,
+        "noActualProcessEnvironmentRead": true,
+        "noHostExecution": true
+      }
+    },
+    {
+      "id": "computedENV-controlled-pure-reader-KUBECLAW_NATIVE_SCOPE",
+      "result": "passed",
+      "value": {
+        "actualHelperExactSource": true,
+        "noActualProcessEnvironmentRead": true,
+        "noHostExecution": true
+      }
+    },
+    {
+      "id": "computedENV-controlled-pure-reader-BUSTER_PREPARATION_ASSIGNED_SOURCE_AUTHORITY",
+      "result": "passed",
+      "value": {
+        "actualHelperExactSource": true,
+        "noActualProcessEnvironmentRead": true,
+        "noHostExecution": true
+      }
+    },
+    {
+      "id": "computedENV-controlled-pure-reader-BUSTER_PREPARATION_ASSIGNED_SOURCE_PUBLIC_KEY",
+      "result": "passed",
+      "value": {
+        "actualHelperExactSource": true,
+        "noActualProcessEnvironmentRead": true,
+        "noHostExecution": true
+      }
+    },
+    {
+      "id": "computedENV-controlled-pure-reader-BUSTER_PREPARATION_ASSIGNED_TAR",
+      "result": "passed",
+      "value": {
+        "actualHelperExactSource": true,
+        "noActualProcessEnvironmentRead": true,
+        "noHostExecution": true
+      }
+    }
+  ],
+  "passed": 16,
+  "failed": 0,
+  "identities": {
+    "skills/buster/engine/test-gates/kubernetes-fixture-values.ts": "bf0d1b34c387395c58be0b171741e2e338ec6f25449bdad4fbf2aeb3ff40f6ad",
+    "skills/worker/core/worker/ownership-capacity.ts": "4ff8bec1986def8a064b10e5e3ab1d1f3d6a4af0871ec5135f49903670aff309",
+    "skills/buster/engine/test-gates/kubernetes-runtime-security.ts": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004",
+    "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45",
+    "skills/buster/engine/test-gates/preparation-host.ts": "960f4605605171a5c1745144321995c91dc9f571926d497df278f9f2974c7fcc",
+    "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/independent-core-canonical-question-6606/check-independent-pure.mjs": "afa1b0d062f9f61eb5e35fc06d1b8f74f64a9453c77393347c67fbbd12aac2b2",
+    "package-lock.json": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "method": "actual current exported productive predicates, no GitHub workflow, git history fixture, build or deployment executed",
+  "command": "node docs/review/evidence/config-acceptance/delivery/run-build-input-definitions.mjs",
+  "source": {
+    "path": "scripts/updates/runtime-inputs.mjs",
+    "sha256": "d846f387b74d9cd71cb7b4515eb99da238fb1ce54b072525a075ec0ed299232a"
+  },
+  "commandSourceSha256": "747b527f457c3d3f40017d09fa7bfa6a2309aa0be4832227dc6a7d7c7686b0c4",
+  "rows": [
+    {
+      "path": "pipeline.config.json",
+      "imageInput": false,
+      "deploymentInput": false
+    },
+    {
+      "path": "pipeline.json",
+      "imageInput": false,
+      "deploymentInput": false
+    },
+    {
+      "path": "swarm.config.json",
+      "imageInput": false,
+      "deploymentInput": false
+    },
+    {
+      "path": "config/prism/control/default.json",
+      "imageInput": false,
+      "deploymentInput": false
+    },
+    {
+      "path": "charts/kubeclaw/files/config/swarm.config.json",
+      "imageInput": false,
+      "deploymentInput": true
+    },
+    {
+      "path": "charts/kubeclaw/files/config/prism-control.config.json",
+      "imageInput": false,
+      "deploymentInput": true
+    },
+    {
+      "path": "charts/prism/values.yaml",
+      "imageInput": false,
+      "deploymentInput": true
+    },
+    {
+      "path": "versions.json",
+      "imageInput": true,
+      "deploymentInput": true
+    },
+    {
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "imageInput": true,
+      "deploymentInput": true
+    },
+    {
+      "path": ".dockerignore",
+      "imageInput": true,
+      "deploymentInput": true
+    },
+    {
+      "path": "scripts/render-native-worker-node.mjs",
+      "imageInput": false,
+      "deploymentInput": false
+    },
+    {
+      "path": "my-values/infra/native-worker-pools.yaml",
+      "imageInput": false,
+      "deploymentInput": false
+    },
+    {
+      "path": "my-values/prism-values.yaml",
+      "imageInput": false,
+      "deploymentInput": true
+    },
+    {
+      "path": "releases/runtime-images.json",
+      "imageInput": false,
+      "deploymentInput": false
+    },
+    {
+      "path": "packaging/runtime/prism.json",
+      "imageInput": false,
+      "deploymentInput": true
+    }
+  ],
+  "node": "v24.21.0",
+  "target": "C1 new entry/profile/generation path must reach intended real filters; current false is source counterexample, not target runtime result"
+}

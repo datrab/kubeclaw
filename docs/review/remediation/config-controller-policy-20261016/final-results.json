@@ -1,0 +1,45 @@
+[
+  {
+    "command": [
+      "gofmt",
+      "-w",
+      "cmd/buster-namespace-controller/demo-product.go",
+      "cmd/buster-namespace-controller/controller-policy_test.go"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-controller-policy-20261016/final-0.txt"
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "./cmd/buster-namespace-controller"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-controller-policy-20261016/final-1.txt",
+    "tests": {
+      "pass": 118,
+      "fail": 0,
+      "skip": 0
+    }
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/deployment/buster-central-delivery.test.mjs"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-controller-policy-20261016/final-2.txt"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-controller-policy-20261016/final-3.txt"
+  }
+]

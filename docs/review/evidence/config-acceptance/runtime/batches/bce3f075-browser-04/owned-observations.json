@@ -1,0 +1,545 @@
+{
+  "caseId": "RT-C0-BCE3F075-BROWSER04-OWNED-DOMAIN",
+  "command": "node docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/check-owned.mjs",
+  "node": "v24.21.0",
+  "sourceDigests": {
+    "skills/common/plugin-runtime/foundation/registry/schema.ts": "eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557"
+  },
+  "testDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/check-owned.mjs": "c061f7db5aa283c382e521d5788e0fc05637bfdd025981e0800cd381719c3e2d"
+  },
+  "inputDigests": {
+    "skills/buster/plugins/lighthouse/schemas/config.schema.json": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958",
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-policy-controls.json": "cf5407fa7d9def83517cef24554df6c1db9ce61f38b437a0f6acc66ec5c3262f",
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/owned-semantic-obligations.json": "9d3f6994cb20c47b07dc275f1764e837be30c45ef77f208eec86ba2152c74aba",
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/lighthouse-owned.schema.json": "fe6ce32d9eb1023f8da3b5cb9686d0eee554a07b1be3016341d7ef595798808d",
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/axe-owned.schema.json": "d90bcc245eb9100f2a493942bc446ea5c82e1a8d5187ead62068e00c90926bb6",
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/visual-owned.schema.json": "73d973872023e7c86b19c800e0bb9c4d7b952c111cac00cd9beacc4d6b6dbda9",
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/playwright-owned.schema.json": "e8f28be71d3a27a2659125dd7131e9e8f69061423d1a93bd039fc54beb0e36a6"
+  },
+  "observations": [
+    {
+      "setting": "RT-dab100380f6a024f",
+      "provider": "axe",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-6776ec7160ea0036",
+      "provider": "axe",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-b6eb30fbf6be03e1",
+      "provider": "axe",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-0d37b61a9e8bc451",
+      "provider": "axe",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-ce85d1e95781cb1b",
+      "provider": "axe",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-735e529045f176ca",
+      "provider": "axe",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-6053515db8e5f294",
+      "provider": "axe",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-b523246a8e584359",
+      "provider": "axe",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-0f8819569bb41402",
+      "provider": "axe",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-bb8352234e6c6200",
+      "provider": "axe",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-e32df097509e32fe",
+      "provider": "axe",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-ea6c994234263250",
+      "provider": "axe",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-3d366b22c4baadb6",
+      "provider": "axe",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-ace0dff341a51674",
+      "provider": "axe",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-e2d010126067fa17",
+      "provider": "axe",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-36d7d882e2bd6da2",
+      "provider": "axe",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-a31018709bf73a5c",
+      "provider": "axe",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-3eeda647e60d7d1b",
+      "provider": "axe",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-28216d3eec81ad18",
+      "provider": "axe",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-45cbcce6c9a8143a",
+      "provider": "lighthouse",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-c5c2b774e067d6c3",
+      "provider": "lighthouse",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-f513e45a2c34c183",
+      "provider": "lighthouse",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-91356268eda2cde6",
+      "provider": "lighthouse",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-9bca7a8727abb08f",
+      "provider": "lighthouse",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-b8fe49d2862e13fe",
+      "provider": "lighthouse",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-c245ed3eed7a76c8",
+      "provider": "lighthouse",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-858b7c0d83228aea",
+      "provider": "lighthouse",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-d1ed31f756f931f4",
+      "provider": "lighthouse",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-91b918f8698f70dd",
+      "provider": "lighthouse",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-8138a8b093bfc06d",
+      "provider": "lighthouse",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-323256cac3d5065d",
+      "provider": "lighthouse",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-398b1cee6b5ad261",
+      "provider": "lighthouse",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-1412bca48fc1b08d",
+      "provider": "lighthouse",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-bfc739d422a140ce",
+      "provider": "lighthouse",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-088d813a8d6ff7ca",
+      "provider": "lighthouse",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-a8b0c90a7a729d20",
+      "provider": "lighthouse",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-14d3d815490102e1",
+      "provider": "lighthouse",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-97dfffc2083d51ea",
+      "provider": "lighthouse",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-480d76acac6850a9",
+      "provider": "lighthouse",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-f6fd1dec2d2c6b35",
+      "provider": "playwright",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-d17ed366e09f9e72",
+      "provider": "playwright",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-0960971aa584ed2a",
+      "provider": "playwright",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-c226799a77c2da3b",
+      "provider": "playwright",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-fbdecaab60720898",
+      "provider": "playwright",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-d46f4334df4967fa",
+      "provider": "playwright",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-e4dcfff9aa6b1ef0",
+      "provider": "playwright",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-28f9b2da06d59a77",
+      "provider": "playwright",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-d348d41c2ab35c8b",
+      "provider": "playwright",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-42fd37c34f097e2d",
+      "provider": "visual",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-4003eb10ed91148b",
+      "provider": "visual",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-7055bd224779ebc9",
+      "provider": "visual",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-e044f6419f72c0e0",
+      "provider": "visual",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-bf905e47ed35863a",
+      "provider": "visual",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-165dd3d0da855565",
+      "provider": "visual",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-1ef5ab4a60156159",
+      "provider": "visual",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-e747f65a9f069ccd",
+      "provider": "visual",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-9bc4832efb4988b7",
+      "provider": "visual",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-fe646415d23cc642",
+      "provider": "visual",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-6e3cc348f44734f5",
+      "provider": "visual",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-be3717baf421a9dd",
+      "provider": "visual",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-fa24eda72114411c",
+      "provider": "visual",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-d57032dd890b6f18",
+      "provider": "visual",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-3f0dfb808c23e5e0",
+      "provider": "visual",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-086164702f20b582",
+      "provider": "visual",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-b1bebfd3aa463e09",
+      "provider": "visual",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "missingNullUnknownRetiredSelectorReject": true,
+      "result": "passed"
+    }
+  ],
+  "result": "passed",
+  "scope": "proposed strict singlebusinessowner schemas/refs/coverage definitions only, not real productive target loader, installedbrowser/profile/role/baseline/JSproject compatibility or original EFFECT/mutation acceptance. Stricterall4Lighthousebudget fields and no omittedperformancebudget unapproved/reviewer disposition required.",
+  "reviewerConfirmation": "pending"
+}

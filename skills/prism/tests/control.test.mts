@@ -3,13 +3,13 @@ import test from "node:test";
 import { exchangeTailscaleIdentity, mintSession, verifySession } from "../control/session.ts";
 
 test("Tailscale exchange requires the trusted ingress path", () => {
-  assert.throws(() => exchangeTailscaleIdentity({ "tailscale-user-login": "davide" }, "edge", "session"), /untrusted/);
-  const token = exchangeTailscaleIdentity({ "tailscale-user-login": "davide", "x-prism-ingress-secret": "edge" }, "edge", "session");
+  assert.throws(() => exchangeTailscaleIdentity({ "tailscale-user-login": "davide" }, "edge", "session", 900), /untrusted/);
+  const token = exchangeTailscaleIdentity({ "tailscale-user-login": "davide", "x-prism-ingress-secret": "edge" }, "edge", "session", 900);
   assert.equal(verifySession(token, "session").user, "davide");
   assert.deepEqual(verifySession(token, "session").roles, ["editor"]);
 });
 test("session signatures and expiry fail closed", () => {
-  const token = mintSession("davide", "secret", 1_000);
+  const token = mintSession("davide", "secret", 900, 1_000);
   assert.throws(() => verifySession(`${token}x`, "secret", 2_000), /invalid/);
   assert.throws(() => verifySession(token, "secret", 1_000 + 16 * 60_000), /expired/);
 });

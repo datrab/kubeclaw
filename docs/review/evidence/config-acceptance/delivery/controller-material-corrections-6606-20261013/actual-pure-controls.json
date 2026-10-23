@@ -1,0 +1,839 @@
+{
+  "scope": "actual PURE own schema/field/hash/synthetic-crypto/source/preservation controls; NO Go/native/API/provider/authority/module/acceptance evidence",
+  "sourceDigests": {
+    "cmd/buster-namespace-controller/demo-readiness.go": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+    "cmd/buster-namespace-controller/demo-readiness_test.go": "74749508416be24525cf5713fd771760517499d254dcfd064c4030b8bc4c6e42",
+    "cmd/buster-namespace-controller/demo-readiness-sources.go": "d1aca629a3c5c739e84a9116a95af6d0a0bbc7b0782cc0b0ee680a004f621628",
+    "cmd/buster-namespace-controller/demo-readiness-lifecycle.go": "6c79d6dd6d94ed7df8903c2d617eeec2574bb9789bf6ac2c0c34d6059a8c8ba2",
+    "cmd/buster-namespace-controller/demo-retention.go": "4a173d7f2012e8c9d58a0c2f93ceda77629bacac384e5f56fdbec9c459a7c2a7",
+    "cmd/buster-namespace-controller/demo-product.go": "127c82f150c8277a931ae9fba701b7a1c6cc368d9e8290f9fb2082efd74cc49c",
+    "cmd/buster-namespace-controller/main.go": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+    "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/apis/core/validation/validation.go": "a9caab845cd895822bcdca6d3564022feb609a87a459c4e9c1a4e5fc7eebc80f",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/staging/src/k8s.io/apimachinery/pkg/util/validation/validation.go": "5f4d8a4753853905faa387c0e8009a8d72900db24bb6b535de2eefcaeb30d8e2",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/staging/src/k8s.io/apimachinery/pkg/api/validation/generic.go": "2c59b38f0a3ba3f3d09ccd1ebf0114a2e0c6f6acaad81aa3c12f2a3a075b6b78",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/pkg/apis/core/validation/validation.go": "4b263eff73f9da9bbc288cef5052a20d599d57e15474ad91662a9c45b7a19aa1",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/staging/src/k8s.io/apimachinery/pkg/util/validation/validation.go": "5c2a8c1bbe4916bcb0db626b5249ca83b7510b0e338978e6aab9bb8f6cd1a32f",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/staging/src/k8s.io/apimachinery/pkg/api/validation/generic.go": "459f759b7f8f4938b5ac2f2b420c1dd0dcf808044ad167ad213bb71a55238eda"
+  },
+  "readyStateRequiredKeys": [
+    "retentionSeconds",
+    "namespace",
+    "schemaVersion",
+    "state",
+    "requestId",
+    "requestDigest",
+    "readyAt",
+    "expiresAt",
+    "runId",
+    "sourceRevision",
+    "candidateDigest",
+    "decisionDigest",
+    "resultDigest",
+    "leaseUID",
+    "immutableImage",
+    "manifestDigest",
+    "credentialDigest",
+    "secretUID",
+    "url",
+    "previousOwner",
+    "owner",
+    "exposureGeneration",
+    "exposureSpec",
+    "receipt"
+  ],
+  "productReceiptRequiredKeys": [
+    "schemaVersion",
+    "decisionId",
+    "payloadDigest",
+    "action",
+    "leaseName",
+    "leaseUID",
+    "readyDigest",
+    "generation",
+    "actorId",
+    "issuer",
+    "appliedAt",
+    "previousExpiry",
+    "expiresAt",
+    "state",
+    "envelope"
+  ],
+  "records": [
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-POLICY-A",
+      "result": "passed",
+      "observation": {
+        "meaning": "own policy schema+distinct producer; not TokenReview/RBAC identity"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-POLICY-B",
+      "result": "passed",
+      "observation": {
+        "meaning": "own policy schema+distinct producer; not TokenReview/RBAC identity"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-BUSTER_READY_PRODUCER-INVALID-0",
+      "result": "passed",
+      "observation": {
+        "invalidPublicPrincipal": "",
+        "scope": "schema syntax only"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-BUSTER_READY_PRODUCER-INVALID-1",
+      "result": "passed",
+      "observation": {
+        "invalidPublicPrincipal": "not-a-serviceaccount",
+        "scope": "schema syntax only"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-BUSTER_READY_PRODUCER-INVALID-2",
+      "result": "passed",
+      "observation": {
+        "invalidPublicPrincipal": "system:serviceaccount::nova",
+        "scope": "schema syntax only"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-BUSTER_READY_PRODUCER-INVALID-3",
+      "result": "passed",
+      "observation": {
+        "invalidPublicPrincipal": "system:serviceaccount:ns:",
+        "scope": "schema syntax only"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-BUSTER_READY_PRODUCER-INVALID-4",
+      "result": "passed",
+      "observation": {
+        "invalidPublicPrincipal": "system:serviceaccount:ns:nova:extra",
+        "scope": "schema syntax only"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-BUSTER_READY_PRODUCER-INVALID-5",
+      "result": "passed",
+      "observation": {
+        "invalidPublicPrincipal": "system:serviceaccount:NS:nova",
+        "scope": "schema syntax only"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-BUSTER_READY_PRODUCER-INVALID-6",
+      "result": "passed",
+      "observation": {
+        "invalidPublicPrincipal": "system:serviceaccount:ns:nova_1",
+        "scope": "schema syntax only"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-BUSTER_READY_PRODUCER-INVALID-7",
+      "result": "passed",
+      "observation": {
+        "invalidPublicPrincipal": "system:serviceaccount:ns.:nova",
+        "scope": "schema syntax only"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-BUSTER_READY_PRODUCER-INVALID-8",
+      "result": "passed",
+      "observation": {
+        "invalidPublicPrincipal": "system:serviceaccount:ns:nova..one",
+        "scope": "schema syntax only"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-BUSTER_READY_PRODUCER-INVALID-9",
+      "result": "passed",
+      "observation": {
+        "invalidPublicPrincipal": "system:serviceaccount:ns:-nova",
+        "scope": "schema syntax only"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-BUSTER_READY_PRODUCER-INVALID-10",
+      "result": "passed",
+      "observation": {
+        "invalidPublicPrincipal": "system:serviceaccount:nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn:nova",
+        "scope": "schema syntax only"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-BUSTER_READY_PRODUCER-INVALID-11",
+      "result": "passed",
+      "observation": {
+        "invalidPublicPrincipal": "system:serviceaccount:ns:ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
+        "scope": "schema syntax only"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-BUSTER_READY_PRODUCER-INVALID-12",
+      "result": "passed",
+      "observation": {
+        "invalidPublicPrincipal": "system:serviceaccount:ns:nova\n",
+        "scope": "schema syntax only"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-BUSTER_READY_PRODUCER-MISSING",
+      "result": "passed",
+      "observation": {}
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-BUSTER_READY_PRODUCER-MAX-BOUNDARY",
+      "result": "passed",
+      "observation": {
+        "namespace": 63,
+        "serviceAccount": 253
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-BUSTER_PRODUCT_PRODUCER-INVALID-0",
+      "result": "passed",
+      "observation": {
+        "invalidPublicPrincipal": "",
+        "scope": "schema syntax only"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-BUSTER_PRODUCT_PRODUCER-INVALID-1",
+      "result": "passed",
+      "observation": {
+        "invalidPublicPrincipal": "not-a-serviceaccount",
+        "scope": "schema syntax only"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-BUSTER_PRODUCT_PRODUCER-INVALID-2",
+      "result": "passed",
+      "observation": {
+        "invalidPublicPrincipal": "system:serviceaccount::nova",
+        "scope": "schema syntax only"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-BUSTER_PRODUCT_PRODUCER-INVALID-3",
+      "result": "passed",
+      "observation": {
+        "invalidPublicPrincipal": "system:serviceaccount:ns:",
+        "scope": "schema syntax only"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-BUSTER_PRODUCT_PRODUCER-INVALID-4",
+      "result": "passed",
+      "observation": {
+        "invalidPublicPrincipal": "system:serviceaccount:ns:nova:extra",
+        "scope": "schema syntax only"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-BUSTER_PRODUCT_PRODUCER-INVALID-5",
+      "result": "passed",
+      "observation": {
+        "invalidPublicPrincipal": "system:serviceaccount:NS:nova",
+        "scope": "schema syntax only"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-BUSTER_PRODUCT_PRODUCER-INVALID-6",
+      "result": "passed",
+      "observation": {
+        "invalidPublicPrincipal": "system:serviceaccount:ns:nova_1",
+        "scope": "schema syntax only"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-BUSTER_PRODUCT_PRODUCER-INVALID-7",
+      "result": "passed",
+      "observation": {
+        "invalidPublicPrincipal": "system:serviceaccount:ns.:nova",
+        "scope": "schema syntax only"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-BUSTER_PRODUCT_PRODUCER-INVALID-8",
+      "result": "passed",
+      "observation": {
+        "invalidPublicPrincipal": "system:serviceaccount:ns:nova..one",
+        "scope": "schema syntax only"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-BUSTER_PRODUCT_PRODUCER-INVALID-9",
+      "result": "passed",
+      "observation": {
+        "invalidPublicPrincipal": "system:serviceaccount:ns:-nova",
+        "scope": "schema syntax only"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-BUSTER_PRODUCT_PRODUCER-INVALID-10",
+      "result": "passed",
+      "observation": {
+        "invalidPublicPrincipal": "system:serviceaccount:nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn:nova",
+        "scope": "schema syntax only"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-BUSTER_PRODUCT_PRODUCER-INVALID-11",
+      "result": "passed",
+      "observation": {
+        "invalidPublicPrincipal": "system:serviceaccount:ns:ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
+        "scope": "schema syntax only"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-BUSTER_PRODUCT_PRODUCER-INVALID-12",
+      "result": "passed",
+      "observation": {
+        "invalidPublicPrincipal": "system:serviceaccount:ns:nova\n",
+        "scope": "schema syntax only"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-BUSTER_PRODUCT_PRODUCER-MISSING",
+      "result": "passed",
+      "observation": {}
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-BUSTER_PRODUCT_PRODUCER-MAX-BOUNDARY",
+      "result": "passed",
+      "observation": {
+        "namespace": 63,
+        "serviceAccount": 253
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-DISTINCT-PRODUCERS",
+      "result": "passed",
+      "observation": {}
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-RESTORED-PRODUCERS",
+      "result": "passed",
+      "observation": {}
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-TEMPLATE-ordinary-default",
+      "result": "passed",
+      "observation": {
+        "mode": "ordinary-default",
+        "scope": "public fixedT0 structural template, NOT native-positive/generated-credential/authentic receipt fixture",
+        "unresolvedNativePrerequisites": [
+          "native generatedCredentials full proof + Secret bytes remain memory-only",
+          "actual namespace/SA/lease/ingress/secret UID/RV and authority receipts",
+          "source previewExposureSpec/previewIngress exact generated object + labels/digest",
+          "Product public key + raw signed envelope if applicable; no private key export",
+          "CAS current UID/resourceVersion and typed state proposal installed definition if applicable"
+        ]
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-TEMPLATE-ordinary-explicit",
+      "result": "passed",
+      "observation": {
+        "mode": "ordinary-explicit",
+        "scope": "public fixedT0 structural template, NOT native-positive/generated-credential/authentic receipt fixture",
+        "unresolvedNativePrerequisites": [
+          "native generatedCredentials full proof + Secret bytes remain memory-only",
+          "actual namespace/SA/lease/ingress/secret UID/RV and authority receipts",
+          "source previewExposureSpec/previewIngress exact generated object + labels/digest",
+          "Product public key + raw signed envelope if applicable; no private key export",
+          "CAS current UID/resourceVersion and typed state proposal installed definition if applicable"
+        ]
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-TEMPLATE-ready-v1",
+      "result": "passed",
+      "observation": {
+        "mode": "ready-v1",
+        "scope": "public fixedT0 structural template, NOT native-positive/generated-credential/authentic receipt fixture",
+        "unresolvedNativePrerequisites": [
+          "native generatedCredentials full proof + Secret bytes remain memory-only",
+          "actual namespace/SA/lease/ingress/secret UID/RV and authority receipts",
+          "source previewExposureSpec/previewIngress exact generated object + labels/digest",
+          "Product public key + raw signed envelope if applicable; no private key export",
+          "CAS current UID/resourceVersion and typed state proposal installed definition if applicable"
+        ]
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-TEMPLATE-ready-v2",
+      "result": "passed",
+      "observation": {
+        "mode": "ready-v2",
+        "scope": "public fixedT0 structural template, NOT native-positive/generated-credential/authentic receipt fixture",
+        "unresolvedNativePrerequisites": [
+          "native generatedCredentials full proof + Secret bytes remain memory-only",
+          "actual namespace/SA/lease/ingress/secret UID/RV and authority receipts",
+          "source previewExposureSpec/previewIngress exact generated object + labels/digest",
+          "Product public key + raw signed envelope if applicable; no private key export",
+          "CAS current UID/resourceVersion and typed state proposal installed definition if applicable"
+        ]
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-TEMPLATE-product-extended",
+      "result": "passed",
+      "observation": {
+        "mode": "product-extended",
+        "scope": "public fixedT0 structural template, NOT native-positive/generated-credential/authentic receipt fixture",
+        "unresolvedNativePrerequisites": [
+          "native generatedCredentials full proof + Secret bytes remain memory-only",
+          "actual namespace/SA/lease/ingress/secret UID/RV and authority receipts",
+          "source previewExposureSpec/previewIngress exact generated object + labels/digest",
+          "Product public key + raw signed envelope if applicable; no private key export",
+          "CAS current UID/resourceVersion and typed state proposal installed definition if applicable"
+        ]
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-TEMPLATE-deleting",
+      "result": "passed",
+      "observation": {
+        "mode": "deleting",
+        "scope": "public fixedT0 structural template, NOT native-positive/generated-credential/authentic receipt fixture",
+        "unresolvedNativePrerequisites": [
+          "native generatedCredentials full proof + Secret bytes remain memory-only",
+          "actual namespace/SA/lease/ingress/secret UID/RV and authority receipts",
+          "source previewExposureSpec/previewIngress exact generated object + labels/digest",
+          "Product public key + raw signed envelope if applicable; no private key export",
+          "CAS current UID/resourceVersion and typed state proposal installed definition if applicable"
+        ]
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-CLEANUP-MISSING",
+      "result": "passed",
+      "observation": {}
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-CLEANUP-NEW-B-DEADLINE",
+      "result": "passed",
+      "observation": {}
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-CLEANUP-REPLACEMENT-UID",
+      "result": "passed",
+      "observation": {}
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-EPOCH-CHANGED",
+      "result": "passed",
+      "observation": {}
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-CLEANUP-UNKNOWN-LATEST",
+      "result": "passed",
+      "observation": {}
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-CLEANUP-INVALID-CALENDAR",
+      "result": "passed",
+      "observation": {}
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-CLEANUP-CONFIRMED-WITHOUT-READBACK",
+      "result": "passed",
+      "observation": {}
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-CLEANUP-RESTORED",
+      "result": "passed",
+      "observation": {}
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-CLEANUP-ORIGINAL-NANOSECOND-PRECISION",
+      "result": "passed",
+      "observation": {
+        "meaning": "UTC original precision retained, no rounding/truncation/rebase"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-CLEANUP-SUBMILLISECOND-DEADLINE-DRIFT-REJECT",
+      "result": "passed",
+      "observation": {}
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-TYPED-API-KEY-ORDER-NOT-FROZEN-BYTE-IDENTITY",
+      "result": "passed",
+      "observation": {
+        "meaning": "compare decoded immutable fields structurally; hash only captured original blob bytes, never serialize current API key order to invent new epoch identity"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-retentionSeconds",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "retentionSeconds"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-namespace",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "namespace"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-schemaVersion",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "schemaVersion"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-state",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "state"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-requestId",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "requestId"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-requestDigest",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "requestDigest"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-readyAt",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "readyAt"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-expiresAt",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "expiresAt"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-runId",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "runId"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-sourceRevision",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "sourceRevision"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-candidateDigest",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "candidateDigest"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-decisionDigest",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "decisionDigest"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-resultDigest",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "resultDigest"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-leaseUID",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "leaseUID"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-immutableImage",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "immutableImage"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-manifestDigest",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "manifestDigest"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-credentialDigest",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "credentialDigest"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-secretUID",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "secretUID"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-url",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "url"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-previousOwner",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "previousOwner"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-owner",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "owner"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-exposureGeneration",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "exposureGeneration"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-exposureSpec",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "exposureSpec"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-READY-REQUIRED-receipt",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "receipt"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-PRODUCT-REQUIRED-schemaVersion",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "schemaVersion"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-PRODUCT-REQUIRED-decisionId",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "decisionId"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-PRODUCT-REQUIRED-payloadDigest",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "payloadDigest"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-PRODUCT-REQUIRED-action",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "action"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-PRODUCT-REQUIRED-leaseName",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "leaseName"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-PRODUCT-REQUIRED-leaseUID",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "leaseUID"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-PRODUCT-REQUIRED-readyDigest",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "readyDigest"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-PRODUCT-REQUIRED-generation",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "generation"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-PRODUCT-REQUIRED-actorId",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "actorId"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-PRODUCT-REQUIRED-issuer",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "issuer"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-PRODUCT-REQUIRED-appliedAt",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "appliedAt"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-PRODUCT-REQUIRED-previousExpiry",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "previousExpiry"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-PRODUCT-REQUIRED-expiresAt",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "expiresAt"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-PRODUCT-REQUIRED-state",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "state"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-PRODUCT-REQUIRED-envelope",
+      "result": "passed",
+      "observation": {
+        "sourceMember": "envelope"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-CAS-EXACT-READBACK",
+      "result": "passed",
+      "observation": {
+        "meaning": "own proposal relational predicate, no API effects"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-CAS-STALE-BASE",
+      "result": "passed",
+      "observation": {}
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-CAS-REPLACEMENT-LEASE",
+      "result": "passed",
+      "observation": {}
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-CAS-PRUNED-LIFECYCLE",
+      "result": "passed",
+      "observation": {}
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-CAS-RETURNED-DIFFERENT-EPOCH",
+      "result": "passed",
+      "observation": {}
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-PRODUCT-ACTION-MISSING",
+      "result": "passed",
+      "observation": {
+        "source": "productDeadline ignores record without action extend; definition must not count this extension"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-READY-RECEIPT-MISSING",
+      "result": "passed",
+      "observation": {}
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-ORIGINAL-SYNTHETIC-SIGNATURE",
+      "result": "passed",
+      "observation": {
+        "memoryOnlyThrowawayKey": true,
+        "meaning": "public synthetic crypto relation, not authentic authorized issuer or native Go validation"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-REBASED-SIGNED-HISTORY-REJECT",
+      "result": "passed",
+      "observation": {
+        "meaning": "same old signature cannot authorize rebased payload"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-REBASED-READY-IDENTITY-CHANGES",
+      "result": "passed",
+      "observation": {}
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-NEW-SYNTHETIC-PREBASELINE-IDENTITY",
+      "result": "passed",
+      "observation": {
+        "meaning": "only a separate NEW synthetic fixture may instantiate raw time/digest/signature BEFORE its baseline; NEVER repair/re-sign retained A"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-LEGACY-V1-NO-SILENT-SCHEMA-REWRITE",
+      "result": "passed",
+      "observation": {}
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-REVIEWER-ALL-ORIGINAL-PAYLOADS-PRESERVED",
+      "result": "passed",
+      "observation": {
+        "plain": 68,
+        "gzip": 5,
+        "meaning": "original decoded SHA+length and distinct compressed container SHA verified; earlier raw-container mismatches are diagnostic, NOT lost original payloads"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-PRIMARY-PRINCIPAL-GRAMMAR-v1.35.6",
+      "result": "passed",
+      "observation": {
+        "meaning": "pinned PRIMARY reader source; not installed API or TokenReview/RBAC"
+      }
+    },
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-PRIMARY-PRINCIPAL-GRAMMAR-v1.34.11",
+      "result": "passed",
+      "observation": {
+        "meaning": "pinned PRIMARY reader source; not installed API or TokenReview/RBAC"
+      }
+    }
+  ],
+  "result": "passed"
+}

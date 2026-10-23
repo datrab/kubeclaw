@@ -1,0 +1,340 @@
+{
+  "node": "v24.21.0",
+  "identities": {
+    "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/complete-profiles.json": "508f5e4f01bdbeb9cf1df7cc1c15b689c2fb845c316271fd8b0965bad30a8998",
+    "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/proposed-buster-component.schema.json": "fa051f8dacdda448303d5182374d7970b02e71a496bcd41d098cd1bfd58b028c",
+    "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/serialization-envelope-contract.json": "30eee23ca82c1d223dee96b5ca15034165b99418a7b39ecda756da11242edd8f",
+    "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/admission-binding.schema.json": "2c3b0e60d390bb6a1ec20e5b4600b2e9da6205508db93160872d58aa8e4cc9a9",
+    "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-definitions.json": "35dc182ecb8c5981571aaf2a020ca0e42c2498934f15b64a23cd75464f12d011",
+    "docs/review/evidence/config-acceptance/components/question-closure-bce3f075/validate-proposed-definitions.mjs": "f4edd032255b3d6131f3e930986fa4ed122c55efbcec2ecc9614ef96a2f3c5f0",
+    "docker/Dockerfile.buster-runtime": "c06483aca404d930853061f77537287f7855099d335a473a04475d5d88b7a8be",
+    "skills/buster/engine/test-gates/preparation-command.ts": "dfa5137629af252882f586de99c178c2c46b8fe660fdbdbec0468224fe814bc6",
+    "skills/common/plugin-runtime/foundation/isolation/sandbox.c": "dd09a45754f51fbcd5a000565a48eeee5aa3d9e60a890ba5a3969026130508dc",
+    "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/independent-core-source-question-bce3f075-20261013/definition-counterexamples.mjs": "5303071f5889446a0a1f9222935b23c032bed534ce5f633a3256ea53567d4787",
+    "package-lock.json": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+  },
+  "results": [
+    {
+      "id": "INDEPENDENT-RESERVE-DOMAIN-COUNTEREXAMPLE",
+      "completeAuthor": {
+        "schemaVersion": "swarm-component.v1",
+        "owner": "buster-engine",
+        "settings": {
+          "preparation": {
+            "resourcePolicy": {
+              "cpuTimeMs": 120000,
+              "memoryBytes": 8589934592,
+              "tasks": 64
+            },
+            "timeoutMs": 300000,
+            "cleanupTimeoutMs": 10000,
+            "maximumActivePreparations": 2,
+            "maximumPendingAdmissions": 16,
+            "maximumRequestBytes": 100663296,
+            "maximumArchiveBytes": 67108864,
+            "maximumExtractedBytes": 536870912,
+            "maximumHeaderBytes": 3145728,
+            "maximumSourceBytes": 1073741824,
+            "maximumMetadataBytes": 67108864,
+            "maximumRecords": 10000,
+            "maximumOwnershipBytes": 16777216,
+            "maximumJournalBytes": 268435456,
+            "maximumInputBytes": 65536,
+            "maximumOutputBytes": 8388608,
+            "maximumResultBytes": 4194304,
+            "pollIntervalMs": 25,
+            "drainTimeoutMs": 5000,
+            "closeTimeoutMs": 10000,
+            "tarTimeoutMs": 120000,
+            "maximumArchiveEntries": 200000,
+            "maximumListingLineBytes": 1048576,
+            "maximumTarStderrBytes": 65536,
+            "maximumSourceEntries": 400014,
+            "sourceEntryReservationBytes": 256,
+            "maximumOpenFiles": 64,
+            "tarDiagnosticCodeUnits": 4096,
+            "storeLockWaitSeconds": 5
+          },
+          "admission": {
+            "maximumActiveJobs": 2,
+            "maximumQueuedJobs": 8,
+            "maximumConcurrentAttempts": 64
+          },
+          "dependencyReadiness": {
+            "maximumExecutionMs": 1000,
+            "maximumOutputBytes": 65536
+          },
+          "execution": {
+            "provider": {
+              "cleanupTimeoutMs": 30000,
+              "maximumResultBytes": 16777216,
+              "claimGraceMs": 60000,
+              "queueTimeoutMs": 60000,
+              "workerResultWrapperBytes": 4096,
+              "maximumProtocolBytes": 16777216,
+              "terminationGraceMs": 500,
+              "terminationTimeoutMs": 1000,
+              "capabilityDrainTimeoutMs": 1000,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "maximumPendingCapabilities": 32,
+              "minimumOpenFiles": 64,
+              "artifactFileDescriptorReserve": 32
+            },
+            "reports": {
+              "maximumAggregateResultBytes": 16777216,
+              "maximumSourceBytes": 67108864,
+              "maximumCases": 5000,
+              "maximumFindings": 5000,
+              "maximumCaseFindings": 100,
+              "maximumTimeoutMs": 300000,
+              "memoryBytes": 536870912,
+              "minimumCpuTimeMs": 1000,
+              "maximumOpenFiles": 64,
+              "minimumOpenFiles": 16,
+              "minimumHeapMiB": 16,
+              "heapFraction": 0.7,
+              "runtimeMemoryReserveBytes": 67108864
+            },
+            "observation": {
+              "resourceSampleIntervalMs": 10,
+              "processSampleIntervalMs": 50
+            },
+            "stores": {
+              "attempts": {
+                "maximumEvidenceObjects": 10000,
+                "maximumEvidenceBytes": 10737418240,
+                "maximumEvidenceObjectBytes": 1073741824,
+                "maximumResults": 10000,
+                "maximumClosures": 10000,
+                "maximumMetadataBytes": 268435456,
+                "maximumPendingEvidenceAgeMs": 3600000,
+                "lockWaitSeconds": 5
+              },
+              "admission": {
+                "maximumIngressBytes": 16777216,
+                "maximumRecords": 10000,
+                "maximumBytes": 8500,
+                "maximumQuarantineRecords": 1000,
+                "maximumQuarantineBytes": 100,
+                "reasonThresholdCodeUnits": 256,
+                "reasonPrefixCodeUnits": 180,
+                "metadataReserveBytes": 8192,
+                "lockWaitSeconds": 5
+              }
+            },
+            "processInput": {
+              "cleanupTimeoutMs": 1500,
+              "terminationGraceMs": 250,
+              "acknowledgementPollMs": 10
+            }
+          },
+          "clusterInvokers": {
+            "shared": {
+              "kubectlExecutable": "/usr/local/bin/kubectl",
+              "leaseApiGroup": "kubeclaw.forgestack.ai",
+              "leaseApiVersion": "v1alpha1"
+            },
+            "kubernetesFixture": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "registryRepositoryPrefixes": [
+                "kubeclaw"
+              ],
+              "allowedSecretReferences": [],
+              "allowedStorageClasses": [],
+              "allowDefaultStorageClass": true,
+              "runnerServiceAccount": "agent-buster",
+              "credentialReaderServiceAccount": "agent-nova",
+              "maximumManifestBytes": 1048576,
+              "maximumResources": 64,
+              "maximumPersistentVolumeClaimBytes": 10737418240,
+              "maximumPersistentVolumeTotalBytes": 21474836480,
+              "maximumRetentionSeconds": 604800,
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "commandOutputManifestMultiplier": 2,
+              "diagnosticCodeUnits": 4096,
+              "manifest": {
+                "maximumNodes": 100000,
+                "maximumDepth": 64,
+                "maximumAliases": 1000,
+                "maximumFlattenVisits": 100000,
+                "maximumFlattenPending": 100000
+              }
+            },
+            "tailscaleExposure": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "allowedHostSuffixes": [
+                ".ts.net"
+              ],
+              "maximumExecutionMs": 900000,
+              "pollIntervalMs": 1000,
+              "shortCommandTimeoutMs": 15000,
+              "maximumCommandOutputBytes": 1048576
+            },
+            "runtimeSecurity": {
+              "allowedNamespacePrefixes": [
+                "test"
+              ],
+              "maximumExecutionMs": 300000,
+              "maximumOutputBytes": 16777216,
+              "pollIntervalMs": 1000,
+              "maximumObservationAgeMs": 10000,
+              "maximumFutureSkewMs": 5000,
+              "diagnosticCodeUnits": 1024,
+              "executableSearchPath": [
+                "/usr/local/bin",
+                "/usr/bin",
+                "/bin"
+              ]
+            }
+          }
+        }
+      },
+      "emptyBytes": 182,
+      "headerGrowthBytes": 525,
+      "schemaAccepted": true,
+      "publishedUpperDomain": true,
+      "validatorUpperDomain": false,
+      "scope": "Definition contradiction reproduced, not a current productive reader or target runtime PASS"
+    },
+    {
+      "id": "INDEPENDENT-TAR-PAIRED-GRANT-CHECK",
+      "tar": "/opt/kubeclaw/tools/tar",
+      "roots": [
+        "/app",
+        "/usr",
+        "/lib",
+        "/lib64",
+        "/etc/ssl",
+        "/proc",
+        "/sys/fs/cgroup/buster"
+      ],
+      "permitted": false,
+      "scope": "Source-derived path/grant correlation under actual /app image layout; no sandbox/image/host execution; a changed layout/grant would need an explicit correlated proposal"
+    },
+    {
+      "id": "INDEPENDENT-BINDING-FIXED-WIDTH-CHECK",
+      "bindingResults": [
+        {
+          "suffix": "",
+          "accepted": true,
+          "bytes": 514,
+          "errors": null
+        },
+        {
+          "suffix": "\n",
+          "accepted": false,
+          "bytes": 524,
+          "errors": [
+            {
+              "instancePath": "/generationDigest",
+              "schemaPath": "#/properties/generationDigest/pattern",
+              "keyword": "pattern",
+              "params": {
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "message": "must match pattern \"^sha256:[a-f0-9]{64}$\""
+            },
+            {
+              "instancePath": "/profileDigest",
+              "schemaPath": "#/properties/profileDigest/pattern",
+              "keyword": "pattern",
+              "params": {
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "message": "must match pattern \"^sha256:[a-f0-9]{64}$\""
+            },
+            {
+              "instancePath": "/policyDigest",
+              "schemaPath": "#/properties/policyDigest/pattern",
+              "keyword": "pattern",
+              "params": {
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "message": "must match pattern \"^sha256:[a-f0-9]{64}$\""
+            },
+            {
+              "instancePath": "/schemaDigest",
+              "schemaPath": "#/properties/schemaDigest/pattern",
+              "keyword": "pattern",
+              "params": {
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "message": "must match pattern \"^sha256:[a-f0-9]{64}$\""
+            },
+            {
+              "instancePath": "/sourceDigest",
+              "schemaPath": "#/properties/sourceDigest/pattern",
+              "keyword": "pattern",
+              "params": {
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "message": "must match pattern \"^sha256:[a-f0-9]{64}$\""
+            }
+          ]
+        },
+        {
+          "suffix": "\r\n",
+          "accepted": false,
+          "bytes": 534,
+          "errors": [
+            {
+              "instancePath": "/generationDigest",
+              "schemaPath": "#/properties/generationDigest/pattern",
+              "keyword": "pattern",
+              "params": {
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "message": "must match pattern \"^sha256:[a-f0-9]{64}$\""
+            },
+            {
+              "instancePath": "/profileDigest",
+              "schemaPath": "#/properties/profileDigest/pattern",
+              "keyword": "pattern",
+              "params": {
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "message": "must match pattern \"^sha256:[a-f0-9]{64}$\""
+            },
+            {
+              "instancePath": "/policyDigest",
+              "schemaPath": "#/properties/policyDigest/pattern",
+              "keyword": "pattern",
+              "params": {
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "message": "must match pattern \"^sha256:[a-f0-9]{64}$\""
+            },
+            {
+              "instancePath": "/schemaDigest",
+              "schemaPath": "#/properties/schemaDigest/pattern",
+              "keyword": "pattern",
+              "params": {
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "message": "must match pattern \"^sha256:[a-f0-9]{64}$\""
+            },
+            {
+              "instancePath": "/sourceDigest",
+              "schemaPath": "#/properties/sourceDigest/pattern",
+              "keyword": "pattern",
+              "params": {
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "message": "must match pattern \"^sha256:[a-f0-9]{64}$\""
+            }
+          ]
+        }
+      ],
+      "scope": "Fixed-width hash envelope rejects attempted newline extension; suspected issue falsified, not a finding"
+    }
+  ],
+  "acceptance": "NOT ACCEPTED",
+  "futureCasesExecuted": false
+}

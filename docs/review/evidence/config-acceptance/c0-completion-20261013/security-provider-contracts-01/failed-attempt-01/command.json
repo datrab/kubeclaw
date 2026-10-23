@@ -1,0 +1,9 @@
+{
+  "argv": [
+    "node",
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/check-definition.mjs"
+  ],
+  "exit": 1,
+  "originalObservedTool": "761600",
+  "cause": "Strict conditional required value lacks local properties declaration; anticipated prior owned schema already used explicit declaration. No source/domain/strict option weakening."
+}

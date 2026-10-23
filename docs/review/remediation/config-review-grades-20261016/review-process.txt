@@ -1,0 +1,9 @@
+autoreview target: local
+branch: master
+engine: codex
+tools: on
+web_search: off
+bundle: 762748 chars
+autoreview clean: no accepted/actionable findings reported
+overall: patch is correct (0.84)
+The shared capacity and identity normalizers preserve the original activation behavior, and target selection now applies the audit agent trimming. Explicit v2 recovery restores retained targets before activation without merging current target values; v1 recovery retains its previous behavior. No actionable defects were identified in the supplied bundle. Review was source-only because local inspection commands failed; tests and additional packaging inspection were not performed.

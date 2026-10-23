@@ -1,0 +1,119 @@
+{
+  "reservedReceipt": {
+    "schemaVersion": "buster-provider-launch.v1",
+    "launchBindingDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "sessionDigest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "envelopeDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "claimDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "sourceDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "policyDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "state": "reserved-not-launched",
+    "processIdentity": null,
+    "createdAt": "2026-10-13T00:00:00.000Z",
+    "lastSnapshotDigest": null
+  },
+  "unavailableSnapshot": {
+    "schemaVersion": "buster-provider-measurement.v1",
+    "launchBindingDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "sessionDigest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "phase": "execute",
+    "sequence": 1,
+    "observedAt": "2026-10-13T00:00:01.000Z",
+    "ownership": "uncertain",
+    "processIdentity": {
+      "bootId": "00000000-0000-0000-0000-000000000001",
+      "pid": 12345,
+      "startTicks": 123456
+    },
+    "clockTicksPerSecond": 100,
+    "metrics": {
+      "cpuTimeMs": {
+        "status": "unavailable",
+        "source": "procfs-owned-tree",
+        "coverage": "incomplete",
+        "reason": "entry-disappeared"
+      },
+      "maximumMemoryBytes": {
+        "status": "unavailable",
+        "source": "procfs-owned-tree",
+        "coverage": "incomplete",
+        "reason": "entry-disappeared"
+      },
+      "maximumProcesses": {
+        "status": "unavailable",
+        "source": "procfs-owned-tree",
+        "coverage": "incomplete",
+        "reason": "entry-disappeared"
+      }
+    },
+    "disposal": "uncertain"
+  },
+  "provenNoLaunchSnapshot": {
+    "schemaVersion": "buster-provider-measurement.v1",
+    "launchBindingDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "sessionDigest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "phase": "execute",
+    "sequence": 1,
+    "observedAt": "2026-10-13T00:00:01.000Z",
+    "ownership": "no-launch-proven",
+    "processIdentity": null,
+    "clockTicksPerSecond": null,
+    "metrics": {
+      "cpuTimeMs": {
+        "status": "observed",
+        "source": "confirmed-no-launch",
+        "coverage": "not-launched",
+        "value": 0
+      },
+      "maximumMemoryBytes": {
+        "status": "observed",
+        "source": "confirmed-no-launch",
+        "coverage": "not-launched",
+        "value": 0
+      },
+      "maximumProcesses": {
+        "status": "observed",
+        "source": "confirmed-no-launch",
+        "coverage": "not-launched",
+        "value": 0
+      }
+    },
+    "disposal": "not-started"
+  },
+  "observedStructuralSpecimen": {
+    "schemaVersion": "buster-provider-measurement.v1",
+    "launchBindingDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "sessionDigest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "phase": "execute",
+    "sequence": 1,
+    "observedAt": "2026-10-13T00:00:01.000Z",
+    "ownership": "owned-live",
+    "processIdentity": {
+      "bootId": "00000000-0000-0000-0000-000000000001",
+      "pid": 12345,
+      "startTicks": 123456
+    },
+    "clockTicksPerSecond": 100,
+    "metrics": {
+      "cpuTimeMs": {
+        "status": "observed",
+        "source": "procfs-owned-tree",
+        "coverage": "complete-owned-contract",
+        "value": 10
+      },
+      "maximumMemoryBytes": {
+        "status": "observed",
+        "source": "procfs-owned-tree",
+        "coverage": "complete-owned-contract",
+        "value": 1048576
+      },
+      "maximumProcesses": {
+        "status": "observed",
+        "source": "procfs-owned-tree",
+        "coverage": "complete-owned-contract",
+        "value": 1
+      }
+    },
+    "disposal": "pending"
+  }
+}

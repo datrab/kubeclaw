@@ -283,7 +283,7 @@ func TestDemoReadyAuthenticatedCASAndRecovery(t *testing.T) {
 		}
 		ready, _ := time.Parse(time.RFC3339, stringValue(result["readyAt"]))
 		expiry, _ := time.Parse(time.RFC3339, stringValue(result["expiresAt"]))
-		if expiry.Sub(ready) != demoRetention || !f.controller.expiresAt(f.snapshot()).Equal(expiry) {
+		if expiry.Sub(ready) != (time.Duration(legacyDemoRetentionSeconds)*time.Second) || !f.controller.expiresAt(f.snapshot()).Equal(expiry) {
 			t.Fatal("retention mismatch")
 		}
 		status, replay := f.call("/v1/demo-ready", "producer-token", f.request)
@@ -496,7 +496,7 @@ func TestDemoReadyAuthenticatedCASAndRecovery(t *testing.T) {
 			deadline := time.Now().UTC().Add(750 * time.Millisecond)
 			f.mu.Lock()
 			state := objectValue(f.item.Status["demoReadiness"])
-			state["readyAt"] = deadline.Add(-demoRetention).Format(time.RFC3339Nano)
+			state["readyAt"] = deadline.Add(-(time.Duration(legacyDemoRetentionSeconds) * time.Second)).Format(time.RFC3339Nano)
 			state["expiresAt"] = deadline.Format(time.RFC3339Nano)
 			f.item.Status["expiresAt"] = state["expiresAt"]
 			f.version++

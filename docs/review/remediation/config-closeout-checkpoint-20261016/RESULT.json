@@ -1,0 +1,59 @@
+{
+  "at": "2026-10-16T14:07:48.944659+00:00",
+  "sourceCommit": "ff1359c1af930b91da44809fbeda7050d9a56b8a",
+  "remoteVerified": true,
+  "completedSourceCheckpoints": {
+    "controller": "5d08f9b1b605aaaaf4d5c6fc65d98f97ad1285f1",
+    "opsRuntime": "d2d8fa5611d4d9473de0d0e314bfc09be5ebb8d0",
+    "opsDeployment": "4aa52f105",
+    "agentObserver": "ff1359c1af930b91da44809fbeda7050d9a56b8a"
+  },
+  "checks": {
+    "controllerGoPassEvents": 131,
+    "controllerAndCentralDelivery": "6/6",
+    "opsMcp": "19/19",
+    "opsSupervisor": "2/2",
+    "opsDeploymentNew": "2/2",
+    "originalDeploymentRenderRegression": "8/8",
+    "observerPackage": "exit0; build/type/config/actual writer/remediation",
+    "observerHelmReceiver": "1/1",
+    "independentSourceGroupsClean": 4,
+    "prismAndBusterProjectionCheck": "pass"
+  },
+  "nativeEnvironmentObservation": {
+    "uid": 0,
+    "cgroupMount": "ro,nosuid,nodev,noexec",
+    "dockerExecutable": false,
+    "dockerSocket": false,
+    "pairedNodes": 0
+  },
+  "taskComplete": false,
+  "remaining": [
+    "Quality provider-configuration.v2/selectedPolicy task transport and actual resolver/runner/coordinated original/delivery binding remain defined source implementation work. Do not substitute a private root or promote still-denied v10.",
+    "Semantic reconciliation of historical target locators/current verified implementations and complete original applicability/effect/history cases, beyond hash preservation.",
+    "Full isolated native/archive and fresh integrated independent C6 acceptance; infrastructure owner Raven, suitable host requested."
+  ],
+  "requestedUserInput": "isolated supported Linux test system/Node and access route; no secrets in channel",
+  "retainedUnrelatedWipPreserved": true,
+  "deployment": false,
+  "mainMerge": false,
+  "workerCoreV3Current": {
+    "sourceCommit": "980374793",
+    "remoteVerified": true,
+    "evidence": "docs/review/remediation/config-worker-core-v3-20261016"
+  },
+  "qualityInputGuardsCurrent": {
+    "sourceCommit": "c6e7f5a953f3eba0dab4e070cdd64988631589c1",
+    "evidence": "docs/review/remediation/config-quality-input-guards-20261016",
+    "sourceReview": "clean",
+    "fullC4Accepted": false
+  },
+  "originalIdentityPreservationCurrent": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50,
+    "integrityFailures": 0,
+    "evidence": "docs/review/remediation/config-final-reconciliation-20261016",
+    "runtimeAcceptanceInferred": false
+  }
+}

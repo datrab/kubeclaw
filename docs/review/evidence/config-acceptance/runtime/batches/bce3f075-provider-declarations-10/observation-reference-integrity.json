@@ -1,0 +1,34 @@
+{
+  "referenceOccurrencesValidated": 2213,
+  "artifacts": [
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-artifact-budget-06/observations.json",
+      "sha256": "83cc6904fd0aa62078c07f0c2cee7f5396f1ebc1c773b89dc5cc94e370a48a43"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-browser-04/observations.json",
+      "sha256": "eb6aad6748b119c42123d0decb61516bc7177eb6c856238f4fc698af7f7a975d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/observations.json",
+      "sha256": "3de73701ff6809f698b97425df23d5c0b556b384f0fdb1ee8ade48ccde262601"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/observations.json",
+      "sha256": "a66c02f3b610bd7e9f859e90adb7b180bb3f9d55ce03a35111acd6611fc01175"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-declarations-10/observations.json",
+      "sha256": "a92203d5e9a1730732e17e9d311e4ccef92d9700ac652a46c447d3bf50562626"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-declarations-10/target-observations.json",
+      "sha256": "65ad3b6164ef0213f05ce59dc1ffd68975d59aab2ffa512f05d05cbc7ef24b56"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-tailscale-09/observations.json",
+      "sha256": "b1b6a2f6dde69608cf608a567f04170e2f4b23d84ec30335331943929d4c3d94"
+    }
+  ],
+  "limits": "Document observation integrity only; no runtime/config interpretation or semantic acceptance"
+}

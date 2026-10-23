@@ -1,0 +1,41 @@
+{
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "commands": [
+    {
+      "argv": [
+        "node",
+        "docs/review/evidence/config-acceptance/c0-completion-20261013/security-provider-contracts-01/check-definition.mjs"
+      ],
+      "exit": 0,
+      "stdout": "logs/final-replay.stdout",
+      "stderr": "logs/final-replay.stderr"
+    }
+  ],
+  "historicalFailure": "failed-attempt-01/command.json",
+  "toolOutputReferences": [
+    "bd2755",
+    "ed41fa",
+    "447238",
+    "c33603",
+    "177f17",
+    "64525c",
+    "51a44f",
+    "34fa00",
+    "04ce96",
+    "ce9be3",
+    "8cc051",
+    "761600",
+    "f6d574",
+    "e66dd6",
+    "57e0a1",
+    "ee2253",
+    "0535c0",
+    "6b4c40",
+    "89601c",
+    "5e2975",
+    "f1d801"
+  ],
+  "qualification": "Author local pure definition replay only;0 productive/provider/native/tool/network/API/credentials/Eval cases",
+  "finalCollectorToolOutputReference": "d4fe04",
+  "priorCollectorToolOutputReference": "715c4a"
+}

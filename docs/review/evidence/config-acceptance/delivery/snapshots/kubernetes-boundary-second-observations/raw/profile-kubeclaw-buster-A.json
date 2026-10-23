@@ -1,0 +1,123 @@
+{
+  "image": {
+    "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "imagePullSecrets": [
+    {
+      "name": "delivery-pull-a"
+    }
+  ],
+  "auth": {
+    "existingSecret": "delivery-auth-a",
+    "existingSecretKey": "gateway-token"
+  },
+  "litellm": {
+    "existingSecret": "delivery-litellm-a",
+    "existingSecretKey": "api-key"
+  },
+  "discord": {
+    "enabled": true,
+    "existingSecret": "delivery-discord-a",
+    "existingSecretKey": "discord-token"
+  },
+  "agent": {
+    "git": {
+      "enabled": false
+    }
+  },
+  "gateway": {
+    "startupDoctor": {
+      "resources": {
+        "requests": {
+          "cpu": "100m",
+          "memory": "128Mi"
+        },
+        "limits": {
+          "cpu": "1",
+          "memory": "1Gi"
+        }
+      }
+    }
+  },
+  "initSetup": {
+    "resources": {
+      "requests": {
+        "cpu": "100m",
+        "memory": "128Mi"
+      },
+      "limits": {
+        "cpu": "1",
+        "memory": "1Gi"
+      }
+    }
+  },
+  "resources": {
+    "requests": {
+      "cpu": "100m",
+      "memory": "128Mi"
+    },
+    "limits": {
+      "cpu": "1",
+      "memory": "1Gi"
+    }
+  },
+  "workerTrust": {
+    "spiffe": {
+      "enabled": true,
+      "envoy": {
+        "resources": {
+          "requests": {
+            "cpu": "100m",
+            "memory": "128Mi"
+          },
+          "limits": {
+            "cpu": "1",
+            "memory": "1Gi"
+          }
+        }
+      }
+    }
+  },
+  "persistence": {
+    "config": {
+      "enabled": true,
+      "size": "10Gi",
+      "storageClass": "delivery-storage-a",
+      "accessModes": [
+        "ReadWriteOnce"
+      ]
+    },
+    "workspace": {
+      "enabled": true,
+      "size": "20Gi",
+      "storageClass": "delivery-storage-a",
+      "accessModes": [
+        "ReadWriteOnce"
+      ]
+    }
+  },
+  "serviceAccount": {
+    "create": true
+  },
+  "agentRole": "buster",
+  "busterNative": {
+    "nodeName": "delivery-node",
+    "namespace": "default",
+    "policyDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "busterNamespaceBroker": {
+    "enabled": true,
+    "controller": {
+      "resources": {
+        "requests": {
+          "cpu": "100m",
+          "memory": "128Mi"
+        },
+        "limits": {
+          "cpu": "1",
+          "memory": "1Gi"
+        }
+      }
+    }
+  }
+}

@@ -1,3 +1,5 @@
+export { parseArtifactRef } from './artifact-reference.ts';
+export { discordWebhookPayload } from './discord-payload.ts';
 export type { RetainedWaitSource, RetainedWaitResolver } from './retained-wait.ts';
 export * from './generated/contracts.ts';
 export * from './values.ts';
@@ -33,3 +35,5 @@ export * from './review-subject.ts';
 export * from './source-approval.ts';
 export * from './source-preflight.ts';
 export * from './artifact-json.ts';
+
+export * from './delivery-manifest.ts';

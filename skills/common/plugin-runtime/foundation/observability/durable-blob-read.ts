@@ -1,4 +1,5 @@
 import crypto from 'node:crypto';
+import { constants as bufferConstants } from 'node:buffer';
 import fs from 'node:fs/promises';
 import { constants, type Stats } from 'node:fs';
 import path from 'node:path';
@@ -36,6 +37,11 @@ async function verifyParents(parents: ReadonlyMap<string, string>): Promise<void
 }
 async function boundedBytes(handle: Awaited<ReturnType<typeof fs.open>>, opened: Stats, maximum: number): Promise<Buffer> {
   if (!Number.isSafeInteger(opened.size) || opened.size < 0 || opened.size > maximum) {
+    throw new Error('DURABLE_BLOB_SIZE_EXCEEDED');
+  }
+  // Retain the extra EOF byte without overflowing the installed Node ABI.
+  // A safe policy integer is not proof that its actual file is allocatable.
+  if (!Number.isSafeInteger(opened.size + 1) || opened.size >= bufferConstants.MAX_LENGTH) {
     throw new Error('DURABLE_BLOB_SIZE_EXCEEDED');
   }
   const bounded = Buffer.alloc(opened.size + 1);

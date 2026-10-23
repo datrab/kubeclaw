@@ -1,4 +1,3 @@
-busterComponentFile: files/config/buster-engine.config.json
 images:
   control: { repository: ghcr.io/datrab/kubeclaw-prism-control, digest: "", pullPolicy: IfNotPresent }
   studio: { repository: ghcr.io/datrab/kubeclaw-prism-studio, digest: "", pullPolicy: IfNotPresent }
@@ -9,7 +8,7 @@ imagePullSecrets:
 control:
   # Explicit human decision authority. No operator, issuer or endpoint is inferred.
   productDecisions:
-    enabled: false
+    # Enablement is selected by prism-control.config.json, not Helm values.
     issuer: ""
     operators: []
     origin: ""
@@ -45,8 +44,6 @@ ingestion:
   resources:
     requests: { cpu: "", memory: "" }
     limits: { cpu: "", memory: "" }
-  # Acquired quarantine content only; this does not expire logs or reports.
-  quarantineTtlMs: 3600000
 postgresql:
   enabled: true
   image: pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f

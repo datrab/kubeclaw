@@ -1,0 +1,6 @@
+from pathlib import Path
+import json,copy,io,contextlib
+r=Path.cwd();b=r/'docs/review/evidence/config-acceptance';d=b/'independent-checkpoint6-integration-recheck';source=(b/'author/check-native-case-integration.py').read_text();adapted=source.replace('matrix = json.loads(matrix_path.read_text())','matrix = virtual_matrix');assert source!=adapted
+matrix=json.loads((r/'docs/review/remediation/config-acceptance-matrix.json').read_text());m=copy.deepcopy(matrix);case=next(c for c in m['cases'] if c.get('nativeSpecificationReferences'));case['nativeSpecificationReferences'][0]['sourceSha256']='0'*64
+with contextlib.redirect_stdout(io.StringIO()):exec(compile(adapted,'actual-native-helper-initial-matrix-load-adapted','exec'),{'virtual_matrix':m,'__file__':str(b/'author/check-native-case-integration.py')})
+(d/'native-helper-reference-gap.json').write_text(json.dumps({'scope':'documentation-helper virtual initial matrix load only; no real root changes, not runtime F-MUT','caseId':case['id'],'mutation':'canonical nativeSpecificationReferences[0].sourceSha256 zeros','actualHelperAssertionsStillPassed':True,'sourceMatrixIdentityPrintedByHelperDoesNotDescribeVirtualMutation':True},indent=2)+'\n');print('canonical-reference tamper not checked by standalone helper; real input unchanged')

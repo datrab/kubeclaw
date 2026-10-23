@@ -1,0 +1,40 @@
+{
+  "files": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-ops-pagination-correction-28/README.md",
+      "sha256": "64209dff355e9c280e0ccbc2fac9051596d34749c9445f35d99e96e7b8b00189"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-ops-pagination-correction-28/check.py",
+      "sha256": "3a11c2ff0c5659fe79636bbc9e66924620530500e403ad3400c6c7a0ddb404e9"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-ops-pagination-correction-28/checkout.json",
+      "sha256": "14d476110fe8f9132c7b89c5151884cbe4e8b9ceef98fecb1037ab51c9484d71"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-ops-pagination-correction-28/checks.json",
+      "sha256": "a8c1e23af825b6594fd0b0da3a35974f34588ef0346d881e7bbd106a23bc1068"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-ops-pagination-correction-28/findings.json",
+      "sha256": "62c32571a0e7ea55a79215997b65037523543f644e1cfda2ca76d6505a195b2d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-ops-pagination-correction-28/input-identities.json",
+      "sha256": "ff970aefc5c06eeb38d5cb7e6a31fa22d19f6b6818b605e958d0152ddb6562c0"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-ops-pagination-correction-28/input-recheck.json",
+      "sha256": "7dda0b7790dfe7c5c5deb2745133718e3b5ea7dc4da401304aba806626f8f3f2"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-ops-pagination-correction-28/original-and-manifest-comparisons.json",
+      "sha256": "2857badcbfa92b803b9d65952a651cc68fc6307994b9ead4e77aadcded682884"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-ops-pagination-correction-28/pin-comparisons.json",
+      "sha256": "07d74bd6bf1cde355992134b39a99f2009fc564f85ee75acdf69e5feccbc0424"
+    }
+  ]
+}

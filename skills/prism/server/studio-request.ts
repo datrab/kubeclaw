@@ -5,7 +5,11 @@ import { once } from 'node:events';
 import { pipeline } from 'node:stream/promises';
 import { prismProxyResponseHeaders } from './proxy-headers.ts';
 
+import type { StudioBrowserPolicy } from '../studio/browser-policy.ts';
+
 export interface StudioOptions {
+  readonly browserPolicy: StudioBrowserPolicy;
+  readonly maximumRequestBodyBytes: number;
   readonly root: string;
   readonly control: URL;
   readonly ingressSecret: string;
@@ -41,11 +45,12 @@ export function studioRequestFailed(error: unknown, response: ServerResponse): v
     ...(error instanceof Error && error.cause !== undefined ? { cause: errorDetails(error.cause) } : {}) }));
 }
 
-async function requestBody(request: IncomingMessage): Promise<Buffer<ArrayBuffer> | undefined> {
+async function requestBody(request: IncomingMessage, maximumRequestBodyBytes: number): Promise<Buffer<ArrayBuffer> | undefined> {
+  if (!Number.isSafeInteger(maximumRequestBodyBytes) || maximumRequestBodyBytes < 1) throw new Error('PRISM_STUDIO_REQUEST_LIMIT_INVALID');
   const chunks: Buffer[] = []; let size = 0;
   for await (const chunk of request) {
     size += chunk.length;
-    if (size > 2_000_000) throw new StudioRequestError(413, 'PRISM_STUDIO_REQUEST_TOO_LARGE');
+    if (size > maximumRequestBodyBytes) throw new StudioRequestError(413, 'PRISM_STUDIO_REQUEST_TOO_LARGE');
     chunks.push(chunk);
   }
   return chunks.length ? Buffer.concat(chunks) : undefined;
@@ -79,7 +84,7 @@ async function forwardBody(upstream: Response, response: ServerResponse, signal:
 }
 async function proxy(request: IncomingMessage, response: ServerResponse, url: URL, options: StudioOptions): Promise<void> {
   if (!options.ingressSecret) throw new StudioRequestError(503, 'PRISM_STUDIO_PROXY_NOT_CONFIGURED');
-  const body = await requestBody(request);
+  const body = await requestBody(request, options.maximumRequestBodyBytes);
   const controller = new AbortController();
   const timeoutError = new Error('PRISM_STUDIO_CONTROL_TIMEOUT');
   const timer = setTimeout(() => controller.abort(timeoutError), options.controlTimeoutMs);
@@ -133,6 +138,10 @@ export async function handleStudioRequest(request: IncomingMessage, response: Se
   catch (error) { throw new StudioRequestError(400, 'PRISM_STUDIO_URL_INVALID', error); }
   if (url.pathname === '/health' || url.pathname === '/ready') {
     response.writeHead(200, { 'content-type': 'application/json' }); response.end('{"status":"ready"}'); return;
+  }
+  if (url.pathname === '/studio-config') {
+    response.writeHead(200, { 'content-type': 'application/json', 'cache-control': 'no-store' });
+    response.end(JSON.stringify(options.browserPolicy)); return;
   }
   if (url.pathname.startsWith('/v1/')) await proxy(request, response, url, options);
   else await staticFile(url, response, options);

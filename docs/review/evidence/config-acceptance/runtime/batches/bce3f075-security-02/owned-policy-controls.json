@@ -1,0 +1,7372 @@
+[
+  {
+    "setting": "RT-163ebc138c768e21",
+    "provider": "headers",
+    "field": "profile",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "hsts",
+          "header": "strict-transport-security",
+          "severity": "high",
+          "kind": "hsts-min-age",
+          "value": "31536000"
+        },
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "frame-options",
+          "header": "x-frame-options",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-d233d3039be3adc4",
+    "provider": "headers",
+    "field": "paths",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-6eac87138fc57ac9",
+    "provider": "headers",
+    "field": "paths[]",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-6afb26eb1a7b7271",
+    "provider": "headers",
+    "field": "requestTimeoutMs",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 20,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 40,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-611f5b01895a7c90",
+    "provider": "headers",
+    "field": "rules",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom-b",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-93c925a29f21dd8d",
+    "provider": "headers",
+    "field": "rules.add",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-other",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-d852318fd5b15892",
+    "provider": "headers",
+    "field": "rules.add[]",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-other",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-cd92cb7109a38c4a",
+    "provider": "headers",
+    "field": "rules.add[].id",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom-b",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-8a73cb4fa2939ad4",
+    "provider": "headers",
+    "field": "rules.add[].header",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-other",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-ebb85facca8d1b1b",
+    "provider": "headers",
+    "field": "rules.add[].severity",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "low",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-d87b67b33610f619",
+    "provider": "headers",
+    "field": "rules.add[].kind",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "contains",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-ef66623413223fef",
+    "provider": "headers",
+    "field": "rules.add[].value",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "b"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-101f7a1f1f29236a",
+    "provider": "headers",
+    "field": "rules.replace",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-other",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-5118b56e0742663b",
+    "provider": "headers",
+    "field": "rules.replace[]",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-other",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-584baa9f0f15c058",
+    "provider": "headers",
+    "field": "rules.replace[].id",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-6ecf22c1afd37e91",
+    "provider": "headers",
+    "field": "rules.replace[].header",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-other",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-e702d189d1282e3b",
+    "provider": "headers",
+    "field": "rules.replace[].severity",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "low",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-58a77efdd8cd5820",
+    "provider": "headers",
+    "field": "rules.replace[].kind",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "contains",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-95a1b17121581a49",
+    "provider": "headers",
+    "field": "rules.replace[].value",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "b"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-f4e73c3bb3c19c65",
+    "provider": "headers",
+    "field": "rules.remove",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-0da96fe7ba066ccb",
+    "provider": "headers",
+    "field": "rules.remove[]",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-0c0b02b6fbc2160c",
+    "provider": "headers",
+    "field": "policy",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "other-finding",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-c9bc44d00a7b9c90",
+    "provider": "headers",
+    "field": "policy.profile",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-6b059c9d6ad52058",
+    "provider": "headers",
+    "field": "policy.acceptances",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "other-finding",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-cdfcefd44e87996b",
+    "provider": "headers",
+    "field": "policy.acceptances[]",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "other-finding",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-f365121af3c2af9e",
+    "provider": "headers",
+    "field": "policy.acceptances[].findingId",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "other-finding",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-3caa1e915a125dcd",
+    "provider": "headers",
+    "field": "policy.acceptances[].reason",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "Second reviewed source waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-ea0bcd6957dbc556",
+    "provider": "headers",
+    "field": "policy.acceptances[].expiresAt",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "header:custom:/a",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2000-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-4c38b23dda98be93",
+    "provider": "dependency",
+    "field": "projectDirectory",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "dependency:CVE-CASE:case-package:package.json",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "dependency:CVE-CASE:case-package:package.json",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-0e050207e6faa65c",
+    "provider": "dependency",
+    "field": "timeoutMs",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 1000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "dependency:CVE-CASE:case-package:package.json",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 2000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "dependency:CVE-CASE:case-package:package.json",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-ec0fc91072a8b630",
+    "provider": "dependency",
+    "field": "policy",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "dependency:CVE-CASE:case-package:package.json",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "other-finding",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-1242f6b3245f130e",
+    "provider": "dependency",
+    "field": "policy.profile",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "dependency:CVE-CASE:case-package:package.json",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "dependency:CVE-CASE:case-package:package.json",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-3f66e997ecc380c1",
+    "provider": "dependency",
+    "field": "policy.acceptances",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "dependency:CVE-CASE:case-package:package.json",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "other-finding",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-81f4bdf5f3872b9e",
+    "provider": "dependency",
+    "field": "policy.acceptances[]",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "dependency:CVE-CASE:case-package:package.json",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "other-finding",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-4a23015d6ca86669",
+    "provider": "dependency",
+    "field": "policy.acceptances[].findingId",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "dependency:CVE-CASE:case-package:package.json",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "other-finding",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-a3dc4204fd2dbc99",
+    "provider": "dependency",
+    "field": "policy.acceptances[].reason",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "dependency:CVE-CASE:case-package:package.json",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "dependency:CVE-CASE:case-package:package.json",
+            "reason": "Second reviewed source waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-d912c283aeea31d8",
+    "provider": "dependency",
+    "field": "policy.acceptances[].expiresAt",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "dependency:CVE-CASE:case-package:package.json",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "dependency:CVE-CASE:case-package:package.json",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2000-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-25155a8525353895",
+    "provider": "image",
+    "field": "timeoutMs",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 1000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "image:CVE-CASE:case-package:package.json",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 2000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "image:CVE-CASE:case-package:package.json",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-513bbd46b45156b7",
+    "provider": "image",
+    "field": "policy",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "image:CVE-CASE:case-package:package.json",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "other-finding",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-6d1bc088852536a7",
+    "provider": "image",
+    "field": "policy.profile",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "image:CVE-CASE:case-package:package.json",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "image:CVE-CASE:case-package:package.json",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-2dc4f91b61e79184",
+    "provider": "image",
+    "field": "policy.acceptances",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "image:CVE-CASE:case-package:package.json",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "other-finding",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-bd7eee80bc8feca2",
+    "provider": "image",
+    "field": "policy.acceptances[]",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "image:CVE-CASE:case-package:package.json",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "other-finding",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-53653aa9d3f03c8f",
+    "provider": "image",
+    "field": "policy.acceptances[].findingId",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "image:CVE-CASE:case-package:package.json",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "other-finding",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-376a55c52779beed",
+    "provider": "image",
+    "field": "policy.acceptances[].reason",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "image:CVE-CASE:case-package:package.json",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "image:CVE-CASE:case-package:package.json",
+            "reason": "Second reviewed source waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-e8358fe85c80d3d0",
+    "provider": "image",
+    "field": "policy.acceptances[].expiresAt",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "image:CVE-CASE:case-package:package.json",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "image:CVE-CASE:case-package:package.json",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2000-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-2fe8190f12f15510",
+    "provider": "kubernetes-policy",
+    "field": "timeoutMs",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 1000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "kubernetes-policy:rule-case:manifest.yaml:1",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 2000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "kubernetes-policy:rule-case:manifest.yaml:1",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-8de947a02be68652",
+    "provider": "kubernetes-policy",
+    "field": "policy",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "kubernetes-policy:rule-case:manifest.yaml:1",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "other-finding",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-76d0d20d46b9a8e6",
+    "provider": "kubernetes-policy",
+    "field": "policy.profile",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "kubernetes-policy:rule-case:manifest.yaml:1",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "kubernetes-policy:rule-case:manifest.yaml:1",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-773179d734f2eb77",
+    "provider": "kubernetes-policy",
+    "field": "policy.acceptances",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "kubernetes-policy:rule-case:manifest.yaml:1",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "other-finding",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-9370858078281283",
+    "provider": "kubernetes-policy",
+    "field": "policy.acceptances[]",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "kubernetes-policy:rule-case:manifest.yaml:1",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "other-finding",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-f036e66205a0fa61",
+    "provider": "kubernetes-policy",
+    "field": "policy.acceptances[].findingId",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "kubernetes-policy:rule-case:manifest.yaml:1",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "other-finding",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-ffc33c06d6b6a1c2",
+    "provider": "kubernetes-policy",
+    "field": "policy.acceptances[].reason",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "kubernetes-policy:rule-case:manifest.yaml:1",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "kubernetes-policy:rule-case:manifest.yaml:1",
+            "reason": "Second reviewed source waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-0a39f16498c38979",
+    "provider": "kubernetes-policy",
+    "field": "policy.acceptances[].expiresAt",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "kubernetes-policy:rule-case:manifest.yaml:1",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "kubernetes-policy:rule-case:manifest.yaml:1",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2000-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-c00914a2402f91bf",
+    "provider": "kubernetes-runtime",
+    "field": "timeoutMs",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 1000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "kubernetes-runtime:rule-case",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 2000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "kubernetes-runtime:rule-case",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-8d1e26bc5360c737",
+    "provider": "kubernetes-runtime",
+    "field": "policy",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "kubernetes-runtime:rule-case",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "other-finding",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-ae78d041c3d0fbd6",
+    "provider": "kubernetes-runtime",
+    "field": "policy.profile",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "kubernetes-runtime:rule-case",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "kubernetes-runtime:rule-case",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-9941fbebdaea1c41",
+    "provider": "kubernetes-runtime",
+    "field": "policy.acceptances",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "kubernetes-runtime:rule-case",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "other-finding",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-2672b24a1df6464d",
+    "provider": "kubernetes-runtime",
+    "field": "policy.acceptances[]",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "kubernetes-runtime:rule-case",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "other-finding",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-52731740c2eb92d2",
+    "provider": "kubernetes-runtime",
+    "field": "policy.acceptances[].findingId",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "kubernetes-runtime:rule-case",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "other-finding",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-cc64dd898be55e05",
+    "provider": "kubernetes-runtime",
+    "field": "policy.acceptances[].reason",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "kubernetes-runtime:rule-case",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "kubernetes-runtime:rule-case",
+            "reason": "Second reviewed source waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "setting": "RT-95d37d46c3d99337",
+    "provider": "kubernetes-runtime",
+    "field": "policy.acceptances[].expiresAt",
+    "completeOwnedA": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "kubernetes-runtime:rule-case",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2099-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    },
+    "completeOwnedB": {
+      "providerTimeoutMs": {
+        "headers": 10000,
+        "dependency": 300000,
+        "image": 300000,
+        "kubernetes-policy": 120000,
+        "kubernetes-runtime": 120000
+      },
+      "headerRules": [
+        {
+          "id": "content-type-nosniff",
+          "header": "x-content-type-options",
+          "severity": "high",
+          "kind": "equals",
+          "value": "nosniff"
+        },
+        {
+          "id": "content-security-policy",
+          "header": "content-security-policy",
+          "severity": "high",
+          "kind": "present"
+        },
+        {
+          "id": "referrer-policy",
+          "header": "referrer-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "permissions-policy",
+          "header": "permissions-policy",
+          "severity": "medium",
+          "kind": "present"
+        },
+        {
+          "id": "custom",
+          "header": "x-custom",
+          "severity": "high",
+          "kind": "equals",
+          "value": "a"
+        }
+      ],
+      "verdictPolicy": {
+        "blockingSeverities": [
+          "critical",
+          "high"
+        ],
+        "blockActiveThreats": true,
+        "blockMissingFixes": true,
+        "acceptances": [
+          {
+            "findingId": "kubernetes-runtime:rule-case",
+            "reason": "C0 reviewed control waiver",
+            "expiresAt": "2000-01-01T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  }
+]

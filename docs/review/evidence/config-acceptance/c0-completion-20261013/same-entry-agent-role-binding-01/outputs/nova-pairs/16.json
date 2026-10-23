@@ -1,0 +1,27 @@
+{
+  "root": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/same-entry-agent-role-binding-01/entries/Nova/16.json",
+    "sha256": "686e22c6c4cd92a1607eab0e37175d8189489694707dd06a37e4ba58098ec10c"
+  },
+  "tuple": {
+    "kind": "adapter",
+    "packageId": "kubeclaw.pipeline-review",
+    "registrationId": "kubeclaw.pipeline-review:evidence",
+    "instanceId": "fixture.pipeline-review",
+    "ownerPath": "plugins/kubeclaw.pipeline-review.config.json",
+    "profileId": "RT-36accddb567c892f-A",
+    "serviceInstanceId": "fixture.service.nova-runtime"
+  },
+  "configuration": {
+    "storageRoot": "/fixture/nova/original-state",
+    "orchestratorIssuerId": "case-original-writer",
+    "maximumJournalBytes": 1048576,
+    "maximumArtifactBytes": 1048576,
+    "maximumBundleBytes": 1048576
+  },
+  "sourceCurrentWire": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/receiving/pairs/RT-36accddb567c892f/A.json",
+    "sha256": "8faa63c8f576b4df452fcc0792b526c90422aa12bdb0c89f6bf6609f3376c3c3"
+  },
+  "temporalEligibility": "next unstarted M only inside original R/S/H target maps/source/grants/deadlines/counters; no model stopping or originalR reread/reset"
+}

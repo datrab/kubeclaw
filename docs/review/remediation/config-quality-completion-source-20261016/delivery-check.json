@@ -1,0 +1,20 @@
+{
+  "normalRoleBuild": true,
+  "bundle": "/home/node/.openclaw/workspace/tmp/config-quality-completion-buster-195216",
+  "sourceCommit": "77b76768045cac9dac056a7845a2bab5990205e7",
+  "actualImports": true,
+  "files": [
+    {
+      "source": "skills/buster/engine/test-gates/runner-managed-evidence.ts",
+      "delivered": "/home/node/.openclaw/workspace/tmp/config-quality-completion-buster-195216/skills/packages/buster-engine/test-gates/runner-managed-evidence.ts",
+      "sourceBytesEqual": true,
+      "sha256": "13957e04ecb37b40e705b0ea01c46ef94b4d755f8c2f6a879fc7cfae64d7178d"
+    },
+    {
+      "source": "skills/buster/engine/test-gates/runner-completion.ts",
+      "delivered": "/home/node/.openclaw/workspace/tmp/config-quality-completion-buster-195216/skills/packages/buster-engine/test-gates/runner-completion.ts",
+      "sourceBytesEqual": true,
+      "sha256": "4e8bb16c23499e1e0689763b324d55c794d0e7807717d3c62f88a42e01f1435d"
+    }
+  ]
+}

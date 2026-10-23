@@ -1,3 +1,4 @@
+export { BASELINE_V1, BASELINE_V2, BASELINE_CHECKSUM_ENCODING, baselineChecksumText, assertBaselineChecksumDocument } from './baseline-checksums.ts';
 import { assertPrismComplexity } from "./complexity.ts";
 export { PRISM_JSON_LIMITS, PrismContractError } from "./complexity.ts";
 import schema from "../schemas/prism-v1.schema.json" with { type: "json" };
@@ -17,6 +18,7 @@ import {
   validateEngineResultIngest,
   validateEngineResultPublish,
   validateEngineResultRender,
+  validateEngineResultRenderSelected,
   validateOperation,
   validatePreferenceEvent,
   validatePreviewIndex,
@@ -81,6 +83,7 @@ const requestValidators = new Map<string, StandaloneValidator>([
 const resultValidators = new Map<string, StandaloneValidator>([
   ["generate", validateEngineResultGenerate],
   ["render", validateEngineResultRender],
+  ["renderSelected", validateEngineResultRenderSelected],
   ["evaluate", validateEngineResultEvaluate],
   ["ingest", validateEngineResultIngest],
   ["publish", validateEngineResultPublish],
@@ -106,7 +109,8 @@ export function validateEngineRequest(operation: string, value: unknown): void {
   validateEngine(requestValidators, operation, value, "ENGINE_REQUEST");
 }
 export function validateEngineResult(operation: string, value: unknown): void {
-  validateEngine(resultValidators, operation, value, "ENGINE_RESULT");
+  const version = (value as {renderer?: {policyVersion?: unknown}} | null)?.renderer?.policyVersion;
+  validateEngine(resultValidators, operation === 'render' && version === 'prism-render-policy.v1' ? 'renderSelected' : operation, value, "ENGINE_RESULT");
 }
 
 export type PrismNode = {

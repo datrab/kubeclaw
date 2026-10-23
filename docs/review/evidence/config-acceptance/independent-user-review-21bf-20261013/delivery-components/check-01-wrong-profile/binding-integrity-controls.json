@@ -1,0 +1,53 @@
+{
+  "scope": "Pure source/binding integrity, NOT independent semantic review, Helm/render/native/runtime/field acceptance or F-MUT",
+  "observations": [
+    {
+      "id": "all16-exact-source-members-and-schema-pointers",
+      "result": "passed-definition-binding-integrity-only"
+    },
+    {
+      "id": "candidate-omitted",
+      "result": "intended-document-integrity-rejection",
+      "boundary": "SOURCE_BINDING:missing/duplicate candidate"
+    },
+    {
+      "id": "member-omitted",
+      "result": "intended-document-integrity-rejection",
+      "boundary": "SOURCE_BINDING:enumerated member set/order drift"
+    },
+    {
+      "id": "member-and-advertised-count-omitted",
+      "result": "intended-document-integrity-rejection",
+      "boundary": "SOURCE_BINDING:enumerated member set/order drift"
+    },
+    {
+      "id": "source-digest-changed",
+      "result": "intended-document-integrity-rejection",
+      "boundary": "SOURCE_BINDING:source digest drift"
+    },
+    {
+      "id": "wrong-schema-pointer",
+      "result": "intended-document-integrity-rejection",
+      "boundary": "SOURCE_BINDING:schema pointer/domain drift"
+    },
+    {
+      "id": "reader-alias-changed",
+      "result": "intended-document-integrity-rejection",
+      "boundary": "SOURCE_BINDING:source row/reader mismatch"
+    },
+    {
+      "id": "case-links-omitted",
+      "result": "intended-document-integrity-rejection",
+      "boundary": "SOURCE_BINDING:case requirements lost"
+    },
+    {
+      "id": "new-duplicate-author",
+      "result": "intended-document-integrity-rejection",
+      "boundary": "SOURCE_BINDING:duplicate author proposal"
+    },
+    {
+      "id": "restored-bindings",
+      "result": "passed-definition-binding-integrity-only"
+    }
+  ]
+}

@@ -2,11 +2,31 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "additionalProperties": false,
-  "required": ["targets", "deliveryRoot"],
+  "required": [
+    "targets",
+    "deliveryRoot",
+    "maximumDeliveryRecords",
+    "maximumDeliveryBytes",
+    "targetPayloadProfiles",
+    "failureExcerptCharacters",
+    "maxJsonDepth",
+    "maximumRecordBytes"
+  ],
   "properties": {
-    "deliveryRoot": { "type": "string", "minLength": 1 },
-    "maximumDeliveryRecords": { "type": "integer", "minimum": 1, "default": 100000 },
-    "maximumDeliveryBytes": { "type": "integer", "minimum": 1, "default": 268435456 },
+    "deliveryRoot": {
+      "type": "string",
+      "minLength": 1
+    },
+    "maximumDeliveryRecords": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "maximumDeliveryBytes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
     "targets": {
       "type": "object",
       "minProperties": 1,
@@ -16,7 +36,11 @@
       "additionalProperties": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["endpoint", "signingSecret"],
+        "required": [
+          "endpoint",
+          "signingSecret",
+          "payloadProfile"
+        ],
         "properties": {
           "endpoint": {
             "type": "string",
@@ -27,14 +51,48 @@
             "type": "string",
             "pattern": "^[a-z][a-z0-9._-]{0,127}$"
           },
-          "maxPayloadBytes": {
-            "type": "integer",
-            "minimum": 1,
-            "maximum": 1048576,
-            "default": 262144
+          "payloadProfile": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9._-]{0,127}$"
           }
         }
       }
+    },
+    "targetPayloadProfiles": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9._-]{0,127}$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "maxPayloadBytes"
+        ],
+        "properties": {
+          "maxPayloadBytes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1048576
+          }
+        }
+      }
+    },
+    "failureExcerptCharacters": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2048
+    },
+    "maxJsonDepth": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 64
+    },
+    "maximumRecordBytes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
     }
   }
 }

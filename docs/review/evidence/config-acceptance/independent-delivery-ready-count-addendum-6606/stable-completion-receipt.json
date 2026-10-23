@@ -1,0 +1,33 @@
+{
+  "UTC": "2026-10-13T05:32:42.190267+00:00",
+  "verdict": "DCTRL-RECHECK-DOC01 resolved at literal-only additive definition scope; no acceptance",
+  "authorAddendumReceiptSHA256": "a464959a8036b24eab38ad7830ecaffcdf990b7f4df3d3a847dba248f5d5915a",
+  "independentControls": 32,
+  "frozenInputs": 171,
+  "allInputDrift": 0,
+  "nativeFutureCasesNotRun": 12,
+  "scope": "only DCTRL-RECHECK-DOC01 literal27->24; no whole/native/root/implementation acceptance",
+  "command": {
+    "argv": [
+      "python3",
+      "docs/review/evidence/config-acceptance/independent-delivery-ready-count-addendum-6606/check.py"
+    ],
+    "exit": 0,
+    "stdout": "docs/review/evidence/config-acceptance/independent-delivery-ready-count-addendum-6606/check-attempt2.stdout",
+    "stderr": "docs/review/evidence/config-acceptance/independent-delivery-ready-count-addendum-6606/check-attempt2.stderr"
+  },
+  "artifacts": {
+    "docs/review/evidence/config-acceptance/independent-delivery-ready-count-addendum-6606/frozen-input-identities.json": "2d05ceb99568e24663db6fef1b1871d3b090d9babcfdef06389c97021671853b",
+    "docs/review/evidence/config-acceptance/independent-delivery-ready-count-addendum-6606/check-attempt2.stdout": "2acfc0544baec36bc6e4afe829ff9eb893e778495713e102d42cc96f313ce713",
+    "docs/review/evidence/config-acceptance/independent-delivery-ready-count-addendum-6606/REPORT.md": "6fcdb7693cbeecd973eafe08770aa2ac1ef214dd7ce5f9762094a0845aaf8985",
+    "docs/review/evidence/config-acceptance/independent-delivery-ready-count-addendum-6606/after-input-identities.json": "45aca7ffb57e0f53cbf717d706262591c994a00e934a346f41737da9d5a0764e",
+    "docs/review/evidence/config-acceptance/independent-delivery-ready-count-addendum-6606/observations.json": "12cf2f6c7165f2da59d0075a39c78dfa17fb48b12374da9efbdc959bde7c5388",
+    "docs/review/evidence/config-acceptance/independent-delivery-ready-count-addendum-6606/new-addendum-exact-inputs.json.gz": "5e1ea329677ebecb8227344338d398b7675e21dbd0c482c00c870a8d934da730",
+    "docs/review/evidence/config-acceptance/independent-delivery-ready-count-addendum-6606/check-attempt2.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/independent-delivery-ready-count-addendum-6606/check-attempt1.py.snapshot": "5a817fb0e4c23f49b4f2d1d7d17fd0ceaf3d04d5e179887d62cfb4775498f5c0",
+    "docs/review/evidence/config-acceptance/independent-delivery-ready-count-addendum-6606/check-attempt1.stderr": "24cd7ed6efd79cf49870009e2bd3150dbb182fa29ee98f750b17f8b6556ddd96",
+    "docs/review/evidence/config-acceptance/independent-delivery-ready-count-addendum-6606/check-attempt1.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/review/evidence/config-acceptance/independent-delivery-ready-count-addendum-6606/check.py": "96b7720756700d4f96bd69c9784c2c754faf72c536c0da5af985aa913b2ae1d8"
+  },
+  "RuntimeStillPaused": true
+}

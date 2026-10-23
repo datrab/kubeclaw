@@ -1,0 +1,22 @@
+[
+  {
+    "path": "docs/review/evidence/config-acceptance/author/prism-temporal-before-20261013/PRISM-HANDOFF-TARGET-20261013.md",
+    "sha256": "192c7940230809b6e7219dddbb7bc7d2626868194c42c929d89ceebf0f0b5320"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/author/prism-temporal-before-20261013/prism-handoff-target-contracts-20261013.json",
+    "sha256": "2bdb5b4bb907076a1c435f5b893047f2a81086b345b84325f543919420a71e56"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/author/prism-temporal-before-20261013/main-fragment.json",
+    "sha256": "ce8984f68ab8537855cf4fe22f08b8eaab5b6836775fa9f0ac61eab20b21d0da"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/author/prism-temporal-before-20261013/prism-design-cardinality-proposal.json",
+    "sha256": "97327929bda4d5d954361433040aea9d5a4eafcfb9b4b2b3b8e66aaf62f751ec"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/author/prism-temporal-before-20261013/prism-handoff-definition-controls-20261013.json",
+    "sha256": "8ed697fd5df94862c9fc0a75d2216cd967c6f2f9d548f385ceac842c077010ac"
+  }
+]

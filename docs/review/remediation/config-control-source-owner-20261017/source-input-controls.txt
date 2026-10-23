@@ -1,0 +1,11 @@
+{
+  "status": "PASS_SOURCE_ONLY",
+  "profiles": 2,
+  "invalidPortsRejected": 8,
+  "completeFileSetConserved": true,
+  "immutableCapture": true,
+  "restoredPositive": true,
+  "bootAuthenticated": false,
+  "nativeExecuted": false,
+  "fullAcceptance": "OPEN"
+}

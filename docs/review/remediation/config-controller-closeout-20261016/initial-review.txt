@@ -1,0 +1,7 @@
+autoreview findings: 1
+[P2] [P2] Enforce the selected deletion timeout across requests and polling
+cmd/buster-namespace-controller/main.go:1481
+A valid policy can select `namespaceDeletionTimeoutSeconds: 1` while retaining the default 3-second poll interval and 60-second HTTP timeout. The loop checks its deadline only before each request, so it can sleep for 3 seconds or block in a request for 60 seconds despite the selected 1-second ceiling. A delayed 404 can even return success after that ceiling. The newly configurable timeout therefore does not bound cleanup duration and can stall reconciliation of other leases. Apply a deadline to the request context and bound polling waits by the remaining time.
+
+overall: patch is incorrect (0.9)
+The policy parsing, startup capture, and historical retention handling appear sound, but the selected namespace deletion timeout is not enforced across blocking requests and polling waits. This assessment is source-only: no tests, native deployment proof, or paid model evaluation were performed; Helm rendering alone would not establish deployment proof.

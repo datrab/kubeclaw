@@ -4,15 +4,18 @@ import {FileDurableRecordStore} from '@kubeclaw/plugin-foundation/observability/
 import {NAMESPACE,exact,object,text,target,ref,type Value,type Reader} from './protocol.ts';
 import {bind,delivered,deliveryArtifact,requestBody,type BindingConfig,type Binding} from './binding.ts';
 import {post,validateResponse,type ClientConfig} from './controller-client.ts';
-interface Config extends BindingConfig,ClientConfig {readonly stateRoot:string;readonly timeoutMs:number;}
+interface Config extends BindingConfig,ClientConfig {readonly stateRoot:string;readonly timeoutMs:number;readonly recordLimits:Readonly<{maximumRecords:number;maximumBytes:number;maximumRecordBytes:number}>;}
 function configuration(value:Value):Config {
-  exact(value,['candidateStageId','deliveryStageId','readyStageId','manifestStageId','operatorTarget','endpoint','tokenPath','caPath','stateRoot','timeoutMs']);
+  exact(value,['candidateStageId','deliveryStageId','readyStageId','manifestStageId','operatorTarget','endpoint','tokenPath','caPath','stateRoot','timeoutMs','recordLimits']);
+  const raw=object(value.recordLimits);exact(raw,['maximumRecords','maximumBytes','maximumRecordBytes']);
+  for(const key of ['maximumRecords','maximumBytes','maximumRecordBytes'])if(!Number.isSafeInteger(raw[key])||Number(raw[key])<1)throw new Error('DEMO_READY_STORE_LIMIT_INVALID');
+  const recordLimits=Object.freeze({maximumRecords:Number(raw.maximumRecords),maximumBytes:Number(raw.maximumBytes),maximumRecordBytes:Number(raw.maximumRecordBytes)});
   const endpoint=new URL(text(value.endpoint));
   if(endpoint.protocol!=='https:'||endpoint.pathname!=='/v1/demo-ready'||endpoint.search||endpoint.hash||endpoint.username||endpoint.password||endpoint.href!==value.endpoint)throw new Error('DEMO_READY_ENDPOINT_INVALID');
   const absolute=(item:unknown)=>{const result=text(item);if(!path.isAbsolute(result)||path.normalize(result)!==result)throw new Error('DEMO_READY_PATH_INVALID');return result;};
   const timeoutMs=Number(value.timeoutMs);if(!Number.isSafeInteger(timeoutMs)||timeoutMs<100||timeoutMs>60000)throw new Error('DEMO_READY_DEADLINE_INVALID');
   return {candidateStageId:text(value.candidateStageId),deliveryStageId:text(value.deliveryStageId),readyStageId:text(value.readyStageId),manifestStageId:text(value.manifestStageId),
-    operatorTarget:target(value.operatorTarget),endpoint:endpoint.href,tokenPath:absolute(value.tokenPath),caPath:absolute(value.caPath),stateRoot:absolute(value.stateRoot),timeoutMs};
+    operatorTarget:target(value.operatorTarget),endpoint:endpoint.href,tokenPath:absolute(value.tokenPath),caPath:absolute(value.caPath),stateRoot:absolute(value.stateRoot),timeoutMs,recordLimits};
 }
 function assertRequest(request:EffectRequest,config:Config):void {
   if(request.capability!=='demo.handoff'||!['deliver','commit'].includes(request.operation)||request.resource.type!=='demo.candidate'||request.payload.namespace!==NAMESPACE)throw new Error('DEMO_HANDOFF_OPERATION_INVALID');
@@ -42,7 +45,7 @@ async function commit(records:FileDurableRecordStore,config:Config,body:string,s
 }
 export function activate(context:AdapterActivationContext):AdapterInstance {
   const config=configuration(context.config),stopping=new AbortController();
-  const records=new FileDurableRecordStore(config.stateRoot,{maximumRecords:10000,maximumBytes:64*1024**2,maximumRecordBytes:65536});
+  const records=new FileDurableRecordStore(config.stateRoot,config.recordLimits);
   const execute=async(request:EffectRequest,signal:AbortSignal,recovery:boolean):Promise<Value|undefined>=>{
     assertRequest(request,config);signal.throwIfAborted();
     const reader:Reader={invoke:(capability,invocation)=>context.invoke(capability,invocation,{signal})};

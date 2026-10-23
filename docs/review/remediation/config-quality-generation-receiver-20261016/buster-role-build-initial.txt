@@ -1,0 +1,13 @@
+{"ok":true,"phase":"5.6-C","roles":3,"plugins":48}
+file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/runtime-bundle-receipt.mjs:81
+    || value.packages.length === 0 || value.files.length === 0) throw new Error('PIPELINE_PACKAGE_RECEIPT_INVALID');
+                                                                      ^
+
+Error: PIPELINE_PACKAGE_RECEIPT_INVALID
+    at validateRuntimeBundleReceipt (file:///home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugin-runtime/foundation/config/runtime-bundle-receipt.mjs:81:71)
+    at file:///home/node/.openclaw/workspace/kubeclaw-config-c0/scripts/build-runtime-role-bundle.mjs:291:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0

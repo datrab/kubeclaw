@@ -1,0 +1,99 @@
+{
+  "qualification": "actual strict AJV and actual pure mapper/constructor only; no native/browser/network/child/store effects, credentials or implementedtargetloader",
+  "ownerCount": 6,
+  "profiles": 91,
+  "checks": [
+    {
+      "id": "buster-engine whole strict owner",
+      "result": "passed",
+      "meaning": "pure definition/config predicate, not runtime effect"
+    },
+    {
+      "id": "worker-core whole strict owner",
+      "result": "passed",
+      "meaning": "pure definition/config predicate, not runtime effect"
+    },
+    {
+      "id": "prism-control whole strict owner",
+      "result": "passed",
+      "meaning": "pure definition/config predicate, not runtime effect"
+    },
+    {
+      "id": "prism-worker whole strict owner",
+      "result": "passed",
+      "meaning": "pure definition/config predicate, not runtime effect"
+    },
+    {
+      "id": "prism-studio whole strict owner",
+      "result": "passed",
+      "meaning": "pure definition/config predicate, not runtime effect"
+    },
+    {
+      "id": "prism-execution whole strict owner",
+      "result": "passed",
+      "meaning": "pure definition/config predicate, not runtime effect"
+    },
+    {
+      "id": "missingremote whole-ownernegative",
+      "result": "passed",
+      "meaning": "pure definition/config predicate, not runtime effect"
+    },
+    {
+      "id": "oldalias whole-ownernegative",
+      "result": "passed",
+      "meaning": "pure definition/config predicate, not runtime effect"
+    },
+    {
+      "id": "timerOverflow whole-ownernegative",
+      "result": "passed",
+      "meaning": "pure definition/config predicate, not runtime effect"
+    },
+    {
+      "id": "tinyresponse whole-ownernegative",
+      "result": "passed",
+      "meaning": "pure definition/config predicate, not runtime effect"
+    },
+    {
+      "id": "unsupportedcapability whole-ownernegative",
+      "result": "passed",
+      "meaning": "pure definition/config predicate, not runtime effect"
+    },
+    {
+      "id": "wrongflag whole-ownernegative",
+      "result": "passed",
+      "meaning": "pure definition/config predicate, not runtime effect"
+    },
+    {
+      "id": "A complete root schema",
+      "result": "passed",
+      "meaning": "pure definition/config predicate, not runtime effect"
+    },
+    {
+      "id": "B complete root schema",
+      "result": "passed",
+      "meaning": "pure definition/config predicate, not runtime effect"
+    },
+    {
+      "id": "actual mapper/nativeconstructor no IO",
+      "result": "passed",
+      "meaning": "pure definition/config predicate, not runtime effect"
+    },
+    {
+      "id": "actual registry peer origin",
+      "result": "passed",
+      "meaning": "pure definition/config predicate, not runtime effect"
+    },
+    {
+      "id": "explicit false projection omits native registryhealth",
+      "result": "passed",
+      "meaning": "pure definition/config predicate, not runtime effect"
+    }
+  ],
+  "futureRuntimeResults": "not-run",
+  "generatedWholeRuntimeAndRegistryPairs": 86,
+  "staticQuotaOrderingsPassed": 86,
+  "relationMeaning": "Required static orderings and closed generated shapes only; actual serialized job/state candidate, capacity/role/credential/claim/effect validation remain not-run",
+  "generatedRefDomainFinalRecheck": 86,
+  "preservedPriorFailedAttempt": "attempt-02-failure.log",
+  "generatedReferenceMeaning": "Exact fixed runtime/platform/state/run/tar refs plus auth XOR/name domain and actual platformthree-domain schema; no actual credentials/activation proved"
+}

@@ -1,0 +1,59 @@
+{
+  "caseId": "RT-C0-BCE3F075-CONTAINERFIXTURE08-ACTIVATION-DEFINITION",
+  "command": "node docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/check-activation.mjs",
+  "node": "v24.21.0",
+  "sourceDigests": {
+    "skills/buster/engine/test-gates/remote-prepared-execution.ts": "832631872e86addc6ae98516f63c191e403675b679c795ad3d47a2fdb8350dde",
+    "skills/buster/engine/test-gates/capability-runtime.ts": "3615780a7c173fc3f43f0510e208378e276a9e34f71c8a7c1c643fde296ded11",
+    "skills/buster/engine/test-gates/container-build-runtime.ts": "9316f1e642640c768f268aa7f236f075e9290516543ded5148869914e91f907e",
+    "skills/buster/engine/test-gates/remote-plan-service.ts": "e375000b0e256497409276093ad5375c32285475c87a33d337bef3124be456b7",
+    "skills/buster/engine/test-gates/production.ts": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005"
+  },
+  "testDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/check-activation.mjs": "350342b9b5cd9379a99e36ae5854a9b131f3c786380e1b27bcf5b576aacb0ebe"
+  },
+  "inputDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/contracts.json": "0c3802c483249a99ea7b9ecb0ecde6262d85b48c411dc9d086343a8e7137edc3"
+  },
+  "sourceAnchors": [
+    {
+      "path": "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+      "member": "runPlan",
+      "line": 29,
+      "statement": "createBusterCapabilityRuntime(options, paths, options.executionPolicy.processInput)",
+      "current": "perrunPlan call, before planrunner, no wholeR lifetime inference"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+      "line": 40,
+      "statement": "capabilities.shutdown()",
+      "current": "finallyshutdown after DEFAULTTestPlanRunner execution; optionaloptions.execute branch returns beforefinally andisNOT this productiveconfiguredService path"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/capability-runtime.ts",
+      "line": 46,
+      "statement": "new ContainerBuildCapabilityInvoker({\n    ...required(options.containerBuild, 'BUSTER_CONTAINER_BUILD_CONFIG_REQUIRED'), workspaceRoot,\n  })",
+      "current": "productivefactory spreads sourceContainer options into NEWobject; scalarcopies/Set allowlists atthis constructor-local plan dependency, not externalLatest/R selection"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/container-build-runtime.ts",
+      "line": 168,
+      "current": "directconstructor retainsoptions object, privateplatforms Set copied; not blanketdeepfreeze; productivefactory freshcopy distinction essential"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "line": 286,
+      "current": "actual service #options feed acceptedpreparedexecution; no new configauthor orabsenceallcurrentbindings inferred"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "line": 50,
+      "statement": "new BusterRemotePlanService({\n    preparation,\n    store: new FileBusterPlanJobStore(stateRoot, {\n      recordLimits: {\n        maximumRecords: integer(records.maximumRecords, 'recordLimits.maximumRecords'),\n        maximumBytes: integer(records.maximumBytes, 'recordLimits.maximumBytes'),\n        maximumRecordBytes: integer(records.maximumRecordBytes, 'recordLimits.maximumRecordBytes'),\n      },\n      maximumResultBytes: integer(value.maximumResultBytes, 'maximumResultBytes'),\n      maximumResultStoreBytes: integer(value.maximumResultStoreBytes, 'maximumResultStoreBytes'),\n      trustedSourceAuthority: value.trustedSourceAuthority as string,\n      sourceAttestationPublicKey,\n    }),\n    registry,\n    dependencyReadiness,\n    workerRevision,\n    runtimeRoot: path.resolve(directory, value.runtimeRoot as string),\n    admission: settings.buster.admission, workerLocalRuntime: settings.workerLocalRuntime, executionPolicy: settings.buster.execution,\n    allowedCapabilities,\n    ...capabilities,\n  })",
+      "current": "actualconfiguredService builds explicit options with no executeoverride, so defaultnativeplanrunner/finally path; externaldirectAPI executeoverride behavior notgeneralized"
+    }
+  ],
+  "result": "passed",
+  "scope": "actual AST/current productive callercode S/serviceoptions -> perpreparedplan J constructors/finallyshutdown andfreshcopiedContainer options versusdirectconstructor alias definition only; no genuinefullservice/job/R lifetime/mutation/recovery/wholeCFG acceptance",
+  "target": "R grant/ceiling/dependency constraints remain targetfixed; eligibleM requestpolicies fitselectedS/service+J dependency. Newconstructor/Job alone notproof changedservicepolicy legal; actualselectedimmutablehistoricaloptions/fullbinding andS ownership/grants/C5 mechanism remainunapproved.",
+  "reviewerConfirmation": "pending"
+}

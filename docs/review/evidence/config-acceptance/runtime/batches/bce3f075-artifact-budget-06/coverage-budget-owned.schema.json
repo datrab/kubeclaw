@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "minimumLinePercent": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "combine": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "minimumLinePercent",
+    "combine"
+  ],
+  "description": "Proposed one complete plugin-owned businessbudget/rule/evidence policy. Explicit null inactive SIZEbounds replaces CURRENT undefined-only absence (null currently rejects), unapproved representation/loader migration. Coverage requiredminimum0 preservescurrentnogatebehavior butneverwaivesempty/malformed/digest/sourcecoverage."
+}

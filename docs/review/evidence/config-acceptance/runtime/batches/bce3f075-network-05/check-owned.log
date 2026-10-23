@@ -1,0 +1,56 @@
+{
+  "caseId": "RT-C0-BCE3F075-NETWORK05-OWNED-DOMAIN",
+  "command": "node docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/check-owned.mjs",
+  "node": "v24.21.0",
+  "sourceDigests": {
+    "skills/common/plugin-runtime/foundation/registry/schema.ts": "eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557"
+  },
+  "testDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/check-owned.mjs": "88999776821f8af5b74980007a6d364f2c80c5e5cee91363bfc936bd148c9739"
+  },
+  "inputDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/owned-policy-controls.json": "cee08048146ba86314a8adbfe542505ac9c3494d7473ffcdf5831747387d5705",
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/http-owned.schema.json": "07c04a08c3d02bb0d78f111559e16fd181453b2467d32280041e82ab206609ba",
+    "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-network-05/api-flow-owned.schema.json": "b90a27436a7f1c50e0a938ed336d5ac0d2b7b58e1a02863624c2415d57918ec3"
+  },
+  "observations": [
+    {
+      "setting": "RT-b8eb5e344f496d7c",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "everyMissingNullZeroUnknownTaskFieldReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-98a5849759145124",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "everyMissingNullZeroUnknownTaskFieldReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-6e292c3c6f492f07",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "everyMissingNullZeroUnknownTaskFieldReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-6b6f0761a77de324",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "everyMissingNullZeroUnknownTaskFieldReject": true,
+      "result": "passed"
+    },
+    {
+      "setting": "RT-6a3cdfc223a3c24b",
+      "completeA": "valid proposeddefinition",
+      "completeB": "valid proposeddefinition",
+      "everyMissingNullZeroUnknownTaskFieldReject": true,
+      "result": "passed"
+    }
+  ],
+  "result": "passed",
+  "scope": "proposed complete single-owner processingpolicy domains only, physical author packaging/actualtargetloader/fullruntimecap compatibility/grants/genuinefixture beforeeffect rejection notimplemented/unapproved, no acceptance",
+  "reviewerConfirmation": "pending"
+}

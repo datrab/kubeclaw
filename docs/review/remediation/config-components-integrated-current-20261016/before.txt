@@ -1,0 +1,112 @@
+npm notice run verify:config:components
+npm notice run tsc --noEmit -p tests/verification/reliability/tsconfig.config-components.json && node --test --test-concurrency=1 tests/verification/reliability/config-component-bundle.test.mts tests/verification/reliability/config-component-generation.test.mjs tests/verification/deployment/config-component-packaging.test.mjs tests/verification/deployment/prism-swarm-config.test.mjs tests/verification/deployment/buster-admission-render.test.mjs skills/prism/tests/swarm-*.test.mts skills/prism/tests/studio-config.test.mts skills/prism/tests/studio-service.test.mts
+✔ Studio loads authored operator values and keeps installation inputs outside JSON (10017.330797ms)
+✔ Studio rejects retired PORT="" (4697.710824ms)
+✔ Studio rejects retired PORT="8080" (4679.739589ms)
+✔ Studio rejects retired PRISM_CONTROL_URL="" (4729.799458ms)
+✔ Studio rejects retired PRISM_CONTROL_URL="8080" (4741.868198ms)
+✔ Studio rejects retired PRISM_CONTROL_TIMEOUT_MS="" (4887.129761ms)
+✔ Studio rejects retired PRISM_CONTROL_TIMEOUT_MS="8080" (5134.128387ms)
+✔ Studio rejects invalid port through original shared validation (25938.387773ms)
+✔ Studio rejects invalid controlTimeoutMs through original shared validation (26155.98835ms)
+✔ Studio rejects invalid controlUrl through original shared validation (64355.57513ms)
+✔ Studio rejects unknown settings and invalid startup terminates before serving (8723.763214ms)
+✔ production Studio Docker environment does not reintroduce a retired author (4839.463534ms)
+✔ actual Studio survives refused Control and malformed URL with explicit responses (6685.98546ms)
+✔ actual Studio retains proxy bytes, cookies and upstream status (6314.020853ms)
+✔ actual Studio forwards direction idempotency keys and retry payloads to Control (7063.584577ms)
+✔ actual Studio bounds upstream headers wait and remains healthy (6349.304738ms)
+
+Interrupted while running:
+
+⚠ skills/prism/tests/studio-service.test.mts (skills/prism/tests/studio-service.test.mts:1:1)
+✖ skills/prism/tests/studio-service.test.mts (27044.999278ms)
+✖ skills/prism/tests/swarm-control-policy.test.mts
+✖ skills/prism/tests/swarm-input-limit.test.mts
+✖ skills/prism/tests/swarm-native-settings.test.mts
+✖ skills/prism/tests/swarm-resource-operation.test.mts
+✖ skills/prism/tests/swarm-resource-policy.test.mts
+✖ skills/prism/tests/swarm-result-journal.test.mts
+✖ skills/prism/tests/swarm-supervisor-config.test.mts
+✖ skills/prism/tests/swarm-supervisor-consumers.test.mts
+✖ skills/prism/tests/swarm-worker-behavior.test.mts
+✖ skills/prism/tests/swarm-worker-config.test.mts
+✖ tests/verification/deployment/buster-admission-render.test.mjs
+✖ tests/verification/deployment/config-component-packaging.test.mjs
+✖ tests/verification/deployment/prism-swarm-config.test.mjs
+✖ tests/verification/reliability/config-component-bundle.test.mts
+✖ tests/verification/reliability/config-component-generation.test.mjs
+ℹ tests 32
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 16
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 196171.259223
+
+✖ failing tests:
+
+test at skills/prism/tests/studio-service.test.mts:1:1
+✖ skills/prism/tests/studio-service.test.mts (27044.999278ms)
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at skills/prism/tests/swarm-control-policy.test.mts:1:1
+✖ skills/prism/tests/swarm-control-policy.test.mts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at skills/prism/tests/swarm-input-limit.test.mts:1:1
+✖ skills/prism/tests/swarm-input-limit.test.mts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at skills/prism/tests/swarm-native-settings.test.mts:1:1
+✖ skills/prism/tests/swarm-native-settings.test.mts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at skills/prism/tests/swarm-resource-operation.test.mts:1:1
+✖ skills/prism/tests/swarm-resource-operation.test.mts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at skills/prism/tests/swarm-resource-policy.test.mts:1:1
+✖ skills/prism/tests/swarm-resource-policy.test.mts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at skills/prism/tests/swarm-result-journal.test.mts:1:1
+✖ skills/prism/tests/swarm-result-journal.test.mts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at skills/prism/tests/swarm-supervisor-config.test.mts:1:1
+✖ skills/prism/tests/swarm-supervisor-config.test.mts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at skills/prism/tests/swarm-supervisor-consumers.test.mts:1:1
+✖ skills/prism/tests/swarm-supervisor-consumers.test.mts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at skills/prism/tests/swarm-worker-behavior.test.mts:1:1
+✖ skills/prism/tests/swarm-worker-behavior.test.mts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at skills/prism/tests/swarm-worker-config.test.mts:1:1
+✖ skills/prism/tests/swarm-worker-config.test.mts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/verification/deployment/buster-admission-render.test.mjs:1:1
+✖ tests/verification/deployment/buster-admission-render.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/verification/deployment/config-component-packaging.test.mjs:1:1
+✖ tests/verification/deployment/config-component-packaging.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:1:1
+✖ tests/verification/deployment/prism-swarm-config.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/verification/reliability/config-component-bundle.test.mts:1:1
+✖ tests/verification/reliability/config-component-bundle.test.mts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/verification/reliability/config-component-generation.test.mjs:1:1
+✖ tests/verification/reliability/config-component-generation.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'

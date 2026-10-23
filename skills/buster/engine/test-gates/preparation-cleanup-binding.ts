@@ -1,4 +1,4 @@
-import type { BusterPreparationSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+import type { BusterPreparationSettings } from '@kubeclaw/plugin-foundation/config/swarm';
 import type { WorkerAttemptEnvelopeV3 } from '@kubeclaw/pipeline-worker-core-contract';
 import { canonicalJson } from '@kubeclaw/pipeline-observability-contract';
 import type { PreparationGateBinding } from './preparation-gate.ts';

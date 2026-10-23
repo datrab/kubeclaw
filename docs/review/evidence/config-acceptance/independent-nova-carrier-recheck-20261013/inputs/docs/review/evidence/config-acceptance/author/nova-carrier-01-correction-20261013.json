@@ -1,0 +1,50 @@
+{
+  "finding": "NOVA-CARRIER-01",
+  "status": "corrected proposed order; independent material recheck pending; global C0 open",
+  "proposal": {
+    "path": "docs/review/evidence/config-acceptance/author/NOVA-MODULE-CARRIER-PROPOSAL-20261013.md",
+    "sha256": "4d740674cf8ac876b8cc7cdf0c7566da2d7b26976ccfe31615b4c6defd95846f",
+    "bytes": 9306
+  },
+  "independentFinding": {
+    "path": "docs/review/evidence/config-acceptance/independent-nova-carrier-20261013/independent-review.json",
+    "sha256": "c276cfedf6a33dd9a73feb3d02aa8b602484676eb4a3b4a055a9156c6ba2e2ba",
+    "bytes": 7902
+  },
+  "originalProposal": {
+    "path": "docs/review/evidence/config-acceptance/author/nova-carrier-before-nova-carrier-01-20261013/NOVA-MODULE-CARRIER-PROPOSAL-20261013.md",
+    "sha256": "293416f321fc421d62401aa872b538530b0fcb4a8b253fc564bcdf68d122b1f8",
+    "bytes": 7456
+  },
+  "historicalJournalEvidence": {
+    "path": "docs/review/evidence/config-acceptance/author/nova-journal-binding-seam-identities-20261013.json",
+    "sha256": "e1baa13795858ecfe080b02bd109fcbe8f4a5826a4ce39733e7df664a84596bd",
+    "bytes": 3955
+  },
+  "historicalReceiptQualification": "Original proposal path/hash is superseded by the explicit byte-identical snapshot above; actual persistence source/check/rawlog inputs unchanged. This is not a rerun of a future binding.",
+  "unchangedCurrentCheck": {
+    "path": "docs/review/evidence/config-acceptance/author/check-nova-journal-binding-seam.mjs",
+    "sha256": "0a53f348e71abe3af81ad0422591b62bb9b4e955c5c5f7d566a2669ca547a3f6",
+    "bytes": 3388
+  },
+  "unchangedCurrentLog": {
+    "path": "docs/review/evidence/config-acceptance/author/nova-journal-binding-seam-attempt1-20261013.log",
+    "sha256": "4504b28f3d3ba0793a51e5ad02c5d07ab6e6d3852b5fcfb00f18470d2e96509a",
+    "bytes": 1133
+  },
+  "changes": [
+    "original lookup/validation before any current publication selection for every invocation",
+    "only genuinely unstarted group prepares candidate outside synchronized callback, original history rechecked before append",
+    "final inner SDK sequence/encoding/accounting inside synchronization; single complete append",
+    "initial journal directory publication durability explicit; current power-loss proof not claimed",
+    "original R observer policy, required failure blocking and skip notification boundary explicit",
+    "original async ownership/abort gates separated from synchronous append; no live-owner TTL stealing"
+  ],
+  "remainingOpen": [
+    "exact SDK schema and versioned snapshot/task-operator partition",
+    "authentic owner/role/grant/store/metadata manifests, quotas and field applicability maps",
+    "exact executable crossreader/crash/parallel/fixed-Eval cases",
+    "independent full C0 acceptance"
+  ],
+  "runtimeImplementationCases": "not-run"
+}

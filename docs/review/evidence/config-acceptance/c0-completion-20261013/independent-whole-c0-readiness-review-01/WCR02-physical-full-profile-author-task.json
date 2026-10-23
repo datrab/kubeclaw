@@ -1,0 +1,231 @@
+{
+  "id": "WCR02",
+  "physicalSoleAuthor": "config/components/buster-engine.config.json",
+  "selectedProfilePointer": "/profiles/<explicitSelectedProfile>/settings",
+  "originalAuthorSources": [
+    "charts/kubeclaw/files/config/buster-engine.config.json",
+    "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json"
+  ],
+  "entry": "config/pipeline.config.json explicit role/owner/instance/profile tuple",
+  "exactServicePolicyJoins": [
+    {
+      "transferId": "DLV-B23-EMIT-954f93682167b0ae",
+      "field": "host",
+      "proposedSoleAuthor": {
+        "path": "config/components/buster-engine.config.json",
+        "pointer": "/profiles/<explicitSelectedProfile>/settings/remotePlanService/host",
+        "phase": "new-required C3 absent currentphysicalsettings, notC1/synthesized/seventhauthor",
+        "soleWriter": "existingselectedBuster componentauthor; distinct frompreparation/admission/execution capabilityProviders/launcher, parentallocationconfirmed; generatedruntime.json valuesnoteditableauthor"
+      },
+      "originalCanonicalFieldIds": [
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-HOST"
+      ],
+      "originalCanonicalTargets": [
+        {
+          "author": "existing protocol/schema or generated deployment/credential/image binding",
+          "reference": "host"
+        }
+      ],
+      "remainingTask": "Retain original IDs/cases and add explicit correction/supersession to ONE active physical author pointer; complete required physical owner profile/root/domain/capability/quota/case joins, independently reviewed; no C1 synthesis."
+    },
+    {
+      "transferId": "DLV-B23-EMIT-5cabf96825e7427a",
+      "field": "port",
+      "proposedSoleAuthor": {
+        "path": "config/components/buster-engine.config.json",
+        "pointer": "/profiles/<explicitSelectedProfile>/settings/remotePlanService/port",
+        "phase": "new-required C3 absent currentphysicalsettings, notC1/synthesized/seventhauthor",
+        "soleWriter": "existingselectedBuster componentauthor; distinct frompreparation/admission/execution capabilityProviders/launcher, parentallocationconfirmed; generatedruntime.json valuesnoteditableauthor"
+      },
+      "originalCanonicalFieldIds": [
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-PORT"
+      ],
+      "originalCanonicalTargets": [
+        {
+          "author": "existing protocol/schema or generated deployment/credential/image binding",
+          "reference": "port"
+        }
+      ],
+      "remainingTask": "Retain original IDs/cases and add explicit correction/supersession to ONE active physical author pointer; complete required physical owner profile/root/domain/capability/quota/case joins, independently reviewed; no C1 synthesis."
+    },
+    {
+      "transferId": "DLV-B23-EMIT-15d02d130b8b88ec",
+      "field": "recordLimits.maximumRecords",
+      "proposedSoleAuthor": {
+        "path": "config/components/buster-engine.config.json",
+        "pointer": "/profiles/<explicitSelectedProfile>/settings/remotePlanService/recordLimits/maximumRecords",
+        "phase": "new-required C3 absent currentphysicalsettings, notC1/synthesized/seventhauthor",
+        "soleWriter": "existingselectedBuster componentauthor; distinct frompreparation/admission/execution capabilityProviders/launcher, parentallocationconfirmed; generatedruntime.json valuesnoteditableauthor"
+      },
+      "originalCanonicalFieldIds": [
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-RECORDLIMITS-MAXIMUMRECORDS"
+      ],
+      "originalCanonicalTargets": [
+        {
+          "author": "C3 same existing buster-engine owner physical extension /settings/runtimeService/recordLimits/maximumRecords",
+          "reference": "recordLimits.maximumRecords",
+          "physicalAuthor": "charts/kubeclaw/files/config/buster-engine.config.json (existing sole buster-engine author), runtime variant charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json; new runtimeCapabilities/runtimeService settings explicitly schema-required C3 extension, not another runtime owner"
+        }
+      ],
+      "remainingTask": "Retain original IDs/cases and add explicit correction/supersession to ONE active physical author pointer; complete required physical owner profile/root/domain/capability/quota/case joins, independently reviewed; no C1 synthesis."
+    },
+    {
+      "transferId": "DLV-B23-EMIT-3b6c60a854df2161",
+      "field": "recordLimits.maximumBytes",
+      "proposedSoleAuthor": {
+        "path": "config/components/buster-engine.config.json",
+        "pointer": "/profiles/<explicitSelectedProfile>/settings/remotePlanService/recordLimits/maximumBytes",
+        "phase": "new-required C3 absent currentphysicalsettings, notC1/synthesized/seventhauthor",
+        "soleWriter": "existingselectedBuster componentauthor; distinct frompreparation/admission/execution capabilityProviders/launcher, parentallocationconfirmed; generatedruntime.json valuesnoteditableauthor"
+      },
+      "originalCanonicalFieldIds": [
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-RECORDLIMITS-MAXIMUMBYTES"
+      ],
+      "originalCanonicalTargets": [
+        {
+          "author": "C3 same existing buster-engine owner physical extension /settings/runtimeService/recordLimits/maximumBytes",
+          "reference": "recordLimits.maximumBytes",
+          "physicalAuthor": "charts/kubeclaw/files/config/buster-engine.config.json (existing sole buster-engine author), runtime variant charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json; new runtimeCapabilities/runtimeService settings explicitly schema-required C3 extension, not another runtime owner"
+        }
+      ],
+      "remainingTask": "Retain original IDs/cases and add explicit correction/supersession to ONE active physical author pointer; complete required physical owner profile/root/domain/capability/quota/case joins, independently reviewed; no C1 synthesis."
+    },
+    {
+      "transferId": "DLV-B23-EMIT-c29f7f526c45b1c2",
+      "field": "recordLimits.maximumRecordBytes",
+      "proposedSoleAuthor": {
+        "path": "config/components/buster-engine.config.json",
+        "pointer": "/profiles/<explicitSelectedProfile>/settings/remotePlanService/recordLimits/maximumRecordBytes",
+        "phase": "new-required C3 absent currentphysicalsettings, notC1/synthesized/seventhauthor",
+        "soleWriter": "existingselectedBuster componentauthor; distinct frompreparation/admission/execution capabilityProviders/launcher, parentallocationconfirmed; generatedruntime.json valuesnoteditableauthor"
+      },
+      "originalCanonicalFieldIds": [
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-RECORDLIMITS-MAXIMUMRECORDBYTES"
+      ],
+      "originalCanonicalTargets": [
+        {
+          "author": "C3 same existing buster-engine owner physical extension /settings/runtimeService/recordLimits/maximumRecordBytes",
+          "reference": "recordLimits.maximumRecordBytes",
+          "physicalAuthor": "charts/kubeclaw/files/config/buster-engine.config.json (existing sole buster-engine author), runtime variant charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json; new runtimeCapabilities/runtimeService settings explicitly schema-required C3 extension, not another runtime owner"
+        }
+      ],
+      "remainingTask": "Retain original IDs/cases and add explicit correction/supersession to ONE active physical author pointer; complete required physical owner profile/root/domain/capability/quota/case joins, independently reviewed; no C1 synthesis."
+    },
+    {
+      "transferId": "DLV-B23-EMIT-3bd167bc44b18ff9",
+      "field": "maximumResultBytes",
+      "proposedSoleAuthor": {
+        "path": "config/components/buster-engine.config.json",
+        "pointer": "/profiles/<explicitSelectedProfile>/settings/remotePlanService/maximumResultBytes",
+        "phase": "new-required C3 absent currentphysicalsettings, notC1/synthesized/seventhauthor",
+        "soleWriter": "existingselectedBuster componentauthor; distinct frompreparation/admission/execution capabilityProviders/launcher, parentallocationconfirmed; generatedruntime.json valuesnoteditableauthor"
+      },
+      "originalCanonicalFieldIds": [
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-MAXIMUMRESULTBYTES"
+      ],
+      "originalCanonicalTargets": [
+        {
+          "author": "C3 same existing buster-engine owner physical extension /settings/runtimeService/maximumResultBytes",
+          "reference": "maximumResultBytes",
+          "physicalAuthor": "charts/kubeclaw/files/config/buster-engine.config.json (existing sole buster-engine author), runtime variant charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json; new runtimeCapabilities/runtimeService settings explicitly schema-required C3 extension, not another runtime owner"
+        }
+      ],
+      "remainingTask": "Retain original IDs/cases and add explicit correction/supersession to ONE active physical author pointer; complete required physical owner profile/root/domain/capability/quota/case joins, independently reviewed; no C1 synthesis."
+    },
+    {
+      "transferId": "DLV-B23-EMIT-1f1cd453f52e795e",
+      "field": "maximumResultStoreBytes",
+      "proposedSoleAuthor": {
+        "path": "config/components/buster-engine.config.json",
+        "pointer": "/profiles/<explicitSelectedProfile>/settings/remotePlanService/maximumResultStoreBytes",
+        "phase": "new-required C3 absent currentphysicalsettings, notC1/synthesized/seventhauthor",
+        "soleWriter": "existingselectedBuster componentauthor; distinct frompreparation/admission/execution capabilityProviders/launcher, parentallocationconfirmed; generatedruntime.json valuesnoteditableauthor"
+      },
+      "originalCanonicalFieldIds": [
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-MAXIMUMRESULTSTOREBYTES"
+      ],
+      "originalCanonicalTargets": [
+        {
+          "author": "C3 same existing buster-engine owner physical extension /settings/runtimeService/maximumResultStoreBytes",
+          "reference": "maximumResultStoreBytes",
+          "physicalAuthor": "charts/kubeclaw/files/config/buster-engine.config.json (existing sole buster-engine author), runtime variant charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json; new runtimeCapabilities/runtimeService settings explicitly schema-required C3 extension, not another runtime owner"
+        }
+      ],
+      "remainingTask": "Retain original IDs/cases and add explicit correction/supersession to ONE active physical author pointer; complete required physical owner profile/root/domain/capability/quota/case joins, independently reviewed; no C1 synthesis."
+    },
+    {
+      "transferId": "DLV-B23-EMIT-c1ceb6ad909b0040",
+      "field": "maximumResponseBytes",
+      "proposedSoleAuthor": {
+        "path": "config/components/buster-engine.config.json",
+        "pointer": "/profiles/<explicitSelectedProfile>/settings/remotePlanService/maximumResponseBytes",
+        "phase": "new-required C3 absent currentphysicalsettings, notC1/synthesized/seventhauthor",
+        "soleWriter": "existingselectedBuster componentauthor; distinct frompreparation/admission/execution capabilityProviders/launcher, parentallocationconfirmed; generatedruntime.json valuesnoteditableauthor"
+      },
+      "originalCanonicalFieldIds": [
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-MAXIMUMRESPONSEBYTES"
+      ],
+      "originalCanonicalTargets": [
+        {
+          "author": "C3 same existing buster-engine owner physical extension /settings/runtimeService/maximumResponseBytes",
+          "reference": "maximumResponseBytes",
+          "physicalAuthor": "charts/kubeclaw/files/config/buster-engine.config.json (existing sole buster-engine author), runtime variant charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json; new runtimeCapabilities/runtimeService settings explicitly schema-required C3 extension, not another runtime owner"
+        }
+      ],
+      "remainingTask": "Retain original IDs/cases and add explicit correction/supersession to ONE active physical author pointer; complete required physical owner profile/root/domain/capability/quota/case joins, independently reviewed; no C1 synthesis."
+    },
+    {
+      "transferId": "DLV-B23-EMIT-79bfabc7597d7bcd",
+      "field": "shutdownTimeoutMs",
+      "proposedSoleAuthor": {
+        "path": "config/components/buster-engine.config.json",
+        "pointer": "/profiles/<explicitSelectedProfile>/settings/remotePlanService/shutdownTimeoutMs",
+        "phase": "new-required C3 absent currentphysicalsettings, notC1/synthesized/seventhauthor",
+        "soleWriter": "existingselectedBuster componentauthor; distinct frompreparation/admission/execution capabilityProviders/launcher, parentallocationconfirmed; generatedruntime.json valuesnoteditableauthor"
+      },
+      "originalCanonicalFieldIds": [
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-SHUTDOWNTIMEOUTMS"
+      ],
+      "originalCanonicalTargets": [
+        {
+          "author": "C3 same existing buster-engine owner physical extension /settings/runtimeService/shutdownTimeoutMs",
+          "reference": "shutdownTimeoutMs",
+          "physicalAuthor": "charts/kubeclaw/files/config/buster-engine.config.json (existing sole buster-engine author), runtime variant charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json; new runtimeCapabilities/runtimeService settings explicitly schema-required C3 extension, not another runtime owner"
+        }
+      ],
+      "remainingTask": "Retain original IDs/cases and add explicit correction/supersession to ONE active physical author pointer; complete required physical owner profile/root/domain/capability/quota/case joins, independently reviewed; no C1 synthesis."
+    },
+    {
+      "transferId": "DLV-B23-EMIT-def999cd63a86988",
+      "field": "allowedCapabilities",
+      "proposedSoleAuthor": {
+        "path": "config/components/buster-engine.config.json",
+        "pointer": "/profiles/<explicitSelectedProfile>/settings/remotePlanService/allowedCapabilities",
+        "phase": "new-required C3 absent currentphysicalsettings, notC1/synthesized/seventhauthor",
+        "soleWriter": "existingselectedBuster componentauthor; distinct frompreparation/admission/execution capabilityProviders/launcher, parentallocationconfirmed; generatedruntime.json valuesnoteditableauthor"
+      },
+      "originalCanonicalFieldIds": [
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-ALLOWEDCAPABILITIES"
+      ],
+      "originalCanonicalTargets": [
+        {
+          "author": "C3 same existing buster-engine owner physical extension /settings/runtimeService/allowedCapabilities",
+          "reference": "allowedCapabilities"
+        }
+      ],
+      "remainingTask": "Retain original IDs/cases and add explicit correction/supersession to ONE active physical author pointer; complete required physical owner profile/root/domain/capability/quota/case joins, independently reviewed; no C1 synthesis."
+    }
+  ],
+  "completeOwnerExtension": "Integrate component17 existing C3 Buster baseline, component18 capabilityProviders full source slice and Runtime16 remotePlanService policies plus generated actual refs into ONE complete selected Buster C3 schema/profile. Compose whole root with all six complete owner files and required role/deployment/provider relations; no partial-flat service-policy schema masquerades as complete Buster.",
+  "contractRelations": [
+    "allowedCapabilities vs actual registry + provider profiles/grants; reject unsupported capability before startup/effect",
+    "normal/error/health/ready response frames under actual maximumResponseBytes; correct bounded fallback specification",
+    "serialized record wrappers <= maximumRecordBytes <= maximumBytes and record count; whole result/source/archive/ref metadata/store budgets under original limits",
+    "shutdown native timer-supported range and original job/drain semantics",
+    "host/port generated service/exposure/peer/networkpolicy and installed role relationship; no arbitrary topology",
+    "source key/ref/issuer validation before store construction; original state/runtime roots and retained jobs first; no replacement current root fallback",
+    "tarExecutable real forwarding and installed tool/source trust; domain may be explicitly unsupported rather than invented",
+    "bind original authority/grants/claim/deadline/budgets/fixed Eval; recovery missing original rejects"
+  ],
+  "qualification": "Finite author task only; values/capacity/external identity not invented, future implementation cases not-run. Original historic bodies not rewritten."
+}

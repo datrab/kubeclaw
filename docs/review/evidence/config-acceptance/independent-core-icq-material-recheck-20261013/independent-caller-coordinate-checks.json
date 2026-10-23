@@ -1,0 +1,622 @@
+[
+  {
+    "coordinateIndex": 0,
+    "source": {
+      "path": "skills/common/plugins/state-store/src/adapter.ts",
+      "line": 35,
+      "sha256": "1805e68a4d478af60df925fb6c38204344d53e17a8134fafdd47732263c473c7",
+      "sourceText": "  const store = new FileDurableRecordStore(configured, {"
+    },
+    "owningCompanion": "RegisteredStores"
+  },
+  {
+    "coordinateIndex": 1,
+    "source": {
+      "path": "skills/common/plugins/wait-store/src/adapter.ts",
+      "line": 207,
+      "sha256": "9114197adde4307becd0d14548eef723804be8f051acef012abbcbf8c5b8b082",
+      "sourceText": "  const store = new FileDurableRecordStore(root, {"
+    },
+    "owningCompanion": "RegisteredStores"
+  },
+  {
+    "coordinateIndex": 2,
+    "source": {
+      "path": "skills/common/plugins/telemetry-store/src/adapter.ts",
+      "line": 14,
+      "sha256": "f5a3ff64dce028471c800e9a5da01bcc3a405f26b1e68ccdd8e78cd54e00fb13",
+      "sourceText": "  const store = new FileDurableRecordStore(root, {"
+    },
+    "owningCompanion": "RegisteredStores"
+  },
+  {
+    "coordinateIndex": 3,
+    "source": {
+      "path": "skills/common/plugins/operator-messaging/src/adapter.ts",
+      "line": 69,
+      "sha256": "a6d719a5e69b401a0696af9a74dcf358015cdc57bfa062cca0514c54410b3785",
+      "sourceText": "  const records = new FileDurableRecordStore(config.deliveryRoot, {"
+    },
+    "owningCompanion": "RegisteredStores"
+  },
+  {
+    "coordinateIndex": 4,
+    "source": {
+      "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "line": 197,
+      "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31",
+      "sourceText": "  const records = new FileDurableRecordStore(config.deliveryRoot, {"
+    },
+    "owningCompanion": "RegisteredStores"
+  },
+  {
+    "coordinateIndex": 5,
+    "source": {
+      "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+      "line": 168,
+      "sha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154",
+      "sourceText": "  const records = new FileDurableRecordStore(configured, {"
+    },
+    "owningCompanion": "RegisteredStores"
+  },
+  {
+    "coordinateIndex": 6,
+    "source": {
+      "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+      "line": 173,
+      "sha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154",
+      "sourceText": "  const blobs = new FileDurableBlobStore(configured, Number(maximum), Number(maximumStoreBytes));"
+    },
+    "owningCompanion": "RegisteredStores"
+  },
+  {
+    "coordinateIndex": 7,
+    "source": {
+      "path": "skills/common/plugin-runtime/foundation/config/published-pair.ts",
+      "line": 104,
+      "sha256": "c0c4fc08ae422962f201b4ec9f134ec03f8e3354c85316cb92657db18aafa27a",
+      "sourceText": "  await withDurableStoreLock(pointer,async()=>{"
+    },
+    "owningCompanion": "NovaPlatform"
+  },
+  {
+    "coordinateIndex": 8,
+    "source": {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+      "line": 48,
+      "sha256": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea",
+      "sourceText": "    return withDurableStoreLock(path.join(this.#root, 'blob-budget'), () => this.#put(input));"
+    },
+    "owningCompanion": "ReusableCallerProjection"
+  },
+  {
+    "coordinateIndex": 9,
+    "source": {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 344,
+      "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+      "sourceText": "    const locked = () => withDurableStoreLock(this.#file, operation);"
+    },
+    "owningCompanion": "ReusableCallerProjection"
+  },
+  {
+    "coordinateIndex": 10,
+    "source": {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "line": 458,
+      "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+      "sourceText": "    const locked = () => withDurableStoreLock(this.#file, operation);"
+    },
+    "owningCompanion": "ReusableCallerProjection"
+  },
+  {
+    "coordinateIndex": 11,
+    "source": {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-state.ts",
+      "line": 53,
+      "sha256": "392ad6e2a590c964cc0d8cd1fe0c75237f240798e6d99ee2ed2b33da8047fdca",
+      "sourceText": "      withDurableStoreLock(this.file, async () => {"
+    },
+    "owningCompanion": "ReusableCallerProjection"
+  },
+  {
+    "coordinateIndex": 12,
+    "source": {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "line": 60,
+      "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+      "sourceText": "    const locked = () => withDurableStoreLock(this.#file, operation);"
+    },
+    "owningCompanion": "ReusableCallerProjection"
+  },
+  {
+    "coordinateIndex": 13,
+    "source": {
+      "path": "skills/worker/core/worker/native-attempt-journal.ts",
+      "line": 32,
+      "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+      "sourceText": "    this.#records = new FileDurableRecordStore(path.join(this.#root, 'metadata'), {"
+    },
+    "owningCompanion": "CoreNative"
+  },
+  {
+    "coordinateIndex": 14,
+    "source": {
+      "path": "skills/worker/core/worker/native-attempt-journal.ts",
+      "line": 35,
+      "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+      "sourceText": "    this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), Math.max(limits.maximumInputBytes, limits.maximumResultBytes), limits.maximumTotalBytes);"
+    },
+    "owningCompanion": "CoreNative"
+  },
+  {
+    "coordinateIndex": 15,
+    "source": {
+      "path": "skills/worker/core/worker/native-attempt-journal.ts",
+      "line": 51,
+      "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+      "sourceText": "      return await withDurableStoreLock(path.join(this.#root, 'fences', key.slice(-2), 'lifetime'), async () => {"
+    },
+    "owningCompanion": "CoreNative"
+  },
+  {
+    "coordinateIndex": 16,
+    "source": {
+      "path": "skills/worker/core/worker/native-attempt-journal.ts",
+      "line": 124,
+      "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+      "sourceText": "    return withDurableStoreLock(path.join(this.#root, 'admission', 'lifetime'), async () => {"
+    },
+    "owningCompanion": "CoreNative"
+  },
+  {
+    "coordinateIndex": 17,
+    "source": {
+      "path": "skills/worker/core/worker/native-attempt-journal.ts",
+      "line": 165,
+      "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+      "sourceText": "    return withDurableStoreLock(path.join(this.#root, 'admission', 'lifetime'), async () => {"
+    },
+    "owningCompanion": "CoreNative"
+  },
+  {
+    "coordinateIndex": 18,
+    "source": {
+      "path": "skills/worker/core/worker/ownership-store.ts",
+      "line": 75,
+      "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "sourceText": "    return withDurableStoreLock(this.#file, async () => structuredClone((await this.#read()).records));"
+    },
+    "owningCompanion": "CoreNative"
+  },
+  {
+    "coordinateIndex": 19,
+    "source": {
+      "path": "skills/worker/core/worker/ownership-store.ts",
+      "line": 82,
+      "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "sourceText": "    await withDurableStoreLock(this.#file, async () => {"
+    },
+    "owningCompanion": "CoreNative"
+  },
+  {
+    "coordinateIndex": 20,
+    "source": {
+      "path": "skills/worker/core/worker/ownership-store.ts",
+      "line": 98,
+      "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "sourceText": "    return withDurableStoreLock(path.join(path.dirname(this.#file), 'supervisor', 'lifetime'), operation);"
+    },
+    "owningCompanion": "CoreNative"
+  },
+  {
+    "coordinateIndex": 21,
+    "source": {
+      "path": "skills/worker/core/worker/ownership-store.ts",
+      "line": 104,
+      "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "sourceText": "    return withDurableStoreLock(this.#file, async () => {"
+    },
+    "owningCompanion": "CoreNative"
+  },
+  {
+    "coordinateIndex": 22,
+    "source": {
+      "path": "skills/worker/core/worker/ownership-store.ts",
+      "line": 134,
+      "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "sourceText": "    return withDurableStoreLock(this.#file, async () => {"
+    },
+    "owningCompanion": "CoreNative"
+  },
+  {
+    "coordinateIndex": 23,
+    "source": {
+      "path": "skills/worker/core/worker/ownership-store.ts",
+      "line": 179,
+      "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "sourceText": "    return withDurableStoreLock(this.#file, async () => {"
+    },
+    "owningCompanion": "CoreNative"
+  },
+  {
+    "coordinateIndex": 24,
+    "source": {
+      "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+      "line": 45,
+      "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+      "sourceText": "  const records=new FileDurableRecordStore(config.stateRoot,{maximumRecords:10000,maximumBytes:64*1024**2,maximumRecordBytes:65536});"
+    },
+    "owningCompanion": "DemoHandoff"
+  },
+  {
+    "coordinateIndex": 25,
+    "source": {
+      "path": "skills/nova/core/test-gates/remote-result-import.ts",
+      "line": 100,
+      "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+      "sourceText": "    this.#records = new FileDurableRecordStore(root, options.recordLimits);"
+    },
+    "owningCompanion": "NovaStandaloneGate+NovaRegisteredGate+NovaRegisteredEvidence"
+  },
+  {
+    "coordinateIndex": 26,
+    "source": {
+      "path": "skills/nova/core/test-gates/remote-result-import.ts",
+      "line": 103,
+      "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+      "sourceText": "    this.#blobs = new FileDurableBlobStore(root, options.maximumEvidenceStoreBytes, options.maximumEvidenceStoreBytes);"
+    },
+    "owningCompanion": "NovaStandaloneGate+NovaRegisteredGate+NovaRegisteredEvidence"
+  },
+  {
+    "coordinateIndex": 27,
+    "source": {
+      "path": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+      "line": 24,
+      "sha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+      "sourceText": "    this.#records = new FileDurableRecordStore(root, options.recordLimits);"
+    },
+    "owningCompanion": "NovaStandaloneGate+NovaRegisteredGate+NovaRegisteredEvidence"
+  },
+  {
+    "coordinateIndex": 28,
+    "source": {
+      "path": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+      "line": 25,
+      "sha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+      "sourceText": "    this.#blobs = new FileDurableBlobStore(root, options.maximumArchiveBytes, options.maximumArchiveStoreBytes);"
+    },
+    "owningCompanion": "NovaStandaloneGate+NovaRegisteredGate+NovaRegisteredEvidence"
+  },
+  {
+    "coordinateIndex": 29,
+    "source": {
+      "path": "skills/nova/core/observability/reconciler.ts",
+      "line": 384,
+      "sha256": "61c65951f07d04e1767fdc3114a473183ed5b968ef8d68f665b4ec5d0661dd71",
+      "sourceText": "    attemptStore: new FileDurableAttemptStore("
+    },
+    "owningCompanion": "NovaPlatform"
+  },
+  {
+    "coordinateIndex": 30,
+    "source": {
+      "path": "skills/nova/core/observability/reconciler.ts",
+      "line": 388,
+      "sha256": "61c65951f07d04e1767fdc3114a473183ed5b968ef8d68f665b4ec5d0661dd71",
+      "sourceText": "    admissionStore: new FileObservabilityAdmissionStore("
+    },
+    "owningCompanion": "NovaPlatform"
+  },
+  {
+    "coordinateIndex": 31,
+    "source": {
+      "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+      "line": 46,
+      "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+      "sourceText": "    this.#records = new FileDurableRecordStore(root, options.recordLimits);"
+    },
+    "owningCompanion": "BusterPreparedJob"
+  },
+  {
+    "coordinateIndex": 32,
+    "source": {
+      "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+      "line": 47,
+      "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+      "sourceText": "    this.#results = new FileDurableBlobStore(path.join(root, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);"
+    },
+    "owningCompanion": "BusterPreparedJob"
+  },
+  {
+    "coordinateIndex": 33,
+    "source": {
+      "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+      "line": 89,
+      "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+      "sourceText": "    return withDurableStoreLock(this.#admissionLock, () => this.#accept(job, now));"
+    },
+    "owningCompanion": "BusterPreparedJob"
+  },
+  {
+    "coordinateIndex": 34,
+    "source": {
+      "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+      "line": 185,
+      "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+      "sourceText": "    return withDurableStoreLock(this.#admissionLock, () => this.#complete(jobId, result, now));"
+    },
+    "owningCompanion": "BusterPreparedJob"
+  },
+  {
+    "coordinateIndex": 35,
+    "source": {
+      "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+      "line": 234,
+      "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+      "sourceText": "    return withDurableStoreLock(this.#admissionLock, async () => {"
+    },
+    "owningCompanion": "BusterPreparedJob"
+  },
+  {
+    "coordinateIndex": 36,
+    "source": {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "line": 64,
+      "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a",
+      "sourceText": "      new FileDurableAttemptStore(path.join(observabilityRoot, \"attempts\"), executionPolicy.stores.attempts);"
+    },
+    "owningCompanion": "BusterComponent"
+  },
+  {
+    "coordinateIndex": 37,
+    "source": {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "line": 67,
+      "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a",
+      "sourceText": "      new FileObservabilityAdmissionStore(path.join(observabilityRoot, \"admission\"), executionPolicy.stores.admission);"
+    },
+    "owningCompanion": "BusterComponent"
+  },
+  {
+    "coordinateIndex": 38,
+    "source": {
+      "path": "skills/buster/engine/test-gates/preparation-historical-publication.ts",
+      "line": 144,
+      "sha256": "53147aef26b51b977f07d9ab46fcee9a356ba9acfa19e041f8c3b99d1cbc0f19",
+      "sourceText": "  return withDurableStoreLock(file, async () => {"
+    },
+    "owningCompanion": "BusterComponent"
+  },
+  {
+    "coordinateIndex": 39,
+    "source": {
+      "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+      "line": 31,
+      "sha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+      "sourceText": "    this.#records = new FileDurableRecordStore(path.join(this.#root, 'metadata'), {"
+    },
+    "owningCompanion": "PublicNativeFixture"
+  },
+  {
+    "coordinateIndex": 40,
+    "source": {
+      "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+      "line": 34,
+      "sha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+      "sourceText": "    this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), limits.maximumBlobBytes, limits.maximumTotalBytes);"
+    },
+    "owningCompanion": "PublicNativeFixture"
+  },
+  {
+    "coordinateIndex": 41,
+    "source": {
+      "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+      "line": 125,
+      "sha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+      "sourceText": "    return withDurableStoreLock(path.join(this.#root, 'phases', 'lifetime'), operation);"
+    },
+    "owningCompanion": "PublicNativeFixture"
+  },
+  {
+    "coordinateIndex": 42,
+    "source": {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "line": 71,
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+      "sourceText": "    this.#records = new FileDurableRecordStore(writableRoot, options.recordLimits);"
+    },
+    "owningCompanion": "BusterPreparedJob"
+  },
+  {
+    "coordinateIndex": 43,
+    "source": {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "line": 72,
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+      "sourceText": "    this.#results = new FileDurableBlobStore(path.join(writableRoot, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);"
+    },
+    "owningCompanion": "BusterPreparedJob"
+  },
+  {
+    "coordinateIndex": 44,
+    "source": {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "line": 93,
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+      "sourceText": "    return withDurableStoreLock(this.#admissionLock, () => this.#accept(prepared, now));"
+    },
+    "owningCompanion": "BusterPreparedJob"
+  },
+  {
+    "coordinateIndex": 45,
+    "source": {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "line": 155,
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+      "sourceText": "    await withDurableStoreLock(this.#admissionLock, () => this.#attachSource(captured));"
+    },
+    "owningCompanion": "BusterPreparedJob"
+  },
+  {
+    "coordinateIndex": 46,
+    "source": {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "line": 173,
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+      "sourceText": "    return withDurableStoreLock(this.#admissionLock, async () => {"
+    },
+    "owningCompanion": "BusterPreparedJob"
+  },
+  {
+    "coordinateIndex": 47,
+    "source": {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "line": 191,
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+      "sourceText": "    return withDurableStoreLock(this.#admissionLock,"
+    },
+    "owningCompanion": "BusterPreparedJob"
+  },
+  {
+    "coordinateIndex": 48,
+    "source": {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "line": 238,
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+      "sourceText": "    return withDurableStoreLock(this.#admissionLock, () => this.#complete(jobId, result, now));"
+    },
+    "owningCompanion": "BusterPreparedJob"
+  },
+  {
+    "coordinateIndex": 49,
+    "source": {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "line": 32,
+      "sha256": "e0631a2ec68d28a2eddbb62d37727db2fd71378ae48c0d879ee3aaadc56c92c5",
+      "sourceText": "    return withDurableStoreLock(this.#file, async () => {"
+    },
+    "owningCompanion": "BusterComponent"
+  },
+  {
+    "coordinateIndex": 50,
+    "source": {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "line": 52,
+      "sha256": "e0631a2ec68d28a2eddbb62d37727db2fd71378ae48c0d879ee3aaadc56c92c5",
+      "sourceText": "    return withDurableStoreLock(this.#file, async () => {"
+    },
+    "owningCompanion": "BusterComponent"
+  },
+  {
+    "coordinateIndex": 51,
+    "source": {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "line": 138,
+      "sha256": "e0631a2ec68d28a2eddbb62d37727db2fd71378ae48c0d879ee3aaadc56c92c5",
+      "sourceText": "    return withDurableStoreLock(this.#file, async () => {"
+    },
+    "owningCompanion": "BusterComponent"
+  },
+  {
+    "coordinateIndex": 52,
+    "source": {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "line": 289,
+      "sha256": "e0631a2ec68d28a2eddbb62d37727db2fd71378ae48c0d879ee3aaadc56c92c5",
+      "sourceText": "    return withDurableStoreLock(this.#file, async () => structuredClone((await this.#read()).reservations));"
+    },
+    "owningCompanion": "BusterComponent"
+  },
+  {
+    "coordinateIndex": 53,
+    "source": {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "line": 293,
+      "sha256": "e0631a2ec68d28a2eddbb62d37727db2fd71378ae48c0d879ee3aaadc56c92c5",
+      "sourceText": "    await withDurableStoreLock(this.#file, async () => {"
+    },
+    "owningCompanion": "BusterComponent"
+  },
+  {
+    "coordinateIndex": 54,
+    "source": {
+      "path": "scripts/retire-wait-value.mjs",
+      "line": 94,
+      "sha256": "7a62bff9b58dbb5d4dbb6af8cdd3b3b7b64b5cdc2b536f23ea0ba1c0bb489102",
+      "sourceText": "    const waits = new FileDurableRecordStore(scope.intent.waitRoot, config.waitLimits);"
+    },
+    "owningCompanion": "RetirementOriginalPolicy"
+  },
+  {
+    "coordinateIndex": 55,
+    "source": {
+      "path": "scripts/retire-wait-value.mjs",
+      "line": 95,
+      "sha256": "7a62bff9b58dbb5d4dbb6af8cdd3b3b7b64b5cdc2b536f23ea0ba1c0bb489102",
+      "sourceText": "    const deliveries = new FileDurableRecordStore(scope.intent.deliveryRoot, config.deliveryLimits);"
+    },
+    "owningCompanion": "RetirementOriginalPolicy"
+  },
+  {
+    "coordinateIndex": 56,
+    "source": {
+      "path": "scripts/retire-telemetry.mjs",
+      "line": 49,
+      "sha256": "050d770035a702a33e487ae06c7903aee6333cdbdf1f1e44dd4b5fcf7503c456",
+      "sourceText": "    const store = new FileDurableRecordStore(scope.telemetryRoot,scope.storeLimits);"
+    },
+    "owningCompanion": "RetirementOriginalPolicy"
+  },
+  {
+    "coordinateIndex": 57,
+    "source": {
+      "path": "scripts/retire-operator-request.mjs",
+      "line": 65,
+      "sha256": "8aebd618c02dc8a898db323b99f7a0dee0abb27c470dda59a9bd3d7cde01dc21",
+      "sourceText": "    const waits = new FileDurableRecordStore(scope.intent.waitRoot, config.waitLimits);"
+    },
+    "owningCompanion": "RetirementOriginalPolicy"
+  },
+  {
+    "coordinateIndex": 58,
+    "source": {
+      "path": "scripts/retire-operator-request.mjs",
+      "line": 66,
+      "sha256": "8aebd618c02dc8a898db323b99f7a0dee0abb27c470dda59a9bd3d7cde01dc21",
+      "sourceText": "    const deliveries = new FileDurableRecordStore(scope.intent.deliveryRoot, config.deliveryLimits);"
+    },
+    "owningCompanion": "RetirementOriginalPolicy"
+  },
+  {
+    "coordinateIndex": 59,
+    "source": {
+      "path": "scripts/retire-admission.mjs",
+      "line": 53,
+      "sha256": "ac31444b3acdad697ec7317773fda4dfad48b4ee3a22a4eb2d329e73c5d30d96",
+      "sourceText": "    const attempts=new FileDurableAttemptStore(scope.attemptRoot,scope.attemptLimits);"
+    },
+    "owningCompanion": "RetirementOriginalPolicy"
+  },
+  {
+    "coordinateIndex": 60,
+    "source": {
+      "path": "scripts/retire-admission.mjs",
+      "line": 54,
+      "sha256": "ac31444b3acdad697ec7317773fda4dfad48b4ee3a22a4eb2d329e73c5d30d96",
+      "sourceText": "    const admission=new FileObservabilityAdmissionStore(scope.admissionRoot,scope.admissionLimits);"
+    },
+    "owningCompanion": "RetirementOriginalPolicy"
+  },
+  {
+    "coordinateIndex": 61,
+    "source": {
+      "path": "scripts/retire-attempt-result.mjs",
+      "line": 59,
+      "sha256": "c84c13e778070012ca005b272f0bc0875b3a587e8623ddf5aee827f9b90ae61a",
+      "sourceText": "    const attempts=new FileDurableAttemptStore(scope.attemptRoot,scope.attemptLimits);"
+    },
+    "owningCompanion": "RetirementOriginalPolicy"
+  }
+]

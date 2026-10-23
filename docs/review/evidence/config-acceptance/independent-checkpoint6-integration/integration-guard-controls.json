@@ -1,0 +1,28 @@
+{
+  "observations": [
+    {
+      "id": "current-source-integration-IDs-requirements-lifecycle-conserved",
+      "passed": true
+    },
+    {
+      "id": "R06-unresolved-review-incorrectly-described-resolved",
+      "reproducedGuardGap": true,
+      "scope": "same-path virtual metadata with digest/load both matching its exactbytes; no realreport edited",
+      "observedIndependentReview": "Named R06 contradictions independently resolved at bounded material definition scope; canonical field/consumer and global closure remain open."
+    },
+    {
+      "id": "postreview-selfconsistent-package-requirement-loss-not-invalidated",
+      "reproducedGuardGap": true,
+      "caseId": "QC-FOUNDATION-FLOCK-WAIT-VAL",
+      "removedRequirement": "F-VAL",
+      "all22IDsPreserved": true,
+      "oldReviewStillCarriedAsResolved": true,
+      "scope": "No substantiveCoredefinition reviewed; pure metadata requirement conservation/receipt identity proof only"
+    },
+    {
+      "id": "actual-baseline-restored-positive",
+      "passed": true
+    }
+  ],
+  "scope": "Parent docs integration guard controls, not production/test semantic mutants; root/authorinputs untouched"
+}

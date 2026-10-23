@@ -1,0 +1,13 @@
+✔ Prism OpenClaw plugin enforces one exact three-design commit tool (1.136949ms)
+✔ direction diversity ignores copy-only changes (9.677556ms)
+✔ direction diversity rejects one cosmetic token change (0.385979ms)
+✔ direction diversity accepts a material visual system change (0.427321ms)
+✔ direction diversity ignores object key order (0.242066ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 125.543045

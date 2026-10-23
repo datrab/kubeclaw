@@ -1,0 +1,317 @@
+skills/worker/core/worker/native-process-control.ts:26:        timer = setTimeout(() => reject(new Error('WORKER_NATIVE_CONTROL_UNSETTLED')), closeTimeoutMs);
+skills/worker/core/worker/native-process-control.ts:30:  return { finish: () => completion ??= finish() };
+skills/worker/core/worker/native-attempt-journal.ts:5:import { canonicalJson, sha256Digest, checkWorkerNativeResultBinding, validateWorkerResourceContractV3,
+skills/worker/core/worker/native-attempt-journal.ts:28:    if (!path.isAbsolute(root) || Object.values(limits).some(value => !Number.isSafeInteger(value) || value < 1)) {
+skills/worker/core/worker/native-attempt-journal.ts:47:    // 256 fixed lock stripes bound rejected-request lock metadata. Equal claims
+skills/worker/core/worker/native-attempt-journal.ts:73:      if (journalKey(envelope) !== record.idempotencyKey || sha256Digest(envelope) !== record.payload.envelopeDigest
+skills/worker/core/worker/native-attempt-journal.ts:74:        || canonicalJson(journalIdentity(envelope)) !== canonicalJson(record.payload.identity)) throw new Error('WORKER_NATIVE_JOURNAL_IDENTITY_CONFLICT');
+skills/worker/core/worker/native-attempt-journal.ts:97:      if (output[channel].digest !== process[channel].digest || output[channel].sizeBytes !== process[channel].sizeBytes) {
+skills/worker/core/worker/native-attempt-journal.ts:108:    if (record.payload.result || record.payload.process) throw new Error('WORKER_NATIVE_JOURNAL_PROCESS_ALREADY_RECORDED');
+skills/worker/core/worker/native-attempt-journal.ts:110:    if (!output.stdout.bytes.equals(Buffer.from(process.stdout)) || !output.stderr.bytes.equals(Buffer.from(process.stderr))) {
+skills/worker/core/worker/native-attempt-journal.ts:127:        if (record.payload.result.digest !== sha256Digest(result)) throw new Error('WORKER_NATIVE_JOURNAL_RESULT_ALREADY_SEALED');
+skills/worker/core/worker/native-attempt-journal.ts:138:    try { await fs.mkdir(this.#root, { mode: 0o700 }); }
+skills/worker/core/worker/native-attempt-journal.ts:141:    if (!stat.isDirectory() || stat.uid !== process.getuid!() || (stat.mode & 0o077) !== 0) throw new Error('WORKER_NATIVE_JOURNAL_NOT_PRIVATE');
+skills/worker/core/worker/native-attempt-journal.ts:153:    if (record && (record.payload.envelopeDigest !== sha256Digest(envelope)
+skills/worker/core/worker/native-attempt-journal.ts:154:      || canonicalJson(record.payload.identity) !== canonicalJson(journalIdentity(envelope)))) throw new Error('WORKER_NATIVE_JOURNAL_IDENTITY_CONFLICT');
+skills/worker/core/worker/native-attempt-journal.ts:171:      const reservationBytes = bytes.byteLength + this.#limits.maximumOutputBytes + this.#limits.maximumResultBytes + 65536;
+skills/worker/core/worker/native-attempt-journal.ts:175:      if (!Number.isSafeInteger(requested) || requested > this.#limits.maximumTotalBytes) throw new Error('WORKER_NATIVE_JOURNAL_CAPACITY_EXCEEDED');
+skills/worker/core/worker/native-attempt-journal.ts:177:        envelopeDigest: sha256Digest(envelope), envelope: { digest: sha256Digest(envelope), sizeBytes: bytes.byteLength },
+skills/worker/core/worker/native-attempt-journal.ts:179:      const owner = `native-worker:${sha256Digest(envelope.claim.workerId).slice(7)}`;
+skills/worker/core/worker/native-resource-accounting.ts:8:      if (!Number.isSafeInteger(item.value) || item.value < 0 || item.value < (previous[metric] ?? 0)) return false;
+skills/worker/core/worker/native-resource-accounting.ts:9:    } else if (item?.status !== 'unavailable' || typeof item.reason !== 'string' || !item.reason || item.reason.length > 4096) return false;
+skills/worker/core/worker/native-resource-accounting.ts:23:  if (!measured || typeof measured !== 'object' || Array.isArray(measured)) return invalid();
+skills/worker/core/worker/native-resource-accounting.ts:34:    if (item.status === 'unavailable') error ??= { code: 'WORKER_RESOURCE_MEASUREMENT_UNAVAILABLE', message: item.reason };
+skills/worker/core/worker/native-resource-accounting.ts:35:    else if (item.value > budget.limit) error ??= { code: codes[metric], message: codes[metric] };
+skills/worker/core/worker/native-process-output.ts:7:  if (!Number.isSafeInteger(maximumBytes) || maximumBytes < 1) throw new Error('WORKER_NATIVE_OUTPUT_LIMIT_INVALID');
+skills/worker/core/worker/native-worker-ownership.ts:36:  return record.phase === 'disposed' || record.phase === 'abandoned';
+skills/worker/core/worker/native-worker-ownership.ts:40:  return (error instanceof Error ? error.message : String(error)).slice(0, 4096).toWellFormed() || 'WORKER_NATIVE_UNKNOWN_FAILURE';
+skills/worker/core/worker/native-worker-ownership.ts:68:    if (this.#started || this.#closing) return Promise.reject(new Error('WORKER_NATIVE_LAUNCH_FENCED'));
+skills/worker/core/worker/native-worker-ownership.ts:84:      if (this.#closing || !this.#started || !this.#launch) throw new Error('WORKER_NATIVE_LAUNCH_FENCED');
+skills/worker/core/worker/native-worker-ownership.ts:86:      if (this.#closing || this.#record.phase !== 'running') throw new Error('WORKER_NATIVE_LAUNCH_FENCED');
+skills/worker/core/worker/native-worker-ownership.ts:94:    if (this.#closing || !this.#launcher) throw new Error('WORKER_NATIVE_LAUNCH_FENCED');
+skills/worker/core/worker/native-worker-ownership.ts:113:    this.#completion ??= this.#finish().then(observation => {
+skills/worker/core/worker/native-worker-ownership.ts:156:      if (this.#record.phase !== 'empty' || this.#record.finalObservation === null) {
+skills/worker/core/worker/native-worker-ownership.ts:206:    return record ?? null;
+skills/worker/core/worker/native-worker-ownership.ts:211:    if (!Number.isSafeInteger(options.drainTimeoutMs) || options.drainTimeoutMs < 1) {
+skills/worker/core/worker/native-worker-ownership.ts:214:    if (!Number.isSafeInteger(options.maximumActiveScopes) || options.maximumActiveScopes < 1) {
+skills/worker/core/worker/native-worker-ownership.ts:244:    if (this.#closed || this.#admitting.has(key)) throw new Error('WORKER_NATIVE_ADMISSION_FENCED');
+skills/worker/core/worker/native-worker-ownership.ts:250:      if (record.phase !== 'reserved' || record.topology.kind !== 'aggregate.v1') throw new Error('WORKER_NATIVE_IDENTITY_ALREADY_USED');
+skills/worker/core/worker/native-worker-ownership.ts:269:      if (!record || record.phase !== 'allocated') releaseCapacity();
+skills/worker/core/worker/native-worker-ownership.ts:296:    if (!exists && (!record.binding || record.binding.bootId !== currentBoot)) {
+skills/worker/core/worker/ownership-capacity.ts:7:const maximumDiagnosis = '\u0000'.repeat(maximumOwnershipDiagnosisUnits);
+skills/worker/core/worker/ownership-capacity.ts:14:  return { scopeName, bootId: '00000000-0000-0000-0000-000000000000', device: maximumInteger, inode: maximumInteger };
+skills/worker/core/worker/ownership-capacity.ts:19:  if (record.phase === 'disposed' || record.phase === 'abandoned') return record;
+skills/worker/core/worker/ownership-capacity.ts:20:  const binding = record.binding ?? futureBinding(record.scopeName);
+skills/worker/core/worker/ownership-capacity.ts:22:    diagnosis: maximumDiagnosis, finalObservation: record.finalObservation ?? maximumObservation,
+skills/worker/core/worker/ownership-capacity.ts:24:      binding: child.binding ?? { ...binding, scopeName: child.name,
+skills/worker/core/worker/ownership-capacity.ts:33:  if (!Number.isSafeInteger(maximumBytes) || maximumBytes < 1) throw new Error('WORKER_OWNERSHIP_CAPACITY_EXCEEDED');
+skills/worker/core/worker/ownership-capacity.ts:34:  let total = Buffer.byteLength(canonicalJson({ ...state, hostIdentity: state.hostIdentity ?? maximumHostIdentity, records: [] }));
+skills/worker/core/worker/native-worker-process.ts:44:  if (Object.values(limits).some(value => !Number.isSafeInteger(value) || value < 1)) {
+skills/worker/core/worker/native-worker-process.ts:48:    if (value > 2_147_483_647) throw new Error('WORKER_NATIVE_PROCESS_TIMER_INVALID');
+skills/worker/core/worker/native-worker-process.ts:53:  if (observation.oomKills || observation.maximumMemoryBytes > limits.memoryBytes) return 'WORKER_MEMORY_LIMIT';
+skills/worker/core/worker/native-worker-process.ts:54:  if (observation.taskLimitHits || observation.maximumTasks > limits.tasks) return 'WORKER_TASK_LIMIT';
+skills/worker/core/worker/native-worker-process.ts:55:  if (observation.cpuTimeMicroseconds / 1000 > limits.cpuTimeMs) return 'WORKER_CPU_LIMIT';
+skills/worker/core/worker/native-worker-process.ts:94:    closing ??= lease.finish();
+skills/worker/core/worker/native-worker-process.ts:97:    closeTimer ??= setTimeout(() => {
+skills/worker/core/worker/native-worker-process.ts:104:    fault ??= code;
+skills/worker/core/worker/native-worker-process.ts:111:    if (closing || disposeCancellation) return;
+skills/worker/core/worker/native-worker-process.ts:112:    fault ??= 'WORKER_ATTEMPT_CANCELLED';
+skills/worker/core/worker/native-worker-process.ts:120:  const deadline = setTimeout(() => stop('WORKER_ATTEMPT_TIMEOUT'), limits.timeoutMs);
+skills/worker/core/worker/native-worker-process.ts:121:  const poll = setInterval(() => {
+skills/worker/core/worker/native-worker-process.ts:134:    fault ??= budgetFault(resources, limits);
+skills/worker/core/worker/native-supervisor-authority.ts:8:  if (process.getuid?.() !== 0 || process.geteuid?.() !== 0 || !capabilities
+skills/worker/core/worker/native-supervisor-authority.ts:9:    || (BigInt(`0x${capabilities}`) & required) !== required) throw new Error('WORKER_NATIVE_SUPERVISOR_AUTHORITY_REQUIRED');
+skills/worker/core/worker/native-supervisor-authority.ts:14:  if (!path.isAbsolute(file) || fs.realpathSync(file) !== file) throw new Error('WORKER_NATIVE_LAUNCHER_PATH_INVALID');
+skills/worker/core/worker/native-supervisor-authority.ts:18:    if (!stat.isFile() || stat.uid !== 0 || (stat.mode & 0o6022) !== 0 || (stat.mode & 0o100) === 0) {
+skills/worker/core/worker/trust.ts:4:  readonly authentication: 'spiffe-x509-svid';
+skills/worker/core/worker/trust.ts:12:  const value = headers[name] ?? headers[name.toLowerCase()];
+skills/worker/core/worker/trust.ts:14:  return value ?? '';
+skills/worker/core/worker/trust.ts:21:  if (!forwarded || forwarded.includes(',')) throw new Error('WORKER_TRUST_PEER_MISSING');
+skills/worker/core/worker/trust.ts:26:  const spiffeId = (match?.[1] ?? match?.[2] ?? '').trim();
+skills/worker/core/worker/trust.ts:28:  return Object.freeze({ authentication: 'spiffe-x509-svid', spiffeId });
+skills/worker/core/worker/trust.ts:35:  if (allowedSpiffeIds.size === 0 || [...allowedSpiffeIds].some((id) => !SPIFFE_ID.test(id))) {
+skills/worker/core/worker/trust.ts:48:  if (!remoteAddress || !['127.0.0.1', '::1', '::ffff:127.0.0.1'].includes(remoteAddress)) {
+skills/worker/core/worker/native-attempt-executor.ts:56:    if (error instanceof NativeWorkerAttemptBusy || error instanceof NativeAdmissionRejected) throw error;
+skills/worker/core/worker/native-attempt-executor.ts:73:    if (budget.state !== 'requested' || budget.limit !== maximum) throw new NativeAdmissionRejected('WORKER_NATIVE_ACCEPTED_LIMIT_MISMATCH');
+skills/worker/core/worker/native-attempt-executor.ts:76:  if (started.getTime() < Date.parse(envelope.claim.claimedAt) || claimRemaining <= 0
+skills/worker/core/worker/native-attempt-executor.ts:77:    || started.getTime() >= Date.parse(envelope.queueDeadline)) throw new NativeAdmissionRejected('WORKER_NATIVE_CLAIM_NOT_ACTIVE');
+skills/worker/core/worker/local-runtime.ts:11:const MAX_TIMER_MS = 2_147_483_647;
+skills/worker/core/worker/local-runtime.ts:20:  if (options === null || typeof options !== 'object') throw new Error('WORKER_LOCAL_POLICY_REQUIRED');
+skills/worker/core/worker/local-runtime.ts:25:  if (!Number.isSafeInteger(replayLimit) || replayLimit < 1 || replayLimit > 1_000_000) {
+skills/worker/core/worker/local-runtime.ts:57:  if (!value || typeof value !== 'object') return value;
+skills/worker/core/worker/local-runtime.ts:63:  if (!Number.isSafeInteger(value) || value < 1 || value > MAX_TIMER_MS) throw new Error(code);
+skills/worker/core/worker/local-runtime.ts:73:      new Promise<boolean>((resolve) => { timer = setTimeout(() => resolve(false), timeoutMs); }),
+skills/worker/core/worker/local-runtime.ts:85:    timer = setTimeout(schedule, Math.min(remaining, MAX_TIMER_MS));
+skills/worker/core/worker/local-runtime.ts:105:    if (!Number.isSafeInteger(options.capacity) || options.capacity < 1 || options.capacity > 4096) {
+skills/worker/core/worker/local-runtime.ts:112:    this.#now = options.now ?? (() => new Date());
+skills/worker/core/worker/local-runtime.ts:215:    this.#draining ??= this.#drainOnce();
+skills/worker/core/worker/ownership-store.ts:46:  if (change.binding !== undefined && (current.phase !== 'reserved' || phase !== 'allocated')) {
+skills/worker/core/worker/ownership-store.ts:49:  if (change.finalObservation !== undefined && (current.finalObservation !== null || phase !== 'empty'
+skills/worker/core/worker/ownership-store.ts:50:    || !['quiescing', 'empty'].includes(current.phase))) throw new Error('WORKER_OWNERSHIP_OBSERVATION_REWRITE_FORBIDDEN');
+skills/worker/core/worker/ownership-store.ts:65:    if (!path.isAbsolute(root) || !Number.isSafeInteger(limits.maximumRecords) || limits.maximumRecords < 1
+skills/worker/core/worker/ownership-store.ts:66:      || !Number.isSafeInteger(limits.maximumBytes) || limits.maximumBytes < 1) {
+skills/worker/core/worker/ownership-store.ts:138:      if (!current || canonicalJson(current) !== canonicalJson(expected)) throw new Error('WORKER_OWNERSHIP_CAS_CONFLICT');
+skills/worker/core/worker/ownership-store.ts:143:        binding: change.binding ?? current.binding, diagnosis: change.diagnosis ?? current.diagnosis,
+skills/worker/core/worker/ownership-store.ts:144:        finalObservation: change.finalObservation ?? current.finalObservation,
+skills/worker/core/worker/ownership-store.ts:159:      if (current.phase !== 'running' || current.topology.children.some(item => item.name === name)) {
+skills/worker/core/worker/ownership-store.ts:170:      if (!child || child.binding !== null || current.phase !== 'running') throw new Error('WORKER_OWNERSHIP_CHILD_REBIND_FORBIDDEN');
+skills/worker/core/worker/ownership-store.ts:183:      if (!current || canonicalJson(current) !== canonicalJson(expected)) throw new Error('WORKER_OWNERSHIP_CAS_CONFLICT');
+skills/worker/core/worker/ownership-store.ts:205:      if (!stat.isFile() || stat.nlink !== 1 || stat.size > this.#maximumBytes) throw new Error('WORKER_OWNERSHIP_CAPACITY_EXCEEDED');
+skills/worker/core/worker/ownership-store.ts:214:    if (state.records.length > this.#maximumRecords || Buffer.byteLength(canonicalJson(state)) > this.#maximumBytes) {
+skills/worker/core/worker/native-runtime-identity.ts:16:    if (!stat.isFile() || stat.uid !== 0 || (stat.mode & 0o022) !== 0 || stat.size < 1 || stat.size > 4096) {
+skills/worker/core/worker/native-runtime-identity.ts:22:    if (identity?.schemaVersion !== 1 || identity.bootId !== bootId
+skills/worker/core/worker/native-runtime-identity.ts:23:      || identity.cgroupNamespace?.device !== String(namespace.dev)
+skills/worker/core/worker/native-runtime-identity.ts:24:      || identity.cgroupNamespace?.inode !== String(namespace.ino)) {
+skills/worker/core/worker/native-resource-scope.ts:7:import { setTimeout as delay } from 'node:timers/promises';
+skills/worker/core/worker/native-resource-scope.ts:22:  if (root === '/' || root === '/sys/fs/cgroup' || fs.statfsSync(root).type !== 0x63677270) {
+skills/worker/core/worker/native-resource-scope.ts:40:  if (!Number.isSafeInteger(value) || value < 1) throw new Error('WORKER_NATIVE_LIMIT_INVALID');
+skills/worker/core/worker/native-resource-scope.ts:118:    if (!scopeNamePattern.test(binding.scopeName) || binding.bootId !== bootId()) {
+skills/worker/core/worker/native-resource-scope.ts:123:    if (!stat.isDirectory() || stat.dev !== binding.device || stat.ino !== binding.inode) {
+skills/worker/core/worker/native-resource-scope.ts:161:    if (!this.#quiescing || this.observe().populated) throw new Error('WORKER_NATIVE_SCOPE_NOT_QUIESCENT');
+skills/worker/core/worker/native-resource-scope.ts:191:    if (!this.#quiescing || this.observe().populated) throw new Error('WORKER_NATIVE_SCOPE_NOT_QUIESCENT');
+skills/worker/core/worker/native-resource-scope.ts:200:    if (!stat.isDirectory() || stat.dev !== this.#device || stat.ino !== this.#inode) {
+skills/worker/core/worker/ownership-children.ts:16:  return name === 'host' || /^helper-[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/u.test(name);
+skills/worker/core/worker/ownership-children.ts:20:  if (!value || typeof value !== 'object' || Array.isArray(value)
+skills/worker/core/worker/ownership-children.ts:21:    || Object.keys(value).sort().join(',') !== 'memoryBytes,tasks'
+skills/worker/core/worker/ownership-children.ts:22:    || !('memoryBytes' in value) || !('tasks' in value)
+skills/worker/core/worker/ownership-children.ts:23:    || !Number.isSafeInteger(value.memoryBytes) || Number(value.memoryBytes) < 1
+skills/worker/core/worker/ownership-children.ts:24:    || !Number.isSafeInteger(value.tasks) || Number(value.tasks) < 1) {
+skills/worker/core/worker/ownership-children.ts:30:  if (!value || typeof value !== 'object' || Array.isArray(value)
+skills/worker/core/worker/ownership-children.ts:31:    || Object.keys(value).sort().join(',') !== 'children,kind'
+skills/worker/core/worker/ownership-children.ts:32:    || !('kind' in value) || !('children' in value) || !Array.isArray(value.children)
+skills/worker/core/worker/ownership-children.ts:33:    || !['aggregate.v1', 'legacy-leaf'].includes(String(value.kind))) {
+skills/worker/core/worker/ownership-children.ts:36:  if ((value.kind === 'legacy-leaf' || parent === null) && value.children.length) {
+skills/worker/core/worker/ownership-children.ts:48:  if (!child || typeof child !== 'object' || Array.isArray(child)
+skills/worker/core/worker/ownership-children.ts:49:    || Object.keys(child).sort().join(',') !== 'binding,limits,name'
+skills/worker/core/worker/ownership-children.ts:50:    || !('name' in child) || typeof child.name !== 'string' || !childNameValid(child.name)
+skills/worker/core/worker/ownership-children.ts:51:    || !('limits' in child) || !('binding' in child)) throw new Error('WORKER_OWNERSHIP_CHILD_INVALID');
+skills/worker/core/worker/ownership-children.ts:59:  if (!binding || typeof binding !== 'object' || Array.isArray(binding)
+skills/worker/core/worker/ownership-children.ts:60:    || Object.keys(binding).sort().join(',') !== 'bootId,device,inode,scopeName'
+skills/worker/core/worker/ownership-children.ts:61:    || binding.scopeName !== name || binding.bootId !== parent?.bootId
+skills/worker/core/worker/ownership-children.ts:62:    || binding.device !== parent.device || !Number.isSafeInteger(binding.inode) || binding.inode < 1
+skills/worker/core/worker/ownership-children.ts:63:    || binding.inode === parent.inode) throw new Error('WORKER_OWNERSHIP_CHILD_BINDING_INVALID');
+skills/worker/core/worker/attempt-executor.ts:22:import { sha256Digest, sha256Text } from './digest.ts';
+skills/worker/core/worker/attempt-executor.ts:24:const MAX_ATTEMPT_ENVELOPE_BYTES = 16 * 1024 * 1024;
+skills/worker/core/worker/attempt-executor.ts:25:const MAX_ATTEMPT_LOG_BYTES = 16 * 1024 * 1024;
+skills/worker/core/worker/attempt-executor.ts:26:const MAX_ATTEMPT_LOG_PARTS = 10_000;
+skills/worker/core/worker/attempt-executor.ts:28:const MAX_ATTEMPT_VALUE_NODES = 100_000;
+skills/worker/core/worker/attempt-executor.ts:113:  return text.slice(0, 4096).toWellFormed();
+skills/worker/core/worker/attempt-executor.ts:117:  if (!value || typeof value !== 'object') return value;
+skills/worker/core/worker/attempt-executor.ts:126:    if (unit === 0x22 || unit === 0x5c || unit === 0x08 || unit === 0x09 || unit === 0x0a
+skills/worker/core/worker/attempt-executor.ts:127:      || unit === 0x0c || unit === 0x0d) {
+skills/worker/core/worker/attempt-executor.ts:131:    } else if (unit >= 0xd800 && unit <= 0xdbff && index + 1 < value.length
+skills/worker/core/worker/attempt-executor.ts:135:    } else if (unit >= 0xd800 && unit <= 0xdfff) {
+skills/worker/core/worker/attempt-executor.ts:156:    else if (typeof current.value === 'number' || typeof current.value === 'boolean') {
+skills/worker/core/worker/attempt-executor.ts:175:          if (!descriptor?.enumerable || !('value' in descriptor)) throw new Error(`${prefix}_TYPE_INVALID`);
+skills/worker/core/worker/attempt-executor.ts:194:  const receiptId = `receipt:${crypto.createHash('sha256').update(`${namespace}:${nonce}:${resultDigest}`).digest('hex')}`;
+skills/worker/core/worker/attempt-executor.ts:195:  return { receiptId, receiptDigest: sha256Digest({ namespace, receiptId, resultDigest }) };
+skills/worker/core/worker/attempt-executor.ts:226:      && (options.receiptNamespace.length === 0 || options.receiptNamespace.length > 4096
+skills/worker/core/worker/attempt-executor.ts:227:        || options.receiptNamespace !== options.receiptNamespace.toWellFormed())) {
+skills/worker/core/worker/attempt-executor.ts:233:    this.#now = options.now ?? (() => new Date());
+skills/worker/core/worker/attempt-executor.ts:234:    this.#id = options.id ?? (() => crypto.randomUUID());
+skills/worker/core/worker/attempt-executor.ts:238:    this.#execution ??= this.#executeOnce();
+skills/worker/core/worker/attempt-executor.ts:290:      termination ??= this.#terminate(operation, envelope.limits.cleanupTimeoutMs);
+skills/worker/core/worker/attempt-executor.ts:294:      controller.abort(this.#options.signal?.reason ?? new Error('WORKER_ATTEMPT_CANCELLED'));
+skills/worker/core/worker/attempt-executor.ts:300:      if (logClosed || logFault) return;
+skills/worker/core/worker/attempt-executor.ts:314:        let end = Math.min(offset + 65_536, text.length);
+skills/worker/core/worker/attempt-executor.ts:315:        if (end < text.length && end > offset && /[\uD800-\uDBFF]/u.test(text[end - 1]!)) end -= 1;
+skills/worker/core/worker/attempt-executor.ts:339:          contentDigest: sha256Text(chunk),
+skills/worker/core/worker/attempt-executor.ts:366:    timer = setTimeout(() => {
+skills/worker/core/worker/attempt-executor.ts:388:          || typeof preparationResult === 'function') {
+skills/worker/core/worker/attempt-executor.ts:450:    if(assessment.error && (!fault || assessment.error.code==='WORKER_RESOURCE_MEASUREMENT_INVALID'))fault=new AttemptFault('errored',assessment.error.code,assessment.error.message);
+skills/worker/core/worker/attempt-executor.ts:453:      if (claimExpired || this.#now().getTime() >= claimExpiresAt) await terminate();
+skills/worker/core/worker/attempt-executor.ts:463:        fault = new AttemptFault('errored', terminationError ? 'WORKER_TERMINATION_FAILED' : 'WORKER_CLEANUP_FAILED', terminationError ?? message);
+skills/worker/core/worker/attempt-executor.ts:484:        contentDigest: sha256Text(''),
+skills/worker/core/worker/attempt-executor.ts:496:    let evidence = [...(operationResult?.evidence ?? [])];
+skills/worker/core/worker/attempt-executor.ts:500:          attempt: envelope, state: fault?.state ?? 'completed', signal,
+skills/worker/core/worker/attempt-executor.ts:525:        if (stored.artifact.contentDigest !== sha256Text(fullLog)
+skills/worker/core/worker/attempt-executor.ts:526:          || stored.artifact.sizeBytes !== fullLogBytes) {
+skills/worker/core/worker/attempt-executor.ts:533:        fault ??= new AttemptFault('errored', 'WORKER_LOG_STORE_FAILED', detail(error));
+skills/worker/core/worker/attempt-executor.ts:568:        if (cleanup.state !== 'failed') fault = executionFault ?? new AttemptFault('cancelled', 'WORKER_ATTEMPT_CANCELLED');
+skills/worker/core/worker/attempt-executor.ts:573:    if (claimExpired || this.#now().getTime() >= claimExpiresAt || phases.unresolved || executionUnresolved) {
+skills/worker/core/worker/attempt-executor.ts:578:    if ((phases.unresolved || executionUnresolved) && fault?.code !== 'WORKER_TERMINATION_FAILED') fault = new AttemptFault('errored', 'WORKER_PHASE_UNRESOLVED', `${fault?.code ?? 'WORKER_ATTEMPT_ERROR'}: ${fault?.message ?? ''}; aborted work did not settle; external outcome requires reconciliation.`);
+skills/worker/core/worker/attempt-executor.ts:579:    else if ((claimExpired || this.#now().getTime() >= claimExpiresAt) && fault?.code !== 'WORKER_TERMINATION_FAILED' && cleanup.state !== 'failed') fault = executionFault ?? new AttemptFault('interrupted', 'WORKER_CLAIM_EXPIRED');
+skills/worker/core/worker/attempt-executor.ts:621:          timer = setTimeout(() => resolve('WORKER_TERMINATION_TIMEOUT'), timeoutMs);
+skills/worker/core/worker/attempt-executor.ts:641:      state: fault?.state ?? 'completed' as const,
+skills/worker/core/worker/attempt-executor.ts:645:      summary: boundedText(fault?.message ?? operationResult?.summary, 'Attempt completed.'),
+skills/worker/core/worker/attempt-executor.ts:646:      specialistResult: fault ? null : operationResult?.specialistResult ?? null,
+skills/worker/core/worker/attempt-executor.ts:654:      exitCode: fault ? null : operationResult?.exitCode ?? null,
+skills/worker/core/worker/attempt-executor.ts:656:        ? operationResult.signal.slice(0, 4096).toWellFormed() : null),
+skills/worker/core/worker/attempt-executor.ts:660:      resultDigest = sha256Digest(unsigned);
+skills/worker/core/worker/attempt-executor.ts:674:    // authenticated Nova-worker transport required by D-103 binds identity.
+skills/worker/core/worker/attempt-executor.ts:675:    const namespace = this.#options.receiptNamespace ?? `worker:${envelope.claim.workerId}`;
+skills/worker/core/worker/native-journal-state.ts:3:import { sha256Digest, type WorkerAttemptEnvelopeV3 } from '@kubeclaw/pipeline-worker-core-contract';
+skills/worker/core/worker/native-journal-state.ts:9:export const nativeJournalMaximumDiagnosticUnits = 4096;
+skills/worker/core/worker/native-journal-state.ts:40:  return sha256Digest([envelope.claim.workerId, envelope.attemptId, envelope.claim.generation]);
+skills/worker/core/worker/native-journal-state.ts:45:  if (typeof value.digest !== 'string' || !/^sha256:[a-f0-9]{64}$/u.test(value.digest)
+skills/worker/core/worker/native-journal-state.ts:46:    || !Number.isSafeInteger(value.sizeBytes) || Number(value.sizeBytes) < 0) throw new Error('WORKER_NATIVE_JOURNAL_BLOB_INVALID');
+skills/worker/core/worker/native-journal-state.ts:51:  if (value.schemaVersion !== 'native-attempt-journal.v1' || typeof value.acceptedAt !== 'string'
+skills/worker/core/worker/native-journal-state.ts:52:    || !Number.isFinite(Date.parse(value.acceptedAt)) || !Number.isSafeInteger(value.reservationBytes) || Number(value.reservationBytes) < 1) {
+skills/worker/core/worker/native-journal-state.ts:61:    if (typeof value.processCompletedAt !== 'string' || !Number.isFinite(Date.parse(value.processCompletedAt))) throw new Error('WORKER_NATIVE_JOURNAL_COMPLETION_TIME_INVALID');
+skills/worker/core/worker/native-journal-state.ts:71:  if (value.exitCode !== null && (!Number.isInteger(value.exitCode) || Number(value.exitCode) < 0 || Number(value.exitCode) > 255)) throw new Error('WORKER_NATIVE_JOURNAL_EXIT_INVALID');
+skills/worker/core/worker/native-journal-state.ts:74:    if (value[key] !== null && (typeof value[key] !== 'string' || value[key].length < 1 || value[key].length > nativeJournalMaximumDiagnosticUnits)) throw new Error('WORKER_NATIVE_JOURNAL_FAULT_INVALID');
+skills/worker/core/worker/native-output-spool.ts:28:    if (!path.isAbsolute(root) || !Number.isSafeInteger(maximumBytes) || maximumBytes < 1) throw new Error('WORKER_OUTPUT_SPOOL_CONFIG_INVALID');
+skills/worker/core/worker/native-output-spool.ts:30:    await fs.mkdir(root, { mode: 0o700 });
+skills/worker/core/worker/native-output-spool.ts:34:        constants.O_WRONLY | constants.O_APPEND | constants.O_CREAT | constants.O_EXCL | constants.O_NOFOLLOW, 0o600));
+skills/worker/core/worker/native-output-spool.ts:65:    this.#closing ??= this.#queue.finally(async () => {
+skills/worker/core/worker/native-output-spool.ts:80:  if (!path.isAbsolute(root) || !Number.isSafeInteger(maximumBytes) || maximumBytes < 1) throw new Error('WORKER_OUTPUT_SPOOL_CONFIG_INVALID');
+skills/worker/core/worker/native-output-spool.ts:86:      if (!stat.isFile() || stat.nlink !== 1 || stat.size > maximumBytes - total) throw new Error('WORKER_OUTPUT_SPOOL_FILE_INVALID');
+skills/worker/core/worker/native-output-spool.ts:90:      return { bytes, sizeBytes: bytes.byteLength, digest: `sha256:${createHash('sha256').update(bytes).digest('hex')}` };
+skills/worker/core/worker/native-control-channel.ts:9:  if ([limits.maximumMessageBytes, limits.maximumSessionBytes].some(value => !Number.isSafeInteger(value) || value < 1)
+skills/worker/core/worker/native-control-channel.ts:10:    || limits.maximumMessageBytes > 0xffffffff || limits.maximumMessageBytes > limits.maximumSessionBytes) {
+skills/worker/core/worker/native-control-channel.ts:35:    if (!input.byteLength || input.byteLength > this.#limits.maximumMessageBytes
+skills/worker/core/worker/native-control-channel.ts:36:      || this.#sent + input.byteLength + 4 > this.#limits.maximumSessionBytes) return Promise.reject(new Error('WORKER_NATIVE_CONTROL_OUTPUT_LIMIT'));
+skills/worker/core/worker/native-control-channel.ts:56:        if (!length || length > this.#limits.maximumMessageBytes) throw new Error('WORKER_NATIVE_CONTROL_MESSAGE_LIMIT');
+skills/worker/core/worker/native-process-launches.ts:26:    if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 2_147_483_647) {
+skills/worker/core/worker/native-process-launches.ts:30:    this.#drain ??= this.#stop(timeoutMs);
+skills/worker/core/worker/native-process-launches.ts:42:        timer = setTimeout(() => reject(new Error('WORKER_NATIVE_LAUNCHER_DRAIN_TIMEOUT')), timeoutMs);
+skills/worker/core/worker/native-process-cancellation.ts:7:  if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 2_147_483_647) {
+skills/worker/core/worker/native-process-cancellation.ts:10:  const timer = setTimeout(forceDrain, timeoutMs);
+skills/worker/core/worker/native-attempt-recovery.ts:30:        && (!reconciliation || !await reconcileNativeCleanup(owner, envelope, result, reconciliation))) owner.fenceAdmission();
+skills/worker/core/worker/native-attempt-recovery.ts:33:      if (!reconciliation || !await resolveFailedNativeCleanup(journal, owner, envelope, result, reconciliation)) {
+skills/worker/core/worker/native-attempt-recovery.ts:45:    if (!owner || owner.phase !== 'disposed' || owner.finalObservation === null
+skills/worker/core/worker/native-attempt-recovery.ts:46:      || canonicalJson(owner.finalObservation) !== canonicalJson(archived.process.resources)) {
+skills/worker/core/worker/native-attempt-recovery.ts:55:  const notLaunched = !owner || ['WORKER_NATIVE_ALLOCATION_NOT_LAUNCHED', 'WORKER_NATIVE_RESERVATION_NOT_LAUNCHED'].includes(owner.diagnosis ?? '');
+skills/worker/core/worker/native-attempt-recovery.ts:56:  return interruptedNativeWorkerResult(envelope, started, 'WORKER_NATIVE_INTERRUPTED_RESULT_UNAVAILABLE', owner?.finalObservation ?? null, notLaunched);
+skills/worker/core/worker/native-resource-observation.ts:16:  if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('WORKER_NATIVE_OBSERVATION_INVALID');
+skills/worker/core/worker/native-resource-observation.ts:19:  if (Object.keys(observation).length !== 7 || observation.unit !== 'linux-tasks' || typeof observation.populated !== 'boolean'
+skills/worker/core/worker/native-resource-observation.ts:20:    || counters.some(key => !Number.isSafeInteger(observation[key]) || Number(observation[key]) < 0)) {
+skills/worker/core/worker/native-resource-observation.ts:25:const CGROUP2_SUPER_MAGIC = 0x63677270;
+skills/worker/core/worker/native-resource-observation.ts:41:  if (matches.length !== 1 || matches[0]?.length !== 2) {
+skills/worker/core/worker/native-resource-observation.ts:53:  if (!path.isAbsolute(scope) || fs.statfsSync(scope).type !== CGROUP2_SUPER_MAGIC) {
+skills/worker/core/worker/native-owned-children.ts:24:  if (limits.memoryBytes > parent.memoryBytes || limits.tasks > parent.tasks) throw new Error('WORKER_NATIVE_CHILD_LIMIT_EXCEEDS_PARENT');
+skills/worker/core/worker/native-owned-children.ts:30:  if (!childNameValid(child.name) || child.binding !== null) throw new Error('WORKER_NATIVE_CHILD_RESERVATION_INVALID');
+skills/worker/core/worker/native-owned-children.ts:42:  if (!stat.isDirectory() || stat.dev !== parent.device || fs.statfsSync(target).type !== 0x63677270) {
+skills/worker/core/worker/native-owned-children.ts:52:  if (child.binding && (actual.bootId !== child.binding.bootId || actual.device !== child.binding.device
+skills/worker/core/worker/native-owned-children.ts:53:    || actual.inode !== child.binding.inode || actual.scopeName !== child.binding.scopeName)) {
+skills/worker/core/worker/native-owned-children.ts:56:  if (fs.readdirSync(target, { withFileTypes: true }).some(entry => entry.isDirectory() || entry.isSymbolicLink())) {
+skills/worker/core/worker/native-owned-children.ts:67:    .filter(entry => entry.isDirectory() || entry.isSymbolicLink()).map(entry => entry.name);
+skills/worker/core/worker/resource-accounting.ts:19:  if(!values || !workerResourceMetrics.every(metric=>positiveObservation(values[metric])))return invalid();
+skills/worker/core/worker/resource-accounting.ts:32: if(!accounting || !measured || typeof measured!=='object')return invalid(accounting);
+skills/worker/core/worker/resource-accounting.ts:38: return observation?.status==='unavailable' && typeof observation.reason==='string' && observation.reason.length>0 && observation.reason.length<=4096;
+skills/worker/core/worker/resource-accounting.ts:54:  error??=budgetError(metric,observation,accounting.budgets[metric]);
+skills/worker/core/worker/native-journal-capacity.ts:7:export const nativeJournalMaximumRecordBytes = 65536;
+skills/worker/core/worker/native-journal-capacity.ts:9:const maximumDate = '+275760-09-13T00:00:00.000Z';
+skills/worker/core/worker/native-journal-capacity.ts:10:const digest = `sha256:${'0'.repeat(64)}`;
+skills/worker/core/worker/native-journal-capacity.ts:11:const diagnostic = '\u0000'.repeat(nativeJournalMaximumDiagnosticUnits);
+skills/worker/core/worker/native-journal-capacity.ts:18:  return { ...payload, process: payload.process ?? {
+skills/worker/core/worker/native-journal-capacity.ts:24:  }, processCompletedAt: payload.processCompletedAt ?? maximumDate,
+skills/worker/core/worker/native-journal-capacity.ts:63:    + (state.tombstones?.filter(row => row.stream === nativeJournalStream).length ?? 0) + 1;
+skills/worker/core/worker/native-journal-capacity.ts:68:    records: [...state.records, record], tombstones: state.tombstones ?? [], retirements: state.retirements ?? [] }, limits);
+skills/worker/core/worker/native-resource-pool.ts:27:    if (!Number.isSafeInteger(limits.cpuQuotaMicroseconds) || limits.cpuQuotaMicroseconds < 1000
+skills/worker/core/worker/native-resource-pool.ts:28:      || !Number.isSafeInteger(limits.cpuPeriodMicroseconds) || limits.cpuPeriodMicroseconds < 1000
+skills/worker/core/worker/native-resource-pool.ts:29:      || limits.cpuPeriodMicroseconds > 1000000) throw new Error('WORKER_NATIVE_POOL_CPU_INVALID');
+skills/worker/core/worker/native-resource-pool.ts:35:    if (stat.dev !== this.#device || stat.ino !== this.#inode || fs.statfsSync(this.#root).type !== 0x63677270) {
+skills/worker/core/worker/native-resource-pool.ts:57:    if (after.dev !== this.#device || after.ino !== this.#inode) throw new Error('WORKER_NATIVE_POOL_IDENTITY_CHANGED');
+skills/worker/core/worker/native-result.ts:2:import { checkWorkerNativeResultBinding, initialWorkerNativeResourceAccounting, workerAttemptResultDigest, sha256Digest,
+skills/worker/core/worker/native-result.ts:10:  const result = candidate.result ?? failedHostResult(envelope, started, completed, process.fault ?? candidate.fault!, false);
+skills/worker/core/worker/native-result.ts:13:  const fault = process.fault ?? (completed.getTime() >= Date.parse(envelope.claim.expiresAt) ? 'WORKER_CLAIM_EXPIRED' : null);
+skills/worker/core/worker/native-result.ts:34:  result.resources.cpuTimeMs = Math.ceil(observation.cpuTimeMicroseconds / 1000);
+skills/worker/core/worker/native-result.ts:47:  result.receipt = { receiptId, receiptDigest: sha256Digest({ namespace: 'native-worker', receiptId, resultDigest: result.resultDigest }) };
+skills/worker/core/worker/ownership-state.ts:3:import { sha256Digest } from './digest.ts';
+skills/worker/core/worker/ownership-state.ts:6:export const maximumOwnershipDiagnosisUnits = 4096;
+skills/worker/core/worker/ownership-state.ts:7:export const maximumOwnershipHostIdentityCharacters = 256;
+skills/worker/core/worker/ownership-state.ts:10:  if (typeof value !== 'string' || value.length > maximumOwnershipHostIdentityCharacters
+skills/worker/core/worker/ownership-state.ts:11:    || !/^[A-Za-z0-9][A-Za-z0-9:._-]*$/u.test(value)) throw new Error('WORKER_OWNERSHIP_HOST_IDENTITY_INVALID');
+skills/worker/core/worker/ownership-state.ts:32:  if (!value || typeof value !== 'object' || Array.isArray(value)
+skills/worker/core/worker/ownership-state.ts:33:    || Object.keys(value).length !== keys.length || keys.some(key => !Object.hasOwn(value, key))) {
+skills/worker/core/worker/ownership-state.ts:42:    if (typeof value !== 'string' || value.length < 1 || value.length > 512 || value !== value.toWellFormed()) {
+skills/worker/core/worker/ownership-state.ts:46:  if (!Number.isSafeInteger(identity.generation) || Number(identity.generation) < 1) {
+skills/worker/core/worker/ownership-state.ts:50:    if (typeof identity[key] !== 'string' || !/^sha256:[a-f0-9]{64}$/u.test(identity[key])) {
+skills/worker/core/worker/ownership-state.ts:58:  if (binding.scopeName !== scopeName || typeof binding.bootId !== 'string'
+skills/worker/core/worker/ownership-state.ts:59:    || !/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/u.test(binding.bootId)
+skills/worker/core/worker/ownership-state.ts:60:    || !Number.isSafeInteger(binding.device) || Number(binding.device) < 0
+skills/worker/core/worker/ownership-state.ts:61:    || !Number.isSafeInteger(binding.inode) || Number(binding.inode) < 1) {
+skills/worker/core/worker/ownership-state.ts:69:  if (typeof record.scopeName !== 'string' || !/^worker-[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/u.test(record.scopeName)
+skills/worker/core/worker/ownership-state.ts:70:    || !Number.isSafeInteger(record.revision) || Number(record.revision) < 1
+skills/worker/core/worker/ownership-state.ts:71:    || typeof record.phase !== 'string' || !Object.hasOwn(transitions, record.phase)) {
+skills/worker/core/worker/ownership-state.ts:79:    if (record.finalObservation.populated || !['empty', 'disposed', 'unresolved'].includes(String(record.phase))) {
+skills/worker/core/worker/ownership-state.ts:94:  if (record.diagnosis !== null && (typeof record.diagnosis !== 'string' || record.diagnosis.length < 1
+skills/worker/core/worker/ownership-state.ts:95:    || record.diagnosis.length > maximumOwnershipDiagnosisUnits)) throw new Error('WORKER_OWNERSHIP_DIAGNOSIS_INVALID');
+skills/worker/core/worker/ownership-state.ts:100:  return sha256Digest([identity.workerId, identity.attemptId, identity.generation]);
+skills/worker/core/worker/ownership-state.ts:111:    if (keys.has(identityKey) || scopes.has(record.scopeName)) throw new Error('WORKER_OWNERSHIP_DUPLICATE');
+skills/worker/core/worker/ownership-state.ts:120:  if (!['worker-ownership-store.v1', 'worker-ownership-store.v2', 'worker-ownership-store.v3'].includes(String(value.schemaVersion)) || !Array.isArray(value.records)) {
+skills/worker/core/worker/digest.ts:3:  sha256Digest,
+skills/worker/core/worker/digest.ts:4:  sha256Text,
+skills/worker/core/worker/native-node-identity.ts:10:    if (!stat.isFile() || stat.uid !== 0 || (stat.mode & 0o022) !== 0 || stat.size < 1 || stat.size > 128) {
+skills/worker/core/worker/native-cleanup-reconciliation.ts:2:  canonicalJson, checkWorkerNativeResultBinding, sha256Digest,
+skills/worker/core/worker/native-cleanup-reconciliation.ts:13:const inputSchemaDigest = sha256Digest({ schemaVersion: inputSchemaId,
+skills/worker/core/worker/native-cleanup-reconciliation.ts:20:  schemaDigest: sha256Digest({ schemaVersion: 'native-source-cleanup-result.v1', fields: ['reconciliationDigest'] }),
+skills/worker/core/worker/native-cleanup-reconciliation.ts:45:  if (!/^sha256:[a-f0-9]{64}$/u.test(effectsDigest)) throw new Error('WORKER_NATIVE_RECONCILIATION_EFFECTS_INVALID');
+skills/worker/core/worker/native-cleanup-reconciliation.ts:47:    reconciles: { envelopeDigest: sha256Digest(envelope), attemptId: envelope.attemptId,
+skills/worker/core/worker/native-cleanup-reconciliation.ts:59:  if (!record || canonicalJson(record.identity) !== canonicalJson(identity) || record.phase !== 'disposed'
+skills/worker/core/worker/native-cleanup-reconciliation.ts:60:    || record.binding === null || record.finalObservation === null || record.finalObservation.populated) {
+skills/worker/core/worker/native-cleanup-reconciliation.ts:70:  if (typeof effectsDigest !== 'string' || cleanup.profile.profileDigest !== profileDigest
+skills/worker/core/worker/native-cleanup-reconciliation.ts:71:    || cleanup.attemptId === envelope.attemptId || cleanup.claim.claimId === envelope.claim.claimId
+skills/worker/core/worker/native-cleanup-reconciliation.ts:72:    || cleanup.attemptSpecDigest === envelope.attemptSpecDigest
+skills/worker/core/worker/native-cleanup-reconciliation.ts:73:    || canonicalJson(cleanup.operation) !== canonicalJson(nativeSourceCleanupOperation(envelope, result, effectsDigest))) {
+skills/worker/core/worker/native-cleanup-reconciliation.ts:84:  if (!result || !archived || archived.process.fault !== null || archived.process.exitCode !== 0
+skills/worker/core/worker/native-cleanup-reconciliation.ts:85:    || archived.process.signal !== null || result.state !== 'completed' || result.cleanup.state !== 'completed'
+skills/worker/core/worker/native-cleanup-reconciliation.ts:86:    || !checkWorkerNativeResultBinding(cleanup, result).ok
+skills/worker/core/worker/native-cleanup-reconciliation.ts:87:    || canonicalJson(ownership.finalObservation) !== canonicalJson(archived.process.resources)) {
+skills/worker/core/worker/native-cleanup-reconciliation.ts:91:    values: { reconciliationDigest: sha256Digest(cleanup.operation.values) } };
+skills/worker/core/worker/native-cleanup-reconciliation.ts:109:  if (envelope.operation.contractId === contractId || result.cleanup.state !== 'failed'
+skills/worker/core/worker/native-cleanup-reconciliation.ts:110:    || !checkWorkerNativeResultBinding(envelope, result).ok) {
+skills/worker/core/worker/native-cleanup-reconciliation.ts:129:  if (failed.operation.contractId !== contractId || failedResult.cleanup.state !== 'failed'
+skills/worker/core/worker/native-cleanup-reconciliation.ts:130:    || !checkWorkerNativeResultBinding(failed, failedResult).ok) {
+skills/worker/core/worker/native-cleanup-reconciliation.ts:140:  if (original.operation.contractId === contractId || !originalResult || originalResult.cleanup.state !== 'failed') {
+skills/worker/core/worker/native-cleanup-reconciliation.ts:146:    || failed.attemptId === successfulCleanup.attemptId
+skills/worker/core/worker/native-cleanup-reconciliation.ts:147:    || failed.claim.claimId === successfulCleanup.claim.claimId) {
+skills/worker/core/worker/phase-deadline.ts:22:    const abort = (): void => controller.abort(this.signal?.reason ?? new Error('WORKER_ATTEMPT_CANCELLED'));
+skills/worker/core/worker/phase-deadline.ts:30:      timer = setTimeout(() => controller.abort(this.#timeoutError(phase, maintenance)), Math.max(1, end - this.now()));
+skills/worker/core/worker/phase-deadline.ts:51:    if (!maintenance && this.signal?.aborted) throw this.signal.reason ?? new Error('WORKER_ATTEMPT_CANCELLED');
+skills/worker/core/worker/phase-deadline.ts:60:      timer = setTimeout(() => resolve(false), this.timeoutMs);
+skills/worker/core/worker/phase-deadline.ts:68:    timer = setTimeout(() => resolve(false), timeoutMs);
+skills/worker/core/worker/phase-deadline.ts:77:    timer = setTimeout(schedule, Math.min(remaining, 2_147_483_647));
+skills/worker/core/worker/native-pool-policy.ts:24:    if (!stat.isFile() || stat.uid !== 0 || (stat.mode & 0o022) !== 0 || stat.size < 1 || stat.size > 65536) {
+skills/worker/core/worker/native-pool-policy.ts:34:  if (value?.schemaVersion !== 1 || value.role !== role || typeof value.nodeName !== 'string' || !value.nodeName
+skills/worker/core/worker/native-pool-policy.ts:35:    || typeof value.policyDigest !== 'string' || !/^[a-f0-9]{64}$/u.test(value.policyDigest)) throw new Error('WORKER_NATIVE_POOL_POLICY_INVALID');
+skills/worker/core/worker/native-pool-policy.ts:42:    if (typeof location !== 'string' || !path.isAbsolute(location) || location === '/' || path.resolve(location) !== location) {
+skills/worker/core/worker/native-pool-policy.ts:51:    if (!Number.isSafeInteger(number) || number < 1) throw new Error('WORKER_NATIVE_POOL_POLICY_LIMIT_INVALID');
+skills/worker/core/worker/native-hierarchy-events.ts:9:    if (!fields || fields.length < 6 || !tail || tail.length < 3) throw new Error('WORKER_NATIVE_MOUNTINFO_INVALID');
+skills/worker/core/worker/native-hierarchy-events.ts:12:  }).filter(mount => scope === mount.target || scope.startsWith(mount.target.endsWith('/') ? mount.target : mount.target + '/'));
+skills/worker/core/worker/native-hierarchy-events.ts:15:  if (covering.length !== 1 || covering[0]!.type !== 'cgroup2' || !path.isAbsolute(scope)) {
+skills/worker/core/worker/native-hierarchy-events.ts:18:  if (covering[0]!.options.some(option => option === 'memory_localevents' || option === 'pids_localevents')) {
+skills/worker/core/worker/resource-reservations.ts:8:  if (!Number.isSafeInteger(value) || value < 1) throw new Error('WORKER_NATIVE_CAPACITY_INVALID');
+skills/worker/core/worker/resource-reservations.ts:28:    if (this.#scopes >= this.#maximumScopes || memoryBytes > this.#maximum.memoryBytes - this.#memoryBytes
+skills/worker/core/worker/resource-reservations.ts:29:      || tasks > this.#maximum.tasks - this.#tasks) throw new NativeWorkerCapacityExceeded();

@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
+import os from 'node:os';
 import { resolveExecutable } from './support/resolve-executable.mts';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -41,8 +42,22 @@ const renderPolicy = YAML.parse(fs.readFileSync('my-values/infra/native-worker-p
 renderPolicy.nodeName = 'exposure-render-only';
 renderPolicy.pools.buster.namespace = 'kubeclaw';
 const renderBinding = nativePoolPolicy(renderPolicy, 'buster');
-const lease = YAML.parse(execFileSync(process.env.KUBECLAW_TEST_HELM ?? 'helm', [
-  'template', 'exposure-contract', 'charts/kubeclaw', '--namespace', 'kubeclaw',
+// This contract checks the real CRD, not runtime image delivery. Render the exact
+// checked-in CRD and helper/file dependencies in an unprivileged temporary chart;
+// unrelated workload templates retain their separate full-delivery gates.
+const renderRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'tailscale-exposure-render-'));
+let renderedLease: string;
+try {
+  const chart = path.join(renderRoot, 'chart');
+  fs.cpSync('charts/kubeclaw', chart, { recursive: true });
+  const templates = path.join(chart, 'templates');
+  for (const entry of fs.readdirSync(templates)) {
+    if (entry !== 'buster-namespace-lease-crd.yaml' && !entry.endsWith('.tpl')) {
+      fs.rmSync(path.join(templates, entry), { recursive: true, force: true });
+    }
+  }
+  renderedLease = execFileSync(process.env.KUBECLAW_TEST_HELM ?? 'helm', [
+  'template', 'agent-buster', chart, '--namespace', 'kubeclaw',
   '-f', 'my-values/buster-values.yaml',
   '--set', 'busterNative.namespace=kubeclaw',
   '--set', `busterNative.nodeName=${renderBinding.nodeName}`,
@@ -53,7 +68,11 @@ const lease = YAML.parse(execFileSync(process.env.KUBECLAW_TEST_HELM ?? 'helm', 
   '--set', 'runtimeInfrastructure.registry.endpoint=http://registry.render-test:5000',
   '--set', 'runtimeInfrastructure.registry.transport=http-lab',
   '--show-only', 'templates/buster-namespace-lease-crd.yaml',
-], { encoding: 'utf8', maxBuffer: 2 * 1024 * 1024 }));
+], { encoding: 'utf8', maxBuffer: 2 * 1024 * 1024 });
+} finally {
+  fs.rmSync(renderRoot, { recursive: true, force: true });
+}
+const lease = YAML.parse(renderedLease);
 const leaseSchema = lease.spec.versions[0].schema.openAPIV3Schema;
 for (const schema of [leaseSchema, leaseSchema.properties.spec]) {
   assert(!(schema['x-kubernetes-validations'] ?? []).some((validation: { rule: string }) => validation.rule === 'self == oldSelf'),

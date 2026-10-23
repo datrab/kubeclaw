@@ -1,4 +1,4 @@
-import { canonicalSwarmEntry } from '../config/swarm-bundle.mjs';
+import { runnerBusterSettings } from './execution-policy.mts';
 /** Test-only API adapters. Actual parser/extractor/store/service; preparation UID,
  * native envelope identity and publication are modeled, never kernel evidence. */
 import fs from "node:fs/promises";
@@ -38,8 +38,6 @@ import type {
   PreparedAdmission,
 } from "../../../skills/buster/engine/test-gates/preparation-client.ts";
 import {
-  loadBusterPreparationSettings,
-  loadBusterSettings,
   validateBusterPreparationSettings,
   type BusterPreparationSettings,
 } from "../../../skills/common/plugin-runtime/foundation/config/swarm.ts";
@@ -48,7 +46,7 @@ export {
   preparedPlanRuntimeRoot,
 } from "../../../skills/buster/engine/test-gates/prepared-plan-paths.ts";
 
-const canonicalSettings = loadBusterPreparationSettings({ SWARM_CONFIG: canonicalSwarmEntry });
+const canonicalSettings = runnerBusterSettings.preparation;
 export type ModeledStoreOptions = BusterPlanJobStoreOptions & {
   maximumArchiveBytes: number;
 };
@@ -246,7 +244,7 @@ export class ModeledBusterRemotePlanService extends BusterRemotePlanService {
   ) {
     options.store.modeledPreparation.configure(options);
     super({ ...options, preparation: options.store.modeledPreparation,
-      admission: options.admission ?? loadBusterSettings({ SWARM_CONFIG: canonicalSwarmEntry }).admission });
+      admission: options.admission ?? runnerBusterSettings.admission });
   }
   override submit(input: RemotePlanJobV1 | AsyncIterable<Uint8Array>) {
     return super.submit(ingress(input));

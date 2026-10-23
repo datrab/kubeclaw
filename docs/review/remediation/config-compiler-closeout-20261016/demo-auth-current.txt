@@ -1,0 +1,11 @@
+✔ original controller credentials authenticate against a real local session application through original network runtime (1328.099651ms)
+✔ missing or unsupported protocol and missing business assertion fail explicitly (0.427321ms)
+✔ session cookie contract rejects foreign domain, wrong path, expired and insecure sessions (0.268927ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1932.539241

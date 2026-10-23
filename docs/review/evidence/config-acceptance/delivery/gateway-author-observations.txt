@@ -1,0 +1,74 @@
+$ ['rg', '-n', 'thinkingDefault|reasoningDefault|modelPolicy|agentRuntime|contextPruning|keepRecentTokens|gemini-embedding|memoryFlush|subagents', 'charts/kubeclaw/templates/configmap-gateway.yaml']
+exit=0
+74:          "model": "gemini-embedding-001"
+82:          "thinkingDefault": "off",
+83:          "reasoningDefault": "off",
+92:          "modelPolicy": {
+104:              "agentRuntime": {
+110:              "agentRuntime": {
+115:              "agentRuntime": {
+124:          "contextPruning": {
+130:            "keepRecentTokens": 140000,
+131:            "memoryFlush": {
+135:          "subagents": {
+145:            "subagents": {
+
+$ ['rg', '-n', 'initialized.*memory|initialized.*model|initialized.*acp|config.agents.defaults|persistent source|config.plugins', 'charts/kubeclaw/templates/deployment.yaml']
+exit=0
+194:              config.agents.defaults = config.agents.defaults || {};
+195:              if (config.agents.defaults.systemAgent?.agentId !== 'main') {
+196:                config.agents.defaults.systemAgent = { agentId: 'main' };
+200:              if (config.agents.defaults.heartbeat?.agentId
+201:                  && config.agents.defaults.heartbeat.agentId !== 'main') {
+202:                config.agents.defaults.heartbeat.agentId = 'main';
+239:              config.plugins = config.plugins || {};
+240:              config.plugins.entries = config.plugins.entries || {};
+241:              if (JSON.stringify(config.plugins.allow) !== JSON.stringify(managedPluginAllow)) {
+242:                config.plugins.allow = managedPluginAllow;
+247:                  && config.plugins.entries['kubeclaw-agent-observer']) {
+248:                delete config.plugins.entries['kubeclaw-agent-observer'];
+254:                delete config.plugins.entries['kubeclaw-prism'];
+450:                echo "    openclaw.json exists, keeping persistent source"
+462:              const paths = Array.isArray(config?.plugins?.load?.paths) ? config.plugins.load.paths : null;
+464:                config.plugins.load.paths = paths.filter((entry) => entry !== obsolete);
+465:                if (config.plugins.load.paths.length === 0) delete config.plugins.load.paths;
+466:                if (config.plugins.load && Object.keys(config.plugins.load).length === 0) delete config.plugins.load;
+476:                  config.plugins = config.plugins || {};
+477:                  config.plugins.allow = [...initialized.plugins.allow];
+482:                  config.plugins = config.plugins || {};
+483:                  config.plugins.entries = initialized.plugins.entries;
+501:                if (initialized?.models && typeof initialized.models === 'object') {
+502:                  config.models = initialized.models;
+506:                if (initialized?.acp && typeof initialized.acp === 'object') {
+507:                  config.acp = initialized.acp;
+510:                if (initialized?.agents?.defaults?.model) {
+512:                  config.agents.defaults = config.agents.defaults || {};
+513:                  config.agents.defaults.model = initialized.agents.defaults.model;
+516:                if (initialized?.agents?.defaults?.models) {
+518:                  config.agents.defaults = config.agents.defaults || {};
+519:                  config.agents.defaults.models = initialized.agents.defaults.models;
+522:                if (initialized?.agents?.defaults?.modelPolicy) {
+524:                  config.agents.defaults = config.agents.defaults || {};
+525:                  config.agents.defaults.modelPolicy = initialized.agents.defaults.modelPolicy;
+528:                if (initialized?.memory?.search) {
+530:                  config.memory.search = initialized.memory.search;
+533:                    delete config.agents.defaults.memorySearch;
+573:                  config.agents.defaults = config.agents.defaults || {};
+574:                  config.agents.defaults.systemAgent = managedSystemAgent;
+
+$ ['rg', '-n', 'leaseApiGroup|leaseApiVersion', 'charts/kubeclaw/templates/buster-namespace-controller.yaml', 'charts/kubeclaw/templates/buster-namespace-lease-crd.yaml', 'charts/kubeclaw/templates/rbac.yaml']
+exit=0
+charts/kubeclaw/templates/rbac.yaml:18:  - apiGroups: ["{{ $clusterShared.leaseApiGroup }}"]
+charts/kubeclaw/templates/rbac.yaml:21:  - apiGroups: ["{{ $clusterShared.leaseApiGroup }}"]
+charts/kubeclaw/templates/buster-namespace-lease-crd.yaml:6:  name: busternamespaceleases.{{ $clusterShared.leaseApiGroup }}
+charts/kubeclaw/templates/buster-namespace-lease-crd.yaml:10:  group: {{ $clusterShared.leaseApiGroup }}
+charts/kubeclaw/templates/buster-namespace-lease-crd.yaml:19:    - name: {{ $clusterShared.leaseApiVersion }}
+charts/kubeclaw/templates/buster-namespace-controller.yaml:71:  - apiGroups: ["{{ $clusterShared.leaseApiGroup }}"]
+charts/kubeclaw/templates/buster-namespace-controller.yaml:74:  - apiGroups: ["{{ $clusterShared.leaseApiGroup }}"]
+charts/kubeclaw/templates/buster-namespace-controller.yaml:213:              value: {{ $clusterShared.leaseApiGroup | quote }}
+charts/kubeclaw/templates/buster-namespace-controller.yaml:215:              value: {{ $clusterShared.leaseApiVersion | quote }}
+
+$ ['node', 'docs/review/evidence/config-acceptance/delivery/collect-delivery.cjs']
+exit=0
+{"rows":764,"sources":116,"gaps":7,"status":"incremental C0; not exhaustive acceptance"}
+

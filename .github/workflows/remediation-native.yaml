@@ -14,6 +14,11 @@ on:
       - 'versions.json'
       - '.github/workflows/remediation-native.yaml'
   workflow_call:
+# Superseded PR commits must not occupy the runner queue ahead of the current head.
+# Separate workflow keys also keep reusable workflow callers from sharing a group.
+concurrency:
+  group: pr-remediation-native-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 permissions:
   contents: read
 jobs:
@@ -28,11 +33,12 @@ jobs:
         with:
           node-version: 24
           cache: npm
-      - run: npm ci --ignore-scripts
+      - run: npm ci --include=dev --ignore-scripts
       - name: Install the separately locked packages included in the repository graph
         run: |
-          npm ci --prefix tools/ops-mcp --ignore-scripts
-          npm ci --prefix spikes/prism/puck-adapter --ignore-scripts
+          npm ci --prefix ops/pod --include=dev --ignore-scripts
+          npm ci --prefix tools/ops-mcp --include=dev --ignore-scripts
+          npm ci --prefix spikes/prism/puck-adapter --include=dev --ignore-scripts
       - run: npm run knip:check
       - run: npm run typecheck:integration
 
@@ -85,7 +91,20 @@ jobs:
           cache: npm
       - run: npm ci --ignore-scripts
       - name: Original corpus pool interleaving and rollback acceptance
-        run: npm run test:corpus-pool --workspace @kubeclaw/prism
+        id: corpus_pool
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run test:corpus-pool --workspace @kubeclaw/prism \
+            2>&1 | tee "$RUNNER_TEMP/corpus-pool.log"
+      - name: Preserve the original corpus pool failure for exact-head diagnosis
+        if: ${{ failure() && steps.corpus_pool.outcome == 'failure' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: corpus-pool-failure-${{ github.sha }}
+          path: ${{ runner.temp }}/corpus-pool.log
+          if-no-files-found: error
+          retention-days: 7
       - name: Original concurrent transaction and claim acceptance
         if: ${{ !cancelled() }}
         run: node skills/prism/tests/native/postgres-suite.mts transactions

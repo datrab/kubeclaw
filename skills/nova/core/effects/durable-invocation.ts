@@ -6,7 +6,10 @@ import { resolveDependencyInvocation } from './dependency-identity.ts';
 import {portableJson} from '@kubeclaw/plugin-sdk';
 import {validateContractValue} from '@kubeclaw/plugin-foundation/registry/schema';
 
+import type { CoreRuntimePolicy } from '@kubeclaw/plugin-foundation/config/core-runtime-policy';
+
 interface Dependencies {
+  readonly resourceAcquisition: CoreRuntimePolicy['resourceAcquisition'];
   readonly journal: EffectJournal;
   readonly now: () => Date;
   readonly audit?: EffectAuditSink;
@@ -42,7 +45,7 @@ class DurableInvocation {
     assertMatchingRequest(prior, this.#invocation);
     const existing = await this.#existingReceipt(prior);
     if (existing) return existing;
-    this.#lock = await acquireResource(this.#dependencies.locks, lockResource(this.#invocation, prior), this.#invocation.attempt.attemptId, this.#dependencies.lockTtlMs, this.#signal);
+    this.#lock = await acquireResource(this.#dependencies.locks, lockResource(this.#invocation, prior), this.#invocation.attempt.attemptId, this.#dependencies.lockTtlMs, this.#signal, this.#dependencies.resourceAcquisition);
     let failed = false;
     let failure: unknown;
     try {

@@ -1,0 +1,9 @@
+{
+  "command": [
+    "node",
+    "--test",
+    "tests/verification/reliability/effect-identity-version.test.mts",
+    "tests/verification/reliability/runtime-dispatch-profile-independent.test.mjs"
+  ],
+  "exitCode": 124
+}

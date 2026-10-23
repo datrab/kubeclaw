@@ -1,0 +1,158 @@
+{
+  "schemaVersion": "controller-role-profile.v1-proposal",
+  "profileId": "local-B",
+  "role": "buster",
+  "settings": {
+    "busterNamespaceBroker": {
+      "enabled": true,
+      "allowedPrefixes": [
+        "test"
+      ],
+      "defaultTtlSeconds": 3600,
+      "maxTtlSeconds": 43200,
+      "controller": {
+        "imageRef": {
+          "reference": "namespace-controller",
+          "sourceRef": "existing-selected-controller-image-author",
+          "receiptStatus": "external-required-no-invented-OCI-digest"
+        },
+        "imagePullPolicy": "Always",
+        "allowedAccess": [
+          {
+            "subject": "kubeclaw/agent-nova",
+            "modes": [
+              "deployer"
+            ]
+          },
+          {
+            "subject": "kubeclaw/agent-buster",
+            "modes": [
+              "deployer",
+              "tester"
+            ]
+          }
+        ],
+        "allowedSourceSecrets": [
+          "kubeclaw-fixture-preflight",
+          "prism-test-provider",
+          "prism-test-runtime",
+          "prism-test-postgresql-auth",
+          "prism-test-ghcr"
+        ],
+        "pollIntervalMs": 6000,
+        "resources": {
+          "requests": {
+            "cpu": "50m",
+            "memory": "128Mi"
+          },
+          "limits": {
+            "cpu": "500m",
+            "memory": "512Mi"
+          }
+        },
+        "readiness": {
+          "enabled": true,
+          "audience": "fixture-ready",
+          "producerNamespace": "kubeclaw",
+          "producerServiceAccount": "agent-nova",
+          "tlsSecretRef": {
+            "namespace": "kubeclaw",
+            "name": "fixture-controller-ready-tls",
+            "keys": [
+              "tls.crt",
+              "tls.key"
+            ],
+            "providerRef": "fixture-ready-tls-authority",
+            "revisionCapability": "must-resolve-original-revision-at-activation"
+          },
+          "port": 8443
+        },
+        "policy": {
+          "httpClientTimeoutSeconds": 120,
+          "runtimeSecurityRefreshSeconds": 10,
+          "runtimeSecurityFutureSkewSeconds": 2,
+          "runtimeSecurityMaximumFindings": 2048,
+          "runtimeSecurityMaximumSerializedBytes": 131072,
+          "apiResponseMaximumBytes": 16777216,
+          "apiRequestMaximumBytes": 8388608,
+          "apiDiagnosticMaximumBytes": 2048,
+          "namespaceDeletionTimeoutSeconds": 180,
+          "readyReadHeaderTimeoutSeconds": 10,
+          "readyReadTimeoutSeconds": 40,
+          "readyWriteTimeoutSeconds": 40,
+          "readyIdleTimeoutSeconds": 60,
+          "readyMaxHeaderBytes": 40960,
+          "readyHandlerTimeoutSeconds": 30,
+          "readyMaximumBodyBytes": 8192,
+          "defaultDemoRetentionSeconds": 1209600,
+          "authorizationMaximumBytes": 8192,
+          "readyObservationMaximumAgeSeconds": 180,
+          "productHandlerTimeoutSeconds": 30,
+          "productMaximumBodyBytes": 8192,
+          "productDecisionMaximumValiditySeconds": 120
+        }
+      }
+    }
+  },
+  "readonlyBindings": {
+    "roleApplicability": "enabled-buster-controller",
+    "releaseNamespace": "kubeclaw",
+    "releaseName": "agent-buster",
+    "sharedLease": {
+      "apiGroup": "kubeclaw.forgestack.ai",
+      "apiVersion": "v1alpha1",
+      "groupSettingId": "CMP-buster-engine-clusterInvokers.shared.leaseApiGroup",
+      "versionSettingId": "CMP-buster-engine-clusterInvokers.shared.leaseApiVersion"
+    },
+    "api": {
+      "host": "127.0.0.1",
+      "port": 18443,
+      "origin": "https://127.0.0.1:18443",
+      "providerRef": "fixture-cluster-authority",
+      "credentialRoot": "/var/run/secrets/kubernetes.io/serviceaccount",
+      "namespaceFile": "/var/run/secrets/kubernetes.io/serviceaccount/namespace",
+      "tokenFile": "/var/run/secrets/kubernetes.io/serviceaccount/token",
+      "caFile": "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt",
+      "receiptStatus": "external-required"
+    },
+    "roles": {
+      "controllerServiceAccount": "agent-buster-namespace-controller",
+      "secretRole": "agent-buster-controller-secrets",
+      "deployerRole": "agent-buster-namespace-deployer",
+      "testerRole": "agent-buster-namespace-tester"
+    },
+    "product": {
+      "enabled": true,
+      "sourceSettingId": "AUTH-PRISM-PRODUCT-ENABLE",
+      "selectedControlSourceRef": "config/components/prism-control.config.json#/profiles/local-A/settings/productAuthority/enabled",
+      "audience": "fixture-product",
+      "producer": "system:serviceaccount:kubeclaw:prism-control",
+      "issuer": "fixture-human-authority",
+      "actors": [
+        "fixture-operator"
+      ],
+      "verifyKeyRef": {
+        "originalSigningAuthorityRef": "fixture-product-signing-Ed25519-authority",
+        "decodedPublicKeyBytes": 32,
+        "proofStatus": "external-required-no-private-bytes"
+      }
+    },
+    "maximumDemoRetentionSeconds": 9223372036,
+    "executionModel": {
+      "mode": "serial-reconcileAll-then-sleep",
+      "workers": 1,
+      "queue": "no-independent-queue-author"
+    },
+    "storage": {
+      "mode": "kubernetes-api-CR-status",
+      "epochSeam": "BusterNamespaceLease.status.deliveryPolicyEpoch",
+      "localBusinessPVCorStore": false
+    },
+    "shutdown": {
+      "graceSeconds": 180,
+      "sourceRef": "charts/kubeclaw/values.yaml#/settings/shutdown/terminationGracePeriodSeconds",
+      "mode": "stop-new-admissions-join-original-uncertain-effects-reconcile"
+    },
+    "resourceNamePrefix": "agent-buster"
+  }
+}

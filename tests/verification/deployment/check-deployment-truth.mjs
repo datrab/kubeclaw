@@ -7,6 +7,14 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { load, loadAll, dump } from 'js-yaml';
 import { nativePoolPolicy } from '../../../scripts/native-worker-node-policy.mjs';
+import { buildBusterImageBundle } from '../../../scripts/build-buster-image-bundle.mjs';
+import { syncContract } from '../../../skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs';
+
+// The resolver consumes the package-owned generated contract. A clean checkout
+// has no generated files: use its canonical producer before loading the resolver,
+// just as the observer package build/typecheck does (never reuse stale output).
+syncContract();
+const { resolveAgentObserverConfig } = await import('../../../skills/common/plugins/openclaw-agent-observer/src/config.ts');
 
 function sourceRootFromArgs() {
   const index = process.argv.indexOf('--source-root');
@@ -21,7 +29,7 @@ const exists = (relativePath) =>
 
 const chart = read('charts/kubeclaw/templates/deployment.yaml');
 const gatewayConfig = read('charts/kubeclaw/templates/configmap-gateway.yaml');
-const swarmConfig = read('charts/kubeclaw/files/config/swarm.config.json');
+const pipelineConfig = read('config/pipeline.config.json');
 const prismWorkloads = read('charts/prism/templates/workloads.yaml');
 const prismJobs = read('charts/prism/templates/jobs.yaml');
 const prismValues = read('charts/prism/values.yaml');
@@ -269,14 +277,14 @@ for (const [label, dockerfile, role] of [
 ]) {
   assert.match(
     dockerfile,
-    /node \.?\/?(?:app\/)?node_modules\/playwright\/cli\.js install-deps chromium/,
+    /node \.?\/?(?:app\/(?:prism\/skills\/|skills\/)?|)?node_modules\/playwright\/cli\.js install-deps chromium/,
     `${label} must invoke the production Playwright CLI without the pruned dev-dependency symlink`,
   );
   assert.match(dockerfile, /COPY docker\/browser-archives\.lock\.json /,
     `${label} must copy the pinned browser archive identities`);
   assert.match(dockerfile, /COPY scripts\/browser-archive-lock\.mjs /,
     `${label} must copy the actual locked browser installer`);
-  assert.match(dockerfile, new RegExp(`node (?:/app/)?scripts/browser-archive-lock\\.mjs --install "\\$TARGETARCH" ${role} /ms-playwright`),
+  assert.match(dockerfile, new RegExp(`node (?:/app/|/opt/buster-image-tools/)?scripts/browser-archive-lock\\.mjs --install "\\$TARGETARCH" ${role} /ms-playwright`),
     `${label} must install actual archives using its role and target architecture`);
 }
 assert.match(read('scripts/check-built-runtime-image.sh'), /tests\/verification\/deployment\/check-buster-build\.sh:\/proof\.sh:ro/,
@@ -290,19 +298,32 @@ assert.match(
 );
 assert.match(
   prismControlDockerfile,
-  /COPY --from=build \/build\/tests\/verification\/live \/app\/prism\/tests\/verification\/live/,
+  /COPY --from=build \/build\/tests\/verification\/live \/opt\/kubeclaw-prism-live/,
   'the Prism control image must package its live verification assets',
 );
 assert.match(
   prismStudioDockerfile,
-  /COPY --from=build \/build\/skills\/prism\/server \/app\/prism\/skills\/prism\/server/,
-  'the Prism Studio image must package every imported server module',
+  /node scripts\/build-prism-image-bundle\.mjs prism-studio \/image "\$KUBECLAW_BUILD_REVISION"[\s\S]*COPY --from=build \/image\/role \/app\/prism[\s\S]*COPY --from=build \/image\/generation\/system \/etc\/kubeclaw\/config[\s\S]*COPY --from=build \/image\/delivery \/run\/pipeline-delivery[\s\S]*skills\/packages\/prism-engine\/server\/studio\.ts/,
+  'the Prism Studio image must package the role closure and authenticated configuration used by its actual server',
 );
 assert.match(
   prismStudioDockerfile,
-  /USER node[\s\S]*RUN --mount=type=bind,source=skills\/prism\/tests\/studio-service\.test\.mts,target=\/app\/prism\/skills\/prism\/tests\/studio-service\.test\.mts[\s\S]*source=skills\/prism\/tests\/fixtures\/studio-service\.mts,target=\/app\/prism\/skills\/prism\/tests\/fixtures\/studio-service\.mts[\s\S]*source=skills\/prism\/tests\/studio-canonical-image\.mts,target=\/app\/prism\/skills\/prism\/tests\/studio-canonical-image\.mts[\s\S]*SWARM_CONFIG=\/tmp\/studio-authored\/swarm\.config\.json node --test --test-concurrency=1 \/app\/prism\/skills\/prism\/tests\/studio-service\.test\.mts \/app\/prism\/skills\/prism\/tests\/studio-canonical-image\.mts/,
+  /USER node[\s\S]*RUN --mount=type=bind,source=skills\/prism\/tests\/studio-service\.test\.mts,target=\/opt\/prism-studio-tests\/studio-service\.test\.mts[\s\S]*source=skills\/prism\/tests\/fixtures\/studio-service\.mts,target=\/opt\/prism-studio-tests\/fixtures\/studio-service\.mts[\s\S]*source=skills\/prism\/tests\/studio-canonical-image\.mts,target=\/opt\/prism-studio-tests\/studio-canonical-image\.mts[\s\S]*PRISM_STUDIO_IMAGE_PROOF=\/opt\/prism-studio-proof node --test --test-concurrency=1 \/opt\/prism-studio-tests\/studio-service\.test\.mts \/opt\/prism-studio-tests\/studio-canonical-image\.mts/,
   'the final Studio image must run original HTTP cases and canonical profile as its runtime user',
 );
+// Both build-time and candidate-time proofs must leave the receipt-bound role
+// untouched. Adding even a test file under /app/prism invalidates its manifest.
+assert.doesNotMatch(read('scripts/check-built-runtime-image.sh'), /:\/app\/prism\/skills\/prism\/tests\//u,
+  'candidate proof bind mounts must stay outside the sealed runtime package');
+for (const testFile of ['studio-service.test.mts', 'studio-canonical-image.mts', 'fixtures/studio-service.mts']) {
+  assert.ok(read('scripts/check-built-runtime-image.sh').includes(`:/opt/prism-studio-tests/${testFile}:ro`),
+    `candidate proof must mount original ${testFile} read-only outside the sealed role`);
+}
+assert.ok(isImageInput('scripts/build-studio-image-proof.mjs'), 'Studio proof-only source changes must rebuild the image');
+assert.match(prismStudioDockerfile, /node scripts\/build-studio-image-proof\.mjs \/build \/image/, 'Studio HTTP proof must use real build-published generations');
+assert.match(read('scripts/build-studio-image-proof.mjs'), /await materializePipelineGeneration\(/, 'Studio HTTP proof must use the genuine generation publisher');
+assert.match(read('scripts/check-built-runtime-image.sh'), /PRISM_STUDIO_IMAGE_PROOF=\/opt\/prism-studio-proof[\s\S]*"\$image" --test --test-concurrency=1[\s\S]*studio-service\.test\.mts[\s\S]*studio-canonical-image\.mts/, 'built Studio candidates must execute both original HTTP suites');
+
 
 assert.match(
   chart,
@@ -371,9 +392,14 @@ assert.match(
 );
 assert.match(
   gatewayConfig,
-  /"kubeclaw-agent-observer"[\s\S]*"config"\s*:\s*\{[\s\S]*"enabled"[\s\S]*"maxEventBytes"[\s\S]*"maxQueuePerStream"[\s\S]*"hookTimeoutMs"/,
-  'the host-native observer must receive its required runtime configuration',
+  /"kubeclaw-agent-observer"[\s\S]*"config"\s*:\s*\{\{ required "Central agentObserverPolicy is required" \.Values\.agentObserverPolicy \| toJson \}\}/,
+  'the host-native observer must receive its required runtime configuration from the central author',
 );
+const observerPolicy = load(values).agentObserverPolicy;
+for (const key of ['enabled', 'maxEventBytes', 'maxQueuePerStream', 'hookTimeoutMs']) {
+  assert.ok(Object.hasOwn(observerPolicy, key), `the central observer author must retain original required field ${key}`);
+}
+resolveAgentObserverConfig(observerPolicy, {});
 assert.match(busterValues, /name:\s*buster-v2-runtime/);
 const busterRuntimePortBlock = busterValues.match(
   /extraContainers:[\s\S]*?\n    ports:\s*\n(?<ports>[\s\S]*?)\n    startupProbe:/u,
@@ -485,8 +511,9 @@ assert.doesNotMatch(networkPolicies, /name:\s*kubeclaw-buster-managed-test-egres
 assert.equal((busterValues.match(/scheme:\s*HTTP/gu) ?? []).length, 3,
   'all Buster plan runtime probes must use the loopback-only internal HTTP endpoint');
 assert.match(busterValues, /CONTAINER_BUILD_BUILDKIT_HOST[\s\S]*buildkitd\.sock/);
-assert.match(busterRuntimeDockerfile, /check-pipeline-container-build-production\.mts/);
-assert.match(busterRuntimeDockerfile, /check-pipeline-container-build-recovery\.mts/);
+assert.match(busterRuntimeDockerfile, /COPY --from=buster-package \/proof \/opt\/buster-image-proofs/);
+assert.match(read('scripts/build-buster-proof-harness.mjs'), /check-pipeline-container-build-production\.mts/);
+assert.match(read('scripts/build-buster-proof-harness.mjs'), /check-pipeline-container-build-recovery\.mts/);
 for (const [probe, endpoint] of [['startupProbe', '/bootstrapz'], ['readinessProbe', '/readyz'], ['livenessProbe', '/healthz']]) {
   assert.match(
     busterValues,
@@ -595,9 +622,9 @@ assert.match(
   'the startup migration must remove retired Discord groupAllowFrom before Doctor validation',
 );
 assert.doesNotMatch(
-  swarmConfig,
+  pipelineConfig,
   /discord_webhook_url/,
-  'the persistent swarm config source must not contain a runtime webhook placeholder',
+  'the sole central pipeline author must not contain a runtime webhook placeholder',
 );
 assert.match(
   chart,
@@ -893,10 +920,10 @@ assert.doesNotMatch(busterRuntimeEntrypoint, /chown -R builder:builder "\$plan_s
   'legacy state must not be reopened by recursive service ownership');
 assert.match(
   busterRuntimeEntrypoint,
-  /BUSTER_V2_TOKEN="\$worker_token" KUBECONFIG="\$kubeconfig"[\s\S]*node \/app\/skills\/buster\/engine\/native-parent\.ts/,
+  /BUSTER_V2_TOKEN="\$worker_token" KUBECONFIG="\$kubeconfig"[\s\S]*node \/app\/skills\/packages\/buster-engine\/native-parent\.ts/,
   'the token branch must enter the actual native parent',
 );
-assert.match(busterRuntimeEntrypoint, /BUSTER_TRUSTED_PEER_SPIFFE_ID="\$trusted_peer_spiffe_id" KUBECONFIG="\$kubeconfig"[\s\S]*node \/app\/skills\/buster\/engine\/native-parent\.ts/);
+assert.match(busterRuntimeEntrypoint, /BUSTER_TRUSTED_PEER_SPIFFE_ID="\$trusted_peer_spiffe_id" KUBECONFIG="\$kubeconfig"[\s\S]*node \/app\/skills\/packages\/buster-engine\/native-parent\.ts/);
 assert.match(read('skills/buster/engine/native-parent.ts'), /runBusterPreparationSupervisor/);
 const preparationSupervisor = read('skills/buster/engine/test-gates/preparation-supervisor.ts');
 assert.match(preparationSupervisor, /serveUnprivilegedBuster/);
@@ -991,30 +1018,42 @@ if (helm.error?.code !== 'ENOENT') {
   } finally { fs.rmSync(nativeFixtureRoot, { recursive: true, force: true }); }
   const busterRuntimeIndex = load(read('my-values/buster-values.yaml')).extraContainers.findIndex(item => item.name === 'buster-v2-runtime');
   assert(busterRuntimeIndex >= 0);
-  const busterHelm = spawnSync(
-    'helm',
-    [
-      'template',
-      'agent-buster',
-      path.join(sourceRoot, 'charts/kubeclaw'),
-      '--namespace',
-      'kubeclaw',
-      '--values',
-      path.join(sourceRoot, 'my-values/buster-values.yaml'),
-      '--set-string', `busterNative.nodeName=${nativeBinding.nodeName}`,
-      '--set-string', 'busterNative.namespace=kubeclaw',
-      '--set-string', `busterNative.policyDigest=${nativeBinding.policyDigest}`,
-      // Shape-valid render fixture only; no built-image or deployment evidence.
-      '--set-string', `extraContainers[${busterRuntimeIndex}].image=ghcr.io/datrab/kubeclaw-buster-runtime@sha256:${'a'.repeat(64)}`,
-      '--set-string',
-      'runtimeInfrastructure.registry.endpoint=https://registry.example.test',
-      '--set-string',
-      'runtimeInfrastructure.registry.transport=https',
-      '--set-string',
-      'runtimeInfrastructure.registry.authSecretName=registry-contract-test',
-    ],
-    { cwd: sourceRoot, encoding: 'utf8' },
-  );
+  const receiptRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'deployment-buster-receipt-'));
+  let busterHelm;
+  try {
+    const revision = spawnSync('git', ['rev-parse', 'HEAD'], { cwd: sourceRoot, encoding: 'utf8' });
+    assert.equal(revision.status, 0, revision.stderr);
+    const built = await buildBusterImageBundle({ repository: sourceRoot,
+      output: path.join(receiptRoot, 'image'), revision: revision.stdout.trim(),
+      builtAt: new Date().toISOString() });
+    const receiptFile = path.join(receiptRoot, 'receipt.yaml');
+    fs.writeFileSync(receiptFile, dump({ pipelineDelivery: { buster: built.metadata } }));
+    busterHelm = spawnSync(
+      'helm',
+      [
+        'template',
+        'agent-buster',
+        path.join(sourceRoot, 'charts/kubeclaw'),
+        '--namespace',
+        'kubeclaw',
+        '--values',
+        path.join(sourceRoot, 'my-values/buster-values.yaml'),
+        '--values', receiptFile,
+        '--set-string', `busterNative.nodeName=${nativeBinding.nodeName}`,
+        '--set-string', 'busterNative.namespace=kubeclaw',
+        '--set-string', `busterNative.policyDigest=${nativeBinding.policyDigest}`,
+        // Shape-valid render fixture only; no built-image or deployment evidence.
+        '--set-string', `extraContainers[${busterRuntimeIndex}].image=ghcr.io/datrab/kubeclaw-buster-runtime@sha256:${'a'.repeat(64)}`,
+        '--set-string',
+        'runtimeInfrastructure.registry.endpoint=https://registry.example.test',
+        '--set-string',
+        'runtimeInfrastructure.registry.transport=https',
+        '--set-string',
+        'runtimeInfrastructure.registry.authSecretName=registry-contract-test',
+      ],
+      { cwd: sourceRoot, encoding: 'utf8' },
+    );
+  } finally { fs.rmSync(receiptRoot, { recursive: true, force: true }); }
   assert.equal(
     busterHelm.status,
     0,
@@ -1026,6 +1065,17 @@ if (helm.error?.code !== 'ENOENT') {
     'Buster must render its isolated v2 suite worker',
   );
   assertManagedModels(busterHelm.stdout);
+  const busterGatewayConfig = loadAll(busterHelm.stdout).find(object =>
+    object?.kind === 'ConfigMap' && object.data?.['openclaw.json']);
+  assert.ok(busterGatewayConfig, 'the actual Buster gateway config must be rendered');
+  const renderedObserver = JSON.parse(busterGatewayConfig.data['openclaw.json'])
+    .plugins.entries['kubeclaw-agent-observer'];
+  assert.equal(renderedObserver.enabled, true);
+  assert.deepEqual(renderedObserver.config, observerPolicy,
+    'the actual Buster observer must receive every central field without local defaults');
+  assert.deepEqual(resolveAgentObserverConfig(renderedObserver.config, {}),
+    resolveAgentObserverConfig(observerPolicy, {}),
+    'the actual observer receiver must preserve the authored operating profile');
   assert.match(
     busterHelm.stdout,
     /containerPort:\s*18891/,

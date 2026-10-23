@@ -1,0 +1,893 @@
+{
+  "reviewerTask": "/root/delivery_module_contract_review",
+  "scope": "bounded independent static R03-01-only material recheck",
+  "head": "06bb0b0b8f9253029c260cd3cb59458cd0c02fff",
+  "tree": "f4bf05f406663396ee96a3a846d323f914d67112",
+  "frozenReferences": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery-module-contracts-03/README.md",
+      "sha256": "971b5ae8023868892446d058bdb683aa776d64d0b6d335489fbaeed1a6fc16ce",
+      "actualSha256": "971b5ae8023868892446d058bdb683aa776d64d0b6d335489fbaeed1a6fc16ce",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery-module-contracts-03/active-contract-overlay.json",
+      "sha256": "0a86812b374ad9b95376790a1051143127807fcdbced3bc8fa932780a9822250",
+      "actualSha256": "0a86812b374ad9b95376790a1051143127807fcdbced3bc8fa932780a9822250",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-delivery-module-contract-review-03/README.md",
+      "sha256": "ef0ba39e60132c897245b5d55485b8cddeffb2b0f2dcf8db5c4ecd4fb64b04d6",
+      "actualSha256": "ef0ba39e60132c897245b5d55485b8cddeffb2b0f2dcf8db5c4ecd4fb64b04d6",
+      "matches": true
+    }
+  ],
+  "preserved03SourcePins": [
+    {
+      "path": ".dockerignore",
+      "sha256": "29c8a2f2b7249ece0f29276657794e4de7a18fe2909839ae20408a02f8f466fa",
+      "actualSha256": "29c8a2f2b7249ece0f29276657794e4de7a18fe2909839ae20408a02f8f466fa",
+      "matches": true
+    },
+    {
+      "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+      "sha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875",
+      "actualSha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875",
+      "matches": true
+    },
+    {
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+      "actualSha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+      "matches": true
+    },
+    {
+      "path": "charts/prism/templates/configmap-swarm-config.yaml",
+      "sha256": "75886e7ddea3625d4fa3af7eb866cd63c46ede89d89ca3718d4a022d7304e5e6",
+      "actualSha256": "75886e7ddea3625d4fa3af7eb866cd63c46ede89d89ca3718d4a022d7304e5e6",
+      "matches": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+      "actualSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+      "matches": true
+    },
+    {
+      "path": "docker/Dockerfile.buster-runtime",
+      "sha256": "c06483aca404d930853061f77537287f7855099d335a473a04475d5d88b7a8be",
+      "actualSha256": "c06483aca404d930853061f77537287f7855099d335a473a04475d5d88b7a8be",
+      "matches": true
+    },
+    {
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+      "actualSha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/binding/codec-correction-04/target-contracts.schema.json",
+      "sha256": "560b94432cb10dc9624a29523b69366f7a299c1b1260eb81a708893287a72828",
+      "actualSha256": "560b94432cb10dc9624a29523b69366f7a299c1b1260eb81a708893287a72828",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-package-draft/entry-profile-contract.json",
+      "sha256": "324898891188e6ac833b76e1924ba663f67be0f47cf7c9a6d63b2ce9254fd8b4",
+      "actualSha256": "324898891188e6ac833b76e1924ba663f67be0f47cf7c9a6d63b2ce9254fd8b4",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/pair-entry-selection-translation-03/caller-roster.json",
+      "sha256": "e9b53618d933cc446fa487d153000f3ff26b2b77e523c5e7bf0c16883c992592",
+      "actualSha256": "e9b53618d933cc446fa487d153000f3ff26b2b77e523c5e7bf0c16883c992592",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/pair-entry-selection-translation-03/entry-selections.json",
+      "sha256": "1ebac33ae079ef85c52ef58b5002bb9a1712facc6848e1ece46cf1010c5ddafe",
+      "actualSha256": "1ebac33ae079ef85c52ef58b5002bb9a1712facc6848e1ece46cf1010c5ddafe",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/pair-entry-selection-translation-03/pipeline.config.json",
+      "sha256": "3f954947196dc14eec00d5d96a1118b53a6ded731164b25c9aa82213c9918cbc",
+      "actualSha256": "3f954947196dc14eec00d5d96a1118b53a6ded731164b25c9aa82213c9918cbc",
+      "matches": true
+    },
+    {
+      "path": "scripts/build-runtime-role-bundle.mjs",
+      "sha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9",
+      "actualSha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9",
+      "matches": true
+    },
+    {
+      "path": "scripts/buster-runtime-config-root.mjs",
+      "sha256": "a199f7bad7ee7d91205035588a7958c6d2b589d6be64f0c27f930c0ba0d51674",
+      "actualSha256": "a199f7bad7ee7d91205035588a7958c6d2b589d6be64f0c27f930c0ba0d51674",
+      "matches": true
+    },
+    {
+      "path": "scripts/check-built-runtime-image.sh",
+      "sha256": "c508667b9d280ba10e4bacd04e2727ebc0830b8843d3c1acdc1e95e4a44e81d4",
+      "actualSha256": "c508667b9d280ba10e4bacd04e2727ebc0830b8843d3c1acdc1e95e4a44e81d4",
+      "matches": true
+    },
+    {
+      "path": "scripts/check-runtime-role-manifests.mjs",
+      "sha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905",
+      "actualSha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905",
+      "matches": true
+    },
+    {
+      "path": "scripts/package-agent-skill-bundle.sh",
+      "sha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c",
+      "actualSha256": "dc4cc8626b5b303d2c28085bab83adf090932b4f31b0b4355a6dc188ac0a562c",
+      "matches": true
+    },
+    {
+      "path": "scripts/updates/runtime-inputs.mjs",
+      "sha256": "d846f387b74d9cd71cb7b4515eb99da238fb1ce54b072525a075ec0ed299232a",
+      "actualSha256": "d846f387b74d9cd71cb7b4515eb99da238fb1ce54b072525a075ec0ed299232a",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/native-parent.ts",
+      "sha256": "fa7e09806acf55488d6741ea977fd3f1ac0450ddb9395c0d7bccc605150c4d2d",
+      "actualSha256": "fa7e09806acf55488d6741ea977fd3f1ac0450ddb9395c0d7bccc605150c4d2d",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/remote-plan-cli.ts",
+      "sha256": "2f5e47619915feede36cf8909c860b9cd7e4dd4378eeaf2f9b8b72a61a8d5670",
+      "actualSha256": "2f5e47619915feede36cf8909c860b9cd7e4dd4378eeaf2f9b8b72a61a8d5670",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-cleanup-binding.ts",
+      "sha256": "454c3f6a5a41e179776eddda24ff7a89e9ac959558cfb8343f6334861fc93901",
+      "actualSha256": "454c3f6a5a41e179776eddda24ff7a89e9ac959558cfb8343f6334861fc93901",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-config.ts",
+      "sha256": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835",
+      "actualSha256": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad",
+      "actualSha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+      "actualSha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "sha256": "e375000b0e256497409276093ad5375c32285475c87a33d337bef3124be456b7",
+      "actualSha256": "e375000b0e256497409276093ad5375c32285475c87a33d337bef3124be456b7",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "sha256": "8f29590beaa082f4bdb51741aebefca4f917c280e4fdbf153b7aca0f92d434b3",
+      "actualSha256": "8f29590beaa082f4bdb51741aebefca4f917c280e4fdbf153b7aca0f92d434b3",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "sha256": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1",
+      "actualSha256": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugins/network-http/src/adapter.ts",
+      "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d",
+      "actualSha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+      "sha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e",
+      "actualSha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/dispatch-adapter.ts",
+      "sha256": "16ccaa5e974de17c36d20078fb2912ddd9d2fa1c6a0a677af760e242ce3cd33a",
+      "actualSha256": "16ccaa5e974de17c36d20078fb2912ddd9d2fa1c6a0a677af760e242ce3cd33a",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+      "sha256": "8f3bfbfe9d3d9fa3fa88ac532f8f59abe457d830089a340b196cb8c25bd97217",
+      "actualSha256": "8f3bfbfe9d3d9fa3fa88ac532f8f59abe457d830089a340b196cb8c25bd97217",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugins/secret-resolver/src/adapter.ts",
+      "sha256": "89e997cbc5c533ab70b5c17e71f29e72ce26a49263345ae635ad9a41f8b56eb3",
+      "actualSha256": "89e997cbc5c533ab70b5c17e71f29e72ce26a49263345ae635ad9a41f8b56eb3",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31",
+      "actualSha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/core/effects/contracts.ts",
+      "sha256": "2214fa4a761a7e2b427df8b7578c76373377d27a021176e13a14e05e5ef606d3",
+      "actualSha256": "2214fa4a761a7e2b427df8b7578c76373377d27a021176e13a14e05e5ef606d3",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/core/effects/coordinator.ts",
+      "sha256": "f8a5b4fb5d3abac225ba69b853f88bbc2cb1e87239ee4c870481e8d9d3a75835",
+      "actualSha256": "f8a5b4fb5d3abac225ba69b853f88bbc2cb1e87239ee4c870481e8d9d3a75835",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/core/effects/durable-invocation.ts",
+      "sha256": "6856d2c2761cb9c8e974d0f8683e0083571ed91b25740832921d32341e70d3f2",
+      "actualSha256": "6856d2c2761cb9c8e974d0f8683e0083571ed91b25740832921d32341e70d3f2",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/core/effects/journal.ts",
+      "sha256": "1ab8839b77c51008973975a324d675af129e8aa45152ae0fde97c954d5af3b95",
+      "actualSha256": "1ab8839b77c51008973975a324d675af129e8aa45152ae0fde97c954d5af3b95",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/core/effects/locks.ts",
+      "sha256": "7ca675286800ee88314919f7c0d524c7b5cde99928b9e93c8036e566ecc4b793",
+      "actualSha256": "7ca675286800ee88314919f7c0d524c7b5cde99928b9e93c8036e566ecc4b793",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/core/execution/adapter-invocation-phase.ts",
+      "sha256": "eaae9f5fd571a476b1b7ddbec709f1389c95e71189143ea23a87faa52847ae5f",
+      "actualSha256": "eaae9f5fd571a476b1b7ddbec709f1389c95e71189143ea23a87faa52847ae5f",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/core/execution/adapter-startup.ts",
+      "sha256": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0",
+      "actualSha256": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/core/execution/adapters.ts",
+      "sha256": "30332f9d2d360b32a13e6f2795f83c90297346eb892b4d9346d5e61ed9d60d5b",
+      "actualSha256": "30332f9d2d360b32a13e6f2795f83c90297346eb892b4d9346d5e61ed9d60d5b",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/core/execution/engine-run.ts",
+      "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819",
+      "actualSha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/core/execution/engine-snapshots.ts",
+      "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd",
+      "actualSha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/core/execution/run-mutation.ts",
+      "sha256": "9acd2187077eca9fed18bb73b512cbda72aead9be9d92083438af5305cd7092d",
+      "actualSha256": "9acd2187077eca9fed18bb73b512cbda72aead9be9d92083438af5305cd7092d",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/core/execution/stage-executor.ts",
+      "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb",
+      "actualSha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/core/state/journal.ts",
+      "sha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf",
+      "actualSha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/project/compiler.ts",
+      "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5",
+      "actualSha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/project/coverage.ts",
+      "sha256": "6ad22387d588ec783ddfd12a45d1aea735785f3a065254d0fc00b1820ee01f2b",
+      "actualSha256": "6ad22387d588ec783ddfd12a45d1aea735785f3a065254d0fc00b1820ee01f2b",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/project/demo.ts",
+      "sha256": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566",
+      "actualSha256": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/project/source.ts",
+      "sha256": "f652f5bda01a9a39ea7015ddbf12867ff81f989b0fbe2e0cadcff1a4b4ae2cd0",
+      "actualSha256": "f652f5bda01a9a39ea7015ddbf12867ff81f989b0fbe2e0cadcff1a4b4ae2cd0",
+      "matches": true
+    },
+    {
+      "path": "skills/prism/control/native-operation-store.ts",
+      "sha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9",
+      "actualSha256": "da764d081570b56a5579652033f4cbc0e2623ced3d1b62e0dc8945978f1e77a9",
+      "matches": true
+    },
+    {
+      "path": "skills/prism/control/native-operation.ts",
+      "sha256": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac",
+      "actualSha256": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac",
+      "matches": true
+    },
+    {
+      "path": "skills/prism/engine/worker-envelope.ts",
+      "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+      "actualSha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+      "matches": true
+    },
+    {
+      "path": "skills/prism/server/control-config.ts",
+      "sha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "actualSha256": "35df538b2a10a2781116eb9eb6ee2e98a6ed7180ba876d536ad0f2e7ff64a9d4",
+      "matches": true
+    },
+    {
+      "path": "skills/prism/server/studio-config.ts",
+      "sha256": "c2a7d42ae65d68da876c2efc64194effc969d90a1132d8677ec2190260391465",
+      "actualSha256": "c2a7d42ae65d68da876c2efc64194effc969d90a1132d8677ec2190260391465",
+      "matches": true
+    },
+    {
+      "path": "skills/prism/server/worker-config.ts",
+      "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e",
+      "actualSha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e",
+      "matches": true
+    },
+    {
+      "path": "skills/prism/server/worker-lifecycle.ts",
+      "sha256": "d166a6ec6fd21c6b28c5bbeb0a1494dd3b81c61bbae588846250347917f5318a",
+      "actualSha256": "d166a6ec6fd21c6b28c5bbeb0a1494dd3b81c61bbae588846250347917f5318a",
+      "matches": true
+    },
+    {
+      "path": "skills/prism/server/worker-service.ts",
+      "sha256": "90174f5edf19c85ef1642da95a51aac46854f9a1ce7172d876045a5bac1595e4",
+      "actualSha256": "90174f5edf19c85ef1642da95a51aac46854f9a1ce7172d876045a5bac1595e4",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-ownership.ts",
+      "sha256": "52f2f06fe2f18a8cabd8426d360d756d01d34471e2f0015e8fe148e753238350",
+      "actualSha256": "52f2f06fe2f18a8cabd8426d360d756d01d34471e2f0015e8fe148e753238350",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "sha256": "230bcb2eae21abc5d87187d682504155ef131a649b05f6662fb0d7a6db575182",
+      "actualSha256": "230bcb2eae21abc5d87187d682504155ef131a649b05f6662fb0d7a6db575182",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-store.ts",
+      "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "actualSha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/runtime.ts",
+      "sha256": "565e8f321d742cdb36411381eff8aafc9c49b97f6c3cd6a3453cc472874001c3",
+      "actualSha256": "565e8f321d742cdb36411381eff8aafc9c49b97f6c3cd6a3453cc472874001c3",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/core/execution/engine-runtime.ts",
+      "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613",
+      "actualSha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613",
+      "matches": true
+    }
+  ],
+  "preserved03PriorArtifactPins": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery-module-contracts-02/README.md",
+      "sha256": "5f48d2873e83b35d0473dddeb9f591818672562b98bfa9166cce58a0a75f0421",
+      "actualSha256": "5f48d2873e83b35d0473dddeb9f591818672562b98bfa9166cce58a0a75f0421",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery-module-contracts-02/case-oracles.json",
+      "sha256": "0a1dd69d26d97f260cd29500ec9e87049c2328246463e05d60094891a8a14f93",
+      "actualSha256": "0a1dd69d26d97f260cd29500ec9e87049c2328246463e05d60094891a8a14f93",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery-module-contracts-02/source-pins.json",
+      "sha256": "3a4e7aa590e53296f5312c3018fa715738ac63858a6177490b55b5c2446f94b5",
+      "actualSha256": "3a4e7aa590e53296f5312c3018fa715738ac63858a6177490b55b5c2446f94b5",
+      "matches": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-delivery-module-contract-review-02/README.md",
+      "sha256": "bd7d0a66c1604915cd9498c3348cbb10c1aeb3f62e85a3c0f4773b8a78513b97",
+      "actualSha256": "bd7d0a66c1604915cd9498c3348cbb10c1aeb3f62e85a3c0f4773b8a78513b97",
+      "matches": true
+    }
+  ],
+  "readInputs": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery-module-contracts-04/README.md",
+      "sha256": "d3b22c62eb17270f051cd0f910dc49e6abb94740c5c7fdd673f9bb4a41dda034"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery-module-contracts-04/references.json",
+      "sha256": "1e3baf217b946ee97b73e62e7826443cabf97f941768af1d8c8ed8fb0a8f8300"
+    },
+    {
+      "path": "skills/common/plugins/secret-resolver/src/adapter.ts",
+      "sha256": "89e997cbc5c533ab70b5c17e71f29e72ce26a49263345ae635ad9a41f8b56eb3"
+    },
+    {
+      "path": "skills/common/plugins/network-http/src/adapter.ts",
+      "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+    },
+    {
+      "path": "skills/nova/core/effects/durable-invocation.ts",
+      "sha256": "6856d2c2761cb9c8e974d0f8683e0083571ed91b25740832921d32341e70d3f2"
+    },
+    {
+      "path": "skills/nova/core/effects/coordinator.ts",
+      "sha256": "f8a5b4fb5d3abac225ba69b853f88bbc2cb1e87239ee4c870481e8d9d3a75835"
+    },
+    {
+      "path": "skills/nova/core/effects/locks.ts",
+      "sha256": "7ca675286800ee88314919f7c0d524c7b5cde99928b9e93c8036e566ecc4b793"
+    },
+    {
+      "path": "skills/nova/core/execution/adapters.ts",
+      "sha256": "30332f9d2d360b32a13e6f2795f83c90297346eb892b4d9346d5e61ed9d60d5b"
+    },
+    {
+      "path": "skills/nova/core/execution/adapter-startup.ts",
+      "sha256": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0"
+    },
+    {
+      "path": "skills/nova/core/execution/run-mutation.ts",
+      "sha256": "9acd2187077eca9fed18bb73b512cbda72aead9be9d92083438af5305cd7092d"
+    },
+    {
+      "path": "skills/nova/core/state/file-mutex.ts",
+      "sha256": "d6d347d6b615796ff761c0c608ed6a4d9f4f834bea92ddd2870d2312b5d04c7c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/binding/future-cases.json",
+      "sha256": "7fb72acf016d092d89fb4384641069dfe13f2488092c5f2078243ea45df9cd86"
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "sha256": "1867bdae578f47d19e558db024203f3bf0b39210081df40f19d68c2a98288992"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-package-draft/scope.json",
+      "sha256": "77169de90e57af0cfbe68386c95629fba94597d8c5c79809a6551eca2b31d53c"
+    }
+  ],
+  "correctiveCaseConservation": [
+    {
+      "id": "C5-COMPLETE-LEASE-LOSS",
+      "bodyMatchesPrior01Pin": true,
+      "phase": "C5-implementation-proposal",
+      "result": "not-run",
+      "requirementIds": [
+        "D20",
+        "F-BIND",
+        "F-AUTH",
+        "F-VAL",
+        "A2",
+        "A3",
+        "A6",
+        "A7"
+      ]
+    },
+    {
+      "id": "C5-COMPLETE-MUTATION",
+      "bodyMatchesPrior01Pin": true,
+      "phase": "C5-implementation-proposal",
+      "result": "not-run",
+      "requirementIds": [
+        "D20",
+        "F-BIND",
+        "F-AUTH",
+        "F-VAL",
+        "A2",
+        "A3",
+        "A6",
+        "A7"
+      ]
+    },
+    {
+      "id": "CMP-C5-BIND",
+      "bodyMatchesPrior01Pin": true,
+      "phase": "implementation-proposal",
+      "result": "not-run",
+      "requirementIds": [
+        "C0-A",
+        "C0-B",
+        "C0-C",
+        "D17",
+        "D20",
+        "D21",
+        "D22",
+        "F1",
+        "F2a",
+        "F3a",
+        "F4a",
+        "F5a"
+      ]
+    }
+  ],
+  "canonicalAcceptance": {
+    "C0-A": "not-run",
+    "C0-B": "not-run",
+    "C0-C": "not-run",
+    "C0-D": "not-run",
+    "C0-E": "not-run"
+  },
+  "implementationAuthorization": null,
+  "runtimeExecuted": false,
+  "verdict": "R03-01 closed at bounded static proposal scope; no global C0 or implementation/runtime acceptance",
+  "commands": "cat/sed static source inspection; git identity/status; read-only Python digest/case lifecycle comparison. No tests/validators/API/credentials/secret read/native/Eval.",
+  "finalReadInputRecheck": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery-module-contracts-03/README.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery-module-contracts-03/active-contract-overlay.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-delivery-module-contract-review-03/README.md",
+      "unchanged": true
+    },
+    {
+      "path": ".dockerignore",
+      "unchanged": true
+    },
+    {
+      "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+      "unchanged": true
+    },
+    {
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "unchanged": true
+    },
+    {
+      "path": "charts/prism/templates/configmap-swarm-config.yaml",
+      "unchanged": true
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "unchanged": true
+    },
+    {
+      "path": "docker/Dockerfile.buster-runtime",
+      "unchanged": true
+    },
+    {
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/binding/codec-correction-04/target-contracts.schema.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-package-draft/entry-profile-contract.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/pair-entry-selection-translation-03/caller-roster.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/pair-entry-selection-translation-03/entry-selections.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/pair-entry-selection-translation-03/pipeline.config.json",
+      "unchanged": true
+    },
+    {
+      "path": "scripts/build-runtime-role-bundle.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "scripts/buster-runtime-config-root.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "scripts/check-built-runtime-image.sh",
+      "unchanged": true
+    },
+    {
+      "path": "scripts/check-runtime-role-manifests.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "scripts/package-agent-skill-bundle.sh",
+      "unchanged": true
+    },
+    {
+      "path": "scripts/updates/runtime-inputs.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/native-parent.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/remote-plan-cli.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-cleanup-binding.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-config.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/common/plugins/network-http/src/adapter.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/dispatch-adapter.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/common/plugins/secret-resolver/src/adapter.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/nova/core/effects/contracts.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/nova/core/effects/coordinator.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/nova/core/effects/durable-invocation.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/nova/core/effects/journal.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/nova/core/effects/locks.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/nova/core/execution/adapter-invocation-phase.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/nova/core/execution/adapter-startup.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/nova/core/execution/adapters.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/nova/core/execution/engine-run.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/nova/core/execution/engine-snapshots.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/nova/core/execution/run-mutation.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/nova/core/execution/stage-executor.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/nova/core/state/journal.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/nova/project/compiler.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/nova/project/coverage.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/nova/project/demo.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/nova/project/source.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/prism/control/native-operation-store.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/prism/control/native-operation.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/prism/engine/worker-envelope.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/prism/server/control-config.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/prism/server/studio-config.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/prism/server/worker-config.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/prism/server/worker-lifecycle.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/prism/server/worker-service.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-ownership.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-store.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/runtime.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/nova/core/execution/engine-runtime.ts",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery-module-contracts-02/README.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery-module-contracts-02/case-oracles.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery-module-contracts-02/source-pins.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-delivery-module-contract-review-02/README.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery-module-contracts-04/README.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery-module-contracts-04/references.json",
+      "unchanged": true
+    },
+    {
+      "path": "skills/common/plugins/secret-resolver/src/adapter.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/common/plugins/network-http/src/adapter.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/nova/core/effects/durable-invocation.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/nova/core/effects/coordinator.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/nova/core/effects/locks.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/nova/core/execution/adapters.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/nova/core/execution/adapter-startup.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/nova/core/execution/run-mutation.ts",
+      "unchanged": true
+    },
+    {
+      "path": "skills/nova/core/state/file-mutex.ts",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/binding/future-cases.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/c1-package-draft/scope.json",
+      "unchanged": true
+    }
+  ]
+}

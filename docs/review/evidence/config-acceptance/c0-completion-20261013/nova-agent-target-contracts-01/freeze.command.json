@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "docs/review/evidence/config-acceptance/c0-completion-20261013/nova-agent-target-contracts-01/freeze.py"
+  ],
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+  "exitCode": 0,
+  "stdout": "freeze.stdout.log",
+  "stderr": "freeze.stderr.log"
+}

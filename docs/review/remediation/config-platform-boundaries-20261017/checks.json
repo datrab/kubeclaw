@@ -1,0 +1,62 @@
+{
+  "negativeControls": [
+    {
+      "name": "reject residual id",
+      "rejected": true,
+      "error": "'foreign'"
+    },
+    {
+      "name": "reject residual original",
+      "rejected": true,
+      "error": "Residual drift: RT-fe607ddd5cfa8df5"
+    },
+    {
+      "name": "reject residual originalObjectSha256",
+      "rejected": true,
+      "error": "Residual drift: RT-fe607ddd5cfa8df5"
+    },
+    {
+      "name": "reject residual class",
+      "rejected": true,
+      "error": "Residual drift: RT-fe607ddd5cfa8df5"
+    },
+    {
+      "name": "reject residual originalField",
+      "rejected": true,
+      "error": "Residual drift: RT-fe607ddd5cfa8df5"
+    },
+    {
+      "name": "reject residual caseIds",
+      "rejected": true,
+      "error": "Residual drift: RT-fe607ddd5cfa8df5"
+    },
+    {
+      "name": "reject omitted residual",
+      "rejected": true,
+      "error": "Changed residual set: adapter; reconcile explicitly"
+    },
+    {
+      "name": "reject full roster field loss",
+      "rejected": true,
+      "error": "Incomplete fields"
+    },
+    {
+      "name": "reject full roster case loss",
+      "rejected": true,
+      "error": "Incomplete cases"
+    },
+    {
+      "name": "reject source anchor removal",
+      "rejected": true,
+      "error": "'allowedOrigins'"
+    }
+  ],
+  "restoredDeterministic": true,
+  "fullRoster": {
+    "fields": 2409,
+    "cases": 6845,
+    "requirements": 50
+  },
+  "integrityFailures": [],
+  "qualification": "Author-run matrix integrity only; no original runtime/native cases or independent acceptance."
+}

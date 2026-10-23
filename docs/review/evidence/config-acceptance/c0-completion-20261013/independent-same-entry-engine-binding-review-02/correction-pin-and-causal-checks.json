@@ -1,0 +1,68 @@
+{
+  "frozenBaseAndReviewPins": 962,
+  "frozenBaseAndReviewMismatches": [],
+  "correctionManifestPins": 11,
+  "correctionManifestMismatches": [],
+  "causalScopeRejections": [
+    {
+      "name": "SEEB-R01-01 schema-valid foreign-current-instance before controller",
+      "pass": true,
+      "error": "SECURITY_SERVICE_CLOSURE:wrong-package-instance-profile-kind"
+    },
+    {
+      "name": "SEEB-R01-01 schema-valid foreign-current-instance before original-provider",
+      "pass": true,
+      "error": "SECURITY_SERVICE_CLOSURE:wrong-package-instance-profile-kind"
+    },
+    {
+      "name": "SEEB-R01-01 schema-valid foreign-current-instance before launcher",
+      "pass": true,
+      "error": "SECURITY_SERVICE_CLOSURE:wrong-package-instance-profile-kind"
+    },
+    {
+      "name": "SEEB-R01-01 schema-valid foreign-current-instance before recovery",
+      "pass": true,
+      "error": "SECURITY_SERVICE_CLOSURE:wrong-package-instance-profile-kind"
+    },
+    {
+      "name": "SEEB-R01-01 schema-valid foreign-current-instance before Security-provider",
+      "pass": true,
+      "error": "SECURITY_SERVICE_CLOSURE:wrong-package-instance-profile-kind"
+    },
+    {
+      "name": "SEEB-R01-01 schema-valid missing-current-selected-profile before controller",
+      "pass": true,
+      "error": "SECURITY_SERVICE_CLOSURE:wrong-package-instance-profile-kind"
+    },
+    {
+      "name": "SEEB-R01-01 schema-valid missing-current-selected-profile before original-provider",
+      "pass": true,
+      "error": "SECURITY_SERVICE_CLOSURE:wrong-package-instance-profile-kind"
+    },
+    {
+      "name": "SEEB-R01-01 schema-valid missing-current-selected-profile before launcher",
+      "pass": true,
+      "error": "SECURITY_SERVICE_CLOSURE:wrong-package-instance-profile-kind"
+    },
+    {
+      "name": "SEEB-R01-01 schema-valid missing-current-selected-profile before recovery",
+      "pass": true,
+      "error": "SECURITY_SERVICE_CLOSURE:wrong-package-instance-profile-kind"
+    },
+    {
+      "name": "SEEB-R01-01 schema-valid missing-current-selected-profile before Security-provider",
+      "pass": true,
+      "error": "SECURITY_SERVICE_CLOSURE:wrong-package-instance-profile-kind"
+    }
+  ],
+  "policyProjectionControls": [
+    {
+      "name": "current selected policy and owner digest not stale captured projection",
+      "pass": true
+    },
+    {
+      "name": "unselected valid current policy admitted but entire owner identity retained",
+      "pass": true
+    }
+  ]
+}

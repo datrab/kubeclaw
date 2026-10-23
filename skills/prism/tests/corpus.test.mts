@@ -28,12 +28,12 @@ test("corpus ingestion is atomic, searchable, idempotent and rights aware", asyn
       await search(db as any, "deployment", 10, {
         embedding: [1, 0],
         model: "test",
-      })
+      }, { sourceFamilyLimit: 2 })
     ).length,
     1,
   );
   await expire(db as any, a.id);
-  assert.equal((await search(db as any, "deployment")).length, 0);
+  assert.equal((await search(db as any, "deployment", 10, undefined, { sourceFamilyLimit: 2 })).length, 0);
   await db.close();
 });
 test("public acquisition blocks unsafe networks", () => {
@@ -69,7 +69,7 @@ test("analysis-only material cannot enter design retrieval", async () => {
       sourceDigest: `sha256:${"b".repeat(64)}`,
     },
   );
-  assert.equal((await search(db as any, "restricted")).length, 0);
+  assert.equal((await search(db as any, "restricted", 10, undefined, { sourceFamilyLimit: 2 })).length, 0);
   await db.close();
 });
 
@@ -119,6 +119,7 @@ test("retrieval applies required, excluded, and source-family diversity rules", 
   });
   const preferred = await search(db as any, "dashboard", 1, undefined, {
     preferred: { surface: "mobile" },
+    sourceFamilyLimit: 2,
   });
   assert.equal((preferred[0] as any).normalized.surface, "mobile");
   assert.equal((preferred[0] as any).explanation.preferredMatched, true);

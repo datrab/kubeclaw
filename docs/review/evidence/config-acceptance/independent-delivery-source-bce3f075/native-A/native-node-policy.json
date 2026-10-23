@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "nodeVersion": "24.15.0",
+  "pools": {
+    "buster": {
+      "memoryBytes": 67108864,
+      "tasks": 32,
+      "cpuQuotaMicroseconds": 50000,
+      "cpuPeriodMicroseconds": 100000
+    },
+    "prism": {
+      "memoryBytes": 67108864,
+      "tasks": 32,
+      "cpuQuotaMicroseconds": 50000,
+      "cpuPeriodMicroseconds": 100000
+    }
+  }
+}

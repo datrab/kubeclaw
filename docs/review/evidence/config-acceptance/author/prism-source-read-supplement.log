@@ -1,0 +1,534 @@
+READ skills/prism/server/agent-bridge.mjs SHA256 f908013330077103e3c8c37df76401c642737d245f361b4c6ff63d9161e9738c
+    1 import { createServer } from 'node:http';
+    2 import { AgentJobRunner,controlRequest } from './agent-job-runner.mjs';
+    3 
+    4 const port=Number(process.env.PORT || 18080);
+    5 const controlUrl=process.env.PRISM_CONTROL_URL || 'http://127.0.0.1:28080';
+    6 const runner=new AgentJobRunner(controlUrl);
+    7 async function readJson(request){
+    8   const chunks=[];let size=0;
+    9   for await(const chunk of request){size+=chunk.length;if(size>2_000_000)throw new Error('request too large');chunks.push(chunk);}
+   10   return JSON.parse(Buffer.concat(chunks).toString('utf8'));
+   11 }
+   12 function send(response,status,value){response.writeHead(status,{'content-type':'application/json','cache-control':'no-store'});response.end(JSON.stringify(value));}
+   13 async function dispatch(request,payload,response){
+   14   const persisted=await fetch(new URL('/v1/dispatch',controlUrl),{method:'POST',headers:{'content-type':'application/json','idempotency-key':String(request.headers['idempotency-key']||'')},body:JSON.stringify(payload),signal:AbortSignal.timeout(30_000),redirect:'error'});
+   15   const text=await persisted.text();
+   16   response.writeHead(persisted.status,{'content-type':persisted.headers.get('content-type')||'application/json','cache-control':'no-store'});response.end(text);
+   17 }
+   18 const server=createServer(async(request,response)=>{
+   19   try{
+   20     if(request.url==='/health'||request.url==='/ready')return send(response,200,{status:'ready'});
+   21     if(request.method!=='POST')return send(response,404,{error:'not found'});
+   22     const payload=await readJson(request);
+   23     if(request.url==='/v1/dispatch')return await dispatch(request,payload,response);
+   24     if(request.url==='/v1/design-set'||request.url==='/v1/revise'){
+   25       if(typeof payload.jobId!=='string')throw new Error('a durable Control jobId is required; bridge payloads cannot admit agent work');
+   26       const {job}=await controlRequest(controlUrl,`/v1/agent/jobs/${encodeURIComponent(payload.jobId)}`,undefined,AbortSignal.timeout(10_000));
+   27       return send(response,202,{jobId:job.id,generationId:job.id,status:job.state==='needs_nova'?'NeedsNova':job.state,result:job.result,outcome:job.outcome});
+   28     }
+   29     return send(response,404,{error:'not found'});
+   30   }catch(error){return send(response,422,{error:error instanceof Error?error.message:String(error)});}
+   31 });
+   32 const tick=()=>{void runner.tick().catch(error=>console.error('Prism durable agent runner:',error));};
+   33 const poll=setInterval(tick,1000);
+   34 server.listen(port,'127.0.0.1',tick);
+   35 for(const signal of ['SIGTERM','SIGINT'])process.once(signal,()=>{
+   36   clearInterval(poll);server.close();void runner.stop().catch(error=>console.error('Prism agent shutdown:',error));
+   37 });
+READ skills/prism/server/agent-job-runner.mjs SHA256 f97926e67b1737be717db6a549ca60920232b7fbd2da23f73c0a15597c331bfb
+    1 import { randomUUID } from 'node:crypto';
+    2 import { checkWorkerResourceResultBinding } from '@kubeclaw/pipeline-worker-core-contract';
+    3 import { WorkerAttemptExecutor } from '@kubeclaw/worker-core';
+    4 import { agentAttempt } from './agent-attempt.ts';
+    5 import { AgentProcess } from './agent-process.ts';
+    6 import { WorkerArtifactClient } from './worker-artifacts.ts';
+    7 import { agentPrompt } from './agent-prompt.mjs';
+    8 
+    9 export async function controlRequest(controlUrl,path,body,signal) {
+   10   const response=await fetch(new URL(path,controlUrl),{method:body===undefined?'GET':'POST',headers:{'content-type':'application/json'},body:body===undefined?undefined:JSON.stringify(body),signal,redirect:'error'});
+   11   const text=await response.text();
+   12   if(!response.ok)throw new Error(`Prism Control ${path}: HTTP ${response.status}: ${text}`);
+   13   return JSON.parse(text);
+   14 }
+   15 
+   16 /** A boot receives a new owner ID. Only the durable store may select provably unstarted work. */
+   17 export class AgentJobRunner {
+   18   runnerId=`prism-bridge-${randomUUID()}`;
+   19   stopping=new AbortController();
+   20   active;
+   21   constructor(controlUrl){this.controlUrl=controlUrl;}
+   22   async tick(){
+   23     if(this.active || this.stopping.signal.aborted)return;
+   24     this.active=this.runOne();
+   25     try{await this.active;}finally{this.active=undefined;}
+   26   }
+   27   async runOne(){
+   28     const {job}=await controlRequest(this.controlUrl,'/v1/agent/jobs/claim',{runnerId:this.runnerId},AbortSignal.timeout(10_000));
+   29     if(!job)return;
+   30     // Once this claim is durable, any uncertainty is NeedsNova. Never replay a failed launch.
+   31     let outcome;
+   32     try{
+   33       const envelope=job.attempt_envelope;
+   34       if(!envelope || envelope.claim.workerId!==this.runnerId || envelope.attemptId!==job.fence || envelope.executionId!==job.id)throw new Error('Prism accepted attempt identity is missing or conflicts with claim');
+   35       const localProfile=(await agentAttempt(job,this.runnerId)).profile;
+   36       if(localProfile.profileDigest!==envelope.profile.profileDigest)throw new Error('Prism local launcher implementation does not match Control accepted profile');
+   37       const artifacts=new WorkerArtifactClient(new URL(this.controlUrl),'',true);
+   38       const executor=new WorkerAttemptExecutor({envelope,operation:new AgentProcess('openclaw',['agent','--agent','main','--session-key',job.session_key,'--message',agentPrompt(job),'--json','--timeout','900']),signal:this.stopping.signal,receiptNamespace:'prism-agent-launcher',
+   39         storeFullLog:(id,content,{signal})=>artifacts.upload(`${id}-logs`,'worker-log','text/plain',Buffer.from(content),signal)});
+   40       outcome=await executor.execute();
+   41       const binding=checkWorkerResourceResultBinding(envelope,outcome);
+   42       if(!binding.ok)throw new Error(`Prism agent resource receipt binding failed: ${binding.errors.join('; ')}`);
+   43     }catch(error){outcome={state:'errored',error:error instanceof Error?error.message:String(error)};}
+   44     await controlRequest(this.controlUrl,`/v1/agent/jobs/${job.id}/finish`,{fence:job.fence,outcome},AbortSignal.timeout(10_000));
+   45   }
+   46   async stop(){this.stopping.abort(new Error('Prism bridge is shutting down; external gateway outcome may be unresolved'));await this.active;}
+   47 }
+READ skills/prism/control/product-decisions.ts SHA256 65a172a7867a3ff4635956d3c02fd1ecae837fd9b25f913826b0d12fdca3f1a2
+    1 import { createHash, createPrivateKey, sign, type KeyObject } from 'node:crypto';
+    2 import { readFile } from 'node:fs/promises';
+    3 import { verifySession } from './session.ts';
+    4 import type { IncomingHttpHeaders } from 'node:http';
+    5 
+    6 export const PRODUCT_DOMAIN = 'kubeclaw.demo-product-decision.v1\0';
+    7 export type ProductSubject = {
+    8   leaseName: string; leaseUID: string; sourceRevision: string; candidateDigest: string;
+    9   resultDigest: string; readyDigest: string; generation: number; expectedExpiry: string;
+   10   expectedRevision: string; url: string; runId: string;
+   11 };
+   12 export type ProductIntent = { decisionId: string; action: 'accept' | 'extend'; reason: string;
+   13   subject: ProductSubject; extensionSeconds?: number };
+   14 export type ProductEnvelope = {schemaVersion: 'demo-product-decision-envelope.v1'; payload: string; signature: string};
+   15 export type ProductPayload = Omit<ProductSubject, 'url' | 'runId'> & {
+   16   schemaVersion: 'demo-product-decision.v1'; issuer: string; actorId: string;
+   17   decisionId: string; action: 'accept' | 'extend'; reason: string; issuedAt: string;
+   18   expiresAt: string; extensionSeconds?: number;
+   19 };
+   20 export type ProductConfig = { issuer: string; operators: ReadonlySet<string>; origin: string;
+   21   privateKey: KeyObject; controller: URL; caFile: string; tokenFile: string };
+   22 export const productDigest = (value: string | Buffer): string => `sha256:${createHash('sha256').update(value).digest('hex')}`;
+   23 export async function loadProductConfig(env: NodeJS.ProcessEnv): Promise<ProductConfig | undefined> {
+   24   if (env.PRISM_PRODUCT_DECISIONS_ENABLED !== 'true') return undefined;
+   25   const required = (name: string): string => { const value = env[name]?.trim(); if (!value) throw new Error(`${name} is required`); return value; };
+   26   const origin = new URL(required('PRISM_PRODUCT_ORIGIN'));
+   27   const controller = new URL(required('PRISM_PRODUCT_CONTROLLER_URL'));
+   28   if ([origin, controller].some(url => url.protocol !== 'https:' || url.pathname !== '/' || [url.username, url.password, url.search, url.hash].some(Boolean))) throw new Error('product authority requires HTTPS origins');
+   29   const operators: unknown = JSON.parse(required('PRISM_PRODUCT_OPERATORS'));
+   30   if (!Array.isArray(operators) || !operators.length || operators.some(item => typeof item !== 'string' || !item.trim() || item !== item.trim()) || new Set(operators).size !== operators.length) throw new Error('explicit product operator allowlist is required');
+   31   const privateKey = createPrivateKey(await readFile(required('PRISM_PRODUCT_PRIVATE_KEY_FILE')));
+   32   if (privateKey.asymmetricKeyType !== 'ed25519') throw new Error('product issuer requires a dedicated Ed25519 key');
+   33   return { issuer: required('PRISM_PRODUCT_ISSUER'), operators: new Set(operators), origin: origin.origin,
+   34     privateKey, controller, caFile: required('PRISM_PRODUCT_CONTROLLER_CA_FILE'), tokenFile: required('PRISM_PRODUCT_CONTROLLER_TOKEN_FILE') };
+   35 }
+   36 export function productActor(headers: IncomingHttpHeaders, config: ProductConfig, sessionSecret: string, mutate: boolean, now = Date.now()): {user: string; expiresAt: number} {
+   37   const cookies = new Map((headers.cookie ?? '').split(';').map(part => { const index = part.indexOf('='); return [part.slice(0, index).trim(), decodeURIComponent(part.slice(index + 1))]; }));
+   38   const token = cookies.get('prism_session') ?? '';
+   39   if (token.split('.').length !== 2) throw new Error('invalid product operator session');
+   40   const session = verifySession(token, sessionSecret, now);
+   41   if (typeof session.user !== 'string' || !Number.isSafeInteger(session.expiresAt) || !config.operators.has(session.user)) throw new Error('product operator is not authorized');
+   42   if (mutate && (headers.origin !== config.origin || !cookies.get('prism_csrf') || headers['x-prism-csrf'] !== cookies.get('prism_csrf'))) throw new Error('product decision origin or CSRF rejected');
+   43   return { user: session.user, expiresAt: session.expiresAt };
+   44 }
+   45 function closed(value: unknown, required: string[], optional: string[] = []): asserts value is Record<string, unknown> {
+   46   if (!value || typeof value !== 'object' || Array.isArray(value) || required.some(key => !Object.hasOwn(value, key)) || Object.keys(value).some(key => !required.includes(key) && !optional.includes(key))) throw new Error('invalid product decision fields');
+   47 }
+   48 function validateSubject(subject: unknown): void {
+   49   closed(subject, ['leaseName', 'leaseUID', 'sourceRevision', 'candidateDigest', 'resultDigest', 'readyDigest', 'generation', 'expectedExpiry', 'expectedRevision', 'url', 'runId']);
+   50   for (const [key, field] of Object.entries(subject)) if (key !== 'generation' && (typeof field !== 'string' || !field || field.length > 2048)) throw new Error('invalid product subject');
+   51   if (!Number.isSafeInteger(subject.generation) || Number(subject.generation) < 1) throw new Error('invalid product generation');
+   52 }
+   53 export function parseProductIntent(value: unknown): ProductIntent {
+   54   closed(value, ['decisionId', 'action', 'reason', 'subject'], ['extensionSeconds']);
+   55   if (typeof value.decisionId !== 'string' || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/u.test(value.decisionId) || !['accept', 'extend'].includes(String(value.action)) || typeof value.reason !== 'string' || !value.reason.trim() || Buffer.byteLength(value.reason, 'utf8') > 2000) throw new Error('invalid product decision intent');
+   56   validateSubject(value.subject);
+   57   if (value.action === 'extend' ? !Number.isSafeInteger(value.extensionSeconds) || Number(value.extensionSeconds) < 1 || Number(value.extensionSeconds) > 9223372036 : Object.hasOwn(value, 'extensionSeconds')) throw new Error('invalid product extension');
+   58   return value as unknown as ProductIntent;
+   59 }
+   60 export function signProductIntent(intent: ProductIntent, actor: {user: string; expiresAt: number}, config: ProductConfig, now = Date.now()): {envelope: ProductEnvelope; payload: ProductPayload; payloadDigest: string} {
+   61   const expiry = Math.floor(Math.min(now + 300_000, actor.expiresAt) / 1000) * 1000;
+   62   if (expiry <= now) throw new Error('operator session expires before decision issuance');
+   63   const {url: _url, runId: _runId, ...subject} = intent.subject;
+   64   const payload: ProductPayload = {schemaVersion: 'demo-product-decision.v1', issuer: config.issuer,
+   65     actorId: actor.user, decisionId: intent.decisionId, action: intent.action, reason: intent.reason,
+   66     ...subject, issuedAt: new Date(Math.floor(now / 1000) * 1000).toISOString().replace('.000Z', 'Z'),
+   67     expiresAt: new Date(expiry).toISOString().replace('.000Z', 'Z'),
+   68     ...(intent.action === 'extend' ? {extensionSeconds: intent.extensionSeconds} : {})};
+   69   const bytes = Buffer.from(JSON.stringify(payload));
+   70   return {payload, payloadDigest: productDigest(bytes), envelope: {schemaVersion: 'demo-product-decision-envelope.v1',
+   71     payload: bytes.toString('base64'), signature: sign(null, Buffer.concat([Buffer.from(PRODUCT_DOMAIN), bytes]), config.privateKey).toString('base64')}};
+   72 }
+READ skills/prism/config/database-bootstrap.ts SHA256 23b7078c1fe9304ab60d0fa7742dc5fe543a75da8a3367bb508a9ce8dc649625
+    1 /** Database credentials are captured once; ordinary upgrades cannot rotate them. */
+    2 export function prismDatabaseBootstrapConfig(environment: NodeJS.ProcessEnv = process.env) {
+    3   const required = (name: string): string => {
+    4     const value = environment[name];
+    5     if (!value) throw new Error(`${name} is required`);
+    6     return value;
+    7   };
+    8   return { adminUrl: required('ADMIN_DATABASE_URL'),
+    9     passwords: { migrator: required('PRISM_MIGRATOR_PASSWORD'), runtime: required('PRISM_RUNTIME_PASSWORD'), readonly: required('PRISM_READONLY_PASSWORD') },
+   10     connectionTimeoutMs: 5000, maximumAttempts: 60, retryDelayMs: 2000 };
+   11 }
+READ skills/prism/engine/browser-capture.ts SHA256 722f843dabb944aa29725ab178a7718577fb3351112cd929628b3eaae2cdfae2
+    1 import { chromium, type Browser } from 'playwright';
+    2 
+    3 export class PrismBrowserCloseError extends Error {
+    4   constructor(cause: unknown) { super('PRISM_BROWSER_CLOSE_FAILED', { cause }); }
+    5 }
+    6 
+    7 type Closed = { ok: true } | { ok: false; error: unknown };
+    8 function browserCloser(browser: Browser): () => Promise<Closed> {
+    9   let closing: Promise<Closed> | undefined;
+   10   return () => closing ??= browser.close().then(() => ({ ok: true as const }),
+   11     (error: unknown) => ({ ok: false as const, error }));
+   12 }
+   13 
+   14 /** Only the admitted execution owner may close this browser. Core bounds drain time. */
+   15 export async function openOwnedBrowser(signal: AbortSignal | undefined) {
+   16   signal?.throwIfAborted();
+   17   const browser = await chromium.launch({ headless: true });
+   18   const closeOnce = browserCloser(browser);
+   19   const abort = () => { void closeOnce(); };
+   20   signal?.addEventListener('abort', abort, { once: true });
+   21   const close = async () => {
+   22     signal?.removeEventListener('abort', abort);
+   23     const closed = await closeOnce();
+   24     if (!closed.ok) throw new PrismBrowserCloseError(closed.error);
+   25     signal?.throwIfAborted();
+   26   };
+   27   if (signal?.aborted) await close();
+   28   return { browser, close };
+   29 }
+READ skills/prism/engine/render-operation.ts SHA256 63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501
+    1 import type { PrismDocument } from "@kubeclaw/prism-contracts-v1";
+    2 import { resolveView } from "../domain/index.ts";
+    3 import { renderNode } from "../renderer/index.ts";
+    4 import { openOwnedBrowser } from "./browser-capture.ts";
+    5 import { interactiveFindings, contrastFindings } from "./capture-findings.ts";
+    6 import type { EngineResult } from "./index.ts";
+    7 
+    8 function renderAssetsFor(
+    9   document: PrismDocument,
+   10   input: Record<string, unknown>,
+   11 ): Record<string, unknown> {
+   12   const suppliedAssets = (input.assetSources ?? {}) as Record<string, unknown>;
+   13   const renderAssets: Record<string, unknown> = {};
+   14   for (const [assetId, rawAsset] of Object.entries(document.assets)) {
+   15     const asset = rawAsset as {
+   16       artifact?: string;
+   17       mediaType?: string;
+   18       alt?: string;
+   19     };
+   20     const src = suppliedAssets[assetId];
+   21     if (
+   22       !asset.artifact ||
+   23       !asset.mediaType ||
+   24       typeof src !== "string" ||
+   25       !src.startsWith(`data:${asset.mediaType};base64,`) ||
+   26       src.length > 16_000_000
+   27     )
+   28       throw new Error(`render asset is unavailable: ${assetId}`);
+   29     renderAssets[assetId] = {
+   30       ...asset,
+   31       src,
+   32     };
+   33   }
+   34   return renderAssets;
+   35 }
+   36 
+   37 function renderHtml(
+   38   document: PrismDocument,
+   39   input: Record<string, unknown>,
+   40 ): string {
+   41   const renderAssets = renderAssetsFor(document, input);
+   42   const safeColor = (value: unknown, fallback: string) =>
+   43     typeof value === "string" &&
+   44     /^(?:#[0-9a-f]{3,8}|rgba?\([0-9., %]+\)|hsla?\([0-9., %a-z]+\)|transparent|currentColor)$/iu.test(
+   45       value,
+   46     )
+   47       ? value
+   48       : fallback;
+   49   const safeFont = (value: unknown) =>
+   50     typeof value === "string" && /^[a-z0-9 _-]{1,80}$/iu.test(value)
+   51       ? value
+   52       : "system-ui";
+   53   const bodyBackground = safeColor(
+   54     (document.theme.colors as Record<string, unknown>)?.background,
+   55     "#ffffff",
+   56   );
+   57   const bodyForeground = safeColor(
+   58     (document.theme.colors as Record<string, unknown>)?.text,
+   59     "#111111",
+   60   );
+   61   const viewData = document.views[String(input.view)]?.mockData as Record<string, unknown> | undefined;
+   62   const bodyFont = safeFont(
+   63     (
+   64       (document.theme.typography as Record<string, unknown>)?.body as
+   65         Record<string, unknown> | undefined
+   66     )?.family,
+   67   );
+   68   const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; font-src data:; style-src 'unsafe-inline'"><style>*,*::before,*::after{box-sizing:border-box}html,body{margin:0;min-height:100%;background:${bodyBackground};color:${bodyForeground};font-family:${bodyFont},system-ui,sans-serif}button,input,select,textarea{font:inherit}img{max-width:100%;height:auto}</style></head><body>${renderNode(
+   69     resolveView(
+   70       document,
+   71       String(input.view ?? "home"),
+   72       String(input.state ?? "default"),
+   73       String(input.viewport ?? "wide") as "compact" | "regular" | "wide",
+   74     ),
+   75     renderAssets,
+   76     {
+   77       ...(viewData === undefined ? {} : { data: viewData }),
+   78       components: document.components,
+   79       theme: document.theme as Record<string, unknown>,
+   80     },
+   81   )}</body></html>`;
+   82   return html;
+   83 }
+   84 
+   85 async function captureHtml(
+   86   html: string,
+   87   input: Record<string, unknown>,
+   88   rendererMetadata: Record<string, unknown>,
+   89   signal?: AbortSignal,
+   90 ) {
+   91   let screenshotBase64: string | undefined;
+   92   let ariaSnapshot: string | undefined;
+   93   let accessibilityFindings: string[] | undefined;
+   94   const owned = await openOwnedBrowser(signal);
+   95   const browser = owned.browser;
+   96   rendererMetadata = {
+   97     ...rendererMetadata,
+   98     name: "chromium",
+   99     version: browser.version(),
+  100   };
+  101   try {
+  102     const widths = { compact: 390, regular: 768, wide: 1440 } as const;
+  103     const context = await browser.newContext({
+  104       viewport: {
+  105         width: widths[String(input.viewport) as keyof typeof widths] ?? 1440,
+  106         height: 1000,
+  107       },
+  108       locale: "en-US",
+  109       timezoneId: "UTC",
+  110       reducedMotion: "reduce",
+  111     });
+  112     const page = await context.newPage();
+  113     await page.setContent(html, { waitUntil: "load" });
+  114     await page.addStyleTag({
+  115       content:
+  116         "*,*::before,*::after{animation:none!important;transition:none!important;caret-color:transparent!important}",
+  117     });
+  118     screenshotBase64 = (
+  119       await page.screenshot({ type: "png", fullPage: true })
+  120     ).toString("base64");
+  121     ariaSnapshot = await page.locator("body").ariaSnapshot();
+  122     accessibilityFindings = await page
+  123       .locator(
+  124         "button,input,select,textarea,[role=button],[role=link],[role=tab]",
+  125       )
+  126       .evaluateAll(interactiveFindings);
+  127     const contrast = await page.locator("body").evaluate(contrastFindings);
+  128     accessibilityFindings.push(...contrast);
+  129     await context.close();
+  130   } finally {
+  131     await owned.close();
+  132   }
+  133   return {
+  134     screenshotBase64,
+  135     ariaSnapshot,
+  136     accessibilityFindings,
+  137     rendererMetadata,
+  138   };
+  139 }
+  140 
+  141 export async function renderOperation(
+  142   document: PrismDocument,
+  143   input: Record<string, unknown>,
+  144   signal?: AbortSignal,
+  145 ): Promise<EngineResult> {
+  146   const html = renderHtml(document, input);
+  147   const capture = input.capture === true;
+  148   let screenshotBase64: string | undefined;
+  149   let ariaSnapshot: string | undefined;
+  150   let accessibilityFindings: string[] | undefined;
+  151   let rendererMetadata: Record<string, unknown> = {
+  152     name: "prism-html",
+  153     version: "v1",
+  154     locale: "en-US",
+  155     timezone: "UTC",
+  156     motion: "reduced",
+  157   };
+  158   if (capture) {
+  159     const captured = await captureHtml(html, input, rendererMetadata, signal);
+  160     ({
+  161       screenshotBase64,
+  162       ariaSnapshot,
+  163       accessibilityFindings,
+  164       rendererMetadata,
+  165     } = captured);
+  166   }
+  167   return {
+  168     operation: "render",
+  169     output: {
+  170       html,
+  171       renderer: rendererMetadata,
+  172       accessibilityFindings: accessibilityFindings ?? [],
+  173       ...(screenshotBase64 ? { screenshotBase64, ariaSnapshot } : {}),
+  174     },
+  175   };
+  176 }
+READ skills/prism/server/bootstrap-database.ts SHA256 4cacc0a24266f58196bd6f6a74abeeb4f7bb95f833312fe691e9f6c0a76d28ee
+    1 import { Pool } from 'pg';
+    2 import { bootstrapPrismDatabaseRoles } from './database-roles.ts';
+    3 import { prismDatabaseBootstrapConfig } from '../config/database-bootstrap.ts';
+    4 
+    5 const config = prismDatabaseBootstrapConfig();
+    6 const admin = new Pool({ connectionString: config.adminUrl, connectionTimeoutMillis: config.connectionTimeoutMs });
+    7 const retryableCodes = new Set(['ECONNREFUSED', 'ECONNRESET', 'EHOSTUNREACH', 'ENETUNREACH', 'ETIMEDOUT', '57P03']);
+    8 
+    9 async function bootstrap(): Promise<void> {
+   10   for (let attempt = 1; attempt <= config.maximumAttempts; attempt += 1) {
+   11     try { await bootstrapPrismDatabaseRoles(admin, config.adminUrl, config.passwords); return; }
+   12     catch (error) {
+   13       const code = error && typeof error === 'object' && 'code' in error ? String(error.code) : 'UNKNOWN';
+   14       if (!retryableCodes.has(code) || attempt === config.maximumAttempts) throw error;
+   15       process.stderr.write(`PostgreSQL is not ready (${code}); retrying bootstrap (${attempt}/${config.maximumAttempts})\n`);
+   16       await new Promise(resolve => setTimeout(resolve, config.retryDelayMs));
+   17     }
+   18   }
+   19 }
+   20 try { await bootstrap(); } finally { await admin.end(); }
+READ skills/prism/server/product-controller.ts SHA256 1b2ccc2bbe84e204b5ca40f749c3faf5308bad4e5052228a3ba40550d1bb77b1
+    1 import { request } from 'node:https';
+    2 import { readFile } from 'node:fs/promises';
+    3 import type { ProductConfig } from '../control/product-decisions.ts';
+    4 export class ProductControllerError extends Error {
+    5   readonly code: string | undefined;
+    6   constructor(status: number | undefined, body: Buffer) {
+    7     const value = body.toString('utf8').trim();
+    8     const code = /^DEMO_PRODUCT_[A-Z_]{1,100}$/u.test(value) ? value : undefined;
+    9     super(code ?? `product controller response ${status}`); this.code = code;
+   10   }
+   11 }
+   12 export async function productController(config: ProductConfig, path: string, body: unknown): Promise<unknown> {
+   13   const [ca, token] = await Promise.all([readFile(config.caFile), readFile(config.tokenFile, 'utf8')]);
+   14   if (!token.trim() || token.length > 64_000 || /[\r\n]/u.test(token.trim())) throw new Error('invalid product controller transport token');
+   15   const bytes = Buffer.from(JSON.stringify(body));
+   16   return new Promise((resolve, reject) => {
+   17     const outgoing = request(new URL(path, config.controller), {method: 'POST', ca, rejectUnauthorized: true,
+   18       signal: AbortSignal.timeout(15_000), headers: {authorization: `Bearer ${token.trim()}`, 'content-type': 'application/json', 'content-length': bytes.length}}, response => {
+   19       const chunks: Buffer[] = []; let size = 0;
+   20       response.on('data', (chunk: Buffer) => { size += chunk.length; if (size > 1_000_000) response.destroy(new Error('product controller response too large')); else chunks.push(chunk); });
+   21       response.on('error', reject);
+   22       response.on('end', () => {
+   23         if (response.statusCode !== 200) { reject(new ProductControllerError(response.statusCode, Buffer.concat(chunks))); return; }
+   24         try { resolve(JSON.parse(Buffer.concat(chunks).toString('utf8'))); } catch (error) { reject(error); }
+   25       });
+   26     });
+   27     outgoing.on('error', reject); outgoing.end(bytes);
+   28   });
+   29 }
+READ skills/prism/server/product-decisions.ts SHA256 04be267143d97a628ff607527ff67166faf3c32405536292d326c52ac5b1283d
+    1 import { isDeepStrictEqual } from 'node:util';
+    2 import type { IncomingMessage, ServerResponse } from 'node:http';
+    3 import type { Queryable } from '../storage/index.ts';
+    4 import { parseProductIntent, productActor, type ProductConfig } from '../control/product-decisions.ts';
+    5 import { recordProductIntent, recordProductReceipt, storedProductDecision, type StoredProductDecision } from '../storage/product-decisions.ts';
+    6 import { productController, ProductControllerError } from './product-controller.ts';
+    7 import { productOperatorPage } from './product-operator-page.ts';
+    8 
+    9 export function receiptFor(stored: StoredProductDecision, value: unknown): Record<string, unknown> {
+   10   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('invalid product receipt');
+   11   const receipt = value as Record<string, unknown>;
+   12   const payload = JSON.parse(Buffer.from(stored.envelope.payload, 'base64').toString('utf8')) as Record<string, unknown>;
+   13   const expected = {schemaVersion: 'demo-product-decision-receipt.v1', decisionId: stored.decision_id,
+   14     payloadDigest: stored.payload_digest, action: stored.intent.action, leaseName: payload.leaseName,
+   15     leaseUID: payload.leaseUID, readyDigest: payload.readyDigest, generation: payload.generation,
+   16     actorId: stored.actor_id, issuer: payload.issuer, previousExpiry: payload.expectedExpiry,
+   17     state: stored.intent.action === 'accept' ? 'accepted' : 'extended'};
+   18   const oldExpiry = String(payload.expectedExpiry);
+   19   const fraction = /(?:\.([0-9]+))?Z$/u.exec(oldExpiry)?.[1];
+   20   const wholeSeconds = oldExpiry.replace(/\.[0-9]+Z$/u, 'Z');
+   21   const extended = new Date(Date.parse(wholeSeconds) + Number(payload.extensionSeconds ?? 0) * 1000).toISOString().replace('.000Z', fraction ? `.${fraction}Z` : 'Z');
+   22   const expiresAt = stored.intent.action === 'accept' ? oldExpiry : extended;
+   23   if (Object.keys(receipt).length !== Object.keys(expected).length + 3 || Object.entries(expected).some(([key, field]) => receipt[key] !== field) || !isDeepStrictEqual(receipt.envelope, stored.envelope) || receipt.expiresAt !== expiresAt || typeof receipt.appliedAt !== 'string' || !Number.isFinite(Date.parse(receipt.appliedAt))) throw new Error('product receipt does not bind the recorded decision');
+   24   return receipt;
+   25 }
+   26 async function reconcile(db: Queryable, config: ProductConfig, stored: StoredProductDecision): Promise<Record<string, unknown>> {
+   27   if (stored.receipt) return {state: 'applied', decisionId: stored.decision_id, receipt: receiptFor(stored, stored.receipt)};
+   28   // The immutable status key remains usable after signature expiration. A failed status
+   29   // request is ambiguous: retry only the identical envelope; never issue another one.
+   30   const status = {schemaVersion: 'demo-product-status-request.v1', decisionId: stored.decision_id,
+   31     leaseName: stored.intent.subject.leaseName, leaseUID: stored.intent.subject.leaseUID, payloadDigest: stored.payload_digest};
+   32   try {
+   33     let receipt: Record<string, unknown>;
+   34     try { receipt = receiptFor(stored, await productController(config, '/v1/demo-product/status', status)); }
+   35     catch { receipt = receiptFor(stored, await productController(config, '/v1/demo-product/decisions', stored.envelope)); }
+   36     await recordProductReceipt(db, stored.decision_id, receipt);
+   37     return {state: 'applied', decisionId: stored.decision_id, receipt};
+   38   } catch (error) {
+   39     return {state: 'pending', decisionId: stored.decision_id, ...(error instanceof ProductControllerError && error.code ? {controllerCode: error.code} : {}), message: 'Outcome is unconfirmed. Recover this decision; do not create a replacement.'};
+   40   }
+   41 }
+   42 async function input(request: IncomingMessage): Promise<unknown> {
+   43   if (request.headers['content-type']?.split(';')[0] !== 'application/json') throw new Error('application/json required');
+   44   const chunks: Buffer[] = []; let size = 0;
+   45   for await (const chunk of request) { size += chunk.length; if (size > 32_000) throw new Error('product input too large'); chunks.push(chunk); }
+   46   return JSON.parse(Buffer.concat(chunks).toString('utf8'));
+   47 }
+   48 async function authorizedProductRoute(request: IncomingMessage, url: URL, options: {db: Queryable; config: ProductConfig}, actor: {user: string; expiresAt: number}, json: (code: number, value: unknown) => void): Promise<void> {
+   49     if (url.pathname === '/v1/product-decisions/subjects' && request.method === 'GET') {
+   50       json(200, await productController(options.config, '/v1/demo-product/subjects', {schemaVersion: 'demo-product-subject-request.v1'})); return;
+   51     }
+   52     if (url.pathname === '/v1/product-decisions' && request.method === 'GET') {
+   53       const rows = await options.db.query('SELECT d.decision_id,d.intent,d.created_at,r.receipt FROM prism.product_decision d LEFT JOIN prism.product_decision_receipt r USING(decision_id) WHERE actor_id=$1 ORDER BY created_at DESC LIMIT 100', [actor.user]);
+   54       json(200, {decisions: rows.rows}); return;
+   55     }
+   56     if (url.pathname === '/v1/product-decisions' && request.method === 'POST') {
+   57       let intent;
+   58       try { intent = parseProductIntent(await input(request)); }
+   59       catch { json(400, {state: 'rejected-before-recording', error: 'Invalid decision input; no decision was recorded by this request.'}); return; }
+   60       const stored = await recordProductIntent(options.db, intent, actor, options.config);
+   61       const result = await reconcile(options.db, options.config, stored);
+   62       json(result.state === 'applied' ? 200 : 202, result); return;
+   63     }
+   64     const recovery = /^\/v1\/product-decisions\/([0-9a-f-]{36})\/recover$/u.exec(url.pathname);
+   65     if (recovery && request.method === 'POST') {
+   66       const stored = await storedProductDecision(options.db, recovery[1]!);
+   67       if (!stored || stored.actor_id !== actor.user) throw new Error('product decision is not owned by this operator');
+   68       const result = await reconcile(options.db, options.config, stored);
+   69       json(result.state === 'applied' ? 200 : 202, result); return;
+   70     }
+   71     json(404, {error: 'unknown product decision route'});
+   72 }
+   73 export async function handleProductDecisions(request: IncomingMessage, response: ServerResponse, url: URL,
+   74   options: {db: Queryable; config?: ProductConfig; sessionSecret: string}): Promise<boolean> {
+   75   if (!url.pathname.startsWith('/v1/product-decisions')) return false;
+   76   response.setHeader('cache-control', 'no-store');
+   77   const json = (code: number, value: unknown): void => {response.writeHead(code, {'content-type': 'application/json'}); response.end(JSON.stringify(value));};
+   78   if (!options.config) { json(404, {error: 'product decisions are disabled'}); return true; }
+   79   // The page is static and grants no authority. All data/actions authenticate below.
+   80   if (url.pathname === '/v1/product-decisions/operator' && request.method === 'GET') {
+   81     response.writeHead(200, {'content-type': 'text/html; charset=utf-8', 'x-frame-options': 'DENY', 'content-security-policy': "default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'"}); response.end(productOperatorPage); return true;
+   82   }
+   83   try {
+   84     const actor = productActor(request.headers, options.config, options.sessionSecret, request.method !== 'GET');
+   85     await authorizedProductRoute(request, url, {db: options.db, config: options.config}, actor, json);
+   86   } catch (error) { json(403, {error: error instanceof Error ? error.message : 'product decision rejected'}); }
+   87   return true;
+   88 }
+   89 
+   90 export function productAuthorityHandler(next: (request: IncomingMessage, response: ServerResponse) => Promise<unknown>,
+   91   options: {db: Queryable; config?: ProductConfig; sessionSecret: string}): (request: IncomingMessage, response: ServerResponse) => void {
+   92   const dispatch = async (request: IncomingMessage, response: ServerResponse): Promise<void> => {
+   93     const url = new URL(request.url ?? '/', 'http://prism-control');
+   94     if (url.pathname === '/v1/session' && request.method === 'POST' && options.config && request.headers.origin !== options.config.origin) {
+   95       response.writeHead(403, {'content-type': 'application/json'}); response.end(JSON.stringify({error: 'Prism session origin rejected'})); return;
+   96     }
+   97     if (await handleProductDecisions(request, response, url, options)) return;
+   98     await next(request, response);
+   99   };
+  100   return (request, response) => { void dispatch(request, response).catch(() => {
+  101     if (response.headersSent) {response.destroy(); return;}
+  102     response.writeHead(500, {'content-type': 'application/json'}); response.end(JSON.stringify({error: 'Product authority request failed'}));
+  103   }); };
+  104 }

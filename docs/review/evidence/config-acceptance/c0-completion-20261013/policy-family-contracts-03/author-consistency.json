@@ -1,0 +1,25 @@
+{
+  "scope": "Task-local authored identity/value/recipe consistency, not productive/native/target-loader/schema execution",
+  "counts": {
+    "families": 4,
+    "baseWholeProjectionFixtures": 10,
+    "additionalFullDiagnosticFixtures": 12,
+    "finiteProposedControls": 33,
+    "sourceLineWitnesses": 107,
+    "unchangedPriorPackageAndReviewFiles": 29,
+    "unchangedCurrentInputIdentities": 34
+  },
+  "sameNumericDomainsAs01": true,
+  "P2P3FamilyBodiesUnchanged": true,
+  "allSourcePinsExact": true,
+  "nativeRuns": 0,
+  "APIRequests": 0,
+  "productiveRuns": 0,
+  "implementationAuthorization": false,
+  "globalC0Accepted": false,
+  "freshReview": "pending",
+  "targetedFindings": [
+    "PFCR05",
+    "PFCR06"
+  ]
+}

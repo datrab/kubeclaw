@@ -1,6 +1,5 @@
-import { readTestBundle, writeTestBundle } from '../../../../tests/fixtures/config/swarm-bundle.mjs';
-import { loadPrismSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
-import { nativeResourcePolicy } from './resource-policy.mts';
+import { captureSwarmSettings, type PrismResourcePolicy } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+import { nativeResourcePolicy, nativeControlSettings } from './resource-policy.mts';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import fs from 'node:fs/promises';
@@ -42,27 +41,40 @@ test('real PostgreSQL commit, concurrent retries, writer death and original work
     const migrator = new Pool({ connectionString: databaseUrl('migrator'), connectionTimeoutMillis: 10000 });
     const runtime = new Pool({ connectionString: databaseUrl('runtime'), connectionTimeoutMillis: 10000, max: 6 });
     try {
-      await bootstrapPrismDatabaseRoles(owner, databaseUrl(), { migrator: 'native-operation-migrator', runtime: 'native-operation-runtime', readonly: 'native-operation-readonly' });
+      await bootstrapPrismDatabaseRoles(owner, databaseUrl(), { migrator: 'native-operation-migrator', runtime: 'native-operation-runtime', readonly: 'native-operation-readonly' },nativeControlSettings.databaseBootstrap.connectionTimeoutMs);
       await migrate(migrator, { infrastructure: 'preprovisioned' });
       t.diagnostic(`Original PostgreSQL ${(await owner.query('SHOW server_version')).rows[0].server_version}; original schema migration 017`);
       const key = `concurrent-${randomUUID()}`;
-      const proposed = Array.from({ length: 8 }, () => prismNativeAttempt('render', artifact, key, nativeResourcePolicy));
+      const proposed = Array.from({ length: 8 }, () => prismNativeAttempt('render', artifact, key, nativeResourcePolicy, nativeControlSettings.nativeAttemptLifetimeMs, nativeControlSettings.nativeAttemptTimeoutMs, nativeControlSettings.nativeAttemptCleanupTimeoutMs, nativeControlSettings.nativeAttemptLogBytes, nativeControlSettings.nativeAttemptResultBytes, nativeControlSettings.nativeAttemptEvidenceBytes, nativeControlSettings.nativeAttemptEvidenceFiles));
       assert.equal(prismRequestDigest(proposed[0]!.operation, artifact.contentDigest),
         sha256Digest(JSON.stringify({ operation: proposed[0]!.operation, inputDigest: artifact.contentDigest })), 'Preserve the actual historical producer digest');
       const reserved = await Promise.all(proposed.map(attempt => reserveNativePrismOperation(runtime, key, attempt)));
       for (const selected of reserved) assert.deepEqual(selected, reserved[0]);
-      const changedAuthor = readTestBundle(new URL('../../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url));
-      changedAuthor['prism-execution'].settings.resourcePolicy = { cpuTimeMs: nativeResourcePolicy.cpuTimeMs + 1,
+      const changedRoot = path.join(directory, 'changed-config');
+      await fs.cp(new URL('../../../../config/', import.meta.url), changedRoot, { recursive: true });
+      const changedFile = path.join(changedRoot, 'pipeline.config.json');
+      const changedEntry = JSON.parse(await fs.readFile(changedFile, 'utf8'));
+      const instanceId = 'kubeclaw/prism/prism-worker';
+      const bindings = changedEntry.bindings.filter((binding: { instanceId: string }) => binding.instanceId === instanceId)
+        .map(({ role: _role, ...binding }: { role: string; owner: string; instanceId: string; profileId: string }) => binding);
+      const execution = bindings.find((binding: { owner: string }) => binding.owner === 'prism-execution');
+      assert.ok(execution, 'Selected execution owner must exist');
+      const changedOwnerFile = path.join(changedRoot, changedEntry.components['prism-execution']);
+      const changedAuthor = JSON.parse(await fs.readFile(changedOwnerFile, 'utf8'));
+      changedAuthor.profiles[execution.profileId].settings.resourcePolicy = { cpuTimeMs: nativeResourcePolicy.cpuTimeMs + 1,
         memoryBytes: nativeResourcePolicy.memoryBytes + 1, tasks: nativeResourcePolicy.tasks + 1 };
-      const changedFile = path.join(directory, 'changed-swarm.config.json'); writeTestBundle(changedFile, changedAuthor);
-      const changedPolicy = loadPrismSettings({ SWARM_CONFIG: changedFile }).native.resourcePolicy;
-      const changedAttempt = prismNativeAttempt('render', artifact, key, changedPolicy);
+      await fs.writeFile(changedOwnerFile, JSON.stringify(changedAuthor));
+      const changedCapture = captureSwarmSettings(changedFile, {
+        role: 'prism', callerId: 'prism-worker', serviceInstanceId: instanceId, bindings,
+      });
+      const changedPolicy = changedCapture.components['prism-execution']!.settings.resourcePolicy as unknown as PrismResourcePolicy;
+      const changedAttempt = prismNativeAttempt('render', artifact, key, changedPolicy, nativeControlSettings.nativeAttemptLifetimeMs, nativeControlSettings.nativeAttemptTimeoutMs, nativeControlSettings.nativeAttemptCleanupTimeoutMs, nativeControlSettings.nativeAttemptLogBytes, nativeControlSettings.nativeAttemptResultBytes, nativeControlSettings.nativeAttemptEvidenceBytes, nativeControlSettings.nativeAttemptEvidenceFiles);
       assert.notDeepEqual(changedAttempt.resourceBudgets, reserved[0]!.attempt.resourceBudgets);
       assert.deepEqual(await reserveNativePrismOperation(runtime, key, changedAttempt), reserved[0],
         'Same accepted business identity preserves original envelope and budgets across authored policy changes');
       const row = (await runtime.query('SELECT * FROM prism.engine_operation WHERE idempotency_key=$1', [key])).rows[0];
       assert.deepEqual(row.attempt, reserved[0]!.attempt); assert.equal(row.result, null); assert.equal(row.completed_at, null);
-      await assert.rejects(reserveNativePrismOperation(runtime, key, prismNativeAttempt('render', { ...artifact, contentDigest: `sha256:${'b'.repeat(64)}` }, key, nativeResourcePolicy)), /IDEMPOTENCY_CONFLICT/);
+      await assert.rejects(reserveNativePrismOperation(runtime, key, prismNativeAttempt('render', { ...artifact, contentDigest: `sha256:${'b'.repeat(64)}` }, key, nativeResourcePolicy, nativeControlSettings.nativeAttemptLifetimeMs, nativeControlSettings.nativeAttemptTimeoutMs, nativeControlSettings.nativeAttemptCleanupTimeoutMs, nativeControlSettings.nativeAttemptLogBytes, nativeControlSettings.nativeAttemptResultBytes, nativeControlSettings.nativeAttemptEvidenceBytes, nativeControlSettings.nativeAttemptEvidenceFiles)), /IDEMPOTENCY_CONFLICT/);
       await assert.rejects(runtime.query("UPDATE prism.engine_operation SET attempt_id='legacy-replacement' WHERE idempotency_key=$1", [key]), { code: '23000' });
       await assert.rejects(runtime.query('UPDATE prism.engine_operation SET attempt=NULL WHERE idempotency_key=$1', [key]), { code: '23000' });
       await assert.rejects(runtime.query("UPDATE prism.engine_operation SET idempotency_key='renamed' WHERE idempotency_key=$1", [key]), { code: '23000' });
@@ -75,7 +87,7 @@ test('real PostgreSQL commit, concurrent retries, writer death and original work
 
 async function writerDeath(runtime: Pool, directory: string): Promise<void> {
   const key = `writer-death-${randomUUID()}`;
-  const proposed = prismNativeAttempt('render', artifact, key, nativeResourcePolicy);
+  const proposed = prismNativeAttempt('render', artifact, key, nativeResourcePolicy, nativeControlSettings.nativeAttemptLifetimeMs, nativeControlSettings.nativeAttemptTimeoutMs, nativeControlSettings.nativeAttemptCleanupTimeoutMs, nativeControlSettings.nativeAttemptLogBytes, nativeControlSettings.nativeAttemptResultBytes, nativeControlSettings.nativeAttemptEvidenceBytes, nativeControlSettings.nativeAttemptEvidenceFiles);
   const file = path.join(directory, 'original-attempt.json'); await fs.writeFile(file, JSON.stringify(proposed));
   const child = spawn(process.execPath, [fileURLToPath(new URL('../../../../tests/fixtures/prism-native-operation-writer.mts', import.meta.url)), file, key], {
     env: { ...process.env, PRISM_NATIVE_OPERATION_TEST_DATABASE_URL: databaseUrl('runtime') }, stdio: 'pipe',
@@ -86,10 +98,10 @@ async function writerDeath(runtime: Pool, directory: string): Promise<void> {
     const ready = await Promise.race([once(child.stdout, 'data').then(([bytes]) => String(bytes)),
       exited.then(() => { throw new Error(`writer exited before commit: ${errors}`); })]);
     assert.equal(ready, 'durable\n');
-    const before = await reserveNativePrismOperation(runtime, key, prismNativeAttempt('render', artifact, key, nativeResourcePolicy));
+    const before = await reserveNativePrismOperation(runtime, key, prismNativeAttempt('render', artifact, key, nativeResourcePolicy, nativeControlSettings.nativeAttemptLifetimeMs, nativeControlSettings.nativeAttemptTimeoutMs, nativeControlSettings.nativeAttemptCleanupTimeoutMs, nativeControlSettings.nativeAttemptLogBytes, nativeControlSettings.nativeAttemptResultBytes, nativeControlSettings.nativeAttemptEvidenceBytes, nativeControlSettings.nativeAttemptEvidenceFiles));
     assert.deepEqual(before.attempt, proposed, 'Another actual SQL connection sees the commit before writer death');
     child.kill('SIGKILL'); assert.deepEqual(await exited, [null, 'SIGKILL']);
-    const reopened = await reserveNativePrismOperation(runtime, key, prismNativeAttempt('render', artifact, key, nativeResourcePolicy));
+    const reopened = await reserveNativePrismOperation(runtime, key, prismNativeAttempt('render', artifact, key, nativeResourcePolicy, nativeControlSettings.nativeAttemptLifetimeMs, nativeControlSettings.nativeAttemptTimeoutMs, nativeControlSettings.nativeAttemptCleanupTimeoutMs, nativeControlSettings.nativeAttemptLogBytes, nativeControlSettings.nativeAttemptResultBytes, nativeControlSettings.nativeAttemptEvidenceBytes, nativeControlSettings.nativeAttemptEvidenceFiles));
     assert.deepEqual(reopened.attempt, proposed); assert.equal(reopened.result, null);
   } finally { child.kill('SIGKILL'); await exited; }
 }
@@ -100,7 +112,7 @@ async function receiptReplay(runtime: Pool, directory: string, key: string, atte
   // This is a real never-launched failure receipt; no kernel observations are invented.
   const receipt = await journal.withAttempt(attempt, async context => journal.seal(attempt,
     interruptedNativeWorkerResult(attempt, new Date(context.acceptedAt), 'NATIVE_TEST_NOT_LAUNCHED', null, true)));
-  const retry = await reserveNativePrismOperation(runtime, key, prismNativeAttempt('render', artifact, key, nativeResourcePolicy));
+  const retry = await reserveNativePrismOperation(runtime, key, prismNativeAttempt('render', artifact, key, nativeResourcePolicy, nativeControlSettings.nativeAttemptLifetimeMs, nativeControlSettings.nativeAttemptTimeoutMs, nativeControlSettings.nativeAttemptCleanupTimeoutMs, nativeControlSettings.nativeAttemptLogBytes, nativeControlSettings.nativeAttemptResultBytes, nativeControlSettings.nativeAttemptEvidenceBytes, nativeControlSettings.nativeAttemptEvidenceFiles));
   assert.deepEqual(retry.attempt, attempt); assert.equal(retry.result, null);
   const replay = await journal.readResult(retry.attempt); assert.deepEqual(replay, receipt);
   assert.deepEqual(await recordNativePrismResult(runtime, key, retry.attempt, replay), receipt);
@@ -111,12 +123,12 @@ async function receiptReplay(runtime: Pool, directory: string, key: string, atte
   await assert.rejects(recordNativePrismResult(runtime, key, attempt, changed), /RESULT_CONFLICT/);
   await assert.rejects(runtime.query("UPDATE prism.engine_operation SET result='{}'::jsonb WHERE idempotency_key=$1", [key]), { code: '23000' });
   await assert.rejects(completeNativePrismOperation(runtime, key, attempt.executionId), /COMPLETION_CONFLICT/);
-  await assert.rejects(reserveNativePrismOperation(runtime, key, prismNativeAttempt('render', artifact, key, nativeResourcePolicy)),
+  await assert.rejects(reserveNativePrismOperation(runtime, key, prismNativeAttempt('render', artifact, key, nativeResourcePolicy, nativeControlSettings.nativeAttemptLifetimeMs, nativeControlSettings.nativeAttemptTimeoutMs, nativeControlSettings.nativeAttemptCleanupTimeoutMs, nativeControlSettings.nativeAttemptLogBytes, nativeControlSettings.nativeAttemptResultBytes, nativeControlSettings.nativeAttemptEvidenceBytes, nativeControlSettings.nativeAttemptEvidenceFiles)),
     error => error instanceof Error && (error.cause as { code?: string })?.code === 'NATIVE_TEST_NOT_LAUNCHED');
 }
 
 async function legacyPending(runtime: Pool): Promise<void> {
-  const key = `legacy-${randomUUID()}`; const proposed = prismNativeAttempt('render', artifact, key, nativeResourcePolicy);
+  const key = `legacy-${randomUUID()}`; const proposed = prismNativeAttempt('render', artifact, key, nativeResourcePolicy, nativeControlSettings.nativeAttemptLifetimeMs, nativeControlSettings.nativeAttemptTimeoutMs, nativeControlSettings.nativeAttemptCleanupTimeoutMs, nativeControlSettings.nativeAttemptLogBytes, nativeControlSettings.nativeAttemptResultBytes, nativeControlSettings.nativeAttemptEvidenceBytes, nativeControlSettings.nativeAttemptEvidenceFiles);
   const digest = prismRequestDigest(proposed.operation, artifact.contentDigest);
   await runtime.query("INSERT INTO prism.engine_operation(idempotency_key,attempt_id,operation,request_digest) VALUES($1,'legacy-unknown','render',$2)", [key, digest]);
   await assert.rejects(reserveNativePrismOperation(runtime, key, proposed), /LEGACY_PENDING_RECONCILIATION_REQUIRED/);

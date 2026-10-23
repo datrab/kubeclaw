@@ -1,0 +1,170 @@
+[
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/profile-check-attempt1.stderr",
+    "sha256": "b6d5eb0b2a736c20aa98106333f637e502ff811231456048f6cdebdf794cf429"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/README.md",
+    "sha256": "dd52fad721d4259b8d29a76b826241cb41858710cdbe5cb0368e5b17b3c767fe"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/source-observations.txt",
+    "sha256": "348d9fae3e208b6958597c29833dcee055a0e3669e40b4e99cfe1ee5f59b3a3d"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/operator-slices.schema.json",
+    "sha256": "4c5e1da957a566aa43f0674e6097454038b21e0ca6a791709ed1484f6f05ddf7"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/check.stdout",
+    "sha256": "f1711a37b1bed36811ffa714b204fe8926b52e263706fa62aaa471528d63aeba"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/define.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/operator-C3-B-defaultTtlSeconds.json",
+    "sha256": "c90ee4f1c8c2cc780ffe6ad52c2501e252e4ca7462785cd909621255a46bc520"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/operator-C3-A.json",
+    "sha256": "4723f2e7a95066cf3cc91d78b3816bec0db52eeb6bc750b7bdfd8c57dd3ccc01"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/operator-profile-spec.py",
+    "sha256": "fdc11595bbf2acbefd558fcff458f4086c092dd93c290d45fab28e5238e8d966"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/candidate-dispositions.json",
+    "sha256": "419d572b3687ef54878759e27e48a968c235f77e9245f9334ac1abbc08346574"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/operator-profile-index.json",
+    "sha256": "49de74f3460ca28398220ea792558bf18894045af01b0a3f3988da7c6c054cf4"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/operator-profile-spec.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/profile-check.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/verification.json",
+    "sha256": "702a10ef4521507c9f12f11bb7e2ce7f8f99a61f244e244fe2b42ed340217918"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/define.py",
+    "sha256": "5fb44bc42c7e08d3a06c3dfe82182d72bd01799302db362139fcbe25d1242c71"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/profile-check-attempt1.stdout",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/define.stdout",
+    "sha256": "8835b1039f996ecea10a89ca995837dc3029e94f32ff126a514b08a275b9a076"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/profile-check.mjs",
+    "sha256": "a5a817d00320d28c6df01b3a7a77160799973f01bc6b5638a7252d80943b66e3"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/case-specifications.json",
+    "sha256": "6fbe3f65bea98fc6b1a722ccf54dc40e0388a6c08fd4d4bf6664bd1439fcf830"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/profile-check.stdout",
+    "sha256": "acc7b9a1c1dd6e37815f0cc72a23e02b89dce948a12965fe66fc6e4ddaa55854"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/field-contracts.json",
+    "sha256": "976c0b4d2b98032585a754061a2e3c796c176fde08e36dae92cf384ede16c251"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/package-manifest.json",
+    "sha256": "80f8fb6c525d32dbb7f4babc7dc2e77e63764cd68c724df6eb39115d284e655a"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/check-attempt1.stderr",
+    "sha256": "00d062843e74f6a92b6169e73a0bd14f7cf2f9b6e4382c61b6af4bf90a9ed995"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/check.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/remaining-batches.json",
+    "sha256": "c0fc9f0996ecdecab945ba7c8b9810d3211e8c418631fddc03ed91a71c4fefad"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/check-attempt1.stdout",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/check.py",
+    "sha256": "faf47d02ab4c1e231fc38eb57292c6a31f7eb35f81f10ad5fb4f749454b429a0"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/WORK-STATE.md",
+    "sha256": "87d55d35f07146e61b1f3ddd4bdef99082c07d6d6eaa0773a5e358e5ad4a4a02"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/operator-C3-B-pollIntervalMs.json",
+    "sha256": "92b406343b877e28e81ae133ca5dfcb1f218a32ede499ec3a474f5aa54a1f3f5"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/operator-profile-spec.stdout",
+    "sha256": "81b5b774fd05f5b2a82b1251e015c5b3e23227f445175237744ffd67752f5d4e"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/summary.json",
+    "sha256": "af430640e038f50720d81231e44d6d9a69863509e132ef2b72d41dea470ec972"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/operator-C1-A.json",
+    "sha256": "6d4590fec576a6f5e4aeddac5229c82af21c2afe22f8406ebfd2a59ac63dba5d"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/operator-C3-B-maxTtlSeconds.json",
+    "sha256": "4b0c093b67b668857926ad7dcea05cf5c5feaddf7c4c17896e2f6436f90a39eb"
+  },
+  {
+    "path": "docs/review/remediation/config-semantic-inventory.json",
+    "sha256": "0eb07e01174594709977e5d7c1690827f3f6eede9803b7c65eaafe41c629614c"
+  },
+  {
+    "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-23/remaining-batches.json",
+    "sha256": "e6037f0e6f6ecb9f77cb1a65624ec26786b847668e84e19f8c3fa6147f09085e"
+  },
+  {
+    "path": "docs/review/remediation/OPENCLAW-CONFIG-GOAL.md",
+    "sha256": "fe9215a2674b95facef1d6fe0920eab2fa1f4830e765624692152a28b1731127"
+  },
+  {
+    "path": "docs/review/remediation/GOAL-START.md",
+    "sha256": "688334e1ccaa30fd9497e605ef0a9de1fb67fbeae51c4a312b15e15a12fa085b"
+  },
+  {
+    "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml",
+    "sha256": "e003c7bf4eb938988391d9af0c955b2338cef29781e1d8e932bdcc753ee50d13"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/main.go",
+    "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/demo-readiness.go",
+    "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+    "sha256": "6c79d6dd6d94ed7df8903c2d617eeec2574bb9789bf6ac2c0c34d6059a8c8ba2"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/demo-product.go",
+    "sha256": "127c82f150c8277a931ae9fba701b7a1c6cc368d9e8290f9fb2082efd74cc49c"
+  }
+]

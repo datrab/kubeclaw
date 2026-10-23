@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "findingID": "URUNTIME-001",
+  "exactOriginalRowDigests": 17,
+  "retainedIncorrectDigestsAndOriginalHistoryRecords": 17,
+  "preservedOriginalsMatchFrozenCheckpoint": true,
+  "nonProvenanceInventoryUnchanged": true,
+  "historicalArtifactsUnchanged": 248,
+  "integrationHistoryPrefixRegressionRows": 17,
+  "integrateRerun": false,
+  "scope": "C0 integrity only; no C1/runtime acceptance",
+  "candidateSHA256": "26b007ffc8f08f1e547c2e7f6101eec60fa0e81e87d23909fc58dd4b187a8be5",
+  "verificationScriptSHA256": "f0165add0968b9318767a0a1a9bb3b931d27f32e9e15c922f122109da6a9bf39",
+  "correctionsSHA256": "4e93bec9c9f21a7a7cd4303047d38611b2142b84ac7aacc9155ce2a9deedb3b1",
+  "inputDigestsSHA256": "8d3dc9f5d972058a7709278a7cf2dc4c53b20957ba0f8f3760c34415942cd5a6"
+}

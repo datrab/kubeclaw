@@ -1,0 +1,488 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "secret-provisioning-task.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "taskId",
+    "originalBindingRef",
+    "originalGrantRef",
+    "originalClockAndDeadlineRef",
+    "selectedPolicyRef",
+    "selectedSourceCodeRef",
+    "sourceRevisionSetRef",
+    "targetObservationSetRef",
+    "replacementAuthorizationRef",
+    "confidentialInputSetRef",
+    "retainedApplicationRecoveryRef",
+    "mode"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "secret-provisioning-task.v1"
+    },
+    "taskId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$"
+    },
+    "originalBindingRef": {
+      "$ref": "#/$defs/artifactReference"
+    },
+    "originalGrantRef": {
+      "$ref": "#/$defs/artifactReference"
+    },
+    "originalClockAndDeadlineRef": {
+      "$ref": "#/$defs/artifactReference"
+    },
+    "selectedPolicyRef": {
+      "$ref": "#/$defs/artifactReference"
+    },
+    "selectedSourceCodeRef": {
+      "$ref": "#/$defs/artifactReference"
+    },
+    "sourceRevisionSetRef": {
+      "$ref": "#/$defs/artifactReference"
+    },
+    "targetObservationSetRef": {
+      "$ref": "#/$defs/artifactReference"
+    },
+    "replacementAuthorizationRef": {
+      "$ref": "#/$defs/artifactReference"
+    },
+    "confidentialInputSetRef": {
+      "$ref": "#/$defs/artifactReference"
+    },
+    "retainedApplicationRecoveryRef": {
+      "$ref": "#/$defs/artifactReference"
+    },
+    "mode": {
+      "enum": [
+        "new",
+        "resume",
+        "reconcile"
+      ]
+    }
+  },
+  "$defs": {
+    "artifactReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifactSha256",
+        "memberPointer"
+      ],
+      "properties": {
+        "artifactSha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "memberPointer": {
+          "type": "string",
+          "pattern": "^(/([^~]|~[01])*)*$"
+        }
+      }
+    },
+    "confidentialRevisionDescriptor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "providerIdentity",
+        "providerSchemaRef",
+        "originalAccessGrantRef",
+        "namespace",
+        "objectName",
+        "key",
+        "opaqueRetainedRevision",
+        "originalRetentionRef",
+        "receiverRole"
+      ],
+      "properties": {
+        "providerIdentity": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "providerSchemaRef": {
+          "$ref": "#/$defs/artifactReference"
+        },
+        "originalAccessGrantRef": {
+          "$ref": "#/$defs/artifactReference"
+        },
+        "namespace": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "objectName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "opaqueRetainedRevision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "originalRetentionRef": {
+          "$ref": "#/$defs/artifactReference"
+        },
+        "receiverRole": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        }
+      }
+    },
+    "sourceRevisionSet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "taskId",
+        "entries"
+      ],
+      "properties": {
+        "taskId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/confidentialRevisionDescriptor"
+          }
+        }
+      }
+    },
+    "observedTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "familyId",
+        "namespace",
+        "objectName",
+        "observation",
+        "observedUid",
+        "observedResourceVersion",
+        "confidentialRevisionSetRef"
+      ],
+      "properties": {
+        "familyId": {
+          "enum": [
+            "shared",
+            "attestation",
+            "redis",
+            "postgresql",
+            "litellm",
+            "google",
+            "ghcr",
+            "git-nova",
+            "git-buster",
+            "fixture",
+            "tailscale"
+          ]
+        },
+        "namespace": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "objectName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "observation": {
+          "enum": [
+            "absent",
+            "present"
+          ]
+        },
+        "observedUid": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observedResourceVersion": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "confidentialRevisionSetRef": {
+          "$ref": "#/$defs/artifactReference"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "observation": {
+                "const": "absent"
+              }
+            },
+            "required": [
+              "observation"
+            ]
+          },
+          "then": {
+            "properties": {
+              "observedUid": {
+                "type": "null"
+              },
+              "observedResourceVersion": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "observedUid": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              "observedResourceVersion": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              }
+            }
+          }
+        }
+      ]
+    },
+    "targetObservationSet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "taskId",
+        "entries"
+      ],
+      "properties": {
+        "taskId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/observedTarget"
+          }
+        }
+      }
+    },
+    "authorizedMutation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "familyId",
+        "targetObservationRef",
+        "action",
+        "exactKeyNames",
+        "originalIssuerOrSourceRef",
+        "retainedConsumerRecoveryRef"
+      ],
+      "properties": {
+        "familyId": {
+          "enum": [
+            "shared",
+            "attestation",
+            "redis",
+            "postgresql",
+            "litellm",
+            "google",
+            "ghcr",
+            "git-nova",
+            "git-buster",
+            "fixture",
+            "tailscale"
+          ]
+        },
+        "targetObservationRef": {
+          "$ref": "#/$defs/artifactReference"
+        },
+        "action": {
+          "enum": [
+            "create-absent",
+            "patch-missing-keys",
+            "replace-authorized-object",
+            "issue-absent",
+            "repair-authorized-pair",
+            "rewrite-associated-host"
+          ]
+        },
+        "exactKeyNames": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          }
+        },
+        "originalIssuerOrSourceRef": {
+          "$ref": "#/$defs/artifactReference"
+        },
+        "retainedConsumerRecoveryRef": {
+          "$ref": "#/$defs/artifactReference"
+        }
+      }
+    },
+    "replacementAuthorizationSet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "taskId",
+        "issuerAuthorizationRef",
+        "actions"
+      ],
+      "properties": {
+        "taskId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "issuerAuthorizationRef": {
+          "$ref": "#/$defs/artifactReference"
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/authorizedMutation"
+          }
+        }
+      }
+    },
+    "applicationAssociation": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "state",
+            "taskId",
+            "reason"
+          ],
+          "properties": {
+            "state": {
+              "const": "not-required"
+            },
+            "taskId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512
+            },
+            "reason": {
+              "const": "litellm-disabled"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "state",
+            "taskId",
+            "applicationIdentityRef",
+            "originalActionGraphRef",
+            "originalRecoveryClosureRef"
+          ],
+          "properties": {
+            "state": {
+              "const": "pending-original-actions"
+            },
+            "taskId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512
+            },
+            "applicationIdentityRef": {
+              "$ref": "#/$defs/artifactReference"
+            },
+            "originalActionGraphRef": {
+              "$ref": "#/$defs/artifactReference"
+            },
+            "originalRecoveryClosureRef": {
+              "$ref": "#/$defs/artifactReference"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "taskId",
+            "applicationIdentityRef",
+            "masterRevisionRef",
+            "saltPresence",
+            "saltRevisionRef",
+            "databaseAuthorityRef",
+            "databaseCredentialRevisionRef",
+            "databaseUrlRevisionRef",
+            "originalRecoveryClosureRef",
+            "consumerAcceptanceRef",
+            "state"
+          ],
+          "properties": {
+            "taskId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512
+            },
+            "applicationIdentityRef": {
+              "$ref": "#/$defs/artifactReference"
+            },
+            "masterRevisionRef": {
+              "$ref": "#/$defs/artifactReference"
+            },
+            "saltPresence": {
+              "enum": [
+                "absent-use-original-master",
+                "present"
+              ]
+            },
+            "saltRevisionRef": {
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/artifactReference"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "databaseAuthorityRef": {
+              "$ref": "#/$defs/artifactReference"
+            },
+            "databaseCredentialRevisionRef": {
+              "$ref": "#/$defs/artifactReference"
+            },
+            "databaseUrlRevisionRef": {
+              "$ref": "#/$defs/artifactReference"
+            },
+            "originalRecoveryClosureRef": {
+              "$ref": "#/$defs/artifactReference"
+            },
+            "consumerAcceptanceRef": {
+              "$ref": "#/$defs/artifactReference"
+            },
+            "state": {
+              "const": "captured"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

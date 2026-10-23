@@ -1,0 +1,18 @@
+{
+  "package-lock.json": {
+    "sha256": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b",
+    "bytes": 277178
+  },
+  "docs/review/remediation/OPENCLAW-CONFIG-GOAL.md": {
+    "sha256": "1edfa9c0bcbc34f8e645b0e09c13f8e9df7f1e45d509a91b0ea256dc417f1231",
+    "bytes": 20764
+  },
+  "docker/Dockerfile.buster-runtime": {
+    "sha256": "c06483aca404d930853061f77537287f7855099d335a473a04475d5d88b7a8be",
+    "bytes": 10474
+  },
+  "tests/verification/contracts/check-pipeline-observability-durable-delivery.mts": {
+    "sha256": "188a4d3396b7b3055cf867a0d5fcc813c2b9d4311d9290ca722b17cf070411ec",
+    "bytes": 7755
+  }
+}

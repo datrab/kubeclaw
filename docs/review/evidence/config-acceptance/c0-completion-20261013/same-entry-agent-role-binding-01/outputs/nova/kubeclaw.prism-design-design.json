@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "nova-registration-policy.v1",
+  "binding": {
+    "kind": "stage",
+    "packageId": "kubeclaw.prism-design",
+    "registrationId": "kubeclaw.prism-design:design",
+    "instanceId": "fixture.prism-design",
+    "ownerPath": "plugins/kubeclaw.prism-design.config.json",
+    "profileId": "A",
+    "serviceInstanceId": "fixture.service.nova-runtime",
+    "rootVersion": "pipeline-entry.v9",
+    "rootRawSha256": "b2f8be237c1a3cbe2f98aaf2378224afbf87b8910fbacd3047e17c1efc078ae1",
+    "inputGenerationSha256": "941b7d2a90f5dc3057f6025029cda9091d6766ab4126ec8dcaafb80e25303d9a",
+    "ownerRawSha256": "8e6a8c8c13a17558fc4962d8d7f8e7f62cfb8b63dde06e3467e726ac4b735c49",
+    "ownerSchemaSha256": "905854f2dd9943849731babf4624c019471fb6c44220f8d901a52f69632a2aee",
+    "profileSha256": "11164a595ab9f4bb731709eaf35516842a6cf0cccbf0270a6a7a3f3b8a6a0960",
+    "manifestSha256": "063ef9316e7bfdbe8b2b9a0812bfc2a0b968294edc116d85e557d3e591dbf2d9",
+    "sourcePackageDigest": "sha256:5d651e51e04ae22dadeac5154ede4c78fd98a01c25a32ad8b40cc94e33f1776b",
+    "runtimeDispatchOwnerRawSha256": "64dbefffefc75df11853ec3d0b1654b807dec0ea2d0aea44eb2517f1dba72438"
+  },
+  "configuration": {
+    "agent": "prism",
+    "target": "case-operator-a",
+    "issuerId": "case-issuer-a",
+    "timeoutMinutes": 60
+  },
+  "authentication": "public-unsealed"
+}

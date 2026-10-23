@@ -1,0 +1,1584 @@
+{
+  "sourceCommit": "bce3f075156a86be345821499c04628cb35c2762",
+  "sourceTree": "a8b0adf641de573565360b0c4eb577d6bc7545c3",
+  "originalCandidateArtifact": "docs/review/evidence/config-acceptance/runtime/default-candidates.json",
+  "originalCandidateSha256": "9f925682048ea9976e6dab177f4d5363727b429483b7855a34930d5a0d5facfc",
+  "originalCount": 4642,
+  "explicitReviewedCandidateRecords": [
+    {
+      "id": "RT-CANDIDATE-5071f7139bb21a30",
+      "source": {
+        "path": "skills/buster/plugins/direct-command/src/provider.js",
+        "line": 10,
+        "text": "if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(`DIRECT_COMMAND_CONFIG_INVALID:${label}`);",
+        "sha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+      "disposition": "nonsetting-input-type-guard",
+      "explicitReviewedReason": "configuration object type before consumer, no absent CONFIG value",
+      "settings": [
+        "RT-aff37e16b8a96dfb",
+        "RT-b66d71a53b598ee8",
+        "RT-33e6442dd2c6323d",
+        "RT-7de4b3069445487f",
+        "RT-b6fb4503ebc02dc5",
+        "RT-cbb699d40c1239eb",
+        "RT-ee98119f35dc96d1",
+        "RT-866cc51d43812d41",
+        "RT-b5bbfe4cafcfe65f",
+        "RT-13c87d1fa61aeb38",
+        "RT-e8f58d614243b254",
+        "RT-782a72bc24d55fe2",
+        "RT-d17d3e7a45e4a0c8",
+        "RT-e7836625c9ace3c3",
+        "RT-1db043d5c6d3a4ed",
+        "RT-be7f1b2f7970d6a8",
+        "RT-f76399d441e23e8c",
+        "RT-847a5cb47ae5adae",
+        "RT-d601ae99ab08ed6e",
+        "RT-05edb56f36cc9aa9",
+        "RT-7f3bd9be31aa70ef",
+        "RT-9ca7d7caced9c0ec",
+        "RT-f3368a4164a534a8",
+        "RT-bc4307b73fc31a54"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a3a96bdcc1545bca",
+      "source": {
+        "path": "skills/buster/plugins/direct-command/src/provider.js",
+        "line": 15,
+        "text": "if (typeof value !== 'string' || value.length === 0 || value.length > 1024 || value.includes('\\0')",
+        "sha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+      "disposition": "open-resource-guard-policy",
+      "explicitReviewedReason": "relativePath length1024 is numeric safety/admission quota used cwd/all declared paths; exact adjustable owner/compatibility contract still required",
+      "settings": [
+        "RT-7de4b3069445487f"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "open precise numeric/policy/source-platform obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-c324c1427a9681c5",
+      "source": {
+        "path": "skills/buster/plugins/direct-command/src/provider.js",
+        "line": 16,
+        "text": "|| path.isAbsolute(value) || value.split(/[\\\\/]/u).some((part) => part === '..' || part === '')) {",
+        "sha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+      "disposition": "nonsetting-path-containment",
+      "explicitReviewedReason": "absolute/parent/empty-component path prohibition; same actual repository containment and symlink boundary",
+      "settings": [
+        "RT-7de4b3069445487f"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-91c7501f3bef95a4",
+      "source": {
+        "path": "skills/buster/plugins/direct-command/src/provider.js",
+        "line": 33,
+        "text": "if (!Array.isArray(value) || value.length > (kind === 'report' ? 16 : 8)) throw new Error(`DIRECT_COMMAND_CONFIG_INVALID:${kind}s`);",
+        "sha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+      "disposition": "open-resource-guard-policy",
+      "explicitReviewedReason": "declarations maximum16 reports /8 coverage/artifacts are numeric admission quotas, not automatically protocol constants",
+      "settings": [
+        "RT-866cc51d43812d41",
+        "RT-b5bbfe4cafcfe65f",
+        "RT-13c87d1fa61aeb38",
+        "RT-e8f58d614243b254",
+        "RT-782a72bc24d55fe2",
+        "RT-d17d3e7a45e4a0c8"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "open precise numeric/policy/source-platform obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-07e338564daac3eb",
+      "source": {
+        "path": "skills/buster/plugins/direct-command/src/provider.js",
+        "line": 40,
+        "text": "if (typeof id !== 'string' || !STABLE_ID.test(id) || ids.has(id) || paths.has(file)) {",
+        "sha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+      "disposition": "nonsetting-task-identity-validation",
+      "explicitReviewedReason": "stable declaration ID grammar and duplicate per-kind ID/path guards, cross-kind guard line79; task identity, not policy selection",
+      "settings": [
+        "RT-866cc51d43812d41",
+        "RT-b5bbfe4cafcfe65f",
+        "RT-13c87d1fa61aeb38",
+        "RT-e8f58d614243b254",
+        "RT-782a72bc24d55fe2",
+        "RT-d17d3e7a45e4a0c8"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-51a9d9ccd65f61fd",
+      "source": {
+        "path": "skills/buster/plugins/direct-command/src/provider.js",
+        "line": 45,
+        "text": "|| !['application/junit+xml', 'application/xml', 'text/xml'].includes(item.mediaType))) {",
+        "sha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+      "disposition": "nonsetting-finite-protocol-domain",
+      "explicitReviewedReason": "supported JUnit MIME identity discriminants; unsupported media/format rejects, no second configurable parser",
+      "settings": [
+        "RT-866cc51d43812d41",
+        "RT-b5bbfe4cafcfe65f",
+        "RT-13c87d1fa61aeb38",
+        "RT-e8f58d614243b254",
+        "RT-782a72bc24d55fe2",
+        "RT-d17d3e7a45e4a0c8"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-afd5378416c4ef77",
+      "source": {
+        "path": "skills/buster/plugins/direct-command/src/provider.js",
+        "line": 48,
+        "text": "if (kind === 'coverage' && (item.format !== 'lcov' || item.mediaType !== 'text/lcov')) {",
+        "sha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+      "disposition": "nonsetting-finite-protocol-domain",
+      "explicitReviewedReason": "LCOV/text-lcov supported report codec identity only",
+      "settings": [
+        "RT-e7836625c9ace3c3",
+        "RT-1db043d5c6d3a4ed",
+        "RT-be7f1b2f7970d6a8",
+        "RT-f76399d441e23e8c",
+        "RT-847a5cb47ae5adae",
+        "RT-d601ae99ab08ed6e"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-4927c210bc7d176b",
+      "source": {
+        "path": "skills/buster/plugins/direct-command/src/provider.js",
+        "line": 60,
+        "text": "if (typeof value.executable !== 'string' || !STABLE_ID.test(value.executable)) throw new Error('DIRECT_COMMAND_EXECUTABLE_INVALID');",
+        "sha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+      "disposition": "nonsetting-resource-task-identity",
+      "explicitReviewedReason": "existing stable catalog executable symbolic identity; real catalog/grants separate validation",
+      "settings": [
+        "RT-aff37e16b8a96dfb"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-d8985515d43e6347",
+      "source": {
+        "path": "skills/buster/plugins/direct-command/src/provider.js",
+        "line": 61,
+        "text": "const args = value.args ?? [];",
+        "sha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+      "disposition": "nonsetting-optional-task-absence",
+      "explicitReviewedReason": "optional task args null/absent empty list; not missing policy fallback",
+      "settings": [
+        "RT-b66d71a53b598ee8",
+        "RT-33e6442dd2c6323d"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-32dafab0bbc5f494",
+      "source": {
+        "path": "skills/buster/plugins/direct-command/src/provider.js",
+        "line": 62,
+        "text": "if (!Array.isArray(args) || args.length > 256 || args.some((item) => typeof item !== 'string'",
+        "sha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+      "disposition": "open-resource-guard-policy",
+      "explicitReviewedReason": "argument count256 and per-item string guard; numeric count separate tunable admission policy obligation",
+      "settings": [
+        "RT-b66d71a53b598ee8",
+        "RT-33e6442dd2c6323d"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "open precise numeric/policy/source-platform obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-f804b92cea256161",
+      "source": {
+        "path": "skills/buster/plugins/direct-command/src/provider.js",
+        "line": 63,
+        "text": "|| item.length > 4096 || item.includes('\\0'))) throw new Error('DIRECT_COMMAND_ARGUMENTS_INVALID');",
+        "sha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+      "disposition": "open-resource-guard-policy",
+      "explicitReviewedReason": "argument chars4096 separate numeric admission policy; NUL prohibition remains command protocol/security guard",
+      "settings": [
+        "RT-b66d71a53b598ee8",
+        "RT-33e6442dd2c6323d"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "open precise numeric/policy/source-platform obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-f1b640391c4a7cd1",
+      "source": {
+        "path": "skills/buster/plugins/direct-command/src/provider.js",
+        "line": 64,
+        "text": "const workingDirectory = relativePath(value.workingDirectory ?? '.', 'workingDirectory');",
+        "sha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+      "disposition": "nonsetting-optional-task-absence",
+      "explicitReviewedReason": "optional task cwd null/absent dot; fixed source repository-relative receiver; no global runtime cwd default author",
+      "settings": [
+        "RT-7de4b3069445487f"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-25a2129612bef6ed",
+      "source": {
+        "path": "skills/buster/plugins/direct-command/src/provider.js",
+        "line": 67,
+        "text": "if (entries.length > 64 || entries.some(([name, item]) => !ENVIRONMENT_NAME.test(name) || PROTECTED_ENVIRONMENT.test(name)",
+        "sha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+      "disposition": "open-resource-guard-policy",
+      "explicitReviewedReason": "environment entry count64 numeric policy; protected/name grammar and names security check separately retained",
+      "settings": [
+        "RT-b6fb4503ebc02dc5",
+        "RT-cbb699d40c1239eb"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "open precise numeric/policy/source-platform obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-f04ab9440fc058dd",
+      "source": {
+        "path": "skills/buster/plugins/direct-command/src/provider.js",
+        "line": 68,
+        "text": "|| typeof item !== 'string' || item.length > 4096 || item.includes('\\0'))) {",
+        "sha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+      "disposition": "open-resource-guard-policy",
+      "explicitReviewedReason": "environment value chars4096 numeric admission policy; NUL prohibition independently retained",
+      "settings": [
+        "RT-b6fb4503ebc02dc5",
+        "RT-cbb699d40c1239eb"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "open precise numeric/policy/source-platform obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b0aeb6c0a22511f3",
+      "source": {
+        "path": "skills/buster/plugins/direct-command/src/provider.js",
+        "line": 79,
+        "text": "if (new Set(all.map((item) => item.id)).size !== all.length || new Set(all.map((item) => item.path)).size !== all.length) {",
+        "sha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+      "disposition": "nonsetting-cross-task-identity",
+      "explicitReviewedReason": "unique declaration ID/path across reports/coverage/artifacts; rejects ambiguous output identity rather than a setting",
+      "settings": [
+        "RT-866cc51d43812d41",
+        "RT-b5bbfe4cafcfe65f",
+        "RT-13c87d1fa61aeb38",
+        "RT-e8f58d614243b254",
+        "RT-782a72bc24d55fe2",
+        "RT-d17d3e7a45e4a0c8"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-71b79b80e9aace84",
+      "source": {
+        "path": "skills/buster/plugins/direct-command/src/provider.js",
+        "line": 91,
+        "text": "const noFollow = fs.constants.O_NOFOLLOW ?? 0;",
+        "sha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+      "disposition": "nonsetting-platform-capability-fallback",
+      "explicitReviewedReason": "O_NOFOLLOW absent platform constant becomes0; canonical realpath containment remains actual preceding check; full non-Linux race semantics external/platform verification gap, not config quota",
+      "settings": [
+        "RT-05edb56f36cc9aa9",
+        "RT-7f3bd9be31aa70ef",
+        "RT-9ca7d7caced9c0ec",
+        "RT-f3368a4164a534a8",
+        "RT-bc4307b73fc31a54"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "open precise numeric/policy/source-platform obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-806177acc63a61dd",
+      "source": {
+        "path": "skills/buster/plugins/direct-command/src/provider.js",
+        "line": 98,
+        "text": "if (!Number.isSafeInteger(stat.size) || stat.size < 0 || stat.size > budget.remainingBytes) {",
+        "sha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+      "disposition": "existing-input-quota-and-file-shape",
+      "explicitReviewedReason": "stat size safe/nonnegative/file + invocation.limits.artifactBytes remaining; actual configured plan limit separate component-author obligation; no independent provider fallback",
+      "settings": [
+        "RT-05edb56f36cc9aa9",
+        "RT-7f3bd9be31aa70ef",
+        "RT-9ca7d7caced9c0ec",
+        "RT-f3368a4164a534a8",
+        "RT-bc4307b73fc31a54"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-61261d215fdf8f8d",
+      "source": {
+        "path": "skills/buster/plugins/direct-command/src/provider.js",
+        "line": 106,
+        "text": "if (copied + read > stat.size || copied + read > budget.remainingBytes) {",
+        "sha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+      "disposition": "existing-input-quota-and-source-consistency",
+      "explicitReviewedReason": "read<=stat.size and remaining invocation artifactBytes; source changed/oversize throws and partial file removed, not a default",
+      "settings": [
+        "RT-05edb56f36cc9aa9",
+        "RT-7f3bd9be31aa70ef",
+        "RT-9ca7d7caced9c0ec",
+        "RT-f3368a4164a534a8",
+        "RT-bc4307b73fc31a54"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-c7f5f32d3ccc05f0",
+      "source": {
+        "path": "skills/buster/plugins/direct-command/src/provider.js",
+        "line": 135,
+        "text": "const config = configuration(invocation);",
+        "sha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+      "disposition": "nonsetting-productive-caller",
+      "explicitReviewedReason": "actual configuration reader called before command at provider.execute; source caller marker",
+      "settings": [
+        "RT-aff37e16b8a96dfb",
+        "RT-b66d71a53b598ee8",
+        "RT-33e6442dd2c6323d",
+        "RT-7de4b3069445487f",
+        "RT-b6fb4503ebc02dc5",
+        "RT-cbb699d40c1239eb",
+        "RT-ee98119f35dc96d1",
+        "RT-866cc51d43812d41",
+        "RT-b5bbfe4cafcfe65f",
+        "RT-13c87d1fa61aeb38",
+        "RT-e8f58d614243b254",
+        "RT-782a72bc24d55fe2",
+        "RT-d17d3e7a45e4a0c8",
+        "RT-e7836625c9ace3c3",
+        "RT-1db043d5c6d3a4ed",
+        "RT-be7f1b2f7970d6a8",
+        "RT-f76399d441e23e8c",
+        "RT-847a5cb47ae5adae",
+        "RT-d601ae99ab08ed6e",
+        "RT-05edb56f36cc9aa9",
+        "RT-7f3bd9be31aa70ef",
+        "RT-9ca7d7caced9c0ec",
+        "RT-f3368a4164a534a8",
+        "RT-bc4307b73fc31a54"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-d9f0d5b3f208b68e",
+      "source": {
+        "path": "skills/buster/plugins/direct-command/src/provider.js",
+        "line": 148,
+        "text": "limits: {",
+        "sha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+      "disposition": "existing-input-quota-projection",
+      "explicitReviewedReason": "command payload limits copied from invocation.limits/timeoutMs; actual plan/runtime author remains distinct; provider does not invent independent defaults",
+      "settings": [
+        "RT-aff37e16b8a96dfb",
+        "RT-b66d71a53b598ee8",
+        "RT-33e6442dd2c6323d",
+        "RT-7de4b3069445487f",
+        "RT-b6fb4503ebc02dc5",
+        "RT-cbb699d40c1239eb",
+        "RT-ee98119f35dc96d1",
+        "RT-866cc51d43812d41",
+        "RT-b5bbfe4cafcfe65f",
+        "RT-13c87d1fa61aeb38",
+        "RT-e8f58d614243b254",
+        "RT-782a72bc24d55fe2",
+        "RT-d17d3e7a45e4a0c8",
+        "RT-e7836625c9ace3c3",
+        "RT-1db043d5c6d3a4ed",
+        "RT-be7f1b2f7970d6a8",
+        "RT-f76399d441e23e8c",
+        "RT-847a5cb47ae5adae",
+        "RT-d601ae99ab08ed6e",
+        "RT-05edb56f36cc9aa9",
+        "RT-7f3bd9be31aa70ef",
+        "RT-9ca7d7caced9c0ec",
+        "RT-f3368a4164a534a8",
+        "RT-bc4307b73fc31a54"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-9cf3854c4aec7e2f",
+      "source": {
+        "path": "skills/buster/plugins/direct-command/src/provider.js",
+        "line": 160,
+        "text": "if (record && typeof record === 'object' && (record.stream === 'stdout' || record.stream === 'stderr')",
+        "sha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+      "disposition": "nonsetting-command-output-shape",
+      "explicitReviewedReason": "command stdout/stderr record discriminator; fallback aggregate log strings actual aftercommand transport representation, not CONFIG writer",
+      "settings": [
+        "RT-aff37e16b8a96dfb",
+        "RT-b66d71a53b598ee8",
+        "RT-33e6442dd2c6323d",
+        "RT-7de4b3069445487f",
+        "RT-b6fb4503ebc02dc5",
+        "RT-cbb699d40c1239eb",
+        "RT-ee98119f35dc96d1",
+        "RT-866cc51d43812d41",
+        "RT-b5bbfe4cafcfe65f",
+        "RT-13c87d1fa61aeb38",
+        "RT-e8f58d614243b254",
+        "RT-782a72bc24d55fe2",
+        "RT-d17d3e7a45e4a0c8",
+        "RT-e7836625c9ace3c3",
+        "RT-1db043d5c6d3a4ed",
+        "RT-be7f1b2f7970d6a8",
+        "RT-f76399d441e23e8c",
+        "RT-847a5cb47ae5adae",
+        "RT-d601ae99ab08ed6e",
+        "RT-05edb56f36cc9aa9",
+        "RT-7f3bd9be31aa70ef",
+        "RT-9ca7d7caced9c0ec",
+        "RT-f3368a4164a534a8",
+        "RT-bc4307b73fc31a54"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-022b7b0ed73d1ba2",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 7,
+        "text": "function object(value, code) { if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(code); return value; }",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "nonsetting-input-type-guard",
+      "explicitReviewedReason": "task config/spec object guard, no default",
+      "settings": [
+        "RT-10f3f03208806c98",
+        "RT-1609b6ce9dfde15b",
+        "RT-d2dfede67afe22ac",
+        "RT-396eb59b11141a9a",
+        "RT-1d1c5da45ebf7a59",
+        "RT-039cd17e18207028",
+        "RT-4ad5dd8a7cfccc1c",
+        "RT-496f09de742b998e",
+        "RT-d077dd499ce84e1c",
+        "RT-9cec05672cab2d0d",
+        "RT-148251b72f4d24e0",
+        "RT-153e53cbf58a2c3b",
+        "RT-03b79ef05f21760b",
+        "RT-9d2b7832df8521b8",
+        "RT-88373ef30a584869",
+        "RT-3168b8463b219872",
+        "RT-6c40eb311c36aa18",
+        "RT-67427bf80b25f14f",
+        "RT-da87e9da52e239b4",
+        "RT-795b89c50339c532",
+        "RT-0dfdeb7fe789b20b",
+        "RT-93fe557af6f46c3f",
+        "RT-d67d1281071db148",
+        "RT-96b1400c6db325d0",
+        "RT-550d941bb663f8fc",
+        "RT-63d5aafbda9b5281"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-d3b8530b8300fe98",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 9,
+        "text": "if (typeof relative !== 'string' || path.isAbsolute(relative) || relative.includes('\\0')) throw new Error('OPENAPI_FILE_DENIED');",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "nonsetting-path-security",
+      "explicitReviewedReason": "relative/NUL type/path rejection before canonical file read",
+      "settings": [
+        "RT-10f3f03208806c98"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-1e082888cdad01ac",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 13,
+        "text": "try { if (!real.startsWith(`${root}${path.sep}`) || !fs.statSync(real).isFile()) throw new Error('OPENAPI_FILE_DENIED'); }",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "nonsetting-path-security",
+      "explicitReviewedReason": "realpath remains repository descendant and regular file; task source containment",
+      "settings": [
+        "RT-10f3f03208806c98"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-12174478ace65b7f",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 21,
+        "text": "if (invocation.inputs.length !== 1 || invocation.inputs[0].kind !== 'value') throw new Error('OPENAPI_TARGET_REQUIRED');",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "nonsetting-input-cardinality",
+      "explicitReviewedReason": "exactly one value endpoint/deployment fixture if no expliciturl; otherwise task ambiguity rejected",
+      "settings": [
+        "RT-1609b6ce9dfde15b"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-e8c83393b94780e8",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 24,
+        "text": "if (input.schemaId !== 'kubeclaw.public-endpoint-fixture@1' || value.schemaVersion !== 'public-endpoint-fixture.v1'",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "nonsetting-finite-contract-identity",
+      "explicitReviewedReason": "public endpoint schema ID/version discriminants are fixture protocol, not operator selector",
+      "settings": [
+        "RT-1609b6ce9dfde15b"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-5df9c546114a2897",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 25,
+        "text": "|| typeof value.url !== 'string') throw new Error('OPENAPI_INPUT_INVALID');",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "nonsetting-fixture-value-shape",
+      "explicitReviewedReason": "public fixture URL must string, no fallback",
+      "settings": [
+        "RT-1609b6ce9dfde15b"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-0737c173e66386a5",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 28,
+        "text": "if (input.name !== 'deployment' || input.schemaId !== 'kubeclaw.kubernetes-deployment-fixture@1'",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "nonsetting-finite-contract-identity",
+      "explicitReviewedReason": "deployment fixture schema ID/version protocol discrimination, actual endpointName task selection",
+      "settings": [
+        "RT-d2dfede67afe22ac"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-7f3444046d707b3a",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 29,
+        "text": "|| value.schemaVersion !== 'kubernetes-deployment-fixture.v1' || !Array.isArray(value.endpoints)) throw new Error('OPENAPI_INPUT_INVALID');",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "nonsetting-fixture-value-shape",
+      "explicitReviewedReason": "deployment endpoints array guard; no policy default",
+      "settings": [
+        "RT-d2dfede67afe22ac"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-87f49cdeb89578e3",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 38,
+        "text": "if (typeof schema.$ref !== 'string' || !schema.$ref.startsWith('#/')) throw new Error('OPENAPI_EXTERNAL_REF_DENIED');",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "nonsetting-task-schema-support",
+      "explicitReviewedReason": "local #/ ref only, external specs rejected; referenced task schema does not author CONFIG; unsupported remote refs not silently ignored",
+      "settings": [
+        "RT-10f3f03208806c98"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-2e1cabded91fac8b",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 41,
+        "text": "if (!found || typeof found !== 'object' || !Object.prototype.hasOwnProperty.call(found, part)) throw new Error('OPENAPI_SCHEMA_REF_MISSING');",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "nonsetting-task-schema-ref-integrity",
+      "explicitReviewedReason": "exact own properties through decoded pointer; missing refs reject",
+      "settings": [
+        "RT-10f3f03208806c98"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-677630f03283b95d",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 48,
+        "text": "if (Array.isArray(left) || Array.isArray(right)) return Array.isArray(left) && Array.isArray(right)",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "nonsetting-value-comparison",
+      "explicitReviewedReason": "deep JSON equality arrays recursively compared for task schema enum/const assertions, no tunable default",
+      "settings": [
+        "RT-da87e9da52e239b4"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-eb90ca541a412d8a",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 50,
+        "text": "if (!left || !right || typeof left !== 'object' || typeof right !== 'object') return false;",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "nonsetting-value-comparison",
+      "explicitReviewedReason": "plain object/nonobject comparison branch, not an author",
+      "settings": [
+        "RT-da87e9da52e239b4"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-dd3f125b22ec41e3",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 56,
+        "text": "if (typeof source !== 'string' || source.length > 256 || /[()|]/u.test(source)",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "open-resource-guard-policy",
+      "explicitReviewedReason": "regex pattern chars256 numeric processing quota plus forbidden constructs; numericquota policy ownership/compatible safe subset still required",
+      "settings": [
+        "RT-da87e9da52e239b4"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "open precise numeric/policy/source-platform obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-97411a4b3fac9e92",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 57,
+        "text": "|| /\\\\(?:[1-9]|k<)/u.test(source)) throw new Error('OPENAPI_SCHEMA_PATTERN_UNSAFE');",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "nonsetting-safe-schema-subset",
+      "explicitReviewedReason": "backreferences forbidden in supported safe regexp subset; not a task model/config selector",
+      "settings": [
+        "RT-da87e9da52e239b4"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-2bf8cf4f4ae9f7ed",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 58,
+        "text": "const unbounded = source.match(/(?<!\\\\)[*+]/gu)?.length ?? 0;",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "open-resource-guard-policy",
+      "explicitReviewedReason": "count unbounded operators then safety ceiling1 atline59; maxUnbounded policy0/1 supported subset proposed, security guarantee must not weaken toarbitrary regex",
+      "settings": [
+        "RT-da87e9da52e239b4"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "open precise numeric/policy/source-platform obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-7d0da94ea4d45e1e",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 62,
+        "text": "if (minimum > 1024 || maximum > 1024) throw new Error('OPENAPI_SCHEMA_PATTERN_UNSAFE');",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "open-resource-guard-policy",
+      "explicitReviewedReason": "bounded regex quantifier ceiling1024 numeric safe processing policy; new configurable reference must retain security safety constraints",
+      "settings": [
+        "RT-da87e9da52e239b4"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "open precise numeric/policy/source-platform obligation",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-c2157f8e425eb890",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 68,
+        "text": "if (rawSchema === undefined || rawSchema === null || rawSchema === true) return [];",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "nonsetting-task-schema-null-absence",
+      "explicitReviewedReason": "undefined/null/true task request/response schema imposes no assertion; not CONFIG default; false denies",
+      "settings": [
+        "RT-da87e9da52e239b4"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-23cd66ff21fc1ad1",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 115,
+        "text": "const additionalKeys = Object.keys(value).filter((key) => !Object.prototype.hasOwnProperty.call(schema.properties ?? {}, key));",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "nonsetting-task-schema-additional-key-check",
+      "explicitReviewedReason": "spec schema own properties determine additional task JSON assertions, does not validate provider config itself",
+      "settings": [
+        "RT-da87e9da52e239b4"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-61a9101f1d0c536c",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 125,
+        "text": "if (!content || typeof content !== 'object' || typeof contentType !== 'string') return undefined;",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "nonsetting-media-selection-shape",
+      "explicitReviewedReason": "responseMedia type and content checks before finite media matching, no fallback policy",
+      "settings": [
+        "RT-da87e9da52e239b4"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-f7a9719c76fb55df",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 141,
+        "text": "if (!route.startsWith('/') || route.startsWith('//') || /[?#\\r\\n]/u.test(route)) throw new Error('OPENAPI_PATH_INVALID');",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "nonsetting-route-security",
+      "explicitReviewedReason": "spec route starts slash, no double slash/query/fragment/newline; task URL/origin checks retained",
+      "settings": [
+        "RT-039cd17e18207028"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-6fc0763ab163a7ca",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 144,
+        "text": "if (typeof operation.operationId !== 'string' || found.has(operation.operationId)) throw new Error('OPENAPI_OPERATION_ID_INVALID');",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "nonsetting-task-operation-identity",
+      "explicitReviewedReason": "spec operationId muststring/unique in catalog, no default selector",
+      "settings": [
+        "RT-039cd17e18207028"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b1a416fb323e7c73",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 146,
+        "text": "for (const raw of [...(resolvedPathItem.parameters ?? []), ...(operation.parameters ?? [])]) {",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "nonsetting-task-parameter-precedence",
+      "explicitReviewedReason": "path-item then operation parameter declarations keyedlocation/name; operation declarations override same-key path declarations",
+      "settings": [
+        "RT-4ad5dd8a7cfccc1c",
+        "RT-496f09de742b998e",
+        "RT-d077dd499ce84e1c",
+        "RT-9cec05672cab2d0d",
+        "RT-148251b72f4d24e0"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a9a197ca4107a33a",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 154,
+        "text": "const failures = []; const supplied = { path: selected.pathParameters ?? {}, query: selected.query ?? {}, header: selected.headers ?? {} };",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "nonsetting-optional-task-absence",
+      "explicitReviewedReason": "path/query/header absent=>empty task maps; spec requires explicitrequiredparameters; no operator policy syntheses",
+      "settings": [
+        "RT-4ad5dd8a7cfccc1c",
+        "RT-496f09de742b998e",
+        "RT-d077dd499ce84e1c",
+        "RT-9cec05672cab2d0d",
+        "RT-148251b72f4d24e0"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a7ca86f1a68d604a",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 182,
+        "text": "const rule = operation.responses?.[String(status)] ?? operation.responses?.[range] ?? operation.responses?.default ?? null;",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "nonsetting-task-response-rule-precedence",
+      "explicitReviewedReason": "documented exact status then statusclass then default rule else null; task spec response assertion semantics, not CONFIG global policy",
+      "settings": [
+        "RT-0dfdeb7fe789b20b",
+        "RT-93fe557af6f46c3f"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-7b8ab4aaf8d21940",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 191,
+        "text": "const config = object(invocation.configuration.values, 'OPENAPI_CONFIG_INVALID'); const workspace = fs.realpathSync(context.workspaceRoot);",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "nonsetting-productive-caller",
+      "explicitReviewedReason": "actual execute reads invocation.configuration.values and real workspace; no owning schema validator called here",
+      "settings": [
+        "RT-10f3f03208806c98",
+        "RT-1609b6ce9dfde15b",
+        "RT-d2dfede67afe22ac",
+        "RT-396eb59b11141a9a",
+        "RT-1d1c5da45ebf7a59",
+        "RT-039cd17e18207028",
+        "RT-4ad5dd8a7cfccc1c",
+        "RT-496f09de742b998e",
+        "RT-d077dd499ce84e1c",
+        "RT-9cec05672cab2d0d",
+        "RT-148251b72f4d24e0",
+        "RT-153e53cbf58a2c3b",
+        "RT-03b79ef05f21760b",
+        "RT-9d2b7832df8521b8",
+        "RT-88373ef30a584869",
+        "RT-3168b8463b219872",
+        "RT-6c40eb311c36aa18",
+        "RT-67427bf80b25f14f",
+        "RT-da87e9da52e239b4",
+        "RT-795b89c50339c532",
+        "RT-0dfdeb7fe789b20b",
+        "RT-93fe557af6f46c3f",
+        "RT-d67d1281071db148",
+        "RT-96b1400c6db325d0",
+        "RT-550d941bb663f8fc",
+        "RT-63d5aafbda9b5281"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-dd471d0e83a608e9",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 195,
+        "text": "if (typeof spec?.openapi !== 'string' || !/^3\\.[01]\\./u.test(spec.openapi)) throw new Error('OPENAPI_VERSION_UNSUPPORTED');",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "nonsetting-finite-format-support",
+      "explicitReviewedReason": "supported OpenAPI3.0/3.1 document version, incompatible schemas rejected; not arbitrary operator policy",
+      "settings": [
+        "RT-10f3f03208806c98"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-26356e18f77bd49b",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 196,
+        "text": "const catalog = operations(spec); const explicit = Array.isArray(config.operations) ? config.operations : []; const tags = new Set(config.tags ?? []);",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "nonsetting-task-selection-absence",
+      "explicitReviewedReason": "explicit operations array elseempty + tags null/absentempty; owning exported schema stricter requiredselection, runtime separately emptyselection rejects",
+      "settings": [
+        "RT-396eb59b11141a9a",
+        "RT-1d1c5da45ebf7a59",
+        "RT-039cd17e18207028",
+        "RT-4ad5dd8a7cfccc1c",
+        "RT-496f09de742b998e",
+        "RT-d077dd499ce84e1c",
+        "RT-9cec05672cab2d0d",
+        "RT-148251b72f4d24e0",
+        "RT-153e53cbf58a2c3b",
+        "RT-03b79ef05f21760b",
+        "RT-9d2b7832df8521b8",
+        "RT-88373ef30a584869",
+        "RT-3168b8463b219872",
+        "RT-6c40eb311c36aa18",
+        "RT-67427bf80b25f14f",
+        "RT-da87e9da52e239b4",
+        "RT-795b89c50339c532",
+        "RT-0dfdeb7fe789b20b",
+        "RT-93fe557af6f46c3f"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-84ecda5a58cf03d3",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 199,
+        "text": "&& (found.operation.tags ?? []).some((tag) => tags.has(tag))).map(([operationId]) => ({ operationId }));",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "nonsetting-task-selection-precedence",
+      "explicitReviewedReason": "tags add nonexplicit operationIDs only; explicit task selection wins",
+      "settings": [
+        "RT-d67d1281071db148",
+        "RT-96b1400c6db325d0"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a34c3ca6680bf11a",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 215,
+        "text": "let route = found.route; for (const [name, value] of Object.entries(selected.pathParameters ?? {})) route = route.replace(`{${name}}`, encodeURIComponent(String(value)));",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "nonsetting-task-wire-projection",
+      "explicitReviewedReason": "path values URI-encoded String conversion, not model/config input channel",
+      "settings": [
+        "RT-4ad5dd8a7cfccc1c",
+        "RT-496f09de742b998e",
+        "RT-d077dd499ce84e1c",
+        "RT-9cec05672cab2d0d",
+        "RT-148251b72f4d24e0"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-009481eccc282ea4",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 219,
+        "text": "for (const [name, value] of Object.entries(selected.query ?? {})) url.searchParams.set(name, String(value));",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "nonsetting-task-wire-projection",
+      "explicitReviewedReason": "query values String URLSearchParams, spec/schema assertions stillactive",
+      "settings": [
+        "RT-153e53cbf58a2c3b",
+        "RT-03b79ef05f21760b",
+        "RT-9d2b7832df8521b8",
+        "RT-88373ef30a584869",
+        "RT-3168b8463b219872"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-04e0f62639b419f9",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 224,
+        "text": "if (selected.body !== undefined && Object.keys(selected.headers ?? {}).some((name) => name.toLowerCase() === 'content-type')) {",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "nonsetting-task-header-authority",
+      "explicitReviewedReason": "explicit content-type when body exists denied as provider-controlled wire field, no duplicateauthor",
+      "settings": [
+        "RT-6c40eb311c36aa18",
+        "RT-67427bf80b25f14f"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-a80db5f6bf48a5b3",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 231,
+        "text": "const responseRules = Object.values(found.operation.responses ?? {}).map((entry) => resolveSchema(spec, entry));",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "nonsetting-task-response-contract",
+      "explicitReviewedReason": "all documentedresponse rules determine acceptance/header declarations, not globalCONFIG",
+      "settings": [
+        "RT-0dfdeb7fe789b20b",
+        "RT-93fe557af6f46c3f"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ddc5d49ec07f2151",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 232,
+        "text": "const responseHeaders = [...new Set(responseRules.flatMap((entry) => Object.keys(entry?.headers ?? {}))",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "nonsetting-task-response-projection",
+      "explicitReviewedReason": "requested responseheaders gathered from spec; true runtime validates allowedshape",
+      "settings": [
+        "RT-6c40eb311c36aa18",
+        "RT-67427bf80b25f14f"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b4b27e7841ded998",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 234,
+        "text": "const acceptedTypes = [...new Set(responseRules.flatMap((entry) => Object.keys(entry?.content ?? {})))];",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "nonsetting-task-response-projection",
+      "explicitReviewedReason": "accepttypes gathered fromspecresponsecontent; actual network header grant remains independent",
+      "settings": [
+        "RT-6c40eb311c36aa18",
+        "RT-67427bf80b25f14f"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-4c6b98e6c1b88c0a",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 235,
+        "text": "response = await invoke({ operation: 'request', resource: { type: 'network.url', canonicalId: url.href }, payload: { method: found.method.toUpperCase(), headers: { ...(selected.headers ?? {}), ...(acceptedTypes.length ? { accept: acceptedTypes.join(', ') } : {}), ...(selected.body === undefined ? {} : { 'content-type': 'application/json' }) }, responseHeaders, body: selected.body === undefined ? undefined : JSON.stringify(selected.body), timeoutMs: Math.min(config.requestTimeoutMs ?? 10_000, invocation.timeoutMs), maximumResponseBytes: config.maximumResponseBytes ?? 1_048_576 } });",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "existing-setting-policy-fallback",
+      "explicitReviewedReason": "actual requestedtimeout null/absent10000 min invocation.timeout; responsebytes null/absent1048576, current numeric config rows both now have exact readers/domains/full cases. Real downstream runtime owns strongerceilings; not independent default closure",
+      "settings": [
+        "RT-550d941bb663f8fc"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ac2f5810e87c90f8",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "line": 249,
+        "text": "for (const [name, rawHeader] of Object.entries(rule?.headers ?? {})) {",
+        "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "disposition": "nonsetting-task-response-assertion",
+      "explicitReviewedReason": "documented response header required/type assertion, noCONFIGselector",
+      "settings": [
+        "RT-6c40eb311c36aa18",
+        "RT-67427bf80b25f14f"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-cc7e8092894d043d",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/schema-support.js",
+        "line": 3,
+        "text": "const ANNOTATIONS = new Set(['title', 'description', 'default', 'example', 'examples',",
+        "sha256": "05e27ae54dfd00cb9f1344eb171699a6e4fa87801f5c5f8ff97be18910377e4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "05e27ae54dfd00cb9f1344eb171699a6e4fa87801f5c5f8ff97be18910377e4b",
+      "disposition": "nonsetting-finite-supported-annotation-set",
+      "explicitReviewedReason": "OpenAPI schema annotation keywords deliberately ignored as data; default inSPEC notCONFIG default; unsupported assertions fail closed",
+      "settings": [
+        "RT-da87e9da52e239b4"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-314d67e516934030",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/schema-support.js",
+        "line": 20,
+        "text": "if (!types.length || types.some((type) => !TYPES.has(type))) invalid();",
+        "sha256": "05e27ae54dfd00cb9f1344eb171699a6e4fa87801f5c5f8ff97be18910377e4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "05e27ae54dfd00cb9f1344eb171699a6e4fa87801f5c5f8ff97be18910377e4b",
+      "disposition": "nonsetting-finite-type-subset",
+      "explicitReviewedReason": "supported JSON scalar/container type keywords; unknown type fails",
+      "settings": [
+        "RT-da87e9da52e239b4"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-1931cd28e983027a",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/schema-support.js",
+        "line": 27,
+        "text": "if (schema[key] !== undefined && (!Number.isSafeInteger(schema[key]) || schema[key] < 0)) invalid();",
+        "sha256": "05e27ae54dfd00cb9f1344eb171699a6e4fa87801f5c5f8ff97be18910377e4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "05e27ae54dfd00cb9f1344eb171699a6e4fa87801f5c5f8ff97be18910377e4b",
+      "disposition": "nonsetting-task-schema-bound-type",
+      "explicitReviewedReason": "task schema min/max counts/lengths must safe nonnegativeintegers; individual numeric values are task assertions, not providerglobalquota",
+      "settings": [
+        "RT-da87e9da52e239b4"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-b090e76967a8b5f1",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/schema-support.js",
+        "line": 37,
+        "text": "if (schema.enum !== undefined && (!Array.isArray(schema.enum) || !schema.enum.length)) invalid();",
+        "sha256": "05e27ae54dfd00cb9f1344eb171699a6e4fa87801f5c5f8ff97be18910377e4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "05e27ae54dfd00cb9f1344eb171699a6e4fa87801f5c5f8ff97be18910377e4b",
+      "disposition": "nonsetting-task-schema-enum-shape",
+      "explicitReviewedReason": "task enum nonemptyarray validation; enumvalues ordinary task contract",
+      "settings": [
+        "RT-da87e9da52e239b4"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-ecd1c0702f26152f",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/schema-support.js",
+        "line": 39,
+        "text": "|| schema.required.some((key) => typeof key !== 'string'))) invalid();",
+        "sha256": "05e27ae54dfd00cb9f1344eb171699a6e4fa87801f5c5f8ff97be18910377e4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "05e27ae54dfd00cb9f1344eb171699a6e4fa87801f5c5f8ff97be18910377e4b",
+      "disposition": "nonsetting-task-schema-required-shape",
+      "explicitReviewedReason": "required childnames stringarray validation, noCONFIGauthor",
+      "settings": [
+        "RT-da87e9da52e239b4"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-aa0c0002eb67cce9",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/schema-support.js",
+        "line": 46,
+        "text": "if (raw === undefined || typeof raw === 'boolean') return;",
+        "sha256": "05e27ae54dfd00cb9f1344eb171699a6e4fa87801f5c5f8ff97be18910377e4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "05e27ae54dfd00cb9f1344eb171699a6e4fa87801f5c5f8ff97be18910377e4b",
+      "disposition": "nonsetting-task-schema-absence",
+      "explicitReviewedReason": "undefined/boolean task schemas accepted as finite assertion forms; depth64 atline47 is separate processingquota openobligation",
+      "settings": [
+        "RT-da87e9da52e239b4"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    },
+    {
+      "id": "RT-CANDIDATE-2355160df695684d",
+      "source": {
+        "path": "skills/buster/plugins/openapi/src/schema-support.js",
+        "line": 70,
+        "text": "if (!Array.isArray(raw[key]) || !raw[key].length) invalid();",
+        "sha256": "05e27ae54dfd00cb9f1344eb171699a6e4fa87801f5c5f8ff97be18910377e4b",
+        "disposition": "unresolved-candidate; syntax match is not semantic coverage"
+      },
+      "currentSourceSha256": "05e27ae54dfd00cb9f1344eb171699a6e4fa87801f5c5f8ff97be18910377e4b",
+      "disposition": "nonsetting-task-schema-combinator-shape",
+      "explicitReviewedReason": "task allOf/anyOf/oneOf nonemptyarrays, each child recursively supported even ifpayloadunvisited",
+      "settings": [
+        "RT-da87e9da52e239b4"
+      ],
+      "actualC0Evidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/observations.json",
+      "productiveCallerEvidence": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-provider-01/contracts.json",
+      "status": "explicit narrow nonsetting or existing-setting linkage; independent review pending",
+      "countsTowardAcceptance": false
+    }
+  ],
+  "unreviewedCandidateCount": 4578,
+  "dispositions": {
+    "nonsetting-input-type-guard": 2,
+    "open-resource-guard-policy": 9,
+    "nonsetting-path-containment": 1,
+    "nonsetting-task-identity-validation": 1,
+    "nonsetting-finite-protocol-domain": 2,
+    "nonsetting-resource-task-identity": 1,
+    "nonsetting-optional-task-absence": 3,
+    "nonsetting-cross-task-identity": 1,
+    "nonsetting-platform-capability-fallback": 1,
+    "existing-input-quota-and-file-shape": 1,
+    "existing-input-quota-and-source-consistency": 1,
+    "nonsetting-productive-caller": 2,
+    "existing-input-quota-projection": 1,
+    "nonsetting-command-output-shape": 1,
+    "nonsetting-path-security": 2,
+    "nonsetting-input-cardinality": 1,
+    "nonsetting-finite-contract-identity": 2,
+    "nonsetting-fixture-value-shape": 2,
+    "nonsetting-task-schema-support": 1,
+    "nonsetting-task-schema-ref-integrity": 1,
+    "nonsetting-value-comparison": 2,
+    "nonsetting-safe-schema-subset": 1,
+    "nonsetting-task-schema-null-absence": 1,
+    "nonsetting-task-schema-additional-key-check": 1,
+    "nonsetting-media-selection-shape": 1,
+    "nonsetting-route-security": 1,
+    "nonsetting-task-operation-identity": 1,
+    "nonsetting-task-parameter-precedence": 1,
+    "nonsetting-task-response-rule-precedence": 1,
+    "nonsetting-finite-format-support": 1,
+    "nonsetting-task-selection-absence": 1,
+    "nonsetting-task-selection-precedence": 1,
+    "nonsetting-task-wire-projection": 2,
+    "nonsetting-task-header-authority": 1,
+    "nonsetting-task-response-contract": 1,
+    "nonsetting-task-response-projection": 2,
+    "existing-setting-policy-fallback": 1,
+    "nonsetting-task-response-assertion": 1,
+    "nonsetting-finite-supported-annotation-set": 1,
+    "nonsetting-finite-type-subset": 1,
+    "nonsetting-task-schema-bound-type": 1,
+    "nonsetting-task-schema-enum-shape": 1,
+    "nonsetting-task-schema-required-shape": 1,
+    "nonsetting-task-schema-absence": 1,
+    "nonsetting-task-schema-combinator-shape": 1
+  },
+  "separateStillOpenProductiveGuardsNotInSyntaxRoster": [
+    {
+      "path": "skills/buster/plugins/openapi/src/provider.js",
+      "lines": [
+        37,
+        69,
+        194,
+        203
+      ],
+      "member": "localref/schema depth64, spec file4194304bytes (readFile BEFORE check), selectedoperations128 count; adjustableprocessingquotas need one providerowner and completeparameterizedreader/bindingcases",
+      "sourceSha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+    },
+    {
+      "path": "skills/buster/plugins/openapi/src/schema-support.js",
+      "lines": [
+        47
+      ],
+      "member": "assertSupportedSchema recursiondepth64 duplicated withprovider limits; singleeffectiveowner/derivedprojection, not independent duplicateauthor",
+      "sourceSha256": "05e27ae54dfd00cb9f1344eb171699a6e4fa87801f5c5f8ff97be18910377e4b"
+    }
+  ],
+  "status": "explicit per-candidate source dispositions only; nolexicalautomaticclosure, no C0acceptance"
+}

@@ -1,0 +1,52 @@
+[
+  {
+    "command": [
+      "node",
+      "--test",
+      "--test-timeout=25000",
+      "tests/verification/reliability/agent-source-ingress.test.ts"
+    ],
+    "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-agent-event-policy-20261015/check-0.txt"
+  },
+  {
+    "command": [
+      "node",
+      "tests/live-function.test.ts"
+    ],
+    "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/openclaw-agent-events",
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-agent-event-policy-20261015/check-1.txt"
+  },
+  {
+    "command": [
+      "node",
+      "tests/package-boundary.test.mjs"
+    ],
+    "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/openclaw-agent-events",
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-agent-event-policy-20261015/check-2.txt"
+  },
+  {
+    "command": [
+      "/home/node/.openclaw/workspace/kubeclaw-config-c0/node_modules/.bin/tsc",
+      "--noEmit",
+      "-p",
+      "tsconfig.json"
+    ],
+    "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0/skills/common/plugins/openclaw-agent-events",
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-agent-event-policy-20261015/check-3.txt"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "cwd": "/home/node/.openclaw/workspace/kubeclaw-config-c0",
+    "exitCode": 0,
+    "log": "docs/review/remediation/config-agent-event-policy-20261015/check-4.txt"
+  }
+]

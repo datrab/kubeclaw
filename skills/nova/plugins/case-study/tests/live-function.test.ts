@@ -1,7 +1,4 @@
-import { verifyReportIdentity } from '../../../../../tests/verification/reliability/report-identity-fixture.mjs';
-import { assertReportArtifact } from '../src/stage.ts';
-const markdown = ['Context','Challenge','Approach','Implementation','Verification','Outcome'].map(section => `## ${section}\n\nDraft observations grounded in cited source facts; no narrative entailment proof.`).join('\n\n');
-await verifyReportIdentity({ plugin: 'case-study', registration: 'case-study', type: 'kubeclaw.report.case-study', assertStored: assertReportArtifact,
-  input: { task: 'Draft observations from the actual completed source run.' },
-  valid: { status: 'generated', markdown } });
-console.log(JSON.stringify({ ok: true, plugin: 'kubeclaw.case-study', suite: 'live-function', modelExecution: false }));
+// Repository-owned cross-role test; preserve original working directory and assertions.
+import { execFileSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+execFileSync(process.execPath, [fileURLToPath(new URL('../../../../../tests/verification/integration/nova-case-study-live-function.test.ts', import.meta.url)), ...process.argv.slice(2)], { stdio: 'inherit', env: process.env });

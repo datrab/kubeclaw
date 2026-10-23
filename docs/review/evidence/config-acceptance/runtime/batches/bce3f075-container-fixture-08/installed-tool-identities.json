@@ -1,0 +1,20 @@
+{
+  "status": "actual readonly kubectl client identity only; NO server/API/controller/RBAC/cluster requests/effects orruntime acceptance",
+  "command": [
+    "/usr/local/bin/kubectl",
+    "version",
+    "--client",
+    "-o",
+    "json"
+  ],
+  "resultCode": 0,
+  "actualExecutable": "/usr/local/bin/kubectl",
+  "sha256": "5d11e2ba01ea68ffd053f56e27738e2b4330013ee67f7e46c6da6c585d3c9926",
+  "originalReadonlyClientLog": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/kubectl-version.log",
+  "originalLogSha256": "b6f895d8fe32c64b09bfa505e5c0b9b906f12a765ea09bbc8d215c65762b20b6",
+  "recheckLog": "docs/review/evidence/config-acceptance/runtime/batches/bce3f075-container-fixture-08/kubectl-client-recheck.log",
+  "recheckLogSha256": "b6f895d8fe32c64b09bfa505e5c0b9b906f12a765ea09bbc8d215c65762b20b6",
+  "buildctlOnPath": null,
+  "buildkitDaemonRegistryAndClusterOperatorInputs": "notprovided; actualtool/platform/controller compatibility unsupportedunknown notinferred",
+  "sourceTestScriptSha256": "be53bdf39273920d32a964817ae1583f12ca88b38da0fe84fe95542d052cba7c"
+}

@@ -1,0 +1,145 @@
+{
+  "checks": [
+    {
+      "kind": "rows",
+      "id": "CMP-API-OUTBOX-EXISTING-MAXIMUMBYTES-READBOUND",
+      "bodyEqualsActualRoot": true,
+      "bodySha256Equals": true,
+      "metadataUnchanged": true
+    },
+    {
+      "kind": "rows",
+      "id": "CMP-API-BLOB-EXISTING-TOTALBYTES-REQUIRED",
+      "bodyEqualsActualRoot": true,
+      "bodySha256Equals": true,
+      "metadataUnchanged": true
+    },
+    {
+      "kind": "rows",
+      "id": "CMP-BUSTER-FIXTURE-QUANTITY-QUOTA-REPRESENTATION",
+      "bodyEqualsActualRoot": true,
+      "bodySha256Equals": true,
+      "metadataUnchanged": true
+    },
+    {
+      "kind": "rows",
+      "id": "CMP-BUSTER-PROVIDER-RESOURCE-MEASUREMENT-PROVENANCE",
+      "bodyEqualsActualRoot": true,
+      "bodySha256Equals": true,
+      "metadataUnchanged": true
+    },
+    {
+      "kind": "cases",
+      "id": "QC-OUTBOX-UNBOUNDED-READ-FOUR-METHODS",
+      "bodyEqualsActualRoot": true,
+      "bodySha256Equals": true,
+      "metadataUnchanged": true
+    },
+    {
+      "kind": "cases",
+      "id": "QC-OUTBOX-UNBOUNDED-READ-REPLAY",
+      "bodyEqualsActualRoot": true,
+      "bodySha256Equals": true,
+      "metadataUnchanged": true
+    },
+    {
+      "kind": "cases",
+      "id": "QC-LATENT-UNBOUNDED-BLOB-API-API-AND-SEVEN",
+      "bodyEqualsActualRoot": true,
+      "bodySha256Equals": true,
+      "metadataUnchanged": true
+    },
+    {
+      "kind": "cases",
+      "id": "QC-LATENT-UNBOUNDED-BLOB-API-HISTORY",
+      "bodyEqualsActualRoot": true,
+      "bodySha256Equals": true,
+      "metadataUnchanged": true
+    },
+    {
+      "kind": "cases",
+      "id": "QC-FIXTURE-STORAGE-EXPONENT-REPRESENTATION",
+      "bodyEqualsActualRoot": true,
+      "bodySha256Equals": true,
+      "metadataUnchanged": true
+    },
+    {
+      "kind": "cases",
+      "id": "QC-FIXTURE-STORAGE-EXPONENT-POLICY-BIND",
+      "bodyEqualsActualRoot": true,
+      "bodySha256Equals": true,
+      "metadataUnchanged": true
+    },
+    {
+      "kind": "cases",
+      "id": "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-REAL-PROVENANCE",
+      "bodyEqualsActualRoot": true,
+      "bodySha256Equals": true,
+      "metadataUnchanged": true
+    },
+    {
+      "kind": "cases",
+      "id": "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-RECOVERY-EVAL",
+      "bodyEqualsActualRoot": true,
+      "bodySha256Equals": true,
+      "metadataUnchanged": true
+    },
+    {
+      "kind": "caseJoins",
+      "id": "QC-OUTBOX-UNBOUNDED-READ-FOUR-METHODS",
+      "originalIdBodySame": true,
+      "originalRequirementsPreserved": true,
+      "notRun": true
+    },
+    {
+      "kind": "caseJoins",
+      "id": "QC-OUTBOX-UNBOUNDED-READ-REPLAY",
+      "originalIdBodySame": true,
+      "originalRequirementsPreserved": true,
+      "notRun": true
+    },
+    {
+      "kind": "caseJoins",
+      "id": "QC-LATENT-UNBOUNDED-BLOB-API-API-AND-SEVEN",
+      "originalIdBodySame": true,
+      "originalRequirementsPreserved": true,
+      "notRun": true
+    },
+    {
+      "kind": "caseJoins",
+      "id": "QC-LATENT-UNBOUNDED-BLOB-API-HISTORY",
+      "originalIdBodySame": true,
+      "originalRequirementsPreserved": true,
+      "notRun": true
+    },
+    {
+      "kind": "caseJoins",
+      "id": "QC-FIXTURE-STORAGE-EXPONENT-REPRESENTATION",
+      "originalIdBodySame": true,
+      "originalRequirementsPreserved": true,
+      "notRun": true
+    },
+    {
+      "kind": "caseJoins",
+      "id": "QC-FIXTURE-STORAGE-EXPONENT-POLICY-BIND",
+      "originalIdBodySame": true,
+      "originalRequirementsPreserved": true,
+      "notRun": true
+    },
+    {
+      "kind": "caseJoins",
+      "id": "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-REAL-PROVENANCE",
+      "originalIdBodySame": true,
+      "originalRequirementsPreserved": true,
+      "notRun": true
+    },
+    {
+      "kind": "caseJoins",
+      "id": "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-RECOVERY-EVAL",
+      "originalIdBodySame": true,
+      "originalRequirementsPreserved": true,
+      "notRun": true
+    }
+  ],
+  "allPassed": true
+}

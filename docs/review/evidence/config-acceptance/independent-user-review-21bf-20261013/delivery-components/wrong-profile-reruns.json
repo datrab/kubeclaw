@@ -1,0 +1,18 @@
+[
+  {
+    "batch": "01",
+    "originalProfile": "/CMP-C1-EFFECT-worker-core-localRuntime.drainTimeoutMs",
+    "wrongProfile": "/CMP-C1-EFFECT-prism-studio-port",
+    "exitCode": 0,
+    "stdout": "8 intended documentation negatives /2 positives; no emitter/behavior actions\n",
+    "stderr": ""
+  },
+  {
+    "batch": "02",
+    "originalProfile": "/CMP-C1-EFFECT-prism-control-dispatchTimeoutMs",
+    "wrongProfile": "/CMP-C1-EFFECT-prism-studio-port",
+    "exitCode": 0,
+    "stdout": "8 intended document negatives /2 positives; future consumer/emitter cases NOTRUN\n",
+    "stderr": ""
+  }
+]

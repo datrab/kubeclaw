@@ -1,3 +1,4 @@
+import { nativeControlSettings } from './native/resource-policy.mts';
 // Real TypeScript signer vectors consumed by the controller's native Go verifier.
 import { generateKeyPairSync } from 'node:crypto';
 import { signProductIntent, type ProductConfig, type ProductIntent } from '../control/product-decisions.ts';
@@ -12,7 +13,7 @@ const vectors = (['accept', 'extend'] as const).map((action, index) => {
       candidateDigest: `sha256:${'b'.repeat(64)}`, resultDigest: `sha256:${'c'.repeat(64)}`, readyDigest: `sha256:${'d'.repeat(64)}`,
       generation: 3, expectedExpiry: '2099-09-09T10:20:30.123456789Z', expectedRevision: '123', url: 'https://demo.example.test', runId: 'interop'},
     ...(action === 'extend' ? {extensionSeconds: 3600} : {})};
-  const signed = signProductIntent(intent, {user: 'operator@example.test', expiresAt: now + 900_000}, config, now);
+  const signed = signProductIntent(intent, {user: 'operator@example.test', expiresAt: now + nativeControlSettings.sessionLifetimeSeconds * 1000}, config, nativeControlSettings.productDecisionLifetimeMs, now);
   const jwk = publicKey.export({format: 'jwk'});
   return {publicKey: Buffer.from(jwk.x!, 'base64url').toString('base64'), envelope: signed.envelope, expected: signed.payload};
 });

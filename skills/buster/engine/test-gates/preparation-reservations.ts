@@ -1,4 +1,4 @@
-import type { BusterPreparationSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+import type { BusterPreparationSettings } from '@kubeclaw/plugin-foundation/config/swarm';
 import type { BusterStagedAdmission } from './preparation-input.ts';
 
 export interface PreparationStorageReservation {

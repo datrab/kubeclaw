@@ -1,3 +1,4 @@
+import { TEST_CORE_POLICY_SELECTION } from '../../../tests/fixtures/core-runtime-policy.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -12,7 +13,7 @@ function inputs(root) {
   const file = name => path.join(root, name);
   const roots = ['common', 'nova', 'buster'].map(role => path.join(repository, 'skills', role, 'plugins'));
   fs.mkdirSync(file('repository'), { recursive: true });
-  fs.writeFileSync(file('platform.json'), JSON.stringify({
+  fs.writeFileSync(file('platform.json'), JSON.stringify({corePolicySelection: TEST_CORE_POLICY_SELECTION,
     schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: roots, trustedBuiltinRoots: roots,
     externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} }, storageRoot: file('state'),
     shutdownTimeoutMs: 1000, orchestratorIssuerId: 'supervisor-stop-regression', administrativeDecisionIssuers: [],
