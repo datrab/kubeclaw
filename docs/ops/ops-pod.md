@@ -183,13 +183,18 @@ exact `tools` and explicit `exec` grants. `rbac.namespaces`, `execNamespaces` an
 Nova receives `test*` in addition to its existing scope; Ops can read every namespace. Matching ignores
 case and covers `test`, `testing`, `test-123` and future matching namespaces.
 Only the Ops/Codex client has `readAllNamespaces: true` and the `platform_cluster_state(resource=namespaces)`
-operation. Its reads include current and future namespaces; exec remains separately
-scoped. Nova and Buster do not inherit this global read permission. The observer
+operation. Its reads include current and future namespaces. Its explicit
+`allNonSystemNamespaces` exec grant permits all regular containers outside
+reserved `kube-*` namespaces, with 30-second and 65536-byte ceilings.
+Pods with system priority classes or numeric priority at least 2000000000
+are excluded even in other namespaces. `rbac.execAllNonSystemNamespaces: true`
+is the backend upper bound; disabling it also requires removing the broad client
+grant. Rebuild and promote the Ops MCP image before activating this policy. Nova and Buster do not inherit this global read permission. The observer
 role excludes Secrets and all mutation/exec rights. Disabling global observation
 reconciles its named ClusterRoleBinding to empty subjects without relying on prune.
-The dedicated reconciler grants only the MCP test exec access, normally within five seconds
-of namespace creation. Its mandatory admission guard rejects other namespaces,
-roles or subjects. No agent gets these RoleBindings. Buster retains only its
+The dedicated reconciler grants only the MCP workload namespace exec access, normally within five seconds
+of namespace creation. Its mandatory admission guard rejects reserved `kube-*`
+namespaces and mismatched roles or subjects. No agent gets these RoleBindings. Buster retains only its
 existing broker lease exception. Buster and Nova connect through OpenClaw's native
 `mcp.servers.ops` connector. Each advertised operation appears as a typed agent
 tool, such as `ops__get_pod`, `ops__get_pod_logs` and `ops__exec_pod`. Discovery

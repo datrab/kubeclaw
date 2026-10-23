@@ -114,7 +114,7 @@ spec:
         {{- end }}
       ports: [{protocol: TCP, port: 443}, {protocol: TCP, port: {{ .Values.networkPolicy.apiServerPort }}}]
 {{- end }}
-{{- if .Values.rbac.namespacePrefixes }}
+{{- if or .Values.rbac.namespacePrefixes .Values.rbac.execAllNonSystemNamespaces }}
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -149,7 +149,7 @@ spec:
     matchExpressions:
       - key: app.kubernetes.io/name
         operator: In
-        values: [{{ .Release.Name }}-mcp{{ if .Values.rbac.namespacePrefixes }}, {{ .Release.Name }}-mcp-namespace-access{{ end }}{{ if .Values.mcp.provision.enabled }}, {{ .Release.Name }}-mcp-provisioner{{ end }}]
+        values: [{{ .Release.Name }}-mcp{{ if or .Values.rbac.namespacePrefixes .Values.rbac.execAllNonSystemNamespaces }}, {{ .Release.Name }}-mcp-namespace-access{{ end }}{{ if .Values.mcp.provision.enabled }}, {{ .Release.Name }}-mcp-provisioner{{ end }}]
   egress:
     - toEntities: [kube-apiserver]
       toPorts:

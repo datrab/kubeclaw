@@ -22,7 +22,7 @@ test('MCP exec enforces caller, namespace, live pod labels and container before 
     assert.equal(req.headers.authorization, 'Bearer fixture-api-token');
     const name = req.url.split('/').at(-1);
     res.setHeader('content-type', 'application/json');
-    res.end(JSON.stringify({ metadata: { name, labels: { app: name === 'buster' ? 'buster' : 'other' } }, spec: { containers: [{ name: 'runtime' }] } }));
+    res.end(JSON.stringify({ metadata: { name, labels: { app: name === 'buster' ? 'buster' : 'other' } }, spec: { containers: [{ name: 'runtime' }], ...(name === 'critical' ? { priorityClassName: 'system-node-critical' } : {}) } }));
   });
   const wss = new WebSocketServer({ server: backend });
   wss.on('connection', (socket, req) => {
@@ -42,7 +42,7 @@ test('MCP exec enforces caller, namespace, live pod labels and container before 
   writeFileSync(join(dir, 'api-token'), 'fixture-api-token');
   const child = spawn(process.execPath, [fileURLToPath(new URL('../src/server.mjs', import.meta.url))], {
     env: { ...process.env, PORT: '0', HOST: '127.0.0.1', OPS_LOCAL_ONLY: '1', OPS_MCP_POLICY_FILE: join(dir, 'policy'),
-      OPS_MCP_BEARER_TOKEN: '', OPS_MCP_BEARER_TOKEN_FILE: '',
+      OPS_MCP_BEARER_TOKEN: '', OPS_MCP_BEARER_TOKEN_FILE: '', OPS_READ_ALL_NAMESPACES: '1', OPS_EXEC_ALL_NON_SYSTEM_NAMESPACES: '1',
       KUBERNETES_API_URL: `https://localhost:${backend.address().port}`, KUBERNETES_CA_FILE: cert, KUBERNETES_TOKEN_FILE: join(dir, 'api-token') },
     stdio: ['ignore', 'ignore', 'pipe'] });
   let logs = ''; child.stderr.on('data', chunk => { logs += chunk; });
@@ -71,9 +71,20 @@ test('MCP exec enforces caller, namespace, live pod labels and container before 
   }
   const before = gets.length;
   const outside = await call('codex', { namespace: 'argocd' });
-  assert.ok(outside.error || outside.result?.isError, 'global schema rejects namespaces outside the configured upper bound');
+  assert.ok(outside.error || outside.result?.isError, 'client scope rejects exec outside its namespaces before reading a pod');
   assert.equal(gets.length, before);
   assert.equal(execs.length, 1, 'denied calls must never open remotecommand');
+  clients[0].readAllNamespaces = true;
+  clients[0].exec = [{ allNonSystemNamespaces: true, allPods: true, allContainers: true, timeoutSeconds: 5, maxOutputBytes: 1024 }];
+  writeFileSync(join(dir, 'policy'), JSON.stringify({ clients }));
+  const broad = await call('codex', { namespace: 'future-workload', pod: 'foreign' });
+  assert.equal(broad.result.isError, undefined);
+  assert.equal(execs.length, 2);
+  for (const change of [{ namespace: 'kube-system' }, { namespace: 'kube-public' }, { namespace: 'kube-node-lease' }, { namespace: 'default', pod: 'critical' }]) {
+    const denied = await call('codex', change);
+    assert.ok(denied.error || denied.result?.isError);
+  }
+  assert.equal(execs.length, 2, 'system workloads must never open remotecommand');
   assert.match(logs, /"timeoutSeconds":5,"maxOutputBytes":1024/);
   assert.match(logs, /commandSha256/);
   assert.doesNotMatch(logs, /private-command-argument|fixture-api-token/);

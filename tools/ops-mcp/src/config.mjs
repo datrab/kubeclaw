@@ -20,6 +20,7 @@ export function loadOpsMcpConfig(environment = process.env) {
   return Object.freeze({ port, host, localOnly, defaultNamespace, argoNamespace,
     namespaces: allowedNamespaces(environment.OPS_ALLOWED_NAMESPACES, defaultNamespace, argoNamespace),
     namespacePrefixes, readAllNamespaces: environment.OPS_READ_ALL_NAMESPACES === '1',
+    execAllNonSystemNamespaces: environment.OPS_EXEC_ALL_NON_SYSTEM_NAMESPACES === '1',
     policyFile: environment.OPS_MCP_POLICY_FILE,
     bearer: { file: environment.OPS_MCP_BEARER_TOKEN_FILE, token: environment.OPS_MCP_BEARER_TOKEN },
     allowedOrigins: new Set((environment.MCP_ALLOWED_ORIGINS ?? '').split(',').map(value => value.trim()).filter(Boolean)),

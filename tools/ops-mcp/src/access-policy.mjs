@@ -13,6 +13,8 @@ const hash = v => createHash('sha256').update(v).digest();
 
 export const validNamespace = value => typeof value === 'string' && dns.test(value.toLowerCase());
 
+export const nonSystemNamespace = value => validNamespace(value) && !value.toLowerCase().startsWith('kube-');
+
 export function namespaceAllowed(namespace, namespaces = [], prefixes = []) {
   // Kubernetes namespace names are lowercase DNS labels. Canonicalize at the
   // tool boundary; keep this helper safe for policy and controller callers too.
@@ -20,7 +22,7 @@ export function namespaceAllowed(namespace, namespaces = [], prefixes = []) {
     (namespaces.includes(namespace.toLowerCase()) || prefixes.some(prefix => prefix.length > 0 && namespace.toLowerCase().startsWith(prefix.toLowerCase())));
 }
 
-export function parsePolicy(text, allowedNamespaces, allowedPrefixes = [], readAllNamespaces = false) {
+export function parsePolicy(text, allowedNamespaces, allowedPrefixes = [], readAllNamespaces = false, execAllNonSystemNamespaces = false) {
   const value = JSON.parse(text);
   if (!Array.isArray(value.clients) || !value.clients.length || value.clients.length > 64) throw new Error('Invalid Ops MCP client policy');
   const ids = new Set();
@@ -34,14 +36,17 @@ export function parsePolicy(text, allowedNamespaces, allowedPrefixes = [], readA
     ids.add(client.id);
     if (!Array.isArray(client.exec)) throw new Error('Explicit exec grants are required (use [] to deny)');
     for (const grant of client.exec) {
-      const prefixGrant = typeof grant.namespacePrefix === 'string' &&
+      const broadGrant = grant.allNonSystemNamespaces === true && execAllNonSystemNamespaces &&
+        client.readAllNamespaces === true && grant.allPods === true && grant.allContainers === true &&
+        !grant.namespacePrefix && !grant.namespace && !grant.podLabels && !grant.containers;
+      const prefixGrant = grant.allNonSystemNamespaces === undefined && typeof grant.namespacePrefix === 'string' &&
         (client.namespacePrefixes ?? []).some(prefix => prefix.toLowerCase() === grant.namespacePrefix.toLowerCase()) &&
         grant.allPods === true && grant.allContainers === true && !grant.namespace && !grant.podLabels && !grant.containers;
-      const exactGrant = !grant.namespacePrefix && !grant.allPods && !grant.allContainers &&
+      const exactGrant = grant.allNonSystemNamespaces === undefined && !grant.namespacePrefix && !grant.allPods && !grant.allContainers &&
         client.namespaces.includes(grant.namespace) && grant.podLabels && typeof grant.podLabels === 'object' && !Array.isArray(grant.podLabels) &&
         Object.keys(grant.podLabels).length > 0 && Object.entries(grant.podLabels).every(([k,v]) => typeof v === 'string' && k.length > 0 && v.length > 0) &&
         strings(grant.containers, x => dns.test(x)) && grant.containers.length > 0;
-      if ((!prefixGrant && !exactGrant) || !positive(grant.timeoutSeconds, 120) || !positive(grant.maxOutputBytes, 65536)) throw new Error('Invalid Ops MCP exec grant');
+      if ((!broadGrant && !prefixGrant && !exactGrant) || !positive(grant.timeoutSeconds, 120) || !positive(grant.maxOutputBytes, 65536)) throw new Error('Invalid Ops MCP exec grant');
     }
   }
   return value.clients;
@@ -57,7 +62,7 @@ export function createAccessPolicy(config) {
   }
   if (config.bearer.file || config.bearer.token) throw new Error('Do not combine a client policy with a shared bearer');
   const load = () => {
-    const clients = parsePolicy(readFileSync(config.policyFile, 'utf8'), config.namespaces, config.namespacePrefixes, config.readAllNamespaces);
+    const clients = parsePolicy(readFileSync(config.policyFile, 'utf8'), config.namespaces, config.namespacePrefixes, config.readAllNamespaces, config.execAllNonSystemNamespaces);
     const digests = new Set();
     return clients.map(client => {
       const token = readFileSync(client.tokenFile, 'utf8').trim();
@@ -85,11 +90,15 @@ export function createAccessPolicy(config) {
 export function authorizeTool(client, tool, args, argoNamespace) {
   if (!client?.tools.includes(tool) || (tool === 'platform_cluster_state' && args.resource === 'namespaces' && !client.readAllNamespaces)) throw new Error('OPS_TOOL_FORBIDDEN');
   const namespace = tool === 'list_argocd_applications' ? argoNamespace : args.namespace;
-  if (namespace && !(tool !== 'exec_pod' && client.readAllNamespaces && validNamespace(namespace)) && !namespaceAllowed(namespace, client.namespaces, client.namespacePrefixes)) throw new Error('OPS_NAMESPACE_FORBIDDEN');
+  const broadExec = tool === 'exec_pod' && nonSystemNamespace(namespace) && client.exec.some(grant => grant.allNonSystemNamespaces === true);
+  if (namespace && !broadExec && !(tool !== 'exec_pod' && client.readAllNamespaces && validNamespace(namespace)) && !namespaceAllowed(namespace, client.namespaces, client.namespacePrefixes)) throw new Error('OPS_NAMESPACE_FORBIDDEN');
 }
 
 export function authorizeExec(client, args, pod) {
-  const grant = client.exec.find(grant => grant.namespacePrefix
+  const systemPod = ['system-node-critical', 'system-cluster-critical'].includes(pod.spec?.priorityClassName) || pod.spec?.priority >= 2000000000;
+  const grant = client.exec.find(grant => grant.allNonSystemNamespaces === true
+    ? nonSystemNamespace(args.namespace) && !systemPod
+    : grant.namespacePrefix
     ? namespaceAllowed(args.namespace, [], [grant.namespacePrefix]) && grant.allPods === true && grant.allContainers === true
     : grant.namespace === args.namespace && grant.containers.includes(args.container) &&
       Object.entries(grant.podLabels).every(([k, v]) => pod.metadata?.labels?.[k] === v));

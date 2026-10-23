@@ -8,6 +8,7 @@ networkPolicy:
   cilium: false
 rbac:
   readAllNamespaces: true
+  execAllNonSystemNamespaces: true
   namespaces:
     - kubeclaw-ops
     - kubeclaw
@@ -46,24 +47,9 @@ mcp:
         - get_pod_metrics
         - exec_pod
       exec:
-        - namespacePrefix: test
+        - allNonSystemNamespaces: true
           allPods: true
           allContainers: true
-          timeoutSeconds: 30
-          maxOutputBytes: 65536
-        - namespace: kubeclaw
-          podLabels:
-            app.kubernetes.io/instance: agent-buster
-          containers:
-            - buster-v2-runtime
-          timeoutSeconds: 30
-          maxOutputBytes: 65536
-        - namespace: kubeclaw
-          podLabels:
-            app.kubernetes.io/instance: agent-nova
-          containers:
-            - kubeclaw
-            - archviewer
           timeoutSeconds: 30
           maxOutputBytes: 65536
     - id: nova

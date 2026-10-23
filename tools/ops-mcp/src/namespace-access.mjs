@@ -4,13 +4,16 @@ import { request } from 'node:https';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import { setTimeout as delay } from 'node:timers/promises';
-import { namespaceAllowed } from './access-policy.mjs';
+import { namespaceAllowed, nonSystemNamespace } from './access-policy.mjs';
 import { createKubeList } from './kubernetes.mjs';
 
 const dns = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/;
+const selectedNamespace = (name, config) => config.allNonSystemNamespaces === true
+  ? nonSystemNamespace(name) : namespaceAllowed(name, [], config.prefixes);
 export function validateNamespaceAccess(config) {
   if (![config.namespace, config.serviceAccount].every(x => typeof x === 'string' && dns.test(x)) ||
-      !Array.isArray(config.prefixes) || !config.prefixes.length || !config.prefixes.every(x => typeof x === 'string' && dns.test(x)) ||
+      (config.allNonSystemNamespaces !== undefined && typeof config.allNonSystemNamespaces !== 'boolean') ||
+      !Array.isArray(config.prefixes) || (!config.prefixes.length && !config.allNonSystemNamespaces) || !config.prefixes.every(x => typeof x === 'string' && dns.test(x)) ||
       !Array.isArray(config.roles) || config.roles.length !== 2 || !config.roles.every(x => typeof x === 'string' && /^[a-z0-9-]{1,200}$/.test(x))) {
     throw new Error('INVALID_NAMESPACE_ACCESS_CONFIG');
   }
@@ -28,7 +31,7 @@ export function createNamespaceAccessRequest(config, {
   return (method, path, body) => {
     const list = method === 'GET' && /^\/api\/v1\/namespaces\?(?:limit=\d+)(?:&continue=[A-Za-z0-9%._~-]+)?$/.test(path);
     const target = /^\/apis\/rbac.authorization.k8s.io\/v1\/namespaces\/([a-z0-9-]+)\/rolebindings(?:\/([a-z0-9-]+))?$/.exec(path);
-    if (!list && !(target && namespaceAllowed(target[1], [], config.prefixes) &&
+    if (!list && !(target && selectedNamespace(target[1], config) &&
       ((method === 'POST' && !target[2] && config.roles.includes(body?.metadata?.name)) ||
        (['GET', 'PATCH'].includes(method) && config.roles.includes(target[2]))))) throw new Error('INVALID_NAMESPACE_ACCESS_REQUEST');
     const token = readFileSync(tokenFile, 'utf8').trim();
@@ -60,7 +63,7 @@ export async function reconcileNamespaceAccess(config, api) {
   const namespaces = await list('/api/v1/namespaces', { mapItem: item => ({ name: item.metadata?.name, terminating: Boolean(item.metadata?.deletionTimestamp) }) });
   const failures = [];
   for (const ns of namespaces.items) {
-    if (ns.terminating || !namespaceAllowed(ns.name, [], config.prefixes)) continue;
+    if (ns.terminating || !selectedNamespace(ns.name, config)) continue;
     for (const role of config.roles) {
       const collection = `/apis/rbac.authorization.k8s.io/v1/namespaces/${ns.name}/rolebindings`;
       const desired = { apiVersion: 'rbac.authorization.k8s.io/v1', kind: 'RoleBinding',
