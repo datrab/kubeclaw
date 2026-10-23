@@ -1,0 +1,17 @@
+{
+  "historicalSourceRevision": "30b6e059da770375aaf662e0be6ac3f4e9baf786",
+  "historicalExtractorSha256": "13388da204b7dba97e2e7083ced638e498d9ebaf2dae693e87c8bdb2e2dfbe92",
+  "currentSourceRevision": "b87cafa28572d164648e30de33d7425cad57e5c2",
+  "reproducedOriginalDigest": "51b715099d3629367350bf543b0ef46cae2277e86f2cc0d446721ccf68bba579",
+  "originalFacts": 370,
+  "currentDigest": "dbd34fad2665020fa923e812ade85ea7d5e01d2beef88dbea40abef9f7352bbc",
+  "currentFacts": 381,
+  "delta": "Exactly11added AJV initialization/format-installation facts across4validator files; zero removed facts; both original stageEvidenceFiles call vectors equal. Historical extractor replay reproduces original expected digest exactly. Current extractor correctly refuses unrelated historical observer authority before extraction; failure retained, not bypassed.",
+  "authorizationLimit": "No native writer contract/digest refreshed. stageEvidenceFiles copies arbitrary file bytes selected by validated declarations; mere staging/containment does not prove nonAPI DATA. Existing older independent runner review covered only log sink, not these calls. Need complete source-owned caller/constructor/terminal-consumer and real API-bearing byte-copy negative controls before any remedy.",
+  "proofFiles": [
+    "runner-origin-baseline.json.gz",
+    "next-runner-two-call-vectors.json.gz",
+    "runner-next-semantic-delta.json",
+    "runner-historical-replay-failure.json"
+  ]
+}

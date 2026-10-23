@@ -1,0 +1,5 @@
+{
+  "historicalRevision": "30b6e059da770375aaf662e0be6ac3f4e9baf786",
+  "result": "Current native parser refuses historical observer package authority before selected runner call extraction. No historical Source pins were rewritten; use original extractor and separately compare implementation before interpreting native vector delta.",
+  "failure": "DOCUMENTATION_MATERIALIZED_SOURCE_UNQUALIFIED: skills/common/plugins/openclaw-agent-observer/package.json; source/caller authority drift"
+}

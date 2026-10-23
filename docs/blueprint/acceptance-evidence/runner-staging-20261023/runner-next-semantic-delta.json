@@ -1,0 +1,76 @@
+{
+  "originalDigest": "51b715099d3629367350bf543b0ef46cae2277e86f2cc0d446721ccf68bba579",
+  "currentDigest": "dbd34fad2665020fa923e812ade85ea7d5e01d2beef88dbea40abef9f7352bbc",
+  "originalFacts": 370,
+  "currentFacts": 381,
+  "added": [
+    {
+      "source": "contracts/pipeline-test-gate/v1/src/validation.ts",
+      "kind": "ExpressionStatement",
+      "symbol": "<operation>",
+      "sha256": "2f01b6ef33c7d27dd127b7d6c36a5f5be43eca9e5e0a324349300012ddca31d1"
+    },
+    {
+      "source": "contracts/pipeline-test-gate/v1/src/validation.ts",
+      "kind": "ExpressionStatement",
+      "symbol": "<operation>",
+      "sha256": "61e6b8187bb755d214bc4602c8185a5827bc6c1b6b5a104237d05ce4584e9816"
+    },
+    {
+      "source": "contracts/pipeline-test-gate/v1/src/validation.ts",
+      "kind": "ExpressionStatement",
+      "symbol": "<operation>",
+      "sha256": "ef3d2599f8d9d0d68b3bae91b0ccd6b1c1286b264eec6510af3acbea78c32103"
+    },
+    {
+      "source": "contracts/pipeline-test-gate/v1/src/validation.ts",
+      "kind": "FirstStatement",
+      "symbol": "installFormats",
+      "sha256": "1e062ea0afbda44c76fd8637d3172757b5cf40777f3d5d681d522dbfd6d7a5b1"
+    },
+    {
+      "source": "contracts/pipeline-worker-core/v1/src/resource-validation-v2.ts",
+      "kind": "ExpressionStatement",
+      "symbol": "<operation>",
+      "sha256": "61e6b8187bb755d214bc4602c8185a5827bc6c1b6b5a104237d05ce4584e9816"
+    },
+    {
+      "source": "contracts/pipeline-worker-core/v1/src/resource-validation-v2.ts",
+      "kind": "ExpressionStatement",
+      "symbol": "<operation>",
+      "sha256": "7765bc7e98bc4f278ce6fb4d436be728dbfa90bb59b4c4abfa5b56f9bdffbab4"
+    },
+    {
+      "source": "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts",
+      "kind": "ExpressionStatement",
+      "symbol": "<operation>",
+      "sha256": "61e6b8187bb755d214bc4602c8185a5827bc6c1b6b5a104237d05ce4584e9816"
+    },
+    {
+      "source": "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts",
+      "kind": "ExpressionStatement",
+      "symbol": "<operation>",
+      "sha256": "f68965c46fdaeff416e5f7cafbdb9012734585a722bcd8496d05e036fd6b35f9"
+    },
+    {
+      "source": "contracts/pipeline-worker-core/v1/src/validation.ts",
+      "kind": "ExpressionStatement",
+      "symbol": "<operation>",
+      "sha256": "2f01b6ef33c7d27dd127b7d6c36a5f5be43eca9e5e0a324349300012ddca31d1"
+    },
+    {
+      "source": "contracts/pipeline-worker-core/v1/src/validation.ts",
+      "kind": "ExpressionStatement",
+      "symbol": "<operation>",
+      "sha256": "61e6b8187bb755d214bc4602c8185a5827bc6c1b6b5a104237d05ce4584e9816"
+    },
+    {
+      "source": "contracts/pipeline-worker-core/v1/src/validation.ts",
+      "kind": "FirstStatement",
+      "symbol": "installFormats",
+      "sha256": "1e062ea0afbda44c76fd8637d3172757b5cf40777f3d5d681d522dbfd6d7a5b1"
+    }
+  ],
+  "removed": [],
+  "scope": "Two existing stageEvidenceFiles caller operations only; no digest installed and no API byte-copy exemption."
+}
