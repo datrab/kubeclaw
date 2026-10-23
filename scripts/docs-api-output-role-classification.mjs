@@ -477,6 +477,18 @@ export function createSerializedOutputRoleClassifier(root,universe=[]) {
    if(ts.isPropertyAccessExpression(node)||ts.isElementAccessExpression(node)){
     const key=ts.isPropertyAccessExpression(node)?node.name.text:ts.isStringLiteralLike(node.argumentExpression)?node.argumentExpression.text:null;
     if(['bind','call','apply'].includes(key)){const value=indirectWriter(node.expression,owner,seen);return value?{...value,indirect:true}:null;}
+    // An interface annotation is not runtime validation. It can expose a
+    // negative publication obligation, never grant receiver/payload authority.
+    // Resolve the lexical private field and actual imported Source interface;
+    // unrelated objects with a method named store do not acquire this identity.
+    if(ts.isPropertyAccessExpression(node.expression)&&node.expression.expression.kind===ts.SyntaxKind.ThisKeyword&&ts.isPrivateIdentifier(node.expression.name)){
+     let enclosing=node.parent;while(enclosing&&!ts.isClassDeclaration(enclosing)&&!ts.isClassExpression(enclosing))enclosing=enclosing.parent;
+     const field=enclosing?.members.find(member=>ts.isPropertyDeclaration(member)&&ts.isPrivateIdentifier(member.name)&&member.name.text===node.expression.name.text);
+     const type=field?.type,resolved=type&&ts.isTypeReferenceNode(type)&&ts.isIdentifier(type.typeName)?symbol(owner,type.typeName.text):null;
+     const capability=resolved&&ts.isInterfaceDeclaration(resolved.node)&&resolved.state.file==='skills/buster/engine/test-gates/artifacts.ts'&&resolved.node.name.text==='EvidenceStore'&&opaqueWriters.find(c=>c.class==='FileEvidenceStore'&&c.method===key);
+     const method=capability&&resolved.node.members.find(member=>ts.isMethodSignature(member)&&member.name.getText(resolved.state.tree)===key);
+     if(method)return {capability,fn:method,fnState:resolved.state,indirect:false};
+    }
     const klass=klassOf(node.expression,owner),capability=klass&&nativeWriterCapabilities.find(c=>c.source===klass.state.file&&c.class===klass.node.name?.text&&c.method===key);
     if(capability)return {capability,fn:klass.node.members.find(member=>ts.isMethodDeclaration(member)&&member.name.getText(klass.state.tree)===capability.method),fnState:klass.state,indirect:false};
    }

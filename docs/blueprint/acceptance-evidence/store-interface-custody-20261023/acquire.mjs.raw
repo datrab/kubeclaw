@@ -1,0 +1,13 @@
+import fs from 'node:fs';import {gzipSync,gunzipSync} from 'node:zlib';import {isDeepStrictEqual as same} from 'node:util';import assert from 'node:assert/strict';
+import {documentationExecutableRoleRecipes,documentationExecutableSelectors,documentationSelectorReceipt,documentationChildSourceAuthority} from '/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-documentation-role-custody.mjs';
+import {deriveNativeOperationFacts,nativeOperationFactDigest} from '/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-output-role-classification.mjs';
+const root=process.cwd(),out=new URL('.',import.meta.url),old=JSON.parse(gunzipSync(fs.readFileSync('docs/blueprint/acceptance-evidence/physical-data-custody-20261023/candidate-recipes.json.gz'))).records,records=[],changes=[];
+for(const [source,recipe] of Object.entries(documentationExecutableRoleRecipes)){
+ if(!recipe.selectors)continue;
+ const before=old.find(r=>r.source===source);assert(before,source);assert.equal(nativeOperationFactDigest(before.facts),before.actualDigest);assert.equal(before.actualDigest,recipe.factsDigest,source+' baseline custody mismatch');
+ const selectors=documentationExecutableSelectors(source,fs.readFileSync(source,'utf8'),root),receipt=documentationSelectorReceipt(selectors),facts=deriveNativeOperationFacts(root,source,selectors,{trustAnchorSources:['scripts/docs-api-documentation-role-custody.mjs']}),child=documentationChildSourceAuthority(root,source),actualDigest=nativeOperationFactDigest(facts);
+ records.push({source,actualDigest,facts,selectors:receipt,child});
+ if(actualDigest===before.actualDigest&&same(receipt,before.selectors)&&same(child,before.child))continue;
+ changes.push({source,beforeDigest:before.actualDigest,actualDigest,selectorsChanged:!same(receipt,before.selectors),childChanged:!same(child,before.child),oldSelectors:before.selectors,selectors:receipt,child,added:facts.filter(f=>!before.facts.some(b=>same(b,f))),removed:before.facts.filter(f=>!facts.some(b=>same(b,f)))});
+}
+assert.equal(records.length,old.length);fs.writeFileSync(new URL('candidate-recipes.json.gz',out),gzipSync(JSON.stringify({records})));fs.writeFileSync(new URL('candidate-delta.json',out),JSON.stringify(changes,null,2)+'\n');console.log(JSON.stringify({checked:records.length,changes:changes.map(({source,selectorsChanged,childChanged,added,removed})=>({source,selectorsChanged,childChanged,added:added.map(f=>[f.source,f.kind,f.symbol]),removed:removed.map(f=>[f.source,f.kind,f.symbol])}))},null,2));

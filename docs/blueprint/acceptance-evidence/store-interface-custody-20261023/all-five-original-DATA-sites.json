@@ -1,0 +1,42 @@
+[
+  {
+    "source": "skills/buster/engine/test-gates/artifacts.ts",
+    "line": 41,
+    "sink": "fs.writeFileSync",
+    "role": "unknown",
+    "expression": "content",
+    "basis": "opaque-contained-file-DATA-physical-publication"
+  },
+  {
+    "source": "skills/buster/engine/test-gates/artifacts.ts",
+    "line": 100,
+    "sink": "fs.writeFileSync",
+    "role": "unknown",
+    "expression": "content",
+    "basis": "opaque-contained-file-DATA-physical-publication"
+  },
+  {
+    "source": "skills/buster/engine/test-gates/runner.ts",
+    "line": 1263,
+    "sink": "native-file-writer-call",
+    "role": "unknown",
+    "expression": "errorCandidates",
+    "basis": "opaque-contained-file-DATA-not-descriptor-shape"
+  },
+  {
+    "source": "skills/buster/engine/test-gates/runner.ts",
+    "line": 1283,
+    "sink": "native-file-writer-call",
+    "role": "unknown",
+    "expression": "stagedFiles",
+    "basis": "opaque-contained-file-DATA-not-descriptor-shape"
+  },
+  {
+    "source": "skills/buster/engine/test-gates/runner.ts",
+    "line": 1924,
+    "sink": "native-file-writer-call",
+    "role": "unknown",
+    "expression": "declaration",
+    "basis": "opaque-contained-file-DATA-not-descriptor-shape"
+  }
+]

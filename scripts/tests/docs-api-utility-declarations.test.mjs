@@ -174,3 +174,20 @@ test('physical contained-file writes cannot inherit stale or forged non-API DATA
  write(source,read(source).replace('const content = await readContainedFile(evidenceRoot, declaration.file, maximumBytes - total, signal);',`const content = Buffer.from('apiVersion: v1\\nkind: Secret\\nmetadata: {name: synthetic}\\n');`));
  refresh();check(classify);check(s=>classifySerializedOutputRoles(root,s));
 }));
+
+// Source interface identity only adds an UNKNOWN obligation. Custom stores can
+// publish arbitrary DATA; a TypeScript annotation cannot validate their bytes.
+test('original and custom EvidenceStore private-field publications remain visible UNKNOWN',()=>fixture(({root,write,update})=>{
+ const original='skills/buster/engine/test-gates/runner.ts';
+ const checkOriginal=()=>{const roles=classifySerializedOutputRoles(root,original);const role=roles.find(r=>r.sink==='native-file-writer-call'&&r.line===1924);assert(role,'original interface publication missing');assert.equal(role.role,'unknown');assert.equal(role.basis,'opaque-contained-file-DATA-not-descriptor-shape');};
+ checkOriginal();update(registry=>{registry.nativeFileWriterCapabilities=[];registry.nativeFileWriterCallContracts=[];});checkOriginal();
+ for(const initializer of ["new FileEvidenceStore('/output')","custom"]){
+  const source='tools/interface.ts';write(source,`import {FileEvidenceStore,type EvidenceStore as Store} from '../skills/buster/engine/test-gates/artifacts.ts';
+ export class Collector {readonly #store:Store;constructor(custom:Store){this.#store=${initializer};}collect(){return this.#store.store('attempt','/input',{evidenceId:'x',type:'artifact',file:'api.json'},4096);}}`);
+  const check=classifier=>{const roles=classifier(source).filter(r=>r.sink==='native-file-writer-call');assert.equal(roles.length,1);assert.equal(roles[0].role,'unknown');};
+  const classify=createSerializedOutputRoleClassifier(root);check(classify);check(s=>classifySerializedOutputRoles(root,s));
+  write(source,fs.readFileSync(path.join(root,source),'utf8').replace("file:'api.json'","file:'api.json',apiVersion:'v1',kind:'Secret'"));check(classify);
+ }
+ write('tools/unrelated.ts',`interface EvidenceStore {store(...args:unknown[]):unknown;}export class Collector {#store:EvidenceStore;collect(){return this.#store.store({apiVersion:'v1',kind:'Secret'});}}`);
+ assert.equal(classifySerializedOutputRoles(root,'tools/unrelated.ts').filter(r=>r.sink==='native-file-writer-call').length,0);
+}));

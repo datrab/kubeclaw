@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The added private EvidenceStore-field recognition is narrowly bound to the imported artifacts.ts interface and emits an unknown/opaque writer obligation without granting payload authority. Custody metadata and tests are updated consistently with the classifier change.",
+  "overall_confidence": 0.88
+}

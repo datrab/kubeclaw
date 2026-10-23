@@ -1,0 +1,7 @@
+{
+  "path": ".cache/pr13-store-interface-review/custody.txt",
+  "bytes": 111769,
+  "sha256": "c6221639e476eb48dbaca36d9c85b8388972daa1d24d5a213507019f0a3ac297",
+  "scope": "implementation plus full-vector custody verifier/delta review, source-only",
+  "fullVectorAcquisitionCount": 105
+}
