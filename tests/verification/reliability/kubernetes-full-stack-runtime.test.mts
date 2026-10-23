@@ -114,16 +114,50 @@ test('ordinary fixture provider result carries failure evidence without deployme
   const file = path.join(root, 'manifest.json'); fs.writeFileSync(file, '{}');
   try {
     const evidence = { schemaVersion: 'kubernetes-fixture-failure.v1', pods: [], readErrors: ['pods:unavailable'] };
-    const result = await provider().execute({ runId: 'run', nodeId: 'fixture', attemptId: 'attempt', timeoutMs: 1000,
+    const invocation: any = { runId: 'run', nodeId: 'fixture', attemptId: 'attempt', timeoutMs: 1000,
+      workspace: { evidence: '.' }, limits: { artifactFiles: 2, artifactBytes: 1024 * 1024 },
       configuration: { values: { image: { reference: primary, digest: `sha256:${'a'.repeat(64)}` }, serviceName: 'app', servicePort: 8080 } },
       inputs: [{ name: 'checked-manifest', kind: 'artifact', artifact: { mediaType: 'application/vnd.kubeclaw.checked-kubernetes-yaml',
-        contentDigest: `sha256:${'b'.repeat(64)}`, sizeBytes: 2, storageUrl: new URL(`file://${file}`).href } }] }, {
+        contentDigest: `sha256:${'b'.repeat(64)}`, sizeBytes: 2, storageUrl: new URL(`file://${file}`).href } }] };
+    const context: any = { workspaceRoot: root,
       invoke: async () => ({ ok: false, errorCode: 'KUBERNETES_FIXTURE_READINESS_TIMEOUT', namespace: 'test-stack', failureEvidence: evidence }),
-    });
+    };
+    const result = await provider().execute(invocation, context);
     assert.equal(result.outcome, 'failed');
     assert.deepEqual(result.providerDetails.values.failureEvidence, evidence);
     assert.deepEqual(result.outputs, []);
     assert.match(result.summary, /READINESS_TIMEOUT.*test-stack/);
+    assert.equal(result.providerDetails.values.failureArtifactError, null);
+    assert.equal(result.evidenceFiles[0].type, 'log');
+    const snapshot = path.join(root, result.evidenceFiles[0].file);
+    assert.deepEqual(JSON.parse(fs.readFileSync(snapshot, 'utf8')), evidence);
+    assert.equal(fs.statSync(snapshot).mode & 0o777, 0o600);
+    const { stageEvidenceFiles, FileEvidenceStore } = await import('../../../skills/buster/engine/test-gates/artifacts.ts');
+    const staged = path.join(root, 'staged');
+    const use = await stageEvidenceFiles(root, staged, result.evidenceFiles, 2, 1024 * 1024);
+    assert.equal(use.files, 1);
+    const stored = await new FileEvidenceStore(path.join(root, 'store')).store('attempt', staged, result.evidenceFiles[0], 1024 * 1024);
+    assert.equal(stored.artifact.contentDigest, `sha256:${crypto.createHash('sha256').update(fs.readFileSync(snapshot)).digest('hex')}`);
+    fs.rmSync(staged, { recursive: true });
+    assert.deepEqual(JSON.parse(fs.readFileSync(new URL(stored.artifact.storageUrl), 'utf8')), evidence);
+    const repeated = await provider().execute(invocation, context);
+    assert.equal(repeated.outcome, 'failed');
+    assert.equal(repeated.providerDetails.values.errorCode, 'KUBERNETES_FIXTURE_READINESS_TIMEOUT');
+    assert.equal(repeated.providerDetails.values.failureArtifactError, 'already-exists');
+    assert.deepEqual(repeated.evidenceFiles, []);
+    const limited = await provider().execute({ ...invocation, limits: { artifactFiles: 0, artifactBytes: 0 } }, context);
+    assert.equal(limited.providerDetails.values.failureArtifactError, 'budget-exceeded');
+    assert.deepEqual(limited.providerDetails.values.failureEvidence, evidence);
+    const outside = fs.mkdtempSync(path.join(os.tmpdir(), 'fixture-outside-'));
+    try {
+      fs.symlinkSync(outside, path.join(root, 'escape'));
+      const denied = await provider().execute({ ...invocation, workspace: { evidence: 'escape' } }, context);
+      assert.equal(denied.providerDetails.values.failureArtifactError, 'path-denied');
+      assert.deepEqual(fs.readdirSync(outside), []);
+      const missing = await provider().execute({ ...invocation, workspace: { evidence: 'missing' } }, context);
+      assert.equal(missing.providerDetails.values.failureArtifactError, 'write-failed');
+      assert.equal(missing.outcome, 'failed');
+    } finally { fs.rmSync(outside, { recursive: true, force: true }); }
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 });
 test('diagnostic cancellation avoids reads and collection bounds the public snapshot', async () => {
