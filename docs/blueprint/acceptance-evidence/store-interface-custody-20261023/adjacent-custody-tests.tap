@@ -1,0 +1,46 @@
+✔ sink location discovery conservatively retains classified writers without assigning roles (32.883809ms)
+✔ closed bundle writer retains its API capability and projects every payload caller (68.973621ms)
+✔ changed or escaping bundle writers cannot refresh a private projection into authority (95.693153ms)
+✔ an operation receipt cannot forge a projected API-capable utility (3.227023ms)
+✔ bundle facade construction binds all three role values without qualifying source copies or imports (150.988484ms)
+✔ Ops Helm source checksum stays a hash-check input, not a generic Docker writer exemption (40.415612ms)
+✔ live-check diagnostic roles bind complete readonly source and cannot be refreshed into API output (584.674675ms)
+✔ auxiliary Python receipts distinguish AST, policy-probe and JSON-RPC metadata from API writers (267.469258ms)
+✔ node module builtin-name projections preserve API discovery and reject loader escapes (49.787911ms)
+✔ current documentation checker role binds exported link parser, helper and guarded invocation (332.863297ms)
+✔ native ESM keeps actual .js authority, explicit .ts neighbors, creation and removal custody (52.168641ms)
+✔ scalar and guard exemptions revoke direct and captured caller-time binding writes (161.656006ms)
+✔ reached initialization effects and caller writes bind facts, unused siblings remain passive (2.979846ms)
+✔ heredoc closure uses exact << and tab-only <<- native boundaries (72.976773ms)
+✔ finite command custody selects actual argv and final fd0, not quoted or commented neighbors (1.122248ms)
+✔ outside-root public main, exports, bin and actual Node commands independently publish finite closure (202.353225ms)
+✔ caller-only change, deletion and re-creation cannot reuse transformed custody (46.838256ms)
+✔ same-line API to native transition revokes transaction shell facts (300.400759ms)
+✔ actual reached validator format and schema installation authority is present in finite facts (135.113519ms)
+✔ finite heredoc fd duplication and legacy substitutions agree with actual native consumption (45.729147ms)
+✔ guarded array aliases and unsupported post-proof calls cannot retain a stale scalar-array exemption (92.877881ms)
+✔ package argv distinguishes passive quoted mentions from actual inline Node programs (82.557997ms)
+✔ two source-bound resolver terminals classify only source-location metadata (171.518398ms)
+✔ source/archive compiler metadata binds both callers, extraction branch, package mapping and helper transfer (112.497442ms)
+✔ historical environment roots classify only bound operations and retain current executable source facts (87.246257ms)
+✔ native historical from selector really follows external root, not scanner checkout identity (155.305025ms)
+✔ six native replay recipes bind archive, overlay, caller and exact loader branches without fixture exclusion (290.147077ms)
+✔ native replay root selector preserves explicit external and empty-string nullish cases (412.12884ms)
+✔ Worker resource schema generator receipts retain schema inputs and reject refreshed API output (105.871703ms)
+✔ zero-argument scalar method calls remain conservative without crashing classification (1.791385ms)
+✔ exact caller-qualified fixture harnesses retain genuine imported and child producers (2211.481042ms)
+✔ harness caller and public reachability cannot transfer fixture purpose (2688.214661ms)
+✔ import-time effects, generated crash/historical child bytes, fixture root and new exports revoke cached harness purpose (18162.305101ms)
+✔ literal generated supervisor child argument/lease and declarative registration/schema authority remain bound (4885.75263ms)
+✔ reviewed refs fixture and copied CLI still reject changed authority with warm and fresh roots (22441.415347ms)
+✔ bounded4 native POSIX package globs acquire every142 source and no harness roles (778.244576ms)
+✔ glob quoted/custom/dynamic callers and added/renamed/removed/aliased sources fail before acceptance (1085.594322ms)
+✔ a known wildcard-selected test is an ordinary native API producer, not a fixture-purpose exclusion (8005.710034ms)
+ℹ tests 38
+ℹ suites 0
+ℹ pass 38
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 60649.908569
