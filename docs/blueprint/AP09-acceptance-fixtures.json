@@ -416,7 +416,7 @@
         { "id": "secret-setting", "sourceAuthority": "my-values/setup-secrets.sh", "constructor": "shell-secret-key-v1", "expectedPages": ["docs/site/understand/security-and-trust.md"], "semanticChange": "Secret identity, key, consumer, and rotation boundary" },
         { "id": "script-flag", "sourceAuthority": "scripts/deploy.sh", "constructor": "shell-flag-v1", "expectedPages": ["docs/site/use/install.md"], "semanticChange": "flag identity, default, validation, and precedence" },
         { "id": "swarm-config-field", "sourceAuthority": "charts/kubeclaw/files/config/swarm.config.json", "constructor": "json-field-v1", "expectedPages": ["docs/site/use/operate.md"], "semanticChange": "recursive field, default, constraint, and runtime consumer" },
-        { "id": "nested-plugin-config", "sourceAuthority": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json", "constructor": "json-schema-nested-field-v1", "expectedPages": ["docs/site/extend/plugin-catalogue/kubeclaw.runtime-dispatch.md"], "semanticChange": "nested config field, default, condition, and consumer" },
+        { "id": "nested-plugin-config", "sourceAuthority": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json", "constructor": "json-schema-nested-field-v1", "expectedPages": ["docs/site/reference/plugin-configuration.md"], "semanticChange": "nested config field, default, condition, and consumer" },
         { "id": "default-precedence", "sourceAuthority": "skills/nova/plugins/lint/src/engine/policy-paths.ts", "constructor": "typescript-default-precedence-v1", "expectedPages": ["docs/site/extend/plugin-catalogue/kubeclaw.lint.md"], "semanticChange": "effective default and precedence winner" }
       ]
     },

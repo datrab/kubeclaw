@@ -77,7 +77,7 @@ export const reviewedDocumentationOwnerPurposes=freeze({
       {
         "path": "docs/blueprint/AP09-acceptance-fixtures.json",
         "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
-        "sha256": "19edae3ea55ec0a59988ef625f5e06bd2a6d940b144f59e75bed6849c4f76435"
+        "sha256": "af1973d167a0c43ffe14eb828fc8d139a63ab8b696fdc4095c8e862f2d414dd8"
       },
       {
         "path": "docs/site/use/workflows/wait-resume/platform.template.json",

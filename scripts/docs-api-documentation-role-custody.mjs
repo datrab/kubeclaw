@@ -706,7 +706,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "328f8dd702f5cb8ccffb9ae17cc3d577e76cd8ec81456fffa49b452e908adb55"
       }
     ],
-    "factsDigest": "54c778cc8c76565686bbfa828542d6f534bda90c8b953587556260789bbf7e1f",
+    "factsDigest": "ba8a558844f9bacdfc0c3ee6e538b0e9274983f2ed5336ed16bf214ecde9ec43",
     "authorityInputs": [
       {
         "path": "scripts/docs-api-go-output-role-adapter.go",
@@ -924,7 +924,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "041aa7206a41cf5c3bdd66f61797f9b67c06085f6d0076ce1f84e2a9c8d57db8"
       }
     ],
-    "factsDigest": "a3160d6691905beb2169e3c972c2cc4e63870820742b43400f19ae3081102e09",
+    "factsDigest": "422f3d94f7ebd86045b0693fd0f42602135c8d68595936ed20966b9a154082fe",
     "authorityInputs": []
   },
   "scripts/docs-api-python-output-adapter.py": {
@@ -1203,7 +1203,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "9efac25cb0d8a53fc3a31aec649afa2cd99102c34366428833c403eccaef3fbe"
       }
     ],
-    "factsDigest": "dbc03f239a6b394a3f3c3c63721af1c04118309c3807ed9c8fbe18204742d5f5",
+    "factsDigest": "38dc5280302d286e4ce851ee0bc9bfd27bfcbeea8036fb946714de741a008c92",
     "authorityInputs": []
   },
   "scripts/docs-api-schema-authorities.mjs": {
@@ -1999,7 +1999,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "7602a8f927b47cd0b4b4f2501bccd41bb8e4e4ea43e571cf4bce62f3c3717191"
       }
     ],
-    "factsDigest": "3b6477e501f22c9afccf1f4eaecbf66e3248d1d1818c51cf543b68949f305270",
+    "factsDigest": "231e3040ad3faa9c19d973bb6b849dedf5e35974d6c2bad687d9c48c5e33d234",
     "authorityInputs": [
       {
         "path": "scripts/vendor-external-helm-authorities.mjs",
@@ -2102,7 +2102,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "cba76d80649d6ce8d92897a224d01ee9877a1807a9de9e765cdad79d29f912ce"
       }
     ],
-    "factsDigest": "d45d9e9144f72388224e856dfb6f795a749174d52b54ad88cc44f031587bfc5d",
+    "factsDigest": "c210801e8e4b13f07b1881150120277a4742e4f216fbe7c857e2cbe1ccd18fce",
     "authorityInputs": []
   },
   "scripts/docs-governance.mjs": {
@@ -6155,7 +6155,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "docs/blueprint/AP09-acceptance-fixtures.json",
         "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
-        "sha256": "19edae3ea55ec0a59988ef625f5e06bd2a6d940b144f59e75bed6849c4f76435"
+        "sha256": "af1973d167a0c43ffe14eb828fc8d139a63ab8b696fdc4095c8e862f2d414dd8"
       },
       {
         "path": "docs/site/use/workflows/wait-resume/platform.template.json",
@@ -6313,7 +6313,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "docs/blueprint/AP09-acceptance-fixtures.json",
         "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
-        "sha256": "19edae3ea55ec0a59988ef625f5e06bd2a6d940b144f59e75bed6849c4f76435"
+        "sha256": "af1973d167a0c43ffe14eb828fc8d139a63ab8b696fdc4095c8e862f2d414dd8"
       },
       {
         "path": "docs/site/use/workflows/wait-resume/platform.template.json",
@@ -6639,7 +6639,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "docs/blueprint/AP09-acceptance-fixtures.json",
         "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
-        "sha256": "19edae3ea55ec0a59988ef625f5e06bd2a6d940b144f59e75bed6849c4f76435"
+        "sha256": "af1973d167a0c43ffe14eb828fc8d139a63ab8b696fdc4095c8e862f2d414dd8"
       },
       {
         "path": "docs/site/use/workflows/wait-resume/platform.template.json",
@@ -7153,7 +7153,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "docs/blueprint/AP09-acceptance-fixtures.json",
         "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
-        "sha256": "19edae3ea55ec0a59988ef625f5e06bd2a6d940b144f59e75bed6849c4f76435"
+        "sha256": "af1973d167a0c43ffe14eb828fc8d139a63ab8b696fdc4095c8e862f2d414dd8"
       },
       {
         "path": "examples/buster-values.yaml",
@@ -7454,7 +7454,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "docs/blueprint/AP09-acceptance-fixtures.json",
         "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
-        "sha256": "19edae3ea55ec0a59988ef625f5e06bd2a6d940b144f59e75bed6849c4f76435"
+        "sha256": "af1973d167a0c43ffe14eb828fc8d139a63ab8b696fdc4095c8e862f2d414dd8"
       },
       {
         "path": "package.json",
@@ -7604,7 +7604,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "docs/blueprint/AP09-acceptance-fixtures.json",
         "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
-        "sha256": "19edae3ea55ec0a59988ef625f5e06bd2a6d940b144f59e75bed6849c4f76435"
+        "sha256": "af1973d167a0c43ffe14eb828fc8d139a63ab8b696fdc4095c8e862f2d414dd8"
       },
       {
         "path": "package.json",
@@ -7756,7 +7756,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "docs/blueprint/AP09-acceptance-fixtures.json",
         "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
-        "sha256": "19edae3ea55ec0a59988ef625f5e06bd2a6d940b144f59e75bed6849c4f76435"
+        "sha256": "af1973d167a0c43ffe14eb828fc8d139a63ab8b696fdc4095c8e862f2d414dd8"
       },
       {
         "path": "package.json",
@@ -7914,7 +7914,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "docs/blueprint/AP09-acceptance-fixtures.json",
         "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
-        "sha256": "19edae3ea55ec0a59988ef625f5e06bd2a6d940b144f59e75bed6849c4f76435"
+        "sha256": "af1973d167a0c43ffe14eb828fc8d139a63ab8b696fdc4095c8e862f2d414dd8"
       },
       {
         "path": "package.json",
@@ -8120,7 +8120,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "docs/blueprint/AP09-acceptance-fixtures.json",
         "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
-        "sha256": "19edae3ea55ec0a59988ef625f5e06bd2a6d940b144f59e75bed6849c4f76435"
+        "sha256": "af1973d167a0c43ffe14eb828fc8d139a63ab8b696fdc4095c8e862f2d414dd8"
       },
       {
         "path": "docs/config/platform-surface-map.json",
@@ -8252,7 +8252,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "docs/blueprint/AP09-acceptance-fixtures.json",
         "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
-        "sha256": "19edae3ea55ec0a59988ef625f5e06bd2a6d940b144f59e75bed6849c4f76435"
+        "sha256": "af1973d167a0c43ffe14eb828fc8d139a63ab8b696fdc4095c8e862f2d414dd8"
       },
       {
         "path": "package.json",
@@ -8402,7 +8402,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "docs/blueprint/AP09-acceptance-fixtures.json",
         "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
-        "sha256": "19edae3ea55ec0a59988ef625f5e06bd2a6d940b144f59e75bed6849c4f76435"
+        "sha256": "af1973d167a0c43ffe14eb828fc8d139a63ab8b696fdc4095c8e862f2d414dd8"
       },
       {
         "path": "package.json",
@@ -8514,7 +8514,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "docs/blueprint/AP09-acceptance-fixtures.json",
         "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
-        "sha256": "19edae3ea55ec0a59988ef625f5e06bd2a6d940b144f59e75bed6849c4f76435"
+        "sha256": "af1973d167a0c43ffe14eb828fc8d139a63ab8b696fdc4095c8e862f2d414dd8"
       },
       {
         "path": "package.json",
@@ -8669,7 +8669,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "docs/blueprint/AP09-acceptance-fixtures.json",
         "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
-        "sha256": "19edae3ea55ec0a59988ef625f5e06bd2a6d940b144f59e75bed6849c4f76435"
+        "sha256": "af1973d167a0c43ffe14eb828fc8d139a63ab8b696fdc4095c8e862f2d414dd8"
       },
       {
         "path": "package.json",
@@ -8819,7 +8819,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "docs/blueprint/AP09-acceptance-fixtures.json",
         "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
-        "sha256": "19edae3ea55ec0a59988ef625f5e06bd2a6d940b144f59e75bed6849c4f76435"
+        "sha256": "af1973d167a0c43ffe14eb828fc8d139a63ab8b696fdc4095c8e862f2d414dd8"
       },
       {
         "path": "package.json",
@@ -8891,7 +8891,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "docs/blueprint/AP09-acceptance-fixtures.json",
         "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
-        "sha256": "19edae3ea55ec0a59988ef625f5e06bd2a6d940b144f59e75bed6849c4f76435"
+        "sha256": "af1973d167a0c43ffe14eb828fc8d139a63ab8b696fdc4095c8e862f2d414dd8"
       },
       {
         "path": "package.json",
@@ -8989,7 +8989,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "docs/blueprint/AP09-acceptance-fixtures.json",
         "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
-        "sha256": "19edae3ea55ec0a59988ef625f5e06bd2a6d940b144f59e75bed6849c4f76435"
+        "sha256": "af1973d167a0c43ffe14eb828fc8d139a63ab8b696fdc4095c8e862f2d414dd8"
       },
       {
         "path": "package.json",
@@ -9573,7 +9573,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "docs/blueprint/AP09-acceptance-fixtures.json",
         "canonical": "docs/blueprint/AP09-acceptance-fixtures.json",
-        "sha256": "19edae3ea55ec0a59988ef625f5e06bd2a6d940b144f59e75bed6849c4f76435"
+        "sha256": "af1973d167a0c43ffe14eb828fc8d139a63ab8b696fdc4095c8e862f2d414dd8"
       },
       {
         "path": "docs/site/use/workflows/wait-resume/platform.template.json",
