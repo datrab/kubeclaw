@@ -5,7 +5,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
-import {inspectRuntimeConfiguration, prepareRuntime} from '../../../skills/nova/core/execution/engine-runtime.ts';
+import {discoverRuntimeRegistry, inspectRuntimeConfiguration, prepareRuntime} from '../../../skills/nova/core/execution/engine-runtime.ts';
 
 // Local registry fixtures exercise the existing discovery/schema/grant path.
 // They are not installed production identities or original-run authority.
@@ -68,3 +68,44 @@ test('prepareRuntime still returns activated registrations and persists selected
   assert.deepEqual(await prepared.activated.stages.get('test.core-inspection').execute(),{schemaVersion:'stage-result.v2',outcome:'passed'});
   assert.equal(fs.existsSync(f.platform.storageRoot),false);
 });
+
+// Pre-graph acquisition must not depend on current Core settings, a fabricated
+// graph, granted capabilities, run storage or executable plugin imports.
+test('installed registry is acquired before a graph or Core policy exists, preserving trust rejection',t=>{
+  const f=fixture(t,`throw new Error('PRE_GRAPH_ACTIVATION_SENTINEL'); export function execute(){}`);
+  const input={installationRoots:f.platform.installationRoots,trustedBuiltinRoots:f.platform.trustedBuiltinRoots,
+    externalTrust:f.platform.externalTrust};
+  const before=structuredClone(input);
+  const snapshot=discoverRuntimeRegistry(input);
+  assert.equal(snapshot.stages.has('test.core-inspection'),true);
+  assert.equal(snapshot.packages.has('test.core-inspection'),true);
+  assert.deepEqual(input,before);
+  assert.equal(fs.existsSync(f.platform.storageRoot),false);
+  assert.throws(()=>discoverRuntimeRegistry({...input,trustedBuiltinRoots:[]}),error=>error.code==='REGISTRY_PACKAGE_UNTRUSTED');
+  assert.throws(()=>discoverRuntimeRegistry({...input,installationRoots:[path.join(f.root,'missing')]}),error=>error.code==='REGISTRY_ROOT_INVALID');
+});
+
+// The retained original graph is available before any current runtime policy or
+// installed package is needed. Both continuation entries must reject drift there.
+for (const version of ['execution-graph-snapshot.v2', 'execution-graph-snapshot.v3']) {
+  test(`original graph mismatch rejects before runtime restoration or activation: ${version}`, async t => {
+    const {graphSnapshot, writeRunSnapshots} = await import('../../../skills/nova/core/execution/engine-snapshots.ts');
+    const {recoverPipeline, resumePipeline} = await import('../../../skills/nova/core/execution/engine-run.ts');
+    const {runRoot} = await import('../../../skills/nova/core/execution/run-root.ts');
+    const f = fixture(t, `throw new Error('RECOVERY_MUST_NOT_ACTIVATE'); export function execute(){}`);
+    const directory = runRoot(f.platform.storageRoot, 'original:A');
+    fs.mkdirSync(directory, {recursive:true});
+    // Intentionally no retained policy: a foreign graph must not reach even
+    // policy restoration, much less current registry discovery or activation.
+    writeRunSnapshots(directory, graphSnapshot(f.definition, version), {});
+    const snapshot = fs.readFileSync(path.join(directory, 'run-snapshot.json'));
+    const changed = structuredClone(f.definition);
+    changed.stages[0].config.selected = 'B';
+    const before = structuredClone({platform:f.platform, definition:changed});
+    await assert.rejects(recoverPipeline(f.platform, changed, 'original:A'), /RECOVERY_GRAPH_DIGEST_MISMATCH/);
+    await assert.rejects(resumePipeline(f.platform, changed, 'original:A', {}), /RECOVERY_GRAPH_DIGEST_MISMATCH/);
+    assert.deepEqual({platform:f.platform, definition:changed}, before);
+    assert.deepEqual(fs.readFileSync(path.join(directory, 'run-snapshot.json')), snapshot);
+    assert.deepEqual(fs.readdirSync(directory), ['run-snapshot.json']);
+  });
+}

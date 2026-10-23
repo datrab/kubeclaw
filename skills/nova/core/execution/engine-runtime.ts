@@ -43,6 +43,19 @@ export interface PreparedRuntime extends RuntimeConfigurationInspection {
   readonly activated: Awaited<ReturnType<typeof activateRegistry>>;
 }
 
+/** Discover the installed registry without a graph, Core policy selection or
+ * plugin activation. Original declaration resolution can precede project graph
+ * construction; registration enablement and grants still require that graph.
+ * This is installed-package discovery, NOT generation/source/boot authority.
+ */
+export function discoverRuntimeRegistry(platform: Pick<PlatformConfig, 'installationRoots' | 'trustedBuiltinRoots' | 'externalTrust'>): ReturnType<typeof buildRegistry> {
+  const packages = discoverPackages({ installationRoots: platform.installationRoots, trustPolicy: {
+    trustedBuiltinRoots: platform.trustedBuiltinRoots, allowedSourceDigests: new Map(Object.entries(platform.externalTrust.allowedSourceDigests)),
+    verifiedAttestations: new Map(Object.entries(platform.externalTrust.verifiedAttestations)), verifierId: 'kubeclaw-platform-v2',
+  } });
+  return buildRegistry(packages);
+}
+
 /** Reads installed manifests/schemas and validates the original registry/grants,
  * without importing or activating plugin modules. This is local inspection,
  * NOT original-run discovery, a v10 source receipt, or permission to activate.
@@ -63,11 +76,7 @@ export function inspectRuntimeConfiguration(platform: PlatformConfig, definition
   }
   const observerConfigurations = selectedObserverConfigurations(platform.observers, corePolicy);
   validateContractValue('pipelineDefinition', definition);
-  const packages = discoverPackages({ installationRoots: platform.installationRoots, trustPolicy: {
-    trustedBuiltinRoots: platform.trustedBuiltinRoots, allowedSourceDigests: new Map(Object.entries(platform.externalTrust.allowedSourceDigests)),
-    verifiedAttestations: new Map(Object.entries(platform.externalTrust.verifiedAttestations)), verifierId: 'kubeclaw-platform-v2',
-  } });
-  const snapshot = buildRegistry(packages); const enabled = enabledRegistrations(platform, definition, snapshot);
+  const snapshot = discoverRuntimeRegistry(platform); const enabled = enabledRegistrations(platform, definition, snapshot);
   const policy: CapabilityPolicy = { enabledRegistrations: enabled, grants: nestedMap(platform.grants), providers: new Map(Object.entries(platform.providers)) };
   const granted = resolveCapabilityGrants(snapshot, policy);
   const provider=platform.providers['runtime.dispatch'];

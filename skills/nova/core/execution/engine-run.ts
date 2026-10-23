@@ -62,6 +62,10 @@ function recoveryStates(definition: PipelineDefinition, events: FileJournal<Life
 export async function recoverPipeline(platform: PlatformConfig, definitionInput: PipelineDefinition, runId: string): Promise<PipelineRunResult> {
   const definition = deepFreeze(structuredClone(definitionInput));
   const runRoot = resolveRunRoot(platform.storageRoot, runId);
+  // Reject a replacement graph against the retained original before policy
+  // restoration, package discovery or plugin activation. Keep the locked
+  // recheck below: this early check does not replace mutation-time validation.
+  verifyPinnedGraph(runRoot, definition);
   const retained = retainedRuntimePolicies(runRoot);
   const runtime = await prepareRuntime(platform, definition, retained.corePolicy, retained.timingSelections, retained.httpSelections, retained.publisherSelections, retained.operatorSelections, retained.reviewRuntimeBinding, retained.redisBindings, retained.operatorBindings, retained.publisherBindings, retained.gitBindings, retained.httpBindings, retained.storeBindings);
   return withRunMutationLock(runRoot, runtime.corePolicy, async (leaseSignal) => {
@@ -90,6 +94,10 @@ function dueRecoveryStates(recovered: ReadonlyMap<string, StageRuntimeState>): M
 export async function resumePipeline(platform: PlatformConfig, definitionInput: PipelineDefinition, runId: string, signal: ResumeSignal): Promise<PipelineRunResult> {
   const definition = deepFreeze(structuredClone(definitionInput));
   const runRoot = resolveRunRoot(platform.storageRoot, runId);
+  // Reject a replacement graph against the retained original before policy
+  // restoration, package discovery or plugin activation. Keep the locked
+  // recheck below: this early check does not replace mutation-time validation.
+  verifyPinnedGraph(runRoot, definition);
   const retained = retainedRuntimePolicies(runRoot);
   const runtime = await prepareRuntime(platform, definition, retained.corePolicy, retained.timingSelections, retained.httpSelections, retained.publisherSelections, retained.operatorSelections, retained.reviewRuntimeBinding, retained.redisBindings, retained.operatorBindings, retained.publisherBindings, retained.gitBindings, retained.httpBindings, retained.storeBindings);
   return withRunMutationLock(runRoot, runtime.corePolicy, async (leaseSignal) => {
