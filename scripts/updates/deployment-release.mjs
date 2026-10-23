@@ -4,6 +4,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import yaml from 'js-yaml';
 import { selectedCode, validateCodeReceipt } from './code-release.mjs';
+import { componentSource, validSource } from './runtime-components.mjs';
 
 const families = {
   runtime: ['nova', 'prism-agent', 'buster-gateway', 'buster-runtime', 'namespace-controller', 'archviewer', 'prism-control', 'prism-studio', 'prism-worker', 'prism-ingestion'],
@@ -26,6 +27,10 @@ export function validateReleaseReceipt(receipt, family) {
       || !new RegExp(`^ghcr\\.io/[a-z0-9_-]+/kubeclaw-${name}@sha256:[a-f0-9]{64}$`, 'u').test(receipt.images[name])) {
       throw new Error(`Invalid selected image slot: ${name}`);
     }
+  }
+  if (receipt.imageSources) {
+    if (family !== 'runtime' || JSON.stringify(Object.keys(receipt.imageSources).sort()) !== JSON.stringify([...names].sort())
+      || names.some(name => !validSource(receipt.imageSources[name]))) throw new Error('Invalid image component sources');
   }
   if (receipt.code) validateCodeReceipt(receipt.code);
   return receipt;
@@ -96,7 +101,8 @@ function validateBundle(container, baseline, slot, receipt, requireBundle) {
     const enabled = actual.get(name)?.value;
     if (!['true', 'false'].includes(enabled) || ((requireBundle || receipt.code) && enabled !== 'true')) throw new Error(`Canonical bundle consumer disabled: ${slot}/${name}`);
     const prefix = name.slice(0, -'ENABLED'.length);
-    const commit = receipt.code?.commit ?? receipt.commit;
+    const role = container.env?.find(item => item.name === 'AGENT_NAME')?.value;
+    const commit = receipt.code && role ? componentSource(receipt.code, role, 'bundle').commit : receipt.code?.commit ?? receipt.commit;
     const revision = actual.get(`${prefix}EXPECTED_COMMIT`)?.value;
     if ((enabled === 'true' || revision !== '') && revision !== commit) throw new Error(`Bundle commit differs from selected runtime: ${slot}`);
     if (actual.get(`${prefix}CONTRACT_VERSION`)?.value !== 'v2') throw new Error(`Unsupported bundle contract: ${slot}`);
@@ -163,7 +169,7 @@ function validateOverlays(args, root, role, baseline, render, receipt) {
     const file = args[index + 1];
     const values = yaml.load(fs.readFileSync(file, 'utf8'));
     const commit = values?.codeBundle?.expectedCommit;
-    if (commit && commit !== (receipt.code?.commit ?? receipt.commit)) throw new Error('Overlay bundle commit differs from selected runtime');
+    if (commit && commit !== (receipt.code ? componentSource(receipt.code, role === 'prism-agent' ? 'prism' : role, 'bundle').commit : receipt.commit)) throw new Error('Overlay bundle commit differs from selected runtime');
     if (selectedSeen) validateRenderedRelease(baseline, render(args.slice(0, index + 2)), receipt);
     selectedSeen ||= path.resolve(file) === path.join(root, `releases/values/${role}.yaml`);
     index += 1;
@@ -174,7 +180,10 @@ function validateOverlays(args, root, role, baseline, render, receipt) {
 if (process.argv[1] === import.meta.filename) {
   const [command, root, family, role, release, namespace, ...options] = process.argv.slice(2);
   const receipt = selectedRelease(root, family);
-  if (command === 'verify') process.stdout.write(`${receipt.code?.commit ?? receipt.commit}\n`);
+  if (command === 'verify') {
+    if (role && !['nova', 'buster', 'prism'].includes(role)) throw new Error('Invalid bundle role');
+    process.stdout.write(`${receipt.code && role ? componentSource(receipt.code, role, 'bundle').commit : receipt.code?.commit ?? receipt.commit}\n`);
+  }
   else if (command === 'render') {
     const separator = options.indexOf('--');
     if (separator < 0) throw new Error('Helm values argument separator required');

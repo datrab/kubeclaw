@@ -6,7 +6,7 @@ import { execFileSync } from 'node:child_process';
 import test from 'node:test';
 import yaml from 'js-yaml';
 import { isImageInput, isDeploymentInput } from '../../../scripts/updates/runtime-inputs.mjs';
-import { continuousDocuments, continuousApplications, renderContinuousEnvironment } from '../../../scripts/gitops-continuous.mjs';
+import { continuousDocuments, continuousApplications, renderContinuousEnvironment, retainUnchangedApplications } from '../../../scripts/gitops-continuous.mjs';
 import { gitOpsDigest, inspectGitOpsResources } from '../../../scripts/gitops-bundle.mjs';
 import { planGitOpsRollback, rollbackRevision } from '../../../scripts/gitops-rollback.mjs';
 
@@ -71,7 +71,7 @@ test('initial registration creates all children without starting workload syncs'
 test('configuration and agent code select bundles while generated deployments do not rebuild', () => {
   for (const file of ['charts/kubeclaw/templates/deployment.yaml', 'charts/prism/values.yaml',
     'my-values/nova-values.yaml', 'gitops/production/config.json', 'gitops/production/overlays/prism.yaml', 'skills/nova/core/engine.ts']) {
-    assert.equal(isImageInput(file), false, file);
+    assert.equal(isImageInput(file), file.startsWith('skills/'), file);
     assert.equal(isDeploymentInput(file), true, file);
   }
   for (const file of ['releases/runtime-code.json', 'releases/gitops/x/nova/resources.yaml', 'gitops/production/apps/applications.yaml']) {
@@ -159,5 +159,31 @@ test('real Helm environment rendering remains identical after the bundle commit 
     assert.deepEqual(render(restored).files, expected.files);
     fs.appendFileSync(path.join(root, directory, 'nova/resources.yaml'), '\n# corruption');
     assert.throws(() => render(commit()), /MANIFEST_DIGEST_MISMATCH/);
+  } finally { fs.rmSync(root, { recursive: true, force: true }); }
+});
+
+
+test('a Buster-only promotion retains immutable Argo paths for unchanged Nova and Prism resources', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'retained-apps-'));
+  const application = (role, bundle) => ({ kind: 'Application', metadata: { name: `kubeclaw-${role}`, namespace: 'argocd', annotations: {} },
+    spec: { source: { repoURL: 'https://github.com/example/kubeclaw.git', targetRevision: 'main', path: `releases/gitops/${bundle}/${role}`, directory: { include: 'resources.yaml' } } } });
+  try {
+    const prior = ['nova', 'buster', 'prism'].map(role => application(role, 'runtime-1-1'));
+    const next = ['nova', 'buster', 'prism'].map(role => application(role, 'runtime-2-1'));
+    fs.mkdirSync(path.join(root, 'gitops/production/apps'), { recursive: true });
+    fs.writeFileSync(path.join(root, 'gitops/production/apps/applications.yaml'), prior.map(doc => yaml.dump(doc)).join('---\n'));
+    for (const role of ['nova', 'buster', 'prism']) for (const bundle of ['runtime-1-1', 'runtime-2-1']) {
+      const directory = path.join(root, `releases/gitops/${bundle}/${role}`);
+      fs.mkdirSync(directory, { recursive: true });
+      fs.writeFileSync(path.join(directory, 'resources.yaml'), role === 'buster' ? bundle : `unchanged ${role}`);
+    }
+    const retained = retainUnchangedApplications(root, next);
+    assert.equal(retained[0].spec.source.path, prior[0].spec.source.path);
+    assert.equal(retained[1].spec.source.path, 'releases/gitops/runtime-2-1/buster');
+    assert.equal(retained[2].spec.source.path, prior[2].spec.source.path);
+    assert.equal(retained[0].metadata.annotations['kubeclaw.dev/immutable-bundle-path'], prior[0].spec.source.path);
+    // Changing deployment config still takes effect, even with retained images.
+    fs.appendFileSync(path.join(root, 'releases/gitops/runtime-2-1/nova/resources.yaml'), 'new config');
+    assert.equal(retainUnchangedApplications(root, [application('nova', 'runtime-2-1')])[0].spec.source.path, 'releases/gitops/runtime-2-1/nova');
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 });

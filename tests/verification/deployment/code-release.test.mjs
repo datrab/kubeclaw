@@ -36,12 +36,11 @@ function code(commit) {
       sha256: 'a'.repeat(64), contractVersion: 'v2',
     }])) };
 }
-test('agent changes and manifest changes do not rebuild tools; embedded service code does', () => {
-  for (const file of ['skills/nova/core/execution/engine.ts', 'skills/buster/engine/judge.ts',
-    'skills/common/plugins/artifact-store/src/adapter.ts', 'my-values/nova-values.yaml', 'charts/kubeclaw/values.yaml']) {
+test('configuration-only changes retain images; copied runtime sources rebuild their consumers', () => {
+  for (const file of ['my-values/nova-values.yaml', 'charts/kubeclaw/values.yaml']) {
     assert.equal(isImageInput(file), false, file); assert.equal(isDeploymentInput(file), true, file);
   }
-  for (const file of ['docker/Dockerfile.nova', 'package-lock.json', 'skills/nova/package.json',
+  for (const file of ['skills/nova/core/execution/engine.ts', 'skills/buster/engine/judge.ts', 'skills/common/plugins/artifact-store/src/adapter.ts', 'docker/Dockerfile.nova', 'package-lock.json', 'skills/nova/package.json',
     'skills/prism/server/worker.ts', 'skills/worker/core/worker/native-worker-launcher.c', 'contracts/worker/v1.ts']) {
     assert.equal(isImageInput(file), true, file);
   }
@@ -58,7 +57,7 @@ test('code selection reuses images only across unchanged image inputs, including
     git(['init', '-q']); git(['config', 'core.autocrlf', 'false']);
     write('docker/Dockerfile.nova', 'FROM pinned-base\n'); write('skills/nova/core/engine.ts', 'old');
     const imageCommit = commit();
-    write('skills/nova/core/engine.ts', 'new'); write('charts/kubeclaw/values.yaml', 'replicas: 1\n');
+    write('charts/kubeclaw/values.yaml', 'replicas: 1\n');
     const codeCommit = commit();
     const receipt = code(codeCommit); write('releases/runtime-code.json', JSON.stringify(receipt));
     assert.deepEqual(selectedCode(root, { commit: imageCommit }), receipt);
@@ -84,13 +83,13 @@ test('push detector rebuilds an environment changed by an earlier unselected bui
     fs.mkdirSync(path.join(root, 'docker')); fs.mkdirSync(path.join(root, 'skills/nova'), { recursive: true });
     fs.writeFileSync(path.join(root, 'docker/Dockerfile.nova'), 'old environment'); const selected = commit();
     fs.writeFileSync(path.join(root, 'docker/Dockerfile.nova'), 'new environment'); const before = commit();
-    fs.writeFileSync(path.join(root, 'skills/nova/engine.ts'), 'new code'); const head = commit();
+    fs.mkdirSync(path.join(root, 'charts/kubeclaw'), { recursive: true }); fs.writeFileSync(path.join(root, 'charts/kubeclaw/values.yaml'), 'new config'); const head = commit();
     fs.mkdirSync(path.join(root, 'releases'));
     const selection = path.join(root, 'releases/runtime-images.json');
     const event = path.join(root, 'event.json'), output = path.join(root, 'output');
     fs.writeFileSync(event, JSON.stringify({ before }));
     const run = imageCommit => {
-      fs.writeFileSync(selection, JSON.stringify({ commit: imageCommit })); fs.writeFileSync(output, '');
+      fs.writeFileSync(selection, JSON.stringify({ commit: imageCommit, images: Object.fromEntries(['nova', 'prism-agent', 'buster-gateway', 'buster-runtime', 'namespace-controller', 'archviewer', 'prism-control', 'prism-studio', 'prism-worker', 'prism-ingestion'].map(name => [name, true])) })); fs.writeFileSync(output, '');
       execFileSync(process.execPath, [path.resolve('scripts/updates/runtime-inputs.mjs')], { cwd: root,
         env: { ...process.env, GITHUB_EVENT_NAME: 'push', GITHUB_SHA: head, GITHUB_EVENT_PATH: event, GITHUB_OUTPUT: output } });
       return fs.readFileSync(output, 'utf8');
@@ -139,7 +138,7 @@ test('real materialization and Helm render enable pinned bundles for all three a
     buster.runtimeInfrastructure = { ...buster.runtimeInfrastructure, registry: { endpoint: 'https://registry.example.test', transport: 'https', authSecretName: 'registry-test' } };
     fs.writeFileSync(busterFile, yaml.dump(buster));
     git(['init', '-q']); git(['config', 'core.autocrlf', 'false']); const imageCommit = commit();
-    fs.mkdirSync(path.join(root, 'skills/nova'), { recursive: true }); fs.writeFileSync(path.join(root, 'skills/nova/change.ts'), 'export const changed = true;');
+    fs.appendFileSync(busterFile, '\n# New configuration selection\n');
     const codeCommit = commit(); fs.mkdirSync(path.join(root, 'releases'));
     const names = ['nova', 'prism-agent', 'buster-gateway', 'buster-runtime', 'namespace-controller', 'archviewer', 'prism-control', 'prism-studio', 'prism-worker', 'prism-ingestion'];
     const receipt = { schemaVersion: 1, commit: imageCommit, sourceRunId: 100, sourceRunAttempt: 1,

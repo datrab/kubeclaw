@@ -545,7 +545,8 @@ default_bundle_archive_url() {
 }
 
 default_bundle_expected_commit() {
-  printf '%s\n' "$SELECTED_RUNTIME_COMMIT"
+  local variable="SELECTED_${1^^}_COMMIT"
+  printf '%s\n' "${!variable}"
 }
 
 bundle_values_field() {
@@ -553,12 +554,13 @@ bundle_values_field() {
 }
 
 require_selected_runtime() {
-  SELECTED_RUNTIME_COMMIT="$(node "$REPO_DIR/scripts/updates/deployment-release.mjs" verify "$REPO_DIR" runtime)" || return 1
-  local role expected contract
+  local role expected contract selected
   for role in nova buster prism; do
+    selected="$(node "$REPO_DIR/scripts/updates/deployment-release.mjs" verify "$REPO_DIR" runtime "$role")" || return 1
+    printf -v "SELECTED_${role^^}_COMMIT" '%s' "$selected"
     expected="$(bundle_env_for_role "$role" expected_commit)"
     contract="$(bundle_env_for_role "$role" contract_version)"
-    [[ -z $expected || $expected == "$SELECTED_RUNTIME_COMMIT" ]] || { err "${role} bundle must match selected runtime commit ${SELECTED_RUNTIME_COMMIT}"; return 1; }
+    [[ -z $expected || $expected == "$selected" ]] || { err "${role} bundle must match selected runtime commit ${selected}"; return 1; }
     [[ $contract == v2 ]] || { err "${role} bundle contract must be v2"; return 1; }
   done
 }
@@ -1363,7 +1365,7 @@ deploy_agent() {
     fi
 
     if [[ -z $bundle_expected_commit ]]; then
-      if ! bundle_expected_commit="$(default_bundle_expected_commit)"; then
+      if ! bundle_expected_commit="$(default_bundle_expected_commit "$role")"; then
         err "${role} code deploy requires $(tr '[:lower:]' '[:upper:]' <<<"$role")_CODE_BUNDLE_EXPECTED_COMMIT matching the selected runtime receipt"
         return 1
       fi
@@ -1701,7 +1703,7 @@ cmd_prism() {
     fi
   fi
   if [[ -z $prism_bundle_expected_commit ]]; then
-    if ! prism_bundle_expected_commit="$(default_bundle_expected_commit)"; then
+    if ! prism_bundle_expected_commit="$(default_bundle_expected_commit prism)"; then
       err "Prism deploy requires PRISM_CODE_BUNDLE_EXPECTED_COMMIT matching the selected runtime receipt"
       return 1
     fi

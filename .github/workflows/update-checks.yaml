@@ -38,7 +38,7 @@ jobs:
           node --test tests/verification/deployment/prism-backup.test.mts
           node --test tests/verification/deployment/prism-agent-health.test.mjs
           node --test tests/verification/deployment/runtime-image-workflows.test.mjs tests/verification/deployment/versions.test.mjs tests/verification/deployment/release-images.test.mjs tests/verification/deployment/oci-image-identity.test.mjs tests/verification/deployment/release-configuration.test.mjs tests/verification/deployment/prism-release-evidence.test.mjs tests/verification/deployment/plugin-project-reset.test.mjs
-          node --test tests/verification/deployment/gitops-continuous.test.mjs tests/verification/deployment/code-release.test.mjs
+          node --test tests/verification/deployment/gitops-continuous.test.mjs tests/verification/deployment/code-release.test.mjs tests/verification/deployment/runtime-components.test.mjs
           node --test tests/verification/deployment/gitops-release.test.mjs
           if test -f gitops/production/selection.json; then
             bundle="$(node -p 'JSON.parse(require("fs").readFileSync("gitops/production/selection.json", "utf8")).directory')"
