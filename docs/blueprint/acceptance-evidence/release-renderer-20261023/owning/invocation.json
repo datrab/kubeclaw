@@ -1,0 +1,50 @@
+{
+  "argv": [
+    "/usr/local/bin/node",
+    "--max-old-space-size=4096",
+    "scripts/generate-local-helm-authorities.mjs",
+    "--check"
+  ],
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+  "environment": {
+    "PATH": "/usr/local/bin:/usr/bin:/bin",
+    "HOME": "/home/node",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC",
+    "TMPDIR": "/home/node/.openclaw/workspace/tmp/pr13-release-20261023/environment/ffd9-clean-localhelm/tmp",
+    "LD_LIBRARY_PATH": "/home/node/.openclaw/workspace/tmp/pr13-reader-apt/root/usr/lib/x86_64-linux-gnu",
+    "FONTCONFIG_FILE": "/home/node/.openclaw/workspace/operations/pr13/runtime/chromium-fonts.conf",
+    "KUBECLAW_DOCS_GO_BINARY": "/usr/local/go/bin/go",
+    "GOENV": "off",
+    "GOTOOLCHAIN": "local",
+    "GOROOT": "/usr/local/go",
+    "GO111MODULE": "off",
+    "GOWORK": "off",
+    "GOPROXY": "off",
+    "GOSUMDB": "off",
+    "CGO_ENABLED": "0",
+    "GOOS": "linux",
+    "GOARCH": "amd64",
+    "GOAMD64": "v1",
+    "GOMAXPROCS": "2",
+    "GOPATH": "/home/node/.openclaw/workspace/tmp/pr13-release-20261023/environment/ffd9-clean-localhelm/gopath",
+    "GOMODCACHE": "/home/node/.openclaw/workspace/tmp/pr13-release-20261023/environment/ffd9-clean-localhelm/go-mod-cache",
+    "GOCACHE": "/home/node/.openclaw/workspace/tmp/pr13-release-20261023/environment/ffd9-clean-localhelm/go-build-cache",
+    "GOTMPDIR": "/home/node/.openclaw/workspace/tmp/pr13-release-20261023/environment/ffd9-clean-localhelm/go-tmp",
+    "TEST_TELEMETRY_DIR": "/home/node/.openclaw/workspace/tmp/pr13-release-20261023/environment/ffd9-clean-localhelm/go-telemetry",
+    "PYTHONNOUSERSITE": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "SETUPTOOLS_USE_DISTUTILS": "stdlib",
+    "npm_config_cache": "/home/node/.openclaw/workspace/tmp/pr13-release-20261023/environment/ffd9-clean-localhelm/npm-cache",
+    "npm_config_update_notifier": "false",
+    "npm_config_logs_max": "0"
+  },
+  "startedAt": "2026-10-23T14:11:27.988858+00:00",
+  "inputs": {
+    "scripts/docs-api-output-discovery.mjs": "2fcb2541c2f0957d3a22b062742be075e24762630d2e8c4fe763f3f99541aded",
+    "scripts/docs-deployment-scalar-occurrence-custody.mjs": "217bd883f254843462fba6a8b7e36e5cdbb2c93efc2f00d655466f066aafab56",
+    "scripts/docs-api-documentation-role-custody.mjs": "8b85f347c39ab6c9288ca917fd3608c2475ea4f10a44b3ac4c7fd108c1ff4a72",
+    "scripts/docs-api-producer-adapter-authorities.json": "a1d3da4f599b5406dde827756fc26385cdc6a0b276f8b4611c13f2d2a773bad4"
+  }
+}

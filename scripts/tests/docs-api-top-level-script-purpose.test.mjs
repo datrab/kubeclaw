@@ -8,6 +8,7 @@ import {spawnSync} from 'node:child_process';
 import {checkedTopLevelScriptPurposes, selectedTopLevelScriptPurpose} from '../docs-api-top-level-script-purpose.mjs';
 import {createSerializedOutputRoleClassifier, classifySerializedOutputRoles, deriveNativeOperationFacts} from '../docs-api-output-role-classification.mjs';
 import {assertDocumentationExecutableRole, documentationExecutableSelectors} from '../docs-api-documentation-role-custody.mjs';
+import {checkedReleaseRendererOutputs} from '../docs-api-output-discovery.mjs';
 
 const repository = path.resolve(import.meta.dirname, '../..');
 const authorityPath = 'scripts/docs-api-top-level-script-purpose-authority.json';
@@ -176,4 +177,45 @@ test('stateful stream purpose keeps canonical UNKNOWN and requires its separate 
   assert.match(purpose.purpose, /API-capable YAML stream/);
   assert.match(purpose.purpose, /separate mandatory discoverTransformedApiOutputs/);
   assert.throws(() => selectedTopLevelScriptPurpose(source, {...role, role: 'non-api'}, receipt), /changed canonical slot or role/);
+});
+
+test('release renderer retains original API documents from every maintained Ops forwarding profile', () => {
+  const classify = createSerializedOutputRoleClassifier(repository, sources);
+  const receipt = checkedTopLevelScriptPurposes(repository, graph, classify, sources);
+  const proof = checkedReleaseRendererOutputs(repository, receipt);
+  const renderer = 'scripts/updates/deployment-release.mjs';
+  assert.equal(classify(renderer).find(role => role.line === 195).role, 'unknown');
+  assert.equal(selectedTopLevelScriptPurpose(renderer, classify(renderer).find(role => role.line === 195), receipt), null);
+  assert(proof.outputs.length > 0);
+  assert.deepEqual([...new Set(proof.outputs.map(row => row.context.profile))], [
+    'selected-ops-public-render:default', 'selected-ops-public-render:releases/values/ops.yaml',
+    'selected-ops-public-render:optional-ops-output', 'selected-ops-public-render:ops-no-exec',
+    'selected-ops-public-render:boolean:networkPolicy.cilium',
+  ]);
+  for (const {value, context} of proof.outputs) {
+    assert(value.apiVersion && value.kind);
+    assert.equal(context.path, renderer);
+    assert.equal(context.line, 195);
+    assert.equal(context.forwardedProducer.forwardingCaller, 'scripts/deploy-ops-pod.sh');
+    assert.equal(context.runtimeExecutionAuthorized, false);
+    assert.equal(context.apiApplyAuthorized, false);
+    assert.match(context.executionLimit, /not live discovery\/apply or runtime-family success/);
+  }
+  assert.throws(() => {proof.outputs[0].value.kind = 'Secret';}, TypeError);
+  assert.throws(() => checkedReleaseRendererOutputs(repository, {...receipt}), /unacquired receipt/);
+});
+
+test('release forwarding refuses a changed source or forwarding receiver before native execution', () => {
+  for (const [source, change] of [
+    ['scripts/updates/deployment-release.mjs', text => text.replace('process.stdout.write(rendered);', "process.stdout.write('unreviewed');")],
+    ['scripts/deploy-ops-pod.sh', text => text.replace('cat "$temporary/rendered.yaml"', 'cat "$temporary/foreign.yaml"')],
+  ]) fixture(({root, write, acquire}) => {
+    const receipt = acquire();
+    write('scripts/docs-api-producer-adapter-authorities.json', fs.readFileSync(path.join(repository, 'scripts/docs-api-producer-adapter-authorities.json')));
+    const originalBytes = fs.readFileSync(path.join(repository, source), 'utf8');
+    const changed = change(originalBytes);
+    assert.notEqual(changed, originalBytes);
+    write(source, changed);
+    assert.throws(() => checkedReleaseRendererOutputs(root, receipt), /API_PRODUCT_(?:ADAPTER|RELEASE_RENDERER)/);
+  });
 });

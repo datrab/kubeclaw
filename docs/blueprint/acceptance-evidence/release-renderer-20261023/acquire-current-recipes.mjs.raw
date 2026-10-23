@@ -1,0 +1,13 @@
+import fs from 'node:fs';import {gzipSync,gunzipSync} from 'node:zlib';import {isDeepStrictEqual} from 'node:util';
+import {documentationExecutableRoleRecipes,documentationExecutableSelectors,documentationSelectorReceipt,documentationChildSourceAuthority} from '/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-documentation-role-custody.mjs';
+import {deriveNativeOperationFacts,nativeOperationFactDigest} from '/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-output-role-classification.mjs';
+const root=process.cwd(),out='/home/node/.openclaw/workspace/tmp/pr13-release-20261023',old=JSON.parse(gunzipSync(fs.readFileSync(out+'/baseline-recipes.json.gz'))).records,records=[],changes=[];
+for(const [source,recipe]of Object.entries(documentationExecutableRoleRecipes)){
+ if(!recipe.selectors)continue;
+ const selectors=documentationExecutableSelectors(source,fs.readFileSync(source,'utf8'),root),receipt=documentationSelectorReceipt(selectors),facts=deriveNativeOperationFacts(root,source,selectors,{trustAnchorSources:['scripts/docs-api-documentation-role-custody.mjs']}),child=documentationChildSourceAuthority(root,source),actualDigest=nativeOperationFactDigest(facts);
+ records.push({source,actualDigest,facts,selectors:receipt,child});
+ if(actualDigest===recipe.factsDigest&&isDeepStrictEqual(receipt,recipe.selectors)&&isDeepStrictEqual(child,recipe.authorityInputs))continue;
+ const before=old.find(r=>r.source===source),same=(a,b)=>isDeepStrictEqual(a,b),added=facts.filter(f=>!before.facts.some(b=>same(b,f))),removed=before.facts.filter(f=>!facts.some(b=>same(b,f)));
+ changes.push({source,beforeDigest:recipe.factsDigest,actualDigest,selectorsChanged:!same(receipt,recipe.selectors),oldSelectors:recipe.selectors,selectors:receipt,childChanged:!same(child,recipe.authorityInputs),child,added,removed});
+}
+fs.writeFileSync(out+'/current-recipes.json.gz',gzipSync(JSON.stringify({records})));fs.writeFileSync(out+'/recipe-delta.json',JSON.stringify(changes,null,2)+'\n');console.log(JSON.stringify({checked:records.length,changes:changes.map(({source,selectorsChanged,childChanged,added,removed})=>({source,selectorsChanged,childChanged,added:added.map(f=>[f.source,f.kind,f.symbol]),removed:removed.map(f=>[f.source,f.kind,f.symbol])}))},null,2));

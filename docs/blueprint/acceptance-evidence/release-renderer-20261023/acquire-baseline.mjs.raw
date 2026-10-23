@@ -1,0 +1,9 @@
+import fs from 'node:fs';import {gzipSync} from 'node:zlib';import assert from 'node:assert/strict';
+import {documentationExecutableRoleRecipes,documentationExecutableSelectors} from '/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-documentation-role-custody.mjs';
+import {deriveNativeOperationFacts,nativeOperationFactDigest} from '/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-output-role-classification.mjs';
+const root=process.cwd(),records=[];
+for(const [source,recipe]of Object.entries(documentationExecutableRoleRecipes)){
+ if(!recipe.selectors)continue;
+ const selectors=documentationExecutableSelectors(source,fs.readFileSync(source,'utf8'),root),facts=deriveNativeOperationFacts(root,source,selectors,{trustAnchorSources:['scripts/docs-api-documentation-role-custody.mjs']});const actualDigest=nativeOperationFactDigest(facts);assert.equal(actualDigest,recipe.factsDigest,source);records.push({source,actualDigest,facts});
+}
+fs.writeFileSync('/home/node/.openclaw/workspace/tmp/pr13-release-20261023/baseline-recipes.json.gz',gzipSync(JSON.stringify({root,records})));console.log(JSON.stringify({baselineRecipes:records.length}));

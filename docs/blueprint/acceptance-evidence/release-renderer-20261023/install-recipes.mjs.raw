@@ -1,0 +1,10 @@
+import fs from 'node:fs';import assert from 'node:assert/strict';
+import {documentationExecutableRoleRecipes} from '/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-documentation-role-custody.mjs';
+const changes=JSON.parse(fs.readFileSync('/home/node/.openclaw/workspace/tmp/pr13-release-20261023/recipe-delta.json'));
+assert.equal(changes.length,5);const allowed=new Set(['qualifiedReleaseRendererOutputs','checkedReleaseRendererOutputs','selectedReleaseRendererOutput','discoverScriptApiOutputs','reviewedCallerCensusSha256','reviewedSelectedGraphSha256']);
+const file='scripts/docs-api-documentation-role-custody.mjs';let code=fs.readFileSync(file,'utf8');
+for(const c of changes){assert(!c.childChanged);assert.equal(c.added.length,6);assert.equal(c.removed.length,3);for(const f of [...c.added,...c.removed])assert(allowed.has(f.symbol),JSON.stringify(f));
+ if(c.selectorsChanged){assert.equal(c.source,'scripts/docs-api-output-discovery.mjs');const old=JSON.stringify(c.oldSelectors,null,2).replaceAll('\n','\n    '),next=JSON.stringify(c.selectors,null,2).replaceAll('\n','\n    ');assert.equal(code.split(old).length,2);code=code.replace(old,next);}
+ assert.equal(code.split(c.beforeDigest).length,2);code=code.replace(c.beforeDigest,c.actualDigest);
+}
+fs.writeFileSync(file,code);console.log(JSON.stringify({renewed:changes.length,changedSelectorReceipts:changes.filter(c=>c.selectorsChanged).length,unchangedChildAndRoles:true}));

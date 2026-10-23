@@ -1,0 +1,45 @@
+[
+  {
+    "id": "AP09-documentation-agent-maintenance-20261021",
+    "revision": "2c30c4323f6541cf174e699a6b728391bf1133a2",
+    "changed": [
+      "scripts/docs-api-output-discovery.mjs",
+      "scripts/tests/docs-api-top-level-script-purpose.test.mjs"
+    ]
+  },
+  {
+    "id": "AP09-complete-static-reader-search-20261021",
+    "revision": "2c30c4323f6541cf174e699a6b728391bf1133a2",
+    "changed": [
+      "scripts/docs-api-documentation-role-custody.mjs"
+    ]
+  },
+  {
+    "id": "AP09-search-reader-gate-20261021",
+    "revision": "2c30c4323f6541cf174e699a6b728391bf1133a2",
+    "changed": [
+      "scripts/docs-api-documentation-role-custody.mjs"
+    ]
+  },
+  {
+    "id": "AP09-rendered-source-bounds-gate-20261021",
+    "revision": "2c30c4323f6541cf174e699a6b728391bf1133a2",
+    "changed": [
+      "scripts/docs-api-documentation-role-custody.mjs"
+    ]
+  },
+  {
+    "id": "AP09-complete-same-source-code-preview-20261021",
+    "revision": "2c30c4323f6541cf174e699a6b728391bf1133a2",
+    "changed": [
+      "scripts/docs-api-documentation-role-custody.mjs"
+    ]
+  },
+  {
+    "id": "AP09-complete-responsive-reader-layout-20261021",
+    "revision": "2c30c4323f6541cf174e699a6b728391bf1133a2",
+    "changed": [
+      "scripts/docs-api-documentation-role-custody.mjs"
+    ]
+  }
+]

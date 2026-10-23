@@ -1419,6 +1419,44 @@ function discoverHelmOutputs(root, {allowRejectedInputs,schemaAuthorityOnly}) {
 // cluster. Constructors are discovered from AST identity properties, not a
 // filename list. Every source position and every changed byte remain bound.
 const scriptOutputCache=new Map();
+const qualifiedReleaseRendererOutputs=new WeakSet();
+// The bare renderer slot is API-capable, not a scalar or a generic non-API
+// grant. Reuse the original, source-checked Ops renderer/forwarding adapter;
+// do not substitute a guessed Helm object or waive the selected-release check.
+export function checkedReleaseRendererOutputs(root, topLevelPurposes) {
+  const source='scripts/updates/deployment-release.mjs';
+  if(!fs.existsSync(path.join(root,source)))return null;
+  const fail=detail=>assert.fail(`API_PRODUCT_RELEASE_RENDERER_OUTPUT_UNQUALIFIED: ${detail}`);
+  const expected=topLevelPurposes?.descriptors.find(role=>role.source===source&&role.line===195);
+  if(!expected)fail('missing sealed renderer slot');
+  selectedTopLevelScriptPurpose(source,expected,topLevelPurposes); // authenticates the private receipt and exact raw roster
+  if(expected.role!=='unknown'||expected.sink!=='process.stdout.write')fail('canonical raw role');
+  const caller='scripts/deploy-ops-pod.sh',bytes=fs.readFileSync(path.join(root,caller),'utf8');
+  const sinks=shellRawOutputSinks(caller,bytes).filter(sink=>sink.line===30&&sink.command==='cat');
+  if(sinks.length!==1)fail('original forwarding receiver');
+  const proof=shellReleaseFileProof(root,caller,bytes,sinks[0]);
+  if(!proof||proof.role!=='api'||!proof.outputs.length
+    ||proof.outputs.some(output=>output.context.forwardedProducer?.path!==source))fail('original complete Ops output');
+  const dependencies=[caller,...Object.keys(proof.dependencies)];
+  const inputDigest=hash(JSON.stringify([topLevelPurposes.inputDigest,proof.sourceDigest,proof.dependencies,
+    proof.outputs.map(output=>[output.context.profile,output.context.inputDigest,output.context.outputDigest])]));
+  const outputs=proof.outputs.map(({value,context})=>({value,context:{...context,
+    path:source,line:195,sourceDigest:hash(fs.readFileSync(path.join(root,source))),
+    producer:'node-original-release-forwarding',inputs:dependencies,inputDigest,
+    forwardedProducer:{...context.forwardedProducer,forwardingCaller:caller,forwardingLine:30},
+    runtimeExecutionAuthorized:false,apiApplyAuthorized:false,
+    executionLimit:'Original finite Ops renderer profiles with explicit offline discovery, not live discovery/apply or runtime-family success. Canonical renderer stdout remains UNKNOWN; supported runtime configuration failures are not bypassed.'}}));
+  const freeze=value=>{if(value&&typeof value==='object'){Object.values(value).forEach(freeze);Object.freeze(value);}return value;};
+  const receipt=freeze({source,expected,dependencies,inputDigest,outputs});
+  qualifiedReleaseRendererOutputs.add(receipt);return receipt;
+}
+function selectedReleaseRendererOutput(source,role,receipt) {
+  if(source!=='scripts/updates/deployment-release.mjs'||role.line!==195)return false;
+  assert(receipt&&qualifiedReleaseRendererOutputs.has(receipt),'API_PRODUCT_RELEASE_RENDERER_OUTPUT_UNQUALIFIED: unacquired receipt');
+  const descriptor=value=>Object.fromEntries(['line','sink','expression','sinkContract','role'].map(key=>[key,value[key]??null]));
+  assert.deepEqual(descriptor(role),descriptor(receipt.expected),'API_PRODUCT_RELEASE_RENDERER_OUTPUT_UNQUALIFIED: changed canonical slot');
+  return true;
+}
 // This selected diagnostic recipe includes its complete error-collection
 // authority. Sink facts alone cannot bind new values added to the error list.
 // A mutable line/digest refresh cannot authorize a changed producer or output.
@@ -1791,12 +1829,14 @@ export function discoverScriptApiOutputs(root) {
   const topLevelPurposes=checkedTopLevelScriptPurposes(root,documentationGraphCache.get(root),sourcePurposeClassifier,sourcePurposeSources);
   const probe39=checkedOriginalProbe39Output(root,documentationGraphCache.get(root),sourcePurposeClassifier,sourcePurposeSources);
   const versionsMap=checkedVersionsMapOutputs(root,documentationGraphCache.get(root),sourcePurposeClassifier,sourcePurposeSources);
+  const releaseRenderer=sourcePurposeSources.includes('scripts/updates/deployment-release.mjs')
+    ?checkedReleaseRendererOutputs(root,topLevelPurposes):null;
   const sourceInputs=walkProductSources(root,producerRoots,()=>true);
   if(fs.existsSync(path.join(root,'package.json')))sourceInputs.push('package.json');
-  const inputKey=hash(JSON.stringify([documentationGraphCache.get(root).inputKey,topLevelPurposes?.inputDigest??null,probe39?.inputDigest??null,versionsMap?.inputDigest??null,gitOpsProfile?.witnessDigest??null,infrastructureProfile?.witnessDigest??null,disabledRegistration?.witnessDigest??null,bundleCopy?.inputDigest??null,configOutput?.inputDigest??null,minimalPlugin?.inputDigest??null,[...scalarOccurrences].map(([source,receipt])=>[source,receipt.inputDigest]),sourceInputs.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])]));
+  const inputKey=hash(JSON.stringify([documentationGraphCache.get(root).inputKey,topLevelPurposes?.inputDigest??null,probe39?.inputDigest??null,versionsMap?.inputDigest??null,releaseRenderer?.inputDigest??null,gitOpsProfile?.witnessDigest??null,infrastructureProfile?.witnessDigest??null,disabledRegistration?.witnessDigest??null,bundleCopy?.inputDigest??null,configOutput?.inputDigest??null,minimalPlugin?.inputDigest??null,[...scalarOccurrences].map(([source,receipt])=>[source,receipt.inputDigest]),sourceInputs.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])]));
   const cached=scriptOutputCache.get(root);
   if(cached?.inputKey===inputKey&&cached.dependencies.every(([source,digest])=>fs.existsSync(path.join(root,source))&&hash(fs.readFileSync(path.join(root,source)))===digest))return cached.result;
-  const classifiedDependencies=new Set([...(probe39?.dependencies??[]),...(topLevelPurposes?.dependencies??[]),...(versionsMap?.dependencies??[]),...(infrastructureProfile?.dependencies??[]),...(disabledRegistration?.dependencies??[])]);
+  const classifiedDependencies=new Set([...(probe39?.dependencies??[]),...(topLevelPurposes?.dependencies??[]),...(versionsMap?.dependencies??[]),...(releaseRenderer?.dependencies??[]),...(infrastructureProfile?.dependencies??[]),...(disabledRegistration?.dependencies??[])]);
   const result=[];
   for(const source of walkProductSources(root,producerRoots,file=>!executableSourceSet.has(path.relative(root,fs.realpathSync(path.join(root,file))).replaceAll(path.sep,'/'))&&!/\.(?:[cm]?js|[cm]?ts|py|sh|go|ya?ml|json|md|txt|toml|lock|pem|crt)$/u.test(file))) {
     const bytes=fs.readFileSync(path.join(root,source),'utf8');
@@ -1870,17 +1910,19 @@ export function discoverScriptApiOutputs(root) {
       const topLevelPurpose=selectedTopLevelScriptPurpose(source,role,topLevelPurposes);
       const probe39Slot=selectedOriginalProbe39Output(source,role,probe39);
       const versionsMapPurpose=selectedVersionsMapOutput(source,role,versionsMap);
+      const releaseRendererSlot=selectedReleaseRendererOutput(source,role,releaseRenderer);
       const infrastructureSlot=selectedInfrastructureOutputProfile(source,role,infrastructureProfile);
       const disabledRegistrationSlot=selectedDisabledRegistrationOutput(source,role,disabledRegistration);
       assert(scalarOccurrences.has(source)
         ?selectedDeploymentScalarOccurrences(role,scalarOccurrences.get(source))
-        :probe39Slot||topLevelPurpose||versionsMapPurpose||infrastructureSlot||disabledRegistrationSlot||role.role!=='unknown',
+        :probe39Slot||topLevelPurpose||versionsMapPurpose||releaseRendererSlot||infrastructureSlot||disabledRegistrationSlot||role.role!=='unknown',
         `API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: ${source}:${role.line}: ${role.expression}`);
     }
     if(source==='scripts/render-kubernetes-api-probe.mjs'&&probe39){result.push(...probe39.outputs);continue;}
     if(witness){result.push(...witness.outputs);continue;}
     if(gitOpsProfile?.sources.includes(source)){result.push(...gitOpsProfile.outputs.filter(output=>output.context.path===source));continue;}
     if(source==='scripts/versions.mjs'&&versionsMap){result.push(...versionsMap.outputs);continue;}
+    if(source==='scripts/updates/deployment-release.mjs'&&releaseRenderer){result.push(...releaseRenderer.outputs);continue;}
     if(!outputRoles.some(role=>role.role==='api')&&(!/apiVersion/u.test(bytes)||!/(?:kind\s*:|['"]kind['"]\s*:)/u.test(bytes)))continue;
     const tree=ts.createSourceFile(source,bytes,ts.ScriptTarget.Latest,true,/\.[cm]?ts$/u.test(source)?ts.ScriptKind.TS:ts.ScriptKind.JS);
     assert(!tree.parseDiagnostics.length,`API_PRODUCT_PRODUCER_PARSE_FAILED: ${source}`);
