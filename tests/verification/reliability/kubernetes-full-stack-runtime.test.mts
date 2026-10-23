@@ -287,3 +287,48 @@ test('diagnostic log requests and total UTF-8 evidence remain bounded', async ()
   assert.ok(Buffer.byteLength(JSON.stringify(result)) <= 96 * 1024);
   assert.ok(result.logs.every(log => log.text === ''));
 });
+
+test('replacement retries only bounded explicit conflicts and revalidates ownership', async () => {
+  for (const mode of ['recover', 'changed', 'persistent', 'forbidden', 'cancelled']) {
+    let patches = 0; let reads = 0; let request: any;
+    const versions: string[] = [];
+    const abort = new AbortController();
+    const { invoker, root } = setup(async (_: string, args: string[]) => {
+      if (args[0] === 'auth') return { stdout: 'yes' };
+      if (args[0] === 'patch') {
+        patches++;
+        const patch = JSON.parse(args[args.indexOf('-p') + 1]!);
+        versions.push(patch.metadata.resourceVersion);
+        request = JSON.parse(patch.metadata.annotations['kubeclaw.forgestack.ai/replace-pod']);
+        if (mode === 'cancelled') abort.abort();
+        if (mode === 'forbidden') throw new Error('Error from server (Forbidden): denied');
+        if (patches === 1 || mode === 'persistent') throw new Error('Error from server (Conflict): object modified');
+        return { stdout: '{}' };
+      }
+      if (args[1]?.startsWith('busternamespaceleases.')) {
+        reads++;
+        return { stdout: JSON.stringify({ metadata: { uid: mode === 'changed' && patches ? 'other' : 'lease', resourceVersion: String(reads) },
+          spec: { fullStack: true, purpose: 'gate', namespaceName: 'test-stack', namespacePrefix: 'test', serviceName: 'app', servicePort: 8080 },
+          status: { namespaceName: 'test-stack', phase: 'Ready', expiresAt: new Date(Date.now() + 60000).toISOString(),
+            ...(patches >= 2 ? { podReplacement: { ...request, phase: 'DeletionRequested' } } : {}) } }) };
+      }
+      if (args[1] === 'pods') return { stdout: JSON.stringify({ items: [{ metadata: { name: 'app-0', uid: mode === 'recover' && patches >= 2 ? 'new-pod' : 'pod',
+        ownerReferences: [{ controller: true, kind: 'ReplicaSet', uid: 'owner' }] },
+        status: { phase: 'Running', conditions: [{ type: 'Ready', status: 'True' }] } }] }) };
+      if (args[1] === 'service') return { stdout: JSON.stringify({ spec: { ports: [{ port: 8080 }] } }) };
+      if (args[1] === 'endpoints') return { stdout: JSON.stringify({ subsets: [{ addresses: [{ ip: '10.0.0.2' }], ports: [{ port: 8080 }] }] }) };
+      throw new Error(`Unexpected command ${args}`);
+    });
+    try {
+      const invoke = () => invoker.invoke('kubernetes.fixture', { operation: 'replace-pod', resource: requestResource,
+        payload: { leaseName: 'test-stack', leaseUID: 'lease', namespace: 'test-stack', podName: 'app-0', podUID: 'pod', timeoutMs: 5000 } } as any, abort.signal);
+      if (mode === 'recover') {
+        assert.equal((await invoke()).ok, true);
+        assert.equal(patches, 2); assert.deepEqual(versions, ['1', '2']);
+      } else {
+        await assert.rejects(invoke, mode === 'changed' ? /LEASE_DENIED/ : mode === 'cancelled' ? /CANCELLED/ : mode === 'forbidden' ? /Forbidden/ : /Conflict/);
+        assert.equal(patches, mode === 'persistent' ? 3 : 1);
+      }
+    } finally { fs.rmSync(root, { recursive: true, force: true }); }
+  }
+});

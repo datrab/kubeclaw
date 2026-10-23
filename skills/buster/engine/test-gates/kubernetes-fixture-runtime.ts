@@ -789,8 +789,9 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
     }
   }
 
-  async #replacePod(payload: JsonObject, signal: AbortSignal): Promise<Readonly<Record<string, unknown>>> {
+  async #replacePod(payload: JsonObject, signal: AbortSignal, conflictRetries = 0): Promise<Readonly<Record<string, unknown>>> {
     const timeoutMs = integer(payload.timeoutMs, 'timeoutMs', 1000, this.#maximumExecutionMs);
+    const deadline = Date.now() + timeoutMs;
     const leaseName = text(payload.leaseName, 'leaseName', 63);
     const namespace = text(payload.namespace, 'namespace', 63);
     const podName = text(payload.podName, 'podName', 63);
@@ -825,8 +826,20 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
     const request = { requestId, leaseUID, namespace, podName, podUID };
     const patch = JSON.stringify({ metadata: { resourceVersion: metadata.resourceVersion,
       annotations: { 'kubeclaw.forgestack.ai/replace-pod': JSON.stringify(request) } } });
-    await this.#kubectlRun(['patch', resource, leaseName, '-n', this.#controllerNamespace, '--type=merge', '-p', patch], null, signal, 15_000);
-    const deadline = Date.now() + timeoutMs;
+    try {
+      await this.#kubectlRun(['patch', resource, leaseName, '-n', this.#controllerNamespace, '--type=merge', '-p', patch], null, signal, 15_000);
+    } catch (error) {
+      const remainingMs = deadline - Date.now();
+      // Controller status writes can race this resourceVersion precondition. Retry
+      // only explicit conflicts, re-reading and revalidating lease AND Pod identity.
+      // Never remove the precondition or retry an ambiguous transport failure.
+      if (!signal.aborted && conflictRetries < 2 && remainingMs >= 1000
+        && error instanceof Error && error.message.includes('KUBERNETES_FIXTURE_KUBECTL_FAILED:')
+        && error.message.includes('Error from server (Conflict):')) {
+        return this.#replacePod({ ...payload, timeoutMs: remainingMs }, signal, conflictRetries + 1);
+      }
+      throw error;
+    }
     while (Date.now() < deadline) {
       const fresh = object(JSON.parse(await this.#kubectlRun(['get', resource, leaseName, '-n', this.#controllerNamespace, '-o', 'json'], null, signal, Math.max(1, Math.min(15_000, deadline - Date.now())))), 'lease');
       if (object(fresh.metadata, 'metadata').uid !== leaseUID || object(fresh.metadata, 'metadata').deletionTimestamp
