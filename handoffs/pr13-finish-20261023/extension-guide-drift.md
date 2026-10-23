@@ -105,3 +105,51 @@ these new custody guards. The next coherent batch must compare the complete
 purpose/selector/child inputs, independently assess the exact two Source deltas,
 and renew only demonstrated unchanged scopes before resuming the receiver.
 No whole gate is accepted and no additional acceptance is counted.
+
+
+## Exact custody restoration — 2026-10-23 21:22 UTC
+
+Source candidate `337e1e6dc5467941a66c26e1930528f414aed93b` supersedes the
+unfinished custody paragraph above, without rewriting its failures. Full native
+vectors compared against the last qualified baseline: 1,005 callers and 1,248
+selected graph files, no added/removed membership; the two reviewed checker
+changes and one induced owner-purpose dependency pin are the only byte deltas.
+All 105 role recipes were recomputed against their actual qualified baseline;
+99 fact vectors are unchanged. Six changed vectors contain only the capability
+fixture's explicit genuine reader-dependency binding and the five consumers'
+two scalar vector constants / owner-purpose one-pin object. Every selector,
+child authority, role, consumer and allowed native route is unchanged.
+
+The Source-owned capability self/purpose pins, emitter dependency pin, owner
+purpose input, exact mutable qualification Source/operation recipe and same
+Boolean predicate's native dependency receipt were reviewed together. The
+Boolean baseline was reconstructed from the genuine previous object fact and
+matched its original complete native digest before renewal. No output class,
+DATA slot, generic exemption, release receipt or product runtime changed.
+Original receiver attempts exposed and retained the intermediate qualification,
+selected-fact and Boolean dependency failures. The final unchanged original
+`node --max-old-space-size=4096 scripts/generate-local-helm-authorities.mjs --check`
+with actual Go on PATH now again terminally observes
+`API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: skills/buster/engine/test-gates/artifacts.ts:41: content`.
+This is restoration of the original baseline failure, not a passing receiver.
+
+Pinned autoreview upstream `fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f`,
+Codex / gpt-5.6-terra / high / P2, local four-file candidate: no actionable
+findings. Bounded source-only inspection from supplied complete adjacent Source
+and exact deltas; no reviewer-executed runtime tests claimed. Existing genuine
+TruffleHog and agent Codex auth were used after preserving the initial PATH/auth
+failures. Coordinator: 14 scalar controls, 36 owner/guide controls, 97 publication
+controls pass. Actual committed177-page reader build and all five native artifact,
+search, Source-link, Source-preview and fresh-diagram checks pass. Initial build
+missing shared browser libraries is retained; recovered build uses the existing
+shared operations browser wrapper, not new or substitute packages.
+
+Exactly five pre-existing reader completion records are affected solely through
+the role-custody authority; complete original 202/19/33/26/81-file vectors show
+all pages and every other listed Source byte unchanged. Preserve only those old
+scopes, full original contracts/limits/failures and counters; no new browser,
+human Reader, screenreader or runtime acceptance. Detailed acquisitions,
+intermediate failures, full original contracts/vectors and review invocations:
+`operations/pr13/evidence/extension-guide-drift-20261023/` outside repository tmp.
+Whole A910-13/14, nested-config/Secret baseline-green mutation routes, all five
+DATA slots UNKNOWN and the selected-release Knip boundary remain open.

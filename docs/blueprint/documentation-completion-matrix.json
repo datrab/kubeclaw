@@ -14191,7 +14191,7 @@
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "1b2921a14c0a5b1342a83fadadb4316fa21071c5",
+      "revision": "337e1e6dc5467941a66c26e1930528f414aed93b",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -14562,6 +14562,11 @@
           "command": "node --test scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/deployment-scalar-occurrence-custody.test.mjs scripts/tests/docs-documentation-owner-purpose.test.mjs scripts/tests/api-output-node-entry-custody.test.mjs; current publication build and five native artifact checks",
           "exitCode": 0,
           "observation": "69 custody controls pass;106 publication/CI controls and current177-page build/five artifact checks pass. Exact full105-vector comparison:99 unchanged,6 reviewed bounded metadata deltas; all affected pages and remaining listed Source files unchanged."
+        },
+        {
+          "command": "Independent finite extension-checker custody review; 14 scalar +36 owner/guide +97 publication controls; original current177-page build and five artifact/search/Source/preview/diagram checks",
+          "exitCode": 0,
+          "observation": "Same bounded reader acceptance preserved, not counted anew. Complete original scope file vectors: only role-custody authority changes;99/105 role facts unchanged,6 exact reviewed dependencies;all105 selectors/child authorities unchanged. Original DATA artifacts.ts41 failure actually reached; no new Reader/person/runtime or whole extension acceptance."
         }
       ],
       "limits": [
@@ -15455,7 +15460,7 @@
     },
     {
       "id": "AP09-search-reader-gate-20261021",
-      "revision": "1b2921a14c0a5b1342a83fadadb4316fa21071c5",
+      "revision": "337e1e6dc5467941a66c26e1930528f414aed93b",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-04 code/evidence review plus narrow Source/Reader/Quality native-impact follow-up",
       "verdict": "PASS",
@@ -15618,6 +15623,11 @@
           "command": "node --test scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/deployment-scalar-occurrence-custody.test.mjs scripts/tests/docs-documentation-owner-purpose.test.mjs scripts/tests/api-output-node-entry-custody.test.mjs; current publication build and five native artifact checks",
           "exitCode": 0,
           "observation": "69 custody controls pass;106 publication/CI controls and current177-page build/five artifact checks pass. Exact full105-vector comparison:99 unchanged,6 reviewed bounded metadata deltas; all affected pages and remaining listed Source files unchanged."
+        },
+        {
+          "command": "Independent finite extension-checker custody review; 14 scalar +36 owner/guide +97 publication controls; original current177-page build and five artifact/search/Source/preview/diagram checks",
+          "exitCode": 0,
+          "observation": "Same bounded reader acceptance preserved, not counted anew. Complete original scope file vectors: only role-custody authority changes;99/105 role facts unchanged,6 exact reviewed dependencies;all105 selectors/child authorities unchanged. Original DATA artifacts.ts41 failure actually reached; no new Reader/person/runtime or whole extension acceptance."
         }
       ],
       "limits": [
@@ -16121,7 +16131,7 @@
     },
     {
       "id": "AP09-rendered-source-bounds-gate-20261021",
-      "revision": "2a78151955534f57f8c6ebeb49d051383b3a3afa",
+      "revision": "337e1e6dc5467941a66c26e1930528f414aed93b",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-09 Source/Reader/Quality review and narrow changed-boundary impact review for 21 prior PASS records",
       "verdict": "PASS",
@@ -16293,6 +16303,11 @@
           "command": "node --test scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/deployment-scalar-occurrence-custody.test.mjs scripts/tests/docs-documentation-owner-purpose.test.mjs scripts/tests/api-output-node-entry-custody.test.mjs; current publication build and five native artifact checks",
           "exitCode": 0,
           "observation": "69 custody controls pass;106 publication/CI controls and current177-page build/five artifact checks pass. Exact full105-vector comparison:99 unchanged,6 reviewed bounded metadata deltas; all affected pages and remaining listed Source files unchanged."
+        },
+        {
+          "command": "Independent finite extension-checker custody review; 14 scalar +36 owner/guide +97 publication controls; original current177-page build and five artifact/search/Source/preview/diagram checks",
+          "exitCode": 0,
+          "observation": "Same bounded reader acceptance preserved, not counted anew. Complete original scope file vectors: only role-custody authority changes;99/105 role facts unchanged,6 exact reviewed dependencies;all105 selectors/child authorities unchanged. Original DATA artifacts.ts41 failure actually reached; no new Reader/person/runtime or whole extension acceptance."
         }
       ],
       "limits": [
@@ -17100,7 +17115,7 @@
     },
     {
       "id": "AP09-complete-same-source-code-preview-20261021",
-      "revision": "2a78151955534f57f8c6ebeb49d051383b3a3afa",
+      "revision": "337e1e6dc5467941a66c26e1930528f414aed93b",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole PUB004 Source/Reader/Quality closeout plus narrow changed-boundary preservation for21priorPASSrecords",
       "verdict": "PASS",
@@ -17260,6 +17275,11 @@
           "command": "node --test scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/deployment-scalar-occurrence-custody.test.mjs scripts/tests/docs-documentation-owner-purpose.test.mjs scripts/tests/api-output-node-entry-custody.test.mjs; current publication build and five native artifact checks",
           "exitCode": 0,
           "observation": "69 custody controls pass;106 publication/CI controls and current177-page build/five artifact checks pass. Exact full105-vector comparison:99 unchanged,6 reviewed bounded metadata deltas; all affected pages and remaining listed Source files unchanged."
+        },
+        {
+          "command": "Independent finite extension-checker custody review; 14 scalar +36 owner/guide +97 publication controls; original current177-page build and five artifact/search/Source/preview/diagram checks",
+          "exitCode": 0,
+          "observation": "Same bounded reader acceptance preserved, not counted anew. Complete original scope file vectors: only role-custody authority changes;99/105 role facts unchanged,6 exact reviewed dependencies;all105 selectors/child authorities unchanged. Original DATA artifacts.ts41 failure actually reached; no new Reader/person/runtime or whole extension acceptance."
         }
       ],
       "limits": [
@@ -17721,7 +17741,7 @@
     },
     {
       "id": "AP09-complete-responsive-reader-layout-20261021",
-      "revision": "2a78151955534f57f8c6ebeb49d051383b3a3afa",
+      "revision": "337e1e6dc5467941a66c26e1930528f414aed93b",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A91207 responsive-layout closeout and narrow24-record prior-boundary preservation",
       "verdict": "PASS",
@@ -17941,6 +17961,11 @@
           "command": "node --test scripts/tests/docs-api-top-level-script-purpose.test.mjs scripts/tests/deployment-scalar-occurrence-custody.test.mjs scripts/tests/docs-documentation-owner-purpose.test.mjs scripts/tests/api-output-node-entry-custody.test.mjs; current publication build and five native artifact checks",
           "exitCode": 0,
           "observation": "69 custody controls pass;106 publication/CI controls and current177-page build/five artifact checks pass. Exact full105-vector comparison:99 unchanged,6 reviewed bounded metadata deltas; all affected pages and remaining listed Source files unchanged."
+        },
+        {
+          "command": "Independent finite extension-checker custody review; 14 scalar +36 owner/guide +97 publication controls; original current177-page build and five artifact/search/Source/preview/diagram checks",
+          "exitCode": 0,
+          "observation": "Same bounded reader acceptance preserved, not counted anew. Complete original scope file vectors: only role-custody authority changes;99/105 role facts unchanged,6 exact reviewed dependencies;all105 selectors/child authorities unchanged. Original DATA artifacts.ts41 failure actually reached; no new Reader/person/runtime or whole extension acceptance."
         }
       ],
       "limits": [
