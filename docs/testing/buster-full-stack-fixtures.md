@@ -99,3 +99,24 @@ It lacks a supported multi-image inventory, controller-owned product-policy
 composition, UID-bound replacement and completed-Job readiness semantics. Those
 are extension gaps, not evidence that the documented single-image flow failed.
 This document records the extension; target-cluster behavior remains unverified.
+
+## 2026-10-23 readiness diagnostics: first implementation checkpoint
+
+Readiness and service-readiness timeouts now collect an allowlisted snapshot of
+Pod identity/UID, phase, scheduling/readiness conditions, init/regular container
+current and previous state, exit codes and restarts, plus event reasons/counts,
+**before** lease cleanup. Pod/event reads have one-second per-read and five-second
+overall diagnostic deadlines and share caller cancellation. Diagnostic read
+failures and cleanup failure are recorded independently. Ordinary fixture provider
+results carry the snapshot in `providerDetails.values.failureEvidence`, with a
+failed outcome and no deployment outputs. Cancellation still propagates as an
+error and cleanup retains its independent deadline.
+
+This is intentionally **not yet the complete diagnostic gap fix**. Arbitrary API
+messages and container logs remain omitted rather than leaking probe commands,
+credentials or application output. Next: establish the safe bounded log/message
+redaction path (including previous logs), namespace UID, durable evidence-file
+publication, and cover actual crash/probe cases and cancellation/cleanup through
+the runtime. Then run platform review/build/rollout via the established workflow
+and repeat the disposable HTTP canary. No rollout or live acceptance was performed
+at this checkpoint; the historical startup cause is still unknown.
