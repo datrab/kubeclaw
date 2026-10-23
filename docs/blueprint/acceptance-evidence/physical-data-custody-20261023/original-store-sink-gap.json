@@ -1,0 +1,9 @@
+{
+  "source": "skills/buster/engine/test-gates/runner.ts",
+  "line": 1924,
+  "originalOperation": "await this.#store.store(attemptId,evidenceDirectory,declaration,maximumBytes-total,signal)",
+  "sinkSites": [],
+  "roles": [],
+  "scope": "inert original Source diagnostic, no provider/store execution",
+  "expected": "opaque DATA publication remains surfaced as UNKNOWN, never non-api"
+}

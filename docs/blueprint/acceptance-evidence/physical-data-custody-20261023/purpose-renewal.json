@@ -1,0 +1,22 @@
+{
+  "inputCount": 68,
+  "sourceCount": 11,
+  "descriptorCount": 24,
+  "incomingEdges": 11,
+  "publicEntries": 11,
+  "absentPackageBoundaries": [
+    "scripts/package.json",
+    "scripts/updates/package.json",
+    "scripts/observability-retirement/package.json"
+  ],
+  "deltas": [
+    {
+      "path": "scripts/docs-api-output-role-classification.mjs",
+      "before": "e02f1231c2a97bc455760244cbd00682cb5b2fe9315ae12140662a0219a291a8",
+      "after": "ad40f2882e0fb11748e504109e2f7f5c3d6bfe24f0d1bba7c785cbaba68e6b6f"
+    }
+  ],
+  "onlyAuthorityInputAndHelperConstantChanged": true,
+  "oldAuthoritySha256": "2680e2b9b2a53dadeb92b95a031a716a7063b5779d1a41337f746c8098f5f063",
+  "newAuthoritySha256": "eafef5526d6012ce78eb3a72f3e9321624135e927bfd329182fba6bea37515fd"
+}

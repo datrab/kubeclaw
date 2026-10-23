@@ -4,7 +4,7 @@ import path from 'node:path';
 import {createHash} from 'node:crypto';
 
 const authorityPath = 'scripts/docs-api-top-level-script-purpose-authority.json';
-const authoritySha256 = '2680e2b9b2a53dadeb92b95a031a716a7063b5779d1a41337f746c8098f5f063';
+const authoritySha256 = 'eafef5526d6012ce78eb3a72f3e9321624135e927bfd329182fba6bea37515fd';
 const hash = value => createHash('sha256').update(value).digest('hex');
 const receipts = new WeakSet();
 const selectedSources = Object.freeze([
