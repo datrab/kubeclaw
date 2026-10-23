@@ -125,7 +125,15 @@ export function provider() {
       const config = configuration(invocation);
       const manifest = manifestInput(invocation);
       const result = await context.invoke('kubernetes.fixture', capabilityRequest(invocation, config, manifest));
-      if (result.ok !== true) throw new Error('KUBERNETES_FIXTURE_PREPARATION_FAILED');
+      if (result.ok !== true) {
+        if (!result.failureEvidence) throw new Error('KUBERNETES_FIXTURE_PREPARATION_FAILED');
+        const summary = `${String(result.errorCode)} in ${String(result.namespace)}; see fixture failure evidence.`;
+        return { schemaVersion: 'provider-result.v1', outcome: 'failed', summary,
+          counts: { total: 1, passed: 0, failed: 1, skipped: 0 },
+          findings: [{ id: 'kubernetes-fixture:readiness', severity: 'high', rule: 'kubernetes.fixture.readiness', message: summary }],
+          metrics: [], evidenceFiles: [], reports: [], outputs: [], exitCode: null, signal: null,
+          providerDetails: details({ failureEvidence: result.failureEvidence, errorCode: result.errorCode }) };
+      }
       if (config.testCredentials && !result.generatedCredentials) throw new Error('KUBERNETES_FIXTURE_CREDENTIAL_PROVENANCE_MISSING');
       const deployment = { schemaVersion: 'kubernetes-deployment-fixture.v1', leaseName: result.leaseName,
         namespace: result.namespace,
