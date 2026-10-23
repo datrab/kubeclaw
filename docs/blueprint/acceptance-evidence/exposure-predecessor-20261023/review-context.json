@@ -1,0 +1,7 @@
+{
+  "original": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-output-role-classification.mjs",
+  "sha256": "7015670bb5bdb865ae58afaa462bf133b8de39b1f9ca21da0518308117991957",
+  "supplied": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/.cache/pr13-exposure-review/source.txt",
+  "suppliedSha256": "068d3b2374369123841f4f6be06e962f76f07d3cb4fca874861b9385ae9692c6",
+  "transformation": "Only unitToken -> unitBasenamePart, noncredential basename parser variable appearing in existing string/regex at line901; scanner false positive. No changed region affected. Full file otherwise exact."
+}

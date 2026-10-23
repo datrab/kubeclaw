@@ -1,0 +1,58 @@
+{
+  "verdict": "PASS_BOUNDED_GUARDED_PREDECESSOR_CODEC",
+  "scope": "Exactly exposure-generation.ts return JSON.stringify(lineage), full physical Source SHA256 and canonical path sealed. Runtime owner string/previous array/item guards and bounded Set union reviewed; type cast is not authority. Annotation callers retain API DATA obligations. No payload/metadata blanket exemption or release receipt rewrite.",
+  "sourceConsumers": [
+    "skills/buster/engine/test-gates/exposure-generation.ts:23-36",
+    "skills/buster/engine/test-gates/exposure-handoff.ts:32-39",
+    "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts:214-219",
+    "cmd/buster-namespace-controller/exposure-generation.go:97-127"
+  ],
+  "tests": {
+    "total": 68,
+    "passed": 68,
+    "failed": 0,
+    "skipped": 0,
+    "scope": "8codec baseline/guard/API mutation/warm-cache tests plus original purpose/custody/configuration/probe/versions regression suite, no skips"
+  },
+  "custody": {
+    "baselineSemanticRecipesReproduced": 105,
+    "unchangedRecipes": 99,
+    "renewedRecipes": 6,
+    "deltas": "Five original consumer recipes replace exactly classifier declaration, finite-purpose authoritySha256, and2scalar pin facts; classifier own recipe replaces2declarations and one existing selector syntax hash. No child/role/membership change.",
+    "scalarSelectedVector": 1248,
+    "scalarCallerVector": 1005,
+    "baselineExact": true,
+    "onlySourceByteDelta": "Two verified stages: classifier only, then finite-purpose helper constant only; both complete1248/1005vectors reproduce prior hashes.",
+    "purpose": {
+      "inputs": 68,
+      "producers": 11,
+      "canonicalNativeDescriptors": 24,
+      "currentGraph": {
+        "sources": 1250,
+        "edges": 2472,
+        "publicEntries": 1195
+      },
+      "allOriginalRostersAndDescriptorsUnchanged": true,
+      "onlyPurposeAuthorityDelta": "One classifier input hash and owning helper authoritySha256"
+    }
+  },
+  "review": {
+    "upstreamCommit": "fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f",
+    "settings": "Codex gpt-5.6-terra/high, tools on, P0-P2",
+    "finalConfidence": 0.86,
+    "result": "No actionable findings. Supplied complete datasets and strict semantic delta/install scripts; noncredential unitToken identifier in unrelated classifier dataset line901 renamed unitBasenamePart only to avoid evidence-scanner false positive; actual source unchanged.",
+    "limits": "Reviewer source-only; no reviewer test execution or unchanged repository inspection. Coordinator tests separate. No fresh Reader/practical/global/API/runtime acceptance. Five original reader scopes supplied; sixth maintenance scope identified after purpose authority renewal and requires separate bounded impact review before register rebind."
+  },
+  "acceptance": {
+    "requirementsAccepted": 224,
+    "requirementsTotal": 261,
+    "gatesAccepted": 56,
+    "gatesTotal": 89,
+    "newAcceptedIds": [],
+    "affectedOriginalExplicitScopes": 6,
+    "historicalPracticalEvidenceNotReexecuted": true
+  },
+  "preservedFailure": "RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json; no selected-release receipt rewritten",
+  "originalReceiver": "Original command exit1 after predecessor36 and all finite input/custody dependencies pass; next actual blocker skills/buster/engine/test-gates/runner.ts:1263 return errorCandidates. No global generator success.",
+  "nextAction": "Read original runner errorCandidates constructor/guards/callers/terminal role. Reject arbitrary API-bearing details. Continue remaining33gates/37requirements, no blanket metadata exemption."
+}

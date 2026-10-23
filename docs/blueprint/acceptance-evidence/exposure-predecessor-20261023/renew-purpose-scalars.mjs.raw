@@ -1,0 +1,14 @@
+import fs from 'node:fs';import assert from 'node:assert/strict';import {createHash} from 'node:crypto';import {gunzipSync} from 'node:zlib';import {execFileSync} from 'node:child_process';
+import {deploymentScalarCallerFacts} from '/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-deployment-scalar-occurrence-custody.mjs';
+const root=process.cwd(),out='/home/node/.openclaw/workspace/operations/pr13/evidence/exposure-predecessor-20261023',hash=x=>createHash('sha256').update(x).digest('hex');
+const graph=JSON.parse(gunzipSync(fs.readFileSync('docs/blueprint/acceptance-evidence/combined-api-adapters-20261022/restart-two-helper-purpose-acquisition.json.gz')));
+const discovery='scripts/docs-api-top-level-script-purpose.mjs',scalar='scripts/docs-deployment-scalar-occurrence-custody.mjs';
+const before=fs.readFileSync(scalar,'utf8'),oldDiscovery=execFileSync('git',['show','HEAD:'+discovery]);
+const selected=graph.closureSources.filter(f=>![scalar,'scripts/docs-api-documentation-role-custody.mjs'].includes(f)).sort().map(f=>({path:f,sha256:hash(fs.readFileSync(f))}));const callers=deploymentScalarCallerFacts(root);
+const baseline=rows=>rows.map(row=>row.path===discovery?{...row,sha256:hash(oldDiscovery)}:row);
+let candidate=before;
+for(const [name,rows]of [['reviewedSelectedGraphSha256',selected],['reviewedCallerCensusSha256',callers]]){
+ const old=before.match(new RegExp('const '+name+" = '([a-f0-9]{64})'"))[1];assert.equal(hash(JSON.stringify(baseline(rows))),old,'baseline full vector mismatch '+name);
+ candidate=candidate.replace(new RegExp('(const '+name+" = ')[a-f0-9]{64}(';)"),'$1'+hash(JSON.stringify(rows))+'$2');
+}
+fs.writeFileSync(scalar,candidate);fs.writeFileSync(out+'/scalar-renewal.json',JSON.stringify({selected,callers,onlyChangedSource:discovery,baselineSelected:hash(JSON.stringify(baseline(selected))),baselineCallers:hash(JSON.stringify(baseline(callers)))},null,2)+'\n');console.log(JSON.stringify({selected:selected.length,callers:callers.length,baselineExact:true}));

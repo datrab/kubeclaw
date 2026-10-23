@@ -828,6 +828,20 @@ export function createSerializedOutputRoleClassifier(root,universe=[]) {
  }
  function qualifiedFileRole(sink,argument,state) {
   const text=state.tree.getText();const compact=value=>value.replace(/\s+/gu,'');const expression=compact(argument.getText(state.tree));const destination=sink.arguments[0]?.getText(state.tree)??'';const compactDestination=compact(destination);
+  // Selected Source-owned annotation codec, not a metadata/payload waiver.
+  // The complete physical Source seals the runtime typeof/array/item rejection,
+  // bounded Set union, and serializer against replaced globals or mutations.
+  // A registry receipt refresh cannot renew this authority. Consumers place the
+  // encoded string under exposure-predecessors in lease merge patches; those
+  // API DATA obligations remain at the callers, not discharged by this role.
+  if(state.file==='skills/buster/engine/test-gates/exposure-generation.ts'
+    &&sink.expression.getText(state.tree)==='return'&&expression==='JSON.stringify(lineage)') {
+   const snapshot=sourceSnapshot(state.file);
+   if(snapshot?.canonical!==path.join(root,state.file)
+     ||snapshot.sha256!=='cbaed4e6debf9e225c0c5aab51ecc8383bed69ff3b5dc4f7fe7c18a0ee02a360')return unknown(argument,state);
+   dependencies.add(state.file);
+   return {role:'non-api',basis:'Source-owned-bounded-guarded-exposure-predecessor-string-array-codec'};
+  }
   if(sink.closedWriterDeclaration)return {role:'api-capable-utility',basis:'reviewed-private-writer-with-all-direct-callers-projected',expression:argument.getText(state.tree),closedWriterDeclaration:sink.closedWriterDeclaration};
   // These declarations retain API capability regardless of a mutable role or
   // basis field. Fresh operations are evidence, not authority to relabel them.
