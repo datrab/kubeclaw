@@ -25,3 +25,9 @@ references and encoded generation/output byte ceilings. Policy acquisition, Go
 parity, exact manifest consumers, journal-name integration, TLS and runtime wiring
 remain required. This helper is NOT sufficient to authorize execution. The buster-
 Secret prefix is reserved for future platform-private objects.
+
+`admission-vectors.json` is the language-neutral parity corpus: raw UTF-8 JSON
+strings, fully specified synthetic policy, and exact sanitized errors or byte
+counts. Consumers must not reserialize `raw` before digest validation. The 17
+vectors currently run against TypeScript only; Go must consume the same corpus
+before parity can be claimed. No credential generation or execution occurs.
