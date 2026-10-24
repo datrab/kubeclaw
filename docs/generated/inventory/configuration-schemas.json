@@ -9973,7 +9973,7 @@
   ],
   "discovery": {
     "platformSchema": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
-    "pluginRule": "every string or inline object registered as configSchema in plugin.json or openclaw.plugin.json below skills/{common,nova,buster}/plugins",
+    "pluginRule": "every string or inline object registered as configSchema in plugin.json or openclaw.plugin.json below skills/{common,nova,buster}/plugins or skills/prism/openclaw-plugin",
     "swarmConfig": "charts/kubeclaw/files/config/swarm.config.json"
   },
   "files": [
@@ -49733,6 +49733,97 @@
       "schemaId": null,
       "sourceClass": "plugin-configuration-schema",
       "sourceDigest": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785"
+    },
+    {
+      "fields": [
+        {
+          "branches": [],
+          "constraints": [
+            {
+              "name": "additionalProperties",
+              "value": false
+            }
+          ],
+          "consumers": [
+            "skills/prism/openclaw-plugin/package.json"
+          ],
+          "default": "<none>",
+          "description": "",
+          "meaning": {
+            "acceptedValues": "object with additionalProperties=false",
+            "additionalImplementationEvidence": [],
+            "authorityKey": "skills/prism/openclaw-plugin/openclaw.plugin.json#$.configSchema::$",
+            "blockerOwner": null,
+            "changeImpact": "Child fields, not the container row, define runtime changes.",
+            "closureCondition": null,
+            "defaultBehavior": "The schema declares no default. The immediate parent requires this field. Validation without default insertion rejects omission.",
+            "emptyBehavior": "The local object constraints permit zero properties. Apply every listed conditional constraint and the linked consumer rules before using an empty object.",
+            "evidence": "skills/prism/openclaw-plugin/openclaw.plugin.json",
+            "failureMeaning": "Container shape and child constraints determine validation failure.",
+            "implementationEvidence": null,
+            "schemaEvidence": "skills/prism/openclaw-plugin/openclaw.plugin.json",
+            "status": "structural-container",
+            "text": "Structural schema container. Child fields define configurable behavior."
+          },
+          "negated": false,
+          "ownerEvidence": "skills/prism/openclaw-plugin/package.json",
+          "ownerRole": "@kubeclaw/openclaw-prism",
+          "path": "$",
+          "presence": "allowed",
+          "required": true,
+          "resolvedReferences": [],
+          "type": "object"
+        },
+        {
+          "branches": [],
+          "constraints": [],
+          "consumers": [
+            "skills/prism/openclaw-plugin/package.json"
+          ],
+          "default": "<none>",
+          "description": "",
+          "meaning": {
+            "acceptedValues": "string with no narrower scalar constraint; The schema accepts any string. The consumer resolves the operation path against the selected base using new URL; it imposes no explicit protocol restriction or timeout",
+            "additionalImplementationEvidence": [
+              "skills/prism/openclaw-plugin/index.mjs:10",
+              "skills/prism/openclaw-plugin/index.mjs:17",
+              "skills/prism/openclaw-plugin/index.mjs:18"
+            ],
+            "authorityKey": "skills/prism/openclaw-plugin/openclaw.plugin.json#$.configSchema::$.controlUrl",
+            "blockerOwner": null,
+            "changeImpact": "Changing $.controlUrl changes this exact configured behavior when the Prism OpenClaw design-control client next loads it: Selects the base URL for Prism design-set and revision POST operations; a truthy configured value overrides the environment and built-in fallback.",
+            "closureCondition": null,
+            "defaultBehavior": "A truthy PRISM_CONTROL_URL environment value is used, otherwise http://127.0.0.1:28080. A truthy configured controlUrl takes precedence over both",
+            "emptyBehavior": "An empty string is schema-valid and falls through to the environment value or built-in base. Null is not schema-valid",
+            "evidence": "skills/prism/openclaw-plugin/index.mjs:11",
+            "failureMeaning": "An invalid base rejects in new URL before fetch. Fetch owns network and protocol errors. A non-success HTTP response throws its parsed error value or a status-based error; failed JSON parsing supplies HTTP plus the response status. There is no explicit request timeout",
+            "implementationEvidence": "skills/prism/openclaw-plugin/index.mjs:11",
+            "runtimeDefault": null,
+            "runtimeDefaultEvidence": null,
+            "schemaEvidence": "skills/prism/openclaw-plugin/openclaw.plugin.json",
+            "status": "qualified-runtime-authority",
+            "text": "Selects the base URL for Prism design-set and revision POST operations; a truthy configured value overrides the environment and built-in fallback. Accepted values: string with no narrower scalar constraint; The schema accepts any string. The consumer resolves the operation path against the selected base using new URL; it imposes no explicit protocol restriction or timeout. Omission: A truthy PRISM_CONTROL_URL environment value is used, otherwise http://127.0.0.1:28080. A truthy configured controlUrl takes precedence over both Empty value: An empty string is schema-valid and falls through to the environment value or built-in base. Null is not schema-valid Change effect: Changing $.controlUrl changes this exact configured behavior when the Prism OpenClaw design-control client next loads it: Selects the base URL for Prism design-set and revision POST operations; a truthy configured value overrides the environment and built-in fallback. Failure: An invalid base rejects in new URL before fetch. Fetch owns network and protocol errors. A non-success HTTP response throws its parsed error value or a status-based error; failed JSON parsing supplies HTTP plus the response status. There is no explicit request timeout"
+          },
+          "negated": false,
+          "ownerEvidence": "skills/prism/openclaw-plugin/package.json",
+          "ownerRole": "@kubeclaw/openclaw-prism",
+          "path": "$.controlUrl",
+          "presence": "allowed",
+          "required": false,
+          "resolvedReferences": [],
+          "type": "string"
+        }
+      ],
+      "path": "skills/prism/openclaw-plugin/openclaw.plugin.json#$.configSchema",
+      "registrationEvidence": [
+        {
+          "manifest": "skills/prism/openclaw-plugin/openclaw.plugin.json",
+          "pointer": "$.configSchema"
+        }
+      ],
+      "schemaId": null,
+      "sourceClass": "plugin-configuration-schema",
+      "sourceDigest": "1cf3f06268870973f2d7131cf64d469e516a62bf4b5f3a9d5b6d6a1c9bdd0588"
     }
   ],
   "generatedBy": "scripts/docs-configuration-inventory.mjs",
@@ -50496,12 +50587,12 @@
     "deployedPayloadsWithoutCheckedInReader": 2,
     "deployedStructuredPayloadLeaves": 1449,
     "publicSchemaCollectionFields": 171,
-    "publicSchemaFields": 699,
-    "publicSchemaLeaves": 528,
-    "qualifiedRuntimeAuthorities": 697,
+    "publicSchemaFields": 700,
+    "publicSchemaLeaves": 529,
+    "qualifiedRuntimeAuthorities": 698,
     "schemaAndRuntimeAuthorities": 2,
-    "schemaFields": 855,
-    "schemaFiles": 59,
+    "schemaFields": 857,
+    "schemaFiles": 60,
     "schemaMeaningBlockers": 0,
     "swarmFields": 15,
     "undeployedConfigPayloads": 1,

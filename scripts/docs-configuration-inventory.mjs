@@ -3085,7 +3085,7 @@ function registeredSchemaAuthorities() {
   };
   const platformSchema = 'skills/common/plugin-runtime/foundation/config/platform.schema.json';
   if (exists(platformSchema)) add(platformSchema, { path: platformSchema, schema: null, registrations: [{ manifest: platformSchema, pointer: '$' }] });
-  for (const skillRoot of ['skills/common/plugins', 'skills/nova/plugins', 'skills/buster/plugins']) {
+  for (const skillRoot of ['skills/common/plugins', 'skills/nova/plugins', 'skills/buster/plugins', 'skills/prism/openclaw-plugin']) {
     for (const manifest of walk(skillRoot, (absolutePath) => /\/(?:plugin|openclaw\.plugin)\.json$/.test(absolutePath))) {
       const visit = (item, pointer = '$') => {
         if (Array.isArray(item)) return item.forEach((child, index) => visit(child, `${pointer}[${index}]`));
@@ -3144,6 +3144,7 @@ function schemaRegistrationEvidence(sourcePath) {
 }
 
 const SCHEMA_RUNTIME_CONTEXTS = new Map(Object.entries({
+  'skills/prism/openclaw-plugin/openclaw.plugin.json': 'the Prism OpenClaw design-control client',
   'skills/buster/plugins/api-flow/schemas/config.schema.json': 'one bounded HTTP and WebSocket API flow',
   'skills/buster/plugins/axe/schemas/config.schema.json': 'one browser accessibility scan',
   'skills/buster/plugins/container-build/schemas/config.schema.json': 'one immutable container-image build',
@@ -3472,6 +3473,13 @@ function schemaEmptyBehavior(field) {
 }
 
 function schemaRuntimeValidationRules(authorityPath, field) {
+  if (authorityPath === 'skills/prism/openclaw-plugin/openclaw.plugin.json#$.configSchema' && field.path === '$.controlUrl') return {
+    accepted: 'The schema accepts any string. The consumer resolves the operation path against the selected base using new URL; it imposes no explicit protocol restriction or timeout',
+    omission: 'A truthy PRISM_CONTROL_URL environment value is used, otherwise http://127.0.0.1:28080. A truthy configured controlUrl takes precedence over both',
+    empty: 'An empty string is schema-valid and falls through to the environment value or built-in base. Null is not schema-valid',
+    failure: 'An invalid base rejects in new URL before fetch. Fetch owns network and protocol errors. A non-success HTTP response throws its parsed error value or a status-based error; failed JSON parsing supplies HTTP plus the response status. There is no explicit request timeout',
+    evidence: ['skills/prism/openclaw-plugin/index.mjs:10', 'skills/prism/openclaw-plugin/index.mjs:11', 'skills/prism/openclaw-plugin/index.mjs:17', 'skills/prism/openclaw-plugin/index.mjs:18'],
+  };
   if (authorityPath === 'skills/buster/plugins/coverage-budget/schemas/config.schema.json'
     && ['$.minimumLinePercent', '$.combine'].includes(field.path)) return {
     accepted: field.path === '$.combine'
@@ -3550,6 +3558,7 @@ function schemaRuntimeValidationRules(authorityPath, field) {
 }
 
 function schemaSpecificPurpose(authorityPath, fieldPath, context) {
+  if (authorityPath === 'skills/prism/openclaw-plugin/openclaw.plugin.json#$.configSchema' && fieldPath === '$.controlUrl') return 'Selects the base URL for Prism design-set and revision POST operations; a truthy configured value overrides the environment and built-in fallback.';
   if (authorityPath === 'skills/buster/plugins/coverage-budget/schemas/config.schema.json') {
     if (fieldPath === '$.minimumLinePercent') return 'Sets the enforced minimum line-coverage percentage; omitting this threshold disables budget enforcement, not LCOV input validation.';
     if (fieldPath === '$.combine') return 'Chooses merged line coverage or the lowest individual input percentage for the coverage-budget decision.';
@@ -4116,6 +4125,9 @@ for (const [key, [value, sourcePath, anchor]] of SCHEMA_RUNTIME_FALLBACK_AUTHORI
   if (key.startsWith('skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json::')) SCHEMA_IMPLEMENTATION_AUTHORITIES.set(key, [sourcePath, anchor]);
 }
 
+SCHEMA_IMPLEMENTATION_AUTHORITIES.set('skills/prism/openclaw-plugin/openclaw.plugin.json#$.configSchema::$.controlUrl',
+  ['skills/prism/openclaw-plugin/index.mjs', 'config?.controlUrl || process.env.PRISM_CONTROL_URL']);
+
 function explicitSchemaImplementationEvidence(authorityPath, fieldPath) {
   const authority = SCHEMA_IMPLEMENTATION_AUTHORITIES.get(`${authorityPath}::${fieldPath}`);
   if (!authority) return null;
@@ -4343,7 +4355,8 @@ function schemaFieldMeaning(authorityPath, field, consumerEvidence) {
   // short name (for example `enabled`, `target`, or `timeoutMs`) occurs in an
   // unrelated provider. Existing rows are drift-controlled, while referenced
   // leaves inherit their identity from the resolved local schema definition.
-  const permitsInferredAuthority = previouslyInventoried || inheritedThroughLocalReference || Boolean(authoredDescription);
+  const permitsInferredAuthority = previouslyInventoried || inheritedThroughLocalReference || Boolean(authoredDescription)
+    || SCHEMA_IMPLEMENTATION_AUTHORITIES.has(`${authorityPath}::${field.path}`);
   const collection = schemaCollectionAuthority(authorityPath, field);
   const purpose = collection?.purpose ?? (context && permitsInferredAuthority ? schemaSpecificPurpose(authorityPath, field.path, context) : null);
   const implementation = permitsInferredAuthority ? schemaImplementationEvidence(authorityPath, field.path) : null;
@@ -4975,7 +4988,7 @@ function buildSchemaInventory() {
     generatedBy: 'scripts/docs-configuration-inventory.mjs',
     discovery: {
       platformSchema: 'skills/common/plugin-runtime/foundation/config/platform.schema.json',
-      pluginRule: 'every string or inline object registered as configSchema in plugin.json or openclaw.plugin.json below skills/{common,nova,buster}/plugins',
+      pluginRule: 'every string or inline object registered as configSchema in plugin.json or openclaw.plugin.json below skills/{common,nova,buster}/plugins or skills/prism/openclaw-plugin',
       swarmConfig: swarmPath,
     },
     files,

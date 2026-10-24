@@ -118,6 +118,12 @@ const rawPackages = manifestRecords.map(({ manifestPath, host }) => {
     manifest: relative(manifestPath),
     packageManifest: packageManifest ? relative(packageFile) : null,
     registrations,
+    // OpenClaw declares this schema inline in its host manifest, independently
+    // of pipeline registration schema file references. Preserve the full native
+    // value (including boolean schemas); null here means no declaration.
+    hostConfigSchema: openclaw && Object.hasOwn(manifest, 'configSchema')
+      ? { source: relative(manifestPath), pointer: '/configSchema', schema: manifest.configSchema }
+      : null,
     includedRoles,
     authoredGuide: guide ? relative(guide) : null,
     authoredGuideWords: countWords(guide),
@@ -289,7 +295,7 @@ ${tableRows.map((row) => `| ${row} |`).join('\n')}
 
 ## Boundary
 
-Registration schema values are native manifest declarations relative to the package root; null means no declaration, not proof that a schema is unnecessary. They do not resolve schema contents or establish Secret, artifact, or owner completeness.
+Registration schema values are native manifest declarations relative to the package root; null means no declaration, not proof that a schema is unnecessary. They do not resolve schema contents or establish Secret, artifact, or owner completeness. OpenClaw hostConfigSchema records preserve the complete inline /configSchema value and its source manifest; null means no declaration. This projection does not validate the schema or establish its runtime consumer.
 
 This inventory proves file presence and declared relationships only. It does not prove content quality, activation, runtime behavior, compatibility, or live deployment. AP08 audits those claims separately.
 `;

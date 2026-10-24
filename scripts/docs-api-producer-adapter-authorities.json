@@ -14760,7 +14760,7 @@
               "expression": "content"
             }
           ],
-          "factsDigest": "02a6e5f0a805086587905712c6a03c2a84b80cf7ed2036109074b53aaa84f996"
+          "factsDigest": "dcc8ea45002099969e18570e835e61be8e44244a1ca5d60ace1a60188a62ef9e"
         }
       ],
       "roleConsumerEvidence": {
@@ -18466,7 +18466,7 @@
     },
     {
       "source": "scripts/ap08-extension-inventory.mjs",
-      "line": 313,
+      "line": 319,
       "sink": "console.error",
       "expression": "error instanceof Error ? error.message : String(error)",
       "basis": "original-native-diagnostic-consumer-role",
@@ -18489,10 +18489,10 @@
           "selectors": [
             {
               "expression": "error instanceof Error ? error.message : String(error)",
-              "line": 313
+              "line": 319
             }
           ],
-          "factsDigest": "02a6e5f0a805086587905712c6a03c2a84b80cf7ed2036109074b53aaa84f996"
+          "factsDigest": "dcc8ea45002099969e18570e835e61be8e44244a1ca5d60ace1a60188a62ef9e"
         }
       ]
     },
@@ -99202,7 +99202,7 @@
       {
         "source": "scripts/docs-configuration-inventory.mjs",
         "semanticClass": "finite-documentation-runtime-semantics",
-        "sourceSha256": "7314148ac1c662049961cf274f1e5b1d4f7133769cd5f9c8889d49a329ddfa6b",
+        "sourceSha256": "bc9dfa537ebdf4322152fe5d13e64ce0badcf57c098b73ada69ce5c510df06f9",
         "operations": [
           {
             "expression": "import(pathToFileURL(path.join(root, file)).href)",

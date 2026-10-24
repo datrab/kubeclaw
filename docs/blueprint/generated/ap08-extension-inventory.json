@@ -163,6 +163,70 @@
           "module": "./src/index.ts"
         }
       ],
+      "hostConfigSchema": {
+        "source": "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json",
+        "pointer": "/configSchema",
+        "schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "redisHost": {
+              "type": "string"
+            },
+            "redisPort": {
+              "type": "number"
+            },
+            "redisUsername": {
+              "type": "string"
+            },
+            "redisPassword": {
+              "type": "string"
+            },
+            "redisTls": {
+              "type": "boolean"
+            },
+            "redisNetworkIsolation": {
+              "type": [
+                "boolean",
+                "string"
+              ]
+            },
+            "maxEventBytes": {
+              "type": "number"
+            },
+            "maxQueuePerStream": {
+              "type": "number"
+            },
+            "redisCommandTimeoutMs": {
+              "type": "number"
+            },
+            "streamMaxLen": {
+              "type": "number"
+            },
+            "deadLetterMaxLen": {
+              "type": "number"
+            },
+            "controlWriteMaxAttempts": {
+              "type": "number"
+            },
+            "controlWriteRetryBaseMs": {
+              "type": "number"
+            },
+            "controlWriteRetryMaxMs": {
+              "type": "number"
+            },
+            "hookPriority": {
+              "type": "number"
+            },
+            "hookTimeoutMs": {
+              "type": "number"
+            }
+          }
+        }
+      },
       "includedRoles": [
         "buster",
         "nova",
@@ -196,6 +260,7 @@
           "skills": "./skills/"
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [],
       "authoredGuide": "plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md",
       "authoredGuideWords": 443,
@@ -219,6 +284,19 @@
           "module": "./index.mjs"
         }
       ],
+      "hostConfigSchema": {
+        "source": "skills/prism/openclaw-plugin/openclaw.plugin.json",
+        "pointer": "/configSchema",
+        "schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "controlUrl": {
+              "type": "string"
+            }
+          }
+        }
+      },
       "includedRoles": [],
       "authoredGuide": "skills/prism/openclaw-plugin/README.md",
       "authoredGuideWords": 82,
@@ -269,6 +347,7 @@
           "checkpointSchema": "schemas/checkpoint.schema.json"
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "buster",
         "nova",
@@ -311,6 +390,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "buster"
       ],
@@ -352,6 +432,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "nova"
       ],
@@ -392,6 +473,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "buster",
         "nova",
@@ -432,6 +514,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "buster"
       ],
@@ -473,6 +556,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "nova"
       ],
@@ -514,6 +598,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "nova"
       ],
@@ -556,6 +641,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "nova"
       ],
@@ -595,6 +681,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "buster"
       ],
@@ -635,6 +722,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "buster"
       ],
@@ -671,6 +759,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "buster"
       ],
@@ -709,6 +798,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "nova"
       ],
@@ -747,6 +837,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "buster"
       ],
@@ -835,6 +926,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "nova"
       ],
@@ -874,6 +966,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "buster"
       ],
@@ -915,6 +1008,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "nova"
       ],
@@ -954,6 +1048,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "buster"
       ],
@@ -1009,6 +1104,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "nova"
       ],
@@ -1054,6 +1150,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "nova"
       ],
@@ -1091,6 +1188,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "buster"
       ],
@@ -1129,6 +1227,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "buster"
       ],
@@ -1166,6 +1265,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "buster"
       ],
@@ -1237,6 +1337,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "nova"
       ],
@@ -1283,6 +1384,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "buster",
         "nova",
@@ -1339,6 +1441,7 @@
           "checkpointSchema": "schemas/checkpoint.schema.json"
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "nova"
       ],
@@ -1379,6 +1482,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "buster"
       ],
@@ -1417,6 +1521,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "nova"
       ],
@@ -1459,6 +1564,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "nova"
       ],
@@ -1516,6 +1622,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "nova"
       ],
@@ -1555,6 +1662,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "buster"
       ],
@@ -1610,6 +1718,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "nova"
       ],
@@ -1653,6 +1762,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "nova"
       ],
@@ -1691,6 +1801,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "nova"
       ],
@@ -1748,6 +1859,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "nova"
       ],
@@ -1805,6 +1917,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "nova"
       ],
@@ -1843,6 +1956,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "nova"
       ],
@@ -1921,6 +2035,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "nova"
       ],
@@ -2036,6 +2151,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "buster",
         "nova",
@@ -2076,6 +2192,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "buster",
         "nova",
@@ -2176,6 +2293,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "buster"
       ],
@@ -2212,6 +2330,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "buster"
       ],
@@ -2250,6 +2369,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "nova"
       ],
@@ -2288,6 +2408,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "buster"
       ],
@@ -2325,6 +2446,7 @@
           "checkpointSchema": "schemas/checkpoint.schema.json"
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "nova"
       ],
@@ -2364,6 +2486,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "buster",
         "nova",
@@ -2407,6 +2530,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "nova"
       ],
@@ -2446,6 +2570,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "buster"
       ],
@@ -2484,6 +2609,7 @@
           "checkpointSchema": null
         }
       ],
+      "hostConfigSchema": null,
       "includedRoles": [
         "nova"
       ],
