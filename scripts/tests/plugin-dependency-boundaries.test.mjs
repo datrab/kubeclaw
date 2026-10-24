@@ -22,9 +22,12 @@ test('documents conditional Git remote ownership and the empty child environment
   const boundary = invocationDependencyBoundaries(facts('skills/common/plugins/git-workspace/src/adapter.ts'), root);
   assert.deepEqual(boundary.diagnostics, []);
   const record = boundary.records.find((item) => item.scope === 'remote-command');
-  assert.match(record.endpoint, /origin.*repository Git configuration/u);
+  assert.match(record.endpoint, /origin.*Repository\/system Git configuration.*pushurl/u);
   assert.match(record.secret, /env: \{\}.*neither inherits process environment credentials nor resolves secrets.read/u);
   assert.match(record.check, /ready\(\).*proves no remote access/u);
+  assert.match(record.endpoint, /not a remote-name allowlist/u);
+  assert.match(record.dataOwner, /only when workspaceReference is supplied/u);
+  assert.match(record.check, /Failure, cancellation or lost remote results do not establish rollback/u);
 });
 
 test('host-selected commands and lint tools retain their actual authorization and target limits', () => {
@@ -150,6 +153,21 @@ test('publication report qualifies every discovered route, host and credential b
   for (const id of ['kubeclaw-agent-observer:kubeclaw-agent-observer', 'kubeclaw-ops:kubeclaw-ops', 'kubeclaw-prism:kubeclaw-prism', 'kubeclaw.command-runner:command']) {
     assert.ok(!report.records.find((item) => item.id === id).reachability.includes('Nova platform grants and adapter selection'), id);
   }
+  // These previously disappeared behind artifact exclusions/local-library prose.
+  for (const id of ['kubeclaw.review:review', 'kubeclaw.review:repository-audit', 'kubeclaw.review:repository-revalidation']) {
+    const row = report.records.find(item => item.id === id);
+    assert.match(row.serviceText, /artifacts.read.*artifacts.write/u, id);
+    assert.match(row.endpoint, /`agent`/u, id);
+    assert.match(row.secret, /binding owns its credential contract/u, id);
+    assert.match(row.reachability, /assign an actual owner.*Stop if the binding/u, id);
+    assert.doesNotMatch(row.reachability, /availability proves no configured endpoint/u, id);
+    assert.match(row.dataOwner, /not the operational ownership/u, id);
+  }
+  const fixture = report.records.find(item => item.id === 'kubeclaw.kubernetes-fixture:deployment');
+  assert.match(fixture.secret, /secret material, not provenance only/u);
+  assert.match(fixture.reachability, /initial ordinary apply errors are outside that cleanup block/u);
+  const exposure = report.records.find(item => item.id === 'kubeclaw.tailscale-exposure:exposure');
+  assert.match(exposure.reachability, /cleanupPolicy retain.*fixture default delete/u);
   const secret = report.records.find((item) => item.id === 'kubeclaw.secret-resolver:secrets');
   assert.ok(!secret.secret.includes('No credential selector'));
   assert.match(secret.secret, /context\.config\.environment.*SECRET_DENIED/u);
@@ -206,4 +224,22 @@ test('arbitrary spread Git argv cannot borrow the exact local forwarding helper'
     assert.ok(boundary.diagnostics.some((item) => item.includes('subprocess target requires command dependency authority')), expression);
     assert.ok(!boundary.records.some((item) => item.service.startsWith('Local Git revision reader:')), expression);
   }
+});
+
+test('selected handoff and operator adapters expose sensitive durable custody and format-specific recovery', () => {
+  const handoff = invocationDependencyBoundaries(facts('skills/nova/plugins/demo-handoff/src/adapter.ts'), root);
+  const operator = invocationDependencyBoundaries(facts('skills/common/plugins/operator-messaging/src/adapter.ts'), root);
+  for (const value of [handoff, operator]) assert.deepEqual(value.diagnostics, []);
+  const local = (value) => value.records.find((item) => item.scope === 'local-store');
+  assert.match(local(handoff).dataOwner, /stateRoot.*retention.*shutdown.*does not erase/u);
+  assert.match(local(handoff).check, /uncertain initial POST.*\/status/u);
+  assert.match(local(operator).secret, /HMAC-SHA256.*not a bearer token.*confidential endpoint URL/u);
+  assert.match(local(operator).secret, /same resolved URL value is the HMAC key.*tokenSecret is not selected/u);
+  assert.match(local(operator).dataOwner, /deliveryRoot.*request payloads.*usernames\/passwords/u);
+  assert.match(local(operator).endpoint, /only for format json.*discord_webhook does not query.*validated at activation in both formats/u);
+  const unrelated = invocationDependencyBoundaries(facts('skills/common/plugins/git-workspace/src/adapter.ts'), root);
+  assert.equal(local(unrelated), undefined, 'installed adapters must not grant unrelated callers a custody record');
+  const synthetic = invocationDependencyBoundaries({ diagnostics: [], evidence: [], selectedSources: new Map() }, root,
+    { providesCapabilities: ['operator.request', 'demo.handoff'] });
+  assert.equal(local(synthetic), undefined, 'capability names alone do not select the durable adapter');
 });

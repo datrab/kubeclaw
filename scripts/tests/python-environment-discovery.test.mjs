@@ -1118,7 +1118,9 @@ test('opaque imported helpers cannot inherit caller subprocess authority or exec
 });
 
 test('fixture Secret array and item meanings distinguish object copying, projections and admission', () => {
+  vm.runInContext(declaration('schemaFieldPathComponents'),sandbox);
   vm.runInContext(declaration('schemaNamedSegments'),sandbox);
+  vm.runInContext(declaration('webProviderTargetRules'),sandbox);
   vm.runInContext(declaration('schemaSpecificPurpose'),sandbox);
   const authority='skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json';
   for(const field of ['$.secretReferences','$.secretReferences[]']) {

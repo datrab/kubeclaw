@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "No P0\u2013P2 actionable defects were substantiated in the three scoped observer Reader rows or their manifest-derived policy rendering. The rows accurately retain deployment-dependent binding, credential, custody, retention, and reachability limitations.",
+  "overall_confidence": 0.9
+}

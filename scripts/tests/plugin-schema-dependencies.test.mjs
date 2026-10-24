@@ -127,12 +127,36 @@ test('matchingFiles maximumBytes describes the actual native aggregate, not a pe
       assert.equal(result.outcome,outcome);assert.equal(result.providerDetails.values.matchingFiles[0].bytes,120);
     }
     const inventory=fs.readFileSync(path.resolve(import.meta.dirname,'../docs-configuration-inventory.mjs'),'utf8');
-    const {default:vm}=await import('node:vm');const scope={};vm.createContext(scope);
-    for(const name of ['schemaNamedSegments','schemaSpecificPurpose']) {
+    const {default:vm}=await import('node:vm');const scope={assert};vm.createContext(scope);
+    for(const name of ['schemaFieldPathComponents','schemaNamedSegments','webProviderTargetRules','schemaSpecificPurpose']) {
       const start=inventory.indexOf(`function ${name}(`),end=inventory.indexOf('\n}\n',start)+2;
       vm.runInContext(inventory.slice(start,end),scope);
     }
     const purpose=scope.schemaSpecificPurpose('skills/buster/plugins/size-budget/schemas/config.schema.json','$.matchingFiles[].maximumBytes','size budget');
     assert.match(purpose,/aggregate.*all files/);assert.doesNotMatch(purpose,/each file/);
   } finally {fs.rmSync(directory,{recursive:true,force:true});}
+});
+
+test('schema target paths preserve shipped regex quantifiers, dots, classes and escaped braces', async () => {
+  const { default: vm } = await import('node:vm');
+  const source = fs.readFileSync(path.resolve(import.meta.dirname, '../docs-configuration-inventory.mjs'), 'utf8');
+  const scope = { assert }; vm.createContext(scope);
+  for (const name of ['schemaFieldPathComponents', 'schemaNamedSegments', 'webProviderTargetRules', 'schemaSpecificPurpose']) {
+    const start = source.indexOf(`function ${name}(`), end = source.indexOf('\n}\n', start) + 2;
+    assert.ok(start >= 0 && end > start, `complete actual ${name} required`);
+    vm.runInContext(source.slice(start, end), scope);
+  }
+  const schemaPath = 'skills/common/plugins/operator-messaging/schemas/config.schema.json';
+  const schema = JSON.parse(fs.readFileSync(path.resolve(import.meta.dirname, '../..', schemaPath), 'utf8'));
+  const pattern = Object.keys(schema.properties.targets.patternProperties)[0];
+  assert.ok(pattern.includes('{0,126}'), 'exercise the actual shipped target identifier grammar');
+  const target = `$.targets.{pattern:${pattern}}`;
+  assert.deepEqual(Array.from(scope.schemaNamedSegments(`${target}.endpoint`)), ['targets', 'endpoint']);
+  assert.match(scope.schemaSpecificPurpose(schemaPath, `${target}.endpoint`, 'operator messaging'), /exact network endpoint.*one named target/u);
+  assert.match(scope.schemaSpecificPurpose(schemaPath, target, 'operator messaging'), /closed target variant/u);
+  const escaped = '$.targets.{pattern:^unit\\.\\{[a-z{}]+\\}$}.tokenSecret';
+  assert.deepEqual(Array.from(scope.schemaNamedSegments(escaped)), ['targets', 'tokenSecret']);
+  assert.match(scope.schemaSpecificPurpose(schemaPath, escaped, 'operator messaging'), /confidential token.*one named target/u);
+  assert.deepEqual(Array.from(scope.schemaNamedSegments('$.policy.rules[].bounds[12].maximum')), ['policy', 'rules', 'bounds', 'maximum']);
+  assert.throws(() => scope.schemaFieldPathComponents('$.targets.{pattern:unterminated.endpoint'), /unterminated/u);
 });

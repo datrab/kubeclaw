@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "All four Reader rows reflect the supplied runtime behavior and include the required OpenClaw topology, command-exit, secret-resolution, and Git endpoint/ownership boundaries.",
+  "overall_confidence": 0.93
+}

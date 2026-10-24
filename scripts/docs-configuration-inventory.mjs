@@ -3197,7 +3197,7 @@ const SCHEMA_RUNTIME_CONTEXTS = new Map(Object.entries({
   'skills/nova/plugins/remote-test-gate/schemas/evidence-config.schema.json': 'the imported Buster evidence store',
   'skills/nova/plugins/repository-adapter/schemas/config.schema.json': 'the read-only repository snapshot adapter',
   'skills/nova/plugins/review/schemas/config.schema.json': 'the in-pipeline repository review stage',
-  'skills/nova/plugins/review/schemas/repository-audit-config.schema.json': 'the independent repository-audit stage',
+  'skills/nova/plugins/review/schemas/repository-audit-config.schema.json': 'the shared repository-review registration configuration',
 }));
 
 function schemaAuthorityPath(authorityPath) {
@@ -3209,10 +3209,41 @@ function schemaRuntimeContext(authorityPath) {
   return SCHEMA_RUNTIME_CONTEXTS.get(sourcePath) ?? null;
 }
 
+function schemaFieldPathComponents(fieldPath) {
+  assert(typeof fieldPath === 'string', 'configuration schema path must be a string');
+  const components = [];
+  let index = fieldPath.startsWith('$') ? 1 : 0;
+  while (index < fieldPath.length) {
+    if (fieldPath[index] === '.') { index += 1; continue; }
+    const start = index;
+    if (fieldPath[index] === '{') {
+      let depth = 0; let characterClass = false;
+      do {
+        const character = fieldPath[index++];
+        if (character === '\\') { index += 1; continue; }
+        if (character === '[') characterClass = true;
+        else if (character === ']') characterClass = false;
+        else if (!characterClass && character === '{') depth += 1;
+        else if (!characterClass && character === '}') depth -= 1;
+        assert(index <= fieldPath.length, `unterminated configuration schema map path: ${fieldPath}`);
+      } while (depth > 0 && index < fieldPath.length);
+      assert(depth === 0 && !characterClass, `unterminated configuration schema map path: ${fieldPath}`);
+    } else if (fieldPath[index] === '[') {
+      const close = fieldPath.indexOf(']', index);
+      assert(close >= index && /^\[(?:[0-9]+)?\]$/u.test(fieldPath.slice(index, close + 1)),
+        `invalid configuration schema array path: ${fieldPath}`);
+      index = close + 1;
+    } else {
+      while (index < fieldPath.length && !['.', '[', '{'].includes(fieldPath[index])) index += 1;
+      assert(index > start, `invalid configuration schema path: ${fieldPath}`);
+    }
+    components.push(fieldPath.slice(start, index));
+  }
+  return components;
+}
+
 function schemaNamedSegments(fieldPath) {
-  return fieldPath.replace(/^\$\.?/u, '').split('.')
-    .map((segment) => segment.replace(/\[\]|\[[0-9]+\]|\{[^}]+\}/gu, ''))
-    .filter(Boolean);
+  return schemaFieldPathComponents(fieldPath).filter((component) => !component.startsWith('{') && !component.startsWith('['));
 }
 
 function schemaAcceptedValues(field) {
@@ -3472,7 +3503,87 @@ function schemaEmptyBehavior(field) {
   return 'A JSON empty string has the wrong declared type. Apply enclosing and sibling constraints as well.';
 }
 
+function webProviderTargetRules(authorityPath, fieldPath) {
+  const match = authorityPath.match(/^skills\/buster\/plugins\/(lighthouse|openapi|playwright)\/schemas\/config\.schema\.json$/u);
+  if (!match || !['$.url', '$.endpointName'].includes(fieldPath)) return null;
+  const name = match[1];
+  const selection = name === 'openapi' ? 'Omission requires exactly one deployment endpoint; multiple endpoints require a matching name.' : 'Omission selects the first deployment endpoint, even when several are present.';
+  const url = name === 'playwright'
+    ? 'Supplies an HTTP/HTTPS root origin only: embedded credentials, non-root path, query and fragment are rejected. Tests choose application routes separately.'
+    : name === 'lighthouse'
+      ? 'Supplies a URL whose new URL(value).origin is used as the audit base. Any configured URL path is discarded; configured routes select the actual root-relative audit paths.'
+      : 'Supplies the OpenAPI request base. OpenAPI operation paths are root-relative and resolved with new URL(route, base), so a configured base-path prefix is discarded rather than prepended.';
+  const selector = `Selects an exact named endpoint only from a typed Kubernetes deployment input. ${selection} A typed public-endpoint input supplies its URL without consulting endpointName; direct url also ignores endpointName.`;
+  const prefix = name.toUpperCase();
+  return {
+    purpose: fieldPath === '$.url' ? url : selector,
+    accepted: fieldPath === '$.url' ? url : selector,
+    omission: fieldPath === '$.url' ? `Without url exactly one typed deployment or public-endpoint input must supply the target. ${selection}` : selector,
+    empty: 'Null or an empty string is not an omission fallback; the declared field type/pattern and selected provider validation apply.',
+    failure: `Configured url combined with any typed input raises ${prefix}_TARGET_AMBIGUOUS. Missing target or invalid typed input fails before the capability call. A missing named deployment endpoint raises ${prefix}_ENDPOINT_NOT_FOUND. ${name === 'playwright' ? 'A non-origin direct url raises PLAYWRIGHT_TARGET_INVALID; a non-origin typed URL raises PLAYWRIGHT_INPUT_INVALID.' : 'The selected runtime capability separately checks URL admission and execution limits.'}`,
+    evidence: [`skills/buster/plugins/${name}/src/provider.js:${name === 'openapi' ? 18 : name === 'playwright' ? 9 : 14}`],
+  };
+}
+
 function schemaRuntimeValidationRules(authorityPath, field) {
+  if (authorityPath === 'skills/common/plugins/operator-messaging/schemas/config.schema.json'
+    && ['endpoint', 'tokenSecret', 'endpointSecret', 'endpointOrigin'].some((name) => field.path.endsWith(`.${name}`))) return {
+    accepted: 'Schema anyOf admits a direct endpoint/tokenSecret pair or an endpointSecret/endpointOrigin pair but does not exclude mixed-mode keys. Adapter activation is stricter: presence of endpointSecret OR endpointOrigin selects secret-endpoint mode and forbids a simultaneous endpoint; a complete selected pair and its URL/identifier checks must pass',
+    empty: 'An empty value is not a mode-selection fallback; declared type/minLength and the selected parser checks apply.',
+    failure: 'A schema-valid mixed target such as endpoint plus tokenSecret plus endpointOrigin rejects activation with OPERATOR_CONFIG_INVALID:endpoint_mode:<targetId>. Schema acceptance is not deployability. No runtime or schema hardening is implied; qualify exactly one complete mode before activation.',
+    evidence: ['skills/common/plugins/operator-messaging/src/config.ts:61', 'skills/common/plugins/operator-messaging/src/config.ts:64', 'skills/common/plugins/operator-messaging/src/config.ts:69', 'skills/common/plugins/operator-messaging/src/config.ts:78'],
+  };
+  if (authorityPath === 'skills/nova/plugins/review/schemas/repository-audit-config.schema.json' && field.path === '$.reviewerRuntime') return {
+    accepted: 'The schema admits acp or subagent. Audit and revalidation independently consume this expected runtime identity; the returned runtime attestation must match the selected identity',
+    omission: 'Audit stageConfig selects subagent for undefined reviewerRuntime. Revalidation runtimeIdentity independently uses config.reviewerRuntime ?? subagent; both select subagent on valid omission.',
+    empty: 'The schema rejects null and empty strings. If validation is bypassed, revalidation null falls through its nullish fallback, whereas audit rejects a non-enum value; omission and invalid values are not interchangeable.',
+    failure: 'Audit rejects invalid runtime settings with repository audit config is invalid. Revalidation runtimeIdentity casts the selected setting and validates returned runtime attestation against its own expected identity; do not attribute that path to audit stageConfig.',
+    evidence: ['skills/nova/plugins/review/src/repository-audit-stage.ts:114', 'skills/nova/plugins/review/src/repository-audit-stage.ts:118', 'skills/nova/plugins/review/src/repository-revalidation-stage.ts:130', 'skills/nova/plugins/review/src/repository-revalidation-stage.ts:134'],
+  };
+
+  if (['skills/nova/plugins/case-study/schemas/config.schema.json', 'skills/nova/plugins/pipeline-review/schemas/config.schema.json', 'skills/nova/plugins/review/schemas/config.schema.json'].includes(authorityPath) && field.path === '$.agent') {
+    const plugin = authorityPath.split('/')[3];
+    const stage = `skills/nova/plugins/${plugin}/src/stage.ts`;
+    return {
+      accepted: 'The schema requires a string with minLength 1; the selected stage additionally requires agent.trim() to be nonempty',
+      empty: 'Empty strings fail the schema; whitespace-only strings pass minLength but are rejected by the selected stage before any capability invocation.',
+      failure: `${plugin} rejects an empty trimmed agent before dispatch with ${plugin === 'review' ? 'review' : plugin === 'case-study' ? 'case study' : 'pipeline review'} agent is not configured. This configuration rejection is outside the stage dispatch catch and is not a successful or blocked report. ${plugin === 'review' ? 'The review stage uses the trimmed agent.' : 'The stage checks the trimmed value but forwards the original agent string.'}`,
+      evidence: [`${stage}:${plugin === 'case-study' ? 5 : plugin === 'pipeline-review' ? 6 : 43}`],
+    };
+  }
+  if (authorityPath === 'skills/nova/plugins/prism-design/schemas/config.schema.json' && ['$.issuerId', '$.timeoutMinutes'].includes(field.path)) return {
+    accepted: field.path === '$.issuerId' ? 'A nonempty string naming the exact authorized operator issuer for prism.approval.resolved' : 'An integer from 1 through 525600; expiry is computed at wait creation as Date.now() plus timeoutMinutes times 60000',
+    omission: 'The schema requires this field and supplies no default. No-design execution returns before configuration is read.',
+    empty: 'An empty issuer fails minLength; a noninteger, null or empty timeout fails the declared integer constraint.',
+    failure: 'On the design path invalid configuration or incompatible approval guidance rejects before the dispatch try block. The returned wait must match this issuer and computed expiry or PRISM_DESIGN_WAIT_INVALID blocks execution; approval must match the operator issuer and architecture digest or PRISM_DESIGN_APPROVAL_INVALID rejects guidance.',
+    evidence: ['skills/nova/plugins/prism-design/src/stage.ts:7', 'skills/nova/plugins/prism-design/src/stage.ts:8', 'skills/nova/plugins/prism-design/src/stage.ts:9', 'skills/nova/plugins/prism-design/src/stage.ts:23'],
+  };
+  if (authorityPath === 'skills/nova/plugins/review/schemas/repository-audit-config.schema.json' && ['$.agent', '$.reviewerModel', '$.reviewerAgentId', '$.reviewerThinking'].includes(field.path)) return {
+    accepted: 'The declared nonempty-string constraint applies. Repository audit trims these strings and rejects an empty result; repository revalidation runtimeIdentity requires nonempty already-trimmed text of at most 1024 characters',
+    empty: 'Whitespace-only values are not usable runtime identities; omission is permitted only for fields with the documented consumer fallback.',
+    failure: 'Repository audit stageConfig rejects invalid settings with repository audit config is invalid. Repository revalidation runtimeIdentity separately validates config.agent, config.reviewerAgentId, config.reviewerModel and config.reviewerThinking; invalid identity is an integrity failure. The revalidation stage dispatches its own findings, not the audit dispatch path.',
+    evidence: ['skills/nova/plugins/review/src/repository-audit-stage.ts:106', 'skills/nova/plugins/review/src/repository-audit-stage.ts:111', 'skills/nova/plugins/review/src/repository-revalidation-stage.ts:42', 'skills/nova/plugins/review/src/repository-revalidation-stage.ts:130'],
+  };
+
+  if (authorityPath === 'skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json' && field.path === '$.serviceTargetPort') return {
+    accepted: 'An integer from 1 through 65535 used as the expected resolved target port of the checked Service manifest, not a command to rewrite a workload or Service.',
+    omission: 'Omission adds no expected-target-port equality constraint. The runtime still resolves the checked Service targetPort: a numeric target is used directly, omission in the manifest uses servicePort, and a named target must resolve to one unique declared container port.',
+    empty: 'Null and an empty string fail the integer type; neither means omission.',
+    failure: 'A mismatched, unresolved or out-of-range manifest target raises KUBERNETES_FIXTURE_SERVICE_TARGET_PORT_MISMATCH before lease creation. The resolved value informs lease/network policy; the checked manifest bytes are applied unchanged, so changing configuration does not rewrite its ports.',
+    evidence: ['skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts:348', 'skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts:387', 'skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts:662', 'skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts:715'],
+  };
+
+  if (authorityPath === 'skills/common/plugins/transport-publisher/schemas/config.schema.json'
+    && field.path.endsWith('.endpoint')) return {
+    accepted: 'An HTTP or HTTPS URL without userinfo or fragment. URI/pattern schema acceptance alone does not establish these stronger adapter activation constraints; HTTPS is not mandatory in the current adapter.',
+    omission: 'Each configured target requires endpoint; there is no effective fallback.',
+    empty: 'An empty string is rejected rather than selecting a default endpoint.',
+    failure: 'Malformed URL, forbidden protocol, userinfo or fragment rejects adapter activation with TRANSPORT_CONFIG_INVALID:endpoint, before publication or credential resolution. HTTP remains accepted and must be independently qualified by the deployment owner.',
+    evidence: ['skills/common/plugins/transport-publisher/src/adapter.ts:49', 'skills/common/plugins/transport-publisher/src/adapter.ts:57'],
+  };
+
+  const webTarget = webProviderTargetRules(authorityPath, field.path);
+  if (webTarget) return webTarget;
   if (authorityPath === 'skills/prism/openclaw-plugin/openclaw.plugin.json#$.configSchema' && field.path === '$.controlUrl') return {
     accepted: 'The schema accepts any string. The consumer resolves the operation path against the selected base using new URL; it imposes no explicit protocol restriction or timeout',
     omission: 'A truthy PRISM_CONTROL_URL environment value is used, otherwise http://127.0.0.1:28080. A truthy configured controlUrl takes precedence over both',
@@ -3558,6 +3669,35 @@ function schemaRuntimeValidationRules(authorityPath, field) {
 }
 
 function schemaSpecificPurpose(authorityPath, fieldPath, context) {
+  if (authorityPath === 'skills/buster/plugins/visual/schemas/config.schema.json' && fieldPath === '$.timeoutMs') return 'Supplies the browser.visual capture request timeout in milliseconds, with provider default 30000. It does not set a deadline for later compare calls. Capture has deadline checks, but browser launch can outlast them; synchronous PNG/pixelmatch comparison has no separate computation timer and cannot be preempted by this setting.';
+
+  if (authorityPath === 'skills/buster/plugins/security-providers/schemas/dependency.schema.json' && fieldPath === '$.projectDirectory') return 'Selects a repository-relative scan target. The provider checks lexical repository containment and the runtime resolves canonical workspace containment, but neither requires a directory. An existing file can be scanned without covering the intended project; the platform owner must verify that the selected path is the actual project directory and check expected project coverage before treating results as whole-project evidence.';
+
+  if (authorityPath === 'skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json') {
+    const manifestSelection = {
+      '$.serviceName': 'Selects the existing named Service required in the checked manifest and used for the returned internal endpoint; it does not create or rename that Service by rewriting the manifest.',
+      '$.servicePort': 'Selects the exact Service port required in the checked manifest and published in the returned internal endpoint; the checked manifest must already declare that port.',
+      '$.serviceTargetPort': 'Optionally constrains the resolved target port already declared by the checked Service manifest. A mismatch fails validation; this setting does not change workload or Service ports. The resolved target is carried into lease network policy, and manifest bytes are applied unchanged.',
+    };
+    if (manifestSelection[fieldPath]) return manifestSelection[fieldPath];
+  }
+
+  const webTarget = webProviderTargetRules(authorityPath, fieldPath);
+  if (webTarget) return webTarget.purpose;
+  if (authorityPath === 'skills/common/plugins/network-http/schemas/config.schema.json') {
+    const facts = { '$.allowedOrigins': 'Lists admitted URL origins. The runtime normalizes each configured URL with new URL(value).origin; path text is not an additional route restriction.', '$.allowedMethods': 'Lists admitted request methods; the runtime uppercases values and defaults to GET when absent.', '$.allowedHeaders': 'Lists admitted request header names; the runtime lowercases names and defaults to accept, content-type and idempotency-key when absent.', '$.maxRequestBytes': 'Caps encoded request-body bytes; the runtime default is 1048576 bytes.', '$.maxResponseBytes': 'Caps observed response bytes, including streamed bodies; the runtime default is 1048576 bytes.', '$.timeoutMs': 'Sets the request timeout combined with caller cancellation; the runtime default is 30000 milliseconds.' };
+    if (facts[fieldPath]) return facts[fieldPath];
+  }
+  if (authorityPath === 'skills/common/plugins/redis-transport/schemas/config.schema.json' && fieldPath === '$.url') return 'Selects the configured Redis endpoint used by both publisher and telemetry registrations. Neither registration declares a typed endpoint input or runtime endpoint override.';
+  if (authorityPath === 'skills/common/plugins/operator-messaging/schemas/config.schema.json') {
+    const target = '$.targets.{pattern:^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}';
+    if (fieldPath === `${target}.tokenSecret`) return 'Names the confidential HMAC-SHA256 signing key resolved for this operator target. It signs requests and JSON receipt lookups; it is not sent as a bearer token.';
+    if (fieldPath === `${target}.endpointSecret`) return 'Names the Secret containing the confidential endpoint URL. The consumer requires its URL origin to match endpointOrigin and rejects embedded user credentials or fragments; the same resolved URL value is also the HMAC-SHA256 key for request signatures and JSON receipt lookups. tokenSecret is not selected in this mode.';
+    if (fieldPath === `${target}.receiptEndpoint`) return 'Selects a remote receipt lookup URL only for format json, to reconcile an uncertain delivery before resending. discord_webhook does not query this URL and uses the local Discord receipt path. In both formats any supplied URL is still validated at activation as HTTP(S), without user credentials or fragment, and with the same target origin.';
+  }
+  if (authorityPath === 'skills/buster/plugins/tailscale-exposure/schemas/config.schema.json' && fieldPath === '$.endpointName') return 'Selects an exact endpoint name from the deployment input. Omission selects only a sole endpoint; multiple endpoints are rejected as ambiguous. This selector is not approval or authorization. The provider defaults path to /, readiness to 120 seconds and retention to release.';
+  if (authorityPath === 'skills/buster/plugins/visual/schemas/config.schema.json' && fieldPath === '$.endpointName') return 'Selects a matching deployment endpoint; omission uses the first deployment endpoint. A typed public-endpoint input ignores this selector. Configured url combined with any typed input is rejected as ambiguous.';
+
   if (authorityPath === 'skills/buster/plugins/axe/schemas/config.schema.json' && fieldPath === '$.url') return 'Supplies a configured target whose new URL(url).origin is used as the scan base. The configured path is discarded; routes select scanned paths, so changing only the URL path changes no scanned route. A configured URL cannot be combined with typed inputs.';
   if (authorityPath === 'skills/buster/plugins/http/schemas/config.schema.json' && fieldPath === '$.url') return 'Supplies a canonical HTTP or HTTPS base origin, optionally ending in /. A non-root path, query, fragment or embedded credentials is rejected by explicitBase; path selects the request route separately. A configured base cannot be combined with a typed deployment or endpoint input.';
   if (authorityPath === 'skills/prism/openclaw-plugin/openclaw.plugin.json#$.configSchema' && fieldPath === '$.controlUrl') return 'Selects the base URL for Prism design-set and revision POST operations; a truthy configured value overrides the environment and built-in fallback.';
@@ -3583,7 +3723,7 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
   if (authorityPath === 'skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json'
     && ['$.secretReferences', '$.secretReferences[]'].includes(fieldPath)) {
     const selection = fieldPath.endsWith('[]') ? 'Names one Kubernetes Secret object to copy' : 'Lists Kubernetes Secret objects to copy';
-    return `${selection} from the approved source namespace into the deployment lease namespace created by ${context}. The runtime allowedSecretReferences and controller BUSTER_ALLOWED_SOURCE_SECRETS allowlists must both admit each name. The separately applied checked workload manifest defines volume, environment and imagePullSecret projections; listing a copied Secret does not create those projections.`;
+    return `${selection} from the approved source namespace into the deployment lease namespace created by ${context}. The runtime allowedSecretReferences and controller BUSTER_ALLOWED_SOURCE_SECRETS allowlists must both admit each name. The separately applied checked workload manifest defines volume, environment and imagePullSecret projections; listing a copied Secret does not create those projections. The local name pattern permits uppercase and underscore, so passing local schema/runtime validation is not Kubernetes Secret-name validation or proof that the object can be copied. Use actual Kubernetes-compatible source Secret names admitted by both owners, and verify source lookup and target copy; an invalid or missing object can fail at the controller/API boundary.`;
   }
   if (authorityPath === 'skills/common/plugin-runtime/foundation/config/platform.schema.json' && fieldPath === '$.shutdownTimeoutMs') return 'Sets the timer delay used for adapter activation, readiness and shutdown. Some paths reject at the deadline; cleanup paths that only pass an abort signal can remain pending if the adapter does not settle.';
 
@@ -3637,8 +3777,11 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
   if (/externalTrust\.allowedSourceDigests\.\{\*\}\[\]$/u.test(pathWithoutRoot)) return `Adds one allowed package digest under a canonical external source reference for ${context}.`;
   if (/externalTrust\.verifiedAttestations\.\{\*\}$/u.test(pathWithoutRoot)) return `Maps one verified package digest to the attestation digest trusted by ${context}.`;
   if (/providers\.\{\*\}$/u.test(pathWithoutRoot)) return `Maps one capability identifier to the provider registration that ${context} activates.`;
-  if (/targets\.\{(?:\*|pattern:[^}]+)\}$/u.test(pathWithoutRoot)) return `Selects the closed target variant used for each named target in ${context}.`;
-  if (/targets\.\{(?:\*|pattern:[^}]+)\}\./u.test(pathWithoutRoot)) {
+  const components = schemaFieldPathComponents(fieldPath);
+  const targetMapIndex = components.findIndex((component, index) => index > 0 && components[index - 1] === 'targets'
+    && (component === '{*}' || component.startsWith('{pattern:')));
+  if (targetMapIndex >= 0 && targetMapIndex === components.length - 1) return `Selects the closed target variant used for each named target in ${context}.`;
+  if (targetMapIndex >= 0 && targetMapIndex < components.length - 1) {
     const targetPurpose = {
       authentication: `Selects the authentication protocol that ${context} uses for one named target.`,
       endpoint: `Sets the exact network endpoint used for one named target in ${context}.`,
@@ -3984,6 +4127,10 @@ function schemaImplementationCandidates(authorityPath) {
 }
 
 const SCHEMA_IMPLEMENTATION_AUTHORITIES = new Map(Object.entries({
+  'skills/nova/plugins/case-study/schemas/config.schema.json::$.agent': ['skills/nova/plugins/case-study/src/stage.ts', "const agent=context.contract.config.agent"],
+  'skills/nova/plugins/pipeline-review/schemas/config.schema.json::$.agent': ['skills/nova/plugins/pipeline-review/src/stage.ts', "const agent=context.contract.config.agent"],
+  'skills/nova/plugins/review/schemas/config.schema.json::$.agent': ['skills/nova/plugins/review/src/stage.ts', "const agent = typeof value.agent"],
+
   'skills/buster/plugins/axe/schemas/config.schema.json::$.acceptances[].expiresAt': ['skills/buster/plugins/axe/src/provider.js', 'String(acceptance.expiresAt)'],
   'skills/buster/plugins/axe/schemas/config.schema.json::$.acceptances[].reason': ['skills/buster/plugins/axe/src/provider.js', 'acceptedFinding.reason'],
   'skills/buster/plugins/container-build/schemas/config.schema.json::$.definition.buildArgs.{*}': ['skills/buster/plugins/container-build/src/provider.js', 'const entries = Object.entries(buildArgs)'],
@@ -4345,7 +4492,12 @@ function schemaFieldMeaning(authorityPath, field, consumerEvidence) {
       closureCondition: null,
     };
   }
-  const context = schemaRuntimeContext(authorityPath);
+  const context = authorityPath === 'skills/common/plugins/notification-observer/schemas/config.schema.json' && field.path === '$.target'
+    ? 'the shared lifecycle and preview notification publisher'
+    : authorityPath === 'skills/nova/plugins/review/schemas/repository-audit-config.schema.json'
+      && (field.path === '$.profile' || field.path === '$.policy' || field.path.startsWith('$.policy.'))
+      ? 'the repository-audit stage (repository revalidation admits this shared schema but does not consume this setting)'
+      : schemaRuntimeContext(authorityPath);
   const priorSchema = priorInventory('configuration-schemas.json');
   priorSchemaAuthorityKeys ??= new Set((priorSchema?.files ?? []).flatMap((file) =>
     (file.fields ?? []).map((candidate) => `${file.path}::${candidate.path}`)));

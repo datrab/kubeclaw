@@ -1,0 +1,23 @@
+{
+  "utc": "2026-10-24T10:18:34.144355+00:00",
+  "focusedControls": {
+    "command": "node --test scripts/tests/plugin-dependency-boundaries.test.mjs",
+    "pass": 17,
+    "fail": 0,
+    "log": "handoff-focused.log"
+  },
+  "catalogue": {
+    "command": "node scripts/check-ap08-host-lifecycle-catalogue.mjs",
+    "exitCode": 0,
+    "log": "handoff-catalogue.log"
+  },
+  "gitDiffCheck": 0,
+  "currentSourceHashes": {
+    "scripts/plugin-dependency-boundaries.mjs": "cf14a8a3036d651a45c7df1cc6c8c0250dffd8c4d128a91c61c7c13b96d58361",
+    "scripts/plugin-registration-dependencies.mjs": "30b7dfca4dcbdf05e2aafb4cdddaae06de1236c2e86a3eb6c2b411434cd6d3f1",
+    "scripts/docs-configuration-inventory.mjs": "8947ef557f8f5bde9943d8387e70e865a6b0d11aa52608ee921fafa5c38d7605",
+    "scripts/docs-publication.mjs": "7f5a8a1ba6c18f629928149776d8345042c24e67c63e2cf408134ed0f0e65935",
+    "docs/blueprint/AP08-catalogue-guidance.json": "c7848f41dee6904efb59f04059d2536dd94947d0f33421e2a964e63def643a21"
+  },
+  "qualification": "Coordinator controls only; no independent reviewer tests, browser exercise, role grant or new gate/requirement acceptance."
+}

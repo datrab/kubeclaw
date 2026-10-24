@@ -1,0 +1,26 @@
+{
+  "utc": "2026-10-24T10:07:25.163628+00:00",
+  "review": "pipeline-callers-reader-custody-corrected-review.json",
+  "status": "three substantiated new findings OPEN; no source correction or Reader acceptance yet",
+  "findings": [
+    {
+      "title": "Optional architecture source path",
+      "sourceProof": "architecture-validator/src/stage.ts4-10 builds subject only sourceBinding or input.source;20/25-27 verifies subject/checkedFiles only if subject;23/38 sends and persists optional subject including selected source text",
+      "nextOwner": "shared dependency boundary + AP08 architecture-validator operation-note owner",
+      "limits": "Do not call declared git capability an always-executed operation; sourceBinding has source-preflight/artifact context, input.source uses captureReviewSubject."
+    },
+    {
+      "title": "Repair-evidence content disclosure",
+      "sourceProof": "implementation-agent repair-evidence.ts and stage.ts94/38; Core repairRequest references JSON artifact data, serialized <=262144 bytes and appended to configured runtime-agent helper prompt",
+      "nextOwner": "shared guarded data-custody and conditional artifacts.read boundary + canonical operation note",
+      "limits": "Bind actual selected artifacts.read/runtime.dispatch owner requirements; do not assign runtime provider by candidate package."
+    },
+    {
+      "title": "Retained workspace on unsuccessful implementation",
+      "sourceProof": "stage.ts88-115 tracks created/integrated; remove only inside finally if workspaceIntegrated; blockedFailure includes retained workspace details when created&&!integrated",
+      "nextOwner": "implementation workflow operation-note/custody boundary",
+      "limits": "Differentiate successfully created but unintegrated workspaces, integrated cleanup failure and no-workspace branch; do not promise rollback or deletion."
+    }
+  ],
+  "noAcceptance": true
+}

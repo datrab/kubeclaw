@@ -145,6 +145,21 @@ an environment whose source/tool prerequisites have not been qualified.
 > These digests identify only that committed snapshot. Recheck current bytes before reusing the procedure.
 > Limit: selected SDK/discovery, source/Git and child-process prerequisites remain in force. No effect admission or current-output approval follows from these locators.
 
+When the source component owner intentionally retires a package from source
+discovery, reconcile its catalogue page in the same reviewed source change.
+`docs:publication:generate` writes current pages but does not delete orphaned
+catalogue files; `docs:publication:check` rejects a remaining page with no
+installed plugin. After confirming the retired manifest ID is absent from the
+candidate discovery set, have the plugin-foundation owner review removal of only
+its generated `docs/site/extend/plugin-catalogue/<manifest-id>.md` page and repair
+incoming links and package guidance/inventory/verification inputs. Then generate
+and check again. Do not delete an authored guide, an AP10 file, an active runtime
+package, or old pinned-run data as catalogue cleanup. Ordinary activation changes
+and candidate runtime retirement do not authorize source-package deletion; use
+[the plugin lifecycle procedure](../use/plugins.md#5-replace-or-remove) for those
+separate boundaries. An orphan-page check is a stop condition, not automatic
+cleanup or evidence that generation reconciled a retired package.
+
 Inspect every generated diff and require exit zero before the next step.
 Generators can write earlier files before a later failure. Retain the first
 error, partial diff, selected revision and tool versions; fix the input or tool

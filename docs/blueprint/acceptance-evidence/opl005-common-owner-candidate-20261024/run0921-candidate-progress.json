@@ -1,0 +1,86 @@
+{
+  "utc": "2026-10-24T10:15:44.151942+00:00",
+  "status": "candidate-only; no acceptance/guard/receipt renewal",
+  "headAndRemote": "40c924a99488c4e4a4dc324e7b72bd368eab3e67",
+  "documentationRuntimeSourceRevision": "7994a51e16bc752357c3a801190b12b7d6a191a4",
+  "runtimeContractFilesByteProvedAtPin": 124,
+  "completeCurrentReviewedRows": [
+    "kubeclaw.artifact-store:artifact-store",
+    "kubeclaw.command-runner:command",
+    "kubeclaw.demo-handoff:candidate",
+    "kubeclaw.demo-handoff:delivery",
+    "kubeclaw.demo-handoff:handoff",
+    "kubeclaw.demo-handoff:ready",
+    "kubeclaw.git-workspace:git",
+    "kubeclaw.human-approval:approval",
+    "kubeclaw.human-approval:architecture-approval",
+    "kubeclaw.network-http:http",
+    "kubeclaw.notification-observer:notifications",
+    "kubeclaw.notification-observer:preview-delivery",
+    "kubeclaw.openclaw-agent-events:source",
+    "kubeclaw.operator-messaging:operator",
+    "kubeclaw.pipeline-review:evidence",
+    "kubeclaw.preflight-contract:source",
+    "kubeclaw.preflight-contract:validate",
+    "kubeclaw.project-summary:summary",
+    "kubeclaw.redis-transport:publisher",
+    "kubeclaw.redis-transport:telemetry",
+    "kubeclaw.runtime-dispatch:runtime",
+    "kubeclaw.secret-resolver:secrets",
+    "kubeclaw.size-budget:artifact",
+    "kubeclaw.telemetry-observer:telemetry"
+  ],
+  "remainingCount": 46,
+  "newGateOrRequirementAcceptance": false,
+  "reviewer": {
+    "helperCommit": "fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f",
+    "engine": "codex",
+    "model": "gpt-5.6-terra",
+    "thinking": "high",
+    "maxPriority": "P2",
+    "mode": "commit HEAD, complete single-root frozen source-only snapshots",
+    "actualCommandsAndInputManifests": "operations/pr13/evidence/opl005-20261024/continuation-0921/*-process.json and *-manifest.json"
+  },
+  "checks": {
+    "focusedControls": 17,
+    "focusedResult": "pass",
+    "schemaMode": "supported --schemas-only generation and --check-schema-semantics-only pass; full generation failure retained",
+    "catalogue": "pass,54pages51packages; not new Reader exercise",
+    "independentReviewerTests": "not claimed",
+    "originalReceiver": "DOCUMENTATION_TOOL_QUALIFICATION_SOURCE_DRIFT collector",
+    "acceptanceChecker": "A911-03-REF-007 changed docs-publication Source"
+  },
+  "preservedLimits": [
+    "API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED artifacts.ts41 content is the original terminal baseline",
+    "all5DATA UNKNOWN",
+    "no human/live/runtime/release acceptance",
+    "selected-release Knip limit retained",
+    "no commit/push, guard refresh or role grant"
+  ],
+  "vectors": {
+    "baselineCommit": "40c924a99488c4e4a4dc324e7b72bd368eab3e67",
+    "selectedCount": 1249,
+    "callerCount": 1006,
+    "selectedChanged": [
+      "scripts/check-ap08-host-lifecycle-catalogue.mjs",
+      "scripts/docs-configuration-inventory.mjs",
+      "scripts/docs-publication.mjs",
+      "scripts/plugin-dependency-boundaries.mjs",
+      "scripts/plugin-registration-dependencies.mjs"
+    ],
+    "callerChanged": [
+      "scripts/check-ap08-host-lifecycle-catalogue.mjs",
+      "scripts/docs-configuration-inventory.mjs",
+      "scripts/docs-publication.mjs",
+      "scripts/plugin-dependency-boundaries.mjs",
+      "scripts/plugin-registration-dependencies.mjs"
+    ],
+    "ordinaryCount": 193,
+    "ordinarySemanticChanges": [],
+    "ordinaryUnchangedPreexistingMismatches": 28,
+    "selectedMembership": "Historical complete1249 membership only; fresh guarded graph acquisition failed DOCUMENTATION_READER_CI_PURPOSE_DRIFT. Not current graph qualification.",
+    "callerMembership": "Fresh deploymentScalarCallerFacts1006; exact baseline cardinality and digest proved.",
+    "authorityRenewed": false
+  },
+  "openFindings": "run0921-open-pipeline-findings.json"
+}

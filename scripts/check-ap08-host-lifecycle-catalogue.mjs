@@ -107,6 +107,15 @@ assert.deepEqual(
   'catalogue guidance and extension inventory differ',
 );
 for (const item of guidance.records) {
+  if (item.registrationOperationNotes !== undefined) {
+    assert(item.registrationOperationNotes && typeof item.registrationOperationNotes === 'object' && !Array.isArray(item.registrationOperationNotes), `${item.id} invalid registration operation notes`);
+    const native = inventory.packages.find(entry => entry.id === item.id);
+    const ids = new Set(native.registrations.map(entry => entry.id));
+    for (const [id, note] of Object.entries(item.registrationOperationNotes)) {
+      assert(ids.has(id), `${item.id} operation note names unknown registration ${id}`);
+      assert(typeof note === 'string' && note.length >= 24, `${item.id}:${id} lacks substantive operation note`);
+    }
+  }
   for (const field of ['purpose', 'useWhen', 'avoidWhen', 'criticalLimit', 'operationNote']) {
     assert.equal(typeof item[field], 'string', `${item.id} lacks ${field}`);
     assert(item[field].length >= 24, `${item.id} has an incomplete ${field}`);

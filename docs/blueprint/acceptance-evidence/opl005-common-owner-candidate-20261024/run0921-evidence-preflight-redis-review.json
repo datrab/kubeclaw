@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The five scoped dependency rows and their shared-generator changes accurately describe the supplied evidence, preflight, and Redis boundaries, including custody, failure behavior, byte limits, frozen source handling, and Redis retention/idempotency limits. Review was limited to the supplied source-only change bundle; no live bindings, provider internals, credentials, or runtime execution were inspected.",
+  "overall_confidence": 0.86
+}
