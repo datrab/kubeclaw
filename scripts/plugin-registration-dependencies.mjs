@@ -326,3 +326,16 @@ export function joinNativeDependencyAuthorities(nativePackages, authorities) {
   }
   return result;
 }
+
+// Read-only acquisition over caller-owned, freshly discovered inputs. No CLI,
+// filesystem writes, or acceptance claims; the strict native join remains binding.
+export function acquireNativeDependencyReport({ nativePackages, plugins, ...options }) {
+  if (!Array.isArray(nativePackages)) throw new Error('Native packages must be explicit');
+  const { registrationDependencyAuthority } = createRegistrationDependencyCollector({ plugins, ...options });
+  const authorities = plugins.flatMap(plugin => plugin.registrations.map(registration =>
+    registrationDependencyAuthority(plugin, registration)));
+  const packages = joinNativeDependencyAuthorities(nativePackages, authorities);
+  return { packageCount: packages.length,
+    registrationCount: packages.reduce((sum, plugin) => sum + plugin.registrations.length, 0),
+    packages };
+}

@@ -706,7 +706,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "328f8dd702f5cb8ccffb9ae17cc3d577e76cd8ec81456fffa49b452e908adb55"
       }
     ],
-    "factsDigest": "ae5eb8b41272f5c3334fbc590d18d32f335ae8cf0e80704213c51f5e107a21cc",
+    "factsDigest": "d64a2e282842577c189c48b099948d12361636e15bbda8efb60277b2d026a1e1",
     "authorityInputs": [
       {
         "path": "scripts/docs-api-go-output-role-adapter.go",
@@ -924,7 +924,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "041aa7206a41cf5c3bdd66f61797f9b67c06085f6d0076ce1f84e2a9c8d57db8"
       }
     ],
-    "factsDigest": "3411abe3da5affb991d0c5f310f4684c2183ff582c9c10d5bee47e6ab9c90700",
+    "factsDigest": "03673f28924926008e93ecd14df379cefad9a3f1f901a1243601bd1b79b9de39",
     "authorityInputs": []
   },
   "scripts/docs-api-python-output-adapter.py": {
@@ -1203,7 +1203,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "9efac25cb0d8a53fc3a31aec649afa2cd99102c34366428833c403eccaef3fbe"
       }
     ],
-    "factsDigest": "26aead223f33d3f46085c49a4f38f4da7f7b1a6857c37afb2a0d18064f4785f6",
+    "factsDigest": "466bbfefce75d54e6c66b8e3bfd53bd686c2cebe4b4486ca07dd249f77bcc7c1",
     "authorityInputs": []
   },
   "scripts/docs-api-schema-authorities.mjs": {
@@ -2002,7 +2002,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "7602a8f927b47cd0b4b4f2501bccd41bb8e4e4ea43e571cf4bce62f3c3717191"
       }
     ],
-    "factsDigest": "a1afa9229d3441eabf6d008d696cd9c083dff887a846c0fb8f2df9bac7fa6319",
+    "factsDigest": "3723a675111498c86546914b95807fe879a664c8e2f33eb1b9b6a14adaaf6037",
     "authorityInputs": [
       {
         "path": "scripts/vendor-external-helm-authorities.mjs",
@@ -2105,7 +2105,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "cba76d80649d6ce8d92897a224d01ee9877a1807a9de9e765cdad79d29f912ce"
       }
     ],
-    "factsDigest": "5965f64eb23f404e622f61660afae7f34bb9507ceb4f2f2215399abeb98965d2",
+    "factsDigest": "640f833d16b24350821f83f58f13adb5b70c04366817994c98b234397e552a01",
     "authorityInputs": []
   },
   "scripts/docs-governance.mjs": {
@@ -4257,13 +4257,16 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "642a385862ed880edc80cb8a73cbf73bf2ac79160d0c9e79057bb32457274f76"
       },
       {
+        "expressionSha256": "b3bbf79f404e09a37ef6dd787be5ab68ec058bb51bae75dc9f71fc86f138f65c"
+      },
+      {
         "expressionSha256": "d45150f1844f2301bba1aa7f5f64e6afb11a56405d851a2581ff2f4047a949fb"
       },
       {
-        "expressionSha256": "4fb5ded89a79ea52b56fa582dd5d054caea341526c950ac3f4d78d14cc88dad9"
+        "expressionSha256": "4204ef97b15dbad1d93cbfed9b3e8c3f5569e5c9ebe85d5883325ee6ead18f29"
       },
       {
-        "expressionSha256": "4204ef97b15dbad1d93cbfed9b3e8c3f5569e5c9ebe85d5883325ee6ead18f29"
+        "expressionSha256": "041f8ac1fb87d4e48f752aa8bf3270a0f3790d39fa2c9de69ed5f58d5b509124"
       },
       {
         "expressionSha256": "c6a24e6c079dbdd5fec57fee81e203c4f941bd13cf0ccae67b284d598a3507e5"
@@ -4275,7 +4278,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "727f773302bc6f4faa10afbd55e617925c6decd17999bfcb956ba6f87477718e"
       },
       {
-        "expressionSha256": "8b6adbabc2becefd33f00a3499af6c08fdcb735b4713b33f5c0490b68286ddfe"
+        "expressionSha256": "58810d6175964e9e5ea8bf8360c10022d47a935cda325dfc9c5ec1320e9a2be4"
       },
       {
         "expressionSha256": "57c31fef7fd09adea5a63521d1e38f0047d058e6ebc39359a06992b7ea3561ac"
@@ -4341,7 +4344,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "03d2a219590952d6856d98e14bda9af22b335224727810743d0a4d3cba8b1a3d"
       },
       {
-        "expressionSha256": "0a391a3cdd5d20e57d4a4b439e9999f4a411b532b4e943419a2c9c45c242f1ca"
+        "expressionSha256": "15be77abb670d84b49c414dc3cb4b85fa4dcdece8a809528d19fd9f597df78bd"
       },
       {
         "expressionSha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
@@ -4395,7 +4398,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "0c07d5c689b4e48cfa546e3f4be6056b06b0a07cbc7b16a08901bef75afef919"
       }
     ],
-    "factsDigest": "1c34e648d221c18443507d347f7d64916259f85791d97aaf45059effc73925a9",
+    "factsDigest": "06da7471832e825ca50b11f3fb34bd9c606c951cf84d664e080c10ee40b2df88",
     "authorityInputs": []
   },
   "scripts/docs-runtime-consumer-contracts.mjs": {
@@ -6193,7 +6196,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/docs-publication.mjs",
         "canonical": "scripts/docs-publication.mjs",
-        "sha256": "7f5a8a1ba6c18f629928149776d8345042c24e67c63e2cf408134ed0f0e65935"
+        "sha256": "2e44d7a367bfce370229a00af8b0352690983029f763020608e938ba8fd35943"
       },
       {
         "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
@@ -6534,7 +6537,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/docs-publication.mjs",
         "canonical": "scripts/docs-publication.mjs",
-        "sha256": "7f5a8a1ba6c18f629928149776d8345042c24e67c63e2cf408134ed0f0e65935"
+        "sha256": "2e44d7a367bfce370229a00af8b0352690983029f763020608e938ba8fd35943"
       }
     ],
     "purposeInputs": [
@@ -6556,7 +6559,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/docs-publication.mjs",
         "canonical": "scripts/docs-publication.mjs",
-        "sha256": "7f5a8a1ba6c18f629928149776d8345042c24e67c63e2cf408134ed0f0e65935"
+        "sha256": "2e44d7a367bfce370229a00af8b0352690983029f763020608e938ba8fd35943"
       },
       {
         "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
@@ -9987,7 +9990,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/docs-publication.mjs",
         "canonical": "scripts/docs-publication.mjs",
-        "sha256": "7f5a8a1ba6c18f629928149776d8345042c24e67c63e2cf408134ed0f0e65935"
+        "sha256": "2e44d7a367bfce370229a00af8b0352690983029f763020608e938ba8fd35943"
       },
       {
         "path": "scripts/docs-reader/renderer.mjs",
@@ -10049,11 +10052,14 @@ export const documentationExecutableRoleRecipes = {
   "scripts/plugin-registration-dependencies.mjs": {
     "role": "documentation-consumer",
     "qualificationKind": "reviewed-documentation-consumer/v1",
-    "sourceSha256": "127470b44951f6b7e1770ab00bc995da825c6d04f5ac25e1e2c495a018eae123",
+    "sourceSha256": "0e5cc4599edcd642b3c7c6190be62b869d8f57aa5fc45d0acd9bd5a78e7e28b2",
     "consumer": "Private source-analysis/Markdown rendering collector imported only by the exact reviewed docs-publication consumer. Explicit caller-injected discovery and source-link authorities; inert schema, invocation and boundary metadata yield documentation facts and a strictly identity/capability joined opt-in report, never provider execution, deployment, actual operational ownership or observed runtime DATA. Root documentation-only ancestry, package entries, exports, full executable selectors and physical purpose inputs remain independently checked; this is not a role for arbitrary plugin output or copied runtime objects.",
     "selectors": [
       {
         "expressionSha256": "f1b555e5b390cd51cefe6e431ffc0c89498c08a12793fd9086ed9a443695f821"
+      },
+      {
+        "expressionSha256": "6e768dc36e12b98c7f759f16ca58a4f19754b07c67c8025fd9e10505f53f827d"
       },
       {
         "expressionSha256": "a507ef2e2fbd2b78f77d32e2c5efd2958c83cd37ccffdcf3626abbb6c0a46931"
@@ -10098,7 +10104,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "d05e549dc72a720baab0455f074943160b8edf3d5f65958658b039ee74244666"
       }
     ],
-    "factsDigest": "415cfd84314e5670e1ce30619100c3304f712316bac98275633a647e568e66f6",
+    "factsDigest": "f4aee6b47c21ff263190de5cfc68a6c24533c46990fdcf76aeaade81822413e7",
     "authorityInputs": [],
     "purposeInputs": [
       {
@@ -10109,7 +10115,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/docs-publication.mjs",
         "canonical": "scripts/docs-publication.mjs",
-        "sha256": "7f5a8a1ba6c18f629928149776d8345042c24e67c63e2cf408134ed0f0e65935"
+        "sha256": "2e44d7a367bfce370229a00af8b0352690983029f763020608e938ba8fd35943"
       }
     ]
   }

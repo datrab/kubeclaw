@@ -19448,7 +19448,7 @@
               "expression": "reviewedDocumentationOwnerPurposes[source]?.allowedNativePackageEntries.some(value=>JSON.stringify(value)===JSON.stringify(entry))??false"
             }
           ],
-          "factsDigest": "a0a5651d10b1095f2c09603038b0e62ae629a7ccce00f92fc6f8d46f337150c8"
+          "factsDigest": "d500537e9f54b642abc504093ff10030746c2e0bcd9935699c00bf9e9c3e0cdd"
         }
       ],
       "roleConsumerEvidence": {
@@ -99098,7 +99098,7 @@
       {
         "kind": "reviewed-documentation-consumer/v1",
         "source": "scripts/plugin-registration-dependencies.mjs",
-        "sha256": "127470b44951f6b7e1770ab00bc995da825c6d04f5ac25e1e2c495a018eae123",
+        "sha256": "0e5cc4599edcd642b3c7c6190be62b869d8f57aa5fc45d0acd9bd5a78e7e28b2",
         "operationRecipe": {
           "language": "TypeScript",
           "statements": [
@@ -99153,6 +99153,10 @@
             {
               "kind": "FunctionDeclaration",
               "syntax": "export function joinNativeDependencyAuthorities(nativePackages, authorities) {\n  const kinds = new Map([\n    ['stage', 'stage'], ['observer', 'observer'], ['adapter', 'capability adapter'],\n    ['test-provider', 'test provider'], ['report-adapter', 'report adapter'],\n    ['openclaw-extension', 'OpenClaw extension'], ['codex-plugin', 'Codex plugin'],\n  ]);\n  const byIdentity = new Map();\n  for (const authority of authorities) {\n    const { packageId, registrationId } = authority.identity;\n    const key = `${packageId}:${registrationId}`;\n    if (byIdentity.has(key)) throw new Error(`Duplicate dependency authority: ${key}`);\n    byIdentity.set(key, authority);\n  }\n  const used = new Set();\n  const canonical = (values) => JSON.stringify([...new Set(values ?? [])].sort());\n  const result = nativePackages.map((plugin) => ({\n    ...plugin,\n    registrations: plugin.registrations.map((registration) => {\n      const key = `${plugin.id}:${registration.id}`;\n      if (used.has(key)) throw new Error(`Duplicate native registration: ${key}`);\n      used.add(key);\n      const authority = byIdentity.get(key);\n      if (!authority) throw new Error(`Missing dependency authority: ${key}`);\n      if ((plugin.host === 'pipeline-runtime' && (!Object.hasOwn(registration, 'requiredCapabilities')\n        || !Object.hasOwn(registration, 'providedCapabilities')))\n        || authority.identity.host !== plugin.host || authority.identity.manifest !== plugin.manifest\n        || authority.identity.kind !== kinds.get(registration.kind)\n        || (Object.hasOwn(registration, 'requiredCapabilities') && canonical(authority.required) !== canonical(registration.requiredCapabilities))\n        || (Object.hasOwn(registration, 'providedCapabilities') && canonical(authority.provided) !== canonical(registration.providedCapabilities))) {\n        throw new Error(`Native dependency identity/capability mismatch: ${key}`);\n      }\n      return { ...registration, dependencyAuthority: authority,\n        nativeCapabilityComparison: {\n          required: Object.hasOwn(registration, 'requiredCapabilities') ? 'exact' : 'not projected by native inventory',\n          provided: Object.hasOwn(registration, 'providedCapabilities') ? 'exact' : 'not projected by native inventory',\n        },\n      };\n    }),\n  }));\n  for (const key of byIdentity.keys()) {\n    if (!used.has(key)) throw new Error(`Extra dependency authority: ${key}`);\n  }\n  return result;\n}"
+            },
+            {
+              "kind": "FunctionDeclaration",
+              "syntax": "export function acquireNativeDependencyReport({ nativePackages, plugins, ...options }) {\n  if (!Array.isArray(nativePackages)) throw new Error('Native packages must be explicit');\n  const { registrationDependencyAuthority } = createRegistrationDependencyCollector({ plugins, ...options });\n  const authorities = plugins.flatMap(plugin => plugin.registrations.map(registration =>\n    registrationDependencyAuthority(plugin, registration)));\n  const packages = joinNativeDependencyAuthorities(nativePackages, authorities);\n  return { packageCount: packages.length,\n    registrationCount: packages.reduce((sum, plugin) => sum + plugin.registrations.length, 0),\n    packages };\n}"
             }
           ]
         },
@@ -99161,7 +99165,7 @@
             "source": "scripts/docs-publication.mjs",
             "target": "scripts/plugin-registration-dependencies.mjs",
             "kind": "import",
-            "operation": "import { createRegistrationDependencyCollector, joinNativeDependencyAuthorities, markdownInlineCode, schemaConstraint, schemaConditions, schemaSemanticText } from './plugin-registration-dependencies.mjs';"
+            "operation": "import { createRegistrationDependencyCollector, acquireNativeDependencyReport, markdownInlineCode, schemaConstraint, schemaConditions, schemaSemanticText } from './plugin-registration-dependencies.mjs';"
           }
         ],
         "documentationEntries": [

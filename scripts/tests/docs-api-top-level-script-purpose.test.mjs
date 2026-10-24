@@ -26,10 +26,10 @@ function fixture(run) {
   } finally {fs.rmSync(root, {recursive: true, force: true});}
 }
 
-test('current real native parser agrees with complete reviewed24-slot seal', () => {
+test('current real native parser agrees with complete reviewed26-slot seal', () => {
   const classify = createSerializedOutputRoleClassifier(repository, sources);
   const receipt = checkedTopLevelScriptPurposes(repository, graph, classify, sources);
-  assert.equal(receipt.descriptors.length, 24);
+  assert.equal(receipt.descriptors.length, 26);
   assert.equal(receipt.runtimeExecutionAuthorized, false);
   assert.equal(receipt.apiApplyAuthorized, false);
   for (const source of sources) for (const role of classify(source)) {
@@ -45,7 +45,7 @@ test('current real native parser agrees with complete reviewed24-slot seal', () 
   assert.equal(selectedTopLevelScriptPurpose('scripts/versions.mjs', classify('scripts/versions.mjs')[0], receipt), null);
 });
 
-test('each of68 Source/helper/input byte changes and missing primary source fail before reuse', () => fixture(({root, write, acquire}) => {
+test('each of79 Source/helper/input byte changes and missing primary source fail before reuse', () => fixture(({root, write, acquire}) => {
   acquire(); acquire();
   for (const input of authority.inputs) {
     const bytes = fs.readFileSync(path.join(root, input.path));
@@ -56,7 +56,7 @@ test('each of68 Source/helper/input byte changes and missing primary source fail
   assert.throws(() => acquire(original, graph, sources.slice(1)), /missing selected source/u);
 }));
 
-test('all11 source role inversions and every24-slot omission/extension fail', () => fixture(({acquire}) => {
+test('all12 source role inversions and every26-slot omission/extension fail', () => fixture(({acquire}) => {
   for (const source of sources) {
     assert.throws(() => acquire(candidate => original(candidate).map((role, index) => candidate === source && index === 0 ? {...role, role: role.role === 'unknown' ? 'non-api' : 'unknown'} : role)), /canonical native slot\/role roster/u);
   }
@@ -219,3 +219,25 @@ test('release forwarding refuses a changed source or forwarding receiver before 
     assert.throws(() => checkedReleaseRendererOutputs(root, receipt), /API_PRODUCT_(?:ADAPTER|RELEASE_RENDERER)/);
   });
 });
+
+// Exact documentation-file occurrence only; nested schema data remains raw.
+test('aggregate fixed-file occurrence preserves UNKNOWN and rejects receiver/caller drift', () => fixture(({root, write, acquire}) => {
+  const source = 'scripts/generate-plugin-dependency-aggregate.mjs';
+  const receipt = acquire();
+  const role = original(source).find(row => row.line === 21);
+  assert.equal(role.role, 'unknown');
+  const purpose = selectedTopLevelScriptPurpose(source, role, receipt);
+  assert.equal(purpose.canonicalRawRole, 'unknown');
+  assert.equal(purpose.runtimeExecutionAuthorized, false);
+  assert.equal(purpose.apiApplyAuthorized, false);
+  assert.match(purpose.purpose, /compared read-only to that same file/);
+  assert.match(purpose.purpose, /not globally non-API/);
+  assert.equal(selectedTopLevelScriptPurpose(source, original(source).find(row => row.line === 22), receipt), null);
+  assert.throws(() => selectedTopLevelScriptPurpose(source, {...role, role: 'non-api'}, receipt), /changed canonical slot or role/);
+  assert.throws(() => acquire(original, {...graph, edges: [...graph.edges, {source: 'skills/runtime.mjs', target: source, kind: 'import', operation: 'import generator'}]}), /caller or aliased/);
+  const before = fs.readFileSync(path.join(root, source), 'utf8');
+  const changed = before.replace('docs/blueprint/generated/plugin-dependency-aggregate.json', 'runtime/resource.json');
+  assert.notEqual(changed, before);
+  write(source, changed);
+  assert.throws(() => acquire(), /changed Source\/caller\/receiver\/input/);
+}));

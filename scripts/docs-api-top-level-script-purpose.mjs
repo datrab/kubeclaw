@@ -4,7 +4,7 @@ import path from 'node:path';
 import {createHash} from 'node:crypto';
 
 const authorityPath = 'scripts/docs-api-top-level-script-purpose-authority.json';
-const authoritySha256 = 'f0b112dec29fb73d62b8a29add83f0ea19d376fceb6aa32b9f8fa351f4ff5c24';
+const authoritySha256 = 'a0cf010ffc16a1c952879698d9ede2ce38364807ec3a4996cf68c8fed26d0d1b';
 const hash = value => createHash('sha256').update(value).digest('hex');
 const receipts = new WeakSet();
 const selectedSources = Object.freeze([
@@ -13,9 +13,11 @@ const selectedSources = Object.freeze([
   'scripts/render-stateful-network-policies.mjs', 'scripts/updates/check-upstream-refresh.mjs',
   'scripts/updates/deployment-release.mjs', 'scripts/updates/materialize-release.mjs',
   'scripts/updates/refresh-versions.mjs', 'scripts/updates/release-images.mjs', 'scripts/versions.mjs',
+  'scripts/generate-plugin-dependency-aggregate.mjs',
 ]);
 const descriptor = role => Object.fromEntries(['line', 'sink', 'expression', 'sinkContract', 'role'].map(key => [key, role[key] ?? null]));
 const purposes = Object.freeze({
+  "scripts/generate-plugin-dependency-aggregate.mjs:21": "Exact native aggregate write/check occurrence: fresh extension discovery and ownership assertions precede the strict declaration report; raw native manifests and bounded schema-reference documents are serialized only to fixed docs/blueprint/generated/plugin-dependency-aggregate.json, or compared read-only to that same file. Nested schema/examples remain arbitrary raw data, not globally non-API or observed provider DATA. No API submission, schema-semantic validation, runtime role, credential or operational-owner grant.",
   'scripts/lint-baseline-update.mjs:74': 'selected local lint-baseline configuration rewrite after report/baseline digest, findings and approval-argument checks; not API submission',
   'scripts/lint-baseline-update.mjs:75': 'raw tool name and approved-fingerprint count status following the local lint-baseline write; unbounded text remains UNKNOWN',
   'scripts/observability-retirement-plan.mjs:138': 'fixed observability-retirement-plan envelope with retain-all blockers; nested inventory data, not a release/delete operation',

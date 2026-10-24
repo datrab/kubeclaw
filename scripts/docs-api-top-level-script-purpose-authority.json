@@ -10,7 +10,8 @@
     "scripts/updates/materialize-release.mjs": "ad026a32e4e9cad21ab3f2f0e87fcafe6c5d563f5133191f70b4c5ef4c925475",
     "scripts/updates/refresh-versions.mjs": "f125cb70dd7dec201ab1415a61d21d5f87e8e6e8ea3f5bd8f2ce1deaa5a04356",
     "scripts/updates/release-images.mjs": "6c9afb34ba328142af2b086985ceda3313e74a48fac1608dc2271d8f80e47bf5",
-    "scripts/versions.mjs": "c837f871d19a8d37bc1748c3f85db9cb46ccdf9d53b1c0aaa6f64c7c6efbf00b"
+    "scripts/versions.mjs": "c837f871d19a8d37bc1748c3f85db9cb46ccdf9d53b1c0aaa6f64c7c6efbf00b",
+    "scripts/generate-plugin-dependency-aggregate.mjs": "6e1953fccf9f5157c8c49533feba28f3c2560867ae545f33fa4ece7a143ef249"
   },
   "descriptors": [
     {
@@ -224,6 +225,22 @@
     {
       "source": "scripts/versions.mjs",
       "line": 188,
+      "sink": "console.log",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "scripts/generate-plugin-dependency-aggregate.mjs",
+      "line": 21,
+      "sink": "fs.writeFileSync",
+      "expression": "checkAggregate(target, bytes)",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "scripts/generate-plugin-dependency-aggregate.mjs",
+      "line": 22,
       "sink": "console.log",
       "expression": null,
       "sinkContract": null,
@@ -502,6 +519,50 @@
     {
       "path": "scripts/docs-api-output-role-classification.mjs",
       "sha256": "ccf7b50843950b26425340d4cb79e60cbc6b4322d3d236e9586897ff04ce3c71"
+    },
+    {
+      "path": "scripts/generate-plugin-dependency-aggregate.mjs",
+      "sha256": "6e1953fccf9f5157c8c49533feba28f3c2560867ae545f33fa4ece7a143ef249"
+    },
+    {
+      "path": "scripts/plugin-dependency-aggregate.mjs",
+      "sha256": "aef02b3e692eec31b05aab543a1a36a608e711a7a6c7e3a7be90a0451f6cc7c2"
+    },
+    {
+      "path": "scripts/plugin-schema-closure.mjs",
+      "sha256": "4ff4c1be84951960fc07f19d6301db0dc639db1e1ccc9e2099b59a8776896a20"
+    },
+    {
+      "path": "scripts/plugin-registration-dependencies.mjs",
+      "sha256": "0e5cc4599edcd642b3c7c6190be62b869d8f57aa5fc45d0acd9bd5a78e7e28b2"
+    },
+    {
+      "path": "scripts/plugin-schema-dependencies.mjs",
+      "sha256": "92a7aadf67ee26fe81dc98aba5e8227c6d67c2f8967f3f5ec80b10104937ba89"
+    },
+    {
+      "path": "scripts/plugin-source-closure.mjs",
+      "sha256": "847cf0a6e4a64703ed51b61eec37cf1bb80c25ddebdd575a89474d41ef108f13"
+    },
+    {
+      "path": "scripts/docs-publication.mjs",
+      "sha256": "2e44d7a367bfce370229a00af8b0352690983029f763020608e938ba8fd35943"
+    },
+    {
+      "path": "scripts/check-runtime-package-ownership.mjs",
+      "sha256": "c3e065454ab8c36912c760e61e273417eed4f902e0bcbf8b2d7a99de9818c5fc"
+    },
+    {
+      "path": "packaging/runtime/package-ownership.json",
+      "sha256": "0723d0a55eba3fdcc6c041132616db3330c3397db6a24f1d0abbf874bd28cab8"
+    },
+    {
+      "path": "scripts/ap08-extension-inventory.mjs",
+      "sha256": "ecc0e9fd442adf0ccee40697ae75a04dd0efe8777b900e2554b8747bb3188326"
+    },
+    {
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
     }
   ],
   "incomingEdges": [
@@ -573,6 +634,10 @@
     }
   ],
   "publicEntries": [
+    {
+      "path": "scripts/generate-plugin-dependency-aggregate.mjs",
+      "canonicalSource": "scripts/generate-plugin-dependency-aggregate.mjs"
+    },
     {
       "path": "scripts/lint-baseline-update.mjs",
       "canonicalSource": "scripts/lint-baseline-update.mjs"

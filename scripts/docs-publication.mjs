@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 import Ajv2020 from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
 import ts from 'typescript';
-import { createRegistrationDependencyCollector, joinNativeDependencyAuthorities, markdownInlineCode, schemaConstraint, schemaConditions, schemaSemanticText } from './plugin-registration-dependencies.mjs';
+import { createRegistrationDependencyCollector, acquireNativeDependencyReport, markdownInlineCode, schemaConstraint, schemaConditions, schemaSemanticText } from './plugin-registration-dependencies.mjs';
 import { stripMarkdownCodeAndRawHtml } from './lib/docs-markdown-anchors.mjs';
 import { publicationAssets, copyPublicationAssets, publicationPages, publicationManifest } from './lib/docs-publication-assets.mjs';
 import { rebaseMarkdownLinks } from './lib/docs-publication-links.mjs';
@@ -980,12 +980,10 @@ async function build() {
 }
 
 if (command === 'dependency-authority-report') {
-  const authorities = plugins.flatMap((plugin) => plugin.registrations.map((registration) =>
-    registrationDependencyAuthority(plugin, registration)));
-  const joined = joinNativeDependencyAuthorities(inventory.packages, authorities);
-  console.log(JSON.stringify({ packageCount: joined.length,
-    registrationCount: joined.reduce((sum, plugin) => sum + plugin.registrations.length, 0),
-    packages: joined }, null, 2));
+  console.log(JSON.stringify(acquireNativeDependencyReport({
+    nativePackages: inventory.packages, root, plugins, configurationSemantics,
+    sourceRevision, sourceBase, sourceEvidenceLink, sourceLink,
+  }), null, 2));
 } else if (command === 'dependency-report') {
   const records = plugins.flatMap((plugin) => plugin.registrations.map((registration) => ({
     id: `${plugin.manifest.id}:${registration.id}`,

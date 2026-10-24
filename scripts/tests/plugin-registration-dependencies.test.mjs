@@ -5,7 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { createRegistrationDependencyCollector, joinNativeDependencyAuthorities } from '../plugin-registration-dependencies.mjs';
+import { createRegistrationDependencyCollector, joinNativeDependencyAuthorities, acquireNativeDependencyReport } from '../plugin-registration-dependencies.mjs';
 
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'registration-dependencies-'));
 const moduleFile = fileURLToPath(new URL('../plugin-registration-dependencies.mjs', import.meta.url));
@@ -74,6 +74,14 @@ try {
     { id: 'one', kind: 'openclaw-extension' },
   ] }];
   const joined = joinNativeDependencyAuthorities(native, [authority]);
+  const report = acquireNativeDependencyReport({ ...options, plugins: [{ ...plugin, registrations: [configured] }], nativePackages: native });
+  assert.deepEqual(report.packages, joined);
+  assert.equal(report.packageCount, native.length);
+  assert.equal(report.registrationCount, 1);
+  assert.throws(() => acquireNativeDependencyReport({ ...options, nativePackages: [] }), /Extra dependency authority/);
+  assert.throws(() => acquireNativeDependencyReport({ ...options, nativePackages: native, plugins: [] }), /Missing dependency authority/);
+  assert.throws(() => acquireNativeDependencyReport({ ...options }), /Native packages must be explicit/);
+
   assert.equal(joined[0].registrations[0].dependencyAuthority, authority);
   assert.equal(joined[0].registrations[0].nativeCapabilityComparison.required, 'not projected by native inventory');
   assert.ok(!Object.hasOwn(native[0].registrations[0], 'dependencyAuthority'));
