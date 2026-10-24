@@ -9,7 +9,7 @@ const repository=path.resolve(import.meta.dirname,'../..');
 const source='scripts/docs-reader/check-artifact.mjs';
 const inputs=["scripts/docs-reader/check-artifact.mjs", "scripts/docs-reader/page-records.mjs", "scripts/docs-publication.mjs", "scripts/docs-reader/renderer.mjs", "scripts/docs-reader/redirects.mjs", ".github/workflows/docs-checks.yaml", "scripts/tests/docs-reader-page-records.test.mjs", "scripts/tests/docs-reader.test.mjs", "scripts/tests/docs-reader-redirects.test.mjs", "docs/site/reference/documentation-site.md", "package.json", "scripts/lib/docs-publication-assets.mjs", "scripts/lib/docs-route-continuity.mjs", "scripts/docs-reader/metadata.mjs"];
 const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
-inputs.push('scripts/docs-reader/check-search.mjs','scripts/docs-reader/search-questions.json');
+inputs.push('scripts/docs-reader/check-search.mjs','scripts/docs-reader/search-questions.json','scripts/plugin-registration-dependencies.mjs');
 function fixture(t){
  const root=fs.mkdtempSync(path.join(os.tmpdir(),'reader-external-ci-purpose-'));t.after(()=>fs.rmSync(root,{recursive:true,force:true}));
  const write=(name,bytes)=>{fs.mkdirSync(path.dirname(path.join(root,name)),{recursive:true});fs.writeFileSync(path.join(root,name),bytes);};

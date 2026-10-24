@@ -23,7 +23,7 @@ try {
   const remote = run('git', ['remote', 'set-url', 'origin', 'git@github.com:datrab/kubeclaw.git']);
   assert.equal(remote.status, 0, remote.stderr);
   // Overlay exactly the current capability tooling/page candidate, never ignored outputs.
-  for (const relative of ['package.json', 'scripts/docs-publication.mjs', 'scripts/check-capability-drift.mjs', 'scripts/check-capability-drift-mutations.mjs', 'scripts/check-capability-registrations-drift.mjs', 'docs/site/reference/capabilities.md']) {
+  for (const relative of ['package.json', 'scripts/docs-publication.mjs', 'scripts/plugin-registration-dependencies.mjs', 'scripts/check-capability-drift.mjs', 'scripts/check-capability-drift-mutations.mjs', 'scripts/check-capability-registrations-drift.mjs', 'docs/site/reference/capabilities.md']) {
     fs.copyFileSync(path.join(root, relative), path.join(temporary, relative));
   }
   const modules = path.join(temporary, 'node_modules');

@@ -97,7 +97,7 @@ export const reviewedDocumentationOwnerPurposes=freeze({
       {
         "path": "scripts/check-capability-drift-mutations.mjs",
         "canonical": "scripts/check-capability-drift-mutations.mjs",
-        "sha256": "11127a406716cf4372a6e066eb2700367d77da14927c7cb42d1bcb723fa6dbe0"
+        "sha256": "0e8fe42a376c58c7b9a1b4c28ffa415e15c29a762d55667c3a2984e321524006"
       },
       {
         "path": "scripts/check-capability-policy-drift-mutations.mjs",
@@ -411,7 +411,7 @@ const readerArtifactCiPurpose=freeze({
     {
       "path": "scripts/docs-publication.mjs",
       "canonical": "scripts/docs-publication.mjs",
-      "sha256": "fdae9667aa99505d4fcc90681f081fb45717ab9f9d4333a30544abdea33525a4"
+      "sha256": "2490b48bcfdcd73396349529dc5ef59fa173054dbdb0ff0d2ea33f61ae7837d0"
     },
     {
       "path": "scripts/docs-reader/renderer.mjs",
@@ -467,6 +467,11 @@ const readerArtifactCiPurpose=freeze({
       "path": "scripts/docs-reader/metadata.mjs",
       "canonical": "scripts/docs-reader/metadata.mjs",
       "sha256": "51e0b027356401a68c52a3b8b1fe4d6c6ed35070dfcb300067dd1b9af8da0abc"
+    },
+    {
+      "path": "scripts/plugin-registration-dependencies.mjs",
+      "canonical": "scripts/plugin-registration-dependencies.mjs",
+      "sha256": "20e46891fc697e57f6e11be19bb4bd75c1e20293472e8090444c311ad8794c62"
     }
   ],
   "ciRunLine": "run: npm run docs:publication:check && node --test scripts/tests/docs-reader.test.mjs scripts/tests/docs-reader-page-records.test.mjs scripts/tests/docs-reader-redirects.test.mjs scripts/tests/docs-reader-source-links.test.mjs scripts/tests/docs-reader-source-previews.test.mjs scripts/tests/docs-reader-diagrams.test.mjs && node scripts/tests/docs-reader-redirects.browser.mjs && npm run docs:publication:build && node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs && node scripts/docs-reader/check-search.mjs && node --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs && node --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs && node --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
