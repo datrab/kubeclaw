@@ -10,7 +10,7 @@
     "testProviders": 19,
     "reportAdapters": 1,
     "registrations": 67,
-    "files": 1000
+    "files": 1001
   },
   "runtime": {
     "roots": [
@@ -39,6 +39,7 @@
       "skills/buster/engine/test-gates/exposure-handoff.ts",
       "skills/buster/engine/test-gates/fixture-authority.ts",
       "skills/buster/engine/test-gates/generated-demo-credentials.ts",
+      "skills/buster/engine/test-gates/kubernetes-fixture-bootstrap.ts",
       "skills/buster/engine/test-gates/kubernetes-fixture-diagnostics.ts",
       "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
       "skills/buster/engine/test-gates/kubernetes-manifest.ts",
@@ -2254,6 +2255,7 @@
     "skills/buster/engine/test-gates/exposure-handoff.ts",
     "skills/buster/engine/test-gates/fixture-authority.ts",
     "skills/buster/engine/test-gates/generated-demo-credentials.ts",
+    "skills/buster/engine/test-gates/kubernetes-fixture-bootstrap.ts",
     "skills/buster/engine/test-gates/kubernetes-fixture-diagnostics.ts",
     "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
     "skills/buster/engine/test-gates/kubernetes-manifest.ts",
