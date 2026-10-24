@@ -97,6 +97,12 @@ const rawPackages = manifestRecords.map(({ manifestPath, host }) => {
         inputSchema: registration.inputSchema ?? null,
         resultSchema: registration.resultSchema ?? null,
         checkpointSchema: registration.checkpointSchema ?? null,
+        // Native data declarations are not observed provider output or a DATA role.
+        // Keep absence distinct from an explicitly empty declaration.
+        inputs: registration.inputs ?? null,
+        outputs: registration.outputs ?? null,
+        evidenceTypes: registration.evidenceTypes ?? null,
+        evidenceDefaults: registration.evidenceDefaults ?? null,
       })))
     : openclaw
       ? (packageManifest?.openclaw?.extensions ?? []).map((module, index) => ({
@@ -296,6 +302,8 @@ ${tableRows.map((row) => `| ${row} |`).join('\n')}
 ## Boundary
 
 Registration schema values are native manifest declarations relative to the package root; null means no declaration, not proof that a schema is unnecessary. They do not resolve schema contents or establish Secret, artifact, or owner completeness. OpenClaw hostConfigSchema records preserve the complete inline /configSchema value and its source manifest; null means no declaration. This projection does not validate the schema or establish its runtime consumer.
+
+Registration inputs, outputs, evidenceTypes, and evidenceDefaults preserve exact native manifest declarations; null means absent and an empty declaration remains empty. These declarations do not qualify arbitrary provider output, runtime evidence bytes, Secret custody, or artifact consumers.
 
 This inventory proves file presence and declared relationships only. It does not prove content quality, activation, runtime behavior, compatibility, or live deployment. AP08 audits those claims separately.
 `;

@@ -329,7 +329,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": "schemas/checkpoint.schema.json"
+          "checkpointSchema": "schemas/checkpoint.schema.json",
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         },
         {
           "kind": "observer",
@@ -344,7 +348,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": "schemas/checkpoint.schema.json"
+          "checkpointSchema": "schemas/checkpoint.schema.json",
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
@@ -387,7 +395,39 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": [
+            {
+              "name": "deployment",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+            },
+            {
+              "name": "endpoint",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.public-endpoint-fixture@1"
+            }
+          ],
+          "outputs": [],
+          "evidenceTypes": [
+            "log",
+            "test-report"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log",
+              "test-report"
+            ],
+            "onFail": [
+              "log",
+              "test-report"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
         }
       ],
       "hostConfigSchema": null,
@@ -429,7 +469,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": "schemas/input.schema.json",
           "resultSchema": "schemas/result.schema.json",
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
@@ -470,7 +514,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
@@ -511,7 +559,41 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": [
+            {
+              "name": "deployment",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+            },
+            {
+              "name": "endpoint",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.public-endpoint-fixture@1"
+            }
+          ],
+          "outputs": [],
+          "evidenceTypes": [
+            "log",
+            "test-report",
+            "screenshot"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log",
+              "test-report"
+            ],
+            "onFail": [
+              "log",
+              "test-report",
+              "screenshot"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
         }
       ],
       "hostConfigSchema": null,
@@ -553,7 +635,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": "schemas/input.schema.json",
           "resultSchema": "schemas/result.schema.json",
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
@@ -595,7 +681,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": "schemas/input.schema.json",
           "resultSchema": "schemas/result.schema.json",
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
@@ -638,7 +728,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": "schemas/input.schema.json",
           "resultSchema": "schemas/result.schema.json",
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
@@ -678,7 +772,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
@@ -719,7 +817,30 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": [],
+          "outputs": [
+            {
+              "name": "image",
+              "kind": "value",
+              "required": true,
+              "schemaId": "kubeclaw.container-image@1"
+            }
+          ],
+          "evidenceTypes": [
+            "log"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
         }
       ],
       "hostConfigSchema": null,
@@ -756,7 +877,88 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": [
+            {
+              "name": "coverage-1",
+              "kind": "artifact",
+              "required": true,
+              "mediaTypes": [
+                "text/lcov"
+              ]
+            },
+            {
+              "name": "coverage-2",
+              "kind": "artifact",
+              "required": false,
+              "mediaTypes": [
+                "text/lcov"
+              ]
+            },
+            {
+              "name": "coverage-3",
+              "kind": "artifact",
+              "required": false,
+              "mediaTypes": [
+                "text/lcov"
+              ]
+            },
+            {
+              "name": "coverage-4",
+              "kind": "artifact",
+              "required": false,
+              "mediaTypes": [
+                "text/lcov"
+              ]
+            },
+            {
+              "name": "coverage-5",
+              "kind": "artifact",
+              "required": false,
+              "mediaTypes": [
+                "text/lcov"
+              ]
+            },
+            {
+              "name": "coverage-6",
+              "kind": "artifact",
+              "required": false,
+              "mediaTypes": [
+                "text/lcov"
+              ]
+            },
+            {
+              "name": "coverage-7",
+              "kind": "artifact",
+              "required": false,
+              "mediaTypes": [
+                "text/lcov"
+              ]
+            },
+            {
+              "name": "coverage-8",
+              "kind": "artifact",
+              "required": false,
+              "mediaTypes": [
+                "text/lcov"
+              ]
+            }
+          ],
+          "outputs": [],
+          "evidenceTypes": [
+            "log"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
         }
       ],
       "hostConfigSchema": null,
@@ -795,7 +997,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": "schemas/input.schema.json",
           "resultSchema": "schemas/result.schema.json",
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
@@ -834,7 +1040,49 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": [
+            {
+              "name": "deployment",
+              "kind": "value",
+              "required": true,
+              "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+            },
+            {
+              "name": "credentials",
+              "kind": "value",
+              "required": true,
+              "schemaId": "kubeclaw.generated-demo-credentials@1"
+            },
+            {
+              "name": "exposure",
+              "kind": "value",
+              "required": true,
+              "schemaId": "kubeclaw.public-endpoint-fixture@1"
+            }
+          ],
+          "outputs": [
+            {
+              "name": "authentication",
+              "kind": "value",
+              "schemaId": "kubeclaw.demo-auth-evidence@1",
+              "required": true
+            }
+          ],
+          "evidenceTypes": [
+            "log"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
         }
       ],
       "hostConfigSchema": null,
@@ -871,7 +1119,11 @@
           "configSchema": "schemas/empty.schema.json",
           "inputSchema": "schemas/candidate.schema.json",
           "resultSchema": "schemas/result.schema.json",
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         },
         {
           "kind": "stage",
@@ -887,7 +1139,11 @@
           "configSchema": "schemas/empty.schema.json",
           "inputSchema": "schemas/delivery.schema.json",
           "resultSchema": "schemas/result.schema.json",
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         },
         {
           "kind": "stage",
@@ -903,7 +1159,11 @@
           "configSchema": "schemas/empty.schema.json",
           "inputSchema": "schemas/ready.schema.json",
           "resultSchema": "schemas/result.schema.json",
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         },
         {
           "kind": "adapter",
@@ -923,7 +1183,11 @@
           "configSchema": "schemas/adapter.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
@@ -963,7 +1227,204 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": [],
+          "outputs": [
+            {
+              "name": "coverage-1",
+              "kind": "artifact",
+              "required": false,
+              "mediaTypes": [
+                "text/lcov"
+              ]
+            },
+            {
+              "name": "coverage-2",
+              "kind": "artifact",
+              "required": false,
+              "mediaTypes": [
+                "text/lcov"
+              ]
+            },
+            {
+              "name": "coverage-3",
+              "kind": "artifact",
+              "required": false,
+              "mediaTypes": [
+                "text/lcov"
+              ]
+            },
+            {
+              "name": "coverage-4",
+              "kind": "artifact",
+              "required": false,
+              "mediaTypes": [
+                "text/lcov"
+              ]
+            },
+            {
+              "name": "coverage-5",
+              "kind": "artifact",
+              "required": false,
+              "mediaTypes": [
+                "text/lcov"
+              ]
+            },
+            {
+              "name": "coverage-6",
+              "kind": "artifact",
+              "required": false,
+              "mediaTypes": [
+                "text/lcov"
+              ]
+            },
+            {
+              "name": "coverage-7",
+              "kind": "artifact",
+              "required": false,
+              "mediaTypes": [
+                "text/lcov"
+              ]
+            },
+            {
+              "name": "coverage-8",
+              "kind": "artifact",
+              "required": false,
+              "mediaTypes": [
+                "text/lcov"
+              ]
+            },
+            {
+              "name": "artifact-1",
+              "kind": "artifact",
+              "required": false,
+              "mediaTypes": [
+                "application/octet-stream",
+                "application/x-tar",
+                "application/gzip",
+                "application/vnd.kubeclaw.build-output.tar",
+                "application/vnd.kubeclaw.checked-kubernetes-yaml",
+                "application/vnd.kubeclaw.size-budget-baseline+json"
+              ]
+            },
+            {
+              "name": "artifact-2",
+              "kind": "artifact",
+              "required": false,
+              "mediaTypes": [
+                "application/octet-stream",
+                "application/x-tar",
+                "application/gzip",
+                "application/vnd.kubeclaw.build-output.tar",
+                "application/vnd.kubeclaw.checked-kubernetes-yaml",
+                "application/vnd.kubeclaw.size-budget-baseline+json"
+              ]
+            },
+            {
+              "name": "artifact-3",
+              "kind": "artifact",
+              "required": false,
+              "mediaTypes": [
+                "application/octet-stream",
+                "application/x-tar",
+                "application/gzip",
+                "application/vnd.kubeclaw.build-output.tar",
+                "application/vnd.kubeclaw.checked-kubernetes-yaml",
+                "application/vnd.kubeclaw.size-budget-baseline+json"
+              ]
+            },
+            {
+              "name": "artifact-4",
+              "kind": "artifact",
+              "required": false,
+              "mediaTypes": [
+                "application/octet-stream",
+                "application/x-tar",
+                "application/gzip",
+                "application/vnd.kubeclaw.build-output.tar",
+                "application/vnd.kubeclaw.checked-kubernetes-yaml",
+                "application/vnd.kubeclaw.size-budget-baseline+json"
+              ]
+            },
+            {
+              "name": "artifact-5",
+              "kind": "artifact",
+              "required": false,
+              "mediaTypes": [
+                "application/octet-stream",
+                "application/x-tar",
+                "application/gzip",
+                "application/vnd.kubeclaw.build-output.tar",
+                "application/vnd.kubeclaw.checked-kubernetes-yaml",
+                "application/vnd.kubeclaw.size-budget-baseline+json"
+              ]
+            },
+            {
+              "name": "artifact-6",
+              "kind": "artifact",
+              "required": false,
+              "mediaTypes": [
+                "application/octet-stream",
+                "application/x-tar",
+                "application/gzip",
+                "application/vnd.kubeclaw.build-output.tar",
+                "application/vnd.kubeclaw.checked-kubernetes-yaml",
+                "application/vnd.kubeclaw.size-budget-baseline+json"
+              ]
+            },
+            {
+              "name": "artifact-7",
+              "kind": "artifact",
+              "required": false,
+              "mediaTypes": [
+                "application/octet-stream",
+                "application/x-tar",
+                "application/gzip",
+                "application/vnd.kubeclaw.build-output.tar",
+                "application/vnd.kubeclaw.checked-kubernetes-yaml",
+                "application/vnd.kubeclaw.size-budget-baseline+json"
+              ]
+            },
+            {
+              "name": "artifact-8",
+              "kind": "artifact",
+              "required": false,
+              "mediaTypes": [
+                "application/octet-stream",
+                "application/x-tar",
+                "application/gzip",
+                "application/vnd.kubeclaw.build-output.tar",
+                "application/vnd.kubeclaw.checked-kubernetes-yaml",
+                "application/vnd.kubeclaw.size-budget-baseline+json"
+              ]
+            }
+          ],
+          "evidenceTypes": [
+            "log",
+            "test-report",
+            "coverage",
+            "artifact"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log",
+              "test-report",
+              "coverage",
+              "artifact"
+            ],
+            "onFail": [
+              "log",
+              "test-report",
+              "coverage",
+              "artifact"
+            ],
+            "onError": [
+              "log",
+              "test-report",
+              "coverage",
+              "artifact"
+            ]
+          }
         }
       ],
       "hostConfigSchema": null,
@@ -1005,7 +1466,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
@@ -1045,7 +1510,36 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": [
+            {
+              "name": "deployment",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+            },
+            {
+              "name": "endpoint",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.public-endpoint-fixture@1"
+            }
+          ],
+          "outputs": [],
+          "evidenceTypes": [
+            "log"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
         }
       ],
       "hostConfigSchema": null,
@@ -1082,7 +1576,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": "schemas/input.schema.json",
           "resultSchema": "schemas/result.schema.json",
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         },
         {
           "kind": "stage",
@@ -1101,7 +1599,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": "schemas/architecture-input.schema.json",
           "resultSchema": "schemas/result.schema.json",
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
@@ -1147,7 +1649,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": "schemas/input.schema.json",
           "resultSchema": "schemas/result.schema.json",
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
@@ -1185,7 +1691,11 @@
           "configSchema": null,
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
@@ -1224,7 +1734,57 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": [
+            {
+              "name": "image",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.container-image@1"
+            },
+            {
+              "name": "checked-manifest",
+              "kind": "artifact",
+              "required": true,
+              "mediaTypes": [
+                "application/vnd.kubeclaw.checked-kubernetes-yaml"
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "name": "demo-credentials",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.generated-demo-credentials@1"
+            },
+            {
+              "name": "deployment",
+              "kind": "value",
+              "required": true,
+              "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+            },
+            {
+              "name": "image",
+              "kind": "value",
+              "required": true,
+              "schemaId": "kubeclaw.container-image@1"
+            }
+          ],
+          "evidenceTypes": [
+            "log"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
         }
       ],
       "hostConfigSchema": null,
@@ -1262,7 +1822,42 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": [
+            {
+              "name": "deployment",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+            },
+            {
+              "name": "endpoint",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.public-endpoint-fixture@1"
+            }
+          ],
+          "outputs": [],
+          "evidenceTypes": [
+            "log",
+            "performance-report",
+            "performance-report-representative"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log",
+              "performance-report",
+              "performance-report-representative"
+            ],
+            "onFail": [
+              "log",
+              "performance-report",
+              "performance-report-representative"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
         }
       ],
       "hostConfigSchema": null,
@@ -1302,7 +1897,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": "schemas/input.schema.json",
           "resultSchema": "schemas/result.schema.json",
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         },
         {
           "kind": "stage",
@@ -1319,7 +1918,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": "schemas/input.schema.json",
           "resultSchema": "schemas/result.schema.json",
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         },
         {
           "kind": "adapter",
@@ -1334,7 +1937,11 @@
           "configSchema": "schemas/adapter-config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
@@ -1381,7 +1988,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
@@ -1423,7 +2034,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": "schemas/checkpoint.schema.json"
+          "checkpointSchema": "schemas/checkpoint.schema.json",
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         },
         {
           "kind": "observer",
@@ -1438,7 +2053,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": "schemas/checkpoint.schema.json"
+          "checkpointSchema": "schemas/checkpoint.schema.json",
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
@@ -1479,7 +2098,39 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": [
+            {
+              "name": "deployment",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+            },
+            {
+              "name": "endpoint",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.public-endpoint-fixture@1"
+            }
+          ],
+          "outputs": [],
+          "evidenceTypes": [
+            "log",
+            "test-report"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log",
+              "test-report"
+            ],
+            "onFail": [
+              "log",
+              "test-report"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
         }
       ],
       "hostConfigSchema": null,
@@ -1518,7 +2169,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
@@ -1561,7 +2216,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
@@ -1602,7 +2261,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": "schemas/input.schema.json",
           "resultSchema": "schemas/result.schema.json",
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         },
         {
           "kind": "adapter",
@@ -1619,7 +2282,11 @@
           "configSchema": "schemas/evidence-config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
@@ -1659,7 +2326,51 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": [
+            {
+              "name": "deployment",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+            },
+            {
+              "name": "endpoint",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.public-endpoint-fixture@1"
+            }
+          ],
+          "outputs": [],
+          "evidenceTypes": [
+            "log",
+            "test-report",
+            "screenshot",
+            "video",
+            "trace",
+            "test-artifact"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log",
+              "test-report",
+              "screenshot",
+              "video",
+              "trace",
+              "test-artifact"
+            ],
+            "onFail": [
+              "log",
+              "test-report",
+              "screenshot",
+              "video",
+              "trace",
+              "test-artifact"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
         }
       ],
       "hostConfigSchema": null,
@@ -1699,7 +2410,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": "schemas/input.schema.json",
           "resultSchema": "schemas/result.schema.json",
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         },
         {
           "kind": "stage",
@@ -1715,7 +2430,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": "schemas/source-input.schema.json",
           "resultSchema": "schemas/result.schema.json",
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
@@ -1759,7 +2478,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": "schemas/input.schema.json",
           "resultSchema": "schemas/result.schema.json",
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
@@ -1798,7 +2521,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": "schemas/input.schema.json",
           "resultSchema": "schemas/result.schema.json",
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
@@ -1839,7 +2566,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         },
         {
           "kind": "adapter",
@@ -1856,7 +2587,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
@@ -1897,7 +2632,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         },
         {
           "kind": "adapter",
@@ -1914,7 +2653,11 @@
           "configSchema": "schemas/evidence-config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
@@ -1953,7 +2696,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
@@ -1996,7 +2743,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": "schemas/input.schema.json",
           "resultSchema": "schemas/result.schema.json",
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         },
         {
           "kind": "stage",
@@ -2014,7 +2765,11 @@
           "configSchema": "schemas/repository-audit-config.schema.json",
           "inputSchema": "schemas/repository-audit-input.schema.json",
           "resultSchema": "schemas/result.schema.json",
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         },
         {
           "kind": "stage",
@@ -2032,7 +2787,11 @@
           "configSchema": "schemas/repository-audit-config.schema.json",
           "inputSchema": "schemas/repository-revalidation-input.schema.json",
           "resultSchema": "schemas/result.schema.json",
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
@@ -2129,7 +2888,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         },
         {
           "kind": "adapter",
@@ -2148,7 +2911,11 @@
           "configSchema": "schemas/openclaw-config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
@@ -2189,7 +2956,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
@@ -2230,7 +3001,30 @@
           "configSchema": "schemas/headers.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": [
+            {
+              "name": "deployment",
+              "kind": "value",
+              "required": true,
+              "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+            }
+          ],
+          "outputs": [],
+          "evidenceTypes": [
+            "log"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
         },
         {
           "kind": "test-provider",
@@ -2245,7 +3039,23 @@
           "configSchema": "schemas/dependency.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": [],
+          "outputs": [],
+          "evidenceTypes": [
+            "log"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
         },
         {
           "kind": "test-provider",
@@ -2260,7 +3070,30 @@
           "configSchema": "schemas/image.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": [
+            {
+              "name": "image",
+              "kind": "value",
+              "required": true,
+              "schemaId": "kubeclaw.container-image@1"
+            }
+          ],
+          "outputs": [],
+          "evidenceTypes": [
+            "log"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
         },
         {
           "kind": "test-provider",
@@ -2275,7 +3108,32 @@
           "configSchema": "schemas/kubernetes-policy.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": [
+            {
+              "name": "checked-manifest",
+              "kind": "artifact",
+              "required": true,
+              "mediaTypes": [
+                "application/vnd.kubeclaw.checked-kubernetes-yaml"
+              ]
+            }
+          ],
+          "outputs": [],
+          "evidenceTypes": [
+            "log"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
         },
         {
           "kind": "test-provider",
@@ -2290,7 +3148,38 @@
           "configSchema": "schemas/kubernetes-runtime.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": [
+            {
+              "name": "deployment",
+              "kind": "value",
+              "required": true,
+              "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+            },
+            {
+              "name": "checked-manifest",
+              "kind": "artifact",
+              "required": true,
+              "mediaTypes": [
+                "application/vnd.kubeclaw.checked-kubernetes-yaml"
+              ]
+            }
+          ],
+          "outputs": [],
+          "evidenceTypes": [
+            "log"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
         }
       ],
       "hostConfigSchema": null,
@@ -2327,7 +3216,56 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": [
+            {
+              "name": "build-output",
+              "kind": "artifact",
+              "required": true,
+              "mediaTypes": [
+                "application/octet-stream",
+                "application/x-tar",
+                "application/gzip",
+                "application/vnd.kubeclaw.build-output.tar"
+              ]
+            },
+            {
+              "name": "baseline",
+              "kind": "artifact",
+              "required": false,
+              "mediaTypes": [
+                "application/vnd.kubeclaw.size-budget-baseline+json"
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "name": "baseline",
+              "kind": "artifact",
+              "required": true,
+              "schemaId": "kubeclaw.size-budget-baseline@1",
+              "mediaTypes": [
+                "application/vnd.kubeclaw.size-budget-baseline+json"
+              ]
+            }
+          ],
+          "evidenceTypes": [
+            "log",
+            "size-budget-baseline"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log",
+              "size-budget-baseline"
+            ],
+            "onFail": [
+              "log",
+              "size-budget-baseline"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
         }
       ],
       "hostConfigSchema": null,
@@ -2366,7 +3304,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
@@ -2405,7 +3347,37 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": [
+            {
+              "name": "deployment",
+              "kind": "value",
+              "required": true,
+              "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+            }
+          ],
+          "outputs": [
+            {
+              "name": "exposure",
+              "kind": "value",
+              "required": true,
+              "schemaId": "kubeclaw.public-endpoint-fixture@1"
+            }
+          ],
+          "evidenceTypes": [
+            "log"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
         }
       ],
       "hostConfigSchema": null,
@@ -2443,7 +3415,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": "schemas/checkpoint.schema.json"
+          "checkpointSchema": "schemas/checkpoint.schema.json",
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
@@ -2483,7 +3459,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
@@ -2527,7 +3507,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
@@ -2567,7 +3551,48 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": [
+            {
+              "name": "deployment",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+            },
+            {
+              "name": "endpoint",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.public-endpoint-fixture@1"
+            }
+          ],
+          "outputs": [],
+          "evidenceTypes": [
+            "log",
+            "visual-baseline",
+            "visual-current",
+            "visual-difference",
+            "test-report"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log",
+              "visual-baseline",
+              "visual-current",
+              "visual-difference",
+              "test-report"
+            ],
+            "onFail": [
+              "log",
+              "visual-baseline",
+              "visual-current",
+              "visual-difference",
+              "test-report"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
         }
       ],
       "hostConfigSchema": null,
@@ -2606,7 +3631,11 @@
           "configSchema": "schemas/config.schema.json",
           "inputSchema": null,
           "resultSchema": null,
-          "checkpointSchema": null
+          "checkpointSchema": null,
+          "inputs": null,
+          "outputs": null,
+          "evidenceTypes": null,
+          "evidenceDefaults": null
         }
       ],
       "hostConfigSchema": null,
