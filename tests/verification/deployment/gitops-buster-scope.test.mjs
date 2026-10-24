@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
+import yaml from 'js-yaml';
 import { retainedGitOpsGroups } from '../../../scripts/gitops-buster-scope.mjs';
 
 // Frozen real receipts exercise effective per-component provenance and the
@@ -18,6 +19,15 @@ function fixture(run) {
     // Copy all historical immutable inputs, never edit the real repository.
     fs.cpSync('releases/gitops', path.join(root, 'releases/gitops'), { recursive: true });
     const prior = JSON.parse(fs.readFileSync(path.join(root, directory, 'bundle.receipt')));
+    // Build a coherent frozen selection independently of production rollback
+    // pointers. Otherwise an unrelated active rollback masks the tested gate.
+    const appsFile = path.join(root, 'gitops/production/apps/applications.yaml');
+    const apps = yaml.loadAll(fs.readFileSync(appsFile, 'utf8')).filter(Boolean);
+    for (const app of apps.filter(item => item.kind === 'Application')) {
+      const group = prior.groups.find(item => item.name === app.metadata.name);
+      if (group) app.spec.source.path = group.path;
+    }
+    fs.writeFileSync(appsFile, apps.map(item => yaml.dump(item)).join('---\n'));
     run(root, structuredClone(prior.receipt), directory);
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 }
@@ -72,4 +82,20 @@ test('Buster-only carry-forward accepts a new namespace-controller without chang
   receipt.images['namespace-controller'] = receipt.images['namespace-controller'].replace(/sha256:.*/, 'sha256:'+'b'.repeat(64));
   receipt.imageSources['namespace-controller'].commit = 'a'.repeat(40);
   assert.deepEqual([...retain(root, receipt).keys()], ['prism', 'nova']);
+}));
+
+
+test('Buster-only export rejects an active retained-role rollback inconsistent with selected bundle', () => fixture((root, receipt) => {
+  const file = path.join(root, 'gitops/production/apps/applications.yaml');
+  const apps = yaml.loadAll(fs.readFileSync(file, 'utf8')).filter(Boolean);
+  const prism = apps.find(item => item.kind === 'Application' && item.metadata.name.endsWith('-prism'));
+  const directory = 'releases/gitops/rollback-fixture/prism';
+  fs.mkdirSync(path.join(root, directory), {recursive: true});
+  fs.copyFileSync(path.join(root, prism.spec.source.path, 'resources.yaml'), path.join(root, directory, 'resources.yaml'));
+  // A different immutable path alone is safe when the manifest is identical.
+  prism.spec.source.path = directory;
+  fs.writeFileSync(file, apps.map(item => yaml.dump(item)).join('---\n'));
+  assert.deepEqual([...retain(root, receipt).keys()], ['prism', 'nova']);
+  fs.appendFileSync(path.join(root, directory, 'resources.yaml'), '\n# different rollback content\n');
+  assert.throws(() => retain(root, receipt), /GITOPS_MANIFEST_DIGEST_MISMATCH/);
 }));
