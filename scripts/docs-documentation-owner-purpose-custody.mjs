@@ -319,7 +319,7 @@ export const reviewedDocumentationOwnerPurposes=freeze({
       {
         "path": "docs/site/extend/documentation-maintenance.md",
         "canonical": "docs/site/extend/documentation-maintenance.md",
-        "sha256": "a8727c33bb81242fb446e89a66101b9f5182f2c5a54ae26ff3cfc7499a120b14"
+        "sha256": "900890bd6a59568cba8f30def84bb4e931de414edecb95f4b3f16762c5d93469"
       },
       {
         "path": "package.json",
