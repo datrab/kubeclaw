@@ -34,7 +34,7 @@ test('Buster-only export carries unchanged roles without invoking their renderer
 }));
 
 test('Buster-only export rejects unrelated images and provenance changes', () => fixture((root, receipt) => {
-  for (const name of Object.keys(receipt.images).filter(name => name !== 'buster-runtime')) {
+  for (const name of Object.keys(receipt.images).filter(name => !['buster-runtime', 'namespace-controller'].includes(name))) {
     const changed = structuredClone(receipt);
     changed.images[name] += 'bad';
     assert.throws(() => retain(root, changed), /SCOPE_IMAGE_CHANGED/);
@@ -66,4 +66,10 @@ test('Buster-only export rejects corrupt retained manifests and inventories', ()
   bundle.groups.find(group => group.role === 'nova').resources.pop();
   fs.writeFileSync(receiptFile, JSON.stringify(bundle));
   assert.throws(() => retain(root, receipt), /INVENTORY_MISMATCH/);
+}));
+
+test('Buster-only carry-forward accepts a new namespace-controller without changing other role manifests', () => fixture((root, receipt) => {
+  receipt.images['namespace-controller'] = receipt.images['namespace-controller'].replace(/sha256:.*/, 'sha256:'+'b'.repeat(64));
+  receipt.imageSources['namespace-controller'].commit = 'a'.repeat(40);
+  assert.deepEqual([...retain(root, receipt).keys()], ['prism', 'nova']);
 }));

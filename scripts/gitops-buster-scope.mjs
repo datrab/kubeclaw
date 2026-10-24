@@ -23,7 +23,7 @@ function sameCode(before, after, role) {
 
 function validateScope(before, after) {
   for (const name of Object.keys(before.images)) {
-    if (name === 'buster-runtime') continue;
+    if (['buster-runtime', 'namespace-controller'].includes(name)) continue;
     if (after.images[name] !== before.images[name]
       || !isDeepStrictEqual(componentSource(after, name, 'image'), componentSource(before, name, 'image'))) {
       throw new Error(`GITOPS_BUSTER_SCOPE_IMAGE_CHANGED:${name}`);

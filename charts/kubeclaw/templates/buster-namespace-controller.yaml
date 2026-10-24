@@ -222,6 +222,8 @@ spec:
               {{- $allowedAccess = append $allowedAccess (dict "subject" $subject "modes" .modes) -}}
               {{- end }}
               value: {{ toJson $allowedAccess | quote }}
+            - name: BUSTER_FAMILYCLAW_BOOTSTRAP_ENABLED
+              value: {{ .Values.busterNamespaceBroker.controller.familyclawBootstrapEnabled | default false | quote }}
             - name: BUSTER_ALLOWED_SOURCE_SECRETS
               value: {{ join "," .Values.busterNamespaceBroker.controller.allowedSourceSecrets | quote }}
             - name: BUSTER_LEASE_API_GROUP

@@ -4,7 +4,7 @@ import { isDeepStrictEqual } from 'node:util';
 import { validateCodeReceipt, selectedCode } from './code-release.mjs';
 import { inputDigest, isDeploymentInput } from './runtime-inputs.mjs';
 import { validateReleaseReceipt } from './deployment-release.mjs';
-import { runtimePublicationCommand, isRuntimeRenderConfiguration } from './runtime-publication-scope.mjs';
+import { runtimePublicationCommand, busterRenderConfigurationCompatible } from './runtime-publication-scope.mjs';
 import { componentSource } from './runtime-components.mjs';
 
 const root = process.cwd(), repo = process.env.GITHUB_REPOSITORY, token = process.env.GITHUB_TOKEN;
@@ -67,8 +67,7 @@ const images = validateReleaseReceipt(built?.value ?? JSON.parse(fs.readFileSync
 const priorImages = fs.existsSync('releases/runtime-images.json')
   ? JSON.parse(fs.readFileSync('releases/runtime-images.json', 'utf8')) : undefined;
 const priorCode = fs.existsSync(priorFile) ? JSON.parse(fs.readFileSync(priorFile, 'utf8')) : undefined;
-const configurationUnchanged = priorCode && inputDigest(root, priorCode.commit, isRuntimeRenderConfiguration)
-  === inputDigest(root, run.head_sha, isRuntimeRenderConfiguration);
+const configurationUnchanged = priorCode && busterRenderConfigurationCompatible(root, priorCode.commit, run.head_sha);
 const exportCommand = runtimePublicationCommand(priorImages && { ...priorImages, code: priorCode },
   { ...images, code }, configurationUnchanged);
 fs.mkdirSync('releases', { recursive: true });

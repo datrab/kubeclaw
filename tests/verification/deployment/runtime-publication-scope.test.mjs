@@ -17,7 +17,7 @@ test('only Buster runtime/code changes select guarded Buster export', () => {
 });
 
 test('unrelated image/code/provenance changes retain full publication', () => {
-  for (const name of Object.keys(prior.images).filter(name => name !== 'buster-runtime')) {
+  for (const name of Object.keys(prior.images).filter(name => !['buster-runtime', 'namespace-controller'].includes(name))) {
     const next = structuredClone(prior);
     next.images[name] = 'changed';
     assert.equal(runtimePublicationCommand(prior, next, true), 'export');
@@ -50,4 +50,13 @@ test('automatic publication consumes only validated selector export commands', (
   assert.equal(step.env.EXPORT_COMMAND, '${{ steps.selection.outputs.export_command }}');
   assert.match(step.run, /case "\$EXPORT_COMMAND" in export\|export-buster\)/);
   assert.match(step.run, /gitops-continuous\.mjs "\$EXPORT_COMMAND" "\$BUNDLE_DIRECTORY"/);
+});
+
+test('runtime and namespace-controller changes both remain Buster-only, unrelated slots still refuse', () => {
+  const next = structuredClone(prior);
+  next.images['buster-runtime'] = 'new-runtime';
+  next.images['namespace-controller'] = 'new-controller';
+  next.imageSources['namespace-controller'].commit = 'b'.repeat(40);
+  assert.equal(runtimePublicationCommand(prior, next, true), 'export-buster');
+  assert.equal(runtimePublicationCommand(prior, next, false), 'export');
 });
