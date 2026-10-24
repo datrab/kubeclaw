@@ -162,7 +162,10 @@
       "if": {
         "required": [
           "familyclawBootstrap"
-        ]
+        ],
+        "properties": {
+          "familyclawBootstrap": {}
+        }
       },
       "then": {
         "required": [
@@ -171,7 +174,10 @@
         "not": {
           "required": [
             "testCredentials"
-          ]
+          ],
+          "properties": {
+            "testCredentials": {}
+          }
         },
         "properties": {
           "fullStack": {
@@ -181,14 +187,17 @@
             "const": "test"
           },
           "secretReferences": {
-            "maxItems": 0
+            "maxItems": 0,
+            "type": "array"
           },
           "retention": {
             "properties": {
               "seconds": {
-                "maximum": 3600
+                "maximum": 3600,
+                "type": "integer"
               }
-            }
+            },
+            "type": "object"
           }
         }
       }
