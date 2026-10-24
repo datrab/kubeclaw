@@ -68982,7 +68982,7 @@
         "scripts/tests/docs-source-freshness.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "0413a749c68e9065648a055a9f34c07b34d4324668341e792f4cc3eabf4dd315"
+      "sha256": "b7dbdd950372eb0d643d0ee2fb58afd97544bdd3bc17702cc131cb0addbaa677"
     },
     {
       "path": "docs/generated/inventory/configuration-values.json",
@@ -221542,7 +221542,7 @@
           ]
         }
       ],
-      "sha256": "5c7d2d7c5d474605ac74212d36262e33a996a41a4e647e4f307f1a5e990d0c96"
+      "sha256": "567ac1d6406916ef160566e62c72a5703b13ce7d5d2cdeb1bc615313c0c6fc1a"
     },
     {
       "path": "docs/site/use/prism-studio.md",

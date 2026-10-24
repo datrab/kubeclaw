@@ -72,9 +72,12 @@ function registrationDependencyFacts(plugin, registration) {
   const fieldWords = (field) => field.replace(/([a-z0-9])([A-Z])/gu, '$1.$2').toLowerCase().split(/[^a-z0-9]+/u);
   const endpoints = schema.fields.filter((field) => fieldWords(field.path).some((word) => ['endpoint', 'url', 'origin', 'origins', 'host', 'hosts', 'ports', 'port', 'address'].includes(word)));
   const sensitiveHints = new Set(Object.entries(plugin.manifest.uiHints ?? {}).filter(([, hint]) => hint.sensitive).map(([field]) => field));
-  const secrets = schema.fields.filter((field) => field.constraints.writeOnly || sensitiveHints.has(field.path)
+  const loginMapping = (field) => registration.configSchema
+    && rel(path.join(plugin.directory, registration.configSchema)) === 'skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json'
+    && ['usernameKey', 'passwordKey'].includes(field.path);
+  const secrets = schema.fields.filter((field) => !loginMapping(field) && (field.constraints.writeOnly || sensitiveHints.has(field.path)
     || fieldWords(field.path).some((word) => ['secret', 'secrets', 'token', 'password', 'credential', 'credentials'].includes(word))
-    || /(?:apiKey|caPath|certPath|keyPath)$/u.test(field.path));
+    || /(?:apiKey|caPath|certPath|keyPath)$/u.test(field.path)));
   const required = [...new Set(registration.requiredCapabilities ?? [])].sort();
   const provided = [...new Set(registration.providesCapabilities ?? [])].sort();
   const modulePath = registration.module ? path.join(plugin.directory, registration.module) : null;

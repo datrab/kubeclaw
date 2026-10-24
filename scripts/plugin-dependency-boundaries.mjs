@@ -139,15 +139,31 @@ export function invocationDependencyBoundaries(invocation, repositoryRoot, regis
       case 'NetworkHttpCapabilityInvoker':
         record = {
           service: 'Buster performs HTTP or allowed WebSocket requests through the configured network consumer. A registry health request has a separate narrow authentication projection.',
-          endpoint: 'The request resource canonicalId supplies the URL. allowedOrigins, allowedHostSuffixes and allowedPorts admit targets, together with currently valid fixture origins. URL credentials and redirects are denied; allowedMethods/request headers scope operations. The runtime owner supplies these policies and the concrete endpoint.',
-          secret: 'The request may supply only allowed headers; the runtime does not resolve secrets.read. Optional registryHealth origin/username/password can authorize only GET/HEAD of exactly /v2/ with no body and accept-only input headers. Other paths cannot use platform registry credentials; response checks deny reflected credential bytes. The configured runtime and caller own their respective credential sources and rotation.',
+          endpoint: 'The request resource canonicalId supplies the URL. Targets must first match allowedOrigins or allowedHostSuffixes and an allowedPort, except the separately configured registry-health origin. Current fixture origins only give an already policy-admitted target exact-origin status; a fixture cannot override the network policy. URL credentials and redirects are denied; allowedMethods/request headers scope operations. The runtime owner supplies these policies and the concrete endpoint.',
+          secret: 'The request may supply only allowed headers; the runtime does not resolve secrets.read. Optional registryHealth configuration requires either an HTTPS origin with both nonempty username and password, or an HTTP origin with neither credential field present. Other combinations fail HTTP_REGISTRY_HEALTH_AUTH_INVALID. This separate authority can authorize only GET/HEAD of exactly /v2/ with no body and accept-only input headers. Other paths cannot use platform registry credentials; response checks deny the Basic authorization header, its base64 payload and the password when reflected in checked response bytes or content type; raw username reflection alone is not rejected. The configured runtime and caller own their respective credential sources and rotation.',
           dataOwner: 'The selected HTTP/WebSocket target owns remote state. The consumer owns bounded request/response observation; a mutating HTTP result lost after receiver commit remains uncertain. Fixture leases retain endpoint admission authority.',
           check: 'Run the permitted request against its admitted URL and verify the intended status/body or bounded WebSocket result. Bound requests by maximumExecutionMs, maximumRequestBytes and maximumResponseBytes plus narrower request limits. Verify origin/header/method/auth denial and timeout/cancellation separately; HTTP status alone proves no unrelated target operation.',
         };
+        const callerFiles = [...invocation.selectedSources.keys()].map((file) => path.relative(repositoryRoot, file).split(path.sep).join('/'));
+        if (callerFiles.includes('skills/buster/plugins/demo-auth-smoke/src/provider.js')) {
+          record.endpoint += ' The demo-auth-smoke session requires allowedMethods to include POST and GET and allowedRequestHeaders to include accept, content-type and cookie; the defaults GET/HEAD and accept alone cannot run login and authenticated requests.';
+          record.secret += ' For demo-auth-smoke, config.usernameKey and config.passwordKey name login JSON properties, not credentials or Secret references. Those properties receive the fixed confidential credentials.values.username and credentials.values.password values respectively; changing the property names does not select different credential fields.';
+          guards.push(['skills/buster/plugins/demo-auth-smoke/src/provider.js', "payload:{method,headers:{accept:'application/json',...headers}", "const authenticated = await request(config.protectedPath,'GET',{cookie});"],
+            [relative, "const methods = options.allowedMethods ?? ['GET', 'HEAD'];", 'this.#allowedRequestHeaders = new Set(headers);']);
+        }
+        for (const [caller, first, last] of [
+          ['skills/buster/plugins/http/src/provider.js', "if (value.schemaVersion !== 'public-endpoint-fixture.v1'", "value.provider !== 'tailscale-ingress'"],
+          ['skills/buster/plugins/demo-auth-smoke/src/protocol.js', "e.schemaVersion !== 'public-endpoint-fixture.v1'", "e.provider !== 'tailscale-ingress'"],
+        ]) {
+          if (!callerFiles.includes(caller)) continue;
+          record.endpoint += ' Its public-endpoint fixture must name provider tailscale-ingress; another provider is rejected before requesting the endpoint. This route requires the separately owned Tailscale ingress exposure, not merely a schema-valid URL.';
+          guards.push([caller, first, last]);
+        }
         guards.push([relative, '  async invoke(', '    const payload = exactPayload'],
           [relative, '  #target(', '  async #responseBytes('],
           [relative, '    const timeoutMs = positiveInteger(payload.timeoutMs', '      return websocket('],
           [relative, '      response = await fetch(url', '      return Object.freeze({'],
+          ['skills/buster/engine/test-gates/registry-health-access.ts', 'export function validateRegistryHealth(', "throw new Error('HTTP_REGISTRY_HEALTH_AUTH_INVALID');"],
           ['skills/buster/engine/test-gates/registry-health-access.ts', '  headers(url:', '  assertResponse('],
           ['skills/buster/engine/test-gates/registry-health-access.ts', '  assertResponse(', '\n  }']);
         break;
@@ -203,7 +219,7 @@ export function invocationDependencyBoundaries(invocation, repositoryRoot, regis
         if (!axe) {
           record.service += ' capture reaches the application; compare uses only caller-supplied PNG images and local pixelmatch computation.';
           record.endpoint += ' Before relying on capture containment, the Buster runtime owner must verify independent browser egress enforcement that denies cross-origin redirect traffic, or correct the runtime and prove redirect denial. Stop capture where containment is required until that proof exists; an origin allowlist or a passed screenshot is insufficient. compare selects visual.comparison:pixelmatch-v1 and no remote endpoint.';
-          record.check += ' compare bounds input/decoded/result image sizes and checks cancellation before synchronous comparison; it declares no separate computation timeout.';
+          record.check += ' capture starts its deadline before browser launch, but launch receives no remaining-deadline timeout or cancellation race; the callback closes only browsers already registered after launch. A pending launch can outlast maximumExecutionMs or cancellation, so this is not a hard operation-wide bound. Require separately verified launcher supervision when a hard startup deadline is needed. compare bounds input/decoded/result image sizes and checks cancellation before synchronous comparison; it declares no separate computation timeout.';
           guards.push([relative, "    if (request.operation === 'compare')", "    if (request.operation !== 'capture')"],
             [relative, "          await context.route('**/*'", '            return route.continue();\n          });']);
         }
@@ -255,9 +271,18 @@ export function invocationDependencyBoundaries(invocation, repositoryRoot, regis
         if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && calls.includes(node.expression.text)) {
           const args = node.arguments[1];
           if (['execFileSync', 'spawnSync'].includes(node.expression.text) && (!node.arguments[0] || !ts.isStringLiteralLike(node.arguments[0]) || node.arguments[0].text !== 'git')) { ts.forEachChild(node, scan); return; }
-          // execFileSync('git', ['-C', root, ...args]) is the local helper's
-          // forwarding site; its finite callers below supply every command.
-          if (node.expression.text === 'execFileSync' && ts.isArrayLiteralExpression(args) && args.elements.some(ts.isSpreadElement)) { ts.forEachChild(node, scan); return; }
+          // Only the exact original local forwarding declaration may defer argv
+          // classification to its finite git(...) callers. A spread at any other
+          // call site (including an allowed verb prefix) is not finite authority.
+          if (args && ts.isArrayLiteralExpression(args) && args.elements.some(ts.isSpreadElement)) {
+            const forwarder = node.parent?.parent;
+            const originalForwarder = node.expression.text === 'execFileSync'
+              && file === path.join(repositoryRoot, 'skills/nova/plugins/repository-adapter/src/revision-reader.ts')
+              && forwarder && ts.isBlock(forwarder) && ts.isFunctionDeclaration(forwarder.parent)
+              && forwarder.parent.getText(source) === "function git(root: string, args: readonly string[], maxBuffer = 1024 * 1024): Buffer {\n  return execFileSync('git', ['-C', root, ...args], {\n    encoding: 'buffer', maxBuffer, stdio: ['ignore', 'pipe', 'pipe'],\n  });\n}";
+            if (!originalForwarder) { seen++; valid = false; }
+            ts.forEachChild(node, scan); return;
+          }
           seen++;
           if (!args || !ts.isArrayLiteralExpression(args)) valid = false;
           else {

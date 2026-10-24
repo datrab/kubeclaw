@@ -63,6 +63,13 @@ try {
   assert.deepEqual(authority.artifactOperations, []);
   assert.equal(authority.schema.secrets[0].path, 'token');
   assert.ok(!JSON.stringify(authority.schema).includes(root));
+  const authPlugin = { ...plugin, directory: path.join(root, 'skills/buster/plugins/demo-auth-smoke') };
+  const authRegistration = { ...registration, configSchema: 'schemas/config.schema.json', configSchemaObject: {
+    type: 'object', properties: { usernameKey: { type: 'string' }, passwordKey: { type: 'string' }, passwordSecret: { type: 'string' } },
+  } };
+  const authAuthority = collect({ plugins: [authPlugin], sourceLink: () => 'pinned-fixture' })
+    .registrationDependencyAuthority(authPlugin, authRegistration);
+  assert.deepEqual(authAuthority.schema.secrets.map(field => field.path), ['passwordSecret']);
   const native = [{ id: 'fixture', host: 'openclaw', manifest: 'plugin.json', registrations: [
     { id: 'one', kind: 'openclaw-extension' },
   ] }];

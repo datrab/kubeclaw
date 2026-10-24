@@ -3558,6 +3558,8 @@ function schemaRuntimeValidationRules(authorityPath, field) {
 }
 
 function schemaSpecificPurpose(authorityPath, fieldPath, context) {
+  if (authorityPath === 'skills/buster/plugins/axe/schemas/config.schema.json' && fieldPath === '$.url') return 'Supplies a configured target whose new URL(url).origin is used as the scan base. The configured path is discarded; routes select scanned paths, so changing only the URL path changes no scanned route. A configured URL cannot be combined with typed inputs.';
+  if (authorityPath === 'skills/buster/plugins/http/schemas/config.schema.json' && fieldPath === '$.url') return 'Supplies a canonical HTTP or HTTPS base origin, optionally ending in /. A non-root path, query, fragment or embedded credentials is rejected by explicitBase; path selects the request route separately. A configured base cannot be combined with a typed deployment or endpoint input.';
   if (authorityPath === 'skills/prism/openclaw-plugin/openclaw.plugin.json#$.configSchema' && fieldPath === '$.controlUrl') return 'Selects the base URL for Prism design-set and revision POST operations; a truthy configured value overrides the environment and built-in fallback.';
   if (authorityPath === 'skills/buster/plugins/coverage-budget/schemas/config.schema.json') {
     if (fieldPath === '$.minimumLinePercent') return 'Sets the enforced minimum line-coverage percentage; omitting this threshold disables budget enforcement, not LCOV input validation.';
@@ -3861,7 +3863,7 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
     orchestratorIssuerId: `Sets the issuer identity required on orchestrator decisions accepted by ${context}.`,
     outputName: `Sets the stable logical name of the image output produced by ${context}.`,
     outsideScope: `Selects how the review treats a proposed finding outside the declared review scope.`,
-    passwordKey: `Names the key in the confidential credential object that supplies the demo password.`,
+    passwordKey: `Names the JSON property in the login request body populated from the fixed confidential credentials.values.password field; it does not rename the credential object field.`,
     passwordSecret: `Names the confidential Redis password that ${context} resolves through the secret capability.`,
     path: `Sets the URL path used by ${context}.`,
     paths: `Lists the URL paths checked by ${context}.`,
@@ -3952,7 +3954,7 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
     unknownScope: `Selects how the review treats a proposed finding whose diff scope cannot be proved.`,
     unverifiedRequirement: `Selects the review outcome when a stated requirement cannot be verified.`,
     url: `Sets the absolute target URL contacted by ${context} when no typed endpoint input supplies it.`,
-    usernameKey: `Names the key in the confidential credential object that supplies the demo username.`,
+    usernameKey: `Names the JSON property in the login request body populated from the fixed confidential credentials.values.username field; it does not rename the credential object field.`,
     usernamePointer: `Selects the JSON Pointer that must equal the authenticated username in ${context}.`,
     workers: `Sets the number of Playwright workers used by ${context}.`,
     workingDirectory: `Selects the allowlisted repository-relative directory in which ${context} starts the command.`,

@@ -153,6 +153,22 @@ test('publication report qualifies every discovered route, host and credential b
   const secret = report.records.find((item) => item.id === 'kubeclaw.secret-resolver:secrets');
   assert.ok(!secret.secret.includes('No credential selector'));
   assert.match(secret.secret, /context\.config\.environment.*SECRET_DENIED/u);
+  // Reader prerequisites must differ by actual caller route, not just capability family.
+  const session = report.records.find((item) => item.id === 'kubeclaw.demo-auth-smoke:session');
+  const http = report.records.find((item) => item.id === 'kubeclaw.http:request');
+  const axe = report.records.find((item) => item.id === 'kubeclaw.axe:axe');
+  for (const record of [session, http]) {
+    assert.match(record.endpoint, /provider tailscale-ingress/u, record.id);
+    assert.match(record.endpoint, /fixture cannot override the network policy/u, record.id);
+    assert.match(record.secret, /HTTPS origin with both nonempty username and password/u, record.id);
+    assert.match(record.secret, /HTTP origin with neither credential field present/u, record.id);
+    assert.match(record.secret, /raw username reflection alone is not rejected/u, record.id);
+  }
+  assert.match(session.endpoint, /POST and GET.*accept, content-type and cookie/u);
+  assert.doesNotMatch(http.endpoint, /demo-auth-smoke session requires/u);
+  assert.doesNotMatch(axe.endpoint, /demo-auth-smoke session requires/u);
+  assert.match(session.secret, /usernameKey/u);
+  assert.match(session.secret, /name login JSON properties, not credentials or Secret references/u);
   const revision = JSON.parse(fs.readFileSync(path.join(root, 'docs/generated/inventory/documentation-source-revision.json'), 'utf8')).revision;
   const lock = execFileSync('git', ['show', `${revision}:package-lock.json`], { cwd: root, encoding: 'utf8' }).split('\n');
   const urls = [...JSON.stringify(report).matchAll(/https:\/\/github\.com\/[^/]+\/[^/]+\/blob\/([0-9a-f]{40})\/package-lock\.json#L(\d+)-L(\d+)/gu)];
@@ -163,5 +179,31 @@ test('publication report qualifies every discovered route, host and credential b
     assert.match(excerpt, /"node_modules\/(?:yaml|js-tiktoken|tiktoken)"/u);
     assert.match(excerpt, /"version":/u);
     assert.match(excerpt, /"integrity":/u);
+  }
+});
+
+
+test('visual dependency guidance exposes unbounded startup without granting runtime containment', () => {
+  const routes = pluginCapabilityRoutes(path.join(root, 'skills/buster/engine/test-gates/remote-plan-service.ts'), root);
+  const invocation = facts('skills/buster/plugins/visual/src/provider.js', 'provider');
+  const boundary = invocationDependencyBoundaries(invocation, root, { routes });
+  assert.deepEqual(boundary.diagnostics, []);
+  const record = boundary.records.find((item) => item.scope === 'runtime-client');
+  assert.ok(record);
+  assert.match(record.endpoint, /redirected requests continue without its origin check/u);
+  assert.match(record.endpoint, /Stop capture where containment is required/u);
+  assert.match(record.check, /pending launch can outlast maximumExecutionMs or cancellation/u);
+  assert.match(record.check, /not a hard operation-wide bound/u);
+});
+
+
+test('arbitrary spread Git argv cannot borrow the exact local forwarding helper', () => {
+  const original = facts('skills/nova/plugins/repository-adapter/src/adapter.ts');
+  for (const expression of ["execFileSync('git', ['fetch', ...args]);", "spawnSync('git', ['fetch', ...args]);", "git(root, ['show', ...args]);", "execFileSync('git', ['-C', root, ...args]);"]) {
+    const selectedSources = new Map(original.selectedSources);
+    selectedSources.set(path.join(root, 'mutation.ts'), expression);
+    const boundary = invocationDependencyBoundaries({ ...original, selectedSources }, root);
+    assert.ok(boundary.diagnostics.some((item) => item.includes('subprocess target requires command dependency authority')), expression);
+    assert.ok(!boundary.records.some((item) => item.service.startsWith('Local Git revision reader:')), expression);
   }
 });

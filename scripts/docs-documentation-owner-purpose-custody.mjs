@@ -471,7 +471,7 @@ const readerArtifactCiPurpose=freeze({
     {
       "path": "scripts/plugin-registration-dependencies.mjs",
       "canonical": "scripts/plugin-registration-dependencies.mjs",
-      "sha256": "20e46891fc697e57f6e11be19bb4bd75c1e20293472e8090444c311ad8794c62"
+      "sha256": "0d0684a71002310465fdaf86ad021a185caaf36d53cb565393bd2347cc385cec"
     }
   ],
   "ciRunLine": "run: npm run docs:publication:check && node --test scripts/tests/docs-reader.test.mjs scripts/tests/docs-reader-page-records.test.mjs scripts/tests/docs-reader-redirects.test.mjs scripts/tests/docs-reader-source-links.test.mjs scripts/tests/docs-reader-source-previews.test.mjs scripts/tests/docs-reader-diagrams.test.mjs && node scripts/tests/docs-reader-redirects.browser.mjs && npm run docs:publication:build && node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs && node scripts/docs-reader/check-search.mjs && node --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs && node --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs && node --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
