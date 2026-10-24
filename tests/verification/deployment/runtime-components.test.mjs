@@ -132,7 +132,7 @@ test('mixed provenance resolves each retained artifact to its producing successf
   const assets = new Map(); const releases = {};
   let counter = 0;
   for (const [tag, receipt] of Object.entries(receipts)) {
-    const id = ++counter; assets.set(id, receipt);
+    const id = ++counter; assets.set(id, structuredClone(receipt));
     releases[tag] = { target_commitish: receipt.commit, assets: [{ id, name: tag.startsWith('code') ? 'runtime-code.json' : 'runtime-images.json', size: 1000 },
       ...Object.entries(receipt.bundles ?? {}).filter(([, bundle]) => !bundle.source).map(([role, bundle]) => ({ name: `${role}-${receipt.commit}.tgz`, browser_download_url: bundle.url, digest: `sha256:${bundle.sha256}` }))] };
   }
@@ -148,7 +148,20 @@ test('mixed provenance resolves each retained artifact to its producing successf
   const verify = () => verifyReleaseSources({ root, repo: 'datrab/kubeclaw', token: 'test', fetchImpl });
   await verify();
   runs[1].conclusion = 'failure'; await assert.rejects(verify, /successful/); delete runs[1].conclusion;
+  // Local selection edits must not mutate the immutable API receipt fixture.
+  // Even an authentic older component cannot be substituted into a different
+  // published selection: a new successful-source receipt is required first.
+  const synthetic = structuredClone(next);
+  synthetic.images['namespace-controller'] = images.images['namespace-controller'];
+  synthetic.imageSources['namespace-controller'] = componentSource(images, 'namespace-controller', 'image');
+  write('releases/runtime-images.json', JSON.stringify(synthetic));
+  await assert.rejects(verify, /preserved successful-source receipt/);
+  assert.equal(assets.get(2).images['namespace-controller'], next.images['namespace-controller']);
   next.images.nova = image('nova', 'f'); write('releases/runtime-images.json', JSON.stringify(next));
+  await assert.rejects(verify, /preserved successful-source receipt/);
+  // If the published selection itself names a forged retained value, the
+  // independent original producer receipt must still reject it.
+  assets.set(2, structuredClone(next));
   await assert.rejects(verify, /original build/);
 }));
 
