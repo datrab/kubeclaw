@@ -4,7 +4,7 @@ import { isDeepStrictEqual } from 'node:util';
 import { validateCodeReceipt, selectedCode } from './code-release.mjs';
 import { inputDigest, isDeploymentInput } from './runtime-inputs.mjs';
 import { validateReleaseReceipt } from './deployment-release.mjs';
-import { runtimePublicationCommand, busterRenderConfigurationCompatible } from './runtime-publication-scope.mjs';
+import { runtimePublicationCommand, busterRenderConfigurationCompatible, assertRuntimePublicationScope } from './runtime-publication-scope.mjs';
 import { componentSource } from './runtime-components.mjs';
 
 const root = process.cwd(), repo = process.env.GITHUB_REPOSITORY, token = process.env.GITHUB_TOKEN;
@@ -70,6 +70,7 @@ const priorCode = fs.existsSync(priorFile) ? JSON.parse(fs.readFileSync(priorFil
 const configurationUnchanged = priorCode && busterRenderConfigurationCompatible(root, priorCode.commit, run.head_sha);
 const exportCommand = runtimePublicationCommand(priorImages && { ...priorImages, code: priorCode },
   { ...images, code }, configurationUnchanged);
+assertRuntimePublicationScope(exportCommand, process.env.RUNTIME_PUBLICATION_SCOPE);
 fs.mkdirSync('releases', { recursive: true });
 fs.writeFileSync(priorFile, JSON.stringify(code, null, 2) + '\n');
 selectedCode(root, images);

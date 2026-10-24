@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import test from 'node:test';
 import yaml from 'js-yaml';
-import { runtimePublicationCommand, isRuntimeRenderConfiguration } from '../../../scripts/updates/runtime-publication-scope.mjs';
+import { runtimePublicationCommand, isRuntimeRenderConfiguration, assertRuntimePublicationScope } from '../../../scripts/updates/runtime-publication-scope.mjs';
 const images = JSON.parse(fs.readFileSync('releases/runtime-images.json'));
 const code = JSON.parse(fs.readFileSync('releases/runtime-code.json'));
 const prior = { ...images, code };
@@ -59,4 +59,23 @@ test('runtime and namespace-controller changes both remain Buster-only, unrelate
   next.imageSources['namespace-controller'].commit = 'b'.repeat(40);
   assert.equal(runtimePublicationCommand(prior, next, true), 'export-buster');
   assert.equal(runtimePublicationCommand(prior, next, false), 'export');
+});
+
+test('Buster authorization refuses full export, including shared-image rebuild fallback', () => {
+  const next = structuredClone(prior);
+  next.images['prism-agent'] = 'shared-input-rebuild';
+  const command = runtimePublicationCommand(prior, next, true);
+  assert.equal(command, 'export');
+  assert.throws(() => assertRuntimePublicationScope(command, 'buster'), /SCOPE_EXCEEDED/);
+  assert.doesNotThrow(() => assertRuntimePublicationScope('export-buster', 'buster'));
+  assert.doesNotThrow(() => assertRuntimePublicationScope('export', 'all'));
+  for (const scope of [undefined, '', 'prism']) assert.throws(() => assertRuntimePublicationScope('export', scope), /SCOPE_REQUIRED/);
+  assert.throws(() => assertRuntimePublicationScope('untrusted', 'all'), /COMMAND_INVALID/);
+});
+
+test('automatic selector checks authorization before changing selected receipts', () => {
+  const workflow = yaml.load(fs.readFileSync('.github/workflows/auto-promote-runtime.yaml', 'utf8'));
+  assert.equal(workflow.jobs.publish.env.RUNTIME_PUBLICATION_SCOPE, 'buster');
+  const source = fs.readFileSync('scripts/updates/select-runtime-deployment.mjs', 'utf8');
+  assert.ok(source.indexOf('assertRuntimePublicationScope(exportCommand,') < source.indexOf("fs.mkdirSync('releases'"));
 });

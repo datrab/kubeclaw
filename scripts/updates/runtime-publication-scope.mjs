@@ -58,3 +58,11 @@ export function runtimePublicationCommand(prior, next, configurationUnchanged) {
   if (!['nova', 'prism'].every(role => unchangedBundle(prior.code, next.code, role))) return 'export';
   return 'export-buster';
 }
+
+// Authorization is independent of build scope: rebuilding shared inputs does
+// not authorize rolling out every role that consumes them.
+export function assertRuntimePublicationScope(command, authorizedScope) {
+  if (!['all', 'buster'].includes(authorizedScope)) throw new Error('RUNTIME_PUBLICATION_SCOPE_REQUIRED');
+  if (!['export', 'export-buster'].includes(command)) throw new Error('RUNTIME_PUBLICATION_COMMAND_INVALID');
+  if (authorizedScope === 'buster' && command !== 'export-buster') throw new Error('RUNTIME_PUBLICATION_SCOPE_EXCEEDED:buster');
+}

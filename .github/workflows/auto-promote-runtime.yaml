@@ -22,6 +22,8 @@ jobs:
       actions: read
     env:
       GITHUB_TOKEN: ${{ github.token }}
+      # Current delivery authorization excludes Nova and Prism.
+      RUNTIME_PUBLICATION_SCOPE: buster
       SOURCE_RUN_ID: ${{ github.event.workflow_run.id }}
       SOURCE_RUN_ATTEMPT: ${{ github.event.workflow_run.run_attempt }}
     steps:
