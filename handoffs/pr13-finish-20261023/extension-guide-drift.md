@@ -382,3 +382,93 @@ verified finding dispositions and six-scope vectors are in operations evidence
 an actually unaccepted remaining topic from the current register rather than
 repeat unchanged 105-vector custody, equivalent DATA fixtures, these two accepted
 whole extension gates or historical review acquisitions.
+
+
+## Executing continuation: package schema projection, 2026-10-23 23:32 UTC
+
+Unpublished candidate on `dce5993b`; no acceptance transition. Full native
+51-package/67-registration reconciliation found 66 declared config-schema edges
+already present in the separate configuration inventory. AP08 projection omitted
+all native schema declarations: changing the actual runtime-dispatch adapter's
+`configSchema` to its existing sibling schema incorrectly left the original AP08
+check green. Real package and registration additions already failed stale output.
+All temporary manifest mutations were restored byte-for-byte.
+
+The candidate preserves `configSchema`, `inputSchema`, `resultSchema`, and
+`checkpointSchema` declarations, with null meaning absence of a declaration,
+not schema exemption. It does not resolve schema contents or infer Secret,
+artifact, or owner completeness. Four real native schema kinds, each changed
+and removed, now give eight stale-output failures and four restored green
+baselines. Choice (24 links/12 scenarios), host catalogue (54 pages/51 packages),
+and advanced guide (94 links/12 suites) checks pass; unavailable runtime paths
+remain unavailable. Pinned fe588b1a Terra/high/P2 source-only review found no
+actionable findings (0.98); complete current generator supplied in-band, not a
+claim of reviewer shell inspection or reviewer-executed tests.
+
+Full changed-Source acquisition checked all 105 native recipes: facts, selectors,
+children and all 105 qualification inputs are exactly unchanged. Selected graph
+1248 and executable caller census 1005 have unchanged membership and exactly
+one changed Source: `scripts/ap08-extension-inventory.mjs`. No custody constants
+were renewed. The unchanged original receiver was executed and stops at
+`DEPLOYMENT_SCALAR_OCCURRENCE_UNQUALIFIED: scripts/bundle-values-field.mjs;
+changed/new executable caller census`. It did NOT re-reach original DATA
+`artifacts.ts:41`; all five DATA slots remain UNKNOWN.
+
+The four initially affected old scopes are developers (77 files), maintenance
+(27), complete plugin mechanisms (504), and A910-03 command prerequisites (218).
+Complete original contracts and pre-change-HEAD/current vectors are retained;
+these are impact inputs, not independent preservation approval. Scalar custody
+renewal will affect additional scopes and needs its own complete enumeration.
+Registry remains 225/261 requirements, 58/89 gates, 98 records. No commit, push,
+new gate, runtime change, release/receipt rewrite, or exemption is claimed.
+
+Resume the same candidate: independently assess exact single-Source
+caller/selected delta and unchanged 105 native operations, then derive the two
+scalar initializer consequences and affected recipe facts with original contracts
+and baseline failures supplied up front. Only then apply justified custody
+renewal, exact old-scope preservation, required original checks, commit and push.
+Do not restart unchanged 105 acquisitions or the original negative DATA loop.
+A910-05 still needs substantive Secret/artifact/owner completeness; A910-10
+needs independent clean-checkout/compatibility/removal/rollback assessment.
+Detailed reproducible scripts, full compressed vectors, original failure and
+review-runtime recoveries are outside tmp under
+`operations/pr13/evidence/package-inventory-20261023/`.
+
+
+### Executing custody continuation, 2026-10-23 23:58 UTC
+
+The exact single-generator selected/caller delta received independent pinned
+Terra/high/P2 semantic review (.97). Only the two scalar census initializers
+were renewed. All 105 native recipes were then acquired completely: precisely
+five digest consequences, each containing only those two initializers; every
+selector and child is unchanged. A second bounded source-role review is clean
+(.98), not a whole-gate or prior-scope preservation approval.
+
+The actual original receiver first exposed the five native recipe consequences,
+then, after those exact updates, stops at the AP08 inventory's original content
+slot (line 305). This is not original DATA acceptance: artifacts.ts41 has NOT yet
+been re-reached in this continuation. Its five UNKNOWN slots remain unchanged.
+Original native role contracts were acquired against actual prior Git Source:
+both complete 41-fact baselines reproduce the original digest. Candidate facts
+change only rawPackages and markdown initializers; two existing contracts need
+only their exact digest and diagnostic line 305-to-313 maintenance. The candidate
+keeps original roles, purposes, consumer evidence and all other fields intact.
+Four isolated actual classifier mutations (foreign destination, raw content,
+diagnostic receiver, new raw output) reject; all four exact restores qualify.
+These are scoped maintenance controls, not a new output exemption.
+
+All TEN impacted original scopes (1233 declared file memberships) are now
+enumerated and compared against their actual original reviewed revisions.
+Their complete contracts and vectors are retained outside tmp, not counted as
+preservation approval. The register is unchanged. There is no new whole A91005
+or A91010 approval, fresh participant, runtime, release or deployment claim.
+The OpenClaw hosts' inline configSchema declarations are a separate remaining
+whole-inventory join; current repair covers pipeline registration declarations.
+
+Publication was actually attempted: first missing shared browser libraries
+(fixed by the declared retained runtime wrapper), then the original dirty-Source
+Git guard. No renderer guard was bypassed, receipt rewritten, or failed build
+called green. Source commit plus the original six reader artifact processes and
+independent ten-scope preservation remain necessary before publishing. Detailed
+failures, reviewed deltas and exact next execution are in operations evidence
+package-inventory-20261023 and runtime/current-work.json.

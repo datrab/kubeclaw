@@ -247,7 +247,11 @@
           "requiredCapabilities": [
             "telemetry.emit"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": "schemas/checkpoint.schema.json"
         },
         {
           "kind": "observer",
@@ -258,7 +262,11 @@
           "requiredCapabilities": [
             "artifacts.write"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": "schemas/checkpoint.schema.json"
         }
       ],
       "includedRoles": [
@@ -296,7 +304,11 @@
           "requiredCapabilities": [
             "network.http"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -333,7 +345,11 @@
             "git.repository.read",
             "artifacts.read"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": "schemas/input.schema.json",
+          "resultSchema": "schemas/result.schema.json",
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -369,7 +385,11 @@
           "providedCapabilities": [
             "artifacts.read",
             "artifacts.write"
-          ]
+          ],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -405,7 +425,11 @@
           "requiredCapabilities": [
             "browser.axe"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -442,7 +466,11 @@
             "artifacts.write",
             "artifacts.read"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": "schemas/input.schema.json",
+          "resultSchema": "schemas/result.schema.json",
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -479,7 +507,11 @@
             "artifacts.write",
             "artifacts.read"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": "schemas/input.schema.json",
+          "resultSchema": "schemas/result.schema.json",
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -517,7 +549,11 @@
             "artifacts.write",
             "report.evidence.read"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": "schemas/input.schema.json",
+          "resultSchema": "schemas/result.schema.json",
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -552,7 +588,11 @@
           "requiredCapabilities": [],
           "providedCapabilities": [
             "command.execute"
-          ]
+          ],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -588,7 +628,11 @@
           "requiredCapabilities": [
             "container.build"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -620,7 +664,11 @@
           "module": "src/provider.js",
           "export": "provider",
           "requiredCapabilities": [],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -654,7 +702,11 @@
             "git.repository.read",
             "artifacts.write"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": "schemas/input.schema.json",
+          "resultSchema": "schemas/result.schema.json",
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -688,7 +740,11 @@
           "requiredCapabilities": [
             "network.http"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -720,7 +776,11 @@
             "test.plan.evidence",
             "artifacts.write"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/empty.schema.json",
+          "inputSchema": "schemas/candidate.schema.json",
+          "resultSchema": "schemas/result.schema.json",
+          "checkpointSchema": null
         },
         {
           "kind": "stage",
@@ -732,7 +792,11 @@
             "demo.handoff",
             "artifacts.write"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/empty.schema.json",
+          "inputSchema": "schemas/delivery.schema.json",
+          "resultSchema": "schemas/result.schema.json",
+          "checkpointSchema": null
         },
         {
           "kind": "stage",
@@ -744,7 +808,11 @@
             "demo.handoff",
             "artifacts.write"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/empty.schema.json",
+          "inputSchema": "schemas/ready.schema.json",
+          "resultSchema": "schemas/result.schema.json",
+          "checkpointSchema": null
         },
         {
           "kind": "adapter",
@@ -760,7 +828,11 @@
           ],
           "providedCapabilities": [
             "demo.handoff"
-          ]
+          ],
+          "configSchema": "schemas/adapter.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -795,7 +867,11 @@
           "requiredCapabilities": [
             "command.execute"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -832,7 +908,11 @@
             "git.commit",
             "git.merge",
             "git.sync"
-          ]
+          ],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -867,7 +947,11 @@
           "requiredCapabilities": [
             "network.http"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -899,7 +983,11 @@
             "operator.request",
             "signal.wait"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": "schemas/input.schema.json",
+          "resultSchema": "schemas/result.schema.json",
+          "checkpointSchema": null
         },
         {
           "kind": "stage",
@@ -914,7 +1002,11 @@
             "git.repository.read",
             "artifacts.write"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": "schemas/architecture-input.schema.json",
+          "resultSchema": "schemas/result.schema.json",
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -955,7 +1047,11 @@
             "artifacts.read",
             "artifacts.write"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": "schemas/input.schema.json",
+          "resultSchema": "schemas/result.schema.json",
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -988,7 +1084,11 @@
           "module": "src/adapter.js",
           "export": "adapt",
           "requiredCapabilities": [],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": null,
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -1022,7 +1122,11 @@
           "requiredCapabilities": [
             "kubernetes.fixture"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -1055,7 +1159,11 @@
           "requiredCapabilities": [
             "browser.lighthouse"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -1090,7 +1198,11 @@
             "artifacts.write",
             "artifacts.read"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": "schemas/input.schema.json",
+          "resultSchema": "schemas/result.schema.json",
+          "checkpointSchema": null
         },
         {
           "kind": "stage",
@@ -1103,7 +1215,11 @@
             "artifacts.write",
             "artifacts.read"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": "schemas/input.schema.json",
+          "resultSchema": "schemas/result.schema.json",
+          "checkpointSchema": null
         },
         {
           "kind": "adapter",
@@ -1114,7 +1230,11 @@
           "requiredCapabilities": [],
           "providedCapabilities": [
             "lint.execute"
-          ]
+          ],
+          "configSchema": "schemas/adapter-config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -1156,7 +1276,11 @@
           "requiredCapabilities": [],
           "providedCapabilities": [
             "network.http"
-          ]
+          ],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -1193,7 +1317,11 @@
           "requiredCapabilities": [
             "operator.request"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": "schemas/checkpoint.schema.json"
         },
         {
           "kind": "observer",
@@ -1204,7 +1332,11 @@
           "requiredCapabilities": [
             "operator.request"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": "schemas/checkpoint.schema.json"
         }
       ],
       "includedRoles": [
@@ -1240,7 +1372,11 @@
           "requiredCapabilities": [
             "network.http"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -1274,7 +1410,11 @@
           "requiredCapabilities": [],
           "providedCapabilities": [
             "agent.events.subscribe"
-          ]
+          ],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -1312,7 +1452,11 @@
           "providedCapabilities": [
             "operator.request",
             "operator.receipt"
-          ]
+          ],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -1348,7 +1492,11 @@
             "artifacts.write",
             "report.evidence.read"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": "schemas/input.schema.json",
+          "resultSchema": "schemas/result.schema.json",
+          "checkpointSchema": null
         },
         {
           "kind": "adapter",
@@ -1361,7 +1509,11 @@
           ],
           "providedCapabilities": [
             "report.evidence.read"
-          ]
+          ],
+          "configSchema": "schemas/evidence-config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -1396,7 +1548,11 @@
           "requiredCapabilities": [
             "browser.playwright"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -1431,7 +1587,11 @@
             "git.repository.read",
             "artifacts.write"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": "schemas/input.schema.json",
+          "resultSchema": "schemas/result.schema.json",
+          "checkpointSchema": null
         },
         {
           "kind": "stage",
@@ -1443,7 +1603,11 @@
             "git.repository.read",
             "artifacts.write"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": "schemas/source-input.schema.json",
+          "resultSchema": "schemas/result.schema.json",
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -1482,7 +1646,11 @@
             "operator.request",
             "signal.wait"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": "schemas/input.schema.json",
+          "resultSchema": "schemas/result.schema.json",
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -1516,7 +1684,11 @@
             "artifacts.read",
             "artifacts.write"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": "schemas/input.schema.json",
+          "resultSchema": "schemas/result.schema.json",
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -1552,7 +1724,11 @@
           ],
           "providedCapabilities": [
             "transport.publish"
-          ]
+          ],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         },
         {
           "kind": "adapter",
@@ -1565,7 +1741,11 @@
           ],
           "providedCapabilities": [
             "telemetry.emit"
-          ]
+          ],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -1601,7 +1781,11 @@
           ],
           "providedCapabilities": [
             "test.plan.execute"
-          ]
+          ],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         },
         {
           "kind": "adapter",
@@ -1614,7 +1798,11 @@
           ],
           "providedCapabilities": [
             "test.plan.evidence"
-          ]
+          ],
+          "configSchema": "schemas/evidence-config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -1648,7 +1836,11 @@
           "requiredCapabilities": [],
           "providedCapabilities": [
             "git.repository.read"
-          ]
+          ],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -1686,7 +1878,11 @@
             "artifacts.read",
             "artifacts.write"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": "schemas/input.schema.json",
+          "resultSchema": "schemas/result.schema.json",
+          "checkpointSchema": null
         },
         {
           "kind": "stage",
@@ -1700,7 +1896,11 @@
             "artifacts.read",
             "artifacts.write"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/repository-audit-config.schema.json",
+          "inputSchema": "schemas/repository-audit-input.schema.json",
+          "resultSchema": "schemas/result.schema.json",
+          "checkpointSchema": null
         },
         {
           "kind": "stage",
@@ -1714,7 +1914,11 @@
             "artifacts.read",
             "artifacts.write"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/repository-audit-config.schema.json",
+          "inputSchema": "schemas/repository-revalidation-input.schema.json",
+          "resultSchema": "schemas/result.schema.json",
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -1806,7 +2010,11 @@
           ],
           "providedCapabilities": [
             "runtime.dispatch"
-          ]
+          ],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         },
         {
           "kind": "adapter",
@@ -1821,7 +2029,11 @@
           ],
           "providedCapabilities": [
             "runtime.dispatch"
-          ]
+          ],
+          "configSchema": "schemas/openclaw-config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -1857,7 +2069,11 @@
           "requiredCapabilities": [],
           "providedCapabilities": [
             "secrets.read"
-          ]
+          ],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -1893,7 +2109,11 @@
           "requiredCapabilities": [
             "network.http"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/headers.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         },
         {
           "kind": "test-provider",
@@ -1904,7 +2124,11 @@
           "requiredCapabilities": [
             "security.scan"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/dependency.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         },
         {
           "kind": "test-provider",
@@ -1915,7 +2139,11 @@
           "requiredCapabilities": [
             "security.scan"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/image.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         },
         {
           "kind": "test-provider",
@@ -1926,7 +2154,11 @@
           "requiredCapabilities": [
             "security.scan"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/kubernetes-policy.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         },
         {
           "kind": "test-provider",
@@ -1937,7 +2169,11 @@
           "requiredCapabilities": [
             "kubernetes.runtime-security"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/kubernetes-runtime.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -1969,7 +2205,11 @@
           "module": "src/provider.js",
           "export": "provider",
           "requiredCapabilities": [],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -2003,7 +2243,11 @@
           "providedCapabilities": [
             "state.read",
             "state.append"
-          ]
+          ],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -2037,7 +2281,11 @@
           "requiredCapabilities": [
             "kubernetes.exposure"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -2070,7 +2318,11 @@
           "requiredCapabilities": [
             "telemetry.emit"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": "schemas/checkpoint.schema.json"
         }
       ],
       "includedRoles": [
@@ -2105,7 +2357,11 @@
           "requiredCapabilities": [],
           "providedCapabilities": [
             "telemetry.emit"
-          ]
+          ],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -2144,7 +2400,11 @@
           ],
           "providedCapabilities": [
             "transport.publish"
-          ]
+          ],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -2179,7 +2439,11 @@
           "requiredCapabilities": [
             "browser.visual"
           ],
-          "providedCapabilities": []
+          "providedCapabilities": [],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [
@@ -2213,7 +2477,11 @@
           "requiredCapabilities": [],
           "providedCapabilities": [
             "signal.wait"
-          ]
+          ],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": null,
+          "resultSchema": null,
+          "checkpointSchema": null
         }
       ],
       "includedRoles": [

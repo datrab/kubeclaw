@@ -14760,7 +14760,7 @@
               "expression": "content"
             }
           ],
-          "factsDigest": "10829790920ac294fb62ecd490235a6d1136e17fa79eeb64ba11659ae3632c90"
+          "factsDigest": "02a6e5f0a805086587905712c6a03c2a84b80cf7ed2036109074b53aaa84f996"
         }
       ],
       "roleConsumerEvidence": {
@@ -18466,7 +18466,7 @@
     },
     {
       "source": "scripts/ap08-extension-inventory.mjs",
-      "line": 305,
+      "line": 313,
       "sink": "console.error",
       "expression": "error instanceof Error ? error.message : String(error)",
       "basis": "original-native-diagnostic-consumer-role",
@@ -18489,10 +18489,10 @@
           "selectors": [
             {
               "expression": "error instanceof Error ? error.message : String(error)",
-              "line": 305
+              "line": 313
             }
           ],
-          "factsDigest": "10829790920ac294fb62ecd490235a6d1136e17fa79eeb64ba11659ae3632c90"
+          "factsDigest": "02a6e5f0a805086587905712c6a03c2a84b80cf7ed2036109074b53aaa84f996"
         }
       ]
     },

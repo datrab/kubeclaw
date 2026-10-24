@@ -91,6 +91,12 @@ const rawPackages = manifestRecords.map(({ manifestPath, host }) => {
         export: registration.export ?? null,
         requiredCapabilities: registration.requiredCapabilities ?? [],
         providedCapabilities: registration.providesCapabilities ?? [],
+        // Preserve the native registration-to-schema edges. File presence and
+        // field semantics remain owned by the configuration/schema inventories.
+        configSchema: registration.configSchema ?? null,
+        inputSchema: registration.inputSchema ?? null,
+        resultSchema: registration.resultSchema ?? null,
+        checkpointSchema: registration.checkpointSchema ?? null,
       })))
     : openclaw
       ? (packageManifest?.openclaw?.extensions ?? []).map((module, index) => ({
@@ -282,6 +288,8 @@ ${Object.entries(registrationCounts).map(([kind, count]) => `| ${kind} | ${count
 ${tableRows.map((row) => `| ${row} |`).join('\n')}
 
 ## Boundary
+
+Registration schema values are native manifest declarations relative to the package root; null means no declaration, not proof that a schema is unnecessary. They do not resolve schema contents or establish Secret, artifact, or owner completeness.
 
 This inventory proves file presence and declared relationships only. It does not prove content quality, activation, runtime behavior, compatibility, or live deployment. AP08 audits those claims separately.
 `;
