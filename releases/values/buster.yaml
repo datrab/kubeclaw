@@ -1,4 +1,4 @@
-# Generated from release 8e27f76d708d9e38065897e061c4a469472c8673 and byte-matched source configuration; do not edit.
+# Generated from release 43b233fdbedb2dc455b1517a0b5906f2af42d6b8 and byte-matched source configuration; do not edit.
 agentRole: buster
 gateway:
   startupDoctor:
@@ -243,7 +243,7 @@ busterNamespaceBroker:
       - prism-test-ghcr
     image:
       repository: ghcr.io/datrab/kubeclaw-namespace-controller
-      digest: sha256:2c394cae250a3ba38ea888ed883fcd2c30a4cef66fef9f09ddbfb4059ba67102
+      digest: sha256:42e3d09447da3a6654adf4dba30edfb9a28cbbbd2774a10641c082609c92e921
       tag: ''
       pullPolicy: IfNotPresent
 resources:
