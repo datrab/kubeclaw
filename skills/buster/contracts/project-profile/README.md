@@ -1,7 +1,7 @@
 # Project profile v1 — inactive shape contract
 
 This schema is an admission foundation, NOT an execution capability or an
-authorization decision. No runtime/controller imports it yet. Existing fixed
+authorization decision. No runtime/controller imports it yet; admission.mts is exercised only by tests. Existing fixed
 bootstrap branches are not migrated by adding this file.
 
 Only bounded random values and concatenation are specified here. Literals are
@@ -18,3 +18,10 @@ TTL/resource ceilings. JSON schema alone cannot establish these properties.
 Required follow-up: shared semantic rejection vectors, controller parity,
 project-owned definition, private interpreter/journal CAS recovery, review and
 Buster-only delivery. Never enable a path based solely on schema validity.
+
+Inactive TypeScript admission now checks byte-exact digest and identity against an
+independently supplied policy, TTL, unique names/keys/consumers, earlier-only
+references and encoded generation/output byte ceilings. Policy acquisition, Go
+parity, exact manifest consumers, journal-name integration, TLS and runtime wiring
+remain required. This helper is NOT sufficient to authorize execution. The buster-
+Secret prefix is reserved for future platform-private objects.
