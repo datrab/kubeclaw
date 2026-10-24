@@ -19448,7 +19448,7 @@
               "expression": "reviewedDocumentationOwnerPurposes[source]?.allowedNativePackageEntries.some(value=>JSON.stringify(value)===JSON.stringify(entry))??false"
             }
           ],
-          "factsDigest": "bb4bdb5dfbcc97d10ad7245d97119526d1f8fb402180f6f310fb82ecb6e35a08"
+          "factsDigest": "4fdab6e633612dbda03ed5b6ab8bac3f1086f02eed0d79e4596d3fbd30c9b9eb"
         }
       ],
       "roleConsumerEvidence": {
@@ -99956,7 +99956,7 @@
       {
         "source": "scripts/docs-configuration-inventory.mjs",
         "semanticClass": "finite-documentation-runtime-semantics",
-        "sourceSha256": "9c6d68dc2b69ac96f47daeb10623968cfc014ead87ceddec7323ccb51aa8a6b4",
+        "sourceSha256": "8ec3200fcb69a72f44e6ffe1fffc8f24c452473b04e4bb53f2a542b5ae68c1cc",
         "operations": [
           {
             "expression": "import(pathToFileURL(path.join(root, file)).href)",
