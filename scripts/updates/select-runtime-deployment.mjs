@@ -4,6 +4,7 @@ import { isDeepStrictEqual } from 'node:util';
 import { validateCodeReceipt, selectedCode } from './code-release.mjs';
 import { inputDigest, isDeploymentInput } from './runtime-inputs.mjs';
 import { validateReleaseReceipt } from './deployment-release.mjs';
+import { runtimePublicationCommand, isRuntimeRenderConfiguration } from './runtime-publication-scope.mjs';
 import { componentSource } from './runtime-components.mjs';
 
 const root = process.cwd(), repo = process.env.GITHUB_REPOSITORY, token = process.env.GITHUB_TOKEN;
@@ -61,8 +62,17 @@ if (fs.existsSync(priorFile)) {
 const built = await receipt(`runtime-images-${id}-${attempt}`, 'runtime-images.json', true);
 if (!built && !fs.existsSync('releases/runtime-images.json')) throw new Error('INITIAL_IMAGE_BUILD_REQUIRED');
 const images = validateReleaseReceipt(built?.value ?? JSON.parse(fs.readFileSync('releases/runtime-images.json', 'utf8')), 'runtime');
+// Choose scope before replacing the selected receipts. Conservative full
+// rendering is required whenever role chart/value inputs have changed.
+const priorImages = fs.existsSync('releases/runtime-images.json')
+  ? JSON.parse(fs.readFileSync('releases/runtime-images.json', 'utf8')) : undefined;
+const priorCode = fs.existsSync(priorFile) ? JSON.parse(fs.readFileSync(priorFile, 'utf8')) : undefined;
+const configurationUnchanged = priorCode && inputDigest(root, priorCode.commit, isRuntimeRenderConfiguration)
+  === inputDigest(root, run.head_sha, isRuntimeRenderConfiguration);
+const exportCommand = runtimePublicationCommand(priorImages && { ...priorImages, code: priorCode },
+  { ...images, code }, configurationUnchanged);
 fs.mkdirSync('releases', { recursive: true });
 fs.writeFileSync(priorFile, JSON.stringify(code, null, 2) + '\n');
 selectedCode(root, images);
 if (built) fs.writeFileSync('releases/runtime-images.json', JSON.stringify(images, null, 2) + '\n');
-fs.appendFileSync(process.env.GITHUB_OUTPUT, `selected=true\ndirectory=releases/gitops/runtime-${id}-${attempt}\n`);
+fs.appendFileSync(process.env.GITHUB_OUTPUT, `export_command=${exportCommand}\nselected=true\ndirectory=releases/gitops/runtime-${id}-${attempt}\n`);

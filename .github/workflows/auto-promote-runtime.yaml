@@ -43,11 +43,13 @@ jobs:
         if: steps.selection.outputs.selected == 'true'
         env:
           BUNDLE_DIRECTORY: ${{ steps.selection.outputs.directory }}
+          EXPORT_COMMAND: ${{ steps.selection.outputs.export_command }}
         run: |
           set -euo pipefail
           node scripts/updates/verify-release-source.mjs
           node scripts/updates/materialize-release.mjs --family=runtime
-          node scripts/gitops-continuous.mjs export "$BUNDLE_DIRECTORY"
+          case "$EXPORT_COMMAND" in export|export-buster) ;; *) exit 1 ;; esac
+          node scripts/gitops-continuous.mjs "$EXPORT_COMMAND" "$BUNDLE_DIRECTORY"
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add releases
