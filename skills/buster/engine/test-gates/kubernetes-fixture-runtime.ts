@@ -549,12 +549,26 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
     throw new Error(`KUBERNETES_FIXTURE_LEASE_TIMEOUT:${last}`);
   }
 
+  async #readinessQuery(args: readonly string[], signal: AbortSignal, timeout: number): Promise<string> {
+    try {
+      return await this.#kubectlRun(args, null, signal, timeout);
+    } catch (error) {
+      // A timed-out API read is not proof that the workload itself is unhealthy.
+      // Preserve its diagnostic snapshot without reclassifying auth/cancellation.
+      if (!signal.aborted && error instanceof Error &&
+          error.message === 'KUBERNETES_FIXTURE_KUBECTL_FAILED:KUBERNETES_FIXTURE_KUBECTL_TIMEOUT') {
+        throw new Error('KUBERNETES_FIXTURE_READINESS_QUERY_TIMEOUT', { cause: error });
+      }
+      throw error;
+    }
+  }
+
   async #waitPods(namespace: string, signal: AbortSignal, timeoutMs: number): Promise<number> {
     const deadline = Date.now() + timeoutMs;
     let last = 'No pods found.';
     while (Date.now() < deadline) {
       const requestTimeoutMs = Math.max(1, Math.min(15_000, deadline - Date.now()));
-      const raw = await this.#kubectlRun(['get', 'pods', '-n', namespace, '-o', 'json'], null, signal, requestTimeoutMs);
+      const raw = await this.#readinessQuery(['get', 'pods', '-n', namespace, '-o', 'json'], signal, requestTimeoutMs);
       const value = object(JSON.parse(raw), 'pods');
       const items = Array.isArray(value.items) ? value.items : [];
       if (items.length > 0) {
@@ -581,7 +595,7 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
     let last = 'Service endpoints not ready.';
     while (Date.now() < deadline) {
       const serviceTimeoutMs = Math.max(1, Math.min(15_000, deadline - Date.now()));
-      const serviceRaw = await this.#kubectlRun(['get', 'service', serviceName, '-n', namespace, '-o', 'json'], null, signal, serviceTimeoutMs);
+      const serviceRaw = await this.#readinessQuery(['get', 'service', serviceName, '-n', namespace, '-o', 'json'], signal, serviceTimeoutMs);
       const service = object(JSON.parse(serviceRaw), 'service');
       const spec = object(service.spec, 'service.spec');
       const ports = Array.isArray(spec.ports) ? spec.ports : [];
@@ -593,7 +607,7 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
       if (Date.now() >= deadline) break;
       try {
         const endpointsTimeoutMs = Math.max(1, Math.min(15_000, deadline - Date.now()));
-        const endpointsRaw = await this.#kubectlRun(['get', 'endpoints', serviceName, '-n', namespace, '-o', 'json'], null, signal, endpointsTimeoutMs);
+        const endpointsRaw = await this.#readinessQuery(['get', 'endpoints', serviceName, '-n', namespace, '-o', 'json'], signal, endpointsTimeoutMs);
         const endpoints = object(JSON.parse(endpointsRaw), 'endpoints');
         const subsets = Array.isArray(endpoints.subsets) ? endpoints.subsets : [];
         const ready = subsets.some((entry) => {
@@ -785,7 +799,7 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
       // This does not relax lease validation or turn a failed replacement into success.
       // Validation, credential and other controller failures still throw.
       if (!['KUBERNETES_FIXTURE_READINESS_TIMEOUT', 'KUBERNETES_FIXTURE_SERVICE_READINESS_TIMEOUT',
-        'KUBERNETES_FIXTURE_REPLACEMENT_LEASE_CHANGED'].includes(errorCode!)) throw error;
+        'KUBERNETES_FIXTURE_REPLACEMENT_LEASE_CHANGED', 'KUBERNETES_FIXTURE_READINESS_QUERY_TIMEOUT'].includes(errorCode!)) throw error;
       return Object.freeze({ ok: false, errorCode, namespace: namespaceName, leaseName,
         failureEvidence: { ...failureEvidence, cleanupError } });
     }

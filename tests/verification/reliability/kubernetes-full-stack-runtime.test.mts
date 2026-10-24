@@ -368,3 +368,47 @@ test('prepare preserves replacement lease-change diagnostics before release with
     assert.doesNotMatch(JSON.stringify(result), /private-canary/);
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 });
+
+test('readiness query timeout preserves diagnostics, but cancellation/denial/admission timeout still throw', async () => {
+  for (const mode of ['pods', 'service', 'endpoints', 'cancelled', 'forbidden', 'apply']) {
+    let injected = false, released = false, eventsRead = false;
+    const abort = new AbortController();
+    const { invoker, root, payload } = setup(async (_: string, args: string[]) => {
+      if (args[0] === 'auth') return { stdout: 'yes' };
+      if (args[0] === 'delete') { if (mode !== 'cancelled') assert.ok(eventsRead); released = true; return { stdout: '{}' }; }
+      assert.equal(released, false);
+      const target = ['service', 'endpoints'].includes(mode) ? mode : 'pods';
+      if (!injected && ((mode === 'apply' && args[0] === 'apply' && args.includes('--namespace')) ||
+          (mode !== 'apply' && args[0] === 'get' && args[1] === target))) {
+        injected = true;
+        if (mode === 'cancelled') abort.abort();
+        throw new Error(mode === 'forbidden' ? 'Forbidden password=private-canary' : 'KUBERNETES_FIXTURE_KUBECTL_TIMEOUT');
+      }
+      if (args[0] === 'apply') return { stdout: '{}' };
+      if (args[1]?.startsWith('busternamespacelease')) return { stdout: JSON.stringify({ status: {
+        phase: 'Ready', namespaceName: 'test-stack', createdAt: new Date().toISOString(),
+      } }) };
+      if (args[1] === 'events') { eventsRead = true; return { stdout: JSON.stringify({ items: [{ reason: 'Unhealthy', message: 'Readiness probe failed: HTTP503 password=private-canary' }] }) }; }
+      if (args[1] === 'namespace') return { stdout: JSON.stringify({ metadata: { uid: 'ns-uid' } }) };
+      if (args[1] === 'service') return { stdout: JSON.stringify({ spec: { ports: [{ port: 8080 }] } }) };
+      if (args[1] === 'endpoints') return { stdout: JSON.stringify({ subsets: [] }) };
+      if (args[0] === 'logs') return { stdout: 'diagnostic token=private-canary' };
+      return { stdout: JSON.stringify({ items: [{ metadata: { name: 'app' }, status: { phase: 'Running', conditions: [{ type: 'Ready', status: 'True' }] } }] }) };
+    });
+    try {
+      const invoke = () => invoker.invoke('kubernetes.fixture', { operation: 'prepare', resource: requestResource, payload } as any, abort.signal);
+      if (['cancelled', 'forbidden', 'apply'].includes(mode)) {
+        await assert.rejects(invoke, mode === 'cancelled' ? /CANCELLED/ : mode === 'forbidden' ? /Forbidden/ : /KUBECTL_TIMEOUT/);
+      } else {
+        const result: any = await invoke();
+        assert.equal(result.ok, false);
+        assert.equal(result.errorCode, 'KUBERNETES_FIXTURE_READINESS_QUERY_TIMEOUT');
+        assert.equal(result.failureEvidence.namespaceIdentity.uid, 'ns-uid');
+        assert.equal(result.failureEvidence.events[0].reason, 'Unhealthy');
+        assert.equal(released, true);
+        assert.doesNotMatch(JSON.stringify(result), /private-canary/);
+      }
+      assert.equal(injected, true);
+    } finally { fs.rmSync(root, { recursive: true, force: true }); }
+  }
+});

@@ -166,3 +166,19 @@ typecheck passed. Autoreview clean supplied diff only (reviewer shell unavailabl
 This source patch is not installed/live-qualified and does not identify the actual
 lease predicate or resolve the prior PostgreSQL restart. Publish/install matching
 runtime via supported platform flow before rerunning the signed integration test.
+
+### Readiness API-query timeouts — 2026-10-24
+
+Injected executor regression reproduces loss of ordinary evidence when a Pod read
+throws KUBERNETES_FIXTURE_KUBECTL_TIMEOUT during prepare. This is a reproducible
+error-path defect, not proof of the failing operation in live run dac501df.
+Pod/Service/Endpoints readiness reads now narrowly translate the exact wrapped
+kubectl timeout marker to READINESS_QUERY_TIMEOUT, retaining bounded redacted
+pre-cleanup evidence as an ordinary failed result. Query/API timeout is deliberately
+not called workload READINESS_TIMEOUT; no retry or success fallback is introduced.
+Cancellation, Forbidden and apply/admission timeouts still throw. Existing identity,
+ownership, replacement and budget checks are unchanged.14 runtime tests including
+six injected modes, fixture implementation contract and engine noEmit typecheck
+pass. Autoreview clean supplied diff only; reviewer shell unavailable. Not installed
+or live-qualified. The earlier1afe517c3 bundle does not include this change and must
+not be used as proof of installed query-timeout handling; rebuild from this source.
