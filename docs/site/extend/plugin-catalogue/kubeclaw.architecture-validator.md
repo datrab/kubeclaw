@@ -91,7 +91,7 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-The stage dispatches a validation task, checks that the response covers the required files, and stores an architecture-validation artifact. Invalid or incomplete responses block the stage.
+The input schema requires only task; source and sourceBinding are optional. sourceBinding resolves source-preflight evidence, while input.source captures a review subject. Only a present subject triggers Git/source verification before and after dispatch and checkedFiles coverage of its paths. With neither source input, dispatch and report persistence can proceed without Git verification or source-path coverage. The configured agent receives architecture and any review subject, including selected source-file text; the architecture-validation artifact persists the response and any subject. Assign the actual runtime.dispatch and artifacts.read/write providers owners for access, retention and failure response; a candidate provider is not an active binding. Invalid agent responses or subject checks block the stage; report-write failure escapes without a semantic outcome.
 
 Registry validation checks declared paths, schemas, and capability names.
 Activation or the Buster loader checks executable exports; discovery does not import package code.

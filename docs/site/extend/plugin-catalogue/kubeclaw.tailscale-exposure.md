@@ -107,7 +107,7 @@ Outputs:
 
 ## Failure Behavior
 
-Preparation supports release or await-readiness retention. The latter requires a valid handoff generation. Cleanup calls release; package tests do not prove a real Tailscale endpoint or cluster cleanup.
+The provider selects a matching deployment endpoint; omitted endpointName requires a sole endpoint, and endpointName is not authorization. Optional hostname requests one DNS-label public hostname. path defaults to / and must be a root-relative path without //, query, fragment, NUL, CR or LF. readinessTimeoutSeconds defaults 120, admits integers 1..3600 and is capped by invocation.timeoutMs. retentionMode defaults release; await-readiness forwards a handoff retention request and requires awaiting-readiness phase plus exposure generation in the response. Both prepare and cleanup forward the selected path, optional hostname and handoff mode to kubernetes.exposure. The actual runtime/controller owns release/handoff lifetime and reconciliation; cleanup calls release but does not prove remote deletion. Fixture, Tailscale operator and Kubernetes authorities must be configured independently.
 
 Registry validation checks declared paths, schemas, and capability names.
 Activation or the Buster loader checks executable exports; discovery does not import package code.

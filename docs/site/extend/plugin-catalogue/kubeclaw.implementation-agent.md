@@ -91,7 +91,7 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-The stage dispatches implementation work and stores attempt-bound artifacts. Invalid evidence or output blocks execution. A configured agent name alone does not establish approval or a usable agent host.
+The stage dispatches implementation work to config.agent and stores attempt-bound completion artifacts; the name alone establishes neither approval nor a usable host. A Core-issued guidance.repairRequest conditionally reads up to 32 integrity-checked JSON artifacts through artifacts.read. Request/evidence are limited to 256 KiB and serialized JSON is checked against that limit, then appended with helperPrompt to the configured runtime-agent request. Assign the actual artifact and runtime providers owners for raw evidence access, retention and failure handling. Optional workspaces are committed/merged only for ready_for_testing completion; removal is attempted only after integration. Created but unintegrated workspaces and branches are retained for reconciliation, with references in blocked error details or completion artifacts. Integrated cleanup failure produces a separate cleanup artifact and does not imply rollback. No-workspace execution makes no workspace-cleanup guarantee; invalid evidence or output blocks execution.
 
 Registry validation checks declared paths, schemas, and capability names.
 Activation or the Buster loader checks executable exports; discovery does not import package code.

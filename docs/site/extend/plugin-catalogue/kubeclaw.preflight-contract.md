@@ -123,7 +123,7 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-The stage validates the declared source contract and stores source-preflight evidence. Invalid input or failed validation blocks the stage. It does not replace later implementation tests.
+The source and validate registrations have different evidence and outcomes. Each depends on selected repository/artifact authority; neither replaces later implementation tests.
 
 Registry validation checks declared paths, schemas, and capability names.
 Activation or the Buster loader checks executable exports; discovery does not import package code.

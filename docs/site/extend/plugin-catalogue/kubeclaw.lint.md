@@ -161,7 +161,7 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-The adapter accepts lint.execute/run_report and validates any source revision. The stage stores a report and reduces its findings. Missing shellcheck or shfmt appears as a tool failure, not a clean lint result.
+The executor accepts lint.execute/run_report and validates the selected source revision. Requested revisions create an isolated shared Git clone and detached checkout, removed in finally; selected tools can retain separate caches. The stage reads implementation provenance when required and writes its report through artifacts.write. Missing tools with required=false are not_applicable; required missing tools return errors, never a clean lint verdict.
 
 Registry validation checks declared paths, schemas, and capability names.
 Activation or the Buster loader checks executable exports; discovery does not import package code.

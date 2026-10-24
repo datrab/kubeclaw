@@ -273,7 +273,7 @@ Inputs:
 
 ## Failure Behavior
 
-Each security registration has its own inputs and capability. Unknown rules and malformed capability results fail validation. Trivy tests require a usable local vulnerability database; no database means no vulnerability verdict.
+Each registration has distinct inputs and scan operations. Dependency/image scans require approved fresh vulnerability-database snapshots; Kubernetes policy scans do not use that vulnerability database. The selected runtime still requires nonempty allowedRegistryPrefixes even for local scans. Providers validate findings but forward capability resultDigest without independently validating its format; the known runtime generating SHA256 does not qualify an arbitrary provider result. Dependency projectDirectory is path-contained but is not required to be a directory by current provider/runtime code; an existing file can produce a partial scan. Verify the actual intended directory and expected project coverage before accepting whole-project results. Kubernetes-runtime kubectl inherits HOME as well as KUBECONFIG and Kubernetes service settings; when KUBECONFIG is absent its default $HOME/.kube/config can select the API/context and credentials. The platform owner must qualify that ambient authority before any read.
 
 Registry validation checks declared paths, schemas, and capability names.
 Activation or the Buster loader checks executable exports; discovery does not import package code.

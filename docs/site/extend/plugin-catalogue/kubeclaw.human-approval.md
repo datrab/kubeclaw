@@ -127,7 +127,7 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-General and architecture approval are separate stage registrations. Architecture approval checks the passed validation report and requires a reason. Core validates the external signal and resumes the wait.
+General approval uses config.target as the operator recipient and config.issuerId as the sole authorized signal.wait/guidance issuer; the platform configuration owner must qualify both separately. Architecture approval first verifies a passed report and verifies its review subject only when subject is present; an absent subject skips git.repository.read source verification and can be persisted as null: with no findings it succeeds without executeApproval, operator.request, signal.wait or a reason. Only the findings path invokes general approval; approved guidance on that path requires a nonempty reason. Core validates the external signal and resumes the wait.
 
 Registry validation checks declared paths, schemas, and capability names.
 Activation or the Buster loader checks executable exports; discovery does not import package code.

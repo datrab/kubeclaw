@@ -141,7 +141,7 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-The two observers publish notifications through an operator target. Delivery failure belongs to observer processing and cannot rewrite the event that triggered it.
+Notifications select config.target as the operator recipient; schema omission is not runtime readiness because a missing target fails only on delivery. Both registrations use at_least_once/per_run best_effort delivery; retries can duplicate a notification and exhausted attempts can lose it without blocking the run. The selected operator transport and receipt/data retention remain separately configured authorities.
 
 Registry validation checks declared paths, schemas, and capability names.
 Activation or the Buster loader checks executable exports; discovery does not import package code.

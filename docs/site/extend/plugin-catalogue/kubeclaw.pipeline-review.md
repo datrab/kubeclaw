@@ -126,7 +126,7 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-The evidence reader binds snapshots to a run identity, checks for source changes, and enforces the bundle byte budget. It fails on mismatched runs or changed evidence rather than returning a partial authoritative snapshot.
+The stage and evidence adapter have separate storage and failure boundaries. Selected report evidence, runtime-agent dispatch and artifact bindings must each be qualified; live or external storage ownership is not implied by code availability.
 
 Registry validation checks declared paths, schemas, and capability names.
 Activation or the Buster loader checks executable exports; discovery does not import package code.

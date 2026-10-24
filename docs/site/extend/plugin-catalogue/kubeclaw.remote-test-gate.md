@@ -127,7 +127,7 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-The package imports remote evidence through its configured manifest and gate-stage bindings. It validates the evidence store and stops on cancellation; fixture envelopes alone do not prove a remote Buster job.
+Plan and evidence registrations have distinct responsibilities; neither a ready() result nor a fixture envelope proves remote Buster execution.
 
 Registry validation checks declared paths, schemas, and capability names.
 Activation or the Buster loader checks executable exports; discovery does not import package code.

@@ -106,7 +106,7 @@ Inputs:
 
 ## Failure Behavior
 
-The provider resolves selected operation IDs and path parameters from the supplied specification. Unknown operations, missing parameters, or paths outside the selected origin fail before the request.
+The provider resolves selected operation IDs and path parameters from the supplied specification. Unknown operations, missing parameters, or paths outside the selected origin fail before the request. Target selection: configured url cannot be combined with typed inputs. endpointName is used only for deployment inputs, not public endpoints or direct url. Omitted endpointName requires a sole deployment endpoint. OpenAPI resolves root-relative operation paths, discarding a configured base-path prefix.
 
 Registry validation checks declared paths, schemas, and capability names.
 Activation or the Buster loader checks executable exports; discovery does not import package code.

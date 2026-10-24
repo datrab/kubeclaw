@@ -107,7 +107,7 @@ Inputs:
 
 ## Failure Behavior
 
-The provider runs the selected browser test and imports its report and artifacts. Malformed reports and excess artifact counts fail. The package test needs an absolute PLAYWRIGHT_BROWSERS_PATH.
+The provider runs the selected browser test and imports its report and artifacts. Malformed reports and excess artifact counts fail. The package test needs an absolute PLAYWRIGHT_BROWSERS_PATH. Target selection: configured url cannot be combined with typed inputs. endpointName is used only for deployment inputs, not public endpoints or direct url. Omitted endpointName selects the first deployment endpoint. Playwright requires the selected URL to be a root HTTP/HTTPS origin without credentials, query or fragment; tests select paths.
 
 Registry validation checks declared paths, schemas, and capability names.
 Activation or the Buster loader checks executable exports; discovery does not import package code.

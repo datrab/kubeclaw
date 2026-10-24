@@ -172,7 +172,7 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-The stage freezes source and policy, verifies proposed findings, and stores immutable reports. Repository-audit jobs have recovery checkpoints; revalidation does not promise per-finding resume. Local tests do not prove live reviewer quality.
+Each registration freezes its selected source and policy and uses separately selected Git, runtime-dispatch and artifact bindings. Immutable report storage and reviewer quality are not implied by source availability; registration-specific failure and recovery behavior differs.
 
 Registry validation checks declared paths, schemas, and capability names.
 Activation or the Buster loader checks executable exports; discovery does not import package code.

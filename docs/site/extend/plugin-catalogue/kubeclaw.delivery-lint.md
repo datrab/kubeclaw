@@ -90,7 +90,7 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-Configuration is the closed empty object. The artifact namespace is fixed to `kubeclaw.delivery-lint`; it is not a configurable report namespace. Input selects the Dockerfile and delivery paths. A passing lexical check does not prove COPY source existence or the final image filesystem. See the configuration schema and registration module above.
+Configuration is the closed empty object. The artifact namespace is fixed to `kubeclaw.delivery-lint`; it is not a configurable report namespace. Input selects nullable Dockerfile and static paths. dockerfile=null writes an empty passed report immediately, without reading a Dockerfile or considering staticPath. With a Dockerfile, staticPath=null skips the COPY-destination check. A passed result therefore need not establish that either delivery surface was checked. A passing lexical check does not prove COPY source existence or the final image filesystem. See the configuration schema and registration module above. The local returned artifact check establishes only object presence, not report digest/size/identity/producer binding; the actual artifacts.write provider and receiving evidence consumer must establish those properties. Use POSIX repository-relative Dockerfile paths without backslashes or drive/UNC forms: safeRepositoryPath checks leading slash before replacing backslashes, so local admission is not proof the normalized path remains relative. The selected git.repository.read provider retains final path admission; do not infer arbitrary-file access or a runtime fix.
 
 Registry validation checks declared paths, schemas, and capability names.
 Activation or the Buster loader checks executable exports; discovery does not import package code.

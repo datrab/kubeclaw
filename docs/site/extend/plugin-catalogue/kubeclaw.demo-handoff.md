@@ -196,7 +196,7 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-The delivery adapter compares recovered receipts with the authoritative operator receipt before announcing readiness. Lost-response recovery must not create a second external delivery.
+Candidate creation, delivery, readiness and the handoff adapter own different effects. Candidate artifacts and durable delivery records can retain confidential credential material; removing a plugin is not erasure. Receipt reconciliation must not create a second delivery.
 
 Registry validation checks declared paths, schemas, and capability names.
 Activation or the Buster loader checks executable exports; discovery does not import package code.

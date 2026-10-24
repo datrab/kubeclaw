@@ -91,7 +91,7 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-Publication reserves durable delivery state, resolves secrets, and invokes network.http. Unknown external outcomes must not become blind retries. The current local execution check fails canonical effect-request validation. Treat the package as locally unavailable until that check passes.
+Publication persists original message bodies and reserves durable state, resolves signingSecret for HMAC-SHA256 and sends through network.http. Existing in-progress reservations can fall through to another POST; a later attempt after uncertain failure can POST again. Per-record locks and an idempotency-key header do not ensure receiver deduplication. Establish receiver-enforced idempotency and reconcile original keys/receipts before retrying; no rollback or universal receipt lookup is guaranteed. Assign deliveryRoot access, retention, backup/removal and failure-response ownership. The current local execution check fails canonical effect-request validation; treat the package as locally unavailable until it passes. deliveryRoot selects the local durable directory. maximumDeliveryRecords defaults to 100000 records and maximumDeliveryBytes to 268435456 bytes (256 MiB); both must be positive safe integers. Reaching store capacity can reject new request/reservation persistence before delivery with a store-full failure; it is not automatic retention or cleanup. Separate recording failure after an external effect remains uncertain and requires reconciliation.
 
 Registry validation checks declared paths, schemas, and capability names.
 Activation or the Buster loader checks executable exports; discovery does not import package code.

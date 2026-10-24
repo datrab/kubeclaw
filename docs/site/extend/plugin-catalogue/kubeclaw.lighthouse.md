@@ -109,7 +109,7 @@ Inputs:
 
 ## Failure Behavior
 
-The provider invokes browser.lighthouse and validates the returned runs and category data. Missing categories or audit execution errors fail the operation. Its package test requires real Chromium.
+The provider invokes browser.lighthouse and validates the returned runs and category data. Missing categories or audit execution errors fail the operation. Its package test requires real Chromium. Target selection: configured url cannot be combined with typed inputs. endpointName is used only for deployment inputs, not public endpoints or direct url. Omitted endpointName selects the first deployment endpoint. Lighthouse uses the selected URL origin and configured root-relative routes.
 
 Registry validation checks declared paths, schemas, and capability names.
 Activation or the Buster loader checks executable exports; discovery does not import package code.

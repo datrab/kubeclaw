@@ -90,7 +90,7 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-The stage reads a report-evidence snapshot, dispatches the narrative task, and stores the result. It rejects output whose artifact identity does not match the producing attempt.
+The stage reads a report-evidence snapshot, dispatches the narrative task, and stores the result. It rejects output whose artifact identity does not match the producing attempt. The generated narrative remains draft-not-entailment-verified, not proof of factual entailment or publication readiness. artifacts.write and returned-artifact binding checks occur outside the dispatch try block: they can reject after narrative dispatch without a StageResult. Preserve and reconcile dispatch and persistence outcomes before retry; generated text is not a stored case-study result.
 
 Registry validation checks declared paths, schemas, and capability names.
 Activation or the Buster loader checks executable exports; discovery does not import package code.

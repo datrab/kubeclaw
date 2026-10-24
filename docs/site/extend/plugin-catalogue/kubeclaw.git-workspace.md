@@ -95,7 +95,7 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-Workspace mutations use configured Git author identity and execution limits. Keep ordinary repository inspection on the repository-adapter surface and do not infer mutation authority from a read grant.
+Git mutations can be partial: worktree creation precedes owner-record persistence, removal precedes optional branch deletion, and sync_paths changes files separately. Ownership checks depend on a supplied workspaceReference and approval checks on their selected contract. Fetch/push targets come from request remote plus actual Git fetch/pushurl/rewrite configuration, not an adapter remote allowlist. Reconcile workspace/ref state after failure or an uncertain remote effect.
 
 Registry validation checks declared paths, schemas, and capability names.
 Activation or the Buster loader checks executable exports; discovery does not import package code.

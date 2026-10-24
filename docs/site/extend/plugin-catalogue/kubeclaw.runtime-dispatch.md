@@ -119,7 +119,7 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-Dispatch selects an operator-configured target and validates its payload limits. OpenClaw result import checks the authoritative result path. Local process tests do not establish a connected production agent.
+The generic HTTP dispatcher and OpenClaw session dispatcher are separate registrations. Each uses the configured target and its own response, credential, result and recovery contract; local tests do not establish a connected production agent.
 
 Registry validation checks declared paths, schemas, and capability names.
 Activation or the Buster loader checks executable exports; discovery does not import package code.
