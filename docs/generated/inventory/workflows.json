@@ -15,6 +15,28 @@
     ".github/workflows/rollback-runtime.yaml",
     ".github/workflows/update-checks.yaml"
   ],
+  "discoveryScope": {
+    "family": "Workflow",
+    "owner": "documentation automation",
+    "generator": "scripts/docs-inventory.mjs:buildWorkflowInventory",
+    "searchSpace": {
+      "root": ".github/workflows",
+      "recursive": false,
+      "extensions": [
+        ".yaml",
+        ".yml"
+      ]
+    },
+    "parser": {
+      "implementation": "parseWorkflowTriggers, parseWorkflowPathFilters, parseWorkflowJobs, parseWorkflowCommands; name and cron source patterns",
+      "rule": "Source-shaped text extraction: top-level on/jobs blocks with two-space keys, indented paths lists, quoted cron values, single-line run/uses and indented npm run references."
+    },
+    "exclusions": [
+      "Nested directory contents and names not ending .yaml or .yml are not selected. Immediate matching names are read without file-type or alias filtering; read failures, including matching directory names, propagate.",
+      "No general YAML evaluation, alias/expression resolution, complete multiline shell interpretation or traversal of referenced action/reusable-workflow internals.",
+      "Product project-compiler workflows have a separate authority in scripts/docs-product-pipeline-reference.mjs; this inventory describes CI workflow files only."
+    ]
+  },
   "workflows": [
     {
       "path": ".github/workflows/auto-promote-runtime.yaml",

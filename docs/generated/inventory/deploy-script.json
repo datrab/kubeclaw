@@ -5,6 +5,28 @@
     "scripts/generate-buster-error-reference.mjs",
     "scripts/generate-buster-provider-reference.mjs"
   ],
+  "discoveryScope": {
+    "family": "CLI",
+    "owner": "documentation automation",
+    "generator": "scripts/docs-inventory.mjs:buildDeployScriptInventory",
+    "searchSpace": {
+      "sources": [
+        "scripts/deploy.sh",
+        "scripts/run-lint-report.mjs",
+        "scripts/generate-buster-error-reference.mjs",
+        "scripts/generate-buster-provider-reference.mjs"
+      ],
+      "recursive": false
+    },
+    "parser": {
+      "implementation": "parseHeaderUsage, parseHeaderEnv, parseCaseCommands, parseFunctions, parseDefaultAssignments, publicMapCliContracts",
+      "rule": "Reviewed deploy invocation forms checked against main dispatch cases; source-shaped shell header/default/function patterns; fixed lint option-map contract and two explicit reference-generator revision-option contracts."
+    },
+    "exclusions": [
+      "Other CLI sources are outside this fixed deploy/supplemental boundary; configuration-runtime-inputs.json supplies a separate bounded runtime scan.",
+      "No shell execution, general shell AST, arbitrary argument-parser discovery or proof of runtime success."
+    ]
+  },
   "commands": [
     {
       "invocation": "./scripts/deploy.sh render <nova|buster> [image|code]",

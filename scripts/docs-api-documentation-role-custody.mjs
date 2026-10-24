@@ -706,7 +706,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "328f8dd702f5cb8ccffb9ae17cc3d577e76cd8ec81456fffa49b452e908adb55"
       }
     ],
-    "factsDigest": "25c4522eb967b3da7d5120c11a4c2c5446164c9200f35a48fcc2e91dcefd2c43",
+    "factsDigest": "bf7dbd1368067997362a51321ea8f4b831798da51fa619da25173fbe7fe8621e",
     "authorityInputs": [
       {
         "path": "scripts/docs-api-go-output-role-adapter.go",
@@ -924,7 +924,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "041aa7206a41cf5c3bdd66f61797f9b67c06085f6d0076ce1f84e2a9c8d57db8"
       }
     ],
-    "factsDigest": "5c8185f052db4ac5932309d785a69b10d9d35275eed71f807128bee295ddb0ac",
+    "factsDigest": "5284c61e48a662cf11582467953b617bc41146b890df3d32bbab94cfe21006b8",
     "authorityInputs": []
   },
   "scripts/docs-api-python-output-adapter.py": {
@@ -1203,7 +1203,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "9efac25cb0d8a53fc3a31aec649afa2cd99102c34366428833c403eccaef3fbe"
       }
     ],
-    "factsDigest": "8613f1750a16c98545e9bf2c16aee6dacf01f91f6372503689722594de196a68",
+    "factsDigest": "637221fd800b383a7d94a3f2d6335305eb99818b40999817553416a6cd0a020d",
     "authorityInputs": []
   },
   "scripts/docs-api-schema-authorities.mjs": {
@@ -2002,7 +2002,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "7602a8f927b47cd0b4b4f2501bccd41bb8e4e4ea43e571cf4bce62f3c3717191"
       }
     ],
-    "factsDigest": "a9444e5aa390c3a05c0f4e18b373f243bd33af92e387cd8d795728be712eea84",
+    "factsDigest": "eac73cb78fd53cfd641fdbf5b4d4c94c09991a4190a7708ae72ec84d3f759178",
     "authorityInputs": [
       {
         "path": "scripts/vendor-external-helm-authorities.mjs",
@@ -2105,7 +2105,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "cba76d80649d6ce8d92897a224d01ee9877a1807a9de9e765cdad79d29f912ce"
       }
     ],
-    "factsDigest": "ddc23e6157436659e0e2c2d19538ac5ccd23e55d6fea90966318e8a5920ced91",
+    "factsDigest": "7871a0932e659b79b6f422315e1748775ec5510fdc1cb0591b211d6ec66138ad",
     "authorityInputs": []
   },
   "scripts/docs-governance.mjs": {
@@ -2187,7 +2187,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "bb8ab2d6a9b676ab5d904423d87b25a6b7bb91f6dd13fa19fb0e2296d110113f"
       }
     ],
-    "factsDigest": "886ae027638d388607566bccff8dbfec31d2e358afce44abb88836c14c54084d",
+    "factsDigest": "4d5de211ef181898ecbc06ef68682cc22c871c8761c145bf4fe347400bafffb1",
     "authorityInputs": []
   },
   "scripts/docs-kubernetes-admission-receiver-contracts.mjs": {
