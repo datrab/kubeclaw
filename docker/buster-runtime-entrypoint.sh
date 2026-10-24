@@ -226,6 +226,7 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
     maximumExecutionMs: 900000, maximumManifestBytes: 16777216,
   },
   kubernetesFixture: {
+    familyclawBootstrapEnabled: process.env.BUSTER_FAMILYCLAW_BOOTSTRAP_ENABLED === 'true',
     kubectlExecutable: '/usr/local/bin/kubectl', controllerNamespace: process.env.CONTROLLER_NAMESPACE,
     leaseApiGroup: process.env.BUSTER_LEASE_API_GROUP || 'kubeclaw.forgestack.ai',
     leaseApiVersion: process.env.BUSTER_LEASE_API_VERSION || 'v1alpha1', allowedNamespacePrefixes: ['test'],

@@ -116,6 +116,23 @@
           "maxLength": 63
         }
       }
+    },
+    "familyclawBootstrap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "release"
+      ],
+      "properties": {
+        "profile": {
+          "const": "familyclaw.v1"
+        },
+        "release": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,34}$"
+        }
+      }
     }
   },
   "$defs": {
@@ -139,5 +156,42 @@
     "podReplacementSelectors": [
       "fullStack"
     ]
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "required": [
+          "familyclawBootstrap"
+        ]
+      },
+      "then": {
+        "required": [
+          "fullStack"
+        ],
+        "not": {
+          "required": [
+            "testCredentials"
+          ]
+        },
+        "properties": {
+          "fullStack": {
+            "const": true
+          },
+          "namespacePrefix": {
+            "const": "test"
+          },
+          "secretReferences": {
+            "maxItems": 0
+          },
+          "retention": {
+            "properties": {
+              "seconds": {
+                "maximum": 3600
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
 }
