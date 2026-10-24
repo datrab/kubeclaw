@@ -94,7 +94,7 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-The observer sends lifecycle identity, timestamp, sequence, causation and payload plus observer provenance to telemetry.emit. Redaction is key-based, not a guarantee that all sensitive values are removed. Delivery is at_least_once/per_run and best_effort with five attempts and a ten-second attempt timeout: retries can duplicate records and exhausted delivery can lose telemetry without blocking the run. The selected provider owns its separately configured storage; the observer does not own canonical lifecycle state.
+The observer sends lifecycle identity, timestamp, sequence, causation and payload plus observer provenance to telemetry.emit. Redaction is key-based, not a guarantee that all sensitive values are removed. Delivery is at_least_once/per_run and best_effort with five attempts and a ten-second attempt timeout. Retries can duplicate records. Exhausted delivery can lose telemetry without blocking the run. The selected provider owns its separately configured storage; the observer does not own canonical lifecycle state.
 
 Registry validation checks declared paths, schemas, and capability names.
 Activation or the Buster loader checks executable exports; discovery does not import package code.

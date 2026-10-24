@@ -93,7 +93,7 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-When requiresDesign is false the stage returns before configuration or capability calls. Otherwise it reads verified architecture and dispatches the configured agent before approval wait/operator notification; it sends architectureContent and later stores the verified imported design archive/request through artifact authority. Dispatch/parse failures block the stage. A waiting result is not approval, and the configured operator target, issuer and expiry must be qualified independently.
+When requiresDesign is false the stage returns before configuration or capability calls. Otherwise it reads verified architecture and dispatches the configured agent before approval wait/operator notification. It sends architectureContent and later stores the verified imported design archive/request through artifact authority. Dispatch/parse failures block the stage. A waiting result is not approval, and the configured operator target, issuer and expiry must be qualified independently.
 
 Registry validation checks declared paths, schemas, and capability names.
 Activation or the Buster loader checks executable exports; discovery does not import package code.
