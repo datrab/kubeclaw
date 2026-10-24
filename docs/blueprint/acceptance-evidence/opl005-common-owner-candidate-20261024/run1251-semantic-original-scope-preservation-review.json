@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "No actionable P0-P2 defect is substantiated by the supplied change bundle. The documented schema/runtime target-mode distinction is explicitly retained as an existing limitation rather than silently represented as resolved.",
+  "overall_confidence": 0.82
+}

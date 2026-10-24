@@ -1,0 +1,131 @@
+{
+  "candidateRevision": "71e0f4a4f4bc9788e7fe34170647441034b6ea5e",
+  "sourceRevision": "f562f70162656f8f48f108b28f85ed7fa3e6ca79",
+  "preservedRecordIds": [
+    "A910-03-whole-command-prerequisite-contract-20261022",
+    "A910-07-08-09-12-OPL001-whole-487f4e00-20261022",
+    "A911-03-REF-007-20261020",
+    "A912-03-supported-redirect-paths-20261021",
+    "A912-05-whole-source-excerpt-callouts-20261022",
+    "A912-11-deterministic-page-records-20261022",
+    "A98-02-13-whole-operator-procedure-contract-20261022",
+    "A99-03-whole-content-20261021",
+    "AP09-closeout-config-reference-20261020",
+    "AP09-closeout-developer-maintenance-20261020",
+    "AP09-complete-developer-reader-contracts-20261021",
+    "AP09-complete-platform-change-content-20261021",
+    "AP09-complete-plugin-maintenance-mechanisms-20261021",
+    "AP09-complete-publication-reference-navigation-20261021",
+    "AP09-complete-responsive-reader-layout-20261021",
+    "AP09-complete-same-source-code-preview-20261021",
+    "AP09-complete-source-backed-diagrams-20261021",
+    "AP09-complete-static-offline-fallback-20261021",
+    "AP09-complete-static-reader-search-20261021",
+    "AP09-confidential-adapter-lifecycle-20261021",
+    "AP09-decision-record-content-20261021",
+    "AP09-documentation-agent-maintenance-20261021",
+    "AP09-publication-positive-scope-7ef16585",
+    "AP09-reader-developers-20261020",
+    "AP09-reader-operators-20261020",
+    "AP09-rendered-source-bounds-gate-20261021",
+    "AP09-reviewed-configuration-20261020",
+    "AP09-reviewed-maintenance-20261020",
+    "AP09-reviewed-publication-navigation-20261020",
+    "AP09-reviewed-reference-20261020",
+    "AP09-search-reader-gate-20261021",
+    "AP09-whole-extension-drift-A91014-20261023",
+    "AP09-whole-extension-guides-A91013-20261023",
+    "AP09.1-ready-topics-20261020",
+    "FLW014-plugin-operator-supported-lifecycle-20261021",
+    "PUB008-current-reader-build-ci-20261023"
+  ],
+  "otherRecordsExact": 62,
+  "allOtherRegisterFieldsUnchanged": true,
+  "noNewAcceptance": true,
+  "scopeRows": 3068,
+  "uniqueFiles": 1264,
+  "native106MembershipUnchanged": true,
+  "ordinary193Original28MismatchesRetained": true,
+  "selected1249MembershipUnchanged": true,
+  "caller1006MembershipUnchanged": true,
+  "original110RoleGuards": {
+    "checked": 110,
+    "failures": 0
+  },
+  "originalCustodyControls": 53,
+  "finalReaderChecks": [
+    {
+      "command": [
+        "node",
+        "--max-old-space-size=4096",
+        "scripts/docs-publication.mjs",
+        "build"
+      ],
+      "pid": 1613545,
+      "started": "2026-10-24T15:17:44.712274+00:00",
+      "exitCode": 0,
+      "finished": "2026-10-24T15:20:11.677809+00:00"
+    },
+    {
+      "command": [
+        "node",
+        "--max-old-space-size=4096",
+        "scripts/docs-reader/check-artifact.mjs"
+      ],
+      "pid": 1630948,
+      "started": "2026-10-24T15:20:11.678529+00:00",
+      "exitCode": 0,
+      "finished": "2026-10-24T15:20:41.315337+00:00"
+    },
+    {
+      "command": [
+        "node",
+        "--max-old-space-size=4096",
+        "scripts/docs-reader/check-search.mjs"
+      ],
+      "pid": 1633648,
+      "started": "2026-10-24T15:20:41.328778+00:00",
+      "exitCode": 0,
+      "finished": "2026-10-24T15:20:56.996166+00:00"
+    },
+    {
+      "command": [
+        "node",
+        "--max-old-space-size=4096",
+        "scripts/docs-reader/check-source-links.mjs"
+      ],
+      "pid": 1633749,
+      "started": "2026-10-24T15:20:57.003013+00:00",
+      "exitCode": 0,
+      "finished": "2026-10-24T15:22:48.251032+00:00"
+    },
+    {
+      "command": [
+        "node",
+        "--max-old-space-size=4096",
+        "scripts/docs-reader/check-source-previews.mjs"
+      ],
+      "pid": 1642555,
+      "started": "2026-10-24T15:22:48.251723+00:00",
+      "exitCode": 0,
+      "finished": "2026-10-24T15:23:19.893986+00:00"
+    },
+    {
+      "command": [
+        "node",
+        "--max-old-space-size=4096",
+        "scripts/docs-reader/check-diagrams.mjs"
+      ],
+      "pid": 1644813,
+      "started": "2026-10-24T15:23:19.905434+00:00",
+      "exitCode": 0,
+      "finished": "2026-10-24T15:23:38.944866+00:00"
+    }
+  ],
+  "baselineFailure": "API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: skills/buster/engine/test-gates/artifacts.ts:41: content",
+  "limits": "All5DATA UNKNOWN; selected-releaseKnip/human/live limits unwaived. Actual native negative advisories and acquisition/prediction failures retained in operations evidence; no review receipt rewritten. No fresh human/practical/runtime acceptance; no newwholeOPL005/all70acceptance.",
+  "nativePreservationReceipts": {
+    "semantic": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-semantic-original-scope-preservation-review.json",
+    "publication": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-publication-original-scope-preservation-review.json"
+  }
+}

@@ -11779,6 +11779,158 @@
       "introducedAfterBaseline": true
     },
     {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/candidate-status.md",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/candidate-status.md",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/candidate-status.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/delivery-reader-final-review.json",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/delivery-reader-final-review.json",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/delivery-reader-final-review.json",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/host-git-reader-final-review.json",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/host-git-reader-final-review.json",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/host-git-reader-final-review.json",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0841-reader-corrections.md",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0841-reader-corrections.md",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0841-reader-corrections.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0841-ten-reader-rows-candidate.json",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0841-ten-reader-rows-candidate.json",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0841-ten-reader-rows-candidate.json",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-approval-network-review.json",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-approval-network-review.json",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-approval-network-review.json",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-candidate-progress.json",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-candidate-progress.json",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-candidate-progress.json",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-evidence-preflight-redis-review.json",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-evidence-preflight-redis-review.json",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-evidence-preflight-redis-review.json",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-final-checks.json",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-final-checks.json",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-final-checks.json",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-observer-policy-preview-review.json",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-observer-policy-preview-review.json",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-observer-policy-preview-review.json",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-open-pipeline-findings.json",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-open-pipeline-findings.json",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-open-pipeline-findings.json",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-source-reader-corrections.md",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-source-reader-corrections.md",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-source-reader-corrections.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1021-source-reader-corrections.md",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1021-source-reader-corrections.md",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1021-source-reader-corrections.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1131-canonical-and-store-followup.md",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1131-canonical-and-store-followup.md",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1131-canonical-and-store-followup.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1131-final-source-topic-progress.md",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1131-final-source-topic-progress.md",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1131-final-source-topic-progress.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-publication-original-scope-preservation-review.json",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-publication-original-scope-preservation-review.json",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-publication-original-scope-preservation-review.json",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-semantic-original-scope-preservation-review.json",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-semantic-original-scope-preservation-review.json",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-semantic-original-scope-preservation-review.json",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-verified-checkpoint-scope-preservation.json",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-verified-checkpoint-scope-preservation.json",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-verified-checkpoint-scope-preservation.json",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/source-review.json",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/source-review.json",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/source-review.json",
+      "introducedAfterBaseline": true
+    },
+    {
       "path": "docs/blueprint/acceptance-evidence/ops-mcp-complete-20261021.json",
       "class": "internal-documentation-input",
       "purpose": "Internal bounded Source/Reader/Quality acceptance evidence for ops-mcp-complete-20261021.json; retained for its specific review/provenance/negative controls, not publication or runtime permission.",
