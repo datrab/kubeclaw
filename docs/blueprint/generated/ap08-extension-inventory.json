@@ -489,7 +489,7 @@
         "skills/nova/plugins/architecture-validator/tests/protocol.unit.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.architecture-validator.md",
-      "catalogueWords": 561,
+      "catalogueWords": 649,
       "auditStatus": "content-written"
     },
     {
@@ -748,7 +748,7 @@
         "skills/nova/plugins/case-study/tests/protocol.test.mjs"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.case-study.md",
-      "catalogueWords": 548,
+      "catalogueWords": 598,
       "auditStatus": "content-written"
     },
     {
@@ -1016,7 +1016,7 @@
         "skills/nova/plugins/delivery-lint/tests/package-boundary.test.mjs"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md",
-      "catalogueWords": 571,
+      "catalogueWords": 679,
       "auditStatus": "content-written"
     },
     {
@@ -1203,7 +1203,7 @@
         "skills/nova/plugins/demo-handoff/tests/handoff.test.mts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.demo-handoff.md",
-      "catalogueWords": 975,
+      "catalogueWords": 988,
       "auditStatus": "content-written"
     },
     {
@@ -1486,7 +1486,7 @@
         "skills/common/plugins/git-workspace/tests/sync-disposition.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.git-workspace.md",
-      "catalogueWords": 625,
+      "catalogueWords": 657,
       "auditStatus": "locally-verified"
     },
     {
@@ -1619,7 +1619,7 @@
         "skills/nova/plugins/human-approval/tests/package-boundary.test.mjs"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md",
-      "catalogueWords": 751,
+      "catalogueWords": 812,
       "auditStatus": "content-written"
     },
     {
@@ -1669,7 +1669,7 @@
         "skills/nova/plugins/implementation-agent/tests/protocol.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md",
-      "catalogueWords": 568,
+      "catalogueWords": 671,
       "auditStatus": "content-written"
     },
     {
@@ -1798,7 +1798,7 @@
         "skills/buster/plugins/kubernetes-fixture/tests/live-function.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md",
-      "catalogueWords": 714,
+      "catalogueWords": 804,
       "auditStatus": "locally-verified"
     },
     {
@@ -1871,7 +1871,7 @@
         "skills/buster/plugins/lighthouse/tests/live-function.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.lighthouse.md",
-      "catalogueWords": 679,
+      "catalogueWords": 719,
       "auditStatus": "content-written"
     },
     {
@@ -1964,7 +1964,7 @@
         "skills/nova/plugins/lint/tests/stage.unit.test.mjs"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
-      "catalogueWords": 868,
+      "catalogueWords": 896,
       "auditStatus": "content-written"
     },
     {
@@ -2074,7 +2074,7 @@
         "skills/common/plugins/notification-observer/tests/parity.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.notification-observer.md",
-      "catalogueWords": 798,
+      "catalogueWords": 828,
       "auditStatus": "content-written"
     },
     {
@@ -2145,7 +2145,7 @@
         "skills/buster/plugins/openapi/tests/remediation.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.openapi.md",
-      "catalogueWords": 653,
+      "catalogueWords": 693,
       "auditStatus": "locally-verified"
     },
     {
@@ -2385,7 +2385,7 @@
         "skills/buster/plugins/playwright/tests/live-function.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.playwright.md",
-      "catalogueWords": 675,
+      "catalogueWords": 724,
       "auditStatus": "content-written"
     },
     {
@@ -2450,7 +2450,7 @@
         "skills/nova/plugins/preflight-contract/tests/package-boundary.test.mjs"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md",
-      "catalogueWords": 668,
+      "catalogueWords": 663,
       "auditStatus": "content-written"
     },
     {
@@ -2496,7 +2496,7 @@
         "skills/nova/plugins/prism-design/tests/live-function.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.prism-design.md",
-      "catalogueWords": 571,
+      "catalogueWords": 605,
       "auditStatus": "content-written"
     },
     {
@@ -2672,7 +2672,7 @@
         "skills/nova/plugins/remote-test-gate/tests/live-function.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md",
-      "catalogueWords": 732,
+      "catalogueWords": 720,
       "auditStatus": "content-written"
     },
     {
@@ -2861,7 +2861,7 @@
         "skills/nova/plugins/review/tests/stage.unit.test.mjs"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.review.md",
-      "catalogueWords": 1213,
+      "catalogueWords": 1216,
       "auditStatus": "content-written"
     },
     {
@@ -2932,7 +2932,7 @@
         "skills/common/plugins/runtime-dispatch/tests/package-boundary.test.mjs"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.runtime-dispatch.md",
-      "catalogueWords": 691,
+      "catalogueWords": 697,
       "auditStatus": "content-written"
     },
     {
@@ -3194,7 +3194,7 @@
         "skills/buster/plugins/security-providers/tests/live-function.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.security-providers.md",
-      "catalogueWords": 1322,
+      "catalogueWords": 1423,
       "auditStatus": "content-written"
     },
     {
@@ -3391,7 +3391,7 @@
         "skills/buster/plugins/tailscale-exposure/tests/live-function.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.tailscale-exposure.md",
-      "catalogueWords": 629,
+      "catalogueWords": 712,
       "auditStatus": "locally-verified"
     },
     {
@@ -3435,7 +3435,7 @@
         "skills/common/plugins/telemetry-observer/tests/parity.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-observer.md",
-      "catalogueWords": 595,
+      "catalogueWords": 645,
       "auditStatus": "locally-verified"
     },
     {
@@ -3527,7 +3527,7 @@
         "skills/common/plugins/transport-publisher/tests/package-boundary.test.mjs"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.transport-publisher.md",
-      "catalogueWords": 592,
+      "catalogueWords": 701,
       "auditStatus": "content-written"
     },
     {
@@ -3607,7 +3607,7 @@
         "skills/buster/plugins/visual/tests/live-function.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.visual.md",
-      "catalogueWords": 685,
+      "catalogueWords": 889,
       "auditStatus": "content-written"
     },
     {
