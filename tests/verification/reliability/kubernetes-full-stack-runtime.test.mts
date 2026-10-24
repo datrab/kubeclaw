@@ -18,11 +18,11 @@ const manifest = { apiVersion: 'v1', kind: 'List', items: [
   { apiVersion: 'networking.k8s.io/v1', kind: 'NetworkPolicy', metadata: { name: 'deny' }, spec: { podSelector: {}, policyTypes: ['Ingress', 'Egress'] } },
 ] };
 const requestResource = { type: 'kubernetes.fixture', canonicalId: 'kubernetes-fixture:attempt:stack' };
-function setup(execute: any, familyclawBootstrapEnabled = false) {
+function setup(execute: any) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-stack-'));
   const invoker = new KubernetesFixtureCapabilityInvoker({ workspaceRoot: root, kubectlExecutable: resolveExecutable('kubectl'),
     controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
-    allowedNamespacePrefixes: ['test'], allowedRegistryPrefixes: ['registry.local/core', 'registry.local/db'], allowedSecretReferences: [], familyclawBootstrapEnabled,
+    allowedNamespacePrefixes: ['test'], allowedRegistryPrefixes: ['registry.local/core', 'registry.local/db'], allowedSecretReferences: [],
     allowedStorageClasses: ['fast'], allowDefaultStorageClass: false, maximumPersistentVolumeClaimBytes: 1024 ** 3,
     maximumPersistentVolumeTotalBytes: 2 * 1024 ** 3, maximumManifestBytes: 1024 ** 2, maximumResources: 64,
     maximumRetentionSeconds: 3600, maximumExecutionMs: 10_000, pollIntervalMs: 50, execute });
@@ -413,25 +413,11 @@ test('readiness query timeout preserves diagnostics, but cancellation/denial/adm
   }
 });
 
-test('signed fixed profile reaches lease purpose/pretest with no copied source Secrets', async () => {
- let lease:any;
- const {invoker,root,payload}=setup(async (_:string,args:string[],options:any)=>{
-  if(args[0]==='auth')return {stdout:'yes'};
-  if(args[0]==='apply'){const doc=JSON.parse(String(options.input));if(doc.kind==='BusterNamespaceLease')lease=doc;return {stdout:'{}'};}
-  if(args[1]?.startsWith('busternamespacelease'))return {stdout:JSON.stringify({status:{phase:'Ready',namespaceName:'test-stack',createdAt:new Date().toISOString()}})};
-  if(args[1]==='service')return {stdout:JSON.stringify({spec:{ports:[{port:8080}]}})};
-  if(args[1]==='endpoints')return {stdout:JSON.stringify({subsets:[{addresses:[{ip:'10.0.0.2'}],ports:[{port:8080}]}]})};
-  return {stdout:JSON.stringify({items:[{metadata:{name:'app'},status:{phase:'Running',conditions:[{type:'Ready',status:'True'}]}}]})};
- },true);
- try{
-  const modified:any=structuredClone(manifest);modified.items[1].metadata.name='familyclaw-core';
-  modified.items[0].spec.template.spec.containers[0].envFrom=['familyclaw-database-bootstrap','familyclaw-database-owner','familyclaw-database-tls','familyclaw-runtime','familyclaw-openclaw','familyclaw-firefly'].map(name=>({secretRef:{name}}));
-  const bytes=JSON.stringify(modified);fs.writeFileSync(payload.manifestPath,bytes);
-  const request:any={...payload,familyclawBootstrap:{profile:'familyclaw.v1',release:'familyclaw'},serviceName:'familyclaw-core',secretReferences:[],manifestDigest:'sha256:'+crypto.createHash('sha256').update(bytes).digest('hex')};
-  const result:any=await invoker.invoke('kubernetes.fixture',{operation:'prepare',resource:requestResource,payload:request} as any,new AbortController().signal);
-  assert.equal(result.ok,true);assert.deepEqual(lease.spec.familyclawBootstrap,request.familyclawBootstrap);
-  assert.equal(lease.spec.purpose,'pretest');assert.deepEqual(lease.spec.secretsToCopy,[]);
-  const denied:any={...request,familyclawBootstrap:{...request.familyclawBootstrap,data:'private-canary'}};
-  await assert.rejects(()=>invoker.invoke('kubernetes.fixture',{operation:'prepare',resource:requestResource,payload:denied} as any,new AbortController().signal),/BOOTSTRAP_INVALID/);
+test('removed bootstrap payload is rejected before execution', async () => {
+ const {invoker,root,payload}=setup(async ()=>{throw new Error('unexpected execution');});
+ try {
+  for (const obsolete of [{profile:'familyclaw.v1',release:'familyclaw'},null,{}]) {
+   await assert.rejects(()=>invoker.invoke('kubernetes.fixture',{operation:'prepare',resource:requestResource,payload:{...payload,familyclawBootstrap:obsolete}} as any,new AbortController().signal),/KUBERNETES_FIXTURE_BOOTSTRAP_REMOVED/);
+  }
  }finally{fs.rmSync(root,{recursive:true,force:true});}
 });

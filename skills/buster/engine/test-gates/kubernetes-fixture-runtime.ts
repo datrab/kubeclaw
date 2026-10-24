@@ -1,6 +1,5 @@
 import { testSecretContract, validateTestSecretBindings } from '../../plugins/kubernetes-fixture/src/test-secrets.js';
 import crypto from 'node:crypto';
-import { fixtureBootstrapProfile, validateBootstrapManifest } from './kubernetes-fixture-bootstrap.ts';
 import { collectFixtureFailureEvidence } from './kubernetes-fixture-diagnostics.ts';
 import { validateFixtureNetworkPolicy } from './kubernetes-network-envelope.ts';
 import { fixturePodIsReady } from './kubernetes-pod-readiness.ts';
@@ -58,7 +57,6 @@ export interface KubernetesFixtureCapabilityInvokerOptions {
   readonly allowedNamespacePrefixes: readonly string[];
   readonly allowedRegistryPrefixes: readonly string[];
   readonly allowedSecretReferences: readonly string[];
-  readonly familyclawBootstrapEnabled?: boolean;
   readonly allowedStorageClasses: readonly string[];
   readonly allowDefaultStorageClass: boolean;
   readonly runnerSubject?: string;
@@ -441,7 +439,6 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
   readonly #namespacePrefixes: ReadonlySet<string>;
   readonly #registryPrefixes: readonly string[];
   readonly #secretReferences: ReadonlySet<string>;
-  readonly #familyclawBootstrapEnabled: boolean;
   readonly #allowedStorageClasses: ReadonlySet<string>;
   readonly #allowDefaultStorageClass: boolean;
   readonly #runnerSubject: string;
@@ -497,7 +494,6 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
     this.#namespacePrefixes = new Set(options.allowedNamespacePrefixes);
     this.#registryPrefixes = [...options.allowedRegistryPrefixes];
     this.#secretReferences = new Set(options.allowedSecretReferences);
-    this.#familyclawBootstrapEnabled = options.familyclawBootstrapEnabled === true;
     this.#allowedStorageClasses = new Set(options.allowedStorageClasses);
     this.#allowDefaultStorageClass = options.allowDefaultStorageClass;
     this.#runnerSubject = runnerSubject;
@@ -685,7 +681,6 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
       })) throw new Error('KUBERNETES_FIXTURE_IMAGE_INVENTORY_INVALID');
       verifiedImages.sort();
     } else if (payload.verifiedImages !== undefined) throw new Error('KUBERNETES_FIXTURE_FULL_STACK_REQUIRED');
-    const familyclawBootstrap = fixtureBootstrapProfile(payload, this.#familyclawBootstrapEnabled);
     const replacementSelectors = payload.podReplacementSelectors ?? [];
     if (!Array.isArray(replacementSelectors) || replacementSelectors.length > 8 || (replacementSelectors.length > 0 && !verifiedImages)) throw new Error('KUBERNETES_FIXTURE_REPLACEMENT_SELECTORS_INVALID');
     for (const raw of replacementSelectors) {
@@ -729,10 +724,10 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
       testCredentials = { mode, secretName, keys: ['username', 'password'],
         readers: [...new Set([this.#credentialReaderSubject, this.#runnerSubject])] };
     }
+    if (Object.hasOwn(payload, 'familyclawBootstrap')) throw new Error('KUBERNETES_FIXTURE_BOOTSTRAP_REMOVED');
     const testSecrets = testSecretContract(payload.testSecrets);
     const documents = verifiedImages ? flattenDocuments(boundedManifestDocuments(bytes), this.#maximumResources) : [];
-    if (familyclawBootstrap) validateBootstrapManifest(documents);
-    validateTestSecretBindings(testSecrets,documents,{fullStack:!!verifiedImages,namespacePrefix,retentionSeconds,secretReferences,testCredentials,familyclawBootstrap});
+    validateTestSecretBindings(testSecrets,documents,{fullStack:!!verifiedImages,namespacePrefix,retentionSeconds,secretReferences,testCredentials});
     const networkPolicies = documents.filter(doc => doc.kind === 'NetworkPolicy').map(doc => ({ name: object(doc.metadata, 'metadata').name, spec: doc.spec }));
     const endpointService = documents.find(doc => doc.kind === 'Service' && object(doc.metadata, 'metadata').name === serviceName);
     const endpointSelector = endpointService ? object(object(endpointService.spec, 'service.spec').selector, 'service.selector') : undefined;
@@ -743,7 +738,7 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
       metadata: { name: leaseName, namespace: this.#controllerNamespace,
         labels: { 'openclaw.io/buster-scope': request.resource.canonicalId.replace(/[^A-Za-z0-9._-]/gu, '-').slice(0, 63) } },
       spec: { namespaceName, namespacePrefix, runId: leaseName, project: text(payload.project, 'project', 253),
-        purpose: familyclawBootstrap ? 'pretest' : 'gate', ...(familyclawBootstrap ? { familyclawBootstrap } : {}), serviceName, servicePort, serviceTargetPort: facts.serviceTargetPort, cleanupPolicy: retentionMode,
+        purpose: 'gate', serviceName, servicePort, serviceTargetPort: facts.serviceTargetPort, cleanupPolicy: retentionMode,
         verifiedImage: immutableImage, manifestDigest,
         ...(verifiedImages ? { fullStack: true, verifiedImages, networkPolicies, endpointSelector } : {}),
         ttlSeconds: retentionSeconds, access: [{ subject: this.#runnerSubject, mode: 'deployer' }],

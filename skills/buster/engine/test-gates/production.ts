@@ -263,7 +263,6 @@ export function loadProductionBusterRemotePlanRuntime(
       ...(registryUsername !== undefined ? { registryUsername, registryPassword: registryPassword! } : {}),
     } } : {}),
     ...(kubernetesFixtureSource ? { kubernetesFixture: {
-      familyclawBootstrapEnabled: kubernetesFixtureSource.familyclawBootstrapEnabled === true,
       kubectlExecutable: path.resolve(directory, String(kubernetesFixtureSource.kubectlExecutable)),
       controllerNamespace: String(kubernetesFixtureSource.controllerNamespace),
       leaseApiGroup: String(kubernetesFixtureSource.leaseApiGroup),
