@@ -41,6 +41,22 @@ function fixture(run) {
     run({ root, git, commit, sourceCommit, images, env });
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 }
+test('selected nested image digests are readable with the system awk', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'selected-digest-'));
+  try {
+    const file = path.join(root, 'values.yaml');
+    const expected = `sha256:${'a'.repeat(64)}`;
+    fs.writeFileSync(file, yaml.dump({ images: { control: { digest: expected }, studio: { digest: `sha256:${'b'.repeat(64)}` } } }));
+    const script = fs.readFileSync(path.join(source, 'scripts/deploy.sh'), 'utf8');
+    const start = script.indexOf('yaml_get_nested_section_key() {');
+    const trimStart = script.indexOf('yaml_trim_scalar() {');
+    const trimEnd = script.indexOf('\n}', trimStart) + 2;
+    const end = script.indexOf('\n}', start) + 2;
+    const output = execFileSync('bash', ['-c', `${script.slice(trimStart, trimEnd)}\n${script.slice(start, end)}\nyaml_get_nested_section_key "$1" images control digest`, 'test', file], { encoding: 'utf8' });
+    assert.equal(output.trim(), expected);
+  } finally { fs.rmSync(root, { recursive: true, force: true }); }
+});
+
 const directory = 'releases/gitops/reviewed-test';
 const url = 'https://github.com/datrab/kubeclaw.git';
 

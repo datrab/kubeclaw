@@ -433,18 +433,18 @@ yaml_get_nested_section_key() {
       in_subsection = 0
     }
 
-    in_section && $0 ~ ("^[[:space:]]{2}" subsection ":[[:space:]]*$") {
+    in_section && $0 ~ ("^  " subsection ":[[:space:]]*$") {
       in_subsection = 1
       next
     }
 
-    in_section && in_subsection && $0 ~ /^[[:space:]]{2}[A-Za-z0-9_-]+:[[:space:]]*$/ && $0 !~ ("^[[:space:]]{2}" subsection ":[[:space:]]*$") {
+    in_section && in_subsection && $0 ~ /^  [A-Za-z0-9_-]+:[[:space:]]*$/ && $0 !~ ("^  " subsection ":[[:space:]]*$") {
       in_subsection = 0
     }
 
-    in_section && in_subsection && $0 ~ ("^[[:space:]]{4}" key ":[[:space:]]*") {
+    in_section && in_subsection && $0 ~ ("^    " key ":[[:space:]]*") {
       value = $0
-      sub("^[[:space:]]{4}" key ":[[:space:]]*", "", value)
+      sub("^    " key ":[[:space:]]*", "", value)
       print value
       exit
     }
