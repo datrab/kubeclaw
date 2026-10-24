@@ -10045,6 +10045,73 @@ export const documentationExecutableRoleRecipes = {
         "sha256": "51e0b027356401a68c52a3b8b1fe4d6c6ed35070dfcb300067dd1b9af8da0abc"
       }
     ]
+  },
+  "scripts/plugin-registration-dependencies.mjs": {
+    "role": "documentation-consumer",
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "20e46891fc697e57f6e11be19bb4bd75c1e20293472e8090444c311ad8794c62",
+    "consumer": "Private source-analysis/Markdown rendering collector imported only by the exact reviewed docs-publication consumer. Explicit caller-injected discovery and source-link authorities; inert schema, invocation and boundary metadata yield documentation facts and a strictly identity/capability joined opt-in report, never provider execution, deployment, actual operational ownership or observed runtime DATA. Root documentation-only ancestry, package entries, exports, full executable selectors and physical purpose inputs remain independently checked; this is not a role for arbitrary plugin output or copied runtime objects.",
+    "selectors": [
+      {
+        "expressionSha256": "f1b555e5b390cd51cefe6e431ffc0c89498c08a12793fd9086ed9a443695f821"
+      },
+      {
+        "expressionSha256": "6544b67b73797b8c803a63d1805de5c0383f612cd4c5e77cb15a15e2847ccc01"
+      },
+      {
+        "expressionSha256": "e2d8321c8cb138e598fd205a138ea893380d45b23602987a543849e8ca19ea06"
+      },
+      {
+        "expressionSha256": "b10c9275def2aa5cc2639b2d182a995a24452b96a5f1a4d1b30604c3b53c27d2"
+      },
+      {
+        "expressionSha256": "fd31b8f8048d8c1f55d91ee29e91b766faf77ee7d7156f40d891473d26c1252f"
+      },
+      {
+        "expressionSha256": "554e44fcd603dbde382bbd5d6e50135869a5d82a4936b6ffc963536e87e60b4d"
+      },
+      {
+        "expressionSha256": "d84084458ef4cf2092b97b7bef4dd114a121c92b81cc9b550bf4060fb30bc759"
+      },
+      {
+        "expressionSha256": "967573157d8a0118a9b81842abb29015d82a1e83f6d2d055d56e848e4def640e"
+      },
+      {
+        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+      },
+      {
+        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+      },
+      {
+        "expressionSha256": "56acaca28eb35ec48c2e12a8daa77923718c9240cca4790cba0a10d4624c910a"
+      },
+      {
+        "expressionSha256": "b503b81286a97e017d755c5e14ad003e09df2ca9431a979d10916c5e012b1637"
+      },
+      {
+        "expressionSha256": "dc5bf2c9acda51f78c758008b8c689eb67e56d00abd66e41a000a4c4cf589aee"
+      },
+      {
+        "expressionSha256": "954a9046025e559744f02bce3e529459a8532b55473d577a2bf3f51678799150"
+      },
+      {
+        "expressionSha256": "d05e549dc72a720baab0455f074943160b8edf3d5f65958658b039ee74244666"
+      }
+    ],
+    "factsDigest": "801e9d43fc808288fcbaff91ee6184dec6582a38701077bfbd30b2c5ea62495b",
+    "authorityInputs": [],
+    "purposeInputs": [
+      {
+        "path": "package.json",
+        "canonical": "package.json",
+        "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+      },
+      {
+        "path": "scripts/docs-publication.mjs",
+        "canonical": "scripts/docs-publication.mjs",
+        "sha256": "2490b48bcfdcd73396349529dc5ef59fa173054dbdb0ff0d2ea33f61ae7837d0"
+      }
+    ]
   }
 };
 const syntaxSha256=syntax=>createHash('sha256').update(syntax).digest('hex');
