@@ -55067,6 +55067,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
+          "token": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-publication-original-scope-preservation-review.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/config/documentation-tree-classification.json",
           "token": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-publication-original-scope-preservation-review.json",
           "inputUse": false
@@ -55087,6 +55092,11 @@
       "consumers": [
         {
           "sourcePath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-verified-checkpoint-scope-preservation.json",
+          "token": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-semantic-original-scope-preservation-review.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/blueprint/documentation-completion-matrix.json",
           "token": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-semantic-original-scope-preservation-review.json",
           "inputUse": false
         },
@@ -66142,7 +66152,7 @@
         "scripts/tests/docs-source-freshness.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "e4d70574aa76040d69fc88ce1ead9f5a20d437454e4162650835414cbd5b0c77"
+      "sha256": "50c057b5e0991466a9264fc9b992e032bf6176a52a46b66ca8199a19e566c795"
     },
     {
       "path": "docs/blueprint/documentation-parity-contract.md",
