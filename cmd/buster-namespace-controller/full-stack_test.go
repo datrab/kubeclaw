@@ -61,43 +61,12 @@ func TestFullStackNetworkEnvelope(t *testing.T) {
 	}
 }
 
-func TestFullStackBootstrapPurposeBoundary(t *testing.T) {
-	cases := []struct {
-		name    string
-		enabled bool
-		patch   func(map[string]interface{})
-		want    bool
-	}{
-		{"fixed pretest", true, func(s map[string]interface{}) {}, true},
-		{"disabled profile", false, func(s map[string]interface{}) {}, false},
-		{"generic pretest", true, func(s map[string]interface{}) { delete(s, "familyclawBootstrap") }, false},
-		{"generic gate", false, func(s map[string]interface{}) { delete(s, "familyclawBootstrap"); s["purpose"] = "gate" }, true},
-		{"unknown profile", true, func(s map[string]interface{}) {
-			s["familyclawBootstrap"].(map[string]interface{})["profile"] = "arbitrary"
-		}, false},
-		{"invalid release", true, func(s map[string]interface{}) {
-			s["familyclawBootstrap"].(map[string]interface{})["release"] = "bad/release"
-		}, false},
-		{"exposed", true, func(s map[string]interface{}) { s["exposure"] = map[string]interface{}{"provider": "tailscale"} }, false},
-		{"copied credentials", true, func(s map[string]interface{}) { s["secretsToCopy"] = []interface{}{"foreign"} }, false},
-		{"demo credentials", true, func(s map[string]interface{}) { s["testCredentials"] = map[string]interface{}{} }, false},
-		{"long ttl", true, func(s map[string]interface{}) { s["ttlSeconds"] = 3601 }, false},
-		{"short ttl", true, func(s map[string]interface{}) { s["ttlSeconds"] = 59 }, false},
-		{"wrong purpose", true, func(s map[string]interface{}) { s["purpose"] = "production" }, false},
-		{"empty selector", true, func(s map[string]interface{}) { s["endpointSelector"] = map[string]interface{}{} }, false},
-		{"invalid policy", true, func(s map[string]interface{}) {
-			s["networkPolicies"] = []interface{}{map[string]interface{}{"name": "bad", "spec": map[string]interface{}{}}}
-		}, false},
-	}
-	for _, tc := range cases {
-		t.Run(tc.name, func(t *testing.T) {
-			spec := map[string]interface{}{"fullStack": true, "purpose": "pretest", "ttlSeconds": 600, "exposure": map[string]interface{}{"provider": "off"}, "familyclawBootstrap": map[string]interface{}{"profile": "familyclaw.v1", "release": "familyclaw"}, "servicePort": 8080, "endpointSelector": map[string]interface{}{"app": "core"}, "networkPolicies": []interface{}{}}
-			tc.patch(spec)
-			c := &controller{familyclawBootstrapEnabled: tc.enabled}
-			err := c.validateFullStackNetwork(&lease{Spec: spec})
-			if (err == nil) != tc.want {
-				t.Fatalf("accepted=%v want=%v error=%v", err == nil, tc.want, err)
-			}
-		})
+func TestFullStackGatePurposeBoundary(t *testing.T) {
+	for _, purpose := range []string{"pretest", "gate", "final-preview"} {
+		spec := map[string]interface{}{"fullStack": true, "purpose": purpose, "exposure": map[string]interface{}{"provider": "off"}, "servicePort": 8080, "endpointSelector": map[string]interface{}{"app": "core"}, "networkPolicies": []interface{}{}}
+		err := (&controller{}).validateFullStackNetwork(&lease{Spec: spec})
+		if (err == nil) != (purpose == "gate") {
+			t.Fatalf("purpose=%s error=%v", purpose, err)
+		}
 	}
 }

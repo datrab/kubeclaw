@@ -139,13 +139,7 @@ func (c *controller) validateFullStackNetwork(item *lease) error {
 		}
 		return nil
 	}
-	// Only the enabled, fully validated fixed bootstrap profile may use pretest.
-	// This does not widen the generic full-stack or network-policy envelope.
-	release, err := c.familyclawBootstrapRequest(item)
-	if err != nil {
-		return err
-	}
-	if (spec["purpose"] != "gate" && release == "") || stringValue(securityObject(spec["exposure"])["provider"]) != "off" {
+	if spec["purpose"] != "gate" || stringValue(securityObject(spec["exposure"])["provider"]) != "off" {
 		return errors.New("fullStack is restricted to unexposed gate leases")
 	}
 	port := intValue(spec["serviceTargetPort"], intValue(spec["servicePort"], 0))

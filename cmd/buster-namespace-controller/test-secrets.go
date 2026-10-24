@@ -47,7 +47,7 @@ func parseFixtureSecrets(item *lease) (*fixtureSecretRequest, error) {
 		return nil, errors.New("testSecrets invalid contract")
 	}
 	ttl := intValue(item.Spec["ttlSeconds"], 0)
-	if !boolValue(item.Spec["fullStack"]) || stringValue(item.Spec["purpose"]) != "gate" || ttl < 60 || ttl > 3600 || !strings.HasPrefix(stringValue(item.Spec["namespaceName"]), "test-") || stringValue(objectValue(item.Spec["exposure"])["provider"]) != "off" || item.Spec["familyclawBootstrap"] != nil {
+	if !boolValue(item.Spec["fullStack"]) || stringValue(item.Spec["purpose"]) != "gate" || ttl < 60 || ttl > 3600 || !strings.HasPrefix(stringValue(item.Spec["namespaceName"]), "test-") || stringValue(objectValue(item.Spec["exposure"])["provider"]) != "off" {
 		return nil, errors.New("testSecrets requires isolated gate lease, exposure off, TTL 60..3600")
 	}
 	if len(r.Values) < 1 || len(r.Values) > 32 || len(r.Secrets) < 1 || len(r.Secrets) > 16 {

@@ -119,8 +119,6 @@ extraContainers:
         value: /workspace/git-repo/.swarm/runtime-results
       - name: BUSTER_V2_KUBERNETES_CREDENTIALS
         value: /var/run/buster-worker/kubernetes
-      - name: BUSTER_FAMILYCLAW_BOOTSTRAP_ENABLED
-        value: "true"
       - name: BUSTER_ALLOWED_SOURCE_SECRETS
         value: kubeclaw-fixture-preflight,prism-test-provider,prism-test-runtime,prism-test-postgresql-auth,prism-test-ghcr
       - name: CONTAINER_BUILD_BUILDKIT_HOST
@@ -221,7 +219,6 @@ extraVolumes:
 busterNamespaceBroker:
   enabled: true
   controller:
-    familyclawBootstrapEnabled: true
     opsMcpAccess:
       enabled: true
       namespace: kubeclaw-ops

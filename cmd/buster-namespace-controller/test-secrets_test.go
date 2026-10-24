@@ -127,3 +127,12 @@ func TestFixtureSecretRejectsReservedKubernetesKeys(t *testing.T) {
 		})
 	}
 }
+
+func TestRemovedBootstrapFieldRejected(t *testing.T) {
+	for _, value := range []interface{}{nil, "", map[string]interface{}{"profile": "familyclaw.v1", "release": "familyclaw"}} {
+		c := testController(t)
+		if err := c.validateLeaseSpec(&lease{Spec: map[string]interface{}{"familyclawBootstrap": value}}); err == nil {
+			t.Fatal("removed bootstrap field accepted")
+		}
+	}
+}
