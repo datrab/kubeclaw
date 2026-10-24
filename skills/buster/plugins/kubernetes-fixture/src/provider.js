@@ -16,22 +16,12 @@ function object(value, label) {
   return value;
 }
 
-function bootstrapBinding(value, context, release) {
-  if (!context.fullStack || context.namespacePrefix !== 'test' || context.retentionSeconds > 3600
-    || context.secretReferences.length || value.testCredentials !== undefined
-    || value.serviceName !== release + '-core' || value.servicePort !== 8080) throw new Error('KUBERNETES_FIXTURE_BOOTSTRAP_BINDING_INVALID');
-}
-function bootstrapProfile(value, context) {
-  if (value.familyclawBootstrap === undefined) return undefined;
-  const raw = object(value.familyclawBootstrap, 'familyclawBootstrap');
-  if (Object.keys(raw).sort().join(',') !== 'profile,release' || raw.profile !== 'familyclaw.v1'
-    || typeof raw.release !== 'string' || !/^[a-z][a-z0-9-]{0,34}$/u.test(raw.release)) throw new Error('KUBERNETES_FIXTURE_BOOTSTRAP_INVALID');
-  bootstrapBinding(value, context, raw.release);
-  return { profile: 'familyclaw.v1', release: raw.release };
-}
-
 function configuration(invocation) {
   const value = object(invocation.configuration.values, 'root');
+  const allowed = new Set(['image', 'serviceName', 'servicePort', 'serviceTargetPort',
+    'namespacePrefix', 'retention', 'readinessTimeoutSeconds', 'secretReferences',
+    'testCredentials', 'fullStack', 'verifiedImages', 'podReplacementSelectors', 'testSecrets']);
+  if (Object.keys(value).some(key => !allowed.has(key))) throw new Error('KUBERNETES_FIXTURE_CONFIG_UNKNOWN');
   const imageInputs = invocation.inputs.filter((item) => item.name === 'image');
   if (invocation.inputs.some((item) => !['image', 'checked-manifest'].includes(item.name))) {
     throw new Error('KUBERNETES_FIXTURE_INPUT_UNKNOWN');
@@ -89,9 +79,8 @@ function configuration(invocation) {
     throw new Error('KUBERNETES_FIXTURE_TEST_CREDENTIALS_INVALID');
   }
   const testSecrets = testSecretContract(value.testSecrets);
-  validateTestSecretBindings(testSecrets, [], {fullStack,namespacePrefix,retentionSeconds,secretReferences,testCredentials,familyclawBootstrap:value.familyclawBootstrap});
-  const familyclawBootstrap = bootstrapProfile(value, { fullStack, namespacePrefix, retentionSeconds, secretReferences });
-  return { ...(testSecrets ? {testSecrets} : {}), ...(familyclawBootstrap ? { familyclawBootstrap } : {}), ...(fullStack ? { fullStack: true, verifiedImages: [...value.verifiedImages].sort(), podReplacementSelectors } : {}), immutableImage: image.reference, imageDigest: image.digest, serviceName: value.serviceName,
+  validateTestSecretBindings(testSecrets, [], {fullStack,namespacePrefix,retentionSeconds,secretReferences,testCredentials});
+  return { ...(testSecrets ? {testSecrets} : {}), ...(fullStack ? { fullStack: true, verifiedImages: [...value.verifiedImages].sort(), podReplacementSelectors } : {}), immutableImage: image.reference, imageDigest: image.digest, serviceName: value.serviceName,
     servicePort: value.servicePort, namespacePrefix, retentionMode, retentionSeconds,
     readinessTimeoutSeconds, secretReferences: [...new Set(secretReferences)],
     ...(serviceTargetPort === undefined ? {} : { serviceTargetPort }),
@@ -122,7 +111,7 @@ function capabilityRequest(invocation, config, manifest) {
   const names = identity(invocation, config.namespacePrefix);
   return {
     operation: 'prepare', resource: { type: 'kubernetes.fixture', canonicalId: `kubernetes-fixture:${invocation.attemptId}` },
-    payload: { ...names, ...(config.testSecrets ? {testSecrets:config.testSecrets} : {}), ...(config.familyclawBootstrap ? { familyclawBootstrap: config.familyclawBootstrap } : {}), namespacePrefix: config.namespacePrefix, project: invocation.moduleId ?? invocation.runId,
+    payload: { ...names, ...(config.testSecrets ? {testSecrets:config.testSecrets} : {}), namespacePrefix: config.namespacePrefix, project: invocation.moduleId ?? invocation.runId,
       ...(config.fullStack ? { fullStack: true, verifiedImages: config.verifiedImages, podReplacementSelectors: config.podReplacementSelectors } : {}),
       immutableImage: config.immutableImage, imageDigest: config.imageDigest, manifestPath: manifest.file,
       manifestDigest: manifest.artifact.contentDigest, serviceName: config.serviceName, servicePort: config.servicePort,
@@ -213,7 +202,7 @@ export function provider() {
       const names = identity(invocation, config.namespacePrefix);
       const released = await context.invoke('kubernetes.fixture', { operation: 'release',
         resource: { type: 'kubernetes.fixture', canonicalId: `kubernetes-fixture:${invocation.attemptId}` },
-        payload: { ...names, ...(config.testSecrets ? {testSecrets:config.testSecrets} : {}), ...(config.familyclawBootstrap ? { familyclawBootstrap: config.familyclawBootstrap } : {}), namespacePrefix: config.namespacePrefix } });
+        payload: { ...names, ...(config.testSecrets ? {testSecrets:config.testSecrets} : {}), namespacePrefix: config.namespacePrefix } });
       if (released?.ok !== true) throw new Error('KUBERNETES_FIXTURE_RELEASE_FAILED');
     },
   };

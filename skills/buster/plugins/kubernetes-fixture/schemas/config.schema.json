@@ -117,23 +117,6 @@
         }
       }
     },
-    "familyclawBootstrap": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "profile",
-        "release"
-      ],
-      "properties": {
-        "profile": {
-          "const": "familyclaw.v1"
-        },
-        "release": {
-          "type": "string",
-          "pattern": "^[a-z][a-z0-9-]{0,34}$"
-        }
-      }
-    },
     "testSecrets": {
       "type": "object",
       "additionalProperties": false,
@@ -231,51 +214,5 @@
     "podReplacementSelectors": [
       "fullStack"
     ]
-  },
-  "allOf": [
-    {
-      "if": {
-        "required": [
-          "familyclawBootstrap"
-        ],
-        "properties": {
-          "familyclawBootstrap": {}
-        }
-      },
-      "then": {
-        "required": [
-          "fullStack"
-        ],
-        "not": {
-          "required": [
-            "testCredentials"
-          ],
-          "properties": {
-            "testCredentials": {}
-          }
-        },
-        "properties": {
-          "fullStack": {
-            "const": true
-          },
-          "namespacePrefix": {
-            "const": "test"
-          },
-          "secretReferences": {
-            "maxItems": 0,
-            "type": "array"
-          },
-          "retention": {
-            "properties": {
-              "seconds": {
-                "maximum": 3600,
-                "type": "integer"
-              }
-            },
-            "type": "object"
-          }
-        }
-      }
-    }
-  ]
+  }
 }
