@@ -65766,7 +65766,7 @@
         "scripts/tests/docs-source-freshness.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "6cf106a9728131c00049efd7e28bf6eb5c3af85e76019955a3f8dba123362e33"
+      "sha256": "c551bd30e95ccce2e35b173369f2b05be9c95035983c3465abc4391483fb720f"
     },
     {
       "path": "docs/blueprint/documentation-parity-contract.md",
@@ -65916,7 +65916,7 @@
         "scripts/ap08-extension-inventory.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "822e863ff05624e6580076034167874c722f22ec6223965acaf80b092ac7c4d5"
+      "sha256": "e114f0df92f2e7c42c5811359d6380ce5fed5b803ff23ed80081a74715402633"
     },
     {
       "path": "docs/blueprint/generated/ap08-extension-inventory.md",
@@ -65952,7 +65952,7 @@
         "scripts/ap08-extension-inventory.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "3da046f483f4adf3a1b2a6cd8cf04a0c5cdd5c74b986042e4ccdd23d6ab83a91"
+      "sha256": "c3f314f5ba24cbfb9c60047135a835081490d908d63c7bc080011641417c92d3"
     },
     {
       "path": "docs/blueprint/generated/ap08-repeat-review-scope.json",
