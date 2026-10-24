@@ -1,0 +1,20 @@
+# Project profile v1 — inactive shape contract
+
+This schema is an admission foundation, NOT an execution capability or an
+authorization decision. No runtime/controller imports it yet. Existing fixed
+bootstrap branches are not migrated by adding this file.
+
+Only bounded random values and concatenation are specified here. Literals are
+inert data: never interpolate environment, templates or commands. TLS needs a
+separate closed primitive and namespace-bound SAN validation before use.
+
+Before activation, BOTH TypeScript and Go admission must enforce: byte-exact
+64KiB document digest and authenticated project/immutable revision policy binding;
+unique IDs, Secret names/keys/consumer identities; earlier-only references (no
+cycles); reserved private journal names; aggregate encoded output <=64KiB or lower
+policy ceiling; exact manifest Secret key/consumer matches; unexposed lease and
+TTL/resource ceilings. JSON schema alone cannot establish these properties.
+
+Required follow-up: shared semantic rejection vectors, controller parity,
+project-owned definition, private interpreter/journal CAS recovery, review and
+Buster-only delivery. Never enable a path based solely on schema validity.
