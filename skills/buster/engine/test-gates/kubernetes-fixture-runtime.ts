@@ -781,9 +781,11 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
       await this.#releaseAfterPrepareFailure(leaseName).catch(() => { cleanupError = true; });
       if (signal.aborted) throw error;
       const errorCode = error instanceof Error ? error.message.split(':', 1)[0] : 'KUBERNETES_FIXTURE_PREPARATION_FAILED';
-      // Only readiness errors become ordinary failed fixture results. Validation,
-      // credential and controller failures retain their existing error semantics.
-      if (!['KUBERNETES_FIXTURE_READINESS_TIMEOUT', 'KUBERNETES_FIXTURE_SERVICE_READINESS_TIMEOUT'].includes(errorCode!)) throw error;
+      // Readiness and post-admission replacement failures retain diagnostics.
+      // This does not relax lease validation or turn a failed replacement into success.
+      // Validation, credential and other controller failures still throw.
+      if (!['KUBERNETES_FIXTURE_READINESS_TIMEOUT', 'KUBERNETES_FIXTURE_SERVICE_READINESS_TIMEOUT',
+        'KUBERNETES_FIXTURE_REPLACEMENT_LEASE_CHANGED'].includes(errorCode!)) throw error;
       return Object.freeze({ ok: false, errorCode, namespace: namespaceName, leaseName,
         failureEvidence: { ...failureEvidence, cleanupError } });
     }

@@ -148,3 +148,21 @@ supported release workflow, followed by disposable HTTP failure-artifact and
 successful lifecycle canaries. The installed 9ec5f2c runtime still returned the
 old readiness-only timeout in the 2026-10-23 17:10 UTC diagnostic; the new fix was
 not deployed in that run. Historical and fresh Pod startup causes remain unknown.
+
+### Replacement diagnostic checkpoint — 2026-10-24
+
+Familyclaw signed run9356c295-1f0c-4ba9-9c3a-7e9d431ebbef exposed a diagnostic
+coverage gap: REPLACEMENT_LEASE_CHANGED was rethrown after pre-cleanup collection,
+so ordinary results lost the snapshot. Prepare now returns an explicit failed
+fixture result with bounded/redacted failureEvidence for this exact code, as for
+readiness timeouts. UID/expiry/phase checks and direct replace-pod rejection remain
+unchanged; no retry, success fallback or permissions expansion. Cancellation and
+other validation/controller errors retain throwing semantics.
+
+Regression injects UID change after replacement patch and verifies rejected
+replacement, retained previous-container exit0/logs, redaction and reads before
+lease release. Runtime13 tests, fixture implementation contract and engine noEmit
+typecheck passed. Autoreview clean supplied diff only (reviewer shell unavailable).
+This source patch is not installed/live-qualified and does not identify the actual
+lease predicate or resolve the prior PostgreSQL restart. Publish/install matching
+runtime via supported platform flow before rerunning the signed integration test.

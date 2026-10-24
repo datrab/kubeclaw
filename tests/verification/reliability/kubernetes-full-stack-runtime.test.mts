@@ -332,3 +332,39 @@ test('replacement retries only bounded explicit conflicts and revalidates owners
     } finally { fs.rmSync(root, { recursive: true, force: true }); }
   }
 });
+
+
+test('prepare preserves replacement lease-change diagnostics before release without bypassing rejection', async () => {
+  let patched = false, released = false, eventsRead = false;
+  const { invoker, root, payload } = setup(async (_: string, args: string[]) => {
+    if (args[0] === 'auth') return { stdout: 'yes' };
+    if (args[0] === 'apply') return { stdout: '{}' };
+    if (args[0] === 'patch') { patched = true; return { stdout: '{}' }; }
+    if (args[0] === 'delete') { assert.ok(eventsRead); released = true; return { stdout: '{}' }; }
+    assert.equal(released, false, 'Diagnostic reads must precede release');
+    if (args[1]?.startsWith('busternamespacelease')) return { stdout: JSON.stringify({
+      metadata: { uid: patched ? 'changed-lease' : 'lease', resourceVersion: '1' },
+      spec: { fullStack: true, purpose: 'gate', namespaceName: 'test-stack', namespacePrefix: 'test', serviceName: 'app', servicePort: 8080 },
+      status: { phase: 'Ready', namespaceName: 'test-stack', createdAt: new Date().toISOString(), expiresAt: new Date(Date.now()+60000).toISOString() },
+    }) };
+    if (args[1] === 'events') { eventsRead = true; return { stdout: JSON.stringify({ items: [{ reason: 'Unhealthy', message: 'connection refused token=private-canary' }] }) }; }
+    if (args[1] === 'namespace') return { stdout: JSON.stringify({ metadata: { uid: 'namespace-uid' } }) };
+    if (args[0] === 'logs') return { stdout: 'connection refused password=private-canary' };
+    if (args[1] === 'pods') return { stdout: JSON.stringify({ items: [{ metadata: { name: 'app-0', uid: 'pod', labels: { app: 'app' }, ownerReferences: [{ controller: true, kind: 'ReplicaSet', uid: 'owner' }] },
+      status: { phase: 'Running', conditions: [{ type: 'Ready', status: 'True' }], containerStatuses: [{ name: 'app', restartCount: 1, state: { running: {} }, lastState: { terminated: { exitCode: 0, reason: 'Completed' } } }] } }] }) };
+    if (args[1] === 'service') return { stdout: JSON.stringify({ spec: { ports: [{ port: 8080 }] } }) };
+    if (args[1] === 'endpoints') return { stdout: JSON.stringify({ subsets: [{ addresses: [{ ip: '10.0.0.2' }], ports: [{ port: 8080 }] }] }) };
+    throw new Error('Unexpected command '+args.join(' '));
+  });
+  try {
+    const result: any = await invoker.invoke('kubernetes.fixture', { operation: 'prepare', resource: requestResource,
+      payload: { ...payload, podReplacementSelectors: [{ app: 'app' }] } } as any, new AbortController().signal);
+    assert.equal(result.ok, false);
+    assert.equal(result.errorCode, 'KUBERNETES_FIXTURE_REPLACEMENT_LEASE_CHANGED');
+    assert.equal(result.failureEvidence.namespaceIdentity.uid, 'namespace-uid');
+    assert.equal(result.failureEvidence.pods[0].containerStatuses[0].lastState.terminated.exitCode, 0);
+    assert.equal(result.failureEvidence.logs.some((log: any) => log.previous), true);
+    assert.equal(released, true);
+    assert.doesNotMatch(JSON.stringify(result), /private-canary/);
+  } finally { fs.rmSync(root, { recursive: true, force: true }); }
+});
