@@ -128,7 +128,8 @@ func validateFixtureNetworkSpec(raw interface{}) error {
 	}
 	return nil
 }
-func validateFullStackNetwork(spec map[string]interface{}) error {
+func (c *controller) validateFullStackNetwork(item *lease) error {
+	spec := item.Spec
 	if spec["fullStack"] != true {
 		if _, ok := spec["networkPolicies"]; ok {
 			return errors.New("networkPolicies requires fullStack")
@@ -138,7 +139,13 @@ func validateFullStackNetwork(spec map[string]interface{}) error {
 		}
 		return nil
 	}
-	if spec["purpose"] != "gate" || stringValue(securityObject(spec["exposure"])["provider"]) != "off" {
+	// Only the enabled, fully validated fixed bootstrap profile may use pretest.
+	// This does not widen the generic full-stack or network-policy envelope.
+	release, err := c.familyclawBootstrapRequest(item)
+	if err != nil {
+		return err
+	}
+	if (spec["purpose"] != "gate" && release == "") || stringValue(securityObject(spec["exposure"])["provider"]) != "off" {
 		return errors.New("fullStack is restricted to unexposed gate leases")
 	}
 	port := intValue(spec["serviceTargetPort"], intValue(spec["servicePort"], 0))
@@ -170,7 +177,7 @@ func validateFullStackNetwork(spec map[string]interface{}) error {
 	return nil
 }
 func (c *controller) ensureFullStackPolicies(ctx context.Context, item *lease, namespace string) error {
-	if err := validateFullStackNetwork(item.Spec); err != nil {
+	if err := c.validateFullStackNetwork(item); err != nil {
 		return err
 	}
 	for _, raw := range interfaceSlice(item.Spec["networkPolicies"]) {

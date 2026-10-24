@@ -868,7 +868,7 @@ func (c *controller) ensureNamespaceNetworkPolicy(ctx context.Context, item *lea
 		},
 	}
 	if item.Spec["fullStack"] == true {
-		if err := validateFullStackNetwork(item.Spec); err != nil {
+		if err := c.validateFullStackNetwork(item); err != nil {
 			return err
 		}
 		spec := securityObject(manifest["spec"])
@@ -1652,7 +1652,7 @@ func (c *controller) validateLeaseSpec(item *lease) error {
 	if _, err := c.familyclawBootstrapRequest(item); err != nil {
 		return err
 	}
-	if err := validateFullStackNetwork(item.Spec); err != nil {
+	if err := c.validateFullStackNetwork(item); err != nil {
 		return err
 	}
 	if err := validateFullStackImages(item.Spec); err != nil {
