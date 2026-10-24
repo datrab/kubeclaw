@@ -183,3 +183,41 @@ test('component dependency declarations cover every explicit Docker COPY source'
     }
   }
 });
+
+
+test('same-code replay still checks image publication scope before receipt writes', () => fixture(({ root, write, initial, images, code }) => {
+  const next = structuredClone(images);
+  next.images['prism-agent'] = image('prism-agent', 'b');
+  const assets = Object.entries(code.bundles).map(([role, bundle], index) => ({
+    id: index + 10, name: `${role}-${initial}.tgz`, browser_download_url: bundle.url,
+    digest: `sha256:${bundle.sha256}`,
+  }));
+  const routes = {
+    'actions/runs/1/attempts/1': { conclusion: 'success', path: '.github/workflows/build-images.yaml',
+      head_branch: 'main', event: 'push', head_repository: { full_name: 'datrab/kubeclaw' }, head_sha: initial },
+    'releases/tags/code-bundles-1-1': { target_commitish: initial, assets: [
+      ...assets, { id: 1, name: 'runtime-code.json', size: 1000 }] },
+    'releases/assets/1': code,
+    'releases/tags/runtime-images-1-1': { target_commitish: initial, assets: [
+      { id: 2, name: 'runtime-images.json', size: 1000 }] },
+    'releases/assets/2': next,
+  };
+  write('mock-fetch.mjs', `const routes = ${JSON.stringify(routes)};
+    globalThis.fetch = async url => {
+      const route = String(url).split('/repos/datrab/kubeclaw/')[1];
+      if (!(route in routes)) throw new Error('Unexpected API route: ' + route);
+      return new Response(JSON.stringify(routes[route]), { status: 200 });
+    };`);
+  const beforeCode = fs.readFileSync(path.join(root, 'releases/runtime-code.json'), 'utf8');
+  const beforeImages = fs.readFileSync(path.join(root, 'releases/runtime-images.json'), 'utf8');
+  assert.throws(() => execFileSync(process.execPath, ['--import', path.join(root, 'mock-fetch.mjs'),
+    path.join(sourceRoot, 'scripts/updates/select-runtime-deployment.mjs')], {
+    cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'],
+    env: { ...process.env, GITHUB_REPOSITORY: 'datrab/kubeclaw', GITHUB_TOKEN: 'fixture-only',
+      SOURCE_RUN_ID: '1', SOURCE_RUN_ATTEMPT: '1', RUNTIME_PUBLICATION_SCOPE: 'buster',
+      GITHUB_OUTPUT: path.join(root, 'selection-output') },
+  }), error => /RUNTIME_PUBLICATION_SCOPE_EXCEEDED:buster/u.test(error.stderr));
+  assert.equal(fs.readFileSync(path.join(root, 'releases/runtime-code.json'), 'utf8'), beforeCode);
+  assert.equal(fs.readFileSync(path.join(root, 'releases/runtime-images.json'), 'utf8'), beforeImages);
+  assert.equal(fs.existsSync(path.join(root, 'selection-output')), false);
+}));

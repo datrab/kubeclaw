@@ -1,6 +1,5 @@
 import fs from 'node:fs';
 import { execFileSync } from 'node:child_process';
-import { isDeepStrictEqual } from 'node:util';
 import { validateCodeReceipt, selectedCode } from './code-release.mjs';
 import { inputDigest, isDeploymentInput } from './runtime-inputs.mjs';
 import { validateReleaseReceipt } from './deployment-release.mjs';
@@ -54,7 +53,8 @@ if (inputDigest(root, head, isDeploymentInput) !== inputDigest(root, run.head_sh
 const priorFile = 'releases/runtime-code.json';
 if (fs.existsSync(priorFile)) {
   const prior = validateCodeReceipt(JSON.parse(fs.readFileSync(priorFile, 'utf8')));
-  if (isDeepStrictEqual(prior, code)) { console.log('Already selected.'); process.exit(0); }
+  // Identical code does not imply identical images or reconciled GitOps state.
+  // Replays must still authenticate image evidence and enforce publication scope.
   git(['merge-base', '--is-ancestor', prior.commit, code.commit]);
   if (prior.commit === code.commit && (prior.sourceRunId > code.sourceRunId
     || (prior.sourceRunId === code.sourceRunId && prior.sourceRunAttempt > code.sourceRunAttempt))) throw new Error('OLDER_SOURCE_ATTEMPT');
