@@ -3058,7 +3058,7 @@
     },
     {
       "id": "AP09-reader-operators-20261020",
-      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+      "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [
@@ -3197,6 +3197,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Six actual separate unchanged original processes against committed7af456b1: Reader build and artifact/search/Source-link/source-preview/diagram checks passed.17focused and18custody dependency controls and original tree/schema checks passed. Seven changed operator rows and complete2106physical scoped rows across17original contracts independently reviewed; unchanged scoped bytes reused. No fresh human, participant, screenreader, runtime, live-host, release or global API acceptance."
         }
       ],
       "review": {
@@ -3319,6 +3324,15 @@
           "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
           "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
           "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
+        },
+        {
+          "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
+          "previousReviewedRevision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 complete17-scope preservation reviewer",
+          "result": "PASS — original bounded scope preserved, not recounted",
+          "scope": "Full original scope contracts, summaries, limits, checks and2106physical scoped rows from actual original Git revisions supplied losslessly, along with all seven complete changed operator rows, unchanged guide instructions, exact source/schema/tree changes and qualified Source consequence reviews. Only original revision binding and append-only actual check/impact metadata updated; no changed historical assertions, verdict, summary, limits, practical observations or accepted counts.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip and human/live constraints remain unresolved. Dirty-source Reader failure retained and repaired only by committing actual Source; no Source check weakened. Coordinator artifact checks do not substitute for independent practical or human exercises.",
+          "reviewDisposition": "Full17-scope independent Source/Reader facets passed. Two operation-closeout guard findings were fixed and checked with2positive/13negative controls. The follow-up finding about a renamed snapshot target was rejected after exact executed-target/review-bundle and control byte comparisons; corrected-guard scope preservation explicitly passed. Native coordinator checks are not reviewer-executed or human/practical observations."
         }
       ],
       "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902",
@@ -4664,7 +4678,7 @@
     },
     {
       "id": "AP09-reviewed-reference-20261020",
-      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+      "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [],
@@ -4772,6 +4786,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Six actual separate unchanged original processes against committed7af456b1: Reader build and artifact/search/Source-link/source-preview/diagram checks passed.17focused and18custody dependency controls and original tree/schema checks passed. Seven changed operator rows and complete2106physical scoped rows across17original contracts independently reviewed; unchanged scoped bytes reused. No fresh human, participant, screenreader, runtime, live-host, release or global API acceptance."
         }
       ],
       "review": {
@@ -5056,6 +5075,15 @@
           "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
           "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
           "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
+        },
+        {
+          "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
+          "previousReviewedRevision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 complete17-scope preservation reviewer",
+          "result": "PASS — original bounded scope preserved, not recounted",
+          "scope": "Full original scope contracts, summaries, limits, checks and2106physical scoped rows from actual original Git revisions supplied losslessly, along with all seven complete changed operator rows, unchanged guide instructions, exact source/schema/tree changes and qualified Source consequence reviews. Only original revision binding and append-only actual check/impact metadata updated; no changed historical assertions, verdict, summary, limits, practical observations or accepted counts.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip and human/live constraints remain unresolved. Dirty-source Reader failure retained and repaired only by committing actual Source; no Source check weakened. Coordinator artifact checks do not substitute for independent practical or human exercises.",
+          "reviewDisposition": "Full17-scope independent Source/Reader facets passed. Two operation-closeout guard findings were fixed and checked with2positive/13negative controls. The follow-up finding about a renamed snapshot target was rejected after exact executed-target/review-bundle and control byte comparisons; corrected-guard scope preservation explicitly passed. Native coordinator checks are not reviewer-executed or human/practical observations."
         }
       ],
       "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
@@ -6989,7 +7017,7 @@
     },
     {
       "id": "AP09-closeout-developer-maintenance-20261020",
-      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+      "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_developer_maintenance",
       "gateIds": [],
@@ -7109,6 +7137,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Six actual separate unchanged original processes against committed7af456b1: Reader build and artifact/search/Source-link/source-preview/diagram checks passed.17focused and18custody dependency controls and original tree/schema checks passed. Seven changed operator rows and complete2106physical scoped rows across17original contracts independently reviewed; unchanged scoped bytes reused. No fresh human, participant, screenreader, runtime, live-host, release or global API acceptance."
         }
       ],
       "review": {
@@ -7475,6 +7508,15 @@
           "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
           "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
           "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
+        },
+        {
+          "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
+          "previousReviewedRevision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 complete17-scope preservation reviewer",
+          "result": "PASS — original bounded scope preserved, not recounted",
+          "scope": "Full original scope contracts, summaries, limits, checks and2106physical scoped rows from actual original Git revisions supplied losslessly, along with all seven complete changed operator rows, unchanged guide instructions, exact source/schema/tree changes and qualified Source consequence reviews. Only original revision binding and append-only actual check/impact metadata updated; no changed historical assertions, verdict, summary, limits, practical observations or accepted counts.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip and human/live constraints remain unresolved. Dirty-source Reader failure retained and repaired only by committing actual Source; no Source check weakened. Coordinator artifact checks do not substitute for independent practical or human exercises.",
+          "reviewDisposition": "Full17-scope independent Source/Reader facets passed. Two operation-closeout guard findings were fixed and checked with2positive/13negative controls. The follow-up finding about a renamed snapshot target was rejected after exact executed-target/review-bundle and control byte comparisons; corrected-guard scope preservation explicitly passed. Native coordinator checks are not reviewer-executed or human/practical observations."
         }
       ],
       "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
@@ -8452,7 +8494,7 @@
     },
     {
       "id": "AP09-confidential-adapter-lifecycle-20261021",
-      "revision": "7fc7e022761d825dbf99d2625d913aa2a9067c8c",
+      "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
       "author": "Documentation authors and /root correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
       "gateIds": [],
@@ -8487,6 +8529,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Six actual separate original processes against reviewed committed Source:177-page Reader build plus artifact/search/Source-link/source-preview/fresh-diagram checks pass. Original scoped tasks and all reader pages except one exactly reviewed native Prism matrix row unchanged; exact missing inline host/Prism configuration schema projection, finite module-input custody consequences and native single Prism operator-row repair reviewed independently. Native host/Prism schema and runtime-meaning controls, focused custody/module guards and seven existing guide checks pass. No new human, participant, screenreader, runtime or global API acceptance."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Six actual separate unchanged original processes against committed7af456b1: Reader build and artifact/search/Source-link/source-preview/diagram checks passed.17focused and18custody dependency controls and original tree/schema checks passed. Seven changed operator rows and complete2106physical scoped rows across17original contracts independently reviewed; unchanged scoped bytes reused. No fresh human, participant, screenreader, runtime, live-host, release or global API acceptance."
         }
       ],
       "review": {
@@ -8591,6 +8638,15 @@
           "scope": "All complete scoped file memberships compared with actual original reviewed Git revisions, complete vectors and original contracts/baseline failures supplied. Complete inline host and Prism schema projection, finite module-input/scalar/native qualification consequences and exact native generated single Prism operator-row correction; no new role/caller/receiver grant. Exact original meanings, summaries, limits, checks and histories retained.",
           "limits": "Current actual committed Reader artifact controls are not fresh practical observations or runtime/API/live/release/human approval. Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, current-root publication SourceURL pins and host compatibility/operator boundaries remain separately unresolved. No new gate or requirement accepted.",
           "evidence": "handoffs/pr13-finish-20261023/host-schema.md"
+        },
+        {
+          "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
+          "previousReviewedRevision": "7fc7e022761d825dbf99d2625d913aa2a9067c8c",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 complete17-scope preservation reviewer",
+          "result": "PASS — original bounded scope preserved, not recounted",
+          "scope": "Full original scope contracts, summaries, limits, checks and2106physical scoped rows from actual original Git revisions supplied losslessly, along with all seven complete changed operator rows, unchanged guide instructions, exact source/schema/tree changes and qualified Source consequence reviews. Only original revision binding and append-only actual check/impact metadata updated; no changed historical assertions, verdict, summary, limits, practical observations or accepted counts.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip and human/live constraints remain unresolved. Dirty-source Reader failure retained and repaired only by committing actual Source; no Source check weakened. Coordinator artifact checks do not substitute for independent practical or human exercises.",
+          "reviewDisposition": "Full17-scope independent Source/Reader facets passed. Two operation-closeout guard findings were fixed and checked with2positive/13negative controls. The follow-up finding about a renamed snapshot target was rejected after exact executed-target/review-bundle and control byte comparisons; corrected-guard scope preservation explicitly passed. Native coordinator checks are not reviewer-executed or human/practical observations."
         }
       ],
       "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902"
@@ -10233,7 +10289,7 @@
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
-      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+      "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 maintenance-ready-review",
       "gateIds": [],
@@ -10532,6 +10588,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Six actual separate unchanged original processes against committed7af456b1: Reader build and artifact/search/Source-link/source-preview/diagram checks passed.17focused and18custody dependency controls and original tree/schema checks passed. Seven changed operator rows and complete2106physical scoped rows across17original contracts independently reviewed; unchanged scoped bytes reused. No fresh human, participant, screenreader, runtime, live-host, release or global API acceptance."
         }
       ],
       "review": {
@@ -11003,6 +11064,15 @@
           "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
           "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
           "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
+        },
+        {
+          "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
+          "previousReviewedRevision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 complete17-scope preservation reviewer",
+          "result": "PASS — original bounded scope preserved, not recounted",
+          "scope": "Full original scope contracts, summaries, limits, checks and2106physical scoped rows from actual original Git revisions supplied losslessly, along with all seven complete changed operator rows, unchanged guide instructions, exact source/schema/tree changes and qualified Source consequence reviews. Only original revision binding and append-only actual check/impact metadata updated; no changed historical assertions, verdict, summary, limits, practical observations or accepted counts.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip and human/live constraints remain unresolved. Dirty-source Reader failure retained and repaired only by committing actual Source; no Source check weakened. Coordinator artifact checks do not substitute for independent practical or human exercises.",
+          "reviewDisposition": "Full17-scope independent Source/Reader facets passed. Two operation-closeout guard findings were fixed and checked with2positive/13negative controls. The follow-up finding about a renamed snapshot target was rejected after exact executed-target/review-bundle and control byte comparisons; corrected-guard scope preservation explicitly passed. Native coordinator checks are not reviewer-executed or human/practical observations."
         }
       ],
       "previousReviewedRevision": "088afcb27fa52f1ccdc46f0098b2fac9e3c9254a",
@@ -12409,7 +12479,7 @@
     },
     {
       "id": "AP09-complete-plugin-maintenance-mechanisms-20261021",
-      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+      "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
       "author": "Nova /root documentation coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 plugin-mechanisms whole original MNT obligations",
       "gateIds": [],
@@ -12996,6 +13066,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Six actual separate unchanged original processes against committed7af456b1: Reader build and artifact/search/Source-link/source-preview/diagram checks passed.17focused and18custody dependency controls and original tree/schema checks passed. Seven changed operator rows and complete2106physical scoped rows across17original contracts independently reviewed; unchanged scoped bytes reused. No fresh human, participant, screenreader, runtime, live-host, release or global API acceptance."
         }
       ],
       "review": {
@@ -13130,6 +13205,15 @@
           "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
           "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
           "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
+        },
+        {
+          "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
+          "previousReviewedRevision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 complete17-scope preservation reviewer",
+          "result": "PASS — original bounded scope preserved, not recounted",
+          "scope": "Full original scope contracts, summaries, limits, checks and2106physical scoped rows from actual original Git revisions supplied losslessly, along with all seven complete changed operator rows, unchanged guide instructions, exact source/schema/tree changes and qualified Source consequence reviews. Only original revision binding and append-only actual check/impact metadata updated; no changed historical assertions, verdict, summary, limits, practical observations or accepted counts.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip and human/live constraints remain unresolved. Dirty-source Reader failure retained and repaired only by committing actual Source; no Source check weakened. Coordinator artifact checks do not substitute for independent practical or human exercises.",
+          "reviewDisposition": "Full17-scope independent Source/Reader facets passed. Two operation-closeout guard findings were fixed and checked with2positive/13negative controls. The follow-up finding about a renamed snapshot target was rejected after exact executed-target/review-bundle and control byte comparisons; corrected-guard scope preservation explicitly passed. Native coordinator checks are not reviewer-executed or human/practical observations."
         }
       ],
       "previousReviewedRevision": "5276ecde0b50f86936e58c5de2de233e5a061e1e",
@@ -14637,7 +14721,7 @@
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+      "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -15053,6 +15137,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Six actual separate unchanged original processes against committed7af456b1: Reader build and artifact/search/Source-link/source-preview/diagram checks passed.17focused and18custody dependency controls and original tree/schema checks passed. Seven changed operator rows and complete2106physical scoped rows across17original contracts independently reviewed; unchanged scoped bytes reused. No fresh human, participant, screenreader, runtime, live-host, release or global API acceptance."
         }
       ],
       "limits": [
@@ -15959,6 +16048,15 @@
           "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
           "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
           "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
+        },
+        {
+          "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
+          "previousReviewedRevision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 complete17-scope preservation reviewer",
+          "result": "PASS — original bounded scope preserved, not recounted",
+          "scope": "Full original scope contracts, summaries, limits, checks and2106physical scoped rows from actual original Git revisions supplied losslessly, along with all seven complete changed operator rows, unchanged guide instructions, exact source/schema/tree changes and qualified Source consequence reviews. Only original revision binding and append-only actual check/impact metadata updated; no changed historical assertions, verdict, summary, limits, practical observations or accepted counts.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip and human/live constraints remain unresolved. Dirty-source Reader failure retained and repaired only by committing actual Source; no Source check weakened. Coordinator artifact checks do not substitute for independent practical or human exercises.",
+          "reviewDisposition": "Full17-scope independent Source/Reader facets passed. Two operation-closeout guard findings were fixed and checked with2positive/13negative controls. The follow-up finding about a renamed snapshot target was rejected after exact executed-target/review-bundle and control byte comparisons; corrected-guard scope preservation explicitly passed. Native coordinator checks are not reviewer-executed or human/practical observations."
         }
       ],
       "scopePreservation3408": {
@@ -16006,7 +16104,7 @@
     },
     {
       "id": "AP09-search-reader-gate-20261021",
-      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+      "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-04 code/evidence review plus narrow Source/Reader/Quality native-impact follow-up",
       "verdict": "PASS",
@@ -16209,6 +16307,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Six actual separate unchanged original processes against committed7af456b1: Reader build and artifact/search/Source-link/source-preview/diagram checks passed.17focused and18custody dependency controls and original tree/schema checks passed. Seven changed operator rows and complete2106physical scoped rows across17original contracts independently reviewed; unchanged scoped bytes reused. No fresh human, participant, screenreader, runtime, live-host, release or global API acceptance."
         }
       ],
       "limits": [
@@ -16718,6 +16821,15 @@
           "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
           "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
           "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
+        },
+        {
+          "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
+          "previousReviewedRevision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 complete17-scope preservation reviewer",
+          "result": "PASS — original bounded scope preserved, not recounted",
+          "scope": "Full original scope contracts, summaries, limits, checks and2106physical scoped rows from actual original Git revisions supplied losslessly, along with all seven complete changed operator rows, unchanged guide instructions, exact source/schema/tree changes and qualified Source consequence reviews. Only original revision binding and append-only actual check/impact metadata updated; no changed historical assertions, verdict, summary, limits, practical observations or accepted counts.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip and human/live constraints remain unresolved. Dirty-source Reader failure retained and repaired only by committing actual Source; no Source check weakened. Coordinator artifact checks do not substitute for independent practical or human exercises.",
+          "reviewDisposition": "Full17-scope independent Source/Reader facets passed. Two operation-closeout guard findings were fixed and checked with2positive/13negative controls. The follow-up finding about a renamed snapshot target was rejected after exact executed-target/review-bundle and control byte comparisons; corrected-guard scope preservation explicitly passed. Native coordinator checks are not reviewer-executed or human/practical observations."
         }
       ],
       "scopePreservation3408": {
@@ -16764,7 +16876,7 @@
     },
     {
       "id": "AP09-rendered-source-bounds-gate-20261021",
-      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+      "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-09 Source/Reader/Quality review and narrow changed-boundary impact review for 21 prior PASS records",
       "verdict": "PASS",
@@ -16976,6 +17088,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Six actual separate unchanged original processes against committed7af456b1: Reader build and artifact/search/Source-link/source-preview/diagram checks passed.17focused and18custody dependency controls and original tree/schema checks passed. Seven changed operator rows and complete2106physical scoped rows across17original contracts independently reviewed; unchanged scoped bytes reused. No fresh human, participant, screenreader, runtime, live-host, release or global API acceptance."
         }
       ],
       "limits": [
@@ -17470,6 +17587,15 @@
           "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
           "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
           "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
+        },
+        {
+          "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
+          "previousReviewedRevision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 complete17-scope preservation reviewer",
+          "result": "PASS — original bounded scope preserved, not recounted",
+          "scope": "Full original scope contracts, summaries, limits, checks and2106physical scoped rows from actual original Git revisions supplied losslessly, along with all seven complete changed operator rows, unchanged guide instructions, exact source/schema/tree changes and qualified Source consequence reviews. Only original revision binding and append-only actual check/impact metadata updated; no changed historical assertions, verdict, summary, limits, practical observations or accepted counts.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip and human/live constraints remain unresolved. Dirty-source Reader failure retained and repaired only by committing actual Source; no Source check weakened. Coordinator artifact checks do not substitute for independent practical or human exercises.",
+          "reviewDisposition": "Full17-scope independent Source/Reader facets passed. Two operation-closeout guard findings were fixed and checked with2positive/13negative controls. The follow-up finding about a renamed snapshot target was rejected after exact executed-target/review-bundle and control byte comparisons; corrected-guard scope preservation explicitly passed. Native coordinator checks are not reviewer-executed or human/practical observations."
         }
       ],
       "scopePreservation3408": {
@@ -17849,7 +17975,7 @@
     },
     {
       "id": "AP09-complete-same-source-code-preview-20261021",
-      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+      "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole PUB004 Source/Reader/Quality closeout plus narrow changed-boundary preservation for21priorPASSrecords",
       "verdict": "PASS",
@@ -18049,6 +18175,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Six actual separate unchanged original processes against committed7af456b1: Reader build and artifact/search/Source-link/source-preview/diagram checks passed.17focused and18custody dependency controls and original tree/schema checks passed. Seven changed operator rows and complete2106physical scoped rows across17original contracts independently reviewed; unchanged scoped bytes reused. No fresh human, participant, screenreader, runtime, live-host, release or global API acceptance."
         }
       ],
       "limits": [
@@ -18516,6 +18647,15 @@
           "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
           "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
           "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
+        },
+        {
+          "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
+          "previousReviewedRevision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 complete17-scope preservation reviewer",
+          "result": "PASS — original bounded scope preserved, not recounted",
+          "scope": "Full original scope contracts, summaries, limits, checks and2106physical scoped rows from actual original Git revisions supplied losslessly, along with all seven complete changed operator rows, unchanged guide instructions, exact source/schema/tree changes and qualified Source consequence reviews. Only original revision binding and append-only actual check/impact metadata updated; no changed historical assertions, verdict, summary, limits, practical observations or accepted counts.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip and human/live constraints remain unresolved. Dirty-source Reader failure retained and repaired only by committing actual Source; no Source check weakened. Coordinator artifact checks do not substitute for independent practical or human exercises.",
+          "reviewDisposition": "Full17-scope independent Source/Reader facets passed. Two operation-closeout guard findings were fixed and checked with2positive/13negative controls. The follow-up finding about a renamed snapshot target was rejected after exact executed-target/review-bundle and control byte comparisons; corrected-guard scope preservation explicitly passed. Native coordinator checks are not reviewer-executed or human/practical observations."
         }
       ],
       "scopePreservation3408": {
@@ -18562,7 +18702,7 @@
     },
     {
       "id": "AP09-complete-responsive-reader-layout-20261021",
-      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+      "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A91207 responsive-layout closeout and narrow24-record prior-boundary preservation",
       "verdict": "PASS",
@@ -18822,6 +18962,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Six actual separate unchanged original processes against committed7af456b1: Reader build and artifact/search/Source-link/source-preview/diagram checks passed.17focused and18custody dependency controls and original tree/schema checks passed. Seven changed operator rows and complete2106physical scoped rows across17original contracts independently reviewed; unchanged scoped bytes reused. No fresh human, participant, screenreader, runtime, live-host, release or global API acceptance."
         }
       ],
       "limits": [
@@ -19312,6 +19457,15 @@
           "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
           "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
           "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
+        },
+        {
+          "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
+          "previousReviewedRevision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 complete17-scope preservation reviewer",
+          "result": "PASS — original bounded scope preserved, not recounted",
+          "scope": "Full original scope contracts, summaries, limits, checks and2106physical scoped rows from actual original Git revisions supplied losslessly, along with all seven complete changed operator rows, unchanged guide instructions, exact source/schema/tree changes and qualified Source consequence reviews. Only original revision binding and append-only actual check/impact metadata updated; no changed historical assertions, verdict, summary, limits, practical observations or accepted counts.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip and human/live constraints remain unresolved. Dirty-source Reader failure retained and repaired only by committing actual Source; no Source check weakened. Coordinator artifact checks do not substitute for independent practical or human exercises.",
+          "reviewDisposition": "Full17-scope independent Source/Reader facets passed. Two operation-closeout guard findings were fixed and checked with2positive/13negative controls. The follow-up finding about a renamed snapshot target was rejected after exact executed-target/review-bundle and control byte comparisons; corrected-guard scope preservation explicitly passed. Native coordinator checks are not reviewer-executed or human/practical observations."
         }
       ],
       "scopePreservation3408": {
@@ -23728,7 +23882,7 @@
       }
     },
     {
-      "revision": "7fc7e022761d825dbf99d2625d913aa2a9067c8c",
+      "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
       "author": "existing documentation authors",
       "reviewer": "/root/workflow_acceptance supporting procedures and root integration/correction; /root independent authored row Source/Reader/quality",
       "review": {
@@ -23787,6 +23941,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Six actual separate original processes against reviewed committed Source:177-page Reader build plus artifact/search/Source-link/source-preview/fresh-diagram checks pass. Original scoped tasks and all reader pages except one exactly reviewed native Prism matrix row unchanged; exact missing inline host/Prism configuration schema projection, finite module-input custody consequences and native single Prism operator-row repair reviewed independently. Native host/Prism schema and runtime-meaning controls, focused custody/module guards and seven existing guide checks pass. No new human, participant, screenreader, runtime or global API acceptance."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Six actual separate unchanged original processes against committed7af456b1: Reader build and artifact/search/Source-link/source-preview/diagram checks passed.17focused and18custody dependency controls and original tree/schema checks passed. Seven changed operator rows and complete2106physical scoped rows across17original contracts independently reviewed; unchanged scoped bytes reused. No fresh human, participant, screenreader, runtime, live-host, release or global API acceptance."
         }
       ],
       "summary": "Whole supported operator plugin task now follows exact roots/trust/package identities,provider/grant/config selection,compile admission versus readiness and actual result,stopped-writer preservation before audit,drain,exclusive same-ID replacement roots,old pinned bytes/state and surface-specific removal limits. Reuses independently accepted OPL002/003/004;fresh existing maintained activation/removal path supports concrete local behavior without claiming general install/remove CLI.",
@@ -23831,6 +23990,15 @@
           "scope": "All complete scoped file memberships compared with actual original reviewed Git revisions, complete vectors and original contracts/baseline failures supplied. Complete inline host and Prism schema projection, finite module-input/scalar/native qualification consequences and exact native generated single Prism operator-row correction; no new role/caller/receiver grant. Exact original meanings, summaries, limits, checks and histories retained.",
           "limits": "Current actual committed Reader artifact controls are not fresh practical observations or runtime/API/live/release/human approval. Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, current-root publication SourceURL pins and host compatibility/operator boundaries remain separately unresolved. No new gate or requirement accepted.",
           "evidence": "handoffs/pr13-finish-20261023/host-schema.md"
+        },
+        {
+          "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
+          "previousReviewedRevision": "7fc7e022761d825dbf99d2625d913aa2a9067c8c",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 complete17-scope preservation reviewer",
+          "result": "PASS — original bounded scope preserved, not recounted",
+          "scope": "Full original scope contracts, summaries, limits, checks and2106physical scoped rows from actual original Git revisions supplied losslessly, along with all seven complete changed operator rows, unchanged guide instructions, exact source/schema/tree changes and qualified Source consequence reviews. Only original revision binding and append-only actual check/impact metadata updated; no changed historical assertions, verdict, summary, limits, practical observations or accepted counts.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip and human/live constraints remain unresolved. Dirty-source Reader failure retained and repaired only by committing actual Source; no Source check weakened. Coordinator artifact checks do not substitute for independent practical or human exercises.",
+          "reviewDisposition": "Full17-scope independent Source/Reader facets passed. Two operation-closeout guard findings were fixed and checked with2positive/13negative controls. The follow-up finding about a renamed snapshot target was rejected after exact executed-target/review-bundle and control byte comparisons; corrected-guard scope preservation explicitly passed. Native coordinator checks are not reviewer-executed or human/practical observations."
         }
       ]
     },
@@ -26017,7 +26185,7 @@
     },
     {
       "id": "AP09-publication-positive-scope-7ef16585",
-      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+      "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
       "author": "existing publication/content maintainers; final authored Sourcefield additions separately reviewed by workflow_acceptance",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -26282,6 +26450,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Six actual separate unchanged original processes against committed7af456b1: Reader build and artifact/search/Source-link/source-preview/diagram checks passed.17focused and18custody dependency controls and original tree/schema checks passed. Seven changed operator rows and complete2106physical scoped rows across17original contracts independently reviewed; unchanged scoped bytes reused. No fresh human, participant, screenreader, runtime, live-host, release or global API acceptance."
         }
       ],
       "review": {
@@ -26750,6 +26923,15 @@
           "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
           "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
           "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
+        },
+        {
+          "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
+          "previousReviewedRevision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 complete17-scope preservation reviewer",
+          "result": "PASS — original bounded scope preserved, not recounted",
+          "scope": "Full original scope contracts, summaries, limits, checks and2106physical scoped rows from actual original Git revisions supplied losslessly, along with all seven complete changed operator rows, unchanged guide instructions, exact source/schema/tree changes and qualified Source consequence reviews. Only original revision binding and append-only actual check/impact metadata updated; no changed historical assertions, verdict, summary, limits, practical observations or accepted counts.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip and human/live constraints remain unresolved. Dirty-source Reader failure retained and repaired only by committing actual Source; no Source check weakened. Coordinator artifact checks do not substitute for independent practical or human exercises.",
+          "reviewDisposition": "Full17-scope independent Source/Reader facets passed. Two operation-closeout guard findings were fixed and checked with2positive/13negative controls. The follow-up finding about a renamed snapshot target was rejected after exact executed-target/review-bundle and control byte comparisons; corrected-guard scope preservation explicitly passed. Native coordinator checks are not reviewer-executed or human/practical observations."
         }
       ],
       "scopePreservation3408": {
@@ -27228,7 +27410,7 @@
     },
     {
       "id": "A98-02-13-whole-operator-procedure-contract-20261022",
-      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+      "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
       "author": "Original canonical topic maintainers plus separately reviewed bounded corrections",
       "reviewer": "/root/operator_acceptance; own quickstart delta independently reviewed by /root",
       "gateIds": [
@@ -27557,6 +27739,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Six actual separate unchanged original processes against committed7af456b1: Reader build and artifact/search/Source-link/source-preview/diagram checks passed.17focused and18custody dependency controls and original tree/schema checks passed. Seven changed operator rows and complete2106physical scoped rows across17original contracts independently reviewed; unchanged scoped bytes reused. No fresh human, participant, screenreader, runtime, live-host, release or global API acceptance."
         }
       ],
       "review": {
@@ -27841,6 +28028,15 @@
           "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
           "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
           "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
+        },
+        {
+          "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
+          "previousReviewedRevision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 complete17-scope preservation reviewer",
+          "result": "PASS — original bounded scope preserved, not recounted",
+          "scope": "Full original scope contracts, summaries, limits, checks and2106physical scoped rows from actual original Git revisions supplied losslessly, along with all seven complete changed operator rows, unchanged guide instructions, exact source/schema/tree changes and qualified Source consequence reviews. Only original revision binding and append-only actual check/impact metadata updated; no changed historical assertions, verdict, summary, limits, practical observations or accepted counts.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip and human/live constraints remain unresolved. Dirty-source Reader failure retained and repaired only by committing actual Source; no Source check weakened. Coordinator artifact checks do not substitute for independent practical or human exercises.",
+          "reviewDisposition": "Full17-scope independent Source/Reader facets passed. Two operation-closeout guard findings were fixed and checked with2positive/13negative controls. The follow-up finding about a renamed snapshot target was rejected after exact executed-target/review-bundle and control byte comparisons; corrected-guard scope preservation explicitly passed. Native coordinator checks are not reviewer-executed or human/practical observations."
         }
       ],
       "scopePreservation3408": {
@@ -27872,7 +28068,7 @@
     },
     {
       "id": "A910-03-whole-command-prerequisite-contract-20261022",
-      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+      "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
       "author": "Original canonical topic maintainers plus separately reviewed bounded corrections",
       "reviewer": "/root/operator_acceptance; own quickstart delta independently reviewed by /root",
       "gateIds": [
@@ -28152,6 +28348,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Six actual separate unchanged original processes against committed7af456b1: Reader build and artifact/search/Source-link/source-preview/diagram checks passed.17focused and18custody dependency controls and original tree/schema checks passed. Seven changed operator rows and complete2106physical scoped rows across17original contracts independently reviewed; unchanged scoped bytes reused. No fresh human, participant, screenreader, runtime, live-host, release or global API acceptance."
         }
       ],
       "review": {
@@ -28401,6 +28602,15 @@
           "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
           "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
           "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
+        },
+        {
+          "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
+          "previousReviewedRevision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 complete17-scope preservation reviewer",
+          "result": "PASS — original bounded scope preserved, not recounted",
+          "scope": "Full original scope contracts, summaries, limits, checks and2106physical scoped rows from actual original Git revisions supplied losslessly, along with all seven complete changed operator rows, unchanged guide instructions, exact source/schema/tree changes and qualified Source consequence reviews. Only original revision binding and append-only actual check/impact metadata updated; no changed historical assertions, verdict, summary, limits, practical observations or accepted counts.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip and human/live constraints remain unresolved. Dirty-source Reader failure retained and repaired only by committing actual Source; no Source check weakened. Coordinator artifact checks do not substitute for independent practical or human exercises.",
+          "reviewDisposition": "Full17-scope independent Source/Reader facets passed. Two operation-closeout guard findings were fixed and checked with2positive/13negative controls. The follow-up finding about a renamed snapshot target was rejected after exact executed-target/review-bundle and control byte comparisons; corrected-guard scope preservation explicitly passed. Native coordinator checks are not reviewer-executed or human/practical observations."
         }
       ],
       "scopePreservation3408": {
@@ -29686,7 +29896,7 @@
     },
     {
       "id": "A910-07-08-09-12-OPL001-whole-487f4e00-20261022",
-      "revision": "7fc7e022761d825dbf99d2625d913aa2a9067c8c",
+      "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
       "author": "Original canonical-guide authors and named eleven-guide correction authors; exact provenance in frozen proof union",
       "reviewer": "/root/source_closeout (Source); /root/reader_closeout (Reader); /root/quality_closeout (Quality); /root combines independent decisions",
       "gateIds": [
@@ -29937,6 +30147,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Six actual separate original processes against reviewed committed Source:177-page Reader build plus artifact/search/Source-link/source-preview/fresh-diagram checks pass. Original scoped tasks and all reader pages except one exactly reviewed native Prism matrix row unchanged; exact missing inline host/Prism configuration schema projection, finite module-input custody consequences and native single Prism operator-row repair reviewed independently. Native host/Prism schema and runtime-meaning controls, focused custody/module guards and seven existing guide checks pass. No new human, participant, screenreader, runtime or global API acceptance."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Six actual separate unchanged original processes against committed7af456b1: Reader build and artifact/search/Source-link/source-preview/diagram checks passed.17focused and18custody dependency controls and original tree/schema checks passed. Seven changed operator rows and complete2106physical scoped rows across17original contracts independently reviewed; unchanged scoped bytes reused. No fresh human, participant, screenreader, runtime, live-host, release or global API acceptance."
         }
       ],
       "review": {
@@ -30120,6 +30335,15 @@
           "scope": "All complete scoped file memberships compared with actual original reviewed Git revisions, complete vectors and original contracts/baseline failures supplied. Complete inline host and Prism schema projection, finite module-input/scalar/native qualification consequences and exact native generated single Prism operator-row correction; no new role/caller/receiver grant. Exact original meanings, summaries, limits, checks and histories retained.",
           "limits": "Current actual committed Reader artifact controls are not fresh practical observations or runtime/API/live/release/human approval. Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, current-root publication SourceURL pins and host compatibility/operator boundaries remain separately unresolved. No new gate or requirement accepted.",
           "evidence": "handoffs/pr13-finish-20261023/host-schema.md"
+        },
+        {
+          "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
+          "previousReviewedRevision": "7fc7e022761d825dbf99d2625d913aa2a9067c8c",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 complete17-scope preservation reviewer",
+          "result": "PASS — original bounded scope preserved, not recounted",
+          "scope": "Full original scope contracts, summaries, limits, checks and2106physical scoped rows from actual original Git revisions supplied losslessly, along with all seven complete changed operator rows, unchanged guide instructions, exact source/schema/tree changes and qualified Source consequence reviews. Only original revision binding and append-only actual check/impact metadata updated; no changed historical assertions, verdict, summary, limits, practical observations or accepted counts.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip and human/live constraints remain unresolved. Dirty-source Reader failure retained and repaired only by committing actual Source; no Source check weakened. Coordinator artifact checks do not substitute for independent practical or human exercises.",
+          "reviewDisposition": "Full17-scope independent Source/Reader facets passed. Two operation-closeout guard findings were fixed and checked with2positive/13negative controls. The follow-up finding about a renamed snapshot target was rejected after exact executed-target/review-bundle and control byte comparisons; corrected-guard scope preservation explicitly passed. Native coordinator checks are not reviewer-executed or human/practical observations."
         }
       ]
     },
@@ -30212,7 +30436,7 @@
     },
     {
       "id": "AP09-whole-extension-drift-A91014-20261023",
-      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+      "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
       "author": "Nova documentation continuation coordinator",
       "reviewer": "Independent pinned fe588b1a autoreview Codex gpt-5.6-terra high P2 whole-A91014 topic reviewer",
       "gateIds": [
@@ -30349,6 +30573,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Six actual separate unchanged original processes against committed7af456b1: Reader build and artifact/search/Source-link/source-preview/diagram checks passed.17focused and18custody dependency controls and original tree/schema checks passed. Seven changed operator rows and complete2106physical scoped rows across17original contracts independently reviewed; unchanged scoped bytes reused. No fresh human, participant, screenreader, runtime, live-host, release or global API acceptance."
         }
       ],
       "review": {
@@ -30401,6 +30630,15 @@
           "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
           "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
           "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
+        },
+        {
+          "revision": "7af456b12c2a86369d9bcd57d24c8a0a64c9377a",
+          "previousReviewedRevision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 complete17-scope preservation reviewer",
+          "result": "PASS — original bounded scope preserved, not recounted",
+          "scope": "Full original scope contracts, summaries, limits, checks and2106physical scoped rows from actual original Git revisions supplied losslessly, along with all seven complete changed operator rows, unchanged guide instructions, exact source/schema/tree changes and qualified Source consequence reviews. Only original revision binding and append-only actual check/impact metadata updated; no changed historical assertions, verdict, summary, limits, practical observations or accepted counts.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip and human/live constraints remain unresolved. Dirty-source Reader failure retained and repaired only by committing actual Source; no Source check weakened. Coordinator artifact checks do not substitute for independent practical or human exercises.",
+          "reviewDisposition": "Full17-scope independent Source/Reader facets passed. Two operation-closeout guard findings were fixed and checked with2positive/13negative controls. The follow-up finding about a renamed snapshot target was rejected after exact executed-target/review-bundle and control byte comparisons; corrected-guard scope preservation explicitly passed. Native coordinator checks are not reviewer-executed or human/practical observations."
         }
       ]
     },
