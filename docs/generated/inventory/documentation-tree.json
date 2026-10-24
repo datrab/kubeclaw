@@ -17,7 +17,7 @@
   "missingBaselineFiles": [],
   "counts": {
     "canonical-reader-documentation": 196,
-    "internal-documentation-input": 1690,
+    "internal-documentation-input": 1709,
     "legacy-extraction-source": 249,
     "deletable-remainder": 2335
   },
@@ -25537,6 +25537,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-final-checks.json",
+          "token": "docs/blueprint/AP08-catalogue-guidance.json",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/initial-owner-delta.json",
           "token": "docs/blueprint/AP08-catalogue-guidance.json",
           "inputUse": false
@@ -25576,7 +25581,7 @@
         "handoffs/pr13-finish-20261021/prior57-review.json"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "ade0f81c0fdd239e3bfc4b99ed3c988600bcae1c591362f27c0219da316562c6"
+      "sha256": "3f0d27e65bf145ee13772169e7aaf1bd88d5e4aaf54d9b3b0cb714522afa82d9"
     },
     {
       "path": "docs/blueprint/AP08-local-verification.json",
@@ -54763,6 +54768,377 @@
       "sha256": "e8e42255b515201fe5cd8d16e58ba64d14a2756589bed8f1234da0d0ee72efec"
     },
     {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/candidate-status.md",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/candidate-status.md",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/candidate-status.md",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/candidate-status.md",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "1c41f8482840cba35001ee373a118d12d72f4155a930e9e385bbc2f77caac6b1"
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/delivery-reader-final-review.json",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/delivery-reader-final-review.json",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/delivery-reader-final-review.json",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/delivery-reader-final-review.json",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "b21d787572d367f75705aef5d24681593443cd2d67a04cebe02ec5bfd1bc4ebf"
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/host-git-reader-final-review.json",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/host-git-reader-final-review.json",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/host-git-reader-final-review.json",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/host-git-reader-final-review.json",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "d2244306cdea7d2591a95bc1f93f8edbe9f12f092deee05a725b9a8762284f73"
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0841-reader-corrections.md",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0841-reader-corrections.md",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0841-reader-corrections.md",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0841-reader-corrections.md",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "e99486b9e5dc9df753147b4c46b3d0740cde65e546fa1eb1d1c9fbbdb94ea38f"
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0841-ten-reader-rows-candidate.json",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0841-ten-reader-rows-candidate.json",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0841-ten-reader-rows-candidate.json",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0841-ten-reader-rows-candidate.json",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "53576d47169da253d0da7ae6d9e8367f95bdddee301ebdb65b77d0b71dd54ee9"
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-approval-network-review.json",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-approval-network-review.json",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-approval-network-review.json",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-approval-network-review.json",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "05a141e54958b5153eaeb3c9386fff7b2cdbcacbeb42d4be56513fbc95f7d661"
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-candidate-progress.json",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-candidate-progress.json",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-candidate-progress.json",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-candidate-progress.json",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "defb0ac266ea60d05f7b99c5a3057eb5294ebc9bf825c534d480bddbe20d8c09"
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-evidence-preflight-redis-review.json",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-evidence-preflight-redis-review.json",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-evidence-preflight-redis-review.json",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-evidence-preflight-redis-review.json",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "15292ed02b686a32aaaa0a31670f546e075d6f19640b6f8eb986ffb624a3fb43"
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-final-checks.json",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-final-checks.json",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-final-checks.json",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-final-checks.json",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "d39205c9f74176ba73283d18339fa31efff8376677626cc606120f11bdfe079c"
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-observer-policy-preview-review.json",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-observer-policy-preview-review.json",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-observer-policy-preview-review.json",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-observer-policy-preview-review.json",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "c798b22f05a0660e379cecad5cd79eed8068dad1d6d6b14cac123ab004cdc97b"
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-open-pipeline-findings.json",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-open-pipeline-findings.json",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-open-pipeline-findings.json",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-open-pipeline-findings.json",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "749236443fb312404a5171e05cadcdcb747d78a902805062fd90bf22a22b8f07"
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-source-reader-corrections.md",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-source-reader-corrections.md",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-source-reader-corrections.md",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run0921-source-reader-corrections.md",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "3c6ef97243b0bb6d338f287e23b6748021e54a5eb816504f3a15398b05e36b91"
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1021-source-reader-corrections.md",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1021-source-reader-corrections.md",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1021-source-reader-corrections.md",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1021-source-reader-corrections.md",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "7a03bb3cd8776b44d69a4fe2472eb9865901d53a46ee1a75d4ae6eb4344e65ef"
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1131-canonical-and-store-followup.md",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1131-canonical-and-store-followup.md",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1131-canonical-and-store-followup.md",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1131-canonical-and-store-followup.md",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "c08fbbdf4065aa7b9f01a7fd4d4781e98399eed8f970a3ba70904f412b4fb643"
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1131-final-source-topic-progress.md",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1131-final-source-topic-progress.md",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1131-final-source-topic-progress.md",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1131-final-source-topic-progress.md",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "09d5463eee8abe04cea38071d3d85e417034011862b496af8cba21bd46d0e002"
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-publication-original-scope-preservation-review.json",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-publication-original-scope-preservation-review.json",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-publication-original-scope-preservation-review.json",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-verified-checkpoint-scope-preservation.json",
+          "token": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-publication-original-scope-preservation-review.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-publication-original-scope-preservation-review.json",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "6d32fde62397924d20aa64d8e4d5f21b93f77a6f98a13e3e4fa1a16004f47398"
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-semantic-original-scope-preservation-review.json",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-semantic-original-scope-preservation-review.json",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-semantic-original-scope-preservation-review.json",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-verified-checkpoint-scope-preservation.json",
+          "token": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-semantic-original-scope-preservation-review.json",
+          "inputUse": false
+        },
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-semantic-original-scope-preservation-review.json",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "d3d69f0cc88af5c1e04708e7b57db854487f7d687964bdedae067396e59755e2"
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-verified-checkpoint-scope-preservation.json",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-verified-checkpoint-scope-preservation.json",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-verified-checkpoint-scope-preservation.json",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-verified-checkpoint-scope-preservation.json",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "177750b6fbdb5c07452c8ce56f31ae6d7adb81dd8efc496b92510cde4e2e66b5"
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/source-review.json",
+      "class": "internal-documentation-input",
+      "purpose": "Internal OPL-005 documentation candidate/review evidence; retained scoped diagnostics and preservation provenance, not a reader page, runtime input or new acceptance.",
+      "originalPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/source-review.json",
+      "expectedPath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/source-review.json",
+      "introducedAfterBaseline": true,
+      "locationValid": true,
+      "consumers": [
+        {
+          "sourcePath": "docs/config/documentation-tree-classification.json",
+          "token": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/source-review.json",
+          "inputUse": false
+        }
+      ],
+      "executableConsumers": [],
+      "indirectExecutableConsumers": [],
+      "sha256": "34f91cf1e73e64f13caec713d383bf2b325017db37d46311a326dae768b81d78"
+    },
+    {
       "path": "docs/blueprint/acceptance-evidence/ops-mcp-complete-20261021.json",
       "class": "internal-documentation-input",
       "purpose": "Internal bounded Source/Reader/Quality acceptance evidence for ops-mcp-complete-20261021.json; retained for its specific review/provenance/negative controls, not publication or runtime permission.",
@@ -65766,7 +66142,7 @@
         "scripts/tests/docs-source-freshness.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "844a10371d370fb318228af0c97e3557e8aa3f467e6b66189b6699865eb3dca9"
+      "sha256": "e4d70574aa76040d69fc88ce1ead9f5a20d437454e4162650835414cbd5b0c77"
     },
     {
       "path": "docs/blueprint/documentation-parity-contract.md",
@@ -67974,7 +68350,7 @@
         "scripts/tests/docs-tree-boundary.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "89ecd53ed6d911db4c7bec38cb94266a8bd33b955240197dddb6af974a7cae6f"
+      "sha256": "e0bc70ed11160c026db2888f686bdbd55cae13877b155a1ce266f5d707c96e87"
     },
     {
       "path": "docs/config/platform-surface-map.json",
@@ -68982,7 +69358,7 @@
         "scripts/tests/docs-source-freshness.test.mjs"
       ],
       "indirectExecutableConsumers": [],
-      "sha256": "b7dbdd950372eb0d643d0ee2fb58afd97544bdd3bc17702cc131cb0addbaa677"
+      "sha256": "4593201cebc3393400d13777d36de450fb6d59b6d7fe5e0fd02ce582e4bf0c73"
     },
     {
       "path": "docs/generated/inventory/configuration-values.json",
@@ -173105,7 +173481,7 @@
           ]
         }
       ],
-      "sha256": "a8727c33bb81242fb446e89a66101b9f5182f2c5a54ae26ff3cfc7499a120b14"
+      "sha256": "900890bd6a59568cba8f30def84bb4e931de414edecb95f4b3f16762c5d93469"
     },
     {
       "path": "docs/site/extend/effectful-plugin.md",
@@ -177534,7 +177910,7 @@
           ]
         }
       ],
-      "sha256": "bca132fe71c90aed5a1408147c309f13cf9e97f4fb1cb0cc731b5e46001db972"
+      "sha256": "cb2bb52d44c7ea4f20b597eebb068506b37e2e253e4a417c024a4ff3588e2210"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md",
@@ -178729,7 +179105,7 @@
           ]
         }
       ],
-      "sha256": "849dc5c1a2a7b83796658955047332ca8518e1e09acc098e0acda5c2eb7104cf"
+      "sha256": "6502abba1492ba00ac104988fe452545f4e20d6344eef2e80c5b3dbe3970737d"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.command-runner.md",
@@ -179685,7 +180061,7 @@
           ]
         }
       ],
-      "sha256": "87e64d60677c698883acfb59c24bd022d4ca8ac8606d74523b821a57b8f59d1f"
+      "sha256": "ce56b3c62177b453a7f7a16d992e94a91ff21e0898691e96fbb619cff32af0cf"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.demo-auth-smoke.md",
@@ -180159,7 +180535,7 @@
           ]
         }
       ],
-      "sha256": "a43d70877d7be09ef14c56d99147e7783b075aa56d0c0fbfa13c36f02d396edc"
+      "sha256": "2c901d8a16c37c3ee2d4cee3747af160dd9a3278e2bd54f2bcd8382b3b48dd22"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.direct-command.md",
@@ -180637,7 +181013,7 @@
           ]
         }
       ],
-      "sha256": "9191e427f08322ff45678bc534718e00a7bcfc5c2eec1b7af5f48981b7be5382"
+      "sha256": "776a807b11b64a2385969434e0763470efcca80c562cad07d3a290e97ea4e10c"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.http.md",
@@ -181125,7 +181501,7 @@
           ]
         }
       ],
-      "sha256": "05b6fb83b6b85be00c1858bd659ec644fe1c5f35295420c97a204f0563554e43"
+      "sha256": "6f49ab0c25ed6d499b4932df2a22e972abb3c4c8e7ee010a1ccf27a48d139c88"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md",
@@ -181364,7 +181740,7 @@
           ]
         }
       ],
-      "sha256": "303db839d362db64bcd8c63d382588c91e4148df17255c3adfb2979d04d4a910"
+      "sha256": "dc5ba8175b2c8d1247de6822ca92fd1b700b6ecc595079554f2b5254adac1f5e"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.junit-report.md",
@@ -181842,7 +182218,7 @@
           ]
         }
       ],
-      "sha256": "bfe95b7a9a05ee29d5a7b20d0b8007b11da1deaeaec3640991f74c2e9b82a937"
+      "sha256": "23fb8dc6dbec54f1778d35782cddbf6385e07b8b5920a629d885d8f31e22e620"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.lighthouse.md",
@@ -182081,7 +182457,7 @@
           ]
         }
       ],
-      "sha256": "cea097d9d2c3a8d9ef9eae0d44daabf6c991dc30b03aba391d1ca8da5e772297"
+      "sha256": "b615ae28ffa63a6188e2e5a256d6d58d86a92ac1731c5f608c4993f745de26c2"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
@@ -182377,7 +182753,7 @@
           ]
         }
       ],
-      "sha256": "2c272da771caba13381229eff7820f779da5a58c76b2dfe947a3249258d65183"
+      "sha256": "8f27d03a052bce073924532fd93f2ad42e0611434cca9aeeb3dc49eafc294fe9"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.network-http.md",
@@ -182855,7 +183231,7 @@
           ]
         }
       ],
-      "sha256": "5189bfd2c865326fb643168af82be9e2fd4117ffc19a940588079664ddeba036"
+      "sha256": "b8a880e055abf37b324e62bc03f636c26cf27869dcd725d438236ad3b11af6ec"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.openapi.md",
@@ -183094,7 +183470,7 @@
           ]
         }
       ],
-      "sha256": "266928a2e106d30c4a8a3225a805680636ba84a8945e8c731f9bdcd78590428f"
+      "sha256": "505ba07771db41646ac9f5867edfe40788e5958004095b5cfc04d849aeca817c"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md",
@@ -183811,7 +184187,7 @@
           ]
         }
       ],
-      "sha256": "ed40947ee2ee86488f397d30c32176df58a92447c560a099302bc84d4380bf4b"
+      "sha256": "ec19bf0be37c310f03d2f3b9c8e7747ba313e7842c1073d4eef6f1cfe5e0cda3"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.playwright.md",
@@ -184050,7 +184426,7 @@
           ]
         }
       ],
-      "sha256": "354c6e1bcfe33f0e4e55d5b65c49f35e593737bde6461d1ef9be01dd8f2d533e"
+      "sha256": "a5e2628a6c12461c704484719b4ba424472d4e4e81d340e112075565d6f9753d"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md",
@@ -184289,7 +184665,7 @@
           ]
         }
       ],
-      "sha256": "e13400a4e96c37600866c420d4d9d62c8d83e7906043a600ca373c6868f46326"
+      "sha256": "27cb71d9550326ad0106db1bd3704d12332749cadddb3e10609d062305fcd555"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.prism-design.md",
@@ -184533,7 +184909,7 @@
           ]
         }
       ],
-      "sha256": "f9d1cfff1d28843f44eba3ba9bd6f620e91b1c6fdff0b86d0b6c6f08f45cada0"
+      "sha256": "065d79c3560ea376f69134bc757317c1b431ef1eeef2ee70045dfda39ed9077b"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md",
@@ -185255,7 +185631,7 @@
           ]
         }
       ],
-      "sha256": "e200919172f9802da4f4f949b73c07bdfcbe3ab4d401b606232366a2ef0dd3db"
+      "sha256": "3d26dbf8c2ea297ecff58102fb5d0c8808333eaad2040c75558dae22ab773521"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.repository-adapter.md",
@@ -185733,7 +186109,7 @@
           ]
         }
       ],
-      "sha256": "384dfd3d84b11cb652c4b24fe1f3d698ee55622a3f53a70ceb13f0874636061c"
+      "sha256": "2fe58d3275bbb0af9c82e3e16ffe038643d769146330c3db86fb91deca1779f7"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.runtime-dispatch.md",
@@ -185972,7 +186348,7 @@
           ]
         }
       ],
-      "sha256": "02e7eb73348ed98d37afe4cbac8ad2ccdda55f9268842b4673b3ecac98ebbd1b"
+      "sha256": "72940aaa609382cd8cc4c1a9f46b0797bc177aa0925a040a2d3cf543f1b26dd3"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md",
@@ -186450,7 +186826,7 @@
           ]
         }
       ],
-      "sha256": "4fc22da329404f73789faaf06aa94f292dc30f35dd34768d7e93154ad94ac4ef"
+      "sha256": "59545c68ef39c6c1ef1b8e7eaff9516fe4ce44dfa81a4f5feb93e10d633f1e68"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.size-budget.md",
@@ -187167,7 +187543,7 @@
           ]
         }
       ],
-      "sha256": "81124fb48a019d32b37e7ac3aefdefc81faf354828f5ba885299f6bfd02b9b6b"
+      "sha256": "95379b1fc1b245ea8d247151f1f25b0a2ec9ab026f8c2fc7c048e353b8c7289c"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-observer.md",
@@ -187406,7 +187782,7 @@
           ]
         }
       ],
-      "sha256": "d0433b7d865aa81b521a7311e265b0397115bb2ef542382b50bcb81a297f4346"
+      "sha256": "a72487191d05641a59723d6d6e7b1f9c16641592f84ee2bae70b5b6067fbc2e6"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md",
@@ -187884,7 +188260,7 @@
           ]
         }
       ],
-      "sha256": "fcb9b300820c4907ec7673a9c1519e6f1e13c2226ff5042a6929463adeb0d15a"
+      "sha256": "4bc24bee4c4e1b6a0ca369eeb7254f0c77695186e65ab2333bc05a7c10e6133b"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.visual.md",
@@ -188123,7 +188499,7 @@
           ]
         }
       ],
-      "sha256": "1ac892cd84b5df3e824260477d27eaa6b81dd4fd4636626e3620ad6acf8be65a"
+      "sha256": "3dd288da85068ba4316744af6b7d0712ba651836e8f19f1ad6438d948f08b511"
     },
     {
       "path": "docs/site/extend/plugin-catalogue/kubeclaw.wait-store.md",
@@ -203526,7 +203902,7 @@
           ]
         }
       ],
-      "sha256": "1a7d3a2656949622afc87cd50c3a3fd96b42d26e82bf034b31d63e631138f4e8"
+      "sha256": "f68828040be1648ef225d04adbd5b4b6cc505712c702d77065a38ea9ee6e081e"
     },
     {
       "path": "docs/site/reference/project-pipeline-publication.md",
@@ -221293,6 +221669,11 @@
           "inputUse": false
         },
         {
+          "sourcePath": "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1131-canonical-and-store-followup.md",
+          "token": "docs/site/use/plugins.md",
+          "inputUse": false
+        },
+        {
           "sourcePath": "docs/blueprint/acceptance-evidence/reader-487f4e00-closeout-20261022/quality-resume-final-20261022/compile-startup-finding-disposition.json",
           "token": "docs/site/use/plugins.md",
           "inputUse": false
@@ -221542,7 +221923,7 @@
           ]
         }
       ],
-      "sha256": "f8b0b70da9c6670e8351da4e8a595e7230759496be5343e016046b1cd4c6e9d3"
+      "sha256": "f89b58eb364dcf305cb9bf3fbfdbf6e7f7eb1c8b1ce3fe6b1294535996429b04"
     },
     {
       "path": "docs/site/use/prism-studio.md",
