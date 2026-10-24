@@ -4,7 +4,7 @@
   "completionRecords": [
     {
       "id": "A911-03-REF-007-20261020",
-      "revision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
       "author": "PR13 automation capability author",
       "reviewer": "/root/review_a91103",
       "gateIds": [
@@ -84,6 +84,11 @@
           "command": "Actual original node scripts/docs-publication.mjs build and four native docs-reader checks: artifact, search, source-links, source-previews (Reader34087521)",
           "exitCode": 0,
           "observation": "Capability vocabulary/non-translation and denial decisions survive. Codex direct-token/shared-Pod and current Nova authority units are explicitly superseded by the reviewed central MCP/gateway-versus-worker model; no live-policy proof transfers. Current build177pages,241outputdigests,40885localtargets; search177pages/12questions;435Sourceboxes/2000exactexcerpts. All authored pages/shared renderer outputs unchanged6250→3408; exact2scripts-tree pageRecordbindings checked. Refs/governance6250 and bounded prior browser observations reused, not relabelled fresh. Prior summary/limits/checks remain historical where superseded; no wider original-scope promotion."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
         }
       ],
       "review": {
@@ -181,6 +186,15 @@
           "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
           "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
           "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
+        },
+        {
+          "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "previousReviewedRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 bounded original-scope Source/Reader/quality review",
+          "result": "PASS — original bounded scope preserved, not recounted; independent Source-only noP0-P2 review in two complete original-contract groups,3chunks each, .87/.87. Original review aspects and practical observations retain their original scope; no fresh independent Reader exercise claimed.",
+          "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
+          "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
         }
       ],
       "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
@@ -240,7 +254,7 @@
     },
     {
       "id": "AP09.1-ready-topics-20261020",
-      "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_ready_foundations (01a157c4-a915-7bd0-9f54-0de78011b9b7)",
       "gateIds": [],
@@ -373,6 +387,11 @@
           "command": "Independent finite source-map delta review plus original current publication build and five native artifact checks",
           "exitCode": 0,
           "observation": "Exact16-record source/reader-contract preservation, including two independently reviewed historical deltas. Current c4ebd7e4:177canonical187HTML241output hashes;12search;14947source links/4061objects;435previewboxes/2000excerpts/1070objects;28freshdiagramhashes. Details current-native-results.json; no new accepted ID or global generator/runtime claim."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
         }
       ],
       "review": {
@@ -642,6 +661,15 @@
           "historicalOtherChangesNotNewlyApproved": [],
           "nativeResults": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-native-results.json",
           "independentReview": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/independent-delta-review.json"
+        },
+        {
+          "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "previousReviewedRevision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 bounded original-scope Source/Reader/quality review",
+          "result": "PASS — original bounded scope preserved, not recounted; independent Source-only noP0-P2 review in two complete original-contract groups,3chunks each, .87/.87. Original review aspects and practical observations retain their original scope; no fresh independent Reader exercise claimed.",
+          "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
+          "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
         }
       ],
       "revisionHistory": [
@@ -3030,7 +3058,7 @@
     },
     {
       "id": "AP09-reader-operators-20261020",
-      "revision": "7fc7e022761d825dbf99d2625d913aa2a9067c8c",
+      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [
@@ -3164,6 +3192,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Six actual separate original processes against reviewed committed Source:177-page Reader build plus artifact/search/Source-link/source-preview/fresh-diagram checks pass. Original scoped tasks and all reader pages except one exactly reviewed native Prism matrix row unchanged; exact missing inline host/Prism configuration schema projection, finite module-input custody consequences and native single Prism operator-row repair reviewed independently. Native host/Prism schema and runtime-meaning controls, focused custody/module guards and seven existing guide checks pass. No new human, participant, screenreader, runtime or global API acceptance."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
         }
       ],
       "review": {
@@ -3277,6 +3310,15 @@
           "scope": "All complete scoped file memberships compared with actual original reviewed Git revisions, complete vectors and original contracts/baseline failures supplied. Complete inline host and Prism schema projection, finite module-input/scalar/native qualification consequences and exact native generated single Prism operator-row correction; no new role/caller/receiver grant. Exact original meanings, summaries, limits, checks and histories retained.",
           "limits": "Current actual committed Reader artifact controls are not fresh practical observations or runtime/API/live/release/human approval. Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, current-root publication SourceURL pins and host compatibility/operator boundaries remain separately unresolved. No new gate or requirement accepted.",
           "evidence": "handoffs/pr13-finish-20261023/host-schema.md"
+        },
+        {
+          "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "previousReviewedRevision": "7fc7e022761d825dbf99d2625d913aa2a9067c8c",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 bounded original-scope Source/Reader/quality review",
+          "result": "PASS — original bounded scope preserved, not recounted; independent Source-only noP0-P2 review in two complete original-contract groups,3chunks each, .87/.87. Original review aspects and practical observations retain their original scope; no fresh independent Reader exercise claimed.",
+          "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
+          "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
         }
       ],
       "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902",
@@ -3620,7 +3662,7 @@
     },
     {
       "id": "AP09-reader-developers-20261020",
-      "revision": "5d3f3c8f72f31abe79d6e51e1d25f26a04f97195",
+      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [
@@ -3818,6 +3860,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Six actual separate unchanged original processes against reviewed committed Source:177-page Reader build and artifact/search/Source-link/source-preview/diagram checks passed after existing shared browser environment restoration; first genuine missing-libglib attempt retained. Exact native registration declarations projection, complete1005caller1248selected105recipe/scoped-native custody consequences independently reviewed;36focused custody and seven original guide checkers pass. No fresh participant, human, screenreader, runtime, live-host or global API acceptance."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
         }
       ],
       "review": {
@@ -4195,6 +4242,15 @@
           "scope": "Full original scoped physical vectors acquired at each actual reviewed Git revision; original contracts, summaries, limits, checks and baseline terminal failures supplied losslessly. Four native provider declaration fields, absent-vs-empty preservation, finite scalar/two-AP08-contract/five-recipe consequences only; no role, caller membership or receiver grant. Historical assertions and all prior practical observations retain original meaning and scope.",
           "limits": "Six coordinator artifact checks are not new human/practical-reader or runtime/host/release evidence. Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip and unrelated current-root SourceURL pins remain separately unresolved. No new gate or requirement accepted.",
           "evidence": "handoffs/pr13-finish-20261023/registration-data.md"
+        },
+        {
+          "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "previousReviewedRevision": "5d3f3c8f72f31abe79d6e51e1d25f26a04f97195",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 bounded original-scope Source/Reader/quality review",
+          "result": "PASS — original bounded scope preserved, not recounted; independent Source-only noP0-P2 review in two complete original-contract groups,3chunks each, .87/.87. Original review aspects and practical observations retain their original scope; no fresh independent Reader exercise claimed.",
+          "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
+          "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
         }
       ],
       "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
@@ -4258,7 +4314,7 @@
     },
     {
       "id": "AP09-reviewed-configuration-20261020",
-      "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -4339,6 +4395,11 @@
           "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
           "exitCode": 0,
           "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
         }
       ],
       "review": {
@@ -4554,6 +4615,15 @@
           "reportAvailability": "Later evidence adoption, not a Source file at reviewed487; not added to record.sources.",
           "limit": "Original named scope/limits preserved only; no new gate/requirement counts, consumer/graph/role/native/product/runtime/deployment/release approval. Knip/parser/output weaknesses and unexecuted product paths remain visible.",
           "wholeRenderedOutputChangedCanonicalPages": []
+        },
+        {
+          "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "previousReviewedRevision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 bounded original-scope Source/Reader/quality review",
+          "result": "PASS — original bounded scope preserved, not recounted; independent Source-only noP0-P2 review in two complete original-contract groups,3chunks each, .87/.87. Original review aspects and practical observations retain their original scope; no fresh independent Reader exercise claimed.",
+          "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
+          "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
         }
       ],
       "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
@@ -4594,7 +4664,7 @@
     },
     {
       "id": "AP09-reviewed-reference-20261020",
-      "revision": "7fc7e022761d825dbf99d2625d913aa2a9067c8c",
+      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [],
@@ -4697,6 +4767,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Six actual separate original processes against reviewed committed Source:177-page Reader build plus artifact/search/Source-link/source-preview/fresh-diagram checks pass. Original scoped tasks and all reader pages except one exactly reviewed native Prism matrix row unchanged; exact missing inline host/Prism configuration schema projection, finite module-input custody consequences and native single Prism operator-row repair reviewed independently. Native host/Prism schema and runtime-meaning controls, focused custody/module guards and seven existing guide checks pass. No new human, participant, screenreader, runtime or global API acceptance."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
         }
       ],
       "review": {
@@ -4972,6 +5047,15 @@
           "scope": "All complete scoped file memberships compared with actual original reviewed Git revisions, complete vectors and original contracts/baseline failures supplied. Complete inline host and Prism schema projection, finite module-input/scalar/native qualification consequences and exact native generated single Prism operator-row correction; no new role/caller/receiver grant. Exact original meanings, summaries, limits, checks and histories retained.",
           "limits": "Current actual committed Reader artifact controls are not fresh practical observations or runtime/API/live/release/human approval. Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, current-root publication SourceURL pins and host compatibility/operator boundaries remain separately unresolved. No new gate or requirement accepted.",
           "evidence": "handoffs/pr13-finish-20261023/host-schema.md"
+        },
+        {
+          "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "previousReviewedRevision": "7fc7e022761d825dbf99d2625d913aa2a9067c8c",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 bounded original-scope Source/Reader/quality review",
+          "result": "PASS — original bounded scope preserved, not recounted; independent Source-only noP0-P2 review in two complete original-contract groups,3chunks each, .87/.87. Original review aspects and practical observations retain their original scope; no fresh independent Reader exercise claimed.",
+          "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
+          "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
         }
       ],
       "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
@@ -5012,7 +5096,7 @@
     },
     {
       "id": "AP09-reviewed-maintenance-20261020",
-      "revision": "5d3f3c8f72f31abe79d6e51e1d25f26a04f97195",
+      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -5116,6 +5200,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Six actual separate unchanged original processes against reviewed committed Source:177-page Reader build and artifact/search/Source-link/source-preview/diagram checks passed after existing shared browser environment restoration; first genuine missing-libglib attempt retained. Exact native registration declarations projection, complete1005caller1248selected105recipe/scoped-native custody consequences independently reviewed;36focused custody and seven original guide checkers pass. No fresh participant, human, screenreader, runtime, live-host or global API acceptance."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
         }
       ],
       "review": {
@@ -5484,6 +5573,15 @@
           "scope": "Full original scoped physical vectors acquired at each actual reviewed Git revision; original contracts, summaries, limits, checks and baseline terminal failures supplied losslessly. Four native provider declaration fields, absent-vs-empty preservation, finite scalar/two-AP08-contract/five-recipe consequences only; no role, caller membership or receiver grant. Historical assertions and all prior practical observations retain original meaning and scope.",
           "limits": "Six coordinator artifact checks are not new human/practical-reader or runtime/host/release evidence. Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip and unrelated current-root SourceURL pins remain separately unresolved. No new gate or requirement accepted.",
           "evidence": "handoffs/pr13-finish-20261023/registration-data.md"
+        },
+        {
+          "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "previousReviewedRevision": "5d3f3c8f72f31abe79d6e51e1d25f26a04f97195",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 bounded original-scope Source/Reader/quality review",
+          "result": "PASS — original bounded scope preserved, not recounted; independent Source-only noP0-P2 review in two complete original-contract groups,3chunks each, .87/.87. Original review aspects and practical observations retain their original scope; no fresh independent Reader exercise claimed.",
+          "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
+          "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
         }
       ],
       "previousReviewedRevision": "078105e40a50f23983e31c136f9bd81912ae6310",
@@ -5535,7 +5633,7 @@
     },
     {
       "id": "AP09-reviewed-publication-navigation-20261020",
-      "revision": "1b2921a14c0a5b1342a83fadadb4316fa21071c5",
+      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
       "author": "Documentation implementation authors",
       "reviewer": "/root/review_publication",
       "gateIds": [
@@ -5634,6 +5732,11 @@
           "command": "Actual original node scripts/docs-publication.mjs build and four native docs-reader checks: artifact, search, source-links, source-previews (Reader34087521)",
           "exitCode": 0,
           "observation": "Understand route changed to the substantive central Ops guide; no canonical destination removal or redirect-only loop is introduced. Historical at-most-three-decision navigation observation remains historical, not a new browser traversal. Current build177pages,241outputdigests,40885localtargets; search177pages/12questions;435Sourceboxes/2000exactexcerpts. All authored pages/shared renderer outputs unchanged6250→3408; exact2scripts-tree pageRecordbindings checked. Refs/governance6250 and bounded prior browser observations reused, not relabelled fresh. Prior summary/limits/checks remain historical where superseded; no wider original-scope promotion."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
         }
       ],
       "review": {
@@ -5973,6 +6076,15 @@
           "report": "handoffs/pr13-finish-20261023/tree-classification.md",
           "evidence": "operations/pr13/evidence/tree-classification-20261023/",
           "inspectionLimit": "Source-only independent assessment with complete necessary adjacent sources/contract fields supplied in-band; no reviewer checkout inspection or tests. Coordinator67tree+14publication controls and complete nine-scope vectors separately attributed. Unchanged historical checks/impact histories retained, not reapproved. Baseline API DATA and Knip failures unchanged."
+        },
+        {
+          "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "previousReviewedRevision": "1b2921a14c0a5b1342a83fadadb4316fa21071c5",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 bounded original-scope Source/Reader/quality review",
+          "result": "PASS — original bounded scope preserved, not recounted; independent Source-only noP0-P2 review in two complete original-contract groups,3chunks each, .87/.87. Original review aspects and practical observations retain their original scope; no fresh independent Reader exercise claimed.",
+          "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
+          "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
         }
       ],
       "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902",
@@ -6439,7 +6551,7 @@
     },
     {
       "id": "AP09-closeout-config-reference-20261020",
-      "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_config_reference",
       "gateIds": [],
@@ -6546,6 +6658,11 @@
           "command": "Independent finite source-map delta review plus original current publication build and five native artifact checks",
           "exitCode": 0,
           "observation": "Exact16-record source/reader-contract preservation, including two independently reviewed historical deltas. Current c4ebd7e4:177canonical187HTML241output hashes;12search;14947source links/4061objects;435previewboxes/2000excerpts/1070objects;28freshdiagramhashes. Details current-native-results.json; no new accepted ID or global generator/runtime claim."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
         }
       ],
       "review": {
@@ -6812,6 +6929,15 @@
           "historicalOtherChangesNotNewlyApproved": [],
           "nativeResults": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-native-results.json",
           "independentReview": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/independent-delta-review.json"
+        },
+        {
+          "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "previousReviewedRevision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 bounded original-scope Source/Reader/quality review",
+          "result": "PASS — original bounded scope preserved, not recounted; independent Source-only noP0-P2 review in two complete original-contract groups,3chunks each, .87/.87. Original review aspects and practical observations retain their original scope; no fresh independent Reader exercise claimed.",
+          "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
+          "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
         }
       ],
       "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
@@ -6863,7 +6989,7 @@
     },
     {
       "id": "AP09-closeout-developer-maintenance-20261020",
-      "revision": "7fc7e022761d825dbf99d2625d913aa2a9067c8c",
+      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_developer_maintenance",
       "gateIds": [],
@@ -6978,6 +7104,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Six actual separate original processes against reviewed committed Source:177-page Reader build plus artifact/search/Source-link/source-preview/fresh-diagram checks pass. Original scoped tasks and all reader pages except one exactly reviewed native Prism matrix row unchanged; exact missing inline host/Prism configuration schema projection, finite module-input custody consequences and native single Prism operator-row repair reviewed independently. Native host/Prism schema and runtime-meaning controls, focused custody/module guards and seven existing guide checks pass. No new human, participant, screenreader, runtime or global API acceptance."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
         }
       ],
       "review": {
@@ -7335,6 +7466,15 @@
           "scope": "All complete scoped file memberships compared with actual original reviewed Git revisions, complete vectors and original contracts/baseline failures supplied. Complete inline host and Prism schema projection, finite module-input/scalar/native qualification consequences and exact native generated single Prism operator-row correction; no new role/caller/receiver grant. Exact original meanings, summaries, limits, checks and histories retained.",
           "limits": "Current actual committed Reader artifact controls are not fresh practical observations or runtime/API/live/release/human approval. Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, current-root publication SourceURL pins and host compatibility/operator boundaries remain separately unresolved. No new gate or requirement accepted.",
           "evidence": "handoffs/pr13-finish-20261023/host-schema.md"
+        },
+        {
+          "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "previousReviewedRevision": "7fc7e022761d825dbf99d2625d913aa2a9067c8c",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 bounded original-scope Source/Reader/quality review",
+          "result": "PASS — original bounded scope preserved, not recounted; independent Source-only noP0-P2 review in two complete original-contract groups,3chunks each, .87/.87. Original review aspects and practical observations retain their original scope; no fresh independent Reader exercise claimed.",
+          "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
+          "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
         }
       ],
       "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
@@ -9898,7 +10038,7 @@
     },
     {
       "id": "AP09-decision-record-content-20261021",
-      "revision": "7ef16585ba04eba3628cead304be85307436f091",
+      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 platform-ready-review",
       "gateIds": [],
@@ -9977,6 +10117,11 @@
           "command": "Current cfc97 Reader and extracted archive checks with independent22scope preservation",
           "exitCode": 0,
           "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
         }
       ],
       "review": {
@@ -10074,12 +10219,21 @@
           "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
           "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
           "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
+        },
+        {
+          "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "previousReviewedRevision": "7ef16585ba04eba3628cead304be85307436f091",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 bounded original-scope Source/Reader/quality review",
+          "result": "PASS — original bounded scope preserved, not recounted; independent Source-only noP0-P2 review in two complete original-contract groups,3chunks each, .87/.87. Original review aspects and practical observations retain their original scope; no fresh independent Reader exercise claimed.",
+          "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
+          "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
         }
       ]
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
-      "revision": "7fc7e022761d825dbf99d2625d913aa2a9067c8c",
+      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 maintenance-ready-review",
       "gateIds": [],
@@ -10373,6 +10527,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Six actual separate original processes against reviewed committed Source:177-page Reader build plus artifact/search/Source-link/source-preview/fresh-diagram checks pass. Original scoped tasks and all reader pages except one exactly reviewed native Prism matrix row unchanged; exact missing inline host/Prism configuration schema projection, finite module-input custody consequences and native single Prism operator-row repair reviewed independently. Native host/Prism schema and runtime-meaning controls, focused custody/module guards and seven existing guide checks pass. No new human, participant, screenreader, runtime or global API acceptance."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
         }
       ],
       "review": {
@@ -10835,6 +10994,15 @@
           "scope": "All complete scoped file memberships compared with actual original reviewed Git revisions, complete vectors and original contracts/baseline failures supplied. Complete inline host and Prism schema projection, finite module-input/scalar/native qualification consequences and exact native generated single Prism operator-row correction; no new role/caller/receiver grant. Exact original meanings, summaries, limits, checks and histories retained.",
           "limits": "Current actual committed Reader artifact controls are not fresh practical observations or runtime/API/live/release/human approval. Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, current-root publication SourceURL pins and host compatibility/operator boundaries remain separately unresolved. No new gate or requirement accepted.",
           "evidence": "handoffs/pr13-finish-20261023/host-schema.md"
+        },
+        {
+          "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "previousReviewedRevision": "7fc7e022761d825dbf99d2625d913aa2a9067c8c",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 bounded original-scope Source/Reader/quality review",
+          "result": "PASS — original bounded scope preserved, not recounted; independent Source-only noP0-P2 review in two complete original-contract groups,3chunks each, .87/.87. Original review aspects and practical observations retain their original scope; no fresh independent Reader exercise claimed.",
+          "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
+          "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
         }
       ],
       "previousReviewedRevision": "088afcb27fa52f1ccdc46f0098b2fac9e3c9254a",
@@ -11271,7 +11439,7 @@
     },
     {
       "id": "AP09-complete-platform-change-content-20261021",
-      "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 platform-final-review",
       "gateIds": [],
@@ -11466,6 +11634,11 @@
           "command": "Independent finite source-map delta review plus original current publication build and five native artifact checks",
           "exitCode": 0,
           "observation": "Exact16-record source/reader-contract preservation, including two independently reviewed historical deltas. Current c4ebd7e4:177canonical187HTML241output hashes;12search;14947source links/4061objects;435previewboxes/2000excerpts/1070objects;28freshdiagramhashes. Details current-native-results.json; no new accepted ID or global generator/runtime claim."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
         }
       ],
       "review": {
@@ -11750,6 +11923,15 @@
           "historicalOtherChangesNotNewlyApproved": [],
           "nativeResults": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-native-results.json",
           "independentReview": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/independent-delta-review.json"
+        },
+        {
+          "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "previousReviewedRevision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 bounded original-scope Source/Reader/quality review",
+          "result": "PASS — original bounded scope preserved, not recounted; independent Source-only noP0-P2 review in two complete original-contract groups,3chunks each, .87/.87. Original review aspects and practical observations retain their original scope; no fresh independent Reader exercise claimed.",
+          "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
+          "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
         }
       ],
       "previousReviewedRevision": "2f8a116e00d6d38a5cc5076b10befcabe426f9f4",
@@ -12227,7 +12409,7 @@
     },
     {
       "id": "AP09-complete-plugin-maintenance-mechanisms-20261021",
-      "revision": "5d3f3c8f72f31abe79d6e51e1d25f26a04f97195",
+      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
       "author": "Nova /root documentation coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 plugin-mechanisms whole original MNT obligations",
       "gateIds": [],
@@ -12809,6 +12991,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Six actual separate unchanged original processes against reviewed committed Source:177-page Reader build and artifact/search/Source-link/source-preview/diagram checks passed after existing shared browser environment restoration; first genuine missing-libglib attempt retained. Exact native registration declarations projection, complete1005caller1248selected105recipe/scoped-native custody consequences independently reviewed;36focused custody and seven original guide checkers pass. No fresh participant, human, screenreader, runtime, live-host or global API acceptance."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
         }
       ],
       "review": {
@@ -12934,6 +13121,15 @@
           "scope": "Full original scoped physical vectors acquired at each actual reviewed Git revision; original contracts, summaries, limits, checks and baseline terminal failures supplied losslessly. Four native provider declaration fields, absent-vs-empty preservation, finite scalar/two-AP08-contract/five-recipe consequences only; no role, caller membership or receiver grant. Historical assertions and all prior practical observations retain original meaning and scope.",
           "limits": "Six coordinator artifact checks are not new human/practical-reader or runtime/host/release evidence. Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip and unrelated current-root SourceURL pins remain separately unresolved. No new gate or requirement accepted.",
           "evidence": "handoffs/pr13-finish-20261023/registration-data.md"
+        },
+        {
+          "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "previousReviewedRevision": "5d3f3c8f72f31abe79d6e51e1d25f26a04f97195",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 bounded original-scope Source/Reader/quality review",
+          "result": "PASS — original bounded scope preserved, not recounted; independent Source-only noP0-P2 review in two complete original-contract groups,3chunks each, .87/.87. Original review aspects and practical observations retain their original scope; no fresh independent Reader exercise claimed.",
+          "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
+          "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
         }
       ],
       "previousReviewedRevision": "5276ecde0b50f86936e58c5de2de233e5a061e1e",
@@ -13303,7 +13499,7 @@
     },
     {
       "id": "AP09-complete-publication-reference-navigation-20261021",
-      "revision": "1b2921a14c0a5b1342a83fadadb4316fa21071c5",
+      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -13472,6 +13668,11 @@
           "command": "Independent finite source-map delta review plus original current publication build and five native artifact checks",
           "exitCode": 0,
           "observation": "Exact16-record source/reader-contract preservation, including two independently reviewed historical deltas. Current c4ebd7e4:177canonical187HTML241output hashes;12search;14947source links/4061objects;435previewboxes/2000excerpts/1070objects;28freshdiagramhashes. Details current-native-results.json; no new accepted ID or global generator/runtime claim."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
         }
       ],
       "review": {
@@ -13828,6 +14029,15 @@
           "report": "handoffs/pr13-finish-20261023/tree-classification.md",
           "evidence": "operations/pr13/evidence/tree-classification-20261023/",
           "inspectionLimit": "Source-only independent assessment with complete necessary adjacent sources/contract fields supplied in-band; no reviewer checkout inspection or tests. Coordinator67tree+14publication controls and complete nine-scope vectors separately attributed. Unchanged historical checks/impact histories retained, not reapproved. Baseline API DATA and Knip failures unchanged."
+        },
+        {
+          "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "previousReviewedRevision": "1b2921a14c0a5b1342a83fadadb4316fa21071c5",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 bounded original-scope Source/Reader/quality review",
+          "result": "PASS — original bounded scope preserved, not recounted; independent Source-only noP0-P2 review in two complete original-contract groups,3chunks each, .87/.87. Original review aspects and practical observations retain their original scope; no fresh independent Reader exercise claimed.",
+          "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
+          "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
         }
       ],
       "scopePreservation3408": {
@@ -13844,7 +14054,7 @@
     },
     {
       "id": "AP09-complete-developer-reader-contracts-20261021",
-      "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -14105,6 +14315,11 @@
           "command": "Independent finite source-map delta review plus original current publication build and five native artifact checks",
           "exitCode": 0,
           "observation": "Exact16-record source/reader-contract preservation, including two independently reviewed historical deltas. Current c4ebd7e4:177canonical187HTML241output hashes;12search;14947source links/4061objects;435previewboxes/2000excerpts/1070objects;28freshdiagramhashes. Details current-native-results.json; no new accepted ID or global generator/runtime claim."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
         }
       ],
       "review": {
@@ -14408,12 +14623,21 @@
           "historicalOtherChangesNotNewlyApproved": [],
           "nativeResults": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-native-results.json",
           "independentReview": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/independent-delta-review.json"
+        },
+        {
+          "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "previousReviewedRevision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 bounded original-scope Source/Reader/quality review",
+          "result": "PASS — original bounded scope preserved, not recounted; independent Source-only noP0-P2 review in two complete original-contract groups,3chunks each, .87/.87. Original review aspects and practical observations retain their original scope; no fresh independent Reader exercise claimed.",
+          "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
+          "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
         }
       ]
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "5d3f3c8f72f31abe79d6e51e1d25f26a04f97195",
+      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -14824,6 +15048,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Six actual separate unchanged original processes against reviewed committed Source:177-page Reader build and artifact/search/Source-link/source-preview/diagram checks passed after existing shared browser environment restoration; first genuine missing-libglib attempt retained. Exact native registration declarations projection, complete1005caller1248selected105recipe/scoped-native custody consequences independently reviewed;36focused custody and seven original guide checkers pass. No fresh participant, human, screenreader, runtime, live-host or global API acceptance."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
         }
       ],
       "limits": [
@@ -15721,6 +15950,15 @@
           "scope": "Full original scoped physical vectors acquired at each actual reviewed Git revision; original contracts, summaries, limits, checks and baseline terminal failures supplied losslessly. Four native provider declaration fields, absent-vs-empty preservation, finite scalar/two-AP08-contract/five-recipe consequences only; no role, caller membership or receiver grant. Historical assertions and all prior practical observations retain original meaning and scope.",
           "limits": "Six coordinator artifact checks are not new human/practical-reader or runtime/host/release evidence. Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip and unrelated current-root SourceURL pins remain separately unresolved. No new gate or requirement accepted.",
           "evidence": "handoffs/pr13-finish-20261023/registration-data.md"
+        },
+        {
+          "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "previousReviewedRevision": "5d3f3c8f72f31abe79d6e51e1d25f26a04f97195",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 bounded original-scope Source/Reader/quality review",
+          "result": "PASS — original bounded scope preserved, not recounted; independent Source-only noP0-P2 review in two complete original-contract groups,3chunks each, .87/.87. Original review aspects and practical observations retain their original scope; no fresh independent Reader exercise claimed.",
+          "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
+          "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
         }
       ],
       "scopePreservation3408": {
@@ -15768,7 +16006,7 @@
     },
     {
       "id": "AP09-search-reader-gate-20261021",
-      "revision": "5d3f3c8f72f31abe79d6e51e1d25f26a04f97195",
+      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-04 code/evidence review plus narrow Source/Reader/Quality native-impact follow-up",
       "verdict": "PASS",
@@ -15966,6 +16204,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Six actual separate unchanged original processes against reviewed committed Source:177-page Reader build and artifact/search/Source-link/source-preview/diagram checks passed after existing shared browser environment restoration; first genuine missing-libglib attempt retained. Exact native registration declarations projection, complete1005caller1248selected105recipe/scoped-native custody consequences independently reviewed;36focused custody and seven original guide checkers pass. No fresh participant, human, screenreader, runtime, live-host or global API acceptance."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
         }
       ],
       "limits": [
@@ -16466,6 +16709,15 @@
           "scope": "Full original scoped physical vectors acquired at each actual reviewed Git revision; original contracts, summaries, limits, checks and baseline terminal failures supplied losslessly. Four native provider declaration fields, absent-vs-empty preservation, finite scalar/two-AP08-contract/five-recipe consequences only; no role, caller membership or receiver grant. Historical assertions and all prior practical observations retain original meaning and scope.",
           "limits": "Six coordinator artifact checks are not new human/practical-reader or runtime/host/release evidence. Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip and unrelated current-root SourceURL pins remain separately unresolved. No new gate or requirement accepted.",
           "evidence": "handoffs/pr13-finish-20261023/registration-data.md"
+        },
+        {
+          "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "previousReviewedRevision": "5d3f3c8f72f31abe79d6e51e1d25f26a04f97195",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 bounded original-scope Source/Reader/quality review",
+          "result": "PASS — original bounded scope preserved, not recounted; independent Source-only noP0-P2 review in two complete original-contract groups,3chunks each, .87/.87. Original review aspects and practical observations retain their original scope; no fresh independent Reader exercise claimed.",
+          "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
+          "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
         }
       ],
       "scopePreservation3408": {
@@ -16512,7 +16764,7 @@
     },
     {
       "id": "AP09-rendered-source-bounds-gate-20261021",
-      "revision": "5d3f3c8f72f31abe79d6e51e1d25f26a04f97195",
+      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-09 Source/Reader/Quality review and narrow changed-boundary impact review for 21 prior PASS records",
       "verdict": "PASS",
@@ -16719,6 +16971,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Six actual separate unchanged original processes against reviewed committed Source:177-page Reader build and artifact/search/Source-link/source-preview/diagram checks passed after existing shared browser environment restoration; first genuine missing-libglib attempt retained. Exact native registration declarations projection, complete1005caller1248selected105recipe/scoped-native custody consequences independently reviewed;36focused custody and seven original guide checkers pass. No fresh participant, human, screenreader, runtime, live-host or global API acceptance."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
         }
       ],
       "limits": [
@@ -17204,6 +17461,15 @@
           "scope": "Full original scoped physical vectors acquired at each actual reviewed Git revision; original contracts, summaries, limits, checks and baseline terminal failures supplied losslessly. Four native provider declaration fields, absent-vs-empty preservation, finite scalar/two-AP08-contract/five-recipe consequences only; no role, caller membership or receiver grant. Historical assertions and all prior practical observations retain original meaning and scope.",
           "limits": "Six coordinator artifact checks are not new human/practical-reader or runtime/host/release evidence. Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip and unrelated current-root SourceURL pins remain separately unresolved. No new gate or requirement accepted.",
           "evidence": "handoffs/pr13-finish-20261023/registration-data.md"
+        },
+        {
+          "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "previousReviewedRevision": "5d3f3c8f72f31abe79d6e51e1d25f26a04f97195",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 bounded original-scope Source/Reader/quality review",
+          "result": "PASS — original bounded scope preserved, not recounted; independent Source-only noP0-P2 review in two complete original-contract groups,3chunks each, .87/.87. Original review aspects and practical observations retain their original scope; no fresh independent Reader exercise claimed.",
+          "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
+          "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
         }
       ],
       "scopePreservation3408": {
@@ -17250,7 +17516,7 @@
     },
     {
       "id": "AP09-complete-static-offline-fallback-20261021",
-      "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole PUB-006/A912-10 Source/Reader/Quality closeout, inspecting original obligation, actual browser provenance and critical task prose",
       "verdict": "PASS",
@@ -17331,6 +17597,11 @@
           "command": "Current cfc97 Reader and extracted archive checks with independent22scope preservation",
           "exitCode": 0,
           "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
         }
       ],
       "limits": [
@@ -17564,12 +17835,21 @@
             "docs/site/use/workflows/redis-replay-recovery.md",
             "docs/site/use/workflows/wait-resume.md"
           ]
+        },
+        {
+          "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "previousReviewedRevision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 bounded original-scope Source/Reader/quality review",
+          "result": "PASS — original bounded scope preserved, not recounted; independent Source-only noP0-P2 review in two complete original-contract groups,3chunks each, .87/.87. Original review aspects and practical observations retain their original scope; no fresh independent Reader exercise claimed.",
+          "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
+          "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
         }
       ]
     },
     {
       "id": "AP09-complete-same-source-code-preview-20261021",
-      "revision": "5d3f3c8f72f31abe79d6e51e1d25f26a04f97195",
+      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole PUB004 Source/Reader/Quality closeout plus narrow changed-boundary preservation for21priorPASSrecords",
       "verdict": "PASS",
@@ -17764,6 +18044,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Six actual separate unchanged original processes against reviewed committed Source:177-page Reader build and artifact/search/Source-link/source-preview/diagram checks passed after existing shared browser environment restoration; first genuine missing-libglib attempt retained. Exact native registration declarations projection, complete1005caller1248selected105recipe/scoped-native custody consequences independently reviewed;36focused custody and seven original guide checkers pass. No fresh participant, human, screenreader, runtime, live-host or global API acceptance."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
         }
       ],
       "limits": [
@@ -18222,6 +18507,15 @@
           "scope": "Full original scoped physical vectors acquired at each actual reviewed Git revision; original contracts, summaries, limits, checks and baseline terminal failures supplied losslessly. Four native provider declaration fields, absent-vs-empty preservation, finite scalar/two-AP08-contract/five-recipe consequences only; no role, caller membership or receiver grant. Historical assertions and all prior practical observations retain original meaning and scope.",
           "limits": "Six coordinator artifact checks are not new human/practical-reader or runtime/host/release evidence. Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip and unrelated current-root SourceURL pins remain separately unresolved. No new gate or requirement accepted.",
           "evidence": "handoffs/pr13-finish-20261023/registration-data.md"
+        },
+        {
+          "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "previousReviewedRevision": "5d3f3c8f72f31abe79d6e51e1d25f26a04f97195",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 bounded original-scope Source/Reader/quality review",
+          "result": "PASS — original bounded scope preserved, not recounted; independent Source-only noP0-P2 review in two complete original-contract groups,3chunks each, .87/.87. Original review aspects and practical observations retain their original scope; no fresh independent Reader exercise claimed.",
+          "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
+          "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
         }
       ],
       "scopePreservation3408": {
@@ -18268,7 +18562,7 @@
     },
     {
       "id": "AP09-complete-responsive-reader-layout-20261021",
-      "revision": "5d3f3c8f72f31abe79d6e51e1d25f26a04f97195",
+      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A91207 responsive-layout closeout and narrow24-record prior-boundary preservation",
       "verdict": "PASS",
@@ -18523,6 +18817,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Six actual separate unchanged original processes against reviewed committed Source:177-page Reader build and artifact/search/Source-link/source-preview/diagram checks passed after existing shared browser environment restoration; first genuine missing-libglib attempt retained. Exact native registration declarations projection, complete1005caller1248selected105recipe/scoped-native custody consequences independently reviewed;36focused custody and seven original guide checkers pass. No fresh participant, human, screenreader, runtime, live-host or global API acceptance."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
         }
       ],
       "limits": [
@@ -19004,6 +19303,15 @@
           "scope": "Full original scoped physical vectors acquired at each actual reviewed Git revision; original contracts, summaries, limits, checks and baseline terminal failures supplied losslessly. Four native provider declaration fields, absent-vs-empty preservation, finite scalar/two-AP08-contract/five-recipe consequences only; no role, caller membership or receiver grant. Historical assertions and all prior practical observations retain original meaning and scope.",
           "limits": "Six coordinator artifact checks are not new human/practical-reader or runtime/host/release evidence. Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip and unrelated current-root SourceURL pins remain separately unresolved. No new gate or requirement accepted.",
           "evidence": "handoffs/pr13-finish-20261023/registration-data.md"
+        },
+        {
+          "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "previousReviewedRevision": "5d3f3c8f72f31abe79d6e51e1d25f26a04f97195",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 bounded original-scope Source/Reader/quality review",
+          "result": "PASS — original bounded scope preserved, not recounted; independent Source-only noP0-P2 review in two complete original-contract groups,3chunks each, .87/.87. Original review aspects and practical observations retain their original scope; no fresh independent Reader exercise claimed.",
+          "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
+          "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
         }
       ],
       "scopePreservation3408": {
@@ -19050,7 +19358,7 @@
     },
     {
       "id": "AP09-complete-source-backed-diagrams-20261021",
-      "revision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
       "author": "Nova /root documentation author and coordinator",
       "reviewer": "Independent Codex diagram_services whole-topic review coordinating independent source reviews; no content authorship",
       "gateIds": [
@@ -19182,6 +19490,11 @@
           "command": "Actual original node scripts/docs-publication.mjs build and four native docs-reader checks: artifact, search, source-links, source-previews (Reader34087521)",
           "exitCode": 0,
           "observation": "Existing diagram meanings/visible alternatives remain except the specifically Source-reviewed platform Ops intermediary edge; new central Ops diagram is a separately reviewed addition, not the old 27-diagram render. Final source/diagram/browser check is separate and conditional. Current build177pages,241outputdigests,40885localtargets; search177pages/12questions;435Sourceboxes/2000exactexcerpts. All authored pages/shared renderer outputs unchanged6250→3408; exact2scripts-tree pageRecordbindings checked. Refs/governance6250 and bounded prior browser observations reused, not relabelled fresh. Prior summary/limits/checks remain historical where superseded; no wider original-scope promotion."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
         }
       ],
       "review": {
@@ -19475,6 +19788,15 @@
             "docs/site/use/workflows/redis-replay-recovery.md",
             "docs/site/use/workflows/wait-resume.md"
           ]
+        },
+        {
+          "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "previousReviewedRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 bounded original-scope Source/Reader/quality review",
+          "result": "PASS — original bounded scope preserved, not recounted; independent Source-only noP0-P2 review in two complete original-contract groups,3chunks each, .87/.87. Original review aspects and practical observations retain their original scope; no fresh independent Reader exercise claimed.",
+          "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
+          "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
         }
       ],
       "scopePreservation3408": {
@@ -25185,7 +25507,7 @@
     },
     {
       "id": "A912-03-supported-redirect-paths-20261021",
-      "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
       "author": "operator_acceptance original implementation; root coherent F1/F2 correction",
       "reviewer": "workflow_acceptance independent full affected-topic Source/semantic Reader/quality review",
       "gateIds": [
@@ -25235,6 +25557,11 @@
           "command": "Frozen candidate/current22ea/main9cc affected-publication input comparison",
           "exitCode": 0,
           "observation": "All8reviewedsource/page/CIcandidatebytes exactly integrated at22ea andunchanged9cc; three later custody/test source changes are not publication inputs; no redundantReaderrebuildclaim"
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
         }
       ],
       "review": {
@@ -25394,12 +25721,21 @@
             "docs/site/use/workflows/redis-replay-recovery.md",
             "docs/site/use/workflows/wait-resume.md"
           ]
+        },
+        {
+          "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "previousReviewedRevision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 bounded original-scope Source/Reader/quality review",
+          "result": "PASS — original bounded scope preserved, not recounted; independent Source-only noP0-P2 review in two complete original-contract groups,3chunks each, .87/.87. Original review aspects and practical observations retain their original scope; no fresh independent Reader exercise claimed.",
+          "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
+          "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
         }
       ]
     },
     {
       "id": "A912-11-deterministic-page-records-20261022",
-      "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
       "author": "/root/workflow_acceptance metadata author; /root installed integration and original production builds",
       "reviewer": "/root/custody_review; independent of metadata author",
       "gateIds": [
@@ -25467,6 +25803,11 @@
           "command": "Independent finite source-map delta review plus original current publication build and five native artifact checks",
           "exitCode": 0,
           "observation": "Exact16-record source/reader-contract preservation, including two independently reviewed historical deltas. Current c4ebd7e4:177canonical187HTML241output hashes;12search;14947source links/4061objects;435previewboxes/2000excerpts/1070objects;28freshdiagramhashes. Details current-native-results.json; no new accepted ID or global generator/runtime claim."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
         }
       ],
       "review": {
@@ -25651,6 +25992,15 @@
           "historicalOtherChangesNotNewlyApproved": [],
           "nativeResults": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-native-results.json",
           "independentReview": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/independent-delta-review.json"
+        },
+        {
+          "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "previousReviewedRevision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 bounded original-scope Source/Reader/quality review",
+          "result": "PASS — original bounded scope preserved, not recounted; independent Source-only noP0-P2 review in two complete original-contract groups,3chunks each, .87/.87. Original review aspects and practical observations retain their original scope; no fresh independent Reader exercise claimed.",
+          "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
+          "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
         }
       ],
       "scopePreservation3408": {
@@ -25667,7 +26017,7 @@
     },
     {
       "id": "AP09-publication-positive-scope-7ef16585",
-      "revision": "7fc7e022761d825dbf99d2625d913aa2a9067c8c",
+      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
       "author": "existing publication/content maintainers; final authored Sourcefield additions separately reviewed by workflow_acceptance",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -25927,6 +26277,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Six actual separate original processes against reviewed committed Source:177-page Reader build plus artifact/search/Source-link/source-preview/fresh-diagram checks pass. Original scoped tasks and all reader pages except one exactly reviewed native Prism matrix row unchanged; exact missing inline host/Prism configuration schema projection, finite module-input custody consequences and native single Prism operator-row repair reviewed independently. Native host/Prism schema and runtime-meaning controls, focused custody/module guards and seven existing guide checks pass. No new human, participant, screenreader, runtime or global API acceptance."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
         }
       ],
       "review": {
@@ -26386,6 +26741,15 @@
           "scope": "All complete scoped file memberships compared with actual original reviewed Git revisions, complete vectors and original contracts/baseline failures supplied. Complete inline host and Prism schema projection, finite module-input/scalar/native qualification consequences and exact native generated single Prism operator-row correction; no new role/caller/receiver grant. Exact original meanings, summaries, limits, checks and histories retained.",
           "limits": "Current actual committed Reader artifact controls are not fresh practical observations or runtime/API/live/release/human approval. Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, current-root publication SourceURL pins and host compatibility/operator boundaries remain separately unresolved. No new gate or requirement accepted.",
           "evidence": "handoffs/pr13-finish-20261023/host-schema.md"
+        },
+        {
+          "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "previousReviewedRevision": "7fc7e022761d825dbf99d2625d913aa2a9067c8c",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 bounded original-scope Source/Reader/quality review",
+          "result": "PASS — original bounded scope preserved, not recounted; independent Source-only noP0-P2 review in two complete original-contract groups,3chunks each, .87/.87. Original review aspects and practical observations retain their original scope; no fresh independent Reader exercise claimed.",
+          "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
+          "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
         }
       ],
       "scopePreservation3408": {
@@ -26417,7 +26781,7 @@
     },
     {
       "id": "A912-05-whole-source-excerpt-callouts-20261022",
-      "revision": "deef4c3ad6e25aaefb13a9977da93889266a043c",
+      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
       "author": "Existing publication/canonical topic maintainers; field-correction authors in named independent reviews",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -26538,6 +26902,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Six actual separate original processes against committed two-guide Source:177page reader build and artifact/search/Source-link/source-preview/fresh-diagram checks pass. Existing command blocks, headings, evidence headers and Source citations unchanged; original advanced/host/repeat-scope owner checks pass. No fresh participant, keyboard, screenreader, live Codex host or runtime exercise claimed."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
         }
       ],
       "review": {
@@ -26819,6 +27188,15 @@
           "scope": "Complete original33/77/202/192/70/218file vectors: exactly assigned Buster and/or host-and-engine prose changes; all other declared files exact. Corrected dependency-install versus verification statement and aligned Codex authoring with existing unavailable-owner-controls stop boundary. Commands/codeblocks/citations/headings/evidence headers unchanged; no executable/generator/runtime/authority change. Original summary/limits and baseline DATA/Knip failures supplied before review.",
           "limits": "Original summaries, limits, histories and observations retained. Actual committed reader build/five artifact checks, not fresh human/practical/runtime approval. Neither A91013 nor any other new gate/requirement accepted. Current-root publication pin, DATA artifacts.ts41/all5UNKNOWN and selected-release Knip remain separately unresolved.",
           "evidence": "handoffs/pr13-finish-20261023/extension-guide-drift.md"
+        },
+        {
+          "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "previousReviewedRevision": "deef4c3ad6e25aaefb13a9977da93889266a043c",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 bounded original-scope Source/Reader/quality review",
+          "result": "PASS — original bounded scope preserved, not recounted; independent Source-only noP0-P2 review in two complete original-contract groups,3chunks each, .87/.87. Original review aspects and practical observations retain their original scope; no fresh independent Reader exercise claimed.",
+          "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
+          "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
         }
       ],
       "scopePreservation3408": {
@@ -26850,7 +27228,7 @@
     },
     {
       "id": "A98-02-13-whole-operator-procedure-contract-20261022",
-      "revision": "7fc7e022761d825dbf99d2625d913aa2a9067c8c",
+      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
       "author": "Original canonical topic maintainers plus separately reviewed bounded corrections",
       "reviewer": "/root/operator_acceptance; own quickstart delta independently reviewed by /root",
       "gateIds": [
@@ -27174,6 +27552,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Six actual separate original processes against reviewed committed Source:177-page Reader build plus artifact/search/Source-link/source-preview/fresh-diagram checks pass. Original scoped tasks and all reader pages except one exactly reviewed native Prism matrix row unchanged; exact missing inline host/Prism configuration schema projection, finite module-input custody consequences and native single Prism operator-row repair reviewed independently. Native host/Prism schema and runtime-meaning controls, focused custody/module guards and seven existing guide checks pass. No new human, participant, screenreader, runtime or global API acceptance."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
         }
       ],
       "review": {
@@ -27449,6 +27832,15 @@
           "scope": "All complete scoped file memberships compared with actual original reviewed Git revisions, complete vectors and original contracts/baseline failures supplied. Complete inline host and Prism schema projection, finite module-input/scalar/native qualification consequences and exact native generated single Prism operator-row correction; no new role/caller/receiver grant. Exact original meanings, summaries, limits, checks and histories retained.",
           "limits": "Current actual committed Reader artifact controls are not fresh practical observations or runtime/API/live/release/human approval. Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, current-root publication SourceURL pins and host compatibility/operator boundaries remain separately unresolved. No new gate or requirement accepted.",
           "evidence": "handoffs/pr13-finish-20261023/host-schema.md"
+        },
+        {
+          "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "previousReviewedRevision": "7fc7e022761d825dbf99d2625d913aa2a9067c8c",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 bounded original-scope Source/Reader/quality review",
+          "result": "PASS — original bounded scope preserved, not recounted; independent Source-only noP0-P2 review in two complete original-contract groups,3chunks each, .87/.87. Original review aspects and practical observations retain their original scope; no fresh independent Reader exercise claimed.",
+          "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
+          "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
         }
       ],
       "scopePreservation3408": {
@@ -27480,7 +27872,7 @@
     },
     {
       "id": "A910-03-whole-command-prerequisite-contract-20261022",
-      "revision": "5d3f3c8f72f31abe79d6e51e1d25f26a04f97195",
+      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
       "author": "Original canonical topic maintainers plus separately reviewed bounded corrections",
       "reviewer": "/root/operator_acceptance; own quickstart delta independently reviewed by /root",
       "gateIds": [
@@ -27755,6 +28147,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Six actual separate unchanged original processes against reviewed committed Source:177-page Reader build and artifact/search/Source-link/source-preview/diagram checks passed after existing shared browser environment restoration; first genuine missing-libglib attempt retained. Exact native registration declarations projection, complete1005caller1248selected105recipe/scoped-native custody consequences independently reviewed;36focused custody and seven original guide checkers pass. No fresh participant, human, screenreader, runtime, live-host or global API acceptance."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
         }
       ],
       "review": {
@@ -27995,6 +28392,15 @@
           "scope": "Full original scoped physical vectors acquired at each actual reviewed Git revision; original contracts, summaries, limits, checks and baseline terminal failures supplied losslessly. Four native provider declaration fields, absent-vs-empty preservation, finite scalar/two-AP08-contract/five-recipe consequences only; no role, caller membership or receiver grant. Historical assertions and all prior practical observations retain original meaning and scope.",
           "limits": "Six coordinator artifact checks are not new human/practical-reader or runtime/host/release evidence. Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip and unrelated current-root SourceURL pins remain separately unresolved. No new gate or requirement accepted.",
           "evidence": "handoffs/pr13-finish-20261023/registration-data.md"
+        },
+        {
+          "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "previousReviewedRevision": "5d3f3c8f72f31abe79d6e51e1d25f26a04f97195",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 bounded original-scope Source/Reader/quality review",
+          "result": "PASS — original bounded scope preserved, not recounted; independent Source-only noP0-P2 review in two complete original-contract groups,3chunks each, .87/.87. Original review aspects and practical observations retain their original scope; no fresh independent Reader exercise claimed.",
+          "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
+          "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
         }
       ],
       "scopePreservation3408": {
@@ -29719,7 +30125,7 @@
     },
     {
       "id": "PUB008-current-reader-build-ci-20261023",
-      "revision": "2a78151955534f57f8c6ebeb49d051383b3a3afa",
+      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
       "author": "Existing canonical publication authors; Nova coordinated unchanged-source checks and adoption",
       "reviewer": "Independent Codex gpt-5.6-terra/high thread 01a16a57-38f2-76d1-bed3-b85a518192f1; pinned topical review",
       "gateIds": [],
@@ -29771,6 +30177,11 @@
           "command": "Independent full PUB-008 topic review against complete current page and owning Source bundle",
           "exitCode": 0,
           "observation": "Source accuracy,reader usability,quality PASS; no actionable findings. Sole pending source-link adoption condition fulfilled before adoption."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
         }
       ],
       "review": {
@@ -29786,11 +30197,22 @@
       ],
       "openIssues": [],
       "verdict": "PASS",
-      "evidenceReport": "docs/blueprint/acceptance-evidence/publication-build-20261023/checked-observations.json"
+      "evidenceReport": "docs/blueprint/acceptance-evidence/publication-build-20261023/checked-observations.json",
+      "impactReviews": [
+        {
+          "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "previousReviewedRevision": "2a78151955534f57f8c6ebeb49d051383b3a3afa",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 bounded original-scope Source/Reader/quality review",
+          "result": "PASS — original bounded scope preserved, not recounted; independent Source-only noP0-P2 review in two complete original-contract groups,3chunks each, .87/.87. Original review aspects and practical observations retain their original scope; no fresh independent Reader exercise claimed.",
+          "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
+          "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
+        }
+      ]
     },
     {
       "id": "AP09-whole-extension-drift-A91014-20261023",
-      "revision": "5d3f3c8f72f31abe79d6e51e1d25f26a04f97195",
+      "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
       "author": "Nova documentation continuation coordinator",
       "reviewer": "Independent pinned fe588b1a autoreview Codex gpt-5.6-terra high P2 whole-A91014 topic reviewer",
       "gateIds": [
@@ -29922,6 +30344,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Six actual separate unchanged original processes against reviewed committed Source:177-page Reader build and artifact/search/Source-link/source-preview/diagram checks passed after existing shared browser environment restoration; first genuine missing-libglib attempt retained. Exact native registration declarations projection, complete1005caller1248selected105recipe/scoped-native custody consequences independently reviewed;36focused custody and seven original guide checkers pass. No fresh participant, human, screenreader, runtime, live-host or global API acceptance."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
         }
       ],
       "review": {
@@ -29965,6 +30392,15 @@
           "scope": "Full original scoped physical vectors acquired at each actual reviewed Git revision; original contracts, summaries, limits, checks and baseline terminal failures supplied losslessly. Four native provider declaration fields, absent-vs-empty preservation, finite scalar/two-AP08-contract/five-recipe consequences only; no role, caller membership or receiver grant. Historical assertions and all prior practical observations retain original meaning and scope.",
           "limits": "Six coordinator artifact checks are not new human/practical-reader or runtime/host/release evidence. Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip and unrelated current-root SourceURL pins remain separately unresolved. No new gate or requirement accepted.",
           "evidence": "handoffs/pr13-finish-20261023/registration-data.md"
+        },
+        {
+          "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "previousReviewedRevision": "5d3f3c8f72f31abe79d6e51e1d25f26a04f97195",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 bounded original-scope Source/Reader/quality review",
+          "result": "PASS — original bounded scope preserved, not recounted; independent Source-only noP0-P2 review in two complete original-contract groups,3chunks each, .87/.87. Original review aspects and practical observations retain their original scope; no fresh independent Reader exercise claimed.",
+          "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
+          "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
         }
       ]
     },
