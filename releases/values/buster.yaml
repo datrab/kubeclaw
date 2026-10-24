@@ -1,4 +1,4 @@
-# Generated from release 02495fd9449898994b5c6c807e0146b9f9a978e2 and byte-matched source configuration; do not edit.
+# Generated from release 8e27f76d708d9e38065897e061c4a469472c8673 and byte-matched source configuration; do not edit.
 agentRole: buster
 gateway:
   startupDoctor:
@@ -38,13 +38,13 @@ imagePullSecrets:
 codeBundle:
   enabled: true
   archiveUrl: >-
-    https://github.com/datrab/kubeclaw/releases/download/code-bundles-40075425970-1/buster-02495fd9449898994b5c6c807e0146b9f9a978e2.tgz
-  expectedCommit: 02495fd9449898994b5c6c807e0146b9f9a978e2
+    https://github.com/datrab/kubeclaw/releases/download/code-bundles-40087275752-1/buster-8e27f76d708d9e38065897e061c4a469472c8673.tgz
+  expectedCommit: 8e27f76d708d9e38065897e061c4a469472c8673
   contractVersion: v2
   auth:
     existingSecret: github-bundle-reader
     existingSecretKey: token
-  sha256: 66263cea6713f3be899de6e782804f5cdc5faf86e6a3856e9d3f3ecef41728d2
+  sha256: 2a8f4843255bcab121849e21dd24d443b266a40e97dbea6b52bd900b11c18051
 auth:
   existingSecret: openclaw-shared-secrets
   existingSecretKey: gatewayToken-buster
@@ -92,7 +92,7 @@ service:
       targetPort: buster-plan
 extraContainers:
   - name: buster-v2-runtime
-    image: ghcr.io/datrab/kubeclaw-buster-runtime@sha256:1dfd4b7980950ffcb111f423daacd7a488196b750a88a093465195ff1786f971
+    image: ghcr.io/datrab/kubeclaw-buster-runtime@sha256:4a7558f7cb47255d3384d7ad0ef55aabe894709f086695e57916abbbadb426a9
     imagePullPolicy: Always
     env:
       - name: BUSTER_V2_TOKEN
@@ -121,6 +121,8 @@ extraContainers:
         value: /workspace/git-repo/.swarm/runtime-results
       - name: BUSTER_V2_KUBERNETES_CREDENTIALS
         value: /var/run/buster-worker/kubernetes
+      - name: BUSTER_FAMILYCLAW_BOOTSTRAP_ENABLED
+        value: 'false'
       - name: BUSTER_ALLOWED_SOURCE_SECRETS
         value: kubeclaw-fixture-preflight,prism-test-provider,prism-test-runtime,prism-test-postgresql-auth,prism-test-ghcr
       - name: CONTAINER_BUILD_BUILDKIT_HOST
@@ -223,6 +225,7 @@ extraVolumes:
 busterNamespaceBroker:
   enabled: true
   controller:
+    familyclawBootstrapEnabled: false
     opsMcpAccess:
       enabled: true
       namespace: kubeclaw-ops
@@ -240,7 +243,7 @@ busterNamespaceBroker:
       - prism-test-ghcr
     image:
       repository: ghcr.io/datrab/kubeclaw-namespace-controller
-      digest: sha256:9955bff2e055ae9b4386b81160095c99d7c3a37d6fd71b6cbb6c2294a9b9c280
+      digest: sha256:2c394cae250a3ba38ea888ed883fcd2c30a4cef66fef9f09ddbfb4059ba67102
       tag: ''
       pullPolicy: IfNotPresent
 resources:
