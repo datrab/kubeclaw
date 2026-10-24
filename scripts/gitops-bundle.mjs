@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import yaml from 'js-yaml';
 import { selectedRelease } from './updates/deployment-release.mjs';
+import { retainedGitOpsGroups } from './gitops-buster-scope.mjs';
 import { prepareAdoptionShape } from './gitops-adoption-shape.mjs';
 
 export const gitOpsDigest = bytes => createHash('sha256').update(bytes).digest('hex');
@@ -100,6 +101,11 @@ function writeNewBundle(output, files) {
   } catch (error) { fs.rmSync(pending, { recursive: true, force: true }); throw error; }
 }
 
+function exportScopeGroups(root, receipt, namespace, prismNamespace, scope = 'all') {
+  if (!['all', 'buster'].includes(scope)) throw new Error('GITOPS_EXPORT_SCOPE_INVALID');
+  return scope === 'buster' ? retainedGitOpsGroups(root, receipt, namespace, prismNamespace) : new Map();
+}
+
 /** Export the existing selected-release renderer, not another image/value resolver. */
 export function exportGitOpsBundle(root, directory, namespace, prismNamespace, environment) {
   if (!gitOpsName(namespace) || !gitOpsName(prismNamespace)) throw new Error('GITOPS_NAMESPACE_INVALID');
@@ -107,8 +113,10 @@ export function exportGitOpsBundle(root, directory, namespace, prismNamespace, e
   if (!/^releases\/gitops\/[a-z0-9][a-z0-9-]{0,50}$/u.test(relative)) throw new Error('GITOPS_BUNDLE_PATH_INVALID');
   if (fs.existsSync(output)) throw new Error('GITOPS_BUNDLE_ALREADY_EXISTS');
   const receipt = selectedRelease(root, 'runtime'), groups = [], files = new Map(), owned = new Set();
+  const retained = exportScopeGroups(root, receipt, namespace, prismNamespace, environment.GITOPS_EXPORT_SCOPE);
   for (const role of ['buster', 'prism', 'nova']) {
-    const { manifest, group } = renderGroup(root, relative, role, namespace, prismNamespace, environment);
+    const { manifest, group } = retained.get(role) ?? renderGroup(root, relative, role, namespace, prismNamespace, environment);
+    group.path = `${relative}/${role}`;
     for (const resource of group.resources) {
       const identity = `${resource.apiVersion.split('/').slice(0, -1).join('/')}/${resource.kind}/${resource.namespace}/${resource.name}`;
       if (owned.has(identity)) throw new Error(`GITOPS_RESOURCE_HAS_MULTIPLE_OWNERS:${identity}`);

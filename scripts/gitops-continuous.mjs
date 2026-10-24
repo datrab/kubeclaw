@@ -97,7 +97,7 @@ export function renderContinuousEnvironment(repository, directory, url, revision
   } finally { fs.rmSync(temporary, { recursive: true, force: true }); }
 }
 
-export function exportContinuousBundle(repository, directory, config, env = process.env) {
+export function exportContinuousBundle(repository, directory, config, env = process.env, scope = 'all') {
   const variables = { ...env };
   const names = { buster: 'BUSTER_VALUES_FILE', nova: 'NOVA_VALUES_FILE', prism: 'PRISM_VALUES_FILE', 'prism-agent': 'PRISM_AGENT_VALUES_FILE' };
   for (const [role, relative] of Object.entries(config.overlays ?? {})) {
@@ -105,14 +105,14 @@ export function exportContinuousBundle(repository, directory, config, env = proc
       || relative.split('/').includes('..') || !fs.existsSync(path.join(repository, relative))) throw new Error(`GITOPS_OVERLAY_INVALID:${role}`);
     variables[names[role]] = path.join(repository, relative);
   }
-  return exportGitOpsBundle(repository, directory, config.namespace, config.prismNamespace, variables);
+  return exportGitOpsBundle(repository, directory, config.namespace, config.prismNamespace, { ...variables, GITOPS_EXPORT_SCOPE: scope });
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
   try {
     const [command, directory, url, revision] = process.argv.slice(2);
     const config = configuration(root);
-    if (command === 'export' && directory && !url) exportContinuousBundle(root, directory, config);
+    if (['export', 'export-buster'].includes(command) && directory && !url) exportContinuousBundle(root, directory, config, undefined, command === 'export-buster' ? 'buster' : 'all');
     else if (['prepare', 'check', 'preflight', 'apply'].includes(command) && directory && url && revision) {
       const { result, files } = renderContinuousEnvironment(root, directory, url, revision, config);
       if (command === 'prepare' || command === 'check') {
@@ -127,6 +127,6 @@ if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.ar
         if (command === 'apply') process.stdout.write(execFileSync('kubectl', ['apply', '-f', '-'],
           { input: dump(result.documents), encoding: 'utf8', timeout: 60000 }));
       }
-    } else throw new Error('Usage: gitops-continuous.mjs export releases/gitops/NAME | prepare|check|preflight|apply releases/gitops/NAME HTTPS_REPOSITORY COMMIT');
+    } else throw new Error('Usage: gitops-continuous.mjs export|export-buster releases/gitops/NAME | prepare|check|preflight|apply releases/gitops/NAME HTTPS_REPOSITORY COMMIT');
   } catch (error) { process.stderr.write(`${error.message}\n`); process.exitCode = 1; }
 }
