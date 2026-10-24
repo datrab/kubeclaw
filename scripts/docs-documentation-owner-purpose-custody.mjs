@@ -282,7 +282,7 @@ export const reviewedDocumentationOwnerPurposes=freeze({
       {
         "path": ".github/workflows/docs-checks.yaml",
         "canonical": ".github/workflows/docs-checks.yaml",
-        "sha256": "96e54e68a99450a6b4cdd1568cd4309cf290ee54f8b368efa76b032f2c7b48b4"
+        "sha256": "464f8b4ce8aacba8d175307e03b959dc2763f1d3b80c31079c24c085076860c5"
       },
       {
         "path": "package.json",
@@ -319,7 +319,7 @@ export const reviewedDocumentationOwnerPurposes=freeze({
       {
         "path": "docs/site/extend/documentation-maintenance.md",
         "canonical": "docs/site/extend/documentation-maintenance.md",
-        "sha256": "900890bd6a59568cba8f30def84bb4e931de414edecb95f4b3f16762c5d93469"
+        "sha256": "d9f11973f90ee2996a7777bb1b6a6e40067dbf970320c9aeb33b2da43177ac42"
       },
       {
         "path": "package.json",
@@ -426,7 +426,7 @@ const readerArtifactCiPurpose=freeze({
     {
       "path": ".github/workflows/docs-checks.yaml",
       "canonical": ".github/workflows/docs-checks.yaml",
-      "sha256": "96e54e68a99450a6b4cdd1568cd4309cf290ee54f8b368efa76b032f2c7b48b4"
+      "sha256": "464f8b4ce8aacba8d175307e03b959dc2763f1d3b80c31079c24c085076860c5"
     },
     {
       "path": "scripts/tests/docs-reader-page-records.test.mjs",

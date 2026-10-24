@@ -54,6 +54,8 @@ jobs:
           echo "::error::Generated docs are stale. Run npm run plugin-system:inventory && npm run docs:inventory && npm run docs:generate and commit the result."
           git status --short --untracked-files=all
           exit 1
+      - name: Check plugin dependency aggregate drift
+        run: node scripts/generate-plugin-dependency-aggregate.mjs --check
       - name: Check generated docs freshness
         run: npm run docs:check:generated
       - name: Check Markdown hygiene
@@ -108,6 +110,7 @@ jobs:
           npm run docs:generate -- --revision "$GITHUB_SHA" --update-source-revision
           npm run plugin-system:inventory
           npm run docs:ap08:inventory
+          node scripts/generate-plugin-dependency-aggregate.mjs
           npm run docs:ap08:review-scope
           npm run docs:ap09:catalogue
           npm run docs:ap09:platform-inventory
@@ -125,6 +128,8 @@ jobs:
           npm run docs:blueprint:generate
           npm run docs:status:generate
           npm run docs:tree:generate
+      - name: Check plugin dependency aggregate drift
+        run: node scripts/generate-plugin-dependency-aggregate.mjs --check
       - name: Check generated docs freshness
         run: npm run docs:check:generated
       - name: Check Markdown hygiene

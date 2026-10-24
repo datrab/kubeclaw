@@ -15945,7 +15945,7 @@
             "source": ".github/workflows/docs-checks.yaml",
             "target": "docs/site/extend/documentation-maintenance.md#generate-only-owned-facts-then-check",
             "owner": "documentation",
-            "factsSha256": "782548a922f2ecf924db387d0cbd692ed42a3bfa75c87afea38780c9e36c04e1"
+            "factsSha256": "0ab72d6c301923bc48a65530c9ba4fab24e2fc73dc8cec6e13a2a71ec79181c4"
           },
           {
             "sourceId": "workflow:.github%2Fworkflows%2Fpipeline-reliability.yaml:job:browser-reliability",
@@ -44686,7 +44686,7 @@
             "source": "skills/buster/plugins/axe/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "1f54e63783ed30dd103d7ff594b0f00a5651c1b1ba5b66dc424bd2b345c66c73"
+            "factsSha256": "45d91dc61f4db78742c6ec37e7bd8235c4c73913462f6a8325cb55411720df72"
           },
           {
             "sourceId": "configuration-schema:skills%2Fbuster%2Fplugins%2Fcontainer-build%2Fschemas%2Fconfig.schema.json:%24:%5B%5D",
@@ -44896,7 +44896,7 @@
             "source": "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "223934829009054da3753181e86d7fe7cb8d8bc1395ce8f794dace1483c15e55"
+            "factsSha256": "f9e5408449cd98ab5d03fa5a87d127b6a6af195ade6413e0dae16f179f16b860"
           },
           {
             "sourceId": "configuration-schema:skills%2Fbuster%2Fplugins%2Fdemo-auth-smoke%2Fschemas%2Fconfig.schema.json:%24.protectedPath:%5B%5D",
@@ -44917,7 +44917,7 @@
             "source": "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "4d6bdcb8752bf0a49c4fe4f36c3ced0c4914ad18ff579c55d7881ba964905628"
+            "factsSha256": "56af417caac11ba73d95d9ba609b4297b4f565469b644a10e83e4e6e6901d0d5"
           },
           {
             "sourceId": "configuration-schema:skills%2Fbuster%2Fplugins%2Fdemo-auth-smoke%2Fschemas%2Fconfig.schema.json:%24.usernamePointer:%5B%5D",
@@ -45281,7 +45281,7 @@
             "source": "skills/buster/plugins/http/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "866022bee1af21b6f5d0705e7483373ca4d40fa432fea016ee8840eb4ea25821"
+            "factsSha256": "766bd28797c56ca3506725767586520b6f797e1d95b1b935a6eb400270e9bf43"
           },
           {
             "sourceId": "configuration-schema:skills%2Fbuster%2Fplugins%2Fkubernetes-fixture%2Fschemas%2Fconfig.schema.json:%24:%5B%5D",
@@ -45351,35 +45351,35 @@
             "source": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "968df699052fc209a4c85aad061b4b6afc9e6abb56814fea71d12a77cbd21d24"
+            "factsSha256": "ed1026d89b5762f252c12be3d407dce479363b80d1ec5ea0a9837e1eb741a5b9"
           },
           {
             "sourceId": "configuration-schema:skills%2Fbuster%2Fplugins%2Fkubernetes-fixture%2Fschemas%2Fconfig.schema.json:%24.secretReferences%5B%5D:%5B%5D",
             "source": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "10681df5db139fd840e111165bf09b18e2803ee4015c3573ba016b0ce451b74a"
+            "factsSha256": "df30dcaeb74e842167668fbbc3c91b454d44e7d7654bfa353b373eb09b2a7588"
           },
           {
             "sourceId": "configuration-schema:skills%2Fbuster%2Fplugins%2Fkubernetes-fixture%2Fschemas%2Fconfig.schema.json:%24.serviceName:%5B%5D",
             "source": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "ac5560f4fb387c5c31f7c8e5d5801f12ce9809b616b7a46bad5d3f8fc1189348"
+            "factsSha256": "3ac29a81d59edac7b52eaa43c89b955ef3ca2b2a8888f3404f8477511b838bcc"
           },
           {
             "sourceId": "configuration-schema:skills%2Fbuster%2Fplugins%2Fkubernetes-fixture%2Fschemas%2Fconfig.schema.json:%24.servicePort:%5B%5D",
             "source": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "3cbb870d5fb576988aec1f74f1426e655e824ad8399d429377d7a6e8f3b9dd82"
+            "factsSha256": "2c16c1fee6db63d3d0dc806997bc6a58b61bcb17a852991f72eca8573c3f9a94"
           },
           {
             "sourceId": "configuration-schema:skills%2Fbuster%2Fplugins%2Fkubernetes-fixture%2Fschemas%2Fconfig.schema.json:%24.serviceTargetPort:%5B%5D",
             "source": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "8129306049f4dfc0ecc7faafee690c67e5d35b36238f47a007cd47d4e10e9b60"
+            "factsSha256": "a16493719435b905a3cb771ec49d782ffea174ad73924e9e08c0930459ec258f"
           },
           {
             "sourceId": "configuration-schema:skills%2Fbuster%2Fplugins%2Fkubernetes-fixture%2Fschemas%2Fconfig.schema.json:%24.testCredentials:%5B%5D",
@@ -45526,7 +45526,7 @@
             "source": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "fe195c255ee9bab685ea1cd7984df0d665fd54d55196995c09ddc4ebcc1cdc44"
+            "factsSha256": "47abc08b44e5dd23ad7d3d86a3de8d1f0a8710878ffa78183ec9a7c1458949a8"
           },
           {
             "sourceId": "configuration-schema:skills%2Fbuster%2Fplugins%2Flighthouse%2Fschemas%2Fconfig.schema.json:%24.profile:%5B%5D",
@@ -45610,7 +45610,7 @@
             "source": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "1e62d3dd73912bb8ce5a375dde990227d308d2ffbc736ea733786a11696fb618"
+            "factsSha256": "f8617ed983e5606f01b4dda18fe2207df37e85537e7afb88a40b455da9ba2abb"
           },
           {
             "sourceId": "configuration-schema:skills%2Fbuster%2Fplugins%2Fopenapi%2Fschemas%2Fconfig.schema.json:%24:%5B%22anyOf%5B0%5D%22%5D",
@@ -45638,7 +45638,7 @@
             "source": "skills/buster/plugins/openapi/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "a9bfb77427ee2519492586487dc2a345de4f139371fd279bfec5e7f2f568a5b7"
+            "factsSha256": "091f6b977fc052731af6257d13d73ae0c471ac83c21429eed03d0c8bd5459533"
           },
           {
             "sourceId": "configuration-schema:skills%2Fbuster%2Fplugins%2Fopenapi%2Fschemas%2Fconfig.schema.json:%24.maximumResponseBytes:%5B%5D",
@@ -45827,7 +45827,7 @@
             "source": "skills/buster/plugins/openapi/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "fd7dd72c6c10a4ae49d34fe98612438826835fdec2e8f0bc3e9fa09e8851e5c0"
+            "factsSha256": "da7831c9d444687001a0fa23f01a361bc71195b52f0ceedd8f09690675dd7727"
           },
           {
             "sourceId": "configuration-schema:skills%2Fbuster%2Fplugins%2Fplaywright%2Fschemas%2Fconfig.schema.json:%24:%5B%5D",
@@ -45848,7 +45848,7 @@
             "source": "skills/buster/plugins/playwright/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "5c5386568fee27820db8a48e8af72964cee966c3a148d31fcb0720776685325c"
+            "factsSha256": "4cdbc0ba2381b2e00ce80c4872e27924c797522f924465946b0532725970b736"
           },
           {
             "sourceId": "configuration-schema:skills%2Fbuster%2Fplugins%2Fplaywright%2Fschemas%2Fconfig.schema.json:%24.minimumExecutedTests:%5B%5D",
@@ -45890,7 +45890,7 @@
             "source": "skills/buster/plugins/playwright/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "6dfaefdccbb0a65a8486be53f00223aff5c313d68d9179753d5e176b9afc3880"
+            "factsSha256": "e6632a85ce17b00ee9b3d02e49f0b0d7beb696c85c4e474d2ca437dc96970af2"
           },
           {
             "sourceId": "configuration-schema:skills%2Fbuster%2Fplugins%2Fplaywright%2Fschemas%2Fconfig.schema.json:%24.workers:%5B%5D",
@@ -45960,7 +45960,7 @@
             "source": "skills/buster/plugins/security-providers/schemas/dependency.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "bbb5e308944e0f2dfdf90ece3e253293109350037448b96f9758f9f78bbda4f0"
+            "factsSha256": "62f3da820eb4b068a715fdb59d4a461a1acf6ab85f5c6d5d14644248f6b8d32c"
           },
           {
             "sourceId": "configuration-schema:skills%2Fbuster%2Fplugins%2Fsecurity-providers%2Fschemas%2Fdependency.schema.json:%24.timeoutMs:%5B%5D",
@@ -46898,7 +46898,7 @@
             "source": "skills/buster/plugins/tailscale-exposure/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "40ff7ec99c1480c1bb10e97a0702e6b11345e0ac80f86d55dfb67ae9bd00f182"
+            "factsSha256": "16454f4f6ef09b5530fabe371954ae9f4700e4c8e48e281f6f844e557c85ca68"
           },
           {
             "sourceId": "configuration-schema:skills%2Fbuster%2Fplugins%2Ftailscale-exposure%2Fschemas%2Fconfig.schema.json:%24.hostname:%5B%5D",
@@ -46954,7 +46954,7 @@
             "source": "skills/buster/plugins/visual/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "3deeebf15a8b14a569ca5614f71d282e38581fc1439397f629ccd50857ed1841"
+            "factsSha256": "707e63ffeeb7564237b8ca97aeffbf144213c5b66f04c5d9c4ac0c8dc995774a"
           },
           {
             "sourceId": "configuration-schema:skills%2Fbuster%2Fplugins%2Fvisual%2Fschemas%2Fconfig.schema.json:%24.manifestFile:%5B%5D",
@@ -47052,7 +47052,7 @@
             "source": "skills/buster/plugins/visual/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "5617e400c26e65e4cf7a7ae4692ea90837d0341fa3cdf1d2d7af0d010a07141a"
+            "factsSha256": "06ae24824ce1195634397f762492e0eb46b7b679f989403088d85ed1cd82808f"
           },
           {
             "sourceId": "configuration-schema:skills%2Fbuster%2Fplugins%2Fvisual%2Fschemas%2Fconfig.schema.json:%24.url:%5B%5D",
@@ -47486,7 +47486,7 @@
             "source": "skills/common/plugins/network-http/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "41af7690fd50ab3a25c3bd3115dd4156705e0c355aecff44c599fe04c3026902"
+            "factsSha256": "9b28c1cefd1617878c10de27cc7c609ff43be0d05abfa5aeba57d9a0d506a228"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Fnetwork-http%2Fschemas%2Fconfig.schema.json:%24.allowedHeaders%5B%5D:%5B%5D",
@@ -47500,7 +47500,7 @@
             "source": "skills/common/plugins/network-http/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "861b821f150ae53f2cbd0e54ddf636d1cf35ad80c0b105e89652da178a44396b"
+            "factsSha256": "c11d6d55e1e25519cd224632e6763a6daf3cf5938ddf4d885e6ac89a185b9f5b"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Fnetwork-http%2Fschemas%2Fconfig.schema.json:%24.allowedMethods%5B%5D:%5B%5D",
@@ -47514,7 +47514,7 @@
             "source": "skills/common/plugins/network-http/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "d79b25cd71b0207bd2be2f39d002b4c30538cd644f4cd30204773e2b49389d92"
+            "factsSha256": "2ced25efe68570cc52ed86661007429433550e60916b77a7d903d32b02ca05c3"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Fnetwork-http%2Fschemas%2Fconfig.schema.json:%24.allowedOrigins%5B%5D:%5B%5D",
@@ -47528,21 +47528,21 @@
             "source": "skills/common/plugins/network-http/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "9a326a8e6526e0f31f1b9be3a307c6ea8f98878c55c78f41f1e195bc40a721df"
+            "factsSha256": "944a07cc96b94cc98671534f451c94e5a99bb1e94dfe5f6b2d19c20220743788"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Fnetwork-http%2Fschemas%2Fconfig.schema.json:%24.maxResponseBytes:%5B%5D",
             "source": "skills/common/plugins/network-http/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "74187872a466b8d6f65778be556ba0422995f3cd7350bbdfdd2834948a0d2e40"
+            "factsSha256": "aa7af97f64e55814735214dfbd0ca0882de5e7dba32742c971c7e7ebe36e981a"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Fnetwork-http%2Fschemas%2Fconfig.schema.json:%24.timeoutMs:%5B%5D",
             "source": "skills/common/plugins/network-http/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "1e69823e91e32dadc2792456af72998aa7fd57f8f6a7b1b8411284ef30000ece"
+            "factsSha256": "624e5cc29911291a12b84614b6402ceac478d50513996ba4011965de7e89f846"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Fnotification-observer%2Fschemas%2Fconfig.schema.json:%24:%5B%5D",
@@ -47605,7 +47605,7 @@
             "source": "skills/common/plugins/notification-observer/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "cc72432129eb4d0b2b7e651e05103ef003de0e311eb8626e7475873ddfed49d2"
+            "factsSha256": "4ae5d1b660fa8e15c724aba0f35e85b2f870a2db15bac55561d65c254115ffff"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Fopenclaw-agent-events%2Fschemas%2Fconfig.schema.json:%24:%5B%5D",
@@ -47836,77 +47836,77 @@
             "source": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "996a1637a508bb2515f5bfbeff0aed4ebc0dfd546179735675c5f2974bb8eb68"
+            "factsSha256": "a86e3d78c5ca94f218b439dcef8ac772357a4365805ee751397f162b28854991"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Foperator-messaging%2Fschemas%2Fconfig.schema.json:%24.targets.%7Bpattern%3A%5E%5Ba-z0-9%5D(%3F%3A%5Ba-z0-9._%3A-%5D%7B0%2C126%7D%5Ba-z0-9%5D)%3F%24%7D.endpoint:%5B%5D",
             "source": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "ca99875a6fa014f5b3d849500ac9c0adf11d9f76026f2153bcc8490c0ab82076"
+            "factsSha256": "712060c31692a2480e47234081cbf47d7de9d898c0f7f772b00952f5e8b5152c"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Foperator-messaging%2Fschemas%2Fconfig.schema.json:%24.targets.%7Bpattern%3A%5E%5Ba-z0-9%5D(%3F%3A%5Ba-z0-9._%3A-%5D%7B0%2C126%7D%5Ba-z0-9%5D)%3F%24%7D.endpointOrigin:%5B%22anyOf%5B1%5D%22%5D",
             "source": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "b532fd90dc05b73799b0c8858d52146d65057c022cdc90fcc14f42c49507b294"
+            "factsSha256": "fba7d63df981da07b9fa976b16ad08fb8e82a64d3420e524d50971f48c2b22ab"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Foperator-messaging%2Fschemas%2Fconfig.schema.json:%24.targets.%7Bpattern%3A%5E%5Ba-z0-9%5D(%3F%3A%5Ba-z0-9._%3A-%5D%7B0%2C126%7D%5Ba-z0-9%5D)%3F%24%7D.endpointOrigin:%5B%5D",
             "source": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "e66ab46ffdc3738b204e2c3b210b047d2385a8ee20e211df5f272ff9d9bf463e"
+            "factsSha256": "fd934acf641e77e4da1599ebfcea20f2a38081af4175b5b7d2f5ee7f8e635cb9"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Foperator-messaging%2Fschemas%2Fconfig.schema.json:%24.targets.%7Bpattern%3A%5E%5Ba-z0-9%5D(%3F%3A%5Ba-z0-9._%3A-%5D%7B0%2C126%7D%5Ba-z0-9%5D)%3F%24%7D.endpointSecret:%5B%22anyOf%5B1%5D%22%5D",
             "source": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "af6d67878d4b6bbfe82beb7c323d7e0773a39526f06be6fd4ad8fc72de43fb00"
+            "factsSha256": "ffa36a1777d1d66c1aeba8e2047153489f5e6d7b1927effec5b7b3a84ab3fce8"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Foperator-messaging%2Fschemas%2Fconfig.schema.json:%24.targets.%7Bpattern%3A%5E%5Ba-z0-9%5D(%3F%3A%5Ba-z0-9._%3A-%5D%7B0%2C126%7D%5Ba-z0-9%5D)%3F%24%7D.endpointSecret:%5B%5D",
             "source": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "f0c5f759ef5702f01e9f7043ace6083c806dbcf944e2f75ead07b1d324179a8a"
+            "factsSha256": "4fd8dec56d5dc967c5e2125e97cac1e64f2adbc5e9b8fd2121b997d1b55071fc"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Foperator-messaging%2Fschemas%2Fconfig.schema.json:%24.targets.%7Bpattern%3A%5E%5Ba-z0-9%5D(%3F%3A%5Ba-z0-9._%3A-%5D%7B0%2C126%7D%5Ba-z0-9%5D)%3F%24%7D.format:%5B%5D",
             "source": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "8f9ce3615b66611168ca215b0eb8cce083a80bf84fe0e655d0f83b7dd7a5d7c2"
+            "factsSha256": "32be82c2038bb293d5ff2c02c0a22fa01efb86be3a539b9bf7585a9a9c1b85cc"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Foperator-messaging%2Fschemas%2Fconfig.schema.json:%24.targets.%7Bpattern%3A%5E%5Ba-z0-9%5D(%3F%3A%5Ba-z0-9._%3A-%5D%7B0%2C126%7D%5Ba-z0-9%5D)%3F%24%7D.maxPayloadBytes:%5B%5D",
             "source": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "ffd1587c53b0d498f37fd0009bab8c733cda967ceda0c0d60e626257175dc907"
+            "factsSha256": "33a84aed912a52a16bf799457aca41bb1ea674f9195465ca4d9f8ae0b3d4a674"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Foperator-messaging%2Fschemas%2Fconfig.schema.json:%24.targets.%7Bpattern%3A%5E%5Ba-z0-9%5D(%3F%3A%5Ba-z0-9._%3A-%5D%7B0%2C126%7D%5Ba-z0-9%5D)%3F%24%7D.receiptEndpoint:%5B%5D",
             "source": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "817dd53e618adbff1657a2025bd2c945d54b1c0e84fd3593cf06cc82117c3c95"
+            "factsSha256": "53ffdc9015cf7e28caeb10accd56e9fdb9a6c856853f9e741cd432a1d7fe7cc7"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Foperator-messaging%2Fschemas%2Fconfig.schema.json:%24.targets.%7Bpattern%3A%5E%5Ba-z0-9%5D(%3F%3A%5Ba-z0-9._%3A-%5D%7B0%2C126%7D%5Ba-z0-9%5D)%3F%24%7D.tokenSecret:%5B%22anyOf%5B0%5D%22%5D",
             "source": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "9254be25a2f9b1d522cb332caeb7665b2541fb894c6e8dd3779fb7df93008bea"
+            "factsSha256": "1fd4adb25dba709f13b6b86b1de3121fa356b87b594b6b1aa13a2b1855855d1a"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Foperator-messaging%2Fschemas%2Fconfig.schema.json:%24.targets.%7Bpattern%3A%5E%5Ba-z0-9%5D(%3F%3A%5Ba-z0-9._%3A-%5D%7B0%2C126%7D%5Ba-z0-9%5D)%3F%24%7D.tokenSecret:%5B%5D",
             "source": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "877249260bc68807970bae0e4302ccc51f5c7f60b676f09728f90ac3e45945c6"
+            "factsSha256": "cc47dd2effac4203ecf145e203ffec8594c0ef78fff655ac2497a05d1483a1fd"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Fredis-transport%2Fschemas%2Fconfig.schema.json:%24:%5B%5D",
@@ -47955,7 +47955,7 @@
             "source": "skills/common/plugins/redis-transport/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "38c60a90c4b73b231356e779ad56d5ae8412348946dd5f3a5f2b0efe77951685"
+            "factsSha256": "e44934a3930609b8aaa078fb99613c793996bc1fa613ad2a6c660d7234f22fcc"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Fruntime-dispatch%2Fschemas%2Fconfig.schema.json:%24:%5B%5D",
@@ -48417,7 +48417,7 @@
             "source": "skills/common/plugins/transport-publisher/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "69172484c93bcb5f9ee5ca76a744f30e89b92490a6f998450d7a82582d99900f"
+            "factsSha256": "b9e132c859fbac48c34aa3f9a9a588b86e6107167046ada2122b8b85f7ad8def"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Ftransport-publisher%2Fschemas%2Fconfig.schema.json:%24.targets.%7B*%7D.maxPayloadBytes:%5B%5D",
@@ -48536,7 +48536,7 @@
             "source": "skills/nova/plugins/case-study/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "097326fbe33e55f14a1111d182aad66d938b78e551eb0df0c382a02c10fbe738"
+            "factsSha256": "e5723d58026851decebe9d29fa79f6c402eb875b3f7312c865c4d8e25cce8717"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Fdelivery-lint%2Fschemas%2Fconfig.schema.json:%24:%5B%5D",
@@ -48760,7 +48760,7 @@
             "source": "skills/nova/plugins/pipeline-review/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "22ac90b9d1e88588ce51df1ebd55cc78ee139fd96012f5b513b454e56053ea04"
+            "factsSha256": "bf8edf810d7394cb0b3cd5b791f0159544754eac2d2ccc131cc73353f57908ee"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Fpipeline-review%2Fschemas%2Fconfig.schema.json:%24.agentRole:%5B%5D",
@@ -48837,7 +48837,7 @@
             "source": "skills/nova/plugins/prism-design/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "6a3f598f01805dad93a56924e6fb5c879d5140d736d1223c5a0a3868d1c0406a"
+            "factsSha256": "b0b887cf9af842dba7fed13a3c00bf7019866dc1b47f58f807199936ecb07248"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Fprism-design%2Fschemas%2Fconfig.schema.json:%24.target:%5B%5D",
@@ -48851,7 +48851,7 @@
             "source": "skills/nova/plugins/prism-design/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "bd5b6ccd99978a158316a8e9c88fddf58c97fa3ad59118e151965315418da355"
+            "factsSha256": "0e7dd780f2c00e26b70ab9467228b22c3b5a3f3fb1112901049b053b24a2a52b"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Fproject-summary%2Fschemas%2Fconfig.schema.json:%24:%5B%5D",
@@ -49096,7 +49096,7 @@
             "source": "skills/nova/plugins/review/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "52e024d8db2a5d30a8b97e5c8fd8c020eecc77b29fec8980f13268cff695bb01"
+            "factsSha256": "1a093b02a97b5513489c620b36bd27235ab728b18351c3a22895705a5f3075c2"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Fconfig.schema.json:%24.policy:%5B%22allOf%5B0%5D%22%2C%22if%22%2C%22anyOf%5B0%5D%22%5D",
@@ -49796,693 +49796,707 @@
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "38ef3da6a77023db212e6b23a283e92f69622015d7412b94be9d1e389c2435cc"
+            "factsSha256": "e853a1f8f7e55fdf1bab19db715dbcc357839cc50b551250954ed4ec530cbb3a"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy:%5B%22allOf%5B0%5D%22%2C%22if%22%2C%22anyOf%5B0%5D%22%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "cdddb608a5d8c2892bd045b0f7f7216fe2502e1207e4d559e541a5df2c016459"
+            "factsSha256": "cc77bc6980c6af9dd8e253dd95b6fcbc63f54c3a57ed70483779cff336771742"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy:%5B%22allOf%5B0%5D%22%2C%22if%22%2C%22anyOf%5B1%5D%22%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "f069a96255a2b202e5d20c9a97913e1f620039eac47f8fe09bec220e9937b9e5"
+            "factsSha256": "5694ca834eef217aeec522d0e7cc37b71da56da4e54e0bfbf78639c7aca24869"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy:%5B%22allOf%5B0%5D%22%2C%22if%22%2C%22anyOf%5B2%5D%22%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "a9bb37c542aff5ed1965b5ead5cb787ab6f42b86cace8d1d71ae227c43641336"
+            "factsSha256": "9713ba25442d79b5f2c7dccf0c6ccc28f103de73b6961af41f42f8505383a3fa"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy:%5B%22allOf%5B0%5D%22%2C%22if%22%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "8d40c371ed7fcff51e65f5f728cc50fa2048930d2763b110c9f6f586bdb40202"
+            "factsSha256": "2dde6c6d719b23b38738ef12be0e8a53e5e22e57ee1701c99a6332520b70e3df"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy:%5B%22allOf%5B0%5D%22%2C%22then%22%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "472de9fc0c32aa3a22c339868868e8221d04b549b95aa99f4b178a5040d9468b"
+            "factsSha256": "6fc4f5eb98ffd1fc06d79a33805234ba0424afa9b538e78bf1d6068cb8e94fe6"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy:%5B%22allOf%5B0%5D%22%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "0be8c45b9bd46e09a7ed5dca8432cf43d772539f959f9d66eaa358fa551a15ec"
+            "factsSha256": "6026a502bcaa0768592f3fea11d11a810896c7403918b91e5f2ff22af45d5b60"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy:%5B%22allOf%5B1%5D%22%2C%22else%22%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "83cb6e17f3858ea77b5729cc96e87e2e3542389fdfe41de1282320adebdcad8c"
+            "factsSha256": "bd91e24b40ef289f1edb22d4b97479ce3e9301504fa82c3e7f7228d5b268e2b0"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy:%5B%22allOf%5B1%5D%22%2C%22if%22%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "5b1c191bea2dc6c52ebdba6b9193dc23794996862dedb2f5e3d13cee012dcdc2"
+            "factsSha256": "6c6527f2670f825435304674142cea940dd240135430cad71573fffc039704dd"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy:%5B%22allOf%5B1%5D%22%2C%22then%22%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "3dbb308ddebdd08912fde7579a3971526de112095ebfe5c711e9e5b730b2bf89"
+            "factsSha256": "0dfcffaff3344e965bd9f6f471db8db2b3db2798e032b115bd737438374f7fb3"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy:%5B%22allOf%5B1%5D%22%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "08c4fe91006dd030294b52210bad73fa9eddd940adc75fccb2485d183f78882b"
+            "factsSha256": "7a1275cad4d01a62339e8dc6537fb673ff2b9af3c6711015abc899fce0064d01"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "122b8259106363fdc6e57f66c17de8ed24921d9afbba25d8aa35035ec8e07a4e"
+            "factsSha256": "32f4b887b9b5321e08519d35def51aeae24e02eabc4e19cc7464754ee4aebe6f"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.blocking:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "691a3a66727f8a25329421975e0e5398605d44e87001db9b695e9739bc75ed95"
+            "factsSha256": "363c8378beb29c5f30210b2f4eb3ffd7a5219332e14f37c4a165f4c905950e85"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.blocking.categories:%5B%22allOf%5B0%5D%22%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "92c8e092d87fec0576e63f371998d8822d3d043db8ff5cc8c434ce67060dd68c"
+            "factsSha256": "1e7ddd5838789ce858983556318ab4ebed49005e2f312352aae7333ef29b3660"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.blocking.categories:%5B%22allOf%5B1%5D%22%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "e0125447d876bb77a3c97b2cf71d9da9e5ea69fe4899f9de8e027ba95bf990fe"
+            "factsSha256": "320e82b07628b5f7e6c978d1c1ad4f556cc05580719ec214d0a46838374fc2a4"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.blocking.categories:%5B%22allOf%5B2%5D%22%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "8396139a9c274e9ba418d837975cb850e5e4942d00b2f5049c12fd74e18ec75b"
+            "factsSha256": "b9c7693c15c748e63e5fc0dda2d6ad50ef20e6d55cdf2e3fbd2d65fa426d737d"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.blocking.categories:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "94aafb70cdbb6f832174ddb3d46987d35055688cec62d20972ebc8501b5e1fff"
+            "factsSha256": "4b8439757e1850133a19e4f25247f82d66e46f936aac66e406f9a0b4ce1b6d08"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.blocking.categories%5B%5D:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "8a86ae503c21ed9edb70cf64658286cc47b418f096986f00983cbfc4f9609ee9"
+            "factsSha256": "cfb53e794ff8b117cd74e79ccf8ff5adc2c8be8dc9f095edf2f2fe2495643e76"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.blocking.priorities:%5B%22allOf%5B0%5D%22%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "21c2fb8f8a13133dd0c83a997db9cb6f0e7eef11d2d4bd180353755decaca3ea"
+            "factsSha256": "9c4c366ed16c9718b98a61cf023ed3881e02318a04392c04647d6e006155f0a8"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.blocking.priorities:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "6c96966cf8314e425cdb61b8805aab5cf97cd4b87fb85c886910e8223ccd26a4"
+            "factsSha256": "a24441a8fc297e16b5317a768d81ed32cd37a1eb708a09295d0ecaae4adb47db"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.blocking.priorities%5B%5D:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "b5f68225b050a6a18a0e83eae8cc9e6e97d9184808e2f883f59682c8c630d096"
+            "factsSha256": "891dd2f44710c7fd32ad7b47bf5ad018c54b9f2664f17a5d863b3507ee95edd9"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.blocking.requireDirectEvidence:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "7f1b8547c117a0c81be925496a9392c88cd3dbe433513ed79010de795dfde919"
+            "factsSha256": "6c7d01483587fc0cde932cca734ef9bf1238145b70a3b81926d7d9f5b21f2196"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.blocking.requireIntroducedByDiff:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "effd72d3881322dab0ac12351a5c423102e2ded158826d7cf1b42f576030d17e"
+            "factsSha256": "3c3ca70662753f7322e7ffa78a87ae54ae6d3c85f5cf77044e27538d73f6edca"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.followUp:%5B%22allOf%5B0%5D%22%2C%22then%22%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "b0033398255dfb1b90f1d5fa7714f9680a0a0389326d814bcf7824f4913083c6"
+            "factsSha256": "26418461317b2deb7bcdcec92ab58550e949ff82abbeb7c78fd143c42b5123ee"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.followUp:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "fa500eea7e53c325a9fc32b6d76d4915df4374301f769128a9b628cd6d3aa9bc"
+            "factsSha256": "16c853917ef5d1182fe9df9938f6b0a5a84cf3991ba567fb90f5094073a7c3e1"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.followUp.maxItems:%5B%22allOf%5B0%5D%22%2C%22then%22%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "44d27e1a68ae19e0e0c23e3bba8f82a358994e25464bd6b7049134dda442019d"
+            "factsSha256": "81a0d76b9c00d77a8b1fb4e88bd02c98c2e16446401b2040d8844c55bbe9cd35"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.followUp.maxItems:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "1c58dd5f73fada6c1b1603af3b166870b8068a3c994a9126860230d71bad6e54"
+            "factsSha256": "923723633f9078a7cc591738c68404bd9e04cc81ecf3a0611b5f8ddf0904e190"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.followUp.retainedPriorities:%5B%22allOf%5B0%5D%22%2C%22then%22%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "47a1f8d9eb77db642c82b42a6378c42e008cb82f949e93a89e069ee5a23767f7"
+            "factsSha256": "54c559c9b3725ade75ebb6f77c9693643e1516abaf254d46d66410dabf3cc4c0"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.followUp.retainedPriorities:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "47a13ad5f82215176745784d5450bfc714d879671e954053229aa83d178b589a"
+            "factsSha256": "f0f61cb895e2126373df47ce1aef93dcf5af3468203340ba7092da27bcf2f5f5"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.followUp.retainedPriorities%5B%5D:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "5e6ef13adb62dadcfe935ab1a1310423a7ef7b939c2e2b079840962dc3e1256b"
+            "factsSha256": "3b99bf2c1ef752fd2766e089a271df10bb7411e7f705aa093f4fcfdb20fe4659"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.governor:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "dcb3a71dab02b59d22dd79e9ebb54f6eb453a99dcc97d052560a367dbcf3e8d2"
+            "factsSha256": "b93597c623ae9746ad12cb4c192ff243584e1297022108a2b974a1ec979ad793"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.governor.absoluteFileAllowance:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "4420458a3a2abda504b9915f7828c0d7af48d8f91f60f77e1474d8d9a3009a41"
+            "factsSha256": "b0022eab76d142fd7798c25deebb5ff16b8610a4e06d25717c849b32568e8d1f"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.governor.absoluteNonTestLocAllowance:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "0132bb653cfbe75e6a149b6b479216473e2453acb37d1b8becdda59da3ee51e6"
+            "factsSha256": "7020047bb3faa3bb9cc7418e23ba77fec0b73ab88f843cdec459a27f194e6f24"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.governor.fileGrowthMultiplier:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "070d10c292dd3124930f97aa766269673d38dd13ba41fdd2a6bd721dade23b9b"
+            "factsSha256": "6b43a07dc5ae13ce587a6c914609793634e78e5978a9e272e9e848270ddf4c5d"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.governor.maxRepairCycles:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "d3eec450c13d9a601f99a391ad6428657f28043875e1d9e2d191d129eeff26ec"
+            "factsSha256": "35e19f08a477b8aae19f2a84e4aa05e32afec7edc9db0ed9ea7e8ea8d72a5b33"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.governor.nonTestLocGrowthMultiplier:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "9789aabcb19776e69d3ac9f69c1eb4b457097d95c5077573467bf350d70690f8"
+            "factsSha256": "c1c8070bbd34561276448d7e44ee071b4cfed4adc5c29c765f695410b9204bc7"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.limits:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "6771ef6e0ebee75e68a764cb1ecba9b818d08566c97f893954386f7460164e42"
+            "factsSha256": "cb2d8eef86c910729ad6514f5cface56926eb8790c6db853089aac375b4e2c3c"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.limits.maxAdvisories:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "8aed95122d8a3fe9ec1873bffb25288042316bcd680d2e3d8e1e0bf9320016a6"
+            "factsSha256": "e367a1a1f79a9b712b99adb1c2df2e42136815728279acf7a3b700812239db4f"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.limits.maxBundleBytes:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "eab919a136c2a26f44add412a5f9a104e605bdda8c872e3945226a1f41a4c59d"
+            "factsSha256": "ca3f5b55e111c9c9ee7e9434540e5a5a683ac9cd54ad758ddc5d14ea1443e01b"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.limits.maxContextBytes:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "d5e3bdd5de0f12bb0b93ea6c9ea61634119ef9550c6560c9b736939516c01caa"
+            "factsSha256": "5bc9e1ff8acf4b155ed2f9f3cb61842605654b8ed1c5a23dd44513fccd9b8ed1"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.limits.maxContextFileBytes:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "1d8b123bb0c210bd0bf8aa0f4d0c983cb5718923a8ac5529d105e1395432fab4"
+            "factsSha256": "ec7016a43674281dfbbd7ce6a58a05c4576eb51487dec7aab601bdaaf7188b7b"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.limits.maxContextFiles:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "39ffe20dd734efd8b72120db45513583616e65ac12b592b557ea9ebf8add2a87"
+            "factsSha256": "a89d0fc653f3da585849dfc336f38e688af4d84179aa752fb5e4d8a2b94624c6"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.limits.maxDependencyDepth:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "145c5c812abad39983f120f4a04d4ca4adadec52fa5ac8cf236a73ab3d90b0bf"
+            "factsSha256": "3613b2f4949086e5c1ae3faeb29d2010a2997348a433959496521b7f9b503abd"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.limits.maxExpansionFiles:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "e84521a2baacab2dedf7d749c5157b9ee997e1bd738e2022ce473c1b5bae2606"
+            "factsSha256": "3009e9035fe64e301cb8852e88d42265f9d387acd1c63da933137b377d07fc2e"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.limits.maxInitialContextBytes:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "cc9dfb2063c7bd128e0641a4ab8ae86847b1fea09b26faa329a1084c1c3f66b9"
+            "factsSha256": "babdc2c80ef23d914cfc75261467edd3b98c9b01f286fab71406d43b41c6bcd1"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.limits.maxInitialContextFiles:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "8e30de2dea9a1e97abf6440ed1e6c14f97d67fa8b61e7c7d65462ccaf87b99bc"
+            "factsSha256": "0ffddc6558507c48ac93f0b7c6487e669e2f4514b5735dfbd90d7a0dd25e2208"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.limits.maxInstancesPerCluster:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "a5f353c59fbfd0b90fe94618f825e74a32f255ed5e8cb75b0c78fa074ccb28be"
+            "factsSha256": "d360c2fff35837fcbbfeb9d6d5c679b433d866af060f1ab287716dd8b11f48a9"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.limits.maxProposals:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "c382cacdaaa347c2c02a824c3e563eb0bcef661605886bea12e38dbc66e72f64"
+            "factsSha256": "e9dfd460aa46616a1a40bc03fc5550d94bd989263b89b4f10ae2668ee60ce822"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.limits.maxRootCauses:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "5adaa92d83a82fc0f5c363585569659754e071d875a27e3f5680f70ea8f4af49"
+            "factsSha256": "2cf31baaeed656fb92629279ac3be5bf4bad36877e5a586db6915f8f042d942e"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.profile:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "f92953e517917aef68926070393f472de56a8fdc3107b2bec46f7af9e7de1308"
+            "factsSha256": "dbca13f3dcfd9bc7bbabc396fde4014b6ca7b130f229ee4d1a6f13849b58c846"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.ranking:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "07b133300217d1866bc76dfcb92e5075eea76c0b169e840b90c4cabf0df7b546"
+            "factsSha256": "b241ce4aa01b51d2e7d53175c08ee7f540aff55878f2d2aa7a324172d189f865"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.ranking.categoryWeights:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "a2c38544d98ca531faff75258141c30cd684a1cda20bcfb78ae4c6a5afd360da"
+            "factsSha256": "282cd273069ef4fe788f65bfdc251a4eaf9c4bf07de5eb19f30128c80032e822"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.ranking.categoryWeights.architecture:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "87d2def164b70cfd81ea31a63d86faf689cbfdd893d8794f7f9abf98baa077f0"
+            "factsSha256": "6e138b34ab543da7d1989efc52639bf9804824238dd9b86883cc600ae04bd222"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.ranking.categoryWeights.contract:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "e9011ac8d7342cf89ddfa42f84cbca0d5503cfa520099e5e36066c3a8e9986ea"
+            "factsSha256": "0dd069ab612cf50b9b1154bd8d0b9015249e817a143b2d3aa5f298cb677a76ad"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.ranking.categoryWeights.correctness:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "2e47ec5feed2e6446bfdb50be116b6eafddd86d68ae5d09710bf7607bddef8d8"
+            "factsSha256": "84dd96e4aed9eee83466b3dcae954e264cbd50b0f845348a0ac26411ff14e168"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.ranking.categoryWeights.security:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "ba17ede31716d34e0416dc88f733dbe75ad34492412a701c1fe62f4082e0da93"
+            "factsSha256": "c6002a6f7b9d74333cf256b8ff199626d519d3670ac624a8fb777cccdb0d3fbc"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.ranking.categoryWeights.simplification:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "ecf149cf8e3e4515033a6c53004377eac2699df2b6d07ca7006ec940a7f44b5a"
+            "factsSha256": "f178d1d0135839c00e701301ade68a4a91bac025ed92dffb6cb6e8ebdeb48f5c"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.ranking.directEvidenceBonus:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "09f4dba589089d1bd9810d2a08d0cb7e3d27d1ec17586cbc1627c874a2e4f5d9"
+            "factsSha256": "8f8087271c8ac8e5ab58ff5d6919a1a6d46d09f687748193f963db6df3c6ef2c"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.ranking.introducedByDiffBonus:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "f62a3d7be19468a079ac14d4a5cc8bf120ce419ab773d9f0976181ebb59b9a5a"
+            "factsSha256": "72f57f705aba1a6bbd3897d8193602a7eb346ef14c0426f20c3c413f9cb905ed"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.ranking.priorityWeights:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "729eb16879adcf77d0262141167af8d0d8d86bd266e49a600099874995761dfe"
+            "factsSha256": "6e6fcb2f80d8f30f22579a0bddf3d940eb4683acb8aade9c62100cb04b98e887"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.ranking.priorityWeights.P0:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "d505280db3e08ff308867b21bb53de6d7cf147ce47519ec454b3187e58485f52"
+            "factsSha256": "950fb6b521db1c0cf98b5aebedbf9244fd64b20e48feebb5f8a181876bb5f358"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.ranking.priorityWeights.P1:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "d1b632a15e37e7725ef77f02a7b8d714affdea2b1d50031146d27998a4e7a31b"
+            "factsSha256": "6e6ee345af66c15bbc262bae2507ef8b67ea801687a8be445418a3ed66f66156"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.ranking.priorityWeights.P2:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "14afd48692b1e6d620578317c43627a8c74d928f208af892565a1c444c13b8f1"
+            "factsSha256": "d7c460a9a39b1c967481b45748eb9bff22c3fb5c901d594eb2161543493de6be"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.ranking.priorityWeights.P3:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "3d5ed3c5657b182567812dc6b3e21e919f39afa5892602ca0785df1117fccd02"
+            "factsSha256": "33dc1db152b6c7bf2458eb9c6bf28826b303d05fc3369dce64755f25f61ca9a2"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.schemaVersion:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "c1d6f93c7caa7c6d9e218ade79999d09cecde446d853b40862782fca932f8d65"
+            "factsSha256": "a2c45c0698844ea311d8782df834b39a55ec014b3e27764c61845696bd5dd605"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.scope:%5B%22allOf%5B0%5D%22%2C%22if%22%2C%22anyOf%5B0%5D%22%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "69598f800441517b23b3879ded9432c3c248508a9b47a076c770edde561857c8"
+            "factsSha256": "78a3c9e48eebc0d7cba0d787ef7f287c0298664137210fdb2171a7eb70a0bde7"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.scope:%5B%22allOf%5B0%5D%22%2C%22if%22%2C%22anyOf%5B1%5D%22%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "07a5f30b4b69025817e232cd361e23ea5b93a4bcc429ff9027045ab8ede09060"
+            "factsSha256": "a3cc7f2527156e20198a1177683102f81285573f1c32c7d5b7a23193ec1498ff"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.scope:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "60b377d1b4a56ff9f31f8c984a31e2c68914c78f3a8885648efeb4df26e8bf67"
+            "factsSha256": "13dcec7755cfea27e69591fa5f799cd240300eeb27c469a75dba55054604538e"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.scope.outsideScope:%5B%22allOf%5B0%5D%22%2C%22if%22%2C%22anyOf%5B0%5D%22%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "89b3c5a92e09dd984d6bab9f937784a862a7316f7b6a02fe00989c31e22b8fb7"
+            "factsSha256": "38c6982d50322aa5deb1158dc5b2b14e4131aa4b02df79c58ebe50b69a42db9d"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.scope.outsideScope:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "1a71145b82e805877927e0a661db850b9def79979ca8989cd0b7110e2491cb1f"
+            "factsSha256": "60f3a8c27c16ce3a897c01e59e3f7b0b523d0b2cff0d744a3211503f386202f8"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.scope.retainPreExisting:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "9e2da00d8b6788c0aace6454be8e536f1012ff6abdcbf886cde9fc9fd5d5931d"
+            "factsSha256": "19d4c868eeac2a5a298caaf63ae76ee7520ceb689000196127c9484c007350b5"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.scope.unknownScope:%5B%22allOf%5B0%5D%22%2C%22if%22%2C%22anyOf%5B1%5D%22%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "010ef5eb412ba0dfa72cb2fabc96484135a4d938a91179b91327e334dd94f5c9"
+            "factsSha256": "8cc52f4305d3b8c48c0a3c06f010620fe7bef649d428686ac158b5c88b37b8f0"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.scope.unknownScope:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "032c2bb9c19319e84837e05bd215c3cbdb605934c064d4d3f18682275648f2d6"
+            "factsSha256": "40f1980041b054e8b49b305742cd5d162d860197ba5352f314e0323d8974620e"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.simplification:%5B%22allOf%5B1%5D%22%2C%22else%22%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "7aa3772bd939898a64495b2a75fc7df5894ed47436b82ccaba9fc450acbc548c"
+            "factsSha256": "79f2228aa4083b53954ddf3f66d0697ce4034c08bfa2cfee6cf2bf2a73d06843"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.simplification:%5B%22allOf%5B1%5D%22%2C%22if%22%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "e3889af2aa6727e7db6f5d9506d3f1583006e76341912aca84c80921aabe716d"
+            "factsSha256": "325ec2ae19aa9ff0774374b3ecba9a1994523a6a00cff41199ab997646a2e8f7"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.simplification:%5B%22allOf%5B1%5D%22%2C%22then%22%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "ca6f4ea1bf4a4efe85f2c3e185e79b62ce1bf135be8eb7f3c6ea88f0bc70dc8f"
+            "factsSha256": "8ea15293d4c75b2a5fe48b3f5f46f041ca794fe6000a7f2a26baedce3b39a702"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.simplification:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "dfe3cd6f6a9c3fbf711a3dcfcc2a7961b04ed827e72b5dd07a2d6cf8b17b0eba"
+            "factsSha256": "586a3b05efc3bb01c8b52d3c16b5100c807c49f7dcca2f06b727fb2285c0544e"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.simplification.enabled:%5B%22allOf%5B1%5D%22%2C%22if%22%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "677029c6c50c6c38fb45d857f04b5284d14c0f61888cd003086f9754f908d1fc"
+            "factsSha256": "5eba064bab29e0ad6e02365e51fc8974d12bcdcb12cfaa29121d26f61008003e"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.simplification.enabled:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "673c989e540d262aec0316c841157c2f6f1d1fa82a64b09734c323810c2d0f97"
+            "factsSha256": "ea1165072f43b54d0502a0f8fd01f6f9d03cb6a9164b2c7ad2ddbce7f995fd9e"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.simplification.enabledRules:%5B%22allOf%5B1%5D%22%2C%22else%22%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "75ca43829f16ee5846539f2b7cc8e092ee762ee762e8c38025721f591d56a142"
+            "factsSha256": "228c6c7954171afbc7c4136bf48cfdc5b97cdcb0ed1f521d4ad3a5a44c1ea968"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.simplification.enabledRules:%5B%22allOf%5B1%5D%22%2C%22then%22%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "66a25f579cfd0e319f2599c25dd5b7a183893e640486f3d0aec1e42d4af39b1e"
+            "factsSha256": "21e9877d79f6f65152979b95a3b81dfea5c13b41f6e9326c4bace57a8afbaacd"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.simplification.enabledRules:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "c63a11235283c854d5bed6904d383720f8b1491fe9d9b5f41b347aa864b6e0f3"
+            "factsSha256": "4398068ef338c20a7e63b38aee0b8e4f1dea72dcd48de5a1dd3db81851f619ce"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.simplification.enabledRules%5B%5D:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "fd60dddd3ad95186ff5a59e9943a76d2e2b4c030971c476fa46450ef59cb8159"
+            "factsSha256": "99584d1c51f1c011b09d72e27381771164b8ffa91917cd1ed5b11fc52d95efb9"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.simplification.maxRecommendations:%5B%22allOf%5B1%5D%22%2C%22else%22%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "33700be1ff144301a1c508707cec6893e26e359b130d38dd7e13b6c093743602"
+            "factsSha256": "5c7822e9ca7d96044651de454cc8135310a25a4e68a4e772c4add698a4a3d6e0"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.simplification.maxRecommendations:%5B%22allOf%5B1%5D%22%2C%22then%22%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "9f5aa2de8e1b0907c729d09f0bf11e9e94d572fbe53d24e0aac3d10d582f17ab"
+            "factsSha256": "32f70a5a16eacf792dbb030458424b48e9d7673c4ce8a32494b246a91a4931e4"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.simplification.maxRecommendations:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "5d36537b01ff3b177d7198bfbfb495b685885893c08b387434cdd69025ace824"
+            "factsSha256": "9293be3b36ca9d1ba4ed92d5359483d31cdb54423eccb55803c622ba4f35f789"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.simplification.minimumConfidence:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "45b366ea0e5d612b7393e827710647bf3e3085852037467800c6d1194fbb2b52"
+            "factsSha256": "8938d78bf4e4c365e522019bb47f1bdfb6eab7f10d8c2c428685ba2246cbbc3f"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.simplification.registryVersion:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "7e6e20940853e118d33bfeacdb88b41b4e8231cfc3fb4227553f77883d27d1d8"
+            "factsSha256": "2189e0bc1458341ebe817d07060d48ac621c7a7de1d9a108786ee0158f9262e5"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.verification:%5B%22allOf%5B0%5D%22%2C%22if%22%2C%22anyOf%5B2%5D%22%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "8336fd1afc0e4f337128bc71d3f1431cfd449260f996f73b8e692bad06e4ae72"
+            "factsSha256": "fc2f82f7bc755a57131b4474336d863fd49a6f489d4a472de425adbb31b9c487"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.verification:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "399bcc23ee46916e1558c888b995207b7d243a741e37d67abdbd5d3bf5f00eca"
+            "factsSha256": "2fc9063c800249ec665be4fca0ef3adbba487dce812de8b64c3a6904026ee698"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.verification.insufficientFindingEvidence:%5B%22allOf%5B0%5D%22%2C%22if%22%2C%22anyOf%5B2%5D%22%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "3db7cb54ae6af7964ca4a25aede6f4893a17e1449f61627d504401b615210b2c"
+            "factsSha256": "7bab8b7a3ce97760c563112ef52020bec63abc08b654698f004e40977f31bdf9"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.verification.insufficientFindingEvidence:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "fdb90bac7a41b5b388b530833b86de7d04c6a2394e60ff903667536104796092"
+            "factsSha256": "21a186671a79805362b252d76dfeaff1101c3068690643fe36517a451267bd4d"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.verification.semanticVerifier:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "edfba458fdd6880a6f70f60789b8c63c23b8a68b83ae4647375b907dab53dc5b"
+            "factsSha256": "d2ec7b44e44fda1ad913b9bd47401e127c9024ff5a47f524c3a820327466ff80"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.policy.verification.unverifiedRequirement:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "d25444fa629fa3ac3fc8553646627eca74d4d8eb5a51173db9877f375dc0b68b"
+            "factsSha256": "3b2fcfd3a4bffa45cf60a5b5ea66aad42cd5ea8d3a5147b9d44b2e757c3b29df"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.profile:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "a12fcf9dc4bc11bd9932631ae9c6f750778eba36050e925b6e617a9bd5b69899"
+            "factsSha256": "f99431f381405f726e89d90de45133900f12857ebe67e726582c7af506d72f18"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.reviewerAgentId:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "8d1067398ef0c63072aab6c982e54bf90a5a2bcdeafd24b82dd6fa33e2af0f6a"
+            "factsSha256": "1bf2b136cf33e3f84dd82540de4dc7ba57298a9dbd833c4479e974b78db72493"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.reviewerModel:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "86a4c571400f972318035bfe73f494ecda4a64455c7cc902a7ce6f4ee99941c2"
+            "factsSha256": "e1a8614c832342a0d42102e35e52d4e301ffbf0934682885fec1de8e897c27a5"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.reviewerRuntime:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "ffd9fd9a6b4b799b15bfbc1d4664f97a010a21e8ef50279cd68c27f961c94a19"
+            "factsSha256": "e1f223e5d7de7050e605ed88bbaf28f0f952e7efa7ce599165348de6513c1624"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.reviewerThinking:%5B%5D",
             "source": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "007ae479cc7bbd66d96a6f0c04974e5031dfc73b352380f45eba61fdd995a47b"
+            "factsSha256": "00d39fdfd1b53fad37a67d8464d8e4c82ff2e535bd43d961cb0d1920ef281691"
+          },
+          {
+            "sourceId": "configuration-schema:skills%2Fprism%2Fopenclaw-plugin%2Fopenclaw.plugin.json%23%24.configSchema:%24:%5B%5D",
+            "source": "skills/prism/openclaw-plugin/openclaw.plugin.json#$.configSchema",
+            "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
+            "owner": "configuration source owners listed for each schema",
+            "factsSha256": "be04d4bdbe01b99e6c5df79dea4c8f9c748966dfccbbbe01379fa3512b799813"
+          },
+          {
+            "sourceId": "configuration-schema:skills%2Fprism%2Fopenclaw-plugin%2Fopenclaw.plugin.json%23%24.configSchema:%24.controlUrl:%5B%5D",
+            "source": "skills/prism/openclaw-plugin/openclaw.plugin.json#$.configSchema",
+            "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
+            "owner": "configuration source owners listed for each schema",
+            "factsSha256": "1efaa45c9135158b0b2c3ed788417df339f6853957066a8d8d72891e6520b660"
           }
         ]
       },
@@ -55895,7 +55909,9 @@
           "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.reviewerModel:%5B%5D",
           "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.reviewerRuntime:%5B%5D",
           "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24.reviewerThinking:%5B%5D",
-          "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24:%5B%5D"
+          "configuration-schema:skills%2Fnova%2Fplugins%2Freview%2Fschemas%2Frepository-audit-config.schema.json:%24:%5B%5D",
+          "configuration-schema:skills%2Fprism%2Fopenclaw-plugin%2Fopenclaw.plugin.json%23%24.configSchema:%24.controlUrl:%5B%5D",
+          "configuration-schema:skills%2Fprism%2Fopenclaw-plugin%2Fopenclaw.plugin.json%23%24.configSchema:%24:%5B%5D"
         ]
       },
       {

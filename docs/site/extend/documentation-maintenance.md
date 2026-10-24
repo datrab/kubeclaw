@@ -167,6 +167,33 @@ cause and rerun that same owned generator. Do not use a broad reset, edit genera
 facts manually, or pass a gap-allowance switch to hide a production omission.
 For prose-only changes, avoid unrelated generator writes.
 
+For plugin package, registration, schema, Secret-reference or artifact-operation
+changes, first run the registered command "npm run docs:ap08:inventory" to
+refresh the discovered package set. Then generate and check the dependency aggregate:
+
+```sh
+node scripts/generate-plugin-dependency-aggregate.mjs
+node scripts/generate-plugin-dependency-aggregate.mjs --check
+```
+
+Inspect and commit the discovery and aggregate diffs together. The supported
+aggregate command always checks fresh package discovery and runtime package
+ownership before collecting current dependency facts; a stale discovery check
+or ownership failure stops it. It writes only
+the blueprint output file `plugin-dependency-aggregate.json`; `--check` compares
+that output without rewriting it. Read-only Docs Checks runs this comparison;
+the trusted main update generates it after package discovery and checks it before
+the scoped generated-output commit. These are workflow definitions, not evidence
+of a successful GitHub run.
+
+The aggregate retains raw schema structure and source-located dependency facts.
+It does not prove runtime defaults, activation, arbitrary artifact content roles
+or complete operational ownership. Missing source classifications and unknown
+operational owners remain explicit; manifest author attribution is not an
+operational or data-owner assignment. Review the actual consumer and responsible
+owner before resolving such gaps; do not replace unknowns with inferred owners
+or edit generated facts to make the drift check pass.
+
 For a plugin-schema explanation change, the inventory owner supports
 `node scripts/docs-configuration-inventory.mjs --schemas-only`. This writes the
 complete schema inventory without regenerating unrelated values/API families.

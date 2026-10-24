@@ -156,6 +156,7 @@
         "node --test tests/verification/deployment/docs-reference-scope.test.mjs",
         "node scripts/check-workflow-yaml.mjs .github/workflows/docs-checks.yaml && node --test tests/verification/contracts/workflow-trust-split.test.mjs",
         "node scripts/docs-check.mjs",
+        "node scripts/generate-plugin-dependency-aggregate.mjs --check",
         "npm ci --ignore-scripts && npm ci --prefix scripts/docs-reader --ignore-scripts",
         "npm run docs:ap08:inventory",
         "npm run docs:ap08:review-scope",

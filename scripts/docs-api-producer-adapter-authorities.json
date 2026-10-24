@@ -19448,7 +19448,7 @@
               "expression": "reviewedDocumentationOwnerPurposes[source]?.allowedNativePackageEntries.some(value=>JSON.stringify(value)===JSON.stringify(entry))??false"
             }
           ],
-          "factsDigest": "d500537e9f54b642abc504093ff10030746c2e0bcd9935699c00bf9e9c3e0cdd"
+          "factsDigest": "796145e98c68c4966416031e717002a8bf0d1c31c0c63d29e5bce6c6da805b00"
         }
       ],
       "roleConsumerEvidence": {
