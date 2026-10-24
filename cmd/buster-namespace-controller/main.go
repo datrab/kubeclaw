@@ -32,27 +32,28 @@ const (
 var errNamespaceOwnershipMismatch = errors.New("namespace ownership does not match lease")
 
 type controller struct {
-	namespace            string
-	apiGroup             string
-	apiVersion           string
-	allowedAccess        map[serviceAccountRef]map[string]bool
-	allowedSourceSecrets map[string]bool
-	serviceAccountName   string
-	secretRoleName       string
-	deployerRoleName     string
-	testerRoleName       string
-	opsMCPNamespace      string
-	opsMCPRelease        string
-	allowedPrefixes      []string
-	defaultTTL           time.Duration
-	maxTTL               time.Duration
-	pollInterval         time.Duration
-	finalizer            string
-	apiURL               string
-	tokenPath            string
-	httpClient           *http.Client
-	readiness            *readinessConfig
-	product              *productConfig
+	namespace                  string
+	apiGroup                   string
+	apiVersion                 string
+	allowedAccess              map[serviceAccountRef]map[string]bool
+	allowedSourceSecrets       map[string]bool
+	familyclawBootstrapEnabled bool
+	serviceAccountName         string
+	secretRoleName             string
+	deployerRoleName           string
+	testerRoleName             string
+	opsMCPNamespace            string
+	opsMCPRelease              string
+	allowedPrefixes            []string
+	defaultTTL                 time.Duration
+	maxTTL                     time.Duration
+	pollInterval               time.Duration
+	finalizer                  string
+	apiURL                     string
+	tokenPath                  string
+	httpClient                 *http.Client
+	readiness                  *readinessConfig
+	product                    *productConfig
 }
 
 type serviceAccountRef struct {
@@ -171,6 +172,7 @@ func newController() (*controller, error) {
 		testerRoleName:     env("BUSTER_TESTER_ROLE_NAME", "buster-namespace-tester"),
 	}
 
+	ctrl.familyclawBootstrapEnabled = os.Getenv("BUSTER_FAMILYCLAW_BOOTSTRAP_ENABLED") == "true"
 	ctrl.opsMCPNamespace = os.Getenv("BUSTER_OPS_MCP_NAMESPACE")
 	ctrl.opsMCPRelease = os.Getenv("BUSTER_OPS_MCP_RELEASE")
 	if ctrl.opsMCPNamespace != "" || ctrl.opsMCPRelease != "" {
@@ -353,6 +355,9 @@ func (c *controller) reconcileReadyLease(ctx context.Context, item *lease, names
 		return err
 	}
 	if err := c.ensureBusterE2EEgressPolicy(ctx, item, namespaceName); err != nil {
+		return err
+	}
+	if err := c.ensureLeaseFamilyclawBootstrap(ctx, item, namespaceName); err != nil {
 		return err
 	}
 	credentials, err := c.ensureTestCredentials(ctx, item, namespaceName)
@@ -635,6 +640,9 @@ func (c *controller) provisionLease(ctx context.Context, item *lease, namespaceN
 		return err
 	}
 	if err := c.copySecrets(ctx, stringSlice(item.Spec["secretsToCopy"]), namespaceName); err != nil {
+		return err
+	}
+	if err := c.ensureLeaseFamilyclawBootstrap(ctx, item, namespaceName); err != nil {
 		return err
 	}
 	credentials, err := c.ensureTestCredentials(ctx, item, namespaceName)
@@ -1641,6 +1649,9 @@ func (c *controller) expiresAt(item *lease) time.Time {
 }
 
 func (c *controller) validateLeaseSpec(item *lease) error {
+	if _, err := c.familyclawBootstrapRequest(item); err != nil {
+		return err
+	}
 	if err := validateFullStackNetwork(item.Spec); err != nil {
 		return err
 	}

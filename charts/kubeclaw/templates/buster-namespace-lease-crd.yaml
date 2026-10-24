@@ -76,7 +76,21 @@ spec:
                   message: "secretsToCopy is immutable"
                 - rule: "has(self.testCredentials) == has(oldSelf.testCredentials) && (!has(self.testCredentials) || self.testCredentials == oldSelf.testCredentials)"
                   message: "testCredentials is immutable"
+                - rule: "has(self.familyclawBootstrap) == has(oldSelf.familyclawBootstrap) && (!has(self.familyclawBootstrap) || self.familyclawBootstrap == oldSelf.familyclawBootstrap)"
+                  message: "familyclawBootstrap is immutable"
+                - rule: "!has(self.familyclawBootstrap) || (has(self.fullStack) && self.fullStack && has(self.ttlSeconds) && self.ttlSeconds <= 3600 && (!has(self.purpose) || self.purpose == 'pretest') && (!has(self.secretsToCopy) || size(self.secretsToCopy) == 0) && !has(self.testCredentials))"
+                  message: "Familyclaw bootstrap requires a bounded full-stack pretest without copied/demo credentials"
               properties:
+                familyclawBootstrap:
+                  type: object
+                  properties:
+                    profile:
+                      type: string
+                      enum: ["familyclaw.v1"]
+                    release:
+                      type: string
+                      pattern: '^[a-z][a-z0-9-]{0,34}$'
+                  required: ["profile", "release"]
                 namespaceName:
                   type: string
                   pattern: '^[A-Za-z0-9]([A-Za-z0-9._-]*[A-Za-z0-9])?$'
@@ -541,6 +555,38 @@ spec:
                     credentialDigest:
                       type: string
                       pattern: '^sha256:[a-f0-9]{64}$'
+                familyclawBootstrapIntent:
+                  type: object
+                  properties:
+                    leaseUID: {type: string, minLength: 1}
+                    namespace: {type: string, minLength: 1}
+                    release: {type: string, minLength: 1, maxLength: 35}
+                    digest: {type: string, pattern: '^sha256:[a-f0-9]{64}$'}
+                  required: ["leaseUID", "namespace", "release", "digest"]
+                familyclawBootstrapSource:
+                  type: object
+                  properties:
+                    name: {type: string, minLength: 1, maxLength: 63}
+                    uid: {type: string, minLength: 1}
+                    digest: {type: string, pattern: '^sha256:[a-f0-9]{64}$'}
+                  required: ["name", "uid", "digest"]
+                familyclawBootstrapSecrets:
+                  type: object
+                  maxProperties: 6
+                  additionalProperties:
+                    type: object
+                    properties:
+                      uid: {type: string, minLength: 1}
+                      digest: {type: string, pattern: '^sha256:[a-f0-9]{64}$'}
+                    required: ["uid", "digest"]
+                familyclawBootstrapReady:
+                  type: object
+                  properties:
+                    profile: {type: string, enum: ["familyclaw.v1"]}
+                    namespace: {type: string, minLength: 1}
+                    secretCount: {type: integer, minimum: 6, maximum: 6}
+                    ready: {type: boolean}
+                  required: ["profile", "namespace", "secretCount", "ready"]
                 podReplacement:
                   type: object
                   x-kubernetes-preserve-unknown-fields: true

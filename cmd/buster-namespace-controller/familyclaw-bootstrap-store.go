@@ -29,7 +29,7 @@ func bootstrapDigest(value interface{}) string {
 	return "sha256:" + hex.EncodeToString(sum[:])
 }
 
-// No reconciliation/admission caller yet. Journal contains private material and
+// Called only through the default-disabled fixed-profile wrapper. Journal contains private material and
 // must never be delivered to workloads, tool output, status or public artifacts.
 func (c *controller) ensureFamilyclawBootstrap(ctx context.Context, item *lease, namespace, release string) (map[string]interface{}, error) {
 	live, err := c.familyclawBootstrapLease(ctx, item, namespace)
@@ -45,6 +45,7 @@ func (c *controller) ensureFamilyclawBootstrap(ctx context.Context, item *lease,
 			return nil, err
 		}
 	}
+	item.Status = live.Status
 	return map[string]interface{}{"profile": "familyclaw.v1", "namespace": namespace, "secretCount": len(documents), "ready": true}, nil
 }
 

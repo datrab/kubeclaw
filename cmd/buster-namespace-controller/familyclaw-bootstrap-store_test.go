@@ -64,7 +64,7 @@ func (f *bootstrapAPIFixture) serve(w http.ResponseWriter, r *http.Request) {
 			status["familyclawBootstrapIntent"] = map[string]interface{}{"digest": "other"}
 		}
 		_ = json.NewEncoder(w).Encode(map[string]interface{}{"metadata": map[string]interface{}{"name": "fixture", "uid": f.leaseUID, "resourceVersion": fmt.Sprint(f.revision)},
-			"spec": map[string]interface{}{"namespaceName": "test-familyclaw"}, "status": status})
+			"spec": mergeBootstrapTestSpec(f.item.Spec), "status": status})
 		return
 	}
 	if r.URL.Path == "/api/v1/namespaces/test-familyclaw" {
@@ -290,4 +290,13 @@ func TestFamilyclawBootstrapOldIntentCannotCommitSourceAfterReplacement(t *testi
 	if err == nil || f.status["familyclawBootstrapSource"] != nil {
 		t.Fatal("stale intent committed source")
 	}
+}
+
+func mergeBootstrapTestSpec(spec map[string]interface{}) map[string]interface{} {
+	result := cloneObject(spec)
+	if result == nil {
+		result = map[string]interface{}{}
+	}
+	result["namespaceName"] = "test-familyclaw"
+	return result
 }
