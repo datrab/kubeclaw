@@ -76,6 +76,8 @@ spec:
                   message: "secretsToCopy is immutable"
                 - rule: "has(self.testCredentials) == has(oldSelf.testCredentials) && (!has(self.testCredentials) || self.testCredentials == oldSelf.testCredentials)"
                   message: "testCredentials is immutable"
+                - rule: "has(self.testSecrets) == has(oldSelf.testSecrets) && (!has(self.testSecrets) || self.testSecrets == oldSelf.testSecrets)"
+                  message: "testSecrets is immutable"
                 - rule: "has(self.familyclawBootstrap) == has(oldSelf.familyclawBootstrap) && (!has(self.familyclawBootstrap) || self.familyclawBootstrap == oldSelf.familyclawBootstrap)"
                   message: "familyclawBootstrap is immutable"
                 - rule: "!has(self.familyclawBootstrap) || (has(self.fullStack) && self.fullStack && has(self.ttlSeconds) && self.ttlSeconds <= 3600 && (!has(self.purpose) || self.purpose == 'pretest') && (!has(self.secretsToCopy) || size(self.secretsToCopy) == 0) && !has(self.testCredentials))"
@@ -180,6 +182,53 @@ spec:
                   items:
                     type: string
                     pattern: '^[A-Za-z0-9._-]+$'
+                testSecrets:
+                  type: object
+                  additionalProperties: false
+                  required:
+                    - values
+                    - secrets
+                  properties:
+                    values:
+                      type: object
+                      minProperties: 1
+                      maxProperties: 32
+                      additionalProperties:
+                        type: object
+                        additionalProperties: false
+                        required:
+                          - kind
+                        properties:
+                          kind:
+                            type: string
+                            enum:
+                              - random
+                              - tls
+                          bytes:
+                            type: integer
+                            minimum: 16
+                            maximum: 64
+                          encoding:
+                            type: string
+                            enum:
+                              - hex
+                              - base64
+                              - base64url
+                          host:
+                            type: string
+                            pattern: ^[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?$
+                    secrets:
+                      type: object
+                      minProperties: 1
+                      maxProperties: 16
+                      additionalProperties:
+                        type: object
+                        minProperties: 1
+                        maxProperties: 32
+                        additionalProperties:
+                          type: string
+                          minLength: 1
+                          maxLength: 4096
                 testCredentials:
                   type: object
                   x-kubernetes-validations:
@@ -555,6 +604,30 @@ spec:
                     credentialDigest:
                       type: string
                       pattern: '^sha256:[a-f0-9]{64}$'
+                fixtureSecretIntent:
+                  type: object
+                  properties:
+                    leaseUID: {type: string, minLength: 1}
+                    namespace: {type: string, minLength: 1}
+                    requestDigest: {type: string, pattern: '^sha256:[a-f0-9]{64}$'}
+                    digest: {type: string, pattern: '^sha256:[a-f0-9]{64}$'}
+                  required: ["leaseUID", "namespace", "requestDigest", "digest"]
+                fixtureSecretSource:
+                  type: object
+                  properties:
+                    name: {type: string, minLength: 1, maxLength: 63}
+                    uid: {type: string, minLength: 1}
+                    digest: {type: string, pattern: '^sha256:[a-f0-9]{64}$'}
+                  required: ["name", "uid", "digest"]
+                fixtureSecretSecrets:
+                  type: object
+                  maxProperties: 16
+                  additionalProperties:
+                    type: object
+                    properties:
+                      uid: {type: string, minLength: 1}
+                      digest: {type: string, pattern: '^sha256:[a-f0-9]{64}$'}
+                    required: ["uid", "digest"]
                 familyclawBootstrapIntent:
                   type: object
                   properties:

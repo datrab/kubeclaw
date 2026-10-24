@@ -360,6 +360,9 @@ func (c *controller) reconcileReadyLease(ctx context.Context, item *lease, names
 	if err := c.ensureLeaseFamilyclawBootstrap(ctx, item, namespaceName); err != nil {
 		return err
 	}
+	if err := c.ensureLeaseTestSecrets(ctx, item, namespaceName); err != nil {
+		return err
+	}
 	credentials, err := c.ensureTestCredentials(ctx, item, namespaceName)
 	if err != nil {
 		return err
@@ -643,6 +646,9 @@ func (c *controller) provisionLease(ctx context.Context, item *lease, namespaceN
 		return err
 	}
 	if err := c.ensureLeaseFamilyclawBootstrap(ctx, item, namespaceName); err != nil {
+		return err
+	}
+	if err := c.ensureLeaseTestSecrets(ctx, item, namespaceName); err != nil {
 		return err
 	}
 	credentials, err := c.ensureTestCredentials(ctx, item, namespaceName)
@@ -1649,6 +1655,9 @@ func (c *controller) expiresAt(item *lease) time.Time {
 }
 
 func (c *controller) validateLeaseSpec(item *lease) error {
+	if _, err := parseFixtureSecrets(item); err != nil {
+		return err
+	}
 	if _, err := c.familyclawBootstrapRequest(item); err != nil {
 		return err
 	}

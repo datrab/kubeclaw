@@ -1,3 +1,4 @@
+import { testSecretContract, validateTestSecretBindings } from '../../plugins/kubernetes-fixture/src/test-secrets.js';
 import crypto from 'node:crypto';
 import { fixtureBootstrapProfile, validateBootstrapManifest } from './kubernetes-fixture-bootstrap.ts';
 import { collectFixtureFailureEvidence } from './kubernetes-fixture-diagnostics.ts';
@@ -728,8 +729,10 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
       testCredentials = { mode, secretName, keys: ['username', 'password'],
         readers: [...new Set([this.#credentialReaderSubject, this.#runnerSubject])] };
     }
+    const testSecrets = testSecretContract(payload.testSecrets);
     const documents = verifiedImages ? flattenDocuments(boundedManifestDocuments(bytes), this.#maximumResources) : [];
     if (familyclawBootstrap) validateBootstrapManifest(documents);
+    validateTestSecretBindings(testSecrets,documents,{fullStack:!!verifiedImages,namespacePrefix,retentionSeconds,secretReferences,testCredentials,familyclawBootstrap});
     const networkPolicies = documents.filter(doc => doc.kind === 'NetworkPolicy').map(doc => ({ name: object(doc.metadata, 'metadata').name, spec: doc.spec }));
     const endpointService = documents.find(doc => doc.kind === 'Service' && object(doc.metadata, 'metadata').name === serviceName);
     const endpointSelector = endpointService ? object(object(endpointService.spec, 'service.spec').selector, 'service.selector') : undefined;
@@ -744,7 +747,7 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
         verifiedImage: immutableImage, manifestDigest,
         ...(verifiedImages ? { fullStack: true, verifiedImages, networkPolicies, endpointSelector } : {}),
         ttlSeconds: retentionSeconds, access: [{ subject: this.#runnerSubject, mode: 'deployer' }],
-        secretsToCopy: secretReferences, ...(testCredentials ? { testCredentials } : {}), exposure: { provider: 'off' } },
+        secretsToCopy: secretReferences, ...(testSecrets ? {testSecrets} : {}), ...(testCredentials ? { testCredentials } : {}), exposure: { provider: 'off' } },
     };
     const leaseBytes = `${JSON.stringify(lease)}\n`;
     const resource = `busternamespaceleases.${this.#apiGroup}`;

@@ -133,6 +133,81 @@
           "pattern": "^[a-z][a-z0-9-]{0,34}$"
         }
       }
+    },
+    "testSecrets": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "values",
+        "secrets"
+      ],
+      "properties": {
+        "values": {
+          "type": "object",
+          "minProperties": 1,
+          "maxProperties": 32,
+          "propertyNames": {
+            "pattern": "^[a-z][a-z0-9-]{0,39}$"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind"
+            ],
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "random",
+                  "tls"
+                ]
+              },
+              "bytes": {
+                "type": "integer",
+                "minimum": 16,
+                "maximum": 64
+              },
+              "encoding": {
+                "type": "string",
+                "enum": [
+                  "hex",
+                  "base64",
+                  "base64url"
+                ]
+              },
+              "host": {
+                "type": "string",
+                "pattern": "^[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?$"
+              }
+            }
+          }
+        },
+        "secrets": {
+          "type": "object",
+          "minProperties": 1,
+          "maxProperties": 16,
+          "propertyNames": {
+            "pattern": "^[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?$"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "minProperties": 1,
+            "maxProperties": 32,
+            "propertyNames": {
+              "pattern": "^[A-Za-z0-9._-]{1,128}$",
+              "not": {
+                "pattern": "^\\.(\\.|$)"
+              }
+            },
+            "additionalProperties": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4096
+            }
+          }
+        }
+      }
     }
   },
   "$defs": {
