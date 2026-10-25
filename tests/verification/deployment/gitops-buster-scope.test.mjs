@@ -110,6 +110,9 @@ test('Buster-only retention rejects ambiguous or non-immutable active role sourc
     app => { app.spec.destination.server = 'https://foreign.invalid'; },
     app => { app.spec.source.targetRevision = 'feature/unreviewed'; },
     app => { app.spec.source.directory.include = '*.yaml'; },
+    app => { app.spec.source.directory.exclude = 'resources.yaml'; },
+    app => { app.spec.source.directory.recurse = true; },
+    ...['helm', 'kustomize', 'plugin', 'chart'].map(field => app => { app.spec.source[field] = {}; }),
     app => { app.spec.source.path = 'releases/gitops/../prism'; },
     app => { app.spec.source.path = app.spec.source.path.replace(/\/prism$/u, '/nova'); },
   ];

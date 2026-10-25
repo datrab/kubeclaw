@@ -51,6 +51,8 @@ function activePath(applications, group, documents) {
     || matching[0]?.spec?.destination?.namespace !== group.namespace
     || matching[0]?.spec?.destination?.server !== 'https://kubernetes.default.svc'
     || source?.targetRevision !== 'main' || source.directory?.include !== 'resources.yaml'
+    || source.directory?.exclude !== undefined || source.directory?.recurse === true
+    || ['helm', 'kustomize', 'plugin', 'chart'].some(field => source[field] !== undefined)
     || !new RegExp(`^releases/gitops/[a-z0-9][a-z0-9-]{0,50}/${group.role}$`, 'u').test(source.path ?? '')) throw new Error('GITOPS_ACTIVE_ROLE_PATH_INVALID');
   return source.path;
 }
