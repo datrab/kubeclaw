@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "commit": "fc87fd76f49d1b930a31a332140f08524aa0afd8",
+  "commit": "5424c954d5b6705f671fab5454909b3c18290d60",
   "images": {
     "nova": "ghcr.io/datrab/kubeclaw-nova@sha256:21bbeda9585eb53584e390c36854648ddb4cc7359e726d607ca5ad553e418cf7",
     "prism-agent": "ghcr.io/datrab/kubeclaw-prism-agent@sha256:2054278d44f5523f110e0f6c91d21d838a4077e896524f45ccf93a39e14aa47d",
@@ -13,7 +13,7 @@
     "prism-worker": "ghcr.io/datrab/kubeclaw-prism-worker@sha256:de084768a1fd59f5c6b1b2903d3daad25c160a9fae571c308ebc51643bd2e9fc",
     "prism-ingestion": "ghcr.io/datrab/kubeclaw-prism-ingestion@sha256:b1b537ccd303b210731d4b4d0f1066f40a284f659125bbc49356ff94c4b789c0"
   },
-  "sourceRunId": 40197640696,
+  "sourceRunId": 40209959246,
   "sourceRunAttempt": 1,
   "imageSources": {
     "nova": {
@@ -67,5 +67,5 @@
       "sourceRunAttempt": 1
     }
   },
-  "retainedBaseline": "releases/gitops/runtime-40000895109-1"
+  "retainedBaseline": "releases/gitops/runtime-40197640696-1"
 }
