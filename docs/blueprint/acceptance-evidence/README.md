@@ -262,3 +262,25 @@ Exact commands, full original/candidate vectors, source boundaries, test logs, f
 | 3 | 2 | `a428dbf9cda03e82006abbb5e534f935a7c237adcc8e7372f762793f85c854a4` | Clean |
 
 Register remains59/89gates and225/261requirements, incomplete. No wholeA91101, new gate/catalogue item, human/runtime/release acceptance, merge or deployment. Local Source and reviewed metadata are not a verified remote checkpoint until the separate exact push verification.
+
+
+## Product pipeline bounded discovery — 2026-10-25
+
+Reviewed local Source `767ffd43a9ee0a28e2b3ca463e7648d765a9accb` adds first-position opt-in discovery at the existing product pipeline owner, using its three authority literals, two schema interface names and exact family selection. All three original rendered sections remain byte-identical; 13 CLI and 15 grammar controls pass. Default checks are unchanged; this describes a bounded syntax/parser and static graph contribution, not all contracts or runtime enforcement.
+
+Pinned helper `fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f`, Codex `gpt-5.6-terra`, high, P0–P2, `run-autoreview.sh --mode local --max-priority P2 --codex-bin /app/extensions/codex/node_modules/.bin/codex`: complete twelve-input Source review clean; coherent finite delta review clean. Exact ten recipe consequences, four existing purpose-input edges, one existing qualification and two scalar identities were reviewed, not blanket-refreshed. Full106 actual canonical-root native vectors match the reviewed candidate; 62 original focused controls and three owner checks pass. All193 ordinary records are unchanged, including 28 historical mismatches. Caller1009 and selected1252 memberships are unchanged. Original same-root canonical capture compares all17 actual raw graph surfaces:16 equal, only inputKey differs; selected bytes differ only at the owner. Exact clean original checkout restoration was verified before persistent application. The earlier handoff expectation of18 graph surfaces was corrected from actual data, not normalized.
+
+Actual committed177-page publication and all five original artifact/search/Source-link/Source-preview/diagram checks pass. These coordinator technical observations do not replace an independent participant, browser, human, screenreader or runtime exercise. Complete99 direct shared four-path impact census and all426 registered physical rows across seven original scopes were compared to each actual reviewed revision: every original row matched before this candidate. Four complete original-contract partitions, including full histories, checks, summaries, limits, exact Source delta, original terminal failures and lossless append-only transitions, independently passed. Exactly seven existing scopes are preserved, not recounted; other92 records and every other matrix state remain exact.
+
+Original receiver again terminates at `API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: skills/buster/engine/test-gates/artifacts.ts:41: content`; all five DATA slots remain UNKNOWN. Original ordinary28 reds, Knip, tree aggregate, full-generation, human/live/runtime/release limitations remain. Earlier acquisition safety findings, formatting refusal and unsupported renewal subcommand are retained separately, not rewritten as passing checks. Scope-only reviews do not establish independent tests or omitted source/vector inspection; full ordered native vectors remain external evidence. No release receipt rewrite, new requirement/gate acceptance, merge or deployment.
+
+Commands, exact datasets/manifests, full original/candidate vectors, acquisition/restoration receipt, actual test logs, complete original contracts and four verdicts: `operations/pr13/evidence/a91101-20261024/product-contract-owner-next/` outside checkout.
+
+| Group | Records | Verdict SHA-256 |
+| --- | ---: | --- |
+| 0 | 2 | `f60e913d962c0cb6cb0178b907bb45faeb21ba938ba442a5748c6b4e3607b56c` |
+| 1 | 2 | `1d68bc681a87002766066c7d96b759278ec8538028db6f09f93476d0f72bedf0` |
+| 2 | 2 | `493d7ebf52a2170d0e6cf316299ca71788b503f0996f35e206fcaea2885eca02` |
+| 3 | 1 | `93e14f479cd0f2a15331d20b1201d7e8f86d01392c381ca3f12c4f1e15bf17f1` |
+
+Register remains59/89 gates and225/261 requirements, incomplete. A local commit and preservation are not a remote outcome until the separate exact push verification.
