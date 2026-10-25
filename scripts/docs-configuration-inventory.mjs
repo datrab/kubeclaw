@@ -9453,6 +9453,40 @@ if (argv.includes('--check-schema-semantics-only')) {
   process.exit(0);
 }
 
+// This describes current source selection, not successful inventory generation.
+export function configurationDiscoveryDeclaration() {
+  return {
+    owner: 'scripts/docs-configuration-inventory.mjs',
+    scope: 'Bounded source selectors and maintained CLI parser contracts only; no runtime value, output role, parser correctness or inventory freshness qualification.',
+    yaml: {
+      selector: 'yamlSources', roots: [...SOURCE_ROOTS], files: yamlSources(),
+      chartRule: 'Within charts only values.yaml, values.yml, ci-values.yaml and ci-values.yml basenames are selected.',
+    },
+    schemas: {
+      selector: 'registeredSchemaAuthorities/schemaSources',
+      authorities: structuredClone(registeredSchemaAuthorities()), files: schemaSources(),
+      limit: 'Registration selection only; deployed payload and swarm discovery are separate buildSchemaInventory responsibilities.',
+    },
+    runtime: {
+      selector: 'runtimeTextSources', roots: [...RUNTIME_SCAN_ROOTS],
+      textExtensions: [...TEXT_EXTENSIONS].sort(), files: runtimeTextSources(),
+      limit: 'Go _test.go is excluded; observer aliases use canonicalRuntimeSource custody. No environment or YAML producer parsing is executed here.',
+    },
+    cli: {
+      sourceSelector: 'runtimeTextSources', extractor: 'ownedCliFlags', classifier: 'classifyCliFacts',
+      parserContracts: structuredClone([...CLI_PARSER_CONTRACTS]),
+      limit: 'Maintained contracts are not a complete CLI definition census; unlisted sources still enter runtimeTextSources and the original extractor/classifier.',
+    },
+    excludedSegments: [...EXCLUDED_SEGMENTS].sort(),
+    custody: 'walk rejects symbolic links below scanned roots; existing canonicalRuntimeSource alias custody remains mandatory.',
+  };
+}
+
+if (argv.includes('--describe-discovery')) {
+  await new Promise((resolve, reject) => process.stdout.write(JSON.stringify(configurationDiscoveryDeclaration(), null, 2) + '\n', error => error ? reject(error) : resolve()));
+  process.exit(0);
+}
+
 export function buildConfigurationInventories() {
   if (argv.includes('--runtime-only')) return new Map([['configuration-runtime-inputs.json', buildRuntimeInputInventory({ files: [] })]]);
   if (argv.includes('--schemas-only')) return new Map([['configuration-schemas.json', buildSchemaInventory()]]);
