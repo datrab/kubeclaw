@@ -99,3 +99,27 @@ test('Buster-only export rejects an active retained-role rollback inconsistent w
   fs.appendFileSync(path.join(root, directory, 'resources.yaml'), '\n# different rollback content\n');
   assert.throws(() => retain(root, receipt), /GITOPS_MANIFEST_DIGEST_MISMATCH/);
 }));
+
+
+test('Buster-only retention rejects ambiguous or non-immutable active role sources', () => fixture((root, receipt) => {
+  const file = path.join(root, 'gitops/production/apps/applications.yaml');
+  const original = yaml.loadAll(fs.readFileSync(file, 'utf8')).filter(Boolean);
+  const cases = [
+    app => { app.spec.source.targetRevision = 'feature/unreviewed'; },
+    app => { app.spec.source.directory.include = '*.yaml'; },
+    app => { app.spec.source.path = 'releases/gitops/../prism'; },
+    app => { app.spec.source.path = app.spec.source.path.replace(/\/prism$/u, '/nova'); },
+  ];
+  for (const mutate of cases) {
+    const documents = structuredClone(original);
+    mutate(documents.find(item => item.kind === 'Application' && item.metadata.name === 'kubeclaw-prism'));
+    fs.writeFileSync(file, documents.map(item => yaml.dump(item)).join('---\n'));
+    assert.throws(() => retain(root, receipt), /GITOPS_ACTIVE_ROLE_PATH_INVALID/);
+  }
+  const duplicate = structuredClone(original);
+  duplicate.push(structuredClone(duplicate.find(item => item.kind === 'Application' && item.metadata.name === 'kubeclaw-prism')));
+  fs.writeFileSync(file, duplicate.map(item => yaml.dump(item)).join('---\n'));
+  assert.throws(() => retain(root, receipt), /GITOPS_ACTIVE_ROLE_PATH_INVALID/);
+  fs.writeFileSync(file, original.map(item => yaml.dump(item)).join('---\n'));
+  assert.deepEqual([...retain(root, receipt).keys()], ['prism', 'nova']);
+}));
