@@ -34,6 +34,22 @@ function forcedComponents(force, allowed) {
     || new Set(force).size !== force.length) throw new Error('INVALID_RUNTIME_REFRESH_COMPONENTS');
   return new Set(force);
 }
+// One fail-closed transport shared by detector, collector and bundle CLI.
+export function runtimeRefresh(env = process.env) {
+  if (env.RUNTIME_REFRESH_PLAN === undefined || env.RUNTIME_REFRESH_PLAN === '') {
+    const force = env.GITHUB_EVENT_NAME === 'workflow_dispatch';
+    return { images: force, bundles: force };
+  }
+  if (env.GITHUB_EVENT_NAME !== 'workflow_dispatch') throw new Error('RUNTIME_REFRESH_REQUIRES_DISPATCH');
+  let plan;
+  try { plan = JSON.parse(env.RUNTIME_REFRESH_PLAN); } catch { throw new Error('INVALID_RUNTIME_REFRESH_PLAN'); }
+  if (!plan || typeof plan !== 'object' || Array.isArray(plan)
+    || Object.keys(plan).sort().join(',') !== 'bundles,images'
+    || !Array.isArray(plan.images) || !Array.isArray(plan.bundles)) throw new Error('INVALID_RUNTIME_REFRESH_PLAN');
+  forcedComponents(plan.images, runtimeImages);
+  forcedComponents(plan.bundles, runtimeRoles);
+  return plan;
+}
 export function changedBundles(root, prior, head, force = false) {
   const forced = forcedComponents(force, runtimeRoles);
   return runtimeRoles.filter(role => {
@@ -62,8 +78,8 @@ if (process.argv[1] === import.meta.filename) {
     ? { commit: before, images: Object.fromEntries(runtimeImages.map(name => [name, true])) }
     : read('releases/runtime-images.json');
   // Compare against selected component sources, including changes from failed or
-  // superseded builds. A manual dispatch deliberately refreshes every component.
-  const images = changedImages(root, prior, head, manual);
+  // superseded builds. Dispatch defaults to all unless a bounded plan is supplied.
+  const images = changedImages(root, prior, head, runtimeRefresh().images);
   const deployment = changed(isDeploymentInput) || images.length > 0;
   fs.appendFileSync(process.env.GITHUB_OUTPUT, `image_inputs=${images.length > 0}\ndeployment_inputs=${deployment}\nimage_matrix=${JSON.stringify(images)}\n`);
 }

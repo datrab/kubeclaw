@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { changedImages } from './runtime-inputs.mjs';
+import { changedImages, runtimeRefresh } from './runtime-inputs.mjs';
 import { runtimeImages, componentSource, validSource } from './runtime-components.mjs';
 
 // Production build receipts are downloaded from one successful, verified workflow run.
@@ -37,7 +37,7 @@ if (process.argv[1] === import.meta.filename) {
   const priorFile = 'releases/runtime-images.json';
   const prior = family === 'runtime' && fs.existsSync(priorFile) ? JSON.parse(fs.readFileSync(priorFile, 'utf8')) : undefined;
   const source = { sourceRunId: Number(process.env.SOURCE_RUN_ID), sourceRunAttempt: Number(process.env.SOURCE_RUN_ATTEMPT) };
-  const release = family === 'runtime' ? collectRuntimeReceipts(directory, commit, prior, source, process.cwd(), process.env.GITHUB_EVENT_NAME === 'workflow_dispatch') : collectReceipts(directory, commit, names);
+  const release = family === 'runtime' ? collectRuntimeReceipts(directory, commit, prior, source, process.cwd(), runtimeRefresh().images) : collectReceipts(directory, commit, names);
   release.sourceRunId = Number(process.env.SOURCE_RUN_ID);
   if (!Number.isSafeInteger(release.sourceRunId) || release.sourceRunId < 1) throw new Error("Verified source run ID required");
   release.sourceRunAttempt = Number(process.env.SOURCE_RUN_ATTEMPT);

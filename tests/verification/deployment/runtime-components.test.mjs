@@ -5,7 +5,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import test from 'node:test';
 import yaml from 'js-yaml';
-import { changedImages, changedBundles } from '../../../scripts/updates/runtime-inputs.mjs';
+import { changedImages, changedBundles, runtimeRefresh } from '../../../scripts/updates/runtime-inputs.mjs';
 import { runtimeImages, runtimeRoles, componentSource, imageInput } from '../../../scripts/updates/runtime-components.mjs';
 import { collectRuntimeReceipts } from '../../../scripts/updates/release-images.mjs';
 import { selectedRelease, validateRenderedRelease } from '../../../scripts/updates/deployment-release.mjs';
@@ -341,3 +341,18 @@ test('explicit refresh is bounded and cannot suppress shared-input rebuilds', ()
   assert.ok(changedImages(root, images, shared, ['namespace-controller']).includes('prism-control'));
   assert.deepEqual(changedBundles(root, code, shared, ['buster']), runtimeRoles);
 }));
+
+
+test('refresh transport is shared, bounded and dispatch-only', () => {
+  assert.deepEqual(runtimeRefresh({}), { images: false, bundles: false });
+  assert.deepEqual(runtimeRefresh({ GITHUB_EVENT_NAME: 'workflow_dispatch' }), { images: true, bundles: true });
+  const plan = { images: ['buster-runtime', 'namespace-controller'], bundles: ['buster'] };
+  const env = { GITHUB_EVENT_NAME: 'workflow_dispatch', RUNTIME_REFRESH_PLAN: JSON.stringify(plan) };
+  assert.deepEqual(runtimeRefresh(env), plan);
+  assert.throws(() => runtimeRefresh({ ...env, GITHUB_EVENT_NAME: 'push' }), /REQUIRES_DISPATCH/u);
+  for (const invalid of ['null', '[]', '{', '{}', '{"images":true,"bundles":[]}',
+    '{"images":[],"bundles":[],"extra":true}', '{"images":["nova","nova"],"bundles":[]}',
+    '{"images":[],"bundles":["unknown"]}']) {
+    assert.throws(() => runtimeRefresh({ ...env, RUNTIME_REFRESH_PLAN: invalid }), /INVALID_RUNTIME_REFRESH/u);
+  }
+});

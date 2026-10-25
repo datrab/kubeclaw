@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
-import { inputDigest, isImageInput, changedBundles } from './runtime-inputs.mjs';
+import { inputDigest, isImageInput, changedBundles, runtimeRefresh } from './runtime-inputs.mjs';
 import { componentSource, validSource, imageInput, runtimeImages } from './runtime-components.mjs';
 
 export function validateCodeReceipt(code) {
@@ -47,7 +47,7 @@ if (process.argv[1] === import.meta.filename) {
   const [directory, commit, repository] = process.argv.slice(2);
   const priorFile = path.join(process.cwd(), 'releases/runtime-code.json');
   const prior = fs.existsSync(priorFile) ? validateCodeReceipt(JSON.parse(fs.readFileSync(priorFile, 'utf8'))) : undefined;
-  const roles = changedBundles(process.cwd(), prior, process.env.GITHUB_SHA ?? commit, process.env.GITHUB_EVENT_NAME === 'workflow_dispatch');
+  const roles = changedBundles(process.cwd(), prior, process.env.GITHUB_SHA ?? commit, runtimeRefresh().bundles);
   if (directory === '--roles') { process.stdout.write(JSON.stringify(roles)); process.exit(0); }
   if (!/^[a-zA-Z0-9_.-]+\/[a-zA-Z0-9_.-]+$/u.test(repository ?? '')) throw new Error('CODE_REPOSITORY_INVALID');
   const code = { schemaVersion: 1, commit, sourceRunId: Number(process.env.GITHUB_RUN_ID),
