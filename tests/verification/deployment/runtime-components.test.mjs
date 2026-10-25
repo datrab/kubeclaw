@@ -81,6 +81,26 @@ test('shared dependencies, packaging metadata, manual refreshes and unrelated do
   assert(changedBundles(root, code, head).includes('nova'));
 }));
 
+test('rollback baseline cannot silently retain Prism after shared image inputs changed', () => fixture(({ root, write, commit, images }) => {
+  write('skills/common/plugin-runtime/sdk/index.ts', 'shared API change');
+  const head = commit();
+  const expected = ['prism-agent', 'buster-runtime', 'prism-control', 'prism-studio', 'prism-worker', 'prism-ingestion'];
+  assert.deepEqual(changedImages(root, images, head), expected);
+  fs.mkdirSync(path.join(root, 'receipt-input'));
+  // Buster-only artifacts cannot certify that the old Prism inputs were built.
+  write('receipt-input/buster-runtime.json', JSON.stringify({ name: 'buster-runtime', commit: head, image: image('buster-runtime', 'b') }));
+  const before = JSON.stringify(images);
+  assert.throws(() => collectRuntimeReceipts(path.join(root, 'receipt-input'), head, images,
+    { sourceRunId: 2, sourceRunAttempt: 1 }, root), /Release is missing required images/u);
+  assert.equal(JSON.stringify(images), before);
+  // Adding the old producer's authentic artifact is still cross-commit, not a
+  // new build. Retention needs an explicit role-bound plan, not artifact mixing.
+  write('receipt-input/prism-agent.json', JSON.stringify({ name: 'prism-agent', commit: images.commit, image: images.images['prism-agent'] }));
+  assert.throws(() => collectRuntimeReceipts(path.join(root, 'receipt-input'), head, images,
+    { sourceRunId: 2, sourceRunAttempt: 1 }, root), /cross-commit image receipt/u);
+  assert.equal(JSON.stringify(images), before);
+}));
+
 test('partial build publication retains old images and bundles, and Helm preserves Nova and Prism pod templates', () => fixture(({ root, write, commit, images, code }) => {
   const materialize = () => execFileSync(process.execPath, [path.join(sourceRoot, 'scripts/updates/materialize-release.mjs')], { cwd: root });
   const render = role => execFileSync('helm', ['template', `agent-${role}`, path.join(root, `charts/${role === 'prism' ? 'prism' : 'kubeclaw'}`), '-n', 'kubeclaw', '-f', path.join(root, `releases/values/${role}.yaml`)], { encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
