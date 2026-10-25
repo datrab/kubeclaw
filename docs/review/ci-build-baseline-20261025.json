@@ -1,0 +1,887 @@
+{
+  "observedOn": "2026-10-25",
+  "runs": [
+    {
+      "run": "https://github.com/datrab/kubeclaw/actions/runs/40231472393",
+      "commit": "905274d7f3d0aa66428719650cdeb94196e5742b",
+      "started": "2026-10-25T20:35:17Z",
+      "updated": "2026-10-25T21:02:19Z",
+      "elapsedSeconds": 1622,
+      "jobs": [
+        {
+          "name": "Detect Image Build Inputs",
+          "id": 121283934713,
+          "started": "2026-10-25T20:35:20Z",
+          "completed": "2026-10-25T20:35:56Z",
+          "seconds": 36,
+          "steps": [
+            {
+              "name": "Checkout",
+              "seconds": 30
+            }
+          ]
+        },
+        {
+          "name": "reliability / service-reliability",
+          "id": 121283934829,
+          "started": "2026-10-25T20:35:21Z",
+          "completed": "2026-10-25T20:36:01Z",
+          "seconds": 40,
+          "steps": []
+        },
+        {
+          "name": "reliability / browser-reliability (lighthouse)",
+          "id": 121283934907,
+          "started": "2026-10-25T20:35:20Z",
+          "completed": "2026-10-25T20:36:53Z",
+          "seconds": 93,
+          "steps": [
+            {
+              "name": "Install browsers matching the locked Playwright package",
+              "seconds": 27
+            },
+            {
+              "name": "Run real browser provider assertions and negative controls",
+              "seconds": 46
+            }
+          ]
+        },
+        {
+          "name": "update-policy / upstream-checksums",
+          "id": 121283934945,
+          "started": "2026-10-25T20:35:20Z",
+          "completed": "2026-10-25T20:35:35Z",
+          "seconds": 15,
+          "steps": []
+        },
+        {
+          "name": "update-policy / envoy",
+          "id": 121283934964,
+          "started": "2026-10-25T20:35:20Z",
+          "completed": "2026-10-25T20:35:33Z",
+          "seconds": 13,
+          "steps": []
+        },
+        {
+          "name": "reliability / reliability-tests (2)",
+          "id": 121283934974,
+          "started": "2026-10-25T20:35:21Z",
+          "completed": "2026-10-25T20:39:31Z",
+          "seconds": 250,
+          "steps": [
+            {
+              "name": "Run reliability shard",
+              "seconds": 230
+            }
+          ]
+        },
+        {
+          "name": "reliability / reliability-tests (4)",
+          "id": 121283934988,
+          "started": "2026-10-25T20:35:20Z",
+          "completed": "2026-10-25T20:37:24Z",
+          "seconds": 124,
+          "steps": [
+            {
+              "name": "Run reliability shard",
+              "seconds": 109
+            }
+          ]
+        },
+        {
+          "name": "update-policy / policy",
+          "id": 121283934992,
+          "started": "2026-10-25T20:35:21Z",
+          "completed": "2026-10-25T20:38:23Z",
+          "seconds": 182,
+          "steps": [
+            {
+              "name": "Run actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
+              "seconds": 27
+            },
+            {
+              "name": "Check generated versions and release receipt validation",
+              "seconds": 102
+            },
+            {
+              "name": "Validate with the actual pinned Renovate executable",
+              "seconds": 30
+            }
+          ]
+        },
+        {
+          "name": "reliability / core-reliability",
+          "id": 121283935018,
+          "started": "2026-10-25T20:35:20Z",
+          "completed": "2026-10-25T20:45:11Z",
+          "seconds": 591,
+          "steps": [
+            {
+              "name": "Typecheck source packages",
+              "seconds": 134
+            },
+            {
+              "name": "Exercise recovery and remote import contracts",
+              "seconds": 21
+            },
+            {
+              "name": "Validate project compiler and installed stage contracts",
+              "seconds": 33
+            },
+            {
+              "name": "Validate production graph and native gate evidence",
+              "seconds": 26
+            },
+            {
+              "name": "Check affected stage and adapter contracts",
+              "seconds": 289
+            },
+            {
+              "name": "Assemble production role packages",
+              "seconds": 48
+            }
+          ]
+        },
+        {
+          "name": "reliability / native-reliability",
+          "id": 121283935038,
+          "started": "2026-10-25T20:35:21Z",
+          "completed": "2026-10-25T20:35:44Z",
+          "seconds": 23,
+          "steps": []
+        },
+        {
+          "name": "reliability / prism-postgres-reliability",
+          "id": 121283935053,
+          "started": "2026-10-25T20:35:21Z",
+          "completed": "2026-10-25T20:35:51Z",
+          "seconds": 30,
+          "steps": []
+        },
+        {
+          "name": "reliability / browser-reliability (axe)",
+          "id": 121283935058,
+          "started": "2026-10-25T20:35:20Z",
+          "completed": "2026-10-25T20:36:15Z",
+          "seconds": 55,
+          "steps": [
+            {
+              "name": "Install browsers matching the locked Playwright package",
+              "seconds": 22
+            },
+            {
+              "name": "Run real browser provider assertions and negative controls",
+              "seconds": 15
+            }
+          ]
+        },
+        {
+          "name": "reliability / reliability-tests (1)",
+          "id": 121283935062,
+          "started": "2026-10-25T20:35:20Z",
+          "completed": "2026-10-25T20:40:01Z",
+          "seconds": 281,
+          "steps": [
+            {
+              "name": "Run reliability shard",
+              "seconds": 263
+            }
+          ]
+        },
+        {
+          "name": "reliability / security-reliability",
+          "id": 121283935067,
+          "started": "2026-10-25T20:35:21Z",
+          "completed": "2026-10-25T20:37:08Z",
+          "seconds": 107,
+          "steps": [
+            {
+              "name": "Install checksum-verified Trivy and real advisory database",
+              "seconds": 29
+            },
+            {
+              "name": "Exercise real scanner and HTTP negative controls",
+              "seconds": 57
+            }
+          ]
+        },
+        {
+          "name": "reliability / browser-reliability (visual)",
+          "id": 121283935081,
+          "started": "2026-10-25T20:35:20Z",
+          "completed": "2026-10-25T20:36:27Z",
+          "seconds": 67,
+          "steps": [
+            {
+              "name": "Install browsers matching the locked Playwright package",
+              "seconds": 29
+            },
+            {
+              "name": "Run real browser provider assertions and negative controls",
+              "seconds": 17
+            }
+          ]
+        },
+        {
+          "name": "reliability / browser-reliability (playwright)",
+          "id": 121283935098,
+          "started": "2026-10-25T20:35:20Z",
+          "completed": "2026-10-25T20:36:20Z",
+          "seconds": 60,
+          "steps": [
+            {
+              "name": "Install browsers matching the locked Playwright package",
+              "seconds": 27
+            },
+            {
+              "name": "Run real browser provider assertions and negative controls",
+              "seconds": 18
+            }
+          ]
+        },
+        {
+          "name": "reliability / reliability-tests (3)",
+          "id": 121283935099,
+          "started": "2026-10-25T20:35:20Z",
+          "completed": "2026-10-25T20:40:58Z",
+          "seconds": 338,
+          "steps": [
+            {
+              "name": "Run reliability shard",
+              "seconds": 322
+            }
+          ]
+        },
+        {
+          "name": "Build & Verify (archviewer)",
+          "id": 121286234873,
+          "started": "2026-10-25T20:45:12Z",
+          "completed": "2026-10-25T20:47:17Z",
+          "seconds": 125,
+          "steps": [
+            {
+              "name": "Provision image build capacity",
+              "seconds": 101
+            },
+            {
+              "name": "Build & Push",
+              "seconds": 7
+            }
+          ]
+        },
+        {
+          "name": "Build & Verify (prism-ingestion)",
+          "id": 121286234892,
+          "started": "2026-10-25T20:45:13Z",
+          "completed": "2026-10-25T20:47:49Z",
+          "seconds": 156,
+          "steps": [
+            {
+              "name": "Provision image build capacity",
+              "seconds": 99
+            },
+            {
+              "name": "Build & Push",
+              "seconds": 30
+            }
+          ]
+        },
+        {
+          "name": "Build & Verify (buster-gateway)",
+          "id": 121286234905,
+          "started": "2026-10-25T20:45:13Z",
+          "completed": "2026-10-25T20:53:54Z",
+          "seconds": 521,
+          "steps": [
+            {
+              "name": "Provision image build capacity",
+              "seconds": 181
+            },
+            {
+              "name": "Build & Push",
+              "seconds": 170
+            },
+            {
+              "name": "Verify the exact published artifact",
+              "seconds": 120
+            },
+            {
+              "name": "Post Set up Docker Buildx",
+              "seconds": 33
+            }
+          ]
+        },
+        {
+          "name": "Build & Verify (prism-worker)",
+          "id": 121286234907,
+          "started": "2026-10-25T20:45:13Z",
+          "completed": "2026-10-25T20:47:36Z",
+          "seconds": 143,
+          "steps": [
+            {
+              "name": "Provision image build capacity",
+              "seconds": 50
+            },
+            {
+              "name": "Build & Push",
+              "seconds": 70
+            }
+          ]
+        },
+        {
+          "name": "Build & Verify (namespace-controller)",
+          "id": 121286234941,
+          "started": "2026-10-25T20:45:13Z",
+          "completed": "2026-10-25T20:48:11Z",
+          "seconds": 178,
+          "steps": [
+            {
+              "name": "Provision image build capacity",
+              "seconds": 133
+            },
+            {
+              "name": "Build & Push",
+              "seconds": 24
+            }
+          ]
+        },
+        {
+          "name": "Build & Verify (buster-runtime)",
+          "id": 121286234943,
+          "started": "2026-10-25T20:45:24Z",
+          "completed": "2026-10-25T21:01:12Z",
+          "seconds": 948,
+          "steps": [
+            {
+              "name": "Provision image build capacity",
+              "seconds": 97
+            },
+            {
+              "name": "Build & Push",
+              "seconds": 747
+            },
+            {
+              "name": "Verify the exact published artifact",
+              "seconds": 76
+            }
+          ]
+        },
+        {
+          "name": "Build & Verify (prism-studio)",
+          "id": 121286234976,
+          "started": "2026-10-25T20:45:13Z",
+          "completed": "2026-10-25T20:47:24Z",
+          "seconds": 131,
+          "steps": [
+            {
+              "name": "Provision image build capacity",
+              "seconds": 92
+            },
+            {
+              "name": "Build & Push",
+              "seconds": 19
+            }
+          ]
+        },
+        {
+          "name": "Build & Verify (prism-agent)",
+          "id": 121286234978,
+          "started": "2026-10-25T20:45:13Z",
+          "completed": "2026-10-25T20:53:02Z",
+          "seconds": 469,
+          "steps": [
+            {
+              "name": "Provision image build capacity",
+              "seconds": 166
+            },
+            {
+              "name": "Build & Push",
+              "seconds": 83
+            },
+            {
+              "name": "Verify the exact published artifact",
+              "seconds": 177
+            },
+            {
+              "name": "Post Set up Docker Buildx",
+              "seconds": 20
+            }
+          ]
+        },
+        {
+          "name": "Build & Verify (prism-control)",
+          "id": 121286234996,
+          "started": "2026-10-25T20:45:13Z",
+          "completed": "2026-10-25T20:47:38Z",
+          "seconds": 145,
+          "steps": [
+            {
+              "name": "Provision image build capacity",
+              "seconds": 98
+            },
+            {
+              "name": "Build & Push",
+              "seconds": 23
+            }
+          ]
+        },
+        {
+          "name": "Build & Verify (nova)",
+          "id": 121286235055,
+          "started": "2026-10-25T20:45:13Z",
+          "completed": "2026-10-25T21:00:37Z",
+          "seconds": 924,
+          "steps": [
+            {
+              "name": "Provision image build capacity",
+              "seconds": 86
+            },
+            {
+              "name": "Build & Push",
+              "seconds": 497
+            },
+            {
+              "name": "Verify the exact published artifact",
+              "seconds": 304
+            },
+            {
+              "name": "Post Set up Docker Buildx",
+              "seconds": 15
+            }
+          ]
+        },
+        {
+          "name": "Package & Publish Skill Bundles",
+          "id": 121289982567,
+          "started": "2026-10-25T21:01:14Z",
+          "completed": "2026-10-25T21:02:18Z",
+          "seconds": 64,
+          "steps": [
+            {
+              "name": "Checkout",
+              "seconds": 28
+            }
+          ]
+        },
+        {
+          "name": "preserve-receipts / preserve",
+          "id": 121289982608,
+          "started": "2026-10-25T21:01:14Z",
+          "completed": "2026-10-25T21:02:00Z",
+          "seconds": 46,
+          "steps": [
+            {
+              "name": "Run actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
+              "seconds": 26
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run": "https://github.com/datrab/kubeclaw/actions/runs/40228460083",
+      "commit": "2ab773d16f31aa7e32825de20f7ca4cead4779df",
+      "started": "2026-10-25T19:57:16Z",
+      "updated": "2026-10-25T20:20:54Z",
+      "elapsedSeconds": 1418,
+      "jobs": [
+        {
+          "name": "Detect Image Build Inputs",
+          "id": 121274872782,
+          "started": "2026-10-25T19:57:18Z",
+          "completed": "2026-10-25T19:57:45Z",
+          "seconds": 27,
+          "steps": [
+            {
+              "name": "Checkout",
+              "seconds": 22
+            }
+          ]
+        },
+        {
+          "name": "reliability / core-reliability",
+          "id": 121274872936,
+          "started": "2026-10-25T19:57:19Z",
+          "completed": "2026-10-25T20:07:32Z",
+          "seconds": 613,
+          "steps": [
+            {
+              "name": "Typecheck source packages",
+              "seconds": 139
+            },
+            {
+              "name": "Exercise recovery and remote import contracts",
+              "seconds": 21
+            },
+            {
+              "name": "Validate project compiler and installed stage contracts",
+              "seconds": 36
+            },
+            {
+              "name": "Validate production graph and native gate evidence",
+              "seconds": 26
+            },
+            {
+              "name": "Check affected stage and adapter contracts",
+              "seconds": 297
+            },
+            {
+              "name": "Assemble production role packages",
+              "seconds": 49
+            }
+          ]
+        },
+        {
+          "name": "reliability / native-reliability",
+          "id": 121274872973,
+          "started": "2026-10-25T19:57:18Z",
+          "completed": "2026-10-25T19:57:38Z",
+          "seconds": 20,
+          "steps": []
+        },
+        {
+          "name": "update-policy / upstream-checksums",
+          "id": 121274872980,
+          "started": "2026-10-25T19:57:18Z",
+          "completed": "2026-10-25T19:57:34Z",
+          "seconds": 16,
+          "steps": []
+        },
+        {
+          "name": "reliability / browser-reliability (lighthouse)",
+          "id": 121274872987,
+          "started": "2026-10-25T19:57:19Z",
+          "completed": "2026-10-25T19:58:57Z",
+          "seconds": 98,
+          "steps": [
+            {
+              "name": "Install browsers matching the locked Playwright package",
+              "seconds": 26
+            },
+            {
+              "name": "Run real browser provider assertions and negative controls",
+              "seconds": 47
+            }
+          ]
+        },
+        {
+          "name": "reliability / browser-reliability (visual)",
+          "id": 121274873009,
+          "started": "2026-10-25T19:57:32Z",
+          "completed": "2026-10-25T19:58:26Z",
+          "seconds": 54,
+          "steps": [
+            {
+              "name": "Install browsers matching the locked Playwright package",
+              "seconds": 22
+            },
+            {
+              "name": "Run real browser provider assertions and negative controls",
+              "seconds": 16
+            }
+          ]
+        },
+        {
+          "name": "reliability / reliability-tests (2)",
+          "id": 121274873011,
+          "started": "2026-10-25T19:57:18Z",
+          "completed": "2026-10-25T20:00:51Z",
+          "seconds": 213,
+          "steps": [
+            {
+              "name": "Run reliability shard",
+              "seconds": 197
+            }
+          ]
+        },
+        {
+          "name": "reliability / reliability-tests (3)",
+          "id": 121274873033,
+          "started": "2026-10-25T19:57:18Z",
+          "completed": "2026-10-25T20:05:18Z",
+          "seconds": 480,
+          "steps": [
+            {
+              "name": "Run reliability shard",
+              "seconds": 455
+            }
+          ]
+        },
+        {
+          "name": "reliability / reliability-tests (4)",
+          "id": 121274873037,
+          "started": "2026-10-25T19:57:19Z",
+          "completed": "2026-10-25T19:59:45Z",
+          "seconds": 146,
+          "steps": [
+            {
+              "name": "Run reliability shard",
+              "seconds": 124
+            }
+          ]
+        },
+        {
+          "name": "update-policy / policy",
+          "id": 121274873041,
+          "started": "2026-10-25T19:57:19Z",
+          "completed": "2026-10-25T20:00:15Z",
+          "seconds": 176,
+          "steps": [
+            {
+              "name": "Run actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
+              "seconds": 29
+            },
+            {
+              "name": "Check generated versions and release receipt validation",
+              "seconds": 100
+            },
+            {
+              "name": "Validate with the actual pinned Renovate executable",
+              "seconds": 29
+            }
+          ]
+        },
+        {
+          "name": "reliability / browser-reliability (playwright)",
+          "id": 121274873044,
+          "started": "2026-10-25T19:57:18Z",
+          "completed": "2026-10-25T19:58:17Z",
+          "seconds": 59,
+          "steps": [
+            {
+              "name": "Install browsers matching the locked Playwright package",
+              "seconds": 22
+            },
+            {
+              "name": "Run real browser provider assertions and negative controls",
+              "seconds": 19
+            }
+          ]
+        },
+        {
+          "name": "reliability / security-reliability",
+          "id": 121274873053,
+          "started": "2026-10-25T19:57:18Z",
+          "completed": "2026-10-25T19:59:03Z",
+          "seconds": 105,
+          "steps": [
+            {
+              "name": "Install checksum-verified Trivy and real advisory database",
+              "seconds": 26
+            },
+            {
+              "name": "Exercise real scanner and HTTP negative controls",
+              "seconds": 64
+            }
+          ]
+        },
+        {
+          "name": "reliability / reliability-tests (1)",
+          "id": 121274873062,
+          "started": "2026-10-25T19:57:18Z",
+          "completed": "2026-10-25T20:02:16Z",
+          "seconds": 298,
+          "steps": [
+            {
+              "name": "Run reliability shard",
+              "seconds": 280
+            }
+          ]
+        },
+        {
+          "name": "reliability / prism-postgres-reliability",
+          "id": 121274873066,
+          "started": "2026-10-25T19:57:18Z",
+          "completed": "2026-10-25T19:57:49Z",
+          "seconds": 31,
+          "steps": []
+        },
+        {
+          "name": "reliability / service-reliability",
+          "id": 121274873081,
+          "started": "2026-10-25T19:57:18Z",
+          "completed": "2026-10-25T19:57:55Z",
+          "seconds": 37,
+          "steps": []
+        },
+        {
+          "name": "update-policy / envoy",
+          "id": 121274873112,
+          "started": "2026-10-25T19:57:18Z",
+          "completed": "2026-10-25T19:57:31Z",
+          "seconds": 13,
+          "steps": []
+        },
+        {
+          "name": "reliability / browser-reliability (axe)",
+          "id": 121274873153,
+          "started": "2026-10-25T19:57:36Z",
+          "completed": "2026-10-25T19:58:38Z",
+          "seconds": 62,
+          "steps": [
+            {
+              "name": "Install browsers matching the locked Playwright package",
+              "seconds": 25
+            },
+            {
+              "name": "Run real browser provider assertions and negative controls",
+              "seconds": 16
+            }
+          ]
+        },
+        {
+          "name": "Build & Verify (prism-agent)",
+          "id": 121277313821,
+          "started": "2026-10-25T20:07:34Z",
+          "completed": "2026-10-25T20:13:33Z",
+          "seconds": 359,
+          "steps": [
+            {
+              "name": "Provision image build capacity",
+              "seconds": 74
+            },
+            {
+              "name": "Build & Push",
+              "seconds": 96
+            },
+            {
+              "name": "Verify the exact published artifact",
+              "seconds": 150
+            },
+            {
+              "name": "Post Set up Docker Buildx",
+              "seconds": 23
+            }
+          ]
+        },
+        {
+          "name": "Build & Verify (buster-runtime)",
+          "id": 121277313846,
+          "started": "2026-10-25T20:07:34Z",
+          "completed": "2026-10-25T20:19:35Z",
+          "seconds": 721,
+          "steps": [
+            {
+              "name": "Provision image build capacity",
+              "seconds": 134
+            },
+            {
+              "name": "Build & Push",
+              "seconds": 482
+            },
+            {
+              "name": "Verify the exact published artifact",
+              "seconds": 80
+            }
+          ]
+        },
+        {
+          "name": "Build & Verify (prism-ingestion)",
+          "id": 121277313900,
+          "started": "2026-10-25T20:07:34Z",
+          "completed": "2026-10-25T20:10:05Z",
+          "seconds": 151,
+          "steps": [
+            {
+              "name": "Provision image build capacity",
+              "seconds": 76
+            },
+            {
+              "name": "Build & Push",
+              "seconds": 45
+            }
+          ]
+        },
+        {
+          "name": "Build & Verify (prism-worker)",
+          "id": 121277313920,
+          "started": "2026-10-25T20:07:34Z",
+          "completed": "2026-10-25T20:10:52Z",
+          "seconds": 198,
+          "steps": [
+            {
+              "name": "Provision image build capacity",
+              "seconds": 92
+            },
+            {
+              "name": "Build & Push",
+              "seconds": 80
+            }
+          ]
+        },
+        {
+          "name": "Build & Verify (prism-studio)",
+          "id": 121277313934,
+          "started": "2026-10-25T20:07:34Z",
+          "completed": "2026-10-25T20:09:55Z",
+          "seconds": 141,
+          "steps": [
+            {
+              "name": "Provision image build capacity",
+              "seconds": 90
+            },
+            {
+              "name": "Build & Push",
+              "seconds": 30
+            }
+          ]
+        },
+        {
+          "name": "Build & Verify (prism-control)",
+          "id": 121277313935,
+          "started": "2026-10-25T20:07:34Z",
+          "completed": "2026-10-25T20:10:45Z",
+          "seconds": 191,
+          "steps": [
+            {
+              "name": "Provision image build capacity",
+              "seconds": 119
+            },
+            {
+              "name": "Build & Push",
+              "seconds": 41
+            }
+          ]
+        },
+        {
+          "name": "Package & Publish Skill Bundles",
+          "id": 121280167708,
+          "started": "2026-10-25T20:19:37Z",
+          "completed": "2026-10-25T20:20:43Z",
+          "seconds": 66,
+          "steps": [
+            {
+              "name": "Checkout",
+              "seconds": 34
+            }
+          ]
+        },
+        {
+          "name": "preserve-receipts / preserve",
+          "id": 121280167843,
+          "started": "2026-10-25T20:19:38Z",
+          "completed": "2026-10-25T20:20:54Z",
+          "seconds": 76,
+          "steps": [
+            {
+              "name": "Run actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
+              "seconds": 49
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "cacheObservations": [
+    {
+      "jobId": 121286234943,
+      "cachedSteps": 0,
+      "cacheExportSeconds": 269.2
+    },
+    {
+      "jobId": 121286235055,
+      "cachedSteps": 0,
+      "cacheExportSeconds": 107.1
+    }
+  ]
+}

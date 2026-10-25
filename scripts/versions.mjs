@@ -32,6 +32,7 @@ function dockerfileVersions(name, source, args, overrides, used) {
     const usedOverrides = new Set();
     const content = source.replace(/^ARG ([A-Z0-9_]+)=(\S+)$/gm, (line, key) => {
       if (['KUBECLAW_BUILD_REVISION', 'TARGETARCH'].includes(key)) return line;
+      if (key === 'KUBECLAW_TOOLCHAIN' && ['docker/Dockerfile.nova', 'docker/Dockerfile.buster-runtime'].includes(name) && line === 'ARG KUBECLAW_TOOLCHAIN=toolchain') return line;
       if (name === 'docker/Dockerfile.buster-runtime' && key === 'TRIVY_DATABASE_REFRESH') return line;
       if (!Object.hasOwn(args, key)) throw new Error(`${name}: unmanaged version argument ${key}`);
       used.add(key);
@@ -41,6 +42,7 @@ function dockerfileVersions(name, source, args, overrides, used) {
     for (const key of Object.keys(overrides)) if (!usedOverrides.has(key)) throw new Error(`${name}: unused override ${key}`);
     for (const match of content.matchAll(/^FROM (\S+)/gm)) {
       if (!/^\$\{[A-Z0-9_]+\}$/.test(match[1])) throw new Error(`${name}: base must reference a managed ARG`);
+      if (match[1] === '${KUBECLAW_TOOLCHAIN}' && /^FROM \S+ AS toolchain$/m.test(content) && content.includes('ARG KUBECLAW_TOOLCHAIN=toolchain')) continue;
       if (!Object.hasOwn(args, match[1].slice(2, -1))) throw new Error(`${name}: unknown base argument`);
     }
   return content;
