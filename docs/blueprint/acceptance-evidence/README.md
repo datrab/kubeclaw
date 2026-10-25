@@ -299,3 +299,27 @@ Actual committed 177-page publication and all five original artifact/search/Sour
 The unchanged original receiver again terminates at `API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: skills/buster/engine/test-gates/artifacts.ts:41: content`; all five DATA slots remain UNKNOWN. The introduced earlier anchor rejection was retained and corrected, not waived. A required-review finding demanded actual receiver evidence before landing: the candidate was tested reversibly, then the same coherent review passed with the actual terminal evidence. Initial missing scanner, synchronous transport timeout, preparation syntax error and snapshot-path finding remain in operations evidence, not rewritten as successful runs. Original Knip, tree aggregate, full-generation, human/live/runtime/release limitations remain. No release receipt rewrite, merge, deployment, new gate or catalogue acceptance.
 
 Exact commands, frozen manifests and full vectors, original failures, reviews, real committed Reader and original preservation contracts: `operations/pr13/evidence/a91101-20261024/configuration-owner-next/` outside checkout. Register remains 59/89 gates and 225/261 requirements, incomplete. Local commits are not remote outcomes until exact push verification.
+
+
+## Coherent owner declarations and finite shared identities — 2026-10-25
+
+Reviewed local Source `a7a855e35b01161e0328687d2c7ef34210f3bd1f` updates bounded configuration/pipeline discovery metadata, its necessary existing module anchor and exact finite custody identities. Independent pinned autoreview `fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f`, Codex `gpt-5.6-terra`, high, P0–P2, reviewed the unchanged Source responsibilities, current finite native/graph consequences, complete 99-record recursive impact, and all 23 original prospective constraints. Eight complete final partitions independently reviewed the actual append-only original-contract transitions before application. No role, operation, selected membership, runtime authority, or acceptance expansion.
+
+All 2012 registered physical rows across 23 original scopes matched their actual original reviewed baselines and exact six-file candidate identities. Complete106 native facts and nine changed full vectors were reviewed; 193 ordinary facts remain unchanged, including28 original mismatches. Qualification45 changes only original product30 metadata. Selected1252 and caller1009 memberships are unchanged; three Source hashes changed. Fifteen of17 raw canonical graph surfaces remain exact, including1454 ordered dependency paths; only inputKey/registrySha256 change.
+
+Actual committed177-page publication and all five original artifact/search/Source-link/Source-preview/diagram checks pass on this Source revision. These are coordinator technical observations, not fresh independent participant/browser/human/runtime exercises. Focused327 controls produced308PASS and19FAIL, not a passing suite. Only those19 negatives were rerun at the same approved original checkout with original six-file blobs: all19 names and first terminal errors match, with conflict-free exact candidate restoration. This proves that bounded negative comparison, not whole-trace identity or a gate waiver. An earlier isolated archive comparison had Git/compiler-root limitations and was not used as equivalent evidence.
+
+The original receiver again ends at `API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: skills/buster/engine/test-gates/artifacts.ts:41: content`; all five DATA slots remain UNKNOWN. Original19 test negatives,28 ordinary mismatches, selected-release Knip, tree/full-generation/parser, human/live/runtime/release limits remain. Original summaries, scopes, checks, histories and practical observations retain their meanings; only revision/predecessor and appended check/impact/history metadata change. Other76 records and all matrix states remain exact. No new gate/catalogue acceptance, receipt rewrite, AP10 deletion, merge or deployment.
+
+Exact frozen manifests, lossless full original contracts/vectors, all original negatives, failed preparation attempts and note-only rejected reviews, candidate restoration, actual committed Reader, commands and verdicts are retained outside checkout at `operations/pr13/evidence/a91101-20261024/aggregate-owner-next/owner-correction/`, notably `final23-0751/`. Current original register remains59/89 gates and225/261 requirements, incomplete. Local work is not published until exact remote verification.
+
+| Final partition | Original records | Verdict SHA-256 |
+| --- | ---: | --- |
+| 0 | 3 | `c684e0002ac2eada0210903bea432a4b8389b8b5a8e2112e6f090796338242fb` |
+| 1 | 3 | `9da8334a737ce1e2034b77eb17fc08281ca22ec05e17acb680cd555a81d59422` |
+| 2 | 3 | `48eb02d33664cb3764dbee36b8883bbdff697ff0f6b5ed6d1707443f6166f5ba` |
+| 3 | 3 | `b122cd6351905107fb8e926c6331f8aca32a76ab855b112fbc10970f11df99f5` |
+| 4 | 3 | `76b6c6812e98827ba81a05915c9ba6648c3f9e3984eecd73c833bd0f96dfb02a` |
+| 5 | 3 | `44f82dbd423323aa7391caba0db03d3e0ab1bf7eccc497cd7dca3617174587b9` |
+| 6 | 3 | `2719bde92051642176ddf88270acfb3c984c60e6ecc3f4c3690a112b4b17dda4` |
+| 7 | 2 | `b80449a2c715adbf4355962d1770c8a7e615eed63508b24517d61b68fae6df5e` |
