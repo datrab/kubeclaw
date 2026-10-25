@@ -179,6 +179,9 @@ test('Export scope routes explicit baseline without rewriting selection or permi
   const resolve = (scope, baseline) => exportScopeGroups(root, receipt, 'kubeclaw', 'kubeclaw', scope, baseline);
   assert.deepEqual([...resolve('buster', directory).keys()], ['prism', 'nova']);
   assert.throws(() => resolve('buster'), /ENOENT/);
+  assert.throws(() => resolve('buster', ''), /ENOENT/);
+  assert.deepEqual([...resolve(undefined, '').keys()], []);
+  assert.deepEqual([...resolve('all', '').keys()], []);
   assert.throws(() => resolve('all', directory), /GITOPS_BASELINE_REQUIRES_BUSTER_SCOPE/);
   assert.throws(() => resolve(undefined, directory), /GITOPS_BASELINE_REQUIRES_BUSTER_SCOPE/);
   assert.throws(() => resolve('buster', '../escape'), /GITOPS_BUNDLE_PATH_INVALID/);

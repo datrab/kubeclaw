@@ -103,6 +103,7 @@ function writeNewBundle(output, files) {
 
 export function exportScopeGroups(root, receipt, namespace, prismNamespace, scope = 'all', baselineDirectory) {
   if (!['all', 'buster'].includes(scope)) throw new Error('GITOPS_EXPORT_SCOPE_INVALID');
+  if (baselineDirectory === '') baselineDirectory = undefined;
   if (baselineDirectory !== undefined && scope !== 'buster') throw new Error('GITOPS_BASELINE_REQUIRES_BUSTER_SCOPE');
   return scope === 'buster' ? retainedGitOpsGroups(root, receipt, namespace, prismNamespace, baselineDirectory) : new Map();
 }
