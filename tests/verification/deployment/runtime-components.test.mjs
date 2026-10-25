@@ -11,6 +11,8 @@ import { collectRuntimeReceipts } from '../../../scripts/updates/release-images.
 import { selectedRelease, validateRenderedRelease } from '../../../scripts/updates/deployment-release.mjs';
 import { verifyReleaseSources } from '../../../scripts/updates/verify-release-source.mjs';
 
+import { selectedCode } from '../../../scripts/updates/code-release.mjs';
+
 const sourceRoot = path.resolve(import.meta.dirname, '../../..');
 const image = (name, digit) => `ghcr.io/datrab/kubeclaw-${name}@sha256:${digit.repeat(64)}`;
 async function fixture(run) {
@@ -220,4 +222,20 @@ test('same-code replay still checks image publication scope before receipt write
   assert.equal(fs.readFileSync(path.join(root, 'releases/runtime-code.json'), 'utf8'), beforeCode);
   assert.equal(fs.readFileSync(path.join(root, 'releases/runtime-images.json'), 'utf8'), beforeImages);
   assert.equal(fs.existsSync(path.join(root, 'selection-output')), false);
+}));
+
+ test('retained role images match their own bundle source, not another role or global code', () => fixture(({ root, write, commit, initial, images, code }) => {
+  write('docker/Dockerfile.prism-agent', 'new Prism image inputs');
+  const head = commit();
+  const nextCode = structuredClone(code);
+  nextCode.commit = head;
+  for (const role of runtimeRoles) nextCode.bundles[role].source = { commit: initial, sourceRunId: 1, sourceRunAttempt: 1 };
+  write('releases/runtime-code.json', JSON.stringify(nextCode));
+  const retained = { ...images, imageSources: Object.fromEntries(runtimeImages.map(name => [name, { commit: initial, sourceRunId: 1, sourceRunAttempt: 1 }])) };
+  assert.deepEqual(selectedCode(root, retained), nextCode);
+  // A new image cannot be paired with the old role bundle merely because global code matches.
+  retained.imageSources['prism-agent'].commit = head;
+  assert.throws(() => selectedCode(root, retained), /CODE_RELEASE_REQUIRES_NEW_IMAGES/);
+  // Image-only legacy receipts retain their conservative global compatibility gate.
+  assert.throws(() => selectedCode(root, images), /CODE_RELEASE_REQUIRES_NEW_IMAGES/);
 }));

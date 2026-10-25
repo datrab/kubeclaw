@@ -23,9 +23,14 @@ export function selectedCode(root, imageReceipt) {
   const file = path.join(root, 'releases/runtime-code.json');
   if (!fs.existsSync(file)) return undefined; // Existing image-only selections remain readable.
   const code = validateCodeReceipt(JSON.parse(fs.readFileSync(file, 'utf8')));
+  const imageCodeCommit = name => {
+    const role = name === 'nova' ? 'nova' : name.startsWith('prism-') ? 'prism'
+      : ['buster-gateway', 'buster-runtime', 'namespace-controller'].includes(name) ? 'buster' : undefined;
+    return role ? componentSource(code, role, 'bundle').commit : code.commit;
+  };
   const compatible = imageReceipt.imageSources
     ? runtimeImages.every(name => inputDigest(root, componentSource(imageReceipt, name, 'image').commit, file => imageInput(name, file))
-      === inputDigest(root, code.commit, file => imageInput(name, file)))
+      === inputDigest(root, imageCodeCommit(name), file => imageInput(name, file)))
     : inputDigest(root, imageReceipt.commit, isImageInput) === inputDigest(root, code.commit, isImageInput);
   if (Object.values(code.bundles).some(bundle => bundle.source) && changedBundles(root, code, code.commit).length > 0) {
     throw new Error('CODE_BUNDLE_INPUTS_CHANGED: retained bundle is incompatible with selected sources');
