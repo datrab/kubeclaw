@@ -9150,7 +9150,7 @@
     },
     {
       "id": "AP09-complete-public-cli-20261020",
-      "revision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
+      "revision": "67efef97128339de5f240d59dbfa4cefa8accdc5",
       "author": "/root/review_example_publication",
       "reviewer": "/root/review_example_publication/review_cli_complete",
       "gateIds": [],
@@ -9233,6 +9233,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Actual committed177page publication and five technical artifact/search/Source-link/Source-preview/diagram checks PASS on a7a855e3. Coordinator evidence only, not fresh independent participant/human/runtime observations. Focused327controls:308PASS/19FAIL; all19negative names and firstterminals independently compared by coordinator to ORIGINALsameapprovedroot with exactsame19failures and guardedcandidate restoration. Suite NOT called PASS. Original receiver same artifacts.ts41content/all5DATAUNKNOWN."
+        },
+        {
+          "command": "Committed source 67efef97128339de5f240d59dbfa4cefa8accdc5: original177-page docs-publication build plus five docs-reader controls; generator/docs/refs/publication/whitespace controls",
+          "exitCode": 0,
+          "observation": "Actual six committed technical Reader processes and five relevant static controls terminal0. Complete three-path provider reference generator/catalogue template/page reviewed with all eight complete original contracts and full baseline-current vectors. Provider schemas/runtime/parser unchanged; source provenance binds manifests, schemas, flow, parser, template and generator at one exact source commit. Initial26-word publication build failure retained and corrected by removing one redundant word. Exact source-first generator/template commit prerequisite and separate generated-reference commit now explicit. False numeric1 review finding refuted by actual unchanged parser; complete original old/current page diffs supplied for sole changed page in4scopes. Successful current build collected separately. No new historical/native/live/human exercise, role/custody pass or A99-11 acceptance. Latest unchanged receiver remains exit1 DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED at docs-plugin-complexity; complete selector delta proves same published-baseline failure, not a successful mutation diagnostic. Historical artifacts.ts41/content/all5UNKNOWN retained separately. Raw controls: /home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/buster-provider-sourcefirst-committed-reader"
         }
       ],
       "review": {
@@ -9463,6 +9468,20 @@
             "docs/blueprint/acceptance-evidence/README.md"
           ],
           "limits": "Original19negativecontrols/28ordinaryred/DATA artifacts.ts41content/all5UNKNOWN/Knip/treeaggregate/fullgeneration/parser/human/live/runtime/release limits remain. No wholeA91101,newgate/catalogue,globalPASS or fresh independent practical exercise."
+        },
+        {
+          "previousReviewedRevision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
+          "revision": "67efef97128339de5f240d59dbfa4cefa8accdc5",
+          "reviewer": "Independent pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 complete original-scope preservation",
+          "changedDependencies": [
+            "scripts/generate-buster-provider-reference.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact complete original contract/checks/history/limits and all baseline-current vectors supplied with complete owning schemas/manifests/parser/generator/template/page. Original scoped observations reused only within unchanged original limits; current technical build/checks remain coordinator observations. Provider type/presence/constraint projection and maintenance/source-trace corrections independently reviewed; all8 original scopes preserved, no new acceptance.",
+          "originalRecordSha256": "8a264f6a9535f7ff912c3df51574c06a4bb28df92243243887859f1d612aa094",
+          "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/buster-provider-sourcefirst-0-1821-verdict.json",
+          "reportSha256": "da7566c8ac88a4779a8bf5b1ee5bc315f4b3f0b25a5e5d724be330b0b270687a",
+          "inspectionLimit": "Static full supplied-source review only, no reviewer-executed tests or fresh historical/native/runtime/live/human observations. WholeA99-11NOT_READY, latest unrelated documentation-role baseline failure remains red; no receipt or purpose/role grant. Original DATA/ToolSource/deployprovenance/releaseKnip/human limits retained."
         }
       ],
       "previousReviewedRevision": "4db128da05fabcf1cc4f345e54c343877e2f782b",
@@ -16672,7 +16691,7 @@
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "01b46a3baf1114c07ab84f8e900033ea3b052cbc",
+      "revision": "67efef97128339de5f240d59dbfa4cefa8accdc5",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -17183,6 +17202,11 @@
           "command": "Actual committedSource01b46a3b: original177page publication build and five docs-reader controls; original publication/docs/refs/whitespace checks",
           "exitCode": 0,
           "observation": "All original technical controls terminal0. Full current ownerpage Source/semanticReader/QualityPASS across all7completeoriginalcontexts; independent per-ID originalscope preservationPASS. Generation guarantees qualified for markerlesscompatibility; URLvalidation/raceerrors accurately bounded; recovery explicitly binds selectedswarm/scaffold and checks historicalSourcepin/cleancheckout. All11 owningSources exact historicalpin. No fresh historicalCLI/native/live/human/wholeA99-11 acceptance. Initial interrupted build transporttimeout retained outside checkout; actual successful rerun separately logged. Raw controls: /home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/project-publication-recovery-committed-reader"
+        },
+        {
+          "command": "Committed source 67efef97128339de5f240d59dbfa4cefa8accdc5: original177-page docs-publication build plus five docs-reader controls; generator/docs/refs/publication/whitespace controls",
+          "exitCode": 0,
+          "observation": "Actual six committed technical Reader processes and five relevant static controls terminal0. Complete three-path provider reference generator/catalogue template/page reviewed with all eight complete original contracts and full baseline-current vectors. Provider schemas/runtime/parser unchanged; source provenance binds manifests, schemas, flow, parser, template and generator at one exact source commit. Initial26-word publication build failure retained and corrected by removing one redundant word. Exact source-first generator/template commit prerequisite and separate generated-reference commit now explicit. False numeric1 review finding refuted by actual unchanged parser; complete original old/current page diffs supplied for sole changed page in4scopes. Successful current build collected separately. No new historical/native/live/human exercise, role/custody pass or A99-11 acceptance. Latest unchanged receiver remains exit1 DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED at docs-plugin-complexity; complete selector delta proves same published-baseline failure, not a successful mutation diagnostic. Historical artifacts.ts41/content/all5UNKNOWN retained separately. Raw controls: /home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/buster-provider-sourcefirst-committed-reader"
         }
       ],
       "limits": [
@@ -18438,6 +18462,20 @@
           "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/project-publication-preservation-static-1711-verdict.json",
           "reportSha256": "2722fe43fb7c23e6b6ae01a5dededc1a7652f0effa5fd156afe4663be2cf6bf7",
           "inspectionLimit": "Static fullSource inspection; actual technical build/checks are coordinator observations, not reviewer-executed tests or fresh historical/native/live/human exercises. WholeA99-11NOT_READY; original DATA/runtime/ToolSource/deployprovenance/releaseKnip/human limits retained."
+        },
+        {
+          "previousReviewedRevision": "01b46a3baf1114c07ab84f8e900033ea3b052cbc",
+          "revision": "67efef97128339de5f240d59dbfa4cefa8accdc5",
+          "reviewer": "Independent pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 complete original-scope preservation",
+          "changedDependencies": [
+            "docs/site/reference/buster-provider-configuration.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact complete original contract/checks/history/limits and all baseline-current vectors supplied with complete owning schemas/manifests/parser/generator/template/page. Original scoped observations reused only within unchanged original limits; current technical build/checks remain coordinator observations. Provider type/presence/constraint projection and maintenance/source-trace corrections independently reviewed; all8 original scopes preserved, no new acceptance.",
+          "originalRecordSha256": "fd4901f9ff6d827388ac92e3454d0df48909b7bc53f9c7d27a98732636b5f14d",
+          "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/buster-provider-sourcefirst-0-1821-verdict.json",
+          "reportSha256": "da7566c8ac88a4779a8bf5b1ee5bc315f4b3f0b25a5e5d724be330b0b270687a",
+          "inspectionLimit": "Static full supplied-source review only, no reviewer-executed tests or fresh historical/native/runtime/live/human observations. WholeA99-11NOT_READY, latest unrelated documentation-role baseline failure remains red; no receipt or purpose/role grant. Original DATA/ToolSource/deployprovenance/releaseKnip/human limits retained."
         }
       ],
       "scopePreservation3408": {
@@ -25399,7 +25437,7 @@
     },
     {
       "id": "A99-01-whole-recursive-input-content-20261021",
-      "revision": "80815e4871e617603094f3228d8f4d49f625552f",
+      "revision": "67efef97128339de5f240d59dbfa4cefa8accdc5",
       "author": "PR13 documentation contributors; parent lint-wording correction",
       "reviewer": "/root/workflow_acceptance",
       "gateIds": [
@@ -25479,6 +25517,11 @@
           "command": "Actual committedSource80815e48: original177page publication build and all five docs-reader checks; publication/docs-check/refs and git diff --check",
           "exitCode": 0,
           "observation": "Actual build and artifact/search/Source-link/preview/diagram controls terminal0. Full corrected pipeline-json originalA99-11 Source/semanticReader/QualityPASS and independent10originalscope preservationPASS. Diagnostic prose only distinguishes COVERAGE_* contract errors from TEST_PLAN_* resolver errors. JSON example, parser, runtime, source bindings, renderer and historical observations unchanged. No fresh native/live/human or wholeA99-11 acceptance. Raw commands/logs: /home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/pipeline-json-recovery-committed-reader"
+        },
+        {
+          "command": "Committed source 67efef97128339de5f240d59dbfa4cefa8accdc5: original177-page docs-publication build plus five docs-reader controls; generator/docs/refs/publication/whitespace controls",
+          "exitCode": 0,
+          "observation": "Actual six committed technical Reader processes and five relevant static controls terminal0. Complete three-path provider reference generator/catalogue template/page reviewed with all eight complete original contracts and full baseline-current vectors. Provider schemas/runtime/parser unchanged; source provenance binds manifests, schemas, flow, parser, template and generator at one exact source commit. Initial26-word publication build failure retained and corrected by removing one redundant word. Exact source-first generator/template commit prerequisite and separate generated-reference commit now explicit. False numeric1 review finding refuted by actual unchanged parser; complete original old/current page diffs supplied for sole changed page in4scopes. Successful current build collected separately. No new historical/native/live/human exercise, role/custody pass or A99-11 acceptance. Latest unchanged receiver remains exit1 DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED at docs-plugin-complexity; complete selector delta proves same published-baseline failure, not a successful mutation diagnostic. Historical artifacts.ts41/content/all5UNKNOWN retained separately. Raw controls: /home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/buster-provider-sourcefirst-committed-reader"
         }
       ],
       "review": {
@@ -25680,6 +25723,20 @@
           "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/pipeline-json-ten-preservation-recovery-c-verdict.json",
           "reportSha256": "aec54c603fb7260cf9153ce4d02038b6200e0cd3ccea2d46222a3274a8f2e264",
           "inspectionLimit": "Complete finalpage/coverage/validation and clean completecontentverdict/manifest; full originalcontracts/vectors/decoding shards. Technical checks are coordinator observations, not reviewer-run/freshparticipant/native/live work. Source-link terminalsummary not semanticinventory; fullraw retained unchanged. Original DATA/runtime/ToolSource/deployprovenance/releaseKnip/human limits remain."
+        },
+        {
+          "previousReviewedRevision": "80815e4871e617603094f3228d8f4d49f625552f",
+          "revision": "67efef97128339de5f240d59dbfa4cefa8accdc5",
+          "reviewer": "Independent pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 complete original-scope preservation",
+          "changedDependencies": [
+            "docs/site/reference/buster-provider-configuration.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact complete original contract/checks/history/limits and all baseline-current vectors supplied with complete owning schemas/manifests/parser/generator/template/page. Original scoped observations reused only within unchanged original limits; current technical build/checks remain coordinator observations. Provider type/presence/constraint projection and maintenance/source-trace corrections independently reviewed; all8 original scopes preserved, no new acceptance.",
+          "originalRecordSha256": "c4ef3b7c78bd980cee6d3645f6a6694e1bfa1474fd678775f9fba9248688a7ea",
+          "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/buster-provider-sourcefirst-1-1821-verdict.json",
+          "reportSha256": "a912d0f8f3fdb7879abf94f75d0c2531786d751635bb475dec7c8266001ce653",
+          "inspectionLimit": "Static full supplied-source review only, no reviewer-executed tests or fresh historical/native/runtime/live/human observations. WholeA99-11NOT_READY, latest unrelated documentation-role baseline failure remains red; no receipt or purpose/role grant. Original DATA/ToolSource/deployprovenance/releaseKnip/human limits retained."
         }
       ],
       "previousReviewedRevision": "767ffd43a9ee0a28e2b3ca463e7648d765a9accb",
@@ -28739,7 +28796,7 @@
     },
     {
       "id": "A99-07-representative-buster-workflow-content-20261021",
-      "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+      "revision": "67efef97128339de5f240d59dbfa4cefa8accdc5",
       "author": "existing Buster workflow authors; package citation repair independently reviewed by root",
       "reviewer": "/root/workflow_acceptance",
       "gateIds": [
@@ -28795,6 +28852,11 @@
           "command": "Current cfc97 Reader and extracted archive checks with independent22scope preservation",
           "exitCode": 0,
           "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
+        },
+        {
+          "command": "Committed source 67efef97128339de5f240d59dbfa4cefa8accdc5: original177-page docs-publication build plus five docs-reader controls; generator/docs/refs/publication/whitespace controls",
+          "exitCode": 0,
+          "observation": "Actual six committed technical Reader processes and five relevant static controls terminal0. Complete three-path provider reference generator/catalogue template/page reviewed with all eight complete original contracts and full baseline-current vectors. Provider schemas/runtime/parser unchanged; source provenance binds manifests, schemas, flow, parser, template and generator at one exact source commit. Initial26-word publication build failure retained and corrected by removing one redundant word. Exact source-first generator/template commit prerequisite and separate generated-reference commit now explicit. False numeric1 review finding refuted by actual unchanged parser; complete original old/current page diffs supplied for sole changed page in4scopes. Successful current build collected separately. No new historical/native/live/human exercise, role/custody pass or A99-11 acceptance. Latest unchanged receiver remains exit1 DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED at docs-plugin-complexity; complete selector delta proves same published-baseline failure, not a successful mutation diagnostic. Historical artifacts.ts41/content/all5UNKNOWN retained separately. Raw controls: /home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/buster-provider-sourcefirst-committed-reader"
         }
       ],
       "summary": "Whole representative workflow documentation connects a complete real suite/checked-manifest/Kubernetes-fixture/HTTP-matrix/JUnit declaration and actual installed registry resolution to source-attested dispatch, real provider/report execution path, exact result verification and digest-bound evidence import. The complete template explicitly identifies image/catalog-command substitutions and deployment prerequisites; production commands identify owning checkout, same project/plan/run, raw-preservation-before-audit, result interpretation, failed boundaries and recovery/cleanup. Separate native vertical proof command has exact expected remote/direct-command/JUnit/LCOV result and explicit scope; neither resolver green nor HTTP acceptance becomes a quality verdict.",
@@ -28974,6 +29036,20 @@
           "reportAvailability": "Later evidence adoption, not a Source file at reviewed487; not added to record.sources.",
           "limit": "Original named scope/limits preserved only; no new gate/requirement counts, consumer/graph/role/native/product/runtime/deployment/release approval. Knip/parser/output weaknesses and unexecuted product paths remain visible.",
           "wholeRenderedOutputChangedCanonicalPages": []
+        },
+        {
+          "previousReviewedRevision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+          "revision": "67efef97128339de5f240d59dbfa4cefa8accdc5",
+          "reviewer": "Independent pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 complete original-scope preservation",
+          "changedDependencies": [
+            "docs/site/reference/buster-provider-configuration.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact complete original contract/checks/history/limits and all baseline-current vectors supplied with complete owning schemas/manifests/parser/generator/template/page. Original scoped observations reused only within unchanged original limits; current technical build/checks remain coordinator observations. Provider type/presence/constraint projection and maintenance/source-trace corrections independently reviewed; all8 original scopes preserved, no new acceptance.",
+          "originalRecordSha256": "5fa452f0385fb709cef0f4b6419e0d4a9263541f03948e974c9ce1c39a10b5c7",
+          "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/buster-provider-sourcefirst-1-1821-verdict.json",
+          "reportSha256": "a912d0f8f3fdb7879abf94f75d0c2531786d751635bb475dec7c8266001ce653",
+          "inspectionLimit": "Static full supplied-source review only, no reviewer-executed tests or fresh historical/native/runtime/live/human observations. WholeA99-11NOT_READY, latest unrelated documentation-role baseline failure remains red; no receipt or purpose/role grant. Original DATA/ToolSource/deployprovenance/releaseKnip/human limits retained."
         }
       ]
     },
@@ -30499,7 +30575,7 @@
     },
     {
       "id": "AP09-publication-positive-scope-7ef16585",
-      "revision": "01b46a3baf1114c07ab84f8e900033ea3b052cbc",
+      "revision": "67efef97128339de5f240d59dbfa4cefa8accdc5",
       "author": "existing publication/content maintainers; final authored Sourcefield additions separately reviewed by workflow_acceptance",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -30829,6 +30905,11 @@
           "command": "Actual committedSource01b46a3b: original177page publication build and five docs-reader controls; original publication/docs/refs/whitespace checks",
           "exitCode": 0,
           "observation": "All original technical controls terminal0. Full current ownerpage Source/semanticReader/QualityPASS across all7completeoriginalcontexts; independent per-ID originalscope preservationPASS. Generation guarantees qualified for markerlesscompatibility; URLvalidation/raceerrors accurately bounded; recovery explicitly binds selectedswarm/scaffold and checks historicalSourcepin/cleancheckout. All11 owningSources exact historicalpin. No fresh historicalCLI/native/live/human/wholeA99-11 acceptance. Initial interrupted build transporttimeout retained outside checkout; actual successful rerun separately logged. Raw controls: /home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/project-publication-recovery-committed-reader"
+        },
+        {
+          "command": "Committed source 67efef97128339de5f240d59dbfa4cefa8accdc5: original177-page docs-publication build plus five docs-reader controls; generator/docs/refs/publication/whitespace controls",
+          "exitCode": 0,
+          "observation": "Actual six committed technical Reader processes and five relevant static controls terminal0. Complete three-path provider reference generator/catalogue template/page reviewed with all eight complete original contracts and full baseline-current vectors. Provider schemas/runtime/parser unchanged; source provenance binds manifests, schemas, flow, parser, template and generator at one exact source commit. Initial26-word publication build failure retained and corrected by removing one redundant word. Exact source-first generator/template commit prerequisite and separate generated-reference commit now explicit. False numeric1 review finding refuted by actual unchanged parser; complete original old/current page diffs supplied for sole changed page in4scopes. Successful current build collected separately. No new historical/native/live/human exercise, role/custody pass or A99-11 acceptance. Latest unchanged receiver remains exit1 DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED at docs-plugin-complexity; complete selector delta proves same published-baseline failure, not a successful mutation diagnostic. Historical artifacts.ts41/content/all5UNKNOWN retained separately. Raw controls: /home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/buster-provider-sourcefirst-committed-reader"
         }
       ],
       "review": {
@@ -31477,6 +31558,20 @@
           "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/project-publication-preservation-publication-callout-1711-verdict.json",
           "reportSha256": "65bd96d5ecdefe0fa6907e0a1b3120315e79f248f22da942c55f4bd921868d49",
           "inspectionLimit": "Static fullSource inspection; actual technical build/checks are coordinator observations, not reviewer-executed tests or fresh historical/native/live/human exercises. WholeA99-11NOT_READY; original DATA/runtime/ToolSource/deployprovenance/releaseKnip/human limits retained."
+        },
+        {
+          "previousReviewedRevision": "01b46a3baf1114c07ab84f8e900033ea3b052cbc",
+          "revision": "67efef97128339de5f240d59dbfa4cefa8accdc5",
+          "reviewer": "Independent pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 complete original-scope preservation",
+          "changedDependencies": [
+            "docs/site/reference/buster-provider-configuration.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact complete original contract/checks/history/limits and all baseline-current vectors supplied with complete owning schemas/manifests/parser/generator/template/page. Original scoped observations reused only within unchanged original limits; current technical build/checks remain coordinator observations. Provider type/presence/constraint projection and maintenance/source-trace corrections independently reviewed; all8 original scopes preserved, no new acceptance.",
+          "originalRecordSha256": "b715d4e283632229e3b5e0bb94a550c9e6e3a2685e01f03e2db02aed0686c9ea",
+          "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/buster-provider-sourcefirst-2-1821-verdict.json",
+          "reportSha256": "f82288e5ff3dd221f6004fd95debefa2bc72738d379983cef5f27bd778ac7aa3",
+          "inspectionLimit": "Static full supplied-source review only, no reviewer-executed tests or fresh historical/native/runtime/live/human observations. WholeA99-11NOT_READY, latest unrelated documentation-role baseline failure remains red; no receipt or purpose/role grant. Original DATA/ToolSource/deployprovenance/releaseKnip/human limits retained."
         }
       ],
       "scopePreservation3408": {
@@ -35753,7 +35848,7 @@
     },
     {
       "id": "AP09-whole-extension-drift-A91014-20261023",
-      "revision": "c56f684a0b18bbf8c9615524e6702a0e80a589e4",
+      "revision": "67efef97128339de5f240d59dbfa4cefa8accdc5",
       "author": "Nova documentation continuation coordinator",
       "reviewer": "Independent pinned fe588b1a autoreview Codex gpt-5.6-terra high P2 whole-A91014 topic reviewer",
       "gateIds": [
@@ -35950,6 +36045,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Actual six separate committed technical Reader processes PASS at c56f684a0b18bbf8c9615524e6702a0e80a589e4; 177-page publication, artifact/search/Source-link/Source-preview/diagrams. Exact reviewed platform sort correction, two finite scalar identities and five downstream digest consequences; 14 canonical scalar and 22 variable-child controls PASS. No new practical participant/human/runtime observations. Original DATA artifacts.ts:41 content/all5 UNKNOWN and original ordinary/Knip/fullgeneration limits retained."
+        },
+        {
+          "command": "Committed source 67efef97128339de5f240d59dbfa4cefa8accdc5: original177-page docs-publication build plus five docs-reader controls; generator/docs/refs/publication/whitespace controls",
+          "exitCode": 0,
+          "observation": "Actual six committed technical Reader processes and five relevant static controls terminal0. Complete three-path provider reference generator/catalogue template/page reviewed with all eight complete original contracts and full baseline-current vectors. Provider schemas/runtime/parser unchanged; source provenance binds manifests, schemas, flow, parser, template and generator at one exact source commit. Initial26-word publication build failure retained and corrected by removing one redundant word. Exact source-first generator/template commit prerequisite and separate generated-reference commit now explicit. False numeric1 review finding refuted by actual unchanged parser; complete original old/current page diffs supplied for sole changed page in4scopes. Successful current build collected separately. No new historical/native/live/human exercise, role/custody pass or A99-11 acceptance. Latest unchanged receiver remains exit1 DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED at docs-plugin-complexity; complete selector delta proves same published-baseline failure, not a successful mutation diagnostic. Historical artifacts.ts41/content/all5UNKNOWN retained separately. Raw controls: /home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/buster-provider-sourcefirst-committed-reader"
         }
       ],
       "review": {
@@ -36133,6 +36233,20 @@
             "docs/blueprint/acceptance-evidence/README.md"
           ],
           "limits": "All original DATA artifacts.ts41content/all5UNKNOWN, original ordinary mismatches, Knip/fullgeneration, external provenance, human/live/runtime/release boundaries retained. No whole A91108 or other new gate/catalogue acceptance."
+        },
+        {
+          "previousReviewedRevision": "c56f684a0b18bbf8c9615524e6702a0e80a589e4",
+          "revision": "67efef97128339de5f240d59dbfa4cefa8accdc5",
+          "reviewer": "Independent pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 complete original-scope preservation",
+          "changedDependencies": [
+            "docs/site/reference/buster-provider-configuration.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact complete original contract/checks/history/limits and all baseline-current vectors supplied with complete owning schemas/manifests/parser/generator/template/page. Original scoped observations reused only within unchanged original limits; current technical build/checks remain coordinator observations. Provider type/presence/constraint projection and maintenance/source-trace corrections independently reviewed; all8 original scopes preserved, no new acceptance.",
+          "originalRecordSha256": "7010b332f16302d851f3ca57fb89cbc40e0cffe7111e990e4de13b15d472ec46",
+          "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/buster-provider-sourcefirst-1-1821-verdict.json",
+          "reportSha256": "a912d0f8f3fdb7879abf94f75d0c2531786d751635bb475dec7c8266001ce653",
+          "inspectionLimit": "Static full supplied-source review only, no reviewer-executed tests or fresh historical/native/runtime/live/human observations. WholeA99-11NOT_READY, latest unrelated documentation-role baseline failure remains red; no receipt or purpose/role grant. Original DATA/ToolSource/deployprovenance/releaseKnip/human limits retained."
         }
       ],
       "previousReviewedRevision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
@@ -36673,7 +36787,7 @@
     },
     {
       "id": "A911-06-authored-surface-bindings-20261025",
-      "revision": "01b46a3baf1114c07ab84f8e900033ea3b052cbc",
+      "revision": "67efef97128339de5f240d59dbfa4cefa8accdc5",
       "author": "PR13 documentation authors and continuation coordinator",
       "reviewer": "Independent pinned fe588b1a Terra/high/P2 A911-06 gate-decision reviewer",
       "gateIds": [
@@ -36944,6 +37058,11 @@
           "command": "Actual committedSource01b46a3b: original177page publication build and five docs-reader controls; original publication/docs/refs/whitespace checks",
           "exitCode": 0,
           "observation": "All original technical controls terminal0. Full current ownerpage Source/semanticReader/QualityPASS across all7completeoriginalcontexts; independent per-ID originalscope preservationPASS. Generation guarantees qualified for markerlesscompatibility; URLvalidation/raceerrors accurately bounded; recovery explicitly binds selectedswarm/scaffold and checks historicalSourcepin/cleancheckout. All11 owningSources exact historicalpin. No fresh historicalCLI/native/live/human/wholeA99-11 acceptance. Initial interrupted build transporttimeout retained outside checkout; actual successful rerun separately logged. Raw controls: /home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/project-publication-recovery-committed-reader"
+        },
+        {
+          "command": "Committed source 67efef97128339de5f240d59dbfa4cefa8accdc5: original177-page docs-publication build plus five docs-reader controls; generator/docs/refs/publication/whitespace controls",
+          "exitCode": 0,
+          "observation": "Actual six committed technical Reader processes and five relevant static controls terminal0. Complete three-path provider reference generator/catalogue template/page reviewed with all eight complete original contracts and full baseline-current vectors. Provider schemas/runtime/parser unchanged; source provenance binds manifests, schemas, flow, parser, template and generator at one exact source commit. Initial26-word publication build failure retained and corrected by removing one redundant word. Exact source-first generator/template commit prerequisite and separate generated-reference commit now explicit. False numeric1 review finding refuted by actual unchanged parser; complete original old/current page diffs supplied for sole changed page in4scopes. Successful current build collected separately. No new historical/native/live/human exercise, role/custody pass or A99-11 acceptance. Latest unchanged receiver remains exit1 DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED at docs-plugin-complexity; complete selector delta proves same published-baseline failure, not a successful mutation diagnostic. Historical artifacts.ts41/content/all5UNKNOWN retained separately. Raw controls: /home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/buster-provider-sourcefirst-committed-reader"
         }
       ],
       "summary": "Original A911-06 authored binding across72endpoint/65outbound/75store records plus CI/product workflows. Reuses original substantive Source/semantic Reader/Quality with exact unchanged complete vectors; fresh four semantic slice assessments. Not inferred from inventory, common anchors or publication counts. No new catalogue requirement counted. Independent whole original criterion Source/semantic Reader/Quality PASS; exact five literal exclusions were assessed as nonmaterial to authored binding, not cleared for Source/execution.",
@@ -36984,12 +37103,26 @@
           "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/project-publication-preservation-content-1711-verdict.json",
           "reportSha256": "9972953a18d06f67774b6f852162aa303469047453b2f09c9fed75b1c38e4354",
           "inspectionLimit": "Static fullSource inspection; actual technical build/checks are coordinator observations, not reviewer-executed tests or fresh historical/native/live/human exercises. WholeA99-11NOT_READY; original DATA/runtime/ToolSource/deployprovenance/releaseKnip/human limits retained."
+        },
+        {
+          "previousReviewedRevision": "01b46a3baf1114c07ab84f8e900033ea3b052cbc",
+          "revision": "67efef97128339de5f240d59dbfa4cefa8accdc5",
+          "reviewer": "Independent pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 complete original-scope preservation",
+          "changedDependencies": [
+            "docs/site/reference/buster-provider-configuration.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact complete original contract/checks/history/limits and all baseline-current vectors supplied with complete owning schemas/manifests/parser/generator/template/page. Original scoped observations reused only within unchanged original limits; current technical build/checks remain coordinator observations. Provider type/presence/constraint projection and maintenance/source-trace corrections independently reviewed; all8 original scopes preserved, no new acceptance.",
+          "originalRecordSha256": "80c5917dbac7216d2ec1f19ebf2ec2fa9cc1985515ea0d193c7ac65b9c187f01",
+          "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/buster-provider-sourcefirst-2-1821-verdict.json",
+          "reportSha256": "f82288e5ff3dd221f6004fd95debefa2bc72738d379983cef5f27bd778ac7aa3",
+          "inspectionLimit": "Static full supplied-source review only, no reviewer-executed tests or fresh historical/native/runtime/live/human observations. WholeA99-11NOT_READY, latest unrelated documentation-role baseline failure remains red; no receipt or purpose/role grant. Original DATA/ToolSource/deployprovenance/releaseKnip/human limits retained."
         }
       ]
     },
     {
       "id": "A99-13-original-seven-dimension-drift-20261025",
-      "revision": "5c8d9b8a6af06fef6441dcb5a9812896d56bcc2f",
+      "revision": "67efef97128339de5f240d59dbfa4cefa8accdc5",
       "author": "PR13 documentation authors and continuation coordinator",
       "reviewer": "Independent pinned fe588b1a Terra/high/P2 original A99-13 reviewer",
       "gateIds": [
@@ -37063,6 +37196,11 @@
           "command": "Pinned fe588b1a Terra/high/P2 complete original seven-dimension A99-13 independent decision",
           "exitCode": 0,
           "observation": "sourceAccuracy: PASS — the supplied complete fixture maps all seven A99-13 dimensions to concrete authorities, constructors, and reader locations; the first six retain the accepted unchanged A91014 scope, and the progress contract has a distinct bounded checker. readerUsability: PASS — every demonstrated mutation identifies its affected reference, including workflows.md for progress. quality: PASS — the verdict change is consistent with baseline-green, Add/Change/Remove rejection, no-write, restoration, and parser-error separation evidence. WHOLE A99-13: PASS within the stated original seven-dimension scope; it does not assert broader SDK-family, A911-11, runtime, or human acceptance."
+        },
+        {
+          "command": "Committed source 67efef97128339de5f240d59dbfa4cefa8accdc5: original177-page docs-publication build plus five docs-reader controls; generator/docs/refs/publication/whitespace controls",
+          "exitCode": 0,
+          "observation": "Actual six committed technical Reader processes and five relevant static controls terminal0. Complete three-path provider reference generator/catalogue template/page reviewed with all eight complete original contracts and full baseline-current vectors. Provider schemas/runtime/parser unchanged; source provenance binds manifests, schemas, flow, parser, template and generator at one exact source commit. Initial26-word publication build failure retained and corrected by removing one redundant word. Exact source-first generator/template commit prerequisite and separate generated-reference commit now explicit. False numeric1 review finding refuted by actual unchanged parser; complete original old/current page diffs supplied for sole changed page in4scopes. Successful current build collected separately. No new historical/native/live/human exercise, role/custody pass or A99-11 acceptance. Latest unchanged receiver remains exit1 DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED at docs-plugin-complexity; complete selector delta proves same published-baseline failure, not a successful mutation diagnostic. Historical artifacts.ts41/content/all5UNKNOWN retained separately. Raw controls: /home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/buster-provider-sourcefirst-committed-reader"
         }
       ],
       "review": {
@@ -37079,7 +37217,23 @@
       ],
       "openIssues": [],
       "verdict": "PASS",
-      "evidenceDirectory": "docs/blueprint/acceptance-evidence/a9913-original-seven-dimensions-20261025"
+      "evidenceDirectory": "docs/blueprint/acceptance-evidence/a9913-original-seven-dimensions-20261025",
+      "impactReviews": [
+        {
+          "previousReviewedRevision": "5c8d9b8a6af06fef6441dcb5a9812896d56bcc2f",
+          "revision": "67efef97128339de5f240d59dbfa4cefa8accdc5",
+          "reviewer": "Independent pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 complete original-scope preservation",
+          "changedDependencies": [
+            "docs/site/reference/buster-provider-configuration.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact complete original contract/checks/history/limits and all baseline-current vectors supplied with complete owning schemas/manifests/parser/generator/template/page. Original scoped observations reused only within unchanged original limits; current technical build/checks remain coordinator observations. Provider type/presence/constraint projection and maintenance/source-trace corrections independently reviewed; all8 original scopes preserved, no new acceptance.",
+          "originalRecordSha256": "b7114cf4c9365505a676e49ca90286ae703d5aa10d242710237879a72a59a23f",
+          "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/buster-provider-sourcefirst-1-1821-verdict.json",
+          "reportSha256": "a912d0f8f3fdb7879abf94f75d0c2531786d751635bb475dec7c8266001ce653",
+          "inspectionLimit": "Static full supplied-source review only, no reviewer-executed tests or fresh historical/native/runtime/live/human observations. WholeA99-11NOT_READY, latest unrelated documentation-role baseline failure remains red; no receipt or purpose/role grant. Original DATA/ToolSource/deployprovenance/releaseKnip/human limits retained."
+        }
+      ]
     }
   ],
   "purpose": "Internal planning and observed findings; not an acceptance ledger and not reader documentation.",
