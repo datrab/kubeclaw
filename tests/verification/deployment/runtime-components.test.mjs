@@ -304,3 +304,21 @@ test('incompatible Buster candidate leaves both selected receipts and outputs un
   // Image-only legacy receipts retain their conservative global compatibility gate.
   assert.throws(() => selectedCode(root, images), /CODE_RELEASE_REQUIRES_NEW_IMAGES/);
 }));
+
+
+test('receipt creation rejects invalid new and retained producer identities before collection', () => fixture(({ root, write, initial, images }) => {
+  fs.mkdirSync(path.join(root, 'receipt-input'));
+  const directory = path.join(root, 'receipt-input');
+  const before = JSON.stringify(images);
+  for (const source of [{}, { sourceRunId: 0, sourceRunAttempt: 1 }, { sourceRunId: 2, sourceRunAttempt: 0 }]) {
+    assert.throws(() => collectRuntimeReceipts(directory, initial, images, source, root), /Verified runtime source identity required/u);
+  }
+  const malformed = structuredClone(images);
+  malformed.imageSources = { nova: { commit: initial, sourceRunId: 1, sourceRunAttempt: 0 } };
+  assert.throws(() => collectRuntimeReceipts(directory, initial, malformed,
+    { sourceRunId: 2, sourceRunAttempt: 1 }, root), /Invalid retained image source:nova/u);
+  assert.equal(JSON.stringify(images), before);
+  const valid = collectRuntimeReceipts(directory, initial, images, { sourceRunId: 2, sourceRunAttempt: 1 }, root);
+  assert.deepEqual(valid.images, images.images);
+  assert.deepEqual(valid.imageSources.nova, componentSource(images, 'nova', 'image'));
+}));

@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { changedImages } from './runtime-inputs.mjs';
-import { runtimeImages, componentSource } from './runtime-components.mjs';
+import { runtimeImages, componentSource, validSource } from './runtime-components.mjs';
 
 // Production build receipts are downloaded from one successful, verified workflow run.
 export function collectReceipts(directory, commit, expected) {
@@ -19,7 +19,11 @@ export function collectReceipts(directory, commit, expected) {
   return { schemaVersion: 1, commit, images };
 }
 export function collectRuntimeReceipts(directory, commit, prior, source, root = process.cwd(), force = false) {
+  if (!validSource({ commit, ...source })) throw new Error('Verified runtime source identity required');
   const expected = changedImages(root, prior, commit, force);
+  for (const name of runtimeImages.filter(name => !expected.includes(name))) {
+    if (!validSource(componentSource(prior, name, 'image'))) throw new Error(`Invalid retained image source:${name}`);
+  }
   const built = collectReceipts(directory, commit, expected);
   return { ...built, ...source,
     images: Object.fromEntries(runtimeImages.map(name => [name, built.images[name] ?? prior?.images[name]])),
