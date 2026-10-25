@@ -13,18 +13,24 @@ const revision = revisionArg?.slice('--revision='.length)
 assert(/^[a-f0-9]{40}$/u.test(revision ?? ''), 'supply --revision=<full source commit> or a reference with a valid evidence revision');
 const codePattern = /^[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)+(?:$|:)/u;
 
+const productionSourceRoots = Object.freeze(['skills/buster/engine', 'skills/buster/plugins']);
+const productionSourceExtension = /\.(?:js|ts)$/u;
+const excludedSourceDirectory = 'tests';
+const excludedSourceSuffix = '.d.ts';
+const pluginSourceSegment = '/src/';
+
 function walk(directory) {
   return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
     const absolute = path.join(directory, entry.name);
-    if (entry.isDirectory()) return entry.name === 'tests' ? [] : walk(absolute);
-    if (!/\.(?:js|ts)$/u.test(entry.name) || entry.name.endsWith('.d.ts')) return [];
+    if (entry.isDirectory()) return entry.name === excludedSourceDirectory ? [] : walk(absolute);
+    if (!productionSourceExtension.test(entry.name) || entry.name.endsWith(excludedSourceSuffix)) return [];
     return [path.relative(root, absolute).split(path.sep).join('/')];
   });
 }
 
 const productionFiles = [...new Set([
-  ...walk(path.join(root, 'skills/buster/engine')),
-  ...walk(path.join(root, 'skills/buster/plugins')).filter((file) => file.includes('/src/')),
+  ...walk(path.join(root, productionSourceRoots[0])),
+  ...walk(path.join(root, productionSourceRoots[1])).filter((file) => file.includes(pluginSourceSegment)),
 ])].sort();
 
 function stableCode(message) {
@@ -1322,7 +1328,35 @@ assert.equal(awkwardFailurePhrases.length, 0,
   `generated causes must describe the failed operation in natural language: ${[...new Set(awkwardFailurePhrases)].join(', ')}`);
 assert(!output.includes('rejected operation because it exceeds'),
   'generated limit causes must identify the limited resource');
-if (process.argv.includes('--write')) {
+if (process.argv.includes('--describe-discovery')) {
+  console.log(JSON.stringify({
+    schemaVersion: 'buster-error-discovery-v1',
+    family: 'Error',
+    generator: 'scripts/generate-buster-error-reference.mjs',
+    owner: 'Buster error-reference documentation owner; runtime diagnostics remain owned by their production components',
+    searchSpace: {
+      roots: productionSourceRoots,
+      recursive: true,
+      extensionPattern: productionSourceExtension.source,
+      extensionFlags: productionSourceExtension.flags,
+      pluginPathMustContain: pluginSourceSegment,
+    },
+    parser: {
+      implementation: 'scripts/generate-buster-error-reference.mjs: walk, analyse, valuesFor, stableCode',
+      syntax: 'TypeScript compiler API; literal diagnostics, local helpers and audited finite dynamic families',
+      qualification: 'Bounded shipped Buster source discovery, not all repository or external plugin errors',
+    },
+    exclusions: {
+      directoryName: excludedSourceDirectory,
+      fileSuffix: excludedSourceSuffix,
+      nonErrorLiteralAuthority: 'excludedLiteralCodes in this generator; absence requires its explicit audit',
+      notCategoricallyExcluded: ['test', 'fixtures', '*.test.ts', '*.spec.ts'],
+      limits: ['Only engine and selected plugin source paths', 'Unregistered dynamic templates fail analysis',
+        'Declaration does not prove reader freshness, runtime outcome or deployment'],
+    },
+    sources: productionFiles,
+  }, null, 2));
+} else if (process.argv.includes('--write')) {
   fs.writeFileSync(target, output);
   console.log(`wrote ${path.relative(root, target)} (${locations.size} stable codes from ${productionFiles.length} production files)`);
 } else {
