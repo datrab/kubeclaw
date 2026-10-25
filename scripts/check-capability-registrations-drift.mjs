@@ -4,7 +4,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 const root = path.resolve(import.meta.dirname, '..');
 const page = 'docs/site/reference/capabilities.md';
+const sourceRoot = 'skills';
 const kinds = { stages: 'Nova grant', observers: 'Nova grant', adapters: 'Nova grant', testProviders: 'Buster runtime', reportAdapters: 'Report adapter (no grant namespace)' };
+if (process.argv.includes('--describe-discovery')) {
+  console.log(JSON.stringify({ owner: 'scripts/check-capability-registrations-drift.mjs', mode: 'recursive-registration-declarations', sourceRoot, filename: 'plugin.json', kinds, traversal: 'sorted Dirent directories and regular files only; no symlink traversal; no fixture/test exclusions', parser: 'JSON.parse; five registration lists; requiredCapabilities/providesCapabilities unique identity lists', page, exclusions: ['effective grants', 'installed registry', 'deployment proof'] }));
+  process.exit(0);
+}
 function walk(directory) {
   return fs.readdirSync(directory, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name)).flatMap(entry => {
     const target = path.join(directory, entry.name);
@@ -18,7 +23,7 @@ function identities(value) {
 }
 try {
   const expected = new Map();
-  for (const file of walk(path.join(root, 'skills'))) {
+  for (const file of walk(path.join(root, sourceRoot))) {
     const manifest = JSON.parse(fs.readFileSync(file, 'utf8'));
     if (typeof manifest.id !== 'string' || !manifest.id) throw new Error(`missing plugin identity: ${file}`);
     for (const [kind, namespace] of Object.entries(kinds)) {

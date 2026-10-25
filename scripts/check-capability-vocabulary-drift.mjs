@@ -6,6 +6,10 @@ import ts from 'typescript';
 const root = path.resolve(import.meta.dirname, '..');
 const authority = 'skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts';
 const page = 'docs/site/reference/capabilities.md';
+if (process.argv.includes('--describe-discovery')) {
+  console.log(JSON.stringify({ owner: 'scripts/check-capability-vocabulary-drift.mjs', mode: 'finite-authority-reader-comparison', authority, page, parser: 'installed TypeScript AST: CAPABILITY_DEFINITIONS literal definition calls with three string arrays', exclusions: ['effective deployment', 'role translation', 'independent acceptance'] }));
+  process.exit(0);
+}
 try {
   const source = ts.createSourceFile(authority, fs.readFileSync(path.join(root, authority), 'utf8'), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   if (source.parseDiagnostics.length) throw new Error('invalid capability vocabulary TypeScript');

@@ -3,12 +3,22 @@
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 const root = path.resolve(import.meta.dirname, '..');
-for (const script of [
+const children = [
   'check-capability-vocabulary-drift.mjs',
   'check-capability-policy-drift.mjs',
   'check-capability-registrations-drift.mjs',
   'check-capability-swarm-boundary.mjs',
-]) {
+];
+if (process.argv.includes('--describe-discovery')) {
+  const descriptors = children.map(script => {
+    const result = spawnSync(process.execPath, [`scripts/${script}`, '--describe-discovery'], { cwd: root, encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
+    if (result.error || result.signal || result.status !== 0) throw new Error(`Capability discovery input/tool error: ${script}: ${result.error ?? result.signal ?? result.stderr}`);
+    return JSON.parse(result.stdout);
+  });
+  console.log(JSON.stringify({ owner: 'scripts/check-capability-drift.mjs', mode: 'delegated-documentation-discovery', children: descriptors, qualification: 'Not effective grants, deployment or independent acceptance' }));
+  process.exit(0);
+}
+for (const script of children) {
   const result = spawnSync(process.execPath, [`scripts/${script}`], { cwd: root, encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
   if (result.error || result.signal) {
     console.error(`Capability gate input/tool error: ${result.error ?? result.signal}`);

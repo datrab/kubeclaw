@@ -10,6 +10,20 @@ import { loadPlatformConfig } from '../skills/common/plugin-runtime/foundation/c
 import { resolveCapabilityGrants } from '../skills/common/plugin-runtime/foundation/registry/capabilities.ts';
 
 const root = path.resolve(import.meta.dirname, '..');
+const citationPaths = [
+  'charts/kubeclaw/files/config/swarm.config.json',
+  'docs/site/use/workflows/wait-resume/platform.template.json',
+  'tests/verification/e2e/support/platform-config.ts',
+  'tests/verification/e2e/support/config-profiles/standard.json',
+  'skills/common/plugin-runtime/foundation/config/platform.schema.json',
+  'skills/common/plugin-runtime/foundation/config/platform.ts',
+  'skills/common/plugin-runtime/foundation/registry/capabilities.ts',
+  'skills/nova/core/execution/authorization.ts',
+];
+if (process.argv.includes('--describe-discovery')) {
+  console.log(JSON.stringify({ owner: 'scripts/check-capability-swarm-boundary.mjs', mode: 'finite-native-authority-boundary', citationPaths, parser: 'expandSwarmConfig, schema-validated loadPlatformConfig and resolveCapabilityGrants', controls: ['reject compact roles/grants/providers and their overrides', 'accept known polling override', 'reject platform roles', 'finite registry provider/scope/denial controls', 'exact pinned citation bytes', 'canonical capability page equality'], exclusions: ['arbitrary capability discovery', 'installed registry', 'effective deployment', 'independent acceptance'] }));
+  process.exit(0);
+}
 const read = relative => fs.readFileSync(path.join(root, relative), 'utf8');
 const compact = JSON.parse(read('charts/kubeclaw/files/config/swarm.config.json'));
 const original = JSON.stringify(compact);
@@ -62,16 +76,7 @@ assert.throws(() => resolveCapabilityGrants(snapshot, { ...policy, enabledRegist
 
 // Every new reader citation must still describe the exact revision it links.
 const revision = JSON.parse(read('docs/generated/inventory/documentation-source-revision.json')).revision;
-for (const relative of [
-  'charts/kubeclaw/files/config/swarm.config.json',
-  'docs/site/use/workflows/wait-resume/platform.template.json',
-  'tests/verification/e2e/support/platform-config.ts',
-  'tests/verification/e2e/support/config-profiles/standard.json',
-  'skills/common/plugin-runtime/foundation/config/platform.schema.json',
-  'skills/common/plugin-runtime/foundation/config/platform.ts',
-  'skills/common/plugin-runtime/foundation/registry/capabilities.ts',
-  'skills/nova/core/execution/authorization.ts',
-]) {
+for (const relative of citationPaths) {
   const pinned = spawnSync('git', ['show', `${revision}:${relative}`], { cwd: root, encoding: 'utf8' });
   assert.equal(pinned.status, 0, pinned.stderr);
   assert.equal(pinned.stdout, read(relative), `${relative}: new citation has stale source bytes`);

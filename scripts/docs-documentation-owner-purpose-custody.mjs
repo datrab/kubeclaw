@@ -26,12 +26,12 @@ export const reviewedDocumentationOwnerPurposes=freeze({
       {
         "path": "scripts/check-capability-registrations-drift.mjs",
         "canonical": "scripts/check-capability-registrations-drift.mjs",
-        "sha256": "8a4d3b81e0f8f2ac374bcda38a6502c78c37308a218230c908e544a7766f0180"
+        "sha256": "908591ed21236080637d3809778976cd7b7992f62360d84eb05972c4ee8a8cc2"
       },
       {
         "path": "scripts/docs-tree-boundary.mjs",
         "canonical": "scripts/docs-tree-boundary.mjs",
-        "sha256": "ee1487ec2e081cc6630ac7869895bd69f3251e0c44ffd8877e574b335981ae52"
+        "sha256": "8899c91ddc78ec98e5c02f14d8a7ee0c39c550f474a9dab29a138f6ecd38081e"
       },
       {
         "path": "scripts/tests/docs-tree-boundary.test.mjs",

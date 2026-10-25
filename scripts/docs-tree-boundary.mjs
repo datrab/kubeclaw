@@ -35,9 +35,9 @@ const reviewedStandaloneDocumentationTools = {
   'scripts/check-provider-registration-drift.mjs': '5bc75b333b0b88880e77f1bf2572af3be97124957c562cb55b781f1a1a99dcca',
   'scripts/check-fixture-registration-drift.mjs': '89683802223aadcddbf631fb6bdd1ef8a6c43203d2a3118a89fc8440d6843937',
   'scripts/check-report-registration-drift.mjs': 'cfd5071ee4a167768fadf00ede81e1d847ee42d151c68121d20697c84893acee',
-  'scripts/check-capability-policy-drift.mjs': '4470cc4342ea7c4e39d41f57626734e2c75c79a5fd4a57103e6868b7cdb69924',
-  'scripts/check-capability-registrations-drift.mjs': '8a4d3b81e0f8f2ac374bcda38a6502c78c37308a218230c908e544a7766f0180',
-  'scripts/check-capability-vocabulary-drift.mjs': 'c466cfa01aaf23a3f6927538a09dff6f31d1eb8c83c80e204d4853692492c2f7',
+  'scripts/check-capability-policy-drift.mjs': '04f1feaeccf821a46becbc5c65b80776f56049adbc103ddb37e5caed2b5232f6',
+  'scripts/check-capability-registrations-drift.mjs': '908591ed21236080637d3809778976cd7b7992f62360d84eb05972c4ee8a8cc2',
+  'scripts/check-capability-vocabulary-drift.mjs': '2afaf4bb5341d67aa7cb4f883fedaff9288da7a61e784513b29db0fe03c61941',
   'scripts/check-capability-registrations-drift-controls.mjs': 'e76c88fe7d72eff87a6ba1e2ff63d8630ae6c7ec861e884dc8e3575c0ce5e3cb',
 };
 

@@ -706,7 +706,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "328f8dd702f5cb8ccffb9ae17cc3d577e76cd8ec81456fffa49b452e908adb55"
       }
     ],
-    "factsDigest": "37d8a21def643f57d29dc6b48f05216d3789da3a777e35f0ef3bcbbd7c8b4e90",
+    "factsDigest": "88b558f5031526397cc659cfcfc8df8c8d4ac2c893122c68245ce8d93f16b11f",
     "authorityInputs": [
       {
         "path": "scripts/docs-api-go-output-role-adapter.go",
@@ -924,7 +924,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "041aa7206a41cf5c3bdd66f61797f9b67c06085f6d0076ce1f84e2a9c8d57db8"
       }
     ],
-    "factsDigest": "69371a457dc488c09d550a0ff9c3a7fe7bedf48519c641fb5face9150adce0c4",
+    "factsDigest": "643484969ab8fa9bc7344fc3f3ed95e4f8e830a6931b39fa8b1bbf046a0bf9a8",
     "authorityInputs": []
   },
   "scripts/docs-api-python-output-adapter.py": {
@@ -1203,7 +1203,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "9efac25cb0d8a53fc3a31aec649afa2cd99102c34366428833c403eccaef3fbe"
       }
     ],
-    "factsDigest": "a6ba9152e462be7365949911661093f4a0c6c03b3bf0d04c4361e57a14c82c78",
+    "factsDigest": "689bf16071990aaaa010e09a83f71db89b0beb8f24b55476ca5c604cffcab4ef",
     "authorityInputs": []
   },
   "scripts/docs-api-schema-authorities.mjs": {
@@ -2002,7 +2002,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "7602a8f927b47cd0b4b4f2501bccd41bb8e4e4ea43e571cf4bce62f3c3717191"
       }
     ],
-    "factsDigest": "9000a32d15ab38ffa654caf05a6899a806de42599cdb3b8ffe63393cb3c41e1d",
+    "factsDigest": "43c69501a2284c0c7e34feb6da81303f2778c21d8f61167e25ee9ca08e9bef5b",
     "authorityInputs": [
       {
         "path": "scripts/vendor-external-helm-authorities.mjs",
@@ -2105,7 +2105,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "cba76d80649d6ce8d92897a224d01ee9877a1807a9de9e765cdad79d29f912ce"
       }
     ],
-    "factsDigest": "cca4d884ca71b44e10a26f0d76d36508ea3d378e621dd3b77b22d7247f0906c3",
+    "factsDigest": "268d4f5bbc9ad2d04b31718c3f580a3adcb1fa5f1d1b2b7d30633466791f4633",
     "authorityInputs": []
   },
   "scripts/docs-governance.mjs": {
@@ -4886,7 +4886,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "87d345ec293f6455f292ba5e4b24582fb6e09e2c91241bef26ef045aa2de8392"
       }
     ],
-    "factsDigest": "4d04b1bf3ba93e1f69085c27a4a7604506487253e47ff53b71fb5d6b62b15d5b",
+    "factsDigest": "403ea2f8e73d00197e8f78efa0eb64f8ea86ecb92e1fdf173e8aefb7e4359434",
     "authorityInputs": []
   },
   "scripts/docs-yaml-field-authorities.mjs": {
@@ -6181,12 +6181,12 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/check-capability-drift.mjs",
         "canonical": "scripts/check-capability-drift.mjs",
-        "sha256": "70847dabcd9771f5fc5a8e430386d5935237bfed265ccef86013d1fbfc1cdca4"
+        "sha256": "5ad0ec42e9850517ef48ceff9cfb1f8223560b70445bc0d4657abd5407614a5b"
       },
       {
         "path": "scripts/check-capability-registrations-drift.mjs",
         "canonical": "scripts/check-capability-registrations-drift.mjs",
-        "sha256": "8a4d3b81e0f8f2ac374bcda38a6502c78c37308a218230c908e544a7766f0180"
+        "sha256": "908591ed21236080637d3809778976cd7b7992f62360d84eb05972c4ee8a8cc2"
       },
       {
         "path": "scripts/docs-ap09-mutation-fixture.mjs",
@@ -6208,9 +6208,12 @@ export const documentationExecutableRoleRecipes = {
   "scripts/check-capability-drift.mjs": {
     "role": "documentation-consumer",
     "qualificationKind": "reviewed-documentation-consumer/v1",
-    "sourceSha256": "70847dabcd9771f5fc5a8e430386d5935237bfed265ccef86013d1fbfc1cdca4",
+    "sourceSha256": "5ad0ec42e9850517ef48ceff9cfb1f8223560b70445bc0d4657abd5407614a5b",
     "consumer": "Read-only capability vocabulary/declaration/example-policy comparison and exact documentation-boundary qualification; registration grants remain separate from swarm roles, installed registry and deployment.",
     "selectors": [
+      {
+        "expressionSha256": "43ce0c780440afcff99d972b124552cb5da7d73a2ff1d64e1e88dd9878f4efbb"
+      },
       {
         "expressionSha256": "de0a399e8c0e8ca89515a3dff05acae9ce005cae0392aa5cec1353e9d2affd1c"
       },
@@ -6219,6 +6222,9 @@ export const documentationExecutableRoleRecipes = {
       },
       {
         "expressionSha256": "5fe4a8188c100cd7322f24c43f6716d5acbe66207efff66c3817d2c262220963"
+      },
+      {
+        "expressionSha256": "035e67e9369db073aec146eb64bf602a3aad62cc560590db6bf5fb2413dc2911"
       },
       {
         "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
@@ -6233,31 +6239,34 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "e304d8a64df52946bb23be030f59c7843dddb13193563352b5a2e6298baffe64"
       },
       {
+        "expressionSha256": "93207ce851127968e3204c3f40d739718d1f1092d62349f646c0135f28dbc1f9"
+      },
+      {
         "expressionSha256": "80d9d51de62cc721605f36a0060d58ff5255e337ab0ed5fa9037c42181c65b4e"
       }
     ],
-    "factsDigest": "6677ccc7b91470a78d043456760f493bf2bc0132da52ce9390f6de1ba7b4834c",
+    "factsDigest": "b05d6e4242324ed7a718d6763be9b34d9ceeaca56f4d7faa252244d9e57259fc",
     "authorityInputs": [],
     "purposeInputs": [
       {
         "path": "scripts/check-capability-policy-drift.mjs",
         "canonical": "scripts/check-capability-policy-drift.mjs",
-        "sha256": "4470cc4342ea7c4e39d41f57626734e2c75c79a5fd4a57103e6868b7cdb69924"
+        "sha256": "04f1feaeccf821a46becbc5c65b80776f56049adbc103ddb37e5caed2b5232f6"
       },
       {
         "path": "scripts/check-capability-registrations-drift.mjs",
         "canonical": "scripts/check-capability-registrations-drift.mjs",
-        "sha256": "8a4d3b81e0f8f2ac374bcda38a6502c78c37308a218230c908e544a7766f0180"
+        "sha256": "908591ed21236080637d3809778976cd7b7992f62360d84eb05972c4ee8a8cc2"
       },
       {
         "path": "scripts/check-capability-swarm-boundary.mjs",
         "canonical": "scripts/check-capability-swarm-boundary.mjs",
-        "sha256": "0147ec6cf172c612023fc3fe55b43ec3848899b84f2b0e729be9c575d9b61aa2"
+        "sha256": "20828503c791b22e13943a189f75f0ce7c0d7a01864a155adeab251d190557c4"
       },
       {
         "path": "scripts/check-capability-vocabulary-drift.mjs",
         "canonical": "scripts/check-capability-vocabulary-drift.mjs",
-        "sha256": "c466cfa01aaf23a3f6927538a09dff6f31d1eb8c83c80e204d4853692492c2f7"
+        "sha256": "2afaf4bb5341d67aa7cb4f883fedaff9288da7a61e784513b29db0fe03c61941"
       }
     ]
   },
@@ -6334,12 +6343,12 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/check-capability-drift.mjs",
         "canonical": "scripts/check-capability-drift.mjs",
-        "sha256": "70847dabcd9771f5fc5a8e430386d5935237bfed265ccef86013d1fbfc1cdca4"
+        "sha256": "5ad0ec42e9850517ef48ceff9cfb1f8223560b70445bc0d4657abd5407614a5b"
       },
       {
         "path": "scripts/check-capability-policy-drift.mjs",
         "canonical": "scripts/check-capability-policy-drift.mjs",
-        "sha256": "4470cc4342ea7c4e39d41f57626734e2c75c79a5fd4a57103e6868b7cdb69924"
+        "sha256": "04f1feaeccf821a46becbc5c65b80776f56049adbc103ddb37e5caed2b5232f6"
       },
       {
         "path": "scripts/docs-ap09-mutation-fixture.mjs",
@@ -6366,14 +6375,20 @@ export const documentationExecutableRoleRecipes = {
   "scripts/check-capability-policy-drift.mjs": {
     "role": "documentation-consumer",
     "qualificationKind": "reviewed-documentation-consumer/v1",
-    "sourceSha256": "4470cc4342ea7c4e39d41f57626734e2c75c79a5fd4a57103e6868b7cdb69924",
+    "sourceSha256": "04f1feaeccf821a46becbc5c65b80776f56049adbc103ddb37e5caed2b5232f6",
     "consumer": "Read-only capability vocabulary/declaration/example-policy comparison and exact documentation-boundary qualification; registration grants remain separate from swarm roles, installed registry and deployment.",
     "selectors": [
+      {
+        "expressionSha256": "77ba3c5b226049473f8aa7246b185172e60d898ba1c95ea519c9ffe88063cc9a"
+      },
       {
         "expressionSha256": "61c71bc45562b384f95aaaede1bd23a126756f026b43674104a7ec38f2475d90"
       },
       {
         "expressionSha256": "fdda881e0e0c08da55b7ef0877a42479b5f6f40eada3c154987fe588589fd168"
+      },
+      {
+        "expressionSha256": "420fd50145a98ab6633f75def9ef3181c591b6b6f8d282698ebdefeb5b60857a"
       },
       {
         "expressionSha256": "8aa3f0788ecf5dc84e28a9f7dae06e3e7f5e6019eb434df9a7dcfe27e2e4b68a"
@@ -6391,7 +6406,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "5b7fbdb4096a717e58dc7b0b3d131eee6c907472ecb9a69930bced3ce002a8bd"
       }
     ],
-    "factsDigest": "97acf518dcdecc29cfb30c183d9e91ee6fd254721140b5fe41b305496718493e",
+    "factsDigest": "94eaf4d6d74bd7bc9e23927e8ffade33e86ba5090f0d918a9346fc5a3df6e12f",
     "authorityInputs": [],
     "purposeInputs": [
       {
@@ -6409,9 +6424,12 @@ export const documentationExecutableRoleRecipes = {
   "scripts/check-capability-registrations-drift.mjs": {
     "role": "documentation-consumer",
     "qualificationKind": "reviewed-documentation-consumer/v1",
-    "sourceSha256": "8a4d3b81e0f8f2ac374bcda38a6502c78c37308a218230c908e544a7766f0180",
+    "sourceSha256": "908591ed21236080637d3809778976cd7b7992f62360d84eb05972c4ee8a8cc2",
     "consumer": "Read-only capability vocabulary/declaration/example-policy comparison and exact documentation-boundary qualification; registration grants remain separate from swarm roles, installed registry and deployment.",
     "selectors": [
+      {
+        "expressionSha256": "3c2702c14138720c03f16b6de11b6ed8829c9a0bf70d106b03433c53ac5d4f4f"
+      },
       {
         "expressionSha256": "c61ab6489f9703ea07790157ce38999e66c0c416648b115ea45da5c015862201"
       },
@@ -6420,6 +6438,9 @@ export const documentationExecutableRoleRecipes = {
       },
       {
         "expressionSha256": "63b3a191baa8256b5f894eef2ea7bd3785c323b2a910b005d36bdaa05c134592"
+      },
+      {
+        "expressionSha256": "eb2aac307622738a0d6658819e2a078e3bfef6304f2384aa80a7678ac16e8510"
       },
       {
         "expressionSha256": "67c7f770c189b9c3a07299b2e475f35d65ca19e18e62bc647fb51c956d2a969f"
@@ -6431,14 +6452,14 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
       }
     ],
-    "factsDigest": "b76bf0219d739f5c7c9ef1ef293c3b26a1be7e0fb8a8ac3026b83c12035a187c",
+    "factsDigest": "9c6dad7d275ddc5b21bff69dffda4e5fb8a155b6e2b0cf919d258dc109427389",
     "authorityInputs": [],
     "purposeInputs": []
   },
   "scripts/check-capability-swarm-boundary.mjs": {
     "role": "documentation-consumer",
     "qualificationKind": "reviewed-documentation-consumer/v1",
-    "sourceSha256": "0147ec6cf172c612023fc3fe55b43ec3848899b84f2b0e729be9c575d9b61aa2",
+    "sourceSha256": "20828503c791b22e13943a189f75f0ce7c0d7a01864a155adeab251d190557c4",
     "consumer": "Read-only capability vocabulary/declaration/example-policy comparison and exact documentation-boundary qualification; registration grants remain separate from swarm roles, installed registry and deployment.",
     "selectors": [
       {
@@ -6446,6 +6467,9 @@ export const documentationExecutableRoleRecipes = {
       },
       {
         "expressionSha256": "755b18f42f5e2f30bab9441efdf3f388e5e76852bbf3617ca153b5eb9b8207d2"
+      },
+      {
+        "expressionSha256": "4efdaefcde243882f2083d61f57afeb9f9b6522b4437a9441d0abc3e2bc86737"
       },
       {
         "expressionSha256": "02b2f520ad805bd6f2c1a85ac4a36474df141a0759fe8d6c7a87c33808b08951"
@@ -6496,6 +6520,9 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "e24b11b03119e24acd917ad3bd18b6670b7bd405d1ae072e53bff980b8b5a563"
       },
       {
+        "expressionSha256": "4217c9326f4de273731bfe6471d4490c1697f8db863ccacf2ebc89dd3c265569"
+      },
+      {
         "expressionSha256": "d99e7882bf916a9fe9f6f412108d5484cbc6c8ef012648a811c37def0dea94c5"
       },
       {
@@ -6532,7 +6559,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "9726829e6b9943675b53e0005a5638f4698114b8c685c46efb3229d61ba3f9d4"
       }
     ],
-    "factsDigest": "5645df69deff39aeb1c88c1e38826cb0946588e723558394cf33da25968426e2",
+    "factsDigest": "f245e4ad5b0697010607e18aec2d410c142c7f3531e293c8c3c053b5a351722e",
     "authorityInputs": [
       {
         "path": "scripts/docs-publication.mjs",
@@ -6660,12 +6687,12 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/check-capability-drift.mjs",
         "canonical": "scripts/check-capability-drift.mjs",
-        "sha256": "70847dabcd9771f5fc5a8e430386d5935237bfed265ccef86013d1fbfc1cdca4"
+        "sha256": "5ad0ec42e9850517ef48ceff9cfb1f8223560b70445bc0d4657abd5407614a5b"
       },
       {
         "path": "scripts/check-capability-vocabulary-drift.mjs",
         "canonical": "scripts/check-capability-vocabulary-drift.mjs",
-        "sha256": "c466cfa01aaf23a3f6927538a09dff6f31d1eb8c83c80e204d4853692492c2f7"
+        "sha256": "2afaf4bb5341d67aa7cb4f883fedaff9288da7a61e784513b29db0fe03c61941"
       },
       {
         "path": "scripts/docs-ap09-mutation-fixture.mjs",
@@ -6682,9 +6709,12 @@ export const documentationExecutableRoleRecipes = {
   "scripts/check-capability-vocabulary-drift.mjs": {
     "role": "documentation-consumer",
     "qualificationKind": "reviewed-documentation-consumer/v1",
-    "sourceSha256": "c466cfa01aaf23a3f6927538a09dff6f31d1eb8c83c80e204d4853692492c2f7",
+    "sourceSha256": "2afaf4bb5341d67aa7cb4f883fedaff9288da7a61e784513b29db0fe03c61941",
     "consumer": "Read-only capability vocabulary/declaration/example-policy comparison and exact documentation-boundary qualification; registration grants remain separate from swarm roles, installed registry and deployment.",
     "selectors": [
+      {
+        "expressionSha256": "b0d285f312c44fe0ed340581f5cd98109e4d87ce1ddbaf3a231d7d0ccda77c4e"
+      },
       {
         "expressionSha256": "c61ab6489f9703ea07790157ce38999e66c0c416648b115ea45da5c015862201"
       },
@@ -6693,6 +6723,9 @@ export const documentationExecutableRoleRecipes = {
       },
       {
         "expressionSha256": "ac50dd3402f70150d718ffc44fec2b571d8a607f4444762b25edf1b28796c308"
+      },
+      {
+        "expressionSha256": "0b7d45321efb3557567efaddfcaaf6a11d913cd7dd4c3fc318acd4a1431b85cd"
       },
       {
         "expressionSha256": "bc8ea8ca531d5d3dacbc215dfda26fda9e656d182289dcb992b80cde048bbaf2"
@@ -6707,7 +6740,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "2948024387391b149bf95db8466bc244e8c0bb1f158e0fbf6b9ba730c29aa67e"
       }
     ],
-    "factsDigest": "eea3b4ab743862492d8708a3571fd387af4209a5f019d497869623c75ed7802c",
+    "factsDigest": "b7f557c973fe39265badf1915962dc4be4f2a4af5be038c7da9a4b4e11bf0d34",
     "authorityInputs": [],
     "purposeInputs": [
       {
@@ -9482,7 +9515,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/check-capability-registrations-drift.mjs",
         "canonical": "scripts/check-capability-registrations-drift.mjs",
-        "sha256": "8a4d3b81e0f8f2ac374bcda38a6502c78c37308a218230c908e544a7766f0180"
+        "sha256": "908591ed21236080637d3809778976cd7b7992f62360d84eb05972c4ee8a8cc2"
       }
     ],
     "purposeInputs": [
@@ -9499,12 +9532,12 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/check-capability-registrations-drift.mjs",
         "canonical": "scripts/check-capability-registrations-drift.mjs",
-        "sha256": "8a4d3b81e0f8f2ac374bcda38a6502c78c37308a218230c908e544a7766f0180"
+        "sha256": "908591ed21236080637d3809778976cd7b7992f62360d84eb05972c4ee8a8cc2"
       },
       {
         "path": "scripts/docs-tree-boundary.mjs",
         "canonical": "scripts/docs-tree-boundary.mjs",
-        "sha256": "ee1487ec2e081cc6630ac7869895bd69f3251e0c44ffd8877e574b335981ae52"
+        "sha256": "8899c91ddc78ec98e5c02f14d8a7ee0c39c550f474a9dab29a138f6ecd38081e"
       },
       {
         "path": "scripts/tests/docs-tree-boundary.test.mjs",
@@ -18963,7 +18996,7 @@ export const reviewedRootNodeEntryRecipes = {
           "kind": "FirstStatement",
           "startLine": 31,
           "endLine": 42,
-          "syntaxSha256": "779f28f89ed2b8f8ccce272a1e450e0f8fcec09a96409f99d5ab9173df75b64d"
+          "syntaxSha256": "f3ecb11163889548e72ad42cd02550d6b16e3e4ab720d534b28ed7fda7b61a89"
         },
         {
           "symbol": "parseTreeArguments",
@@ -19173,7 +19206,7 @@ export const reviewedRootNodeEntryRecipes = {
         {
           "startLine": 1,
           "endLine": 150,
-          "sha256": "510b560ad11786f50ee0a16a675f264f88d8bc862c9c32a72eff1f042598e580"
+          "sha256": "579e91530db654c1a64395ad37717e5cceb3eee97571883b8085044a0d2fe831"
         },
         {
           "startLine": 151,
@@ -19265,7 +19298,7 @@ export const reviewedRootNodeEntryRecipes = {
         },
         {
           "kind": "FirstStatement",
-          "syntaxSha256": "779f28f89ed2b8f8ccce272a1e450e0f8fcec09a96409f99d5ab9173df75b64d"
+          "syntaxSha256": "f3ecb11163889548e72ad42cd02550d6b16e3e4ab720d534b28ed7fda7b61a89"
         },
         {
           "kind": "IfStatement",
