@@ -101,9 +101,10 @@ function writeNewBundle(output, files) {
   } catch (error) { fs.rmSync(pending, { recursive: true, force: true }); throw error; }
 }
 
-function exportScopeGroups(root, receipt, namespace, prismNamespace, scope = 'all') {
+export function exportScopeGroups(root, receipt, namespace, prismNamespace, scope = 'all', baselineDirectory) {
   if (!['all', 'buster'].includes(scope)) throw new Error('GITOPS_EXPORT_SCOPE_INVALID');
-  return scope === 'buster' ? retainedGitOpsGroups(root, receipt, namespace, prismNamespace) : new Map();
+  if (baselineDirectory !== undefined && scope !== 'buster') throw new Error('GITOPS_BASELINE_REQUIRES_BUSTER_SCOPE');
+  return scope === 'buster' ? retainedGitOpsGroups(root, receipt, namespace, prismNamespace, baselineDirectory) : new Map();
 }
 
 /** Export the existing selected-release renderer, not another image/value resolver. */
@@ -113,7 +114,7 @@ export function exportGitOpsBundle(root, directory, namespace, prismNamespace, e
   if (!/^releases\/gitops\/[a-z0-9][a-z0-9-]{0,50}$/u.test(relative)) throw new Error('GITOPS_BUNDLE_PATH_INVALID');
   if (fs.existsSync(output)) throw new Error('GITOPS_BUNDLE_ALREADY_EXISTS');
   const receipt = selectedRelease(root, 'runtime'), groups = [], files = new Map(), owned = new Set();
-  const retained = exportScopeGroups(root, receipt, namespace, prismNamespace, environment.GITOPS_EXPORT_SCOPE);
+  const retained = exportScopeGroups(root, receipt, namespace, prismNamespace, environment.GITOPS_EXPORT_SCOPE, environment.GITOPS_RETAINED_BASELINE);
   for (const role of ['buster', 'prism', 'nova']) {
     const { manifest, group } = retained.get(role) ?? renderGroup(root, relative, role, namespace, prismNamespace, environment);
     group.path = `${relative}/${role}`;

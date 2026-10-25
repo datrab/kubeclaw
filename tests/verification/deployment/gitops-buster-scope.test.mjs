@@ -4,6 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 import yaml from 'js-yaml';
+import { exportScopeGroups } from '../../../scripts/gitops-bundle.mjs';
 import { retainedGitOpsGroups } from '../../../scripts/gitops-buster-scope.mjs';
 
 // Frozen real receipts exercise effective per-component provenance and the
@@ -167,5 +168,20 @@ test('Explicit retained baseline preserves selection and all existing scope/mani
   assert.throws(() => explicit(changed), /SCOPE_IMAGE_CHANGED/);
   fs.appendFileSync(path.join(root, directory, 'prism/resources.yaml'), '\n# tampered');
   assert.throws(() => explicit(receipt), /MANIFEST_DIGEST_MISMATCH/);
+  assert.deepEqual(fs.readFileSync(selection), before);
+}));
+
+
+test('Export scope routes explicit baseline without rewriting selection or permitting all-role override', () => fixture((root, receipt, directory) => {
+  const selection = path.join(root, 'gitops/production/selection.json');
+  fs.writeFileSync(selection, JSON.stringify({directory: 'releases/gitops/unavailable'}));
+  const before = fs.readFileSync(selection);
+  const resolve = (scope, baseline) => exportScopeGroups(root, receipt, 'kubeclaw', 'kubeclaw', scope, baseline);
+  assert.deepEqual([...resolve('buster', directory).keys()], ['prism', 'nova']);
+  assert.throws(() => resolve('buster'), /ENOENT/);
+  assert.throws(() => resolve('all', directory), /GITOPS_BASELINE_REQUIRES_BUSTER_SCOPE/);
+  assert.throws(() => resolve(undefined, directory), /GITOPS_BASELINE_REQUIRES_BUSTER_SCOPE/);
+  assert.throws(() => resolve('buster', '../escape'), /GITOPS_BUNDLE_PATH_INVALID/);
+  assert.deepEqual([...resolve('all').keys()], []);
   assert.deepEqual(fs.readFileSync(selection), before);
 }));
