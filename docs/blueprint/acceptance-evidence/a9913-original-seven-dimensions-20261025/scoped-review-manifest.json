@@ -1,0 +1,67 @@
+[
+  {
+    "path": "docs/blueprint/AP09-acceptance-contract.md",
+    "bytes": 42548,
+    "sha256": "1574710477433d27cade59dbc42ce6ecc6ae56f944271fbddbe7d03be2f9cd2f"
+  },
+  {
+    "path": "original-seven-variants-exact.json",
+    "bytes": 4571,
+    "sha256": "e19cdd580432a6e93fbee802850b89092c892b7de47ea9c28ccd12561207c6c3"
+  },
+  {
+    "path": "scripts/check-progress-contract-drift-mutations.mjs",
+    "bytes": 4719,
+    "sha256": "c740b33340853111031e6ebea7adb0a145cdc1b1d1773ba7cc33c2b11467a5aa"
+  },
+  {
+    "path": "scripts/check-schema-drift-mutations.mjs",
+    "bytes": 4440,
+    "sha256": "307a040b9875969e5533c2edd46f9ce301cca001d2ddc606f70e546cc9bac73f"
+  },
+  {
+    "path": "scripts/docs-product-pipeline-reference.mjs",
+    "bytes": 12457,
+    "sha256": "33e475af70de3488e94cdd8c904db4c3292bdd1d4786abcc54d82e9a9a6fe6b7"
+  },
+  {
+    "path": "scripts/docs-ap09-mutation-fixture.mjs",
+    "bytes": 10465,
+    "sha256": "107001d3dce206fac16f0bf8c71f66967eca35aaf42531b23d1be548741e6d77"
+  },
+  {
+    "path": "skills/nova/project_setup/tools/progress-scaffold-validation.ts",
+    "bytes": 13520,
+    "sha256": "dafa016f41e824b82951a8532b0c291cda421181de1614d79f0cffd91ee436fe"
+  },
+  {
+    "path": "docs/site/reference/workflows.md",
+    "bytes": 148886,
+    "sha256": "7c89788b3585d2bcad5e0b1950369340fbcf98ccf254f1d4ba5bd624a9e22259"
+  },
+  {
+    "path": "reused-A91014-complete-contract-and-vector.json",
+    "bytes": 59834,
+    "sha256": "0e0ec173e5fd2c1a926b2cbb0ded42815982d840ef59726abd085da82fa12512"
+  },
+  {
+    "path": "original-progress-mutations.log",
+    "bytes": 948,
+    "sha256": "f4c384f35aa083ba170911e2c5aea717da5152cacf7ae053af2785f952b09ab3"
+  },
+  {
+    "path": "whole-A91014-review.json",
+    "bytes": 739,
+    "sha256": "e7c1080a6f14614905afed738cbd98f43056657fc22df9b069f569407888c1b9"
+  },
+  {
+    "path": "context.json",
+    "bytes": 1663,
+    "sha256": "57e91fa0ba68607fe51b371af78d176fec748b04998a86a3fac2142259a99391"
+  },
+  {
+    "path": "candidate-completion-record.json",
+    "bytes": 5638,
+    "sha256": "2cbe08baca27a2524a262bcdbd995c16a48f2304b084bf41959cc69236bb4305"
+  }
+]

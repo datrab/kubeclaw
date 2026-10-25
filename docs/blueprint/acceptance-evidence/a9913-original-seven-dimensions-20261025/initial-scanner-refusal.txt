@@ -1,0 +1,9 @@
+autoreview target: local
+branch: master
+engine: codex
+model: gpt-5.6-terra
+thinking: high
+tools: on
+web_search: off
+trufflehog: clean (2.0s)
+refusing to include secret-like content in review bundle; clean or redact --dataset docs/blueprint/AP09-acceptance-fixtures.json before running autoreview

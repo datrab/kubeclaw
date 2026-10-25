@@ -1,0 +1,122 @@
+{
+  "originalPath": "docs/blueprint/AP09-acceptance-fixtures.json",
+  "originalSha256": "af1973d167a0c43ffe14eb828fc8d139a63ab8b696fdc4095c8e862f2d414dd8",
+  "mutationTests": [
+    {
+      "kind": "schema",
+      "operations": [
+        "add",
+        "change",
+        "remove"
+      ],
+      "gate": "docs:drift:schema:check",
+      "command": "npm run docs:drift:schema:check",
+      "diagnosticCode": "DOC_DRIFT_SCHEMA",
+      "variants": [
+        {
+          "id": "recursive-pipeline-field",
+          "sourceAuthority": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+          "constructor": "typescript-contract-field-v1",
+          "expectedPages": [
+            "docs/site/reference/workflows.md"
+          ],
+          "semanticChange": "nested field, variant, condition, default, limit, and consumer"
+        },
+        {
+          "id": "pipeline-stage-type",
+          "sourceAuthority": "skills/nova/project/compiler.ts",
+          "constructor": "typescript-stage-kind-v1",
+          "expectedPages": [
+            "docs/site/reference/workflows.md"
+          ],
+          "semanticChange": "stage kind, selection rule, registry resolution, and runtime behavior"
+        }
+      ]
+    },
+    {
+      "kind": "contract",
+      "operations": [
+        "add",
+        "change",
+        "remove"
+      ],
+      "gate": "docs:drift:contract:check",
+      "command": "npm run docs:drift:contract:check",
+      "diagnosticCode": "DOC_DRIFT_CONTRACT",
+      "variants": [
+        {
+          "id": "progress-contract",
+          "sourceAuthority": "skills/nova/project_setup/tools/progress-scaffold-validation.ts",
+          "constructor": "typescript-progress-contract-v1",
+          "expectedPages": [
+            "docs/site/reference/workflows.md"
+          ],
+          "semanticChange": "progress state, writer, reader, atomicity, and recovery"
+        }
+      ]
+    },
+    {
+      "kind": "capability",
+      "operations": [
+        "add",
+        "change",
+        "remove"
+      ],
+      "gate": "docs:drift:capability:check",
+      "command": "npm run docs:drift:capability:check",
+      "diagnosticCode": "DOC_DRIFT_CAPABILITY",
+      "variants": [
+        {
+          "id": "role-grant",
+          "sourceAuthority": "docs/site/use/workflows/wait-resume/platform.template.json",
+          "constructor": "json-role-grant-v1",
+          "expectedPages": [
+            "docs/site/reference/capabilities.md"
+          ],
+          "semanticChange": "registration grant, provider selection, resource scope, no swarm-role translation, and denial; separate wait/resume example policy, not deployed authority"
+        }
+      ]
+    },
+    {
+      "kind": "plugin-registration",
+      "operations": [
+        "add",
+        "change",
+        "remove"
+      ],
+      "gate": "docs:drift:plugin-registration:check",
+      "command": "npm run docs:drift:plugin-registration:check",
+      "diagnosticCode": "DOC_DRIFT_PLUGIN_REGISTRATION",
+      "variants": [
+        {
+          "id": "provider-registration",
+          "sourceAuthority": "tests/verification/e2e/provider-catalog.mjs",
+          "constructor": "javascript-provider-registration-v1",
+          "expectedPages": [
+            "docs/site/reference/buster-provider-configuration.md"
+          ],
+          "semanticChange": "provider identity, namespace, configuration, and selection"
+        },
+        {
+          "id": "fixture-registration",
+          "sourceAuthority": "tests/verification/e2e/fixture-coverage.mjs",
+          "constructor": "javascript-fixture-registration-v1",
+          "expectedPages": [
+            "docs/site/reference/buster-suites.md"
+          ],
+          "semanticChange": "fixture identity, suite consumer, input, and output"
+        },
+        {
+          "id": "report-format-registration",
+          "sourceAuthority": "skills/buster/plugins/junit-report-adapter/plugin.json",
+          "constructor": "json-report-registration-v1",
+          "expectedPages": [
+            "docs/site/reference/buster-suites.md"
+          ],
+          "semanticChange": "report identity, producer, schema, artifact, and consumer"
+        }
+      ]
+    }
+  ],
+  "qualification": "Lossless complete records for ALL7originalA9913variantresponsibilities; all familyoperations/gates/diagnosticnames and allvariantfields exact. Other config/secret/endpoint/etc unrelated families excluded after full file scanner refused. No redaction or bypass; original unchanged complete fixture independently accepted A91014, exact byte comparison retained. No product mutation."
+}

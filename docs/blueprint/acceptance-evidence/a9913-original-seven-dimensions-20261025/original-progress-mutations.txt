@@ -1,0 +1,5 @@
+progress-contract: checked-in progress-contract baseline PASS
+contract:progress-contract:add: rejected by bounded product-pipeline contract checker (full docs:drift:contract:check not exercised by this bounded runner); DOC_DRIFT_CONTRACT; docs/site/reference/workflows.md
+contract:progress-contract:change: rejected by bounded product-pipeline contract checker (full docs:drift:contract:check not exercised by this bounded runner); DOC_DRIFT_CONTRACT; docs/site/reference/workflows.md
+contract:progress-contract:remove: rejected by bounded product-pipeline contract checker (full docs:drift:contract:check not exercised by this bounded runner); DOC_DRIFT_CONTRACT; docs/site/reference/workflows.md
+progress-contract Add/Change/Remove: 3/3 rejected; restored published baselines PASS; parser errors separate. SDK export and public member variants are not exercised by this bounded runner; not full contract-family or independent A911-11 acceptance.

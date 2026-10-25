@@ -35968,6 +35968,100 @@
       "openIssues": [],
       "verdict": "PASS",
       "evidenceDirectory": "docs/blueprint/acceptance-evidence/a91106-authored-bindings-20261025"
+    },
+    {
+      "id": "A99-13-original-seven-dimension-drift-20261025",
+      "revision": "5c8d9b8a6af06fef6441dcb5a9812896d56bcc2f",
+      "author": "PR13 documentation authors and continuation coordinator",
+      "reviewer": "Independent pinned fe588b1a Terra/high/P2 original A99-13 reviewer",
+      "gateIds": [
+        "A99-13"
+      ],
+      "requirementIds": [],
+      "pages": [
+        "docs/site/extend/README.md",
+        "docs/site/extend/developer-handbook.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
+        "docs/site/reference/buster-error-codes.md",
+        "docs/site/reference/buster-provider-configuration.md",
+        "docs/site/reference/buster-suites.md",
+        "docs/site/reference/capabilities.md",
+        "docs/site/reference/plugin-configuration.md",
+        "docs/site/reference/workflows.md",
+        "docs/site/understand/security-and-trust.md"
+      ],
+      "sources": [
+        "charts/kubeclaw/templates/deployment.yaml",
+        "docs/blueprint/AP09-acceptance-contract.md",
+        "docs/blueprint/AP09-acceptance-fixtures.json",
+        "docs/site/use/workflows/wait-resume/platform.template.json",
+        "scripts/check-capability-drift-mutations.mjs",
+        "scripts/check-contract-drift-mutations.mjs",
+        "scripts/check-error-code-drift-mutations.mjs",
+        "scripts/check-extension-class-drift-mutations.mjs",
+        "scripts/check-fixture-registration-drift-mutations.mjs",
+        "scripts/check-fixture-registration-drift.mjs",
+        "scripts/check-plugin-manifest-drift-mutations.mjs",
+        "scripts/check-progress-contract-drift-mutations.mjs",
+        "scripts/check-provider-registration-drift-mutations.mjs",
+        "scripts/check-provider-registration-drift.mjs",
+        "scripts/check-report-registration-drift-mutations.mjs",
+        "scripts/check-report-registration-drift.mjs",
+        "scripts/check-schema-drift-mutations.mjs",
+        "scripts/docs-ap09-mutation-fixture.mjs",
+        "scripts/docs-api-documentation-role-custody.mjs",
+        "scripts/docs-api-producer-adapter-authorities.json",
+        "scripts/docs-configuration-inventory.mjs",
+        "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+        "scripts/docs-documentation-owner-purpose-custody.mjs",
+        "scripts/docs-generate.mjs",
+        "scripts/docs-platform-surface-inventory.mjs",
+        "scripts/docs-product-pipeline-reference.mjs",
+        "skills/buster/engine/test-gates/production.ts",
+        "skills/buster/plugins/junit-report-adapter/plugin.json",
+        "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+        "skills/common/plugin-runtime/foundation/registry/types.ts",
+        "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+        "skills/common/plugin-runtime/sdk/src/index.ts",
+        "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+        "skills/nova/plugins/lint/plugin.json",
+        "skills/nova/project/compiler.ts",
+        "skills/nova/project_setup/tools/progress-scaffold-validation.ts",
+        "tests/verification/e2e/fixture-coverage.mjs",
+        "tests/verification/e2e/provider-catalog.mjs"
+      ],
+      "checks": [
+        {
+          "command": "Reuse complete original A91014 schema/capability role-grant/provider/fixture/report mutation checks at exact46unchanged scope paths",
+          "exitCode": 0,
+          "observation": "Full original independent accepted record/history/limits and exact vector supplied. These cover first6original dimensions; no rerun/recount or extrapolation to other parserways."
+        },
+        {
+          "command": "node scripts/check-progress-contract-drift-mutations.mjs",
+          "exitCode": 0,
+          "observation": "progress-contract: checked-in progress-contract baseline PASS\ncontract:progress-contract:add: rejected by bounded product-pipeline contract checker (full docs:drift:contract:check not exercised by this bounded runner); DOC_DRIFT_CONTRACT; docs/site/reference/workflows.md\ncontract:progress-contract:change: rejected by bounded product-pipeline contract checker (full docs:drift:contract:check not exercised by this bounded runner); DOC_DRIFT_CONTRACT; docs/site/reference/workflows.md\ncontract:progress-contract:remove: rejected by bounded product-pipeline contract checker (full docs:drift:contract:check not exercised by this bounded runner); DOC_DRIFT_CONTRACT; docs/site/reference/workflows.md\nprogress-contract Add/Change/Remove: 3/3 rejected; restored published baselines PASS; parser errors separate. SDK export and public member variants are not exercised by this bounded runner; not full contract-family or independent A911-11 acceptance."
+        },
+        {
+          "command": "Pinned fe588b1a Terra/high/P2 complete original seven-dimension A99-13 independent decision",
+          "exitCode": 0,
+          "observation": "sourceAccuracy: PASS \u2014 the supplied complete fixture maps all seven A99-13 dimensions to concrete authorities, constructors, and reader locations; the first six retain the accepted unchanged A91014 scope, and the progress contract has a distinct bounded checker. readerUsability: PASS \u2014 every demonstrated mutation identifies its affected reference, including workflows.md for progress. quality: PASS \u2014 the verdict change is consistent with baseline-green, Add/Change/Remove rejection, no-write, restoration, and parser-error separation evidence. WHOLE A99-13: PASS within the stated original seven-dimension scope; it does not assert broader SDK-family, A911-11, runtime, or human acceptance."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Original A99-13 seven named product-contract mutation dimensions: schemafield,stagetype,role,provider,fixture,reportformat,progresscontract. Full prior independent A91014 exact scope reused for first6; genuine current published progress baseline and3original mutation refusals/restorations supplement it. Independent complete original criterion Source/semantic Reader/Quality PASS.",
+      "limits": [
+        "Only original seven-dimension A99-13 drift contract; no whole A911-11/allparser routes/Source-exhaustiveness or runtime execution.",
+        "Existing prior A91014 scope,checks/history/limits kept unchanged; zero duplicate gate or catalogue requirement acceptance.",
+        "No fresh practical/human/participant/screenreader/live deployment or release claim. Original DATAartifacts41/all5UNKNOWN, Knip and immutable external report/provenance gaps remain.",
+        "Progress uses original bounded product-pipeline contract checker, not full SDK export/public member family. Published baseline/read-only exact named reader mismatch/restoration and parser control are genuine."
+      ],
+      "openIssues": [],
+      "verdict": "PASS",
+      "evidenceDirectory": "docs/blueprint/acceptance-evidence/a9913-original-seven-dimensions-20261025"
     }
   ],
   "purpose": "Internal planning and observed findings; not an acceptance ledger and not reader documentation.",
@@ -56014,9 +56108,34 @@
       "id": "A99-13",
       "passCondition": "Mutationen an Schemafeld, Stage-Typ, Rolle, Provider, Fixture, Reportformat und Progress-Vertrag machen die zugeh\u00f6rige Referenz oder Journey rot.",
       "automaticFailure": "Ein \u00f6ffentliches Pipelineelement kann ohne dokumentarische Auswirkung hinzukommen.",
-      "state": "not-accepted",
-      "evidence": [],
-      "reviews": [],
+      "state": "accepted",
+      "evidence": [
+        {
+          "path": "docs/blueprint/acceptance-evidence/a9913-original-seven-dimensions-20261025/README.md",
+          "revision": "5c8d9b8a6af06fef6441dcb5a9812896d56bcc2f",
+          "scope": "Complete original seven-dimension mutation criterion only."
+        }
+      ],
+      "reviews": [
+        {
+          "role": "source",
+          "reviewer": "Independent pinned fe588b1a Terra/high/P2 original A99-13 reviewer",
+          "verdict": "PASS",
+          "report": "docs/blueprint/acceptance-evidence/a9913-original-seven-dimensions-20261025/gate-verdict.json"
+        },
+        {
+          "role": "reader",
+          "reviewer": "Independent pinned fe588b1a Terra/high/P2 original A99-13 reviewer",
+          "verdict": "PASS",
+          "report": "docs/blueprint/acceptance-evidence/a9913-original-seven-dimensions-20261025/gate-verdict.json"
+        },
+        {
+          "role": "quality",
+          "reviewer": "Independent pinned fe588b1a Terra/high/P2 original A99-13 reviewer",
+          "verdict": "PASS",
+          "report": "docs/blueprint/acceptance-evidence/a9913-original-seven-dimensions-20261025/gate-verdict.json"
+        }
+      ],
       "readerFixtureIds": [],
       "executionScenarioIds": [],
       "closureDecision": {
@@ -56024,7 +56143,8 @@
         "revision": "13d6f0a8326d5672f97cb42c0fc91f28da008e0d",
         "reason": "Independent workflows review: Full gate scope not independently established in this batch; narrower PASSs do not imply whole-gate completion.",
         "campaign": "independent-ready-topics-20261020"
-      }
+      },
+      "completionRecord": "A99-13-original-seven-dimension-drift-20261025"
     },
     {
       "id": "A910-01",

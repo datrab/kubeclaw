@@ -1,0 +1,12 @@
+autoreview target: local
+branch: master
+engine: codex
+model: gpt-5.6-terra
+thinking: high
+tools: on
+web_search: off
+trufflehog: clean (2.0s)
+bundle: 705 bytes; review passes: 1
+autoreview clean: no accepted/actionable findings reported
+overall: patch is correct (0.95)
+sourceAccuracy: PASS — the supplied complete fixture maps all seven A99-13 dimensions to concrete authorities, constructors, and reader locations; the first six retain the accepted unchanged A91014 scope, and the progress contract has a distinct bounded checker. readerUsability: PASS — every demonstrated mutation identifies its affected reference, including workflows.md for progress. quality: PASS — the verdict change is consistent with baseline-green, Add/Change/Remove rejection, no-write, restoration, and parser-error separation evidence. WHOLE A99-13: PASS within the stated original seven-dimension scope; it does not assert broader SDK-family, A911-11, runtime, or human acceptance.
