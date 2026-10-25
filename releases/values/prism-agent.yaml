@@ -1,4 +1,4 @@
-# Generated from release 28f43b543fd65a52b13c46e546de1e0128e247c9 and byte-matched source configuration; do not edit.
+# Generated from release fc87fd76f49d1b930a31a332140f08524aa0afd8 and byte-matched source configuration; do not edit.
 agentRole: prism
 gateway:
   startupDoctor:
@@ -13,7 +13,7 @@ gateway:
         memory: 4Gi
 image:
   repository: ghcr.io/datrab/kubeclaw-prism-agent
-  digest: sha256:340ac50c05ed152e4e4d4f5034281d71e482286565533a53812697922c78c4ed
+  digest: sha256:2054278d44f5523f110e0f6c91d21d838a4077e896524f45ccf93a39e14aa47d
   tag: ''
   pullPolicy: IfNotPresent
 imagePullSecrets:
@@ -75,7 +75,7 @@ extraEnv:
     value: https://prism-studio
 extraContainers:
   - name: prism-agent-bridge
-    image: ghcr.io/datrab/kubeclaw-prism-agent@sha256:340ac50c05ed152e4e4d4f5034281d71e482286565533a53812697922c78c4ed
+    image: ghcr.io/datrab/kubeclaw-prism-agent@sha256:2054278d44f5523f110e0f6c91d21d838a4077e896524f45ccf93a39e14aa47d
     imagePullPolicy: Always
     command:
       - node
