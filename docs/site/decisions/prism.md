@@ -42,7 +42,10 @@ Provider-specific response formats stay behind adapters. External provider candi
 The schema decision accepted on August 12 keeps meta, theme, assets, components, views, and flows.
 Nodes keep id, type, props, and children.
 Token, data, asset, and action references use explicit objects so validation does not depend on magic string prefixes.
-Transition identity is separate from its triggering action: one action can have success and failure outcomes.
+Transition IDs remain separate from triggering action IDs.
+Current selection takes the first matching view, state, and action; it has no outcome discriminator.
+Use distinct action IDs for independently selectable success and failure paths.
+Outcome-based selection for one action remains unimplemented.
 Property patches target node IDs directly and cannot change identity, type, or children.
 
 Data binding uses bounded dot paths, not an expression language.
@@ -67,7 +70,7 @@ Keep one combined embedding before adding separate facets or another vector stor
 Only measured limits justify the extra operational and consistency cost of HNSW, replicas, or a specialist service.
 Local PGlite evidence supports development only. It does not establish native-server or physical-device acceptance.
 
-The spike proposes p95 at most 250 ms. The implementation plan and executable server benchmark use 300 ms at 10,000 references.
+The [original spike proposal](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/spikes/prism-foundation-spikes.md#L254-L263) requires p95 at most 250 ms. The implementation plan and executable server benchmark use 300 ms at 10,000 references.
 No separate approval for this relaxation is established here.
 Record both limits. [Prism service acceptance](../status/acceptance.md#prism-database-jobs-sessions-and-resources) must report results against both and must not call 300 ms an approved replacement without decision evidence.
 The other recorded criteria include precision at 10 of 0.70, recall at 20 of 0.80, zero rights leaks, and declared corpus and hardware.
