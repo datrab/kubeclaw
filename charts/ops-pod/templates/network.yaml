@@ -69,6 +69,14 @@ spec:
           podSelector:
             matchLabels: {k8s-app: hubble-relay}
       ports: [{protocol: TCP, port: 4245}]
+    {{- if .Values.mcp.monitoring.enabled }}
+    - to:
+        - namespaceSelector:
+            matchLabels: {kubernetes.io/metadata.name: {{ .Values.mcp.monitoring.namespace }}}
+          podSelector:
+            matchLabels: {{ toYaml .Values.mcp.monitoring.podLabels | nindent 14 }}
+      ports: [{protocol: TCP, port: {{ .Values.mcp.monitoring.port }}}]
+    {{- end }}
 {{- range .Values.mcp.clients }}
 ---
 # Both sides of a default-deny boundary must allow the client -> MCP edge.

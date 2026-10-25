@@ -60,7 +60,7 @@
     "OPS_NPM_TAR_VERSION": "7.5.21",
     "OPS_NPM_BRACE_VERSION": "5.0.12",
     "OPS_NPM_HTTP_CACHE_VERSION": "4.3.0",
-    "OPS_NPM_UNDICI_VERSION": "6.28.1",
+    "OPS_NPM_UNDICI_VERSION": "6.29.1",
     "OPS_NPM_IP_VERSION": "10.3.1"
   },
   "imageOverrides": {

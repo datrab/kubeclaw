@@ -735,3 +735,58 @@ before deleting any of them. Do not delete an entire namespace as a shortcut if
 it contains unrelated resources. Verify that Helm removed its roles/bindings,
 including bindings in observed namespaces. Do not revoke a shared registry
 credential at its source while other workloads still depend on it.
+
+## Read-only resource diagnostics
+
+The default and production `codex` MCP principal has `readOnly: true`, an explicit
+read-tool allowlist and `exec: []`. The policy parser rejects exec tools or grants
+for a read-only principal; tool authorization and exec authorization independently
+reject them too. Helm rejects an exec-enabled read-only client before deployment.
+Nova and Buster retain their separate grants. The shared MCP ServiceAccount still
+has their exec rights: this is per-client enforcement by the trusted MCP, not an
+OS sandbox against a compromised MCP server. Codex receives no Kubernetes token.
+
+Additional reads:
+
+- `platform_cluster_state` includes node allocatable resources, taints and the
+  unschedulable flag, as well as capacity and health.
+- `get_resource_inventory` returns paginated pod requests/limits, pod-level
+  resources, init/sidecar requests and overhead; PVC/PV capacities; storage classes;
+  and EndpointSlices. Follow every `nextContinueToken`. Storage source credentials,
+  CSI attributes, provisioner parameters, environment variables and annotations
+  are deliberately omitted. PV/PVC capacity does not establish actual free space.
+- `get_monitoring_metrics` accepts a named query: `filesystems`, `memory`, `cpu`,
+  `volumes`, `requests`, `network`, or `disk_io`. Filesystem results retain device,
+  mountpoint and instance labels. `avail_bytes` is available to non-root users;
+  do not sum duplicate mounts/scrape targets. CPU is busy fraction per core over
+  five minutes. Missing series mean unavailable, not zero. PVC usage requires
+  kubelet/CSI volume metrics and is not guaranteed for every storage driver.
+- `get_monitoring_alerts` reads active Prometheus alerts; it cannot silence them.
+
+Monitoring and cluster-wide storage inventory require `readAllNamespaces: true`
+in addition to the named tool grant. Monitoring has a configured origin and fixed
+GET-only API routes and queries, refuses redirects, and bounds responses to 2 MiB
+and requests to ten seconds. History requires both UTC timestamps, spans at most
+24 hours and at most 1000 steps, with a minimum step of 60 seconds. No caller can
+supply PromQL, a backend URL, shell command or administration API path.
+
+The production values enable `mcp.monitoring` for the existing internal Prometheus
+service. The chart default is disabled. The chart adds MCP egress only to the
+selected monitoring pods and port; it does not introduce an ingress policy that
+could isolate existing Prometheus consumers. If destination ingress is restricted,
+its owner must add the corresponding MCP allow rule. Keep Prometheus private.
+
+Rollout order: build and verify the new MCP image through the Ops image workflow,
+promote its immutable receipt (image digest and chart revision together), regenerate
+the Argo manifests, inspect the diff, then synchronize `codex-ops` during an agreed
+window. Never synchronize the expanded tool policy against the previous image:
+its parser does not know the new tool names. The child Application intentionally
+has no automated sync. Refresh the connected MCP application's tool catalog after
+rollout. A source change or successful local test is not a live acceptance result.
+
+Live acceptance using the Codex credential must confirm that `tools/list` contains
+only read-only tools and no `exec_pod`; a direct `exec_pod` call is rejected even
+for a formerly granted test pod; filesystem/memory queries return current node
+series; pod/PVC inventory and pagination work; and logs/events remain readable.
+Check that Nova/Buster still receive only their original tool/namespace scopes.
+Do not test write denial by sending a real Kubernetes mutation to production.
