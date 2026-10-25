@@ -176,6 +176,17 @@
       "manifestSha256": "f81d687a5bb7c2c9428a2cfc32fc099c823d56faf533e7d0e1f3cdc0e10f9cc7",
       "manifestUrl": "https://github.com/actions/download-artifact/blob/d3f86a106a0bac45b974a628896c90dbdf5c8093/action.yml",
       "resolvedAt": "2026-09-09"
+    },
+    {
+      "manifestGitBlob": "7af7458c1d5570d2bde23488e55b9f6991abe4eb",
+      "manifestPath": "action.yml",
+      "repo": "actions/cache",
+      "sha": "0057852bfaa89a56745cba8c7296529d2fc39830",
+      "tag": "v4.3.0",
+      "url": "https://github.com/actions/cache/commit/0057852bfaa89a56745cba8c7296529d2fc39830",
+      "manifestSha256": "5ba9b2391f2acf467bc0604a496001d79550de5af6b2b4e2a70a42599022aacc",
+      "manifestUrl": "https://github.com/actions/cache/blob/0057852bfaa89a56745cba8c7296529d2fc39830/action.yml",
+      "resolvedAt": "2026-10-25"
     }
   ]
 }
