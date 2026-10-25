@@ -64,7 +64,7 @@ const routeSources = [
   'tools/ops-mcp/src/server.mjs',
 ];
 const goControllerSources = walk(path.join(root, 'cmd/buster-namespace-controller')).map(relative)
-  .filter((file) => file.endsWith('.go') && !file.endsWith('_test.go'));
+  .filter((file) => file.endsWith('.go') && !file.endsWith('_test.go')).sort();
 const storeSources = [
   'skills/nova/core/effects/locks.ts',
   'skills/nova/core/execution/engine-run.ts',
