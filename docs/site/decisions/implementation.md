@@ -92,7 +92,9 @@ Do not expose either recommendation as an implemented public extension contract.
 ## Controller identity and human product decisions
 
 A controller ServiceAccount can authenticate a service call. It does not prove that a human approved a product or lease extension.
-Bind human intent to the actor, run, source, lease UID, current revision, previous expiry, action, and reason.
+The signed payload binds actor, source and evidence digests, lease name/UID, generation, expected resource revision, previous expiry, action, and reason.
+It has no `runId`; the controller exposes the subject’s run ID but does not compare it in `commitProduct`.
+Explicit signed run binding remains unmet; resource-version freshness does not establish it.
 Preserve the signed decision and exact receipt. The original Ready time remains immutable.
 An identical replay must return the stored result; a different concurrent decision must conflict.
 An expired or deleting lease cannot be revived by a retry.
