@@ -59,6 +59,7 @@
         "bash scripts/deploy.sh prism-e2e",
         "bash scripts/prepare-image-build-runner.sh",
         "node scripts/updates/runtime-inputs.mjs",
+        "node scripts/updates/verify-release-source.mjs",
         "npm ci --ignore-scripts",
         "npm run plugin-system:sandbox:build",
         "uses: ./.github/workflows/pipeline-reliability.yaml",
@@ -278,6 +279,7 @@
         "preserve"
       ],
       "commandAndActionRefs": [
+        "node scripts/updates/verify-release-source.mjs",
         "uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
         "uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093",
         "uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444"
