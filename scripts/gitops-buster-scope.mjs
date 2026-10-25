@@ -6,8 +6,8 @@ import { validateReleaseReceipt, validateRenderedRelease } from './updates/deplo
 import { componentSource } from './updates/runtime-components.mjs';
 import { gitOpsDigest, gitOpsName, inspectGitOpsResources } from './gitops-bundle.mjs';
 
-function priorBundle(root) {
-  const directory = JSON.parse(fs.readFileSync(path.join(root, 'gitops/production/selection.json'), 'utf8')).directory;
+function priorBundle(root, baselineDirectory) {
+  const directory = baselineDirectory ?? JSON.parse(fs.readFileSync(path.join(root, 'gitops/production/selection.json'), 'utf8')).directory;
   if (!/^releases\/gitops\/[a-z0-9][a-z0-9-]{0,50}$/u.test(directory ?? '')) throw new Error('GITOPS_BUNDLE_PATH_INVALID');
   const prior = JSON.parse(fs.readFileSync(path.join(root, directory, 'bundle.receipt'), 'utf8'));
   validateReleaseReceipt(prior.receipt, 'runtime');
@@ -75,8 +75,8 @@ function inspectRetainedManifest(manifest, group, receipt) {
 
 // Buster-only delivery freezes other roles and their effective provenance.
 // Configuration changes for those roles are deliberately not rendered here.
-export function retainedGitOpsGroups(root, receipt, namespace, prismNamespace) {
-  const { directory, prior } = priorBundle(root);
+export function retainedGitOpsGroups(root, receipt, namespace, prismNamespace, baselineDirectory) {
+  const { directory, prior } = priorBundle(root, baselineDirectory);
   validateScope(prior.receipt, receipt);
   const documents = yaml.loadAll(fs.readFileSync(path.join(root, 'gitops/production/apps/applications.yaml'), 'utf8')).filter(Boolean);
   const applications = documents.filter(document => document.kind === 'Application');

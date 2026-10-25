@@ -148,3 +148,24 @@ test('Buster-only retention binds active repositories to an unambiguous local pr
   fs.writeFileSync(file, original.map(item => yaml.dump(item)).join('---\n'));
   assert.deepEqual([...retain(root, receipt).keys()], ['prism', 'nova']);
 }));
+
+
+test('Explicit retained baseline preserves selection and all existing scope/manifest gates', () => fixture((root, receipt, directory) => {
+  const selection = path.join(root, 'gitops/production/selection.json');
+  // Deliberately unusable default: explicit baseline must not rewrite selection.
+  fs.writeFileSync(selection, JSON.stringify({directory: 'releases/gitops/unavailable'}));
+  const before = fs.readFileSync(selection);
+  const explicit = candidate => retainedGitOpsGroups(root, candidate, 'kubeclaw', 'kubeclaw', directory);
+  assert.deepEqual([...explicit(receipt).keys()], ['prism', 'nova']);
+  assert.deepEqual(fs.readFileSync(selection), before);
+  assert.throws(() => retain(root, receipt), /ENOENT/);
+  for (const invalid of ['', '../escape', '/tmp/baseline', 'releases/gitops/../escape']) {
+    assert.throws(() => retainedGitOpsGroups(root, receipt, 'kubeclaw', 'kubeclaw', invalid), /GITOPS_BUNDLE_PATH_INVALID/);
+  }
+  const changed = structuredClone(receipt);
+  changed.images['prism-agent'] += 'bad';
+  assert.throws(() => explicit(changed), /SCOPE_IMAGE_CHANGED/);
+  fs.appendFileSync(path.join(root, directory, 'prism/resources.yaml'), '\n# tampered');
+  assert.throws(() => explicit(receipt), /MANIFEST_DIGEST_MISMATCH/);
+  assert.deepEqual(fs.readFileSync(selection), before);
+}));
