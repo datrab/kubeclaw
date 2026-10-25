@@ -7382,7 +7382,7 @@
     },
     {
       "id": "AP09-closeout-config-reference-20261020",
-      "revision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
+      "revision": "80815e4871e617603094f3228d8f4d49f625552f",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_config_reference",
       "gateIds": [],
@@ -7514,6 +7514,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Actual committed177page publication and five technical artifact/search/Source-link/Source-preview/diagram checks PASS on a7a855e3. Coordinator evidence only, not fresh independent participant/human/runtime observations. Focused327controls:308PASS/19FAIL; all19negative names and firstterminals independently compared by coordinator to ORIGINALsameapprovedroot with exactsame19failures and guardedcandidate restoration. Suite NOT called PASS. Original receiver same artifacts.ts41content/all5DATAUNKNOWN."
+        },
+        {
+          "command": "Actual committedSource80815e48: original177page publication build and all five docs-reader checks; publication/docs-check/refs and git diff --check",
+          "exitCode": 0,
+          "observation": "Actual build and artifact/search/Source-link/preview/diagram controls terminal0. Full corrected pipeline-json originalA99-11 Source/semanticReader/QualityPASS and independent10originalscope preservationPASS. Diagnostic prose only distinguishes COVERAGE_* contract errors from TEST_PLAN_* resolver errors. JSON example, parser, runtime, source bindings, renderer and historical observations unchanged. No fresh native/live/human or wholeA99-11 acceptance. Raw commands/logs: /home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/pipeline-json-recovery-committed-reader"
         }
       ],
       "review": {
@@ -7834,6 +7839,20 @@
             "docs/blueprint/acceptance-evidence/README.md"
           ],
           "limits": "Original19negativecontrols/28ordinaryred/DATA artifacts.ts41content/all5UNKNOWN/Knip/treeaggregate/fullgeneration/parser/human/live/runtime/release limits remain. No wholeA91101,newgate/catalogue,globalPASS or fresh independent practical exercise."
+        },
+        {
+          "previousReviewedRevision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
+          "revision": "80815e4871e617603094f3228d8f4d49f625552f",
+          "reviewer": "Pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 independent complete10originalscope preservation",
+          "changedDependencies": [
+            "docs/site/reference/pipeline-json.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Single diagnostic correction verified against coverage/validation Source and complete finalpage independently Source/semanticReader/QualityPASS. Complete original contracts/terminal failures/checks/history/limits and lossless ALLoriginal-current vectors supplied together with actual177page build/fiveReader controls. Exact unchanged original scopes/historical observations reused, not recounted; no new acceptance.",
+          "originalRecordSha256": "ad6b27acd9a35709fa2fd6ac3c1f7b7eef1b887caddc75a42c0dd0153c84c17b",
+          "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/pipeline-json-ten-preservation-recovery-c-verdict.json",
+          "reportSha256": "aec54c603fb7260cf9153ce4d02038b6200e0cd3ccea2d46222a3274a8f2e264",
+          "inspectionLimit": "Complete finalpage/coverage/validation and clean completecontentverdict/manifest; full originalcontracts/vectors/decoding shards. Technical checks are coordinator observations, not reviewer-run/freshparticipant/native/live work. Source-link terminalsummary not semanticinventory; fullraw retained unchanged. Original DATA/runtime/ToolSource/deployprovenance/releaseKnip/human limits remain."
         }
       ],
       "previousReviewedRevision": "b4f3d630d6a6d15ab84036ec62bdab2d8a4949d3",
@@ -16596,7 +16615,7 @@
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "7ff6afabab5e8c4c67253a05dbeb1aa56d224d86",
+      "revision": "80815e4871e617603094f3228d8f4d49f625552f",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -17092,6 +17111,11 @@
           "command": "Independent completePrism Source/semanticReader/Quality and exact3originalscope preservation; actual committed publication build plus5originalReaderchecks",
           "exitCode": 0,
           "observation": "Original publication/docs-check/docs-check-refs and six current committed Reader processes PASS at reviewed Prism Source. Only prism.md differs in complete original vectors; outcome selection and250vs300 approval limits remain unmet. Originalhuman/runtime/live/release/DATA limits unchanged, no new acceptance."
+        },
+        {
+          "command": "Actual committedSource80815e48: original177page publication build and all five docs-reader checks; publication/docs-check/refs and git diff --check",
+          "exitCode": 0,
+          "observation": "Actual build and artifact/search/Source-link/preview/diagram controls terminal0. Full corrected pipeline-json originalA99-11 Source/semanticReader/QualityPASS and independent10originalscope preservationPASS. Diagnostic prose only distinguishes COVERAGE_* contract errors from TEST_PLAN_* resolver errors. JSON example, parser, runtime, source bindings, renderer and historical observations unchanged. No fresh native/live/human or wholeA99-11 acceptance. Raw commands/logs: /home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/pipeline-json-recovery-committed-reader"
         }
       ],
       "limits": [
@@ -18305,6 +18329,20 @@
           "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/prism-final-three-1421-verdict.json",
           "reportSha256": "d847f53d9ad956ad448816a82a63d1d97b711a25d7e5490358222c4aa7ace070",
           "inspectionLimit": "Independent complete supplied page/actualGoSource/full originalscope contracts/losslessvectors/finalPrismSourceverdict+manifest. No reviewer-run tests or live/runtime exercise. Coordinator original checks separate; full Source-link raw stdout retained unchanged, explicit terminalprojection not fresh semantic inventory."
+        },
+        {
+          "previousReviewedRevision": "7ff6afabab5e8c4c67253a05dbeb1aa56d224d86",
+          "revision": "80815e4871e617603094f3228d8f4d49f625552f",
+          "reviewer": "Pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 independent complete10originalscope preservation",
+          "changedDependencies": [
+            "docs/site/reference/pipeline-json.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Single diagnostic correction verified against coverage/validation Source and complete finalpage independently Source/semanticReader/QualityPASS. Complete original contracts/terminal failures/checks/history/limits and lossless ALLoriginal-current vectors supplied together with actual177page build/fiveReader controls. Exact unchanged original scopes/historical observations reused, not recounted; no new acceptance.",
+          "originalRecordSha256": "5fa0277699d83f448822d4e742bd01f29878914e13d9eac53d1de6bc021b159b",
+          "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/pipeline-json-ten-preservation-recovery-c-verdict.json",
+          "reportSha256": "aec54c603fb7260cf9153ce4d02038b6200e0cd3ccea2d46222a3274a8f2e264",
+          "inspectionLimit": "Complete finalpage/coverage/validation and clean completecontentverdict/manifest; full originalcontracts/vectors/decoding shards. Technical checks are coordinator observations, not reviewer-run/freshparticipant/native/live work. Source-link terminalsummary not semanticinventory; fullraw retained unchanged. Original DATA/runtime/ToolSource/deployprovenance/releaseKnip/human limits remain."
         }
       ],
       "scopePreservation3408": {
@@ -24510,7 +24548,7 @@
     },
     {
       "id": "A99-02-whole-content-20261021",
-      "revision": "7ef16585ba04eba3628cead304be85307436f091",
+      "revision": "80815e4871e617603094f3228d8f4d49f625552f",
       "author": "PR13 documentation contributors",
       "reviewer": "/root/workflow_acceptance",
       "gateIds": [
@@ -24561,6 +24599,11 @@
           "command": "Independent d0bb scoped preservation addendum plus actual publication Reader artifact/search/Source/previews/diagram and offline-browser checks",
           "exitCode": 0,
           "observation": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.md plus named source-only/new-topic reviews. 171canonical/181HTML/38517targets/213hashes;12search;14635SourceLinks3829objects;1741excerpts905objects;27freshSVG;52browser observations0findings0network. No global config/CI/runtime/release success."
+        },
+        {
+          "command": "Actual committedSource80815e48: original177page publication build and all five docs-reader checks; publication/docs-check/refs and git diff --check",
+          "exitCode": 0,
+          "observation": "Actual build and artifact/search/Source-link/preview/diagram controls terminal0. Full corrected pipeline-json originalA99-11 Source/semanticReader/QualityPASS and independent10originalscope preservationPASS. Diagnostic prose only distinguishes COVERAGE_* contract errors from TEST_PLAN_* resolver errors. JSON example, parser, runtime, source bindings, renderer and historical observations unchanged. No fresh native/live/human or wholeA99-11 acceptance. Raw commands/logs: /home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/pipeline-json-recovery-committed-reader"
         }
       ],
       "review": {
@@ -24611,12 +24654,26 @@
           "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
           "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
           "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
+        },
+        {
+          "previousReviewedRevision": "7ef16585ba04eba3628cead304be85307436f091",
+          "revision": "80815e4871e617603094f3228d8f4d49f625552f",
+          "reviewer": "Pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 independent complete10originalscope preservation",
+          "changedDependencies": [
+            "docs/site/reference/pipeline-json.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Single diagnostic correction verified against coverage/validation Source and complete finalpage independently Source/semanticReader/QualityPASS. Complete original contracts/terminal failures/checks/history/limits and lossless ALLoriginal-current vectors supplied together with actual177page build/fiveReader controls. Exact unchanged original scopes/historical observations reused, not recounted; no new acceptance.",
+          "originalRecordSha256": "61276695feb78df4903ec26adf47ede0992ce63e1073cf7cf556cfe767bc8a18",
+          "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/pipeline-json-ten-preservation-recovery-c-verdict.json",
+          "reportSha256": "aec54c603fb7260cf9153ce4d02038b6200e0cd3ccea2d46222a3274a8f2e264",
+          "inspectionLimit": "Complete finalpage/coverage/validation and clean completecontentverdict/manifest; full originalcontracts/vectors/decoding shards. Technical checks are coordinator observations, not reviewer-run/freshparticipant/native/live work. Source-link terminalsummary not semanticinventory; fullraw retained unchanged. Original DATA/runtime/ToolSource/deployprovenance/releaseKnip/human limits remain."
         }
       ]
     },
     {
       "id": "A99-03-whole-content-20261021",
-      "revision": "8fa9ed9b95bb37ca234aef1f321f68831519abab",
+      "revision": "80815e4871e617603094f3228d8f4d49f625552f",
       "author": "PR13 documentation contributors",
       "reviewer": "/root/workflow_acceptance",
       "gateIds": [
@@ -24667,6 +24724,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Six separate original Reader commands passed against committed8fa9ed9b:177pagebuild and artifact/search/Source-link/source-preview/diagram checks.53original custody/purpose controls and54original tree controls pass;110originalrole guards pass with affected tree role rechecked after classification. Complete37original contracts/3089physical scoped references/1264unique files accounted;17semantic+19publication reviews reused and exact19classification/nine-scope followup independently clean. No new gate, practical/human/live/runtime/release/DATA acceptance."
+        },
+        {
+          "command": "Actual committedSource80815e48: original177page publication build and all five docs-reader checks; publication/docs-check/refs and git diff --check",
+          "exitCode": 0,
+          "observation": "Actual build and artifact/search/Source-link/preview/diagram controls terminal0. Full corrected pipeline-json originalA99-11 Source/semanticReader/QualityPASS and independent10originalscope preservationPASS. Diagnostic prose only distinguishes COVERAGE_* contract errors from TEST_PLAN_* resolver errors. JSON example, parser, runtime, source bindings, renderer and historical observations unchanged. No fresh native/live/human or wholeA99-11 acceptance. Raw commands/logs: /home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/pipeline-json-recovery-committed-reader"
         }
       ],
       "review": {
@@ -24717,6 +24779,20 @@
             "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-publication-original-scope-preservation-review.json"
           ],
           "limits": "Original API/DATA artifacts.ts41/all5UNKNOWN, selected-releaseKnip and human/live/screenreader/participant constraints remain. Negative runtime-schema and unchanged cwd-prefixed consumer-discovery advisories retained in operations next-batch/dispositions; no runtime/schema/validator code or guard waived. Provisional36author-owned draft preserved outsideRepo, not finalacceptance; only final37revision bindings and append-only actualcheck/impact metadata applied. No newwhole70/OPL005acceptance."
+        },
+        {
+          "previousReviewedRevision": "8fa9ed9b95bb37ca234aef1f321f68831519abab",
+          "revision": "80815e4871e617603094f3228d8f4d49f625552f",
+          "reviewer": "Pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 independent complete10originalscope preservation",
+          "changedDependencies": [
+            "docs/site/reference/pipeline-json.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Single diagnostic correction verified against coverage/validation Source and complete finalpage independently Source/semanticReader/QualityPASS. Complete original contracts/terminal failures/checks/history/limits and lossless ALLoriginal-current vectors supplied together with actual177page build/fiveReader controls. Exact unchanged original scopes/historical observations reused, not recounted; no new acceptance.",
+          "originalRecordSha256": "d4be6872dd71f6a4ba3e8557dda5de9e2c758551c8e55c5600674cc8f64d2389",
+          "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/pipeline-json-ten-preservation-recovery-c-verdict.json",
+          "reportSha256": "aec54c603fb7260cf9153ce4d02038b6200e0cd3ccea2d46222a3274a8f2e264",
+          "inspectionLimit": "Complete finalpage/coverage/validation and clean completecontentverdict/manifest; full originalcontracts/vectors/decoding shards. Technical checks are coordinator observations, not reviewer-run/freshparticipant/native/live work. Source-link terminalsummary not semanticinventory; fullraw retained unchanged. Original DATA/runtime/ToolSource/deployprovenance/releaseKnip/human limits remain."
         }
       ]
     },
@@ -24923,7 +24999,7 @@
     },
     {
       "id": "A99-05-whole-content-20261021",
-      "revision": "7ef16585ba04eba3628cead304be85307436f091",
+      "revision": "80815e4871e617603094f3228d8f4d49f625552f",
       "author": "PR13 documentation contributors",
       "reviewer": "/root/workflow_acceptance",
       "gateIds": [
@@ -24965,6 +25041,11 @@
           "command": "Independent d0bb scoped preservation addendum plus actual publication Reader artifact/search/Source/previews/diagram and offline-browser checks",
           "exitCode": 0,
           "observation": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.md plus named source-only/new-topic reviews. 171canonical/181HTML/38517targets/213hashes;12search;14635SourceLinks3829objects;1741excerpts905objects;27freshSVG;52browser observations0findings0network. No global config/CI/runtime/release success."
+        },
+        {
+          "command": "Actual committedSource80815e48: original177page publication build and all five docs-reader checks; publication/docs-check/refs and git diff --check",
+          "exitCode": 0,
+          "observation": "Actual build and artifact/search/Source-link/preview/diagram controls terminal0. Full corrected pipeline-json originalA99-11 Source/semanticReader/QualityPASS and independent10originalscope preservationPASS. Diagnostic prose only distinguishes COVERAGE_* contract errors from TEST_PLAN_* resolver errors. JSON example, parser, runtime, source bindings, renderer and historical observations unchanged. No fresh native/live/human or wholeA99-11 acceptance. Raw commands/logs: /home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/pipeline-json-recovery-committed-reader"
         }
       ],
       "review": {
@@ -25004,6 +25085,20 @@
           "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
           "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
           "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
+        },
+        {
+          "previousReviewedRevision": "7ef16585ba04eba3628cead304be85307436f091",
+          "revision": "80815e4871e617603094f3228d8f4d49f625552f",
+          "reviewer": "Pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 independent complete10originalscope preservation",
+          "changedDependencies": [
+            "docs/site/reference/pipeline-json.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Single diagnostic correction verified against coverage/validation Source and complete finalpage independently Source/semanticReader/QualityPASS. Complete original contracts/terminal failures/checks/history/limits and lossless ALLoriginal-current vectors supplied together with actual177page build/fiveReader controls. Exact unchanged original scopes/historical observations reused, not recounted; no new acceptance.",
+          "originalRecordSha256": "8a3000f50fc155236ee5ed887669c230d5e0ed3509aa9a6563e14397169e902f",
+          "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/pipeline-json-ten-preservation-recovery-c-verdict.json",
+          "reportSha256": "aec54c603fb7260cf9153ce4d02038b6200e0cd3ccea2d46222a3274a8f2e264",
+          "inspectionLimit": "Complete finalpage/coverage/validation and clean completecontentverdict/manifest; full originalcontracts/vectors/decoding shards. Technical checks are coordinator observations, not reviewer-run/freshparticipant/native/live work. Source-link terminalsummary not semanticinventory; fullraw retained unchanged. Original DATA/runtime/ToolSource/deployprovenance/releaseKnip/human limits remain."
         }
       ]
     },
@@ -25190,7 +25285,7 @@
     },
     {
       "id": "A99-01-whole-recursive-input-content-20261021",
-      "revision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
+      "revision": "80815e4871e617603094f3228d8f4d49f625552f",
       "author": "PR13 documentation contributors; parent lint-wording correction",
       "reviewer": "/root/workflow_acceptance",
       "gateIds": [
@@ -25265,6 +25360,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Actual committed177page publication and five technical artifact/search/Source-link/Source-preview/diagram checks PASS on a7a855e3. Coordinator evidence only, not fresh independent participant/human/runtime observations. Focused327controls:308PASS/19FAIL; all19negative names and firstterminals independently compared by coordinator to ORIGINALsameapprovedroot with exactsame19failures and guardedcandidate restoration. Suite NOT called PASS. Original receiver same artifacts.ts41content/all5DATAUNKNOWN."
+        },
+        {
+          "command": "Actual committedSource80815e48: original177page publication build and all five docs-reader checks; publication/docs-check/refs and git diff --check",
+          "exitCode": 0,
+          "observation": "Actual build and artifact/search/Source-link/preview/diagram controls terminal0. Full corrected pipeline-json originalA99-11 Source/semanticReader/QualityPASS and independent10originalscope preservationPASS. Diagnostic prose only distinguishes COVERAGE_* contract errors from TEST_PLAN_* resolver errors. JSON example, parser, runtime, source bindings, renderer and historical observations unchanged. No fresh native/live/human or wholeA99-11 acceptance. Raw commands/logs: /home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/pipeline-json-recovery-committed-reader"
         }
       ],
       "review": {
@@ -25452,6 +25552,20 @@
             "docs/blueprint/acceptance-evidence/README.md"
           ],
           "limits": "Original19negativecontrols/28ordinaryred/DATA artifacts.ts41content/all5UNKNOWN/Knip/treeaggregate/fullgeneration/parser/human/live/runtime/release limits remain. No wholeA91101,newgate/catalogue,globalPASS or fresh independent practical exercise."
+        },
+        {
+          "previousReviewedRevision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
+          "revision": "80815e4871e617603094f3228d8f4d49f625552f",
+          "reviewer": "Pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 independent complete10originalscope preservation",
+          "changedDependencies": [
+            "docs/site/reference/pipeline-json.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Single diagnostic correction verified against coverage/validation Source and complete finalpage independently Source/semanticReader/QualityPASS. Complete original contracts/terminal failures/checks/history/limits and lossless ALLoriginal-current vectors supplied together with actual177page build/fiveReader controls. Exact unchanged original scopes/historical observations reused, not recounted; no new acceptance.",
+          "originalRecordSha256": "1a51a9b453a69e4917b995a25a01fc6aadcaabb5e7015aec176519e88a6eab9f",
+          "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/pipeline-json-ten-preservation-recovery-c-verdict.json",
+          "reportSha256": "aec54c603fb7260cf9153ce4d02038b6200e0cd3ccea2d46222a3274a8f2e264",
+          "inspectionLimit": "Complete finalpage/coverage/validation and clean completecontentverdict/manifest; full originalcontracts/vectors/decoding shards. Technical checks are coordinator observations, not reviewer-run/freshparticipant/native/live work. Source-link terminalsummary not semanticinventory; fullraw retained unchanged. Original DATA/runtime/ToolSource/deployprovenance/releaseKnip/human limits remain."
         }
       ],
       "previousReviewedRevision": "767ffd43a9ee0a28e2b3ca463e7648d765a9accb",
@@ -28161,7 +28275,7 @@
       }
     },
     {
-      "revision": "d23046f0a0f39c70f8177c607b722c191a8da7e1",
+      "revision": "80815e4871e617603094f3228d8f4d49f625552f",
       "author": "existing documentation authors",
       "reviewer": "/root/workflow_acceptance",
       "review": {
@@ -28215,6 +28329,11 @@
           "command": "/usr/local/bin/node --max-old-space-size=4096 scripts/docs-publication.mjs build\n/usr/local/bin/node scripts/docs-reader/check-artifact.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-search.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-source-links.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0\n/usr/local/bin/node scripts/docs-reader/check-source-previews.mjs /home/node/.openclaw/workspace/tmp/pr13-finish-20261021/reader-d23046f0",
           "exitCode": 0,
           "observation": "Five separate original native processes each exited0: publication build177canonical/187HTML; artifact local targets/digests,177-page search,Source links and2000excerpts/1070objects. This is one captured group reused for this record; no synthetic shell invocation or human review counted as command success."
+        },
+        {
+          "command": "Actual committedSource80815e48: original177page publication build and all five docs-reader checks; publication/docs-check/refs and git diff --check",
+          "exitCode": 0,
+          "observation": "Actual build and artifact/search/Source-link/preview/diagram controls terminal0. Full corrected pipeline-json originalA99-11 Source/semanticReader/QualityPASS and independent10originalscope preservationPASS. Diagnostic prose only distinguishes COVERAGE_* contract errors from TEST_PLAN_* resolver errors. JSON example, parser, runtime, source bindings, renderer and historical observations unchanged. No fresh native/live/human or wholeA99-11 acceptance. Raw commands/logs: /home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/pipeline-json-recovery-committed-reader"
         }
       ],
       "summary": "Whole gate compatibility explains exact author/read/recover-only/reject contracts for project/platform/definition/progress/publication,snapshotsv1–v4 and graphv2/v3,Worker v1/currentBuster versus Prism v2/v3,profile/schema matching and package/runtime snapshot pins. Negative mixed/new/old combinations reject rather than reinterpret;new work gets new identities,old bytes remain for pinned recovery. Upgrade compatibility table is truthfully empty and first incompatible write forbids image-only rollback.",
@@ -28233,6 +28352,20 @@
           "summary": "Plugin fields preserve exact snapshot/configuration equality and package-only upgrade chains. Negative old/new combinations and first incompatible write/rollback stop remain; no supported deployment pair is added. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
           "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
           "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "d23046f0a0f39c70f8177c607b722c191a8da7e1",
+          "revision": "80815e4871e617603094f3228d8f4d49f625552f",
+          "reviewer": "Pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 independent complete10originalscope preservation",
+          "changedDependencies": [
+            "docs/site/reference/pipeline-json.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Single diagnostic correction verified against coverage/validation Source and complete finalpage independently Source/semanticReader/QualityPASS. Complete original contracts/terminal failures/checks/history/limits and lossless ALLoriginal-current vectors supplied together with actual177page build/fiveReader controls. Exact unchanged original scopes/historical observations reused, not recounted; no new acceptance.",
+          "originalRecordSha256": "9710c6370bb65fd6c1da00a1ef7c77ab5ebbbd73be7427d0e603c248b4b96927",
+          "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/pipeline-json-ten-preservation-recovery-c-verdict.json",
+          "reportSha256": "aec54c603fb7260cf9153ce4d02038b6200e0cd3ccea2d46222a3274a8f2e264",
+          "inspectionLimit": "Complete finalpage/coverage/validation and clean completecontentverdict/manifest; full originalcontracts/vectors/decoding shards. Technical checks are coordinator observations, not reviewer-run/freshparticipant/native/live work. Source-link terminalsummary not semanticinventory; fullraw retained unchanged. Original DATA/runtime/ToolSource/deployprovenance/releaseKnip/human limits remain."
         }
       ],
       "scopePreservation3408": {
@@ -30214,7 +30347,7 @@
     },
     {
       "id": "AP09-publication-positive-scope-7ef16585",
-      "revision": "e55f7fbed552c992f5a5df80cf93e560f99848a2",
+      "revision": "80815e4871e617603094f3228d8f4d49f625552f",
       "author": "existing publication/content maintainers; final authored Sourcefield additions separately reviewed by workflow_acceptance",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -30529,6 +30662,11 @@
           "command": "Actual committed Source e55f7fbe: original publication build and all five docs-reader checks; original publication/docs-check/refs; complexity --check and --self-test",
           "exitCode": 0,
           "observation": "Actual current177page build and five original artifact/search/Source-link/preview/diagram checks terminal0; focused discovery51 packages49 complex51 canonical assignments and11negative/read-only controls PASS. Independent complete ownerpage Source/semanticReader/Quality PASS. Historical native table/browser observations reused exact unchanged table/links/renderers, NOT fresh exercises. No runtime/live/human/new acceptance. Raw logs and exact commands retained in /home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/deep-index-final-style-1441-committed-reader"
+        },
+        {
+          "command": "Actual committedSource80815e48: original177page publication build and all five docs-reader checks; publication/docs-check/refs and git diff --check",
+          "exitCode": 0,
+          "observation": "Actual build and artifact/search/Source-link/preview/diagram controls terminal0. Full corrected pipeline-json originalA99-11 Source/semanticReader/QualityPASS and independent10originalscope preservationPASS. Diagnostic prose only distinguishes COVERAGE_* contract errors from TEST_PLAN_* resolver errors. JSON example, parser, runtime, source bindings, renderer and historical observations unchanged. No fresh native/live/human or wholeA99-11 acceptance. Raw commands/logs: /home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/pipeline-json-recovery-committed-reader"
         }
       ],
       "review": {
@@ -31135,6 +31273,20 @@
           "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/deep-index-final-three-fixed-1441-verdict.json",
           "reportSha256": "6e482fd56ddf09cef29c5c8c32c631d739e8c98a127b74d28d9998feb1772821",
           "inspectionLimit": "Supplied complete current generator/page, exact final full content verdict+manifest, complete original scopes/checks/history/limits/vectors and actual committed Reader results. Source-link terminal summary not fresh semantic inventory; full raw stdout retained unmodified. Original DATA/runtime/ToolSource/deployprovenance/Knip/human limits remain."
+        },
+        {
+          "previousReviewedRevision": "e55f7fbed552c992f5a5df80cf93e560f99848a2",
+          "revision": "80815e4871e617603094f3228d8f4d49f625552f",
+          "reviewer": "Pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 independent complete10originalscope preservation",
+          "changedDependencies": [
+            "docs/site/reference/pipeline-json.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Single diagnostic correction verified against coverage/validation Source and complete finalpage independently Source/semanticReader/QualityPASS. Complete original contracts/terminal failures/checks/history/limits and lossless ALLoriginal-current vectors supplied together with actual177page build/fiveReader controls. Exact unchanged original scopes/historical observations reused, not recounted; no new acceptance.",
+          "originalRecordSha256": "36892835122dda43920b2dead2460f887988e175f3fe3786fd4dc9f2be050378",
+          "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/pipeline-json-ten-preservation-recovery-c-verdict.json",
+          "reportSha256": "aec54c603fb7260cf9153ce4d02038b6200e0cd3ccea2d46222a3274a8f2e264",
+          "inspectionLimit": "Complete finalpage/coverage/validation and clean completecontentverdict/manifest; full originalcontracts/vectors/decoding shards. Technical checks are coordinator observations, not reviewer-run/freshparticipant/native/live work. Source-link terminalsummary not semanticinventory; fullraw retained unchanged. Original DATA/runtime/ToolSource/deployprovenance/releaseKnip/human limits remain."
         }
       ],
       "scopePreservation3408": {
@@ -31211,7 +31363,7 @@
     },
     {
       "id": "A912-05-whole-source-excerpt-callouts-20261022",
-      "revision": "448b8282e6a0c374030c256009224fb7b76d14e8",
+      "revision": "80815e4871e617603094f3228d8f4d49f625552f",
       "author": "Existing publication/canonical topic maintainers; field-correction authors in named independent reviews",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -31352,6 +31504,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "All six actual separate original commands terminal0 at reviewed Source448b8282: committed HTML build plus artifact/search/source-links/source-previews/diagrams.143 focused CI/purpose/scalar controls, actual aggregate check, YAML, owninginventory/governance checks pass. Seven full original-scope semantic preservation reviews clean, one complete pass each. No reviewer-run checkout tests, fresh human/practical/wholeA91005 claim."
+        },
+        {
+          "command": "Actual committedSource80815e48: original177page publication build and all five docs-reader checks; publication/docs-check/refs and git diff --check",
+          "exitCode": 0,
+          "observation": "Actual build and artifact/search/Source-link/preview/diagram controls terminal0. Full corrected pipeline-json originalA99-11 Source/semanticReader/QualityPASS and independent10originalscope preservationPASS. Diagnostic prose only distinguishes COVERAGE_* contract errors from TEST_PLAN_* resolver errors. JSON example, parser, runtime, source bindings, renderer and historical observations unchanged. No fresh native/live/human or wholeA99-11 acceptance. Raw commands/logs: /home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/pipeline-json-recovery-committed-reader"
         }
       ],
       "review": {
@@ -31686,6 +31843,20 @@
             "docs/blueprint/acceptance-evidence/README.md"
           ],
           "limits": "Original artifacts.ts41 DATA/all five UNKNOWN,28 preexisting ordinary mismatches, Knip, human/live/runtime limits remain. Four unchanged site-boundary failures retained. Note-only review not accepted as preservation; missing domain keys in operations comparison accepted/corrected from full original/current maps before substantive clean verdict. No new gate/requirement acceptance or receipt rewrite."
+        },
+        {
+          "previousReviewedRevision": "448b8282e6a0c374030c256009224fb7b76d14e8",
+          "revision": "80815e4871e617603094f3228d8f4d49f625552f",
+          "reviewer": "Pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 independent complete10originalscope preservation",
+          "changedDependencies": [
+            "docs/site/reference/pipeline-json.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Single diagnostic correction verified against coverage/validation Source and complete finalpage independently Source/semanticReader/QualityPASS. Complete original contracts/terminal failures/checks/history/limits and lossless ALLoriginal-current vectors supplied together with actual177page build/fiveReader controls. Exact unchanged original scopes/historical observations reused, not recounted; no new acceptance.",
+          "originalRecordSha256": "258e959544bd6a58604c536aaa197d9fa4bcd51cb1242410dae6d3542f179609",
+          "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/pipeline-json-ten-preservation-recovery-c-verdict.json",
+          "reportSha256": "aec54c603fb7260cf9153ce4d02038b6200e0cd3ccea2d46222a3274a8f2e264",
+          "inspectionLimit": "Complete finalpage/coverage/validation and clean completecontentverdict/manifest; full originalcontracts/vectors/decoding shards. Technical checks are coordinator observations, not reviewer-run/freshparticipant/native/live work. Source-link terminalsummary not semanticinventory; fullraw retained unchanged. Original DATA/runtime/ToolSource/deployprovenance/releaseKnip/human limits remain."
         }
       ],
       "scopePreservation3408": {
@@ -36274,7 +36445,7 @@
     },
     {
       "id": "A911-06-authored-surface-bindings-20261025",
-      "revision": "a5bf66d08da3aca553319ea081c85b6786468c8f",
+      "revision": "80815e4871e617603094f3228d8f4d49f625552f",
       "author": "PR13 documentation authors and continuation coordinator",
       "reviewer": "Independent pinned fe588b1a Terra/high/P2 A911-06 gate-decision reviewer",
       "gateIds": [
@@ -36535,6 +36706,11 @@
           "command": "Pinned fe588b1a autoreview Terra/high/P2 complete original A911-06 decision; full lossless8contract context and four terminal semantic verdicts",
           "exitCode": 0,
           "observation": "Original A911-06 Source, semantic Reader, and Quality are supported: the complete unchanged endpoint/store contracts and vectors preserve their PASS scopes, while the four terminal semantic assessments cover network, stores, CI, and product workflows. The five CI redactions exclude assignment literals and execution semantics, but the supplied CI assessment still establishes the bounded authored authority/identity/limits/transitions/failure meaning; they do not demonstrate a material gap in the original authored-binding criterion. Preserved limits include no Source-exhaustiveness, live runtime, deployment, release, human-practical-reader, or broader-gate acceptance, and the original DATA/Knip/external-provenance limitations remain open."
+        },
+        {
+          "command": "Actual committedSource80815e48: original177page publication build and all five docs-reader checks; publication/docs-check/refs and git diff --check",
+          "exitCode": 0,
+          "observation": "Actual build and artifact/search/Source-link/preview/diagram controls terminal0. Full corrected pipeline-json originalA99-11 Source/semanticReader/QualityPASS and independent10originalscope preservationPASS. Diagnostic prose only distinguishes COVERAGE_* contract errors from TEST_PLAN_* resolver errors. JSON example, parser, runtime, source bindings, renderer and historical observations unchanged. No fresh native/live/human or wholeA99-11 acceptance. Raw commands/logs: /home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/pipeline-json-recovery-committed-reader"
         }
       ],
       "summary": "Original A911-06 authored binding across72endpoint/65outbound/75store records plus CI/product workflows. Reuses original substantive Source/semantic Reader/Quality with exact unchanged complete vectors; fresh four semantic slice assessments. Not inferred from inventory, common anchors or publication counts. No new catalogue requirement counted. Independent whole original criterion Source/semantic Reader/Quality PASS; exact five literal exclusions were assessed as nonmaterial to authored binding, not cleared for Source/execution.",
@@ -36546,7 +36722,23 @@
       ],
       "openIssues": [],
       "verdict": "PASS",
-      "evidenceDirectory": "docs/blueprint/acceptance-evidence/a91106-authored-bindings-20261025"
+      "evidenceDirectory": "docs/blueprint/acceptance-evidence/a91106-authored-bindings-20261025",
+      "impactReviews": [
+        {
+          "previousReviewedRevision": "a5bf66d08da3aca553319ea081c85b6786468c8f",
+          "revision": "80815e4871e617603094f3228d8f4d49f625552f",
+          "reviewer": "Pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 independent complete10originalscope preservation",
+          "changedDependencies": [
+            "docs/site/reference/pipeline-json.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Single diagnostic correction verified against coverage/validation Source and complete finalpage independently Source/semanticReader/QualityPASS. Complete original contracts/terminal failures/checks/history/limits and lossless ALLoriginal-current vectors supplied together with actual177page build/fiveReader controls. Exact unchanged original scopes/historical observations reused, not recounted; no new acceptance.",
+          "originalRecordSha256": "bea3f0f98db0e71e8f85e62a30d72ab56d777a758f1900a17e34cd75fa032c28",
+          "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/pipeline-json-ten-preservation-recovery-c-verdict.json",
+          "reportSha256": "aec54c603fb7260cf9153ce4d02038b6200e0cd3ccea2d46222a3274a8f2e264",
+          "inspectionLimit": "Complete finalpage/coverage/validation and clean completecontentverdict/manifest; full originalcontracts/vectors/decoding shards. Technical checks are coordinator observations, not reviewer-run/freshparticipant/native/live work. Source-link terminalsummary not semanticinventory; fullraw retained unchanged. Original DATA/runtime/ToolSource/deployprovenance/releaseKnip/human limits remain."
+        }
+      ]
     },
     {
       "id": "A99-13-original-seven-dimension-drift-20261025",
