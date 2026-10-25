@@ -29,6 +29,10 @@ selection, activation, behavior, failure, and cleanup.
 
 ## Use A Proof Ladder
 
+For a catalogue **Package Checks** command, follow the
+[package-check preparation, result, failure, and cleanup procedure](#run-a-catalogue-package-check)
+below before choosing a wider proof level.
+
 Run the smallest useful check first. Continue until the test reaches the changed
 boundary.
 
@@ -503,6 +507,74 @@ Follow the first failed boundary:
 
 Do not start by increasing authority or retry limits. First identify whether the
 failure occurred before dispatch, during work, or after an uncertain external effect.
+
+## Run A Catalogue Package Check
+
+This procedure applies to the command under **Package Checks** on a catalogue
+page. It does not turn a dated recorded result into a result for your checkout,
+and it does not apply when the page states that no local command exists.
+
+### Prepare The Exact Package And Environment
+
+1. Use a disposable checkout at the revision you intend to test, and run from
+   its repository root. Complete the [quickstart prerequisites](../use/quickstart.md#prerequisites)
+   and [locked dependency installation](../use/quickstart.md#locked-dependency-installation),
+   including Node.js 24, its supplied npm, the root lockfile and development
+   dependencies. Do not run `npm ci` over another task's dependency tree.
+2. Open the package page's **Package guide**, **Exact package test script** and
+   linked **Test** sources before executing. These own additional prerequisites
+   and side effects; a shared npm setup is not proof that they are available.
+   Check the named host/OS, executable tools, browser, network/service and fixture
+   requirements against that exact command. For example, a recorded BusyBox
+   `flock` limitation requires checking the actual `flock` implementation; a
+   recorded missing Chromium result requires the browser expected by that test.
+   Do not silently skip those checks or substitute a different test command.
+3. Use an isolated test environment without production credentials or shared
+   runtime state. If a command needs an actual host, cluster, service or grant,
+   prepare it through the linked package/host authority first. If that authority
+   or a prerequisite is unavailable, record **not run** and the missing dependency;
+   do not start a partial recipe or treat a dated package result as current proof.
+4. Before starting, identify the test-owned temporary paths, child processes,
+   fixtures and cleanup handlers in the linked tests. Record the current worktree
+   state and any pre-existing resources. If ownership or cleanup is unclear,
+   resolve that package-specific requirement before execution; never assume that
+   deleting the checkout cleans an external service or a process.
+
+### Run And Interpret The Published Command
+
+Run the catalogue page's command verbatim from the repository root. An
+`npm test --prefix <package-directory>` command selects that package's displayed
+script; a displayed `node --test` command is not an npm-script substitute.
+Record revision, package identity, tool versions, prerequisite disposition,
+command, exit code and bounded diagnostics outside the disposable checkout.
+Keep credentials and raw sensitive logs out of the retained record.
+
+An exit code of zero means only that this command completed successfully in this
+recorded environment. Compare its output with the displayed test script and
+record skips or unavailable subchecks separately. It is not activation, production
+readiness, or proof of an unexercised host/runtime path. A nonzero exit, signal,
+timeout or missing prerequisite is not a pass, even when the catalogue records a
+historical pass. Inspect the first failing subcommand and package diagnostics;
+correct the named dependency or defect before retrying the unchanged recipe.
+Do not increase grants or point tests at production to get a green result.
+
+### Clean Up On Every Terminal Path
+
+Let the command finish its own cleanup handlers, including after failure. Check
+for test-owned child processes and fixtures using the ownership recorded before
+the run; stop/release only those resources through the package's documented
+cleanup path. For an interrupted run, inspect that path before removing files.
+Retain the exact blocker and resource owner if safe cleanup cannot complete.
+
+Compare the final worktree and test-owned temporary state with the recorded
+baseline. Remove only the disposable checkout/dependency tree and scratch data
+you own, after confirming no process still uses them and after retaining the
+necessary bounded evidence outside them. Do not delete shared caches, locks,
+pre-existing files, grants or service data. This local test cleanup is distinct
+from [extension removal and remaining-state inspection](#remove-and-inspect-remaining-state);
+if the test used an external host or service, finish its package-specific teardown
+as well. Record cleanup outcome and remaining resources alongside the command
+result; a successful test with unresolved cleanup is not a complete exercise.
 
 ## Commands
 
