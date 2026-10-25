@@ -4,9 +4,9 @@ Status: generated reference
 Audience: pipeline author, operator, test maintainer
 Owner: buster
 Evidence: scripts/generate-buster-provider-reference.mjs; scripts/buster-provider-catalogue-reference.mjs; scripts/generate-buster-provider-reference.mjs; skills/buster/plugins/api-flow/plugin.json; skills/buster/plugins/api-flow/schemas/config.schema.json; skills/buster/plugins/api-flow/schemas/flow.schema.json; skills/buster/plugins/axe/plugin.json; skills/buster/plugins/axe/schemas/config.schema.json; skills/buster/plugins/container-build/plugin.json; skills/buster/plugins/container-build/schemas/config.schema.json; skills/buster/plugins/coverage-budget/plugin.json; skills/buster/plugins/coverage-budget/schemas/config.schema.json; skills/buster/plugins/demo-auth-smoke/plugin.json; skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json; skills/buster/plugins/direct-command/plugin.json; skills/buster/plugins/direct-command/schemas/config.schema.json; skills/buster/plugins/http/plugin.json; skills/buster/plugins/http/schemas/config.schema.json; skills/buster/plugins/junit-report-adapter/plugin.json; skills/buster/plugins/kubernetes-fixture/plugin.json; skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json; skills/buster/plugins/lighthouse/plugin.json; skills/buster/plugins/lighthouse/schemas/config.schema.json; skills/buster/plugins/openapi/plugin.json; skills/buster/plugins/openapi/schemas/config.schema.json; skills/buster/plugins/playwright/plugin.json; skills/buster/plugins/playwright/schemas/config.schema.json; skills/buster/plugins/security-providers/plugin.json; skills/buster/plugins/security-providers/schemas/dependency.schema.json; skills/buster/plugins/security-providers/schemas/headers.schema.json; skills/buster/plugins/security-providers/schemas/image.schema.json; skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json; skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json; skills/buster/plugins/size-budget/plugin.json; skills/buster/plugins/size-budget/schemas/config.schema.json; skills/buster/plugins/tailscale-exposure/plugin.json; skills/buster/plugins/tailscale-exposure/schemas/config.schema.json; skills/buster/plugins/visual/plugin.json; skills/buster/plugins/visual/schemas/config.schema.json; tests/verification/e2e/provider-catalog.mjs
-Evidence revision: `b3455f068d26cd7040a99bb1c6c6f07fce173bfc`
+Evidence revision: `c8bd045cfd8257696d41428c6afe097430801bb4`
 Applies to: complete JSON configuration contracts for all shipped Buster test providers
-Last verified: generated from exact committed provider inputs b3455f068d26cd7040a99bb1c6c6f07fce173bfc
+Last verified: generated from exact committed provider inputs c8bd045cfd8257696d41428c6afe097430801bb4
 
 ## How To Read The Tables
 
@@ -26,49 +26,49 @@ not invent a default when the schema has none.
 
 These exact committed inputs establish the installed provider inventory, contract IDs, selected schemas and catalogue parser:
 
-- [scripts/buster-provider-catalogue-reference.mjs](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/scripts/buster-provider-catalogue-reference.mjs)
-- [scripts/generate-buster-provider-reference.mjs](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/scripts/generate-buster-provider-reference.mjs)
-- [skills/buster/plugins/api-flow/plugin.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/api-flow/plugin.json)
-- [skills/buster/plugins/api-flow/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/api-flow/schemas/config.schema.json)
-- [skills/buster/plugins/api-flow/schemas/flow.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/api-flow/schemas/flow.schema.json)
-- [skills/buster/plugins/axe/plugin.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/axe/plugin.json)
-- [skills/buster/plugins/axe/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/axe/schemas/config.schema.json)
-- [skills/buster/plugins/container-build/plugin.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/container-build/plugin.json)
-- [skills/buster/plugins/container-build/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/container-build/schemas/config.schema.json)
-- [skills/buster/plugins/coverage-budget/plugin.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/coverage-budget/plugin.json)
-- [skills/buster/plugins/coverage-budget/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/coverage-budget/schemas/config.schema.json)
-- [skills/buster/plugins/demo-auth-smoke/plugin.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/demo-auth-smoke/plugin.json)
-- [skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json)
-- [skills/buster/plugins/direct-command/plugin.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/direct-command/plugin.json)
-- [skills/buster/plugins/direct-command/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/direct-command/schemas/config.schema.json)
-- [skills/buster/plugins/http/plugin.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/http/plugin.json)
-- [skills/buster/plugins/http/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/http/schemas/config.schema.json)
-- [skills/buster/plugins/junit-report-adapter/plugin.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/junit-report-adapter/plugin.json)
-- [skills/buster/plugins/kubernetes-fixture/plugin.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/kubernetes-fixture/plugin.json)
-- [skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json)
-- [skills/buster/plugins/lighthouse/plugin.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/lighthouse/plugin.json)
-- [skills/buster/plugins/lighthouse/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/lighthouse/schemas/config.schema.json)
-- [skills/buster/plugins/openapi/plugin.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/openapi/plugin.json)
-- [skills/buster/plugins/openapi/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/openapi/schemas/config.schema.json)
-- [skills/buster/plugins/playwright/plugin.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/playwright/plugin.json)
-- [skills/buster/plugins/playwright/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/playwright/schemas/config.schema.json)
-- [skills/buster/plugins/security-providers/plugin.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/security-providers/plugin.json)
-- [skills/buster/plugins/security-providers/schemas/dependency.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/security-providers/schemas/dependency.schema.json)
-- [skills/buster/plugins/security-providers/schemas/headers.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/security-providers/schemas/headers.schema.json)
-- [skills/buster/plugins/security-providers/schemas/image.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/security-providers/schemas/image.schema.json)
-- [skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json)
-- [skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json)
-- [skills/buster/plugins/size-budget/plugin.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/size-budget/plugin.json)
-- [skills/buster/plugins/size-budget/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/size-budget/schemas/config.schema.json)
-- [skills/buster/plugins/tailscale-exposure/plugin.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/tailscale-exposure/plugin.json)
-- [skills/buster/plugins/tailscale-exposure/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/tailscale-exposure/schemas/config.schema.json)
-- [skills/buster/plugins/visual/plugin.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/visual/plugin.json)
-- [skills/buster/plugins/visual/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/visual/schemas/config.schema.json)
-- [tests/verification/e2e/provider-catalog.mjs](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/tests/verification/e2e/provider-catalog.mjs)
+- [scripts/buster-provider-catalogue-reference.mjs](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/scripts/buster-provider-catalogue-reference.mjs)
+- [scripts/generate-buster-provider-reference.mjs](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/scripts/generate-buster-provider-reference.mjs)
+- [skills/buster/plugins/api-flow/plugin.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/api-flow/plugin.json)
+- [skills/buster/plugins/api-flow/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/api-flow/schemas/config.schema.json)
+- [skills/buster/plugins/api-flow/schemas/flow.schema.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/api-flow/schemas/flow.schema.json)
+- [skills/buster/plugins/axe/plugin.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/axe/plugin.json)
+- [skills/buster/plugins/axe/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/axe/schemas/config.schema.json)
+- [skills/buster/plugins/container-build/plugin.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/container-build/plugin.json)
+- [skills/buster/plugins/container-build/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/container-build/schemas/config.schema.json)
+- [skills/buster/plugins/coverage-budget/plugin.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/coverage-budget/plugin.json)
+- [skills/buster/plugins/coverage-budget/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/coverage-budget/schemas/config.schema.json)
+- [skills/buster/plugins/demo-auth-smoke/plugin.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/demo-auth-smoke/plugin.json)
+- [skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json)
+- [skills/buster/plugins/direct-command/plugin.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/direct-command/plugin.json)
+- [skills/buster/plugins/direct-command/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/direct-command/schemas/config.schema.json)
+- [skills/buster/plugins/http/plugin.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/http/plugin.json)
+- [skills/buster/plugins/http/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/http/schemas/config.schema.json)
+- [skills/buster/plugins/junit-report-adapter/plugin.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/junit-report-adapter/plugin.json)
+- [skills/buster/plugins/kubernetes-fixture/plugin.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/kubernetes-fixture/plugin.json)
+- [skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json)
+- [skills/buster/plugins/lighthouse/plugin.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/lighthouse/plugin.json)
+- [skills/buster/plugins/lighthouse/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/lighthouse/schemas/config.schema.json)
+- [skills/buster/plugins/openapi/plugin.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/openapi/plugin.json)
+- [skills/buster/plugins/openapi/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/openapi/schemas/config.schema.json)
+- [skills/buster/plugins/playwright/plugin.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/playwright/plugin.json)
+- [skills/buster/plugins/playwright/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/playwright/schemas/config.schema.json)
+- [skills/buster/plugins/security-providers/plugin.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/security-providers/plugin.json)
+- [skills/buster/plugins/security-providers/schemas/dependency.schema.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/security-providers/schemas/dependency.schema.json)
+- [skills/buster/plugins/security-providers/schemas/headers.schema.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/security-providers/schemas/headers.schema.json)
+- [skills/buster/plugins/security-providers/schemas/image.schema.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/security-providers/schemas/image.schema.json)
+- [skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json)
+- [skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json)
+- [skills/buster/plugins/size-budget/plugin.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/size-budget/plugin.json)
+- [skills/buster/plugins/size-budget/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/size-budget/schemas/config.schema.json)
+- [skills/buster/plugins/tailscale-exposure/plugin.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/tailscale-exposure/plugin.json)
+- [skills/buster/plugins/tailscale-exposure/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/tailscale-exposure/schemas/config.schema.json)
+- [skills/buster/plugins/visual/plugin.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/visual/plugin.json)
+- [skills/buster/plugins/visual/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/visual/schemas/config.schema.json)
+- [tests/verification/e2e/provider-catalog.mjs](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/tests/verification/e2e/provider-catalog.mjs)
 
 ## `kubeclaw.api-flow@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/api-flow/schemas/config.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/api-flow/schemas/config.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -87,7 +87,7 @@ These exact committed inputs establish the installed provider inventory, contrac
 
 ## `kubeclaw.axe@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/axe/schemas/config.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/axe/schemas/config.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -119,7 +119,7 @@ These exact committed inputs establish the installed provider inventory, contrac
 
 ## `kubeclaw.container-build@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/container-build/schemas/config.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/container-build/schemas/config.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -144,7 +144,7 @@ These exact committed inputs establish the installed provider inventory, contrac
 
 ## `kubeclaw.coverage-budget@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/coverage-budget/schemas/config.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/coverage-budget/schemas/config.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -159,7 +159,7 @@ These exact committed inputs establish the installed provider inventory, contrac
 
 ## `kubeclaw.demo-auth-smoke@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -186,7 +186,7 @@ These exact committed inputs establish the installed provider inventory, contrac
 
 ## `kubeclaw.dependency-scan-trivy@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/security-providers/schemas/dependency.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/security-providers/schemas/dependency.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -208,7 +208,7 @@ These exact committed inputs establish the installed provider inventory, contrac
 
 ## `kubeclaw.direct-command@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/direct-command/schemas/config.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/direct-command/schemas/config.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -245,7 +245,7 @@ These exact committed inputs establish the installed provider inventory, contrac
 
 ## `kubeclaw.http@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/http/schemas/config.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/http/schemas/config.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -269,7 +269,7 @@ These exact committed inputs establish the installed provider inventory, contrac
 
 ## `kubeclaw.image-scan-trivy@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/security-providers/schemas/image.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/security-providers/schemas/image.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -290,7 +290,7 @@ These exact committed inputs establish the installed provider inventory, contrac
 
 ## `kubeclaw.kubernetes-fixture@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -319,7 +319,7 @@ These exact committed inputs establish the installed provider inventory, contrac
 
 ## `kubeclaw.kubernetes-policy-security@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -340,7 +340,7 @@ These exact committed inputs establish the installed provider inventory, contrac
 
 ## `kubeclaw.kubernetes-runtime-security@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -361,7 +361,7 @@ These exact committed inputs establish the installed provider inventory, contrac
 
 ## `kubeclaw.lighthouse@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/lighthouse/schemas/config.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/lighthouse/schemas/config.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -391,7 +391,7 @@ These exact committed inputs establish the installed provider inventory, contrac
 
 ## `kubeclaw.openapi@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/openapi/schemas/config.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/openapi/schemas/config.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -426,7 +426,7 @@ These exact committed inputs establish the installed provider inventory, contrac
 
 ## `kubeclaw.playwright@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/playwright/schemas/config.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/playwright/schemas/config.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -448,7 +448,7 @@ These exact committed inputs establish the installed provider inventory, contrac
 
 ## `kubeclaw.security-headers@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/security-providers/schemas/headers.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/security-providers/schemas/headers.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -489,7 +489,7 @@ These exact committed inputs establish the installed provider inventory, contrac
 
 ## `kubeclaw.size-budget@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/size-budget/schemas/config.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/size-budget/schemas/config.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -514,7 +514,7 @@ These exact committed inputs establish the installed provider inventory, contrac
 
 ## `kubeclaw.tailscale-exposure@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/tailscale-exposure/schemas/config.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/tailscale-exposure/schemas/config.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -532,7 +532,7 @@ These exact committed inputs establish the installed provider inventory, contrac
 
 ## `kubeclaw.visual@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/visual/schemas/config.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/visual/schemas/config.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -562,7 +562,7 @@ These exact committed inputs establish the installed provider inventory, contrac
 
 ## `kubeclaw.api-flow-document@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/api-flow/schemas/flow.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/skills/buster/plugins/api-flow/schemas/flow.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -674,12 +674,12 @@ stop parsing. This parser neither registers installed plugins nor verifies
 remote health, authentication, or Kubernetes namespace isolation. A namespace
 field in the input has no selection or isolation effect.
 
-> [Catalogue parsing and exact route selection](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/tests/verification/e2e/provider-catalog.mjs#L8-L61).
+> [Catalogue parsing and exact route selection](https://github.com/datrab/kubeclaw/blob/c8bd045cfd8257696d41428c6afe097430801bb4/tests/verification/e2e/provider-catalog.mjs#L8-L61).
 
 ## Maintenance Rule
 
 Run from a clean repository checkout with Git and a Node.js runtime supporting native ESM and `import.meta.dirname`. No cluster or remote service is needed.
-Change and commit the schemas/manifests first. Select that full source commit: every installed provider manifest, selected configuration schema, API-flow schema, remote catalogue parser, catalogue prose template and generator must match it byte-for-byte.
+Change and commit the schemas/manifests first. Select that source commit: every installed provider manifest, selected configuration schema, API-flow schema, remote catalogue parser, catalogue prose template and generator must match it byte-for-byte.
 Replace `<full-source-commit>` with that existing lowercase 40-hex commit, then run `node scripts/generate-buster-provider-reference.mjs --write --revision=<full-source-commit>`.
 Expected write result: `wrote docs/site/reference/buster-provider-configuration.md`. Then run `node scripts/generate-buster-provider-reference.mjs` without `--write`.
 Expected check result: `Buster provider configuration verified: 19 providers and one flow document`. This proves generated freshness, not provider execution or remote health.
