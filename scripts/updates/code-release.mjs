@@ -1,3 +1,4 @@
+import { retainedBaseline } from './retained-baseline.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
@@ -46,7 +47,9 @@ export function compatibleCode(root, imageReceipt, candidate) {
 if (process.argv[1] === import.meta.filename) {
   const [directory, commit, repository] = process.argv.slice(2);
   const priorFile = path.join(process.cwd(), 'releases/runtime-code.json');
-  const prior = fs.existsSync(priorFile) ? validateCodeReceipt(JSON.parse(fs.readFileSync(priorFile, 'utf8'))) : undefined;
+  const candidate = retainedBaseline(process.cwd(), process.env.GITOPS_RETAINED_BASELINE)?.code
+    ?? (fs.existsSync(priorFile) ? JSON.parse(fs.readFileSync(priorFile, 'utf8')) : undefined);
+  const prior = candidate ? validateCodeReceipt(candidate) : undefined;
   const roles = changedBundles(process.cwd(), prior, process.env.GITHUB_SHA ?? commit, runtimeRefresh().bundles);
   if (directory === '--roles') { process.stdout.write(JSON.stringify(roles)); process.exit(0); }
   if (!/^[a-zA-Z0-9_.-]+\/[a-zA-Z0-9_.-]+$/u.test(repository ?? '')) throw new Error('CODE_REPOSITORY_INVALID');

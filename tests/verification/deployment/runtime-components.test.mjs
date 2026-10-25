@@ -380,8 +380,18 @@ test('dispatch collector and bundle CLI preserve non-refreshed component origins
   const run = (script, args) => execFileSync(process.execPath, [path.join(sourceRoot, 'scripts/updates', script), ...args],
     { cwd: root, env, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
   assert.deepEqual(JSON.parse(run('code-release.mjs', ['--roles'])), ['buster']);
+  run('release-images.mjs', ['receipt-input', head, 'receipt-output/default.json', 'runtime']);
+  // A conflicting current selection must not override an explicit active baseline.
+  env.GITOPS_RETAINED_BASELINE = 'releases/gitops/runtime-1-1';
+  write(`${env.GITOPS_RETAINED_BASELINE}/bundle.receipt`, JSON.stringify({
+    schemaVersion: 'kubeclaw-gitops-bundle.v1', receipt: { ...images, code },
+  }));
+  write('releases/runtime-images.json', '{}');
+  write('releases/runtime-code.json', '{}');
+  assert.deepEqual(JSON.parse(run('code-release.mjs', ['--roles'])), ['buster']);
   run('release-images.mjs', ['receipt-input', head, 'receipt-output/runtime-images.json', 'runtime']);
   const result = JSON.parse(fs.readFileSync(path.join(root, 'receipt-output/runtime-images.json'), 'utf8'));
+  assert.deepEqual(result, JSON.parse(fs.readFileSync(path.join(root, 'receipt-output/default.json'), 'utf8')));
   for (const name of runtimeImages) {
     if (plan.images.includes(name)) {
       assert.deepEqual(result.imageSources[name], { commit: head, sourceRunId: 2, sourceRunAttempt: 1 });
@@ -391,5 +401,5 @@ test('dispatch collector and bundle CLI preserve non-refreshed component origins
       assert.equal(result.imageSources[name].commit, initial);
     }
   }
-  assert.equal(fs.readFileSync(path.join(root, 'releases/runtime-code.json'), 'utf8'), JSON.stringify(code));
+  assert.equal(fs.readFileSync(path.join(root, 'releases/runtime-code.json'), 'utf8'), '{}');
 }));

@@ -1,3 +1,4 @@
+import { retainedBaseline } from './retained-baseline.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import { changedImages, runtimeRefresh } from './runtime-inputs.mjs';
@@ -35,7 +36,8 @@ if (process.argv[1] === import.meta.filename) {
   if (!["runtime", "ops"].includes(family)) throw new Error("Unknown release family");
   const names = family === 'ops' ? ['codex-ops', 'ops-mcp'] : ['nova', 'prism-agent', 'buster-gateway', 'buster-runtime', 'namespace-controller', 'archviewer', 'prism-control', 'prism-studio', 'prism-worker', 'prism-ingestion'];
   const priorFile = 'releases/runtime-images.json';
-  const prior = family === 'runtime' && fs.existsSync(priorFile) ? JSON.parse(fs.readFileSync(priorFile, 'utf8')) : undefined;
+  const prior = family === 'runtime' ? (retainedBaseline(process.cwd(), process.env.GITOPS_RETAINED_BASELINE)?.runtime
+    ?? (fs.existsSync(priorFile) ? JSON.parse(fs.readFileSync(priorFile, 'utf8')) : undefined)) : undefined;
   const source = { sourceRunId: Number(process.env.SOURCE_RUN_ID), sourceRunAttempt: Number(process.env.SOURCE_RUN_ATTEMPT) };
   const release = family === 'runtime' ? collectRuntimeReceipts(directory, commit, prior, source, process.cwd(), runtimeRefresh().images) : collectReceipts(directory, commit, names);
   release.sourceRunId = Number(process.env.SOURCE_RUN_ID);

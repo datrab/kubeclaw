@@ -1,3 +1,4 @@
+import { retainedBaseline } from './retained-baseline.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -17,14 +18,7 @@ export async function verifyReleaseSources({ root = process.cwd(), repo, token, 
     if (!response.ok) throw new Error(`Release evidence unavailable: HTTP ${response.status}`);
     return response;
   }
-  let baseline;
-  if (baselineDirectory !== undefined) {
-    if (!/^releases\/gitops\/[a-z0-9][a-z0-9-]{0,50}$/u.test(baselineDirectory)) throw new Error('GITOPS_BUNDLE_PATH_INVALID');
-    const bundle = JSON.parse(fs.readFileSync(path.join(root, baselineDirectory, 'bundle.receipt'), 'utf8'));
-    if (bundle.schemaVersion !== 'kubeclaw-gitops-bundle.v1' || !bundle.receipt?.code) throw new Error('GITOPS_BUNDLE_SCHEMA_INVALID');
-    const { code, ...runtime } = bundle.receipt;
-    baseline = { code, runtime };
-  }
+  const baseline = retainedBaseline(root, baselineDirectory);
   const sources = new Map();
   async function sourceReceipt(family, source) {
     if (!validSource(source)) throw new Error('Release source identity required');

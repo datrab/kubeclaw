@@ -1,3 +1,4 @@
+import { retainedBaseline } from './retained-baseline.mjs';
 import fs from 'node:fs';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
@@ -76,7 +77,7 @@ if (process.argv[1] === import.meta.filename) {
   const pr = process.env.GITHUB_EVENT_NAME === 'pull_request';
   const prior = pr && before && !/^0+$/u.test(before)
     ? { commit: before, images: Object.fromEntries(runtimeImages.map(name => [name, true])) }
-    : read('releases/runtime-images.json');
+    : (retainedBaseline(root, process.env.GITOPS_RETAINED_BASELINE)?.runtime ?? read('releases/runtime-images.json'));
   // Compare against selected component sources, including changes from failed or
   // superseded builds. Dispatch defaults to all unless a bounded plan is supplied.
   const images = changedImages(root, prior, head, runtimeRefresh().images);
