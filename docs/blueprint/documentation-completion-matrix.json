@@ -37234,6 +37234,60 @@
           "inspectionLimit": "Static full supplied-source review only, no reviewer-executed tests or fresh historical/native/runtime/live/human observations. WholeA99-11NOT_READY, latest unrelated documentation-role baseline failure remains red; no receipt or purpose/role grant. Original DATA/ToolSource/deployprovenance/releaseKnip/human limits retained."
         }
       ]
+    },
+    {
+      "id": "A913-09-compact-current-closeout-20261025",
+      "revision": "1ffde70288e9b556033e805fd53e6e75fe76c6db",
+      "author": "PR13 documentation continuation coordinator",
+      "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra/high/P2 original A913-09 report and adoption reviewer",
+      "gateIds": [
+        "A913-09"
+      ],
+      "requirementIds": [],
+      "pages": [
+        "docs/site/status/acceptance.md"
+      ],
+      "sources": [
+        "docs/blueprint/acceptance-evidence/README.md",
+        "docs/blueprint/AP09-acceptance-contract.md",
+        "docs/blueprint/07-documentation-quality-standard.md"
+      ],
+      "checks": [
+        {
+          "command": "Exact Git/report fact reconciliation; git diff --check",
+          "exitCode": 0,
+          "observation": "Exact reviewed publication Source67efef97, complete pinned inputs a51d223d and published matrix anchor ed060039 verified; report baseline61/89 and225/261 truthful. Report-only delta, all other original records/states unchanged; native fact checker PASS."
+        },
+        {
+          "command": "node scripts/check-ap09-acceptance-contract.mjs",
+          "exitCode": 0,
+          "observation": "Original checker PASS at published baseline; structural consistency is not content review. Candidate adoption separately rechecked before publication."
+        },
+        {
+          "command": "Reuse actual committed Source67efef97 publication build and five Reader controls; final relevant generator/docs/refs/publication/whitespace checks",
+          "exitCode": 0,
+          "observation": "Six committed technical Reader processes and five relevant static controls actually terminal0.177canonicalpages. Scope unchanged; no fresh participant/live/runtime/human claim. Initial26word failed build remains separately retained and corrected."
+        },
+        {
+          "command": "Pinned fe588b1a Terra/high/P2 independent original A91309 report/adoption review",
+          "exitCode": 0,
+          "observation": "Independent full original A91309 report and exact canonical adoption adjudication; SourceAccuracy/ReaderUsability/Quality and whole original gate must actually PASS before application. Initial missing-adoption NOT_READY retained, not erased or mislabelled."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Whole original A913-09 compact closeout: checked full commit and exact provider scope, relevant actual commands/results, independent review and remaining product limits explicitly identified; linked operational acceptance page preserves unexecuted product obligations. Canonical completion record/state adopted together only after independent full original criterion review. Overall AP09 NOT_READY; no other gate or requirement granted.",
+      "limits": [
+        "Report closes original compact-report obligation only, not overall AP09/A91312, whole language/examples, all261 catalogue completeness or live product acceptance.",
+        "Reuse unchanged source67efef97 technical Reader results and bounded provider reviews at original limits only; no new human/screenreader/participant/runtime execution.",
+        "Original receiver remains FAIL DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED at docs-plugin-complexity; historical artifacts.ts41 content and all5 UNKNOWN remain. No role/custody receipts rewritten.",
+        "All source-policy refusals including full language input refusal remain dependency-blocked; no excluded source reapproval. Source/policy custodians and product/environment/participant owners must satisfy original resume conditions."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
     }
   ],
   "purpose": "Internal planning and observed findings; not an acceptance ledger and not reader documentation.",
@@ -58802,7 +58856,7 @@
       "id": "A913-09",
       "passCondition": "Der kompakte Abschluss nennt geprüften Commit und Umfang, relevante Befehle oder Prüfschritte mit Ergebnissen, unabhängigen Review und verbleibende Produktgrenzen; betroffene Quellen und Seiten stimmen mit dem geprüften Stand überein.",
       "automaticFailure": "Commit oder Umfang sind unbekannt, eine relevante Änderung blieb ungeprüft oder ein fehlgeschlagener Check wird als bestanden dargestellt.",
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [],
       "readerFixtureIds": [],
