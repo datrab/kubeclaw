@@ -101,7 +101,7 @@ The explicit exception permits only pipeline-generated **demo** credentials in p
 
 **Separate 2/2/2 repair budgets, then one Nova exception.** Each module has two lint, two enabled-review and two test repair rounds. Initial implementation and a pure recheck consume no repair round. Charge a repair to its triggering category and still execute other mandatory checks afterwards. Used budgets survive invalidation and restart.
 
-An additional required repair beyond a category's exhausted budget becomes `Needs Nova` with complete history. Success after the last permitted repair may pass. Nova may issue **one additional repair assignment per module**, not one per category. If that assignment and all required rechecks fail, the module becomes `blocked` and requires an operator decision. Nova cannot relax requirements or required checks. Persist the exception and its rationale.
+An additional required repair beyond a category's exhausted budget returns `orchestrator_required` (historically described as “Needs Nova”) with complete history. Success after the last permitted repair may pass. Nova may issue **one additional repair assignment per module**, not one per category. If that assignment and all required rechecks fail, the module becomes `blocked` and requires an operator decision. Nova cannot relax requirements or required checks. Persist the exception and its rationale.
 
 **Rationale/consequence:** bounded convergence without counting successful rechecks as repairs. **Rejected alternatives:** one shared two-round limit, three default rounds, two extra Nova rounds, or reset of every category. Echo's scope governor adds a separate constraint: a clean final repair cannot pass after unauthorized file/LOC/ownership expansion. It consumes Core-certified repair state, not an agent counter.
 
@@ -125,7 +125,7 @@ An additional required repair beyond a category's exhausted budget becomes `Need
 
 ## D08
 
-**Reconcile uncertain effects before retry.** Automatically resume safely repeatable work. For a push or externally accepted job that may already have happened, inspect and adopt the actual state first. If the outcome remains unknown, request `Needs Nova` with diagnosis; even D04's extra assignment cannot authorize blind repetition. Technical retries have independent configured time/attempt limits and do not consume product repair budgets.
+**Reconcile uncertain effects before retry.** Automatically resume safely repeatable work. For a push or externally accepted job that may already have happened, inspect and adopt the actual state first. If the outcome remains unknown, request `orchestrator_required` with diagnosis; even D04's extra assignment cannot authorize blind repetition. Technical retries have independent configured time/attempt limits and do not consume product repair budgets.
 
 **Rationale/consequence:** restart must not duplicate an external authority-changing action or create an endless retry loop. **Alternative:** blind replay of uncertain effects is excluded. Core's durable-effect authority remains the shared architectural rule; this record preserves its operator-facing recovery semantics.
 
