@@ -5,6 +5,8 @@ import os from 'node:os';
 import { execFileSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
 import yaml from 'js-yaml';
+import { retainedGitOpsGroups } from './gitops-buster-scope.mjs';
+import { retainedBaseline } from './updates/retained-baseline.mjs';
 import { bootstrapDocuments, preflightGitOps } from './gitops.mjs';
 import { exportGitOpsBundle, gitOpsName } from './gitops-bundle.mjs';
 
@@ -74,6 +76,24 @@ export function retainUnchangedApplications(repository, documents) {
   return documents;
 }
 
+// Explicit policy baseline authenticates separately in CI; this gate also
+// validates active manifests before retaining only their immutable paths.
+export function retainBaselineApplications(repository, documents, config, directory) {
+  const baseline = retainedBaseline(repository, directory);
+  if (!baseline) return documents;
+  const groups = retainedGitOpsGroups(repository, { ...baseline.runtime, code: baseline.code },
+    config.namespace, config.prismNamespace, directory);
+  const active = yaml.loadAll(fs.readFileSync(path.join(repository, environment, 'apps/applications.yaml'), 'utf8')).filter(Boolean);
+  for (const { group } of groups.values()) {
+    const current = active.find(item => item.kind === 'Application' && item.metadata?.name === group.name);
+    const rendered = documents.find(item => item.kind === 'Application' && item.metadata?.name === group.name);
+    if (!rendered) throw new Error('GITOPS_ACTIVE_ROLE_APPLICATION_MISSING');
+    rendered.spec.source.path = current.spec.source.path;
+    rendered.metadata.annotations['kubeclaw.dev/immutable-bundle-path'] = current.spec.source.path;
+  }
+  return documents;
+}
+
 function configuration(repository) {
   const config = JSON.parse(fs.readFileSync(path.join(repository, environment, 'config.json'), 'utf8'));
   for (const field of ['namespace', 'prismNamespace', 'argoNamespace']) {
@@ -82,7 +102,7 @@ function configuration(repository) {
   return config;
 }
 
-export function renderContinuousEnvironment(repository, directory, url, revision, config) {
+export function renderContinuousEnvironment(repository, directory, url, revision, config, baselineDirectory) {
   const result = bootstrapDocuments(repository, directory, url, revision, config.argoNamespace, config.naming);
   const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'gitops-continuous-'));
   try {
@@ -91,7 +111,7 @@ export function renderContinuousEnvironment(repository, directory, url, revision
     const rendered = execFileSync('helm', ['template', 'runtime', path.join(repository, 'charts/gitops'),
       '-n', config.argoNamespace, '-f', values], { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
     return { result: { ...result, documents: continuousDocuments(result, config.argoNamespace, config) },
-      files: { 'apps/applications.yaml': dump(retainUnchangedApplications(repository, continuousApplications(rendered, config))),
+      files: { 'apps/applications.yaml': dump(retainUnchangedApplications(repository, retainBaselineApplications(repository, continuousApplications(rendered, config), config, baselineDirectory))),
         'bootstrap.yaml': dump(continuousDocuments(result, config.argoNamespace, config)),
         'selection.json': JSON.stringify({ directory }, null, 2) + '\n' } };
   } finally { fs.rmSync(temporary, { recursive: true, force: true }); }
@@ -114,7 +134,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.ar
     const config = configuration(root);
     if (['export', 'export-buster'].includes(command) && directory && !url) exportContinuousBundle(root, directory, config, undefined, command === 'export-buster' ? 'buster' : 'all');
     else if (['prepare', 'check', 'preflight', 'apply'].includes(command) && directory && url && revision) {
-      const { result, files } = renderContinuousEnvironment(root, directory, url, revision, config);
+      const { result, files } = renderContinuousEnvironment(root, directory, url, revision, config, command === 'check' ? process.env.GITOPS_RETAINED_BASELINE : undefined);
       if (command === 'prepare' || command === 'check') {
         for (const [relative, bytes] of Object.entries(files)) {
           const file = path.join(root, environment, relative);

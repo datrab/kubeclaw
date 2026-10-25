@@ -5,6 +5,7 @@ import path from 'node:path';
 import test from 'node:test';
 import yaml from 'js-yaml';
 import { exportScopeGroups } from '../../../scripts/gitops-bundle.mjs';
+import { retainBaselineApplications } from '../../../scripts/gitops-continuous.mjs';
 import { retainedGitOpsGroups } from '../../../scripts/gitops-buster-scope.mjs';
 
 // Frozen real receipts exercise effective per-component provenance and the
@@ -187,4 +188,21 @@ test('Export scope routes explicit baseline without rewriting selection or permi
   assert.throws(() => resolve('buster', '../escape'), /GITOPS_BUNDLE_PATH_INVALID/);
   assert.deepEqual([...resolve('all').keys()], []);
   assert.deepEqual(fs.readFileSync(selection), before);
+}));
+
+
+test('explicit policy baseline retains authenticated role paths without masking other drift', () => fixture((root, receipt, directory) => {
+  const active = yaml.loadAll(fs.readFileSync(path.join(root, 'gitops/production/apps/applications.yaml'), 'utf8')).filter(Boolean);
+  const generated = structuredClone(active);
+  const prism = generated.find(item => item.kind === 'Application' && item.metadata.name.endsWith('-prism'));
+  const original = prism.spec.source.path;
+  prism.spec.source.path = 'releases/gitops/new-build/prism';
+  prism.spec.destination.namespace = 'different-rendered-namespace';
+  const config = {namespace: 'kubeclaw', prismNamespace: 'kubeclaw'};
+  assert.equal(retainBaselineApplications(root, generated, config, '').find(item => item === prism).spec.source.path, 'releases/gitops/new-build/prism');
+  retainBaselineApplications(root, generated, config, directory);
+  assert.equal(prism.spec.source.path, original);
+  assert.equal(prism.spec.destination.namespace, 'different-rendered-namespace');
+  fs.appendFileSync(path.join(root, original, 'resources.yaml'), '\n# tamper');
+  assert.throws(() => retainBaselineApplications(root, generated, config, directory), /MANIFEST_DIGEST_MISMATCH/);
 }));
