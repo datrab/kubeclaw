@@ -4,6 +4,12 @@ on:
     branches: [main]
   workflow_dispatch:
     inputs:
+      receipt_scope:
+        description: Rollout receipt selection, independent of required image builds
+        required: false
+        type: choice
+        options: [all, buster]
+        default: all
       retained_baseline:
         description: Optional immutable releases/gitops baseline authenticated before retention
         required: false
@@ -15,6 +21,7 @@ on:
         type: string
         default: ""
 env:
+  RUNTIME_RECEIPT_SCOPE: ${{ inputs.receipt_scope || 'all' }}
   GITOPS_RETAINED_BASELINE: ${{ inputs.retained_baseline || '' }}
   REGISTRY: ghcr.io
   RUNTIME_REFRESH_PLAN: ${{ inputs.runtime_refresh_plan || '' }}
@@ -250,6 +257,7 @@ jobs:
     with:
       retained_baseline: ${{ inputs.retained_baseline || '' }}
       family: runtime
+      receipt_scope: ${{ inputs.receipt_scope || 'all' }}
       runtime_refresh_plan: ${{ inputs.runtime_refresh_plan || '' }}
     permissions:
       contents: write

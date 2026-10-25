@@ -6,7 +6,7 @@ import path from 'node:path';
 import { execFileSync, spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import yaml from 'js-yaml';
-import { selectedCode, compatibleCode, validateCodeReceipt } from '../../../scripts/updates/code-release.mjs';
+import { selectedCode, compatibleCode, validateCodeReceipt, selectRuntimeCodeReceipt } from '../../../scripts/updates/code-release.mjs';
 import { isImageInput, isDeploymentInput, inputDigest } from '../../../scripts/updates/runtime-inputs.mjs';
 import { selectedRelease, validateRenderedRelease } from '../../../scripts/updates/deployment-release.mjs';
 
@@ -170,4 +170,21 @@ test('real materialization and Helm render enable pinned bundles for all three a
     fs.appendFileSync(path.join(root, 'releases/values/nova.yaml'), '\ntampered: true\n');
     assert.match(materialize(['--check', '--check-selected-source']).stderr, /Release values drift/);
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
+});
+
+test('Buster code publication retains exact other-role source identity without changing build receipts', () => {
+  const prior = code('a'.repeat(40));
+  const built = code('b'.repeat(40));
+  const before = JSON.stringify({prior,built});
+  const selected = selectRuntimeCodeReceipt(built,prior,'buster');
+  assert.equal(selected.commit,built.commit);
+  assert.deepEqual(selected.bundles.buster,built.bundles.buster);
+  for (const role of ['nova','prism']) {
+    assert.equal(selected.bundles[role].url,prior.bundles[role].url);
+    assert.deepEqual(selected.bundles[role].source,{commit:prior.commit,sourceRunId:123,sourceRunAttempt:2});
+  }
+  assert.equal(before,JSON.stringify({prior,built}));
+  assert.equal(selectRuntimeCodeReceipt(built,undefined,'all'),built);
+  assert.throws(()=>selectRuntimeCodeReceipt(built,undefined,'buster'));
+  assert.throws(()=>selectRuntimeCodeReceipt(built,prior,'invalid'));
 });

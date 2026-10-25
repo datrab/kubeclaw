@@ -53,6 +53,9 @@ export function selectRuntimeImageReceipts(built, prior, scope) {
   return selected;
 }
 if (process.argv[1] === import.meta.filename) {
+  const receiptScope = process.env.RUNTIME_RECEIPT_SCOPE ?? 'all';
+  if (!['all', 'buster'].includes(receiptScope)) throw new Error('RUNTIME_PUBLICATION_SCOPE_REQUIRED');
+  if (receiptScope === 'buster' && !process.env.GITOPS_RETAINED_BASELINE) throw new Error('RETAINED_BASELINE_REQUIRED');
   const [directory, commit, output, family = "runtime"] = process.argv.slice(2);
   if (!["runtime", "ops"].includes(family)) throw new Error("Unknown release family");
   const names = family === 'ops' ? ['codex-ops', 'ops-mcp'] : ['nova', 'prism-agent', 'buster-gateway', 'buster-runtime', 'namespace-controller', 'archviewer', 'prism-control', 'prism-studio', 'prism-worker', 'prism-ingestion'];
@@ -60,7 +63,9 @@ if (process.argv[1] === import.meta.filename) {
   const prior = family === 'runtime' ? (retainedBaseline(process.cwd(), process.env.GITOPS_RETAINED_BASELINE)?.runtime
     ?? (fs.existsSync(priorFile) ? JSON.parse(fs.readFileSync(priorFile, 'utf8')) : undefined)) : undefined;
   const source = { sourceRunId: Number(process.env.SOURCE_RUN_ID), sourceRunAttempt: Number(process.env.SOURCE_RUN_ATTEMPT) };
-  const release = family === 'runtime' ? collectRuntimeReceipts(directory, commit, prior, source, process.cwd(), runtimeRefresh().images) : collectReceipts(directory, commit, names);
+  const built = family === 'runtime' ? collectRuntimeReceipts(directory, commit, prior, source, process.cwd(), runtimeRefresh().images) : collectReceipts(directory, commit, names);
+  const release = family === 'runtime' ? selectRuntimeImageReceipts(built, prior, receiptScope) : built;
+  if (family === 'runtime' && receiptScope === 'buster') release.retainedBaseline = process.env.GITOPS_RETAINED_BASELINE;
   release.sourceRunId = Number(process.env.SOURCE_RUN_ID);
   if (!Number.isSafeInteger(release.sourceRunId) || release.sourceRunId < 1) throw new Error("Verified source run ID required");
   release.sourceRunAttempt = Number(process.env.SOURCE_RUN_ATTEMPT);

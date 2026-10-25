@@ -44,11 +44,12 @@ jobs:
       - name: Materialize and validate Argo deployment
         if: steps.selection.outputs.selected == 'true'
         env:
+          GITOPS_RETAINED_BASELINE: ${{ steps.selection.outputs.retained_baseline }}
           BUNDLE_DIRECTORY: ${{ steps.selection.outputs.directory }}
           EXPORT_COMMAND: ${{ steps.selection.outputs.export_command }}
         run: |
           set -euo pipefail
-          node scripts/updates/verify-release-source.mjs
+          GITOPS_RETAINED_BASELINE= node scripts/updates/verify-release-source.mjs
           node scripts/updates/materialize-release.mjs --family=runtime
           case "$EXPORT_COMMAND" in export|export-buster) ;; *) exit 1 ;; esac
           node scripts/gitops-continuous.mjs "$EXPORT_COMMAND" "$BUNDLE_DIRECTORY"

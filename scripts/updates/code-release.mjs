@@ -44,7 +44,20 @@ export function compatibleCode(root, imageReceipt, candidate) {
   }
   return code;
 }
+// Retain the original producer identities, not just bundle URLs/digests.
+export function selectRuntimeCodeReceipt(built, prior, scope) {
+  validateCodeReceipt(built);
+  if (scope === 'all') return built;
+  if (scope !== 'buster') throw new Error('RUNTIME_PUBLICATION_SCOPE_REQUIRED');
+  validateCodeReceipt(prior);
+  return { ...built, bundles: { ...built.bundles,
+    ...Object.fromEntries(['nova', 'prism'].map(role => [role,
+      { ...prior.bundles[role], source: componentSource(prior, role, 'bundle') }])) } };
+}
 if (process.argv[1] === import.meta.filename) {
+  const receiptScope = process.env.RUNTIME_RECEIPT_SCOPE ?? 'all';
+  if (!['all', 'buster'].includes(receiptScope)) throw new Error('RUNTIME_PUBLICATION_SCOPE_REQUIRED');
+  if (receiptScope === 'buster' && !process.env.GITOPS_RETAINED_BASELINE) throw new Error('RETAINED_BASELINE_REQUIRED');
   const [directory, commit, repository] = process.argv.slice(2);
   const priorFile = path.join(process.cwd(), 'releases/runtime-code.json');
   const candidate = retainedBaseline(process.cwd(), process.env.GITOPS_RETAINED_BASELINE)?.code
@@ -64,6 +77,8 @@ if (process.argv[1] === import.meta.filename) {
     code.bundles[role] = { url: `https://github.com/${repository}/releases/download/code-bundles-${code.sourceRunId}-${code.sourceRunAttempt}/${file}`,
       sha256: createHash('sha256').update(fs.readFileSync(path.join(directory, file))).digest('hex'), contractVersion: 'v2' };
   }
-  validateCodeReceipt(code);
-  fs.writeFileSync(path.join(directory, 'runtime-code.json'), JSON.stringify(code, null, 2) + '\n');
+  const selected = selectRuntimeCodeReceipt(code, prior, receiptScope);
+  if (receiptScope === 'buster') selected.retainedBaseline = process.env.GITOPS_RETAINED_BASELINE;
+  validateCodeReceipt(selected);
+  fs.writeFileSync(path.join(directory, 'runtime-code.json'), JSON.stringify(selected, null, 2) + '\n');
 }

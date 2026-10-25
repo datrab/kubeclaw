@@ -1,3 +1,5 @@
+import { retainedBaseline } from './retained-baseline.mjs';
+import { verifyReleaseSources } from './verify-release-source.mjs';
 import fs from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { validateCodeReceipt, compatibleCode } from './code-release.mjs';
@@ -62,11 +64,15 @@ if (fs.existsSync(priorFile)) {
 const built = await receipt(`runtime-images-${id}-${attempt}`, 'runtime-images.json', true);
 if (!built && !fs.existsSync('releases/runtime-images.json')) throw new Error('INITIAL_IMAGE_BUILD_REQUIRED');
 const images = validateReleaseReceipt(built?.value ?? JSON.parse(fs.readFileSync('releases/runtime-images.json', 'utf8')), 'runtime');
+const baselineDirectory = code.retainedBaseline;
+if (baselineDirectory !== images.retainedBaseline) throw new Error('RETAINED_BASELINE_MISMATCH');
+const baseline = retainedBaseline(root, baselineDirectory);
+if (baseline) await verifyReleaseSources({ root, repo, token, baselineDirectory });
 // Choose scope before replacing the selected receipts. Conservative full
 // rendering is required whenever role chart/value inputs have changed.
-const priorImages = fs.existsSync('releases/runtime-images.json')
-  ? JSON.parse(fs.readFileSync('releases/runtime-images.json', 'utf8')) : undefined;
-const priorCode = fs.existsSync(priorFile) ? JSON.parse(fs.readFileSync(priorFile, 'utf8')) : undefined;
+const priorImages = baseline?.runtime ?? (fs.existsSync('releases/runtime-images.json')
+  ? JSON.parse(fs.readFileSync('releases/runtime-images.json', 'utf8')) : undefined);
+const priorCode = baseline?.code ?? (fs.existsSync(priorFile) ? JSON.parse(fs.readFileSync(priorFile, 'utf8')) : undefined);
 const configurationUnchanged = priorCode && busterRenderConfigurationCompatible(root, priorCode.commit, run.head_sha);
 const exportCommand = runtimePublicationCommand(priorImages && { ...priorImages, code: priorCode },
   { ...images, code }, configurationUnchanged);
@@ -76,4 +82,4 @@ compatibleCode(root, images, code);
 fs.mkdirSync('releases', { recursive: true });
 fs.writeFileSync(priorFile, JSON.stringify(code, null, 2) + '\n');
 if (built) fs.writeFileSync('releases/runtime-images.json', JSON.stringify(images, null, 2) + '\n');
-fs.appendFileSync(process.env.GITHUB_OUTPUT, `export_command=${exportCommand}\nselected=true\ndirectory=releases/gitops/runtime-${id}-${attempt}\n`);
+fs.appendFileSync(process.env.GITHUB_OUTPUT, `retained_baseline=${baselineDirectory ?? ''}\nexport_command=${exportCommand}\nselected=true\ndirectory=releases/gitops/runtime-${id}-${attempt}\n`);
