@@ -209,12 +209,16 @@ mean that the file is not the canonical `.swarm/pipeline.json`. A wrapped
 `TEST_PLAN_PIPELINE_INVALID` can mean malformed JSON, a bad publication pair,
 or a missing root/scope object.
 
-Resolver errors begin with `TEST_PLAN_`. The suffix identifies the boundary:
+Resolver-specific errors begin with `TEST_PLAN_`. The suffix identifies the boundary:
 `FIELD_UNKNOWN`, `SUITE_MISSING`, `NODE_DUPLICATE`, `PROVIDER_INVALID`,
 `CONFIGURATION_INVALID`, `DEPENDENCY_*`, `INPUT_*`, `LINK_*`, `MATRIX_*`,
 `TIMEOUT_INVALID`, `LIMIT_INVALID`, `RETRY_*`, `EVIDENCE_INVALID`,
-`CONCURRENCY_*`, or `COVERAGE_*`. Correct the declaration or its operator-owned
-resolver policy; do not edit a resolved plan digest.
+`CONCURRENCY_*`, or coverage-minimum resolution errors. The separate coverage
+contract reports `COVERAGE_*` diagnostics, such as
+`COVERAGE_POLICY_DIGEST_MISMATCH`, `COVERAGE_SCOPE_MISMATCH`, and
+`COVERAGE_REQUIREMENT_UNMAPPED`; preserve these exact tokens rather than adding
+a `TEST_PLAN_` prefix. Correct the declaration or its operator-owned resolver
+policy; do not edit a resolved plan digest.
 
 > **Source evidence — authored test declaration**
 >
