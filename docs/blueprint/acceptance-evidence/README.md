@@ -323,3 +323,8 @@ Exact frozen manifests, lossless full original contracts/vectors, all original n
 | 5 | 3 | `44f82dbd423323aa7391caba0db03d3e0ab1bf7eccc497cd7dca3617174587b9` |
 | 6 | 3 | `2719bde92051642176ddf88270acfb3c984c60e6ecc3f4c3690a112b4b17dda4` |
 | 7 | 2 | `b80449a2c715adbf4355962d1770c8a7e615eed63508b24517d61b68fae6df5e` |
+
+
+## Platform ordering original-scope preservation — 2026-10-25
+
+Reviewed Source `c56f684a0b18bbf8c9615524e6702a0e80a589e4` stabilizes Go source selection order and updates only independently reviewed finite custody identities. Complete 16 original contracts / 1475 physical rows, all99 census, full1252 selected and1009 caller vectors were compared against actual reviewed baselines. Original summaries, limits and prior checks remain; six committed technical Reader commands pass. Source/finite/scalar verdicts and exact complete original-contract preservation evidence: `operations/pr13/evidence/a91108-20261025/run1041/` and `run1101/` (operations evidence retained outside temporary storage). This is preservation only: zero new accepted gates or requirements; original DATA `artifacts.ts:41: content`, all5UNKNOWN, ordinary/Knip/fullgeneration, external provenance and human/live/runtime limits remain. No receipt rewrite, merge or deployment.
