@@ -10,6 +10,7 @@ const prior = { ...images, code };
 test('only Buster runtime/code changes select guarded Buster export', () => {
   const next = structuredClone(prior);
   next.images['buster-runtime'] = 'new-runtime';
+  next.images['buster-gateway'] = 'new-gateway';
   next.code.bundles.buster.sha256 = 'new-bundle';
   assert.equal(runtimePublicationCommand(prior, next, true), 'export-buster');
   assert.equal(runtimePublicationCommand(prior, next, false), 'export');
@@ -17,7 +18,7 @@ test('only Buster runtime/code changes select guarded Buster export', () => {
 });
 
 test('unrelated image/code/provenance changes retain full publication', () => {
-  for (const name of Object.keys(prior.images).filter(name => !['buster-runtime', 'namespace-controller'].includes(name))) {
+  for (const name of Object.keys(prior.images).filter(name => !['buster-gateway', 'buster-runtime', 'namespace-controller'].includes(name))) {
     const next = structuredClone(prior);
     next.images[name] = 'changed';
     assert.equal(runtimePublicationCommand(prior, next, true), 'export');
@@ -55,6 +56,7 @@ test('automatic publication consumes only validated selector export commands', (
 test('runtime and namespace-controller changes both remain Buster-only, unrelated slots still refuse', () => {
   const next = structuredClone(prior);
   next.images['buster-runtime'] = 'new-runtime';
+  next.images['buster-gateway'] = 'new-gateway';
   next.images['namespace-controller'] = 'new-controller';
   next.imageSources['namespace-controller'].commit = 'b'.repeat(40);
   assert.equal(runtimePublicationCommand(prior, next, true), 'export-buster');

@@ -37,6 +37,7 @@ const retain = (root, receipt) => retainedGitOpsGroups(root, receipt, 'kubeclaw'
 
 test('Buster-only export carries unchanged roles without invoking their renderer', () => fixture((root, receipt) => {
   receipt.images['buster-runtime'] = receipt.images['buster-runtime'].replace(/sha256:.*/, `sha256:${'a'.repeat(64)}`);
+  receipt.images['buster-gateway'] = receipt.images['buster-gateway'].replace(/sha256:.*/, `sha256:${'c'.repeat(64)}`);
   receipt.code.bundles.buster.sha256 = 'b'.repeat(64);
   const groups = retain(root, receipt);
   assert.deepEqual([...groups.keys()], ['prism', 'nova']);
@@ -46,7 +47,7 @@ test('Buster-only export carries unchanged roles without invoking their renderer
 }));
 
 test('Buster-only export rejects unrelated images and provenance changes', () => fixture((root, receipt) => {
-  for (const name of Object.keys(receipt.images).filter(name => !['buster-runtime', 'namespace-controller'].includes(name))) {
+  for (const name of Object.keys(receipt.images).filter(name => !['buster-gateway', 'buster-runtime', 'namespace-controller'].includes(name))) {
     const changed = structuredClone(receipt);
     changed.images[name] += 'bad';
     assert.throws(() => retain(root, changed), /SCOPE_IMAGE_CHANGED/);

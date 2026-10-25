@@ -27,7 +27,23 @@ export function selectedCode(root, imageReceipt) {
 }
 export function compatibleCode(root, imageReceipt, candidate) {
   const code = validateCodeReceipt(candidate);
+  // This path is authenticated by publication before compatibility is checked.
+  // Only the independently deployed archviewer may use its exact baseline image;
+  // role images must still match their selected bundle's inputs.
+  const baselineDirectory = code.retainedBaseline;
+  if (baselineDirectory !== imageReceipt.retainedBaseline) throw new Error('RETAINED_BASELINE_MISMATCH');
+  const baseline = retainedBaseline(root, baselineDirectory);
   const imageCodeCommit = name => {
+    if (name === 'archviewer' && baseline) {
+      const source = componentSource(imageReceipt, name, 'image');
+      const priorSource = componentSource(baseline.runtime, name, 'image');
+      if (imageReceipt.images?.[name] !== baseline.runtime.images?.[name]
+        || !validSource(source) || !validSource(priorSource)
+        || ['commit', 'sourceRunId', 'sourceRunAttempt'].some(key => source[key] !== priorSource[key])) {
+        throw new Error('RETAINED_ARCHVIEWER_MISMATCH');
+      }
+      return priorSource.commit;
+    }
     const role = name === 'nova' ? 'nova' : name.startsWith('prism-') ? 'prism'
       : ['buster-gateway', 'buster-runtime', 'namespace-controller'].includes(name) ? 'buster' : undefined;
     return role ? componentSource(code, role, 'bundle').commit : code.commit;

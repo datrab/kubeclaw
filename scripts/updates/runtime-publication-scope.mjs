@@ -59,7 +59,7 @@ export function runtimePublicationCommand(prior, next, configurationUnchanged) {
   if (!configurationUnchanged || !prior?.code || !next?.code) return 'export';
   const names = Object.keys(prior.images);
   if (!isDeepStrictEqual(names.sort(), Object.keys(next.images).sort())) return 'export';
-  if (!names.filter(name => !['buster-runtime', 'namespace-controller'].includes(name)).every(name => unchangedImage(prior, next, name))) return 'export';
+  if (!names.filter(name => !['buster-gateway', 'buster-runtime', 'namespace-controller'].includes(name)).every(name => unchangedImage(prior, next, name))) return 'export';
   if (!['nova', 'prism'].every(role => unchangedBundle(prior.code, next.code, role))) return 'export';
   return 'export-buster';
 }

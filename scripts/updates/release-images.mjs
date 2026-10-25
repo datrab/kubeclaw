@@ -40,7 +40,7 @@ export function selectRuntimeImageReceipts(built, prior, scope) {
   if (!prior) throw new Error('Invalid retained image baseline');
   const selected = { ...built, images: { ...built.images }, imageSources: { ...built.imageSources } };
   for (const name of runtimeImages) {
-    if (['buster-runtime', 'namespace-controller'].includes(name)) continue;
+    if (['buster-gateway', 'buster-runtime', 'namespace-controller'].includes(name)) continue;
     const source = componentSource(prior, name, 'image');
     const image = prior?.images?.[name];
     if (!validSource(source) || typeof image !== 'string'

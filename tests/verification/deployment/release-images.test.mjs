@@ -14,7 +14,7 @@ test('Buster receipt selection retains non-rollout artifacts and rejects incompl
   const snapshot = JSON.stringify({ prior, built });
   const selected = selectRuntimeImageReceipts(built, prior, 'buster');
   for (const name of runtimeImages) {
-    const changed = ['buster-runtime', 'namespace-controller'].includes(name);
+    const changed = ['buster-gateway', 'buster-runtime', 'namespace-controller'].includes(name);
     assert.equal(selected.images[name], (changed ? built : prior).images[name]);
     if (!changed) assert.equal(selected.imageSources[name].commit, prior.commit);
   }

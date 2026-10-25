@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { runtimeImages } from '../../../scripts/updates/runtime-components.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -187,4 +188,39 @@ test('Buster code publication retains exact other-role source identity without c
   assert.equal(selectRuntimeCodeReceipt(built,undefined,'all'),built);
   assert.throws(()=>selectRuntimeCodeReceipt(built,undefined,'buster'));
   assert.throws(()=>selectRuntimeCodeReceipt(built,prior,'invalid'));
+});
+
+test('archviewer retention binds exact baseline digest and producer, never role images', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'arch-retain-'));
+  const git = args => execFileSync('git', ['-C', root, ...args], { encoding: 'utf8' }).trim();
+  const commit = () => { git(['add', '.']); git(['-c', 'user.name=Test', '-c', 'user.email=test@example.invalid', 'commit', '-qm', 'input']); return git(['rev-parse', 'HEAD']); };
+  try {
+    git(['init', '-q']);
+    fs.writeFileSync(path.join(root, 'versions.json'), '{"openclaw":"old"}'); const old = commit();
+    fs.writeFileSync(path.join(root, 'versions.json'), '{"openclaw":"new"}'); const current = commit();
+    const receipt = code(current);
+    const images = { commit: current, images: { archviewer: 'pinned' },
+      imageSources: Object.fromEntries(runtimeImages.map(name => [name, {
+        commit: name === 'archviewer' ? old : current, sourceRunId: 123, sourceRunAttempt: 2,
+      }])) };
+    assert.throws(() => compatibleCode(root, images, receipt), /REQUIRES_NEW_IMAGES/);
+    const baseline = 'releases/gitops/retained-test';
+    fs.mkdirSync(path.join(root, baseline), { recursive: true });
+    fs.writeFileSync(path.join(root, baseline, 'bundle.receipt'), JSON.stringify({
+      schemaVersion: 'kubeclaw-gitops-bundle.v1', receipt: { ...images, commit: old, code: code(old) },
+    }));
+    images.retainedBaseline = baseline;
+    assert.throws(() => compatibleCode(root, images, receipt), /BASELINE_MISMATCH/);
+    receipt.retainedBaseline = baseline;
+    assert.equal(compatibleCode(root, images, receipt), receipt);
+    for (const mutate of [r => { r.images.archviewer = 'other'; },
+      r => { r.imageSources.archviewer.sourceRunId++; },
+      r => { r.imageSources.archviewer.sourceRunAttempt++; },
+      r => { r.imageSources.archviewer.commit = current; }]) {
+      const bad = structuredClone(images); mutate(bad);
+      assert.throws(() => compatibleCode(root, bad, receipt), /ARCHVIEWER_MISMATCH/);
+    }
+    const bad = structuredClone(images); bad.imageSources['buster-gateway'].commit = old;
+    assert.throws(() => compatibleCode(root, bad, receipt), /REQUIRES_NEW_IMAGES/);
+  } finally { fs.rmSync(root, { recursive: true, force: true }); }
 });
