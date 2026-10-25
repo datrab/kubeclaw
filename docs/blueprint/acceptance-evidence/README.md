@@ -104,3 +104,137 @@ Independent reviews use pinned upstream `fe588b1a6267eb47f785d0c748db9f6f3e9a3b4
 Register remains59/89gates and225/261requirements, complete=false; no fresh acceptance inferred from counts.
 
 Preservation correction evidence: one actual new-event revision-label finding was accepted; only the newly proposed event was corrected to candidate revision with its original predecessor, never an old history entry. Disjoint4/4/4/4/3 groups cover the full19 union; request-only verdicts were not counted. A later immutable-root-lineage advisory was rejected only after supplying the complete original controlling checker and its actual pre-preservation relevant-files-changed failure: root revision is the current physical Source binding required by the unchanged checker, not an immutable historical receipt. Group0 valid unchanged substantive review was reused; only the missing-context group and remaining uncovered groups were reviewed with the complete checker. All five final verdicts explicitly support their actual original contracts and finite Source impacts; full union required before any register application. The unchanged original checker now passes59/89and225/261, complete=false. All failed proposals/refusals and dispositions remain in closeout19/, including root-lineage-advisory-disposition.json and original raw logs.
+
+
+---
+
+# Bounded Error-owner discovery candidate — 2026-10-25
+
+## Deliverable and limits
+
+The existing `scripts/generate-buster-error-reference.mjs` owner exposes opt-in
+`--describe-discovery` JSON. Its actual source selectors also supply the metadata:
+engine JavaScript/TypeScript, plugin paths containing `/src/`, recursive `tests`
+directory exclusion and `.d.ts` exclusion. `test`, fixture and `*.test.ts` names
+are **not** categorically excluded. The declaration names the existing TypeScript
+analysis and finite-family audit; it is not a second registry or runtime scanner.
+The metadata option takes precedence over `--write` and does not write the reader.
+
+Default reference verification and ordinary `--write` retain their old branches.
+The existing reference remains byte-exact: 18 groups, 1027 codes, 66 source files.
+This proves neither all external/plugin error coverage nor runtime success.
+No A911-01, gate, requirement, human/participant or whole-PR acceptance is added.
+
+## Source and finite consequences
+
+The original published baseline is `444f66d2b2cac98874937f725bc2ec7a5bae349c`.
+The generator identity changes from `11cf5c42…` to `b7d8768b…`.
+Independent bounded Source/Reader/quality review first rejected two original
+console diagnostics that became unqualified. Exact complete operation vectors
+show 71→76 facts: the same-valued selector constants, corresponding selector
+references and the opt-in branch. Only those two existing diagnostic contracts
+receive the reviewed `cda2833d…` successor; the new fixed-root JSON naturally
+classifies as non-API under the unchanged original classifier.
+
+The two existing guarded consumers keep all original selectors, 10/13 operation
+facts/digests, execution arguments, roles and purposes. Only three generator
+input bindings change (two purpose inputs and one literal-child input).
+The complete current 1252 selected-source/1009 caller vectors reconstruct the
+original Source-owned HEAD digests exactly and change only the Error generator
+identity. Independently reviewed successors change exactly two scalar census
+constants, not canonical stdout roles or runtime/apply authority. Their actual
+original guards still report canonical `unknown`, six/two bounded occurrences,
+and no runtime execution or API apply authorization.
+
+Changing those two scalar constants in turn changes exactly two constant facts
+in five existing native consumer closures. Their independently reviewed five
+factsDigest successors retain selectors, child authority and all role fields.
+A final complete 106-consumer acquisition matches every current registered
+fact digest with zero vector changes. The 193 ordinary vectors remain unchanged
+against the published platform baseline, including 28 historical mismatches;
+none of those old mismatches is renewed or claimed passed.
+
+## Executed controls and independent review
+
+Coordinator controls: syntax, exact default Markdown/source vector, both option
+orders, seven inclusion/exclusion boundary fixtures, the unchanged original three
+Add/Change/Remove error-drift controls and restored baselines, both real guarded
+consumers, both real scalar occurrence guards, final complete selected/caller
+physical-vector equality and `git diff --check` pass.
+
+Pinned autoreview: upstream `fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f`,
+Codex `gpt-5.6-terra`, high reasoning, P0–P2. The initial P1 is retained; finite
+Source/diagnostic, three-input consumer, two-scalar and five-transitive reviews
+are clean at their stated boundaries. These are supplied-context reviews, not
+fresh independent practical Reader exercises or reviewer-executed tests.
+The full classifier dataset initially failed the unchanged helper secret scan.
+The subsequent bounded classifier context explicitly redacts one unrelated
+parity-basename branch (original line 930); that branch is not independently
+covered and is not reconstructed or granted any exemption.
+
+Complete vectors, exact candidate bytes, commands, manifests, all original
+failures and structured verdicts are retained under
+`operations/pr13/evidence/a91101-20261024/error-owner-next/` outside the checkout.
+The final acquisition's generated baseline label retains an old display string;
+its executable reads the retained **after-scalar** 106-vector, and a separate
+clarification binds that input explicitly. The original vector and labels are
+not rewritten.
+
+## Unfinished closeout
+
+The acceptance register is unchanged. All 99 original records were censused;
+ten directly affected original contracts and every original page/source physical
+vector are retained for independent scope/shared-impact preservation, not
+new acceptance. Before preservation, the unchanged acceptance checker correctly
+rejects `AP09-reviewed-reference-20261020: relevant files changed; recheck only
+affected scope` for this generator. This failure is retained, not waived.
+
+The original receiver's pre-scalar caller-census refusal and post-scalar
+`docs-api-reference.mjs` native-custody refusal are retained. Its final actual
+outcome must be read from `original-receiver-after-transitive.log` and its
+terminal receipt; no passing result is inferred from the finite checks.
+The historical baseline remains the `artifacts.ts:41: content` DATA stop,
+all five DATA slots unknown, full recursive generation's preexisting
+`API_REFERENCE_REJECTED_PROFILE_INVENTORY_MISSING`, and all previous practical,
+live/browser/human and selected-release Knip limits.
+
+Required remaining work: actual final receiver result, reviewed Source commit
+when needed by supported generation, all applicable technical checks or explicitly
+justified unchanged-scope reuse, independent preservation of the affected
+original scope union, coherent push and exact remote verification. No merge,
+deployment, release-receipt rewrite or blanket authority refresh is authorized.
+
+## Actual terminal and local Source outcome
+
+Reviewed Source commit: `4db128da05fabcf1cc4f345e54c343877e2f782b` (local only).
+The unchanged original receiver actually terminated at the same historical
+`API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: skills/buster/engine/test-gates/artifacts.ts:41: content`
+with exit 1 at 2026-10-25T00:35:29Z after all exact successors. This is retained
+negative evidence, not a passing global check. Remote remains `444f66d2…`;
+the ten original acceptance scopes are still unpreserved and nothing is newly
+accepted. This proof document is closeout WIP, not an acceptance receipt.
+
+
+## Error-owner bounded preservation closeout — 2026-10-25
+
+The preceding Error section records the chronological candidate/local WIP. Its complete bytes were retained and moved into this existing classified proof instead of adding a new unclassified path. Source `4db128da05fabcf1cc4f345e54c343877e2f782b` now has actual current committed177-page publication build plus all five original technical Reader checks passing. Exact build/artifact/search/source-links/source-previews/diagrams logs are retained; Source-link full log remains external with byte count/hash and terminal summary, not claimed as fresh independent exhaustive link semantics.
+
+Exactly ten original scopes preserved, not newly accepted: complete99record direct-impact census, complete original summaries/limits/history/checks and every page/source physical vector supplied in five lossless complete two-contract partitions. Each reviewed an actual original-record before/after metadata transition, full Error owner, complete four-path Source diff, original checker failure and current technical evidence with original global exclusions. Shared/transitive effects assessed through the full finite Source chain; no role/selector/child/argv/runtime authority, release receipt or original scope membership changed. All original historical arrays remain exact prefixes; other89records and all89gate/261requirement states are exact.
+
+Pinned helper `fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f`, Codex `gpt-5.6-terra`, high, P0–P2; exact command per partition: verified `run-autoreview.sh --mode local --max-priority P2 --codex-bin /app/extensions/codex/node_modules/.bin/codex --prompt-file review-contract.md --json-output <outside-verdict>` with every complete input as `--dataset`. Root `/home/node/.openclaw/workspace/kubeclaw-pr13-recovery`; source-only alias mapping and whole input manifests are supplied. Clean results cover provided complete context, not reviewer-executed tests, independent practical/human/browser/live checks or omitted branches. Coordinator tests remain separate.
+
+Complete operation vectors/final106currentmatch/selected1252/caller1009 owner-only identity review are reused unchanged, with original193ordinary/28mismatch and native-display-label qualifications retained. Same original DATA artifacts.ts41content/all5UNKNOWN and fullgeneration missing-profile negative remain. Actual tree checker additionally exposed the unchanged published aggregate JSON classification omission; exact controlling checker/classification/aggregate identities and negative terminal retained. The introduced proof-path classification regression was corrected by preserving its full bytes here; no treePASS, blanket exemption or original acceptance expansion claimed. Initial transport90000ms failure and aggregate-budget preflight failures retained; durable collector/five complete bounded partitions recovered actual work.
+
+Commands, full inputs, proposed actual records, manifests and verdicts: `operations/pr13/evidence/a91101-20261024/error-owner-next/closeout10/` outside checkout.
+
+| Group | Records | Verdict SHA-256 | Result |
+| --- | ---: | --- | --- |
+| 0 | 2 | `a1da692d8cdf49f404eae67203c92d94baf35afaa2c5951a9211750327d13077` | Clean |
+| 1 | 2 | `74d3a46e50b2c752cc044e85d8053b3ee94c49ec02d5cff10bc0252255566b26` | Clean |
+| 2 | 2 | `33af55a673b5d4c2537c6359c66ff728f617b922d14202e4848dde094792d25a` | Clean |
+| 3 | 2 | `01febb4c208841538b89a6115a85050bece19bfb3dce368b1f261a728624a28f` | Clean |
+| 4 | 2 | `d3fc23094955909b1625810d33a335cfc4dd51ef2c7cbeb1bb6b26fbd697abc8` | Clean |
+
+Register remains59/89gates,225/261requirements, incomplete. No wholeA91101, new catalogue item, human/participant/runtime/release acceptance; no merge/deploy.
+
+The final shared applicator correction was separately independently clean (same pinned Terra/high/P2; verdict SHA-256 `d0794fe0eb64eea44c549e8ac521daaae9adb6487233e661a460dde9a29a641c`): exact five terminal manifest/verdict/union digests are fixed, mandatory context membership is checked, and every decoded reviewed proposal must equal the exact applied record and assigned IDs before any write. Both real binding findings were fixed, not hidden by the original data-diff scope filter. The last-partition table-tail rejection was disproved using the complete immutable689-value table/max688 and exact decoded equality; explicit full disputed values were supplied before the same bounded partition passed. All initial findings and corrected-context/guard verdicts remain retained. The unchanged original acceptance checker now passes59/89and225/261, complete=false; its initial relevant-files-changed failure remains evidence. No new acceptance or fresh practical exercise.
