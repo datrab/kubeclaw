@@ -16,7 +16,7 @@ test('concurrent MCP clients get distinct tool lists and cannot cross namespace 
   const clients = Object.entries(tokens).map(([id, token]) => {
     writeFileSync(join(dir, id), token);
     return { id, tokenFile: join(dir, id), namespaces: id === 'buster' ? [] : [id === 'codex' ? 'kubeclaw' : 'argocd'], namespacePrefixes: ['test'],
-      readAllNamespaces: id === 'codex', tools: id === 'codex' ? ['platform_cluster_state', 'get_pod', 'exec_pod'] : ['get_pod'], exec: [] };
+      readOnly: id === 'codex', readAllNamespaces: id === 'codex', tools: id === 'codex' ? ['platform_cluster_state', 'get_pod', 'get_resource_inventory', 'get_monitoring_metrics', 'get_monitoring_alerts'] : ['get_pod'], exec: [] };
   });
   const policy = join(dir, 'policy'); writeFileSync(policy, JSON.stringify({ clients }));
   const child = spawn(process.execPath, [fileURLToPath(new URL('../src/server.mjs', import.meta.url))], {
@@ -40,7 +40,7 @@ test('concurrent MCP clients get distinct tool lists and cannot cross namespace 
       ? JSON.parse(text.split('\n').find(x => x.startsWith('data:')).slice(5)) : JSON.parse(text);
   };
   const lists = await Promise.all(Array.from({ length: 12 }, (_, i) => call(i % 2 ? 'nova' : 'codex', 'tools/list', {})));
-  lists.forEach((list, i) => assert.deepEqual(list.result.tools.map(x => x.name).sort(), i % 2 ? ['get_pod'] : ['exec_pod', 'get_pod', 'platform_cluster_state']));
+  lists.forEach((list, i) => assert.deepEqual(list.result.tools.map(x => x.name).sort(), i % 2 ? ['get_pod'] : ['get_monitoring_alerts', 'get_monitoring_metrics', 'get_pod', 'get_resource_inventory', 'platform_cluster_state']));
   const denied = await call('nova', 'tools/call', { name: 'get_pod', arguments: { namespace: 'kubeclaw', pod: 'private' } });
   assert.match(JSON.stringify(denied), /NAMESPACE_FORBIDDEN/);
   assert.doesNotMatch(JSON.stringify(denied), /forbidden-api-credential/);
@@ -64,8 +64,16 @@ test('concurrent MCP clients get distinct tool lists and cannot cross namespace 
     assert.ok(discovery.error || discovery.result?.isError);
   }
   const forbiddenExec = await call('codex', 'tools/call', { name: 'exec_pod', arguments: { namespace: 'production-future', pod: 'runtime', container: 'runtime', command: ['id'] } });
-  assert.match(JSON.stringify(forbiddenExec), /NAMESPACE_FORBIDDEN/);
+  assert.ok(forbiddenExec.error || forbiddenExec.result?.isError);
   assert.doesNotMatch(JSON.stringify(forbiddenExec), /forbidden-api-credential/);
+  for (const tool of ['get_monitoring_metrics', 'get_monitoring_alerts', 'get_resource_inventory']) {
+    const list = lists[0].result.tools.find(x => x.name === tool);
+    assert.equal(list.annotations.readOnlyHint, true);
+  }
+  const inventory = await call('codex', 'tools/call', { name: 'get_resource_inventory', arguments: { namespace: 'kubeclaw', resource: 'pods' } });
+  assert.match(JSON.stringify(inventory), /forbidden-api-credential/);
+  const monitoring = await call('codex', 'tools/call', { name: 'get_monitoring_metrics', arguments: { metric: 'filesystems' } });
+  assert.match(JSON.stringify(monitoring), /NOT_CONFIGURED/);
   const discovery = await call('codex', 'tools/call', { name: 'platform_cluster_state', arguments: { resource: 'namespaces' } });
   assert.match(JSON.stringify(discovery), /forbidden-api-credential/);
   // A malformed/revoked policy must reject an already authenticated client on

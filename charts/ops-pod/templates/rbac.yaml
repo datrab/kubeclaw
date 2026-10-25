@@ -15,6 +15,9 @@ rules:
   - apiGroups: [""]
     resources: [pods, pods/log, services, events, persistentvolumeclaims]
     verbs: [get, list]
+  - apiGroups: [discovery.k8s.io]
+    resources: [endpointslices]
+    verbs: [get, list]
   - apiGroups: [metrics.k8s.io]
     resources: [pods]
     verbs: [get, list]
@@ -70,10 +73,13 @@ kind: ClusterRole
 metadata: {name: {{ .Release.Namespace }}-{{ .Release.Name }}-cluster-reader}
 rules:
   - apiGroups: [""]
-    resources: [nodes{{ if .Values.rbac.readAllNamespaces }}, namespaces{{ end }}]
+    resources: [persistentvolumes, nodes{{ if .Values.rbac.readAllNamespaces }}, namespaces{{ end }}]
     verbs: [get, list]
   - apiGroups: [cilium.io]
     resources: [ciliumclusterwidenetworkpolicies]
+    verbs: [get, list]
+  - apiGroups: [storage.k8s.io]
+    resources: [storageclasses]
     verbs: [get, list]
 ---
 apiVersion: rbac.authorization.k8s.io/v1

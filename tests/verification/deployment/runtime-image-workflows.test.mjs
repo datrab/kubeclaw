@@ -39,7 +39,7 @@ test('each runtime is built once per event and PR builds cannot publish', () => 
   assert.equal(new Set(names).size, 10);
   for (const name of names) assert(fs.existsSync(`docker/Dockerfile.${name}`));
   for (const job of [main.jobs.build, pr.jobs.image]) {
-    assert.equal(job.steps.filter(step => step.uses?.startsWith('docker/build-push-action@')).length, 1);
+    assert.equal(job.steps.filter(step => step.uses?.startsWith('docker/build-push-action@') && step.with.target !== 'toolchain').length, 1);
     assert.equal(job.steps.some(step => step.run?.includes('docker build')), false);
   }
   const proof = pr.jobs.image.steps.find(step => step.uses?.startsWith('docker/build-push-action@'));
@@ -62,8 +62,8 @@ test('immutable candidate checks precede release receipts and share PR acceptanc
   assert(pr.jobs.image.steps.some(step => step.run === shared));
   assert.equal(steps[receipt].if, undefined);
   assert.equal(steps[upload].if, undefined);
-  assert.equal(main.jobs['preserve-receipts'].needs, 'build');
-  assert.deepEqual(main.jobs['prism-live-acceptance'].needs, ['build', 'detect-build-inputs']);
+  assert.deepEqual(main.jobs['preserve-receipts'].needs, ['build', 'reliability', 'update-policy']);
+  assert.deepEqual(main.jobs['prism-live-acceptance'].needs, ['build', 'detect-build-inputs', 'reliability', 'update-policy']);
   for (const service of ['control', 'studio', 'worker', 'ingestion']) assert(main.jobs['prism-live-acceptance'].if.includes(`'prism-${service}'`));
 });
 
@@ -71,11 +71,11 @@ test('bundle publication rejects failed or cancelled image proofs while allowing
   const job = main.jobs['bundle-skills'];
   assert(job.needs.includes('build'));
   // Exercise the repository-owned expression; GitHub executes the actual job graph in CI.
-  const evaluate = Function('needs', 'github', 'always', `return (${job.if.replaceAll("needs.update-policy", "needs[\"update-policy\"]").replaceAll("needs.detect-build-inputs", "needs[\"detect-build-inputs\"]")});`);
+  const evaluate = Function('needs', 'github', 'always', `return (${job.if.replaceAll("needs.update-policy", "needs[\"update-policy\"]").replaceAll("needs.prepare-bundles", "needs[\"prepare-bundles\"]").replaceAll("needs.detect-build-inputs", "needs[\"detect-build-inputs\"]")});`);
   for (const result of ['success', 'failure', 'cancelled', 'skipped']) {
     for (const changed of ['true', 'false']) {
       for (const event of ['push', 'workflow_dispatch']) {
-        const needs = { build: { result }, reliability: { result: 'success' },
+        const needs = { 'prepare-bundles': { result: 'success' }, build: { result }, reliability: { result: 'success' },
           'update-policy': { result: 'success' }, 'detect-build-inputs': { outputs: { image_inputs_changed: changed, deployment_inputs_changed: 'true' } } };
         const allowed = result === 'success' || (result === 'skipped' && changed === 'false');
         assert.equal(evaluate(needs, { event_name: event }, () => true), allowed);
@@ -88,7 +88,7 @@ test('bundle publication rejects failed or cancelled image proofs while allowing
 
 
 test('bundle checksum assets remain nonempty with zero, one or all changed roles', () => {
-  const run = main.jobs['bundle-skills'].steps.find(step => step.name === 'Record bundle checksums and source identity').run;
+  const run = main.jobs['prepare-bundles'].steps.find(step => step.name === 'Record bundle checksums and source identity').run;
   // Execute the actual workflow checksum command against each publication shape.
   const checksum = run.slice(run.indexOf('(cd dist;'));
   assert(checksum.startsWith('(cd dist;'));
@@ -120,14 +120,14 @@ test('runtime refresh plan reaches detector, bundles and reusable receipt collec
   assert.equal(receipt.on.workflow_call.inputs.runtime_refresh_plan.default, '');
   const collector = receipt.jobs.preserve.steps.find(step => step.env?.FAMILY);
   assert.equal(collector.env.RUNTIME_REFRESH_PLAN, '${{ inputs.runtime_refresh_plan }}');
-  for (const name of ['detect-build-inputs', 'bundle-skills']) {
+  for (const name of ['detect-build-inputs', 'prepare-bundles', 'bundle-skills']) {
     assert.equal(main.jobs[name].env?.RUNTIME_REFRESH_PLAN, undefined,
       `${name} must inherit the same workflow plan without overriding it`);
   }
 });
 
 test('retained components are authenticated before either receipt producer runs', () => {
-  const bundles = main.jobs['bundle-skills'];
+  const bundles = main.jobs['prepare-bundles'];
   assert.ok(bundles, 'bundle publisher job exists');
   assert.equal(bundles.permissions.actions, 'read');
   const check = (steps, producer) => {
@@ -152,7 +152,7 @@ test('immutable baseline is identical for planners, authentication and both prod
   const receipt = read('publish-image-receipts');
   assert.equal(receipt.on.workflow_call.inputs.retained_baseline.default, '');
   assert.equal(receipt.env.GITOPS_RETAINED_BASELINE, expression);
-  for (const name of ['detect-build-inputs', 'bundle-skills']) {
+  for (const name of ['detect-build-inputs', 'prepare-bundles', 'bundle-skills']) {
     assert.equal(main.jobs[name].env?.GITOPS_RETAINED_BASELINE, undefined);
     for (const step of main.jobs[name].steps) {
       assert.equal(step.env?.GITOPS_RETAINED_BASELINE, undefined);

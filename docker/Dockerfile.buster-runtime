@@ -3,14 +3,14 @@ ARG BUILDKIT_BASE=moby/buildkit:v0.26.2-rootless@sha256:0ffa2fcf6b8757c47d569b3e
 ARG BUSTER_NODE_BASE=node:24-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e
 
 # Buster's v2 suite worker and colocated rootless image builder.
+ARG KUBECLAW_TOOLCHAIN=toolchain
 FROM ${BUILDKIT_BASE} AS buildkit
-FROM ${BUSTER_NODE_BASE}
+FROM ${BUSTER_NODE_BASE} AS toolchain
 
 USER root
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG DEBIAN_SNAPSHOT=20260713T000000Z
 ARG TARGETARCH
-ARG KUBECLAW_BUILD_REVISION=unknown
 ARG KUBECTL_VERSION=1.35.6
 ARG KUBECTL_SHA256_AMD64=5d11e2ba01ea68ffd053f56e27738e2b4330013ee67f7e46c6da6c585d3c9926
 ARG KUBECTL_SHA256_ARM64=c0f97f31c9ddc22d4951d543a1a7125a9af4b31e895ad4aa99899c4ba2a6ff0b
@@ -89,6 +89,14 @@ RUN grep -F "ruff==${RUFF_VERSION} " /opt/kubeclaw-python-locks/buster.txt \
     && pip install --break-system-packages --no-cache-dir --require-hashes --only-binary=:all: \
       -r /opt/kubeclaw-python-locks/buster.txt
 
+# Stable tools can be supplied by a content-keyed, digest-pinned CI image.
+# Local and PR builds retain the identical in-file toolchain by default.
+# hadolint ignore=DL3006
+FROM ${KUBECLAW_TOOLCHAIN} AS runtime
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+ARG TARGETARCH
+
+ARG KUBECLAW_BUILD_REVISION=unknown
 ENV PATH="/app/node_modules/.bin:${PATH}" \
     PLAYWRIGHT_BROWSERS_PATH=/ms-playwright \
     KUBECLAW_BUILD_REVISION=${KUBECLAW_BUILD_REVISION}
