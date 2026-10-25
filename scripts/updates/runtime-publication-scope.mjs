@@ -30,8 +30,13 @@ export function whollyBusterGuarded(bytes) {
 
 // Both revisions must keep the hard role guards. Unknown/shared chart changes
 // are never inferred Buster-only merely because image receipts were retained.
-export function busterRenderConfigurationCompatible(root, before, after) {
-  if (inputDigest(root, before, isNonBusterRenderConfiguration) !== inputDigest(root, after, isNonBusterRenderConfiguration)) return false;
+export function busterRenderConfigurationCompatible(root, before, after, retainedRolePolicy) {
+  if (retainedRolePolicy !== undefined && retainedRolePolicy !== 'retain-active-nova-prism') throw new Error('RETAINED_RENDER_POLICY_INVALID');
+  // Only the lint-tool configuration may differ under explicit retained-role
+  // rendering. The exporter must still authenticate and freeze both active roles.
+  const sharedInput = file => isNonBusterRenderConfiguration(file)
+    && !(retainedRolePolicy === 'retain-active-nova-prism' && file === 'charts/kubeclaw/files/config/knip.json');
+  if (inputDigest(root, before, sharedInput) !== inputDigest(root, after, sharedInput)) return false;
   return [before, after].every(revision => busterTemplates.every(file => {
     const bytes = execFileSync('git', ['-C', root, 'show', revision + ':' + file],
       { encoding: 'utf8', maxBuffer: 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe'] });
