@@ -356,3 +356,31 @@ test('refresh transport is shared, bounded and dispatch-only', () => {
     assert.throws(() => runtimeRefresh({ ...env, RUNTIME_REFRESH_PLAN: invalid }), /INVALID_RUNTIME_REFRESH/u);
   }
 });
+
+
+test('dispatch collector and bundle CLI preserve non-refreshed component origins', () => fixture(({ root, write, commit, initial, images, code }) => {
+  write('docs/refresh-cli.md', 'bounded dispatch');
+  const head = commit();
+  const plan = { images: ['buster-runtime', 'namespace-controller'], bundles: ['buster'] };
+  const env = { ...process.env, GITHUB_EVENT_NAME: 'workflow_dispatch',
+    GITHUB_SHA: head, RUNTIME_REFRESH_PLAN: JSON.stringify(plan),
+    SOURCE_RUN_ID: '2', SOURCE_RUN_ATTEMPT: '1' };
+  for (const name of plan.images) write(`receipt-input/${name}.json`, JSON.stringify({
+    name, commit: head, image: `ghcr.io/datrab/kubeclaw-${name}@sha256:${'b'.repeat(64)}`,
+  }));
+  const run = (script, args) => execFileSync(process.execPath, [path.join(sourceRoot, 'scripts/updates', script), ...args],
+    { cwd: root, env, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
+  assert.deepEqual(JSON.parse(run('code-release.mjs', ['--roles'])), ['buster']);
+  run('release-images.mjs', ['receipt-input', head, 'receipt-output/runtime-images.json', 'runtime']);
+  const result = JSON.parse(fs.readFileSync(path.join(root, 'receipt-output/runtime-images.json'), 'utf8'));
+  for (const name of runtimeImages) {
+    if (plan.images.includes(name)) {
+      assert.deepEqual(result.imageSources[name], { commit: head, sourceRunId: 2, sourceRunAttempt: 1 });
+    } else {
+      assert.equal(result.images[name], images.images[name]);
+      assert.deepEqual(result.imageSources[name], componentSource(images, name, 'image'));
+      assert.equal(result.imageSources[name].commit, initial);
+    }
+  }
+  assert.equal(fs.readFileSync(path.join(root, 'releases/runtime-code.json'), 'utf8'), JSON.stringify(code));
+}));
