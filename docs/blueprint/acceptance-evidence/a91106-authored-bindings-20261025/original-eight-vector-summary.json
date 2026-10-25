@@ -1,0 +1,55 @@
+{
+  "revision": "a5bf66d08da3aca553319ea081c85b6786468c8f",
+  "records": [
+    {
+      "id": "AP09-whole-current-communication-union-20261021-d477",
+      "revision": "82f87e4db5f6fd696a253986054df41f790cf86d",
+      "physicalRows": 67,
+      "allExact": true
+    },
+    {
+      "id": "AP09-reference-network-paths-80178-20261021",
+      "revision": "c56f684a0b18bbf8c9615524e6702a0e80a589e4",
+      "physicalRows": 73,
+      "allExact": true
+    },
+    {
+      "id": "AP09-reference-stores-retention-80178-20261021",
+      "revision": "82f87e4db5f6fd696a253986054df41f790cf86d",
+      "physicalRows": 18,
+      "allExact": true
+    },
+    {
+      "id": "AP09-whole-store-contract-20261021",
+      "revision": "82f87e4db5f6fd696a253986054df41f790cf86d",
+      "physicalRows": 14,
+      "allExact": true
+    },
+    {
+      "id": "A99-02-whole-content-20261021",
+      "revision": "7ef16585ba04eba3628cead304be85307436f091",
+      "physicalRows": 10,
+      "allExact": true
+    },
+    {
+      "id": "A99-01-whole-recursive-input-content-20261021",
+      "revision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
+      "physicalRows": 19,
+      "allExact": true
+    },
+    {
+      "id": "A910-01-whole-content-20261021",
+      "revision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+      "physicalRows": 11,
+      "allExact": true
+    },
+    {
+      "id": "AP09-whole-independent-platform-decision-review-20261021-d477",
+      "revision": "c56f684a0b18bbf8c9615524e6702a0e80a589e4",
+      "physicalRows": 183,
+      "allExact": true
+    }
+  ],
+  "totalRows": 395,
+  "newAcceptance": 0
+}

@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "Within the explicitly bounded product-pipeline semantic group, the supplied authored pipeline-definition, project-publication, and workflow guides bind the generated schema/compiler/scaffold facts to authority, identities, limits, transitions, and failure boundaries. CI, endpoint, and store scopes remain explicitly excluded.",
+  "overall_confidence": 0.86
+}

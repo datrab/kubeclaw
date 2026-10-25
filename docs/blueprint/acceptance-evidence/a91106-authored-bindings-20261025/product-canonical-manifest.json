@@ -1,0 +1,72 @@
+[
+  {
+    "path": "audit-proposal.json",
+    "bytes": 236,
+    "sha256": "b137962529ac16ce95c80300e39befbc52c3576aec1da3b8d1917245367a0eed"
+  },
+  {
+    "path": "context.json",
+    "bytes": 2222,
+    "sha256": "097cc0045090f7d95b3d2ae44ec51adb3bec9bb562f0bb0ad0b42f864b318024"
+  },
+  {
+    "path": "ci-context-disposition.json",
+    "bytes": 1279,
+    "sha256": "b96b7076ab8aff862d84bc82907b124ccd8f0b7c6747ee496bad48f563f21dd9"
+  },
+  {
+    "path": "prior-product-verdict.json",
+    "bytes": 1598,
+    "sha256": "73049e18a4d5c3a167cb4cc6b8186b0cb4018787fe3313dd581ddf093cc57de6"
+  },
+  {
+    "path": "canonical-ci-section.md",
+    "bytes": 9146,
+    "sha256": "efe70eabdabd8bf56ce1e18d3505c15e4ec794f6ea6a64c580112dceb49fb16c"
+  },
+  {
+    "path": "docs/site/use/workflows/README.md",
+    "bytes": 14011,
+    "sha256": "e59fedf0bddb19b870e4beb14398b1f7db63327bd4961dd4e2e646581226a863"
+  },
+  {
+    "path": "docs/site/reference/project-pipeline-publication.md",
+    "bytes": 44281,
+    "sha256": "427e9e6add725db76f75273e9928d6e673ef0d1e2a87abf02f9974f0ec8e4eaf"
+  },
+  {
+    "path": "docs/site/reference/pipeline-definition.md",
+    "bytes": 13381,
+    "sha256": "2883069bd568fb73f47d6524680eae63a03494a5b52f0afced88a4d7674383da"
+  },
+  {
+    "path": "docs/site/reference/workflows.md",
+    "bytes": 148886,
+    "sha256": "7c89788b3585d2bcad5e0b1950369340fbcf98ccf254f1d4ba5bd624a9e22259"
+  },
+  {
+    "path": "docs/blueprint/AP09-acceptance-contract.md",
+    "bytes": 42548,
+    "sha256": "1574710477433d27cade59dbc42ce6ecc6ae56f944271fbddbe7d03be2f9cd2f"
+  },
+  {
+    "path": "scripts/docs-product-pipeline-reference.mjs",
+    "bytes": 12457,
+    "sha256": "33e475af70de3488e94cdd8c904db4c3292bdd1d4786abcc54d82e9a9a6fe6b7"
+  },
+  {
+    "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+    "bytes": 18480,
+    "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1"
+  },
+  {
+    "path": "skills/nova/project_setup/tools/progress-scaffold-validation.ts",
+    "bytes": 13520,
+    "sha256": "dafa016f41e824b82951a8532b0c291cda421181de1614d79f0cffd91ee436fe"
+  },
+  {
+    "path": "skills/nova/project/compiler.ts",
+    "bytes": 14415,
+    "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+  }
+]

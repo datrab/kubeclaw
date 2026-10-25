@@ -1,0 +1,42 @@
+[
+  {
+    "path": "docs/site/understand/communication.md",
+    "bytes": 160497,
+    "sha256": "30c823d0ec36b3c6fdb0e34de8a34c4698c04ca2ebdbc7161ad16715eb7dc146"
+  },
+  {
+    "path": "docs/site/reference/endpoints.md",
+    "bytes": 61066,
+    "sha256": "0c00d0128b4735fa130f2bb144dd3c3aa88c6656cbb2e46e4c3aabb368ac2f27"
+  },
+  {
+    "path": "docs/blueprint/AP09-acceptance-contract.md",
+    "bytes": 42548,
+    "sha256": "1574710477433d27cade59dbc42ce6ecc6ae56f944271fbddbe7d03be2f9cd2f"
+  },
+  {
+    "path": "platform-map-slice.json",
+    "bytes": 18363,
+    "sha256": "c1f2a13a6db255f38a5126543d5bbcd69b4a37588491feba241e95ae546fa522"
+  },
+  {
+    "path": "inventory-slice.json",
+    "bytes": 54573,
+    "sha256": "7970a534e443cfe482b83ee23785d2d88ceca6246b63048446908e995dcfe788"
+  },
+  {
+    "path": "original-contracts-complete.json",
+    "bytes": 103022,
+    "sha256": "fcaa1469680e75aaf0553fe074889dfdddb84f0f7200c12fa0c9a0148a7f9f16"
+  },
+  {
+    "path": "context.json",
+    "bytes": 1382,
+    "sha256": "000a7a84092544501b9c18ce2342c1634d086fc49e8bb484caeb56617b902c71"
+  },
+  {
+    "path": "audit-proposal.json",
+    "bytes": 50,
+    "sha256": "bba5e58dce5600734371a72dbe86af0d71a95751beda61f1f2f1f5616ef061dd"
+  }
+]

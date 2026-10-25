@@ -1,0 +1,122 @@
+[
+  {
+    "path": "prior-ci-verdict.json",
+    "bytes": 1403,
+    "sha256": "9655b851c6942548a706e416b865a24221e706ef63bd5d5d55b91d077a2fa16f"
+  },
+  {
+    "path": "audit-proposal.json",
+    "bytes": 170,
+    "sha256": "bfc12422d86802ed8c351b78c76fa84cebfdb9f4e5d380f264e35a1016a69624"
+  },
+  {
+    "path": "finding-disposition.json",
+    "bytes": 1279,
+    "sha256": "b96b7076ab8aff862d84bc82907b124ccd8f0b7c6747ee496bad48f563f21dd9"
+  },
+  {
+    "path": "context.json",
+    "bytes": 1563,
+    "sha256": "41d644e3e57753e55b563859c0e1bf669a1a5cc493f9b0486f1991263f6ef160"
+  },
+  {
+    "path": "redaction.json",
+    "bytes": 2057,
+    "sha256": "ec2c98d224448231b659354119cd4469a57a0c0e8ddac523e4a5134ea7e07f6a"
+  },
+  {
+    "path": "canonical-ci-section.md",
+    "bytes": 9146,
+    "sha256": "efe70eabdabd8bf56ce1e18d3505c15e4ec794f6ea6a64c580112dceb49fb16c"
+  },
+  {
+    "path": "docs/site/extend/documentation-maintenance.md",
+    "bytes": 47323,
+    "sha256": "d9f11973f90ee2996a7777bb1b6a6e40067dbf970320c9aeb33b2da43177ac42"
+  },
+  {
+    "path": "docs/site/use/maintenance.md",
+    "bytes": 108936,
+    "sha256": "811d59ff760a3b155f3dd5a5ade5e13cea7cbc074dfae913e92d88a2b7b4eb08"
+  },
+  {
+    "path": "docs/site/reference/workflows.md",
+    "bytes": 148886,
+    "sha256": "7c89788b3585d2bcad5e0b1950369340fbcf98ccf254f1d4ba5bd624a9e22259"
+  },
+  {
+    "path": "docs/blueprint/AP09-acceptance-contract.md",
+    "bytes": 42548,
+    "sha256": "1574710477433d27cade59dbc42ce6ecc6ae56f944271fbddbe7d03be2f9cd2f"
+  },
+  {
+    "path": "docs/generated/inventory/workflows.json",
+    "bytes": 18012,
+    "sha256": "7f7bd10072fa15e0c556c868bf82be1d1751a25b8c4418156f29242362b88788"
+  },
+  {
+    "path": ".github/workflows/release-security.yaml",
+    "bytes": 1966,
+    "sha256": "45c6ab961771d95be929cd162f5f5f43de6cc737db56239b98ade2c12a012271"
+  },
+  {
+    "path": ".github/workflows/update-checks.yaml",
+    "bytes": 4582,
+    "sha256": "9e79cbe1038aebffe367916d5b0705e617c27d672d87082839902694f97c910f"
+  },
+  {
+    "path": ".github/workflows/remediation-native.yaml",
+    "bytes": 4686,
+    "sha256": "4edacff35de00ea9698d61a5e2d1db4864c0df7442bc786a76e07bc9b53e1561"
+  },
+  {
+    "path": ".github/workflows/build-ops-mcp.yaml",
+    "bytes": 9504,
+    "sha256": "79cb301569d096bfff6c82135c6d4ee84df487da8cc2f0ccf1ee1b6e196460ba"
+  },
+  {
+    "path": ".github/workflows/docs-checks.yaml",
+    "bytes": 9053,
+    "sha256": "464f8b4ce8aacba8d175307e03b959dc2763f1d3b80c31079c24c085076860c5"
+  },
+  {
+    "path": ".github/workflows/dependency-updates.yaml",
+    "bytes": 2294,
+    "sha256": "cd69649aaed977e116aa7e8c113480601305dc168d0407f72d7f33be3b56cc3c"
+  },
+  {
+    "path": ".github/workflows/build-images.yaml",
+    "bytes": 10516,
+    "sha256": "8fe4c8b087a816429e08cf5901a4db6e55dd9e3e17211528541bd142a731f06d"
+  },
+  {
+    "path": ".github/workflows/rollback-runtime.yaml",
+    "bytes": 3352,
+    "sha256": "be392f5c8fbe2261c0273d6a88dd054e0a72b4cc61ecca39f6979f0c2428b0e8"
+  },
+  {
+    "path": ".github/workflows/auto-promote-runtime.yaml",
+    "bytes": 2723,
+    "sha256": "e233296becb27f3da4f188298e397e487952f89f02639d04ef114e4968ced0e9"
+  },
+  {
+    "path": ".github/workflows/promote-runtime.yaml",
+    "bytes": 6386,
+    "sha256": "e780ca12d34fccd047f130ea8dce2d82e82c645236160fea97651cc0ee12c2fd"
+  },
+  {
+    "path": ".github/workflows/publish-image-receipts.yaml",
+    "bytes": 1660,
+    "sha256": "dcbba52eb6c0c7bbae79681c7401fabed6f6182213e5b8410081d6d79380ffe5"
+  },
+  {
+    "path": ".github/workflows/role-images.yaml",
+    "bytes": 2259,
+    "sha256": "9f39ecb3503ee4564f65353cffb7e1e523fcbc178dcd11518fe93c44508c8959"
+  },
+  {
+    "path": ".github/workflows/pipeline-reliability.yaml",
+    "bytes": 10450,
+    "sha256": "a07954b00b43738a39b567326807e5b8a7890b49678858fb940a6d6f250d366a"
+  }
+]

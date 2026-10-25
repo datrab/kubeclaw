@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The readiness assertion is supported for the bounded CI semantic group. The supplied canonical CI section binds all 13 workflows to triggers, authority/identity, limits, results or transitions, and failure/recovery boundaries; the documentation-maintenance guidance supplies the applicable generated-fact versus authored-explanation boundary. This does not assert acceptance of the wider A911-06 endpoint/store scope or unreviewed redacted execution values.",
+  "overall_confidence": 0.93
+}

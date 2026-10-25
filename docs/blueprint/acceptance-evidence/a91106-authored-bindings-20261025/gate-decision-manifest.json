@@ -1,0 +1,117 @@
+[
+  {
+    "path": "original-eight-vector-summary.json",
+    "bytes": 1582,
+    "sha256": "9a822d37e5ed17a1826f7d7390e1baf37b018af2c467480c2fc2fdc70f99e445"
+  },
+  {
+    "path": "network-authored-verdict.json",
+    "bytes": 509,
+    "sha256": "695cf5d2b5bd02cda70e18fa23a2fd5d7276e289576ef4b3fe6568fbbb255c11"
+  },
+  {
+    "path": "stores-authored-verdict.json",
+    "bytes": 497,
+    "sha256": "6c94a28984be55ba032f141247881a84accd49b19829b1a168e85da70fdc8cb6"
+  },
+  {
+    "path": "ci-canonical-verdict.json",
+    "bytes": 582,
+    "sha256": "d435effabd2d06e628e9a858b3852eaad74fe3d1c489fe5fb4f8fffea6951696"
+  },
+  {
+    "path": "product-canonical-verdict.json",
+    "bytes": 451,
+    "sha256": "4f9561dd308acce9cf4b85f4e89246b576b16d8a1cd9211d9801381b7d3506d2"
+  },
+  {
+    "path": "ci-complete-redaction.json",
+    "bytes": 2057,
+    "sha256": "ec2c98d224448231b659354119cd4469a57a0c0e8ddac523e4a5134ea7e07f6a"
+  },
+  {
+    "path": "ci-canonical-manifest.json",
+    "bytes": 3813,
+    "sha256": "f9eaec54740dcd3cc0b3714bb125c43e9be58d9a80ae5a92e20183962d4b2ee2"
+  },
+  {
+    "path": "product-canonical-manifest.json",
+    "bytes": 2264,
+    "sha256": "cdf30b82e37477407c924ba5ec4625a8fc9f87df427fa44bb7397f0b99de0ee1"
+  },
+  {
+    "path": "network-authored-manifest.json",
+    "bytes": 1225,
+    "sha256": "9471bb3edf9598337d06716fed02450f1b7d2258e10637473056abbafcb6b5f1"
+  },
+  {
+    "path": "stores-authored-manifest.json",
+    "bytes": 1235,
+    "sha256": "1f4e172bbe2376aab6bc95e0734c8e35d64dcf9959de17bb14f8343c4aa2e94c"
+  },
+  {
+    "path": "scope.json",
+    "bytes": 1713,
+    "sha256": "405a0fe70eedd3d6b8a303927cee9409e5216f1d2fb4f5b3a4c796960a860392"
+  },
+  {
+    "path": "original-acceptance-contract.md",
+    "bytes": 42548,
+    "sha256": "1574710477433d27cade59dbc42ce6ecc6ae56f944271fbddbe7d03be2f9cd2f"
+  },
+  {
+    "path": "candidate-completion-record.json",
+    "bytes": 14474,
+    "sha256": "94aadaf44118d3bd0476e7207bcea64dbb56fb109f8c0c41e0e78c2310354634"
+  },
+  {
+    "path": "context.json",
+    "bytes": 13625,
+    "sha256": "264fc8e77259e217c44fb0e3d8adcea3aaafe4ba2a21161f1f89c9d30c24456a"
+  },
+  {
+    "path": "original-contract-0.json",
+    "bytes": 44212,
+    "sha256": "64641ef037c1da0d2c6918e2c564ce279990a13ba58bfda730d786ac98c0ee81"
+  },
+  {
+    "path": "original-contract-1.json",
+    "bytes": 51672,
+    "sha256": "769c03230f0e7e72f7beed1687327e34734e82630e910f90c0e67aff9c051752"
+  },
+  {
+    "path": "original-contract-2.json",
+    "bytes": 21596,
+    "sha256": "a7f6b6881ca296778f287d544567db6a621d300222a39e6b181f73ca35fb45ad"
+  },
+  {
+    "path": "original-contract-3.json",
+    "bytes": 20931,
+    "sha256": "be4e4be2c69c311dfdba1279afb4220a36a2248f9479f9dc6576e9c1fd01affb"
+  },
+  {
+    "path": "original-contract-4.json",
+    "bytes": 9651,
+    "sha256": "69a4a2c223162a25e4d7d4d8d77cba2671cd572972895faf56200929f4a3270d"
+  },
+  {
+    "path": "original-contract-5.json",
+    "bytes": 26983,
+    "sha256": "1d36e44608d68657c920a873613ad4ea89205831ee100e0f7c9d26c329d66b40"
+  },
+  {
+    "path": "original-contract-6.json",
+    "bytes": 8153,
+    "sha256": "95439a2766850669b188c6224aad257882e038700cb6b3f59370cc65e53ad655"
+  },
+  {
+    "path": "original-contract-7.json",
+    "bytes": 92438,
+    "sha256": "32384c6cf9b4878ca8ba00d768e857f9470cdbd29816b9808d1c28b4133f54af"
+  },
+  {
+    "path": "original-full-context-header.json",
+    "bytes": 818,
+    "sha256": "64d206938d36aca322f7d978d1b72347a0571c1bcf312efffd8ae8df45cc0545"
+  }
+]

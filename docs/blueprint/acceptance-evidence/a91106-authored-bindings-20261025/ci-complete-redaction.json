@@ -1,0 +1,47 @@
+{
+  "redactions": [
+    {
+      "path": "docs/site/use/maintenance.md",
+      "originalSha256": "2a13ef9632bba5de0b8a98442446c5076270106f5efa0eb3c2dd600a72b9f3a2",
+      "reviewSha256": "811d59ff760a3b155f3dd5a5ade5e13cea7cbc074dfae913e92d88a2b7b4eb08",
+      "spanLineRanges": [
+        [
+          655,
+          655
+        ]
+      ]
+    },
+    {
+      "path": ".github/workflows/pipeline-reliability.yaml",
+      "originalSha256": "e338f143d87d8fcbf16830fdf82a0f7a9396f53376a780f4076ee4fb5e87ac4a",
+      "reviewSha256": "a07954b00b43738a39b567326807e5b8a7890b49678858fb940a6d6f250d366a",
+      "spanLineRanges": [
+        [
+          204,
+          204
+        ],
+        [
+          222,
+          222
+        ]
+      ]
+    },
+    {
+      "path": ".github/workflows/remediation-native.yaml",
+      "originalSha256": "b7b25ef45d106eece91c72295db6f8d69f7cb52403c248082e1fc601a84d93df",
+      "reviewSha256": "4edacff35de00ea9698d61a5e2d1db4864c0df7442bc786a76e07bc9b53e1561",
+      "spanLineRanges": [
+        [
+          67,
+          67
+        ],
+        [
+          77,
+          77
+        ]
+      ]
+    }
+  ],
+  "scope": "Exactly5flagged assignmentvalues across3files replaced by pinnedhelper redact_review_spans; every other byte preserved. Full original corpus scanned up front after2file-at-time refusals. No scanner bypass. Excluded literals and their execution semantics NOT independently reviewed; this remains authored-binding assessment, not wholeSource/CIexecution qualification. All failures retained.",
+  "dependencyDiagnosis": "Recurring dependency was exact-bundle secret heuristic sequentially failing at next flagged file. Original A91106 requires authored meaning, not disclosure of deployment credential-value expressions. Minimal coherent repair is all3required context-only redactions after complete corpus preflight; product corpus riskfalse unchanged. Finite remaining checks: exactscanner rereview, two independent authored-meaning verdicts; gate remains unaccepted pending omittedliteral/source and endpoint/store scopes."
+}

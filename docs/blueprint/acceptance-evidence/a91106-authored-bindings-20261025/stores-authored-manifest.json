@@ -1,0 +1,42 @@
+[
+  {
+    "path": "docs/site/understand/data-and-state.md",
+    "bytes": 162757,
+    "sha256": "d921325f4872298175ecb785264a75af5e4b8a0d4164d69acd534f98536572ed"
+  },
+  {
+    "path": "docs/site/reference/stores-and-retention.md",
+    "bytes": 27879,
+    "sha256": "810b4bbb25f146d8ee39ec31bc218ae51542dcb7cf3509573b576d5e5adea6cc"
+  },
+  {
+    "path": "docs/blueprint/AP09-acceptance-contract.md",
+    "bytes": 42548,
+    "sha256": "1574710477433d27cade59dbc42ce6ecc6ae56f944271fbddbe7d03be2f9cd2f"
+  },
+  {
+    "path": "platform-map-slice.json",
+    "bytes": 7835,
+    "sha256": "8dc0132d7f9e690ff71f773a11d1149b80727e028205fa610dbee219190fdd4b"
+  },
+  {
+    "path": "inventory-slice.json",
+    "bytes": 10061,
+    "sha256": "5d27a260ece47ba58a5a2a1ce9e0b7d7088cc7495affeffa0090855b3b6f672f"
+  },
+  {
+    "path": "original-contracts-complete.json",
+    "bytes": 46081,
+    "sha256": "6dea7dd2a003e5c7ed37c0bca17ad618199472e594a4a1a8268bd8c926c958e5"
+  },
+  {
+    "path": "context.json",
+    "bytes": 1347,
+    "sha256": "43f22030bb413a17ec1456b1bd11e87ecbc39b03a75d9eca5139dcc6238089cd"
+  },
+  {
+    "path": "audit-proposal.json",
+    "bytes": 49,
+    "sha256": "fd058031bf61b3d5ecc9487cebd4cf8367940cf430978c4c45f8b66fb17a15c3"
+  }
+]
