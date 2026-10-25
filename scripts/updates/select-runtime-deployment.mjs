@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { execFileSync } from 'node:child_process';
-import { validateCodeReceipt, selectedCode } from './code-release.mjs';
+import { validateCodeReceipt, compatibleCode } from './code-release.mjs';
 import { inputDigest, isDeploymentInput } from './runtime-inputs.mjs';
 import { validateReleaseReceipt } from './deployment-release.mjs';
 import { runtimePublicationCommand, busterRenderConfigurationCompatible, assertRuntimePublicationScope } from './runtime-publication-scope.mjs';
@@ -71,8 +71,9 @@ const configurationUnchanged = priorCode && busterRenderConfigurationCompatible(
 const exportCommand = runtimePublicationCommand(priorImages && { ...priorImages, code: priorCode },
   { ...images, code }, configurationUnchanged);
 assertRuntimePublicationScope(exportCommand, process.env.RUNTIME_PUBLICATION_SCOPE);
+// Validate the candidate before mutating either selected receipt.
+compatibleCode(root, images, code);
 fs.mkdirSync('releases', { recursive: true });
 fs.writeFileSync(priorFile, JSON.stringify(code, null, 2) + '\n');
-selectedCode(root, images);
 if (built) fs.writeFileSync('releases/runtime-images.json', JSON.stringify(images, null, 2) + '\n');
 fs.appendFileSync(process.env.GITHUB_OUTPUT, `export_command=${exportCommand}\nselected=true\ndirectory=releases/gitops/runtime-${id}-${attempt}\n`);

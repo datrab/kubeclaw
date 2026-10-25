@@ -22,7 +22,10 @@ export function validateCodeReceipt(code) {
 export function selectedCode(root, imageReceipt) {
   const file = path.join(root, 'releases/runtime-code.json');
   if (!fs.existsSync(file)) return undefined; // Existing image-only selections remain readable.
-  const code = validateCodeReceipt(JSON.parse(fs.readFileSync(file, 'utf8')));
+  return compatibleCode(root, imageReceipt, JSON.parse(fs.readFileSync(file, 'utf8')));
+}
+export function compatibleCode(root, imageReceipt, candidate) {
+  const code = validateCodeReceipt(candidate);
   const imageCodeCommit = name => {
     const role = name === 'nova' ? 'nova' : name.startsWith('prism-') ? 'prism'
       : ['buster-gateway', 'buster-runtime', 'namespace-controller'].includes(name) ? 'buster' : undefined;

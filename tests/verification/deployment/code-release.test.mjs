@@ -6,7 +6,7 @@ import path from 'node:path';
 import { execFileSync, spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import yaml from 'js-yaml';
-import { selectedCode, validateCodeReceipt } from '../../../scripts/updates/code-release.mjs';
+import { selectedCode, compatibleCode, validateCodeReceipt } from '../../../scripts/updates/code-release.mjs';
 import { isImageInput, isDeploymentInput, inputDigest } from '../../../scripts/updates/runtime-inputs.mjs';
 import { selectedRelease, validateRenderedRelease } from '../../../scripts/updates/deployment-release.mjs';
 
@@ -65,6 +65,10 @@ test('code selection reuses images only across unchanged image inputs, including
     fs.unlinkSync(path.join(root, 'docker/Dockerfile.nova')); const changed = commit();
     write('releases/runtime-code.json', JSON.stringify(code(changed)));
     assert.throws(() => selectedCode(root, { commit: imageCommit }), /REQUIRES_NEW_IMAGES/);
+    const before = fs.readFileSync(path.join(root, 'releases/runtime-code.json'), 'utf8');
+    assert.deepEqual(compatibleCode(root, { commit: imageCommit }, receipt), receipt);
+    assert.throws(() => compatibleCode(root, { commit: imageCommit }, code(changed)), /REQUIRES_NEW_IMAGES/);
+    assert.equal(fs.readFileSync(path.join(root, 'releases/runtime-code.json'), 'utf8'), before);
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 });
 test('bundle selection rejects missing hashes, mutable URLs and wrong role archives', () => {
