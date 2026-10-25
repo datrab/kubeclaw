@@ -294,13 +294,13 @@ lines.push(providerCatalogueReference.replaceAll('CATALOGUE_SOURCE_REVISION', re
 
 lines.push('## Maintenance Rule', '',
   'Run from a clean repository checkout with Git and a Node.js runtime supporting native ESM and `import.meta.dirname`. No cluster or remote service is needed.',
-  'Change and commit the schemas/manifests first. Select that source commit: every installed provider manifest, selected configuration schema, API-flow schema, remote catalogue parser, catalogue prose template and generator must match it byte-for-byte.',
+  'Commit changes to the generator, catalogue prose template, schemas and manifests before generation. Select that source commit: every installed provider manifest, selected configuration schema, API-flow schema, remote catalogue parser, catalogue prose template and generator must match it byte-for-byte.',
   'Replace `<full-source-commit>` with that existing lowercase 40-hex commit, then run `node scripts/generate-buster-provider-reference.mjs --write --revision=<full-source-commit>`.',
   'Expected write result: `wrote docs/site/reference/buster-provider-configuration.md`. Then run `node scripts/generate-buster-provider-reference.mjs` without `--write`.',
   'Expected check result: `Buster provider configuration verified: 19 providers and one flow document`. This proves generated freshness, not provider execution or remote health.',
   'If `BUSTER_PROVIDER_SOURCE_REVISION` fails, check the selected commit, missing objects and exact committed input bytes. Commit the intended source and select its revision; do not weaken the pin.',
   'A stale-output assertion requires regeneration from the selected matching inputs. For an inventory-count or provider-contract assertion, inspect the changed provider contracts and review the generator before regeneration. Do not change the count merely to obtain a pass.',
-  'Review the generated diff and limits as a contract change, then commit the intended generator/reference changes. The command writes only the tracked reference: it starts no service and creates no temporary resource to clean up. If abandoning the change, restore only your own generated-file edit after preserving any pre-existing work.', '');
+  'Review the generated diff and limits as a contract change, then commit the generated reference. The command writes only the tracked reference: it starts no service and creates no temporary resource to clean up. If abandoning the change, restore only your own generated-file edit after preserving any pre-existing work.', '');
 
 const output = `${lines.join('\n').trimEnd()}\n`;
 if (process.argv.includes('--write')) {
