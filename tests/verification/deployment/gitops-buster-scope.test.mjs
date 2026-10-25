@@ -105,6 +105,9 @@ test('Buster-only retention rejects ambiguous or non-immutable active role sourc
   const file = path.join(root, 'gitops/production/apps/applications.yaml');
   const original = yaml.loadAll(fs.readFileSync(file, 'utf8')).filter(Boolean);
   const cases = [
+    app => { app.spec.sources = [structuredClone(app.spec.source)]; },
+    app => { app.spec.destination.namespace = 'foreign'; },
+    app => { app.spec.destination.server = 'https://foreign.invalid'; },
     app => { app.spec.source.targetRevision = 'feature/unreviewed'; },
     app => { app.spec.source.directory.include = '*.yaml'; },
     app => { app.spec.source.path = 'releases/gitops/../prism'; },

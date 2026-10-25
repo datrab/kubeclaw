@@ -37,7 +37,10 @@ function validateScope(before, after) {
 function activePath(applications, group) {
   const matching = applications.filter(application => application.metadata?.name === group.name);
   const source = matching[0]?.spec?.source;
-  if (matching.length !== 1 || source?.targetRevision !== 'main' || source.directory?.include !== 'resources.yaml'
+  if (matching.length !== 1 || matching[0]?.spec?.sources !== undefined
+    || matching[0]?.spec?.destination?.namespace !== group.namespace
+    || matching[0]?.spec?.destination?.server !== 'https://kubernetes.default.svc'
+    || source?.targetRevision !== 'main' || source.directory?.include !== 'resources.yaml'
     || !new RegExp(`^releases/gitops/[a-z0-9][a-z0-9-]{0,50}/${group.role}$`, 'u').test(source.path ?? '')) throw new Error('GITOPS_ACTIVE_ROLE_PATH_INVALID');
   return source.path;
 }
