@@ -14,9 +14,9 @@ one for another.
 
 | Concept | Owner | What it controls |
 | --- | --- | --- |
-| Worker profile | Worker producer plus worker contract | Exact engine bytes, worker kind, capabilities, and measurable resource semantics accepted for an attempt. |
+| Worker profile | Worker producer plus worker contract | Producer-declared engine content identity, worker kind, capabilities, and resource semantics accepted for an attempt. |
 | Worker type | Worker profile | Scheduling/implementation class such as `prism` or `prism-agent`; it is not authorization by itself. |
-| Engine reference | Worker profile | Versioned operation contract and content digest for executable behavior. |
+| Engine reference | Worker profile | Versioned operation contract and producer-defined content digest; not by itself executable-byte provenance. |
 | Agent role | Pipeline stage configuration | Dispatch hint such as a specialist role. It does not grant a worker capability or select a Linux identity. |
 | Native pool role | Host-generated pool policy | Binds a worker process to one host cgroup pool, node identity, capacity, and ownership store. |
 | Database role | Prism database bootstrap | Separates schema changes, application access, and read-only access. It is unrelated to worker profiles. |
@@ -34,6 +34,8 @@ The profile has worker type `buster`, core contract `kubeclaw.worker-core@1`,
 engine `buster-test-engine`, engine contract `kubeclaw.buster-engine@1`, and
 engine version `1.0.0`. Engine `contentDigest` is the registry snapshot digest;
 `profileDigest` binds the complete profile without its digest field.
+This Buster content identity is a registry snapshot, not a digest of the
+Buster engine executable bytes.
 
 Unless a caller supplies a worker runtime, Buster [registers a local worker](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/skills/buster/engine/test-gates/runner.ts#L737-L755)
 as `worker:buster:local`, advertises the plan's distinct profile digests and
@@ -52,8 +54,16 @@ does not establish a deployed or remotely scheduled Buster worker.
 
 The profile is a closed object. Every field is required. A producer computes
 `profileDigest` over the profile without the digest field. An attempt carries
-the whole profile, and the runtime accepts it only when the digest is one of
-the profiles advertised by the worker registration.
+the whole profile. Admission depends on the runtime path. The local v1
+runtime checks an advertised-profile digest allowlist. Native Prism instead
+validates the v3 envelope and, for a fresh attempt, compares its digest with
+`prismNativeWorkerProfile.profileDigest`; it does not consult a worker
+registration-profile allowlist.
+
+A previously journaled native attempt follows the retained-envelope path.
+The journal requires the same envelope digest and identity; a changed stored
+profile is not an authorized upgrade. See the [native admission checks](https://github.com/datrab/kubeclaw/blob/4af0cecca26092f67bc3837c4e8fa5e891196c81/skills/prism/server/native-worker-execution.ts#L27-L35)
+and [journal identity checks](https://github.com/datrab/kubeclaw/blob/4af0cecca26092f67bc3837c4e8fa5e891196c81/skills/worker/core/worker/native-attempt-journal.ts#L148-L154).
 
 | Path | Type and constraints | Meaning |
 | --- | --- | --- |
@@ -62,7 +72,7 @@ the profiles advertised by the worker registration.
 | `profileDigest` | Lowercase `sha256:` digest | Integrity binding for all other profile fields. |
 | `workerType` | Stable ID, maximum 256 | Worker implementation family. |
 | `coreContractId` | Versioned contract ID matching `name@positive-version`, maximum 256 | Worker-core contract implemented by this profile. |
-| `engine` | Closed engine object | Exact operation implementation identity. |
+| `engine` | Closed engine object | Producer-declared operation implementation identity. |
 | `capabilities` | Unique array, at most 128 stable IDs | Maximum capabilities the profile can use. Attempt `grantedCapabilities` must be no broader. |
 | `resourceCapabilities` | Closed v2 capability object | States what resource quantities the host can measure for this profile. |
 
@@ -97,8 +107,11 @@ A v3 attempt supplies closed `worker-resource-budgets.v2` fields
 requested and refuses a fresh attempt whose limit exceeds host policy.
 
 The worker result reports resource accounting separately. A profile saying
-`measurement: "measured"` is not itself an observation. The native worker must
-return observed counters under the matching scope and unit.
+`measurement: "measured"` is not itself an observation. For a `completed` result with a requested
+budget, the matching observation must be `observed`, use the declared scope
+and unit, and stay within that budget. Other terminal states may report
+`unavailable`; the corresponding numeric `resources` field must then be
+absent. Unavailable use is unknown, not zero. See the [v3 result accounting checks](https://github.com/datrab/kubeclaw/blob/4af0cecca26092f67bc3837c4e8fa5e891196c81/contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts#L19-L30).
 
 ## Current shipped Prism profiles
 
@@ -149,7 +162,7 @@ Use v2 only with a v2 attempt/result contract. Do not rename
 `maximumProcesses` to `maximumTasks` without moving to the v3 contract and a
 native attempt-tree enforcement boundary.
 
-## Worker registration and capacity
+## Local v1 worker registration and capacity
 
 `LocalWorkerRuntime` receives operator/composition inputs:
 
@@ -193,24 +206,33 @@ not capacity proof.
 
 ## Selection and precedence
 
-1. Host deployment selects the pool role and aggregate capacity.
-2. Worker composition advertises exact profiles and count capacity.
-3. The attempt selects one advertised profile by its complete digest and asks
-   for a subset of its capabilities plus resource budgets.
-4. Worker admission checks the attempt, then native admission compares budgets
-   with host policy.
+1. For native Prism, host preparation selects the pool role and aggregate
+   capacity. Local v1 count capacity is a separate composition input.
+2. Local v1 worker composition advertises exact profiles and count capacity.
+   Native Prism uses its fixed v3 profile instead of this registration path.
+3. A local v1 attempt selects an advertised profile by its complete digest.
+   A fresh native v3 attempt must match Prism's fixed profile. Capability
+   grants and resource requests must follow the selected version's contract.
+4. Each path validates its attempt contract. Fresh native v3 admission also
+   compares requested budgets with native host policy.
 5. Stage `agentRole` can influence dispatch routing inside an adapter, but it
    cannot bypass any of these checks.
 
-Do not add a profile by changing only a pipeline document. The worker producer,
-worker registration, host capacity, engine bytes, and dispatcher must agree.
+Do not add a profile by changing only a pipeline document. For local v1, the
+producer, advertised registration digests, count capacity, implemented engine
+contract and dispatcher must agree. For fresh native Prism v3, the producer
+and dispatcher must match Prism's fixed profile and the prepared native host
+policy; changing a registration allowlist is not this admission path. Neither
+flow gains new authority from a profile digest alone.
 
 ## Change impact and errors
 
 A content digest, engine contract/version, capability, resource semantic, or
 profile field change produces a different profile digest. Existing stored
-attempts retain their original profile. A fresh worker can accept them only if
-it still advertises that digest and implements the matching contract. Native
+attempts retain their original profile. The local v1 worker requires an
+advertised digest and the matching contract. Fresh native Prism attempts
+require its fixed v3 profile; retained native attempts require the exact
+journal-bound envelope and identity, not a new registration advertisement. Native
 pool policy changes require host preparation and worker restart/readiness; an
 attempt cannot raise aggregate limits.
 
@@ -223,7 +245,7 @@ agreement; do not rewrite a persisted attempt or digest.
 
 > **Source evidence — profile and host boundaries**
 >
-> **Claim:** A worker profile binds engine content and capabilities, local admission matches its digest, and native aggregate capacity comes only from a trusted host policy.
+> **Claim:** A worker profile binds the producer-declared engine identity and capabilities. Local v1 admission matches an advertised digest. Native aggregate capacity comes only from a trusted host policy.
 >
 > **Implementation:** [profile-based local admission](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/worker/core/worker/local-runtime.ts#L89-L107); [attempt checks](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/worker/core/worker/local-runtime.ts#L155-L173); [trusted pool policy loader](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/worker/core/worker/native-pool-policy.ts#L18-L52)
 >
