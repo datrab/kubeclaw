@@ -224,6 +224,51 @@ test('same-code replay still checks image publication scope before receipt write
   assert.equal(fs.existsSync(path.join(root, 'selection-output')), false);
 }));
 
+test('incompatible Buster candidate leaves both selected receipts and outputs untouched', () => fixture(({ root, write, commit, initial, images, code }) => {
+  write('docker/Dockerfile.buster-runtime', 'incompatible new runtime inputs');
+  const head = commit();
+  code = structuredClone(code);
+  code.commit = head;
+  for (const bundle of Object.values(code.bundles)) bundle.url = bundle.url.replace(initial, head);
+  code.bundles.buster.sha256 = 'b'.repeat(64);
+  const next = structuredClone(images);
+  next.commit = head;
+  next.imageSources = Object.fromEntries(runtimeImages.map(name => [name, { commit: initial, sourceRunId: 1, sourceRunAttempt: 1 }]));
+  const assets = Object.entries(code.bundles).map(([role, bundle], index) => ({
+    id: index + 10, name: `${role}-${head}.tgz`, browser_download_url: bundle.url,
+    digest: `sha256:${bundle.sha256}`,
+  }));
+  const routes = {
+    'actions/runs/1/attempts/1': { conclusion: 'success', path: '.github/workflows/build-images.yaml',
+      head_branch: 'main', event: 'push', head_repository: { full_name: 'datrab/kubeclaw' }, head_sha: head },
+    'releases/tags/code-bundles-1-1': { target_commitish: head, assets: [
+      ...assets, { id: 1, name: 'runtime-code.json', size: 1000 }] },
+    'releases/assets/1': code,
+    'releases/tags/runtime-images-1-1': { target_commitish: head, assets: [
+      { id: 2, name: 'runtime-images.json', size: 1000 }] },
+    'releases/assets/2': next,
+  };
+  write('mock-fetch.mjs', `const routes = ${JSON.stringify(routes)};
+    globalThis.fetch = async url => {
+      const route = String(url).split('/repos/datrab/kubeclaw/')[1];
+      if (!(route in routes)) throw new Error('Unexpected API route: ' + route);
+      return new Response(JSON.stringify(routes[route]), { status: 200 });
+    };`);
+  const beforeCode = fs.readFileSync(path.join(root, 'releases/runtime-code.json'), 'utf8');
+  const beforeImages = fs.readFileSync(path.join(root, 'releases/runtime-images.json'), 'utf8');
+  // Permit full scope only in this offline fixture to reach the later compatibility gate.
+  assert.throws(() => execFileSync(process.execPath, ['--import', path.join(root, 'mock-fetch.mjs'),
+    path.join(sourceRoot, 'scripts/updates/select-runtime-deployment.mjs')], {
+    cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'],
+    env: { ...process.env, GITHUB_REPOSITORY: 'datrab/kubeclaw', GITHUB_TOKEN: 'fixture-only',
+      SOURCE_RUN_ID: '1', SOURCE_RUN_ATTEMPT: '1', RUNTIME_PUBLICATION_SCOPE: 'all',
+      GITHUB_OUTPUT: path.join(root, 'selection-output') },
+  }), error => /CODE_RELEASE_REQUIRES_NEW_IMAGES/u.test(error.stderr));
+  assert.equal(fs.readFileSync(path.join(root, 'releases/runtime-code.json'), 'utf8'), beforeCode);
+  assert.equal(fs.readFileSync(path.join(root, 'releases/runtime-images.json'), 'utf8'), beforeImages);
+  assert.equal(fs.existsSync(path.join(root, 'selection-output')), false);
+}));
+
  test('retained role images match their own bundle source, not another role or global code', () => fixture(({ root, write, commit, initial, images, code }) => {
   write('docker/Dockerfile.prism-agent', 'new Prism image inputs');
   const head = commit();
