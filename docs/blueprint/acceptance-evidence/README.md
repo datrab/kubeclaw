@@ -9,6 +9,73 @@ Files here are verification records. They are not part of the reader site and
 must not be used as a prerequisite for a task in `docs/site`.
 
 
+## Current verified documentation closeout — 2026-10-25
+
+**Overall AP09 result: NOT_READY.** This report separates verified documentation
+work from open product and acceptance obligations. It does not grant a runtime,
+live, human, screen-reader, DATA-role, or formal ASD-STE100 pass.
+
+### Checked identities and scope
+
+- Reviewed publication source: `67efef97128339de5f240d59dbfa4cefa8accdc5`.
+- Complete provider input and generator revision: `a51d223dca0130a889a3d63f4fb2a6db42bd8250`.
+- Verified published preservation anchor: `ed06003973ec0facd00aca913a4997f6dd1665dc` on `docs/documentation-overhaul`.
+- Changed deliverable: `scripts/generate-buster-provider-reference.mjs`, `scripts/buster-provider-catalogue-reference.mjs`, and `docs/site/reference/buster-provider-configuration.md`.
+- Schemas, runtime and catalogue parser are unchanged. The reference now preserves formats, choice applicability, unconstrained values and actual parser coercion.
+- The source inventory pins every provider manifest, schema, flow document, catalogue parser, prose template and generator. Maintenance commits source inputs before generation.
+
+The matrix at the published anchor records **61/89 accepted gates and 225/261
+accepted requirements**. These are existing recorded acceptances, not fresh
+execution of those scopes. This report does not predeclare its own acceptance.
+Other open gates and requirements remain open.
+
+### Observed checks and independent review
+
+| Evidence | Actual result and limit |
+| --- | --- |
+| `node scripts/generate-buster-provider-reference.mjs` | PASS: 19 providers and one flow document; generated freshness, not provider execution. |
+| `node scripts/docs-check.mjs`; `node scripts/docs-check-refs.mjs`; `node scripts/docs-publication.mjs check`; `git diff --check` | All exit zero on the final source/reference. |
+| `node --max-old-space-size=4096 scripts/docs-publication.mjs build` | PASS: 177 canonical publication pages, built from the full reviewed source commit above. |
+| Five separate `scripts/docs-reader/check-{artifact,search,source-links,source-previews,diagrams}.mjs` commands | All exit zero against that committed build. These are coordinator technical observations, not fresh participant or human accessibility tests. |
+| `node scripts/check-ap09-acceptance-contract.mjs` | PASS on the exact matrix content committed at the published anchor. Its output explicitly says it performs no content review. |
+| Pinned independent review | `fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f`, Codex `gpt-5.6-terra`, high, P2: complete provider page/generators and all eight original contracts/vectors; Source, semantic Reader and Quality PASS. |
+| Unchanged original local-Helm receiver | FAIL: `DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED` at `scripts/docs-plugin-complexity.mjs`. The complete selector vector matches the published baseline; no new role or mutation success is inferred. |
+
+The five successful Reader commands were separate processes:
+
+```sh
+node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs
+node --max-old-space-size=4096 scripts/docs-reader/check-search.mjs
+node --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs
+node --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs
+node --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs
+```
+
+Exactly eight original scopes are independently preserved; the other 93 records
+and all gate/requirement states at that anchor are unchanged. Original summaries,
+limits, failures and history remain intact. The appendix adds current evidence;
+it does not relabel historical practical observations as fresh exercises.
+
+The first committed build failed its 26-word maintenance sentence. That failure
+is retained separately from the corrected successful build. An incorrect numeric
+`1` rejection was disproved with the actual exported parser; the reviewer then
+confirmed the counterexample. No correct parser documentation was removed.
+
+### Remaining obligations and resume conditions
+
+| Open boundary | Required owner action and acceptance condition |
+| --- | --- |
+| Whole example coverage, A99-11 | Documentation owners complete remaining original page responsibilities after required sources are admissible. Bounded page results do not close the whole gate. |
+| Whole language review, A913-06 | The pinned helper maintainer must provide supported complete admission for the unchanged developer handbook. The helper refused it as too large to scan safely before any model review. Do not retry it through a different page, alias, redaction, encoding or partition. A full, independent language review is still required. |
+| Source-policy and historical ToolSource evidence | Policy/evidence custodians restore supported access to each exact refused source and both original reports at their recorded hashes. A missing source or report is not reviewed or waived. |
+| DATA and executing product paths | Product producer/consumer owners supply qualifying original evidence. The historical `artifacts.ts:41` content failure and all five UNKNOWN slots remain; this receiver run did not reach or clear them. |
+| Live, release, accessibility and participant work | The responsible operator or independent participant supplies the original approved environment, identity and observations. Knip/release, joined runtime, browser-sandbox, screen-reader and human limits remain at their original scopes. |
+
+The [operational acceptance page](../../site/status/acceptance.md) defines the
+unexecuted product gates. Its prerequisites and evidence boundaries are not
+replaced by this documentation report. No full product or AP09 pass is claimed.
+All older checkpoint sections below retain their own dated revisions and limits.
+
 ## Reviewed dependency aggregate checkpoint — 2026-10-24
 
 Source: `c0d892fb2ea7f88994e53ea29de0fdce2d87d89e`. Adds the supported deterministic `plugin-dependency-aggregate.json` generator, reusable complete native report and local raw schema/reference closure; no schema-fragment semantics, runtime grant, operational owner or DATA qualification is inferred. Mandatory fresh inventory and ownership assertions are retained. New schema keyword coverage includes `contentSchema` and `$recursiveRef`; resolution remains local/contained.
