@@ -11,8 +11,9 @@ Last verified: 2026-10-12 at source revision `ad73a0df62607ea9634304c3e951882645
 
 `.swarm/progress.json` and `.swarm/pipeline.json` describe different parts of
 one project generation. A generation is an exact stored pair with one identity.
-Project setup publishes both files through one pointer. The strict pair reader
-rejects module/gate authoring and test-provider policy from different generations.
+Project setup publishes both files through one pointer. With a valid committed
+publication, the strict pair reader rejects members from different generations.
+Without `.scaffold-publication`, it accepts loose files without that guarantee.
 
 - `progress.json` holds project, ordering, modules, gates, and classic policy
   selections generated from `progress.scaffold.json`.
@@ -39,10 +40,19 @@ repository root as its checkout owner. The owner needs write access to the
 new temporary directory; no Kubernetes, model-provider, or production-storage
 permission is required.
 
-Before creating the disposable project, check the required locking command:
+Use a clean isolated checkout at the recorded revision; do not reset an existing
+working checkout to run this example. The preflight rejects another revision or
+tracked/untracked worktree changes before creating disposable data.
+Before creating the disposable project, check the revision and locking command:
 
 ```bash
 set -euo pipefail
+publication_expected_revision=ad73a0df62607ea9634304c3e9518826450a6a25
+if [ "$(git rev-parse HEAD)" != "$publication_expected_revision" ] ||
+   [ -n "$(git status --porcelain)" ]; then
+  printf '%s\n' 'Use the recorded revision in a clean isolated checkout; stop' >&2
+  exit 1
+fi
 publication_flock_help="$(/usr/bin/flock --help 2>&1)"
 case "$publication_flock_help" in
   *--timeout*) ;;
@@ -57,9 +67,10 @@ tool through the host owner before proceeding; do not bypass the lock.
 The example uses a disposable Git repository with one module. `FORGE.md` is its
 implementation instruction, and `BUSTER.md` is its test instruction. Discovery
 creates an HTTP health declaration and a blocking dependency-security scan.
-The HTTP declaration needs an origin that the author must supply.
-The loopback origin below is authoring data only. Publication checks its presence;
-it does not prove reachability or provider admission. Before using this plan in a
+The author must supply a usable origin for the HTTP declaration before execution.
+The loopback origin below is authoring data only. Without a deployment input,
+publication requires `config.url` to be a string but accepts an empty string; it
+does not validate a usable origin, reachability, or provider admission. Before using this plan in a
 real run, resolve it with the selected registry and grants and prove the endpoint
 from the provider's execution location. See [Project test pipeline](pipeline-json.md).
 
@@ -73,8 +84,9 @@ set -euo pipefail
 umask 077
 publication_repo="$(mktemp -d "${TMPDIR:-/tmp}/kubeclaw-publication.XXXXXX")"
 publication_swarm="$publication_repo/Projects/demo/src/.swarm"
+publication_scaffold="$publication_swarm/progress.scaffold.json"
 publication_evidence="$(mktemp -d "${TMPDIR:-/tmp}/kubeclaw-publication-evidence.XXXXXX")"
-export publication_repo publication_swarm
+export publication_repo publication_swarm publication_scaffold
 printf '%s\n' "$publication_repo" > "$publication_evidence/disposable-root.txt"
 git rev-parse HEAD > "$publication_evidence/source-revision.txt"
 node --version > "$publication_evidence/node-version.txt"
@@ -232,7 +244,9 @@ provider plan. Resolve all `TODO:` diagnostics before apply.
 
 ### Authoring authority and effective defaults
 
-Discovery reads the committed pair with loose-copy comparison disabled.
+Discovery reads with loose-copy comparison disabled. With a publication
+directory, it requires the committed pair; without one, it accepts legacy loose
+files without a generation-pair guarantee.
 It then reads the existing scaffold. Scaffold version, description, notes,
 defaults, and execution order take precedence over progress values.
 For these fields, missing, null, or empty-string values fall back to progress
@@ -363,11 +377,14 @@ rechecks that the publication directory did not appear during the loose read.
 If the directory exists, the reader requires a valid current pointer, valid
 immutable generation, matching member digests/lengths, stable directory
 identities, and—by default—byte-identical loose materializations. Damage never
-causes fallback to loose files. The exported test-scope and lint loaders use this strict mode.
+causes fallback to loose files. The exported test-scope and lint loaders use
+this reader with copy verification enabled; they also retain its markerless
+loose-file compatibility path.
 
 The scaffold discovery path reads with loose-copy verification disabled so it
-can prepare a corrected publication from the committed generation. That is a
-repair input path, not execution authority.
+can prepare a corrected publication from the committed generation when present.
+Without the publication directory, it reads legacy loose files instead. This
+prepares authoring input, not execution authority.
 
 The test-scope loader requires `.swarm/pipeline.json` and exactly one module or
 gate selector. It returns the selected declaration's coverage, suites, tests,
@@ -390,7 +407,7 @@ The importer [reads the selected file directly](https://github.com/datrab/kubecl
 
 > **Source evidence — strict consumers**
 >
-> **Claim:** Both pipeline loaders read the pair strictly before selecting test or lint declarations.
+> **Claim:** Both pipeline loaders use default copy verification before selecting declarations. Generation coupling requires a valid committed publication; markerless loose files remain supported.
 >
 > **Implementation:** [loadPipelineTestScope](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/nova/core/test-gates/pipeline.ts#L12-L51); [loadPipelineLintDeclaration](https://github.com/datrab/kubeclaw/blob/ad73a0df62607ea9634304c3e9518826450a6a25/skills/nova/core/test-gates/pipeline.ts#L62-L78)
 >
@@ -407,7 +424,11 @@ The importer [reads the selected file directly](https://github.com/datrab/kubecl
 The publisher pins directory device/inode identities, rejects symlinked or
 multi-linked current targets, uses a durable store lock, writes immutable
 generation files, fsyncs files/directories, and commits with one pointer update.
-Concurrent substitution or mutation produces `PUBLISHED_PAIR_CHANGED`.
+Changed pinned identities or protected reads can produce
+`PUBLISHED_PAIR_CHANGED`. Unsafe target types can instead produce
+`PUBLISHED_PAIR_TARGET_INVALID` or another specific error. A regular single-linked
+loose replacement can be rematerialized; not every concurrent change is detected
+or reported with one code.
 
 The lock covers publication, not scaffold edits or the CLI's earlier change
 summary. Keep other authors stopped while validating and applying one input.
@@ -430,9 +451,11 @@ The publisher does not automatically retry or select an older generation.
 >
 > **Limit:** These tests do not prove durability after host power loss or authenticated ownership of the authoring files.
 
-**Current technical inference:** The strict reader prevents its caller from
-combining members of different generations. The current source implements
-this mechanism. Its cost is reduced availability when either
+**Current technical inference:** When `.scaffold-publication/current.json`
+exists and validates, the strict reader prevents its caller from combining
+members of different generations. The legacy path without
+`.scaffold-publication` reads loose members without a generation-pair guarantee.
+The current source implements this distinction. Its cost is reduced availability when either
 materialization is damaged: operators must reconcile the pair before execution.
 The source proves this behavior, but it contains no recorded historical reason
 for choosing this trade-off. The Nova project-setup owner owns that unknown.
@@ -483,21 +506,24 @@ The project owner must confirm that this scaffold remains the authoring authorit
 Do not select a newer-looking loose file as authority.
 
 For the disposable project above, use this recovery path only before its cleanup.
-Keep `publication_repo`, `publication_swarm`, and `publication_evidence` from
+Keep `publication_repo`, `publication_swarm`, `publication_scaffold`, and
+`publication_evidence` from
 the same shell. After cleanup, the deleted disposable project cannot be recovered
 through these bindings. Apply these steps only after
 the owner has excluded symlink substitutions, unsafe targets, and storage damage.
 
 1. Stop all readers and writers.
-2. Preserve the complete `.swarm` directory in a new evidence destination.
-   Keep the existing evidence directory.
+2. Preserve the complete `.swarm` directory and the exact selected scaffold in a
+   new evidence destination. Keep the existing evidence directory.
 3. Check that the scaffold and loose `progress.json` contain valid JSON.
    Missing loose progress is allowed; malformed existing progress requires the stop below.
 4. Run the isolated admission procedure below against a preserved copy.
    Missing authority, unsafe original identities, or a failed isolated apply stops recovery.
-5. Run the same scaffold command with `--repo "$publication_repo" --project demo --check`.
+5. Run the scaffold command with `--repo "$publication_repo" --project demo
+   --swarm "$publication_swarm" --scaffold "$publication_scaffold" --check`.
    Exit zero proves authoring validation only; it does not prove storage integrity.
-6. Run that command with `--apply` only when every condition above holds.
+6. Repeat the exact repository, project, swarm, and scaffold bindings from step 5,
+   replacing only `--check` with `--apply`, when every condition above holds.
    Expected observation: validation passes and both current files receive one committed generation.
 7. Repeat the strict reader and module-scope loader in
    [Publish and read the exact committed pair](#3-publish-and-read-the-exact-committed-pair).
@@ -506,7 +532,10 @@ the owner has excluded symlink substitutions, unsafe targets, and storage damage
    and final strict-read result. Remove only disposable data after retained-copy verification.
 
 For an existing project, replace `demo` with its owner-approved project identifier.
-Bind the three absolute paths to that project's repository, `.swarm`, and evidence directory.
+Bind all four absolute paths to that project's repository, `.swarm`, exact
+authoritative scaffold, and evidence directory. Pass the approved swarm and
+scaffold paths explicitly in both original-target commands; do not infer them
+from the project name.
 The project-setup owner must verify these bindings before any write.
 A failed apply or strict read leaves consumers stopped; do not repeatedly retry
 without identifying the failed condition.
@@ -524,15 +553,16 @@ Run from the source checkout, with the same Bash bindings used above:
 umask 077
 publication_recovery="$(mktemp -d "$publication_evidence/republish-admission.XXXXXX")"
 cp -R "$publication_swarm" "$publication_recovery/swarm"
+cp "$publication_scaffold" "$publication_recovery/input.scaffold.json"
 node skills/nova/project_setup/tools/progress-scaffold.ts \
   --repo "$publication_repo" --project demo \
   --swarm "$publication_recovery/swarm" \
-  --scaffold "$publication_recovery/swarm/progress.scaffold.json" --check \
+  --scaffold "$publication_recovery/input.scaffold.json" --check \
   > "$publication_recovery/check.txt"
 node skills/nova/project_setup/tools/progress-scaffold.ts \
   --repo "$publication_repo" --project demo \
   --swarm "$publication_recovery/swarm" \
-  --scaffold "$publication_recovery/swarm/progress.scaffold.json" --apply \
+  --scaffold "$publication_recovery/input.scaffold.json" --apply \
   > "$publication_recovery/apply.txt" 2>&1
 node --input-type=module - "$publication_recovery/swarm" <<'JS' \
   > "$publication_recovery/strict-read.txt"
