@@ -37,7 +37,8 @@ function fixture(run) {
     const buster = path.join(root, 'registry.yaml'), prism = path.join(root, 'native.yaml');
     fs.writeFileSync(buster, yaml.dump({ runtimeInfrastructure: { registry: { endpoint: 'https://registry.example.test', transport: 'https', authSecretName: 'registry-test' } } }));
     fs.writeFileSync(prism, yaml.dump({ worker: { native: { nodeName: 'native-render-test', namespace: 'agents', policyDigest: nativePoolPolicy(policy, 'prism').policyDigest } } }));
-    const env = { ...process.env, CODE_BUNDLE_GITHUB_REPOSITORY: 'datrab/kubeclaw', BUSTER_VALUES_FILE: buster, PRISM_VALUES_FILE: prism };
+    // Synthetic all-role releases must not inherit a production Buster-only baseline.
+    const env = { ...process.env, GITOPS_RETAINED_BASELINE: '', CODE_BUNDLE_GITHUB_REPOSITORY: 'datrab/kubeclaw', BUSTER_VALUES_FILE: buster, PRISM_VALUES_FILE: prism };
     run({ root, git, commit, sourceCommit, images, env });
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 }

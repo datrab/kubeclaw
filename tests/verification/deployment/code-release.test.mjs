@@ -95,7 +95,7 @@ test('push detector rebuilds an environment changed by an earlier unselected bui
     const run = imageCommit => {
       fs.writeFileSync(selection, JSON.stringify({ commit: imageCommit, images: Object.fromEntries(['nova', 'prism-agent', 'buster-gateway', 'buster-runtime', 'namespace-controller', 'archviewer', 'prism-control', 'prism-studio', 'prism-worker', 'prism-ingestion'].map(name => [name, true])) })); fs.writeFileSync(output, '');
       execFileSync(process.execPath, [path.resolve('scripts/updates/runtime-inputs.mjs')], { cwd: root,
-        env: { ...process.env, GITHUB_EVENT_NAME: 'push', GITHUB_SHA: head, GITHUB_EVENT_PATH: event, GITHUB_OUTPUT: output } });
+        env: { ...process.env, GITOPS_RETAINED_BASELINE: '', GITHUB_EVENT_NAME: 'push', GITHUB_SHA: head, GITHUB_EVENT_PATH: event, GITHUB_OUTPUT: output } });
       return fs.readFileSync(output, 'utf8');
     };
     assert.match(run(selected), /image_inputs=true\ndeployment_inputs=true/);
