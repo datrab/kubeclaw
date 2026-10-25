@@ -325,3 +325,19 @@ test('receipt creation rejects invalid new and retained producer identities befo
   assert.deepEqual(valid.images, images.images);
   assert.deepEqual(valid.imageSources.nova, componentSource(images, 'nova', 'image'));
 }));
+
+
+test('explicit refresh is bounded and cannot suppress shared-input rebuilds', () => fixture(({ root, write, commit, images, code }) => {
+  write('docs/refresh.md', 'refresh fixture');
+  const head = commit();
+  assert.deepEqual(changedImages(root, images, head, ['buster-runtime', 'namespace-controller']), ['buster-runtime', 'namespace-controller']);
+  assert.deepEqual(changedBundles(root, code, head, ['buster']), ['buster']);
+  for (const invalid of [null, 'buster', ['unknown'], ['buster', 'buster']]) {
+    assert.throws(() => changedBundles(root, code, head, invalid), /INVALID_RUNTIME_REFRESH_COMPONENTS/u);
+  }
+  assert.throws(() => changedImages(root, images, head, ['buster']), /INVALID_RUNTIME_REFRESH_COMPONENTS/u);
+  write('skills/common/plugin-runtime/sdk/index.ts', 'shared change');
+  const shared = commit();
+  assert.ok(changedImages(root, images, shared, ['namespace-controller']).includes('prism-control'));
+  assert.deepEqual(changedBundles(root, code, shared, ['buster']), runtimeRoles);
+}));

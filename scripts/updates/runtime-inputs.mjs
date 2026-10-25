@@ -26,16 +26,26 @@ export function inputDigest(root, revision, predicate) {
 export function bundleDigest(root, revision, role, dependencyRevision = revision) {
   return inputDigest(root, revision, bundleInput(root, dependencyRevision, role));
 }
+// Explicit refreshes add components; they never suppress input-driven rebuilds.
+// Keep boolean callers compatible while allowing bounded recovery planning.
+function forcedComponents(force, allowed) {
+  if (typeof force === 'boolean') return new Set(force ? allowed : []);
+  if (!Array.isArray(force) || force.some(name => !allowed.includes(name))
+    || new Set(force).size !== force.length) throw new Error('INVALID_RUNTIME_REFRESH_COMPONENTS');
+  return new Set(force);
+}
 export function changedBundles(root, prior, head, force = false) {
+  const forced = forcedComponents(force, runtimeRoles);
   return runtimeRoles.filter(role => {
-    if (force || !prior?.bundles?.[role]) return true;
+    if (forced.has(role) || !prior?.bundles?.[role]) return true;
     const source = componentSource(prior, role, 'bundle').commit;
     return bundleDigest(root, source, role) !== bundleDigest(root, head, role)
       || bundleDigest(root, source, role, head) !== bundleDigest(root, head, role, head);
   });
 }
 export function changedImages(root, prior, head, force = false) {
-  return runtimeImages.filter(name => force || !prior?.images?.[name]
+  const forced = forcedComponents(force, runtimeImages);
+  return runtimeImages.filter(name => forced.has(name) || !prior?.images?.[name]
     || inputDigest(root, componentSource(prior, name, 'image').commit, file => imageInput(name, file))
       !== inputDigest(root, head, file => imageInput(name, file)));
 }
