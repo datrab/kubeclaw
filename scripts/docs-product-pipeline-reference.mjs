@@ -15,6 +15,8 @@ const familyCodes = Object.freeze({ schema: 'DOC_DRIFT_SCHEMA', contract: 'DOC_D
 export function describeProductPipelineDiscovery() {
   return {
     kind: 'product-pipeline-discovery',
+    owner: 'documentation automation',
+    generator: 'scripts/docs-product-pipeline-reference.mjs',
     page: pipelinePage,
     authorities: { schema: contracts, workflow: compiler, contract: progress },
     schemaInterfaces: [...schemaInterfaces],

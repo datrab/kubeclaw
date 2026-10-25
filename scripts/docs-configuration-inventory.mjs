@@ -9457,19 +9457,22 @@ if (argv.includes('--check-schema-semantics-only')) {
 export function configurationDiscoveryDeclaration() {
   return {
     owner: 'scripts/docs-configuration-inventory.mjs',
-    scope: 'Bounded source selectors and maintained CLI parser contracts only; no runtime value, output role, parser correctness or inventory freshness qualification.',
+    scope: 'Bounded source selectors and parser/extractor declarations only; no runtime value, output role, parser correctness or inventory freshness qualification.',
     yaml: {
       selector: 'yamlSources', roots: [...SOURCE_ROOTS], files: yamlSources(),
+      parser: { implementation: buildYamlInventory.name, syntax: 'YAML.parseAllDocuments with parse-error rejection, document.toJS and yamlFields recursive field extraction; existing authority and consumer checks still apply.', qualification: 'Names the bounded owning parser; does not execute or qualify it in descriptor mode.' },
       chartRule: 'Within charts only values.yaml, values.yml, ci-values.yaml and ci-values.yml basenames are selected.',
     },
     schemas: {
       selector: 'registeredSchemaAuthorities/schemaSources',
       authorities: structuredClone(registeredSchemaAuthorities()), files: schemaSources(),
+      parser: { implementation: buildSchemaInventory.name, registeredSchemas: 'JSON.parse for referenced JSON schemas; registered inline objects are retained; flattenSchema recursively extracts fields.', separateResponsibilities: 'buildSchemaInventory also handles the fixed swarm JSON via JSON.parse/yamlFields and deployed/undeployed payloads via deployedConfigPayloads/undeployedConfigPayloads; the registration selector is not their complete discovery contract.', qualification: 'Declaration only; no general JSON Schema validator, deployed payload, swarm loader or parser-correctness acceptance.' },
       limit: 'Registration selection only; deployed payload and swarm discovery are separate buildSchemaInventory responsibilities.',
     },
     runtime: {
       selector: 'runtimeTextSources', roots: [...RUNTIME_SCAN_ROOTS],
       textExtensions: [...TEXT_EXTENSIONS].sort(), files: runtimeTextSources(),
+      parser: { implementation: buildRuntimeInputInventory.name, extractors: [environmentOccurrences.name, ownedCliFlags.name, derivedAssignments.name, secretFactsFromYaml.name, helmTemplateSecretFacts.name, shellSecretFacts.name], rule: 'Environment and CLI extraction dispatch over selected source text; derived assignments only for shell sources. Secret extraction additionally uses supplied YAML inventory documents, Helm template authorities and selected .sh sources.', qualification: 'Bounded static extractors and their existing fail-closed checks; no shell execution, general language evaluation, runtime result or successful inventory generation is asserted.' },
       limit: 'Go _test.go is excluded; observer aliases use canonicalRuntimeSource custody. No environment or YAML producer parsing is executed here.',
     },
     cli: {
