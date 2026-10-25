@@ -31,6 +31,27 @@ export function collectRuntimeReceipts(directory, commit, prior, source, root = 
     images: Object.fromEntries(runtimeImages.map(name => [name, built.images[name] ?? prior?.images[name]])),
     imageSources: Object.fromEntries(runtimeImages.map(name => [name, built.images[name] ? { commit, ...source } : componentSource(prior, name, 'image')])) };
 }
+
+// Build scope is deliberately independent of rollout scope. Call only after
+// authenticating the exact baseline; never modify the original build receipts.
+export function selectRuntimeImageReceipts(built, prior, scope) {
+  if (scope === 'all') return built;
+  if (scope !== 'buster') throw new Error('RUNTIME_PUBLICATION_SCOPE_REQUIRED');
+  if (!prior) throw new Error('Invalid retained image baseline');
+  const selected = { ...built, images: { ...built.images }, imageSources: { ...built.imageSources } };
+  for (const name of runtimeImages) {
+    if (['buster-runtime', 'namespace-controller'].includes(name)) continue;
+    const source = componentSource(prior, name, 'image');
+    const image = prior?.images?.[name];
+    if (!validSource(source) || typeof image !== 'string'
+      || !new RegExp(`^ghcr\\.io/[a-z0-9_-]+/kubeclaw-${name}@sha256:[a-f0-9]{64}$`, 'u').test(image)) {
+      throw new Error(`Invalid retained image source:${name}`);
+    }
+    selected.images[name] = image;
+    selected.imageSources[name] = source;
+  }
+  return selected;
+}
 if (process.argv[1] === import.meta.filename) {
   const [directory, commit, output, family = "runtime"] = process.argv.slice(2);
   if (!["runtime", "ops"].includes(family)) throw new Error("Unknown release family");

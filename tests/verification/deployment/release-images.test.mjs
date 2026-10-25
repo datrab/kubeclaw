@@ -3,7 +3,28 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { test } from 'node:test';
-import { collectReceipts } from '../../../scripts/updates/release-images.mjs';
+import { collectReceipts, selectRuntimeImageReceipts } from '../../../scripts/updates/release-images.mjs';
+import { runtimeImages } from '../../../scripts/updates/runtime-components.mjs';
+
+test('Buster receipt selection retains non-rollout artifacts and rejects incomplete baselines', () => {
+  const receipt = digit => ({ schemaVersion: 1, commit: digit.repeat(40), sourceRunId: 1, sourceRunAttempt: 1,
+    images: Object.fromEntries(runtimeImages.map(name => [name, `ghcr.io/datrab/kubeclaw-${name}@sha256:${digit.repeat(64)}`])) });
+  const prior = receipt('a');
+  const built = receipt('b');
+  const snapshot = JSON.stringify({ prior, built });
+  const selected = selectRuntimeImageReceipts(built, prior, 'buster');
+  for (const name of runtimeImages) {
+    const changed = ['buster-runtime', 'namespace-controller'].includes(name);
+    assert.equal(selected.images[name], (changed ? built : prior).images[name]);
+    if (!changed) assert.equal(selected.imageSources[name].commit, prior.commit);
+  }
+  assert.equal(JSON.stringify({ prior, built }), snapshot);
+  assert.equal(selectRuntimeImageReceipts(built, undefined, 'all'), built);
+  assert.throws(() => selectRuntimeImageReceipts(built, undefined, 'buster'), /Invalid retained/);
+  assert.throws(() => selectRuntimeImageReceipts(built, prior, ''), /SCOPE_REQUIRED/);
+  delete prior.images.nova;
+  assert.throws(() => selectRuntimeImageReceipts(built, prior, 'buster'), /Invalid retained/);
+});
 
 test('release selection rejects missing, duplicate and cross-commit build receipts', () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'release-receipts-'));
