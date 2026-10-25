@@ -5,7 +5,9 @@ set -euo pipefail
 role="${1:?role required}"
 version="${2:?OpenClaw version required}"
 case "$role" in nova|prism-agent|buster-gateway) ;; *) exit 2 ;; esac
-if [[ "${3:-}" == runtime ]]; then
+mode="${3:-all}"
+case "$mode" in all|plugins|tools|runtime) ;; *) echo "Unknown proof mode: $mode" >&2; exit 2 ;; esac
+if [[ "$mode" == runtime ]]; then
   if [[ "$role" == nova ]]; then test "$(id -u)" -eq 0; else test "$(id -u)" -eq 1000; fi
   cd /app
   node -e 'const sdk=require("openclaw/plugin-sdk/diagnostic-runtime"); if(typeof sdk.onDiagnosticEvent!=="function") process.exit(1)'
@@ -34,6 +36,7 @@ node -e 'const sdk=require("openclaw/plugin-sdk/diagnostic-runtime"); if(typeof 
 test -s /app/dist/extensions/kubeclaw-agent-observer/openclaw.plugin.json
 test -s /opt/openclaw-plugin-home/.kubeclaw-plugin-cache-version
 
+if [[ "$mode" == all || "$mode" == plugins ]]; then
 # Exercise the same offline npm provenance route as the chart, without network access.
 export HOME=/tmp/kubeclaw-image-home
 export NPM_CONFIG_CACHE=/tmp/kubeclaw-image-cache
@@ -44,11 +47,14 @@ for plugin in acpx discord; do
   openclaw plugins install "npm:@openclaw/${plugin}@${version}" --force --pin --accept-capabilities
 done
 openclaw plugins registry --refresh
+fi
 
+if [[ "$mode" == plugins ]]; then exit 0; fi
 if [[ "$role" == nova ]]; then
   shellcheck --version
   ruff --version
-  semgrep --version
+  # Version reporting is offline; advisory freshness is checked elsewhere.
+  SEMGREP_SEND_METRICS=off SEMGREP_ENABLE_VERSION_CHECK=0 semgrep --version
   for executable in buildctl buildkitd playwright lighthouse k6; do
     if command -v "$executable" >/dev/null; then
       echo "Unexpected Buster execution tool in Nova: $executable" >&2
@@ -63,7 +69,11 @@ if [[ "$role" == nova ]]; then
   go version
   tsc --version
   proof="$(mktemp -d)"
+  # Test payload must retain the literal positional parameter.
+  # shellcheck disable=SC2016
   printf '#!/bin/sh\necho "$1"\n' > "$proof/good.sh"
+  # Test payload must retain the literal positional parameter.
+  # shellcheck disable=SC2016
   printf '#!/bin/sh\necho $1\n' > "$proof/bad.sh"
   shellcheck "$proof/good.sh"
   if shellcheck "$proof/bad.sh"; then echo 'Shellcheck accepted an unquoted expansion' >&2; exit 1; fi
