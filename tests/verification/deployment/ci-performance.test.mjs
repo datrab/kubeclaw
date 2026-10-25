@@ -99,7 +99,7 @@ test('timing reports count elapsed wall time, not summed parallel jobs or skippe
   assert.equal(report.jobs.length, 2);
   assert.deepEqual(report.jobs.map(job => job.seconds), [15, 25]);
   assert.deepEqual(buildCacheMetrics('#1 CACHED\n#1 CACHED\n#2 exporting to GitHub Actions Cache\n#2 DONE 269.2s'),
-    { cachedSteps: 1, cacheExports: [{ kind: 'gha', seconds: 269.2 }] });
+    { cachedSteps: 1, cacheExports: [{ build: 0, kind: 'gha', seconds: 269.2 }] });
 });
 
 test('timing collector paginates and requests only the current attempt', async () => {
@@ -136,4 +136,24 @@ test('runner skips SDK removal when capacity suffices and never accepts insuffic
     env.RUNNER_ENVIRONMENT = 'self-hosted';
     assert.notEqual(run().status, 0);
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
+});
+
+
+test('combined toolchain/runtime logs namespace repeated BuildKit IDs per invocation', () => {
+  for (const runtime of [
+    '#1 CACHED\n#2 exporting to GitHub Actions Cache\n#2 DONE 20.0s',
+    // An unrelated step with the old export ID must not rewrite build 1.
+    '#1 CACHED\n#2 DONE 99.0s\n#4 exporting cache to registry\n#4 DONE 20.0s',
+  ]) {
+    const log = [
+      '2026-10-25T20:00:00Z #0 building with "same-builder" instance using docker-container driver',
+      '#1 CACHED', '#1 CACHED', '#2 exporting to GitHub Actions Cache', '#2 DONE 10.0s',
+      '2026-10-25T20:01:00Z #0 building with "same-builder" instance using docker-container driver',
+      runtime,
+    ].join('\n');
+    assert.deepEqual(buildCacheMetrics(log), { cachedSteps: 2, cacheExports: [
+      { build: 1, kind: 'gha', seconds: 10 },
+      { build: 2, kind: runtime.includes('registry') ? 'registry' : 'gha', seconds: 20 },
+    ] });
+  }
 });

@@ -257,7 +257,8 @@ observations do not establish why the cache missed, and are not a speedup claim.
 
 The runtime workflow's `CI timings` job publishes a `ci-timings` JSON artifact and
 job summary with current-attempt job/step durations, start offsets, cached steps
-and cache-export times. It paginates API results and excludes skipped jobs and
+and cache-export times, namespaced per BuildKit invocation so toolchain and
+runtime step IDs cannot collide. It paginates API results and excludes skipped jobs and
 itself from workload elapsed time. Parallel job times are not added together.
 Missing log access is marked unavailable, never counted as a cache miss.
 

@@ -5,13 +5,18 @@ import { pathToFileURL } from 'node:url';
 const seconds = (start, end) => Math.max(0, (Date.parse(end) - Date.parse(start)) / 1000);
 export function buildCacheMetrics(log) {
   const cached = new Set(), exports = new Map();
+  let build = 0;
   for (const line of log.split('\n')) {
+    // Each BuildKit invocation restarts its step IDs, even on the same builder.
+    // A toolchain miss and the runtime build share one Actions job log.
+    if (/#0 building with /u.test(line)) build++;
+    const key = id => `${build}:${id}`;
     const hit = line.match(/#(\d+) CACHED\b/u);
-    if (hit) cached.add(hit[1]);
+    if (hit) cached.add(key(hit[1]));
     const begin = line.match(/#(\d+) exporting (?:to GitHub Actions Cache|cache to registry)/u);
-    if (begin) exports.set(begin[1], { kind: line.includes('GitHub') ? 'gha' : 'registry', seconds: null });
+    if (begin) exports.set(key(begin[1]), { build, kind: line.includes('GitHub') ? 'gha' : 'registry', seconds: null });
     const done = line.match(/#(\d+) DONE ([\d.]+)s/u);
-    if (done && exports.has(done[1])) exports.get(done[1]).seconds = Number(done[2]);
+    if (done && exports.has(key(done[1]))) exports.get(key(done[1])).seconds = Number(done[2]);
   }
   return { cachedSteps: cached.size, cacheExports: [...exports.values()] };
 }
@@ -59,7 +64,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.ar
   const slow = [...report.jobs].sort((a, b) => b.seconds - a.seconds).slice(0, 12);
   const summary = `### CI elapsed and setup timings\nWorkload elapsed: ${report.workloadSeconds}s. Current attempt only; parallel durations are not added.\n\n`
     + slow.map(job => `- ${job.name}: ${job.seconds}s (started +${job.startOffsetSeconds}s)`
-      + (job.buildCache ? `; cached steps ${job.buildCache.cachedSteps}, cache export ${job.buildCache.cacheExports.map(e => `${e.kind}: ${e.seconds ?? 'unknown'}s`).join(', ')}` : '')).join('\n') + '\n';
+      + (job.buildCache ? `; cached steps ${job.buildCache.cachedSteps}, cache export ${job.buildCache.cacheExports.map(e => `build ${e.build} ${e.kind}: ${e.seconds ?? 'unknown'}s`).join(', ')}` : '')).join('\n') + '\n';
   if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, summary);
   console.log(summary);
 }
