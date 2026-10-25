@@ -36,13 +36,44 @@ export function fixturePodEvidence(value: unknown, privateValues: readonly strin
     return { ...fields(container, ['name', 'ready', 'restartCount']), state: state(container.state, privateValues), lastState: state(container.lastState, privateValues) };
   });
   return { ...fields(pod.metadata, ['name', 'uid', 'namespace']), ...fields(status, ['phase', 'reason']), message: fixtureDiagnosticText(status.message, privateValues),
-    conditions: list(status.conditions).slice(0, 16).map(condition => ({ ...fields(condition, ['type', 'status', 'reason', 'lastTransitionTime']), message: fixtureDiagnosticText(record(condition).message, privateValues) })),
+    conditions: list(status.conditions).slice(0, 16).map(condition => ({ ...fields(condition, ['type', 'status', 'reason', 'lastTransitionTime']), schedulerCategories: fixtureSchedulerCategories(record(condition).reason, record(condition).message), message: fixtureDiagnosticText(record(condition).message, privateValues) })),
     initContainerStatuses: containers(status.initContainerStatuses), containerStatuses: containers(status.containerStatuses) };
+}
+// Fixed categories are hints from scheduler diagnostics, never raw text or a
+// claim that a particular PVC/node is the root cause. Unknown wording stays unknown.
+export function fixtureSchedulerCategories(reason: unknown, message: unknown): string[] {
+  if (reason !== 'FailedScheduling' && reason !== 'Unschedulable') return [];
+  const text = typeof message === 'string' ? message.slice(0, 16384) : '';
+  const rules: [string, RegExp][] = [
+    ['insufficient-cpu', /\binsufficient cpu\b/iu],
+    ['insufficient-memory', /\binsufficient memory\b/iu],
+    ['unbound-pvc', /\bunbound immediate PersistentVolumeClaims\b/iu],
+    ['volume-node-affinity', /\bvolume node affinity conflict\b/iu],
+    ['node-affinity', /didn't match Pod's node affinity\/selector/iu],
+    ['untolerated-taint', /\buntolerated taint\b/iu],
+    ['pod-capacity', /\btoo many pods\b/iu],
+  ];
+  const categories = rules.filter(([, pattern]) => pattern.test(text)).map(([category]) => category);
+  return categories.length ? categories : ['unclassified'];
 }
 export function fixtureEventEvidence(value: unknown, privateValues: readonly string[] = []): RecordValue {
   const event = record(value);
   return { ...fields(event, ['type', 'reason', 'count', 'firstTimestamp', 'lastTimestamp']),
+    schedulerCategories: fixtureSchedulerCategories(event.reason, event.message),
     message: fixtureDiagnosticText(event.message, privateValues), involvedObject: fields(event.involvedObject, ['kind', 'name', 'uid']) };
+}
+// Storage evidence is structural only: never publish annotations, specs, volume
+// identities, condition messages or arbitrary provisioner diagnostics.
+export function fixturePvcEvidence(value: unknown): RecordValue {
+  const pvc = record(value); const status = record(pvc.status);
+  const phase = ['Pending', 'Bound', 'Lost'].includes(String(status.phase)) ? status.phase : null;
+  return { ...fields(pvc.metadata, ['name', 'namespace']), phase,
+    boundVolumePresent: typeof record(pvc.spec).volumeName === 'string' && record(pvc.spec).volumeName !== '',
+    conditions: list(status.conditions).slice(0, 16).map(value => {
+      const condition = record(value);
+      return { type: ['Resizing', 'FileSystemResizePending'].includes(String(condition.type)) ? condition.type : 'Other',
+        status: ['True', 'False', 'Unknown'].includes(String(condition.status)) ? condition.status : null };
+    }) };
 }
 // Classify failures without publishing arbitrary subprocess stderr. Inspect causes
 // because the runtime wraps kubectl failures while preserving the original error.
@@ -76,6 +107,7 @@ export async function collectFixtureFailureEvidence(namespace: string, signal: A
   };
   const pods = await get('pods');
   const events = signal.aborted ? [] : await get('events');
+  const pvcs = signal.aborted ? [] : await get('persistentvolumeclaims');
   const namespaceObjects = signal.aborted ? [] : await get('namespace', namespace);
   // Literal env values are private even when they have innocuous names. Never
   // publish the spec itself or read Kubernetes Secret objects for diagnostics.
@@ -138,8 +170,8 @@ export async function collectFixtureFailureEvidence(namespace: string, signal: A
   if (unresolvedPrivateSources) { withholdMessages(podEvidence); withholdMessages(eventEvidence); }
   const evidence = { namespaceIdentity: namespaceObjects.length ? fields(record(namespaceObjects[0]).metadata, ['name', 'uid']) : null,
     schemaVersion: 'kubernetes-fixture-failure.v1', namespace, observedAt: new Date().toISOString(),
-    pods: podEvidence, events: eventEvidence, logs, readErrors, unresolvedPrivateSources,
-    truncated: pods.length > 16 || events.length > 32,
+    pods: podEvidence, events: eventEvidence, persistentVolumeClaims: pvcs.slice(0, 16).map(fixturePvcEvidence), logs, readErrors, unresolvedPrivateSources,
+    truncated: pods.length > 16 || events.length > 32 || pvcs.length > 16,
     logReadLimitReached: logReads >= 8, omitted: ['pod specs', 'Secret objects', 'literal env values and credential patterns'] };
   // Leave room for the provider envelope under its 128 KiB artifact ceiling.
   while (Buffer.byteLength(JSON.stringify(evidence)) > 96 * 1024) {
@@ -147,6 +179,7 @@ export async function collectFixtureFailureEvidence(namespace: string, signal: A
     if (evidence.pods.length) evidence.pods.pop();
     else if (evidence.events.length) evidence.events.pop();
     else if (evidence.logs.length) evidence.logs.pop();
+    else if (evidence.persistentVolumeClaims.length) evidence.persistentVolumeClaims.pop();
     else break;
   }
   return evidence;

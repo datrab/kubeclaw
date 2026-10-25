@@ -172,7 +172,7 @@ test('diagnostic cancellation avoids reads and collection bounds the public snap
   const bounded = await collectFixtureFailureEvidence('test-stack', new AbortController().signal, async () => {
     reads++; return JSON.stringify({ items: Array.from({ length: 100 }, () => ({ metadata: { name: 'pod' }, reason: 'FailedScheduling' })) });
   });
-  assert.equal(reads, 3);
+  assert.equal(reads, 4);
   assert.equal(bounded.pods.length, 16);
   assert.equal(bounded.events.length, 32);
   assert.equal(bounded.truncated, true);
@@ -191,11 +191,11 @@ test('diagnostic read failures retain actionable categories without leaking stde
     const evidence = await collectFixtureFailureEvidence('test-stack', new AbortController().signal, async () => {
       throw new Error('KUBERNETES_FIXTURE_KUBECTL_FAILED', { cause: failure });
     });
-    assert.deepEqual(evidence.readErrors, [`pods:${reason}`, `events:${reason}`, `namespace:${reason}`]);
+    assert.deepEqual(evidence.readErrors, [`pods:${reason}`, `events:${reason}`, `persistentvolumeclaims:${reason}`, `namespace:${reason}`]);
     assert.doesNotMatch(JSON.stringify(evidence), /private|password=|token=/u);
   }
   const malformed = await collectFixtureFailureEvidence('test-stack', new AbortController().signal, async () => '{}');
-  assert.deepEqual(malformed.readErrors, ['pods:invalid-json', 'events:invalid-json']);
+  assert.deepEqual(malformed.readErrors, ['pods:invalid-json', 'events:invalid-json', 'persistentvolumeclaims:invalid-json']);
   const timedOut = await collectFixtureFailureEvidence('test-stack', AbortSignal.abort(new DOMException('private', 'TimeoutError')), async () => { throw new Error('not reached'); });
   assert.deepEqual(timedOut.readErrors, ['pods:timeout']);
 });
@@ -420,4 +420,41 @@ test('removed bootstrap payload is rejected before execution', async () => {
    await assert.rejects(()=>invoker.invoke('kubernetes.fixture',{operation:'prepare',resource:requestResource,payload:{...payload,familyclawBootstrap:obsolete}} as any,new AbortController().signal),/KUBERNETES_FIXTURE_BOOTSTRAP_REMOVED/);
   }
  }finally{fs.rmSync(root,{recursive:true,force:true});}
+});
+
+
+test('PVC diagnostics retain only bounded structural status and classify denied reads', async () => {
+  const { collectFixtureFailureEvidence } = await import('../../../skills/buster/engine/test-gates/kubernetes-fixture-diagnostics.ts');
+  const result = await collectFixtureFailureEvidence('test-stack', new AbortController().signal, async args => {
+    if (args[1] === 'namespace') return '{}';
+    if (args[1] !== 'persistentvolumeclaims') return '{"items":[]}';
+    assert.deepEqual(args, ['get', 'persistentvolumeclaims', '-n', 'test-stack', '-o', 'json']);
+    return JSON.stringify({ items: Array.from({ length: 20 }, () => ({ metadata: { name: 'data', annotations: { private: 'canary' } },
+      spec: { volumeName: 'private-volume-canary' }, status: { phase: 'Bound', conditions: [{ type: 'canary', status: 'True', message: 'canary', reason: 'canary' }] } })) });
+  });
+  assert.equal(result.persistentVolumeClaims.length, 16);
+  assert.equal(result.truncated, true);
+  assert.deepEqual(result.persistentVolumeClaims[0], { name: 'data', namespace: null, phase: 'Bound', boundVolumePresent: true, conditions: [{ type: 'Other', status: 'True' }] });
+  assert.doesNotMatch(JSON.stringify(result), /canary/);
+  const denied = await collectFixtureFailureEvidence('test-stack', new AbortController().signal, async args => {
+    if (args[1] === 'persistentvolumeclaims') throw new Error('Forbidden private-canary');
+    return args[1] === 'namespace' ? '{}' : '{"items":[]}';
+  });
+  assert.deepEqual(denied.readErrors, ['persistentvolumeclaims:forbidden']);
+  assert.deepEqual(denied.persistentVolumeClaims, []);
+});
+
+
+test('scheduler categories survive private-text withholding without publishing arbitrary values', async () => {
+  const { collectFixtureFailureEvidence, fixtureSchedulerCategories } = await import('../../../skills/buster/engine/test-gates/kubernetes-fixture-diagnostics.ts');
+  assert.deepEqual(fixtureSchedulerCategories('FailedScheduling', 'Insufficient cpu, Insufficient memory, pod has unbound immediate PersistentVolumeClaims; private-canary'), ['insufficient-cpu', 'insufficient-memory', 'unbound-pvc']);
+  assert.deepEqual(fixtureSchedulerCategories('Other', 'Insufficient cpu'), []);
+  assert.deepEqual(fixtureSchedulerCategories('Unschedulable', 'private-canary'), ['unclassified']);
+  assert.deepEqual(fixtureSchedulerCategories('FailedScheduling', "volume node affinity conflict; didn't match Pod's node affinity/selector; untolerated taint; Too many pods"), ['volume-node-affinity', 'node-affinity', 'untolerated-taint', 'pod-capacity']);
+  const result = await collectFixtureFailureEvidence('fixture', new AbortController().signal, async args => JSON.stringify(args[1] === 'events'
+    ? { items: [{ reason: 'FailedScheduling', message: 'Insufficient memory private-canary' }] }
+    : { items: [] }));
+  assert.equal(result.unresolvedPrivateSources, true);
+  assert.deepEqual(result.events[0].schedulerCategories, ['insufficient-memory']);
+  assert.equal(JSON.stringify(result).includes('private-canary'), false);
 });
