@@ -90763,7 +90763,7 @@
       {
         "kind": "reviewed-documentation-consumer/v1",
         "source": "scripts/docs-product-pipeline-reference.mjs",
-        "sha256": "0d5ca69959c9ac502d60cc2f51c8485330888f082b861d1ca52c96b0eac0c25d",
+        "sha256": "4fde0246e15bf06c396984b7076a413097bd060bc9b1a88c47f25194e7630483",
         "operationRecipe": {
           "language": "TypeScript",
           "statements": [
@@ -90801,6 +90801,22 @@
             },
             {
               "kind": "FirstStatement",
+              "syntax": "const schemaInterfaces = Object.freeze(['StageDefinition', 'PipelineDefinition']);"
+            },
+            {
+              "kind": "FirstStatement",
+              "syntax": "const familySections = Object.freeze({ schema: Object.freeze(['schema', 'workflow']), contract: Object.freeze(['contract']), workflow: Object.freeze(['workflow']) });"
+            },
+            {
+              "kind": "FirstStatement",
+              "syntax": "const familyCodes = Object.freeze({ schema: 'DOC_DRIFT_SCHEMA', contract: 'DOC_DRIFT_CONTRACT', workflow: 'DOC_DRIFT_WORKFLOW' });"
+            },
+            {
+              "kind": "FunctionDeclaration",
+              "syntax": "export function describeProductPipelineDiscovery() {\n  return {\n    kind: 'product-pipeline-discovery',\n    page: pipelinePage,\n    authorities: { schema: contracts, workflow: compiler, contract: progress },\n    schemaInterfaces: [...schemaInterfaces],\n    families: Object.fromEntries(Object.entries(familySections).map(([family, sections]) => [family, { sections: [...sections], driftCode: familyCodes[family] }])),\n    parser: { kind: 'TypeScript createSourceFile', target: 'Latest', scriptKind: 'TS', typeChecking: false, output: 'printer with comments removed; source order retained' },\n    schema: {\n      selection: 'Every matching interface declaration and all merged members',\n      members: 'Property and index signatures; recursive inline TypeLiteral properties; named aliases remain references',\n      rejected: ['Other interface member kinds', 'Interface heritage', 'Interface type parameters'],\n      annotations: 'Declared JSDoc syntax, not runtime enforcement',\n    },\n    graph: {\n      selection: 'Reachable static relative imports/re-exports with literal .ts extension; normalized root containment and seen membership',\n      external: 'Named import boundaries, not traversed',\n      rejected: ['Import-equals declarations', 'import() calls', 'Every require or createRequire identifier'],\n      filesystem: 'readFileSync; no symlink rejection claim',\n    },\n    limits: ['Bounded product pipeline sections, not all repository contracts or SDK exports', 'Not arbitrary TypeScript module resolution or type checking', 'No runtime, persistence, scheduler or recovery qualification', 'No DATA output-role or acceptance grant'],\n  };\n}"
+            },
+            {
+              "kind": "FirstStatement",
               "syntax": "const printer = ts.createPrinter({ removeComments: true, newLine: ts.NewLineKind.LineFeed });"
             },
             {
@@ -90825,7 +90841,7 @@
             },
             {
               "kind": "FunctionDeclaration",
-              "syntax": "function schemaRows(source) {\n  const rows = [];\n  function members(nodes, prefix) {\n    for (const member of nodes) {\n      if (ts.isPropertySignature(member)) {\n        const name = `${prefix}.${code(member.name, source)}`;\n        const tags = ts.getJSDocTags(member).map(tag => `@${tag.tagName.text} ${typeof tag.comment === 'string' ? tag.comment : ''}`.trim()).join('; ');\n        rows.push([name, member.questionToken ? 'optional' : 'required', code(member, source), tags]);\n        if (member.type && ts.isTypeLiteralNode(member.type)) members(member.type.members, name);\n      } else if (ts.isIndexSignatureDeclaration(member)) {\n        rows.push([`${prefix}.[key]`, 'index signature', code(member, source), '']);\n      } else {\n        throw new Error(`PIPELINE_SCHEMA_UNSUPPORTED_MEMBER ${prefix}: ${ts.SyntaxKind[member.kind]}`);\n      }\n    }\n  }\n  for (const name of ['StageDefinition', 'PipelineDefinition']) {\n    const declarations = source.statements.filter(node => ts.isInterfaceDeclaration(node) && node.name.text === name);\n    if (!declarations.length) throw new Error(`PIPELINE_SCHEMA_AUTHORITY_MISSING ${name}`);\n    // TypeScript merges interface declarations: every member contributes.\n    for (const declaration of declarations) {\n      if (declaration.heritageClauses?.length) throw new Error(`PIPELINE_SCHEMA_UNSUPPORTED_INHERITANCE ${name}`);\n      if (declaration.typeParameters?.length) throw new Error(`PIPELINE_SCHEMA_UNSUPPORTED_TYPE_PARAMETERS ${name}`);\n      members(declaration.members, name);\n    }\n  }\n  return rows;\n}"
+              "syntax": "function schemaRows(source) {\n  const rows = [];\n  function members(nodes, prefix) {\n    for (const member of nodes) {\n      if (ts.isPropertySignature(member)) {\n        const name = `${prefix}.${code(member.name, source)}`;\n        const tags = ts.getJSDocTags(member).map(tag => `@${tag.tagName.text} ${typeof tag.comment === 'string' ? tag.comment : ''}`.trim()).join('; ');\n        rows.push([name, member.questionToken ? 'optional' : 'required', code(member, source), tags]);\n        if (member.type && ts.isTypeLiteralNode(member.type)) members(member.type.members, name);\n      } else if (ts.isIndexSignatureDeclaration(member)) {\n        rows.push([`${prefix}.[key]`, 'index signature', code(member, source), '']);\n      } else {\n        throw new Error(`PIPELINE_SCHEMA_UNSUPPORTED_MEMBER ${prefix}: ${ts.SyntaxKind[member.kind]}`);\n      }\n    }\n  }\n  for (const name of schemaInterfaces) {\n    const declarations = source.statements.filter(node => ts.isInterfaceDeclaration(node) && node.name.text === name);\n    if (!declarations.length) throw new Error(`PIPELINE_SCHEMA_AUTHORITY_MISSING ${name}`);\n    // TypeScript merges interface declarations: every member contributes.\n    for (const declaration of declarations) {\n      if (declaration.heritageClauses?.length) throw new Error(`PIPELINE_SCHEMA_UNSUPPORTED_INHERITANCE ${name}`);\n      if (declaration.typeParameters?.length) throw new Error(`PIPELINE_SCHEMA_UNSUPPORTED_TYPE_PARAMETERS ${name}`);\n      members(declaration.members, name);\n    }\n  }\n  return rows;\n}"
             },
             {
               "kind": "FunctionDeclaration",
@@ -90837,11 +90853,11 @@
             },
             {
               "kind": "FunctionDeclaration",
-              "syntax": "export function checkProductPipeline(root, family) {\n  const codes = { schema: 'DOC_DRIFT_SCHEMA', contract: 'DOC_DRIFT_CONTRACT', workflow: 'DOC_DRIFT_WORKFLOW' };\n  if (!(family in codes)) throw new Error(`PIPELINE_FAMILY_UNSUPPORTED ${family}`);\n  // Parse/toolchain/read errors propagate separately; only a successfully built\n  // semantic section that differs from this exact page receives a drift code.\n  const expected = productPipelineSections(root);\n  const page = fs.readFileSync(path.join(root, pipelinePage), 'utf8');\n  // The schema family owns both recursive fields and compiler-selected stages.\n  const selected = family === 'schema' ? ['schema', 'workflow'] : [family];\n  for (const section of selected) {\n    const begin = `<!-- BEGIN PRODUCT PIPELINE: ${section} -->`;\n    const end = `<!-- END PRODUCT PIPELINE: ${section} -->`;\n    const start = page.indexOf(begin);\n    const stop = page.indexOf(end);\n    if (start < 0 || stop < start || page.indexOf(begin, start + begin.length) !== -1 || page.indexOf(end, stop + end.length) !== -1 || page.slice(start + begin.length, stop) !== `\\n\\n${expected[section]}\\n`) {\n      return `${codes[family]} ${pipelinePage}: product pipeline ${section} section differs from its source rules`;\n    }\n  }\n  return null;\n}"
+              "syntax": "export function checkProductPipeline(root, family) {\n  const codes = familyCodes;\n  if (!(family in codes)) throw new Error(`PIPELINE_FAMILY_UNSUPPORTED ${family}`);\n  // Parse/toolchain/read errors propagate separately; only a successfully built\n  // semantic section that differs from this exact page receives a drift code.\n  const expected = productPipelineSections(root);\n  const page = fs.readFileSync(path.join(root, pipelinePage), 'utf8');\n  // The schema family owns both recursive fields and compiler-selected stages.\n  const selected = Object.hasOwn(familySections, family) ? familySections[family] : [family];\n  for (const section of selected) {\n    const begin = `<!-- BEGIN PRODUCT PIPELINE: ${section} -->`;\n    const end = `<!-- END PRODUCT PIPELINE: ${section} -->`;\n    const start = page.indexOf(begin);\n    const stop = page.indexOf(end);\n    if (start < 0 || stop < start || page.indexOf(begin, start + begin.length) !== -1 || page.indexOf(end, stop + end.length) !== -1 || page.slice(start + begin.length, stop) !== `\\n\\n${expected[section]}\\n`) {\n      return `${codes[family]} ${pipelinePage}: product pipeline ${section} section differs from its source rules`;\n    }\n  }\n  return null;\n}"
             },
             {
               "kind": "IfStatement",
-              "syntax": "if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {\n  try {\n    const family = process.argv[2];\n    const failure = checkProductPipeline(process.cwd(), family);\n    if (failure) { console.error(failure); process.exitCode = 1; }\n    else console.log(`product pipeline ${family} section is current; bounded contribution, not complete family acceptance`);\n  } catch (error) {\n    console.error(`PIPELINE_REFERENCE_INPUT_ERROR: ${error.message}`);\n    process.exitCode = 2;\n  }\n}"
+              "syntax": "if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {\n  try {\n    if (process.argv[2] === '--describe-discovery') {\n      console.log(JSON.stringify(describeProductPipelineDiscovery(), null, 2));\n    } else {\n    const family = process.argv[2];\n    const failure = checkProductPipeline(process.cwd(), family);\n    if (failure) { console.error(failure); process.exitCode = 1; }\n    else console.log(`product pipeline ${family} section is current; bounded contribution, not complete family acceptance`);\n    }\n  } catch (error) {\n    console.error(`PIPELINE_REFERENCE_INPUT_ERROR: ${error.message}`);\n    process.exitCode = 2;\n  }\n}"
             }
           ]
         },

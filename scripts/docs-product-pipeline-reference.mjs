@@ -7,6 +7,34 @@ export const pipelinePage = 'docs/site/reference/workflows.md';
 const contracts = 'skills/common/plugin-runtime/sdk/src/generated/contracts.ts';
 const compiler = 'skills/nova/project/compiler.ts';
 const progress = 'skills/nova/project_setup/tools/progress-scaffold-validation.ts';
+const schemaInterfaces = Object.freeze(['StageDefinition', 'PipelineDefinition']);
+const familySections = Object.freeze({ schema: Object.freeze(['schema', 'workflow']), contract: Object.freeze(['contract']), workflow: Object.freeze(['workflow']) });
+const familyCodes = Object.freeze({ schema: 'DOC_DRIFT_SCHEMA', contract: 'DOC_DRIFT_CONTRACT', workflow: 'DOC_DRIFT_WORKFLOW' });
+
+// Fresh metadata only: consumers cannot mutate the renderer's selection inputs.
+export function describeProductPipelineDiscovery() {
+  return {
+    kind: 'product-pipeline-discovery',
+    page: pipelinePage,
+    authorities: { schema: contracts, workflow: compiler, contract: progress },
+    schemaInterfaces: [...schemaInterfaces],
+    families: Object.fromEntries(Object.entries(familySections).map(([family, sections]) => [family, { sections: [...sections], driftCode: familyCodes[family] }])),
+    parser: { kind: 'TypeScript createSourceFile', target: 'Latest', scriptKind: 'TS', typeChecking: false, output: 'printer with comments removed; source order retained' },
+    schema: {
+      selection: 'Every matching interface declaration and all merged members',
+      members: 'Property and index signatures; recursive inline TypeLiteral properties; named aliases remain references',
+      rejected: ['Other interface member kinds', 'Interface heritage', 'Interface type parameters'],
+      annotations: 'Declared JSDoc syntax, not runtime enforcement',
+    },
+    graph: {
+      selection: 'Reachable static relative imports/re-exports with literal .ts extension; normalized root containment and seen membership',
+      external: 'Named import boundaries, not traversed',
+      rejected: ['Import-equals declarations', 'import() calls', 'Every require or createRequire identifier'],
+      filesystem: 'readFileSync; no symlink rejection claim',
+    },
+    limits: ['Bounded product pipeline sections, not all repository contracts or SDK exports', 'Not arbitrary TypeScript module resolution or type checking', 'No runtime, persistence, scheduler or recovery qualification', 'No DATA output-role or acceptance grant'],
+  };
+}
 const printer = ts.createPrinter({ removeComments: true, newLine: ts.NewLineKind.LineFeed });
 const code = (node, source) => printer.printNode(ts.EmitHint.Unspecified, node, source).trim();
 // Entity-encode every ASCII punctuation mark before Markdown parses a cell.
@@ -53,7 +81,7 @@ function schemaRows(source) {
       }
     }
   }
-  for (const name of ['StageDefinition', 'PipelineDefinition']) {
+  for (const name of schemaInterfaces) {
     const declarations = source.statements.filter(node => ts.isInterfaceDeclaration(node) && node.name.text === name);
     if (!declarations.length) throw new Error(`PIPELINE_SCHEMA_AUTHORITY_MISSING ${name}`);
     // TypeScript merges interface declarations: every member contributes.
@@ -111,14 +139,14 @@ export function renderProductPipeline(root) {
 }
 
 export function checkProductPipeline(root, family) {
-  const codes = { schema: 'DOC_DRIFT_SCHEMA', contract: 'DOC_DRIFT_CONTRACT', workflow: 'DOC_DRIFT_WORKFLOW' };
+  const codes = familyCodes;
   if (!(family in codes)) throw new Error(`PIPELINE_FAMILY_UNSUPPORTED ${family}`);
   // Parse/toolchain/read errors propagate separately; only a successfully built
   // semantic section that differs from this exact page receives a drift code.
   const expected = productPipelineSections(root);
   const page = fs.readFileSync(path.join(root, pipelinePage), 'utf8');
   // The schema family owns both recursive fields and compiler-selected stages.
-  const selected = family === 'schema' ? ['schema', 'workflow'] : [family];
+  const selected = Object.hasOwn(familySections, family) ? familySections[family] : [family];
   for (const section of selected) {
     const begin = `<!-- BEGIN PRODUCT PIPELINE: ${section} -->`;
     const end = `<!-- END PRODUCT PIPELINE: ${section} -->`;
@@ -133,10 +161,14 @@ export function checkProductPipeline(root, family) {
 
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
   try {
+    if (process.argv[2] === '--describe-discovery') {
+      console.log(JSON.stringify(describeProductPipelineDiscovery(), null, 2));
+    } else {
     const family = process.argv[2];
     const failure = checkProductPipeline(process.cwd(), family);
     if (failure) { console.error(failure); process.exitCode = 1; }
     else console.log(`product pipeline ${family} section is current; bounded contribution, not complete family acceptance`);
+    }
   } catch (error) {
     console.error(`PIPELINE_REFERENCE_INPUT_ERROR: ${error.message}`);
     process.exitCode = 2;
