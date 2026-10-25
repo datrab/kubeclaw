@@ -310,7 +310,10 @@ test('receipt creation rejects invalid new and retained producer identities befo
   fs.mkdirSync(path.join(root, 'receipt-input'));
   const directory = path.join(root, 'receipt-input');
   const before = JSON.stringify(images);
-  for (const source of [{}, { sourceRunId: 0, sourceRunAttempt: 1 }, { sourceRunId: 2, sourceRunAttempt: 0 }]) {
+  for (const source of [{}, { sourceRunId: 0, sourceRunAttempt: 1 }, { sourceRunId: 2, sourceRunAttempt: 0 },
+    { sourceRunId: 2, sourceRunAttempt: 1, commit: 'a'.repeat(40) },
+    { sourceRunId: 2, sourceRunAttempt: 1, images: {} },
+    { sourceRunId: 2, sourceRunAttempt: 1, schemaVersion: 99 }]) {
     assert.throws(() => collectRuntimeReceipts(directory, initial, images, source, root), /Verified runtime source identity required/u);
   }
   const malformed = structuredClone(images);

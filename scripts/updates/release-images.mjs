@@ -19,7 +19,8 @@ export function collectReceipts(directory, commit, expected) {
   return { schemaVersion: 1, commit, images };
 }
 export function collectRuntimeReceipts(directory, commit, prior, source, root = process.cwd(), force = false) {
-  if (!validSource({ commit, ...source })) throw new Error('Verified runtime source identity required');
+  if (!source || Object.keys(source).some(key => !['sourceRunId', 'sourceRunAttempt'].includes(key))
+    || !validSource({ commit, ...source })) throw new Error('Verified runtime source identity required');
   const expected = changedImages(root, prior, commit, force);
   for (const name of runtimeImages.filter(name => !expected.includes(name))) {
     if (!validSource(componentSource(prior, name, 'image'))) throw new Error(`Invalid retained image source:${name}`);
