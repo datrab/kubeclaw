@@ -120,7 +120,7 @@ test('partial build publication retains old images and bundles, and Helm preserv
   }
   write('dist/buster-' + head + '.tgz', 'fixture archive bytes');
   execFileSync(process.execPath, [path.join(sourceRoot, 'scripts/updates/code-release.mjs'), 'dist', head, 'datrab/kubeclaw'], {
-    cwd: root, env: { ...process.env, GITHUB_SHA: head, GITHUB_RUN_ID: '2', GITHUB_RUN_ATTEMPT: '1', GITHUB_EVENT_NAME: 'push' },
+    cwd: root, env: { ...process.env, GITOPS_RETAINED_BASELINE: '', GITHUB_SHA: head, GITHUB_RUN_ID: '2', GITHUB_RUN_ATTEMPT: '1', GITHUB_EVENT_NAME: 'push' },
   });
   const nextCode = JSON.parse(fs.readFileSync(path.join(root, 'dist/runtime-code.json')));
   for (const role of ['nova', 'prism']) {
@@ -371,7 +371,8 @@ test('dispatch collector and bundle CLI preserve non-refreshed component origins
   write('docs/refresh-cli.md', 'bounded dispatch');
   const head = commit();
   const plan = { images: ['buster-runtime', 'namespace-controller'], bundles: ['buster'] };
-  const env = { ...process.env, GITHUB_EVENT_NAME: 'workflow_dispatch',
+  // Synthetic receipts must not inherit the caller's production baseline.
+  const env = { ...process.env, GITOPS_RETAINED_BASELINE: '', GITHUB_EVENT_NAME: 'workflow_dispatch',
     GITHUB_SHA: head, RUNTIME_REFRESH_PLAN: JSON.stringify(plan),
     SOURCE_RUN_ID: '2', SOURCE_RUN_ATTEMPT: '1' };
   for (const name of plan.images) write(`receipt-input/${name}.json`, JSON.stringify({
