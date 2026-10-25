@@ -28,7 +28,7 @@ assert.equal(revisionType, 'commit', 'BUSTER_PROVIDER_SOURCE_REVISION: source re
 
 // Historical source links must describe these exact current inputs, not merely
 // an older schema at the same path. A new schema requires its committed source.
-function pinnedJson(relativePath) {
+function pinnedText(relativePath) {
   const current = fs.readFileSync(path.join(root, relativePath), 'utf8');
   let pinned;
   try {
@@ -41,7 +41,11 @@ function pinnedJson(relativePath) {
   }
   assert.equal(current, pinned,
     `BUSTER_PROVIDER_SOURCE_REVISION: current input differs from ${revision}:${relativePath}; commit the source and supply --revision=<commit>`);
-  return JSON.parse(current);
+  return current;
+}
+
+function pinnedJson(relativePath) {
+  return JSON.parse(pinnedText(relativePath));
 }
 
 function resolvePointer(schema, pointer) {
@@ -71,26 +75,39 @@ function variants(node, schema, choices = []) {
 
 function typeText(nodes) {
   const types = new Set(nodes.flatMap((node) => Array.isArray(node.type) ? node.type : node.type ? [node.type] : []));
-  return [...types].sort().join(' or ') || 'schema choice';
+  if (!types.size) {
+    for (const node of nodes) {
+      const values = node.enum ?? (Object.hasOwn(node, 'const') ? [node.const] : []);
+      for (const value of values) types.add(value === null ? 'null'
+        : Array.isArray(value) ? 'array' : typeof value);
+    }
+  }
+  return [...types].sort().join(' or ') || 'any JSON value';
 }
 
 function ruleText(nodes) {
   const rules = [];
+  const types = new Set(nodes.flatMap((node) => Array.isArray(node.type) ? node.type : node.type ? [node.type] : []));
+  const typed = (type, label) => types.size > 1 ? `${type} ${label}` : label;
   const add = (label, values) => {
     const unique = [...new Set(values.filter((value) => value !== undefined).map((value) => JSON.stringify(value)))];
     if (unique.length) rules.push(`${label} ${unique.join(' or ')}`);
   };
   add('default', nodes.map((node) => node.default));
   add('constant', nodes.map((node) => node.const));
+  add(typed('string', 'format'), nodes.map((node) => node.format));
   const enums = nodes.flatMap((node) => node.enum ?? []);
   if (enums.length) rules.push(`values ${[...new Set(enums.map((value) => JSON.stringify(value)))].join(', ')}`);
   for (const [key, label] of [['minimum', 'minimum'], ['maximum', 'maximum'], ['minLength', 'minimum length'],
     ['maxLength', 'maximum length'], ['minItems', 'minimum items'], ['maxItems', 'maximum items'],
-    ['minProperties', 'minimum entries'], ['maxProperties', 'maximum entries']]) add(label, nodes.map((node) => node[key]));
-  add('pattern', nodes.map((node) => node.pattern?.replaceAll('(', '&#40;').replaceAll(')', '&#41;')));
-  add('property name pattern', nodes.map((node) => node.propertyNames?.pattern?.replaceAll('(', '&#40;').replaceAll(')', '&#41;')));
-  if (nodes.some((node) => node.uniqueItems === true)) rules.push('unique items');
-  if (nodes.some((node) => node.additionalProperties === false)) rules.push('no unknown fields');
+    ['minProperties', 'minimum entries'], ['maxProperties', 'maximum entries']]) {
+    const type = /Length/u.test(key) ? 'string' : /Items/u.test(key) ? 'array' : /Properties/u.test(key) ? 'object' : 'number';
+    add(typed(type, label), nodes.map((node) => node[key]));
+  }
+  add(typed('string', 'pattern'), nodes.map((node) => node.pattern?.replaceAll('(', '&#40;').replaceAll(')', '&#41;')));
+  add(typed('object', 'property name pattern'), nodes.map((node) => node.propertyNames?.pattern?.replaceAll('(', '&#40;').replaceAll(')', '&#41;')));
+  if (nodes.some((node) => node.uniqueItems === true)) rules.push(typed('array', 'unique items'));
+  if (nodes.some((node) => node.additionalProperties === false)) rules.push(typed('object', 'no unknown fields'));
   return rules.join('; ') || 'No additional scalar limit in the schema.';
 }
 
@@ -100,8 +117,8 @@ function collect(schema) {
     const nodes = variants(raw, schema);
     if (fieldPath) rows.push({ path: fieldPath,
       required, choices: inheritedChoices,
-      type: typeText(nodes.map((entry) => entry.node)),
-      rules: ruleText(nodes.map((entry) => entry.node)) });
+      type: nodes.length ? typeText(nodes.map((entry) => entry.node)) : undefined,
+      rules: nodes.length ? ruleText(nodes.map((entry) => entry.node)) : undefined });
     for (const { node, choices } of nodes) {
       if (ancestors.has(node)) continue;
       const next = new Set(ancestors).add(node);
@@ -110,9 +127,14 @@ function collect(schema) {
         walk(child, fieldPath ? `${fieldPath}.${name}` : name, requiredNames.has(name),
           [...inheritedChoices, ...choices], next);
       }
-      if (node.items) walk(node.items, `${fieldPath}[]`, false, [...inheritedChoices, ...choices], next);
-      if (node.additionalProperties && typeof node.additionalProperties === 'object') {
-        walk(node.additionalProperties, `${fieldPath}{}`, false, [...inheritedChoices, ...choices], next);
+      if (node.items !== false && (node.items || node.type === 'array')) {
+        walk(node.items === true || node.items === undefined ? {} : node.items,
+          `${fieldPath}[]`, false, [...inheritedChoices, ...choices], next);
+      }
+      if (node.additionalProperties !== false
+        && (node.type === 'object' || typeof node.additionalProperties === 'object')) {
+        walk(typeof node.additionalProperties === 'object' ? node.additionalProperties : {},
+          `${fieldPath}{}`, false, [...inheritedChoices, ...choices], next);
       }
     }
   };
@@ -121,15 +143,14 @@ function collect(schema) {
   for (const row of rows) {
     const current = unique.get(row.path) ?? { path: row.path, occurrences: [], types: new Set(), rules: new Set() };
     current.occurrences.push({ required: row.required, choices: row.choices });
-    current.types.add(row.type);
-    current.rules.add(row.rules);
+    if (row.type) current.types.add(row.type);
+    if (row.rules) current.rules.add(row.rules);
     unique.set(row.path, current);
   }
   const presence = (occurrences) => {
     const unconditional = occurrences.filter((item) => item.choices.length === 0);
     if (unconditional.some((item) => item.required)) return 'Required';
     if (unconditional.length) return occurrences.some((item) => item.required) ? 'Conditional' : 'Optional';
-    if (!occurrences.some((item) => item.required)) return 'Optional';
     const choiceGroups = new Map();
     for (const occurrence of occurrences) for (const choice of occurrence.choices) {
       const group = choiceGroups.get(choice.id) ?? { count: choice.count, indexes: new Set(), allRequired: true };
@@ -137,22 +158,29 @@ function collect(schema) {
       group.allRequired &&= occurrence.required;
       choiceGroups.set(choice.id, group);
     }
+    if (!occurrences.some((item) => item.required)) {
+      return [...choiceGroups.values()].every((group) => group.indexes.size === group.count)
+        ? 'Optional' : 'Conditional (optional in selected choice)';
+    }
     return [...choiceGroups.values()].some((group) => group.allRequired && group.indexes.size === group.count)
       ? 'Required' : 'Conditional';
   };
   return [...unique.values()].map((row) => ({
     path: row.path,
     presence: presence(row.occurrences),
-    type: [...row.types].sort().join(' or '),
-    rules: [...row.rules].sort().join('; '),
+    type: [...row.types].sort().join(' or ') || 'any',
+    rules: [...row.rules].sort().join('; ') || 'No additional scalar limit in the schema.',
   })).sort((a, b) => a.path.localeCompare(b.path));
 }
 
 const providers = [];
+const manifestFiles = [];
 for (const pluginName of fs.readdirSync(pluginRoot).sort()) {
   const manifestPath = path.join(pluginRoot, pluginName, 'plugin.json');
   if (!fs.existsSync(manifestPath)) continue;
-  const manifest = pinnedJson(path.posix.join('skills/buster/plugins', pluginName, 'plugin.json'));
+  const manifestFile = path.posix.join('skills/buster/plugins', pluginName, 'plugin.json');
+  manifestFiles.push(manifestFile);
+  const manifest = pinnedJson(manifestFile);
   for (const provider of manifest.testProviders ?? []) {
     const file = path.posix.join('skills/buster/plugins', pluginName, provider.configSchema);
     providers.push({ contractId: provider.contractId, file,
@@ -173,7 +201,13 @@ assert.equal(containerRows.get('definition.template')?.presence, 'Conditional',
 
 const flowFile = 'skills/buster/plugins/api-flow/schemas/flow.schema.json';
 const flow = pinnedJson(flowFile);
-const sources = [...new Set([...providers.map((provider) => provider.file), flowFile])].sort();
+const generatorFile = 'scripts/generate-buster-provider-reference.mjs';
+pinnedText(generatorFile);
+const catalogueFile = 'tests/verification/e2e/provider-catalog.mjs';
+const catalogueTemplateFile = 'scripts/buster-provider-catalogue-reference.mjs';
+pinnedText(catalogueFile);
+pinnedText(catalogueTemplateFile);
+const sources = [...new Set([...manifestFiles, ...providers.map((provider) => provider.file), flowFile, catalogueFile, catalogueTemplateFile, generatorFile])].sort();
 const lines = [
   '# Buster Provider Configuration', '',
   'Status: generated reference',
@@ -195,6 +229,10 @@ const lines = [
   'size limits, patterns, uniqueness, and closed-object rules. It intentionally does',
   'not invent a default when the schema has none.', '',
 ];
+
+lines.push('## Source Inventory', '',
+  'These exact committed inputs establish the installed provider inventory, contract IDs, selected schemas and catalogue parser:', '',
+  ...sources.map((file) => `- [${file}](https://github.com/datrab/kubeclaw/blob/${revision}/${file})`), '');
 
 function appendContract(title, schema, file) {
   const rows = collect(schema);
@@ -252,12 +290,17 @@ function appendContract(title, schema, file) {
 for (const provider of providers) appendContract(provider.contractId, provider.schema, provider.file);
 appendContract('kubeclaw.api-flow-document@1', flow, flowFile);
 
-lines.push(providerCatalogueReference.trimEnd(), '');
+lines.push(providerCatalogueReference.replaceAll('CATALOGUE_SOURCE_REVISION', revision).trimEnd(), '');
 
 lines.push('## Maintenance Rule', '',
-  'Change and commit a schema first. Then run `node scripts/generate-buster-provider-reference.mjs --write --revision=<full-source-commit>`.',
-  'Review the changed paths and limits as a contract change. The reference freshness gate',
-  'rejects a stale file and rejects a provider that is absent from this inventory.', '');
+  'Run from a clean repository checkout with Git and a Node.js runtime supporting native ESM and `import.meta.dirname`. No cluster or remote service is needed.',
+  'Change and commit the schemas/manifests first. Select that full source commit: every installed provider manifest, selected configuration schema, API-flow schema, remote catalogue parser, catalogue prose template and generator must match it byte-for-byte.',
+  'Replace `<full-source-commit>` with that existing lowercase 40-hex commit, then run `node scripts/generate-buster-provider-reference.mjs --write --revision=<full-source-commit>`.',
+  'Expected write result: `wrote docs/site/reference/buster-provider-configuration.md`. Then run `node scripts/generate-buster-provider-reference.mjs` without `--write`.',
+  'Expected check result: `Buster provider configuration verified: 19 providers and one flow document`. This proves generated freshness, not provider execution or remote health.',
+  'If `BUSTER_PROVIDER_SOURCE_REVISION` fails, check the selected commit, missing objects and exact committed input bytes. Commit the intended source and select its revision; do not weaken the pin.',
+  'A stale-output assertion requires regeneration from the selected matching inputs. For an inventory-count or provider-contract assertion, inspect the changed provider contracts and review the generator before regeneration. Do not change the count merely to obtain a pass.',
+  'Review the generated diff and limits as a contract change, then commit the intended generator/reference changes. The command writes only the tracked reference: it starts no service and creates no temporary resource to clean up. If abandoning the change, restore only your own generated-file edit after preserving any pre-existing work.', '');
 
 const output = `${lines.join('\n').trimEnd()}\n`;
 if (process.argv.includes('--write')) {
