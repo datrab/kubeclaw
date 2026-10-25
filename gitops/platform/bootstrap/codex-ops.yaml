@@ -89,9 +89,11 @@ spec:
                 app.kubernetes.io/instance: agent-nova
               namespaces:
                 - kubeclaw
+                - argocd
               namespacePrefixes:
                 - test
               tools:
+                - list_argocd_applications
                 - namespace_overview
                 - get_pod
                 - get_events
