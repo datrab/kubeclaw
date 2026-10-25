@@ -3,10 +3,10 @@
 Status: generated reference
 Audience: pipeline author, operator, test maintainer
 Owner: buster
-Evidence: scripts/generate-buster-provider-reference.mjs; skills/buster/plugins/api-flow/schemas/config.schema.json; skills/buster/plugins/api-flow/schemas/flow.schema.json; skills/buster/plugins/axe/schemas/config.schema.json; skills/buster/plugins/container-build/schemas/config.schema.json; skills/buster/plugins/coverage-budget/schemas/config.schema.json; skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json; skills/buster/plugins/direct-command/schemas/config.schema.json; skills/buster/plugins/http/schemas/config.schema.json; skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json; skills/buster/plugins/lighthouse/schemas/config.schema.json; skills/buster/plugins/openapi/schemas/config.schema.json; skills/buster/plugins/playwright/schemas/config.schema.json; skills/buster/plugins/security-providers/schemas/dependency.schema.json; skills/buster/plugins/security-providers/schemas/headers.schema.json; skills/buster/plugins/security-providers/schemas/image.schema.json; skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json; skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json; skills/buster/plugins/size-budget/schemas/config.schema.json; skills/buster/plugins/tailscale-exposure/schemas/config.schema.json; skills/buster/plugins/visual/schemas/config.schema.json
-Evidence revision: `3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f`
+Evidence: scripts/generate-buster-provider-reference.mjs; scripts/buster-provider-catalogue-reference.mjs; scripts/generate-buster-provider-reference.mjs; skills/buster/plugins/api-flow/plugin.json; skills/buster/plugins/api-flow/schemas/config.schema.json; skills/buster/plugins/api-flow/schemas/flow.schema.json; skills/buster/plugins/axe/plugin.json; skills/buster/plugins/axe/schemas/config.schema.json; skills/buster/plugins/container-build/plugin.json; skills/buster/plugins/container-build/schemas/config.schema.json; skills/buster/plugins/coverage-budget/plugin.json; skills/buster/plugins/coverage-budget/schemas/config.schema.json; skills/buster/plugins/demo-auth-smoke/plugin.json; skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json; skills/buster/plugins/direct-command/plugin.json; skills/buster/plugins/direct-command/schemas/config.schema.json; skills/buster/plugins/http/plugin.json; skills/buster/plugins/http/schemas/config.schema.json; skills/buster/plugins/junit-report-adapter/plugin.json; skills/buster/plugins/kubernetes-fixture/plugin.json; skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json; skills/buster/plugins/lighthouse/plugin.json; skills/buster/plugins/lighthouse/schemas/config.schema.json; skills/buster/plugins/openapi/plugin.json; skills/buster/plugins/openapi/schemas/config.schema.json; skills/buster/plugins/playwright/plugin.json; skills/buster/plugins/playwright/schemas/config.schema.json; skills/buster/plugins/security-providers/plugin.json; skills/buster/plugins/security-providers/schemas/dependency.schema.json; skills/buster/plugins/security-providers/schemas/headers.schema.json; skills/buster/plugins/security-providers/schemas/image.schema.json; skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json; skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json; skills/buster/plugins/size-budget/plugin.json; skills/buster/plugins/size-budget/schemas/config.schema.json; skills/buster/plugins/tailscale-exposure/plugin.json; skills/buster/plugins/tailscale-exposure/schemas/config.schema.json; skills/buster/plugins/visual/plugin.json; skills/buster/plugins/visual/schemas/config.schema.json; tests/verification/e2e/provider-catalog.mjs
+Evidence revision: `b3455f068d26cd7040a99bb1c6c6f07fce173bfc`
 Applies to: complete JSON configuration contracts for all shipped Buster test providers
-Last verified: generated from exact committed provider inputs 3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f
+Last verified: generated from exact committed provider inputs b3455f068d26cd7040a99bb1c6c6f07fce173bfc
 
 ## How To Read The Tables
 
@@ -22,9 +22,53 @@ The generator records types, defaults, constants, allowed values, numeric and
 size limits, patterns, uniqueness, and closed-object rules. It intentionally does
 not invent a default when the schema has none.
 
+## Source Inventory
+
+These exact committed inputs establish the installed provider inventory, contract IDs, selected schemas and catalogue parser:
+
+- [scripts/buster-provider-catalogue-reference.mjs](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/scripts/buster-provider-catalogue-reference.mjs)
+- [scripts/generate-buster-provider-reference.mjs](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/scripts/generate-buster-provider-reference.mjs)
+- [skills/buster/plugins/api-flow/plugin.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/api-flow/plugin.json)
+- [skills/buster/plugins/api-flow/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/api-flow/schemas/config.schema.json)
+- [skills/buster/plugins/api-flow/schemas/flow.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/api-flow/schemas/flow.schema.json)
+- [skills/buster/plugins/axe/plugin.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/axe/plugin.json)
+- [skills/buster/plugins/axe/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/axe/schemas/config.schema.json)
+- [skills/buster/plugins/container-build/plugin.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/container-build/plugin.json)
+- [skills/buster/plugins/container-build/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/container-build/schemas/config.schema.json)
+- [skills/buster/plugins/coverage-budget/plugin.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/coverage-budget/plugin.json)
+- [skills/buster/plugins/coverage-budget/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/coverage-budget/schemas/config.schema.json)
+- [skills/buster/plugins/demo-auth-smoke/plugin.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/demo-auth-smoke/plugin.json)
+- [skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json)
+- [skills/buster/plugins/direct-command/plugin.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/direct-command/plugin.json)
+- [skills/buster/plugins/direct-command/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/direct-command/schemas/config.schema.json)
+- [skills/buster/plugins/http/plugin.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/http/plugin.json)
+- [skills/buster/plugins/http/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/http/schemas/config.schema.json)
+- [skills/buster/plugins/junit-report-adapter/plugin.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/junit-report-adapter/plugin.json)
+- [skills/buster/plugins/kubernetes-fixture/plugin.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/kubernetes-fixture/plugin.json)
+- [skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json)
+- [skills/buster/plugins/lighthouse/plugin.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/lighthouse/plugin.json)
+- [skills/buster/plugins/lighthouse/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/lighthouse/schemas/config.schema.json)
+- [skills/buster/plugins/openapi/plugin.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/openapi/plugin.json)
+- [skills/buster/plugins/openapi/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/openapi/schemas/config.schema.json)
+- [skills/buster/plugins/playwright/plugin.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/playwright/plugin.json)
+- [skills/buster/plugins/playwright/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/playwright/schemas/config.schema.json)
+- [skills/buster/plugins/security-providers/plugin.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/security-providers/plugin.json)
+- [skills/buster/plugins/security-providers/schemas/dependency.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/security-providers/schemas/dependency.schema.json)
+- [skills/buster/plugins/security-providers/schemas/headers.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/security-providers/schemas/headers.schema.json)
+- [skills/buster/plugins/security-providers/schemas/image.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/security-providers/schemas/image.schema.json)
+- [skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json)
+- [skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json)
+- [skills/buster/plugins/size-budget/plugin.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/size-budget/plugin.json)
+- [skills/buster/plugins/size-budget/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/size-budget/schemas/config.schema.json)
+- [skills/buster/plugins/tailscale-exposure/plugin.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/tailscale-exposure/plugin.json)
+- [skills/buster/plugins/tailscale-exposure/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/tailscale-exposure/schemas/config.schema.json)
+- [skills/buster/plugins/visual/plugin.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/visual/plugin.json)
+- [skills/buster/plugins/visual/schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/visual/schemas/config.schema.json)
+- [tests/verification/e2e/provider-catalog.mjs](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/tests/verification/e2e/provider-catalog.mjs)
+
 ## `kubeclaw.api-flow@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/api-flow/schemas/config.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/api-flow/schemas/config.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -43,7 +87,7 @@ not invent a default when the schema has none.
 
 ## `kubeclaw.axe@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/axe/schemas/config.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/axe/schemas/config.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -75,7 +119,7 @@ not invent a default when the schema has none.
 
 ## `kubeclaw.container-build@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/container-build/schemas/config.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/container-build/schemas/config.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -83,12 +127,12 @@ not invent a default when the schema has none.
 | --- | --- | --- | --- |
 | `buildContext` | Required | string | minimum length 1; maximum length 1024 |
 | `definition` | Required | object | no unknown fields |
-| `definition.buildArgs` | Optional | object | maximum entries 32; property name pattern "^[A-Za-z_][A-Za-z0-9_]*$" |
+| `definition.buildArgs` | Conditional (optional in selected choice) | object | maximum entries 32; property name pattern "^[A-Za-z_][A-Za-z0-9_]*$" |
 | `definition.buildArgs{}` | Each map value | string | maximum length 4096 |
 | `definition.dockerfile` | Conditional | string | minimum length 1; maximum length 1024 |
-| `definition.target` | Optional | string | pattern "^[a-z0-9]&#40;?:[a-z0-9._-]{0,126}[a-z0-9]&#41;?$" |
-| `definition.template` | Conditional | schema choice | constant "node-static@1" |
-| `definition.type` | Required | schema choice | constant "dockerfile"; constant "template" |
+| `definition.target` | Conditional (optional in selected choice) | string | pattern "^[a-z0-9]&#40;?:[a-z0-9._-]{0,126}[a-z0-9]&#41;?$" |
+| `definition.template` | Conditional | string | constant "node-static@1" |
+| `definition.type` | Required | string | constant "dockerfile"; constant "template" |
 | `outputName` | Optional | string | pattern "^[a-z0-9]&#40;?:[a-z0-9._-]{0,126}[a-z0-9]&#41;?$" |
 | `platform` | Optional | string | maximum length 64; pattern "^linux/[a-z0-9_+-]+&#40;?:/[a-z0-9._+-]+&#41;?$" |
 
@@ -100,7 +144,7 @@ not invent a default when the schema has none.
 
 ## `kubeclaw.coverage-budget@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/coverage-budget/schemas/config.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/coverage-budget/schemas/config.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -115,7 +159,7 @@ not invent a default when the schema has none.
 
 ## `kubeclaw.demo-auth-smoke@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -123,13 +167,13 @@ not invent a default when the schema has none.
 | --- | --- | --- | --- |
 | `assertions` | Required | array | minimum items 1; maximum items 16 |
 | `assertions[]` | Each array item | object | no unknown fields |
-| `assertions[].equals` | Required | boolean or number or string | maximum length 2048 |
+| `assertions[].equals` | Required | boolean or number or string | string maximum length 2048 |
 | `assertions[].pointer` | Required | string | minimum length 1; maximum length 2048 |
 | `cookieName` | Required | string | minimum length 1; maximum length 2048 |
 | `loginPath` | Required | string | minimum length 1; maximum length 2048 |
 | `passwordKey` | Required | string | minimum length 1; maximum length 2048 |
 | `protectedPath` | Required | string | minimum length 1; maximum length 2048 |
-| `protocol` | Required | schema choice | constant "json-session.v1" |
+| `protocol` | Required | string | constant "json-session.v1" |
 | `usernameKey` | Required | string | minimum length 1; maximum length 2048 |
 | `usernamePointer` | Required | string | minimum length 1; maximum length 2048 |
 
@@ -142,7 +186,7 @@ not invent a default when the schema has none.
 
 ## `kubeclaw.dependency-scan-trivy@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/security-providers/schemas/dependency.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/security-providers/schemas/dependency.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -151,10 +195,10 @@ not invent a default when the schema has none.
 | `policy` | Required | object | no unknown fields |
 | `policy.acceptances` | Optional | array | maximum items 128 |
 | `policy.acceptances[]` | Each array item | object | no unknown fields |
-| `policy.acceptances[].expiresAt` | Required | string | No additional scalar limit in the schema. |
+| `policy.acceptances[].expiresAt` | Required | string | format "date-time" |
 | `policy.acceptances[].findingId` | Required | string | minimum length 1; maximum length 256; pattern "^[A-Za-z0-9._:@/-]+$" |
 | `policy.acceptances[].reason` | Required | string | minimum length 8; maximum length 1024 |
-| `policy.profile` | Required | schema choice | constant "strict-v1" |
+| `policy.profile` | Required | string | constant "strict-v1" |
 | `projectDirectory` | Required | string | minimum length 1; maximum length 4096 |
 | `timeoutMs` | Optional | integer | minimum 1000; maximum 900000 |
 
@@ -164,7 +208,7 @@ not invent a default when the schema has none.
 
 ## `kubeclaw.direct-command@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/direct-command/schemas/config.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/direct-command/schemas/config.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -175,24 +219,24 @@ not invent a default when the schema has none.
 | `artifacts` | Optional | array | maximum items 8 |
 | `artifacts[]` | Each array item | object | no unknown fields |
 | `artifacts[].id` | Required | string | pattern "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$" |
-| `artifacts[].mediaType` | Required | schema choice | values "application/octet-stream", "application/x-tar", "application/gzip", "application/vnd.kubeclaw.build-output.tar", "application/vnd.kubeclaw.checked-kubernetes-yaml", "application/vnd.kubeclaw.size-budget-baseline+json" |
+| `artifacts[].mediaType` | Required | string | values "application/octet-stream", "application/x-tar", "application/gzip", "application/vnd.kubeclaw.build-output.tar", "application/vnd.kubeclaw.checked-kubernetes-yaml", "application/vnd.kubeclaw.size-budget-baseline+json" |
 | `artifacts[].path` | Required | string | minimum length 1; maximum length 1024 |
 | `coverage` | Optional | array | maximum items 8 |
 | `coverage[]` | Each array item | object | no unknown fields |
-| `coverage[].format` | Required | schema choice | constant "lcov" |
+| `coverage[].format` | Required | string | constant "lcov" |
 | `coverage[].id` | Required | string | pattern "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$" |
-| `coverage[].mediaType` | Required | schema choice | constant "text/lcov" |
+| `coverage[].mediaType` | Required | string | constant "text/lcov" |
 | `coverage[].path` | Required | string | minimum length 1; maximum length 1024 |
 | `environment` | Optional | object | maximum entries 64; property name pattern "^[A-Za-z_][A-Za-z0-9_]*$" |
 | `environment{}` | Each map value | string | maximum length 4096 |
 | `executable` | Required | string | pattern "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$" |
 | `reports` | Optional | array | maximum items 16 |
 | `reports[]` | Each array item | object | no unknown fields |
-| `reports[].format` | Required | schema choice | constant "junit" |
+| `reports[].format` | Required | string | constant "junit" |
 | `reports[].id` | Required | string | pattern "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$" |
-| `reports[].mediaType` | Required | schema choice | values "application/junit+xml", "application/xml", "text/xml" |
+| `reports[].mediaType` | Required | string | values "application/junit+xml", "application/xml", "text/xml" |
 | `reports[].path` | Required | string | minimum length 1; maximum length 1024 |
-| `resultMode` | Required | schema choice | values "junit-required", "exit-code" |
+| `resultMode` | Required | string | values "junit-required", "exit-code" |
 | `workingDirectory` | Optional | string | minimum length 1; maximum length 1024 |
 
 ### Choice And Dependency Rules
@@ -201,7 +245,7 @@ not invent a default when the schema has none.
 
 ## `kubeclaw.http@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/http/schemas/config.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/http/schemas/config.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -214,7 +258,7 @@ not invent a default when the schema has none.
 | `expectedStatuses[]` | Each array item | integer | minimum 100; maximum 599 |
 | `expectedText` | Optional | string | minimum length 1; maximum length 4096 |
 | `maximumResponseBytes` | Optional | integer | default 1048576; minimum 1; maximum 16777216 |
-| `method` | Optional | schema choice | default "GET"; values "GET", "HEAD" |
+| `method` | Optional | string | default "GET"; values "GET", "HEAD" |
 | `path` | Optional | string | maximum length 2048; pattern "^/&#40;?!/&#41;" |
 | `requestTimeoutMs` | Optional | integer | default 10000; minimum 1; maximum 300000 |
 | `url` | Optional | string | minimum length 1; maximum length 2048 |
@@ -225,7 +269,7 @@ not invent a default when the schema has none.
 
 ## `kubeclaw.image-scan-trivy@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/security-providers/schemas/image.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/security-providers/schemas/image.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -234,10 +278,10 @@ not invent a default when the schema has none.
 | `policy` | Required | object | no unknown fields |
 | `policy.acceptances` | Optional | array | maximum items 128 |
 | `policy.acceptances[]` | Each array item | object | no unknown fields |
-| `policy.acceptances[].expiresAt` | Required | string | No additional scalar limit in the schema. |
+| `policy.acceptances[].expiresAt` | Required | string | format "date-time" |
 | `policy.acceptances[].findingId` | Required | string | minimum length 1; maximum length 256; pattern "^[A-Za-z0-9._:@/-]+$" |
 | `policy.acceptances[].reason` | Required | string | minimum length 8; maximum length 1024 |
-| `policy.profile` | Required | schema choice | constant "strict-v1" |
+| `policy.profile` | Required | string | constant "strict-v1" |
 | `timeoutMs` | Optional | integer | minimum 1000; maximum 900000 |
 
 ### Choice And Dependency Rules
@@ -246,7 +290,7 @@ not invent a default when the schema has none.
 
 ## `kubeclaw.kubernetes-fixture@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -258,7 +302,7 @@ not invent a default when the schema has none.
 | `namespacePrefix` | Optional | string | maximum length 42; pattern "^[a-z0-9]&#40;?:[a-z0-9-]{0,40}[a-z0-9]&#41;?$" |
 | `readinessTimeoutSeconds` | Optional | integer | minimum 1; maximum 3600 |
 | `retention` | Optional | object | no unknown fields |
-| `retention.mode` | Optional | schema choice | values "delete", "retain" |
+| `retention.mode` | Optional | string | values "delete", "retain" |
 | `retention.seconds` | Optional | integer | minimum 60; maximum 604800 |
 | `secretReferences` | Optional | array | maximum items 32; unique items |
 | `secretReferences[]` | Each array item | string | maximum length 253; pattern "^[A-Za-z0-9._-]+$" |
@@ -266,7 +310,7 @@ not invent a default when the schema has none.
 | `servicePort` | Required | integer | minimum 1; maximum 65535 |
 | `serviceTargetPort` | Optional | integer | minimum 1; maximum 65535 |
 | `testCredentials` | Optional | object | no unknown fields |
-| `testCredentials.mode` | Required | schema choice | constant "generate" |
+| `testCredentials.mode` | Required | string | constant "generate" |
 | `testCredentials.secretName` | Required | string | pattern "^[a-z0-9]&#40;?:[a-z0-9-]{0,61}[a-z0-9]&#41;?$" |
 
 ### Choice And Dependency Rules
@@ -275,7 +319,7 @@ not invent a default when the schema has none.
 
 ## `kubeclaw.kubernetes-policy-security@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -284,10 +328,10 @@ not invent a default when the schema has none.
 | `policy` | Required | object | no unknown fields |
 | `policy.acceptances` | Optional | array | maximum items 128 |
 | `policy.acceptances[]` | Each array item | object | no unknown fields |
-| `policy.acceptances[].expiresAt` | Required | string | No additional scalar limit in the schema. |
+| `policy.acceptances[].expiresAt` | Required | string | format "date-time" |
 | `policy.acceptances[].findingId` | Required | string | minimum length 1; maximum length 256; pattern "^[A-Za-z0-9._:@/-]+$" |
 | `policy.acceptances[].reason` | Required | string | minimum length 8; maximum length 1024 |
-| `policy.profile` | Required | schema choice | constant "strict-v1" |
+| `policy.profile` | Required | string | constant "strict-v1" |
 | `timeoutMs` | Optional | integer | minimum 1000; maximum 300000 |
 
 ### Choice And Dependency Rules
@@ -296,7 +340,7 @@ not invent a default when the schema has none.
 
 ## `kubeclaw.kubernetes-runtime-security@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -305,10 +349,10 @@ not invent a default when the schema has none.
 | `policy` | Required | object | no unknown fields |
 | `policy.acceptances` | Optional | array | maximum items 128 |
 | `policy.acceptances[]` | Each array item | object | no unknown fields |
-| `policy.acceptances[].expiresAt` | Required | string | No additional scalar limit in the schema. |
+| `policy.acceptances[].expiresAt` | Required | string | format "date-time" |
 | `policy.acceptances[].findingId` | Required | string | minimum length 1; maximum length 256; pattern "^[A-Za-z0-9._:@/-]+$" |
 | `policy.acceptances[].reason` | Required | string | minimum length 8; maximum length 1024 |
-| `policy.profile` | Required | schema choice | constant "strict-v1" |
+| `policy.profile` | Required | string | constant "strict-v1" |
 | `timeoutMs` | Optional | integer | minimum 1000; maximum 300000 |
 
 ### Choice And Dependency Rules
@@ -317,7 +361,7 @@ not invent a default when the schema has none.
 
 ## `kubeclaw.lighthouse@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/lighthouse/schemas/config.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/lighthouse/schemas/config.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -332,10 +376,10 @@ not invent a default when the schema has none.
 | `budget` | Optional | string | maximum length 64; pattern "^[A-Za-z0-9][A-Za-z0-9._-]*$" |
 | `endpointName` | Optional | string | maximum length 64; pattern "^[A-Za-z0-9][A-Za-z0-9._-]*$" |
 | `profile` | Required | string | maximum length 64; pattern "^[A-Za-z0-9][A-Za-z0-9._-]*$" |
-| `purpose` | Required | schema choice | values "performance", "seo", "best-practices" |
+| `purpose` | Required | string | values "performance", "seo", "best-practices" |
 | `routes` | Required | array | minimum items 1; maximum items 16; unique items |
 | `routes[]` | Each array item | string | maximum length 1024; pattern "^/&#40;?!/&#41;[^?#\\r\\n]*$" |
-| `runs` | Optional | schema choice | values 1, 3, 5 |
+| `runs` | Optional | number | values 1, 3, 5 |
 | `settingsFile` | Required | string | minimum length 1; maximum length 4096; pattern "^&#40;?!/&#41;&#40;?!.*&#40;?:^\|/&#41;\\.\\.&#40;?:/\|$&#41;&#41;.+$" |
 | `timeoutMs` | Optional | integer | default 120000; minimum 10000; maximum 180000 |
 | `url` | Optional | string | maximum length 2048; pattern "^https?://" |
@@ -347,7 +391,7 @@ not invent a default when the schema has none.
 
 ## `kubeclaw.openapi@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/openapi/schemas/config.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/openapi/schemas/config.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -355,9 +399,9 @@ not invent a default when the schema has none.
 | --- | --- | --- | --- |
 | `endpointName` | Optional | string | pattern "^[a-z0-9]&#40;?:[a-z0-9-]{0,61}[a-z0-9]&#41;?$" |
 | `maximumResponseBytes` | Optional | integer | default 1048576; minimum 1; maximum 16777216 |
-| `operations` | Conditional | array or schema choice | No additional scalar limit in the schema.; minimum items 1; maximum items 128 |
+| `operations` | Conditional | array | minimum items 1; maximum items 128 |
 | `operations[]` | Each array item | object | no unknown fields |
-| `operations[].body` | Optional | schema choice | No additional scalar limit in the schema. |
+| `operations[].body` | Optional | any JSON value | No additional scalar limit in the schema. |
 | `operations[].cleanup` | Optional | boolean | default false |
 | `operations[].expectedStatuses` | Optional | array | minimum items 1; maximum items 16; unique items |
 | `operations[].expectedStatuses[]` | Each array item | integer | minimum 100; maximum 599 |
@@ -370,7 +414,7 @@ not invent a default when the schema has none.
 | `operations[].query{}` | Each map value | boolean or number or string | No additional scalar limit in the schema. |
 | `requestTimeoutMs` | Optional | integer | default 10000; minimum 1; maximum 300000 |
 | `specFile` | Required | string | minimum length 1; maximum length 1024; pattern "^&#40;?!/&#41;&#40;?!.*&#40;?:^\|/&#41;\\.\\.&#40;?:/\|$&#41;&#41;.+$" |
-| `tags` | Conditional | array or schema choice | No additional scalar limit in the schema.; minimum items 1; maximum items 32; unique items |
+| `tags` | Conditional | array | minimum items 1; maximum items 32; unique items |
 | `tags[]` | Each array item | string | minimum length 1; maximum length 128 |
 | `url` | Optional | string | minimum length 1; maximum length 2048 |
 
@@ -382,7 +426,7 @@ not invent a default when the schema has none.
 
 ## `kubeclaw.playwright@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/playwright/schemas/config.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/playwright/schemas/config.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -404,7 +448,7 @@ not invent a default when the schema has none.
 
 ## `kubeclaw.security-headers@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/security-providers/schemas/headers.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/security-providers/schemas/headers.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -415,19 +459,19 @@ not invent a default when the schema has none.
 | `policy` | Required | object | no unknown fields |
 | `policy.acceptances` | Optional | array | maximum items 128 |
 | `policy.acceptances[]` | Each array item | object | no unknown fields |
-| `policy.acceptances[].expiresAt` | Required | string | No additional scalar limit in the schema. |
+| `policy.acceptances[].expiresAt` | Required | string | format "date-time" |
 | `policy.acceptances[].findingId` | Required | string | minimum length 1; maximum length 256; pattern "^[A-Za-z0-9._:@/-]+$" |
 | `policy.acceptances[].reason` | Required | string | minimum length 8; maximum length 1024 |
-| `policy.profile` | Required | schema choice | constant "strict-v1" |
-| `profile` | Required | schema choice | values "web-https-v1", "api-http-v1" |
+| `policy.profile` | Required | string | constant "strict-v1" |
+| `profile` | Required | string | values "web-https-v1", "api-http-v1" |
 | `requestTimeoutMs` | Optional | integer | minimum 1; maximum 300000 |
 | `rules` | Optional | object | no unknown fields |
 | `rules.add` | Optional | array | maximum items 32 |
 | `rules.add[]` | Each array item | object | no unknown fields |
 | `rules.add[].header` | Required | string | maximum length 128; pattern "^[a-z0-9-]+$" |
 | `rules.add[].id` | Required | string | maximum length 128; pattern "^[a-z0-9.-]+$" |
-| `rules.add[].kind` | Required | schema choice | values "present", "equals", "contains", "hsts-min-age" |
-| `rules.add[].severity` | Required | schema choice | values "critical", "high", "medium", "low", "info" |
+| `rules.add[].kind` | Required | string | values "present", "equals", "contains", "hsts-min-age" |
+| `rules.add[].severity` | Required | string | values "critical", "high", "medium", "low", "info" |
 | `rules.add[].value` | Optional | string | minimum length 1; maximum length 1024 |
 | `rules.remove` | Optional | array | maximum items 32; unique items |
 | `rules.remove[]` | Each array item | string | maximum length 128; pattern "^[a-z0-9.-]+$" |
@@ -435,8 +479,8 @@ not invent a default when the schema has none.
 | `rules.replace[]` | Each array item | object | no unknown fields |
 | `rules.replace[].header` | Required | string | maximum length 128; pattern "^[a-z0-9-]+$" |
 | `rules.replace[].id` | Required | string | maximum length 128; pattern "^[a-z0-9.-]+$" |
-| `rules.replace[].kind` | Required | schema choice | values "present", "equals", "contains", "hsts-min-age" |
-| `rules.replace[].severity` | Required | schema choice | values "critical", "high", "medium", "low", "info" |
+| `rules.replace[].kind` | Required | string | values "present", "equals", "contains", "hsts-min-age" |
+| `rules.replace[].severity` | Required | string | values "critical", "high", "medium", "low", "info" |
 | `rules.replace[].value` | Optional | string | minimum length 1; maximum length 1024 |
 
 ### Choice And Dependency Rules
@@ -445,13 +489,13 @@ not invent a default when the schema has none.
 
 ## `kubeclaw.size-budget@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/size-budget/schemas/config.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/size-budget/schemas/config.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
 | Exact field path | Presence | Type | Schema rules |
 | --- | --- | --- | --- |
-| `format` | Optional | schema choice | values "auto", "file", "tar", "tar-gzip" |
+| `format` | Optional | string | values "auto", "file", "tar", "tar-gzip" |
 | `largestFiles` | Optional | integer | minimum 1; maximum 100 |
 | `matchingFiles` | Optional | array | maximum items 32 |
 | `matchingFiles[]` | Each array item | object | no unknown fields |
@@ -470,7 +514,7 @@ not invent a default when the schema has none.
 
 ## `kubeclaw.tailscale-exposure@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/tailscale-exposure/schemas/config.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/tailscale-exposure/schemas/config.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -480,7 +524,7 @@ not invent a default when the schema has none.
 | `hostname` | Optional | string | pattern "^[a-z0-9]&#40;?:[a-z0-9-]{0,61}[a-z0-9]&#41;?$" |
 | `path` | Optional | string | maximum length 1024; pattern "^/&#40;?:[^/?#\\r\\n][^?#\\r\\n]*&#41;?$" |
 | `readinessTimeoutSeconds` | Optional | integer | minimum 1; maximum 3600 |
-| `retentionMode` | Optional | schema choice | values "release", "await-readiness" |
+| `retentionMode` | Optional | string | values "release", "await-readiness" |
 
 ### Choice And Dependency Rules
 
@@ -488,13 +532,13 @@ not invent a default when the schema has none.
 
 ## `kubeclaw.visual@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/visual/schemas/config.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/visual/schemas/config.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
 | Exact field path | Presence | Type | Schema rules |
 | --- | --- | --- | --- |
-| `comparisonProfile` | Optional | schema choice | default "strict-v1"; values "strict-v1", "balanced-v1" |
+| `comparisonProfile` | Optional | string | default "strict-v1"; values "strict-v1", "balanced-v1" |
 | `endpointName` | Optional | string | maximum length 64; pattern "^[A-Za-z0-9][A-Za-z0-9._-]*$" |
 | `manifestFile` | Required | string | minimum length 1; maximum length 4096; pattern "^&#40;?!/&#41;&#40;?!.*&#40;?:^\|/&#41;\\.\\.&#40;?:/\|$&#41;&#41;.+$" |
 | `masks` | Optional | array | maximum items 64 |
@@ -518,7 +562,7 @@ not invent a default when the schema has none.
 
 ## `kubeclaw.api-flow-document@1`
 
-> [Validation schema](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/api-flow/schemas/flow.schema.json)
+> [Validation schema](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/skills/buster/plugins/api-flow/schemas/flow.schema.json)
 
 **Root rule:** Unknown top-level fields are rejected.
 
@@ -526,11 +570,12 @@ not invent a default when the schema has none.
 | --- | --- | --- | --- |
 | `cleanup` | Optional | array | maximum items 256 |
 | `cleanup[]` | Each array item | object | no unknown fields |
-| `cleanup[].body` | Optional | schema choice | No additional scalar limit in the schema. |
+| `cleanup[].body` | Optional | any JSON value | No additional scalar limit in the schema. |
 | `cleanup[].expect` | Optional | object | no unknown fields |
 | `cleanup[].expect.bodyContains` | Optional | string | No additional scalar limit in the schema. |
 | `cleanup[].expect.contentType` | Optional | string | No additional scalar limit in the schema. |
 | `cleanup[].expect.json` | Optional | object | maximum entries 32 |
+| `cleanup[].expect.json{}` | Each map value | any JSON value | No additional scalar limit in the schema. |
 | `cleanup[].expect.messageContains` | Optional | string | No additional scalar limit in the schema. |
 | `cleanup[].expect.minimumMessages` | Optional | integer | minimum 1; maximum 64 |
 | `cleanup[].expect.status` | Optional | integer | minimum 100; maximum 599 |
@@ -540,18 +585,20 @@ not invent a default when the schema has none.
 | `cleanup[].headers{}` | Each map value | string | minimum length 1; maximum length 4096 |
 | `cleanup[].id` | Required | string | pattern "^[a-z][a-z0-9-]{0,63}$" |
 | `cleanup[].messages` | Optional | array | maximum items 64 |
-| `cleanup[].method` | Optional | schema choice | values "DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT" |
+| `cleanup[].messages[]` | Each array item | any JSON value | No additional scalar limit in the schema. |
+| `cleanup[].method` | Optional | string | values "DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT" |
 | `cleanup[].path` | Required | string | minimum length 1; maximum length 2048; pattern "^/&#40;?!/&#41;[^#\\r\\n]*$" |
-| `cleanup[].protocol` | Optional | schema choice | constant "websocket" |
+| `cleanup[].protocol` | Optional | string | constant "websocket" |
 | `cleanup[].timeoutMs` | Optional | integer | minimum 1; maximum 300000 |
-| `schemaVersion` | Required | schema choice | constant "kubeclaw.api-flow.v1" |
+| `schemaVersion` | Required | string | constant "kubeclaw.api-flow.v1" |
 | `setup` | Optional | array | maximum items 256 |
 | `setup[]` | Each array item | object | no unknown fields |
-| `setup[].body` | Optional | schema choice | No additional scalar limit in the schema. |
+| `setup[].body` | Optional | any JSON value | No additional scalar limit in the schema. |
 | `setup[].expect` | Optional | object | no unknown fields |
 | `setup[].expect.bodyContains` | Optional | string | No additional scalar limit in the schema. |
 | `setup[].expect.contentType` | Optional | string | No additional scalar limit in the schema. |
 | `setup[].expect.json` | Optional | object | maximum entries 32 |
+| `setup[].expect.json{}` | Each map value | any JSON value | No additional scalar limit in the schema. |
 | `setup[].expect.messageContains` | Optional | string | No additional scalar limit in the schema. |
 | `setup[].expect.minimumMessages` | Optional | integer | minimum 1; maximum 64 |
 | `setup[].expect.status` | Optional | integer | minimum 100; maximum 599 |
@@ -561,17 +608,19 @@ not invent a default when the schema has none.
 | `setup[].headers{}` | Each map value | string | minimum length 1; maximum length 4096 |
 | `setup[].id` | Required | string | pattern "^[a-z][a-z0-9-]{0,63}$" |
 | `setup[].messages` | Optional | array | maximum items 64 |
-| `setup[].method` | Optional | schema choice | values "DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT" |
+| `setup[].messages[]` | Each array item | any JSON value | No additional scalar limit in the schema. |
+| `setup[].method` | Optional | string | values "DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT" |
 | `setup[].path` | Required | string | minimum length 1; maximum length 2048; pattern "^/&#40;?!/&#41;[^#\\r\\n]*$" |
-| `setup[].protocol` | Optional | schema choice | constant "websocket" |
+| `setup[].protocol` | Optional | string | constant "websocket" |
 | `setup[].timeoutMs` | Optional | integer | minimum 1; maximum 300000 |
 | `steps` | Required | array | maximum items 256 |
 | `steps[]` | Each array item | object | no unknown fields |
-| `steps[].body` | Optional | schema choice | No additional scalar limit in the schema. |
+| `steps[].body` | Optional | any JSON value | No additional scalar limit in the schema. |
 | `steps[].expect` | Optional | object | no unknown fields |
 | `steps[].expect.bodyContains` | Optional | string | No additional scalar limit in the schema. |
 | `steps[].expect.contentType` | Optional | string | No additional scalar limit in the schema. |
 | `steps[].expect.json` | Optional | object | maximum entries 32 |
+| `steps[].expect.json{}` | Each map value | any JSON value | No additional scalar limit in the schema. |
 | `steps[].expect.messageContains` | Optional | string | No additional scalar limit in the schema. |
 | `steps[].expect.minimumMessages` | Optional | integer | minimum 1; maximum 64 |
 | `steps[].expect.status` | Optional | integer | minimum 100; maximum 599 |
@@ -581,9 +630,10 @@ not invent a default when the schema has none.
 | `steps[].headers{}` | Each map value | string | minimum length 1; maximum length 4096 |
 | `steps[].id` | Required | string | pattern "^[a-z][a-z0-9-]{0,63}$" |
 | `steps[].messages` | Optional | array | maximum items 64 |
-| `steps[].method` | Optional | schema choice | values "DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT" |
+| `steps[].messages[]` | Each array item | any JSON value | No additional scalar limit in the schema. |
+| `steps[].method` | Optional | string | values "DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT" |
 | `steps[].path` | Required | string | minimum length 1; maximum length 2048; pattern "^/&#40;?!/&#41;[^#\\r\\n]*$" |
-| `steps[].protocol` | Optional | schema choice | constant "websocket" |
+| `steps[].protocol` | Optional | string | constant "websocket" |
 | `steps[].timeoutMs` | Optional | integer | minimum 1; maximum 300000 |
 | `variables` | Optional | object | maximum entries 64; property name pattern "^[A-Za-z][A-Za-z0-9_]{0,63}$" |
 | `variables{}` | Each map value | boolean or number or string | No additional scalar limit in the schema. |
@@ -596,10 +646,14 @@ not invent a default when the schema has none.
 
 The production verification harness reads `KUBECLAW_CAPABILITY_PROVIDERS` as
 JSON. This is a remote capability routing catalogue, not the installed Buster
-plugin registry or a Kubernetes namespace configuration. Its provider IDs and
-agent roles use lowercase DNS-label syntax (1–63 characters). Each provider
-needs an agentRole and a nonempty capabilities map. Capability names are dotted
-lowercase identifiers; each route needs a DNS-label adapter and an HTTP(S)
+plugin registry or a Kubernetes namespace configuration. Its provider IDs use lowercase DNS-label syntax (1–63 characters). Each provider
+needs an agentRole and a nonempty capabilities map. The parser checks
+`String(agentRole)` and `String(adapter)` against the same DNS-label pattern,
+but returns their original values without string conversion. For example, JSON
+boolean `true` and number `1` pass that lexical check and remain a boolean
+and number in the returned record; this is not string-only type validation.
+Capability names are dotted lowercase identifiers; each route needs an adapter
+whose string form passes that check and an HTTP(S)
 origin without credentials, path beyond '/', query, or fragment. The parser
 normalizes the endpoint to its origin. Unknown input fields are not rejected,
 but they are not copied to the returned records.
@@ -620,10 +674,15 @@ stop parsing. This parser neither registers installed plugins nor verifies
 remote health, authentication, or Kubernetes namespace isolation. A namespace
 field in the input has no selection or isolation effect.
 
-> [Catalogue parsing and exact route selection](https://github.com/datrab/kubeclaw/blob/cf549b0238c89db00cc392dadbab40199777a6d7/tests/verification/e2e/provider-catalog.mjs#L8-L61).
+> [Catalogue parsing and exact route selection](https://github.com/datrab/kubeclaw/blob/b3455f068d26cd7040a99bb1c6c6f07fce173bfc/tests/verification/e2e/provider-catalog.mjs#L8-L61).
 
 ## Maintenance Rule
 
-Change and commit a schema first. Then run `node scripts/generate-buster-provider-reference.mjs --write --revision=<full-source-commit>`.
-Review the changed paths and limits as a contract change. The reference freshness gate
-rejects a stale file and rejects a provider that is absent from this inventory.
+Run from a clean repository checkout with Git and a Node.js runtime supporting native ESM and `import.meta.dirname`. No cluster or remote service is needed.
+Change and commit the schemas/manifests first. Select that full source commit: every installed provider manifest, selected configuration schema, API-flow schema, remote catalogue parser, catalogue prose template and generator must match it byte-for-byte.
+Replace `<full-source-commit>` with that existing lowercase 40-hex commit, then run `node scripts/generate-buster-provider-reference.mjs --write --revision=<full-source-commit>`.
+Expected write result: `wrote docs/site/reference/buster-provider-configuration.md`. Then run `node scripts/generate-buster-provider-reference.mjs` without `--write`.
+Expected check result: `Buster provider configuration verified: 19 providers and one flow document`. This proves generated freshness, not provider execution or remote health.
+If `BUSTER_PROVIDER_SOURCE_REVISION` fails, check the selected commit, missing objects and exact committed input bytes. Commit the intended source and select its revision; do not weaken the pin.
+A stale-output assertion requires regeneration from the selected matching inputs. For an inventory-count or provider-contract assertion, inspect the changed provider contracts and review the generator before regeneration. Do not change the count merely to obtain a pass.
+Review the generated diff and limits as a contract change, then commit the intended generator/reference changes. The command writes only the tracked reference: it starts no service and creates no temporary resource to clean up. If abandoning the change, restore only your own generated-file edit after preserving any pre-existing work.
