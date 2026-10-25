@@ -294,7 +294,7 @@ lines.push(providerCatalogueReference.replaceAll('CATALOGUE_SOURCE_REVISION', re
 
 lines.push('## Maintenance Rule', '',
   'Run from a clean repository checkout with Git and a Node.js runtime supporting native ESM and `import.meta.dirname`. No cluster or remote service is needed.',
-  'Change and commit the schemas/manifests first. Select that full source commit: every installed provider manifest, selected configuration schema, API-flow schema, remote catalogue parser, catalogue prose template and generator must match it byte-for-byte.',
+  'Change and commit the schemas/manifests first. Select that source commit: every installed provider manifest, selected configuration schema, API-flow schema, remote catalogue parser, catalogue prose template and generator must match it byte-for-byte.',
   'Replace `<full-source-commit>` with that existing lowercase 40-hex commit, then run `node scripts/generate-buster-provider-reference.mjs --write --revision=<full-source-commit>`.',
   'Expected write result: `wrote docs/site/reference/buster-provider-configuration.md`. Then run `node scripts/generate-buster-provider-reference.mjs` without `--write`.',
   'Expected check result: `Buster provider configuration verified: 19 providers and one flow document`. This proves generated freshness, not provider execution or remote health.',
