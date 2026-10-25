@@ -27,6 +27,12 @@ jobs:
           pattern: image-receipt-*
           merge-multiple: true
           path: receipt-input
+      - name: Authenticate selected receipts before retaining runtime images
+        if: inputs.family == 'runtime'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/updates/verify-release-source.mjs
+
       - name: Preserve immutable source record beyond CI artifact retention
         env:
           GH_TOKEN: ${{ github.token }}

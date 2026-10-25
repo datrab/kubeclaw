@@ -125,3 +125,20 @@ test('runtime refresh plan reaches detector, bundles and reusable receipt collec
       `${name} must inherit the same workflow plan without overriding it`);
   }
 });
+
+test('retained components are authenticated before either receipt producer runs', () => {
+  const bundles = main.jobs['bundle-skills'];
+  assert.ok(bundles, 'bundle publisher job exists');
+  assert.equal(bundles.permissions.actions, 'read');
+  const check = (steps, producer) => {
+    const auth = steps.findIndex(step => step.run === 'node scripts/updates/verify-release-source.mjs');
+    assert.ok(auth >= 0);
+    assert.ok(auth < steps.findIndex(step => step.name === producer));
+    assert.equal(steps[auth].env.GITHUB_TOKEN, '${{ github.token }}');
+    return steps[auth];
+  };
+  check(bundles.steps, 'Build changed role bundles');
+  const receipt = read('publish-image-receipts');
+  assert.equal(check(receipt.jobs.preserve.steps,
+    'Preserve immutable source record beyond CI artifact retention').if, "inputs.family == 'runtime'");
+});

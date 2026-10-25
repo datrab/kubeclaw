@@ -132,6 +132,7 @@ jobs:
       (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     permissions:
       contents: write
+      actions: read
     env:
       BUNDLE_RELEASE_TAG: code-bundles-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
@@ -151,6 +152,11 @@ jobs:
 
       - name: Build plugin isolation launcher
         run: npm run plugin-system:sandbox:build
+
+      - name: Authenticate selected receipts before retaining role bundles
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/updates/verify-release-source.mjs
 
       - name: Build changed role bundles
         run: |
