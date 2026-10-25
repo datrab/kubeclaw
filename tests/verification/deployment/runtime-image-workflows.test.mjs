@@ -177,3 +177,10 @@ test('immutable baseline is identical for planners, authentication and both prod
   assert.equal(steps[auth].env.GITHUB_TOKEN, '${{ github.token }}');
   assert.match(steps[policy].run, /gitops-continuous\.mjs check/);
 });
+
+ test('receipt verifier dependencies are installed before source authentication', () => {
+  const steps = read('publish-image-receipts').jobs.preserve.steps;
+  const install = steps.findIndex(step => step.run === 'npm ci --ignore-scripts --no-audit --no-fund');
+  const auth = steps.findIndex(step => step.name === 'Authenticate selected receipts before retaining runtime images');
+  assert.ok(install >= 0 && install < auth);
+});
