@@ -8,7 +8,7 @@ import { validateReleaseReceipt } from './deployment-release.mjs';
 
 // A mixed selection remains a complete published receipt. Every retained slot
 // additionally resolves to its original successful run, receipt and asset.
-export async function verifyReleaseSources({ root = process.cwd(), repo, token, fetchImpl = fetch }) {
+export async function verifyReleaseSources({ root = process.cwd(), repo, token, fetchImpl = fetch, baselineDirectory }) {
   if (!repo || !token) throw new Error('Read-only GitHub identity required to verify release provenance');
   async function get(route, accept = 'application/vnd.github+json') {
     const response = await fetchImpl(`https://api.github.com/repos/${repo}/${route}`, {
@@ -16,6 +16,14 @@ export async function verifyReleaseSources({ root = process.cwd(), repo, token, 
     });
     if (!response.ok) throw new Error(`Release evidence unavailable: HTTP ${response.status}`);
     return response;
+  }
+  let baseline;
+  if (baselineDirectory !== undefined) {
+    if (!/^releases\/gitops\/[a-z0-9][a-z0-9-]{0,50}$/u.test(baselineDirectory)) throw new Error('GITOPS_BUNDLE_PATH_INVALID');
+    const bundle = JSON.parse(fs.readFileSync(path.join(root, baselineDirectory, 'bundle.receipt'), 'utf8'));
+    if (bundle.schemaVersion !== 'kubeclaw-gitops-bundle.v1' || !bundle.receipt?.code) throw new Error('GITOPS_BUNDLE_SCHEMA_INVALID');
+    const { code, ...runtime } = bundle.receipt;
+    baseline = { code, runtime };
   }
   const sources = new Map();
   async function sourceReceipt(family, source) {
@@ -47,8 +55,8 @@ export async function verifyReleaseSources({ root = process.cwd(), repo, token, 
   }
   for (const family of ['code', 'runtime', 'ops']) {
     const file = path.join(root, `releases/${family === 'code' ? 'runtime-code' : `${family}-images`}.json`);
-    if (!fs.existsSync(file)) continue;
-    const selected = JSON.parse(fs.readFileSync(file, 'utf8'));
+    if (!baseline?.[family] && !fs.existsSync(file)) continue;
+    const selected = baseline?.[family] ?? JSON.parse(fs.readFileSync(file, 'utf8'));
     const source = { commit: selected.commit, sourceRunId: selected.sourceRunId, sourceRunAttempt: selected.sourceRunAttempt };
     const published = await sourceReceipt(family, source);
     assert.deepEqual(selected, published.receipt, 'Selection does not match the preserved successful-source receipt');
@@ -71,5 +79,5 @@ export async function verifyReleaseSources({ root = process.cwd(), repo, token, 
   }
 }
 if (process.argv[1] === import.meta.filename) {
-  await verifyReleaseSources({ repo: process.env.GITHUB_REPOSITORY, token: process.env.GITHUB_TOKEN });
+  await verifyReleaseSources({ repo: process.env.GITHUB_REPOSITORY, token: process.env.GITHUB_TOKEN, baselineDirectory: process.env.GITOPS_RETAINED_BASELINE });
 }

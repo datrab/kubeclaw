@@ -169,6 +169,15 @@ test('mixed provenance resolves each retained artifact to its producing successf
   };
   const verify = () => verifyReleaseSources({ root, repo: 'datrab/kubeclaw', token: 'test', fetchImpl });
   await verify();
+  const baselineDirectory = 'releases/gitops/runtime-1-1';
+  write(`${baselineDirectory}/bundle.receipt`, JSON.stringify({ schemaVersion: 'kubeclaw-gitops-bundle.v1', receipt: { ...images, code } }));
+  const verifyBaseline = () => verifyReleaseSources({ root, repo: 'datrab/kubeclaw', token: 'test', fetchImpl, baselineDirectory });
+  await verifyBaseline();
+  await assert.rejects(() => verifyReleaseSources({ root, repo: 'datrab/kubeclaw', token: 'test', fetchImpl, baselineDirectory: '../escape' }), /PATH_INVALID/);
+  write(`${baselineDirectory}/bundle.receipt`, JSON.stringify({ schemaVersion: 'kubeclaw-gitops-bundle.v1', receipt: { ...images, images: { ...images.images, nova: image('nova', 'f') }, code } }));
+  await assert.rejects(verifyBaseline, /preserved successful-source receipt/);
+  write(`${baselineDirectory}/bundle.receipt`, JSON.stringify({ schemaVersion: 'kubeclaw-gitops-bundle.v1', receipt: { ...images, code } }));
+  runs[1].conclusion = 'failure'; await assert.rejects(verifyBaseline, /successful/); delete runs[1].conclusion;
   runs[1].conclusion = 'failure'; await assert.rejects(verify, /successful/); delete runs[1].conclusion;
   // Local selection edits must not mutate the immutable API receipt fixture.
   // Even an authentic older component cannot be substituted into a different
