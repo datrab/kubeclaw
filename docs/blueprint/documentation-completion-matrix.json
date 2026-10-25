@@ -11266,7 +11266,7 @@
     },
     {
       "id": "AP09-decision-record-content-20261021",
-      "revision": "c412e6a1a79eeb40e2584c66db3181a6de4eb163",
+      "revision": "d07cacd6f820abf98a74b23e799a23fde30f5133",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 platform-ready-review",
       "gateIds": [],
@@ -11365,6 +11365,11 @@
           "command": "Independent pinned two-page Source/semanticReader/Quality and original-record preservation; actual committed publication build plus five original Reader checks",
           "exitCode": 0,
           "observation": "177-page Source c412e6a1 publication/artifact/search/Source-link/Source-preview/diagram checks PASS; original docs-check/docs-check-refs/publication checks PASS. Original scope evidence unchanged except two reviewed pages; no fresh product/native/human/live execution or new gate/requirement acceptance."
+        },
+        {
+          "command": "Independent complete4page Source/semanticReader/Quality and exact3originalscope preservation; actual committed publication build plus5originalReaderchecks",
+          "exitCode": 0,
+          "observation": "Original publication/docs-check/docs-check-refs and six current committed Reader processes PASS at d07cacd6. Only implementation.md differs in complete original vectors; signedrunbinding remains unmet. Originalhuman/runtime/live/release/DATA limits unchanged, no new acceptance."
         }
       ],
       "review": {
@@ -11427,6 +11432,11 @@
           "previousReviewedRevision": "c0d892fb2ea7f88994e53ea29de0fdce2d87d89e",
           "revision": "c412e6a1a79eeb40e2584c66db3181a6de4eb163",
           "reason": "Independently reviewed two-page decision-example clarification preserves exact original scope and limits; not recounted."
+        },
+        {
+          "previousReviewedRevision": "c412e6a1a79eeb40e2584c66db3181a6de4eb163",
+          "revision": "d07cacd6f820abf98a74b23e799a23fde30f5133",
+          "reason": "Independent original-scope preservation after single signed-decision paragraph correction; no recount."
         }
       ],
       "impactReviews": [
@@ -11522,9 +11532,23 @@
           "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/decision-preserve-content-1311-verdict.json",
           "reportSha256": "9c6f1d9389d34b4ffb1b5ac3e68c28e8a39996997d15ab13094ce9b4830f60ca",
           "inspectionLimit": "Independent supplied complete pages/current claim implementation/full original record/vector; no reviewer-run tests or live/runtime exercise. Coordinator original six current Reader results separate. Full 1.48MB Source-link raw stdout retained unchanged; terminal counts and two changed-claim objects projected explicitly for bounded preservation."
+        },
+        {
+          "previousReviewedRevision": "c412e6a1a79eeb40e2584c66db3181a6de4eb163",
+          "revision": "d07cacd6f820abf98a74b23e799a23fde30f5133",
+          "reviewer": "Pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 independent exact three-original-scope preservation",
+          "changedDependencies": [
+            "docs/site/decisions/implementation.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Only implementation decision paragraph corrects unsupported signed run binding. Actual unchanged productDecision/commitProduct Source has no signed runId or run comparison; the page explicitly retains signedrunbinding as unmet, not waived. Independent complete four-page Source/semanticReader/Quality PASS; all three full original contracts/checks/history/limits and complete physical vectors supplied losslessly, with exact final-page review binding. Actual committed177-page build and five original Reader checks PASS. No runtime/schema change, freshhuman/native/live result or new acceptance.",
+          "originalRecordSha256": "205ba22a23a5d7d0d57f28fa6d2dbbe451b47e6b2e9ef7880c57576fb3542017",
+          "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/signed-final-three-1311-verdict.json",
+          "reportSha256": "c41b4aa24afa8b3174d310436461925ce427b218c58751392f8237e9ac4be738",
+          "inspectionLimit": "Independent complete supplied page/actualGoSource/full originalscope contracts/losslessvectors/final4pageSourceverdict+manifest. No reviewer-run tests or live/runtime exercise. Coordinator original checks separate; full Source-link raw stdout retained unchanged, explicit terminalprojection not fresh semantic inventory."
         }
       ],
-      "previousReviewedRevision": "c0d892fb2ea7f88994e53ea29de0fdce2d87d89e"
+      "previousReviewedRevision": "c412e6a1a79eeb40e2584c66db3181a6de4eb163"
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
@@ -16548,7 +16572,7 @@
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "c412e6a1a79eeb40e2584c66db3181a6de4eb163",
+      "revision": "d07cacd6f820abf98a74b23e799a23fde30f5133",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -17034,6 +17058,11 @@
           "command": "Independent pinned two-page Source/semanticReader/Quality and original-record preservation; actual committed publication build plus five original Reader checks",
           "exitCode": 0,
           "observation": "177-page Source c412e6a1 publication/artifact/search/Source-link/Source-preview/diagram checks PASS; original docs-check/docs-check-refs/publication checks PASS. Original scope evidence unchanged except two reviewed pages; no fresh product/native/human/live execution or new gate/requirement acceptance."
+        },
+        {
+          "command": "Independent complete4page Source/semanticReader/Quality and exact3originalscope preservation; actual committed publication build plus5originalReaderchecks",
+          "exitCode": 0,
+          "observation": "Original publication/docs-check/docs-check-refs and six current committed Reader processes PASS at d07cacd6. Only implementation.md differs in complete original vectors; signedrunbinding remains unmet. Originalhuman/runtime/live/release/DATA limits unchanged, no new acceptance."
         }
       ],
       "limits": [
@@ -17276,6 +17305,11 @@
           "previousReviewedRevision": "fb48da8ae1af107873e7586538dd7de9245e882b",
           "revision": "c412e6a1a79eeb40e2584c66db3181a6de4eb163",
           "reason": "Independently reviewed two-page decision-example clarification preserves exact original scope and limits; not recounted."
+        },
+        {
+          "previousReviewedRevision": "c412e6a1a79eeb40e2584c66db3181a6de4eb163",
+          "revision": "d07cacd6f820abf98a74b23e799a23fde30f5133",
+          "reason": "Independent original-scope preservation after single signed-decision paragraph correction; no recount."
         }
       ],
       "impactReviews": [
@@ -18209,6 +18243,20 @@
           "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/decision-final-binding-1311-verdict.json",
           "reportSha256": "eb961a94cc5b4bec17f6acc6a2a99769b08c219ffeee655c816373f55d83fa0b",
           "inspectionLimit": "Independent supplied complete pages/current claim implementation/full original record/vector; no reviewer-run tests or live/runtime exercise. Coordinator original six current Reader results separate. Full 1.48MB Source-link raw stdout retained unchanged; terminal counts and two changed-claim objects projected explicitly for bounded preservation."
+        },
+        {
+          "previousReviewedRevision": "c412e6a1a79eeb40e2584c66db3181a6de4eb163",
+          "revision": "d07cacd6f820abf98a74b23e799a23fde30f5133",
+          "reviewer": "Pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 independent exact three-original-scope preservation",
+          "changedDependencies": [
+            "docs/site/decisions/implementation.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Only implementation decision paragraph corrects unsupported signed run binding. Actual unchanged productDecision/commitProduct Source has no signed runId or run comparison; the page explicitly retains signedrunbinding as unmet, not waived. Independent complete four-page Source/semanticReader/Quality PASS; all three full original contracts/checks/history/limits and complete physical vectors supplied losslessly, with exact final-page review binding. Actual committed177-page build and five original Reader checks PASS. No runtime/schema change, freshhuman/native/live result or new acceptance.",
+          "originalRecordSha256": "f35d3f2f64aab57c21c9d4d4c5ad4a0ad73757ab681e936b62f769bdbc95f2f3",
+          "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/signed-final-three-1311-verdict.json",
+          "reportSha256": "c41b4aa24afa8b3174d310436461925ce427b218c58751392f8237e9ac4be738",
+          "inspectionLimit": "Independent complete supplied page/actualGoSource/full originalscope contracts/losslessvectors/final4pageSourceverdict+manifest. No reviewer-run tests or live/runtime exercise. Coordinator original checks separate; full Source-link raw stdout retained unchanged, explicit terminalprojection not fresh semantic inventory."
         }
       ],
       "scopePreservation3408": {
@@ -18252,7 +18300,7 @@
         "browserPreservation": "No new browser, screenreader or fresh-persona exercise: unchanged authored pages/shared renderer outputs retain only prior successful original scopes. Current Source/output checks separately executed.",
         "globalGeneratorLimit": "Original normal5b1b localHelm exits1 at scripts/install/register-runtime-argo.mjs29; infrastructure slots passed. No global configuration/API/schema/runtime acceptance."
       },
-      "previousReviewedRevision": "fb48da8ae1af107873e7586538dd7de9245e882b"
+      "previousReviewedRevision": "c412e6a1a79eeb40e2584c66db3181a6de4eb163"
     },
     {
       "id": "AP09-search-reader-gate-20261021",
@@ -30118,7 +30166,7 @@
     },
     {
       "id": "AP09-publication-positive-scope-7ef16585",
-      "revision": "c412e6a1a79eeb40e2584c66db3181a6de4eb163",
+      "revision": "d07cacd6f820abf98a74b23e799a23fde30f5133",
       "author": "existing publication/content maintainers; final authored Sourcefield additions separately reviewed by workflow_acceptance",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -30418,6 +30466,11 @@
           "command": "Independent pinned two-page Source/semanticReader/Quality and original-record preservation; actual committed publication build plus five original Reader checks",
           "exitCode": 0,
           "observation": "177-page Source c412e6a1 publication/artifact/search/Source-link/Source-preview/diagram checks PASS; original docs-check/docs-check-refs/publication checks PASS. Original scope evidence unchanged except two reviewed pages; no fresh product/native/human/live execution or new gate/requirement acceptance."
+        },
+        {
+          "command": "Independent complete4page Source/semanticReader/Quality and exact3originalscope preservation; actual committed publication build plus5originalReaderchecks",
+          "exitCode": 0,
+          "observation": "Original publication/docs-check/docs-check-refs and six current committed Reader processes PASS at d07cacd6. Only implementation.md differs in complete original vectors; signedrunbinding remains unmet. Originalhuman/runtime/live/release/DATA limits unchanged, no new acceptance."
         }
       ],
       "review": {
@@ -30982,6 +31035,20 @@
           "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/decision-final-binding-1311-verdict.json",
           "reportSha256": "eb961a94cc5b4bec17f6acc6a2a99769b08c219ffeee655c816373f55d83fa0b",
           "inspectionLimit": "Independent supplied complete pages/current claim implementation/full original record/vector; no reviewer-run tests or live/runtime exercise. Coordinator original six current Reader results separate. Full 1.48MB Source-link raw stdout retained unchanged; terminal counts and two changed-claim objects projected explicitly for bounded preservation."
+        },
+        {
+          "previousReviewedRevision": "c412e6a1a79eeb40e2584c66db3181a6de4eb163",
+          "revision": "d07cacd6f820abf98a74b23e799a23fde30f5133",
+          "reviewer": "Pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 independent exact three-original-scope preservation",
+          "changedDependencies": [
+            "docs/site/decisions/implementation.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Only implementation decision paragraph corrects unsupported signed run binding. Actual unchanged productDecision/commitProduct Source has no signed runId or run comparison; the page explicitly retains signedrunbinding as unmet, not waived. Independent complete four-page Source/semanticReader/Quality PASS; all three full original contracts/checks/history/limits and complete physical vectors supplied losslessly, with exact final-page review binding. Actual committed177-page build and five original Reader checks PASS. No runtime/schema change, freshhuman/native/live result or new acceptance.",
+          "originalRecordSha256": "eeb999c2d184637d835a7329f6a4a2a107b61e210c105ae57374294b7cf84ee5",
+          "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/signed-final-three-1311-verdict.json",
+          "reportSha256": "c41b4aa24afa8b3174d310436461925ce427b218c58751392f8237e9ac4be738",
+          "inspectionLimit": "Independent complete supplied page/actualGoSource/full originalscope contracts/losslessvectors/final4pageSourceverdict+manifest. No reviewer-run tests or live/runtime exercise. Coordinator original checks separate; full Source-link raw stdout retained unchanged, explicit terminalprojection not fresh semantic inventory."
         }
       ],
       "scopePreservation3408": {
@@ -31010,7 +31077,7 @@
         "priorSummaryStatus": "Original summary and all old limits/checks/review/persona provenance retained as historical scope; current177-page observations stated here, not retroactively attributed to old runs.",
         "globalGeneratorLimit": "Original normal81b localHelm still FAILS at infrastructure-chart.mjs63. This preservation grants no global configuration/API generator or live-release acceptance."
       },
-      "previousReviewedRevision": "fb48da8ae1af107873e7586538dd7de9245e882b",
+      "previousReviewedRevision": "c412e6a1a79eeb40e2584c66db3181a6de4eb163",
       "revisionHistory": [
         {
           "revision": "8fa9ed9b95bb37ca234aef1f321f68831519abab",
@@ -31043,6 +31110,11 @@
           "previousReviewedRevision": "fb48da8ae1af107873e7586538dd7de9245e882b",
           "revision": "c412e6a1a79eeb40e2584c66db3181a6de4eb163",
           "reason": "Independently reviewed two-page decision-example clarification preserves exact original scope and limits; not recounted."
+        },
+        {
+          "previousReviewedRevision": "c412e6a1a79eeb40e2584c66db3181a6de4eb163",
+          "revision": "d07cacd6f820abf98a74b23e799a23fde30f5133",
+          "reason": "Independent original-scope preservation after single signed-decision paragraph correction; no recount."
         }
       ]
     },
