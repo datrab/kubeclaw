@@ -109,3 +109,19 @@ test('bundle checksum assets remain nonempty with zero, one or all changed roles
     } finally { fs.rmSync(root, { recursive: true, force: true }); }
   }
 });
+
+test('runtime refresh plan reaches detector, bundles and reusable receipt collector unchanged', () => {
+  assert.equal(main.on.workflow_dispatch.inputs.runtime_refresh_plan.type, 'string');
+  assert.equal(main.on.workflow_dispatch.inputs.runtime_refresh_plan.default, '');
+  const expression = "${{ inputs.runtime_refresh_plan || '' }}";
+  assert.equal(main.env.RUNTIME_REFRESH_PLAN, expression);
+  assert.equal(main.jobs['preserve-receipts'].with.runtime_refresh_plan, expression);
+  const receipt = read('publish-image-receipts');
+  assert.equal(receipt.on.workflow_call.inputs.runtime_refresh_plan.default, '');
+  const collector = receipt.jobs.preserve.steps.find(step => step.env?.FAMILY);
+  assert.equal(collector.env.RUNTIME_REFRESH_PLAN, '${{ inputs.runtime_refresh_plan }}');
+  for (const name of ['detect-build-inputs', 'bundle-skills']) {
+    assert.equal(main.jobs[name].env?.RUNTIME_REFRESH_PLAN, undefined,
+      `${name} must inherit the same workflow plan without overriding it`);
+  }
+});

@@ -3,8 +3,15 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      runtime_refresh_plan:
+        description: Optional additive JSON refresh plan with images and bundles arrays
+        required: false
+        type: string
+        default: ""
 env:
   REGISTRY: ghcr.io
+  RUNTIME_REFRESH_PLAN: ${{ inputs.runtime_refresh_plan || '' }}
 jobs:
   update-policy:
     uses: ./.github/workflows/update-checks.yaml
@@ -228,6 +235,7 @@ jobs:
     uses: ./.github/workflows/publish-image-receipts.yaml
     with:
       family: runtime
+      runtime_refresh_plan: ${{ inputs.runtime_refresh_plan || '' }}
     permissions:
       contents: write
       actions: read
