@@ -54,6 +54,13 @@ tailscale:
 # Central MCP service. Argo creates credential objects and a scoped Sync Job
 # fills them inside the cluster. Each client receives only its own credential.
 mcp:
+  monitoring:
+    enabled: false
+    namespace: monitoring
+    service: prometheus-kube-prometheus-prometheus
+    port: 9090
+    podLabels:
+      app.kubernetes.io/name: prometheus
   provision:
     enabled: true
     caSecret: codex-ops-mcp-ca
@@ -62,19 +69,15 @@ mcp:
   caConfigMap: ops-mcp-ca
   clients:
     - id: codex
+      readOnly: true
       readAllNamespaces: true
       tokenSecret: codex-ops-bearer
       namespace: kubeclaw-ops
       podLabels: {app.kubernetes.io/name: codex-ops}
       namespaces: [kubeclaw]
       namespacePrefixes: [test]
-      tools: [list_argocd_applications, platform_cluster_state, platform_network_state, namespace_overview, get_pod, get_events, get_pod_logs, get_hubble_flows, get_pod_metrics, exec_pod]
-      exec:
-        - allNonSystemNamespaces: true
-          allPods: true
-          allContainers: true
-          timeoutSeconds: 30
-          maxOutputBytes: 65536
+      tools: [list_argocd_applications, platform_cluster_state, platform_network_state, namespace_overview, get_pod, get_events, get_pod_logs, get_hubble_flows, get_pod_metrics, get_resource_inventory, get_monitoring_metrics, get_monitoring_alerts]
+      exec: []
     - id: nova
       tokenSecret: nova-ops-bearer
       namespace: kubeclaw

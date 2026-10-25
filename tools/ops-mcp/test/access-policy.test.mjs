@@ -74,3 +74,23 @@ test('global namespace observation is explicit, discoverable, and never an impli
   assert.throws(() => authorizeTool(scoped, 'platform_cluster_state', { resource: 'namespaces' }, 'argocd'), /TOOL_FORBIDDEN/);
   assert.throws(() => authorizeTool(scoped, 'get_pod', { namespace: 'production' }, 'argocd'), /NAMESPACE_FORBIDDEN/);
 });
+
+test('read-only identities reject exec at parsing and authorization, and global diagnostics cannot bypass namespace scope', () => {
+  const observer = { ...client('codex', '/token'), readOnly: true, readAllNamespaces: true,
+    tools: ['get_pod', 'get_resource_inventory', 'get_monitoring_metrics', 'get_monitoring_alerts'], exec: [] };
+  assert.doesNotThrow(() => parsePolicy(JSON.stringify({ clients: [observer] }), ['kubeclaw'], [], true));
+  for (const changed of [{ exec: [grant] }, { tools: [...observer.tools, 'exec_pod'] }, { readOnly: 'true' }]) {
+    assert.throws(() => parsePolicy(JSON.stringify({ clients: [{ ...observer, ...changed }] }), ['kubeclaw'], [], true), /read.?only/i);
+  }
+  // Defense in depth even when a malformed principal reaches authorization.
+  assert.throws(() => authorizeTool({ ...observer, tools: ['exec_pod'] }, 'exec_pod', {}, 'argocd'), /TOOL_FORBIDDEN/);
+  assert.throws(() => authorizeExec({ ...observer, exec: [grant] }, { namespace: 'kubeclaw', container: 'runtime' }, {}), /TARGET_FORBIDDEN/);
+  for (const tool of ['get_monitoring_metrics', 'get_monitoring_alerts']) {
+    assert.doesNotThrow(() => authorizeTool(observer, tool, {}, 'argocd'));
+    assert.throws(() => authorizeTool({ ...observer, readAllNamespaces: false }, tool, {}, 'argocd'), /TOOL_FORBIDDEN/);
+  }
+  for (const resource of ['persistentvolumes', 'storageclasses']) {
+    assert.throws(() => authorizeTool({ ...observer, readAllNamespaces: false }, 'get_resource_inventory', { resource, namespace: 'kubeclaw' }, 'argocd'), /TOOL_FORBIDDEN/);
+  }
+  assert.throws(() => authorizeTool({ ...observer, readAllNamespaces: false }, 'get_resource_inventory', { resource: 'persistentvolumeclaims', namespace: 'other' }, 'argocd'), /NAMESPACE_FORBIDDEN/);
+});

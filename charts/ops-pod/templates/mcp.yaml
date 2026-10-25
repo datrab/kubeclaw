@@ -14,6 +14,9 @@
 {{- range .namespacePrefixes -}}
 {{- if not (has (lower .) $.Values.rbac.namespacePrefixes) -}}{{- fail "MCP client prefix is outside rbac.namespacePrefixes" -}}{{- end -}}
 {{- end -}}
+{{- if and .readOnly (or (has "exec_pod" .tools) (not (empty .exec))) -}}
+{{- fail "Read-only MCP clients cannot have exec tools or grants" -}}
+{{- end -}}
 {{- range .exec -}}
 {{- if .allNonSystemNamespaces -}}
 {{- if or (not $.Values.rbac.execAllNonSystemNamespaces) (not $client.readAllNamespaces) -}}{{- fail "MCP broad exec requires RBAC and client all-namespace observation" -}}{{- end -}}
@@ -21,7 +24,7 @@
 {{- if not (has (lower .namespacePrefix) $.Values.rbac.namespacePrefixes) -}}{{- fail "MCP exec prefix is outside rbac.namespacePrefixes" -}}{{- end -}}
 {{- else if not (has .namespace $.Values.rbac.execNamespaces) -}}{{- fail "MCP exec grant is outside rbac.execNamespaces" -}}{{- end -}}
 {{- end -}}
-{{- $clients = append $clients (dict "id" .id "tokenFile" (printf "/var/run/ops-clients/%s/token" .id) "namespaces" .namespaces "readAllNamespaces" (.readAllNamespaces | default false) "namespacePrefixes" (.namespacePrefixes | default list) "tools" .tools "exec" .exec) -}}
+{{- $clients = append $clients (dict "id" .id "readOnly" (.readOnly | default false) "tokenFile" (printf "/var/run/ops-clients/%s/token" .id) "namespaces" .namespaces "readAllNamespaces" (.readAllNamespaces | default false) "namespacePrefixes" (.namespacePrefixes | default list) "tools" .tools "exec" .exec) -}}
 {{- end -}}
 apiVersion: v1
 kind: ConfigMap
@@ -70,6 +73,9 @@ spec:
             - {name: OPS_READ_ALL_NAMESPACES, value: {{ ternary "1" "0" .Values.rbac.readAllNamespaces | quote }}}
             - {name: OPS_ALLOWED_NAMESPACE_PREFIXES, value: {{ join "," .Values.rbac.namespacePrefixes | quote }}}
             - {name: ARGOCD_NAMESPACE, value: {{ .Values.argoNamespace | quote }}}
+            {{- if .Values.mcp.monitoring.enabled }}
+            - {name: OPS_PROMETHEUS_ORIGIN, value: {{ printf "http://%s.%s.svc.cluster.local:%v" .Values.mcp.monitoring.service .Values.mcp.monitoring.namespace .Values.mcp.monitoring.port | quote }}}
+            {{- end }}
             - {name: OPS_MCP_POLICY_FILE, value: /etc/ops-mcp/policy.json}
             - {name: OPS_MCP_TLS_CERT_FILE, value: /etc/ops-tls/tls.crt}
             - {name: OPS_MCP_TLS_KEY_FILE, value: /etc/ops-tls/tls.key}

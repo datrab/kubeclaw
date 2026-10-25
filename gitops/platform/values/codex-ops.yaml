@@ -17,8 +17,11 @@ rbac:
     - spire-server
     - spire-system
 mcp:
+  monitoring:
+    enabled: true
   clients:
     - id: codex
+      readOnly: true
       readAllNamespaces: true
       tokenSecret: codex-ops-bearer
       namespace: kubeclaw-ops
@@ -44,28 +47,10 @@ mcp:
         - get_pod_logs
         - get_hubble_flows
         - get_pod_metrics
-        - exec_pod
-      exec:
-        - namespacePrefix: test
-          allPods: true
-          allContainers: true
-          timeoutSeconds: 30
-          maxOutputBytes: 65536
-        - namespace: kubeclaw
-          podLabels:
-            app.kubernetes.io/instance: agent-buster
-          containers:
-            - buster-v2-runtime
-          timeoutSeconds: 30
-          maxOutputBytes: 65536
-        - namespace: kubeclaw
-          podLabels:
-            app.kubernetes.io/instance: agent-nova
-          containers:
-            - kubeclaw
-            - archviewer
-          timeoutSeconds: 30
-          maxOutputBytes: 65536
+        - get_resource_inventory
+        - get_monitoring_metrics
+        - get_monitoring_alerts
+      exec: []
     - id: nova
       tokenSecret: nova-ops-bearer
       namespace: kubeclaw

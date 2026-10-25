@@ -4,8 +4,10 @@ import { AsyncLocalStorage } from 'node:async_hooks';
 import { createBearerAuthorization } from './authentication.mjs';
 
 export const requestIdentity = new AsyncLocalStorage();
-export const TOOL_NAMES = ['platform_cluster_state', 'platform_network_state', 'list_argocd_applications',
-  'namespace_overview', 'get_pod', 'get_events', 'get_pod_logs', 'get_hubble_flows', 'get_pod_metrics', 'exec_pod'];
+export const READ_ONLY_TOOLS = Object.freeze(['platform_cluster_state', 'platform_network_state', 'list_argocd_applications',
+  'namespace_overview', 'get_pod', 'get_events', 'get_pod_logs', 'get_hubble_flows', 'get_pod_metrics',
+  'get_resource_inventory', 'get_monitoring_metrics', 'get_monitoring_alerts']);
+export const TOOL_NAMES = [...READ_ONLY_TOOLS, 'exec_pod'];
 const dns = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/;
 const strings = (v, check) => Array.isArray(v) && v.every(x => typeof x === 'string' && check(x));
 const positive = (v, max) => Number.isInteger(v) && v > 0 && v <= max;
@@ -35,6 +37,8 @@ export function parsePolicy(text, allowedNamespaces, allowedPrefixes = [], readA
         !strings(client.namespacePrefixes ?? [], x => dns.test(x.toLowerCase()) && allowedPrefixes.includes(x.toLowerCase()))) throw new Error('Invalid Ops MCP client policy');
     ids.add(client.id);
     if (!Array.isArray(client.exec)) throw new Error('Explicit exec grants are required (use [] to deny)');
+    if (client.readOnly !== undefined && typeof client.readOnly !== 'boolean') throw new Error('Invalid readOnly policy');
+    if (client.readOnly && (client.exec.length || client.tools.some(tool => !READ_ONLY_TOOLS.includes(tool)))) throw new Error('Read-only client cannot have exec grants or write tools');
     for (const grant of client.exec) {
       const broadGrant = grant.allNonSystemNamespaces === true && execAllNonSystemNamespaces &&
         client.readAllNamespaces === true && grant.allPods === true && grant.allContainers === true &&
@@ -88,6 +92,8 @@ export function createAccessPolicy(config) {
 }
 
 export function authorizeTool(client, tool, args, argoNamespace) {
+  if (client?.readOnly && !READ_ONLY_TOOLS.includes(tool)) throw new Error('OPS_TOOL_FORBIDDEN');
+  if ((tool.startsWith('get_monitoring_') || (tool === 'get_resource_inventory' && ['persistentvolumes', 'storageclasses'].includes(args.resource))) && !client?.readAllNamespaces) throw new Error('OPS_TOOL_FORBIDDEN');
   if (!client?.tools.includes(tool) || (tool === 'platform_cluster_state' && args.resource === 'namespaces' && !client.readAllNamespaces)) throw new Error('OPS_TOOL_FORBIDDEN');
   const namespace = tool === 'list_argocd_applications' ? argoNamespace : args.namespace;
   const broadExec = tool === 'exec_pod' && nonSystemNamespace(namespace) && client.exec.some(grant => grant.allNonSystemNamespaces === true);
@@ -95,6 +101,7 @@ export function authorizeTool(client, tool, args, argoNamespace) {
 }
 
 export function authorizeExec(client, args, pod) {
+  if (client?.readOnly) throw new Error('OPS_EXEC_TARGET_FORBIDDEN');
   const systemPod = ['system-node-critical', 'system-cluster-critical'].includes(pod.spec?.priorityClassName) || pod.spec?.priority >= 2000000000;
   const grant = client.exec.find(grant => grant.allNonSystemNamespaces === true
     ? nonSystemNamespace(args.namespace) && !systemPod

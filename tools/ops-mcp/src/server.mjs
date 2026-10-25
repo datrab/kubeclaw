@@ -5,6 +5,8 @@ import { createPodExec } from './exec.mjs';
 import { readTlsPair, reloadTls } from './tls.mjs';
 import { loadOpsMcpConfig } from './config.mjs';
 import { createKubeRequest, createKubeList } from './kubernetes.mjs';
+import { createMonitoring, METRIC_QUERIES } from './monitoring.mjs';
+import { INVENTORY_PATHS, resourceSummary } from './resource-inventory.mjs';
 import { createServer as createHttpServer } from 'node:http';
 import { createServer as createHttpsServer } from 'node:https';
 import { createHash } from 'node:crypto';
@@ -20,6 +22,7 @@ const DEFAULT_NAMESPACE = config.defaultNamespace;
 const ARGO_NAMESPACE = config.argoNamespace;
 const MAX_LOG_BYTES = 64 * 1024;
 const kubeList = createKubeList(kubeRequest);
+const monitoring = createMonitoring();
 const EVENT_PAGE_SIZE = 500;
 
 const authentication = createAccessPolicy(config);
@@ -239,7 +242,7 @@ function buildServer() {
       const path = resource === 'nodes' ? '/api/v1/nodes' : resource === 'namespaces' ? '/api/v1/namespaces' : '/apis/cilium.io/v2/ciliumclusterwidenetworkpolicies';
       const page = await kubeList(path, { pageSize: 50, maxPages: 1, continueToken,
         mapItem: item => resource === 'nodes'
-          ? { ...trimObjectMetadata(item), conditions: item.status?.conditions, nodeInfo: item.status?.nodeInfo, capacity: item.status?.capacity }
+          ? { ...trimObjectMetadata(item), conditions: item.status?.conditions, nodeInfo: item.status?.nodeInfo, capacity: item.status?.capacity, allocatable: item.status?.allocatable, unschedulable: item.spec?.unschedulable ?? false, taints: item.spec?.taints ?? [] }
           : resource === 'namespaces' ? { name: item.metadata?.name, creationTimestamp: item.metadata?.creationTimestamp, phase: item.status?.phase }
           : { ...trimObjectMetadata(item), spec: item.spec, specs: item.specs, status: item.status },
       });
@@ -263,6 +266,30 @@ function buildServer() {
       return jsonText({ ...page, nextContinueToken: page.continuation });
     });
   }
+
+  server.registerTool('get_resource_inventory', {
+    title: 'Read resource and storage inventory',
+    description: 'Read paginated pod requests/limits (including init containers and overhead), PVC/PV capacities, storage classes or EndpointSlices. Capacity is not free disk space; use filesystem/volume monitoring. Global storage inventory requires all-namespace observation.',
+    inputSchema: z.object({ namespace: namespaceSchema, resource: z.enum(Object.keys(INVENTORY_PATHS)), continueToken: z.string().max(16384).optional() }),
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
+  }, async ({ namespace, resource, continueToken }) => {
+    const page = await kubeList(INVENTORY_PATHS[resource].replace('{namespace}', encodeURIComponent(namespace)), {
+      pageSize: 50, maxPages: 1, continueToken, mapItem: item => resourceSummary(resource, item),
+    });
+    return jsonText({ resource, ...page, nextContinueToken: page.continuation });
+  });
+  server.registerTool('get_monitoring_metrics', {
+    title: 'Read host and volume monitoring',
+    description: 'Fixed read-only Prometheus queries for CPU, available RAM, filesystems/inodes, PVC usage, requests, network and disk IO. Global observation required. Optional history: both timestamps, max 24h and 1000 steps. Empty data means unavailable, never zero usage. Preserve instance/device/mountpoint labels; do not sum duplicate filesystem series.',
+    inputSchema: z.object({ metric: z.enum(Object.keys(METRIC_QUERIES)), startTime: z.iso.datetime().optional(), endTime: z.iso.datetime().optional(), stepSeconds: z.number().int().min(60).max(3600).default(60) }),
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
+  }, async args => jsonText(await monitoring.metrics(args)));
+  server.registerTool('get_monitoring_alerts', {
+    title: 'Read monitoring alerts',
+    description: 'Read active Prometheus alerts. Requires global observation; does not acknowledge, silence or change alerts.',
+    inputSchema: z.object({}),
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
+  }, async () => jsonText(await monitoring.alerts()));
 
   server.registerTool(
     'list_argocd_applications',

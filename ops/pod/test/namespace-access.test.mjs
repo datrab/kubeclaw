@@ -23,7 +23,11 @@ test('rendered MCP scope, dynamic backend, admission guard and network edge agre
   assert.deepEqual(clients.map(c => c.id), ['codex', 'nova', 'buster']);
   for (const client of clients) {
     assert.deepEqual(client.namespacePrefixes, ['test']);
-    assert.ok(client.exec.some(g => (client.id === 'codex' ? g.allNonSystemNamespaces === true : g.namespacePrefix === 'test') && g.allPods && g.allContainers));
+    if (client.id === 'codex') {
+      assert.equal(client.readOnly, true);
+      assert.deepEqual(client.exec, []);
+      assert.ok(!client.tools.includes('exec_pod'));
+    } else assert.ok(client.exec.some(g => g.namespacePrefix === 'test' && g.allPods && g.allContainers));
   }
   assert.deepEqual(clients.find(c => c.id === 'buster').namespaces, []);
   const guard = resources.find(x => x.kind === 'ValidatingAdmissionPolicy');
@@ -74,7 +78,8 @@ test('global observer binding grants only MCP reads and cannot introduce cluster
 
 test('broad backend is explicit and reconciler retains API egress without namespace prefixes', () => {
   const defaults = parse(readFileSync(root + 'charts/ops-pod/values.yaml', 'utf8'));
-  const clients = defaults.mcp.clients.map(c => ({ ...c, namespacePrefixes: [], exec: c.id === 'codex' ? c.exec : [] }));
+  // Explicit non-read-only fixture retains coverage of broad backend grants.
+  const clients = defaults.mcp.clients.map(c => ({ ...c, readOnly: false, namespacePrefixes: [], exec: c.id === 'codex' ? [{ allNonSystemNamespaces: true, allPods: true, allContainers: true, timeoutSeconds: 30, maxOutputBytes: 65536 }] : [] }));
   const args = ['template', 'codex-ops', root + 'charts/ops-pod', '-n', 'kubeclaw-ops',
     '--set-string', 'codexImage=example/codex@sha256:' + 'a'.repeat(64),
     '--set-string', 'mcpImage=example/mcp@sha256:' + 'b'.repeat(64),
