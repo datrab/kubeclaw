@@ -28819,7 +28819,7 @@
     },
     {
       "id": "FLW016-supported-failure-task-20261021",
-      "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+      "revision": "151c2dfeaaaf2e6eac33c372314d33deb326bf5d",
       "author": "/root/workflow_acceptance",
       "reviewer": "/root/operator_acceptance independent whole topic and correction rereview; parent installed-path/Reader integration",
       "gateIds": [],
@@ -28852,6 +28852,11 @@
           "command": "Reader artifact/search/source-links/source-previews/diagrams checks; offline browser; extracted artifact/search checks",
           "exitCode": 0,
           "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
+        },
+        {
+          "command": "Independent pinned native-scope correction/four-original-scope preservation; actual committed publication build plus five original reader checks",
+          "exitCode": 0,
+          "observation": "Source/semanticReader/Quality PASS; only worker-result-recovery.md changes in complete original vectors. Native-scope tests NOT executed; unchanged prior source/checks/limits reused. All6publication commands terminal0 at151c2dfe; no new gate or requirement acceptance."
         }
       ],
       "review": {
@@ -28865,7 +28870,31 @@
         "No full AP09/package, fresh-context persona, global generator or runtime release approval."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "previousReviewedRevision": "cfc97be096908c1193877d054bb80662120f1eca",
+      "impactReviews": [
+        {
+          "previousReviewedRevision": "cfc97be096908c1193877d054bb80662120f1eca",
+          "revision": "151c2dfeaaaf2e6eac33c372314d33deb326bf5d",
+          "reviewer": "Pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 independent native-scope paragraph and four-original-scope Source/semanticReader/Quality review",
+          "changedDependencies": [
+            "docs/site/use/workflows/worker-result-recovery.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Only source-backed expected TypeScript+two-test result, failure and owned cleanup limits of the existing native-scope example corrected. Complete original physical vector differs only at this page; exact native suite/resource implementation and all four complete original contracts/checks/limits/history supplied in-band. Independent Source/Reader/Quality and four-scope preservation PASS. Actual committed177page build and five original artifact/search/Source-link/Source-preview/diagram checks PASS. Original practical/native/live/human/release limits and whole A99-11 NOT_READY remain; no fresh delegated-host execution or new acceptance.",
+          "originalRecordSha256": "8c3e682c17ae4c30149736e4e8998909d552ffb6fc3c4359f257a598d63b4b21",
+          "report": "operations/pr13/evidence/a9911-20261025/native-scope-correction-verdict.json",
+          "reportSha256": "b0121ea7ce1b7b959e93dd58da2ccf784a3be3e9997038415fd701b664e0af88",
+          "inspectionLimit": "Supplied source/suite/resource implementation/contracts/vectors/diff only; no reviewer checkout inspection or runtime/delegated-host execution. Coordinator publication checks separate."
+        }
+      ],
+      "revisionHistory": [
+        {
+          "previousReviewedRevision": "cfc97be096908c1193877d054bb80662120f1eca",
+          "revision": "151c2dfeaaaf2e6eac33c372314d33deb326bf5d",
+          "reason": "Independent exact one-page native-scope example correction preserves original scope and limits; not recounted."
+        }
+      ]
     },
     {
       "id": "FLW012-supported-failure-task-20261021",
@@ -28974,7 +29003,7 @@
     },
     {
       "id": "A99-08-complete-supported-failure-journey-union-20261021",
-      "revision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "revision": "151c2dfeaaaf2e6eac33c372314d33deb326bf5d",
       "author": "Documentation topic authors and integration coordinator",
       "reviewer": "Independent topic-review union: operator_acceptance (new Redis/Worker topics); original independent Codex topic reviewers (registry/Tailnet diagnosis); workflow_acceptance (uncertain-effect/Demo); root nonauthor (BuildKit/Tailnet task guides)",
       "gateIds": [
@@ -29094,6 +29123,11 @@
           "command": "Actual original node scripts/docs-publication.mjs build and four native docs-reader checks: artifact, search, source-links, source-previews (Reader34087521)",
           "exitCode": 0,
           "observation": "Install/operate diagnostic additions do not alter the six supported failure-family procedures. Missing live controls still have owner/identity/follow-up stops; no A99-12 fresh exercise follows. Current build177pages,241outputdigests,40885localtargets; search177pages/12questions;435Sourceboxes/2000exactexcerpts. All authored pages/shared renderer outputs unchanged6250\u21923408; exact2scripts-tree pageRecordbindings checked. Refs/governance6250 and bounded prior browser observations reused, not relabelled fresh. Prior summary/limits/checks remain historical where superseded; no wider original-scope promotion."
+        },
+        {
+          "command": "Independent pinned native-scope correction/four-original-scope preservation; actual committed publication build plus five original reader checks",
+          "exitCode": 0,
+          "observation": "Source/semanticReader/Quality PASS; only worker-result-recovery.md changes in complete original vectors. Native-scope tests NOT executed; unchanged prior source/checks/limits reused. All6publication commands terminal0 at151c2dfe; no new gate or requirement acceptance."
         }
       ],
       "review": {
@@ -29250,6 +29284,20 @@
           "reportAvailability": "Later evidence adoption, not a Source file at reviewed487; not added to record.sources.",
           "limit": "Original named scope/limits preserved only; no new gate/requirement counts, consumer/graph/role/native/product/runtime/deployment/release approval. Knip/parser/output weaknesses and unexecuted product paths remain visible.",
           "wholeRenderedOutputChangedCanonicalPages": []
+        },
+        {
+          "previousReviewedRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+          "revision": "151c2dfeaaaf2e6eac33c372314d33deb326bf5d",
+          "reviewer": "Pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 independent native-scope paragraph and four-original-scope Source/semanticReader/Quality review",
+          "changedDependencies": [
+            "docs/site/use/workflows/worker-result-recovery.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Only source-backed expected TypeScript+two-test result, failure and owned cleanup limits of the existing native-scope example corrected. Complete original physical vector differs only at this page; exact native suite/resource implementation and all four complete original contracts/checks/limits/history supplied in-band. Independent Source/Reader/Quality and four-scope preservation PASS. Actual committed177page build and five original artifact/search/Source-link/Source-preview/diagram checks PASS. Original practical/native/live/human/release limits and whole A99-11 NOT_READY remain; no fresh delegated-host execution or new acceptance.",
+          "originalRecordSha256": "7257ff8f20d77833e3fd0784585470420b62d7acbabd0a2eb3dfb61ed6d86d99",
+          "report": "operations/pr13/evidence/a9911-20261025/native-scope-correction-verdict.json",
+          "reportSha256": "b0121ea7ce1b7b959e93dd58da2ccf784a3be3e9997038415fd701b664e0af88",
+          "inspectionLimit": "Supplied source/suite/resource implementation/contracts/vectors/diff only; no reviewer checkout inspection or runtime/delegated-host execution. Coordinator publication checks separate."
         }
       ],
       "scopePreservation3408": {
@@ -29262,7 +29310,15 @@
         "historicalChecksRemainAtOriginalRevisions": true,
         "practicalReaderProvenance": "Any original practical/semantic Reader observation remains dated and scoped. This source-informed content review is not a fresh eligible practical participant or new run.",
         "limits": "Only affected declared content/source bindings preserved. Old Ops loopback/shared-token/read-only/direct-token units are superseded where applicable by current source-only central Ops contract; no original live result transfers. No new global API/config generator, runtime, full accessibility, practical Reader execution or two-build determinism claim."
-      }
+      },
+      "previousReviewedRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "revisionHistory": [
+        {
+          "previousReviewedRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+          "revision": "151c2dfeaaaf2e6eac33c372314d33deb326bf5d",
+          "reason": "Independent exact one-page native-scope example correction preserves original scope and limits; not recounted."
+        }
+      ]
     },
     {
       "id": "A912-03-supported-redirect-paths-20261021",
@@ -29913,7 +29969,7 @@
     },
     {
       "id": "AP09-publication-positive-scope-7ef16585",
-      "revision": "448b8282e6a0c374030c256009224fb7b76d14e8",
+      "revision": "151c2dfeaaaf2e6eac33c372314d33deb326bf5d",
       "author": "existing publication/content maintainers; final authored Sourcefield additions separately reviewed by workflow_acceptance",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -30198,6 +30254,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "All six actual separate original commands terminal0 at reviewed Source448b8282: committed HTML build plus artifact/search/source-links/source-previews/diagrams.143 focused CI/purpose/scalar controls, actual aggregate check, YAML, owninginventory/governance checks pass. Seven full original-scope semantic preservation reviews clean, one complete pass each. No reviewer-run checkout tests, fresh human/practical/wholeA91005 claim."
+        },
+        {
+          "command": "Independent pinned native-scope correction/four-original-scope preservation; actual committed publication build plus five original reader checks",
+          "exitCode": 0,
+          "observation": "Source/semanticReader/Quality PASS; only worker-result-recovery.md changes in complete original vectors. Native-scope tests NOT executed; unchanged prior source/checks/limits reused. All6publication commands terminal0 at151c2dfe; no new gate or requirement acceptance."
         }
       ],
       "review": {
@@ -30719,6 +30780,20 @@
             "docs/blueprint/acceptance-evidence/README.md"
           ],
           "limits": "Original artifacts.ts41 DATA/all five UNKNOWN,28 preexisting ordinary mismatches, Knip, human/live/runtime limits remain. Four unchanged site-boundary failures retained. Note-only review not accepted as preservation; missing domain keys in operations comparison accepted/corrected from full original/current maps before substantive clean verdict. No new gate/requirement acceptance or receipt rewrite."
+        },
+        {
+          "previousReviewedRevision": "448b8282e6a0c374030c256009224fb7b76d14e8",
+          "revision": "151c2dfeaaaf2e6eac33c372314d33deb326bf5d",
+          "reviewer": "Pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 independent native-scope paragraph and four-original-scope Source/semanticReader/Quality review",
+          "changedDependencies": [
+            "docs/site/use/workflows/worker-result-recovery.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Only source-backed expected TypeScript+two-test result, failure and owned cleanup limits of the existing native-scope example corrected. Complete original physical vector differs only at this page; exact native suite/resource implementation and all four complete original contracts/checks/limits/history supplied in-band. Independent Source/Reader/Quality and four-scope preservation PASS. Actual committed177page build and five original artifact/search/Source-link/Source-preview/diagram checks PASS. Original practical/native/live/human/release limits and whole A99-11 NOT_READY remain; no fresh delegated-host execution or new acceptance.",
+          "originalRecordSha256": "8000542a7315c18d52a14b24341a55a2a71e7f351b442088df65ed28b9e00ce9",
+          "report": "operations/pr13/evidence/a9911-20261025/native-scope-correction-verdict.json",
+          "reportSha256": "b0121ea7ce1b7b959e93dd58da2ccf784a3be3e9997038415fd701b664e0af88",
+          "inspectionLimit": "Supplied source/suite/resource implementation/contracts/vectors/diff only; no reviewer checkout inspection or runtime/delegated-host execution. Coordinator publication checks separate."
         }
       ],
       "scopePreservation3408": {
@@ -30747,7 +30822,7 @@
         "priorSummaryStatus": "Original summary and all old limits/checks/review/persona provenance retained as historical scope; current177-page observations stated here, not retroactively attributed to old runs.",
         "globalGeneratorLimit": "Original normal81b localHelm still FAILS at infrastructure-chart.mjs63. This preservation grants no global configuration/API generator or live-release acceptance."
       },
-      "previousReviewedRevision": "c0d892fb2ea7f88994e53ea29de0fdce2d87d89e",
+      "previousReviewedRevision": "448b8282e6a0c374030c256009224fb7b76d14e8",
       "revisionHistory": [
         {
           "revision": "8fa9ed9b95bb37ca234aef1f321f68831519abab",
@@ -30765,6 +30840,11 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/README.md",
           "reason": "Independent finite CI/maintenance21 Source/Reader/Quality preservation; original summary/limits/historical observations/accepted membership unchanged."
+        },
+        {
+          "previousReviewedRevision": "448b8282e6a0c374030c256009224fb7b76d14e8",
+          "revision": "151c2dfeaaaf2e6eac33c372314d33deb326bf5d",
+          "reason": "Independent exact one-page native-scope example correction preserves original scope and limits; not recounted."
         }
       ]
     },
@@ -31295,7 +31375,7 @@
     },
     {
       "id": "A98-02-13-whole-operator-procedure-contract-20261022",
-      "revision": "c56f684a0b18bbf8c9615524e6702a0e80a589e4",
+      "revision": "151c2dfeaaaf2e6eac33c372314d33deb326bf5d",
       "author": "Original canonical topic maintainers plus separately reviewed bounded corrections",
       "reviewer": "/root/operator_acceptance; own quickstart delta independently reviewed by /root",
       "gateIds": [
@@ -31669,6 +31749,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Actual six separate committed technical Reader processes PASS at c56f684a0b18bbf8c9615524e6702a0e80a589e4; 177-page publication, artifact/search/Source-link/Source-preview/diagrams. Exact reviewed platform sort correction, two finite scalar identities and five downstream digest consequences; 14 canonical scalar and 22 variable-child controls PASS. No new practical participant/human/runtime observations. Original DATA artifacts.ts:41 content/all5 UNKNOWN and original ordinary/Knip/fullgeneration limits retained."
+        },
+        {
+          "command": "Independent pinned native-scope correction/four-original-scope preservation; actual committed publication build plus five original reader checks",
+          "exitCode": 0,
+          "observation": "Source/semanticReader/Quality PASS; only worker-result-recovery.md changes in complete original vectors. Native-scope tests NOT executed; unchanged prior source/checks/limits reused. All6publication commands terminal0 at151c2dfe; no new gate or requirement acceptance."
         }
       ],
       "review": {
@@ -32061,6 +32146,20 @@
             "docs/blueprint/acceptance-evidence/README.md"
           ],
           "limits": "All original DATA artifacts.ts41content/all5UNKNOWN, original ordinary mismatches, Knip/fullgeneration, external provenance, human/live/runtime/release boundaries retained. No whole A91108 or other new gate/catalogue acceptance."
+        },
+        {
+          "previousReviewedRevision": "c56f684a0b18bbf8c9615524e6702a0e80a589e4",
+          "revision": "151c2dfeaaaf2e6eac33c372314d33deb326bf5d",
+          "reviewer": "Pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 independent native-scope paragraph and four-original-scope Source/semanticReader/Quality review",
+          "changedDependencies": [
+            "docs/site/use/workflows/worker-result-recovery.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Only source-backed expected TypeScript+two-test result, failure and owned cleanup limits of the existing native-scope example corrected. Complete original physical vector differs only at this page; exact native suite/resource implementation and all four complete original contracts/checks/limits/history supplied in-band. Independent Source/Reader/Quality and four-scope preservation PASS. Actual committed177page build and five original artifact/search/Source-link/Source-preview/diagram checks PASS. Original practical/native/live/human/release limits and whole A99-11 NOT_READY remain; no fresh delegated-host execution or new acceptance.",
+          "originalRecordSha256": "4f3ea36d37de82c443cbeb145a0040f34b4846e45de1e114eb73886b16ea7428",
+          "report": "operations/pr13/evidence/a9911-20261025/native-scope-correction-verdict.json",
+          "reportSha256": "b0121ea7ce1b7b959e93dd58da2ccf784a3be3e9997038415fd701b664e0af88",
+          "inspectionLimit": "Supplied source/suite/resource implementation/contracts/vectors/diff only; no reviewer checkout inspection or runtime/delegated-host execution. Coordinator publication checks separate."
         }
       ],
       "scopePreservation3408": {
@@ -32089,7 +32188,7 @@
         "priorSummaryStatus": "Original summary and all old limits/checks/review/persona provenance retained as historical scope; current177-page observations stated here, not retroactively attributed to old runs.",
         "globalGeneratorLimit": "Original normal81b localHelm still FAILS at infrastructure-chart.mjs63. This preservation grants no global configuration/API generator or live-release acceptance."
       },
-      "previousReviewedRevision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
+      "previousReviewedRevision": "c56f684a0b18bbf8c9615524e6702a0e80a589e4",
       "revisionHistory": [
         {
           "revision": "8fa9ed9b95bb37ca234aef1f321f68831519abab",
@@ -32150,6 +32249,11 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/README.md",
           "reason": "Exact independently reviewed platform ordering and finite shared custody original-scope preservation; no new acceptance."
+        },
+        {
+          "previousReviewedRevision": "c56f684a0b18bbf8c9615524e6702a0e80a589e4",
+          "revision": "151c2dfeaaaf2e6eac33c372314d33deb326bf5d",
+          "reason": "Independent exact one-page native-scope example correction preserves original scope and limits; not recounted."
         }
       ]
     },
