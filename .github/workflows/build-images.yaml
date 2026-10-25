@@ -4,12 +4,18 @@ on:
     branches: [main]
   workflow_dispatch:
     inputs:
+      retained_baseline:
+        description: Optional immutable releases/gitops baseline authenticated before retention
+        required: false
+        type: string
+        default: ""
       runtime_refresh_plan:
         description: Optional additive JSON refresh plan with images and bundles arrays
         required: false
         type: string
         default: ""
 env:
+  GITOPS_RETAINED_BASELINE: ${{ inputs.retained_baseline || '' }}
   REGISTRY: ghcr.io
   RUNTIME_REFRESH_PLAN: ${{ inputs.runtime_refresh_plan || '' }}
 jobs:
@@ -240,6 +246,7 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     uses: ./.github/workflows/publish-image-receipts.yaml
     with:
+      retained_baseline: ${{ inputs.retained_baseline || '' }}
       family: runtime
       runtime_refresh_plan: ${{ inputs.runtime_refresh_plan || '' }}
     permissions:

@@ -5,10 +5,16 @@ on:
       family:
         required: true
         type: string
+      retained_baseline:
+        required: false
+        type: string
+        default: ""
       runtime_refresh_plan:
         required: false
         type: string
         default: ""
+env:
+  GITOPS_RETAINED_BASELINE: ${{ inputs.retained_baseline || '' }}
 permissions:
   contents: write
   actions: read

@@ -142,3 +142,23 @@ test('retained components are authenticated before either receipt producer runs'
   assert.equal(check(receipt.jobs.preserve.steps,
     'Preserve immutable source record beyond CI artifact retention').if, "inputs.family == 'runtime'");
 });
+
+
+test('immutable baseline is identical for planners, authentication and both producers', () => {
+  const expression = "${{ inputs.retained_baseline || '' }}";
+  assert.equal(main.on.workflow_dispatch.inputs.retained_baseline.default, '');
+  assert.equal(main.env.GITOPS_RETAINED_BASELINE, expression);
+  assert.equal(main.jobs['preserve-receipts'].with.retained_baseline, expression);
+  const receipt = read('publish-image-receipts');
+  assert.equal(receipt.on.workflow_call.inputs.retained_baseline.default, '');
+  assert.equal(receipt.env.GITOPS_RETAINED_BASELINE, expression);
+  for (const name of ['detect-build-inputs', 'bundle-skills']) {
+    assert.equal(main.jobs[name].env?.GITOPS_RETAINED_BASELINE, undefined);
+    for (const step of main.jobs[name].steps) {
+      assert.equal(step.env?.GITOPS_RETAINED_BASELINE, undefined);
+    }
+  }
+  for (const step of receipt.jobs.preserve.steps) {
+    assert.equal(step.env?.GITOPS_RETAINED_BASELINE, undefined);
+  }
+});
