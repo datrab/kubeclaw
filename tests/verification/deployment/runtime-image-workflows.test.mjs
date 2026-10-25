@@ -162,3 +162,18 @@ test('immutable baseline is identical for planners, authentication and both prod
     assert.equal(step.env?.GITOPS_RETAINED_BASELINE, undefined);
   }
 });
+
+ test('reusable policy authenticates the identical explicit baseline before drift validation', () => {
+  const expression = "${{ inputs.retained_baseline || '' }}";
+  assert.equal(main.jobs['update-policy'].with.retained_baseline, expression);
+  assert.equal(updates.on.workflow_call.inputs.retained_baseline.default, '');
+  assert.equal(updates.env.GITOPS_RETAINED_BASELINE, expression);
+  const steps = updates.jobs.policy.steps;
+  const auth = steps.findIndex(step => step.name === 'Authenticate explicit retained baseline before policy validation');
+  const policy = steps.findIndex(step => step.name === 'Check generated versions and release receipt validation');
+  assert.ok(auth >= 0 && auth < policy);
+  assert.equal(steps[auth].if, "inputs.retained_baseline != ''");
+  assert.equal(steps[auth].run, 'node scripts/updates/verify-release-source.mjs');
+  assert.equal(steps[auth].env.GITHUB_TOKEN, '${{ github.token }}');
+  assert.match(steps[policy].run, /gitops-continuous\.mjs check/);
+});

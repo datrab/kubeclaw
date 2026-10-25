@@ -2,6 +2,14 @@ name: Update policy acceptance
 on:
   pull_request:
   workflow_call:
+    inputs:
+      retained_baseline:
+        description: Optional immutable baseline authenticated by the production source verifier
+        required: false
+        type: string
+        default: ""
+env:
+  GITOPS_RETAINED_BASELINE: ${{ inputs.retained_baseline || '' }}
 permissions:
   contents: read
   actions: read
@@ -19,6 +27,11 @@ jobs:
       - uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4 # v4
         with:
           version: v3.18.4
+      - name: Authenticate explicit retained baseline before policy validation
+        if: inputs.retained_baseline != ''
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/updates/verify-release-source.mjs
       - name: Check generated versions and release receipt validation
         run: |
           sudo apt-get update -qq && sudo apt-get install -y lua5.1

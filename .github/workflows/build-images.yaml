@@ -21,6 +21,8 @@ env:
 jobs:
   update-policy:
     uses: ./.github/workflows/update-checks.yaml
+    with:
+      retained_baseline: ${{ inputs.retained_baseline || '' }}
     permissions:
       contents: read
       actions: read
