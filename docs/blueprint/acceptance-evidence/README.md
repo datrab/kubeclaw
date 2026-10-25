@@ -76,6 +76,118 @@ unexecuted product gates. Its prerequisites and evidence boundaries are not
 replaced by this documentation report. No full product or AP09 pass is claimed.
 All older checkpoint sections below retain their own dated revisions and limits.
 
+## Final documentation report — 2026-10-25
+
+**Documentation acceptance: NOT_READY. Complete live-gate passes: none established
+for this closeout.** This is the final-report obligation, not a declaration that
+all documentation or product work is finished. Remaining material documentation
+findings, source-policy dependencies and unexecuted product work remain open.
+
+The verified report/register anchor is
+`546693e93652db92a786c733fd23520ea4165aa0`: **62/89 gates and 225/261
+requirements accepted**. A913-09 is the one newly accepted compact-report gate.
+This baseline precedes adjudication of A913-12. No other point is inferred from
+this report. The checked publication source, exact commands, successful technical
+results, independent reviews and failed receiver are listed immediately above.
+Those technical passes are not complete live-gate passes.
+
+### Complete operational gate disposition
+
+The following census covers all 15 complete acceptance areas in the checked
+[operational acceptance page](../../site/status/acceptance.md). Its heading
+“Executed quality gates” names a required execution area; it does not record a
+successful production run. **NOT EXECUTED** below means the complete required
+current gate is not established by an accepted execution record in this closeout.
+It does not erase or deny earlier local/native subtests, partial attempts or
+historical evidence at their original identities and limits. No complete live
+PASS, failed run or blocked prerequisite is relabelled as successful.
+
+| Complete operational gate | Closeout disposition |
+| --- | --- |
+| Contracts, SDK and installable packages | NOT EXECUTED at complete required scope; no live PASS. |
+| Durable state, effects and recovery | NOT EXECUTED at complete required scope; no live PASS. |
+| Workers, kernel limits, supervisors and cancellation | NOT EXECUTED at complete required scope; no live PASS. |
+| Approvals, repair budgets and risk acceptance | NOT EXECUTED at complete required scope; no live PASS. |
+| Forge, Git concurrency and workspace ownership | NOT EXECUTED at complete required scope; no live PASS. |
+| Executed quality gates and eleven production receipts | NOT EXECUTED at complete required scope; no live PASS. |
+| Prism database, jobs, sessions and resources | NOT EXECUTED at complete required scope; no live PASS. |
+| Prism browser, Studio, artifacts and retained memory | NOT EXECUTED at complete required scope; no live PASS. |
+| Observability, retention and operator delivery | NOT EXECUTED at complete required scope; no live PASS. |
+| Demo, Kubernetes admission, Tailnet and human acceptance | NOT EXECUTED at complete required scope; no live PASS. |
+| Release identity, registry, mirrors and GitHub permissions | NOT EXECUTED at complete required scope; no live PASS. |
+| Networking, identities, Envoy and access boundaries | NOT EXECUTED at complete required scope; no live PASS. |
+| GitOps, stateful services, restore and capacity | NOT EXECUTED at complete required scope; no live PASS. |
+| Complete user journey and evidence-backed final report | NOT EXECUTED at complete required scope; no live PASS. |
+| Echo promotion as a separate product decision | NOT EXECUTED at complete required scope; no live PASS. |
+
+All eleven production-receipt successors remain **NOT EXECUTED at their complete
+production scope**: `unit`, `buildkit`, `kubernetes-fixture`, `http`, `tailscale`,
+`api`, `a11y`, `lighthouse`, `visual`, `e2e`, and `security`. These are the preflight
+suffixes in the operational gate. Provider registration, local schema parity and
+technical publication checks do not attest their execution. The two locally
+parity-checked manifest/bundle paths retain that narrower evidence; neither
+provides a substitute production receipt for these eleven successors.
+
+### Complete registered deployment scenario disposition
+
+The original AP09 fixture catalogue registers the following 18 deployment
+scenarios. None has a complete current live PASS established by this closeout.
+Their required observations remain the original fixture contract; the command
+page below is not proof that its procedure ran. A similar local fixture, partial
+provider exercise or historical scenario does not close the registered scope.
+
+| Original deployment scenario | Command authority | Closeout disposition |
+| --- | --- | --- |
+| `EXEC-PLATFORM-SUCCESS` | `docs/site/use/workflows/buster-suite.md` | NOT EXECUTED at complete registered scope. |
+| `EXEC-WAIT-RESUME` | `docs/site/use/operate.md` | NOT EXECUTED at complete registered scope. |
+| `EXEC-CANCELLATION` | `docs/site/use/operate.md` | NOT EXECUTED at complete registered scope. |
+| `EXEC-RESTART-RECOVERY` | `docs/site/use/recovery.md` | NOT EXECUTED at complete registered scope. |
+| `EXEC-UPGRADE` | `docs/site/use/maintenance.md` | NOT EXECUTED at complete registered scope. |
+| `EXEC-ROLLBACK` | `docs/site/use/maintenance.md` | NOT EXECUTED at complete registered scope. |
+| `EXEC-DECOMMISSION` | `docs/site/use/maintenance.md` | NOT EXECUTED at complete registered scope. |
+| `EXEC-PRISM-JOURNEY` | `docs/site/use/prism-studio.md` | NOT EXECUTED at complete registered scope. |
+| `EXEC-DEMO-JOURNEY` | `docs/site/use/demo-delivery.md` | NOT EXECUTED at complete registered scope. |
+| `EXEC-FAIL-REDIS` | `docs/site/use/diagnose.md` | NOT EXECUTED at complete registered scope. |
+| `EXEC-FAIL-POSTGRESQL` | `docs/site/use/diagnose.md` | NOT EXECUTED at complete registered scope. |
+| `EXEC-FAIL-REGISTRY-BUILDKIT` | `docs/site/use/diagnose.md` | NOT EXECUTED at complete registered scope. |
+| `EXEC-FAIL-TAILSCALE` | `docs/site/use/diagnose.md` | NOT EXECUTED at complete registered scope. |
+| `EXEC-FAIL-LITELLM` | `docs/site/use/diagnose.md` | NOT EXECUTED at complete registered scope. |
+| `EXEC-FAIL-GIT` | `docs/site/use/diagnose.md` | NOT EXECUTED at complete registered scope. |
+| `EXEC-FAIL-WORKER-ABORT` | `docs/site/use/workflows/buster-suite.md` | NOT EXECUTED at complete registered scope. |
+| `EXEC-FAIL-UNCERTAIN-EFFECT` | `docs/site/use/recovery.md` | NOT EXECUTED at complete registered scope. |
+| `EXEC-FAIL-DEMO-REJECTION` | `docs/site/use/demo-delivery.md` | NOT EXECUTED at complete registered scope. |
+
+### Failed, blocked and independently observed work
+
+The original local-Helm receiver remains **FAIL**, not a live execution or a
+successful mutation diagnostic. Its current documentation-role failure and the
+historical product-output/DATA failures remain distinct. The initial failed
+publication build remains recorded separately from the corrected technical PASS.
+The full language input was **BLOCKED before model review**. Source-policy
+refusals, missing exact historical reports and all five DATA UNKNOWN slots remain
+unresolved, not accepted by omission.
+
+The committed 177-page publication build, five technical Reader controls and
+five relevant static checks above are **PASS only at their recorded technical
+scope**. Prior automated accessibility and keyboard subsets remain subsets; they
+do not establish independent screen-reader or participant acceptance. No new
+mutating product, release, human or live test was run for this report.
+
+The operational page retains its own historical source pin and unexecuted
+procedures. Reading that checked file does not attest a current running image,
+release, environment or source identity. An operator must select the approved
+real environment and collect the complete original observations before changing
+any live disposition. Signing, consumer/producer qualification, actual device and
+human identities cannot be replaced by model-written evidence.
+
+**Resume condition:** Documentation owners resolve remaining material findings
+and obtain complete independent original-scope reviews. Policy/evidence
+custodians restore supported access at the recorded source/report identities.
+The responsible product operator or participant supplies approved execution
+prerequisites and original bound results for each remaining live area. Keep
+AP09 **NOT_READY** until no material documentation finding remains; do not turn
+an unexecuted live gate into PASS to close documentation work.
+
 ## Reviewed dependency aggregate checkpoint — 2026-10-24
 
 Source: `c0d892fb2ea7f88994e53ea29de0fdce2d87d89e`. Adds the supported deterministic `plugin-dependency-aggregate.json` generator, reusable complete native report and local raw schema/reference closure; no schema-fragment semantics, runtime grant, operational owner or DATA qualification is inferred. Mandatory fresh inventory and ownership assertions are retained. New schema keyword coverage includes `contentSchema` and `$recursiveRef`; resolution remains local/contained.
