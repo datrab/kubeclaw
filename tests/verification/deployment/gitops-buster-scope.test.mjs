@@ -126,3 +126,22 @@ test('Buster-only retention rejects ambiguous or non-immutable active role sourc
   fs.writeFileSync(file, original.map(item => yaml.dump(item)).join('---\n'));
   assert.deepEqual([...retain(root, receipt).keys()], ['prism', 'nova']);
 }));
+
+
+test('Buster-only retention binds active repositories to an unambiguous local project', () => fixture((root, receipt) => {
+  const file = path.join(root, 'gitops/production/apps/applications.yaml');
+  const original = yaml.loadAll(fs.readFileSync(file, 'utf8')).filter(Boolean);
+  for (const mode of ['foreign', 'missing-project', 'duplicate-project', 'wildcard']) {
+    const documents = structuredClone(original);
+    const app = documents.find(item => item.kind === 'Application' && item.metadata.name === 'kubeclaw-prism');
+    const project = documents.find(item => item.kind === 'AppProject' && item.metadata.name === app.spec.project);
+    if (mode === 'foreign') app.spec.source.repoURL = 'https://github.com/foreign/kubeclaw.git';
+    if (mode === 'missing-project') app.spec.project = 'unknown';
+    if (mode === 'duplicate-project') documents.push(structuredClone(project));
+    if (mode === 'wildcard') project.spec.sourceRepos = ['*'];
+    fs.writeFileSync(file, documents.map(item => yaml.dump(item)).join('---\n'));
+    assert.throws(() => retain(root, receipt), /GITOPS_ACTIVE_ROLE_REPOSITORY_INVALID/);
+  }
+  fs.writeFileSync(file, original.map(item => yaml.dump(item)).join('---\n'));
+  assert.deepEqual([...retain(root, receipt).keys()], ['prism', 'nova']);
+}));

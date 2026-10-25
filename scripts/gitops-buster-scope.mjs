@@ -34,9 +34,19 @@ function validateScope(before, after) {
   }
 }
 
-function activePath(applications, group) {
+function activePath(applications, group, documents) {
   const matching = applications.filter(application => application.metadata?.name === group.name);
-  const source = matching[0]?.spec?.source;
+  const application = matching[0];
+  const source = application?.spec?.source;
+  const projects = documents.filter(document => document.kind === 'AppProject'
+    && document.metadata?.name === application?.spec?.project
+    && document.metadata?.namespace === application?.metadata?.namespace);
+  const repositories = projects[0]?.spec?.sourceRepos;
+  if (projects.length !== 1 || typeof source?.repoURL !== 'string'
+    || !Array.isArray(repositories) || !repositories.includes(source.repoURL)
+    || !/^https:\/\/[a-z0-9.-]+\/[a-zA-Z0-9_./-]+\.git$/u.test(source.repoURL)) {
+    throw new Error('GITOPS_ACTIVE_ROLE_REPOSITORY_INVALID');
+  }
   if (matching.length !== 1 || matching[0]?.spec?.sources !== undefined
     || matching[0]?.spec?.destination?.namespace !== group.namespace
     || matching[0]?.spec?.destination?.server !== 'https://kubernetes.default.svc'
@@ -66,13 +76,13 @@ function inspectRetainedManifest(manifest, group, receipt) {
 export function retainedGitOpsGroups(root, receipt, namespace, prismNamespace) {
   const { directory, prior } = priorBundle(root);
   validateScope(prior.receipt, receipt);
-  const applications = yaml.loadAll(fs.readFileSync(path.join(root, 'gitops/production/apps/applications.yaml'), 'utf8'))
-    .filter(document => document?.kind === 'Application');
+  const documents = yaml.loadAll(fs.readFileSync(path.join(root, 'gitops/production/apps/applications.yaml'), 'utf8')).filter(Boolean);
+  const applications = documents.filter(document => document.kind === 'Application');
   return new Map(prior.groups.filter(group => group.role !== 'buster').map(group => {
     validateGroup(group, directory, group.role === 'prism' ? prismNamespace : namespace);
     const manifest = fs.readFileSync(path.join(root, group.path, 'resources.yaml'), 'utf8');
     if (gitOpsDigest(manifest) !== group.manifestDigest
-      || fs.readFileSync(path.join(root, activePath(applications, group), 'resources.yaml'), 'utf8') !== manifest) throw new Error('GITOPS_MANIFEST_DIGEST_MISMATCH');
+      || fs.readFileSync(path.join(root, activePath(applications, group, documents), 'resources.yaml'), 'utf8') !== manifest) throw new Error('GITOPS_MANIFEST_DIGEST_MISMATCH');
     inspectRetainedManifest(manifest, group, receipt);
     return [group.role, { manifest, group: structuredClone(group) }];
   }));
