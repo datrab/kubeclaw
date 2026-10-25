@@ -11266,7 +11266,7 @@
     },
     {
       "id": "AP09-decision-record-content-20261021",
-      "revision": "c0d892fb2ea7f88994e53ea29de0fdce2d87d89e",
+      "revision": "c412e6a1a79eeb40e2584c66db3181a6de4eb163",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 platform-ready-review",
       "gateIds": [],
@@ -11360,6 +11360,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Actual six separate original commands pass at committed c0d892fb;177canonical/187HTML/241outputdigests/40887localLinks,12searchquestions,15062verifiedSourceLinks/4082objects,435previewboxes/2000excerpts/1070objects,28deterministicSVGs. Complete31original scoped contracts/physical vectors independently preserved in six pinned Terra/high/P2 one-pass groups; unchanged Source reviews and156controls/110role guards reused. Supported aggregate --check and ownership checker pass. No new human/practical/runtime/release/DATA/gate acceptance."
+        },
+        {
+          "command": "Independent pinned two-page Source/semanticReader/Quality and original-record preservation; actual committed publication build plus five original Reader checks",
+          "exitCode": 0,
+          "observation": "177-page Source c412e6a1 publication/artifact/search/Source-link/Source-preview/diagram checks PASS; original docs-check/docs-check-refs/publication checks PASS. Original scope evidence unchanged except two reviewed pages; no fresh product/native/human/live execution or new gate/requirement acceptance."
         }
       ],
       "review": {
@@ -11417,6 +11422,11 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/README.md",
           "reason": "Independent finite aggregate31 Source/Reader/Quality preservation; original summary/limits/historical checks and accepted membership unchanged."
+        },
+        {
+          "previousReviewedRevision": "c0d892fb2ea7f88994e53ea29de0fdce2d87d89e",
+          "revision": "c412e6a1a79eeb40e2584c66db3181a6de4eb163",
+          "reason": "Independently reviewed two-page decision-example clarification preserves exact original scope and limits; not recounted."
         }
       ],
       "impactReviews": [
@@ -11497,9 +11507,24 @@
             "docs/blueprint/acceptance-evidence/README.md"
           ],
           "limits": "Original artifacts.ts41 DATA/all5UNKNOWN, Knip, human/live/runtime limits unchanged. Initial B2 import-path advisory retained and disproved by actual single-JSON51package report, then independently clean with full omitted consumer context; no Source correction or gate waiver."
+        },
+        {
+          "previousReviewedRevision": "c0d892fb2ea7f88994e53ea29de0fdce2d87d89e",
+          "revision": "c412e6a1a79eeb40e2584c66db3181a6de4eb163",
+          "reviewer": "Pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 independent original-record preservation",
+          "changedDependencies": [
+            "docs/site/decisions/core-and-plugins.md",
+            "docs/site/decisions/runtime-and-operations.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Two complete decision pages clarify ordinary pinned resume versus authenticated recorded administrative package-upgrade retry and current orchestrator_required versus historical Needs Nova prose. Actual unchanged engine admin/snapshots/governor supplied; independent full Source/semanticReader/Quality PASS. Complete original contract/checks/history/limits and complete physical vector supplied; only these two pages differ. Actual committed177-page build and five original Reader checks PASS. All original practical/runtime/human/live/release limitations remain; no new acceptance.",
+          "originalRecordSha256": "f97f2f22cbba2865bd42ed58faffb4afd88e18261c8cecc3af33f7a63940d5ac",
+          "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/decision-preserve-content-1311-verdict.json",
+          "reportSha256": "9c6f1d9389d34b4ffb1b5ac3e68c28e8a39996997d15ab13094ce9b4830f60ca",
+          "inspectionLimit": "Independent supplied complete pages/current claim implementation/full original record/vector; no reviewer-run tests or live/runtime exercise. Coordinator original six current Reader results separate. Full 1.48MB Source-link raw stdout retained unchanged; terminal counts and two changed-claim objects projected explicitly for bounded preservation."
         }
       ],
-      "previousReviewedRevision": "8fa9ed9b95bb37ca234aef1f321f68831519abab"
+      "previousReviewedRevision": "c0d892fb2ea7f88994e53ea29de0fdce2d87d89e"
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
@@ -16523,7 +16548,7 @@
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "fb48da8ae1af107873e7586538dd7de9245e882b",
+      "revision": "c412e6a1a79eeb40e2584c66db3181a6de4eb163",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -17004,6 +17029,11 @@
           "command": "Pinned full originalscope preservation plus actual committed177page build and5 original Reader checks",
           "exitCode": 0,
           "observation": "All6 technical publication commands terminal0 at fb48da8a; full original vector changes only testing.md; originalscope preservation PASS. Historical practical observations retained, not refreshed. Original DATA artifacts.ts41 failure/all5UNKNOWN retained. No new gate/requirement acceptance."
+        },
+        {
+          "command": "Independent pinned two-page Source/semanticReader/Quality and original-record preservation; actual committed publication build plus five original Reader checks",
+          "exitCode": 0,
+          "observation": "177-page Source c412e6a1 publication/artifact/search/Source-link/Source-preview/diagram checks PASS; original docs-check/docs-check-refs/publication checks PASS. Original scope evidence unchanged except two reviewed pages; no fresh product/native/human/live execution or new gate/requirement acceptance."
         }
       ],
       "limits": [
@@ -17241,6 +17271,11 @@
           "previousReviewedRevision": "c56f684a0b18bbf8c9615524e6702a0e80a589e4",
           "revision": "fb48da8ae1af107873e7586538dd7de9245e882b",
           "reason": "Independently reviewed additive package-check lifecycle guide preserves exact original scope; not recounted."
+        },
+        {
+          "previousReviewedRevision": "fb48da8ae1af107873e7586538dd7de9245e882b",
+          "revision": "c412e6a1a79eeb40e2584c66db3181a6de4eb163",
+          "reason": "Independently reviewed two-page decision-example clarification preserves exact original scope and limits; not recounted."
         }
       ],
       "impactReviews": [
@@ -18159,6 +18194,21 @@
           "report": "operations/pr13/evidence/a9911-20261025/package-preserve-1-verdict.json",
           "reportSha256": "f333402d62de75b60361e07e4e6deca378cabf426ea140cb0e51216c2d4970eb",
           "inspectionLimit": "Supplied full guide/setup/contracts/vectors/diff/sourceverdict; snapshot not runnable; reviewer runtime/adjacent-source execution not inferred. Coordinator checks separate."
+        },
+        {
+          "previousReviewedRevision": "fb48da8ae1af107873e7586538dd7de9245e882b",
+          "revision": "c412e6a1a79eeb40e2584c66db3181a6de4eb163",
+          "reviewer": "Pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 independent original-record preservation",
+          "changedDependencies": [
+            "docs/site/decisions/core-and-plugins.md",
+            "docs/site/decisions/runtime-and-operations.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Two complete decision pages clarify ordinary pinned resume versus authenticated recorded administrative package-upgrade retry and current orchestrator_required versus historical Needs Nova prose. Actual unchanged engine admin/snapshots/governor supplied; independent full Source/semanticReader/Quality PASS. Complete original contract/checks/history/limits and complete physical vector supplied; only these two pages differ. Actual committed177-page build and five original Reader checks PASS. All original practical/runtime/human/live/release limitations remain; no new acceptance.",
+          "originalRecordSha256": "1500491336b379e2928ea30ef1e239eaad4aeb7c93f3a5b5020c5d1c82fd9700",
+          "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/decision-final-binding-1311-verdict.json",
+          "reportSha256": "eb961a94cc5b4bec17f6acc6a2a99769b08c219ffeee655c816373f55d83fa0b",
+          "inspectionLimit": "Independent supplied complete pages/current claim implementation/full original record/vector; no reviewer-run tests or live/runtime exercise. Coordinator original six current Reader results separate. Full 1.48MB Source-link raw stdout retained unchanged; terminal counts and two changed-claim objects projected explicitly for bounded preservation."
         }
       ],
       "scopePreservation3408": {
@@ -18202,7 +18252,7 @@
         "browserPreservation": "No new browser, screenreader or fresh-persona exercise: unchanged authored pages/shared renderer outputs retain only prior successful original scopes. Current Source/output checks separately executed.",
         "globalGeneratorLimit": "Original normal5b1b localHelm exits1 at scripts/install/register-runtime-argo.mjs29; infrastructure slots passed. No global configuration/API/schema/runtime acceptance."
       },
-      "previousReviewedRevision": "c56f684a0b18bbf8c9615524e6702a0e80a589e4"
+      "previousReviewedRevision": "fb48da8ae1af107873e7586538dd7de9245e882b"
     },
     {
       "id": "AP09-search-reader-gate-20261021",
@@ -30068,7 +30118,7 @@
     },
     {
       "id": "AP09-publication-positive-scope-7ef16585",
-      "revision": "fb48da8ae1af107873e7586538dd7de9245e882b",
+      "revision": "c412e6a1a79eeb40e2584c66db3181a6de4eb163",
       "author": "existing publication/content maintainers; final authored Sourcefield additions separately reviewed by workflow_acceptance",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -30363,6 +30413,11 @@
           "command": "Pinned full originalscope preservation plus actual committed177page build and5 original Reader checks",
           "exitCode": 0,
           "observation": "All6 technical publication commands terminal0 at fb48da8a; full original vector changes only testing.md; originalscope preservation PASS. Historical practical observations retained, not refreshed. Original DATA artifacts.ts41 failure/all5UNKNOWN retained. No new gate/requirement acceptance."
+        },
+        {
+          "command": "Independent pinned two-page Source/semanticReader/Quality and original-record preservation; actual committed publication build plus five original Reader checks",
+          "exitCode": 0,
+          "observation": "177-page Source c412e6a1 publication/artifact/search/Source-link/Source-preview/diagram checks PASS; original docs-check/docs-check-refs/publication checks PASS. Original scope evidence unchanged except two reviewed pages; no fresh product/native/human/live execution or new gate/requirement acceptance."
         }
       ],
       "review": {
@@ -30912,6 +30967,21 @@
           "report": "operations/pr13/evidence/a9911-20261025/package-preserve-2-verdict.json",
           "reportSha256": "e76368c4399fcd96fe5950ebc88efb7ad567bc29ca45289fa512855423929b6d",
           "inspectionLimit": "Supplied full guide/setup/contracts/vectors/diff/sourceverdict; snapshot not runnable; reviewer runtime/adjacent-source execution not inferred. Coordinator checks separate."
+        },
+        {
+          "previousReviewedRevision": "fb48da8ae1af107873e7586538dd7de9245e882b",
+          "revision": "c412e6a1a79eeb40e2584c66db3181a6de4eb163",
+          "reviewer": "Pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 independent original-record preservation",
+          "changedDependencies": [
+            "docs/site/decisions/core-and-plugins.md",
+            "docs/site/decisions/runtime-and-operations.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Two complete decision pages clarify ordinary pinned resume versus authenticated recorded administrative package-upgrade retry and current orchestrator_required versus historical Needs Nova prose. Actual unchanged engine admin/snapshots/governor supplied; independent full Source/semanticReader/Quality PASS. Complete original contract/checks/history/limits and complete physical vector supplied; only these two pages differ. Actual committed177-page build and five original Reader checks PASS. All original practical/runtime/human/live/release limitations remain; no new acceptance.",
+          "originalRecordSha256": "6ccf1f7ffa3634f9b950ae6f351796cd83c0090a907c8e89883204b7ed2ba1e0",
+          "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/decision-final-binding-1311-verdict.json",
+          "reportSha256": "eb961a94cc5b4bec17f6acc6a2a99769b08c219ffeee655c816373f55d83fa0b",
+          "inspectionLimit": "Independent supplied complete pages/current claim implementation/full original record/vector; no reviewer-run tests or live/runtime exercise. Coordinator original six current Reader results separate. Full 1.48MB Source-link raw stdout retained unchanged; terminal counts and two changed-claim objects projected explicitly for bounded preservation."
         }
       ],
       "scopePreservation3408": {
@@ -30940,7 +31010,7 @@
         "priorSummaryStatus": "Original summary and all old limits/checks/review/persona provenance retained as historical scope; current177-page observations stated here, not retroactively attributed to old runs.",
         "globalGeneratorLimit": "Original normal81b localHelm still FAILS at infrastructure-chart.mjs63. This preservation grants no global configuration/API generator or live-release acceptance."
       },
-      "previousReviewedRevision": "151c2dfeaaaf2e6eac33c372314d33deb326bf5d",
+      "previousReviewedRevision": "fb48da8ae1af107873e7586538dd7de9245e882b",
       "revisionHistory": [
         {
           "revision": "8fa9ed9b95bb37ca234aef1f321f68831519abab",
@@ -30968,6 +31038,11 @@
           "previousReviewedRevision": "151c2dfeaaaf2e6eac33c372314d33deb326bf5d",
           "revision": "fb48da8ae1af107873e7586538dd7de9245e882b",
           "reason": "Independently reviewed additive package-check lifecycle guide preserves exact original scope; not recounted."
+        },
+        {
+          "previousReviewedRevision": "fb48da8ae1af107873e7586538dd7de9245e882b",
+          "revision": "c412e6a1a79eeb40e2584c66db3181a6de4eb163",
+          "reason": "Independently reviewed two-page decision-example clarification preserves exact original scope and limits; not recounted."
         }
       ]
     },
