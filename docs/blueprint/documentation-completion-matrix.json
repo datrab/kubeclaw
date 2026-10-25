@@ -37237,7 +37237,7 @@
     },
     {
       "id": "A913-09-compact-current-closeout-20261025",
-      "revision": "1ffde70288e9b556033e805fd53e6e75fe76c6db",
+      "revision": "57a3d9486e0fdf1615a18f062b148e8151929db4",
       "author": "PR13 documentation continuation coordinator",
       "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra/high/P2 original A913-09 report and adoption reviewer",
       "gateIds": [
@@ -37272,6 +37272,11 @@
           "command": "Pinned fe588b1a Terra/high/P2 independent original A91309 report/adoption review",
           "exitCode": 0,
           "observation": "Independent full original A91309 report and exact canonical adoption adjudication; SourceAccuracy/ReaderUsability/Quality and whole original gate must actually PASS before application. Initial missing-adoption NOT_READY retained, not erased or mislabelled."
+        },
+        {
+          "command": "Original A91309 preservation after appended full A91312 live disposition report",
+          "exitCode": 0,
+          "observation": "Old compact report section byte-exact; only appended explicit original live dispositions. Independent full original A91309 preservation decision required before this candidate is applied; all prior checks, summary, limits and histories retained."
         }
       ],
       "review": {
@@ -37285,6 +37290,69 @@
         "Reuse unchanged source67efef97 technical Reader results and bounded provider reviews at original limits only; no new human/screenreader/participant/runtime execution.",
         "Original receiver remains FAIL DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED at docs-plugin-complexity; historical artifacts.ts41 content and all5 UNKNOWN remain. No role/custody receipts rewritten.",
         "All source-policy refusals including full language input refusal remain dependency-blocked; no excluded source reapproval. Source/policy custodians and product/environment/participant owners must satisfy original resume conditions."
+      ],
+      "openIssues": [],
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "previousReviewedRevision": "1ffde70288e9b556033e805fd53e6e75fe76c6db",
+          "revision": "57a3d9486e0fdf1615a18f062b148e8151929db4",
+          "reviewer": "Independent pinned fe588b1a Terra/high/P2 original A91309 preservation and A91312 reviewer",
+          "changedDependencies": [
+            "docs/blueprint/acceptance-evidence/README.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact original compact-report section retained; complete original live-gate/scenario dispositions added with all failures, original scope and overall NOT_READY preserved. Apply only on actual explicit independent original A91309 preservation PASS.",
+          "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/a91312-1821-verdict.json"
+        }
+      ]
+    },
+    {
+      "id": "A913-12-complete-live-dispositions-20261025",
+      "revision": "57a3d9486e0fdf1615a18f062b148e8151929db4",
+      "author": "PR13 documentation continuation coordinator",
+      "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra/high/P2 complete original A91312 reviewer",
+      "gateIds": [
+        "A913-12"
+      ],
+      "requirementIds": [],
+      "pages": [
+        "docs/site/status/acceptance.md"
+      ],
+      "sources": [
+        "docs/blueprint/acceptance-evidence/README.md",
+        "docs/blueprint/AP09-acceptance-contract.md",
+        "docs/blueprint/AP09-acceptance-fixtures.json",
+        "docs/blueprint/07-documentation-quality-standard.md"
+      ],
+      "checks": [
+        {
+          "command": "Full original live-report census and exact baseline/current report reconciliation",
+          "exitCode": 0,
+          "observation": "All15 operational gate areas, all11 production-receipt suffixes and all18 registered deployment scenarios explicitly listed. No complete current live PASS established by closeout; no denial of original partial/native/failed/historical observations. Old A91309 report section byte-exact. Baseline62/89,225/261 refers exact published546693e9 before report adjudication."
+        },
+        {
+          "command": "Reuse original technical publication/build, Reader and static controls from unchanged publication source67efef97",
+          "exitCode": 0,
+          "observation": "Actual177canonical build+five Reader controls and static5 terminal0; no public page or owning script changed. Technical scope only, no new participant, runtime, release, live or human pass."
+        },
+        {
+          "command": "Pinned fe588b1a Terra/high/P2 complete original A91312 report and canonical adoption plus original A91309 preservation",
+          "exitCode": 0,
+          "observation": "Candidate contingent on actual explicit report SourceAccuracy/ReaderUsability/Quality and whole original A91312 PASS plus unchanged original A91309 preservation. No other ID granted, failures and material documentation gaps retained."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Whole original A91312 final documentation report names every complete operational live area, production-receipt successor and registered deployment scenario, explicitly separates technical PASS from unexecuted live scope, retains failed/blocked work and overall AP09 NOT_READY while material documentation findings remain. Not a product execution or global documentation completion claim.",
+      "limits": [
+        "Original report gate only; no new catalogue requirement or overall AP09PASS. Product live gates remain unexecuted at complete required scope and require original approved environments/identities/observations.",
+        "No broad source/language/example or product/runtime reapproval. Original local/native observations remain only original scope, failed attempts retained and historical technical passes not relabelled live.",
+        "Current documentation-role receiver failure, historical product-output failure and all5 DATAUNKNOWN slots remain; no receipt rewrites or blanket exemptions.",
+        "Original A91309 compact report preserved without recounting it; all other prior records and states unchanged."
       ],
       "openIssues": [],
       "verdict": "PASS"
@@ -58888,7 +58956,7 @@
       "id": "A913-12",
       "passCondition": "Der finale Bericht nennt ausdrücklich alle bestandenen und nicht ausgeführten Live-Gates. AP09 erhält nur dann `PASS`, wenn kein materieller Dokumentationsbefund offen ist.",
       "automaticFailure": "„Alles grün“ verschweigt Skips, Produktlücken oder begrenzte Evidenzklassen.",
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
