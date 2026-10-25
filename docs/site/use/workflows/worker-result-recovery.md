@@ -155,10 +155,37 @@ npm run verify:worker-core:native-scope
 ```
 
 That suite requires its real delegated host resources and does not skip missing
-prerequisites. It checks actual scope accounting, process-tree drain, launcher
-privilege drop, pool admission and replay fencing. Do not treat that as a
-complete live supervisor-abort→specialist-result recovery exercise either;
-record the original-attempt chronology above for the actual service.
+prerequisites. The npm command first requires the native-scope TypeScript check
+to exit zero, then runs **two** native tests. Require command exit zero, both
+tests passing, and zero failed, cancelled or skipped tests. They check actual
+scope accounting and final counters after drain, production-launcher UID/GID
+and group restrictions, durable ownership, pool admission and exact replay
+fencing. Retain the selected revision, actual host-resource identities, complete
+terminal output and exit status outside the suite's disposable directories.
+This is the expected result, not a report that this guide's author ran it.
+
+A compiler error, missing host input, unexpected child exit, assertion failure,
+drain timeout or `Native scope test cleanup failed` is a failed check. Preserve
+the first error and the original host/ownership evidence; have the registered
+host owner inspect the exact test scopes and remaining children before retrying.
+Do not replace a delegated cgroup with an ordinary directory, relax launcher or
+pool restrictions, or count only the tests that reached their assertions.
+
+The scope test's finalizer attempts to kill its own remaining children, drain
+its created scopes with a five-second bound, and dispose them; cleanup failure
+is reported, not a successful result. The launcher/ownership test removes its
+private `worker-native-live-*` state tree in its finalizer, but an early host-input
+error can occur before that finalizer is installed. On failure, confirm actual
+quiescence and identify any retained owned scope or temporary tree with the host
+owner; do not assume that a process exit proves cleanup. Retain necessary failure
+evidence before retiring only those confirmed private leftovers. Never remove
+the delegated cgroup root, trusted node identity, pool policy, production launcher
+or unrelated supervisor stores. The suite does not retire a real service's
+specialist effects or incident evidence.
+
+Do not treat even a successful suite as a complete live
+supervisor-abort→specialist-result recovery exercise; record the original-attempt
+chronology above for the actual service.
 
 ## Cleanup and change
 
