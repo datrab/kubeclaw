@@ -93,6 +93,7 @@ export function createAccessPolicy(config) {
 
 export function authorizeTool(client, tool, args, argoNamespace) {
   if (client?.readOnly && !READ_ONLY_TOOLS.includes(tool)) throw new Error('OPS_TOOL_FORBIDDEN');
+  if (tool === 'platform_cluster_state' && args.node && !client?.readAllNamespaces) throw new Error('OPS_TOOL_FORBIDDEN');
   if ((tool.startsWith('get_monitoring_') || (tool === 'get_resource_inventory' && ['persistentvolumes', 'storageclasses'].includes(args.resource))) && !client?.readAllNamespaces) throw new Error('OPS_TOOL_FORBIDDEN');
   if (!client?.tools.includes(tool) || (tool === 'platform_cluster_state' && args.resource === 'namespaces' && !client.readAllNamespaces)) throw new Error('OPS_TOOL_FORBIDDEN');
   const namespace = tool === 'list_argocd_applications' ? argoNamespace : args.namespace;
