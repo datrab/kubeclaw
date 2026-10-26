@@ -19,7 +19,7 @@
       "actorId": "parity-reviewer:project-navigation-and-status"
     }
   },
-  "decisionSha256": "cedb2b8f198adf46a7f13d5d9c54b84d6752035db55c2ec74a55bddca1353301",
+  "decisionSha256": "5d46f2e0d9ace5858bc839d03b936f06904a3d25203544c846755a151958d4f6",
   "contentRoot": "6f2ba25e501b89b546729af7bcd0f3b86362a900ccf6df7dff17bb7dcf2a9524",
   "claimIds": [
     "contributing:dpu_2a84a52e01dd0697f5bb7a0210d49126:0",
@@ -33,7 +33,7 @@
     "contributing:dpu_2619224de547c655eccef696386b3d54:3",
     "contributing:dpu_ef92f563384f9f05f65c4a05b9287555:0"
   ],
-  "reviewedRevision": "d4ffd68505aa416bb0a114a1a159acaa86f30453",
+  "reviewedRevision": "95d9cd8a307090065243e24a0211d23fffbaf012",
   "classificationVerdict": "PASS",
   "claimVerdicts": [
     {
@@ -109,8 +109,8 @@
   ],
   "visualVerdicts": [],
   "activeDependencyReview": {
-    "reviewedRevision": "d4ffd68505aa416bb0a114a1a159acaa86f30453",
-    "reviewedTree": "911fd43cbcefec8308af2362b3782e004780f6e9",
+    "reviewedRevision": "95d9cd8a307090065243e24a0211d23fffbaf012",
+    "reviewedTree": "dbd503a2bd996975538080df025a54f07193f300",
     "contentRoot": "6f2ba25e501b89b546729af7bcd0f3b86362a900ccf6df7dff17bb7dcf2a9524",
     "scope": {
       "paths": [
@@ -127,7 +127,7 @@
     "methods": [
       {
         "kind": "manual-inspection",
-        "detail": "dynamic-configuration: Full executable scanner and owner configuration paths inspected. Frozen scanner binds5509 text files and finds no exact legacy/original token or supported simple joined-path use. Broader case-insensitive basename search identified only root CONTRIBUTING guidance and root reference-check token plus documentation-control authorities; no evidence that product configuration resolves docs/CONTRIBUTING.md. Root README links root CONTRIBUTING.md, not the extracted documentation source. See complete root README/CONTRIBUTING and docs-check-refs source."
+        "detail": "dynamic-configuration: Full executable scanner and owner configuration paths inspected. Frozen scanner binds5512 text files and finds no exact legacy/original token or supported simple joined-path use. Broader case-insensitive basename search identified only root CONTRIBUTING guidance and root reference-check token plus documentation-control authorities; no evidence that product configuration resolves docs/CONTRIBUTING.md. Root README links root CONTRIBUTING.md, not the extracted documentation source. See complete root README/CONTRIBUTING and docs-check-refs source."
       },
       {
         "kind": "manual-inspection",
@@ -145,11 +145,11 @@
     "evidence": [
       {
         "kind": "scanner-result",
-        "detail": "Actual frozen d4ffd685 scan searched original and extracted paths across5509 files; zero matches; full scanner input root88c5001235f587474d06ee590c7126adf06b3eff84cc600c48df7626c90bf58d and native source inspection are retained. Static zero alone is not the manual criterion."
+        "detail": "Actual frozen 95d9cd8a scan searched original and extracted paths across5512 files; zero matches; full scanner input root79a93efc7087d81338f6ac404e67093cb2686d69e1edd1feaab7624a435396f0 and native source inspection are retained. Static zero alone is not the manual criterion."
       },
       {
         "kind": "manual-observation",
-        "detail": "Full executable scanner and owner configuration paths inspected. Frozen scanner binds5509 text files and finds no exact legacy/original token or supported simple joined-path use. Broader case-insensitive basename search identified only root CONTRIBUTING guidance and root reference-check token plus documentation-control authorities; no evidence that product configuration resolves docs/CONTRIBUTING.md. Root README links root CONTRIBUTING.md, not the extracted documentation source. See complete root README/CONTRIBUTING and docs-check-refs source."
+        "detail": "Full executable scanner and owner configuration paths inspected. Frozen scanner binds5512 text files and finds no exact legacy/original token or supported simple joined-path use. Broader case-insensitive basename search identified only root CONTRIBUTING guidance and root reference-check token plus documentation-control authorities; no evidence that product configuration resolves docs/CONTRIBUTING.md. Root README links root CONTRIBUTING.md, not the extracted documentation source. See complete root README/CONTRIBUTING and docs-check-refs source."
       },
       {
         "kind": "manual-observation",
@@ -165,7 +165,11 @@
       },
       {
         "kind": "scanner-result",
-        "detail": "The original validator builds its index with all249 immutable sources, excluding every legacy body from active consumers. Exact native-equivalent index has 5509 inputs and zero matches. Earlier public single-source call additionally scanned248 other legacy bodies, also zero matches; substantive four-risk verdict remains byteequal except native scan binding. Exact original uninstrumented source validator must still confirm this registration; no tool/schema/authority change."
+        "detail": "The original validator builds its index with all249 immutable sources, excluding every legacy body from active consumers. Exact native-equivalent index has 5512 inputs and zero matches. Earlier public single-source call additionally scanned248 other legacy bodies, also zero matches; substantive four-risk verdict remains byteequal except native scan binding. Exact original uninstrumented source validator must still confirm this registration; no tool/schema/authority change."
+      },
+      {
+        "kind": "manual-observation",
+        "detail": "Final Source pin includes the approved review metadata and its generated inventory row/counts, plus three durable verdict files. Full source-specific native scan remains zero matches. The primary source, all target pages, direct code evidence and public route authority are byteequal to the already independently passed content/manual assessments; exact complete vector retained. New verdict documents introduce no active source consumer. No criterion or limitation changes."
       }
     ],
     "findings": [],
@@ -175,9 +179,9 @@
         "docs/CONTRIBUTING.md",
         "docs/_legacy-source/CONTRIBUTING.md"
       ],
-      "scannedFileCount": 5509,
-      "scannedPathsSha256": "b58331ceed9d161cfb6e71b15d4ef643bb264730ae3d5cfac0857ac2b2e853d9",
-      "scannerInputRoot": "88c5001235f587474d06ee590c7126adf06b3eff84cc600c48df7626c90bf58d",
+      "scannedFileCount": 5512,
+      "scannedPathsSha256": "d36402ca9a46b1837c6fcac9abb3d71fdefa53e96d2b46aeccb388d05c5efc0b",
+      "scannerInputRoot": "79a93efc7087d81338f6ac404e67093cb2686d69e1edd1feaab7624a435396f0",
       "matches": []
     },
     "limitation": "Static literal, link, and simple path-composition scanning is not complete program analysis; independent reviewer attestation remains required.",
