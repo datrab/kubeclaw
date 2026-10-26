@@ -3,9 +3,9 @@
 Status: implemented with stated verification limits
 Audience: plugin author, maintainer
 Owner: plugin-foundation
-Evidence: docs/site/extend/examples/minimal-stage; package.json; skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json; packaging/runtime/roles/nova.json
+Evidence: docs/site/extend/examples/minimal-stage; docs/site/extend/examples/observer-lifecycle; package.json; skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json; packaging/runtime/roles/nova.json
 Evidence revision: `bcf032f241b432bf920baa9ee5f727947921447d`
-Applies to: one capability-free `pipeline-plugin-v2` stage and the separately pinned local observer companion
+Applies to: one capability-free `pipeline-plugin-v2` stage in the Nova role and the separately pinned local observer companion
 Last verified: original stage source/local check on 2026-09-16; observer source/local journey on 2026-10-26
 
 ## Objective
