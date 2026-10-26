@@ -5,7 +5,7 @@ import {fileURLToPath,pathToFileURL} from 'node:url';import {spawn,execFileSync,
 const sourceRoot=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../../../../..');
 const operation=process.argv[2],root=process.argv[3];
 assert(process.argv.length===4&&['prepare','run','verify','cleanup'].includes(operation),'Usage: node compiled-project.mjs prepare|run|verify|cleanup NEW_ABSOLUTE_DIRECTORY');
-assert(root&&path.isAbsolute(root)&&path.normalize(root)===root&&root!=='/'&&root!==sourceRoot&&!sourceRoot.startsWith(root+path.sep),'Unsafe fixture path');
+assert(root&&path.isAbsolute(root)&&path.normalize(root)===root&&root!=='/'&&root!==sourceRoot&&!sourceRoot.startsWith(root+path.sep)&&!root.startsWith(sourceRoot+path.sep),'Unsafe fixture path');
 for(let x=path.dirname(root);;x=path.dirname(x)){assert(!fs.lstatSync(x).isSymbolicLink(),'Symlinked ancestor');if(x===path.dirname(x))break;}
 assert.equal(Number(process.versions.node.split('.')[0]),24,'Node24 required');
 for(const executable of ['/usr/bin/git','/usr/bin/tar','/usr/bin/script','/usr/bin/flock'])fs.accessSync(executable,fs.constants.X_OK);
