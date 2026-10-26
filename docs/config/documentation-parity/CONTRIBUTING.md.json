@@ -1,0 +1,540 @@
+{
+  "schemaVersion": "kubeclaw-documentation-parity-decision.v1",
+  "source": {
+    "originalPath": "docs/CONTRIBUTING.md",
+    "legacyPath": "docs/_legacy-source/CONTRIBUTING.md",
+    "classification": "legacy-extraction-source",
+    "baselineRevision": "8da6157b77247dcbdf209ef12f491f0b92ca858a",
+    "gitObject": "989681f2590ce67c14e47a57bf1df8a59f52870b",
+    "extractionDigest": "befd6039390597685794f840a92459ca2044e329d452fa76ad57d9db8c0002e9"
+  },
+  "reviewedRevision": "8bbed396b7d2bdf55454143cfbf8ff08cdf5ee78",
+  "author": {
+    "id": "parity-author:project-navigation-and-status",
+    "assignmentId": "parity-assignment:ad93a1daf07a8cc865a82ae7de9827e608c0a9ead582d29ab10825c5166aefeb"
+  },
+  "redirect": {
+    "status": "not-required",
+    "from": "/CONTRIBUTING",
+    "to": null,
+    "basis": "no-authoritative-public-route",
+    "reason": "The current route registry has no authoritative historical public CONTRIBUTING route and explicitly forbids inventing unknown redirects; preserve canonical handbook/extension navigation, no public URL asserted."
+  },
+  "visualEvidence": [],
+  "contentRoot": "6f2ba25e501b89b546729af7bcd0f3b86362a900ccf6df7dff17bb7dcf2a9524",
+  "unitCoverage": [
+    {
+      "unitId": "dpu_2a84a52e01dd0697f5bb7a0210d49126",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "contributing:dpu_2a84a52e01dd0697f5bb7a0210d49126:0",
+          "reasonCode": null,
+          "byteStart": 0,
+          "byteEnd": 15
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_a2f8cc1ec24a26383b0a72d9e00551d7",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "contributing:dpu_a2f8cc1ec24a26383b0a72d9e00551d7:0",
+          "reasonCode": null,
+          "byteStart": 16,
+          "byteEnd": 93
+        },
+        {
+          "kind": "claim",
+          "claimId": "contributing:dpu_a2f8cc1ec24a26383b0a72d9e00551d7:1",
+          "reasonCode": null,
+          "byteStart": 93,
+          "byteEnd": 132
+        },
+        {
+          "kind": "claim",
+          "claimId": "contributing:dpu_a2f8cc1ec24a26383b0a72d9e00551d7:2",
+          "reasonCode": null,
+          "byteStart": 132,
+          "byteEnd": 209
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_ef799cc679ba706004a87a665e36b744",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "contributing:dpu_ef799cc679ba706004a87a665e36b744:0",
+          "reasonCode": null,
+          "byteStart": 210,
+          "byteEnd": 237
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_2619224de547c655eccef696386b3d54",
+      "codeBlockClassification": "runnable-example",
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "contributing:dpu_2619224de547c655eccef696386b3d54:0",
+          "reasonCode": null,
+          "byteStart": 238,
+          "byteEnd": 278
+        },
+        {
+          "kind": "claim",
+          "claimId": "contributing:dpu_2619224de547c655eccef696386b3d54:1",
+          "reasonCode": null,
+          "byteStart": 278,
+          "byteEnd": 297
+        },
+        {
+          "kind": "claim",
+          "claimId": "contributing:dpu_2619224de547c655eccef696386b3d54:2",
+          "reasonCode": null,
+          "byteStart": 297,
+          "byteEnd": 380
+        },
+        {
+          "kind": "claim",
+          "claimId": "contributing:dpu_2619224de547c655eccef696386b3d54:3",
+          "reasonCode": null,
+          "byteStart": 380,
+          "byteEnd": 401
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_ef92f563384f9f05f65c4a05b9287555",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "contributing:dpu_ef92f563384f9f05f65c4a05b9287555:0",
+          "reasonCode": null,
+          "byteStart": 402,
+          "byteEnd": 535
+        }
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "contributing:dpu_2a84a52e01dd0697f5bb7a0210d49126:0",
+      "unitId": "dpu_2a84a52e01dd0697f5bb7a0210d49126",
+      "summary": "Contributor navigation now starts at the complete canonical development handbook.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "targets": [
+        {
+          "path": "docs/site/extend/developer-handbook.md",
+          "anchor": "develop-kubeclaw",
+          "excerpt": "# Develop KubeClaw",
+          "excerptSha256": "fd88e1efd3d6460298dfa879b62443b3e96fdd78f9a29d62a4e4498550e5fbf2",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "evidence": [],
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 0,
+        "byteEnd": 15,
+        "lineStart": 1,
+        "lineEnd": 1,
+        "exactSha256": "98b2a75ce0f3f7d540bdaf0de6b37043c741b9e6ce5474b5b4ab5e787614309a",
+        "normalizedSha256": "d720a828da1110733f6baa861dbe161da9315aa8d2e7971c9bcca92354d64cf3"
+      },
+      "omission": null
+    },
+    {
+      "claimId": "contributing:dpu_a2f8cc1ec24a26383b0a72d9e00551d7:0",
+      "unitId": "dpu_a2f8cc1ec24a26383b0a72d9e00551d7",
+      "summary": "The old universal binary claim that all runtime behavior is a registration or generic v2 Core is overbroad for source-integrated specialist engines.",
+      "claimType": "constraint",
+      "truthState": "obsolete-or-incorrect",
+      "targets": [],
+      "evidence": [],
+      "omission": {
+        "reasonCode": "obsolete-or-incorrect",
+        "explanation": "Do not preserve the universal wording as current architecture: Prism specialist operations bind source-integrated domain engines above neutral Worker Core, not a pipeline registration or generic Core policy. The current complete extension choice table and handbook ownership routes retain the useful choose-the-smallest-owner intent without falsely classifying host/engine integration as pipeline registration. This is a specific source-backed correction, not omission of a correct duplicate.",
+        "evidence": [
+          {
+            "revision": "8bbed396b7d2bdf55454143cfbf8ff08cdf5ee78",
+            "path": "skills/prism/engine/worker-binding.ts",
+            "basis": "current-implementation",
+            "assertion": "executePrismOperation validates specialist contracts and invokes the Prism engine through its source-integrated worker operation binding.",
+            "gitObject": "83cd68862d5ff1bbbcdf30147560db8858cf914e",
+            "byteStart": 507,
+            "byteEnd": 2009,
+            "lineStart": 15,
+            "lineEnd": 50,
+            "exactSha256": "f729298fe511c2c163fbbe5a13f5acddb39e7e9a9ba3f8ff8bb7f1ffea69fd46",
+            "normalizedSha256": "8cfb63123f40568757a3f50d9b870472857c1ce272b85da70eeb474fec7ff9ab"
+          }
+        ]
+      },
+      "disposition": "omitted",
+      "source": {
+        "byteStart": 16,
+        "byteEnd": 93,
+        "lineStart": 3,
+        "lineEnd": 3,
+        "exactSha256": "b1aa87cfdc946c0497ddcad5353d88d90c80638efb01353fda94aefd2433f59d",
+        "normalizedSha256": "8cab78869b34fe7373ece5b6554cee757b2d447154f52adeebbfaaad4dd820b8"
+      }
+    },
+    {
+      "claimId": "contributing:dpu_a2f8cc1ec24a26383b0a72d9e00551d7:1",
+      "unitId": "dpu_a2f8cc1ec24a26383b0a72d9e00551d7",
+      "summary": "Core must not import concrete plugin or role-specific implementation.",
+      "claimType": "constraint",
+      "truthState": "current",
+      "targets": [
+        {
+          "path": "docs/site/decisions/runtime-and-operations.md",
+          "anchor": "d09",
+          "excerpt": "Core imports no concrete plugin.",
+          "excerptSha256": "e315bea890306fef68bcdb1d376a244d9470c246c915c24e8e2f61abeba52181",
+          "occurrence": 1,
+          "relation": "equivalent"
+        }
+      ],
+      "evidence": [
+        {
+          "revision": "8bbed396b7d2bdf55454143cfbf8ff08cdf5ee78",
+          "path": "tests/verification/contracts/check-plugin-system-v2-boundaries.mjs",
+          "basis": "current-test",
+          "assertion": "The Core boundary test rejects concrete role/plugin imports and restricts dependency owners.",
+          "gitObject": "a56900a6894c426e717218a454cf39c1a5285d95",
+          "byteStart": 21569,
+          "byteEnd": 21675,
+          "lineStart": 433,
+          "lineEnd": 433,
+          "exactSha256": "a23961b0203f34420ee3b2c61a9a11e9ddf3aff2fc29d4da22a573b409623c16",
+          "normalizedSha256": "5b0f0795ce4ed3677fb9e0d43b38fff29abf983d69a5fd70fd18b67fd0baba5b"
+        }
+      ],
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 93,
+        "byteEnd": 132,
+        "lineStart": 4,
+        "lineEnd": 4,
+        "exactSha256": "a6052031654e2f7380aab5471928a666466d203955524a9f28a92f26481d5ba5",
+        "normalizedSha256": "8fad931a55feb1f77eabc186347fd8c3bb6d6945d599ab83c2341b8c308ee75b"
+      },
+      "omission": null
+    },
+    {
+      "claimId": "contributing:dpu_a2f8cc1ec24a26383b0a72d9e00551d7:2",
+      "unitId": "dpu_a2f8cc1ec24a26383b0a72d9e00551d7",
+      "summary": "Plugin behavior tests use the component toolchain; canonical routes explain TypeScript source checks and native component boundaries.",
+      "claimType": "constraint",
+      "truthState": "current",
+      "targets": [
+        {
+          "path": "docs/site/extend/developer-handbook.md",
+          "anchor": "repository-ownership-and-build-boundaries",
+          "excerpt": "Use package exports for cross-package imports. Keep explicit `.ts`/`.mts`\nextensions for relative source imports. TypeScript must be erasable: Node can\nremove types without a separate compile step.",
+          "excerptSha256": "ae1a2a73c79735065c112064cef79061cee8db52428af13b7782a5a314ddc184",
+          "occurrence": 1,
+          "relation": "expanded"
+        },
+        {
+          "path": "docs/site/extend/developer-handbook.md",
+          "anchor": "repository-ownership-and-build-boundaries",
+          "excerpt": "| `cmd`, `tools/native-worker-nri` | Go controllers and node integration | Root Go module and independent NRI module. |",
+          "excerptSha256": "6e176387cefebcdf7655bccd5e2114ed69a24e5d4778cf995aab3263ec63a4d8",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "evidence": [
+        {
+          "revision": "8bbed396b7d2bdf55454143cfbf8ff08cdf5ee78",
+          "path": "scripts/check-erasable-typescript.mjs",
+          "basis": "current-implementation",
+          "assertion": "The typecheck script checks source TypeScript configurations across contracts, skills and tests.",
+          "gitObject": "52eb26f40e8ddfff429f0899ce83970abdd4a74b",
+          "byteStart": 436,
+          "byteEnd": 513,
+          "lineStart": 10,
+          "lineEnd": 12,
+          "exactSha256": "ee1e4072415fd79b13d5de777c9d0f82946f52c054ea608d9f7cbcb488646d43",
+          "normalizedSha256": "0567ece71e2c0cf6379822228edf75ea572b3c3f82f679a08fcfda97b89c16d5"
+        }
+      ],
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 132,
+        "byteEnd": 209,
+        "lineStart": 4,
+        "lineEnd": 5,
+        "exactSha256": "478aeb7194f343037b91411adafc820d518d95a8ad738322c3e47174175ac4f3",
+        "normalizedSha256": "9cfc154a8521adb35ebe0179a8097dfcf029e609b433386b9cd2f2d01f0f8900"
+      },
+      "omission": null
+    },
+    {
+      "claimId": "contributing:dpu_ef799cc679ba706004a87a665e36b744:0",
+      "unitId": "dpu_ef799cc679ba706004a87a665e36b744",
+      "summary": "Before submission, choose the complete relevant verification chain and retain baseline, errors, skips and cleanup boundaries rather than treating every aggregate as universally runnable.",
+      "claimType": "procedure",
+      "truthState": "current",
+      "targets": [
+        {
+          "path": "docs/site/extend/developer-handbook.md",
+          "anchor": "select-the-smallest-complete-check-chain",
+          "excerpt": "Before each edit, record revision, environment, selected commands, baseline,\nand stop conditions. After the edit, retain exit codes, nonzero failures,\nskips, test counts, identity-bearing output, and generated diffs. Remove only\nthe fixture's temporary directories/processes. Do not delete journals, lock\ninodes, result records, or remote effects to make a check pass. See\n[extension testing](testing.md) for effect identity, activation, and remaining\nstate requirements.",
+          "excerptSha256": "23c33b7ec3f9df4dda31197477eb7837a4d86d4904ff5a982fccb795bf825c27",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "evidence": [
+        {
+          "revision": "8bbed396b7d2bdf55454143cfbf8ff08cdf5ee78",
+          "path": "tests/verification/run-full-verification.sh",
+          "basis": "current-test",
+          "assertion": "The full verification runner calls the docs check command as a separate required run step.",
+          "gitObject": "66bd337c8f6bc858f1be9a4c4088a42b5772c913",
+          "byteStart": 2399,
+          "byteEnd": 2443,
+          "lineStart": 73,
+          "lineEnd": 74,
+          "exactSha256": "6b842dda683dc052901d21676ffe51d37c55cca84a1f67b85b5bd7e65e6bf7c1",
+          "normalizedSha256": "62c285c4ae7e676f5f3b4c4763374eaedefa9216b7c43456dca50ee939a82592"
+        }
+      ],
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 210,
+        "byteEnd": 237,
+        "lineStart": 7,
+        "lineEnd": 7,
+        "exactSha256": "1b7f393d6f6871a344d2fcee2bd0475d6299d2dbd2a89cafb4dc263f58ecbaeb",
+        "normalizedSha256": "3b852c9afa527eeed7ea39c21f41e3086ab34ff0ecd741928b0a00ea3d75547e"
+      },
+      "omission": null
+    },
+    {
+      "claimId": "contributing:dpu_2619224de547c655eccef696386b3d54:0",
+      "unitId": "dpu_2619224de547c655eccef696386b3d54",
+      "summary": "The plugin-system-v2 aggregate remains available with explicit native and delegated-cgroup prerequisites; package/unit success is not activation.",
+      "claimType": "procedure",
+      "truthState": "current",
+      "targets": [
+        {
+          "path": "docs/site/extend/developer-handbook.md",
+          "anchor": "select-the-smallest-complete-check-chain",
+          "excerpt": "The aggregate `verify:product`, `verify:contracts`, `verify:plugin-system-v2`,\n`verify:prism`, and `docs:check` scripts are not universal starting commands.\nThey include native launchers, delegated cgroups, browser/service prerequisites,\nrole packaging, generators, or unrelated families. Inspect their script bodies\nand prepare those environments before choosing them as an integration gate.\nIn particular, `verify:plugin-system-v2` requires\n`KUBECLAW_TEST_CGROUP_ROOT` to name a delegated cgroup-v2 subtree.",
+          "excerptSha256": "2de37b85924e43556c0c1c03b24ed9d618acb746d4541f62c26457106255e2fb",
+          "occurrence": 1,
+          "relation": "expanded"
+        },
+        {
+          "path": "docs/site/reference/verification-commands.md",
+          "anchor": "claim-to-test-map",
+          "excerpt": "| Core, package, capability, lifecycle, recovery, isolation, and malicious-package checks pass | `npm run verify:plugin-system-v2` |",
+          "excerptSha256": "4d84a718b308fdb0bba9522e79e552cb2d526f2bf28632635e1eca186da47844",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "evidence": [
+        {
+          "revision": "8bbed396b7d2bdf55454143cfbf8ff08cdf5ee78",
+          "path": "tests/verification/contracts/check-plugin-system-v2-boundaries.mjs",
+          "basis": "current-test",
+          "assertion": "The Core boundary test rejects concrete role/plugin imports and restricts dependency owners.",
+          "gitObject": "a56900a6894c426e717218a454cf39c1a5285d95",
+          "byteStart": 21569,
+          "byteEnd": 21675,
+          "lineStart": 433,
+          "lineEnd": 433,
+          "exactSha256": "a23961b0203f34420ee3b2c61a9a11e9ddf3aff2fc29d4da22a573b409623c16",
+          "normalizedSha256": "5b0f0795ce4ed3677fb9e0d43b38fff29abf983d69a5fd70fd18b67fd0baba5b"
+        }
+      ],
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 238,
+        "byteEnd": 278,
+        "lineStart": 9,
+        "lineEnd": 10,
+        "exactSha256": "6ccfe7b79f5d94a2f46f0fd7a25c635925fe0955970cb8b9826ae97b3c457d6e",
+        "normalizedSha256": "73b7afcb353733b789d35aa3a0ba48dee94339bd1c9cff5c8217d04c53f579a3"
+      },
+      "omission": null
+    },
+    {
+      "claimId": "contributing:dpu_2619224de547c655eccef696386b3d54:1",
+      "unitId": "dpu_2619224de547c655eccef696386b3d54",
+      "summary": "The docs:check aggregate remains a documented source/reader validation command, not an unconditional already-green result.",
+      "claimType": "procedure",
+      "truthState": "current",
+      "targets": [
+        {
+          "path": "docs/site/extend/developer-handbook.md",
+          "anchor": "select-the-smallest-complete-check-chain",
+          "excerpt": "The aggregate `verify:product`, `verify:contracts`, `verify:plugin-system-v2`,\n`verify:prism`, and `docs:check` scripts are not universal starting commands.\nThey include native launchers, delegated cgroups, browser/service prerequisites,\nrole packaging, generators, or unrelated families. Inspect their script bodies\nand prepare those environments before choosing them as an integration gate.\nIn particular, `verify:plugin-system-v2` requires\n`KUBECLAW_TEST_CGROUP_ROOT` to name a delegated cgroup-v2 subtree.",
+          "excerptSha256": "2de37b85924e43556c0c1c03b24ed9d618acb746d4541f62c26457106255e2fb",
+          "occurrence": 1,
+          "relation": "expanded"
+        },
+        {
+          "path": "docs/site/reference/verification-commands.md",
+          "anchor": "claim-to-test-map",
+          "excerpt": "| Documentation surface links and generated docs expectations stay valid | `npm run docs:check` |",
+          "excerptSha256": "f59ef47e10e4da152a594a5a217a931d0afb20f99f0c8bcdfee3026e6504ba31",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "evidence": [
+        {
+          "revision": "8bbed396b7d2bdf55454143cfbf8ff08cdf5ee78",
+          "path": "tests/verification/run-full-verification.sh",
+          "basis": "current-test",
+          "assertion": "The full verification runner calls the docs check command as a separate required run step.",
+          "gitObject": "66bd337c8f6bc858f1be9a4c4088a42b5772c913",
+          "byteStart": 2399,
+          "byteEnd": 2443,
+          "lineStart": 73,
+          "lineEnd": 74,
+          "exactSha256": "6b842dda683dc052901d21676ffe51d37c55cca84a1f67b85b5bd7e65e6bf7c1",
+          "normalizedSha256": "62c285c4ae7e676f5f3b4c4763374eaedefa9216b7c43456dca50ee939a82592"
+        }
+      ],
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 278,
+        "byteEnd": 297,
+        "lineStart": 11,
+        "lineEnd": 11,
+        "exactSha256": "2ec71bae0343f5fb5e19a7631366838b297790cc66197b0233ea22a7e5904d58",
+        "normalizedSha256": "2e353da028595053b0cf8d2b8e460bc4e96837b2d87b1fe23092dcd0fa9e30d7"
+      },
+      "omission": null
+    },
+    {
+      "claimId": "contributing:dpu_2619224de547c655eccef696386b3d54:2",
+      "unitId": "dpu_2619224de547c655eccef696386b3d54",
+      "summary": "The source-root deployment truth check is retained as source verification, not live deployment proof.",
+      "claimType": "procedure",
+      "truthState": "current",
+      "targets": [
+        {
+          "path": "docs/site/reference/verification-commands.md",
+          "anchor": "claim-to-test-map",
+          "excerpt": "| Deployment manifests, NetworkPolicies, service exposure, PVCs, config mounts, and sandbox surfaces match source | `node tests/verification/deployment/check-deployment-truth.mjs --source-root \"$PWD\"` |",
+          "excerptSha256": "14af6689e14403817fdd32c0fef1fcfb56a3b2faae62133abaca7e681c82b753",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "evidence": [
+        {
+          "revision": "8bbed396b7d2bdf55454143cfbf8ff08cdf5ee78",
+          "path": "tests/verification/deployment/check-deployment-truth.mjs",
+          "basis": "current-test",
+          "assertion": "sourceRootFromArgs accepts --source-root from process.argv and resolves the selected directory with a current-working-directory default.",
+          "gitObject": "2b0323fe4313784e0504e718e4f387894a0f8cd4",
+          "byteStart": 303,
+          "byteEnd": 468,
+          "lineStart": 10,
+          "lineEnd": 13,
+          "exactSha256": "f11ba638bd3e7c2c5ecf7ad3495b604f2374f371ff4503edac0b6fbe76620fca",
+          "normalizedSha256": "e8b3c592c325167cd240a9548a377ec40a29a1f688c41847a91cf6ac5c0b4d2a"
+        }
+      ],
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 297,
+        "byteEnd": 380,
+        "lineStart": 12,
+        "lineEnd": 12,
+        "exactSha256": "9cf054819bf4d453e1b5937d2cf88d330fd70c96bb58191ea3a6da6061b7047f",
+        "normalizedSha256": "a490b28c57de07dafc7f1b7af42362fbc127e7a7f430b38fdaac8208bcc1f46e"
+      },
+      "omission": null
+    },
+    {
+      "claimId": "contributing:dpu_2619224de547c655eccef696386b3d54:3",
+      "unitId": "dpu_2619224de547c655eccef696386b3d54",
+      "summary": "git diff --check is retained as whitespace hygiene for proposed documentation edits.",
+      "claimType": "procedure",
+      "truthState": "current",
+      "targets": [
+        {
+          "path": "docs/site/reference/verification-commands.md",
+          "anchor": "claim-to-test-map",
+          "excerpt": "| Proposed doc edits have no whitespace errors | `git diff --check` |",
+          "excerptSha256": "d6670eb5b29eb091fbcff27c17171ac475672bd707ef9440b361f9679f5ee0e8",
+          "occurrence": 1,
+          "relation": "equivalent"
+        }
+      ],
+      "evidence": [
+        {
+          "revision": "8bbed396b7d2bdf55454143cfbf8ff08cdf5ee78",
+          "path": "tests/verification/run-full-verification.sh",
+          "basis": "current-test",
+          "assertion": "The full verification runner calls git diff check as its whitespace check step.",
+          "gitObject": "66bd337c8f6bc858f1be9a4c4088a42b5772c913",
+          "byteStart": 2445,
+          "byteEnd": 2493,
+          "lineStart": 76,
+          "lineEnd": 77,
+          "exactSha256": "fd0e5a6d04ee13c13440d0d1410c70567b1e3594b2c3dba30f586c2146297a88",
+          "normalizedSha256": "363fe2a76103e1ffdc92cfc6dffc4b523712c402f878f7658eeda1ea3dc69941"
+        }
+      ],
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 380,
+        "byteEnd": 401,
+        "lineStart": 13,
+        "lineEnd": 14,
+        "exactSha256": "85d915f7d0ba6a610fcbf227cffadc23e0362be295a9127cfb6347bd50b8d60e",
+        "normalizedSha256": "12a5603e4550d77c3440029606efca3f974ce3931ef6b78ff2fe1aa1b638620b"
+      },
+      "omission": null
+    },
+    {
+      "claimId": "contributing:dpu_ef92f563384f9f05f65c4a05b9287555:0",
+      "unitId": "dpu_ef92f563384f9f05f65c4a05b9287555",
+      "summary": "Old authoring/testing links are replaced by canonical extension and lifecycle/check-chain navigation.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "targets": [
+        {
+          "path": "docs/site/extend/README.md",
+          "anchor": "continue-with-the-correct-guide",
+          "excerpt": "The linked pipeline, effect, Buster, Nova, host, lifecycle, and catalogue guides add detailed procedures.",
+          "excerptSha256": "6fcd6be439247630715e5fc375082c02c15d3c4bdb1072280ae9a68b4473850e",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "evidence": [],
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 402,
+        "byteEnd": 535,
+        "lineStart": 16,
+        "lineEnd": 17,
+        "exactSha256": "cb919f54b0857652157f9067d3eba456cf2904c3332ac2341e6a792a49704fe8",
+        "normalizedSha256": "567019f41a0511dcc01ccbc058b12f6af7b35f87b9e06bfd0196a23889c9b9a4"
+      },
+      "omission": null
+    }
+  ]
+}

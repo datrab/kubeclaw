@@ -1,0 +1,29 @@
+{
+  "findings": [
+    {
+      "title": "Reject decisions whose legacy source binding does not match the requested source",
+      "body": "The helper accepts a v1 decision as an author proposal after checking only `source.originalPath`. A stale or forged decision for the same original path but a different `legacyPath` (or otherwise mismatched source binding) can therefore supply canonical destinations to the migration ledger and be labeled as an author proposal. Validate the expected legacy path/source binding before returning a suggestion, or pass and validate the authoritative source record here.",
+      "priority": "P2",
+      "confidence": 0.91,
+      "category": "bug",
+      "code_location": {
+        "file_path": "scripts/lib/docs-blueprint-parity-suggestions.mjs",
+        "line": 22
+      }
+    },
+    {
+      "title": "Do not treat dangling author-decision symlinks as missing records",
+      "body": "`existsSync` follows symlinks, so a dangling symlink at the author-decision path returns false and causes this helper to return `null`. The generator then falls back to filename-based migration guidance instead of failing closed for malformed/symlinked author metadata. Inspect the path with `lstatSync` (and guard parent components) before deciding it is absent so dangling symlinks are rejected like other symlinks.",
+      "priority": "P2",
+      "confidence": 0.94,
+      "category": "bug",
+      "code_location": {
+        "file_path": "scripts/lib/docs-blueprint-parity-suggestions.mjs",
+        "line": 12
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "The new proposal helper can emit or fall back from invalid author metadata without enforcing the intended exact source-binding and symlink controls.",
+  "overall_confidence": 0.92
+}

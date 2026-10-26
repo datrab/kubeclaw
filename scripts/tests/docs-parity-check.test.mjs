@@ -3,7 +3,7 @@ import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import test from 'node:test';
+import test, { after } from 'node:test';
 import { crc32, deflateSync } from 'node:zlib';
 
 import {
@@ -82,6 +82,11 @@ function manualActiveDependencyReview(root, source, reviewedRevision, contentRoo
   return review;
 }
 
+const ownedFixtureRoots = [];
+after(() => {
+  for (const root of ownedFixtureRoots) fs.rmSync(root, { recursive: true, force: true });
+});
+
 const decisionPath = 'docs/config/documentation-parity/legacy.md.json';
 const reviewPath = 'docs/config/documentation-parity-reviews/legacy.md.json';
 const sitePath = 'docs/site/guide.md';
@@ -122,6 +127,7 @@ function fixture({ sourceText = 'Alpha current behavior.\n', sourceKind = 'markd
   siteText = '# Guide\n\nAlpha current behavior.\n', unregisteredBaselineText = null,
   reviewedDependencyText = null } = {}) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-doc-parity-'));
+  ownedFixtureRoots.push(root);
   const sourceBuffer = Buffer.from(sourceText);
   const sourceName = sourceKind === 'diagram' ? 'legacy.svg' : 'legacy.md';
   const originalPath = `docs/${sourceName}`;
@@ -136,11 +142,11 @@ function fixture({ sourceText = 'Alpha current behavior.\n', sourceKind = 'markd
     write(root, `scripts/${gate}`, `process.stdout.write(${JSON.stringify(`fixture ${gate} passed\\n`)});\n`);
   }
   write(root, 'scripts/tests/docs-tree-boundary.test.mjs',
-    "import test from 'node:test'; test('fixture tree mutation gate', () => {});\n");
+    "import test, { after } from 'node:test'; test('fixture tree mutation gate', () => {});\n");
   write(root, 'scripts/tests/docs-markdown-anchors.test.mjs',
-    "import test from 'node:test'; test('fixture anchor mutation gate', () => {});\n");
+    "import test, { after } from 'node:test'; test('fixture anchor mutation gate', () => {});\n");
   write(root, 'scripts/tests/docs-check-refs.test.mjs',
-    "import test from 'node:test'; test('fixture reference mutation gate', () => {});\n");
+    "import test, { after } from 'node:test'; test('fixture reference mutation gate', () => {});\n");
   write(root, originalPath, sourceText);
   if (unregisteredBaselineText !== null) write(root, 'docs/forgotten.md', unregisteredBaselineText);
   execFileSync('git', ['add', '.'], { cwd: root });
@@ -1326,4 +1332,31 @@ test('exports categorical strict per-source inspection and fail-closed global fi
   assert.equal(inspection.valid, false);
   assert.equal(inspection.sources.length, 0);
   assert.equal(inspection.globalFindings[0].kind, 'authority-or-tool-error');
+});
+
+
+test('structural physical-tree membership is metadata, not an active source consumer', () => {
+  const root = fixture();
+  json(root, 'docs/generated/inventory/documentation-tree.json', {
+    schemaVersion: 'kubeclaw-documentation-tree.v1',
+    files: [{ path: 'docs/_legacy-source/legacy.md', originalPath: 'docs/legacy.md' }],
+  });
+  assert.equal(validateParity({ root }).deletionReady, false);
+});
+
+test('physical-tree metadata never exempts another inventory or a real executable consumer', () => {
+  for (const target of ['docs/generated/inventory/documentation-tree-copy.json', 'config/runtime.json', 'scripts/reader.mjs']) {
+    const root = fixture();
+    json(root, 'docs/generated/inventory/documentation-tree.json', { files: [{ path: 'docs/_legacy-source/legacy.md' }] });
+    write(root, target, '"docs/_legacy-source/legacy.md"\n');
+    assert.throws(() => validateParity({ root }), /active files still depend/u);
+  }
+});
+
+test('excluding structural membership cannot bypass the real tree readiness gate', () => {
+  const root = fixture();
+  json(root, 'docs/generated/inventory/documentation-tree.json', { files: [{ path: 'docs/_legacy-source/legacy.md' }] });
+  write(root, 'scripts/docs-tree-boundary.mjs', "throw new Error('physical tree validation failed');\n");
+  commitFixture(root, 'tree gate must still execute');
+  assert.throws(() => validateParity({ root, readiness: true }), /scanner input|Command failed/u);
 });

@@ -4,11 +4,14 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { authoredParitySuggestion } from './lib/docs-blueprint-parity-suggestions.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const blueprintRoot = path.join(root, 'docs', 'blueprint');
 const generatedRoot = path.join(blueprintRoot, 'generated');
 const checkMode = process.argv.includes('--check');
+const paritySourceBindings = new Map(JSON.parse(fs.readFileSync(path.join(root,
+  'docs/generated/inventory/documentation-parity-summary.json'), 'utf8')).sources.map(source => [source.originalPath, source]));
 
 function rel(filePath) {
   return path.relative(root, filePath).split(path.sep).join('/');
@@ -212,7 +215,12 @@ function originalDocumentationPath(filePath) {
   return filePath.startsWith(prefix) ? `docs/${filePath.slice(prefix.length)}` : filePath;
 }
 
+const canonicalReaderPages = new Set(readJson(path.join(root, 'docs/config/documentation-publication-manifest.json'))
+  .pages.map(page => page.sourcePath));
+
 function migration(filePath) {
+  const authored = authoredParitySuggestion(root, filePath, canonicalReaderPages, paritySourceBindings);
+  if (authored) return authored;
   const name = path.basename(filePath);
   if (filePath === 'docs/operator-tasks.json') return ['internal-machine-authority', 'documentation build pipeline', 'Keep the operator-task registry outside the published reader site; publish only the validated task procedures and reference views.'];
   if (filePath.startsWith('docs/diagrams/') && filePath.endsWith('.svg')) return ['replace-then-delete', '/architecture/interactive', 'Extract topology, labels, flows, and accessibility text; implement as responsive HTML.'];
@@ -228,7 +236,6 @@ function migration(filePath) {
   if (filePath.startsWith('docs/spikes/')) return ['move-out-of-product-docs', 'engineering research records', 'Retain verified research outside product documentation; publish only current boundaries and accepted decisions.'];
   if (filePath === 'docs/DOCUMENTATION_TOPIC_MAP.md') return ['delete-after-replacement', 'docs/blueprint/02-three-track-site-map.md', 'Replace the stale internal map with the approved three-track site map and generated coverage data.'];
   if (filePath === 'docs/ROADMAP.md') return ['move-out-of-product-docs', 'project planning or website roadmap', 'Keep future work separate from current platform guarantees.'];
-  if (filePath === 'docs/CONTRIBUTING.md') return ['rewrite-and-keep', '/extend/contributing/documentation', 'Keep public contribution guidance; remove internal migration workflow.'];
   if (filePath === 'docs/README.md') return ['rewrite-and-keep', '/', 'Replace with the three independent reader entrances and global search.'];
   if (filePath.startsWith('docs/reference/')) return ['replace-with-generated-reference', `/reference/${name.replace(/\.md$/u, '')}`, 'Generate factual tables from code and add only concise human context.'];
   if (filePath.startsWith('docs/operators/')) return ['rewrite-and-keep', `/use/${name === 'README.md' ? '' : name.replace(/\.md$/u, '')}`, 'Rewrite as a self-contained operator task or concept; link to architecture only for optional depth.'];

@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "CONTENT_PARITY_CONTRIBUTING=PASS. All 10 claims (heading; three runtime-boundary claims; submission procedure; four command claims; navigation links) pass semanticParity, currentAccuracy, targetSpecificity, and dispositionJustification. Source classification/binding=PASS. This is content-only parity; it makes no active-dependency, deletion-readiness, or whole-tree approval claim.",
+  "overall_confidence": 0.92
+}

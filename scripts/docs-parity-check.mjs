@@ -205,6 +205,8 @@ function buildReferenceIndex(root, sources, reviewedRevision = null) {
   const metadata = new Set([
     baselinePath, classificationPath, unitsPath, extractionSummaryPath, assignmentsPath, deletionManifestPath,
     'docs/config/documentation-parity-batches.json', 'docs/generated/inventory/documentation-parity-batches.json',
+    // Structural tree membership is checked by its owning readiness gate, not an active reader/loader.
+    'docs/generated/inventory/documentation-tree.json',
   ]);
   const paths = new Map(sources.flatMap((source) => [
     [source.originalPath, source.originalPath], [source.legacyPath, source.originalPath],

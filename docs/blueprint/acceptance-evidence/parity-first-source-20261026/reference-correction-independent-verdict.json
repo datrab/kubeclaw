@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The corrected helper validates the complete source binding, rejects symlinks (including dangling parent/final links) before absence fallback, and generator integration supplies the extraction-summary bindings. The included focused tests cover the corrected cases.",
+  "overall_confidence": 0.93
+}
