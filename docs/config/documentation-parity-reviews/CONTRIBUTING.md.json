@@ -19,7 +19,7 @@
       "actorId": "parity-reviewer:project-navigation-and-status"
     }
   },
-  "decisionSha256": "5d46f2e0d9ace5858bc839d03b936f06904a3d25203544c846755a151958d4f6",
+  "decisionSha256": "5e21224360c7b95b0255921114e5ed5f1ed51501b69ee4244f1df3bebc755b56",
   "contentRoot": "6f2ba25e501b89b546729af7bcd0f3b86362a900ccf6df7dff17bb7dcf2a9524",
   "claimIds": [
     "contributing:dpu_2a84a52e01dd0697f5bb7a0210d49126:0",
@@ -33,7 +33,7 @@
     "contributing:dpu_2619224de547c655eccef696386b3d54:3",
     "contributing:dpu_ef92f563384f9f05f65c4a05b9287555:0"
   ],
-  "reviewedRevision": "95d9cd8a307090065243e24a0211d23fffbaf012",
+  "reviewedRevision": "341663c0d2f1ba53d56eb0d700f9dd7e949584ec",
   "classificationVerdict": "PASS",
   "claimVerdicts": [
     {
@@ -109,8 +109,8 @@
   ],
   "visualVerdicts": [],
   "activeDependencyReview": {
-    "reviewedRevision": "95d9cd8a307090065243e24a0211d23fffbaf012",
-    "reviewedTree": "dbd503a2bd996975538080df025a54f07193f300",
+    "reviewedRevision": "341663c0d2f1ba53d56eb0d700f9dd7e949584ec",
+    "reviewedTree": "88a3cf9a8acb02c849474562e0fb7b6730f558a4",
     "contentRoot": "6f2ba25e501b89b546729af7bcd0f3b86362a900ccf6df7dff17bb7dcf2a9524",
     "scope": {
       "paths": [
@@ -170,6 +170,10 @@
       {
         "kind": "manual-observation",
         "detail": "Final Source pin includes the approved review metadata and its generated inventory row/counts, plus three durable verdict files. Full source-specific native scan remains zero matches. The primary source, all target pages, direct code evidence and public route authority are byteequal to the already independently passed content/manual assessments; exact complete vector retained. New verdict documents introduce no active source consumer. No criterion or limitation changes."
+      },
+      {
+        "kind": "scanner-result",
+        "detail": "Inspected the current original full249-source scanner record and compared its frozen5512 file paths and Git blob input root at341663c0d2f1ba53d56eb0d700f9dd7e949584ec: zero CONTRIBUTING path matches. Current scanner input binding is2283628aad896ef0038700a16b66603a84994aa0e7ad993febaf234d97f7cb45; complete unchanged primary/target/route vectors retain the previous substantive manual four-risk source observations. This inspected static result does not prove unknown dynamic or external consumers absent."
       }
     ],
     "findings": [],
@@ -181,7 +185,7 @@
       ],
       "scannedFileCount": 5512,
       "scannedPathsSha256": "d36402ca9a46b1837c6fcac9abb3d71fdefa53e96d2b46aeccb388d05c5efc0b",
-      "scannerInputRoot": "79a93efc7087d81338f6ac404e67093cb2686d69e1edd1feaab7624a435396f0",
+      "scannerInputRoot": "2283628aad896ef0038700a16b66603a84994aa0e7ad993febaf234d97f7cb45",
       "matches": []
     },
     "limitation": "Static literal, link, and simple path-composition scanning is not complete program analysis; independent reviewer attestation remains required.",

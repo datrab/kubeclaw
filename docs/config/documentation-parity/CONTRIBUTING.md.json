@@ -8,7 +8,7 @@
     "gitObject": "989681f2590ce67c14e47a57bf1df8a59f52870b",
     "extractionDigest": "befd6039390597685794f840a92459ca2044e329d452fa76ad57d9db8c0002e9"
   },
-  "reviewedRevision": "95d9cd8a307090065243e24a0211d23fffbaf012",
+  "reviewedRevision": "341663c0d2f1ba53d56eb0d700f9dd7e949584ec",
   "author": {
     "id": "parity-author:project-navigation-and-status",
     "assignmentId": "parity-assignment:ad93a1daf07a8cc865a82ae7de9827e608c0a9ead582d29ab10825c5166aefeb"
@@ -166,7 +166,7 @@
         "explanation": "Do not preserve the universal wording as current architecture: Prism specialist operations bind source-integrated domain engines above neutral Worker Core, not a pipeline registration or generic Core policy. The current complete extension choice table and handbook ownership routes retain the useful choose-the-smallest-owner intent without falsely classifying host/engine integration as pipeline registration. This is a specific source-backed correction, not omission of a correct duplicate.",
         "evidence": [
           {
-            "revision": "95d9cd8a307090065243e24a0211d23fffbaf012",
+            "revision": "341663c0d2f1ba53d56eb0d700f9dd7e949584ec",
             "path": "skills/prism/engine/worker-binding.ts",
             "basis": "current-implementation",
             "assertion": "executePrismOperation validates specialist contracts and invokes the Prism engine through its source-integrated worker operation binding.",
@@ -208,7 +208,7 @@
       ],
       "evidence": [
         {
-          "revision": "95d9cd8a307090065243e24a0211d23fffbaf012",
+          "revision": "341663c0d2f1ba53d56eb0d700f9dd7e949584ec",
           "path": "tests/verification/contracts/check-plugin-system-v2-boundaries.mjs",
           "basis": "current-test",
           "assertion": "The Core boundary test rejects concrete role/plugin imports and restricts dependency owners.",
@@ -258,7 +258,7 @@
       ],
       "evidence": [
         {
-          "revision": "95d9cd8a307090065243e24a0211d23fffbaf012",
+          "revision": "341663c0d2f1ba53d56eb0d700f9dd7e949584ec",
           "path": "scripts/check-erasable-typescript.mjs",
           "basis": "current-implementation",
           "assertion": "The typecheck script checks source TypeScript configurations across contracts, skills and tests.",
@@ -300,7 +300,7 @@
       ],
       "evidence": [
         {
-          "revision": "95d9cd8a307090065243e24a0211d23fffbaf012",
+          "revision": "341663c0d2f1ba53d56eb0d700f9dd7e949584ec",
           "path": "tests/verification/run-full-verification.sh",
           "basis": "current-test",
           "assertion": "The full verification runner calls the docs check command as a separate required run step.",
@@ -350,7 +350,7 @@
       ],
       "evidence": [
         {
-          "revision": "95d9cd8a307090065243e24a0211d23fffbaf012",
+          "revision": "341663c0d2f1ba53d56eb0d700f9dd7e949584ec",
           "path": "tests/verification/contracts/check-plugin-system-v2-boundaries.mjs",
           "basis": "current-test",
           "assertion": "The Core boundary test rejects concrete role/plugin imports and restricts dependency owners.",
@@ -400,7 +400,7 @@
       ],
       "evidence": [
         {
-          "revision": "95d9cd8a307090065243e24a0211d23fffbaf012",
+          "revision": "341663c0d2f1ba53d56eb0d700f9dd7e949584ec",
           "path": "tests/verification/run-full-verification.sh",
           "basis": "current-test",
           "assertion": "The full verification runner calls the docs check command as a separate required run step.",
@@ -442,7 +442,7 @@
       ],
       "evidence": [
         {
-          "revision": "95d9cd8a307090065243e24a0211d23fffbaf012",
+          "revision": "341663c0d2f1ba53d56eb0d700f9dd7e949584ec",
           "path": "tests/verification/deployment/check-deployment-truth.mjs",
           "basis": "current-test",
           "assertion": "sourceRootFromArgs accepts --source-root from process.argv and resolves the selected directory with a current-working-directory default.",
@@ -484,7 +484,7 @@
       ],
       "evidence": [
         {
-          "revision": "95d9cd8a307090065243e24a0211d23fffbaf012",
+          "revision": "341663c0d2f1ba53d56eb0d700f9dd7e949584ec",
           "path": "tests/verification/run-full-verification.sh",
           "basis": "current-test",
           "assertion": "The full verification runner calls git diff check as its whitespace check step.",
