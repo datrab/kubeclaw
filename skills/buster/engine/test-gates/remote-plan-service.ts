@@ -547,6 +547,21 @@ export class BusterRemotePlanService {
     } finally { release(); }
   }
 
+  async census() {
+    const counts: Record<RemotePlanStatusV1['state'], number> = {
+      accepted: 0, running: 0, cancelling: 0, completed: 0, failed: 0, cancelled: 0,
+    };
+    const records = await this.#options.store.records();
+    for (const { payload } of records) {
+      const state = payload.status.state;
+      if (!Object.hasOwn(counts, state)) throw new Error('BUSTER_JOB_RECORD_INVALID');
+      counts[state] += 1;
+    }
+    // A point-in-time observation, not an admission lock or a reservation.
+    return { schemaVersion: 'buster-plan-census.v1', total: records.length, counts,
+      nonterminal: counts.accepted + counts.running + counts.cancelling };
+  }
+
   async status(jobId: string): Promise<RemotePlanStatusV1> {
     return (await this.#options.store.get(jobId)).payload.status;
   }

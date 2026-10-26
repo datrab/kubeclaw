@@ -126,6 +126,10 @@ export function createBusterRemotePlanHttpServer(options: {
         send(response, 401, { error: 'unauthorized' }, options.maximumResponseBytes);
         return;
       }
+      if (request.method === 'GET' && request.url === '/v1/plan-jobs') {
+        send(response, 200, await options.service.census(), options.maximumResponseBytes);
+        return;
+      }
       if (request.method === 'POST' && request.url === '/v1/plan-jobs') {
         const value = await requestBody(request, options.maximumRequestBytes);
         validatePipelineTestGateContract('remotePlanJob', value);
