@@ -1,0 +1,50 @@
+{
+  "source": "08c4589fb257b39a2f29f4440cf48f191746b733",
+  "snapshot": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91010-20261026/a91010-lint-common-review",
+  "baseline": "a16242eb78d61f7a4d10af430129669c1cec745c",
+  "target": "a5ad32fa9a1ebb911f090ea6867856541ebadc7b",
+  "inputs": [
+    {
+      "path": "docs/blueprint/AP09-acceptance-contract.md",
+      "bytes": 42548,
+      "sha256": "1574710477433d27cade59dbc42ce6ecc6ae56f944271fbddbe7d03be2f9cd2f"
+    },
+    {
+      "path": "docs/site/extend/developer-handbook.md",
+      "bytes": 186330,
+      "sha256": "c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1"
+    },
+    {
+      "path": "docs/site/extend/lint.md",
+      "bytes": 82420,
+      "sha256": "8e84ad80f6b9fff4557073d77796f64e6374c170ad23d261c1a3ae6b0dac461e"
+    },
+    {
+      "path": "docs/site/extend/nova.md",
+      "bytes": 24672,
+      "sha256": "221377bfc856fac8498788d150765e380fb131dbc048dd619f2230fc88c03b28"
+    },
+    {
+      "path": "docs/site/extend/testing.md",
+      "bytes": 39795,
+      "sha256": "4eb7b8e00f01be3a3c6149e63310b4f74594f1e9e297ab4b681f31f474a0673e"
+    },
+    {
+      "path": "a91010-original-family-criterion-matrix.json",
+      "bytes": 17786,
+      "sha256": "2b4b7b06dd02912dad18d2e7a3d27349241fcf5bdeaacd8c93cd54de4d23c4f1"
+    },
+    {
+      "path": "a91010-whole-original-reuse-context.json",
+      "bytes": 49250,
+      "sha256": "7ebc8f846bd24451e03c10b41367f0a99e2e905dca531f0d730f978c9348159e"
+    },
+    {
+      "path": "observer-final-complete-native-summary.json",
+      "bytes": 5342,
+      "sha256": "5e65a04f68b3b297a048fcd0af4bfe913934e0bb8c480a3d83747c62e2ef9717"
+    }
+  ],
+  "rawBytes": 451378,
+  "noTruncation": true
+}

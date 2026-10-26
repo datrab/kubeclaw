@@ -1,0 +1,9 @@
+# Original A910-10 whole supported extension lifecycle
+
+Independent substantive decisions: **LINT_AND_COMMON=PASS** and **WHOLE_A91010=PASS**, each sourceAccuracy/readerUsability/quality PASS. Reviewed Source: `08c4589fb257b39a2f29f4440cf48f191746b733`.
+
+The complete criterion matrix covers twelve supported families through clean checkout, change, registration, permission, configuration, test, activation, observation, compatibility, removal and rollback. Complete lint/common handbook responsibility and complete other core guides/platform were supplied in two bounded complete semantic passes, not truncated source or a request-only review. Six existing qualified scopes and their entire 268-path Source vector remain unchanged and apply only within original limits. New observer source/reader/native/preservation proof is in the adjacent observer-lifecycle-20261026 directory.
+
+The initial adequacy review did not accept the gate; it required whole criterion proof, now supplied. The oversized common operator guide refusal remains retained, not retried through an alias or excerpt. Its unchanged originally accepted supported-task control alone is reused where applicable. Complete product gaps and missing live controls stay explicit; they are not product execution successes. Original FAIL history, all five DATA UNKNOWN slots, global receiver/output-role, release Knip, live/native/human and receipt boundaries remain unwaived.
+
+Registration adds **only A910-10**; no catalogue requirement or other gate is counted. No old completion record or history is rewritten. Actual prior native checks are reused at byte-equal page/source inputs, not rerun solely for an evidence commit or relabelled fresh independent participant/testing. Pinned commands, complete per-pass input identity manifests and actual reviewer verdicts are retained here. Snapshot checkouts were source-only, not runnable installations.

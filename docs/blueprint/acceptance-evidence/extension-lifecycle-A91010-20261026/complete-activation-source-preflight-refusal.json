@@ -1,0 +1,20 @@
+{
+  "at": "2026-10-26T13:28:02.965213+00:00",
+  "gate": "A910-10",
+  "necessarySource": "docs/site/use/plugins.md",
+  "bytes": 1116272,
+  "sha256": "f89b58eb364dcf305cb9bf3fbfdbf6e7f7eb1c8b1ce3fe6b1294535996429b04",
+  "observedRefusal": "file too large to scan safely",
+  "perFileLimit": 360000,
+  "aggregateLimit": 512000,
+  "whyNecessary": "Canonical first-plugin/effectful/internal host extension paths delegate actual activation/observation/retirement to this published consumer guide; cannot infer activation from build/unit tests under original automaticFailure.",
+  "reviewerStarted": false,
+  "safeNext": "Do not omit necessary consumer guide or retry unchanged. Determine whether supported complete semantic/lossless repetition handling actually preserves original input and scans all unique text under unchanged caps; otherwise exact owner/action/resume and another original executable point.",
+  "sourceUnchanged": true,
+  "rawLineDedupDiagnostic": {
+    "uniqueTextBytes": 1115775,
+    "originalLines": 491,
+    "uniqueLines": 411
+  },
+  "newAcceptance": false
+}
