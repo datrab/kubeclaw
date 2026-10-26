@@ -1,0 +1,60 @@
+{
+  "scope": "One complete327byte original deployment-verification source,7units7claims; no wholeA91311/deletion/live/runtime approval.",
+  "originalSource": "docs/deployment/deployment-verification.md",
+  "originalContentFailure": {
+    "findings": [
+      {
+        "title": "Preserve the legacy schema-validation procedure explicitly",
+        "body": "The original procedure requires users to “validate schemas.” This decision maps it only to role rendering and local source checks; the cited truth checker runs kubeconform only when it is installed, and the mapped install procedure does not require any schema-validation command. Thus the mapping weakens a distinct original claim rather than preserving it. Add a canonical target that requires the applicable schema validation (with supporting evidence), or make an evidence-backed obsolete disposition if that behavior is no longer supported.",
+        "priority": "P1",
+        "confidence": 0.98,
+        "category": "regression",
+        "code_location": {
+          "file_path": "docs/config/documentation-parity/deployment/deployment-verification.md.json",
+          "line": 178
+        }
+      },
+      {
+        "title": "Add the required independent review for this new parity decision",
+        "body": "This commit adds only the author decision. The supplied author-only result explicitly says it is not semantic approval and that final inspection remains required. The parity contract requires a matching independent review, with distinct reviewer identity and passing semantic-parity, accuracy, target-specificity, and disposition verdicts for every claim. Without it, this source cannot become deletion-ready or pass the parity gate.",
+        "priority": "P1",
+        "confidence": 0.98,
+        "category": "bug",
+        "code_location": {
+          "file_path": "docs/config/documentation-parity/deployment/deployment-verification.md.json",
+          "line": 1
+        }
+      },
+      {
+        "title": "Use a permitted disposition for navigation-only headings",
+        "body": "This claim marks a `navigation-only` heading as `current` and `mapped`. The parity contract's compatibility matrix permits `navigation-only` only as `non-reader-content` with an omitted navigation-only disposition; it does not permit the current/mapped pairing. The same invalid pairing is repeated for the other heading claims, so the decision will fail the contract gate. Reclassify these headings/dispositions according to the matrix or represent their substantive navigation as a supported claim type.",
+        "priority": "P2",
+        "confidence": 0.94,
+        "category": "bug",
+        "code_location": {
+          "file_path": "docs/config/documentation-parity/deployment/deployment-verification.md.json",
+          "line": 123
+        }
+      }
+    ],
+    "overall_correctness": "patch is incorrect",
+    "overall_explanation": "NOT_READY: the seven-claim parity proposal does not preserve the original schema-validation instruction, lacks the required independent parity review, and contains invalid navigation-only claim dispositions.",
+    "overall_confidence": 0.98
+  },
+  "actualCorrection": "Install now requires pinned strict schema validation for every selected rendered role and explicit target/schema selection; zero resources, missing/skipped schema and errors stop. Existing release/authority limits retained.",
+  "maintainedControlCommand": "node --test tests/verification/docs/check-install-schema-step.mjs",
+  "actualControls": {
+    "testsPassed": 10,
+    "fixtureCases": 9,
+    "scope": "Real pinned kubeconform with toy schemas and fixture bound_deploy. Not actual KubeClaw renders, approved target schema, release, live cluster or fresh Reader acceptance."
+  },
+  "nativeAuthorOnly": true,
+  "correctedIndependentContentReferenceAndPreservation": "PENDING",
+  "detailedEvidenceOutsideRepository": "operations/pr13/evidence/a91311-deployment-verification-20261026",
+  "acceptedPublishedCountsUnchanged": {
+    "gates": 65,
+    "requirements": 226,
+    "sourceValid": 1
+  },
+  "originalFindingsDisposition": "SchemaP1 accepted and corrected; missing independent review is intentional content-stage pending, not deletion-readiness claim. Navigation-only mapped/current finding requires adjudication against unchanged original native claim rules before any content approval."
+}

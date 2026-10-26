@@ -1,0 +1,6 @@
+{
+  "schemaVersion": "kubeclaw-documentation-parity-review.pending.v1",
+  "originalPath": "docs/deployment/deployment-verification.md",
+  "verdict": "NOT_READY",
+  "reason": "Original content review found missing required schema validation; canonical/test correction is authored and original author function passes, but actual corrected content/reference/current-source independent approval and original full native source-valid result are still required. No deletion or gate approval."
+}

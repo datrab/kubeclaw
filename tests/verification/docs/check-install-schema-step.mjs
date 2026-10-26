@@ -54,11 +54,12 @@ await test('documented strict schema step: finite local CLI/control fixtures', a
   try {
     fs.writeFileSync(path.join(temporary, 'schema.json'), JSON.stringify(toySchema));
     fs.writeFileSync(path.join(temporary, 'valid.yaml'), manifest);
-    fs.writeFileSync(path.join(temporary, 'invalid.yaml'), `${manifest}unexpected: true\n`);
+    fs.writeFileSync(path.join(temporary, 'invalid.yaml'), manifest.replace(
+      '  name: schema-fixture-__ROLE__', '  name: first-name\n  name: schema-fixture-__ROLE__'));
     const cases = [
       ['two selected roles', 'valid', 'false', true],
       ['three selected roles', 'valid', 'true', true],
-      ['invalid resource fails', 'invalid', 'false', false],
+      ['duplicate resource keys fail strict validation', 'invalid', 'false', false],
       ['zero resources fail', 'zero-resource', 'false', false],
       ['missing schema fails', 'missing-schema', 'false', false],
       ['render failure stops', 'render-failure', 'false', false],

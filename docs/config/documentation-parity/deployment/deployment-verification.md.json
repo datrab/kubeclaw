@@ -1,0 +1,400 @@
+{
+  "schemaVersion": "kubeclaw-documentation-parity-decision.v1",
+  "source": {
+    "originalPath": "docs/deployment/deployment-verification.md",
+    "legacyPath": "docs/_legacy-source/deployment/deployment-verification.md",
+    "baselineRevision": "8da6157b77247dcbdf209ef12f491f0b92ca858a",
+    "gitObject": "9acd81a6b41bfbf883a9bf60e0b3e25776253743",
+    "extractionDigest": "d82febee5a0656d23cd63001880f9da04bdbe309a19b7f9724df84fca494082a",
+    "classification": "legacy-extraction-source"
+  },
+  "reviewedRevision": "7d08d36ccb965883d6bd7f7bc9ef842474a01c24",
+  "author": {
+    "id": "parity-author:platform-deployment-operations-and-security",
+    "assignmentId": "parity-assignment:b46dd355be30c27b37deda845c90e8f7c6453a4190a4533d841e655338913ddb"
+  },
+  "redirect": {
+    "status": "not-required",
+    "from": "/deployment/deployment-verification",
+    "to": null,
+    "basis": "no-authoritative-public-route",
+    "reason": "No historical public route is declared by the current authoritative registry; canonical complete installation and verification/check-chain navigation replaces the old source without inventing a redirect."
+  },
+  "visualEvidence": [],
+  "contentRoot": "f3b7ee1eacd6aaa549b8985abd3e7b389cc9c437cfa858edfd77510b07ebf4d6",
+  "unitCoverage": [
+    {
+      "unitId": "dpu_31bf4f46a08bc501e2d5c41aec975072",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "deployment-verification:dpu_31bf4f46a08bc501e2d5c41aec975072:0",
+          "reasonCode": null,
+          "byteStart": 0,
+          "byteEnd": 26
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_f30be3e447a1f0041d8a76d05b1150a8",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "deployment-verification:dpu_f30be3e447a1f0041d8a76d05b1150a8:0",
+          "reasonCode": null,
+          "byteStart": 27,
+          "byteEnd": 40
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_172f155edfb0e9ae1b5b08385a9b904f",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "deployment-verification:dpu_172f155edfb0e9ae1b5b08385a9b904f:0",
+          "reasonCode": null,
+          "byteStart": 41,
+          "byteEnd": 114
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_712dd50292fd924c4abdbdf61f11ebf9",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "deployment-verification:dpu_712dd50292fd924c4abdbdf61f11ebf9:0",
+          "reasonCode": null,
+          "byteStart": 115,
+          "byteEnd": 131
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_34ed270f008e21e337a89c1d841320a9",
+      "codeBlockClassification": "runnable-example",
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "deployment-verification:dpu_34ed270f008e21e337a89c1d841320a9:0",
+          "reasonCode": null,
+          "byteStart": 132,
+          "byteEnd": 227
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_d573166a609d9e69f4bfbfc494bfa396",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "deployment-verification:dpu_d573166a609d9e69f4bfbfc494bfa396:0",
+          "reasonCode": null,
+          "byteStart": 228,
+          "byteEnd": 247
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_ce44cc3c1862c1927cddbe5c70d93f0a",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "deployment-verification:dpu_ce44cc3c1862c1927cddbe5c70d93f0a:0",
+          "reasonCode": null,
+          "byteStart": 248,
+          "byteEnd": 327
+        }
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "deployment-verification:dpu_31bf4f46a08bc501e2d5c41aec975072:0",
+      "unitId": "dpu_31bf4f46a08bc501e2d5c41aec975072",
+      "summary": "Canonical deployment verification navigation.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 0,
+        "byteEnd": 26,
+        "lineStart": 1,
+        "lineEnd": 1,
+        "exactSha256": "2d4063aa842ce3ebdd335d1ac40d3763f08d6b4f20c4684cd07499c4e4e375eb",
+        "normalizedSha256": "43913d09fbe7dae2e4c1eed12584b75983f300df051c339c29d58704216681bb"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/use/install.md",
+          "anchor": "preflight-without-mutation",
+          "excerpt": "## Preflight Without Mutation",
+          "excerptSha256": "0d2a8e3af3b80792c98fb512c6958ab901968dd2c145cc108a29062016535f18",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "deployment-verification:dpu_f30be3e447a1f0041d8a76d05b1150a8:0",
+      "unitId": "dpu_f30be3e447a1f0041d8a76d05b1150a8",
+      "summary": "The procedure heading maps to the complete source/contract checks and protected role render preflight.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 27,
+        "byteEnd": 40,
+        "lineStart": 3,
+        "lineEnd": 3,
+        "exactSha256": "9503a27e446036e25f7d440466f7c27459bdb4c338d15db611b94bef5bbd8ce0",
+        "normalizedSha256": "5da93bd3e25731d2786cd3c17c54b84047ba82401bc69b04138a3a1a9b0c0402"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/use/install.md",
+          "anchor": "preflight-without-mutation",
+          "excerpt": "## Preflight Without Mutation",
+          "excerptSha256": "0d2a8e3af3b80792c98fb512c6958ab901968dd2c145cc108a29062016535f18",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "deployment-verification:dpu_172f155edfb0e9ae1b5b08385a9b904f:0",
+      "unitId": "dpu_172f155edfb0e9ae1b5b08385a9b904f",
+      "summary": "Before mutation, render every selected role, inspect image/config references and require strict validation against the reviewed target Kubernetes version and approved schemas; absent or skipped schemas, zero-resource results and validator errors stop rather than pass.",
+      "claimType": "procedure",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 41,
+        "byteEnd": 114,
+        "lineStart": 5,
+        "lineEnd": 5,
+        "exactSha256": "43c7233561a5cf9e7ddbe5b101cac30f0ae5610dcb928864afbe63abe7b1b0ff",
+        "normalizedSha256": "a166a84d8659b713dd563c30ff88fa6ff1e28f2de3eecbc652fe1bf93e3c5330"
+      },
+      "evidence": [
+        {
+          "revision": "7d08d36ccb965883d6bd7f7bc9ef842474a01c24",
+          "path": "tests/verification/deployment/check-deployment-truth.mjs",
+          "basis": "current-test",
+          "assertion": "The sourceRootFromArgs function uses the source-root argument when present, otherwise process.cwd(), and returns a path.resolve result for the selected source directory.",
+          "gitObject": "2b0323fe4313784e0504e718e4f387894a0f8cd4",
+          "byteStart": 303,
+          "byteEnd": 468,
+          "lineStart": 10,
+          "lineEnd": 13,
+          "exactSha256": "f11ba638bd3e7c2c5ecf7ad3495b604f2374f371ff4503edac0b6fbe76620fca",
+          "normalizedSha256": "e8b3c592c325167cd240a9548a377ec40a29a1f688c41847a91cf6ac5c0b4d2a"
+        },
+        {
+          "revision": "7d08d36ccb965883d6bd7f7bc9ef842474a01c24",
+          "path": "tests/verification/docs/check-install-schema-step.mjs",
+          "basis": "current-test",
+          "assertion": "The maintained guide check executes the complete documented subshell with the real pinned validator and toy schemas; it checks positive selected-role results, invalid and empty resources, missing schema or selection, rendering failure, validator version/availability, private permissions and exact owned directory cleanup. This is not product rendering or deployment proof.",
+          "gitObject": "a067001e6a4ffd389b3478bda7d975b893fcddd9",
+          "byteStart": 2433,
+          "byteEnd": 6924,
+          "lineStart": 51,
+          "lineEnd": 123,
+          "exactSha256": "b6510c054376c8846bd9177b0aa26802426e02dd38211ba3845fee6112c2c228",
+          "normalizedSha256": "36e084f70a8067d418e1f7e411b90b4a35817b7bae0a5f35f843a0cb8ae2a38d"
+        }
+      ],
+      "targets": [
+        {
+          "path": "docs/site/use/install.md",
+          "anchor": "preflight-without-mutation",
+          "excerpt": "This section makes no cluster change. First complete the canonical\n[Locked Dependency Installation](quickstart.md#locked-dependency-installation)\nin this disposable checkout. Install Go and make `go` available on `PATH`;\nthe configuration inventory uses it to inspect Go producers. The repository\ndoes not declare an accepted Go version range. Record the observed version before\nrunning the source checks:\n\n```bash\ncommand -v go\ngo version\nnpm run versions:check\nnpm run docs:check:generated\nnpm run verify:prism:deploy-script\nnode tests/verification/deployment/check-deployment-truth.mjs --source-root \"$PWD\"\n```\n\nOn 2026-10-09, `npm run verify:prism:deploy-script` passed at revision `e3fa70c3fe3a1a4a32af503201a19e0b5df14c61` with Node.js `v24.21.0`.\nIt checks workflow YAML, the deployment contract, and deployment-script syntax.\nThis local result does not establish successful cluster deployment.\nRun every source check above for your selected checkout and stop on a nonzero exit.\n\nRender each selected role before mutation:\n\n```bash\nbound_deploy render nova\nbound_deploy render buster\nif [[ $KUBECLAW_DEPLOY_PRISM == true ]]; then\n  bound_deploy render prism\nfi\n```\n\nRuntime rendering requires `releases/runtime-images.json` and its generated values.\nThe current checkout contains runtime image and code receipts, but its selection\nfails configuration verification at\n`RELEASE_CONFIGURATION_CHANGED: charts/kubeclaw/files/config/knip.json`.\nStop before mutation and resolve the selection through the release owner.\nDo not rewrite receipts or bypass this check. The first failure does not\nestablish whether later checks would pass.",
+          "excerptSha256": "3aec84392a97a3e8d8a465452767fba8a0fdf68bf8bdbc58ecdef39c84191a01",
+          "occurrence": 1,
+          "relation": "expanded"
+        },
+        {
+          "path": "docs/site/use/install.md",
+          "anchor": "preflight-without-mutation",
+          "excerpt": "Validate the schemas of **every selected role render before mutation**. The\nsource checker above invokes strict `kubeconform` only when Helm and\n`kubeconform` are present. Its successful exit without that branch is not a\nschema-validation result. Existing release-selection and authority stops still\napply; never render an unqualified selection to bypass them.\n\nObtain the target Kubernetes version and approved schema location from the\nplanning record. The schema owner must cover all selected resource kinds,\nincluding any custom resources. Set `TARGET_KUBERNETES_VERSION` and\n`APPROVED_SCHEMA_LOCATION` to those exact reviewed values in this shell. They\nare task-local validator inputs, not new product or Helm settings. An unknown\nversion, unavailable schema, missing validator, or skipped validation is a stop,\nnot permission to use the tool's unqualified `master` default. Schema downloads,\nif required by the approved location, need the administration host's permitted\nnetwork access; do not substitute an unreviewed schema source.\n\nRun this block from the same bound Bash shell and reviewed source checkout.\nIt rerenders only the selected roles into an owned private temporary directory;\nit does not create cluster resources. The subshell removes only that exact\ndirectory, including its renders and reports, on success or failure. Retain the version, exact schema selection,\ncommands and validation summaries in the protected installation record.\n\n```bash\n(\n  set -eu\n  command -v kubeconform\n  : \"${TARGET_KUBERNETES_VERSION:?select the reviewed target Kubernetes version}\"\n  : \"${APPROVED_SCHEMA_LOCATION:?select the approved schema location}\"\n  schema_expected_version=\"$(node -p 'JSON.parse(require(\"node:fs\").readFileSync(\"versions.json\", \"utf8\")).buildArgs.KUBECONFORM_VERSION')\"\n  schema_actual_version=\"$(kubeconform -v)\"\n  test \"${schema_actual_version#v}\" = \"$schema_expected_version\"\n  printf '%s\\n' \"kubeconform $schema_actual_version\"\n  umask 077\n  SCHEMA_RENDER_DIR=\"$(mktemp -d /tmp/kubeclaw-schema-check.XXXXXX)\"\n  trap 'rm -rf -- \"$SCHEMA_RENDER_DIR\"' EXIT\n  bound_deploy render nova > \"$SCHEMA_RENDER_DIR/nova.yaml\"\n  bound_deploy render buster > \"$SCHEMA_RENDER_DIR/buster.yaml\"\n  if [[ $KUBECLAW_DEPLOY_PRISM == true ]]; then\n    bound_deploy render prism > \"$SCHEMA_RENDER_DIR/prism.yaml\"\n  fi\n  for schema_manifest in \"$SCHEMA_RENDER_DIR\"/*.yaml; do\n    test -s \"$schema_manifest\"\n    printf 'Schema validation: %s\\n' \"$schema_manifest\"\n    schema_report=\"$schema_manifest.report.json\"\n    schema_status=0\n    kubeconform -strict -summary -output json \\\n      -kubernetes-version \"$TARGET_KUBERNETES_VERSION\" \\\n      -schema-location \"$APPROVED_SCHEMA_LOCATION\" \"$schema_manifest\" \\\n      > \"$schema_report\" || schema_status=$?\n    cat \"$schema_report\"\n    test \"$schema_status\" -eq 0\n    node -e '\n      const fs = require(\"node:fs\");\n      const assert = require(\"node:assert/strict\");\n      const report = JSON.parse(fs.readFileSync(process.argv[1], \"utf8\"));\n      assert(Number.isSafeInteger(report.summary?.valid) && report.summary.valid > 0);\n      for (const key of [\"invalid\", \"errors\", \"skipped\"]) {\n        assert.equal(report.summary[key], 0);\n      }\n    ' \"$schema_report\"\n  done\n)\n```\n\nEach selected role must show a positive validated-resource count and zero\ninvalid, error, and skipped resources. Stop on a nonzero exit, a zero-resource\nrender, or a missing role result. Do not add skip or ignore-missing-schema flags\nto obtain success. This validates the rendered schemas only; it does not prove\nAPI admission, authorization, readiness, or a successful deployment.",
+          "excerptSha256": "73c08738578c716374fff8ef1c125c8dc23d7af03831fcfea680a24879446972",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "deployment-verification:dpu_712dd50292fd924c4abdbdf61f11ebf9:0",
+      "unitId": "dpu_712dd50292fd924c4abdbdf61f11ebf9",
+      "summary": "Verification navigation identifies the local documentation/deployment check chain.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 115,
+        "byteEnd": 131,
+        "lineStart": 7,
+        "lineEnd": 7,
+        "exactSha256": "967a0847252e3d1cba91c583204d1c991d0d62c378b10628d354daa32f99f138",
+        "normalizedSha256": "80937328f4f7b2400b498c2e504a90057378843e8c8870ab4738c70572fefef7"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/verification-commands.md",
+          "anchor": "local-documentation-and-deployment-checks",
+          "excerpt": "## Local Documentation And Deployment Checks",
+          "excerptSha256": "046b589b21f5fbe098b3e175f8de3af8719a93d585c9cb7f346e7e1e67a2daaa",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "deployment-verification:dpu_34ed270f008e21e337a89c1d841320a9:0",
+      "unitId": "dpu_34ed270f008e21e337a89c1d841320a9",
+      "summary": "The exact source-root deployment truth command remains available with its source-only boundary and stop-on-failure rule.",
+      "claimType": "procedure",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 132,
+        "byteEnd": 227,
+        "lineStart": 9,
+        "lineEnd": 11,
+        "exactSha256": "c05351bbe52d573ba7274ce49d3edd4c10871e2bda88223bda8e41c66aa04924",
+        "normalizedSha256": "60a49d89cffa1f57f619d5a21d3470ba65a1f8510934252353f7d0dd0ba6abea"
+      },
+      "evidence": [
+        {
+          "revision": "7d08d36ccb965883d6bd7f7bc9ef842474a01c24",
+          "path": "tests/verification/deployment/check-deployment-truth.mjs",
+          "basis": "current-test",
+          "assertion": "The sourceRootFromArgs function uses the source-root argument when present, otherwise process.cwd(), and returns a path.resolve result for the selected source directory.",
+          "gitObject": "2b0323fe4313784e0504e718e4f387894a0f8cd4",
+          "byteStart": 303,
+          "byteEnd": 468,
+          "lineStart": 10,
+          "lineEnd": 13,
+          "exactSha256": "f11ba638bd3e7c2c5ecf7ad3495b604f2374f371ff4503edac0b6fbe76620fca",
+          "normalizedSha256": "e8b3c592c325167cd240a9548a377ec40a29a1f688c41847a91cf6ac5c0b4d2a"
+        }
+      ],
+      "targets": [
+        {
+          "path": "docs/site/reference/verification-commands.md",
+          "anchor": "local-documentation-and-deployment-checks",
+          "excerpt": "## Local Documentation And Deployment Checks\n\n```bash\nnpm run verify:plugin-system-v2\nnpm run typecheck:skills\nnpm run docs:inventory:check\nnpm run docs:generate:check\nnode tests/verification/deployment/check-deployment-truth.mjs --source-root \"$PWD\"\ngit diff --check\n```",
+          "excerptSha256": "52658728c2f33a40ff8b0a34bc599b88134c0b617ae4f0e98b5a135e4c1d933d",
+          "occurrence": 1,
+          "relation": "expanded"
+        },
+        {
+          "path": "docs/site/use/install.md",
+          "anchor": "preflight-without-mutation",
+          "excerpt": "Run every source check above for your selected checkout and stop on a nonzero exit.",
+          "excerptSha256": "cb195efbe558c0185a04448fb290b3fcbb453527ff3ff3d1d6db666aae122f74",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "deployment-verification:dpu_d573166a609d9e69f4bfbfc494bfa396:0",
+      "unitId": "dpu_d573166a609d9e69f4bfbfc494bfa396",
+      "summary": "Troubleshooting navigation maps to source-owned regeneration and verification after changed chart/deploy inputs.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 228,
+        "byteEnd": 247,
+        "lineStart": 13,
+        "lineEnd": 13,
+        "exactSha256": "ab082ac24e8895d9bf32d90891535ef59cc1bf43da0f618458302fd132a48b00",
+        "normalizedSha256": "659a188b36f9c3262a28539e24c345df4edc9657f59b116b0a1d9887cf2e28e0"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/extend/developer-handbook.md",
+          "anchor": "documentation-change-chain",
+          "excerpt": "### Documentation-change chain",
+          "excerptSha256": "326cad97c4ab7325764ece6469d485c6b15dab546466aff389b31e0de00e813a",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "deployment-verification:dpu_ce44cc3c1862c1927cddbe5c70d93f0a:0",
+      "unitId": "dpu_ce44cc3c1862c1927cddbe5c70d93f0a",
+      "summary": "Current inventory and generated-reference command routes preserve source-owned regeneration after chart/deploy changes; the complete handbook qualifies generator selection, partial failure, diff inspection and check modes, not guaranteed green generation.",
+      "claimType": "procedure",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 248,
+        "byteEnd": 327,
+        "lineStart": 15,
+        "lineEnd": 15,
+        "exactSha256": "e9f44a8c76cf278889b8f3c6c2bb326246a9f083206cf8b39c225412e9d7f999",
+        "normalizedSha256": "770b2009df191d72eb86ebce56e3170c5059d67018c9ff31082914f9690a4dcf"
+      },
+      "evidence": [
+        {
+          "revision": "7d08d36ccb965883d6bd7f7bc9ef842474a01c24",
+          "path": "package.json",
+          "basis": "current-configuration",
+          "assertion": "The package defines docs:inventory as a Node invocation of scripts/docs-inventory.mjs; its separately declared check mode retains the inventory verification route.",
+          "gitObject": "c983aaf3654d5f3d473f639e32ae6857221947e3",
+          "byteStart": 31151,
+          "byteEnd": 31203,
+          "lineStart": 175,
+          "lineEnd": 175,
+          "exactSha256": "02a615cdf1aa2c0bd07e8a4e6dd715a380766682ace3b192df316bb9030ce82a",
+          "normalizedSha256": "02a615cdf1aa2c0bd07e8a4e6dd715a380766682ace3b192df316bb9030ce82a"
+        },
+        {
+          "revision": "7d08d36ccb965883d6bd7f7bc9ef842474a01c24",
+          "path": "package.json",
+          "basis": "current-configuration",
+          "assertion": "The package defines docs:generate as a Node invocation of scripts/docs-generate.mjs and separately defines its check mode for generated-reference verification.",
+          "gitObject": "c983aaf3654d5f3d473f639e32ae6857221947e3",
+          "byteStart": 35054,
+          "byteEnd": 35104,
+          "lineStart": 216,
+          "lineEnd": 216,
+          "exactSha256": "d1439a47346a44c6d6595c9190e5258d76b07837558593e11082e819d856b497",
+          "normalizedSha256": "d1439a47346a44c6d6595c9190e5258d76b07837558593e11082e819d856b497"
+        }
+      ],
+      "targets": [
+        {
+          "path": "docs/site/extend/developer-handbook.md",
+          "anchor": "documentation-change-chain",
+          "excerpt": "1. Identify the changed source in the generated page map and update its authored\n   explanation and metadata. If metadata or source dependencies changed, run\n   `npm run docs:governance:generate`. If source-derived facts changed, run their\n   registered generator, then `npm run docs:generate` for the affected reference\n   sections. Plugin catalogue/operator matrix changes use\n   `npm run docs:publication:generate`. Do not run write commands for an\n   unrelated prose-only edit. Never hand-edit a generated section.",
+          "excerptSha256": "e3c3f722ea3491d27ff8c6b025f88a689f1650ce8ddbfdd2a227fb479028a3f9",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    }
+  ]
+}
