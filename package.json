@@ -233,7 +233,35 @@
     "@playwright/test": "1.62.1"
   },
   "overrides": {
-    "fast-uri": "3.1.5",
-    "js-yaml": "4.3.1"
+    "fast-uri": "3.1.9",
+    "js-yaml": "4.3.2",
+    "@puckeditor/core": {
+      "happy-dom": "21.0.4"
+    },
+    "@tiptap/html": {
+      ".": "3.32.0",
+      "happy-dom": "21.0.4"
+    },
+    "@tiptap/core": "3.32.0",
+    "@tiptap/extension-blockquote": "3.32.0",
+    "@tiptap/extension-bold": "3.32.0",
+    "@tiptap/extension-bubble-menu": "3.32.0",
+    "@tiptap/extension-code": "3.32.0",
+    "@tiptap/extension-code-block": "3.32.0",
+    "@tiptap/extension-document": "3.32.0",
+    "@tiptap/extension-floating-menu": "3.32.0",
+    "@tiptap/extension-hard-break": "3.32.0",
+    "@tiptap/extension-heading": "3.32.0",
+    "@tiptap/extension-horizontal-rule": "3.32.0",
+    "@tiptap/extension-italic": "3.32.0",
+    "@tiptap/extension-link": "3.32.0",
+    "@tiptap/extension-list": "3.32.0",
+    "@tiptap/extension-paragraph": "3.32.0",
+    "@tiptap/extension-strike": "3.32.0",
+    "@tiptap/extension-text": "3.32.0",
+    "@tiptap/extension-text-align": "3.32.0",
+    "@tiptap/extension-underline": "3.32.0",
+    "@tiptap/pm": "3.32.0",
+    "@tiptap/react": "3.32.0"
   }
 }
