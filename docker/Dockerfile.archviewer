@@ -1,5 +1,5 @@
 # Version defaults are generated from versions.json; run npm run versions:sync.
-ARG ARCHVIEWER_BASE=docker.io/library/nginx:1.29-alpine@sha256:5616878291a2eed594aee8db4dade5878cf7edcb475e59193904b198d9b830de
+ARG ARCHVIEWER_BASE=docker.io/library/nginx:1.30-alpine@sha256:47928bf67eb62a1863cb08d9ecb52d3e704304ba614eaee17884204677702951
 
 # =============================================================================
 # KubeClaw Archviewer — Lightweight architecture presentation server
