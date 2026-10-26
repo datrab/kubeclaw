@@ -3,9 +3,9 @@
 Status: workflow task index; full wait/resume lifecycle and deployment execution open
 Audience: pipeline authors and operators
 Owner: product integration maintainers
-Evidence: docs/site/use/workflows/examples/first-project.mjs; skills/nova/project/compiler.ts; docs/site/use/workflows/wait-resume.md; docs/site/use/workflows/buster-suite.md; docs/site/use/workflows/kubernetes-fixture.md; docs/site/use/demo-delivery.md; docs/site/use/diagnose.md; docs/site/use/recovery.md; docs/site/use/plugins.md; docs/site/use/workflows/repair-retry.md; docs/site/use/workflows/interruption-recovery.md; docs/site/use/workflows/redis-replay-recovery.md; docs/site/use/workflows/worker-result-recovery.md; docs/site/use/workflows/build-image.md; docs/site/use/workflows/tailnet-exposure.md
+Evidence: docs/site/use/workflows/examples/compiled-project.mjs; docs/site/use/workflows/examples/compiled-project-input.mjs; docs/site/use/workflows/examples/compiled-project-verification.mjs; docs/site/use/workflows/examples/first-project.mjs; skills/nova/project/compiler.ts; docs/site/use/workflows/wait-resume.md; docs/site/use/workflows/buster-suite.md; docs/site/use/workflows/kubernetes-fixture.md; docs/site/use/demo-delivery.md; docs/site/use/diagnose.md; docs/site/use/recovery.md; docs/site/use/plugins.md; docs/site/use/workflows/repair-retry.md; docs/site/use/workflows/interruption-recovery.md; docs/site/use/workflows/redis-replay-recovery.md; docs/site/use/workflows/worker-result-recovery.md; docs/site/use/workflows/build-image.md; docs/site/use/workflows/tailnet-exposure.md
 Applies to: pipeline workflow selection; each guide states its contracts and execution prerequisites
-Last verified: 2026-10-20; first-project local compilation and greeting assertion; other journey boundaries stated separately; no full project execution or deployment evidence; task routing source-checked 2026-10-21
+Last verified: 2026-10-26; one actual eight-stage compiled minimal-project run, original audit and artifact verification; compile-only task remains separate; no deployment or human acceptance claim
 
 Use these guides to bind a pipeline task to its inputs, durable state, result
 authority, and cleanup. A **wait** is a persisted request for a later decision.
@@ -182,3 +182,167 @@ The full deployment wait/resume run is mandatory and remains unexecuted. Use
 [the deployment registration and stop conditions](wait-resume.md#deployment-registration)
 to identify the missing inputs. Do not infer completion from an example file,
 a successful notification, or a source link.
+
+
+## Run one compiled minimal project
+
+This journey compiles one `nova-project.v2` and gives that exact `compiled.json`
+to Core. It does not join the compile-only exercise above with an unrelated
+explicit graph. The real implementation agent corrects an initially wrong
+`greeting()` result. The same run then performs module lint, a mandatory Buster
+provider test, final lint, a cumulative provider test and the technical summary.
+
+Use the full reviewed Source commit shown for this copy of the guide. Do not
+substitute the developer handbook's older example baseline. The following
+commands replace the handbook's clone/revision selection steps:
+
+```bash
+set -euo pipefail
+read -r -p "Full reviewed Source commit for this guide: " COMPILED_SOURCE_REVISION
+[[ "$COMPILED_SOURCE_REVISION" =~ ^[0-9a-f]{40}$ ]]
+export COMPILED_SOURCE_REVISION
+git clone https://github.com/datrab/kubeclaw.git kubeclaw-compiled-source
+cd kubeclaw-compiled-source
+git fetch origin "$COMPILED_SOURCE_REVISION"
+git checkout --detach "$COMPILED_SOURCE_REVISION"
+test "$(git rev-parse HEAD)" = "$COMPILED_SOURCE_REVISION"
+test -z "$(git status --porcelain)"
+for helper in compiled-project.mjs compiled-project-input.mjs compiled-project-verification.mjs; do
+  git cat-file -e "$COMPILED_SOURCE_REVISION:docs/site/use/workflows/examples/$helper"
+done
+```
+
+All commands must exit zero; the checkout is clean at the requested full commit
+and contains all three helpers. Then follow the
+[handbook's host-tool and locked development-dependency steps](../../extend/developer-handbook.md#prepare-a-clean-checkout)
+in this same checkout, keeping this revision. Use its explicit `--include=dev`
+installation and module-resolution checks, not a production-only dependency tree.
+
+Before creating a fixture, check the exact executable paths used by the helper:
+
+```bash
+node --version
+npm --version
+/usr/bin/git --version
+/usr/bin/flock --version
+/usr/bin/tar --version
+/usr/bin/script --version
+cc --version
+semgrep --version
+```
+
+Node must be major 24. `/usr/bin/flock` and `/usr/bin/script` must be GNU
+util-linux, and `/usr/bin/tar` must be GNU tar. Git must exist at `/usr/bin/git`;
+a different executable found only through `PATH` is not sufficient. Use the
+Semgrep executable from the declared Nova toolchain. Stop on a missing or wrong
+host dependency. These steps do not provision a Gateway or grant a model account.
+
+The operator must supply an approved OpenClaw Gateway tools endpoint, its bearer
+authentication, an existing implementation agent and that agent's configured
+model. The Gateway must permit this selected product runtime's session creation,
+status, history and cleanup operations. The helper creates an attempt-owned
+implementation session, not a new continuation worker. It fixes only the private
+fixture's `app` prefix. Do not select a real project repository for this exercise.
+
+From the selected repository root:
+
+```bash
+set -euo pipefail
+export COMPILED_JOURNEY_PARENT="$(mktemp -d /tmp/kubeclaw-compiled.XXXXXX)"
+export COMPILED_JOURNEY="$COMPILED_JOURNEY_PARENT/journey"
+mkdir "$COMPILED_JOURNEY_PARENT/nova-tools"
+cp docker/nova-tools/package.json docker/nova-tools/package-lock.json "$COMPILED_JOURNEY_PARENT/nova-tools/"
+npm ci --prefix "$COMPILED_JOURNEY_PARENT/nova-tools" --ignore-scripts --no-audit --no-fund --cache "$COMPILED_JOURNEY_PARENT/npm-cache"
+export COMPILED_TOOLS_BIN="$COMPILED_JOURNEY_PARENT/nova-tools/node_modules/.bin"
+npm run plugin-system:sandbox:build
+node docs/site/use/workflows/examples/compiled-project.mjs prepare "$COMPILED_JOURNEY"
+```
+
+Expected: `status: "prepared-compiled-project"`, `execution: false` and
+`stageCount: 8`. Inspect `project/project.json`, `project/compiled.json`,
+`project/operator-selected-lint-policy.json` and
+`compiled-platform.local-providers.json` under the new destination.
+The source includes `package.json` and reserves only `.kubeclaw-results/` for
+generated runtime receipts; actual application changes remain tracked and
+subject to the source guard. The architecture ref is the exact baseline commit.
+
+The policy retains the shipped tools and an empty suppression baseline. For this
+JavaScript-only fixture, full lint selects ESLint, Knip, Dependency Cruiser,
+JSCPD, Semgrep and OpenAPI contract validation. An unavailable or failing required
+tool blocks the workflow; it is not converted to a successful check.
+
+Select the actual authorized endpoint and runtime identities. For a local
+Gateway the endpoint commonly ends in `/tools/invoke`; a Gateway root URL is
+not a tools endpoint. Read the credential without echoing it:
+
+```bash
+(
+  trap 'unset COMPILED_GATEWAY_TOKEN' EXIT
+  read -r -p "Approved Gateway tools URL: " COMPILED_GATEWAY_ENDPOINT
+  read -r -p "Existing implementation agent id: " COMPILED_AGENT_ID
+  read -r -p "Configured model id: " COMPILED_MODEL
+  read -rs -p "Gateway bearer credential: " COMPILED_GATEWAY_TOKEN
+  printf '\n'
+  export COMPILED_GATEWAY_ENDPOINT COMPILED_AGENT_ID COMPILED_MODEL COMPILED_GATEWAY_TOKEN
+  node docs/site/use/workflows/examples/compiled-project.mjs run "$COMPILED_JOURNEY"
+)
+```
+
+The helper starts the real shipped Buster production runtime on an ephemeral
+loopback listener, with a generated fixture-only authentication value and
+source-attestation key. These values remain in memory, not in JSON configuration or command output.
+The trusted Core child receives only its required credential references and
+runtime variables. The Buster loader receives only its own authentication and
+public verification key; the provider and command runtime use their original
+sanitized child environments. The credential prompt is scoped to a subshell with
+an EXIT cleanup trap, including failed runs. Core uses the
+original compiled graph, narrow provider selections and explicit grants. Buster
+executes the declared `node --test app/greeting.test.mjs` provider checks on
+signed committed-source snapshots for both test stages. The additional test
+agent is disabled; the mandatory provider checks are not disabled.
+The selected direct-command policy uses the supported sampled process limit,
+not a claim of cgroup-qualified isolation. No cluster, image delivery, deployment,
+screenreader exercise, human acceptance or release gate is proved.
+
+Expected final status: `verified-actual-compiled-workflow`, eight successful
+stages, two passed native test-gate decisions, actual audit and byte-verified
+artifacts from that same run. The helper preserves raw run/artifact bytes before
+it invokes the original Core audit CLI. It uses a PTY for that CLI so a large
+JSON audit is not cut off by pipe shutdown. The verifier checks the complete
+journal hash chain, audit digest/head, normalized compiler graph, original
+artifact bytes and producing run/stage/attempt. It does not rerun a stage:
+
+```bash
+node docs/site/use/workflows/examples/compiled-project.mjs verify "$COMPILED_JOURNEY"
+```
+
+### Keep proof and remove only this fixture
+
+A failed attempt keeps its first errors, owned workspace and durable state.
+Do not overwrite its graph, delete its journal or rerun `run` into that same
+root. Diagnose the exact missing prerequisite and prepare a fresh complete
+journey. A failed session cleanup needs actual reconciliation before its owned
+workspace can be removed; a timeout is not evidence of successful cleanup.
+
+After successful verification, retain the proof outside the deletion target:
+
+```bash
+mkdir "$COMPILED_JOURNEY_PARENT/proof"
+cp "$COMPILED_JOURNEY/native-verification.json" "$COMPILED_JOURNEY_PARENT/proof/"
+cp "$COMPILED_JOURNEY/project/compiled.json" "$COMPILED_JOURNEY_PARENT/proof/"
+cp "$COMPILED_JOURNEY/compiled-run-command.json" "$COMPILED_JOURNEY_PARENT/proof/"
+cp "$COMPILED_JOURNEY/compiled-run.stdout" "$COMPILED_JOURNEY_PARENT/proof/"
+cp "$COMPILED_JOURNEY/compiled-audit-pty.stdout" "$COMPILED_JOURNEY_PARENT/proof/"
+cp -a "$COMPILED_JOURNEY/raw-before-audit" "$COMPILED_JOURNEY_PARENT/proof/"
+node docs/site/use/workflows/examples/compiled-project.mjs cleanup "$COMPILED_JOURNEY"
+test ! -e "$COMPILED_JOURNEY"
+rm -rf -- "$COMPILED_JOURNEY_PARENT/nova-tools" "$COMPILED_JOURNEY_PARENT/npm-cache"
+```
+
+Expected cleanup status: `verified-owned-cleanup`. Cleanup rechecks the selected
+Source, verification, clean fixture repository and absence of retained Git
+worktrees before removing the exact owned journey root. It does not remove an
+OpenClaw installation, another checkout or an operator's credentials. Keep the
+small `proof` directory while the result is needed. The sandbox build remains
+a generated dependency in the isolated checkout; retain it while another check
+uses it and remove only a build owned by this exercise when no process uses it.
