@@ -368,6 +368,7 @@
         "scan"
       ],
       "commandAndActionRefs": [
+        "node --test tests/verification/deployment/release-security-report.test.mjs",
         "node scripts/updates/scan-releases.mjs",
         "node scripts/versions.mjs --check",
         "uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
