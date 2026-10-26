@@ -201,7 +201,7 @@ selection steps:
 
 ```bash
 set -euo pipefail
-COMPILED_SOURCE_REVISION=3d52c76087201ac068bd80357d66612797c02c02
+COMPILED_SOURCE_REVISION=94e248446a266d8f801725fc19d381e780efa39b
 export COMPILED_SOURCE_REVISION
 git clone https://github.com/datrab/kubeclaw.git kubeclaw-compiled-source
 cd kubeclaw-compiled-source
@@ -290,7 +290,10 @@ tool blocks the workflow; it is not converted to a successful check.
 
 Select the actual authorized endpoint and runtime identities. For a local
 Gateway the endpoint commonly ends in `/tools/invoke`; a Gateway root URL is
-not a tools endpoint. Read the credential without echoing it:
+not a tools endpoint. Remote endpoints require HTTPS; HTTP is accepted only for
+the literal loopback addresses `127.0.0.1` and `[::1]`. Do not put credentials
+in the URL: userinfo, query parameters and fragments are rejected. Supply the
+credential separately as the bearer value, without echoing it:
 
 ```bash
 (
