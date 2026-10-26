@@ -5,7 +5,7 @@ Audience: operator, plugin author, developer, documentation maintainer
 Owner: documentation
 Evidence: scripts/docs-reader/page-records.mjs; scripts/tests/docs-reader-page-records.test.mjs; docs/config/documentation-publication-manifest.json; docs/site/reference/generated-documentation-map.json; scripts/docs-publication.mjs; scripts/docs-reader/diagrams.mjs; scripts/docs-reader/check-diagrams.mjs; scripts/tests/docs-reader-diagrams.test.mjs; docs/config/documentation-diagrams.json; scripts/docs-reader/metadata.mjs; scripts/lib/docs-publication-assets.mjs; scripts/lib/docs-publication-links.mjs; scripts/docs-reader/renderer.mjs; scripts/docs-reader/package.json; scripts/docs-reader/package-lock.json; scripts/tests/docs-reader.test.mjs; scripts/docs-reader/check-artifact.mjs; scripts/docs-reader/check-search.mjs; scripts/docs-reader/search-questions.json; scripts/docs-reader/check-source-links.mjs; scripts/docs-reader/source-links.mjs; scripts/docs-reader/source-previews.mjs; scripts/docs-reader/check-source-previews.mjs; scripts/tests/docs-reader-source-previews.test.mjs; scripts/tests/docs-reader-source-links.test.mjs; scripts/docs-governance.mjs; scripts/docs-check-refs.mjs; scripts/check-site-reader-boundary.mjs; docs/config/documentation-tree-classification.json; docs/site/reference/documentation-route-registry.json; package.json; .github/workflows/docs-checks.yaml; scripts/docs-reader/redirects.mjs; scripts/docs-reader/serve.mjs; scripts/tests/docs-reader-redirects.test.mjs; scripts/tests/docs-reader-redirects.browser.mjs
 Applies to: positively selected repository reader pages and the local HTML publication artifact
-Last verified: source, original 167-page build, parser tests, and rendered local links checked on 2026-10-21; browser observations have their own recorded scope; machine-readable page bindings source and isolated fixture tests checked on 2026-10-21, not a complete production-build result
+Last verified: source, original 167-page build, parser tests, and rendered local links checked on 2026-10-21; browser observations have their own recorded scope; machine-readable page bindings source and isolated fixture tests checked on 2026-10-21, not a complete production-build result; topic-link target existence and tracked source-root membership checked on 2026-10-26, not new procedure or runtime execution
 
 ## Find the explanation before the source
 
@@ -39,6 +39,29 @@ no results, and a load failure. A failure is not evidence that a product name is
 absent. Use section navigation or the owning reference while search is unavailable.
 Search requires JavaScript. Reading, navigation, source links, and native section
 links do not. No search query is sent to an external service.
+
+## Topic routing and supporting sources
+
+Use the reader pages to open a topic. Source locations identify supporting repository
+code and metadata. This map does not certify a procedure or select a required
+runtime dependency.
+
+| Topic | Reader pages | Supporting sources |
+| --- | --- | --- |
+| Runtime architecture | [`docs/site/understand/README.md`](../understand/README.md); [`docs/site/understand/components-and-authority.md`](../understand/components-and-authority.md); [`docs/site/understand/request-state-recovery.md`](../understand/request-state-recovery.md) | `skills/common/plugin-runtime/foundation/`; `skills/nova/core/`; `skills/worker/core/`; `skills/buster/engine/` |
+| Test suites and Buster | [`docs/site/extend/buster.md`](../extend/buster.md); [`docs/site/product-surfaces.md`](../product-surfaces.md) | `contracts/pipeline-test-gate/`; `skills/nova/core/test-gates/`; `skills/buster/engine/test-gates/` |
+| Echo decisions and current boundary | [`docs/site/decisions/echo.md`](../decisions/echo.md); [`docs/site/understand/components-and-authority.md`](../understand/components-and-authority.md); [`docs/site/status/current.md`](../status/current.md) | `skills/nova/plugins/review/` |
+| Plugin inventory | [`docs/site/extend/plugin-catalogue/README.md`](../extend/plugin-catalogue/README.md); [`docs/site/reference/capabilities.md`](capabilities.md) | `docs/generated/inventory/plugin-system.json`; `skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts` |
+| Security and isolation | [`docs/site/understand/deployment-and-trust.md`](../understand/deployment-and-trust.md); [`docs/site/understand/worker-trust.md`](../understand/worker-trust.md); [`docs/site/extend/testing.md`](../extend/testing.md) | `skills/common/plugin-runtime/foundation/isolation/`; `skills/common/plugin-runtime/foundation/packages/install.ts` |
+| Deployment | [`docs/site/use/install.md`](../use/install.md); [`docs/site/understand/deployment-and-trust.md`](../understand/deployment-and-trust.md) | `charts/kubeclaw/templates/deployment.yaml`; `scripts/deploy.sh` |
+| Operations | [`docs/site/use/README.md`](../use/README.md); [`docs/site/use/operate.md`](../use/operate.md); [`docs/site/use/diagnose.md`](../use/diagnose.md); [`docs/site/use/recovery.md`](../use/recovery.md); [`docs/site/use/maintenance.md`](../use/maintenance.md) | `skills/nova/core/cli.ts`; `skills/nova/project/cli.ts`; `charts/prism/files/prism-backup.sh` |
+| Extension authoring | [`docs/site/extend/README.md`](../extend/README.md); [`docs/site/extend/first-plugin.md`](../extend/first-plugin.md); [`docs/site/extend/contracts.md`](../extend/contracts.md); [`docs/site/extend/testing.md`](../extend/testing.md) | `skills/common/plugin-runtime/sdk/` |
+| Current implementation and compatibility | [`docs/site/status/current.md`](../status/current.md); [`docs/site/status/open-issues.md`](../status/open-issues.md); [`docs/site/decisions/README.md`](../decisions/README.md) | `docs/status/open-issues.json`; `packaging/runtime/package-ownership.json` |
+| Codex operations workspace | [`docs/site/understand/platform-and-operations.md`](../understand/platform-and-operations.md); [`docs/site/extend/host-and-engine.md`](../extend/host-and-engine.md) | `charts/ops-pod/`; `plugins/kubeclaw-ops/`; `tools/ops-mcp/src/`; `scripts/deploy-ops-pod.sh` |
+
+Only pages below `docs/site` are canonical reader documentation. Other files
+provide implementation evidence or temporary migration sources. They do not
+define a second reader-facing authority.
 
 ## Read source evidence with its limits
 

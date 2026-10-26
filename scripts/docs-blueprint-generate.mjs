@@ -234,7 +234,6 @@ function migration(filePath) {
   if (filePath.startsWith('docs/decisions/')) return ['extract-decisions-then-delete', '/decisions', 'Promote durable current decisions with implementation evidence; remove migration-specific ledger bookkeeping.'];
   if (filePath.startsWith('docs/implementation/')) return ['extract-then-delete', '/architecture, /use, /extend, /decisions', 'Extract verified current facts and durable decisions; keep implementation history outside published product documentation.'];
   if (filePath.startsWith('docs/spikes/')) return ['move-out-of-product-docs', 'engineering research records', 'Retain verified research outside product documentation; publish only current boundaries and accepted decisions.'];
-  if (filePath === 'docs/DOCUMENTATION_TOPIC_MAP.md') return ['delete-after-replacement', 'docs/blueprint/02-three-track-site-map.md', 'Replace the stale internal map with the approved three-track site map and generated coverage data.'];
   if (filePath === 'docs/ROADMAP.md') return ['move-out-of-product-docs', 'project planning or website roadmap', 'Keep future work separate from current platform guarantees.'];
   if (filePath === 'docs/README.md') return ['rewrite-and-keep', '/', 'Replace with the three independent reader entrances and global search.'];
   if (filePath.startsWith('docs/reference/')) return ['replace-with-generated-reference', `/reference/${name.replace(/\.md$/u, '')}`, 'Generate factual tables from code and add only concise human context.'];

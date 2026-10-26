@@ -1,0 +1,1415 @@
+{
+  "schemaVersion": "kubeclaw-documentation-parity-decision.v1",
+  "source": {
+    "originalPath": "docs/DOCUMENTATION_TOPIC_MAP.md",
+    "legacyPath": "docs/_legacy-source/DOCUMENTATION_TOPIC_MAP.md",
+    "baselineRevision": "8da6157b77247dcbdf209ef12f491f0b92ca858a",
+    "gitObject": "fa03f4f15e8127d14f412504bcc72fbd369cde81",
+    "extractionDigest": "4244f33df1589de79a1afd2c89994bae5c6814b1d2a313ae6565bf345600d5c5",
+    "classification": "legacy-extraction-source"
+  },
+  "reviewedRevision": "daee15122bc41de25d63993e80cbd81eef5c62d6",
+  "author": {
+    "id": "parity-author:project-navigation-and-status",
+    "assignmentId": "parity-assignment:aa3694146adc547f121a90ee3b3e5536718ed7412cccddbcff517124c252999d"
+  },
+  "redirect": {
+    "status": "not-required",
+    "from": "/DOCUMENTATION_TOPIC_MAP",
+    "to": null,
+    "basis": "no-authoritative-public-route",
+    "reason": "The current authoritative route registry contains no historical public TopicMap route. Preserve all exact reader destinations in the canonical documentation-site reference; do not invent a public redirect."
+  },
+  "visualEvidence": [],
+  "contentRoot": "0f9637b934aad15587423b6de5cb81f00a7249655286393e1668303f35759115",
+  "unitCoverage": [
+    {
+      "unitId": "dpu_63b17f75e7269bc4fe153bca33b22e18",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_63b17f75e7269bc4fe153bca33b22e18:0",
+          "reasonCode": null,
+          "byteStart": 0,
+          "byteEnd": 26
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_e301ce2027e917910c3634edb3754f21",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_e301ce2027e917910c3634edb3754f21:0",
+          "reasonCode": null,
+          "byteStart": 27,
+          "byteEnd": 37
+        },
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_e301ce2027e917910c3634edb3754f21:1",
+          "reasonCode": null,
+          "byteStart": 37,
+          "byteEnd": 55
+        },
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_e301ce2027e917910c3634edb3754f21:2",
+          "reasonCode": null,
+          "byteStart": 55,
+          "byteEnd": 73
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_177c9357748442655bc5ea3f2f911fe9",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "structural",
+          "claimId": null,
+          "reasonCode": "formatting-only",
+          "byteStart": 73,
+          "byteEnd": 93
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_55528e28f83459ebe4b13c91c4b78f6b",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_55528e28f83459ebe4b13c91c4b78f6b:0",
+          "reasonCode": null,
+          "byteStart": 93,
+          "byteEnd": 118
+        },
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_55528e28f83459ebe4b13c91c4b78f6b:1",
+          "reasonCode": null,
+          "byteStart": 118,
+          "byteEnd": 255
+        },
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_55528e28f83459ebe4b13c91c4b78f6b:2",
+          "reasonCode": null,
+          "byteStart": 255,
+          "byteEnd": 369
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_4725bf61d5b014d5d7bf5cbd8eebcace",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_4725bf61d5b014d5d7bf5cbd8eebcace:0",
+          "reasonCode": null,
+          "byteStart": 369,
+          "byteEnd": 396
+        },
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_4725bf61d5b014d5d7bf5cbd8eebcace:1",
+          "reasonCode": null,
+          "byteStart": 396,
+          "byteEnd": 460
+        },
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_4725bf61d5b014d5d7bf5cbd8eebcace:2",
+          "reasonCode": null,
+          "byteStart": 460,
+          "byteEnd": 562
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_1f41cbc0eb297388bec13d0616f3ddec",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_1f41cbc0eb297388bec13d0616f3ddec:0",
+          "reasonCode": null,
+          "byteStart": 562,
+          "byteEnd": 602
+        },
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_1f41cbc0eb297388bec13d0616f3ddec:1",
+          "reasonCode": null,
+          "byteStart": 602,
+          "byteEnd": 717
+        },
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_1f41cbc0eb297388bec13d0616f3ddec:2",
+          "reasonCode": null,
+          "byteStart": 717,
+          "byteEnd": 749
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_8966e047037616b8a22fc460f7e7e743",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_8966e047037616b8a22fc460f7e7e743:0",
+          "reasonCode": null,
+          "byteStart": 749,
+          "byteEnd": 770
+        },
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_8966e047037616b8a22fc460f7e7e743:1",
+          "reasonCode": null,
+          "byteStart": 770,
+          "byteEnd": 857
+        },
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_8966e047037616b8a22fc460f7e7e743:2",
+          "reasonCode": null,
+          "byteStart": 857,
+          "byteEnd": 982
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_9df7f649a7b63d9da25f19863e69af60",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_9df7f649a7b63d9da25f19863e69af60:0",
+          "reasonCode": null,
+          "byteStart": 982,
+          "byteEnd": 1009
+        },
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_9df7f649a7b63d9da25f19863e69af60:1",
+          "reasonCode": null,
+          "byteStart": 1009,
+          "byteEnd": 1129
+        },
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_9df7f649a7b63d9da25f19863e69af60:2",
+          "reasonCode": null,
+          "byteStart": 1129,
+          "byteEnd": 1247
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_a1e45957f3b808c2f51898c36bffb711",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_a1e45957f3b808c2f51898c36bffb711:0",
+          "reasonCode": null,
+          "byteStart": 1247,
+          "byteEnd": 1262
+        },
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_a1e45957f3b808c2f51898c36bffb711:1",
+          "reasonCode": null,
+          "byteStart": 1262,
+          "byteEnd": 1339
+        },
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_a1e45957f3b808c2f51898c36bffb711:2",
+          "reasonCode": null,
+          "byteStart": 1339,
+          "byteEnd": 1406
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_c7d34a09385dd706b592f7ddbcb3bb8b",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_c7d34a09385dd706b592f7ddbcb3bb8b:0",
+          "reasonCode": null,
+          "byteStart": 1406,
+          "byteEnd": 1421
+        },
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_c7d34a09385dd706b592f7ddbcb3bb8b:1",
+          "reasonCode": null,
+          "byteStart": 1421,
+          "byteEnd": 1567
+        },
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_c7d34a09385dd706b592f7ddbcb3bb8b:2",
+          "reasonCode": null,
+          "byteStart": 1567,
+          "byteEnd": 1663
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_d2617859b8fd31fe526eab3074b5a51b",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_d2617859b8fd31fe526eab3074b5a51b:0",
+          "reasonCode": null,
+          "byteStart": 1663,
+          "byteEnd": 1687
+        },
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_d2617859b8fd31fe526eab3074b5a51b:1",
+          "reasonCode": null,
+          "byteStart": 1687,
+          "byteEnd": 1818
+        },
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_d2617859b8fd31fe526eab3074b5a51b:2",
+          "reasonCode": null,
+          "byteStart": 1818,
+          "byteEnd": 1856
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_e282cae38a11f7879f2dd9e48cd5010e",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_e282cae38a11f7879f2dd9e48cd5010e:0",
+          "reasonCode": null,
+          "byteStart": 1856,
+          "byteEnd": 1901
+        },
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_e282cae38a11f7879f2dd9e48cd5010e:1",
+          "reasonCode": null,
+          "byteStart": 1901,
+          "byteEnd": 2001
+        },
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_e282cae38a11f7879f2dd9e48cd5010e:2",
+          "reasonCode": null,
+          "byteStart": 2001,
+          "byteEnd": 2078
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_fb980623c0039f57f6b1a873da31b227",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_fb980623c0039f57f6b1a873da31b227:0",
+          "reasonCode": null,
+          "byteStart": 2078,
+          "byteEnd": 2109
+        },
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_fb980623c0039f57f6b1a873da31b227:1",
+          "reasonCode": null,
+          "byteStart": 2109,
+          "byteEnd": 2200
+        },
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_fb980623c0039f57f6b1a873da31b227:2",
+          "reasonCode": null,
+          "byteStart": 2200,
+          "byteEnd": 2296
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_199ed312d2dc815e003d4de9021ab844",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_199ed312d2dc815e003d4de9021ab844:0",
+          "reasonCode": null,
+          "byteStart": 2297,
+          "byteEnd": 2362
+        },
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_199ed312d2dc815e003d4de9021ab844:1",
+          "reasonCode": null,
+          "byteStart": 2362,
+          "byteEnd": 2455
+        },
+        {
+          "kind": "claim",
+          "claimId": "topic-map:dpu_199ed312d2dc815e003d4de9021ab844:2",
+          "reasonCode": null,
+          "byteStart": 2455,
+          "byteEnd": 2508
+        }
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "topic-map:dpu_63b17f75e7269bc4fe153bca33b22e18:0",
+      "unitId": "dpu_63b17f75e7269bc4fe153bca33b22e18",
+      "summary": "The documentation topic map is retained as a canonical topic-routing reference.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 0,
+        "byteEnd": 26,
+        "lineStart": 1,
+        "lineEnd": 1,
+        "exactSha256": "cfe1d0a3ea816db3212e508f0b8aa5d3afbeaf60186278e634c4132edb35b6dc",
+        "normalizedSha256": "6f385b53069459ad32e243aaf061c5524c449062695b085c2bca50b41083272e"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "## Topic routing and supporting sources",
+          "excerptSha256": "808dd2f0b1601b962647304fc0f65d461f37a5c3b8b4fe85d99d7f6e84125ed5",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_e301ce2027e917910c3634edb3754f21:0",
+      "unitId": "dpu_e301ce2027e917910c3634edb3754f21",
+      "summary": "The routing map labels the documentation topic column.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 27,
+        "byteEnd": 37,
+        "lineStart": 3,
+        "lineEnd": 3,
+        "exactSha256": "251b826fcde39a85e51ac268f0cfba95a1a0a407409e140d36e85b7814da81e6",
+        "normalizedSha256": "8a5f0b0ef7d53d0140e66ec35c1def3e77346ec8921f8c83ac7b9639492ec45a"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Topic | Reader pages | Supporting sources |",
+          "excerptSha256": "5e99570b74d6f6acd196539552eaa6a83d47864703876b907274500f9bd6add7",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_e301ce2027e917910c3634edb3754f21:1",
+      "unitId": "dpu_e301ce2027e917910c3634edb3754f21",
+      "summary": "The routing map labels the canonical reader destination column.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 37,
+        "byteEnd": 55,
+        "lineStart": 3,
+        "lineEnd": 3,
+        "exactSha256": "3ea5289b4b7b8f5f06216140ab136c5bef29de2e0c2d2ba73144d159ab30cfd1",
+        "normalizedSha256": "6333e4767a7cfacbe83d6039dbd67fb0b0aba8c17056c07b431fd75335238e8e"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Topic | Reader pages | Supporting sources |",
+          "excerptSha256": "5e99570b74d6f6acd196539552eaa6a83d47864703876b907274500f9bd6add7",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_e301ce2027e917910c3634edb3754f21:2",
+      "unitId": "dpu_e301ce2027e917910c3634edb3754f21",
+      "summary": "The routing map labels the supporting source-location column.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 55,
+        "byteEnd": 73,
+        "lineStart": 3,
+        "lineEnd": 3,
+        "exactSha256": "66222dfec8d117ea17be55abb8c653ac1a21ce70d0e1008e0f113436e8fcf7fb",
+        "normalizedSha256": "73dc8b33aaf7afedf9d3e102156c587f56ff48f2c0f3f84840e04a75a21992ae"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Topic | Reader pages | Supporting sources |",
+          "excerptSha256": "5e99570b74d6f6acd196539552eaa6a83d47864703876b907274500f9bd6add7",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_55528e28f83459ebe4b13c91c4b78f6b:0",
+      "unitId": "dpu_55528e28f83459ebe4b13c91c4b78f6b",
+      "summary": "The routing map names the Runtime architecture documentation topic.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 93,
+        "byteEnd": 118,
+        "lineStart": 5,
+        "lineEnd": 5,
+        "exactSha256": "fb50cbc0fd018a8d5a3e413724bc11157b2e7db85070b4539e695a2ce6821f5e",
+        "normalizedSha256": "14c626588eaf68f737bad0a031d149ae7a12d9657b82bcc8cb6b65ed9949fc36"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Runtime architecture | [`docs/site/understand/README.md`](../understand/README.md); [`docs/site/understand/components-and-authority.md`](../understand/components-and-authority.md); [`docs/site/understand/request-state-recovery.md`](../understand/request-state-recovery.md) | `skills/common/plugin-runtime/foundation/`; `skills/nova/core/`; `skills/worker/core/`; `skills/buster/engine/` |",
+          "excerptSha256": "5a7f617a3ca6ec3256010f2b3947237d064ccddac62b8ba1c33a0ea1a26bee6d",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_55528e28f83459ebe4b13c91c4b78f6b:1",
+      "unitId": "dpu_55528e28f83459ebe4b13c91c4b78f6b",
+      "summary": "The Runtime architecture entry retains every original canonical reader destination as an exact relative link.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 118,
+        "byteEnd": 255,
+        "lineStart": 5,
+        "lineEnd": 5,
+        "exactSha256": "360438a1039e561a4b8f655b5da3b29d0474cb8cb56dff3f350c1ce37e6ccaec",
+        "normalizedSha256": "be424428b062007d13790688fb6db54334386462a01d0256cb1d3297154697b6"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Runtime architecture | [`docs/site/understand/README.md`](../understand/README.md); [`docs/site/understand/components-and-authority.md`](../understand/components-and-authority.md); [`docs/site/understand/request-state-recovery.md`](../understand/request-state-recovery.md) | `skills/common/plugin-runtime/foundation/`; `skills/nova/core/`; `skills/worker/core/`; `skills/buster/engine/` |",
+          "excerptSha256": "5a7f617a3ca6ec3256010f2b3947237d064ccddac62b8ba1c33a0ea1a26bee6d",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_55528e28f83459ebe4b13c91c4b78f6b:2",
+      "unitId": "dpu_55528e28f83459ebe4b13c91c4b78f6b",
+      "summary": "The Runtime architecture entry retains every original supporting repository source location; this is provenance navigation, not fresh runtime qualification.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 255,
+        "byteEnd": 369,
+        "lineStart": 5,
+        "lineEnd": 5,
+        "exactSha256": "d5bc71a8c6df0a28d3351abab4e7ffc3236e57c6550da21ef4d11861631b96dc",
+        "normalizedSha256": "b63e760b2a6012ee16580e18de57193cb779d19aa00be9b569e1b610ee572c76"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Runtime architecture | [`docs/site/understand/README.md`](../understand/README.md); [`docs/site/understand/components-and-authority.md`](../understand/components-and-authority.md); [`docs/site/understand/request-state-recovery.md`](../understand/request-state-recovery.md) | `skills/common/plugin-runtime/foundation/`; `skills/nova/core/`; `skills/worker/core/`; `skills/buster/engine/` |",
+          "excerptSha256": "5a7f617a3ca6ec3256010f2b3947237d064ccddac62b8ba1c33a0ea1a26bee6d",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_4725bf61d5b014d5d7bf5cbd8eebcace:0",
+      "unitId": "dpu_4725bf61d5b014d5d7bf5cbd8eebcace",
+      "summary": "The routing map names the Test suites and Buster documentation topic.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 369,
+        "byteEnd": 396,
+        "lineStart": 6,
+        "lineEnd": 6,
+        "exactSha256": "5baac37cd499194ac416c9d7d3e6c29dad304aca5e0c528cf73853e7d76a8b24",
+        "normalizedSha256": "dc8ae5811a7c3f843a9ea0e882e8387b5804d5de54cab3be2ae4a5eab4ea5f12"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Test suites and Buster | [`docs/site/extend/buster.md`](../extend/buster.md); [`docs/site/product-surfaces.md`](../product-surfaces.md) | `contracts/pipeline-test-gate/`; `skills/nova/core/test-gates/`; `skills/buster/engine/test-gates/` |",
+          "excerptSha256": "bdd0a5e8e33ff802db39b69d0cf9e9dc8918dc2b32b1dcc9c3e26f3f644e288b",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_4725bf61d5b014d5d7bf5cbd8eebcace:1",
+      "unitId": "dpu_4725bf61d5b014d5d7bf5cbd8eebcace",
+      "summary": "The Test suites and Buster entry retains every original canonical reader destination as an exact relative link.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 396,
+        "byteEnd": 460,
+        "lineStart": 6,
+        "lineEnd": 6,
+        "exactSha256": "879db15522d61108da0facde68f586028185787feb84628a4c985e8feeee56dd",
+        "normalizedSha256": "8cd4109f34ad1af7b491f8fd3dfba523857e98eabd2a56471c749fb599636ef8"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Test suites and Buster | [`docs/site/extend/buster.md`](../extend/buster.md); [`docs/site/product-surfaces.md`](../product-surfaces.md) | `contracts/pipeline-test-gate/`; `skills/nova/core/test-gates/`; `skills/buster/engine/test-gates/` |",
+          "excerptSha256": "bdd0a5e8e33ff802db39b69d0cf9e9dc8918dc2b32b1dcc9c3e26f3f644e288b",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_4725bf61d5b014d5d7bf5cbd8eebcace:2",
+      "unitId": "dpu_4725bf61d5b014d5d7bf5cbd8eebcace",
+      "summary": "The Test suites and Buster entry retains every original supporting repository source location; this is provenance navigation, not fresh runtime qualification.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 460,
+        "byteEnd": 562,
+        "lineStart": 6,
+        "lineEnd": 6,
+        "exactSha256": "cc34417862b87c36f167770f9477977c80a1c35f05e0431bceb00cc86ff87380",
+        "normalizedSha256": "384b82d25006c85326c22f35176739d181d3cbfbea022e9141d6710a6d70fd4e"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Test suites and Buster | [`docs/site/extend/buster.md`](../extend/buster.md); [`docs/site/product-surfaces.md`](../product-surfaces.md) | `contracts/pipeline-test-gate/`; `skills/nova/core/test-gates/`; `skills/buster/engine/test-gates/` |",
+          "excerptSha256": "bdd0a5e8e33ff802db39b69d0cf9e9dc8918dc2b32b1dcc9c3e26f3f644e288b",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_1f41cbc0eb297388bec13d0616f3ddec:0",
+      "unitId": "dpu_1f41cbc0eb297388bec13d0616f3ddec",
+      "summary": "The routing map names the Echo decisions and current boundary documentation topic.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 562,
+        "byteEnd": 602,
+        "lineStart": 7,
+        "lineEnd": 7,
+        "exactSha256": "c3bf03190d2c9ebe207ad48113a271c3e8f0fd4afae7799fa65faf3860cf8d61",
+        "normalizedSha256": "9c681d6db590be50851d96a11266aed6b564bb006ab06f4e962b84ed547b2c1a"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Echo decisions and current boundary | [`docs/site/decisions/echo.md`](../decisions/echo.md); [`docs/site/understand/components-and-authority.md`](../understand/components-and-authority.md); [`docs/site/status/current.md`](../status/current.md) | `skills/nova/plugins/review/` |",
+          "excerptSha256": "6f3c0baa3e86a96139bb5b366a32b9d3d2eda058da9508258158569838706d7d",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_1f41cbc0eb297388bec13d0616f3ddec:1",
+      "unitId": "dpu_1f41cbc0eb297388bec13d0616f3ddec",
+      "summary": "The Echo decisions and current boundary entry retains every original canonical reader destination as an exact relative link.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 602,
+        "byteEnd": 717,
+        "lineStart": 7,
+        "lineEnd": 7,
+        "exactSha256": "53acfe92859df90c0c6cb59dec0e699a7034c16bb1ad6274b3998e1633e05fa9",
+        "normalizedSha256": "7f13f0c792e054288e2d4ac39a824299f61e209aa319511daa8693a45221224a"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Echo decisions and current boundary | [`docs/site/decisions/echo.md`](../decisions/echo.md); [`docs/site/understand/components-and-authority.md`](../understand/components-and-authority.md); [`docs/site/status/current.md`](../status/current.md) | `skills/nova/plugins/review/` |",
+          "excerptSha256": "6f3c0baa3e86a96139bb5b366a32b9d3d2eda058da9508258158569838706d7d",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_1f41cbc0eb297388bec13d0616f3ddec:2",
+      "unitId": "dpu_1f41cbc0eb297388bec13d0616f3ddec",
+      "summary": "The Echo decisions and current boundary entry retains every original supporting repository source location; this is provenance navigation, not fresh runtime qualification.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 717,
+        "byteEnd": 749,
+        "lineStart": 7,
+        "lineEnd": 7,
+        "exactSha256": "91a598d0fd0c100fd4c3ef7eb312d9379e87db864528a2beb6f6e4c77ca88ff4",
+        "normalizedSha256": "8addd23aa31b286ee83caa1b534f928b4e6921ac9b1243c73f96baa233fd5b6f"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Echo decisions and current boundary | [`docs/site/decisions/echo.md`](../decisions/echo.md); [`docs/site/understand/components-and-authority.md`](../understand/components-and-authority.md); [`docs/site/status/current.md`](../status/current.md) | `skills/nova/plugins/review/` |",
+          "excerptSha256": "6f3c0baa3e86a96139bb5b366a32b9d3d2eda058da9508258158569838706d7d",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_8966e047037616b8a22fc460f7e7e743:0",
+      "unitId": "dpu_8966e047037616b8a22fc460f7e7e743",
+      "summary": "The routing map names the Plugin inventory documentation topic.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 749,
+        "byteEnd": 770,
+        "lineStart": 8,
+        "lineEnd": 8,
+        "exactSha256": "a6087cfcc0294948dc6d9a9ac64d70410a8ebb58176d8ad03f168ec1dfe104f4",
+        "normalizedSha256": "e66ae15c564fcb0edc2e4c083313e21a5f61a2ca78debcbde4377543a2f2c2a3"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Plugin inventory | [`docs/site/extend/plugin-catalogue/README.md`](../extend/plugin-catalogue/README.md); [`docs/site/reference/capabilities.md`](capabilities.md) | `docs/generated/inventory/plugin-system.json`; `skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts` |",
+          "excerptSha256": "51c2393beca711aadf8539220c3caec4ee16371bd1e076d1fda66aea1fa2a5c5",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_8966e047037616b8a22fc460f7e7e743:1",
+      "unitId": "dpu_8966e047037616b8a22fc460f7e7e743",
+      "summary": "The Plugin inventory entry retains every original canonical reader destination as an exact relative link.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 770,
+        "byteEnd": 857,
+        "lineStart": 8,
+        "lineEnd": 8,
+        "exactSha256": "7108fb2e9ca9390d991dedf135ba77842b700c99b86eadaf30c424f129e5d173",
+        "normalizedSha256": "60eab1e37eb6e0ef472cca160c13d2400052daf8ba9d6bd2d13948fa5814c5b7"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Plugin inventory | [`docs/site/extend/plugin-catalogue/README.md`](../extend/plugin-catalogue/README.md); [`docs/site/reference/capabilities.md`](capabilities.md) | `docs/generated/inventory/plugin-system.json`; `skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts` |",
+          "excerptSha256": "51c2393beca711aadf8539220c3caec4ee16371bd1e076d1fda66aea1fa2a5c5",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_8966e047037616b8a22fc460f7e7e743:2",
+      "unitId": "dpu_8966e047037616b8a22fc460f7e7e743",
+      "summary": "The Plugin inventory entry retains every original supporting repository source location; this is provenance navigation, not fresh runtime qualification.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 857,
+        "byteEnd": 982,
+        "lineStart": 8,
+        "lineEnd": 8,
+        "exactSha256": "f0d51be2468051ebb7ec9e9aac07d4f53df425079cd3ecd0aa0ebc992749a88a",
+        "normalizedSha256": "69535be77db5c53fd2643df8b56f070fc4dda79d4ab4a7bfffb6b36e25b731be"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Plugin inventory | [`docs/site/extend/plugin-catalogue/README.md`](../extend/plugin-catalogue/README.md); [`docs/site/reference/capabilities.md`](capabilities.md) | `docs/generated/inventory/plugin-system.json`; `skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts` |",
+          "excerptSha256": "51c2393beca711aadf8539220c3caec4ee16371bd1e076d1fda66aea1fa2a5c5",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_9df7f649a7b63d9da25f19863e69af60:0",
+      "unitId": "dpu_9df7f649a7b63d9da25f19863e69af60",
+      "summary": "The routing map names the Security and isolation documentation topic.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 982,
+        "byteEnd": 1009,
+        "lineStart": 9,
+        "lineEnd": 9,
+        "exactSha256": "8b3e2d41a7b7c08cc8438dc63493d3b700820b90d3ce855cc851f0a2fb538a44",
+        "normalizedSha256": "419e84dc6946de143e51fd34e00717d6e17faee0a1b360fb77474dfb9fac92f4"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Security and isolation | [`docs/site/understand/deployment-and-trust.md`](../understand/deployment-and-trust.md); [`docs/site/understand/worker-trust.md`](../understand/worker-trust.md); [`docs/site/extend/testing.md`](../extend/testing.md) | `skills/common/plugin-runtime/foundation/isolation/`; `skills/common/plugin-runtime/foundation/packages/install.ts` |",
+          "excerptSha256": "bf87e6f63fc33ea95d039f579e2e56ebb9c96ef601c8e23eeff32bded4c0acf3",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_9df7f649a7b63d9da25f19863e69af60:1",
+      "unitId": "dpu_9df7f649a7b63d9da25f19863e69af60",
+      "summary": "The Security and isolation entry retains every original canonical reader destination as an exact relative link.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 1009,
+        "byteEnd": 1129,
+        "lineStart": 9,
+        "lineEnd": 9,
+        "exactSha256": "cd94269b1152f6eaab0b35db4c8b9b820b11d650357067d6c21c795594af8ec7",
+        "normalizedSha256": "211680b3ee94aecb645ddf22a5120c5191a80692776f4b866f5498ba6883ecc8"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Security and isolation | [`docs/site/understand/deployment-and-trust.md`](../understand/deployment-and-trust.md); [`docs/site/understand/worker-trust.md`](../understand/worker-trust.md); [`docs/site/extend/testing.md`](../extend/testing.md) | `skills/common/plugin-runtime/foundation/isolation/`; `skills/common/plugin-runtime/foundation/packages/install.ts` |",
+          "excerptSha256": "bf87e6f63fc33ea95d039f579e2e56ebb9c96ef601c8e23eeff32bded4c0acf3",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_9df7f649a7b63d9da25f19863e69af60:2",
+      "unitId": "dpu_9df7f649a7b63d9da25f19863e69af60",
+      "summary": "The Security and isolation entry retains every original supporting repository source location; this is provenance navigation, not fresh runtime qualification.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 1129,
+        "byteEnd": 1247,
+        "lineStart": 9,
+        "lineEnd": 9,
+        "exactSha256": "5c215c53dadcc38759757624618da6152603e5318b6b3ce1d7fc4a0d389cde33",
+        "normalizedSha256": "3e3d0ac7282e671b2da7b956f734dee54a0648efc77afdfae9fa032ff9fd63cf"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Security and isolation | [`docs/site/understand/deployment-and-trust.md`](../understand/deployment-and-trust.md); [`docs/site/understand/worker-trust.md`](../understand/worker-trust.md); [`docs/site/extend/testing.md`](../extend/testing.md) | `skills/common/plugin-runtime/foundation/isolation/`; `skills/common/plugin-runtime/foundation/packages/install.ts` |",
+          "excerptSha256": "bf87e6f63fc33ea95d039f579e2e56ebb9c96ef601c8e23eeff32bded4c0acf3",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_a1e45957f3b808c2f51898c36bffb711:0",
+      "unitId": "dpu_a1e45957f3b808c2f51898c36bffb711",
+      "summary": "The routing map names the Deployment documentation topic.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 1247,
+        "byteEnd": 1262,
+        "lineStart": 10,
+        "lineEnd": 10,
+        "exactSha256": "3acb3dc64be9b63aaa0c534489d8f695de644c56088caf351ee84f74daf11ffb",
+        "normalizedSha256": "9c3280a195c72dbae77e4ea69e5085340de4d321a3f110c709e50d0d017ccafd"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Deployment | [`docs/site/use/install.md`](../use/install.md); [`docs/site/understand/deployment-and-trust.md`](../understand/deployment-and-trust.md) | `charts/kubeclaw/templates/deployment.yaml`; `scripts/deploy.sh` |",
+          "excerptSha256": "8a51ec9b25ad96ebf28b73d481eb3a9e9d43b68d367f7470ae4b2339a216008d",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_a1e45957f3b808c2f51898c36bffb711:1",
+      "unitId": "dpu_a1e45957f3b808c2f51898c36bffb711",
+      "summary": "The Deployment entry retains every original canonical reader destination as an exact relative link.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 1262,
+        "byteEnd": 1339,
+        "lineStart": 10,
+        "lineEnd": 10,
+        "exactSha256": "e58798fb9412a9a8d32592ea2a476604797eb7b9c8b364b5b1f96182e32707dd",
+        "normalizedSha256": "229b0318662baa8ac5005853d9f2179dcbe0a11674e2a396f0b2757d22a22aca"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Deployment | [`docs/site/use/install.md`](../use/install.md); [`docs/site/understand/deployment-and-trust.md`](../understand/deployment-and-trust.md) | `charts/kubeclaw/templates/deployment.yaml`; `scripts/deploy.sh` |",
+          "excerptSha256": "8a51ec9b25ad96ebf28b73d481eb3a9e9d43b68d367f7470ae4b2339a216008d",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_a1e45957f3b808c2f51898c36bffb711:2",
+      "unitId": "dpu_a1e45957f3b808c2f51898c36bffb711",
+      "summary": "The Deployment entry retains every original supporting repository source location; this is provenance navigation, not fresh runtime qualification.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 1339,
+        "byteEnd": 1406,
+        "lineStart": 10,
+        "lineEnd": 10,
+        "exactSha256": "b2bc2b73f60fb62670232212e1b22253bdff8999f64de05a184090ca16e49763",
+        "normalizedSha256": "bb8b104a504efc7cf92b4e6fc8e4ac1cf765920e50b48333792288f242aafc59"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Deployment | [`docs/site/use/install.md`](../use/install.md); [`docs/site/understand/deployment-and-trust.md`](../understand/deployment-and-trust.md) | `charts/kubeclaw/templates/deployment.yaml`; `scripts/deploy.sh` |",
+          "excerptSha256": "8a51ec9b25ad96ebf28b73d481eb3a9e9d43b68d367f7470ae4b2339a216008d",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_c7d34a09385dd706b592f7ddbcb3bb8b:0",
+      "unitId": "dpu_c7d34a09385dd706b592f7ddbcb3bb8b",
+      "summary": "The routing map names the Operations documentation topic.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 1406,
+        "byteEnd": 1421,
+        "lineStart": 11,
+        "lineEnd": 11,
+        "exactSha256": "acb21dcfae6eb48411c8ff117bf365b39a3a058e95b139dd708c7e7e24eb5b63",
+        "normalizedSha256": "8a9b37e1b74e197e6b7ddf6378bb047856dfc9bdd6229d0cc1503c63b83285e9"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Operations | [`docs/site/use/README.md`](../use/README.md); [`docs/site/use/operate.md`](../use/operate.md); [`docs/site/use/diagnose.md`](../use/diagnose.md); [`docs/site/use/recovery.md`](../use/recovery.md); [`docs/site/use/maintenance.md`](../use/maintenance.md) | `skills/nova/core/cli.ts`; `skills/nova/project/cli.ts`; `charts/prism/files/prism-backup.sh` |",
+          "excerptSha256": "57f1e9db128684e0c28bb5516cf7ca93c9722a791de92f4c9391d4d4c0f528a9",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_c7d34a09385dd706b592f7ddbcb3bb8b:1",
+      "unitId": "dpu_c7d34a09385dd706b592f7ddbcb3bb8b",
+      "summary": "The Operations entry retains every original canonical reader destination as an exact relative link.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 1421,
+        "byteEnd": 1567,
+        "lineStart": 11,
+        "lineEnd": 11,
+        "exactSha256": "095cf83555f157d7f146839718643e8434220d3681ecc4fa0973b9337fed8a53",
+        "normalizedSha256": "8fe006eaf77ea763a1be5bbd85777b1ef6b0471a1e5f03aec9406168413f149e"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Operations | [`docs/site/use/README.md`](../use/README.md); [`docs/site/use/operate.md`](../use/operate.md); [`docs/site/use/diagnose.md`](../use/diagnose.md); [`docs/site/use/recovery.md`](../use/recovery.md); [`docs/site/use/maintenance.md`](../use/maintenance.md) | `skills/nova/core/cli.ts`; `skills/nova/project/cli.ts`; `charts/prism/files/prism-backup.sh` |",
+          "excerptSha256": "57f1e9db128684e0c28bb5516cf7ca93c9722a791de92f4c9391d4d4c0f528a9",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_c7d34a09385dd706b592f7ddbcb3bb8b:2",
+      "unitId": "dpu_c7d34a09385dd706b592f7ddbcb3bb8b",
+      "summary": "The Operations entry retains every original supporting repository source location; this is provenance navigation, not fresh runtime qualification.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 1567,
+        "byteEnd": 1663,
+        "lineStart": 11,
+        "lineEnd": 11,
+        "exactSha256": "2ed17f832ce4a3c8b8456371fb4ef39a559855a93fcd474ab1a61c732d3ad01b",
+        "normalizedSha256": "f465b5eb6dd87767e8182a9aef5bfd80e21ae1a44194e6fc87fee54eb28ca6c9"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Operations | [`docs/site/use/README.md`](../use/README.md); [`docs/site/use/operate.md`](../use/operate.md); [`docs/site/use/diagnose.md`](../use/diagnose.md); [`docs/site/use/recovery.md`](../use/recovery.md); [`docs/site/use/maintenance.md`](../use/maintenance.md) | `skills/nova/core/cli.ts`; `skills/nova/project/cli.ts`; `charts/prism/files/prism-backup.sh` |",
+          "excerptSha256": "57f1e9db128684e0c28bb5516cf7ca93c9722a791de92f4c9391d4d4c0f528a9",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_d2617859b8fd31fe526eab3074b5a51b:0",
+      "unitId": "dpu_d2617859b8fd31fe526eab3074b5a51b",
+      "summary": "The routing map names the Extension authoring documentation topic.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 1663,
+        "byteEnd": 1687,
+        "lineStart": 12,
+        "lineEnd": 12,
+        "exactSha256": "b1cd69e77e17ef0a70bc442383f8d8ebc46a71483e50ad043de084901ac5eae6",
+        "normalizedSha256": "3c480eb4b7c80f6a2735c08d91f09f521dbb4ae0d6cc9614b354621dd7dee1ae"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Extension authoring | [`docs/site/extend/README.md`](../extend/README.md); [`docs/site/extend/first-plugin.md`](../extend/first-plugin.md); [`docs/site/extend/contracts.md`](../extend/contracts.md); [`docs/site/extend/testing.md`](../extend/testing.md) | `skills/common/plugin-runtime/sdk/` |",
+          "excerptSha256": "e873604da5915b139768be533879321fd2e17428df3e43e5dbce947e2e9508a7",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_d2617859b8fd31fe526eab3074b5a51b:1",
+      "unitId": "dpu_d2617859b8fd31fe526eab3074b5a51b",
+      "summary": "The Extension authoring entry retains every original canonical reader destination as an exact relative link.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 1687,
+        "byteEnd": 1818,
+        "lineStart": 12,
+        "lineEnd": 12,
+        "exactSha256": "0dbd29d9619e250aed61651e9c6fcb098069e402a945f95e2bc858ab888b8f66",
+        "normalizedSha256": "7ad41f9961ac0b8e214b71a78196e9ba8b001750cc1b5069509926944bfe0106"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Extension authoring | [`docs/site/extend/README.md`](../extend/README.md); [`docs/site/extend/first-plugin.md`](../extend/first-plugin.md); [`docs/site/extend/contracts.md`](../extend/contracts.md); [`docs/site/extend/testing.md`](../extend/testing.md) | `skills/common/plugin-runtime/sdk/` |",
+          "excerptSha256": "e873604da5915b139768be533879321fd2e17428df3e43e5dbce947e2e9508a7",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_d2617859b8fd31fe526eab3074b5a51b:2",
+      "unitId": "dpu_d2617859b8fd31fe526eab3074b5a51b",
+      "summary": "The Extension authoring entry retains every original supporting repository source location; this is provenance navigation, not fresh runtime qualification.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 1818,
+        "byteEnd": 1856,
+        "lineStart": 12,
+        "lineEnd": 12,
+        "exactSha256": "73679537246d2dd0da6b73350d214bab4dd43c1f6de5112a3c1236e1a125cf75",
+        "normalizedSha256": "612ed7781440946aa7151bb29127621e309348bd74fcb1a17767d99eb9948c04"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Extension authoring | [`docs/site/extend/README.md`](../extend/README.md); [`docs/site/extend/first-plugin.md`](../extend/first-plugin.md); [`docs/site/extend/contracts.md`](../extend/contracts.md); [`docs/site/extend/testing.md`](../extend/testing.md) | `skills/common/plugin-runtime/sdk/` |",
+          "excerptSha256": "e873604da5915b139768be533879321fd2e17428df3e43e5dbce947e2e9508a7",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_e282cae38a11f7879f2dd9e48cd5010e:0",
+      "unitId": "dpu_e282cae38a11f7879f2dd9e48cd5010e",
+      "summary": "The routing map names the Current implementation and compatibility documentation topic.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 1856,
+        "byteEnd": 1901,
+        "lineStart": 13,
+        "lineEnd": 13,
+        "exactSha256": "f91ec8d9b6e1e86b86ef188f4c02472049f34713ec49dd83fc094ca62d451c5d",
+        "normalizedSha256": "ac18923a5b410455fe5bed27dd5d1f7de6b20f07b9e7cbc855d45d489ae2e2a3"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Current implementation and compatibility | [`docs/site/status/current.md`](../status/current.md); [`docs/site/status/open-issues.md`](../status/open-issues.md); [`docs/site/decisions/README.md`](../decisions/README.md) | `docs/status/open-issues.json`; `packaging/runtime/package-ownership.json` |",
+          "excerptSha256": "1503859f698a6ebb53259bfd8b824f963513e423c9a1ecf18b6c95683f4287a2",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_e282cae38a11f7879f2dd9e48cd5010e:1",
+      "unitId": "dpu_e282cae38a11f7879f2dd9e48cd5010e",
+      "summary": "The Current implementation and compatibility entry retains every original canonical reader destination as an exact relative link.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 1901,
+        "byteEnd": 2001,
+        "lineStart": 13,
+        "lineEnd": 13,
+        "exactSha256": "05df00ee908227e7d73682ee3da51a1f4c047657cae2aa1d1da94fe157598104",
+        "normalizedSha256": "e12771626cc1952f0e25168f373e94fd6098df5656ef4d53eaf6995f2f5a64d9"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Current implementation and compatibility | [`docs/site/status/current.md`](../status/current.md); [`docs/site/status/open-issues.md`](../status/open-issues.md); [`docs/site/decisions/README.md`](../decisions/README.md) | `docs/status/open-issues.json`; `packaging/runtime/package-ownership.json` |",
+          "excerptSha256": "1503859f698a6ebb53259bfd8b824f963513e423c9a1ecf18b6c95683f4287a2",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_e282cae38a11f7879f2dd9e48cd5010e:2",
+      "unitId": "dpu_e282cae38a11f7879f2dd9e48cd5010e",
+      "summary": "The Current implementation and compatibility entry retains every original supporting repository source location; this is provenance navigation, not fresh runtime qualification.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 2001,
+        "byteEnd": 2078,
+        "lineStart": 13,
+        "lineEnd": 13,
+        "exactSha256": "93fec69768e63f15126311313f548306a1ed5ca9bc9c5a4b4b6df7d709fd7ed3",
+        "normalizedSha256": "e0f82cdf66329ece42cf1082d0f88b5220f0ccb5e6eef454f24069b867eba3c3"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Current implementation and compatibility | [`docs/site/status/current.md`](../status/current.md); [`docs/site/status/open-issues.md`](../status/open-issues.md); [`docs/site/decisions/README.md`](../decisions/README.md) | `docs/status/open-issues.json`; `packaging/runtime/package-ownership.json` |",
+          "excerptSha256": "1503859f698a6ebb53259bfd8b824f963513e423c9a1ecf18b6c95683f4287a2",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_fb980623c0039f57f6b1a873da31b227:0",
+      "unitId": "dpu_fb980623c0039f57f6b1a873da31b227",
+      "summary": "The routing map names the Codex operations workspace documentation topic.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 2078,
+        "byteEnd": 2109,
+        "lineStart": 14,
+        "lineEnd": 14,
+        "exactSha256": "1633360ef6c1eae16451708543800280ba597cd31f3c43b1a2f54a464d546ccc",
+        "normalizedSha256": "87b7f77e22eac8244022c0520495425347128e809de50a30382cadf0d921477d"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Codex operations workspace | [`docs/site/understand/platform-and-operations.md`](../understand/platform-and-operations.md); [`docs/site/extend/host-and-engine.md`](../extend/host-and-engine.md) | `charts/ops-pod/`; `plugins/kubeclaw-ops/`; `tools/ops-mcp/src/`; `scripts/deploy-ops-pod.sh` |",
+          "excerptSha256": "d032878bd8fc012558cdf9193bb2ee0e4ffda57f5e8a34f15172bb82a427055b",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_fb980623c0039f57f6b1a873da31b227:1",
+      "unitId": "dpu_fb980623c0039f57f6b1a873da31b227",
+      "summary": "The Codex operations workspace entry retains every original canonical reader destination as an exact relative link.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 2109,
+        "byteEnd": 2200,
+        "lineStart": 14,
+        "lineEnd": 14,
+        "exactSha256": "2642863ea30db9dadb9ab1e93a1c6bc9e2159ccb8f394a202cc7f2ac865716b9",
+        "normalizedSha256": "bbca02620a82e9ca62482afc152892be5c49b5af6b5ea0cc7468c55c08b9d53d"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Codex operations workspace | [`docs/site/understand/platform-and-operations.md`](../understand/platform-and-operations.md); [`docs/site/extend/host-and-engine.md`](../extend/host-and-engine.md) | `charts/ops-pod/`; `plugins/kubeclaw-ops/`; `tools/ops-mcp/src/`; `scripts/deploy-ops-pod.sh` |",
+          "excerptSha256": "d032878bd8fc012558cdf9193bb2ee0e4ffda57f5e8a34f15172bb82a427055b",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_fb980623c0039f57f6b1a873da31b227:2",
+      "unitId": "dpu_fb980623c0039f57f6b1a873da31b227",
+      "summary": "The Codex operations workspace entry retains every original supporting repository source location; this is provenance navigation, not fresh runtime qualification.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 2200,
+        "byteEnd": 2296,
+        "lineStart": 14,
+        "lineEnd": 14,
+        "exactSha256": "6d3597cdd39eaf2a665801818376033681385f2e2b1df922c05ddb0d6cd3eaf1",
+        "normalizedSha256": "50c23141002db15b78dd264000ac57ceb5943846d07c5f7a46b2c5844a3127d3"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "| Codex operations workspace | [`docs/site/understand/platform-and-operations.md`](../understand/platform-and-operations.md); [`docs/site/extend/host-and-engine.md`](../extend/host-and-engine.md) | `charts/ops-pod/`; `plugins/kubeclaw-ops/`; `tools/ops-mcp/src/`; `scripts/deploy-ops-pod.sh` |",
+          "excerptSha256": "d032878bd8fc012558cdf9193bb2ee0e4ffda57f5e8a34f15172bb82a427055b",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_199ed312d2dc815e003d4de9021ab844:0",
+      "unitId": "dpu_199ed312d2dc815e003d4de9021ab844",
+      "summary": "Canonical reader navigation uses only paths below docs/site.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 2297,
+        "byteEnd": 2362,
+        "lineStart": 16,
+        "lineEnd": 16,
+        "exactSha256": "d824b79f8a6d2264966157214c24135d40a9c85d532bb22c34e2f8b14d06f99f",
+        "normalizedSha256": "5c60a103f3332ae5b01aa3e7d698d519184eb6b78625f268e4b74a146303c417"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "Only pages below `docs/site` are canonical reader documentation. Other files\nprovide implementation evidence or temporary migration sources. They do not\ndefine a second reader-facing authority.",
+          "excerptSha256": "2a9858dabb42c09b9cacdad83841534655237827c6b0594134874817a504a130",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_199ed312d2dc815e003d4de9021ab844:1",
+      "unitId": "dpu_199ed312d2dc815e003d4de9021ab844",
+      "summary": "Other files remain implementation evidence or temporary migration sources.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 2362,
+        "byteEnd": 2455,
+        "lineStart": 16,
+        "lineEnd": 17,
+        "exactSha256": "ccfbd9bbb431a0fc6eaf5d43169813504a3ef3459f0dc24f427c3cbf9505587b",
+        "normalizedSha256": "9e3ec20a1da8211b2ae2efc69d05ab6d8913e2bd6af21ce9a492355c6cdbc134"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "Only pages below `docs/site` are canonical reader documentation. Other files\nprovide implementation evidence or temporary migration sources. They do not\ndefine a second reader-facing authority.",
+          "excerptSha256": "2a9858dabb42c09b9cacdad83841534655237827c6b0594134874817a504a130",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "topic-map:dpu_199ed312d2dc815e003d4de9021ab844:2",
+      "unitId": "dpu_199ed312d2dc815e003d4de9021ab844",
+      "summary": "Implementation and migration files do not create a second reader-facing authority.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 2455,
+        "byteEnd": 2508,
+        "lineStart": 18,
+        "lineEnd": 18,
+        "exactSha256": "e6e0cfa2b223ae0f9dd67085758aa4dbec09c0d4f2dada759ef8e5c50d4dd9b5",
+        "normalizedSha256": "28900ce86d65c79a8478d66bf5c71a598782ef94bc7bf2d9625b5cb691c78e97"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "Only pages below `docs/site` are canonical reader documentation. Other files\nprovide implementation evidence or temporary migration sources. They do not\ndefine a second reader-facing authority.",
+          "excerptSha256": "2a9858dabb42c09b9cacdad83841534655237827c6b0594134874817a504a130",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    }
+  ]
+}
