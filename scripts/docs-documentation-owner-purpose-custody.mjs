@@ -456,7 +456,7 @@ const readerArtifactCiPurpose=freeze({
     {
       "path": "scripts/lib/docs-publication-assets.mjs",
       "canonical": "scripts/lib/docs-publication-assets.mjs",
-      "sha256": "239950ea0ebc87501d03aa178d07b99922cb4ec7dabdded3fbf8f8ab5c5de6f0"
+      "sha256": "71764219d05fd7f4ea0c715d2414315eb5869834f4ebe9eb5d9ce2d22153c295"
     },
     {
       "path": "scripts/lib/docs-route-continuity.mjs",
