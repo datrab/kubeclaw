@@ -22,6 +22,24 @@ Architecture: [Codex Ops Pod architecture](../architecture/ops-pod.md).
 
 ## Overview
 
+For the read-only equivalent of the resource sections in `kubectl describe node ax41-production`,
+call `platform_cluster_state` with `{"resource":"nodes","node":"ax41-production"}`.
+It returns `capacity`, `allocatable`, `nonTerminatedPods` and `allocatedResources`
+(requests/limits and integer percentages of allocatable). CPU quantities are cores
+or millicores (`m`); memory/storage totals are decimal bytes. These are reservations
+and limits, not measured usage or a namespace quota. Accounting follows Kubernetes
+1.36 container resize status, pod-level resource budgets, init-container peaks,
+restartable sidecars and overhead. Pod-level resize status and DRA claim accounting
+are not enabled, matching the default Kubernetes resource-helper options.
+This mode requires `readAllNamespaces: true` as well as the existing tool grant.
+It uses only node/pod GET and LIST access already granted to the central observer;
+no exec, credentials, annotations or full pod specifications are returned.
+Pod reads use a node/phase field selector and scan at most 20 pages of 100 pods
+within the shared list deadline. If incomplete, `partial` is true and both total
+pod count and allocated resources are withheld. Without `node`, the existing
+paginated node-health listing is unchanged. Deploy the updated MCP image before
+using the new input; updating source alone does not update a running connector.
+
 A StatefulSet runs the official Codex CLI. A separate Deployment runs the central
 Ops MCP, shared by Codex, Nova and Buster through per-client policy. Argo owns the Helm release, but the `codex-ops` child Application has
 no automated sync so an image promotion cannot restart an active workspace. There

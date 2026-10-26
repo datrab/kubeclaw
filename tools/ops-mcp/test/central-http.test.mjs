@@ -76,6 +76,14 @@ test('concurrent MCP clients get distinct tool lists and cannot cross namespace 
   assert.match(JSON.stringify(monitoring), /NOT_CONFIGURED/);
   const discovery = await call('codex', 'tools/call', { name: 'platform_cluster_state', arguments: { resource: 'namespaces' } });
   assert.match(JSON.stringify(discovery), /forbidden-api-credential/);
+  const nodeResources = await call('codex', 'tools/call', { name: 'platform_cluster_state', arguments: { resource: 'nodes', node: 'ax41-production' } });
+  assert.match(JSON.stringify(nodeResources), /forbidden-api-credential/);
+  for (const args of [{ resource: 'namespaces', node: 'ax41-production' }, { resource: 'nodes', node: 'ax41-production', continueToken: 'token' },
+    ...['../node', 'node,other', 'node/secret', 'node..example', '-node'].map(node => ({ resource: 'nodes', node }))]) {
+    const invalid = await call('codex', 'tools/call', { name: 'platform_cluster_state', arguments: args });
+    assert.ok(invalid.error || invalid.result?.isError);
+    assert.doesNotMatch(JSON.stringify(invalid), /forbidden-api-credential/);
+  }
   // A malformed/revoked policy must reject an already authenticated client on
   // its very next request, regardless of a legacy MCP session header.
   writeFileSync(policy, '{invalid');
