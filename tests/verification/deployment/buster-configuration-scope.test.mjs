@@ -31,6 +31,14 @@ test('real Git snapshots allow private Buster changes but reject shared changes 
     assert.equal(busterRenderConfigurationCompatible(root,before,lintChange),false);
     assert.equal(busterRenderConfigurationCompatible(root,before,lintChange,'retain-active-nova-prism'),true);
     assert.throws(()=>busterRenderConfigurationCompatible(root,before,lintChange,'ignore-shared'),/RETAINED_RENDER_POLICY_INVALID/);
+    write('my-values/infra/native-worker-pools-ax41.yaml','schedulerReservation: changed');const hostChange=commit();
+    assert.equal(busterRenderConfigurationCompatible(root,before,hostChange),false);
+    assert.equal(busterRenderConfigurationCompatible(root,before,hostChange,'retain-active-nova-prism'),true);
+    for (const file of ['my-values/infra/native-worker-pools.yaml','my-values/infra/postgresql-values.yaml']) {
+      write(file,'shared: changed');const unknownChange=commit();
+      assert.equal(busterRenderConfigurationCompatible(root,hostChange,unknownChange,'retain-active-nova-prism'),false);
+      fs.unlinkSync(path.join(root,file));commit();
+    }
     write('charts/kubeclaw/values.yaml','shared: changed');const sharedChange=commit();
     assert.equal(busterRenderConfigurationCompatible(root,before,sharedChange,'retain-active-nova-prism'),false);
     assert.equal(busterRenderConfigurationCompatible(root,before,sharedChange),false);

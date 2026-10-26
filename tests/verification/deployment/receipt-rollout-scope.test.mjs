@@ -23,7 +23,7 @@ test('actual receipt CLIs retain authenticated-baseline-shaped other roles despi
   run('release-images.mjs',['input',after,'dist/images.json','runtime']);run('code-release.mjs',['dist',after,'example/repo']);
   const images=JSON.parse(fs.readFileSync(path.join(dir,'dist/images.json'))),code=JSON.parse(fs.readFileSync(path.join(dir,'dist/runtime-code.json')));
   assert.equal(images.retainedBaseline,baseline);assert.equal(code.retainedBaseline,baseline);
-  for(const name of runtimeImages)assert.equal(images.images[name],['buster-runtime','namespace-controller'].includes(name)?`ghcr.io/example/kubeclaw-${name}@sha256:${'b'.repeat(64)}`:prior.images[name]);
+  for(const name of runtimeImages)assert.equal(images.images[name],['buster-gateway','buster-runtime','namespace-controller'].includes(name)?`ghcr.io/example/kubeclaw-${name}@sha256:${'b'.repeat(64)}`:prior.images[name]);
   for(const role of ['nova','prism'])assert.deepEqual(code.bundles[role],{...priorCode.bundles[role],source:{commit:before,sourceRunId:123,sourceRunAttempt:1}});
   assert.equal(runtimePublicationCommand({...prior,code:priorCode},{...images,code},true),'export-buster');
   const rejected=spawnSync(process.execPath,[path.join(root,'scripts/updates/release-images.mjs'),'input',after,'rejected.json','runtime'],{cwd:dir,env:{...env,GITOPS_RETAINED_BASELINE:''}});
