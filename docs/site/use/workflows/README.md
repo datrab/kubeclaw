@@ -290,9 +290,9 @@ tool blocks the workflow; it is not converted to a successful check.
 
 Select the actual authorized endpoint and runtime identities. For a local
 Gateway the endpoint commonly ends in `/tools/invoke`; a Gateway root URL is
-not a tools endpoint. Remote endpoints require HTTPS; HTTP is accepted only for
-the literal loopback addresses `127.0.0.1` and `[::1]`. Do not put credentials
-in the URL: userinfo, query parameters and fragments are rejected. Supply the
+not a tools endpoint. Remote endpoints require HTTPS. The helper accepts HTTP only for the literal
+loopback addresses `127.0.0.1` and `[::1]`. Do not put credentials in the URL:
+the helper rejects userinfo, query parameters and fragments. Supply the
 credential separately as the bearer value, without echoing it:
 
 ```bash
