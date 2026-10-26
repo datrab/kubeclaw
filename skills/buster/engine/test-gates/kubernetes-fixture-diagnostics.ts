@@ -29,13 +29,34 @@ function state(value: unknown, privateValues: readonly string[]): RecordValue {
   return Object.fromEntries(['waiting', 'running', 'terminated'].filter(key => input[key]).map(key => [key,
     { ...fields(input[key], ['reason', 'exitCode', 'signal', 'startedAt', 'finishedAt']), message: fixtureDiagnosticText(record(input[key]).message, privateValues) }]));
 }
+// Resource-only projection of admitted values, not a full spec or capacity verdict.
+function resourceEvidence(value: unknown): RecordValue {
+  const input = record(value);
+  return Object.fromEntries(['cpu', 'memory'].map(key => {
+    const quantity = input[key];
+    return [key, typeof quantity === 'string' && quantity.length <= 64 &&
+      /^(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)(?:[eE][+-]?[0-9]+|[numkKMGTP]|[KMGTPE]i)?$/u.test(quantity)
+      ? quantity : typeof quantity === 'number' && Number.isFinite(quantity) && quantity >= 0 ? quantity : null];
+  }));
+}
+function podResourceEvidence(value: unknown): RecordValue {
+  const spec = record(value);
+  const containers = (entries: unknown) => list(entries).slice(0, 16).map(value => {
+    const container = record(value); const resources = record(container.resources);
+    return { name: identifier(container.name), restartPolicy: container.restartPolicy === 'Always' ? 'Always' : null,
+      requests: resourceEvidence(resources.requests), limits: resourceEvidence(resources.limits) };
+  });
+  return { nodeName: identifier(spec.nodeName), overhead: resourceEvidence(spec.overhead),
+    containers: containers(spec.containers), initContainers: containers(spec.initContainers),
+    truncated: list(spec.containers).length > 16 || list(spec.initContainers).length > 16 };
+}
 export function fixturePodEvidence(value: unknown, privateValues: readonly string[] = []): RecordValue {
   const pod = record(value); const status = record(pod.status);
   const containers = (entries: unknown) => list(entries).slice(0, 16).map(entry => {
     const container = record(entry);
     return { ...fields(container, ['name', 'ready', 'restartCount']), state: state(container.state, privateValues), lastState: state(container.lastState, privateValues) };
   });
-  return { ...fields(pod.metadata, ['name', 'uid', 'namespace']), ...fields(status, ['phase', 'reason']), message: fixtureDiagnosticText(status.message, privateValues),
+  return { resources: podResourceEvidence(pod.spec), ...fields(pod.metadata, ['name', 'uid', 'namespace']), ...fields(status, ['phase', 'reason']), message: fixtureDiagnosticText(status.message, privateValues),
     conditions: list(status.conditions).slice(0, 16).map(condition => ({ ...fields(condition, ['type', 'status', 'reason', 'lastTransitionTime']), schedulerCategories: fixtureSchedulerCategories(record(condition).reason, record(condition).message), message: fixtureDiagnosticText(record(condition).message, privateValues) })),
     initContainerStatuses: containers(status.initContainerStatuses), containerStatuses: containers(status.containerStatuses) };
 }

@@ -505,3 +505,21 @@ test('private init diagnostic failures stay bounded and never export subprocess 
   assert.ok(result.readErrors.filter(value => value.startsWith('logs/')).every(value => value.endsWith(':forbidden')));
   assert.equal(JSON.stringify(result).includes(canary), false);
 });
+
+
+test('admitted resource projection is bounded and excludes arbitrary spec and resource values', async () => {
+  const { fixturePodEvidence } = await import('../../../skills/buster/engine/test-gates/kubernetes-fixture-diagnostics.ts');
+  const result = fixturePodEvidence({ spec: { nodeName: 'node-1', overhead: { cpu: '10m' },
+    containers: [{ name: 'app', env: [{ value: 'private-canary' }], resources: {
+      requests: { cpu: '250m', memory: '1Gi', 'private-canary': 'private-canary' }, limits: { cpu: 'private-canary', memory: '2Gi' } } }],
+    initContainers: Array.from({ length: 17 }, () => ({ name: 'seed', restartPolicy: 'Always', resources: { requests: { cpu: 1 } } })) } });
+  const projection = result.resources as any;
+  assert.equal(projection.nodeName, 'node-1');
+  assert.deepEqual(projection.containers[0].requests, { cpu: '250m', memory: '1Gi' });
+  assert.deepEqual(projection.containers[0].limits, { cpu: null, memory: '2Gi' });
+  assert.equal(projection.overhead.cpu, '10m');
+  assert.equal(projection.initContainers[0].restartPolicy, 'Always');
+  assert.equal(projection.initContainers.length, 16);
+  assert.equal(projection.truncated, true);
+  assert.equal(JSON.stringify(result).includes('private-canary'), false);
+});
