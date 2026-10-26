@@ -56,6 +56,20 @@ export function fixtureSchedulerCategories(reason: unknown, message: unknown): s
   const categories = rules.filter(([, pattern]) => pattern.test(text)).map(([category]) => category);
   return categories.length ? categories : ['unclassified'];
 }
+// Closed-vocabulary hints only; never include matched text, paths, or captures.
+// These classify observed log wording, not a verified root cause.
+export function fixtureInitLogCategories(value: unknown): string[] {
+  const text = typeof value === 'string' ? value.slice(0, 4096) : '';
+  const rules: [string, RegExp][] = [
+    ['permission-denied', /\bpermission denied\b/iu],
+    ['read-only-filesystem', /\bread-only file system\b/iu],
+    ['no-space', /\bno space left on device\b/iu],
+    ['missing-path', /\bno such file or directory\b/iu],
+    ['operation-not-permitted', /\boperation not permitted\b/iu],
+  ];
+  const categories = rules.filter(([, pattern]) => pattern.test(text)).map(([category]) => category);
+  return categories.length ? categories : ['unclassified'];
+}
 export function fixtureEventEvidence(value: unknown, privateValues: readonly string[] = []): RecordValue {
   const event = record(value);
   return { ...fields(event, ['type', 'reason', 'count', 'firstTimestamp', 'lastTimestamp']),
@@ -142,7 +156,7 @@ export async function collectFixtureFailureEvidence(namespace: string, signal: A
         if (signal.aborted || logReads >= 8) break;
         if (previous && !record(record(container).lastState).terminated) continue;
         logReads++;
-        if (unresolvedPrivateSources) {
+        if (unresolvedPrivateSources && !list(status.initContainerStatuses).includes(container)) {
           logs.push({ pod: name, container: containerName, previous, text: null, omitted: 'unresolved-private-sources' });
           continue;
         }
@@ -153,7 +167,10 @@ export async function collectFixtureFailureEvidence(namespace: string, signal: A
           // Discard that record before publishing any potentially partial value.
           const byteLimited = Buffer.byteLength(output) >= 4090;
           const completeOutput = byteLimited ? output.slice(output.indexOf('\n') + 1 || output.length) : output;
-          logs.push({ pod: name, container: containerName, previous, text: fixtureDiagnosticText(completeOutput, privateValues), truncated: byteLimited || output.length > 1024 });
+          logs.push(unresolvedPrivateSources
+            ? { pod: name, container: containerName, previous, text: null, omitted: 'unresolved-private-sources',
+              categories: fixtureInitLogCategories(completeOutput), truncated: byteLimited }
+            : { pod: name, container: containerName, previous, text: fixtureDiagnosticText(completeOutput, privateValues), truncated: byteLimited || output.length > 1024 });
         } catch (error) { readErrors.push(`logs/${name}/${containerName}/${previous ? 'previous' : 'current'}:${readFailureReason(error, signal)}`); }
       }
     }

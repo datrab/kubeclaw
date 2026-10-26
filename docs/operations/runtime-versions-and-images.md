@@ -215,3 +215,118 @@ selected browser/database bytes, complete package inventory/SBOM and output
 manifests for two isolated builds. Compare software identities and classify
 metadata/provenance and intentional data-refresh differences. Continue deploying
 only the accepted output digest through the existing release-selection path.
+
+## CI build latency and preserved gates
+
+The runtime workflow prepares images and skill bundles concurrently with
+reliability and update-policy validation. Candidate registry objects are not
+release authorization: bundle publication, durable image receipts and live
+Prism acceptance still require the existing quality gates. Image receipts are
+written only after acceptance of the exact published digest. PR image jobs
+remain read-only and build the same toolchains locally without registry writes.
+
+Nova and Buster-runtime expose a `toolchain` build target. On trusted builds,
+`scripts/ci/toolchain.mjs` keys that target by its Dockerfile prefix, every local
+COPY input, `.dockerignore`, and architecture. A missing target is built once;
+reuse passes an immutable registry digest to the final runtime stage. Application
+payload changes do not rebuild stable tools. Local builds default to the in-file
+stage. Buster's advisory database refresh stays in the final runtime stage and
+continues to change on every build attempt; no security refresh is cached away.
+
+The browser reliability jobs cache only binaries matching the exact lockfile,
+OS, architecture and runner image version. Host dependencies are still installed
+on every disposable runner. Existing npm download caching and lockfile installs
+remain: measured installs were only 6–11 seconds, so sharing mutable node_modules
+or caching the subsecond sandbox compilation is not justified.
+
+The former serial core checks now run as source, production/recovery and four
+stage-contract groups. All twelve original stage suites are still mandatory.
+The `core-reliability` aggregate fails when any group fails or is skipped.
+Native, service, browser, security and PostgreSQL checks remain separate and
+required. Runner SDK cleanup now happens only below the existing 30 GiB free-space
+threshold and stops when that invariant is met.
+
+### Measurement and cache comparison
+
+Baseline evidence is recorded in
+[the 2026-10-25 CI measurements](../review/ci-build-baseline-20261025.json).
+Successful runtime runs took 27:02 and 23:38. Their serial core jobs took 9:51 and
+10:13. In the latest run Buster-runtime's cache export alone took 269.2 seconds;
+Nova's took 107.1 seconds. Both logs reported zero cached build steps. Those
+observations do not establish why the cache missed, and are not a speedup claim.
+
+The runtime workflow's `CI timings` job publishes a `ci-timings` JSON artifact and
+job summary with current-attempt job/step durations, start offsets, cached steps
+and cache-export times, namespaced per BuildKit invocation so toolchain and
+runtime step IDs cannot collide. It paginates API results and excludes skipped jobs and
+itself from workload elapsed time. Parallel job times are not added together.
+Missing log access is marked unavailable, never counted as a cache miss.
+
+Dispatch `Build Runtime Images And Skill Bundles` on the same commit and bounded
+`runtime_refresh_plan`, first cold and then warm, for each `cache_profile`:
+`gha-min`, `gha-max`, and `registry-max`. The default remains `gha-min` until a
+comparable benchmark establishes a better policy. Registry cache uses separate
+per-image/architecture references; it does not overwrite candidate artifacts.
+Compare total elapsed time, toolchain hit/miss, cache export, exact-image
+acceptance, runner preparation, and queue/start offsets. Do not compare a full
+manual refresh with a push that rebuilt only a subset of images.
+
+These changes preserve SBOM, maximum provenance, pinned tool versions, hashed
+package locks and immutable source receipts. The first toolchain publication is
+a cold bootstrap and can cost more; only subsequent equivalent runs measure
+reuse. No measured post-change production speedup is claimed before merge.
+
+### Second latency pass: existing hosted runners only
+
+Completed follow-up runtime builds on 2026-10-25 took
+[10:54](https://github.com/datrab/kubeclaw/actions/runs/40236337731) and
+[11:04](https://github.com/datrab/kubeclaw/actions/runs/40236697726), each selecting
+all ten images. These observations include runner waits, toolchain reuse, image
+acceptance and release receipts; they are not a controlled cache-profile trial.
+
+Superseded PR runs now cancel within a workflow/PR-specific concurrency group.
+Non-PR and reusable caller groups use unique run IDs and cannot cancel production
+publication runs. Image matrices are capped at four concurrent jobs and browser
+matrices at two; the runner type stays `ubuntu-latest`. No larger runner or paid
+service is selected.
+
+Nova, Prism-agent and Buster-gateway acceptance now runs three independent,
+network-disabled containers for offline plugin installation, tooling, and the
+actual runtime identity. Every result is required, all children are awaited, and
+containers/log directories are cleaned on exit or cancellation. The default
+in-container proof mode still executes the complete serial proof for manual use.
+Semgrep version reporting disables telemetry and version-update network requests
+inside the already-offline proof; no scan, pinned version or negative control is
+removed. Proof and image-pull durations are emitted separately.
+
+Core reliability tests use deterministic longest-processing-time allocation over
+four shards. The initial weight file identifies its historical source run and
+explicitly labels its values as estimates from uniquely matched top-level test
+names, not complete file wall times. Unknown/new files receive a median weight
+and remain included exactly once. Native and service memberships are unchanged.
+The normal test reporter now also emits exact per-file duration/success records
+in `reliability-timings-*` artifacts, without changing failure exit status. After
+downloading successful shard artifacts, generate updated weights with:
+
+```bash
+node scripts/ci/update-reliability-weights.mjs /path/to/reliability-core-*.json > scripts/ci/reliability-weights.json
+```
+
+`Runtime cache comparison` runs isolated `gha-min` and `gha-max` experiments on
+PRs changing its configuration, and includes `registry-max` only on trusted
+`main`. It can also be dispatched for a selected role. Each profile builds the
+same commit cold and warm using two distinct BuildKit builders, so the warm run
+must import the exported remote cache rather than reusing a local builder. Each
+run/attempt/profile/role gets its own cache namespace. Registry cache tags reuse
+the existing role image repository rather than creating a new package. Cache-export failures are
+fatal in the experiment rather than silently reported as a valid comparison.
+Only one GHA experiment runs at once to bound additional runner pressure.
+
+The experiment uses `cacheonly` outputs: no candidate image, source receipt,
+skill release or deployment is published. Benchmark database refresh identity is
+held constant between its cold/warm phases; production database refresh remains
+per build attempt. The `cache-comparison-timings` artifact contains distinct
+cold/warm step durations and per-invocation cache metrics. PRs cannot write
+registry caches; the three-way registry comparison therefore completes only on
+trusted `main` after merge. The production cache default remains unchanged until
+a comparable result supports changing it.

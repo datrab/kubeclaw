@@ -1,90 +1,30 @@
 name: Pipeline reliability
 on:
-  pull_request:
-  # main is covered by the required call from build-images.yaml.
+  pull_request: # main is covered by the required call from build-images.yaml.
+
   workflow_call:
 permissions:
   contents: read
 jobs:
   core-reliability:
-    # Report independent check failures together; failed steps still fail the job.
+    name: core-reliability
+    needs:
+      - core-source
+      - core-contracts
+      - stage-contracts
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
-    timeout-minutes: 25
     steps:
-      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
-        with:
-          node-version: 24
-          cache: npm
-      - id: dependencies
-        run: npm ci --ignore-scripts
-      - name: Check central versions and reject drift
-        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
-        run: |
-          npm run versions:check
-          node --test tests/verification/deployment/versions.test.mjs
-      - name: Typecheck source packages
-        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
-        run: npm run typecheck:skills
-      - name: Build isolation launcher before contract tests
-        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
-        run: npm run plugin-system:sandbox:build
-      - name: Exercise recovery and remote import contracts
-        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
-        run: npm run verify:reliability:contracts
-      - name: Validate project compiler and installed stage contracts
-        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
-        run: node tests/verification/contracts/check-project-compiler.mts
-      - name: Validate production graph and native gate evidence
-        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
-        run: node --test tests/verification/e2e/production-graph-validation.test.mts tests/verification/e2e/real-run-evidence.test.mjs tests/verification/e2e/durable-evidence.test.mjs
-      - name: Install real shell lint tools
-        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
-        run: sudo apt-get update && sudo apt-get install -y shellcheck shfmt
-      - name: Check affected stage and adapter contracts
-        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
-        run: |
-          npm test --workspace @kubeclaw/plugin-prism-design
-          npm test --workspace @kubeclaw/plugin-notification-observer
-          npm test --workspace @kubeclaw/plugin-human-approval
-          npm test --workspace @kubeclaw/plugin-project-summary
-          npm test --workspace @kubeclaw/plugin-lint
-          npm test --workspace @kubeclaw/plugin-implementation-agent
-          npm test --workspace @kubeclaw/plugin-buster-quality-gate
-          npm test --workspace @kubeclaw/plugin-runtime-dispatch
-          npm test --workspace @kubeclaw/plugin-operator-messaging
-          npm test --prefix skills/buster/plugins/http
-          npm test --prefix skills/nova/plugins/delivery-lint
-          npm test --workspace @kubeclaw/plugin-review
-      - uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4 # v4
-        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
-        with:
-          version: v3.18.4
-      - name: Validate Buster persistent storage manifests
-        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
-        run: |
-          node --test tests/verification/deployment/ax41-buster-overlay.test.mjs
-          node tests/verification/deployment/check-role-chart.mjs
-          node tests/verification/deployment/check-deployment-truth.mjs
-          helm lint charts/kubeclaw -f my-values/buster-values.yaml -f tests/fixtures/helm/runtime-registry.yaml
-          helm template agent-buster charts/kubeclaw -f my-values/buster-values.yaml -f tests/fixtures/helm/runtime-registry.yaml > /tmp/buster-rendered.yaml
-      - name: Exercise real isolated provider transport and evidence import
-        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
-        run: node tests/verification/contracts/check-pipeline-remote-real-provider.mts
-      - name: Assemble production role packages
-        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
-        run: |
-          mkdir -p dist
-          bash scripts/package-agent-skill-bundle.sh nova "dist/nova-${GITHUB_SHA}.tgz" "${GITHUB_SHA}"
-          bash scripts/package-agent-skill-bundle.sh buster "dist/buster-${GITHUB_SHA}.tgz" "${GITHUB_SHA}"
-          node tests/verification/contracts/check-review-bundle-tokenizer.mjs "dist/nova-${GITHUB_SHA}.tgz"
-          node tests/verification/contracts/check-project-compiler.mts "dist/nova-${GITHUB_SHA}.tgz"
+      - name: Require every original core check
+        env:
+          RESULTS: ${{ toJSON(needs) }}
+        run: node -e 'const jobs=JSON.parse(process.env.RESULTS); if(Object.values(jobs).some(job=>job.result!=="success")) process.exit(1)'
 
   reliability-tests:
     strategy:
       fail-fast: false
       matrix:
-        shard: [1, 2, 3, 4]
+        shard: [ 1, 2, 3, 4 ]
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -99,6 +39,13 @@ jobs:
         run: node --test tests/verification/deployment/reliability-groups.test.mjs
       - name: Run reliability shard
         run: node scripts/reliability-tests.mjs core ${{ matrix.shard }} 4
+      - name: Preserve measured per-file shard timings
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: reliability-timings-${{ matrix.shard }}
+          path: dist/ci-timings/reliability-core-*.json
+          if-no-files-found: error
 
   native-reliability:
     runs-on: ubuntu-latest
@@ -141,7 +88,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        provider: [axe, lighthouse, visual, playwright]
+        provider: [ axe, lighthouse, visual, playwright ]
+      max-parallel: 2
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
@@ -153,8 +101,20 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci --ignore-scripts
+      - name: Key browser environment by lock and runner image
+        id: browser-key
+        run: echo "image=${ImageOS}-${ImageVersion}" >> "$GITHUB_OUTPUT"
+      - name: Restore exact locked browser binaries
+        id: browsers
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830
+        with:
+          path: /tmp/kubeclaw-playwright-browsers
+          key: browser-v1-${{ runner.os }}-${{ runner.arch }}-${{ steps.browser-key.outputs.image }}-${{ hashFiles('package-lock.json') }}
+      - name: Install browser host dependencies
+        run: node node_modules/playwright/cli.js install-deps chromium
       - name: Install browsers matching the locked Playwright package
-        run: node node_modules/playwright/cli.js install --with-deps chromium
+        if: steps.browsers.outputs.cache-hit != 'true'
+        run: node node_modules/playwright/cli.js install chromium
       - name: Build isolation launcher
         run: npm run plugin-system:sandbox:build
       - name: Permit the installed Chromium sandbox on the CI host
@@ -207,10 +167,7 @@ jobs:
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U kubeclaw_test -d kubeclaw_test"
-          --health-interval 5s
-          --health-timeout 5s
-          --health-retries 10
+          --health-cmd "pg_isready -U kubeclaw_test -d kubeclaw_test" --health-interval 5s --health-timeout 5s --health-retries 10
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
@@ -222,3 +179,103 @@ jobs:
         env:
           KUBECLAW_PRISM_TRANSACTION_TEST_DATABASE: postgres://kubeclaw_test:transaction_test_only@127.0.0.1:5432/kubeclaw_test
         run: node tests/verification/contracts/check-prism-postgres-transactions.mts
+  core-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: 24
+          cache: npm
+      - id: dependencies
+        run: npm ci --ignore-scripts
+      - name: Check central versions and reject drift
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
+        run: |
+          npm run versions:check
+          node --test tests/verification/deployment/versions.test.mjs
+      - name: Typecheck source packages
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
+        run: npm run typecheck:skills
+      - name: Verify CI scheduling and cache contracts
+        run: node --test tests/verification/deployment/ci-performance.test.mjs tests/verification/deployment/ci-second-round.test.mjs tests/verification/deployment/runtime-image-workflows.test.mjs
+    name: Source and version contracts
+  core-contracts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: 24
+          cache: npm
+      - id: dependencies
+        run: npm ci --ignore-scripts
+      - name: Build isolation launcher before contract tests
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
+        run: npm run plugin-system:sandbox:build
+      - name: Exercise recovery and remote import contracts
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
+        run: npm run verify:reliability:contracts
+      - name: Validate project compiler and installed stage contracts
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
+        run: node tests/verification/contracts/check-project-compiler.mts
+      - name: Validate production graph and native gate evidence
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
+        run: node --test tests/verification/e2e/production-graph-validation.test.mts tests/verification/e2e/real-run-evidence.test.mjs tests/verification/e2e/durable-evidence.test.mjs
+      - uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
+        with:
+          version: v3.18.4
+      - name: Validate Buster persistent storage manifests
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
+        run: |
+          node --test tests/verification/deployment/ax41-buster-overlay.test.mjs
+          node tests/verification/deployment/check-role-chart.mjs
+          node tests/verification/deployment/check-deployment-truth.mjs
+          helm lint charts/kubeclaw -f my-values/buster-values.yaml -f tests/fixtures/helm/runtime-registry.yaml
+          helm template agent-buster charts/kubeclaw -f my-values/buster-values.yaml -f tests/fixtures/helm/runtime-registry.yaml > /tmp/buster-rendered.yaml
+      - name: Exercise real isolated provider transport and evidence import
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
+        run: node tests/verification/contracts/check-pipeline-remote-real-provider.mts
+      - name: Assemble production role packages
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
+        run: |
+          mkdir -p dist
+          bash scripts/package-agent-skill-bundle.sh nova "dist/nova-${GITHUB_SHA}.tgz" "${GITHUB_SHA}"
+          bash scripts/package-agent-skill-bundle.sh buster "dist/buster-${GITHUB_SHA}.tgz" "${GITHUB_SHA}"
+          node tests/verification/contracts/check-review-bundle-tokenizer.mjs "dist/nova-${GITHUB_SHA}.tgz"
+          node tests/verification/contracts/check-project-compiler.mts "dist/nova-${GITHUB_SHA}.tgz"
+    name: Production and recovery contracts
+  stage-contracts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: 24
+          cache: npm
+      - id: dependencies
+        run: npm ci --ignore-scripts
+      - name: Build isolation launcher before contract tests
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
+        run: npm run plugin-system:sandbox:build
+      - name: Install real shell lint tools
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
+        run: sudo apt-get update && sudo apt-get install -y shellcheck shfmt
+      - name: Run required stage contract group
+        run: node scripts/ci/stage-contracts.mjs "${{ matrix.group }}"
+    name: Stage contracts (${{ matrix.group }})
+    strategy:
+      fail-fast: false
+      matrix:
+        group:
+          - lint
+          - review
+          - pipeline
+          - observers
+concurrency:
+  group: ${{ github.workflow }}-ci-pipeline-reliability-${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}

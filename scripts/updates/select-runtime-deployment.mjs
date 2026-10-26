@@ -73,7 +73,8 @@ if (baseline) await verifyReleaseSources({ root, repo, token, baselineDirectory 
 const priorImages = baseline?.runtime ?? (fs.existsSync('releases/runtime-images.json')
   ? JSON.parse(fs.readFileSync('releases/runtime-images.json', 'utf8')) : undefined);
 const priorCode = baseline?.code ?? (fs.existsSync(priorFile) ? JSON.parse(fs.readFileSync(priorFile, 'utf8')) : undefined);
-const configurationUnchanged = priorCode && busterRenderConfigurationCompatible(root, priorCode.commit, run.head_sha);
+const configurationUnchanged = priorCode && busterRenderConfigurationCompatible(root, priorCode.commit, run.head_sha,
+  baseline && process.env.RUNTIME_PUBLICATION_SCOPE === 'buster' ? 'retain-active-nova-prism' : undefined);
 const exportCommand = runtimePublicationCommand(priorImages && { ...priorImages, code: priorCode },
   { ...images, code }, configurationUnchanged);
 assertRuntimePublicationScope(exportCommand, process.env.RUNTIME_PUBLICATION_SCOPE);

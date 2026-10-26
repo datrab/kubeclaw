@@ -22,6 +22,8 @@ const under = (file, source) => source.endsWith('/') ? file.startsWith(source) :
 export function imageInput(name, file) {
   if (!inputs[name]) throw new Error(`UNKNOWN_RUNTIME_IMAGE:${name}`);
   return file === `docker/Dockerfile.${name}` || file === '.dockerignore' || file === 'versions.json'
+    || file === 'scripts/check-built-runtime-image.sh'
+    || (['nova', 'prism-agent', 'buster-gateway'].includes(name) && file === 'scripts/check-role-image.sh')
     || file === 'scripts/versions.mjs'
     || inputs[name].some(source => under(file, source))
     || (name.startsWith('prism-') && /^skills\/.*\/package(?:-lock)?\.json$/u.test(file));

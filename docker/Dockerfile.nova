@@ -7,8 +7,9 @@
 ARG OPENCLAW_BASE=ghcr.io/openclaw/openclaw:2026.10.5@sha256:f40d1e66fd14d8c5b49c832f4100f83b53fdc01f5108f7db11de38fd0ee6dbe5
 
 
+ARG KUBECLAW_TOOLCHAIN=toolchain
 # hadolint ignore=DL3006
-FROM ${OPENCLAW_BASE}
+FROM ${OPENCLAW_BASE} AS toolchain
 
 # Root is the declared Nova/Forge/Echo runtime mode.
 
@@ -238,6 +239,13 @@ rm -rf "$schema_repo"
 # Terraform validation uses only explicitly pre-provisioned provider packages.
 
 RUN mkdir -p /app/skills /opt/terraform-provider-mirror
+
+# Stable tools can be supplied by a content-keyed, digest-pinned CI image.
+# Local and PR builds retain the identical in-file toolchain by default.
+# hadolint ignore=DL3006
+FROM ${KUBECLAW_TOOLCHAIN} AS runtime
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+ARG TARGETARCH
 
 # The observer is self-contained and must not import from /app/skills.
 

@@ -458,3 +458,50 @@ test('scheduler categories survive private-text withholding without publishing a
   assert.deepEqual(result.events[0].schedulerCategories, ['insufficient-memory']);
   assert.equal(JSON.stringify(result).includes('private-canary'), false);
 });
+
+
+test('private init logs expose only fixed hints; app logs remain unread and canaries stay private', async () => {
+  const { collectFixtureFailureEvidence, fixtureInitLogCategories } = await import('../../../skills/buster/engine/test-gates/kubernetes-fixture-diagnostics.ts');
+  const canary = 'opaque-private-canary-path-and-token';
+  const calls: string[][] = [];
+  const result = await collectFixtureFailureEvidence('test-stack', new AbortController().signal, async args => {
+    calls.push([...args]);
+    if (args[0] === 'logs') return `2026-10-26T00:00:00Z cp: ${canary}: Permission denied\n${canary}`;
+    return JSON.stringify({ items: args[1] === 'pods' ? [{ metadata: { name: 'app' },
+      spec: { containers: [{ envFrom: [{ secretRef: { name: 'private' } }] }] },
+      status: { initContainerStatuses: [{ name: 'seed', lastState: { terminated: { exitCode: 1 } } }],
+        containerStatuses: [{ name: 'app' }] } }] : [] });
+  });
+  assert.equal(result.unresolvedPrivateSources, true);
+  assert.equal(calls.filter(args => args[0] === 'logs').length, 2);
+  assert.ok(calls.filter(args => args[0] === 'logs').every(args => args[args.indexOf('-c') + 1] === 'seed'));
+  assert.deepEqual(result.logs[0]?.categories, ['permission-denied']);
+  assert.deepEqual(result.logs[1]?.categories, ['permission-denied']);
+  assert.ok(result.logs.every(log => log.text === null));
+  assert.ok(!JSON.stringify(result).includes(canary));
+  assert.deepEqual(fixtureInitLogCategories(canary), ['unclassified']);
+  assert.deepEqual(fixtureInitLogCategories('x'.repeat(4096) + 'Permission denied'), ['unclassified']);
+  assert.deepEqual(fixtureInitLogCategories('Read-only file system; No space left on device; No such file or directory; Operation not permitted'),
+    ['read-only-filesystem', 'no-space', 'missing-path', 'operation-not-permitted']);
+});
+
+test('private init diagnostic failures stay bounded and never export subprocess secrets', async () => {
+  const { collectFixtureFailureEvidence } = await import('../../../skills/buster/engine/test-gates/kubernetes-fixture-diagnostics.ts');
+  const canary = 'private-error-canary';
+  let reads = 0;
+  const result = await collectFixtureFailureEvidence('test-stack', new AbortController().signal, async args => {
+    if (args[0] === 'logs') {
+      reads++;
+      assert.ok(args.includes('--limit-bytes=4096'));
+      throw new Error(`Forbidden ${canary}`, { cause: new Error(canary) });
+    }
+    return JSON.stringify({ items: args[1] === 'pods' ? [{ metadata: { name: 'app' },
+      spec: { containers: [{ envFrom: [{ secretRef: { name: 'private' } }] }] },
+      status: { initContainerStatuses: Array.from({ length: 12 }, (_, i) => ({ name: `seed-${i}`,
+        lastState: { terminated: { exitCode: 1 } } })) } }] : [] });
+  });
+  assert.equal(reads, 8);
+  assert.equal(result.readErrors.filter(value => value.startsWith('logs/')).length, 8);
+  assert.ok(result.readErrors.filter(value => value.startsWith('logs/')).every(value => value.endsWith(':forbidden')));
+  assert.equal(JSON.stringify(result).includes(canary), false);
+});

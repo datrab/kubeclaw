@@ -27,7 +27,12 @@ test('real Git snapshots allow private Buster changes but reject shared changes 
     const before=commit();
     write('my-values/buster-values.yaml','agentRole: buster\nbootstrap: false');const privateChange=commit();
     assert.equal(busterRenderConfigurationCompatible(root,before,privateChange),true);
+    write('charts/kubeclaw/files/config/knip.json','{}');const lintChange=commit();
+    assert.equal(busterRenderConfigurationCompatible(root,before,lintChange),false);
+    assert.equal(busterRenderConfigurationCompatible(root,before,lintChange,'retain-active-nova-prism'),true);
+    assert.throws(()=>busterRenderConfigurationCompatible(root,before,lintChange,'ignore-shared'),/RETAINED_RENDER_POLICY_INVALID/);
     write('charts/kubeclaw/values.yaml','shared: changed');const sharedChange=commit();
+    assert.equal(busterRenderConfigurationCompatible(root,before,sharedChange,'retain-active-nova-prism'),false);
     assert.equal(busterRenderConfigurationCompatible(root,before,sharedChange),false);
     write('charts/kubeclaw/values.yaml','shared: unchanged');
     write('charts/kubeclaw/templates/buster-namespace-controller.yaml',guard+'\n{{ end }}\nkind: Deployment');const unguarded=commit();
