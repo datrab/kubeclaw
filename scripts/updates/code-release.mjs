@@ -52,7 +52,25 @@ export function compatibleCode(root, imageReceipt, candidate) {
     ? runtimeImages.every(name => inputDigest(root, componentSource(imageReceipt, name, 'image').commit, file => imageInput(name, file))
       === inputDigest(root, imageCodeCommit(name), file => imageInput(name, file)))
     : inputDigest(root, imageReceipt.commit, isImageInput) === inputDigest(root, code.commit, isImageInput);
-  if (Object.values(code.bundles).some(bundle => bundle.source) && changedBundles(root, code, code.commit).length > 0) {
+  const retainedRoles = new Set();
+  if (baseline) {
+    validateCodeReceipt(baseline.code);
+    for (const role of ['nova', 'prism']) {
+      const bundle = code.bundles[role], prior = baseline.code.bundles[role];
+      const source = componentSource(code, role, 'bundle');
+      const priorSource = componentSource(baseline.code, role, 'bundle');
+      if (source.commit === code.commit) continue;
+      if (['url', 'sha256', 'contractVersion'].some(key => bundle[key] !== prior[key])
+        || ['commit', 'sourceRunId', 'sourceRunAttempt'].some(key => source[key] !== priorSource[key])) {
+        throw new Error(`RETAINED_CODE_BUNDLE_MISMATCH:${role}`);
+      }
+      retainedRoles.add(role);
+    }
+  }
+  // Publication authenticates the exact immutable baseline before this call.
+  // Retained roles target that baseline, not the new Buster source tree.
+  if (Object.values(code.bundles).some(bundle => bundle.source)
+    && changedBundles(root, code, code.commit).some(role => !retainedRoles.has(role))) {
     throw new Error('CODE_BUNDLE_INPUTS_CHANGED: retained bundle is incompatible with selected sources');
   }
   if (!compatible) {

@@ -11,7 +11,7 @@ import { collectRuntimeReceipts } from '../../../scripts/updates/release-images.
 import { selectedRelease, validateRenderedRelease } from '../../../scripts/updates/deployment-release.mjs';
 import { verifyReleaseSources } from '../../../scripts/updates/verify-release-source.mjs';
 
-import { selectedCode } from '../../../scripts/updates/code-release.mjs';
+import { compatibleCode, selectRuntimeCodeReceipt, selectedCode } from '../../../scripts/updates/code-release.mjs';
 
 const sourceRoot = path.resolve(import.meta.dirname, '../../..');
 const image = (name, digit) => `ghcr.io/datrab/kubeclaw-${name}@sha256:${digit.repeat(64)}`;
@@ -403,4 +403,27 @@ test('dispatch collector and bundle CLI preserve non-refreshed component origins
     }
   }
   assert.equal(fs.readFileSync(path.join(root, 'releases/runtime-code.json'), 'utf8'), '{}');
+}));
+
+ test('explicit retained baseline permits only exact Nova/Prism bundles and keeps Buster current', () => fixture(({ root, write, commit, initial, images, code }) => {
+  write('skills/common/plugin-runtime/sdk/index.ts', 'new shared runtime');
+  const head = commit();
+  const baseline = 'releases/gitops/retained-code-test';
+  write(`${baseline}/bundle.receipt`, JSON.stringify({ schemaVersion: 'kubeclaw-gitops-bundle.v1', receipt: { ...images, code } }));
+  const built = { ...code, commit: head, bundles: Object.fromEntries(Object.entries(code.bundles).map(([role, bundle]) => [role, { ...bundle, url: bundle.url.replace(initial, head) }])) };
+  const candidate = { ...selectRuntimeCodeReceipt(built, code, 'buster'), retainedBaseline: baseline };
+  const selectedImages = { ...images, commit: head, retainedBaseline: baseline,
+    imageSources: Object.fromEntries(runtimeImages.map(name => [name, { commit: name === 'archviewer' || name === 'nova' || name.startsWith('prism-') ? initial : head, sourceRunId: 1, sourceRunAttempt: 1 }])) };
+  assert.equal(compatibleCode(root, selectedImages, candidate), candidate);
+  for (const role of ['nova', 'prism']) {
+    for (const mutate of [bundle => { bundle.sha256 = 'b'.repeat(64); }, bundle => { bundle.source.sourceRunId++; }]) {
+      const bad = structuredClone(candidate); mutate(bad.bundles[role]);
+      assert.throws(() => compatibleCode(root, selectedImages, bad), /RETAINED_CODE_BUNDLE_MISMATCH|CODE_BUNDLE_INVALID/);
+    }
+  }
+  const stale = structuredClone(candidate); stale.bundles.buster = { ...code.bundles.buster, source: { commit: initial, sourceRunId: 1, sourceRunAttempt: 1 } };
+  assert.throws(() => compatibleCode(root, selectedImages, stale), /CODE_BUNDLE_INPUTS_CHANGED/);
+  const unscoped = structuredClone(candidate); delete unscoped.retainedBaseline;
+  const unscopedImages = { ...selectedImages }; delete unscopedImages.retainedBaseline;
+  assert.throws(() => compatibleCode(root, unscopedImages, unscoped), /CODE_BUNDLE_INPUTS_CHANGED/);
 }));
