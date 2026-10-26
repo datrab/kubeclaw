@@ -5,8 +5,8 @@ Audience: plugin author, maintainer
 Owner: plugin-foundation
 Evidence: docs/site/extend/examples/minimal-stage; package.json; skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json; packaging/runtime/roles/nova.json
 Evidence revision: `bcf032f241b432bf920baa9ee5f727947921447d`
-Applies to: one capability-free `pipeline-plugin-v2` stage in the Nova role
-Last verified: source and local journey check on 2026-09-16
+Applies to: one capability-free `pipeline-plugin-v2` stage and the separately pinned local observer companion
+Last verified: original stage source/local check on 2026-09-16; observer source/local journey on 2026-10-26
 
 ## Objective
 
@@ -399,3 +399,164 @@ readable after it removes the temporary package.
 This example creates no external effect and no persistent plugin-owned state.
 Therefore, it needs no adapter reconciliation or plugin cleanup operation.
 The [effectful plugin guide](effectful-plugin.md) explains those lifecycle concerns.
+
+## Practice an observer lifecycle locally
+
+The stage journey above does not activate an observer. Use this companion to
+change an observer registration and exercise its actual runtime consumer.
+
+### Prepare the companion checkout
+
+Select the complete Source commit
+`91c40217c7a439a2264f9aab6383e6616712c71b` in a disposable development branch. This commit
+contains the companion files; the older evidence revision at the top of this
+page applies to the original stage and Core citations, not these new files.
+Follow [Prepare a clean checkout](developer-handbook.md#prepare-a-clean-checkout)
+with this explicit commit and its locked development dependencies. Require Node
+24 and GNU util-linux `flock` at `/usr/bin/flock`. This fixture needs no service credentials or
+external service.
+
+Run the command from that repository, not an extracted Reader archive:
+
+```bash
+node docs/site/extend/examples/observer-lifecycle/journey.mjs
+```
+
+The helper creates a private temporary installation root. It copies the
+[original greeting stage](examples/minimal-stage/plugin.json) and the
+[observer package](examples/observer-lifecycle/plugin/plugin.json) into that
+root. It does not install either package in your checkout's Nova role.
+
+### Inspect the registration and authority
+
+The [observer manifest](examples/observer-lifecycle/plugin/plugin.json) registers
+observer ID `watch` and selects export `observe` from the
+[handler](examples/observer-lifecycle/plugin/src/observer.js). Its subscription
+is `run.succeeded`; delivery is `at_least_once`, ordering is `per_run`, and the
+required failure policy allows one attempt. The
+[configuration schema](examples/observer-lifecycle/plugin/schemas/config.schema.json)
+accepts an optional Boolean `fail`. The
+[checkpoint schema](examples/observer-lifecycle/plugin/schemas/checkpoint.schema.json)
+binds the committed event sequence and ID.
+
+The package requests no capabilities. The helper configures an explicit empty
+grant set. The handler attempts `state.read` and requires
+`PLUGIN_CAPABILITY_DENIED:state.read`; it then emits a fact in its own plugin
+event namespace. This proves denial through `PluginContext`, not operating-system
+isolation. The fixture trusts its own in-process packages; it is not a third-party
+sandbox or a credential-provider example. A nonempty capability grant needs the
+provider and constraint checks described in [Capability Adapter Contract](contracts.md#capability-adapter-contract).
+
+The helper also runs the real role-manifest checker twice. Omission must fail;
+an explicit simulated Nova role addition must pass. That check validates the
+proposed ownership entry. It does not modify or deploy a role.
+
+### Read the runtime observations
+
+[The maintained journey](examples/observer-lifecycle/journey.mjs) uses Registry
+activation, `PipelineRunner`, `ObserverRuntime`, and persistent `FileJournal`
+instances. It does not replace activation with package tests or compilation. A zero exit
+means that the positive and deliberately negative cases matched their expected
+results, not that every operation succeeded.
+Its internal pipeline definition is an authoring fixture, not a
+`.swarm/pipeline.json` project declaration.
+
+Expected output includes:
+
+| Observation | Expected value | Meaning |
+| --- | --- | --- |
+| `success.activatedObservers` | `1` | Foundation loaded the selected observer export |
+| `success.delivered` | `1` | The real observer consumer completed a subscribed delivery |
+| `success.observedSourceEventType` | `run.succeeded` | The handler consumed the selected committed fact |
+| `success.checkpointCount` | `1` | The consumer committed the checkpoint after handling |
+| `success.replayDelivered` | `0` | A reconstructed runtime and reopened journals skip completed delivery |
+| `invalidConfiguration` | `REGISTRY_RESULT_INVALID` | The real configuration validator rejects a non-Boolean `fail` |
+| `requiredFailure.requiredDrain` | `failed` | A required handler failure stops the drain with no checkpoint |
+| `disabled.activatedObservers` | `0` | Removing enablement and its grant entry prevents new activation |
+| `disabled.delivered` | `0` | The disabled observer consumes no events |
+| `incompatibleApi` | `REGISTRY_MANIFEST_INVALID` | Discovery rejects the unsupported API version |
+| `sameContractVersionChange.registrationVersion` | `2.0.0` | The same API, schemas, and module bytes reactivate under the changed package version |
+| `rollback.registrationVersion` | `1.0.0` | The original manifest bytes reactivate successfully |
+| `removal` | `REGISTRY_REGISTRATION_MISSING` | Re-enabling the removed observer fails through normal resolution |
+| `temporaryRootRemoved` | `true` | The helper removed only the temporary tree it created |
+
+The required-failure case still reports `pipelineStatus: succeeded`. Its
+canonical stage work had already completed. The observer drain fails separately;
+the helper asserts that no observer rewrites the committed lifecycle facts.
+Do not report that case as a failed pipeline or a successful required drain.
+
+The reconstructed runtime reopens actual disk journals. This is checkpoint replay
+proof, not a killed-process, crash-durability, deployed-service, or whole recovery
+acceptance result. The version exercise keeps the API, schemas, and handler
+unchanged. It does not prove arbitrary package upgrade compatibility.
+
+### Change the subscription
+
+Use one shell for the edit and restore steps. Save the delivered manifest before
+changing it; retain the printed backup path if that shell closes:
+
+```bash
+set -eu
+OBSERVER_MANIFEST_BACKUP="$(mktemp /tmp/kubeclaw-observer-manifest.XXXXXX)"
+cp docs/site/extend/examples/observer-lifecycle/plugin/plugin.json "$OBSERVER_MANIFEST_BACKUP"
+printf '%s\n' "$OBSERVER_MANIFEST_BACKUP"
+```
+
+Select a different committed fact:
+
+```bash
+node --input-type=module <<'JS'
+import fs from 'node:fs';
+const file = 'docs/site/extend/examples/observer-lifecycle/plugin/plugin.json';
+const value = JSON.parse(fs.readFileSync(file, 'utf8'));
+value.observers[0].subscriptions = ['stage.succeeded'];
+fs.writeFileSync(file, JSON.stringify(value, null, 2) + '\n');
+JS
+```
+
+Run the same journey again:
+
+```bash
+node docs/site/extend/examples/observer-lifecycle/journey.mjs
+```
+
+Require `success.observedSourceEventType: stage.succeeded`, one completed
+observer delivery, one checkpoint, and zero duplicate deliveries. The other
+configuration, permission, disable, compatibility, and removal checks must still
+pass. This is an actual registration change, not a renamed stage test.
+
+Restore the original manifest:
+
+```bash
+cp "$OBSERVER_MANIFEST_BACKUP" docs/site/extend/examples/observer-lifecycle/plugin/plugin.json
+git diff -- docs/site/extend/examples/observer-lifecycle/plugin/plugin.json
+```
+
+The diff must be empty if you started from the pinned checkout. Remove your
+saved backup only after that confirmation:
+
+```bash
+rm -- "$OBSERVER_MANIFEST_BACKUP"
+```
+
+### Retain the right evidence and stop safely
+
+The helper verifies the original success journal, checkpoint, and delivery bytes
+again after package removal. It prints their byte lengths and SHA-256 digests
+under `retainedSuccessJournals`. It then removes its owned scratch tree, including
+those demonstration files. Save the JSON output if you need the bounded result;
+it is not a retained production run or a durable artifact archive.
+
+A nonzero exit is a failed step. Keep its error and correct the reported
+configuration, registration, schema, role, or host prerequisite before retrying.
+Do not treat a different error as the expected negative result. The helper's
+assertions require the specific failure classes in the table and clean up its
+private scratch on both success and failure. Your manually saved manifest backup
+remains yours until you restore and remove it.
+
+The helper changes versions only inside its inactive disposable copy. Do not
+perform these in-place edits on a released package. Keep the exact package bytes
+needed by any real nonterminal run. Disable new work, reconcile pending effects,
+and follow the applicable deployment and retention procedure before production
+replacement or removal. This local observer recipe does not qualify other
+extension types or a deployed release.
