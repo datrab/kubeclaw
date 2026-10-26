@@ -14,7 +14,7 @@
   "actualIndependentTarget": "cf3c8fe321a3baeed883eddc0b6a4b9f298006d1",
   "maintainedSource": "16e7b792aeaeae4ded0e9ee02f41b0bc06b2e247",
   "nativeAuthorOnly": "PASS original unchanged decision validator; not independent/source/global approval",
-  "referenceNativePublicationAndPriorScopePreservation": "PENDING",
+  "referenceNativePublicationAndPriorScopePreservation": "Native publication and 19 original scopes PASS; final active-dependency/source binding PENDING",
   "originalGateCountsUnchanged": {
     "gates": 65,
     "requirements": 226
@@ -24,5 +24,19 @@
     "FirstCONTRIBUTING publishednativeSourcevalid mustbe rebound to newwholeSource before newper-source approval; no firstSourcecontent rerun merelyforcommit.",
     "Alloriginalproduct/Human/DATAUNKNOWN/Sourcequalification failures retained; no AP10deletion or wholepoint waivers."
   ],
-  "detailedEvidenceOutsideRepository": "operations/pr13/evidence/a91311-topic-map-20261026"
+  "detailedEvidenceOutsideRepository": "operations/pr13/evidence/a91311-topic-map-20261026",
+  "originalScopePreservation": {
+    "verdict": {
+      "findings": [],
+      "overall_correctness": "patch is correct",
+      "overall_explanation": "ALL19_ORIGINAL_SCOPES_PRESERVED=PASS. The supplied full page delta is additive, all linked reader destinations are positively published, the complete changed-page search record preserves the original query scope, and the one generated-map row changes only its qualified verification text. The supplied vectors establish unchanged original scoped files and limits; current native and bounded browser evidence supports the changed reader surface without claiming broader runtime or persona acceptance.",
+      "overall_confidence": 0.95
+    },
+    "target": "5cd47f1ae98078ff810e2f75168a083cfee6fb0a",
+    "records": 19,
+    "source": "343810187d8897412b5f49b21b2f9c684718cb5e",
+    "nativeReaderProcessesPassed": 6,
+    "boundedBrowserCasesPassed": 4,
+    "limits": "No new gate, requirement, childprocedure, runtime, human or wholeparity approval."
+  }
 }

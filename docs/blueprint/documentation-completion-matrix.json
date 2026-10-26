@@ -339,7 +339,7 @@
     },
     {
       "id": "AP09.1-ready-topics-20261020",
-      "revision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_ready_foundations (01a157c4-a915-7bd0-9f54-0de78011b9b7)",
       "gateIds": [],
@@ -497,6 +497,11 @@
           "command": "Independent exact26-original-scope preservation; node scripts/docs-governance.mjs --check; original committed Reader build and five native reader checks",
           "exitCode": 0,
           "observation": "Complete original contracts/limits and 676-file vectors reviewed; exact first-plugin/6literal asset paths/three generated metadata rows preserve existing bounds. Final seven coordinator processes and four bounded browser cases passed; fresh observer source checkout/install/lifecycle passed separately. No new accepted IDs, human/live/global qualification; original histories and failures retained. Evidence docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/."
+        },
+        {
+          "command": "Independent complete19 original-scope preservation; six native Reader controls and four bounded browser cases",
+          "exitCode": 0,
+          "observation": "ALL19_ORIGINAL_SCOPES_PRESERVED=PASS. Complete additive canonical navigation, one generated metadata row, full changed-page search record and 727-file vectors preserve original Source/Reader/Quality scopes and limits; no new accepted IDs."
         }
       ],
       "review": {
@@ -823,6 +828,20 @@
           "report": "docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/observer-26-scope-preservation-corrected-verdict.json",
           "reportSha256": "042f58eb25bb548c3c8d8a62724683d0b435e5dd65aea45a26fe888011462498",
           "inspectionLimit": "Complete original summary/limits/role/requirement contracts and all676 relevant paths supplied; full historical ledger unchanged. Coordinator native observations are not reviewer execution or fresh participant/live/deployment qualification. Original global output-role/DATAUNKNOWN/release/human limits retained."
+        },
+        {
+          "previousReviewedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+          "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
+          "reviewer": "Pinned fe588b1a Codex gpt-5.6-terra/high/P2 independent complete19 original-scope preservation",
+          "changedDependencies": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "verdict": "PASS",
+          "summary": "Alloriginalqualifiedtopic bodies andimplementation sources byteequal; oneunrelateddocsite lastVerified projection changed, other176rows/sourceSurfaceMap equal. Newtopiclinks do not alter originalplatform/task semantics.",
+          "originalRecordSha256": "25dd924f2438551a297f31c0a05d1e7db81ca3c8f5864d219fe83ece199b843e",
+          "report": "docs/review/parity-topic-map-20261026.json",
+          "reportSha256": "a73d41327f2166dc5e67afc8345c58fe68504373617855f9396f94be11efca66",
+          "inspectionLimit": "Complete original contracts/limits and 727-file vectors; unchanged historical receipts reused without revision. Coordinator checks are not new independent human/runtime qualification."
         }
       ],
       "revisionHistory": [
@@ -2542,7 +2561,7 @@
     },
     {
       "id": "Reviewed-corrections-20261020",
-      "revision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -2702,6 +2721,11 @@
           "command": "Independent exact26-original-scope preservation; node scripts/docs-governance.mjs --check; original committed Reader build and five native reader checks",
           "exitCode": 0,
           "observation": "Complete original contracts/limits and 676-file vectors reviewed; exact first-plugin/6literal asset paths/three generated metadata rows preserve existing bounds. Final seven coordinator processes and four bounded browser cases passed; fresh observer source checkout/install/lifecycle passed separately. No new accepted IDs, human/live/global qualification; original histories and failures retained. Evidence docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/."
+        },
+        {
+          "command": "Independent complete19 original-scope preservation; six native Reader controls and four bounded browser cases",
+          "exitCode": 0,
+          "observation": "ALL19_ORIGINAL_SCOPES_PRESERVED=PASS. Complete additive canonical navigation, one generated metadata row, full changed-page search record and 727-file vectors preserve original Source/Reader/Quality scopes and limits; no new accepted IDs."
         }
       ],
       "review": {
@@ -3179,6 +3203,20 @@
           "report": "docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/observer-26-scope-preservation-corrected-verdict.json",
           "reportSha256": "042f58eb25bb548c3c8d8a62724683d0b435e5dd65aea45a26fe888011462498",
           "inspectionLimit": "Complete original summary/limits/role/requirement contracts and all676 relevant paths supplied; full historical ledger unchanged. Coordinator native observations are not reviewer execution or fresh participant/live/deployment qualification. Original global output-role/DATAUNKNOWN/release/human limits retained."
+        },
+        {
+          "previousReviewedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+          "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
+          "reviewer": "Pinned fe588b1a Codex gpt-5.6-terra/high/P2 independent complete19 original-scope preservation",
+          "changedDependencies": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "verdict": "PASS",
+          "summary": "Alloriginalcorrectedruntime/schema/error source andreaderbodies byteequal. OnlyDocsite metadata projection differs; new navigation metadata grantsno feature/runtime qualification.",
+          "originalRecordSha256": "3a585a396ffb8d3c8eb981a7aeef88c4bb849acc88811a30b3424c4333471f9c",
+          "report": "docs/review/parity-topic-map-20261026.json",
+          "reportSha256": "a73d41327f2166dc5e67afc8345c58fe68504373617855f9396f94be11efca66",
+          "inspectionLimit": "Complete original contracts/limits and 727-file vectors; unchanged historical receipts reused without revision. Coordinator checks are not new independent human/runtime qualification."
         }
       ],
       "previousReviewedRevision": "deef4c3ad6e25aaefb13a9977da93889266a043c",
@@ -6485,7 +6523,7 @@
     },
     {
       "id": "AP09-reviewed-publication-navigation-20261020",
-      "revision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
       "author": "Documentation implementation authors",
       "reviewer": "/root/review_publication",
       "gateIds": [
@@ -6604,6 +6642,11 @@
           "command": "Independent exact26-original-scope preservation; node scripts/docs-governance.mjs --check; original committed Reader build and five native reader checks",
           "exitCode": 0,
           "observation": "Complete original contracts/limits and 676-file vectors reviewed; exact first-plugin/6literal asset paths/three generated metadata rows preserve existing bounds. Final seven coordinator processes and four bounded browser cases passed; fresh observer source checkout/install/lifecycle passed separately. No new accepted IDs, human/live/global qualification; original histories and failures retained. Evidence docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/."
+        },
+        {
+          "command": "Independent complete19 original-scope preservation; six native Reader controls and four bounded browser cases",
+          "exitCode": 0,
+          "observation": "ALL19_ORIGINAL_SCOPES_PRESERVED=PASS. Complete additive canonical navigation, one generated metadata row, full changed-page search record and 727-file vectors preserve original Source/Reader/Quality scopes and limits; no new accepted IDs."
         }
       ],
       "review": {
@@ -7008,6 +7051,20 @@
           "report": "docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/observer-26-scope-preservation-corrected-verdict.json",
           "reportSha256": "042f58eb25bb548c3c8d8a62724683d0b435e5dd65aea45a26fe888011462498",
           "inspectionLimit": "Complete original summary/limits/role/requirement contracts and all676 relevant paths supplied; full historical ledger unchanged. Coordinator native observations are not reviewer execution or fresh participant/live/deployment qualification. Original global output-role/DATAUNKNOWN/release/human limits retained."
+        },
+        {
+          "previousReviewedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+          "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
+          "reviewer": "Pinned fe588b1a Codex gpt-5.6-terra/high/P2 independent complete19 original-scope preservation",
+          "changedDependencies": [
+            "docs/site/reference/documentation-site.md"
+          ],
+          "verdict": "PASS",
+          "summary": "New10topicmap routesall25destinations to positivelyselectedcanonicalpages; currentfullpage/12searchqueries/nativeartifact and4offlinebrowsercases preserve real reader find/navigation duty.",
+          "originalRecordSha256": "5f2e3637f3f478541b202d2cbf8497017dccca8cb04f699b207e132a71dc5507",
+          "report": "docs/review/parity-topic-map-20261026.json",
+          "reportSha256": "a73d41327f2166dc5e67afc8345c58fe68504373617855f9396f94be11efca66",
+          "inspectionLimit": "Complete original contracts/limits and 727-file vectors; unchanged historical receipts reused without revision. Coordinator checks are not new independent human/runtime qualification."
         }
       ],
       "previousReviewedRevision": "8fa9ed9b95bb37ca234aef1f321f68831519abab",
@@ -11883,7 +11940,7 @@
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
-      "revision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 maintenance-ready-review",
       "gateIds": [],
@@ -12237,6 +12294,11 @@
           "command": "Independent exact26-original-scope preservation; node scripts/docs-governance.mjs --check; original committed Reader build and five native reader checks",
           "exitCode": 0,
           "observation": "Complete original contracts/limits and 676-file vectors reviewed; exact first-plugin/6literal asset paths/three generated metadata rows preserve existing bounds. Final seven coordinator processes and four bounded browser cases passed; fresh observer source checkout/install/lifecycle passed separately. No new accepted IDs, human/live/global qualification; original histories and failures retained. Evidence docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/."
+        },
+        {
+          "command": "Independent complete19 original-scope preservation; six native Reader controls and four bounded browser cases",
+          "exitCode": 0,
+          "observation": "ALL19_ORIGINAL_SCOPES_PRESERVED=PASS. Complete additive canonical navigation, one generated metadata row, full changed-page search record and 727-file vectors preserve original Source/Reader/Quality scopes and limits; no new accepted IDs."
         }
       ],
       "review": {
@@ -12850,6 +12912,20 @@
           "report": "docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/observer-26-scope-preservation-corrected-verdict.json",
           "reportSha256": "042f58eb25bb548c3c8d8a62724683d0b435e5dd65aea45a26fe888011462498",
           "inspectionLimit": "Complete original summary/limits/role/requirement contracts and all676 relevant paths supplied; full historical ledger unchanged. Coordinator native observations are not reviewer execution or fresh participant/live/deployment qualification. Original global output-role/DATAUNKNOWN/release/human limits retained."
+        },
+        {
+          "previousReviewedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+          "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
+          "reviewer": "Pinned fe588b1a Codex gpt-5.6-terra/high/P2 independent complete19 original-scope preservation",
+          "changedDependencies": [
+            "docs/site/reference/documentation-site.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Unchanged existingdocumentation maintenance/publication procedures andallprimaryscripts retained. Addedtopic map improves source-location lookup without replacing source ownership, generator/check or old explicit limits.",
+          "originalRecordSha256": "90e9c926442ffcac0d8582fc5d1c290513a7a9d446ba1a4dc73a27e018098910",
+          "report": "docs/review/parity-topic-map-20261026.json",
+          "reportSha256": "a73d41327f2166dc5e67afc8345c58fe68504373617855f9396f94be11efca66",
+          "inspectionLimit": "Complete original contracts/limits and 727-file vectors; unchanged historical receipts reused without revision. Coordinator checks are not new independent human/runtime qualification."
         }
       ],
       "previousReviewedRevision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
@@ -15608,7 +15684,7 @@
     },
     {
       "id": "AP09-complete-publication-reference-navigation-20261021",
-      "revision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -15807,6 +15883,11 @@
           "command": "Independent exact26-original-scope preservation; node scripts/docs-governance.mjs --check; original committed Reader build and five native reader checks",
           "exitCode": 0,
           "observation": "Complete original contracts/limits and 676-file vectors reviewed; exact first-plugin/6literal asset paths/three generated metadata rows preserve existing bounds. Final seven coordinator processes and four bounded browser cases passed; fresh observer source checkout/install/lifecycle passed separately. No new accepted IDs, human/live/global qualification; original histories and failures retained. Evidence docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/."
+        },
+        {
+          "command": "Independent complete19 original-scope preservation; six native Reader controls and four bounded browser cases",
+          "exitCode": 0,
+          "observation": "ALL19_ORIGINAL_SCOPES_PRESERVED=PASS. Complete additive canonical navigation, one generated metadata row, full changed-page search record and 727-file vectors preserve original Source/Reader/Quality scopes and limits; no new accepted IDs."
         }
       ],
       "review": {
@@ -16273,6 +16354,20 @@
           "report": "docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/observer-26-scope-preservation-corrected-verdict.json",
           "reportSha256": "042f58eb25bb548c3c8d8a62724683d0b435e5dd65aea45a26fe888011462498",
           "inspectionLimit": "Complete original summary/limits/role/requirement contracts and all676 relevant paths supplied; full historical ledger unchanged. Coordinator native observations are not reviewer execution or fresh participant/live/deployment qualification. Original global output-role/DATAUNKNOWN/release/human limits retained."
+        },
+        {
+          "previousReviewedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+          "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
+          "reviewer": "Pinned fe588b1a Codex gpt-5.6-terra/high/P2 independent complete19 original-scope preservation",
+          "changedDependencies": [
+            "docs/site/reference/documentation-site.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Reference/positivescope/source-evidence boundaries unchangedoutside additive map. Entirecurrentpage supplied; all25newlocaldestinations valid; old scope not expanded into childprocedure correctness.",
+          "originalRecordSha256": "f55b18450c8e8070139b7ed2694fa1e7083afc50a9d7dbd4fdf016a4d7be90ef",
+          "report": "docs/review/parity-topic-map-20261026.json",
+          "reportSha256": "a73d41327f2166dc5e67afc8345c58fe68504373617855f9396f94be11efca66",
+          "inspectionLimit": "Complete original contracts/limits and 727-file vectors; unchanged historical receipts reused without revision. Coordinator checks are not new independent human/runtime qualification."
         }
       ],
       "scopePreservation3408": {
@@ -17016,7 +17111,7 @@
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -17537,6 +17632,11 @@
           "command": "Independent exact26-original-scope preservation; node scripts/docs-governance.mjs --check; original committed Reader build and five native reader checks",
           "exitCode": 0,
           "observation": "Complete original contracts/limits and 676-file vectors reviewed; exact first-plugin/6literal asset paths/three generated metadata rows preserve existing bounds. Final seven coordinator processes and four bounded browser cases passed; fresh observer source checkout/install/lifecycle passed separately. No new accepted IDs, human/live/global qualification; original histories and failures retained. Evidence docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/."
+        },
+        {
+          "command": "Independent complete19 original-scope preservation; six native Reader controls and four bounded browser cases",
+          "exitCode": 0,
+          "observation": "ALL19_ORIGINAL_SCOPES_PRESERVED=PASS. Complete additive canonical navigation, one generated metadata row, full changed-page search record and 727-file vectors preserve original Source/Reader/Quality scopes and limits; no new accepted IDs."
         }
       ],
       "limits": [
@@ -18838,6 +18938,20 @@
           "report": "docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/observer-26-scope-preservation-corrected-verdict.json",
           "reportSha256": "042f58eb25bb548c3c8d8a62724683d0b435e5dd65aea45a26fe888011462498",
           "inspectionLimit": "Complete original summary/limits/role/requirement contracts and all676 relevant paths supplied; full historical ledger unchanged. Coordinator native observations are not reviewer execution or fresh participant/live/deployment qualification. Original global output-role/DATAUNKNOWN/release/human limits retained."
+        },
+        {
+          "previousReviewedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+          "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
+          "reviewer": "Pinned fe588b1a Codex gpt-5.6-terra/high/P2 independent complete19 original-scope preservation",
+          "changedDependencies": [
+            "docs/site/reference/documentation-site.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Currentcomplete changed-page searchrecord provided, full177pageindex andall12originalqueries0. Newbodysearchimpact assessed, not onlymetadata hashes. No new query threshold or freshbody semanticapproval.",
+          "originalRecordSha256": "75cc0028de96fc5a099e970056117f7c11c659e10929fa1d0adb7c108147a726",
+          "report": "docs/review/parity-topic-map-20261026.json",
+          "reportSha256": "a73d41327f2166dc5e67afc8345c58fe68504373617855f9396f94be11efca66",
+          "inspectionLimit": "Complete original contracts/limits and 727-file vectors; unchanged historical receipts reused without revision. Coordinator checks are not new independent human/runtime qualification."
         }
       ],
       "scopePreservation3408": {
@@ -18885,7 +18999,7 @@
     },
     {
       "id": "AP09-search-reader-gate-20261021",
-      "revision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-04 code/evidence review plus narrow Source/Reader/Quality native-impact follow-up",
       "verdict": "PASS",
@@ -19153,6 +19267,11 @@
           "command": "Independent exact26-original-scope preservation; node scripts/docs-governance.mjs --check; original committed Reader build and five native reader checks",
           "exitCode": 0,
           "observation": "Complete original contracts/limits and 676-file vectors reviewed; exact first-plugin/6literal asset paths/three generated metadata rows preserve existing bounds. Final seven coordinator processes and four bounded browser cases passed; fresh observer source checkout/install/lifecycle passed separately. No new accepted IDs, human/live/global qualification; original histories and failures retained. Evidence docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/."
+        },
+        {
+          "command": "Independent complete19 original-scope preservation; six native Reader controls and four bounded browser cases",
+          "exitCode": 0,
+          "observation": "ALL19_ORIGINAL_SCOPES_PRESERVED=PASS. Complete additive canonical navigation, one generated metadata row, full changed-page search record and 727-file vectors preserve original Source/Reader/Quality scopes and limits; no new accepted IDs."
         }
       ],
       "limits": [
@@ -19922,6 +20041,20 @@
           "report": "docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/observer-26-scope-preservation-corrected-verdict.json",
           "reportSha256": "042f58eb25bb548c3c8d8a62724683d0b435e5dd65aea45a26fe888011462498",
           "inspectionLimit": "Complete original summary/limits/role/requirement contracts and all676 relevant paths supplied; full historical ledger unchanged. Coordinator native observations are not reviewer execution or fresh participant/live/deployment qualification. Original global output-role/DATAUNKNOWN/release/human limits retained."
+        },
+        {
+          "previousReviewedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+          "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
+          "reviewer": "Pinned fe588b1a Codex gpt-5.6-terra/high/P2 independent complete19 original-scope preservation",
+          "changedDependencies": [
+            "docs/site/reference/documentation-site.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Entire changedpage searchrecord/all12samequestions preserveoriginalfindability; allotherpagebodies/engine/config unchanged. Newtopicmapheading andbodyincluded ratherthan excluded semantic impact.",
+          "originalRecordSha256": "febdf33c99ebc2b6b437acfb84a4eada9ee3c8ed252c1041c9f581f9c7cfe680",
+          "report": "docs/review/parity-topic-map-20261026.json",
+          "reportSha256": "a73d41327f2166dc5e67afc8345c58fe68504373617855f9396f94be11efca66",
+          "inspectionLimit": "Complete original contracts/limits and 727-file vectors; unchanged historical receipts reused without revision. Coordinator checks are not new independent human/runtime qualification."
         }
       ],
       "scopePreservation3408": {
@@ -19968,7 +20101,7 @@
     },
     {
       "id": "AP09-rendered-source-bounds-gate-20261021",
-      "revision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-09 Source/Reader/Quality review and narrow changed-boundary impact review for 21 prior PASS records",
       "verdict": "PASS",
@@ -20245,6 +20378,11 @@
           "command": "Independent exact26-original-scope preservation; node scripts/docs-governance.mjs --check; original committed Reader build and five native reader checks",
           "exitCode": 0,
           "observation": "Complete original contracts/limits and 676-file vectors reviewed; exact first-plugin/6literal asset paths/three generated metadata rows preserve existing bounds. Final seven coordinator processes and four bounded browser cases passed; fresh observer source checkout/install/lifecycle passed separately. No new accepted IDs, human/live/global qualification; original histories and failures retained. Evidence docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/."
+        },
+        {
+          "command": "Independent complete19 original-scope preservation; six native Reader controls and four bounded browser cases",
+          "exitCode": 0,
+          "observation": "ALL19_ORIGINAL_SCOPES_PRESERVED=PASS. Complete additive canonical navigation, one generated metadata row, full changed-page search record and 727-file vectors preserve original Source/Reader/Quality scopes and limits; no new accepted IDs."
         }
       ],
       "limits": [
@@ -20990,6 +21128,20 @@
           "report": "docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/observer-26-scope-preservation-corrected-verdict.json",
           "reportSha256": "042f58eb25bb548c3c8d8a62724683d0b435e5dd65aea45a26fe888011462498",
           "inspectionLimit": "Complete original summary/limits/role/requirement contracts and all676 relevant paths supplied; full historical ledger unchanged. Coordinator native observations are not reviewer execution or fresh participant/live/deployment qualification. Original global output-role/DATAUNKNOWN/release/human limits retained."
+        },
+        {
+          "previousReviewedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+          "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
+          "reviewer": "Pinned fe588b1a Codex gpt-5.6-terra/high/P2 independent complete19 original-scope preservation",
+          "changedDependencies": [
+            "docs/site/reference/documentation-site.md"
+          ],
+          "verdict": "PASS",
+          "summary": "OriginalSource code/link/conversion boundaries unchanged; newmap doesnot add Sourcebox semantics or privatelyqualifyfiles. Actual currentartifact/source-links/previews controls0 at originalboundedtechnicalscope.",
+          "originalRecordSha256": "673d0fb487df8272618c456ad4ddb125452d165367ce95aef7e847c3788d649e",
+          "report": "docs/review/parity-topic-map-20261026.json",
+          "reportSha256": "a73d41327f2166dc5e67afc8345c58fe68504373617855f9396f94be11efca66",
+          "inspectionLimit": "Complete original contracts/limits and 727-file vectors; unchanged historical receipts reused without revision. Coordinator checks are not new independent human/runtime qualification."
         }
       ],
       "scopePreservation3408": {
@@ -21036,7 +21188,7 @@
     },
     {
       "id": "AP09-complete-static-offline-fallback-20261021",
-      "revision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole PUB-006/A912-10 Source/Reader/Quality closeout, inspecting original obligation, actual browser provenance and critical task prose",
       "verdict": "PASS",
@@ -21137,6 +21289,11 @@
           "command": "Independent exact26-original-scope preservation; node scripts/docs-governance.mjs --check; original committed Reader build and five native reader checks",
           "exitCode": 0,
           "observation": "Complete original contracts/limits and 676-file vectors reviewed; exact first-plugin/6literal asset paths/three generated metadata rows preserve existing bounds. Final seven coordinator processes and four bounded browser cases passed; fresh observer source checkout/install/lifecycle passed separately. No new accepted IDs, human/live/global qualification; original histories and failures retained. Evidence docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/."
+        },
+        {
+          "command": "Independent complete19 original-scope preservation; six native Reader controls and four bounded browser cases",
+          "exitCode": 0,
+          "observation": "ALL19_ORIGINAL_SCOPES_PRESERVED=PASS. Complete additive canonical navigation, one generated metadata row, full changed-page search record and 727-file vectors preserve original Source/Reader/Quality scopes and limits; no new accepted IDs."
         }
       ],
       "limits": [
@@ -21433,13 +21590,27 @@
           "report": "docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/observer-26-scope-preservation-corrected-verdict.json",
           "reportSha256": "042f58eb25bb548c3c8d8a62724683d0b435e5dd65aea45a26fe888011462498",
           "inspectionLimit": "Complete original summary/limits/role/requirement contracts and all676 relevant paths supplied; full historical ledger unchanged. Coordinator native observations are not reviewer execution or fresh participant/live/deployment qualification. Original global output-role/DATAUNKNOWN/release/human limits retained."
+        },
+        {
+          "previousReviewedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+          "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
+          "reviewer": "Pinned fe588b1a Codex gpt-5.6-terra/high/P2 independent complete19 original-scope preservation",
+          "changedDependencies": [
+            "docs/site/reference/documentation-site.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Newtable nativeHTML/localanchors works JSoff/on at320/1440offline,25filetargets,noHTTP. No newJSdependency; fulloriginalbuild/links checks0, old broaderparticipant limits retained.",
+          "originalRecordSha256": "0cc3e7cbfa44f2cc6fc03c011cd5ca99190d037b4aeccf7794c7ba358f13b465",
+          "report": "docs/review/parity-topic-map-20261026.json",
+          "reportSha256": "a73d41327f2166dc5e67afc8345c58fe68504373617855f9396f94be11efca66",
+          "inspectionLimit": "Complete original contracts/limits and 727-file vectors; unchanged historical receipts reused without revision. Coordinator checks are not new independent human/runtime qualification."
         }
       ],
       "previousReviewedRevision": "8fa9ed9b95bb37ca234aef1f321f68831519abab"
     },
     {
       "id": "AP09-complete-same-source-code-preview-20261021",
-      "revision": "829704320afac4cbed028d0847062819acda6559",
+      "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole PUB004 Source/Reader/Quality closeout plus narrow changed-boundary preservation for21priorPASSrecords",
       "verdict": "PASS",
@@ -21699,6 +21870,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Actual six separate committed technical Reader processes PASS at c56f684a0b18bbf8c9615524e6702a0e80a589e4; 177-page publication, artifact/search/Source-link/Source-preview/diagrams. Exact reviewed platform sort correction, two finite scalar identities and five downstream digest consequences; 14 canonical scalar and 22 variable-child controls PASS. No new practical participant/human/runtime observations. Original DATA artifacts.ts:41 content/all5 UNKNOWN and original ordinary/Knip/fullgeneration limits retained."
+        },
+        {
+          "command": "Independent complete19 original-scope preservation; six native Reader controls and four bounded browser cases",
+          "exitCode": 0,
+          "observation": "ALL19_ORIGINAL_SCOPES_PRESERVED=PASS. Complete additive canonical navigation, one generated metadata row, full changed-page search record and 727-file vectors preserve original Source/Reader/Quality scopes and limits; no new accepted IDs."
         }
       ],
       "limits": [
@@ -22394,6 +22570,20 @@
           "result": "PASS — original bounded scope preserved, not recounted",
           "scope": "Complete original record and full declared vector preserved after only2Source-custody data-module changes. Exactly3explicit copy-only publicassets,17CI/14reader-purpose existing input vectors,one operative unit/range/init successor,8existingconsumer facts digests; actualcomplete106consumer census, each changedconsumer ONE of2known definitions. Every executable guard/import/selector/caller/authority and allothermetadata unchanged. Actual93purpose+38operative/role controls and8direct originalqualifications pass; original6f6Reader controls reused on unchanged owning publication/runtime sources.",
           "limits": "Original author/reviewer/summary/review/checks/limits/history/verdict/practicaldates unchanged; no newhuman,DATA/outputrole/globalAPI/product/runtime/deployment/release qualification. Actualcurrentcomplexityselector failure reproduced by original1e84 own-module directguard; fullisolatedbaselineReceiver canonicalRoot refusal retained, no alias or exception. Historicalartifact41/all5DATAUNKNOWN preserved, not misreportedcurrentterminal."
+        },
+        {
+          "previousReviewedRevision": "829704320afac4cbed028d0847062819acda6559",
+          "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
+          "reviewer": "Pinned fe588b1a Codex gpt-5.6-terra/high/P2 independent complete19 original-scope preservation",
+          "changedDependencies": [
+            "docs/site/reference/documentation-site.md"
+          ],
+          "verdict": "PASS",
+          "summary": "All existing Sourceboxes/preview source inputs unchanged; newtable no newSource-disclosure implementation. ActualcurrentSourcepreviewchecker0; historicpracticalobservations stayhistoric.",
+          "originalRecordSha256": "f28c3869cf0137c5a283947a7da8c74448bc2d88f3dc0f4ec6b0d32a2639b61e",
+          "report": "docs/review/parity-topic-map-20261026.json",
+          "reportSha256": "a73d41327f2166dc5e67afc8345c58fe68504373617855f9396f94be11efca66",
+          "inspectionLimit": "Complete original contracts/limits and 727-file vectors; unchanged historical receipts reused without revision. Coordinator checks are not new independent human/runtime qualification."
         }
       ],
       "scopePreservation3408": {
@@ -22440,7 +22630,7 @@
     },
     {
       "id": "AP09-complete-responsive-reader-layout-20261021",
-      "revision": "829704320afac4cbed028d0847062819acda6559",
+      "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A91207 responsive-layout closeout and narrow24-record prior-boundary preservation",
       "verdict": "PASS",
@@ -22760,6 +22950,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Actual six separate committed technical Reader processes PASS at c56f684a0b18bbf8c9615524e6702a0e80a589e4; 177-page publication, artifact/search/Source-link/Source-preview/diagrams. Exact reviewed platform sort correction, two finite scalar identities and five downstream digest consequences; 14 canonical scalar and 22 variable-child controls PASS. No new practical participant/human/runtime observations. Original DATA artifacts.ts:41 content/all5 UNKNOWN and original ordinary/Knip/fullgeneration limits retained."
+        },
+        {
+          "command": "Independent complete19 original-scope preservation; six native Reader controls and four bounded browser cases",
+          "exitCode": 0,
+          "observation": "ALL19_ORIGINAL_SCOPES_PRESERVED=PASS. Complete additive canonical navigation, one generated metadata row, full changed-page search record and 727-file vectors preserve original Source/Reader/Quality scopes and limits; no new accepted IDs."
         }
       ],
       "limits": [
@@ -23478,6 +23673,20 @@
           "result": "PASS — original bounded scope preserved, not recounted",
           "scope": "Complete original record and full declared vector preserved after only2Source-custody data-module changes. Exactly3explicit copy-only publicassets,17CI/14reader-purpose existing input vectors,one operative unit/range/init successor,8existingconsumer facts digests; actualcomplete106consumer census, each changedconsumer ONE of2known definitions. Every executable guard/import/selector/caller/authority and allothermetadata unchanged. Actual93purpose+38operative/role controls and8direct originalqualifications pass; original6f6Reader controls reused on unchanged owning publication/runtime sources.",
           "limits": "Original author/reviewer/summary/review/checks/limits/history/verdict/practicaldates unchanged; no newhuman,DATA/outputrole/globalAPI/product/runtime/deployment/release qualification. Actualcurrentcomplexityselector failure reproduced by original1e84 own-module directguard; fullisolatedbaselineReceiver canonicalRoot refusal retained, no alias or exception. Historicalartifact41/all5DATAUNKNOWN preserved, not misreportedcurrentterminal."
+        },
+        {
+          "previousReviewedRevision": "829704320afac4cbed028d0847062819acda6559",
+          "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
+          "reviewer": "Pinned fe588b1a Codex gpt-5.6-terra/high/P2 independent complete19 original-scope preservation",
+          "changedDependencies": [
+            "docs/site/reference/documentation-site.md"
+          ],
+          "verdict": "PASS",
+          "summary": "ExistingCSS/renderer unchanged; actual newlongtable fourbrowsercases showsdocument scrollWidth<=viewport320/1440 forJSoff/on. Originalautomatedresponsive scope maintained, not new human/deviceproof.",
+          "originalRecordSha256": "a0dde350f4f6b25fbd56bb012eb16f662a1827e0803a58abab3a0fbbcc7dda8d",
+          "report": "docs/review/parity-topic-map-20261026.json",
+          "reportSha256": "a73d41327f2166dc5e67afc8345c58fe68504373617855f9396f94be11efca66",
+          "inspectionLimit": "Complete original contracts/limits and 727-file vectors; unchanged historical receipts reused without revision. Coordinator checks are not new independent human/runtime qualification."
         }
       ],
       "scopePreservation3408": {
@@ -23524,7 +23733,7 @@
     },
     {
       "id": "AP09-complete-source-backed-diagrams-20261021",
-      "revision": "c0d892fb2ea7f88994e53ea29de0fdce2d87d89e",
+      "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
       "author": "Nova /root documentation author and coordinator",
       "reviewer": "Independent Codex diagram_services whole-topic review coordinating independent source reviews; no content authorship",
       "gateIds": [
@@ -23671,6 +23880,11 @@
           "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
           "exitCode": 0,
           "observation": "Actual six separate original commands pass at committed c0d892fb;177canonical/187HTML/241outputdigests/40887localLinks,12searchquestions,15062verifiedSourceLinks/4082objects,435previewboxes/2000excerpts/1070objects,28deterministicSVGs. Complete31original scoped contracts/physical vectors independently preserved in six pinned Terra/high/P2 one-pass groups; unchanged Source reviews and156controls/110role guards reused. Supported aggregate --check and ownership checker pass. No new human/practical/runtime/release/DATA/gate acceptance."
+        },
+        {
+          "command": "Independent complete19 original-scope preservation; six native Reader controls and four bounded browser cases",
+          "exitCode": 0,
+          "observation": "ALL19_ORIGINAL_SCOPES_PRESERVED=PASS. Complete additive canonical navigation, one generated metadata row, full changed-page search record and 727-file vectors preserve original Source/Reader/Quality scopes and limits; no new accepted IDs."
         }
       ],
       "review": {
@@ -23996,6 +24210,20 @@
             "docs/blueprint/acceptance-evidence/README.md"
           ],
           "limits": "Original artifacts.ts41 DATA/all5UNKNOWN, Knip, human/live/runtime limits unchanged. Initial B2 import-path advisory retained and disproved by actual single-JSON51package report, then independently clean with full omitted consumer context; no Source correction or gate waiver."
+        },
+        {
+          "previousReviewedRevision": "c0d892fb2ea7f88994e53ea29de0fdce2d87d89e",
+          "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
+          "reviewer": "Pinned fe588b1a Codex gpt-5.6-terra/high/P2 independent complete19 original-scope preservation",
+          "changedDependencies": [
+            "docs/site/reference/documentation-site.md"
+          ],
+          "verdict": "PASS",
+          "summary": "All28diagramrecords/source inputs andrenderer unchanged; currentnative freshdiagramcheck0. Newtable doesnot modify diagram semantics or alternatives; no widened diagram/source approval.",
+          "originalRecordSha256": "a5d12c9db344a2a9e6cae3e189f82c62a041f8c58f94cc0595e49c52cdf65b55",
+          "report": "docs/review/parity-topic-map-20261026.json",
+          "reportSha256": "a73d41327f2166dc5e67afc8345c58fe68504373617855f9396f94be11efca66",
+          "inspectionLimit": "Complete original contracts/limits and 727-file vectors; unchanged historical receipts reused without revision. Coordinator checks are not new independent human/runtime qualification."
         }
       ],
       "scopePreservation3408": {
@@ -30529,7 +30757,7 @@
     },
     {
       "id": "A912-03-supported-redirect-paths-20261021",
-      "revision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
       "author": "operator_acceptance original implementation; root coherent F1/F2 correction",
       "reviewer": "workflow_acceptance independent full affected-topic Source/semantic Reader/quality review",
       "gateIds": [
@@ -30604,6 +30832,11 @@
           "command": "Independent exact26-original-scope preservation; node scripts/docs-governance.mjs --check; original committed Reader build and five native reader checks",
           "exitCode": 0,
           "observation": "Complete original contracts/limits and 676-file vectors reviewed; exact first-plugin/6literal asset paths/three generated metadata rows preserve existing bounds. Final seven coordinator processes and four bounded browser cases passed; fresh observer source checkout/install/lifecycle passed separately. No new accepted IDs, human/live/global qualification; original histories and failures retained. Evidence docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/."
+        },
+        {
+          "command": "Independent complete19 original-scope preservation; six native Reader controls and four bounded browser cases",
+          "exitCode": 0,
+          "observation": "ALL19_ORIGINAL_SCOPES_PRESERVED=PASS. Complete additive canonical navigation, one generated metadata row, full changed-page search record and 727-file vectors preserve original Source/Reader/Quality scopes and limits; no new accepted IDs."
         }
       ],
       "review": {
@@ -30829,6 +31062,20 @@
           "report": "docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/observer-26-scope-preservation-corrected-verdict.json",
           "reportSha256": "042f58eb25bb548c3c8d8a62724683d0b435e5dd65aea45a26fe888011462498",
           "inspectionLimit": "Complete original summary/limits/role/requirement contracts and all676 relevant paths supplied; full historical ledger unchanged. Coordinator native observations are not reviewer execution or fresh participant/live/deployment qualification. Original global output-role/DATAUNKNOWN/release/human limits retained."
+        },
+        {
+          "previousReviewedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+          "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
+          "reviewer": "Pinned fe588b1a Codex gpt-5.6-terra/high/P2 independent complete19 original-scope preservation",
+          "changedDependencies": [
+            "docs/site/reference/documentation-site.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Route registry/redirectimplementation unchanged; no invented legacyTopicMappublicroute. Currentartifactchecks0 andall25newcanonicaldestinations existingselectedtargets. Originalsupported redirectscope preserved.",
+          "originalRecordSha256": "661e929e3c084b9a66550a513ede42c7c6a469d393278f4313d9e1552901c8cf",
+          "report": "docs/review/parity-topic-map-20261026.json",
+          "reportSha256": "a73d41327f2166dc5e67afc8345c58fe68504373617855f9396f94be11efca66",
+          "inspectionLimit": "Complete original contracts/limits and 727-file vectors; unchanged historical receipts reused without revision. Coordinator checks are not new independent human/runtime qualification."
         }
       ],
       "previousReviewedRevision": "c0d892fb2ea7f88994e53ea29de0fdce2d87d89e",
@@ -30853,7 +31100,7 @@
     },
     {
       "id": "A912-11-deterministic-page-records-20261022",
-      "revision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
       "author": "/root/workflow_acceptance metadata author; /root installed integration and original production builds",
       "reviewer": "/root/custody_review; independent of metadata author",
       "gateIds": [
@@ -30946,6 +31193,11 @@
           "command": "Independent exact26-original-scope preservation; node scripts/docs-governance.mjs --check; original committed Reader build and five native reader checks",
           "exitCode": 0,
           "observation": "Complete original contracts/limits and 676-file vectors reviewed; exact first-plugin/6literal asset paths/three generated metadata rows preserve existing bounds. Final seven coordinator processes and four bounded browser cases passed; fresh observer source checkout/install/lifecycle passed separately. No new accepted IDs, human/live/global qualification; original histories and failures retained. Evidence docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/."
+        },
+        {
+          "command": "Independent complete19 original-scope preservation; six native Reader controls and four bounded browser cases",
+          "exitCode": 0,
+          "observation": "ALL19_ORIGINAL_SCOPES_PRESERVED=PASS. Complete additive canonical navigation, one generated metadata row, full changed-page search record and 727-file vectors preserve original Source/Reader/Quality scopes and limits; no new accepted IDs."
         }
       ],
       "review": {
@@ -31197,6 +31449,21 @@
           "report": "docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/observer-26-scope-preservation-corrected-verdict.json",
           "reportSha256": "042f58eb25bb548c3c8d8a62724683d0b435e5dd65aea45a26fe888011462498",
           "inspectionLimit": "Complete original summary/limits/role/requirement contracts and all676 relevant paths supplied; full historical ledger unchanged. Coordinator native observations are not reviewer execution or fresh participant/live/deployment qualification. Original global output-role/DATAUNKNOWN/release/human limits retained."
+        },
+        {
+          "previousReviewedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+          "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
+          "reviewer": "Pinned fe588b1a Codex gpt-5.6-terra/high/P2 independent complete19 original-scope preservation",
+          "changedDependencies": [
+            "docs/site/reference/documentation-site.md",
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "verdict": "PASS",
+          "summary": "OnlyonecompleteDocsite metadata row lastVerified changes; ownergenerate/check0. Allother176rows/allnonpage domains/parsecode unchanged; bodytable doesnot redefine pagebinding/cardinality.",
+          "originalRecordSha256": "2c92eb3e3cc7d926b2f1aa3e31a6e0f9719cf4ddb9a2fa618928de460323064e",
+          "report": "docs/review/parity-topic-map-20261026.json",
+          "reportSha256": "a73d41327f2166dc5e67afc8345c58fe68504373617855f9396f94be11efca66",
+          "inspectionLimit": "Complete original contracts/limits and 727-file vectors; unchanged historical receipts reused without revision. Coordinator checks are not new independent human/runtime qualification."
         }
       ],
       "scopePreservation3408": {
@@ -31233,7 +31500,7 @@
     },
     {
       "id": "AP09-publication-positive-scope-7ef16585",
-      "revision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
       "author": "existing publication/content maintainers; final authored Sourcefield additions separately reviewed by workflow_acceptance",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -31573,6 +31840,11 @@
           "command": "Independent exact26-original-scope preservation; node scripts/docs-governance.mjs --check; original committed Reader build and five native reader checks",
           "exitCode": 0,
           "observation": "Complete original contracts/limits and 676-file vectors reviewed; exact first-plugin/6literal asset paths/three generated metadata rows preserve existing bounds. Final seven coordinator processes and four bounded browser cases passed; fresh observer source checkout/install/lifecycle passed separately. No new accepted IDs, human/live/global qualification; original histories and failures retained. Evidence docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/."
+        },
+        {
+          "command": "Independent complete19 original-scope preservation; six native Reader controls and four bounded browser cases",
+          "exitCode": 0,
+          "observation": "ALL19_ORIGINAL_SCOPES_PRESERVED=PASS. Complete additive canonical navigation, one generated metadata row, full changed-page search record and 727-file vectors preserve original Source/Reader/Quality scopes and limits; no new accepted IDs."
         }
       ],
       "review": {
@@ -32260,6 +32532,21 @@
           "report": "docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/observer-26-scope-preservation-corrected-verdict.json",
           "reportSha256": "042f58eb25bb548c3c8d8a62724683d0b435e5dd65aea45a26fe888011462498",
           "inspectionLimit": "Complete original summary/limits/role/requirement contracts and all676 relevant paths supplied; full historical ledger unchanged. Coordinator native observations are not reviewer execution or fresh participant/live/deployment qualification. Original global output-role/DATAUNKNOWN/release/human limits retained."
+        },
+        {
+          "previousReviewedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+          "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
+          "reviewer": "Pinned fe588b1a Codex gpt-5.6-terra/high/P2 independent complete19 original-scope preservation",
+          "changedDependencies": [
+            "docs/site/reference/documentation-site.md",
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "verdict": "PASS",
+          "summary": "Manifest/positivepage andassetboundary implementations unchanged,177canonicalpages retained; currentbuild/artifact0. Newtable onlylinks alreadyselectedreaderpages, neverpublishes source roots as newproductpages.",
+          "originalRecordSha256": "749e3fd85d511cc785f933733f986d920645476c6135b9d85b9f243648391301",
+          "report": "docs/review/parity-topic-map-20261026.json",
+          "reportSha256": "a73d41327f2166dc5e67afc8345c58fe68504373617855f9396f94be11efca66",
+          "inspectionLimit": "Complete original contracts/limits and 727-file vectors; unchanged historical receipts reused without revision. Coordinator checks are not new independent human/runtime qualification."
         }
       ],
       "scopePreservation3408": {
@@ -32336,7 +32623,7 @@
     },
     {
       "id": "A912-05-whole-source-excerpt-callouts-20261022",
-      "revision": "01b46a3baf1114c07ab84f8e900033ea3b052cbc",
+      "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
       "author": "Existing publication/canonical topic maintainers; field-correction authors in named independent reviews",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -32492,6 +32779,11 @@
           "command": "Actual committedSource01b46a3b: original177page publication build and five docs-reader controls; original publication/docs/refs/whitespace checks",
           "exitCode": 0,
           "observation": "All original technical controls terminal0. Full current ownerpage Source/semanticReader/QualityPASS across all7completeoriginalcontexts; independent per-ID originalscope preservationPASS. Generation guarantees qualified for markerlesscompatibility; URLvalidation/raceerrors accurately bounded; recovery explicitly binds selectedswarm/scaffold and checks historicalSourcepin/cleancheckout. All11 owningSources exact historicalpin. No fresh historicalCLI/native/live/human/wholeA99-11 acceptance. Initial interrupted build transporttimeout retained outside checkout; actual successful rerun separately logged. Raw controls: /home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/project-publication-recovery-committed-reader"
+        },
+        {
+          "command": "Independent complete19 original-scope preservation; six native Reader controls and four bounded browser cases",
+          "exitCode": 0,
+          "observation": "ALL19_ORIGINAL_SCOPES_PRESERVED=PASS. Complete additive canonical navigation, one generated metadata row, full changed-page search record and 727-file vectors preserve original Source/Reader/Quality scopes and limits; no new accepted IDs."
         }
       ],
       "review": {
@@ -32868,6 +33160,20 @@
           "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/project-publication-preservation-publication-callout-1711-verdict.json",
           "reportSha256": "65bd96d5ecdefe0fa6907e0a1b3120315e79f248f22da942c55f4bd921868d49",
           "inspectionLimit": "Static fullSource inspection; actual technical build/checks are coordinator observations, not reviewer-executed tests or fresh historical/native/live/human exercises. WholeA99-11NOT_READY; original DATA/runtime/ToolSource/deployprovenance/releaseKnip/human limits retained."
+        },
+        {
+          "previousReviewedRevision": "01b46a3baf1114c07ab84f8e900033ea3b052cbc",
+          "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
+          "reviewer": "Pinned fe588b1a Codex gpt-5.6-terra/high/P2 independent complete19 original-scope preservation",
+          "changedDependencies": [
+            "docs/site/reference/documentation-site.md"
+          ],
+          "verdict": "PASS",
+          "summary": "No change to Sourcecalloutcontract/parser/renderer or oldboxes. Currentwholepage given plusactualSource-links/previews0; newtable doesnot relabel codeRoot paths as executed or proof-qualified callouts.",
+          "originalRecordSha256": "daccb2f6b7cbec60d03710bd2f7f743eee1ba64b8d5a939b5a2ef862d0027b95",
+          "report": "docs/review/parity-topic-map-20261026.json",
+          "reportSha256": "a73d41327f2166dc5e67afc8345c58fe68504373617855f9396f94be11efca66",
+          "inspectionLimit": "Complete original contracts/limits and 727-file vectors; unchanged historical receipts reused without revision. Coordinator checks are not new independent human/runtime qualification."
         }
       ],
       "scopePreservation3408": {
@@ -32918,7 +33224,7 @@
     },
     {
       "id": "A98-02-13-whole-operator-procedure-contract-20261022",
-      "revision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
       "author": "Original canonical topic maintainers plus separately reviewed bounded corrections",
       "reviewer": "/root/operator_acceptance; own quickstart delta independently reviewed by /root",
       "gateIds": [
@@ -33307,6 +33613,11 @@
           "command": "Independent exact26-original-scope preservation; node scripts/docs-governance.mjs --check; original committed Reader build and five native reader checks",
           "exitCode": 0,
           "observation": "Complete original contracts/limits and 676-file vectors reviewed; exact first-plugin/6literal asset paths/three generated metadata rows preserve existing bounds. Final seven coordinator processes and four bounded browser cases passed; fresh observer source checkout/install/lifecycle passed separately. No new accepted IDs, human/live/global qualification; original histories and failures retained. Evidence docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/."
+        },
+        {
+          "command": "Independent complete19 original-scope preservation; six native Reader controls and four bounded browser cases",
+          "exitCode": 0,
+          "observation": "ALL19_ORIGINAL_SCOPES_PRESERVED=PASS. Complete additive canonical navigation, one generated metadata row, full changed-page search record and 727-file vectors preserve original Source/Reader/Quality scopes and limits; no new accepted IDs."
         }
       ],
       "review": {
@@ -33751,6 +34062,20 @@
           "report": "docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/observer-26-scope-preservation-corrected-verdict.json",
           "reportSha256": "042f58eb25bb548c3c8d8a62724683d0b435e5dd65aea45a26fe888011462498",
           "inspectionLimit": "Complete original summary/limits/role/requirement contracts and all676 relevant paths supplied; full historical ledger unchanged. Coordinator native observations are not reviewer execution or fresh participant/live/deployment qualification. Original global output-role/DATAUNKNOWN/release/human limits retained."
+        },
+        {
+          "previousReviewedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+          "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
+          "reviewer": "Pinned fe588b1a Codex gpt-5.6-terra/high/P2 independent complete19 original-scope preservation",
+          "changedDependencies": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "verdict": "PASS",
+          "summary": "Alloriginaloperator procedure/config/currentSourcebodies byteequal. Onlyanunrelateddocumentation-site metadata row changed. Existingcompactcontract1-4/actual limits remain, no newoperator/release/livequalifications.",
+          "originalRecordSha256": "09da57599e6bf264c1a84dd9439c00b7a978fa8526f4bedb4bcef31ad7c41902",
+          "report": "docs/review/parity-topic-map-20261026.json",
+          "reportSha256": "a73d41327f2166dc5e67afc8345c58fe68504373617855f9396f94be11efca66",
+          "inspectionLimit": "Complete original contracts/limits and 727-file vectors; unchanged historical receipts reused without revision. Coordinator checks are not new independent human/runtime qualification."
         }
       ],
       "scopePreservation3408": {
@@ -36439,7 +36764,7 @@
     },
     {
       "id": "PUB008-current-reader-build-ci-20261023",
-      "revision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
       "author": "Existing canonical publication authors; Nova coordinated unchanged-source checks and adoption",
       "reviewer": "Independent Codex gpt-5.6-terra/high thread 01a16a57-38f2-76d1-bed3-b85a518192f1; pinned topical review",
       "gateIds": [],
@@ -36516,6 +36841,11 @@
           "command": "Independent exact26-original-scope preservation; node scripts/docs-governance.mjs --check; original committed Reader build and five native reader checks",
           "exitCode": 0,
           "observation": "Complete original contracts/limits and 676-file vectors reviewed; exact first-plugin/6literal asset paths/three generated metadata rows preserve existing bounds. Final seven coordinator processes and four bounded browser cases passed; fresh observer source checkout/install/lifecycle passed separately. No new accepted IDs, human/live/global qualification; original histories and failures retained. Evidence docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/."
+        },
+        {
+          "command": "Independent complete19 original-scope preservation; six native Reader controls and four bounded browser cases",
+          "exitCode": 0,
+          "observation": "ALL19_ORIGINAL_SCOPES_PRESERVED=PASS. Complete additive canonical navigation, one generated metadata row, full changed-page search record and 727-file vectors preserve original Source/Reader/Quality scopes and limits; no new accepted IDs."
         }
       ],
       "review": {
@@ -36598,6 +36928,20 @@
           "report": "docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/observer-26-scope-preservation-corrected-verdict.json",
           "reportSha256": "042f58eb25bb548c3c8d8a62724683d0b435e5dd65aea45a26fe888011462498",
           "inspectionLimit": "Complete original summary/limits/role/requirement contracts and all676 relevant paths supplied; full historical ledger unchanged. Coordinator native observations are not reviewer execution or fresh participant/live/deployment qualification. Original global output-role/DATAUNKNOWN/release/human limits retained."
+        },
+        {
+          "previousReviewedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+          "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
+          "reviewer": "Pinned fe588b1a Codex gpt-5.6-terra/high/P2 independent complete19 original-scope preservation",
+          "changedDependencies": [
+            "docs/site/reference/documentation-site.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Entire oldpublication/CI/source-explanation body byteequal except newtopic section/qualifiedverification note. Current6nativeReader/ownerchecks0+boundednewtablebrowser0; originalCI/deployment/release limitations not converted into newruntime success.",
+          "originalRecordSha256": "8115f9420e3213ea9ad1304eabf42cd9b16c471c017919fd1a3fd4d3777aedbf",
+          "report": "docs/review/parity-topic-map-20261026.json",
+          "reportSha256": "a73d41327f2166dc5e67afc8345c58fe68504373617855f9396f94be11efca66",
+          "inspectionLimit": "Complete original contracts/limits and 727-file vectors; unchanged historical receipts reused without revision. Coordinator checks are not new independent human/runtime qualification."
         }
       ],
       "previousReviewedRevision": "c0d892fb2ea7f88994e53ea29de0fdce2d87d89e",
@@ -38451,7 +38795,7 @@
     },
     {
       "id": "A910-10-whole-supported-extension-lifecycle-20261026",
-      "revision": "08c4589fb257b39a2f29f4440cf48f191746b733",
+      "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
       "author": "Nova documentation implementation and closure coordinator",
       "reviewer": "Pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 independent lint/common and whole original A910-10 adjudication",
       "gateIds": [
@@ -38752,6 +39096,11 @@
           "command": "Reuse actual unchanged Source040 governance/build/artifact/search/Source-link/preview/diagram processes, actual Source91c clean install and real observer lifecycle",
           "exitCode": 0,
           "observation": "All seven original technical processes and four bounded page browser cases passed, plus actual isolated own-dependency source checkout/install/observer delivery/checkpoint/authority denial/failure/disable/remove/version-only compatibility/exact rollback. Full relevant pages byte-equal Source040 to reviewed08c; original unchanged guide owner checks reused in their existing qualified scopes, not recounted as fresh. Details published observer-lifecycle-20261026 proof."
+        },
+        {
+          "command": "Independent complete19 original-scope preservation; six native Reader controls and four bounded browser cases",
+          "exitCode": 0,
+          "observation": "ALL19_ORIGINAL_SCOPES_PRESERVED=PASS. Complete additive canonical navigation, one generated metadata row, full changed-page search record and 727-file vectors preserve original Source/Reader/Quality scopes and limits; no new accepted IDs."
         }
       ],
       "review": {
@@ -38768,7 +39117,23 @@
         "All five DATA slots remain UNKNOWN and original global output-role receiver, historical artifacts.ts:41, selected-release Knip, live/receipt/human limits remain red and not waived. Raw refused common operator guide was not aliased/redacted/excerpted/reviewed anew; only its unchanged original FLW014 supported-task qualification reused."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "previousReviewedRevision": "08c4589fb257b39a2f29f4440cf48f191746b733",
+          "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
+          "reviewer": "Pinned fe588b1a Codex gpt-5.6-terra/high/P2 independent complete19 original-scope preservation",
+          "changedDependencies": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "verdict": "PASS",
+          "summary": "All12familyguides/realobserverfixture/completecontract/controlSource vectors byteequal; onlyDocsite lastVerified maprow differs. No lifecycle change fromtopicrouting table; originalfamily/product-gap/native/live/human limits andwholeactualA91010PASS retained, not rerun/recounted.",
+          "originalRecordSha256": "a5b0a71b18ea1d00e83e5eac39e739dd6b069efe2287611536ed6852636ffbc1",
+          "report": "docs/review/parity-topic-map-20261026.json",
+          "reportSha256": "a73d41327f2166dc5e67afc8345c58fe68504373617855f9396f94be11efca66",
+          "inspectionLimit": "Complete original contracts/limits and 727-file vectors; unchanged historical receipts reused without revision. Coordinator checks are not new independent human/runtime qualification."
+        }
+      ]
     }
   ],
   "purpose": "Internal planning and observed findings; not an acceptance ledger and not reader documentation.",
