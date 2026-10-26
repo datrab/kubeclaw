@@ -16,6 +16,7 @@ new stage attempt; it does not change the result of the earlier attempt.
 | --- | --- | --- |
 | Run and audit a local Core graph | [Local durable Core pipeline](local-core.md) | Actual shipped stage, adapters, filesystem journals/artifact, same-run local telemetry and negative checks; no project compiler, Forge, remote Buster or deployment. |
 | Compile a complete first project | [Materialize and compile a first project](#materialize-and-compile-a-first-project) | Real local compiler and resolver; no platform admission, adapter activation, agent execution, or delivery. |
+| Compile, run, audit and clean up one minimal project | [Run one compiled minimal project](#run-one-compiled-minimal-project) | One actual compiler-produced graph, implementation, two lint/test gates, audit, original artifacts and owned cleanup; no deployment or human acceptance. |
 | Wait, approval, and resume | [Rehearse Human Approval and Resume](wait-resume.md) | Complete inputs, host prerequisites, and ordered local rehearsal; no successful full local lifecycle evidence. The required deployment run remains open. |
 | Run a Buster suite with a fixture, matrix, and report | [Run a Buster Suite](buster-suite.md) | Use that guide's declared local and deployment checks. |
 | Prepare and release a Kubernetes fixture | [Prepare and Release a Kubernetes Fixture](kubernetes-fixture.md) | Separates local plan validation from deployed fixture lifecycle. |
@@ -200,7 +201,7 @@ selection steps:
 
 ```bash
 set -euo pipefail
-COMPILED_SOURCE_REVISION=7c8d2d3a0162ff056020ea0b965ded54ee2f4c19
+COMPILED_SOURCE_REVISION=3d52c76087201ac068bd80357d66612797c02c02
 export COMPILED_SOURCE_REVISION
 git clone https://github.com/datrab/kubeclaw.git kubeclaw-compiled-source
 cd kubeclaw-compiled-source
@@ -219,6 +220,19 @@ and contains all three helpers. Then follow the
 in this same checkout, keeping this revision. Use its explicit `--include=dev`
 installation and module-resolution checks, not a production-only dependency tree.
 
+Install Semgrep separately from the npm tools. The npm lockfile does not include
+this Python tool. Use the repository's complete hash-locked Nova requirements
+in an owned environment; Python 3 with `venv` support must be available. Stop
+on a venv, wheel, hash or dependency failure rather than changing the lockfile.
+
+```bash
+export COMPILED_JOURNEY_PARENT="$(mktemp -d /tmp/kubeclaw-compiled.XXXXXX)"
+python3 -m venv "$COMPILED_JOURNEY_PARENT/semgrep"
+"$COMPILED_JOURNEY_PARENT/semgrep/bin/python" -m pip install --require-hashes --only-binary=:all: -r docker/python-tools/semgrep-nova.txt
+export PATH="$COMPILED_JOURNEY_PARENT/semgrep/bin:$PATH"
+export SEMGREP_SETTINGS_FILE="$COMPILED_JOURNEY_PARENT/semgrep-settings.yml"
+```
+
 Before creating a fixture, check the exact executable paths used by the helper:
 
 ```bash
@@ -235,7 +249,7 @@ semgrep --version
 Node must be major 24. `/usr/bin/flock` and `/usr/bin/script` must be GNU
 util-linux, and `/usr/bin/tar` must be GNU tar. Git must exist at `/usr/bin/git`;
 a different executable found only through `PATH` is not sufficient. Use the
-Semgrep executable from the declared Nova toolchain. Stop on a missing or wrong
+Semgrep executable from the hash-locked environment just installed. Stop on a missing or wrong
 host dependency. These steps do not provision a Gateway or grant a model account.
 
 The operator must supply an approved OpenClaw Gateway tools endpoint, its bearer
@@ -249,7 +263,6 @@ From the selected repository root:
 
 ```bash
 set -euo pipefail
-export COMPILED_JOURNEY_PARENT="$(mktemp -d /tmp/kubeclaw-compiled.XXXXXX)"
 export COMPILED_JOURNEY="$COMPILED_JOURNEY_PARENT/journey"
 mkdir "$COMPILED_JOURNEY_PARENT/nova-tools"
 cp docker/nova-tools/package.json docker/nova-tools/package-lock.json "$COMPILED_JOURNEY_PARENT/nova-tools/"
@@ -263,6 +276,8 @@ Expected: `status: "prepared-compiled-project"`, `execution: false` and
 `stageCount: 8`. Inspect `project/project.json`, `project/compiled.json`,
 `project/operator-selected-lint-policy.json` and
 `compiled-platform.local-providers.json` under the new destination.
+The owner marker records the exact prepared project and compiler-output digests.
+Run, verification and cleanup reject either file if it changes after preparation.
 The source includes `package.json` and reserves only `.kubeclaw-results/` for
 generated runtime receipts; actual application changes remain tracked and
 subject to the source guard. The architecture ref is the exact baseline commit.
@@ -337,7 +352,7 @@ cp "$COMPILED_JOURNEY/compiled-audit-pty.stdout" "$COMPILED_JOURNEY_PARENT/proof
 cp -a "$COMPILED_JOURNEY/raw-before-audit" "$COMPILED_JOURNEY_PARENT/proof/"
 node docs/site/use/workflows/examples/compiled-project.mjs cleanup "$COMPILED_JOURNEY"
 test ! -e "$COMPILED_JOURNEY"
-rm -rf -- "$COMPILED_JOURNEY_PARENT/nova-tools" "$COMPILED_JOURNEY_PARENT/npm-cache"
+rm -rf -- "$COMPILED_JOURNEY_PARENT/nova-tools" "$COMPILED_JOURNEY_PARENT/npm-cache" "$COMPILED_JOURNEY_PARENT/semgrep"
 ```
 
 Expected cleanup status: `verified-owned-cleanup`. Cleanup rechecks the selected
