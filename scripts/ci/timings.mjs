@@ -51,7 +51,7 @@ export async function collectTimings(repository, runId, token, request = fetch) 
     if (data.jobs.length < 100) break;
   }
   const report = timingReport(run, jobs);
-  for (const job of report.jobs.filter(job => /Build & Verify|Build the image/u.test(job.name))) {
+  for (const job of report.jobs.filter(job => /Build & Verify|Build the image|Cache benchmark \(/u.test(job.name))) {
     try { job.buildCache = buildCacheMetrics(await (await get(`actions/jobs/${job.id}/logs`)).text()); }
     catch (error) { job.cacheMetricsUnavailable = error.message; } // no fabricated zero hits
   }

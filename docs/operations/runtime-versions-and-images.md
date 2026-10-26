@@ -275,3 +275,58 @@ These changes preserve SBOM, maximum provenance, pinned tool versions, hashed
 package locks and immutable source receipts. The first toolchain publication is
 a cold bootstrap and can cost more; only subsequent equivalent runs measure
 reuse. No measured post-change production speedup is claimed before merge.
+
+### Second latency pass: existing hosted runners only
+
+Completed follow-up runtime builds on 2026-10-25 took
+[10:54](https://github.com/datrab/kubeclaw/actions/runs/40236337731) and
+[11:04](https://github.com/datrab/kubeclaw/actions/runs/40236697726), each selecting
+all ten images. These observations include runner waits, toolchain reuse, image
+acceptance and release receipts; they are not a controlled cache-profile trial.
+
+Superseded PR runs now cancel within a workflow/PR-specific concurrency group.
+Non-PR and reusable caller groups use unique run IDs and cannot cancel production
+publication runs. Image matrices are capped at four concurrent jobs and browser
+matrices at two; the runner type stays `ubuntu-latest`. No larger runner or paid
+service is selected.
+
+Nova, Prism-agent and Buster-gateway acceptance now runs three independent,
+network-disabled containers for offline plugin installation, tooling, and the
+actual runtime identity. Every result is required, all children are awaited, and
+containers/log directories are cleaned on exit or cancellation. The default
+in-container proof mode still executes the complete serial proof for manual use.
+Semgrep version reporting disables telemetry and version-update network requests
+inside the already-offline proof; no scan, pinned version or negative control is
+removed. Proof and image-pull durations are emitted separately.
+
+Core reliability tests use deterministic longest-processing-time allocation over
+four shards. The initial weight file identifies its historical source run and
+explicitly labels its values as estimates from uniquely matched top-level test
+names, not complete file wall times. Unknown/new files receive a median weight
+and remain included exactly once. Native and service memberships are unchanged.
+The normal test reporter now also emits exact per-file duration/success records
+in `reliability-timings-*` artifacts, without changing failure exit status. After
+downloading successful shard artifacts, generate updated weights with:
+
+```bash
+node scripts/ci/update-reliability-weights.mjs /path/to/reliability-core-*.json > scripts/ci/reliability-weights.json
+```
+
+`Runtime cache comparison` runs isolated `gha-min` and `gha-max` experiments on
+PRs changing its configuration, and includes `registry-max` only on trusted
+`main`. It can also be dispatched for a selected role. Each profile builds the
+same commit cold and warm using two distinct BuildKit builders, so the warm run
+must import the exported remote cache rather than reusing a local builder. Each
+run/attempt/profile/role gets its own cache namespace. Registry cache tags reuse
+the existing role image repository rather than creating a new package. Cache-export failures are
+fatal in the experiment rather than silently reported as a valid comparison.
+Only one GHA experiment runs at once to bound additional runner pressure.
+
+The experiment uses `cacheonly` outputs: no candidate image, source receipt,
+skill release or deployment is published. Benchmark database refresh identity is
+held constant between its cold/warm phases; production database refresh remains
+per build attempt. The `cache-comparison-timings` artifact contains distinct
+cold/warm step durations and per-invocation cache metrics. PRs cannot write
+registry caches; the three-way registry comparison therefore completes only on
+trusted `main` after merge. The production cache default remains unchanged until
+a comparable result supports changing it.
