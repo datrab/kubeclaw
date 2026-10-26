@@ -78,6 +78,7 @@ jobs:
       fail-fast: false
       matrix:
         name: ${{ fromJSON(needs.detect-build-inputs.outputs.image_matrix) }}
+      max-parallel: 4
     steps:
       - name: Checkout
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -158,7 +159,9 @@ jobs:
           IMAGE: ${{ env.REGISTRY }}/${{ github.repository_owner }}/kubeclaw-${{ matrix.name }}@${{ steps.build.outputs.digest }}
           ROLE: ${{ matrix.name }}
         run: |
+          start=$SECONDS
           docker pull "$IMAGE"
+          printf 'IMAGE_PULL seconds=%s\n' "$((SECONDS-start))"
           bash scripts/check-built-runtime-image.sh "$ROLE" "$IMAGE"
       - name: Record immutable build receipt
         env:

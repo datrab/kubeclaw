@@ -30,8 +30,8 @@ on:
       - .github/workflows/build-ops-mcp.yaml
   workflow_dispatch: null
 concurrency:
-  group: ops-mcp-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: ${{ github.workflow }}-ci-build-ops-mcp-${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 env:
   REGISTRY: ghcr.io
 jobs:
