@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "CONTRIBUTING_REFERENCE=PASS. The proposed review supplies substantive, revision- and content-root-bound manual assessment for dynamic configuration, generated paths, runtime lookup, and external consumers, while preserving the scanner and external-world limitations. The supplied source-specific evidence supports the limited first-source reference decision; it does not assert deletion readiness or whole-tree approval.",
+  "overall_confidence": 0.94
+}

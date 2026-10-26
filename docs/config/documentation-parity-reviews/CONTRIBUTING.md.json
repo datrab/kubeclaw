@@ -1,0 +1,188 @@
+{
+  "schemaVersion": "kubeclaw-documentation-parity-review.v1",
+  "source": {
+    "originalPath": "docs/CONTRIBUTING.md",
+    "legacyPath": "docs/_legacy-source/CONTRIBUTING.md",
+    "classification": "legacy-extraction-source",
+    "baselineRevision": "8da6157b77247dcbdf209ef12f491f0b92ca858a",
+    "gitObject": "989681f2590ce67c14e47a57bf1df8a59f52870b",
+    "extractionDigest": "befd6039390597685794f840a92459ca2044e329d452fa76ad57d9db8c0002e9"
+  },
+  "reviewer": {
+    "id": "parity-reviewer:project-navigation-and-status",
+    "assignmentId": "parity-assignment:ad93a1daf07a8cc865a82ae7de9827e608c0a9ead582d29ab10825c5166aefeb",
+    "freshContext": true,
+    "readOnly": true,
+    "provenance": {
+      "kind": "repository-review-assignment",
+      "revision": "4178d6ec07cac5e4b903126f9daba81aab908949",
+      "actorId": "parity-reviewer:project-navigation-and-status"
+    }
+  },
+  "decisionSha256": "cedb2b8f198adf46a7f13d5d9c54b84d6752035db55c2ec74a55bddca1353301",
+  "contentRoot": "6f2ba25e501b89b546729af7bcd0f3b86362a900ccf6df7dff17bb7dcf2a9524",
+  "claimIds": [
+    "contributing:dpu_2a84a52e01dd0697f5bb7a0210d49126:0",
+    "contributing:dpu_a2f8cc1ec24a26383b0a72d9e00551d7:0",
+    "contributing:dpu_a2f8cc1ec24a26383b0a72d9e00551d7:1",
+    "contributing:dpu_a2f8cc1ec24a26383b0a72d9e00551d7:2",
+    "contributing:dpu_ef799cc679ba706004a87a665e36b744:0",
+    "contributing:dpu_2619224de547c655eccef696386b3d54:0",
+    "contributing:dpu_2619224de547c655eccef696386b3d54:1",
+    "contributing:dpu_2619224de547c655eccef696386b3d54:2",
+    "contributing:dpu_2619224de547c655eccef696386b3d54:3",
+    "contributing:dpu_ef92f563384f9f05f65c4a05b9287555:0"
+  ],
+  "reviewedRevision": "d4ffd68505aa416bb0a114a1a159acaa86f30453",
+  "classificationVerdict": "PASS",
+  "claimVerdicts": [
+    {
+      "claimId": "contributing:dpu_2a84a52e01dd0697f5bb7a0210d49126:0",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "contributing:dpu_a2f8cc1ec24a26383b0a72d9e00551d7:0",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "contributing:dpu_a2f8cc1ec24a26383b0a72d9e00551d7:1",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "contributing:dpu_a2f8cc1ec24a26383b0a72d9e00551d7:2",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "contributing:dpu_ef799cc679ba706004a87a665e36b744:0",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "contributing:dpu_2619224de547c655eccef696386b3d54:0",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "contributing:dpu_2619224de547c655eccef696386b3d54:1",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "contributing:dpu_2619224de547c655eccef696386b3d54:2",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "contributing:dpu_2619224de547c655eccef696386b3d54:3",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "contributing:dpu_ef92f563384f9f05f65c4a05b9287555:0",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    }
+  ],
+  "visualVerdicts": [],
+  "activeDependencyReview": {
+    "reviewedRevision": "d4ffd68505aa416bb0a114a1a159acaa86f30453",
+    "reviewedTree": "911fd43cbcefec8308af2362b3782e004780f6e9",
+    "contentRoot": "6f2ba25e501b89b546729af7bcd0f3b86362a900ccf6df7dff17bb7dcf2a9524",
+    "scope": {
+      "paths": [
+        "docs/CONTRIBUTING.md",
+        "docs/_legacy-source/CONTRIBUTING.md"
+      ],
+      "risks": [
+        "dynamic-configuration",
+        "generated-paths",
+        "runtime-lookup",
+        "external-consumers"
+      ]
+    },
+    "methods": [
+      {
+        "kind": "manual-inspection",
+        "detail": "dynamic-configuration: Full executable scanner and owner configuration paths inspected. Frozen scanner binds5509 text files and finds no exact legacy/original token or supported simple joined-path use. Broader case-insensitive basename search identified only root CONTRIBUTING guidance and root reference-check token plus documentation-control authorities; no evidence that product configuration resolves docs/CONTRIBUTING.md. Root README links root CONTRIBUTING.md, not the extracted documentation source. See complete root README/CONTRIBUTING and docs-check-refs source."
+      },
+      {
+        "kind": "manual-inspection",
+        "detail": "generated-paths: Full blueprint producer walks docs only to classify advisory source paths. The obsolete contributor selector is removed. Exact one generated ledger row now obtains four explicit canonical targets from complete per-claim author decision and remains pending rewrite/unapproved. Owner generation and --check both exit0. Full tree producer sourceConsumers/classify inventories legacy membership and verifies immutable classification; this structural authority remains checked by its own readiness gates, not migrated as a content-consuming reader. No whole10MB inventory certification is inferred."
+      },
+      {
+        "kind": "manual-inspection",
+        "detail": "runtime-lookup: Complete maintained parity checker intentionally reads immutable legacy bytes to validate extraction and claim fragments; this is the declared parity control, not an application content consumer. Its scanner searches executable/configuration inputs outside explicit control metadata, enforces Git blob identity for every input and still requires manual review. The basename reference in docs-check-refs is the root CONTRIBUTING.md token; docs-status merely emits audience prose containing contributing agent. Complete sources supplied, no renamed consumer or literal exemption."
+      },
+      {
+        "kind": "manual-inspection",
+        "detail": "external-consumers: Complete public route registry inspected: no authoritative old CONTRIBUTING public route or consumer is declared, and rules forbid inventing one. Root README links the distinct maintained root CONTRIBUTING.md. Repository static inspection cannot prove unknown third-party consumers absent; original scanner limitation remains verbatim and no AP10 deletion or world-wide link guarantee is authorized. Remaining physical legacy source is preserved for AP10 obligations."
+      }
+    ],
+    "evidence": [
+      {
+        "kind": "scanner-result",
+        "detail": "Actual frozen d4ffd685 scan searched original and extracted paths across5509 files; zero matches; full scanner input root88c5001235f587474d06ee590c7126adf06b3eff84cc600c48df7626c90bf58d and native source inspection are retained. Static zero alone is not the manual criterion."
+      },
+      {
+        "kind": "manual-observation",
+        "detail": "Full executable scanner and owner configuration paths inspected. Frozen scanner binds5509 text files and finds no exact legacy/original token or supported simple joined-path use. Broader case-insensitive basename search identified only root CONTRIBUTING guidance and root reference-check token plus documentation-control authorities; no evidence that product configuration resolves docs/CONTRIBUTING.md. Root README links root CONTRIBUTING.md, not the extracted documentation source. See complete root README/CONTRIBUTING and docs-check-refs source."
+      },
+      {
+        "kind": "manual-observation",
+        "detail": "Full blueprint producer walks docs only to classify advisory source paths. The obsolete contributor selector is removed. Exact one generated ledger row now obtains four explicit canonical targets from complete per-claim author decision and remains pending rewrite/unapproved. Owner generation and --check both exit0. Full tree producer sourceConsumers/classify inventories legacy membership and verifies immutable classification; this structural authority remains checked by its own readiness gates, not migrated as a content-consuming reader. No whole10MB inventory certification is inferred."
+      },
+      {
+        "kind": "manual-observation",
+        "detail": "Complete maintained parity checker intentionally reads immutable legacy bytes to validate extraction and claim fragments; this is the declared parity control, not an application content consumer. Its scanner searches executable/configuration inputs outside explicit control metadata, enforces Git blob identity for every input and still requires manual review. The basename reference in docs-check-refs is the root CONTRIBUTING.md token; docs-status merely emits audience prose containing contributing agent. Complete sources supplied, no renamed consumer or literal exemption."
+      },
+      {
+        "kind": "manual-observation",
+        "detail": "Complete public route registry inspected: no authoritative old CONTRIBUTING public route or consumer is declared, and rules forbid inventing one. Root README links the distinct maintained root CONTRIBUTING.md. Repository static inspection cannot prove unknown third-party consumers absent; original scanner limitation remains verbatim and no AP10 deletion or world-wide link guarantee is authorized. Remaining physical legacy source is preserved for AP10 obligations."
+      },
+      {
+        "kind": "scanner-result",
+        "detail": "The original validator builds its index with all249 immutable sources, excluding every legacy body from active consumers. Exact native-equivalent index has 5509 inputs and zero matches. Earlier public single-source call additionally scanned248 other legacy bodies, also zero matches; substantive four-risk verdict remains byteequal except native scan binding. Exact original uninstrumented source validator must still confirm this registration; no tool/schema/authority change."
+      }
+    ],
+    "findings": [],
+    "scanner": {
+      "version": "kubeclaw-documentation-active-dependency-scanner.v2",
+      "searchedPaths": [
+        "docs/CONTRIBUTING.md",
+        "docs/_legacy-source/CONTRIBUTING.md"
+      ],
+      "scannedFileCount": 5509,
+      "scannedPathsSha256": "b58331ceed9d161cfb6e71b15d4ef643bb264730ae3d5cfac0857ac2b2e853d9",
+      "scannerInputRoot": "88c5001235f587474d06ee590c7126adf06b3eff84cc600c48df7626c90bf58d",
+      "matches": []
+    },
+    "limitation": "Static literal, link, and simple path-composition scanning is not complete program analysis; independent reviewer attestation remains required.",
+    "verdict": "PASS"
+  },
+  "verdict": "PASS",
+  "findings": []
+}

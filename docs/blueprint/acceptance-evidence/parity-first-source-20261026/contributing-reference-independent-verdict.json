@@ -1,0 +1,29 @@
+{
+  "findings": [
+    {
+      "title": "Complete the independent active-dependency review before accepting CONTRIBUTING",
+      "body": "Reviewer: chunk 2/3\n\nThe only supplied source-specific dependency record remains `PENDING` with empty manual methods and evidence. A zero-match static scan is explicitly insufficient for dynamic configuration, generated paths, runtime lookup, and external-consumer risks. Add the assigned independent review/attestation with substantive manual evidence and a PASS verdict; until then, CONTRIBUTING_REFERENCE=NOT_READY.",
+      "priority": "P1",
+      "confidence": 0.98,
+      "category": "regression",
+      "code_location": {
+        "file_path": "contributing-after-reference-repair-observation.json",
+        "line": 33
+      }
+    },
+    {
+      "title": "Complete the independent active-dependency review before accepting CONTRIBUTING",
+      "body": "Reviewer: chunk 3/3\n\nThe supplied source-specific attestation is still `PENDING` with empty manual methods and evidence. A zero-match static scan is explicitly limited and cannot establish the required review of dynamic configuration, generated paths, runtime lookup, and external consumers. Add the assigned independent review with substantive manual evidence and a PASS verdict bound to this reviewed revision/content root; until then this decision must not be accepted as a reference-removal or migration gate.",
+      "priority": "P2",
+      "confidence": 0.99,
+      "category": "regression",
+      "code_location": {
+        "file_path": "contributing-after-reference-repair-observation.json",
+        "line": 38
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "Chunked review complete. chunk 1/3: 0 finding(s), chunk 2/3: 1 finding(s), chunk 3/3: 1 finding(s).",
+  "overall_confidence": 0.99
+}
