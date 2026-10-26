@@ -1,0 +1,18 @@
+{
+  "findings": [
+    {
+      "title": "Include the changed guide in the search-gate impact review",
+      "body": "This whole A912-04 record previously covers a canonical search index over every reader page, but its changed-bound set names only the asset allowlist. `docs/site/extend/first-plugin.md` is itself a changed canonical reader page, and the added observer text can affect indexed terms and ranking. The proposed preservation therefore omits a material changed input from the independent impact review; add the guide (and assess its generated search output) before preserving this record at the new revision.",
+      "priority": "P2",
+      "confidence": 0.94,
+      "category": "regression",
+      "code_location": {
+        "file_path": "observer-proposed-26-scope-preservation.json",
+        "line": 174
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "The proposal understates the changed inputs for at least the whole search-gate preservation record, so it cannot support the required independent preservation adjudication as written.",
+  "overall_confidence": 0.94
+}

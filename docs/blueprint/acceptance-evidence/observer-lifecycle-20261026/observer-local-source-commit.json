@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-26T14:28:51.131659+00:00",
+  "localSourceCommit": "91c40217c7a439a2264f9aab6383e6616712c71b",
+  "parentPublished": "cd3fa7d93242c0da59b7565ebfa0e83447c796c6",
+  "independentSourceReview": "observer-independent-source-verdict.json",
+  "scope": "Only6new observer-lifecycle teaching files; no productSource/previousreaderpage/acceptancerecord changed. Notpushed until coherent pinnedguide/Reader/preservation closeout.",
+  "postReviewDelta": {
+    "kind": "Output scope wording only; internalgateidentifier replaced by user-relevant complete-platform-qualification limitation",
+    "beforeHelperSha256": "96ad733d0d0dbe042de48323f0bc2f44260833e720d3b85c5492833207886617",
+    "afterHelperSha256": "4ec92e7f43aab3be488ea92f57380e14562a4a13d5de97ad2eec42eca5d3c5b0",
+    "exactReplaceOnly": true,
+    "followup": "Canonical guide/semanticReader review includes complete finalhelper and explicit delta."
+  },
+  "newGateAcceptance": false
+}

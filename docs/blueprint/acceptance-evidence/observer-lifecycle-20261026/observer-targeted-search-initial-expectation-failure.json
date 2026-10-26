@@ -1,0 +1,7 @@
+{
+  "command": "node operations/pr13/runtime/check-observer-search-impact.mjs",
+  "exitCode": 1,
+  "observedAssertion": "observer lifecycle: extend/nova.html,extend/plugin-catalogue/kubeclaw.telemetry-observer.html,extend/plugin-catalogue/kubeclaw.notification-observer.html",
+  "expectation": "first-plugin top3 for added broad observer lifecycle query",
+  "provenance": "Retained actual terminal observation from exec3653; no earlier rawlog file existed. Original12 maintainedquery checkerpassed; new expectation is not automatically an originalcontractfailure and actualqueryranks now retained for independent judgement."
+}

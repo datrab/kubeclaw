@@ -1,0 +1,28 @@
+{
+  "startedAt": "2026-10-26T14:30:09.109075+00:00",
+  "checkout": "/home/node/.openclaw/workspace/tmp/pr13-observer-clean-rbi6lpk0",
+  "cache": "/home/node/.openclaw/workspace/tmp/pr13-observer-npm-trd8ecdv",
+  "revision": "91c40217c7a439a2264f9aab6383e6616712c71b",
+  "status": "PASS",
+  "steps": [
+    {
+      "command": "local object clone + detached exact Source commit, initially clean",
+      "exitCode": 0
+    },
+    {
+      "command": "npm ci --include=dev --ignore-scripts --cache owned-temp",
+      "exitCode": 0
+    },
+    {
+      "command": "node docs/site/extend/examples/observer-lifecycle/journey.mjs",
+      "exitCode": 0
+    }
+  ],
+  "cleanAfter": true,
+  "realSdkResolvedInOwnCheckout": "/home/node/.openclaw/workspace/tmp/pr13-observer-clean-rbi6lpk0/skills/common/plugin-runtime/sdk/src/index.ts",
+  "helperSha256": "4ec92e7f43aab3be488ea92f57380e14562a4a13d5de97ad2eec42eca5d3c5b0",
+  "finishedAt": "2026-10-26T14:30:22.132352+00:00",
+  "ownedCheckoutRemoved": true,
+  "ownedCacheRemoved": true,
+  "newWholeGateAcceptance": false
+}

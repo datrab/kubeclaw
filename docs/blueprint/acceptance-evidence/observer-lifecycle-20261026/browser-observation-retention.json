@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-26T16:29:50.335649+00:00",
+  "previousPassingObservationRecoveredFromContemporaneousFullSummary": "observer-complete-native-reader-summary.json",
+  "previousObservationSource": "1a4d661f831e3edb9b412d164c1ec8a485b2d293",
+  "previousObservationSemanticExact": true,
+  "previousObservationNoNewExecutionClaim": true,
+  "currentRawObservationCopiedByteExact": true,
+  "currentSource": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+  "unversionedResultsWasLatestStateAndNoFailureLost": true,
+  "futureRunnerOutputsVersionedAndNeverOverwritesExistingObservations": true
+}

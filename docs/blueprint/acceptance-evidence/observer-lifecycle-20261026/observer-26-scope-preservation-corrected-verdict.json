@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The preservation proposal now includes the changed canonical guide in whole Reader scopes, including the search-gate record previously identified as incomplete. It retains the original declared-file intersections while explicitly assessing the complete changed guide, assets, and generated-map context; the supplied current search record and original query results support that bounded assessment.",
+  "overall_confidence": 0.94
+}

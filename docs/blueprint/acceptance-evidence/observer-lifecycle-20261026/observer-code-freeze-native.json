@@ -1,0 +1,77 @@
+{
+  "journey": "local-observer-lifecycle",
+  "subscription": [
+    "run.succeeded"
+  ],
+  "journalKind": "production FileJournal",
+  "deployment": false,
+  "roleOmission": "rejected",
+  "roleInclusion": "validated addition only; no deployed role changed",
+  "success": {
+    "activatedObservers": 1,
+    "pipelineStatus": "succeeded",
+    "delivered": 1,
+    "observedSourceEventType": "run.succeeded",
+    "replayDelivered": 0,
+    "checkpointCount": 1,
+    "retainedEventRecords": 9,
+    "registrationVersion": "1.0.0"
+  },
+  "invalidConfiguration": "REGISTRY_RESULT_INVALID",
+  "requiredFailure": {
+    "requiredDrain": "failed",
+    "pipelineStatus": "succeeded",
+    "checkpointCount": 0
+  },
+  "disabled": {
+    "activatedObservers": 0,
+    "pipelineStatus": "succeeded",
+    "delivered": 0,
+    "observedSourceEventType": null,
+    "replayDelivered": 0,
+    "checkpointCount": 0,
+    "retainedEventRecords": 8,
+    "registrationVersion": "1.0.0"
+  },
+  "incompatibleApi": "REGISTRY_MANIFEST_INVALID",
+  "sameContractVersionChange": {
+    "activatedObservers": 1,
+    "pipelineStatus": "succeeded",
+    "delivered": 1,
+    "observedSourceEventType": "run.succeeded",
+    "replayDelivered": 0,
+    "checkpointCount": 1,
+    "retainedEventRecords": 9,
+    "registrationVersion": "2.0.0"
+  },
+  "rollback": {
+    "activatedObservers": 1,
+    "pipelineStatus": "succeeded",
+    "delivered": 1,
+    "observedSourceEventType": "run.succeeded",
+    "replayDelivered": 0,
+    "checkpointCount": 1,
+    "retainedEventRecords": 9,
+    "registrationVersion": "1.0.0"
+  },
+  "removal": "REGISTRY_REGISTRATION_MISSING",
+  "retainedSuccessJournals": [
+    {
+      "name": "events.jsonl",
+      "bytes": 6320,
+      "sha256": "b2a9932a5a1a87991e1660315da9104fefa440a85d9bad376310b8e602ba13d5"
+    },
+    {
+      "name": "checkpoints.jsonl",
+      "bytes": 1047,
+      "sha256": "7c96e1a2b83e43fab25c3cc91cd8aeee3ddb3ed09d78a931b8f426a522163e62"
+    },
+    {
+      "name": "deliveries.jsonl",
+      "bytes": 1099,
+      "sha256": "d0505eec3871e2b55cf32f1dfa0358017adf3ec1da6b9f4b7c891f75a7d94629"
+    }
+  ],
+  "scope": "Real local trusted-first-party activation, persistent observer audit/checkpoint and reconstructed runtime replay. Not a process-restart, external isolation, production deployment or whole A91010 acceptance.",
+  "temporaryRootRemoved": true
+}

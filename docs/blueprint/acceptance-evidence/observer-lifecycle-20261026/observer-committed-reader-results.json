@@ -1,0 +1,16 @@
+{
+  "sourceCommit": "452d777dfaaff63b6c0cd53f3c90174b6211e0c2",
+  "completed": 1,
+  "total": 6,
+  "results": [
+    {
+      "name": "build",
+      "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build",
+      "startedAt": "2026-10-26T15:06:07.841545+00:00",
+      "finishedAt": "2026-10-26T15:06:28.996791+00:00",
+      "exitCode": 1
+    }
+  ],
+  "allCompletedPassed": false,
+  "scope": "Actual coordinator publication/Reader checks, not fresh independent participant/live/runtime approval"
+}

@@ -1,0 +1,25 @@
+✔ published reader links retain exact runnable input and example dependency bytes (4.574117ms)
+✔ an internal record under the reader root cannot silently enter or disappear from publication (0.937333ms)
+✔ unapproved artifacts inside extend/examples/minimal-stage stop publication (1.161939ms)
+✔ unapproved artifacts inside extend/examples/observer-lifecycle stop publication (1.175569ms)
+✔ unapproved artifacts inside use/workflows/examples stop publication (1.088418ms)
+✔ unapproved artifacts inside use/workflows/wait-resume stop publication (0.957124ms)
+✔ an allowed-looking symlink cannot publish data outside the reader tree (4.771252ms)
+✔ publication includes exactly the registered canonical reader pages (1.160309ms)
+✔ missing and noncanonical reader pages stop publication (0.758429ms)
+✔ invalid classification cannot broaden the publication boundary (0.753579ms)
+✔ positive manifest preserves registered exact HTML paths and refuses unapproved input (1.002186ms)
+✔ positive manifest cannot launder a registered Markdown symlink (0.494413ms)
+✔ the complete maintained observer example publishes byte-exactly without adjacent private artifacts (3.811767ms)
+✔ an explicitly allowed observer entrypoint cannot launder an outside symlink (0.688198ms)
+✔ shared fixture guidance reaches the same canonical procedure from the operator matrix (4.959016ms)
+✔ anchors, images, titles and multiple links retain their original meanings (0.342979ms)
+✔ source citations, external routes and executable examples remain byte-identical (0.314408ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 82.816686

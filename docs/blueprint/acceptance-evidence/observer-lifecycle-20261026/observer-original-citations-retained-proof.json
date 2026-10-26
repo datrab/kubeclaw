@@ -1,0 +1,69 @@
+{
+  "at": "2026-10-26T16:13:50.168278+00:00",
+  "citedSources": [
+    {
+      "path": "scripts/build-runtime-role-bundle.mjs",
+      "originalSourceRevision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "originalSourceSha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9",
+      "observerSourceSha256": "0e20765fdcc03f09b884aba805e6733f42e63c494d39a11827b2fda5c9bd6ef9",
+      "byteEqual": true
+    },
+    {
+      "path": "scripts/check-runtime-role-manifests.mjs",
+      "originalSourceRevision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "originalSourceSha256": "2a3af027d6fb437c7341ed24e2438b76545f665cab048b3c04943c62ade3e905",
+      "observerSourceSha256": "521f14214afa42f7651ef81eca689f206cf3bc63c1c9edeb2376037dfba7d80c",
+      "byteEqual": false
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/activation.ts",
+      "originalSourceRevision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "originalSourceSha256": "2d1ba3633fd9ba8549488f953a21909fdebd7d70c056fad1c688316d2ca8ee67",
+      "observerSourceSha256": "2d1ba3633fd9ba8549488f953a21909fdebd7d70c056fad1c688316d2ca8ee67",
+      "byteEqual": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+      "originalSourceRevision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "originalSourceSha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867",
+      "observerSourceSha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867",
+      "byteEqual": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+      "originalSourceRevision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "originalSourceSha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+      "observerSourceSha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+      "byteEqual": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+      "originalSourceRevision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "originalSourceSha256": "1f2742573de8a2f37067238bc53edcb4b031e881f04da94519687c79eb758a87",
+      "observerSourceSha256": "1f2742573de8a2f37067238bc53edcb4b031e881f04da94519687c79eb758a87",
+      "byteEqual": true
+    },
+    {
+      "path": "skills/nova/core/execution/runner.ts",
+      "originalSourceRevision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "originalSourceSha256": "9a34098cd68460f42e220ada2f3e7bef37fcc9eb5fdd351db2cd1585fe6a5cc6",
+      "observerSourceSha256": "9a34098cd68460f42e220ada2f3e7bef37fcc9eb5fdd351db2cd1585fe6a5cc6",
+      "byteEqual": true
+    },
+    {
+      "path": "skills/nova/core/execution/stage-executor.ts",
+      "originalSourceRevision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "originalSourceSha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb",
+      "observerSourceSha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb",
+      "byteEqual": true
+    },
+    {
+      "path": "skills/nova/core/lifecycle/reducer.ts",
+      "originalSourceRevision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "originalSourceSha256": "13982ba82b9b619f5df89dc0b9932c7802f0b78968e450263ab302726d4f552d",
+      "observerSourceSha256": "13982ba82b9b619f5df89dc0b9932c7802f0b78968e450263ab302726d4f552d",
+      "byteEqual": true
+    }
+  ],
+  "decision": "Keep all original bcfSourcecitations/pin; one rolechecker differs, no blanketrepin. NewobserverSource explicitlyseparate91cpin. Only add completeobserverdir tocurrentownershipEvidence andretainoriginalNova applicability."
+}

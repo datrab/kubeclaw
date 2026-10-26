@@ -1,0 +1,139 @@
+{
+  "at": "2026-10-26T16:41:42.931307+00:00",
+  "changedRecords": [
+    {
+      "id": "AP09.1-ready-topics-20261020",
+      "originalRecordSha256": "d0e59281f6e6a6ff2e917ffd82f1f2d53e732c7f6c582ab638b17e129e35fa99",
+      "onlyRevisionAndOneCheckAndOneImpactAppend": true
+    },
+    {
+      "id": "Reviewed-corrections-20261020",
+      "originalRecordSha256": "4bd42b3a5f0304fdaa121de16fcfb9ae0be0b09b8a04f2b6b3574d44c0923a35",
+      "onlyRevisionAndOneCheckAndOneImpactAppend": true
+    },
+    {
+      "id": "AP09-reader-developers-20261020",
+      "originalRecordSha256": "1b79f99473b66cd6910fd3415f97b8b0dda780419df695b33bd0ebf703505683",
+      "onlyRevisionAndOneCheckAndOneImpactAppend": true
+    },
+    {
+      "id": "AP09-reviewed-maintenance-20261020",
+      "originalRecordSha256": "7442d22571227bbd782bea361a6180e0b1bca3e734b6316a1794606208bee3e3",
+      "onlyRevisionAndOneCheckAndOneImpactAppend": true
+    },
+    {
+      "id": "AP09-reviewed-publication-navigation-20261020",
+      "originalRecordSha256": "01d3f5028578af70098ee3a1a3e5edf29afb1b56e0272d98202d02194cb561cb",
+      "onlyRevisionAndOneCheckAndOneImpactAppend": true
+    },
+    {
+      "id": "AP09-closeout-developer-maintenance-20261020",
+      "originalRecordSha256": "adce56afe657a4ba6bcb838161491bf994d10c42a373f5849b939ca06bd83e3d",
+      "onlyRevisionAndOneCheckAndOneImpactAppend": true
+    },
+    {
+      "id": "AP09-first-project-example-20261020",
+      "originalRecordSha256": "4b6dbdbb8eb8362d625e2bf20f7bdda3ac39c8a2dd4bc375c451fd7117343639",
+      "onlyRevisionAndOneCheckAndOneImpactAppend": true
+    },
+    {
+      "id": "AP09-buster-lease-reference-20261020",
+      "originalRecordSha256": "df08753b043160c1ba275397680647825e8d220816351228926e84a6c3f3a091",
+      "onlyRevisionAndOneCheckAndOneImpactAppend": true
+    },
+    {
+      "id": "AP09-install-maintenance-project-entry-20261021",
+      "originalRecordSha256": "f3e941670fce4c55def9b310dd11a45a0f310228d504be5a5222ee1cc1cd8bff",
+      "onlyRevisionAndOneCheckAndOneImpactAppend": true
+    },
+    {
+      "id": "AP09-documentation-agent-maintenance-20261021",
+      "originalRecordSha256": "9f962567d3505526bd84b9c8c43c0befc17793ccec0a47b73b79db38d840f956",
+      "onlyRevisionAndOneCheckAndOneImpactAppend": true
+    },
+    {
+      "id": "AP09-complete-platform-change-content-20261021",
+      "originalRecordSha256": "7f7522463a76d4f95bc3b942ee52902e31824ed3fec40b001c65d4319b3a7d0e",
+      "onlyRevisionAndOneCheckAndOneImpactAppend": true
+    },
+    {
+      "id": "AP09-complete-publication-reference-navigation-20261021",
+      "originalRecordSha256": "73edcc393af598648e66b058c6a14c3590945b8dee8fe5a6a7a42041e273b728",
+      "onlyRevisionAndOneCheckAndOneImpactAppend": true
+    },
+    {
+      "id": "AP09-complete-developer-reader-contracts-20261021",
+      "originalRecordSha256": "394e471f83d1a638d68e2ea9e2c4a070dad144fa4fef6ccc86f374d2ba474bb2",
+      "onlyRevisionAndOneCheckAndOneImpactAppend": true
+    },
+    {
+      "id": "AP09-complete-static-reader-search-20261021",
+      "originalRecordSha256": "9beb20902f7f16854a91454ec098ae94d294f2822953a3a26e62ad0a77a601e6",
+      "onlyRevisionAndOneCheckAndOneImpactAppend": true
+    },
+    {
+      "id": "AP09-search-reader-gate-20261021",
+      "originalRecordSha256": "4ec23aecf5af014530f1a24cfc2c1ac0b039087a5bc4dcbadc26d3a42f902ac0",
+      "onlyRevisionAndOneCheckAndOneImpactAppend": true
+    },
+    {
+      "id": "AP09-rendered-source-bounds-gate-20261021",
+      "originalRecordSha256": "0716465873008cf31c69a8d8a62de82ba80fdecc97baef6d2f8b778470fcf21b",
+      "onlyRevisionAndOneCheckAndOneImpactAppend": true
+    },
+    {
+      "id": "AP09-complete-static-offline-fallback-20261021",
+      "originalRecordSha256": "594b00538a1e74c6c629d60f1242e0bf7776d4fbc6d6e90cf2d5b8c250bf0288",
+      "onlyRevisionAndOneCheckAndOneImpactAppend": true
+    },
+    {
+      "id": "FLW014-plugin-operator-supported-lifecycle-20261021",
+      "originalRecordSha256": "ed2b9c3046fbb0f3e966d841ff84430b2715a2fd933e5e4a9adfc2a694384b80",
+      "onlyRevisionAndOneCheckAndOneImpactAppend": true
+    },
+    {
+      "id": "A912-03-supported-redirect-paths-20261021",
+      "originalRecordSha256": "7a27b7a1d3d1bd7548d841f4dfab9b233054c128a6ebfa5e6dc24cdda207c8e8",
+      "onlyRevisionAndOneCheckAndOneImpactAppend": true
+    },
+    {
+      "id": "A912-11-deterministic-page-records-20261022",
+      "originalRecordSha256": "da6ece994be88e7e89224f4072ce3ce061dfbd6f4d380b634aea063e1169f219",
+      "onlyRevisionAndOneCheckAndOneImpactAppend": true
+    },
+    {
+      "id": "AP09-publication-positive-scope-7ef16585",
+      "originalRecordSha256": "f7d087d4ee48369965b5ff89b289cae276c7d268b4fe409d7aaf391ae08b2d57",
+      "onlyRevisionAndOneCheckAndOneImpactAppend": true
+    },
+    {
+      "id": "A98-02-13-whole-operator-procedure-contract-20261022",
+      "originalRecordSha256": "2ea4e46383d0f6c20a43872c1a589517401a0f5fa59415b187e0857ea8b1ffe0",
+      "onlyRevisionAndOneCheckAndOneImpactAppend": true
+    },
+    {
+      "id": "A910-03-whole-command-prerequisite-contract-20261022",
+      "originalRecordSha256": "9db92d3046ebc30f266a72fbd7711e6c675bcee6bf9f416da289b79e10960065",
+      "onlyRevisionAndOneCheckAndOneImpactAppend": true
+    },
+    {
+      "id": "PUB008-current-reader-build-ci-20261023",
+      "originalRecordSha256": "01884176f307f041527e97fcd677749d6a8e3f4a9175634af309b430cc7f4504",
+      "onlyRevisionAndOneCheckAndOneImpactAppend": true
+    },
+    {
+      "id": "AP09-whole-extension-guides-A91013-20261023",
+      "originalRecordSha256": "c19849962ba6371cbf64966aaea20de62574ee475326a31e5e009003d1fc192f",
+      "onlyRevisionAndOneCheckAndOneImpactAppend": true
+    },
+    {
+      "id": "A99-06-actual-compiled-minimal-project-20261026",
+      "originalRecordSha256": "c0e9684fad183776f810734d6308f9659e493b41fba9583f73591e1a6c32a386",
+      "onlyRevisionAndOneCheckAndOneImpactAppend": true
+    }
+  ],
+  "otherRecordsUnchanged": 78,
+  "rootFieldsUnchanged": true,
+  "newGateIds": [],
+  "newRequirementIds": []
+}

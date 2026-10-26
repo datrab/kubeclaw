@@ -1,0 +1,70 @@
+{
+  "journey": "local-observer-lifecycle",
+  "journalKind": "production FileJournal",
+  "deployment": false,
+  "roleOmission": "rejected",
+  "roleInclusion": "validated addition only; no deployed role changed",
+  "success": {
+    "activatedObservers": 1,
+    "pipelineStatus": "succeeded",
+    "delivered": 1,
+    "replayDelivered": 0,
+    "checkpointCount": 1,
+    "retainedEventRecords": 9,
+    "registrationVersion": "1.0.0"
+  },
+  "invalidConfiguration": "REGISTRY_RESULT_INVALID",
+  "requiredFailure": {
+    "requiredDrain": "failed",
+    "pipelineStatus": "succeeded",
+    "checkpointCount": 0
+  },
+  "disabled": {
+    "activatedObservers": 0,
+    "pipelineStatus": "succeeded",
+    "delivered": 0,
+    "replayDelivered": 0,
+    "checkpointCount": 0,
+    "retainedEventRecords": 8,
+    "registrationVersion": "1.0.0"
+  },
+  "incompatibleApi": "REGISTRY_MANIFEST_INVALID",
+  "sameContractVersionChange": {
+    "activatedObservers": 1,
+    "pipelineStatus": "succeeded",
+    "delivered": 1,
+    "replayDelivered": 0,
+    "checkpointCount": 1,
+    "retainedEventRecords": 9,
+    "registrationVersion": "2.0.0"
+  },
+  "rollback": {
+    "activatedObservers": 1,
+    "pipelineStatus": "succeeded",
+    "delivered": 1,
+    "replayDelivered": 0,
+    "checkpointCount": 1,
+    "retainedEventRecords": 9,
+    "registrationVersion": "1.0.0"
+  },
+  "removal": "REGISTRY_REGISTRATION_MISSING",
+  "retainedSuccessJournals": [
+    {
+      "name": "events.jsonl",
+      "bytes": 6286,
+      "sha256": "eea959c06a0867691c4afd5267962c67af4ae5fa7b415e7716cc0ef145cef66c"
+    },
+    {
+      "name": "checkpoints.jsonl",
+      "bytes": 1047,
+      "sha256": "359e78071a086fcf0fec1c036c3f4523e659f766d77b64d14dc411fe46413e70"
+    },
+    {
+      "name": "deliveries.jsonl",
+      "bytes": 1099,
+      "sha256": "07be6db4efc2595e00d25afc8bcdf8c802df2a6c239008c3a597ae4d0740a7b5"
+    }
+  ],
+  "scope": "Real local trusted-first-party activation, persistent observer audit/checkpoint and reconstructed runtime replay. Not a process-restart, external isolation, production deployment or whole A91010 acceptance.",
+  "temporaryRootRemoved": true
+}

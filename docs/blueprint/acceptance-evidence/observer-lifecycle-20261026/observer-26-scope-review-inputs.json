@@ -1,0 +1,150 @@
+{
+  "source": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+  "snapshot": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91010-20261026/observer-26-scope-review",
+  "baseline": "a091b5ad796bedeeac2abb2882319505300c2eaf",
+  "target": "2eabb3fe4232134e962c09f725e1f6ee218f6812",
+  "inputs": [
+    {
+      "path": "docs/blueprint/AP09-acceptance-contract.md",
+      "bytes": 42548,
+      "sha256": "1574710477433d27cade59dbc42ce6ecc6ae56f944271fbddbe7d03be2f9cd2f"
+    },
+    {
+      "path": "docs/site/extend/first-plugin.md",
+      "bytes": 27267,
+      "sha256": "77c7feaf619df7f13d514fbf33fea8c3fb47cc08046804d38d6600f4ce4b07d8"
+    },
+    {
+      "path": "scripts/lib/docs-publication-assets.mjs",
+      "bytes": 5685,
+      "sha256": "c0d58d0680bb42186370cb13a346e72e739e3ff64e146541c9f36c5dfd2ab294"
+    },
+    {
+      "path": "scripts/tests/docs-publication-assets.test.mjs",
+      "bytes": 7746,
+      "sha256": "c8ce8c02982d41e6ed250667917eb26e216d0e3d189ae28123428e9fd960a590"
+    },
+    {
+      "path": "scripts/docs-governance.mjs",
+      "bytes": 8879,
+      "sha256": "b432aa310245de62fcfbc072fc889ff46ed109df3c5f46c93748104c671a2a9c"
+    },
+    {
+      "path": "docs/site/extend/examples/observer-lifecycle/journey.mjs",
+      "bytes": 9250,
+      "sha256": "4ec92e7f43aab3be488ea92f57380e14562a4a13d5de97ad2eec42eca5d3c5b0"
+    },
+    {
+      "path": "docs/site/extend/examples/observer-lifecycle/plugin/package.json",
+      "bytes": 83,
+      "sha256": "19024f350c83619ca208e044bea042455517084566e099270ac9a0e0a2b50dd9"
+    },
+    {
+      "path": "docs/site/extend/examples/observer-lifecycle/plugin/plugin.json",
+      "bytes": 664,
+      "sha256": "42c68ce5ae6ec703393d16617e5ec3884f2e7a0453891e9e8924eb065ee0425a"
+    },
+    {
+      "path": "docs/site/extend/examples/observer-lifecycle/plugin/schemas/checkpoint.schema.json",
+      "bytes": 328,
+      "sha256": "8076bdee81e673be6e14805339f1f28a3d2cf294c0d56254463a74fabb031008"
+    },
+    {
+      "path": "docs/site/extend/examples/observer-lifecycle/plugin/schemas/config.schema.json",
+      "bytes": 184,
+      "sha256": "2630fff1d6be622bfc3ab96f4f9a3960d0e5afdaae53528416ca13b6b19b1b3a"
+    },
+    {
+      "path": "docs/site/extend/examples/observer-lifecycle/plugin/src/observer.js",
+      "bytes": 781,
+      "sha256": "886992a473fc3a1d0401d16fd6a5b1ed214976e5a46297e5e644508b06069041"
+    },
+    {
+      "path": "twentysix-original-scope-contracts.json",
+      "bytes": 44521,
+      "sha256": "51e46e1ceb337c7a05c194c40347952e9e1613271a18fb3cbb48ba0dad24540e"
+    },
+    {
+      "path": "twentysix-original-full-shared-vector.json",
+      "bytes": 164108,
+      "sha256": "58b41dfb22653329955324ad3294c967c92be7400707dd6844b6ffbaea764fc9"
+    },
+    {
+      "path": "twentysix-original-requirement-contracts.json",
+      "bytes": 22518,
+      "sha256": "e411d3091d2ac583fda4583e38d48d485da3250de338bc294a98864a42dec34f"
+    },
+    {
+      "path": "observer-complete-metadata-row-review-context.json",
+      "bytes": 38991,
+      "sha256": "d95b09a9aa70bcc2572ca11fff60e0e62ad34b15ea39f387d57c64eebe4d6dca"
+    },
+    {
+      "path": "observer-independent-source-verdict.json",
+      "bytes": 503,
+      "sha256": "5e39623b92218334c0147158d9b8f5e333707598e3dff2693098fe4ac9dbca1f"
+    },
+    {
+      "path": "observer-local-source-commit.json",
+      "bytes": 954,
+      "sha256": "113b6ad3cb13ded546d732a36269bec4d1be4fcd8619e67222cc1e74cbb3a2dc"
+    },
+    {
+      "path": "observer-guide-corrected-verdict.json",
+      "bytes": 341,
+      "sha256": "90a637a7aec2227d19a54073c0f6adc13bfe96c96d21b5c31d45db18a80b05c4"
+    },
+    {
+      "path": "observer-guide-source-reader-quality-verdict.json",
+      "bytes": 812,
+      "sha256": "636c3db42e637a9f4f4263e8ca5624051428e913b8c17f723a51c2898f1c080f"
+    },
+    {
+      "path": "observer-guide-correction-proof.json",
+      "bytes": 448,
+      "sha256": "f0bfd9be3b1a27be2a5ffb84b85bd66e2be65735436308e5dfe941b714e5f665"
+    },
+    {
+      "path": "observer-publication-boundary-verdict.json",
+      "bytes": 389,
+      "sha256": "1692807adeaa1183848c8ccc70028cef369381f5f10a0aa78c547248286f325f"
+    },
+    {
+      "path": "observer-final-complete-native-summary.json",
+      "bytes": 5342,
+      "sha256": "5e65a04f68b3b297a048fcd0af4bfe913934e0bb8c480a3d83747c62e2ef9717"
+    },
+    {
+      "path": "observer-final-build-report.json",
+      "bytes": 2264,
+      "sha256": "84bd909593ae11360829a7f198e2ea1815cafb9ec86a0e8ccdc09c1f8746a177"
+    },
+    {
+      "path": "observer-clean-checkout-result.json",
+      "bytes": 1054,
+      "sha256": "01bdd1bfd76bacca99a1543be9d26676fcd66464eb0dd5c4fc437a890402fb31"
+    },
+    {
+      "path": "observer-existing-stage-preservation-check.log",
+      "bytes": 698,
+      "sha256": "770c15aa4cfa728e7a55b472085796e3a101b36500b7848e6b147bc7a524a104"
+    },
+    {
+      "path": "observer-original-citations-retained-proof.json",
+      "bytes": 3691,
+      "sha256": "3b624ad6542fd204d2135e1151810d8f285da8c069971485659b9e17df789724"
+    },
+    {
+      "path": "browser-observation-retention.json",
+      "bytes": 584,
+      "sha256": "39bbdf567407d585581dca4c600384779c9e79307b04b3babf2898e723e35a37"
+    },
+    {
+      "path": "complete-changed-source.diff",
+      "bytes": 32608,
+      "sha256": "f1e38f57fccb1a296afc51491c18b18ec406e87f4f5a6b917c5df12bc1c4b1bc"
+    }
+  ],
+  "estimatedRawBytes": 448117,
+  "noTruncation": true
+}

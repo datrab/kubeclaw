@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-26T14:50:10.551312+00:00",
+  "previousWholeGuideVerdict": "observer-guide-source-reader-quality-verdict.json",
+  "correctionTarget": "0978955ae7ff56ce63ffce19b6df6272c09ddd3a",
+  "guideSha256": "4a3f56a9ee996a6cc9d7ba3162d98e643590799b251260c728afa39abc06a3e1",
+  "onlyMisidentifiedExportSentenceChanged": true,
+  "noExecutableSourceOrNativeProofChanged": true,
+  "originalFailurePreserved": true,
+  "newGateAcceptance": false
+}

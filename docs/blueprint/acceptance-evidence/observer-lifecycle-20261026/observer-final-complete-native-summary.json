@@ -1,0 +1,149 @@
+{
+  "at": "2026-10-26T16:29:50.348388+00:00",
+  "scope": "Actual coordinator checks only, no fresh independent participant/native deployment qualification",
+  "processResults": {
+    "sourceCommit": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+    "changedInputs": "Actual fullobserverEvidence metadata andthreeowner-generatedmaprows, not commit-hash-only rerun",
+    "completed": 7,
+    "total": 7,
+    "results": [
+      {
+        "name": "governance",
+        "command": "node scripts/docs-governance.mjs --check",
+        "startedAt": "2026-10-26T16:20:41.800325+00:00",
+        "finishedAt": "2026-10-26T16:20:42.786110+00:00",
+        "exitCode": 0
+      },
+      {
+        "name": "build",
+        "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build",
+        "startedAt": "2026-10-26T16:20:42.786345+00:00",
+        "finishedAt": "2026-10-26T16:23:00.549458+00:00",
+        "exitCode": 0
+      },
+      {
+        "name": "artifact",
+        "command": "node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs",
+        "startedAt": "2026-10-26T16:23:00.549791+00:00",
+        "finishedAt": "2026-10-26T16:23:25.686588+00:00",
+        "exitCode": 0
+      },
+      {
+        "name": "search",
+        "command": "node --max-old-space-size=4096 scripts/docs-reader/check-search.mjs",
+        "startedAt": "2026-10-26T16:23:25.699221+00:00",
+        "finishedAt": "2026-10-26T16:23:40.732346+00:00",
+        "exitCode": 0
+      },
+      {
+        "name": "source-links",
+        "command": "node --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs",
+        "startedAt": "2026-10-26T16:23:40.735344+00:00",
+        "finishedAt": "2026-10-26T16:25:28.343804+00:00",
+        "exitCode": 0
+      },
+      {
+        "name": "source-previews",
+        "command": "node --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs",
+        "startedAt": "2026-10-26T16:25:28.347262+00:00",
+        "finishedAt": "2026-10-26T16:26:00.069934+00:00",
+        "exitCode": 0
+      },
+      {
+        "name": "diagrams",
+        "command": "node --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+        "startedAt": "2026-10-26T16:26:00.082742+00:00",
+        "finishedAt": "2026-10-26T16:26:19.125891+00:00",
+        "exitCode": 0
+      }
+    ],
+    "allCompletedPassed": true,
+    "scope": "Coordinator Nativechecks only; prior1aSource6checks retained, no human/live/wholegate claim"
+  },
+  "browser": {
+    "source": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+    "scope": "Automated bounded companion page layout/link/no-script-injection/offline checks only; no independent participant, keyboard/screenreader or WCAG qualification",
+    "results": [
+      {
+        "width": 320,
+        "javaScriptEnabled": false,
+        "passed": true,
+        "localObserverLinks": 6,
+        "scrollWidth": 320,
+        "observerScripts": [],
+        "httpRequests": 0
+      },
+      {
+        "width": 320,
+        "javaScriptEnabled": true,
+        "passed": true,
+        "localObserverLinks": 6,
+        "scrollWidth": 320,
+        "observerScripts": [],
+        "httpRequests": 0
+      },
+      {
+        "width": 1440,
+        "javaScriptEnabled": false,
+        "passed": true,
+        "localObserverLinks": 6,
+        "scrollWidth": 1440,
+        "observerScripts": [],
+        "httpRequests": 0
+      },
+      {
+        "width": 1440,
+        "javaScriptEnabled": true,
+        "passed": true,
+        "localObserverLinks": 6,
+        "scrollWidth": 1440,
+        "observerScripts": [],
+        "httpRequests": 0
+      }
+    ]
+  },
+  "controls": {
+    "artifact": {
+      "selectedPages": 177,
+      "htmlPages": 191,
+      "localLinks": 41661,
+      "verifiedOutputDigests": 254,
+      "fullLogSha256": "ffe25ad62aa15ba5af70b304335c7d771d1b877984e908e9722fb491c86e9ec5",
+      "fullLogBytes": 85
+    },
+    "search": {
+      "indexedCanonicalPages": 177,
+      "internalArtifacts": 0,
+      "readerQuestionsPassed": 12,
+      "fullLogSha256": "b647afdfb3094db600e80b6c4d4d3b700b9060c56418258cb818e31e1feff98b",
+      "fullLogBytes": 3055
+    },
+    "source-links": {
+      "htmlPages": 191,
+      "uniqueVerifiedLinks": 15107,
+      "uniqueSourceObjects": 4126,
+      "limit": "Primary source object/revision/line or Markdown-fragment verification only; not semantic or live-runtime acceptance.",
+      "fullLogSha256": "d2da610927b378b584b661ec0b6435a87a7d7c20bfa6a6a6f98391f4ac39db17",
+      "fullLogBytes": 1499934
+    },
+    "source-previews": {
+      "pages": 177,
+      "sourceBoxes": 435,
+      "boxesWithPreviews": 435,
+      "excerpts": 2000,
+      "uniqueSourceObjects": 1070,
+      "limit": "Exact linked source and rendered excerpt verification; no semantic claim or test/runtime result inferred.",
+      "fullLogSha256": "4ad56aef5dd242ae3f15925a6a7952aeb6170e590e2ab27afe7b0df3eb91c6f3",
+      "fullLogBytes": 240
+    },
+    "diagrams": {
+      "pages": 177,
+      "diagrams": 28,
+      "freshRenderHashesMatched": 28,
+      "localOnly": true,
+      "limit": "Source/owner/question/visible alternative routing, static SVG and deterministic render checks only; not per-edge semantic or human screenreader acceptance.",
+      "fullLogSha256": "306c2a7279307e42effa2d099b2ccf07db7669d840054fbd649f045949259e6e",
+      "fullLogBytes": 262
+    }
+  }
+}

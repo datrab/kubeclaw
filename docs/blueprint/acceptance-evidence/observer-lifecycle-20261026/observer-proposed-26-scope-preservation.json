@@ -1,0 +1,444 @@
+{
+  "kind": "PROPOSED preservation only; do NOT adopt before independent full relevant-scope PASS",
+  "source": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+  "baseline": "cd3fa7d93242c0da59b7565ebfa0e83447c796c6",
+  "newAcceptedGates": [],
+  "newAcceptedRequirements": [],
+  "records": [
+    {
+      "id": "AP09.1-ready-topics-20261020",
+      "originalRevision": "448b8282e6a0c374030c256009224fb7b76d14e8",
+      "originalRecordSemanticSha256": "d0e59281f6e6a6ff2e917ffd82f1f2d53e732c7f6c582ab638b17e129e35fa99",
+      "proposedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "changedBoundFiles": [
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "allowedMutation": "revision plus one new scopedcheck andimpactReview append ONLY; every originalsummary/limits/author/reviewer/verdict/IDs/pages/sources/historicalchecks/history unchanged",
+      "proposedJudgement": "PASS for original unchanged scope only, pending independentreview; newobserver contribution reviewed separately and notrecounted; no live/runtime/human/globalpass",
+      "changedDeclaredBoundFiles": [
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "additionalSemanticImpactsAssessed": "Full shared guide/6asset/3maprow change context inspected for original bounded task; no expansion of original accepted topic or recounting. Changed declared files retain complete original vector."
+    },
+    {
+      "id": "Reviewed-corrections-20261020",
+      "originalRevision": "448b8282e6a0c374030c256009224fb7b76d14e8",
+      "originalRecordSemanticSha256": "4bd42b3a5f0304fdaa121de16fcfb9ae0be0b09b8a04f2b6b3574d44c0923a35",
+      "proposedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "changedBoundFiles": [
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "allowedMutation": "revision plus one new scopedcheck andimpactReview append ONLY; every originalsummary/limits/author/reviewer/verdict/IDs/pages/sources/historicalchecks/history unchanged",
+      "proposedJudgement": "PASS for original unchanged scope only, pending independentreview; newobserver contribution reviewed separately and notrecounted; no live/runtime/human/globalpass",
+      "changedDeclaredBoundFiles": [
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "additionalSemanticImpactsAssessed": "Full shared guide/6asset/3maprow change context inspected for original bounded task; no expansion of original accepted topic or recounting. Changed declared files retain complete original vector."
+    },
+    {
+      "id": "AP09-reader-developers-20261020",
+      "originalRevision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
+      "originalRecordSemanticSha256": "1b79f99473b66cd6910fd3415f97b8b0dda780419df695b33bd0ebf703505683",
+      "proposedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "changedBoundFiles": [
+        "docs/site/extend/first-plugin.md"
+      ],
+      "allowedMutation": "revision plus one new scopedcheck andimpactReview append ONLY; every originalsummary/limits/author/reviewer/verdict/IDs/pages/sources/historicalchecks/history unchanged",
+      "proposedJudgement": "PASS for original unchanged scope only, pending independentreview; newobserver contribution reviewed separately and notrecounted; no live/runtime/human/globalpass",
+      "changedDeclaredBoundFiles": [
+        "docs/site/extend/first-plugin.md"
+      ],
+      "additionalSemanticImpactsAssessed": "Full shared guide/6asset/3maprow change context inspected for original bounded task; no expansion of original accepted topic or recounting. Changed declared files retain complete original vector."
+    },
+    {
+      "id": "AP09-reviewed-maintenance-20261020",
+      "originalRevision": "c56f684a0b18bbf8c9615524e6702a0e80a589e4",
+      "originalRecordSemanticSha256": "7442d22571227bbd782bea361a6180e0b1bca3e734b6316a1794606208bee3e3",
+      "proposedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "changedBoundFiles": [
+        "scripts/tests/docs-publication-assets.test.mjs"
+      ],
+      "allowedMutation": "revision plus one new scopedcheck andimpactReview append ONLY; every originalsummary/limits/author/reviewer/verdict/IDs/pages/sources/historicalchecks/history unchanged",
+      "proposedJudgement": "PASS for original unchanged scope only, pending independentreview; newobserver contribution reviewed separately and notrecounted; no live/runtime/human/globalpass",
+      "changedDeclaredBoundFiles": [
+        "scripts/tests/docs-publication-assets.test.mjs"
+      ],
+      "additionalSemanticImpactsAssessed": "Full shared guide/6asset/3maprow change context inspected for original bounded task; no expansion of original accepted topic or recounting. Changed declared files retain complete original vector."
+    },
+    {
+      "id": "AP09-reviewed-publication-navigation-20261020",
+      "originalRevision": "f6c818c09b94b75a95c8d40efbf8b23b8f3466a1",
+      "originalRecordSemanticSha256": "01d3f5028578af70098ee3a1a3e5edf29afb1b56e0272d98202d02194cb561cb",
+      "proposedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "changedBoundFiles": [
+        "docs/site/extend/first-plugin.md",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "allowedMutation": "revision plus one new scopedcheck andimpactReview append ONLY; every originalsummary/limits/author/reviewer/verdict/IDs/pages/sources/historicalchecks/history unchanged",
+      "proposedJudgement": "PASS for original unchanged scope only, pending independentreview; newobserver contribution reviewed separately and notrecounted; no live/runtime/human/globalpass",
+      "changedDeclaredBoundFiles": [
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "additionalSemanticImpactsAssessed": "Changed canonical guide search text/headings/ranking, final Source links/previews, static fallback and exact6published support assets are included in whole Reader responsibilities, not merely historical declared vector intersection. 177canonical/search12questions/currentfirst-guide record+targetedqueries and sevenfinalnative checks/fourbrowsercases supplied. New assets do not enter canonicalindex or execute as page scripts."
+    },
+    {
+      "id": "AP09-closeout-developer-maintenance-20261020",
+      "originalRevision": "fb48da8ae1af107873e7586538dd7de9245e882b",
+      "originalRecordSemanticSha256": "adce56afe657a4ba6bcb838161491bf994d10c42a373f5849b939ca06bd83e3d",
+      "proposedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "changedBoundFiles": [
+        "scripts/tests/docs-publication-assets.test.mjs"
+      ],
+      "allowedMutation": "revision plus one new scopedcheck andimpactReview append ONLY; every originalsummary/limits/author/reviewer/verdict/IDs/pages/sources/historicalchecks/history unchanged",
+      "proposedJudgement": "PASS for original unchanged scope only, pending independentreview; newobserver contribution reviewed separately and notrecounted; no live/runtime/human/globalpass",
+      "changedDeclaredBoundFiles": [
+        "scripts/tests/docs-publication-assets.test.mjs"
+      ],
+      "additionalSemanticImpactsAssessed": "Full shared guide/6asset/3maprow change context inspected for original bounded task; no expansion of original accepted topic or recounting. Changed declared files retain complete original vector."
+    },
+    {
+      "id": "AP09-first-project-example-20261020",
+      "originalRevision": "f6c818c09b94b75a95c8d40efbf8b23b8f3466a1",
+      "originalRecordSemanticSha256": "4b6dbdbb8eb8362d625e2bf20f7bdda3ac39c8a2dd4bc375c451fd7117343639",
+      "proposedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "changedBoundFiles": [
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "allowedMutation": "revision plus one new scopedcheck andimpactReview append ONLY; every originalsummary/limits/author/reviewer/verdict/IDs/pages/sources/historicalchecks/history unchanged",
+      "proposedJudgement": "PASS for original unchanged scope only, pending independentreview; newobserver contribution reviewed separately and notrecounted; no live/runtime/human/globalpass",
+      "changedDeclaredBoundFiles": [
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "additionalSemanticImpactsAssessed": "Full shared guide/6asset/3maprow change context inspected for original bounded task; no expansion of original accepted topic or recounting. Changed declared files retain complete original vector."
+    },
+    {
+      "id": "AP09-buster-lease-reference-20261020",
+      "originalRevision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+      "originalRecordSemanticSha256": "df08753b043160c1ba275397680647825e8d220816351228926e84a6c3f3a091",
+      "proposedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "changedBoundFiles": [
+        "scripts/tests/docs-publication-assets.test.mjs"
+      ],
+      "allowedMutation": "revision plus one new scopedcheck andimpactReview append ONLY; every originalsummary/limits/author/reviewer/verdict/IDs/pages/sources/historicalchecks/history unchanged",
+      "proposedJudgement": "PASS for original unchanged scope only, pending independentreview; newobserver contribution reviewed separately and notrecounted; no live/runtime/human/globalpass",
+      "changedDeclaredBoundFiles": [
+        "scripts/tests/docs-publication-assets.test.mjs"
+      ],
+      "additionalSemanticImpactsAssessed": "Full shared guide/6asset/3maprow change context inspected for original bounded task; no expansion of original accepted topic or recounting. Changed declared files retain complete original vector."
+    },
+    {
+      "id": "AP09-install-maintenance-project-entry-20261021",
+      "originalRevision": "f6c818c09b94b75a95c8d40efbf8b23b8f3466a1",
+      "originalRecordSemanticSha256": "f3e941670fce4c55def9b310dd11a45a0f310228d504be5a5222ee1cc1cd8bff",
+      "proposedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "changedBoundFiles": [
+        "docs/site/extend/first-plugin.md"
+      ],
+      "allowedMutation": "revision plus one new scopedcheck andimpactReview append ONLY; every originalsummary/limits/author/reviewer/verdict/IDs/pages/sources/historicalchecks/history unchanged",
+      "proposedJudgement": "PASS for original unchanged scope only, pending independentreview; newobserver contribution reviewed separately and notrecounted; no live/runtime/human/globalpass",
+      "changedDeclaredBoundFiles": [
+        "docs/site/extend/first-plugin.md"
+      ],
+      "additionalSemanticImpactsAssessed": "Full shared guide/6asset/3maprow change context inspected for original bounded task; no expansion of original accepted topic or recounting. Changed declared files retain complete original vector."
+    },
+    {
+      "id": "AP09-documentation-agent-maintenance-20261021",
+      "originalRevision": "f6c818c09b94b75a95c8d40efbf8b23b8f3466a1",
+      "originalRecordSemanticSha256": "9f962567d3505526bd84b9c8c43c0befc17793ccec0a47b73b79db38d840f956",
+      "proposedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "changedBoundFiles": [
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/tests/docs-publication-assets.test.mjs"
+      ],
+      "allowedMutation": "revision plus one new scopedcheck andimpactReview append ONLY; every originalsummary/limits/author/reviewer/verdict/IDs/pages/sources/historicalchecks/history unchanged",
+      "proposedJudgement": "PASS for original unchanged scope only, pending independentreview; newobserver contribution reviewed separately and notrecounted; no live/runtime/human/globalpass",
+      "changedDeclaredBoundFiles": [
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/tests/docs-publication-assets.test.mjs"
+      ],
+      "additionalSemanticImpactsAssessed": "Full shared guide/6asset/3maprow change context inspected for original bounded task; no expansion of original accepted topic or recounting. Changed declared files retain complete original vector."
+    },
+    {
+      "id": "AP09-complete-platform-change-content-20261021",
+      "originalRevision": "f6c818c09b94b75a95c8d40efbf8b23b8f3466a1",
+      "originalRecordSemanticSha256": "7f7522463a76d4f95bc3b942ee52902e31824ed3fec40b001c65d4319b3a7d0e",
+      "proposedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "changedBoundFiles": [
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/tests/docs-publication-assets.test.mjs"
+      ],
+      "allowedMutation": "revision plus one new scopedcheck andimpactReview append ONLY; every originalsummary/limits/author/reviewer/verdict/IDs/pages/sources/historicalchecks/history unchanged",
+      "proposedJudgement": "PASS for original unchanged scope only, pending independentreview; newobserver contribution reviewed separately and notrecounted; no live/runtime/human/globalpass",
+      "changedDeclaredBoundFiles": [
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/tests/docs-publication-assets.test.mjs"
+      ],
+      "additionalSemanticImpactsAssessed": "Full shared guide/6asset/3maprow change context inspected for original bounded task; no expansion of original accepted topic or recounting. Changed declared files retain complete original vector."
+    },
+    {
+      "id": "AP09-complete-publication-reference-navigation-20261021",
+      "originalRevision": "f6c818c09b94b75a95c8d40efbf8b23b8f3466a1",
+      "originalRecordSemanticSha256": "73edcc393af598648e66b058c6a14c3590945b8dee8fe5a6a7a42041e273b728",
+      "proposedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "changedBoundFiles": [
+        "docs/site/extend/first-plugin.md",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "allowedMutation": "revision plus one new scopedcheck andimpactReview append ONLY; every originalsummary/limits/author/reviewer/verdict/IDs/pages/sources/historicalchecks/history unchanged",
+      "proposedJudgement": "PASS for original unchanged scope only, pending independentreview; newobserver contribution reviewed separately and notrecounted; no live/runtime/human/globalpass",
+      "changedDeclaredBoundFiles": [
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "additionalSemanticImpactsAssessed": "Changed canonical guide search text/headings/ranking, final Source links/previews, static fallback and exact6published support assets are included in whole Reader responsibilities, not merely historical declared vector intersection. 177canonical/search12questions/currentfirst-guide record+targetedqueries and sevenfinalnative checks/fourbrowsercases supplied. New assets do not enter canonicalindex or execute as page scripts."
+    },
+    {
+      "id": "AP09-complete-developer-reader-contracts-20261021",
+      "originalRevision": "f6c818c09b94b75a95c8d40efbf8b23b8f3466a1",
+      "originalRecordSemanticSha256": "394e471f83d1a638d68e2ea9e2c4a070dad144fa4fef6ccc86f374d2ba474bb2",
+      "proposedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "changedBoundFiles": [
+        "docs/site/extend/first-plugin.md",
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/tests/docs-publication-assets.test.mjs"
+      ],
+      "allowedMutation": "revision plus one new scopedcheck andimpactReview append ONLY; every originalsummary/limits/author/reviewer/verdict/IDs/pages/sources/historicalchecks/history unchanged",
+      "proposedJudgement": "PASS for original unchanged scope only, pending independentreview; newobserver contribution reviewed separately and notrecounted; no live/runtime/human/globalpass",
+      "changedDeclaredBoundFiles": [
+        "docs/site/extend/first-plugin.md",
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/tests/docs-publication-assets.test.mjs"
+      ],
+      "additionalSemanticImpactsAssessed": "Full shared guide/6asset/3maprow change context inspected for original bounded task; no expansion of original accepted topic or recounting. Changed declared files retain complete original vector."
+    },
+    {
+      "id": "AP09-complete-static-reader-search-20261021",
+      "originalRevision": "829704320afac4cbed028d0847062819acda6559",
+      "originalRecordSemanticSha256": "9beb20902f7f16854a91454ec098ae94d294f2822953a3a26e62ad0a77a601e6",
+      "proposedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "changedBoundFiles": [
+        "docs/site/extend/first-plugin.md",
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/tests/docs-publication-assets.test.mjs"
+      ],
+      "allowedMutation": "revision plus one new scopedcheck andimpactReview append ONLY; every originalsummary/limits/author/reviewer/verdict/IDs/pages/sources/historicalchecks/history unchanged",
+      "proposedJudgement": "PASS for original unchanged scope only, pending independentreview; newobserver contribution reviewed separately and notrecounted; no live/runtime/human/globalpass",
+      "changedDeclaredBoundFiles": [
+        "docs/site/extend/first-plugin.md",
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/tests/docs-publication-assets.test.mjs"
+      ],
+      "additionalSemanticImpactsAssessed": "Changed canonical guide search text/headings/ranking, final Source links/previews, static fallback and exact6published support assets are included in whole Reader responsibilities, not merely historical declared vector intersection. 177canonical/search12questions/currentfirst-guide record+targetedqueries and sevenfinalnative checks/fourbrowsercases supplied. New assets do not enter canonicalindex or execute as page scripts."
+    },
+    {
+      "id": "AP09-search-reader-gate-20261021",
+      "originalRevision": "829704320afac4cbed028d0847062819acda6559",
+      "originalRecordSemanticSha256": "4ec23aecf5af014530f1a24cfc2c1ac0b039087a5bc4dcbadc26d3a42f902ac0",
+      "proposedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "changedBoundFiles": [
+        "docs/site/extend/first-plugin.md",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "allowedMutation": "revision plus one new scopedcheck andimpactReview append ONLY; every originalsummary/limits/author/reviewer/verdict/IDs/pages/sources/historicalchecks/history unchanged",
+      "proposedJudgement": "PASS for original unchanged scope only, pending independentreview; newobserver contribution reviewed separately and notrecounted; no live/runtime/human/globalpass",
+      "changedDeclaredBoundFiles": [
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "additionalSemanticImpactsAssessed": "Changed canonical guide search text/headings/ranking, final Source links/previews, static fallback and exact6published support assets are included in whole Reader responsibilities, not merely historical declared vector intersection. 177canonical/search12questions/currentfirst-guide record+targetedqueries and sevenfinalnative checks/fourbrowsercases supplied. New assets do not enter canonicalindex or execute as page scripts."
+    },
+    {
+      "id": "AP09-rendered-source-bounds-gate-20261021",
+      "originalRevision": "829704320afac4cbed028d0847062819acda6559",
+      "originalRecordSemanticSha256": "0716465873008cf31c69a8d8a62de82ba80fdecc97baef6d2f8b778470fcf21b",
+      "proposedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "changedBoundFiles": [
+        "docs/site/extend/first-plugin.md",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "allowedMutation": "revision plus one new scopedcheck andimpactReview append ONLY; every originalsummary/limits/author/reviewer/verdict/IDs/pages/sources/historicalchecks/history unchanged",
+      "proposedJudgement": "PASS for original unchanged scope only, pending independentreview; newobserver contribution reviewed separately and notrecounted; no live/runtime/human/globalpass",
+      "changedDeclaredBoundFiles": [
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "additionalSemanticImpactsAssessed": "Changed canonical guide search text/headings/ranking, final Source links/previews, static fallback and exact6published support assets are included in whole Reader responsibilities, not merely historical declared vector intersection. 177canonical/search12questions/currentfirst-guide record+targetedqueries and sevenfinalnative checks/fourbrowsercases supplied. New assets do not enter canonicalindex or execute as page scripts."
+    },
+    {
+      "id": "AP09-complete-static-offline-fallback-20261021",
+      "originalRevision": "f6c818c09b94b75a95c8d40efbf8b23b8f3466a1",
+      "originalRecordSemanticSha256": "594b00538a1e74c6c629d60f1242e0bf7776d4fbc6d6e90cf2d5b8c250bf0288",
+      "proposedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "changedBoundFiles": [
+        "docs/site/extend/first-plugin.md",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "allowedMutation": "revision plus one new scopedcheck andimpactReview append ONLY; every originalsummary/limits/author/reviewer/verdict/IDs/pages/sources/historicalchecks/history unchanged",
+      "proposedJudgement": "PASS for original unchanged scope only, pending independentreview; newobserver contribution reviewed separately and notrecounted; no live/runtime/human/globalpass",
+      "changedDeclaredBoundFiles": [
+        "docs/site/extend/first-plugin.md",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "additionalSemanticImpactsAssessed": "Changed canonical guide search text/headings/ranking, final Source links/previews, static fallback and exact6published support assets are included in whole Reader responsibilities, not merely historical declared vector intersection. 177canonical/search12questions/currentfirst-guide record+targetedqueries and sevenfinalnative checks/fourbrowsercases supplied. New assets do not enter canonicalindex or execute as page scripts."
+    },
+    {
+      "id": "FLW014-plugin-operator-supported-lifecycle-20261021",
+      "originalRevision": "f6c818c09b94b75a95c8d40efbf8b23b8f3466a1",
+      "originalRecordSemanticSha256": "ed2b9c3046fbb0f3e966d841ff84430b2715a2fd933e5e4a9adfc2a694384b80",
+      "proposedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "changedBoundFiles": [
+        "docs/site/extend/first-plugin.md"
+      ],
+      "allowedMutation": "revision plus one new scopedcheck andimpactReview append ONLY; every originalsummary/limits/author/reviewer/verdict/IDs/pages/sources/historicalchecks/history unchanged",
+      "proposedJudgement": "PASS for original unchanged scope only, pending independentreview; newobserver contribution reviewed separately and notrecounted; no live/runtime/human/globalpass",
+      "changedDeclaredBoundFiles": [
+        "docs/site/extend/first-plugin.md"
+      ],
+      "additionalSemanticImpactsAssessed": "Full shared guide/6asset/3maprow change context inspected for original bounded task; no expansion of original accepted topic or recounting. Changed declared files retain complete original vector."
+    },
+    {
+      "id": "A912-03-supported-redirect-paths-20261021",
+      "originalRevision": "f6c818c09b94b75a95c8d40efbf8b23b8f3466a1",
+      "originalRecordSemanticSha256": "7a27b7a1d3d1bd7548d841f4dfab9b233054c128a6ebfa5e6dc24cdda207c8e8",
+      "proposedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "changedBoundFiles": [
+        "docs/site/extend/first-plugin.md",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "allowedMutation": "revision plus one new scopedcheck andimpactReview append ONLY; every originalsummary/limits/author/reviewer/verdict/IDs/pages/sources/historicalchecks/history unchanged",
+      "proposedJudgement": "PASS for original unchanged scope only, pending independentreview; newobserver contribution reviewed separately and notrecounted; no live/runtime/human/globalpass",
+      "changedDeclaredBoundFiles": [
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "additionalSemanticImpactsAssessed": "Changed canonical guide search text/headings/ranking, final Source links/previews, static fallback and exact6published support assets are included in whole Reader responsibilities, not merely historical declared vector intersection. 177canonical/search12questions/currentfirst-guide record+targetedqueries and sevenfinalnative checks/fourbrowsercases supplied. New assets do not enter canonicalindex or execute as page scripts."
+    },
+    {
+      "id": "A912-11-deterministic-page-records-20261022",
+      "originalRevision": "f6c818c09b94b75a95c8d40efbf8b23b8f3466a1",
+      "originalRecordSemanticSha256": "da6ece994be88e7e89224f4072ce3ce061dfbd6f4d380b634aea063e1169f219",
+      "proposedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "changedBoundFiles": [
+        "docs/site/extend/first-plugin.md",
+        "docs/site/reference/generated-documentation-map.json",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "allowedMutation": "revision plus one new scopedcheck andimpactReview append ONLY; every originalsummary/limits/author/reviewer/verdict/IDs/pages/sources/historicalchecks/history unchanged",
+      "proposedJudgement": "PASS for original unchanged scope only, pending independentreview; newobserver contribution reviewed separately and notrecounted; no live/runtime/human/globalpass",
+      "changedDeclaredBoundFiles": [
+        "docs/site/reference/generated-documentation-map.json",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "additionalSemanticImpactsAssessed": "Changed canonical guide search text/headings/ranking, final Source links/previews, static fallback and exact6published support assets are included in whole Reader responsibilities, not merely historical declared vector intersection. 177canonical/search12questions/currentfirst-guide record+targetedqueries and sevenfinalnative checks/fourbrowsercases supplied. New assets do not enter canonicalindex or execute as page scripts."
+    },
+    {
+      "id": "AP09-publication-positive-scope-7ef16585",
+      "originalRevision": "f6c818c09b94b75a95c8d40efbf8b23b8f3466a1",
+      "originalRecordSemanticSha256": "f7d087d4ee48369965b5ff89b289cae276c7d268b4fe409d7aaf391ae08b2d57",
+      "proposedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "changedBoundFiles": [
+        "docs/site/extend/first-plugin.md",
+        "docs/site/reference/generated-documentation-map.json",
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/tests/docs-publication-assets.test.mjs"
+      ],
+      "allowedMutation": "revision plus one new scopedcheck andimpactReview append ONLY; every originalsummary/limits/author/reviewer/verdict/IDs/pages/sources/historicalchecks/history unchanged",
+      "proposedJudgement": "PASS for original unchanged scope only, pending independentreview; newobserver contribution reviewed separately and notrecounted; no live/runtime/human/globalpass",
+      "changedDeclaredBoundFiles": [
+        "docs/site/extend/first-plugin.md",
+        "docs/site/reference/generated-documentation-map.json",
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/tests/docs-publication-assets.test.mjs"
+      ],
+      "additionalSemanticImpactsAssessed": "Changed canonical guide search text/headings/ranking, final Source links/previews, static fallback and exact6published support assets are included in whole Reader responsibilities, not merely historical declared vector intersection. 177canonical/search12questions/currentfirst-guide record+targetedqueries and sevenfinalnative checks/fourbrowsercases supplied. New assets do not enter canonicalindex or execute as page scripts."
+    },
+    {
+      "id": "A98-02-13-whole-operator-procedure-contract-20261022",
+      "originalRevision": "f6c818c09b94b75a95c8d40efbf8b23b8f3466a1",
+      "originalRecordSemanticSha256": "2ea4e46383d0f6c20a43872c1a589517401a0f5fa59415b187e0857ea8b1ffe0",
+      "proposedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "changedBoundFiles": [
+        "docs/site/reference/generated-documentation-map.json",
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/tests/docs-publication-assets.test.mjs"
+      ],
+      "allowedMutation": "revision plus one new scopedcheck andimpactReview append ONLY; every originalsummary/limits/author/reviewer/verdict/IDs/pages/sources/historicalchecks/history unchanged",
+      "proposedJudgement": "PASS for original unchanged scope only, pending independentreview; newobserver contribution reviewed separately and notrecounted; no live/runtime/human/globalpass",
+      "changedDeclaredBoundFiles": [
+        "docs/site/reference/generated-documentation-map.json",
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/tests/docs-publication-assets.test.mjs"
+      ],
+      "additionalSemanticImpactsAssessed": "Full shared guide/6asset/3maprow change context inspected for original bounded task; no expansion of original accepted topic or recounting. Changed declared files retain complete original vector."
+    },
+    {
+      "id": "A910-03-whole-command-prerequisite-contract-20261022",
+      "originalRevision": "f6c818c09b94b75a95c8d40efbf8b23b8f3466a1",
+      "originalRecordSemanticSha256": "9db92d3046ebc30f266a72fbd7711e6c675bcee6bf9f416da289b79e10960065",
+      "proposedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "changedBoundFiles": [
+        "docs/site/extend/first-plugin.md",
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/tests/docs-publication-assets.test.mjs"
+      ],
+      "allowedMutation": "revision plus one new scopedcheck andimpactReview append ONLY; every originalsummary/limits/author/reviewer/verdict/IDs/pages/sources/historicalchecks/history unchanged",
+      "proposedJudgement": "PASS for original unchanged scope only, pending independentreview; newobserver contribution reviewed separately and notrecounted; no live/runtime/human/globalpass",
+      "changedDeclaredBoundFiles": [
+        "docs/site/extend/first-plugin.md",
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/tests/docs-publication-assets.test.mjs"
+      ],
+      "additionalSemanticImpactsAssessed": "Full shared guide/6asset/3maprow change context inspected for original bounded task; no expansion of original accepted topic or recounting. Changed declared files retain complete original vector."
+    },
+    {
+      "id": "PUB008-current-reader-build-ci-20261023",
+      "originalRevision": "f6c818c09b94b75a95c8d40efbf8b23b8f3466a1",
+      "originalRecordSemanticSha256": "01884176f307f041527e97fcd677749d6a8e3f4a9175634af309b430cc7f4504",
+      "proposedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "changedBoundFiles": [
+        "docs/site/extend/first-plugin.md",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "allowedMutation": "revision plus one new scopedcheck andimpactReview append ONLY; every originalsummary/limits/author/reviewer/verdict/IDs/pages/sources/historicalchecks/history unchanged",
+      "proposedJudgement": "PASS for original unchanged scope only, pending independentreview; newobserver contribution reviewed separately and notrecounted; no live/runtime/human/globalpass",
+      "changedDeclaredBoundFiles": [
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "additionalSemanticImpactsAssessed": "Changed canonical guide search text/headings/ranking, final Source links/previews, static fallback and exact6published support assets are included in whole Reader responsibilities, not merely historical declared vector intersection. 177canonical/search12questions/currentfirst-guide record+targetedqueries and sevenfinalnative checks/fourbrowsercases supplied. New assets do not enter canonicalindex or execute as page scripts."
+    },
+    {
+      "id": "AP09-whole-extension-guides-A91013-20261023",
+      "originalRevision": "fb48da8ae1af107873e7586538dd7de9245e882b",
+      "originalRecordSemanticSha256": "c19849962ba6371cbf64966aaea20de62574ee475326a31e5e009003d1fc192f",
+      "proposedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "changedBoundFiles": [
+        "docs/site/extend/first-plugin.md"
+      ],
+      "allowedMutation": "revision plus one new scopedcheck andimpactReview append ONLY; every originalsummary/limits/author/reviewer/verdict/IDs/pages/sources/historicalchecks/history unchanged",
+      "proposedJudgement": "PASS for original unchanged scope only, pending independentreview; newobserver contribution reviewed separately and notrecounted; no live/runtime/human/globalpass",
+      "changedDeclaredBoundFiles": [
+        "docs/site/extend/first-plugin.md"
+      ],
+      "additionalSemanticImpactsAssessed": "Full shared guide/6asset/3maprow change context inspected for original bounded task; no expansion of original accepted topic or recounting. Changed declared files retain complete original vector."
+    },
+    {
+      "id": "A99-06-actual-compiled-minimal-project-20261026",
+      "originalRevision": "f6c818c09b94b75a95c8d40efbf8b23b8f3466a1",
+      "originalRecordSemanticSha256": "c0e9684fad183776f810734d6308f9659e493b41fba9583f73591e1a6c32a386",
+      "proposedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "changedBoundFiles": [
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "allowedMutation": "revision plus one new scopedcheck andimpactReview append ONLY; every originalsummary/limits/author/reviewer/verdict/IDs/pages/sources/historicalchecks/history unchanged",
+      "proposedJudgement": "PASS for original unchanged scope only, pending independentreview; newobserver contribution reviewed separately and notrecounted; no live/runtime/human/globalpass",
+      "changedDeclaredBoundFiles": [
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "additionalSemanticImpactsAssessed": "Full shared guide/6asset/3maprow change context inspected for original bounded task; no expansion of original accepted topic or recounting. Changed declared files retain complete original vector."
+    }
+  ],
+  "sharedChangedSourceContext": [
+    "docs/site/extend/first-plugin.md",
+    "scripts/lib/docs-publication-assets.mjs",
+    "scripts/tests/docs-publication-assets.test.mjs",
+    "docs/site/reference/generated-documentation-map.json",
+    "docs/site/extend/examples/observer-lifecycle (all6complete files supplied)"
+  ],
+  "semanticImpactCorrection": "Original explicit file-list intersections are not a complete semantic dependency model. All26 review the full shared changed-source context. Whole Reader search/render/Source/publication records additionally include the changed canonical guide and six published assets even when omitted from historical declared source arrays; original arrays remain unchanged. Final fullgenerated first-plugin search record and targetedquery observations supplied; original12query completechecker retained. No historical source binding rewritten."
+}

@@ -1,0 +1,782 @@
+{
+  "at": "2026-10-26T16:39:09.428Z",
+  "scope": "Actual generated canonical first-plugin search record and bounded targeted query observations; no fresh full-renderer semantic or human qualification",
+  "source": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+  "indexSha256": "ed31a08989df590c92f15b620cef40091439ea8fc2dca57c36e84faf71ddb869",
+  "indexBytes": 22713567,
+  "canonicalCount": 177,
+  "manifestExactAndUnique": true,
+  "completeChangedCanonicalRecord": {
+    "title": "Create And Activate A First Pipeline Plugin",
+    "headings": [
+      "Create And Activate A First Pipeline Plugin",
+      "Objective",
+      "Scope Boundary",
+      "What You Will Build",
+      "Prerequisites",
+      "Understand The Package Before You Copy It",
+      "Procedure",
+      "1. Copy The Package Into The Nova Plugin Root",
+      "2. Observe The Missing Role Ownership Failure",
+      "3. Add The Plugin To The Nova Role",
+      "4. Build And Inspect A Nova Runtime Bundle",
+      "5. Run The Complete Local Activation Journey",
+      "6. Read The Result As A Runtime Contract",
+      "7. Inspect The Runtime Path In Source",
+      "Expected Result",
+      "Verification",
+      "Common Failures",
+      "Recovery",
+      "Practice an observer lifecycle locally",
+      "Prepare the companion checkout",
+      "Inspect the registration and authority",
+      "Read the runtime observations",
+      "Change the subscription",
+      "Retain the right evidence and stop safely"
+    ],
+    "route": "extend/first-plugin.html",
+    "text": "Create And Activate A First Pipeline Plugin Page scope and sources Status: implemented with stated verification limits Audience: plugin author, maintainer Owner: plugin-foundation Evidence: docs/site/extend/examples/minimal-stage; docs/site/extend/examples/observer-lifecycle; package.json; skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json; packaging/runtime/roles/nova.json Evidence revision: bcf032f241b432bf920baa9ee5f727947921447d Applies to: one capability-free pipeline-plugin-v2 stage in the Nova role and the separately pinned local observer companion Last verified: original stage source/local check on 2026-09-16; observer source/local journey on 2026-10-26 Objective Create one small stage plugin and take it through the complete local plugin path: inspect and test the package; make the Nova role own it; verify that role packaging can include it; discover, register, grant, and activate it; invoke it in a local runner harness and inspect its decision fact; invoke one intentional failure; reject one invalid input before stage execution; remove the package and prove that new activation stops; identify the run evidence that remains after removal. The example does not access a network, filesystem, secret, process, or database. It requests no capabilities and creates no external state. This design keeps the first journey focused on package and runtime mechanics. Continue with the effectful plugin guide for external state. Scope Boundary This guide explains plugin authoring and local plugin integration only. It does not explain .swarm/pipeline.json, the project compiler, pipeline submission, transport, a running Nova service, image deployment, or an end-to-end pipeline run. The maintained check creates one pipeline-definition.v2 value in memory because a stage needs a graph entry before Nova can invoke it. That value is a test harness for the plugin registration. It is not a project file, a reusable pipeline example, or an end-to-end system test. This separation keeps two different developer tasks clear: this guide proves that an installed plugin can register, activate, and return a result through the local runtime boundary; the Use and Operate guides own pipeline configuration, submission, observation, and deployed execution. Do not copy the in-memory test definition as a .swarm/pipeline.json file. The two inputs have different schemas and different owners. What You Will Build The example registers example.greeting.say. It reads a name and a configured prefix. On success, it returns the decision fact tutorial.greeting. When the input sets fail to true, it returns a deliberate terminal failure. This example is a stage because the graph must order it and Core must interpret its typed result. An observer would only consume committed events. An adapter would provide external authority. A test provider would execute Buster test work. The canonical example remains outside skills/nova/plugins by default. This choice prevents the tutorial exercise from changing the shipped Nova role. You copy the example into the Nova plugin root during the exercise. You then make role ownership explicit before packaging it. Benefit: The repository keeps one executable teaching source without silently adding tutorial behavior to a production runtime. Cost: The exercise has an explicit copy and role-edit step. Alternative: The repository could ship the example in every Nova bundle. That approach would increase the trusted code set without a product requirement. Reconsider when: The greeting stage becomes a supported product feature or the project adds a dedicated development-only runtime role. Prerequisites Start from a clean checkout of the product revision that you plan to extend. A pinned source link can show an earlier verified revision. Use that link as evidence, but edit and test the files in your selected product revision. Install Node.js major version 24. Complete the canonical Locked Dependency Installation in a disposable checkout and retain its sanitized evidence. Use a branch. The procedure changes one role manifest and creates one package copy. Keep released package bytes for any nonterminal run that can still recover. Do not use this tutorial package in a production deployment. Confirm the starting state: git status --short node --version npm run docs:extensions:minimal-plugin:check The last command uses a temporary installation root. It does not add the tutorial plugin to the checked-out Nova role. Understand The Package Before You Copy It The example package contains seven maintained files: File Purpose Why it exists plugin.json Declares package and stage identity Discovery must inspect inert metadata before code runs package.json Defines an isolated package test command A package must have a repeatable local check config.schema.json Accepts one required greeting prefix Configuration must fail before execution when its shape is wrong input.schema.json Accepts a name and optional failure switch The runner validates graph input before calling the stage result.schema.json Accepts the exact success and failure results Core must reject output outside the declared contract stage.js Implements the capability-free operation The first example needs no adapter or hidden authority stage.test.mjs Tests success and intentional failure Fast package feedback remains separate from runtime integration The manifest is the inert entry point: { \"id\": \"example.greeting\", \"apiVersion\": \"pipeline-plugin-v2\", \"packageVersion\": \"1.0.0\", \"stages\": [ { \"id\": \"say\", \"type\": \"example.greeting.say\", \"module\": \"src/stage.js\", \"export\": \"execute\", \"requiredCapabilities\": [], \"configSchema\": \"schemas/config.schema.json\", \"inputSchema\": \"schemas/input.schema.json\", \"resultSchema\": \"schemas/result.schema.json\" } ], \"observers\": [], \"adapters\": [] } The package ID and registration ID form the global identity example.greeting:say. The stage type example.greeting.say is the name used by a pipeline graph. These names have different purposes and must both remain unique. requiredCapabilities is empty by design. Do not add a capability only to make the example appear realistic. Each capability needs an installed adapter, operator selection, bounded grant, denial test, and effect-recovery analysis. Procedure 1. Copy The Package Into The Nova Plugin Root Use the exact tutorial destination so that later commands remain reproducible: cp -R docs/site/extend/examples/minimal-stage skills/nova/plugins/tutorial-greeting npm test --prefix skills/nova/plugins/tutorial-greeting Expected package result: two tests pass. One test checks tutorial.greeting. The other checks tutorial.requested_failure. The package uses JavaScript and has no compile step. The package test is its source build gate. Runtime-role assembly performs the deployable packaging step later. 2. Observe The Missing Role Ownership Failure Run the normal role check before you edit the role: npm run verify:runtime-packaging:roles Expected failure: nova omits its plugin: example.greeting This failure is useful. A directory under skills/nova/plugins does not silently become shipped runtime code. The Nova role must own the plugin explicitly. 3. Add The Plugin To The Nova Role Open packaging/runtime/roles/nova.json. Add example.greeting once to the plugins array. Do not add it to packages, extensions, or externalCapabilities. Run the role check again: npm run verify:runtime-packaging:roles Expected result: the command reports three valid roles. It also reports 49 pipeline plugins while the tutorial copy exists. Why the plugins array is necessary: the source directory declares who owns the package; the role manifest declares which deployable identity includes it; the bundle builder copies only selected role content; deployment receives the built bundle, not the complete repository. The plugin requests no capabilities. Therefore, role closure needs no additional adapter or external-capability record. 4. Build And Inspect A Nova Runtime Bundle Build the isolation launcher first because runtime bundle assembly requires it. Then build into a new temporary child path: npm run plugin-system:sandbox:build export KUBECLAW_TUTORIAL_TEMP=\"$(mktemp -d /tmp/kubeclaw-plugin-tutorial.XXXXXX)\" node scripts/build-runtime-role-bundle.mjs nova \"$KUBECLAW_TUTORIAL_TEMP/nova\" 0000000000000000000000000000000000000000 v2 2026-09-16T00:00:00Z rg -n 'example.greeting' \"$KUBECLAW_TUTORIAL_TEMP/nova/manifest.json\" The command creates a unique temporary parent. Keep this variable for cleanup. The builder refuses an existing output directory. Expected result: the bundle manifest contains one plugin record for example.greeting. This proves deployable role inclusion. It does not prove that a cluster runs the new bundle. 5. Run The Complete Local Activation Journey Run the maintained journey check: npm run docs:extensions:minimal-plugin:check The check performs these operations with the real KubeClaw components: copy the canonical example to a temporary installation root; parse the manifest and all referenced schemas; build the registry and resolve the empty capability grant set; reject the owned package before the Nova role selects it; accept a Nova role addition through the normal role checker; the role probe uses a separate ID so the installed tutorial cannot collide; activate exactly one stage through Foundation; invoke that stage through a local Nova PipelineRunner harness; inspect the successful decision fact; run the explicit failure input; reject an empty name through the input schema; remove the temporary package and require stage-owner failure. Expected output includes these fields: \"roleOmission\":\"rejected\" \"activatedStages\":1 \"successFact\":\"Hello, KubeClaw!\" \"intentionalFailure\":\"failed\" \"invalidInput\":\"rejected\" \"removal\":\"stage-owner-missing\" The journey check uses an in-memory event journal. The recorded local result came from a host with BusyBox flock and no timeout support. The persistent file journal requires flock --timeout. Registry, grants, activation, schema checks, PipelineRunner, stage execution, lifecycle reduction, and role validation use production code. Persistent file-lock and recovery verification remain outside this local result. 6. Read The Result As A Runtime Contract The successful result has three separate meanings: activatedStages: 1 proves that Foundation loaded the selected stage export; successFact proves that Nova invoked the export with validated config and input; the succeeded stage state proves that Core interpreted the typed result. The intentional harness failure also has three meanings: the plugin ran and returned a valid failed result; Core recorded the stage as failed; the local one-stage harness ended as failed because no later stage can repair it. The invalid-name case fails earlier. Nova validates the input schema before it calls the plugin. This distinction helps you locate a defect: input rejection is not stage failure. 7. Inspect The Runtime Path In Source Use these sources when the observed result differs from the expected result: Discovery: discoverPackages() reads manifests and package identity without importing the stage. Registration: buildRegistry() validates files and assigns the global registration identity. Grant resolution: Foundation enables registrations and creates their exact grant sets. Activation: activateRegistry() checks package integrity and loads only selected stage exports. Input validation: PipelineRunner validates stage configuration and input before execution. Invocation: StageExecutor creates a bounded lease, invokes the stage, and validates its result. Lifecycle: Core maps passed and failed results to canonical stage state. Role closure: The role checker resolves selected plugin capabilities and rejects owned plugins that the role omits. Bundle selection: The bundle builder copies only plugins listed by the selected role. The links above use the assessment revision in this page metadata. The tutorial fixture and journey checker are maintained documentation sources. Use their relative links until a later commit can supply immutable GitHub links. Expected Result You have four different proofs when the procedure succeeds: Proof Expected observation What it does not prove Package Two package tests pass Registry discovery or runtime activation Role Runtime-role check accepts the Nova selection A bundle or deployment contains the bytes Bundle Nova bundle manifest names example.greeting A running pod uses that bundle Runtime harness One stage succeeds, one fails intentionally, and invalid input is rejected .swarm/pipeline.json, submission, service transport, persistent recovery, or cluster behavior Do not combine these states into one statement such as “the plugin works.” Name the proof that you have. Verification Run the focused checks after the exercise: npm test --prefix skills/nova/plugins/tutorial-greeting npm run verify:runtime-packaging:roles npm run docs:extensions:minimal-plugin:check npm run docs:extensions:choice:check npm run docs:check:refs The complete package verifier runs every current plugin package and takes longer: npm run verify:plugin-packages The full plugin-system verifier currently reaches the separately tracked open plugin-boundary failure. Do not report that suite as green until the Buster quality-gate import boundary is corrected. An end-to-end pipeline exercise requires a project or explicit pipeline definition, submission through the supported command path, a running Nova service, transport, and result observation. The tutorial currently proves local harness activation, not submission to a deployed Nova service. Service submission and observation remain a separate deployed-environment evidence boundary. Common Failures Symptom Cause Correction nova omits its plugin: example.greeting Package exists under the Nova root but the role does not select it Add the ID once to roles/nova.json selects unknown plugin Role entry exists but the package path or manifest ID does not match Restore the package or correct the exact ID PIPELINE_STAGE_OWNER_MISSING Installation roots do not contain the package, or the stage type differs Inspect the effective root and stages[].type REGISTRY_PACKAGE_UNTRUSTED The package is neither a trusted built-in nor an approved external digest Keep operator trust separate from project input REGISTRY_RESULT_INVALID before execution Manifest, config, input, or result violates its schema Fix the named contract; do not weaken the schema PIPELINE_STAGE_NOT_ACTIVATED Discovery succeeded but enablement or activation did not select the stage Inspect the graph, registration identity, and grants Pipeline status is failed The tutorial used fail: true or the stage returned a terminal failure Inspect the stage result and reason code Bundle output already exists Bundle assembly requires a new output path Select a new empty child path flock: unrecognized option: timeout BusyBox flock lacks the GNU timeout option Use a supported host for persistent-run verification Do not solve a trust, role, or activation error by importing private Core modules. Each failure identifies a different ownership boundary. Recovery Reverse the tutorial changes as one reviewed change: Remove example.greeting from packaging/runtime/roles/nova.json. Remove only skills/nova/plugins/tutorial-greeting. Remove the temporary bundle directory that you created. Run the role and documented journey checks again. Example commands after you have removed the role entry: rm -r skills/nova/plugins/tutorial-greeting rm -r \"$KUBECLAW_TUTORIAL_TEMP\" npm run verify:runtime-packaging:roles npm run docs:extensions:minimal-plugin:check git status --short Confirm the exact paths before either removal command. Do not remove a released bundle that a nonterminal run still needs for recovery. Removing the package prevents new discovery and activation. It does not erase old event journals, snapshots, logs, artifacts, or released images. The journey check confirms that its earlier success and failure evidence remains readable after it removes the temporary package. This example creates no external effect and no persistent plugin-owned state. Therefore, it needs no adapter reconciliation or plugin cleanup operation. The effectful plugin guide explains those lifecycle concerns. Practice an observer lifecycle locally The stage journey above does not activate an observer. Use this companion to change an observer registration and exercise its actual runtime consumer. Prepare the companion checkout Select the complete Source commit 91c40217c7a439a2264f9aab6383e6616712c71b in a disposable development branch. This commit contains the companion files; the older evidence revision at the top of this page applies to the original stage and Core citations, not these new files. Follow Prepare a clean checkout with this explicit commit and its locked development dependencies. Require Node 24 and GNU util-linux flock at /usr/bin/flock. This fixture needs no service credentials or external service. Run the command from that repository, not an extracted Reader archive: node docs/site/extend/examples/observer-lifecycle/journey.mjs The helper creates a private temporary installation root. It copies the original greeting stage and the observer package into that root. It does not install either package in your checkout's Nova role. Inspect the registration and authority The observer manifest registers observer ID watch and selects export observe from the handler. Its subscription is run.succeeded; delivery is at_least_once, ordering is per_run, and the required failure policy allows one attempt. The configuration schema accepts an optional Boolean fail. The checkpoint schema binds the committed event sequence and ID. The package requests no capabilities. The helper configures an explicit empty grant set. The handler attempts state.read and requires PLUGIN_CAPABILITY_DENIED:state.read; it then emits a fact in its own plugin event namespace. This proves denial through PluginContext, not operating-system isolation. The fixture trusts its own in-process packages; it is not a third-party sandbox or a credential-provider example. A nonempty capability grant needs the provider and constraint checks described in Capability Adapter Contract. The helper also runs the real role-manifest checker twice. Omission must fail; an explicit simulated Nova role addition must pass. That check validates the proposed ownership entry. It does not modify or deploy a role. Read the runtime observations The maintained journey uses Registry activation, PipelineRunner, ObserverRuntime, and persistent FileJournal instances. It does not replace activation with package tests or compilation. A zero exit means that the positive and deliberately negative cases matched their expected results, not that every operation succeeded. Its internal pipeline definition is an authoring fixture, not a .swarm/pipeline.json project declaration. Expected output includes: Observation Expected value Meaning success.activatedObservers 1 Foundation loaded the selected observer export success.delivered 1 The real observer consumer completed a subscribed delivery success.observedSourceEventType run.succeeded The handler consumed the selected committed fact success.checkpointCount 1 The consumer committed the checkpoint after handling success.replayDelivered 0 A reconstructed runtime and reopened journals skip completed delivery invalidConfiguration REGISTRY_RESULT_INVALID The real configuration validator rejects a non-Boolean fail requiredFailure.requiredDrain failed A required handler failure stops the drain with no checkpoint disabled.activatedObservers 0 Removing enablement and its grant entry prevents new activation disabled.delivered 0 The disabled observer consumes no events incompatibleApi REGISTRY_MANIFEST_INVALID Discovery rejects the unsupported API version sameContractVersionChange.registrationVersion 2.0.0 The same API, schemas, and module bytes reactivate under the changed package version rollback.registrationVersion 1.0.0 The original manifest bytes reactivate successfully removal REGISTRY_REGISTRATION_MISSING Re-enabling the removed observer fails through normal resolution temporaryRootRemoved true The helper removed only the temporary tree it created The required-failure case still reports pipelineStatus: succeeded. Its canonical stage work had already completed. The observer drain fails separately; the helper asserts that no observer rewrites the committed lifecycle facts. Do not report that case as a failed pipeline or a successful required drain. The reconstructed runtime reopens actual disk journals. This is checkpoint replay proof, not a killed-process, crash-durability, deployed-service, or whole recovery acceptance result. The version exercise keeps the API, schemas, and handler unchanged. It does not prove arbitrary package upgrade compatibility. Change the subscription Use one shell for the edit and restore steps. Save the delivered manifest before changing it; retain the printed backup path if that shell closes: set -eu OBSERVER_MANIFEST_BACKUP=\"$(mktemp /tmp/kubeclaw-observer-manifest.XXXXXX)\" cp docs/site/extend/examples/observer-lifecycle/plugin/plugin.json \"$OBSERVER_MANIFEST_BACKUP\" printf '%s\\n' \"$OBSERVER_MANIFEST_BACKUP\" Select a different committed fact: node --input-type=module <<'JS' import fs from 'node:fs'; const file = 'docs/site/extend/examples/observer-lifecycle/plugin/plugin.json'; const value = JSON.parse(fs.readFileSync(file, 'utf8')); value.observers[0].subscriptions = ['stage.succeeded']; fs.writeFileSync(file, JSON.stringify(value, null, 2) + '\\n'); JS Run the same journey again: node docs/site/extend/examples/observer-lifecycle/journey.mjs Require success.observedSourceEventType: stage.succeeded, one completed observer delivery, one checkpoint, and zero duplicate deliveries. The other configuration, permission, disable, compatibility, and removal checks must still pass. This is an actual registration change, not a renamed stage test. Restore the original manifest: cp \"$OBSERVER_MANIFEST_BACKUP\" docs/site/extend/examples/observer-lifecycle/plugin/plugin.json git diff -- docs/site/extend/examples/observer-lifecycle/plugin/plugin.json The diff must be empty if you started from the pinned checkout. Remove your saved backup only after that confirmation: rm -- \"$OBSERVER_MANIFEST_BACKUP\" Retain the right evidence and stop safely The helper verifies the original success journal, checkpoint, and delivery bytes again after package removal. It prints their byte lengths and SHA-256 digests under retainedSuccessJournals. It then removes its owned scratch tree, including those demonstration files. Save the JSON output if you need the bounded result; it is not a retained production run or a durable artifact archive. A nonzero exit is a failed step. Keep its error and correct the reported configuration, registration, schema, role, or host prerequisite before retrying. Do not treat a different error as the expected negative result. The helper's assertions require the specific failure classes in the table and clean up its private scratch on both success and failure. Your manually saved manifest backup remains yours until you restore and remove it. The helper changes versions only inside its inactive disposable copy. Do not perform these in-place edits on a released package. Keep the exact package bytes needed by any real nonterminal run. Disable new work, reconcile pending effects, and follow the applicable deployment and retention procedure before production replacement or removal. This local observer recipe does not qualify other extension types or a deployed release. "
+  },
+  "observedTargetedQueries": [
+    {
+      "query": "observer lifecycle",
+      "observedTopThree": [
+        "extend/nova.html",
+        "extend/plugin-catalogue/kubeclaw.telemetry-observer.html",
+        "extend/plugin-catalogue/kubeclaw.notification-observer.html"
+      ],
+      "firstPluginRank": 9
+    },
+    {
+      "query": "example.observer-lifecycle",
+      "observedTopThree": [],
+      "firstPluginRank": null
+    },
+    {
+      "query": "observer checkpoint",
+      "observedTopThree": [
+        "extend/nova.html",
+        "extend/plugin-catalogue/kubeclaw.notification-observer.html",
+        "extend/plugin-catalogue/kubeclaw.telemetry-observer.html"
+      ],
+      "firstPluginRank": 9
+    },
+    {
+      "query": "Practice an observer lifecycle locally",
+      "observedTopThree": [
+        "extend/first-plugin.html",
+        "extend/developer-handbook.html",
+        "use/plugins.html"
+      ],
+      "firstPluginRank": 1
+    }
+  ],
+  "remainingCanonicalRecordIdentities": [
+    {
+      "route": "README.html",
+      "sha256": "ea2b2a22dc9fa633a9d6ccdfeb0ce84e1e4e884a76e7bdc3eccddda148019651"
+    },
+    {
+      "route": "decisions/README.html",
+      "sha256": "8f629cb8efcf12a72e19d0cb5ba24732957dfd16456041f6f7f016f895a1aaa9"
+    },
+    {
+      "route": "decisions/acceptance.html",
+      "sha256": "685675be8dcbb4426f1547df356ec52c5734d6c8c1c6f35c779fe251e6e7f015"
+    },
+    {
+      "route": "decisions/core-and-plugins.html",
+      "sha256": "3fa254e3d0b2afec3b0cb083761a7758b003aaab9b051d3d8160557464f0546a"
+    },
+    {
+      "route": "decisions/echo.html",
+      "sha256": "f05260e1e9ba1512e41506fab239cb66f2dffdd1eeb0ab43f54cf7c867c74231"
+    },
+    {
+      "route": "decisions/implementation.html",
+      "sha256": "bd0d13f206402131a99ce2f82a5246e6ffe811dc3aa329973b5301737762ed1c"
+    },
+    {
+      "route": "decisions/prism.html",
+      "sha256": "f48659b989de3be8a9ff7856a47699180814de3f0190447b1e8cafc2b73784b3"
+    },
+    {
+      "route": "decisions/runtime-and-operations.html",
+      "sha256": "888fe06ac8a36543f1147c6f448021d415c7976e1f18c5d7a03d8a65256a2cc9"
+    },
+    {
+      "route": "decisions/test-gate.html",
+      "sha256": "5e0f085e03566487d89bbc7798e1ed470e9568835c8703db0eb09e0e070396b7"
+    },
+    {
+      "route": "extend/README.html",
+      "sha256": "013a9348c6228d2a95af4ceb63df73250ff42081489a2444c95ba202cc0dfb40"
+    },
+    {
+      "route": "extend/buster.html",
+      "sha256": "ee400e32ae38c27f171e99ba016e606a9a1b74f31326e7e10a1f14c4e27aac79"
+    },
+    {
+      "route": "extend/contracts.html",
+      "sha256": "914116922bf63fd4eb8477a55c4557b888e0a18366eee87b1ce5aa8ef5061df9"
+    },
+    {
+      "route": "extend/deep-guides/README.html",
+      "sha256": "ed6ba277c98d163d1651e5732acabda99e7b2cfa87b65f0a010b5a5a6965e7c8"
+    },
+    {
+      "route": "extend/deep-guides/demo-handoff.html",
+      "sha256": "71473d5684993c9babf100059fc1a45a0e8f94c39f939f77d8c2af00ba613aad"
+    },
+    {
+      "route": "extend/deep-guides/reports.html",
+      "sha256": "4e2e5cdf1b42ff8214f093c354f6f9663a22a455d5ca131aa41cf4fa52497e95"
+    },
+    {
+      "route": "extend/developer-handbook.html",
+      "sha256": "1c2d2209be77c0dc1640749f3d5de839d14aabbccf3211ca514103beab0e5678"
+    },
+    {
+      "route": "extend/documentation-maintenance.html",
+      "sha256": "53656aa242bfc67da009f3d81a507244480aa302bee3b2f9602c658b23876178"
+    },
+    {
+      "route": "extend/effectful-plugin.html",
+      "sha256": "4cfde2836fbca99131c15cfc6fdb81be31b33cfb2a40afe53fa34fd5c4815664"
+    },
+    {
+      "route": "extend/host-and-engine.html",
+      "sha256": "f5643202aa227c76564c1d22ff7e0bccec44f831b6fe11cf8e0f157796767e04"
+    },
+    {
+      "route": "extend/lint.html",
+      "sha256": "b42082be86286ddb3a3bfcf47a8bf7f587ad67252ecb2cbfc8907760d562f691"
+    },
+    {
+      "route": "extend/nova.html",
+      "sha256": "d3599f25b7100c0fef4cd29bcb4368b7e7953f6303c8824f6e81343c0ca56161"
+    },
+    {
+      "route": "extend/platform/README.html",
+      "sha256": "7348b100d4e2608dd281c9e6738d799823436f1511b1e08621647f4a2a4a868f"
+    },
+    {
+      "route": "extend/platform/buster.html",
+      "sha256": "abeb7a23234afe080520793f0999e9421174cc0ae99ea526452fdaec43fea6bc"
+    },
+    {
+      "route": "extend/platform/prism.html",
+      "sha256": "59ec93488c0f07bc05216cc7c3919ba7d8cc0cde8ad2228eb7532157d88a4c42"
+    },
+    {
+      "route": "extend/plugin-catalogue/README.html",
+      "sha256": "2719ed2ac758767019329e5d9fdf321aef6ed4b60ce4bc42d24d521141477f95"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw-agent-observer.html",
+      "sha256": "8d742104b7cae18e4319abe5e83ab5e128d13552fa2192e408b30d15789bf216"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw-ops.html",
+      "sha256": "a84786b3dd129e088b4bd1b16a9997c9d2b9f1e28aeb22fb9dfc8f710b1c3262"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw-prism.html",
+      "sha256": "1a04ab87dc5e72db1b6b7e67e52421f5ab67db90357233010a6710586a9bf3b4"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.agent-observability.html",
+      "sha256": "46bee9ec5e80c0bc43f4e7b22e6a4a33ea7e70c9df9b9aa4bfe4f4c46554d302"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.api-flow.html",
+      "sha256": "01c7ce04784e5e22871b0536527eff18d77b3d4046676d9f5b08bd4326d7db2a"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.architecture-validator.html",
+      "sha256": "0861734eb8bfcbf0ff84925b8786eee8cee29fe1631ae53510d2923419f891ff"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.artifact-store.html",
+      "sha256": "3fc1a98d52bdb400a50270201143af66659130fbdba5abd9de44d1e6b1cc1431"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.axe.html",
+      "sha256": "849e1361ebc2e0eb96e14b04a734923fe87e5f0a7325655cd7ba6b976ca4ca3d"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.blueprint-sync.html",
+      "sha256": "8dea441f7114646fc4ce0b8f175c59571ea0560fad234f460db16fd4b589ba86"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.buster-quality-gate.html",
+      "sha256": "b7cd28d970f82b9459dad62bf26a765a107f385d46cf7ee63b5f64b89bb94979"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.case-study.html",
+      "sha256": "a4f25bfbbd452c21ffed3f75b092166360b06215dda7e83bfa08344cb38fed31"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.command-runner.html",
+      "sha256": "c456d913b73750e33b5c00f61cc392a547ccf1ca789d5aae108b1cf6fe09c5fd"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.container-build.html",
+      "sha256": "6bf36fb1814ac394be03730315ec6377e3a6419b15d57c30e9a0f008b1c548bc"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.coverage-budget.html",
+      "sha256": "f943bcd1240118ff88b78908e6750ab451841f2ed37290ac5366812219814367"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.delivery-lint.html",
+      "sha256": "3fe24347f8fc3c20ce1903f700d20dc0ec6cff232e8803565ed280de9b435f15"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.demo-auth-smoke.html",
+      "sha256": "ab0bc139c9998219f2d44e75a9265a7ddb5889398b752b03b9a44ba03c0f571c"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.demo-handoff.html",
+      "sha256": "f4d28871aa06813a25b1a3e7c6b7cbd9ef3f6269d342ea425f430601067b5822"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.direct-command.html",
+      "sha256": "321a572b06341eff28efcb39c8f71ef144f5dfbc3cf1dad7744301c4f957e507"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.git-workspace.html",
+      "sha256": "63d73ca352b4c7ac2290c08568643872098ca5a1122427cd8298e6d74e282468"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.http.html",
+      "sha256": "ee442c96a2915dc42841c15ebbdd7b7d23e4caa4061afab276a5f8f8e8b9717a"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.human-approval.html",
+      "sha256": "4cc031fa090988555c0eef4921249d181bdb875e116cad48e1e0d4c34f2853cb"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.implementation-agent.html",
+      "sha256": "ee6efe9fd2f1800af815130b309edfd2db88a29276d819f5d08dbb51bc7a51e4"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.junit-report.html",
+      "sha256": "535712c72001d7342745e17b56365aad37285e24e5ff2a9d913b0dd945ef702e"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.kubernetes-fixture.html",
+      "sha256": "12a3b10e1b9155fbf205aa6f6a66ad8ba5be2f47956e0707cc53651233c94f82"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.lighthouse.html",
+      "sha256": "6134cbe2996c5d0ace1e19551056a3d7bf164c25bc2fbe4177e1931bf0b3248a"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.lint.html",
+      "sha256": "e7235208c4bdfa8a0fdd8bee54c520eb9431f856d4a474af423f226b3e449bd6"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.network-http.html",
+      "sha256": "5ec8c078f2c83178d5d686acd957b24fc181dda505e817de0025c7e999144f2c"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.notification-observer.html",
+      "sha256": "de8c948ce04125d3504e6c6b6ded11fa564ea8ea5292b448bbe8eb2dbebab8bb"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.openapi.html",
+      "sha256": "53dd1a8536cc79e4e55266a25a74b09905cd3024f1105b5469232ac45c860d82"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.openclaw-agent-events.html",
+      "sha256": "06c4668446762fba667570d09b521ba448646aa230a249a5cacc354c3dea0392"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.operator-messaging.html",
+      "sha256": "f6a860b66886bf6ad198b2fc6b0c7d9c14214692fd54fdfacf1addb2fa564dfc"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.pipeline-review.html",
+      "sha256": "37fab0ef2ba9cefbf3f4cc759e088261fcdac977f31667aa8677345d4e85857f"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.playwright.html",
+      "sha256": "48bde37b8ec1ff9142afb2aeabd070f6cb82c31dc68d91bc63053f63b46b9a0c"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.preflight-contract.html",
+      "sha256": "06f74886cabdb47d3a47c4c3b5ee83380d18dd56e041e2ac8086c8e405ee4b95"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.prism-design.html",
+      "sha256": "b6e21fbd633b95cb786e4722385b50809dbff42c9ea322325094a4260a3b37e2"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.project-summary.html",
+      "sha256": "711ea8babcb47c15ff49e4030dcd2c020e8b50d9df8b5c37e6efe4db629ec1b4"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.redis-transport.html",
+      "sha256": "97520f4fd29d34ab3b1fd36459c0aace2d1aac6f2b043e2cdaa58f00ec9638b3"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.remote-test-gate.html",
+      "sha256": "f626811554d55ac5c8944d37427920548468bf0ab2c77e73c3bb58a9c43b5706"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.repository-adapter.html",
+      "sha256": "d731553d1715be6a02bd7c4b427efb224a79f6d38c1a672532a1907a6ea53fad"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.review.html",
+      "sha256": "470517d0d3af553bd7dfe6b3cee040d15a9ef55f6d255964772a2c26c8b4f0c8"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.runtime-dispatch.html",
+      "sha256": "c9b754628b8aee2197d6a3b9e43de7eb808a1f68d71e60634ee5c9b581547ed3"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.secret-resolver.html",
+      "sha256": "b6f8794bce697bb042110cf16638b70251258f1aa4201964bf508a07e3c3f46f"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.security-providers.html",
+      "sha256": "afe8dab8e49ce4eacbe7891fdb65f040599fe4ddfca8fbc0ea0f46e1eae2648e"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.size-budget.html",
+      "sha256": "8f3df8abc61caaff93ef72950020e5111f0e5818c7c6ba9854def803d43a2839"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.state-store.html",
+      "sha256": "4004db9ae98ebcbf4f726c60bef3887a8bfcef2ece185acee2ee54c8cd308df1"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.tailscale-exposure.html",
+      "sha256": "da9f08f26e58118b07ee0c405cbdd937acf25621bba49c9a63c0c6e9e415f973"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.telemetry-observer.html",
+      "sha256": "e3d37d4dfa0c8456c85e4d5e3415da19996680677b351747d4c5fa66366df8be"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.telemetry-store.html",
+      "sha256": "8389119c63f96807ffca0026dadf717606bdde24babd91865c4b85d77fbdc7a4"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.transport-publisher.html",
+      "sha256": "5f4096de3c50a1bf71083ed8d6489d99e6276ba71eeb4fedbc32b7a9b915befe"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.visual.html",
+      "sha256": "cea85923cbcd6d197d69d6bbf4458d1d0b8695edf3f11c4918fbb9f020407261"
+    },
+    {
+      "route": "extend/plugin-catalogue/kubeclaw.wait-store.html",
+      "sha256": "e8669521048b8f2c7ae90740b9f12df0fe92f32f1b33e40a9bb72d805fde42ff"
+    },
+    {
+      "route": "extend/testing.html",
+      "sha256": "810797118e27c464f9b5900b1b01512ca082333d352aed0ba72d201bb6b7efeb"
+    },
+    {
+      "route": "product-surfaces.html",
+      "sha256": "dfe95843e594333fecf8fa670ea877b434dd3263fce36afa54249c4c346143c7"
+    },
+    {
+      "route": "reference/README.html",
+      "sha256": "049570f67c4cb3c8fdb6209b1ff93e040270d45f3c667d3a68edf08ce6616424"
+    },
+    {
+      "route": "reference/api-object-updates.html",
+      "sha256": "1bcf529ed5469a46ecac5d7c542be32af2d0a6ddafd21e3c5c4454cd670fdbd8"
+    },
+    {
+      "route": "reference/buster-error-codes.html",
+      "sha256": "22f901e8e05bfe086f7511f9872a6c11d7e0756de7957ac33f23e6155b631426"
+    },
+    {
+      "route": "reference/buster-namespace-lease.html",
+      "sha256": "939dc9e8fe72654a702d890ceda2d1306d404ebed77d51fec21f2b011ca1b77b"
+    },
+    {
+      "route": "reference/buster-provider-configuration.html",
+      "sha256": "ed96ace39e1dcac9941a0a44f02805c54c64232105529e350b4c23f13719945d"
+    },
+    {
+      "route": "reference/buster-runtime-configuration.html",
+      "sha256": "ef2a20adc0817c9e8e2a159b3e83a88ba6f2937c41eec9512f2fd5101967266b"
+    },
+    {
+      "route": "reference/buster-suites.html",
+      "sha256": "d5bb31abc40b4da5e5794d5aead268bcf33162ce43a26f1c62728d0dd6c45d05"
+    },
+    {
+      "route": "reference/capabilities.html",
+      "sha256": "b46166e7577d5d1c6ce40423eb72a354169edae96c00d5efb8db2d494aaa180c"
+    },
+    {
+      "route": "reference/cli.html",
+      "sha256": "c35b491cd2fbd5052e0097b2269e9163a00d5acf97bc2243c90d6d08a53616e6"
+    },
+    {
+      "route": "reference/configuration-change-impact.html",
+      "sha256": "4e8c19587f4ec323d7b82d87311d6761dd5d816e2f2305314dc3f066877aa853"
+    },
+    {
+      "route": "reference/configuration-compatibility.html",
+      "sha256": "c873faaf56e952a829825924b3f5b0256d4dbdb45dc605d28a589376e931efa9"
+    },
+    {
+      "route": "reference/configuration-errors.html",
+      "sha256": "3026e1adbe83a27be17ed05a648ecb8ce32f0b27b04163d4dd8274cdb9ea7bcd"
+    },
+    {
+      "route": "reference/configuration-precedence.html",
+      "sha256": "a24ed6455b9c31ce9966d2e2cddaf0554608c69b2f3ee8fc770e08bf4809ac66"
+    },
+    {
+      "route": "reference/configuration.html",
+      "sha256": "5db19efdeb6908d99adb273bfac3c27a0bc087a751b801f0e529599bcb16a82b"
+    },
+    {
+      "route": "reference/contracts.html",
+      "sha256": "94040b2819a540ecfae5cfbd286706b824db0b6500041ee11e8871eec0708dd4"
+    },
+    {
+      "route": "reference/documentation-governance.html",
+      "sha256": "51337e9374fe89fdae1d321d17c4a0acede9de69777bb769463ce3d058ee30d6"
+    },
+    {
+      "route": "reference/documentation-site.html",
+      "sha256": "8ffc67baf2dbcc41809aad8f327c46721660168d9304949f6a30a18110ec04c7"
+    },
+    {
+      "route": "reference/endpoints.html",
+      "sha256": "9e6929267dd8f7a39501c577402bc2e5f2ea88eebfef5151ec33522e82f39872"
+    },
+    {
+      "route": "reference/environment-variables.html",
+      "sha256": "15a1fb13b4cc95c4f716fe22547fd192e201915baa82437424cb0e790c49248d"
+    },
+    {
+      "route": "reference/errors.html",
+      "sha256": "f9329f60559c88f494ec7967157447ba452b0e05e79de0f8039ca5f2341be192"
+    },
+    {
+      "route": "reference/events.html",
+      "sha256": "b1b0d602d52ef7270cfca959430ef92793d6be36cc6fa709ce9315465b90658e"
+    },
+    {
+      "route": "reference/glossary.html",
+      "sha256": "56a19680f8187087326f5126956c20f103291fbd33f0d603c5897c59ad318887"
+    },
+    {
+      "route": "reference/helm-values.html",
+      "sha256": "757db0e413b8f525405b035176adda4755efdbf851e8b2c583b35eef48468a8d"
+    },
+    {
+      "route": "reference/host-and-prism-configuration.html",
+      "sha256": "4077669be155a59c2626ddc11597a0ca9d2492779bf54d5bc296a23d9c94c686"
+    },
+    {
+      "route": "reference/images-and-digests.html",
+      "sha256": "8679352d058b030ea4ac63042dbae2ed35147153ae18fd79567b250ab0fb2e2c"
+    },
+    {
+      "route": "reference/lint-policy-generated.html",
+      "sha256": "af0ac6277d967bb970b0720a6fc77ecfb0d7d9a157e404c3d4d307aee9911369"
+    },
+    {
+      "route": "reference/lint-policy.html",
+      "sha256": "415419484eeaf56659f5ec51664b5acca12bafdc0d38795f534e0e8b9aa9e852"
+    },
+    {
+      "route": "reference/lint-rules.html",
+      "sha256": "6fe25678e402ea5ecc36966ba2c419e54c905dc1aaf6065bc1437e093e2092a2"
+    },
+    {
+      "route": "reference/nova-project.html",
+      "sha256": "654574df8dacebe21bc517e28922360b439a6795fd50631fb4cbad5f6d6f167a"
+    },
+    {
+      "route": "reference/pipeline-definition.html",
+      "sha256": "44fb16ddd8be347f7fd868bfaf56dd2c7b048929e2d2c6b644ee445c827f77af"
+    },
+    {
+      "route": "reference/pipeline-json.html",
+      "sha256": "caa60daf2d327364236d2eb408f157ea67f29c5c8f169161d57886bac98380a6"
+    },
+    {
+      "route": "reference/pipeline-platform.html",
+      "sha256": "e4ce339a3363ae208617b1cf3a39db3fa6f8d48a4b5340588060d182d424fcc4"
+    },
+    {
+      "route": "reference/platform-surfaces-generated.html",
+      "sha256": "45faea31801aa244ee90bfe8fd8e0d5f78627a52c7df556151b2b66b817aa75b"
+    },
+    {
+      "route": "reference/plugin-configuration.html",
+      "sha256": "33799efcf10c7f58e2b43e4df35a13b42b7768900cbeb5d9860d2aa5e567c3b9"
+    },
+    {
+      "route": "reference/project-pipeline-publication.html",
+      "sha256": "61bbfdc854e786885033ecbe181ceb6469233bccf1c968d1d9761b07cf20e6b8"
+    },
+    {
+      "route": "reference/roles-and-package-ownership.html",
+      "sha256": "87319f134c99803563693c74cf93aeba16e1074c2aeab179c279b4e1f8b934c5"
+    },
+    {
+      "route": "reference/schemas.html",
+      "sha256": "4cb23acb5eacb45989ae663a272c3b470e54646b9807315db010cef2acab55d9"
+    },
+    {
+      "route": "reference/sdk-exports.html",
+      "sha256": "3ceff674103f0465b43d80bbd485f5437c765ac03c89f247b1b6ed062eb11bd2"
+    },
+    {
+      "route": "reference/sdk.html",
+      "sha256": "ffb385d45ed816f688f33a90c4f05c3cd6f0648699b5dd4753cf743ed9ef84eb"
+    },
+    {
+      "route": "reference/secrets.html",
+      "sha256": "b248229c11106da0ff64ec1cce266a620405a923fe6b2c0fe9f9a46d118d2051"
+    },
+    {
+      "route": "reference/service-routing.html",
+      "sha256": "bb86a828a85e03d8e956014adb704a407348fbbcbef2ef51f67ed4ae68154f1d"
+    },
+    {
+      "route": "reference/stores-and-retention.html",
+      "sha256": "15086d9bbcf5a79f467b1edd3620373fab5639ca6127bb512fc6260c4a3bbbb6"
+    },
+    {
+      "route": "reference/verification-commands.html",
+      "sha256": "28c042ea3a61f6882c32c636d606bc31e5483b655f8ff63eae73de21be15b3cd"
+    },
+    {
+      "route": "reference/worker-profiles-and-roles.html",
+      "sha256": "aa540cac60040479c889dc40e782c9bce6d2694b0fae5ef4dbe198bf710d0d35"
+    },
+    {
+      "route": "reference/workflows.html",
+      "sha256": "99098e6c6c0e5fe7292729d7e66008f007b15a8525745dc88debd0107e0e9acb"
+    },
+    {
+      "route": "status/acceptance.html",
+      "sha256": "e27be5de7583f978f28a27a167997d7f735ac7d6178c360057397e1463e5b664"
+    },
+    {
+      "route": "status/current.html",
+      "sha256": "ac38a27c32229ea10c4395cda3137ffb19bd4371b65db34e9e101ab268b64b58"
+    },
+    {
+      "route": "status/open-issues.html",
+      "sha256": "b1a7d87e858b39449405ab9c388a1531aa96bcc53a2156bf0e8fbc766b57d239"
+    },
+    {
+      "route": "status/roadmap.html",
+      "sha256": "695f5b93722ec8ef00443ffff785fb27d1f0e84f6ddd59a83d5fdb7832eba5ef"
+    },
+    {
+      "route": "understand/README.html",
+      "sha256": "21b2a572fd6925550a6c8146315bc25083bf3a75ba1c7f4c33867407f70eba15"
+    },
+    {
+      "route": "understand/archviewer.html",
+      "sha256": "6c0a5cb6b63a3f2cbee8329a49171eeedeb72e7834438c83002ecba93ea88d1a"
+    },
+    {
+      "route": "understand/buster-namespace-controller.html",
+      "sha256": "743cb0d4b48e4b4dc2af4272e0634e8a53a9c5abd5bf1a627e85084a6534a598"
+    },
+    {
+      "route": "understand/buster.html",
+      "sha256": "5f96d770d5b4622d317a05a5d89fbef32980b8e32f1f8342dcbaf9462775004b"
+    },
+    {
+      "route": "understand/codex-integration.html",
+      "sha256": "6495469bb495a8fb49a097fe836b3766faa37d720a32ef5e3b1459e33ada4447"
+    },
+    {
+      "route": "understand/communication.html",
+      "sha256": "7c02017ae94498bde4999019cb6d6008909c661dd5ab4a9c07d693661b72bd88"
+    },
+    {
+      "route": "understand/components-and-authority.html",
+      "sha256": "fbc9083d89011a055c06eebeb95b84a52ba9c1baa524ca3dd784d7239f7e95fe"
+    },
+    {
+      "route": "understand/data-and-state.html",
+      "sha256": "3d9af691e427de86eb416960295313a7ded144af12ae9387408dd0d5d8c45c8f"
+    },
+    {
+      "route": "understand/deployment-and-trust.html",
+      "sha256": "db19a03e974bb09dd7d43a879d16ea2cb039f024980eb587407580d92e29cff1"
+    },
+    {
+      "route": "understand/echo.html",
+      "sha256": "a461155a8f8e30f0466de9ed15cfc5ff18be790c48dd836011509fb18150f146"
+    },
+    {
+      "route": "understand/forge.html",
+      "sha256": "c5d6cc61b2bbe25420e7b0795829461fe030e0b6f90e7e1069227c4ede4903cf"
+    },
+    {
+      "route": "understand/nova-core.html",
+      "sha256": "5f184a099a6ff3b8643ed6b7c05dc1fcf204547b1e7a073151769b5425aebdc6"
+    },
+    {
+      "route": "understand/openclaw.html",
+      "sha256": "084d6b1363bda309e7f53d891367f7bc6a13a8288e6442d35e1b4b0ad48b570b"
+    },
+    {
+      "route": "understand/ops-mcp.html",
+      "sha256": "1286e77eb7ab40ec27bcc2151a5990a89abb1397044f509f0d532411120215cb"
+    },
+    {
+      "route": "understand/pipeline-dependencies.html",
+      "sha256": "1abbb58394066d2d9b869dc13eee35d65ffe5f7f993c4e8254ef8c1f6aefc80d"
+    },
+    {
+      "route": "understand/platform-and-operations.html",
+      "sha256": "7eb1699877afb823d4c7b98a21b2c6fb8e41825893512e94ea155f9e09629e10"
+    },
+    {
+      "route": "understand/plugin-runtime.html",
+      "sha256": "2fb50e1a1ca8a93abf01198ae1cc6089cbc9d2f560bc2115e8c57ebbfc4cbadd"
+    },
+    {
+      "route": "understand/prism-data.html",
+      "sha256": "370e4ab433f3561b2dbe45629eb9df54f736d478e59aeb0b193ddff34af696b6"
+    },
+    {
+      "route": "understand/prism-runtime.html",
+      "sha256": "747544da3ab5bdb6d8cfd51f115aff5651b8c4e2cbb704562366b8e2a854c875"
+    },
+    {
+      "route": "understand/prism.html",
+      "sha256": "1b9ff6b59b812d7cda4e1bb89ab201881044a4613e90e2ac8bef77f36a9bbccc"
+    },
+    {
+      "route": "understand/request-state-recovery.html",
+      "sha256": "f68759d7b96b3a21c87507aa7052d17554b6b8f471cb84116b09df6b1ef698bd"
+    },
+    {
+      "route": "understand/request-to-result.html",
+      "sha256": "ea5b7bc730bd57564aba196f117dd08942ab38f20b37d6b1d384d617ca486027"
+    },
+    {
+      "route": "understand/security-and-trust.html",
+      "sha256": "819d3bdf629f90123eff7dde50d84fe66d32667cca0b762b532855a18c76117e"
+    },
+    {
+      "route": "understand/telemetry.html",
+      "sha256": "8048c2be2e4eb94635ee1d1a9af3f9beb53260637ac868925fa3021511d977ea"
+    },
+    {
+      "route": "understand/worker-core.html",
+      "sha256": "830d47a0616639da06234a726803d87e735aa96b148286462293c7de8eda9ca5"
+    },
+    {
+      "route": "understand/worker-trust.html",
+      "sha256": "a0e3da5377ef87812b2e562aaf55ef2d6df4cd8436281afebbf27382098d638d"
+    },
+    {
+      "route": "use/README.html",
+      "sha256": "d5b93895b750697e1b05ea3da6722e772c519d1978087db8c9f315403a103cac"
+    },
+    {
+      "route": "use/capacity.html",
+      "sha256": "4dbcbc905ff50310d9c64a837369669c67eef5a2546b23ded9952cf176eefdbd"
+    },
+    {
+      "route": "use/demo-delivery.html",
+      "sha256": "d4ef66bb7bb4b1e0054948ce7e3dbae222ed1e55ddf8d8256204797c9389ad57"
+    },
+    {
+      "route": "use/diagnose.html",
+      "sha256": "24dfd3bb04f41bb4f6edbb0fc4aa6948e59d6fe8ae46911077c97d60c9744e71"
+    },
+    {
+      "route": "use/install.html",
+      "sha256": "198ed9da11daad0e6ca5c91b9e3e73c70a99dd478fe66f505ca8dc7a5ae64b0c"
+    },
+    {
+      "route": "use/maintenance.html",
+      "sha256": "262ad4f86778c296ee8a444f4bb265d608e78741d94a3e315d67481c65b4fbbd"
+    },
+    {
+      "route": "use/operate.html",
+      "sha256": "a42a23f61bf1ab56287a625403fc36183ce6726b3ee18ee74226a79e464eda95"
+    },
+    {
+      "route": "use/plugins.html",
+      "sha256": "c49ee67b3a66088f81d47e82f622ec88c0700818e2a3b5953b76cf2e9cdd121a"
+    },
+    {
+      "route": "use/prism-studio.html",
+      "sha256": "2eb68fa8233db2148a52a7c7f1bf606c25429fbec35254da65a28d2386910c5e"
+    },
+    {
+      "route": "use/quickstart.html",
+      "sha256": "2e8e9be5df42d68dc788eb56c0bbde42cfe35bbe01f20768ed78089fb6222124"
+    },
+    {
+      "route": "use/recovery.html",
+      "sha256": "22edacd8dc10afbf4a77bf9924ff97c0d4e813512144187a466694bcd573fe7a"
+    },
+    {
+      "route": "use/worker-trust.html",
+      "sha256": "0a20a6b653850dd733813d40765ef37b0c89f6e5f7aa710677e52440ebe16414"
+    },
+    {
+      "route": "use/workflows/README.html",
+      "sha256": "1432f9f301bd93fc653df0171fd27ab955d6765836ea77179ef05fe7960b0bfb"
+    },
+    {
+      "route": "use/workflows/build-image.html",
+      "sha256": "70e8c2f184334cca5e852a385a23af0856941ff5970a8c3760dc5385f991dfcf"
+    },
+    {
+      "route": "use/workflows/buster-suite.html",
+      "sha256": "fb80366fd34741ef68d22c520b742d884d7206915ac38006a788a638dcad5676"
+    },
+    {
+      "route": "use/workflows/interruption-recovery.html",
+      "sha256": "2874f984cd8d8d868846868304237d2c5e27219a41554a61506bcee55f4f534f"
+    },
+    {
+      "route": "use/workflows/kubernetes-fixture.html",
+      "sha256": "75476f11bafc11041ebd5bd76f04f49da6dfbce12b080b4d99c2fb657cdbee43"
+    },
+    {
+      "route": "use/workflows/local-core.html",
+      "sha256": "159a16caa2417b25769185666e7b2c16c43155244edf6affc0e9ad6db6c09ab9"
+    },
+    {
+      "route": "use/workflows/redis-replay-recovery.html",
+      "sha256": "c00611173c04e7fe7ad8d11254eeb0ce938a02b2f8f9111e5f19f3e962709949"
+    },
+    {
+      "route": "use/workflows/repair-retry.html",
+      "sha256": "901844a79587caea1b40a4b38fb1e645e46dbaa5b6db6abc38227ef68d255928"
+    },
+    {
+      "route": "use/workflows/tailnet-exposure.html",
+      "sha256": "377214658360830cb7d2fde039ff41e9a8c0aa232ded37c67b67726f00de0452"
+    },
+    {
+      "route": "use/workflows/wait-resume.html",
+      "sha256": "dab8f65ac0bf3ef0d5485e9696b25f195d573f42d0a284d902c50775ac52ee28"
+    },
+    {
+      "route": "use/workflows/worker-result-recovery.html",
+      "sha256": "f115fa98460ce38603af74dd422b40673250e8cfc93539accfcfa4fec2117398"
+    }
+  ],
+  "diagnosticLimit": "Initial added expectation first-plugin must rank top3 for broad observer lifecycle was not met; original12 maintained queries allPASS, not rewritten. Broad terms may legitimately rank other observer-specific guides above this stage-titled companion. Actual ranks retained for independent materiality assessment; no invented new search acceptance threshold.",
+  "unchangedImplementationReuse": "Renderer and search checker bytes unchanged publishedcd3; baseline whole A91204 and PUB002 retained, actual full original12query checker at040 exit0. No old generated search bytes asserted available/equal; guide input and resulting record changed and assessed here."
+}

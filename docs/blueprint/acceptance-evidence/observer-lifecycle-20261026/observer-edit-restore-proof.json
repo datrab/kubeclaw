@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-26T14:18:17.370312+00:00",
+  "originalManifestSha256": "42c68ce5ae6ec703393d16617e5ec3884f2e7a0453891e9e8924eb065ee0425a",
+  "changedOnlySubscriptionTo": "stage.succeeded",
+  "actualJourneyExitCode": 0,
+  "observedCommittedType": "stage.succeeded",
+  "originalBytesRestored": true,
+  "ownedRunScratchRemoved": true,
+  "sourceReviewNotStarted": true,
+  "newWholeGateAcceptance": false
+}

@@ -1,0 +1,18 @@
+{
+  "findings": [
+    {
+      "title": "Correct the observer export name",
+      "body": "The manifest selects the `observe` export; `watch` is the observer registration ID. As written, the guide tells readers inspecting or adapting this fixture that the wrong exported handler name is selected, which can lead to a failed activation when copied into a package.",
+      "priority": "P2",
+      "confidence": 0.99,
+      "category": "bug",
+      "code_location": {
+        "file_path": "docs/site/extend/first-plugin.md",
+        "line": 438
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "The bounded observer recipe is otherwise aligned with the supplied fixture and runtime journey, but it misidentifies the selected handler export.",
+  "overall_confidence": 0.99
+}
