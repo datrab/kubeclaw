@@ -6,7 +6,7 @@ Owner: platform operations
 Evidence: scripts/deploy.sh; docs/generated/inventory/deploy-script.json
 Upstream source scope: central Ops contract at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; no runtime source adoption or live verification is established by this update
 Applies to: current selected runtime release
-Last verified: 2026-10-12; local extracted-command and release-boundary checks only; no live cluster result is available
+Last verified: 2026-10-12; local extracted-command and release-boundary checks only; no live cluster result is available; schema-step CLI/control fixtures checked on 2026-10-26 with the pinned validator, not an actual deployment render or target-schema approval
 
 ## Objective
 
@@ -137,7 +137,7 @@ Use two separate administration locations.
 
 | Location | Purpose | Required access |
 | --- | --- | --- |
-| Existing administration machine | First install, cluster recovery, and lockout recovery | Repository, `kubectl`, `helm`, Node.js, npm, Go for source checks, and cluster bootstrap rights |
+| Existing administration machine | First install, cluster recovery, and lockout recovery | Repository, `kubectl`, `helm`, Node.js, npm, Go for source checks, `kubeconform` at the selected `versions.json` version, and cluster bootstrap rights |
 | Ops Pod | Routine observation and reviewed Git changes | Running cluster, its PVCs, and configured observer rights |
 
 The Ops Pod is not an independent recovery path.
@@ -156,6 +156,7 @@ Record these values:
 | Source | Full repository commit and clean-worktree result |
 | Release | Runtime selection file and every selected image digest |
 | Cluster | Absolute dedicated kubeconfig path, exact context, independently supplied API server and `kube-system` namespace UID, Kubernetes version, nodes, and CNI |
+| Manifest schemas | Target Kubernetes version, approved schema location covering every rendered kind, schema owner, and actual validator version |
 | Storage | StorageClass, binding mode, reclaim policy, free capacity, and backup destination |
 | Network | Cluster DNS, service ranges, egress route, Tailnet owner, and recovery route |
 | Identity | Cluster administrator, SPIRE owner, service-account owner, and emergency credential owner |
@@ -451,6 +452,90 @@ Never invent the file or substitute mutable image tags.
 
 Treat rendered output as sensitive configuration.
 Review images, Secrets, service accounts, PVCs, ports, and network policies.
+
+Validate the schemas of **every selected role render before mutation**. The
+source checker above invokes strict `kubeconform` only when Helm and
+`kubeconform` are present. Its successful exit without that branch is not a
+schema-validation result. Existing release-selection and authority stops still
+apply; never render an unqualified selection to bypass them.
+
+Obtain the target Kubernetes version and approved schema location from the
+planning record. The schema owner must cover all selected resource kinds,
+including any custom resources. Set `TARGET_KUBERNETES_VERSION` and
+`APPROVED_SCHEMA_LOCATION` to those exact reviewed values in this shell. They
+are task-local validator inputs, not new product or Helm settings. An unknown
+version, unavailable schema, missing validator, or skipped validation is a stop,
+not permission to use the tool's unqualified `master` default. Schema downloads,
+if required by the approved location, need the administration host's permitted
+network access; do not substitute an unreviewed schema source.
+
+Run this block from the same bound Bash shell and reviewed source checkout.
+It rerenders only the selected roles into an owned private temporary directory;
+it does not create cluster resources. The subshell removes only that exact
+directory, including its renders and reports, on success or failure. Retain the version, exact schema selection,
+commands and validation summaries in the protected installation record.
+
+```bash
+(
+  set -eu
+  command -v kubeconform
+  : "${TARGET_KUBERNETES_VERSION:?select the reviewed target Kubernetes version}"
+  : "${APPROVED_SCHEMA_LOCATION:?select the approved schema location}"
+  schema_expected_version="$(node -p 'JSON.parse(require("node:fs").readFileSync("versions.json", "utf8")).buildArgs.KUBECONFORM_VERSION')"
+  schema_actual_version="$(kubeconform -v)"
+  test "${schema_actual_version#v}" = "$schema_expected_version"
+  printf '%s\n' "kubeconform $schema_actual_version"
+  umask 077
+  SCHEMA_RENDER_DIR="$(mktemp -d /tmp/kubeclaw-schema-check.XXXXXX)"
+  trap 'rm -rf -- "$SCHEMA_RENDER_DIR"' EXIT
+  bound_deploy render nova > "$SCHEMA_RENDER_DIR/nova.yaml"
+  bound_deploy render buster > "$SCHEMA_RENDER_DIR/buster.yaml"
+  if [[ $KUBECLAW_DEPLOY_PRISM == true ]]; then
+    bound_deploy render prism > "$SCHEMA_RENDER_DIR/prism.yaml"
+  fi
+  for schema_manifest in "$SCHEMA_RENDER_DIR"/*.yaml; do
+    test -s "$schema_manifest"
+    printf 'Schema validation: %s\n' "$schema_manifest"
+    schema_report="$schema_manifest.report.json"
+    schema_status=0
+    kubeconform -strict -summary -output json \
+      -kubernetes-version "$TARGET_KUBERNETES_VERSION" \
+      -schema-location "$APPROVED_SCHEMA_LOCATION" "$schema_manifest" \
+      > "$schema_report" || schema_status=$?
+    cat "$schema_report"
+    test "$schema_status" -eq 0
+    node -e '
+      const fs = require("node:fs");
+      const assert = require("node:assert/strict");
+      const report = JSON.parse(fs.readFileSync(process.argv[1], "utf8"));
+      assert(Number.isSafeInteger(report.summary?.valid) && report.summary.valid > 0);
+      for (const key of ["invalid", "errors", "skipped"]) {
+        assert.equal(report.summary[key], 0);
+      }
+    ' "$schema_report"
+  done
+)
+```
+
+Each selected role must show a positive validated-resource count and zero
+invalid, error, and skipped resources. Stop on a nonzero exit, a zero-resource
+render, or a missing role result. Do not add skip or ignore-missing-schema flags
+to obtain success. This validates the rendered schemas only; it does not prove
+API admission, authorization, readiness, or a successful deployment.
+
+> **Source evidence — mandatory rendered-schema step**
+>
+> **Claim:** Every selected role requires strict schema validation before mutation; an optional source-check branch or zero-resource result is not that proof.
+>
+> **Implementation:** [The source checker runs its schema branch only when Helm and kubeconform are available](../../../tests/verification/deployment/check-deployment-truth.mjs#L1101-L1121). The [maintained exact-guide check](../../../tests/verification/docs/check-install-schema-step.mjs) tests the documented shell control with the real validator and toy schemas.
+>
+> **Contract or setting:** [The selected tool version](../../../versions.json) comes from `buildArgs.KUBECONFORM_VERSION`. The planning record supplies the target Kubernetes version and approved schema location; no supported cluster range is inferred.
+>
+> **Test evidence:** `node --test tests/verification/docs/check-install-schema-step.mjs` passed 10 tests, including nine CLI/control cases, on 2026-10-26. Invalid and empty resources, missing schemas, render failure, wrong or missing validator, and absent schema selection stop; exact owned temporary renders/reports are removed.
+>
+> **Revision:** The test and this procedure use the same reviewed Source checkout. Existing verifier and version-source bytes are unchanged from `47da6148545626e3c4e798a7e2e304d7f3345a32`.
+>
+> **Limit:** Toy render/schema fixtures prove command selection, failure control and cleanup only. They are not KubeClaw render validation, platform-owner schema approval, cluster compatibility, release qualification, API admission or live operation. Existing release and authority stops remain.
 
 Complete [client preparation](maintenance.md#prepare-the-client-projections)
 from the reviewed Buster render. If a new node configuration is required, the
