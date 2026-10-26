@@ -3642,7 +3642,7 @@
       "audience": "Kubernetes platform operator, security operator",
       "owner": "platform operations",
       "appliesTo": "current selected runtime release",
-      "lastVerified": "2026-10-12; local extracted-command and release-boundary checks only; no live cluster result is available",
+      "lastVerified": "2026-10-12; local extracted-command and release-boundary checks only; no live cluster result is available; schema-step CLI/control fixtures checked on 2026-10-26 with the pinned validator, not an actual deployment render or target-schema approval",
       "sourceDependencies": [
         "scripts/deploy.sh",
         "docs/generated/inventory/deploy-script.json"

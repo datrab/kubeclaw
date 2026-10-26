@@ -8,7 +8,7 @@
     "extractionDigest": "d82febee5a0656d23cd63001880f9da04bdbe309a19b7f9724df84fca494082a",
     "classification": "legacy-extraction-source"
   },
-  "reviewedRevision": "7d08d36ccb965883d6bd7f7bc9ef842474a01c24",
+  "reviewedRevision": "c60249b1d944c7a88ced6eb932ab763e3c4b2003",
   "author": {
     "id": "parity-author:platform-deployment-operations-and-security",
     "assignmentId": "parity-assignment:b46dd355be30c27b37deda845c90e8f7c6453a4190a4533d841e655338913ddb"
@@ -21,7 +21,7 @@
     "reason": "No historical public route is declared by the current authoritative registry; canonical complete installation and verification/check-chain navigation replaces the old source without inventing a redirect."
   },
   "visualEvidence": [],
-  "contentRoot": "f3b7ee1eacd6aaa549b8985abd3e7b389cc9c437cfa858edfd77510b07ebf4d6",
+  "contentRoot": "7de6e5cc31d700cf8e89aed232c01f13e5a9c41d421cfabb4f111f71777d8523",
   "unitCoverage": [
     {
       "unitId": "dpu_31bf4f46a08bc501e2d5c41aec975072",
@@ -189,7 +189,7 @@
       },
       "evidence": [
         {
-          "revision": "7d08d36ccb965883d6bd7f7bc9ef842474a01c24",
+          "revision": "c60249b1d944c7a88ced6eb932ab763e3c4b2003",
           "path": "tests/verification/deployment/check-deployment-truth.mjs",
           "basis": "current-test",
           "assertion": "The sourceRootFromArgs function uses the source-root argument when present, otherwise process.cwd(), and returns a path.resolve result for the selected source directory.",
@@ -202,17 +202,17 @@
           "normalizedSha256": "e8b3c592c325167cd240a9548a377ec40a29a1f688c41847a91cf6ac5c0b4d2a"
         },
         {
-          "revision": "7d08d36ccb965883d6bd7f7bc9ef842474a01c24",
+          "revision": "c60249b1d944c7a88ced6eb932ab763e3c4b2003",
           "path": "tests/verification/docs/check-install-schema-step.mjs",
           "basis": "current-test",
           "assertion": "The maintained guide check executes the complete documented subshell with the real pinned validator and toy schemas; it checks positive selected-role results, invalid and empty resources, missing schema or selection, rendering failure, validator version/availability, private permissions and exact owned directory cleanup. This is not product rendering or deployment proof.",
-          "gitObject": "a067001e6a4ffd389b3478bda7d975b893fcddd9",
+          "gitObject": "395a6db8981cfb704a6cd33cc848ec394859a775",
           "byteStart": 2433,
-          "byteEnd": 6924,
+          "byteEnd": 7030,
           "lineStart": 51,
-          "lineEnd": 123,
-          "exactSha256": "b6510c054376c8846bd9177b0aa26802426e02dd38211ba3845fee6112c2c228",
-          "normalizedSha256": "36e084f70a8067d418e1f7e411b90b4a35817b7bae0a5f35f843a0cb8ae2a38d"
+          "lineEnd": 124,
+          "exactSha256": "e86696a25806692069c56626cb24901545540ae3f6d323805b8e65917f6749f4",
+          "normalizedSha256": "a29a5fb5509c9d6a65987cd1661fec9b1c1cb34d252c46a4c1b16d9e55de1231"
         }
       ],
       "targets": [
@@ -280,7 +280,7 @@
       },
       "evidence": [
         {
-          "revision": "7d08d36ccb965883d6bd7f7bc9ef842474a01c24",
+          "revision": "c60249b1d944c7a88ced6eb932ab763e3c4b2003",
           "path": "tests/verification/deployment/check-deployment-truth.mjs",
           "basis": "current-test",
           "assertion": "The sourceRootFromArgs function uses the source-root argument when present, otherwise process.cwd(), and returns a path.resolve result for the selected source directory.",
@@ -358,7 +358,7 @@
       },
       "evidence": [
         {
-          "revision": "7d08d36ccb965883d6bd7f7bc9ef842474a01c24",
+          "revision": "c60249b1d944c7a88ced6eb932ab763e3c4b2003",
           "path": "package.json",
           "basis": "current-configuration",
           "assertion": "The package defines docs:inventory as a Node invocation of scripts/docs-inventory.mjs; its separately declared check mode retains the inventory verification route.",
@@ -371,7 +371,7 @@
           "normalizedSha256": "02a615cdf1aa2c0bd07e8a4e6dd715a380766682ace3b192df316bb9030ce82a"
         },
         {
-          "revision": "7d08d36ccb965883d6bd7f7bc9ef842474a01c24",
+          "revision": "c60249b1d944c7a88ced6eb932ab763e3c4b2003",
           "path": "package.json",
           "basis": "current-configuration",
           "assertion": "The package defines docs:generate as a Node invocation of scripts/docs-generate.mjs and separately defines its check mode for generated-reference verification.",

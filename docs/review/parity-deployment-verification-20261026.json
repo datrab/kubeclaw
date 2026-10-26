@@ -56,5 +56,37 @@
     "requirements": 226,
     "sourceValid": 1
   },
-  "originalFindingsDisposition": "SchemaP1 accepted and corrected; missing independent review is intentional content-stage pending, not deletion-readiness claim. Navigation-only mapped/current finding requires adjudication against unchanged original native claim rules before any content approval."
+  "originalFindingsDisposition": "SchemaP1 accepted and corrected; missing independent review is intentional content-stage pending, not deletion-readiness claim. Navigation-only mapped/current finding requires adjudication against unchanged original native claim rules before any content approval.",
+  "correctedSourceRevision": "c60249b1d944c7a88ced6eb932ab763e3c4b2003",
+  "currentNativeAuthorOnlyResult": {
+    "scope": "Original native author-decision function only with complete immutable registry/site/assignment controls. Current prior-source reference root is necessarily stale during canonical WIP; no global/source/review/deletion acceptance inferred. Final full inspectParitySources still required on coherent frozen Source.",
+    "moduleSha256": "768385f7161fff247f4f626d43de4fe349d1fae64b09a36c0bd9a1adaaaca694",
+    "sourceCodeUnmodifiedAppendInternalExportsOnly": true,
+    "valid": true,
+    "info": {
+      "authorId": "parity-author:platform-deployment-operations-and-security",
+      "assignmentId": "parity-assignment:b46dd355be30c27b37deda845c90e8f7c6453a4190a4533d841e655338913ddb",
+      "claimIds": [
+        "deployment-verification:dpu_31bf4f46a08bc501e2d5c41aec975072:0",
+        "deployment-verification:dpu_f30be3e447a1f0041d8a76d05b1150a8:0",
+        "deployment-verification:dpu_172f155edfb0e9ae1b5b08385a9b904f:0",
+        "deployment-verification:dpu_712dd50292fd924c4abdbdf61f11ebf9:0",
+        "deployment-verification:dpu_34ed270f008e21e337a89c1d841320a9:0",
+        "deployment-verification:dpu_d573166a609d9e69f4bfbfc494bfa396:0",
+        "deployment-verification:dpu_ce44cc3c1862c1927cddbe5c70d93f0a:0"
+      ],
+      "reviewedRevision": "c60249b1d944c7a88ced6eb932ab763e3c4b2003",
+      "svgUnitIds": [],
+      "svgRelationUnitIds": [],
+      "visualBindings": [],
+      "redirect": {
+        "status": "not-required",
+        "from": "/deployment/deployment-verification",
+        "to": null,
+        "basis": "no-authoritative-public-route",
+        "reason": "No historical public route is declared by the current authoritative registry; canonical complete installation and verification/check-chain navigation replaces the old source without inventing a redirect."
+      }
+    }
+  },
+  "strictCounterprobe": "Real pinned validator accepts toy duplicate keys without -strict and rejects them with -strict. Maintained negative case now checks duplicate keys;10tests/9cases passed again."
 }
