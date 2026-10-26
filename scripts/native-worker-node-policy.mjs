@@ -18,6 +18,13 @@ export function validateNativeNodePolicy(policy) {
     || !/^[a-z0-9](?:[a-z0-9.-]{0,251}[a-z0-9])?$/.test(policy.nodeName)) throw new Error('NATIVE_NODE_IDENTITY_REQUIRED');
   resources(policy.systemReserve); resources(policy.kubernetesReserve);
   positive(policy.systemReserve.tasks); positive(policy.kubernetesReserve.tasks);
+  if (policy.cpuReservation !== undefined) {
+    const cpu = policy.cpuReservation;
+    if (!cpu || cpu.mode !== 'overcommit' ||
+        Object.keys(cpu).sort().join(',') !== 'kubernetesMillicores,mode,systemMillicores') throw new Error('NATIVE_NODE_CPU_RESERVATION_INVALID');
+    positive(cpu.systemMillicores); positive(cpu.kubernetesMillicores);
+    if (BigInt(cpu.systemMillicores) + BigInt(cpu.kubernetesMillicores) > BigInt(Number.MAX_SAFE_INTEGER)) throw new Error('NATIVE_NODE_CPU_RESERVATION_INVALID');
+  }
   if (Object.keys(policy.pools ?? {}).sort().join(',') !== 'buster,prism') throw new Error('NATIVE_NODE_ROLE_SET_INVALID');
   for (const pool of Object.values(policy.pools)) {
     if (typeof pool.namespace !== 'string' || !/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(pool.namespace)) throw new Error('NATIVE_NODE_NAMESPACE_REQUIRED');
@@ -39,8 +46,11 @@ export function nativePoolPolicy(policy, role) {
   const selected = validateNativeNodePolicy(policy);
   const pool = selected.pools[role];
   if (!pool) throw new Error('NATIVE_NODE_ROLE_INVALID');
+  // Scheduler CPU overcommit does not change pool limits or runtime identity.
+  // Keep installed worker/NRI policy digests stable for this accounting-only change.
+  const { cpuReservation: _cpuReservation, ...poolIdentity } = selected;
   return { schemaVersion: 1, role, nodeName: selected.nodeName,
-    policyDigest: createHash('sha256').update(JSON.stringify(selected)).digest('hex'),
+    policyDigest: createHash('sha256').update(JSON.stringify(poolIdentity)).digest('hex'),
     cgroupRoot: `${nativePoolRoot}/${role}`, ownershipRoot: `/var/lib/kubeclaw/native/${role}`,
     nodeIdentityFile: '/etc/kubeclaw/native-node-id', runtimeIdentityFile: '/etc/kubeclaw/native-runtime-identity.json',
     maximumActiveScopes: pool.maximumActiveScopes,
@@ -54,6 +64,7 @@ export function nativeNodeReservation(policy) {
   for (const pool of Object.values(selected.pools)) {
     system.cpuMillicores += pool.cpuMillicores; system.memoryBytes += pool.memoryBytes; system.tasks += pool.tasks;
   }
+  if (selected.cpuReservation) system.cpuMillicores = selected.cpuReservation.systemMillicores;
   return { systemReserved: { cpu: `${system.cpuMillicores}m`, memory: String(system.memoryBytes), pid: String(system.tasks) },
-    kubeReserved: { cpu: `${selected.kubernetesReserve.cpuMillicores}m`, memory: String(selected.kubernetesReserve.memoryBytes), pid: String(selected.kubernetesReserve.tasks) } };
+    kubeReserved: { cpu: `${selected.cpuReservation?.kubernetesMillicores ?? selected.kubernetesReserve.cpuMillicores}m`, memory: String(selected.kubernetesReserve.memoryBytes), pid: String(selected.kubernetesReserve.tasks) } };
 }

@@ -47,6 +47,7 @@ jobs:
           node --test tests/verification/deployment/ax41-buster-overlay.test.mjs
           node --test tests/verification/deployment/archviewer-policy-provider.test.mjs
           node --test tests/verification/deployment/browser-pool-maintenance.test.mjs
+          node --test tests/verification/deployment/native-worker-cpu-overcommit.test.mjs
           node --test tests/verification/deployment/gitops-adoption-shape.test.mjs
           node --test tests/verification/deployment/prism-backup.test.mts
           node --test tests/verification/deployment/prism-agent-health.test.mjs

@@ -1,23 +1,24 @@
 import fs from 'node:fs';
+import path from 'node:path';
 import { spawnSync } from 'node:child_process';
-const versions = JSON.parse(fs.readFileSync('versions.json', 'utf8'));
-const inputs = [...Object.values(versions.buildArgs).filter(v => typeof v === 'string' && v.includes('@sha256:')),
-  ...Object.values(versions.infrastructure), ...Object.values(versions.automation),
-  `ghcr.io/openclaw/openclaw:${versions.openclaw.version}@${versions.openclaw.digest}`];
-let failure = false;
-// A scan of inputs cannot stand in for scanning the actually selected runtime release.
-for (const [family, count] of [['runtime', 10], ['ops', 2]]) {
-if (!fs.existsSync(`releases/${family}-images.json`)) {
-  console.error(`No ${family} release selected. Run Promote image release after a successful main build.`); failure = true;
-} else {
-  const release = JSON.parse(fs.readFileSync(`releases/${family}-images.json`, 'utf8'));
-  if (release.schemaVersion !== 1 || !/^[a-f0-9]{40}$/.test(release.commit) || Object.keys(release.images ?? {}).length !== count)
-    throw new Error('Invalid selected runtime release');
-  inputs.push(...Object.values(release.images));
+import { scanInventory, readScan, writeSecurityReport } from './security-report.mjs';
+
+const root = process.cwd();
+const directory = path.resolve(process.env.KUBECLAW_TRIVY_REPORT_DIR || 'dist/trivy');
+const inventory = scanInventory(root);
+const plan = { schemaVersion: 1, generatedAt: new Date().toISOString(), commit: process.env.GITHUB_SHA || null,
+  runUrl: process.env.GITHUB_REPOSITORY && process.env.GITHUB_RUN_ID
+    ? `https://github.com/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}` : null,
+  errors: inventory.errors, images: [] };
+// Persist before scanning and after each image so timeouts also leave an inventory.
+const pending = inventory.images.map(item => ({ ...item, status: 'error', error: 'Scan not completed', findings: [] }));
+const persist = () => writeSecurityReport({ ...plan, images: [...plan.images, ...pending.slice(plan.images.length)] }, directory);
+persist();
+for (const item of inventory.images) {
+  const result = spawnSync('bash', ['scripts/scan-runtime-images.sh', item.reference], { stdio: 'inherit', env: { ...process.env, KUBECLAW_TRIVY_REPORT_DIR: directory } });
+  plan.images.push(readScan(item, directory, result.status));
+  persist();
 }
-}
-for (const reference of new Set(inputs)) {
-  const result = spawnSync('bash', ['scripts/scan-runtime-images.sh', reference], { stdio: 'inherit' });
-  if (result.error || result.status !== 0) failure = true;
-}
-process.exitCode = failure ? 1 : 0;
+const failed = plan.errors.length || plan.images.some(image => image.status !== 'clean');
+if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, fs.readFileSync(path.join(directory, 'security-issue.md')));
+process.exitCode = failed ? 1 : 0;

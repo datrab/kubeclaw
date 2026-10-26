@@ -68,5 +68,5 @@ export function requireNativeNodeCapacity(policy, node, kubelet, hostIdentity) {
     if (capacity <= withheld || allocatable <= 0n || allocatable > capacity - withheld) throw new Error(`NATIVE_NODE_ALLOCATABLE_NOT_RESERVED:${resource}`);
   }
   return { nodeName: node.metadata.name, nodeUid: node.metadata.uid, machineId: hostIdentity.machineId, bootId: hostIdentity.bootId,
-    scope: 'current-node-cpu-memory-task-reservation-only', reservation };
+    scope: 'current-node-cpu-memory-task-reservation-only', cpuReservationMode: policy.cpuReservation?.mode ?? 'dedicated', reservation };
 }

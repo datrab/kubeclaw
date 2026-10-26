@@ -1,12 +1,17 @@
 # Initial single-node profile, not a measured workload capacity guarantee.
 # Render and review before activation; reconcile ordinary Pod requests first.
 # Worker ceilings: 3.5 CPUs / 24 GiB, one active scope per role.
-# Includes existing daemon reservations plus a 0.5 CPU / 2 GiB safety buffer.
-# Total withheld from Pods: 5 CPUs / 27.5 GiB.
+# CPU is deliberately shared with native pools; RAM/PID reservations stay dedicated.
+# Total withheld from Pods: 1 CPU / 27.5 GiB -> 11 CPU Allocatable on this 12-CPU node.
 schemaVersion: 1
 nodeName: ax41-production
 runtime:
   containerdVersion: 2.3.4-k3s1.36
+# Scheduler accounting only; does not change native pool cgroups or their digests.
+cpuReservation:
+  mode: overcommit
+  systemMillicores: 500
+  kubernetesMillicores: 500
 systemReserve:
   cpuMillicores: 1000
   memoryBytes: 3221225472

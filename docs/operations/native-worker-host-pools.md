@@ -5,8 +5,10 @@ see the [AX41 rollout runbook](ax41-rollout.md).
 
 D16 selects fixed host-managed role pools for Buster and Prism. Generic Core
 owns process/resource accounting; Buster owns fixture policy. A host pool is
-outside the supervisor Pod's resource hierarchy. Its capacity must therefore
-be withheld separately from ordinary Kubernetes Pod allocation.
+outside the supervisor Pod's resource hierarchy. Its capacity is withheld
+separately from ordinary Kubernetes Pod allocation by default. Explicit CPU
+overcommit can share CPU bandwidth with Pods; memory and Linux-task capacity
+remain separately reserved.
 
 This document describes the implemented pool preparation and verification
 contract. Prism now has an explicit native V3 startup/chart/runtime selection.
@@ -143,9 +145,20 @@ access to the Node and kubelet configz API:
 bash scripts/deploy.sh native-node-preflight "$SELECTED_POLICY_YAML"
 ```
 
+An optional node-policy `cpuReservation` object selects deliberate scheduler CPU
+overcommit: `{mode: overcommit, systemMillicores: 500, kubernetesMillicores: 500}`.
+Both positive reservation values and the exact mode are required. The generator
+uses those CPU values instead of adding the native pool CPU ceilings to the
+daemon reservations. Without this option, dedicated accounting is unchanged.
+Only the selected AX41 profile opts in. Pool CPU limits, memory/PID reservations
+and runtime policy digests remain unchanged; the new option affects scheduler
+accounting only. Apply the existing-host update from the [AX41 runbook](ax41-rollout.md#apply-the-cpu-accounting-change-to-an-existing-ax41-installation).
+
 The checker reads the real Node, actual kubelet configz and real cgroup-v2 files.
 It binds Node name, UID, machine ID and boot ID. Effective system/kube reservations
-must withhold at least the requested pool and daemon capacity. The Node's actual
+must withhold the selected daemon CPU reservations and, by default, native CPU
+capacity too. With explicit overcommit, pool CPU ceilings are shared instead.
+Memory and PID capacity must still cover the pools and daemons. The Node's actual
 CPU/memory Allocatable must reflect that withholding. A label, annotation,
 prepared file or successful render cannot satisfy these checks.
 

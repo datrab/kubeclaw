@@ -70,10 +70,10 @@ codes or generated machine/boot identity files.
 | Buster native worker pool | 1.5 | 8 GiB |
 | Prism native worker pool | 2 | 16 GiB |
 | Existing host/Kubernetes daemon budget | 1 | 1.5 GiB |
-| Additional host safety buffer | 0.5 | 2 GiB |
-| Remaining planning budget for other containers | 3 | approximately 19 GiB |
+| Additional host safety buffer | CPU shared under overcommit | 2 GiB |
+| Pod Allocatable target, including Nova | 11 | approximately 35 GiB |
 
-The last row is arithmetic headroom on the observed 12-CPU, approximately
+The last row is the selected scheduling target on the observed 12-CPU, approximately
 62.7-GiB host, not an enforced namespace quota or a capacity guarantee. It
 includes all agent sidecars/supervisors, pipeline services and databases,
 monitoring, Argo, Tailscale, Ops, future Cilium, websites and HomeOS. Paperless
@@ -81,13 +81,92 @@ belongs to the future HomeOS budget; do not count it again as an extra system.
 Nova's main-container request remains 1 CPU / 12 GiB; its limit is not a
 reservation of four CPUs. Whole-Pod requests include additional containers.
 
-The native pools are outside Kubernetes Pod accounting. Together with daemon
-reservations and the extra buffer, the profile withholds 5 CPUs / 27.5 GiB from
-Pod allocation. The resulting Pod budget is approximately 7 CPUs / 35 GiB,
-including Nova. The buffer is folded into `systemReserve`; it is not a separate
+The native pools are outside Kubernetes Pod accounting. The operator selected
+explicit CPU overcommit on 2026-10-26: `cpuReservation.mode: overcommit` reserves
+500m for the system and 500m for Kubernetes instead of withholding native pool
+CPU ceilings as well. The profile therefore withholds 1 CPU / 27.5 GiB, yielding
+a target of 11 CPUs / approximately 35 GiB Allocatable, including Nova. Native
+Buster and Prism retain their 1.5/2-CPU ceilings and compete with Pods for real
+CPU time; this is not a guarantee of 11 CPUs plus dedicated native capacity.
+Memory and PID reservations remain fully accounted, including the native pools.
+The RAM buffer is folded into `systemReserve`; it is not a separate
 cgroup guaranteed to remain physically idle. Both native pools currently admit
 one active scope per role. Pool limits are not measured workload requirements.
 Native pool swap is disabled; the host's swap must not be added to RAM capacity.
+
+### Apply the CPU accounting change to an existing AX41 installation
+
+A merge or Argo sync does not update the host kubelet drop-in. Before this change,
+the observed Node reported 12 CPUs Capacity and 7 Allocatable. No live host change
+is implied by the new profile. The initial activation script preserves larger
+existing reservations and refuses installed files; do not rerun it to lower CPU.
+
+On AX41 as root, using the merged repository revision and its Node dependencies,
+prepare a fresh private bundle and confirm that the worker policies are unchanged:
+
+```bash
+umask 077
+bundle="$(mktemp -d /root/kubeclaw-cpu-accounting.XXXXXX)"
+node scripts/render-native-worker-node.mjs \
+  my-values/infra/native-worker-pools-ax41.yaml "$bundle/generated"
+for file in buster-pool.json prism-pool.json native-nri.json; do
+  cmp "$bundle/generated/$file" "/etc/kubeclaw/$file" || exit 1
+done
+cat "$bundle/generated/kubelet-reservations.json"
+```
+
+Expected CPU values are `systemReserved.cpu: 500m` and `kubeReserved.cpu: 500m`.
+The accounting-only option is excluded from runtime policy digests, so this change
+does not require replacing worker policies, changing NRI or restarting native pools.
+Prepare a copy of the existing kubelet drop-in, changing only those two CPU fields:
+
+```bash
+python3 - "$bundle" <<'PY'
+import json, pathlib, shutil, sys
+bundle = pathlib.Path(sys.argv[1])
+target = pathlib.Path('/var/lib/rancher/k3s/agent/etc/kubelet.conf.d/90-kubeclaw-native.conf')
+if target.is_symlink() or not target.is_file() or target.stat().st_uid != 0:
+    raise SystemExit('Unexpected kubelet drop-in; inspect before proceeding')
+current = json.loads(target.read_text())
+desired = json.loads((bundle / 'generated/kubelet-reservations.json').read_text())
+for category in ['systemReserved', 'kubeReserved']:
+    for resource in ['memory', 'pid']:
+        if current.get(category, {}).get(resource) != desired[category][resource]:
+            raise SystemExit('Memory/PID configuration differs; inspect before proceeding')
+    if desired[category]['cpu'] != '500m':
+        raise SystemExit('Unexpected target CPU reservation')
+    if current[category].get('cpu') not in ['4500m', '500m']:
+        raise SystemExit('Unexpected current CPU reservation')
+shutil.copy2(target, bundle / 'original.conf')
+for category in ['systemReserved', 'kubeReserved']:
+    current[category]['cpu'] = desired[category]['cpu']
+(bundle / 'candidate.conf').write_text(json.dumps(current, indent=2) + '\n')
+print('Prepared:', bundle / 'candidate.conf')
+PY
+```
+
+Review the diff between `original.conf` and `candidate.conf`: only the two CPU
+fields may change (the Kubernetes value may already be 500m). In a host maintenance
+window with independent recovery access, install the candidate, restart K3s and
+verify the effective configuration. No pool service restart is required:
+
+```bash
+install -o root -g root -m 0600 "$bundle/candidate.conf" \
+  /var/lib/rancher/k3s/agent/etc/kubelet.conf.d/90-kubeclaw-native.conf
+systemctl restart k3s
+# After the API has returned:
+k3s kubectl wait --for=condition=Ready node/ax41-production --timeout=180s
+node scripts/native-worker-node-preflight.mjs my-values/infra/native-worker-pools-ax41.yaml
+k3s kubectl get node ax41-production \
+  -o jsonpath='{.status.capacity.cpu}{" capacity / "}{.status.allocatable.cpu}{" allocatable\n"}'
+```
+
+Require 12 Capacity / 11 Allocatable and a successful preflight reporting
+`cpuReservationMode: overcommit`. Check Pod readiness and CPU throttling under
+actual concurrent work. Keep the private backup. To roll back, first reduce Pod
+requests to fit the previous 7-CPU budget, restore `original.conf` with its owner
+and mode, restart K3s and verify the previous dedicated profile. CPU overcommit
+does not relax the memory, PID, node-identity or cgroup-limit checks.
 
 ## Last observed state
 
