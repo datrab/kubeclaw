@@ -33,7 +33,7 @@ fs.writeFileSync(path.join(repositoryRoot, 'app/greeting.test.mjs'), "import ass
 // The reserved runtime receipt directory is generated evidence, not project source.
 fs.writeFileSync(path.join(repositoryRoot, '.gitignore'), '.kubeclaw-results/\n');
 fs.writeFileSync(path.join(repositoryRoot, 'package.json'), JSON.stringify({name:'first-project',private:true,type:'module',scripts:{test:'node --test app/greeting.test.mjs'}})+'\n');
-const git = (...args) => execFileSync('git', ['-C', repositoryRoot, ...args], { encoding: 'utf8' }).trim();
+const git = (...args) => execFileSync('/usr/bin/git', ['-C', repositoryRoot, ...args], { encoding: 'utf8' }).trim();
 git('init', '-q'); git('add', '.');
 git('-c', 'user.name=Documentation Example', '-c', 'user.email=example@example.invalid', 'commit', '-qm', 'First project baseline');
 const baseRevision = git('rev-parse', 'HEAD');

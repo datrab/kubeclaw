@@ -121,7 +121,7 @@ if(operation==='run'){
 if(operation==='verify'){owned();console.log(JSON.stringify(show(await verifyCompiledProject(root,sourceRoot))));}
 if(operation==='cleanup'){
  owned();const result=await verifyCompiledProject(root,sourceRoot);assert.equal(result.status,'verified-actual-compiled-workflow');
- const repo=path.join(root,'project/repository');const worktrees=execFileSync('git',['worktree','list','--porcelain'],{cwd:repo,encoding:'utf8'});assert.equal(worktrees.split('\n').filter(x=>x.startsWith('worktree ')).length,1,'Retained active worktree; preserve fixture');
- assert.equal(execFileSync('git',['status','--porcelain'],{cwd:repo,encoding:'utf8'}).trim(),'','Source fixture dirty; preserve it');
+ const repo=path.join(root,'project/repository');const worktrees=execFileSync('/usr/bin/git',['worktree','list','--porcelain'],{cwd:repo,encoding:'utf8'});assert.equal(worktrees.split('\n').filter(x=>x.startsWith('worktree ')).length,1,'Retained active worktree; preserve fixture');
+ assert.equal(execFileSync('/usr/bin/git',['status','--porcelain'],{cwd:repo,encoding:'utf8'}).trim(),'','Source fixture dirty; preserve it');
  fs.rmSync(root,{recursive:true});assert(!fs.existsSync(root));console.log(JSON.stringify({status:'verified-owned-cleanup',root,runId:result.runId,artifacts:result.artifactCount}));
 }
