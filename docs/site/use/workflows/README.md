@@ -201,7 +201,7 @@ selection steps:
 
 ```bash
 set -euo pipefail
-COMPILED_SOURCE_REVISION=94e248446a266d8f801725fc19d381e780efa39b
+COMPILED_SOURCE_REVISION=da43fa58743934a7a98dc8f2fb6205b062e83870
 export COMPILED_SOURCE_REVISION
 git clone https://github.com/datrab/kubeclaw.git kubeclaw-compiled-source
 cd kubeclaw-compiled-source
@@ -272,6 +272,9 @@ export COMPILED_TOOLS_BIN="$COMPILED_JOURNEY_PARENT/nova-tools/node_modules/.bin
 npm run plugin-system:sandbox:build
 node docs/site/use/workflows/examples/compiled-project.mjs prepare "$COMPILED_JOURNEY"
 ```
+
+Keep the helper destination outside the selected Source checkout, as allocated
+above. The helper rejects a destination inside or containing that checkout.
 
 Expected: `status: "prepared-compiled-project"`, `execution: false` and
 `stageCount: 8`. Inspect `project/project.json`, `project/compiled.json`,
