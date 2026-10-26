@@ -74,7 +74,8 @@ test('dependency store can resolve internal packages through the skills ancestor
   put('node_modules/external', { name: 'external', dependencies: { '@workspace/core': '*' } });
   const plan = runtimeDependencyPlan([{ name: 'external', origin: root, target: 'skills/plugins/consumer' }], new Set(['@workspace/core']));
   assert.equal(plan.packages.length, 1);
-  assert.equal(plan.links[0].target, 'skills/plugins/consumer/node_modules/external');
+  assert.equal(plan.links[0].target, 'skills/node_modules/external');
+  assert(plan.links.every(({ target }) => !target.startsWith('skills/plugins/')));
   const output = path.join(root, 'output');
   const record = plan.packages[0];
   const external = path.join(output, record.target);
@@ -87,4 +88,16 @@ test('dependency store can resolve internal packages through the skills ancestor
   fs.mkdirSync(path.dirname(link), { recursive: true });
   fs.symlinkSync(path.relative(path.dirname(link), internal), link);
   assert.equal(createRequire(path.join(external, 'package.json'))('@workspace/core'), 42);
+});
+
+
+test('plugin dependency hoisting rejects conflicting installed versions', (t) => {
+  const { root, put } = fixture(t);
+  put('node_modules/shared', { name: 'shared', version: '1' });
+  const plugin = put('plugin', { name: 'plugin' });
+  put('plugin/node_modules/shared', { name: 'shared', version: '2' });
+  assert.throws(() => runtimeDependencyPlan([
+    { name: 'shared', origin: root },
+    { name: 'shared', origin: plugin, target: 'skills/plugins/plugin' },
+  ]), /target collision/);
 });

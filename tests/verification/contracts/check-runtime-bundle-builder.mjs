@@ -27,9 +27,33 @@ try {
       assert.equal(fs.lstatSync(link).isSymbolicLink(), true, `${role} package link is missing: ${entry.id}`);
       assert(fs.realpathSync(link).startsWith(`${path.join(output, 'skills/packages')}${path.sep}`), `${role} package link escapes: ${entry.id}`);
     }
-    const forbidden = execFileSync('find', [output, '-type', 'd', '(', '-name', 'test', '-o', '-name', 'tests', '-o', '-name', 'node_modules', ')'], { encoding: 'utf8' })
-      .split('\n').filter((entry) => entry && entry !== path.join(output, 'skills/node_modules'));
+    const forbidden = execFileSync('find', [output, '-type', 'd', '(', '-name', 'test', '-o', '-name', 'tests', ')'], { encoding: 'utf8' })
+      .split('\n').filter(Boolean);
     assert.deepEqual(forbidden, [], `${role} bundle contains development directories`);
+    // Runtime graphs require per-declarer links for nested version collisions.
+    // Permit link-only node_modules directories, never copied install trees.
+    const modules = execFileSync('find', [output, '-type', 'd', '-name', 'node_modules'], { encoding: 'utf8' })
+      .split('\n').filter(Boolean);
+    for (const directory of modules) {
+      const relative = path.relative(output, directory).split(path.sep).join('/');
+      assert(/^skills\/(?:node_modules|(?:\.runtime-dependencies\/[0-9]+|packages\/[^/]+)\/node_modules)$/.test(relative),
+        `${role} unexpected dependency directory: ${relative}`);
+      function checkLinks(parent, scoped = false) {
+        for (const entry of fs.readdirSync(parent, { withFileTypes: true })) {
+          const target = path.join(parent, entry.name);
+          if (!scoped && entry.name.startsWith('@') && entry.isDirectory()) {
+            checkLinks(target, true);
+            continue;
+          }
+          assert(entry.isSymbolicLink(), `${role} dependency must be a link: ${target}`);
+          const resolved = fs.realpathSync(target);
+          assert([path.join(output, 'skills/packages'), path.join(output, 'skills/plugins'), path.join(output, 'skills/.runtime-dependencies')]
+            .some((allowed) => resolved.startsWith(`${allowed}${path.sep}`)),
+          `${role} dependency link escapes runtime stores: ${target}`);
+        }
+      }
+      checkLinks(directory);
+    }
     const observer = path.join(output, 'skills/plugins/openclaw-agent-observer');
     const canonicalContract = path.join(root, 'contracts/agent-observability/v1/src');
     for (const name of fs.readdirSync(canonicalContract)) {

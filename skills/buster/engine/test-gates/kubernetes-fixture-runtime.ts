@@ -1,4 +1,4 @@
-import { testSecretContract, validateTestSecretBindings } from '../../plugins/kubernetes-fixture/src/test-secrets.js';
+import { testSecretContract, validateTestSecretBindings } from '@kubeclaw/plugin-kubernetes-fixture-provider/src/test-secrets.js';
 import crypto from 'node:crypto';
 import { collectFixtureFailureEvidence } from './kubernetes-fixture-diagnostics.ts';
 import { validateFixtureNetworkPolicy } from './kubernetes-network-envelope.ts';

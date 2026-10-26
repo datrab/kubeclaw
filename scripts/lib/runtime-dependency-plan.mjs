@@ -43,6 +43,12 @@ export function runtimeDependencyPlan(roots, internalNames = new Set()) {
     }
     link(path.posix.join(parentTarget, 'node_modules', name), record.target);
   }
-  for (const { name, origin, optional = false, target = 'skills' } of roots) visit(name, origin, optional, target);
+  // Plugin digests forbid symlinks within plugin trees. Resolve their direct
+  // dependencies through the shared skills ancestor; conflicting versions fail
+  // closed instead of silently selecting a different installed package.
+  for (const { name, origin, optional = false, target = 'skills' } of roots) {
+    const dependencyTarget = target.startsWith('skills/plugins/') ? 'skills' : target;
+    visit(name, origin, optional, dependencyTarget);
+  }
   return { packages: [...packages.values()], links: [...links].map(([target, destination]) => ({ target, destination })) };
 }
