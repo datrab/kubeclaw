@@ -212,6 +212,27 @@ function buildReferenceIndex(root, sources, reviewedRevision = null) {
     [source.originalPath, source.originalPath], [source.legacyPath, source.originalPath],
   ]));
   const references = new Map(sources.map((source) => [source.originalPath, new Set()]));
+  const escapeReferencePattern = (value) => value.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&');
+  const referencePatterns = [...paths].map(([needle, originalPath]) => {
+    const pieces = needle.split('/');
+    const quotedPieces = pieces.map((piece) => `["']${escapeReferencePattern(piece)}["']`).join('\\s*,\\s*');
+    return {
+      needle, originalPath,
+      joined: pieces.length > 1
+        ? new RegExp(`\\[\\s*${quotedPieces}\\s*\\]\\s*\\.join\\(\\s*["']/["']\\s*\\)`, 'u') : null,
+      pathJoined: pieces.length > 1
+        ? new RegExp(`\\bpath(?:\\.posix)?\\.join\\(\\s*${quotedPieces}\\s*\\)`, 'u') : null,
+    };
+  });
+  // Boolean literal prefilters only avoid impossible matches; never exclude a
+  // file from the input binding or its separate Markdown/HTML link resolution.
+  // No Unicode/global/sticky flags: preserve String.includes code-unit matching.
+  const directReferencePattern = paths.size
+    ? new RegExp([...paths.keys()].map(escapeReferencePattern).join('|')) : null;
+  const composedReferencePrefixes = [...new Set([...paths.keys()]
+    .filter((needle) => needle.includes('/')).map((needle) => needle.split('/')[0]))]
+    .map((piece) => new RegExp(`["']${escapeReferencePattern(piece)}["']`, 'u'));
+
   const scannedFiles = [];
   const reviewedTree = reviewedRevision ? repositoryTreeAt(root, reviewedRevision) : null;
   const files = reviewedTree ? [...reviewedTree.keys()] : repositoryFiles(root);
@@ -239,14 +260,14 @@ function buildReferenceIndex(root, sources, reviewedRevision = null) {
       || file === 'docs/blueprint/generated/migration-ledger.csv';
     if (!provenanceMetadata) {
       scannedFiles.push(file);
-      for (const [needle, originalPath] of paths) {
-        if (text.includes(needle)) references.get(originalPath).add(file);
-        const pieces = needle.split('/');
-        if (pieces.length > 1) {
-          const quotedPieces = pieces.map((piece) => `["']${piece.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&')}["']`).join('\\s*,\\s*');
-          const joined = new RegExp(`\\[\\s*${quotedPieces}\\s*\\]\\s*\\.join\\(\\s*["']/["']\\s*\\)`, 'u');
-          const pathJoined = new RegExp(`\\bpath(?:\\.posix)?\\.join\\(\\s*${quotedPieces}\\s*\\)`, 'u');
-          if (joined.test(text) || pathJoined.test(text)) references.get(originalPath).add(file);
+      const directPossible = directReferencePattern?.test(text) ?? false;
+      const composedPossible = composedReferencePrefixes.some((pattern) => pattern.test(text));
+      if (directPossible || composedPossible) {
+        for (const { needle, originalPath, joined, pathJoined } of referencePatterns) {
+          if (directPossible && text.includes(needle)) references.get(originalPath).add(file);
+          if (composedPossible && joined && (joined.test(text) || pathJoined.test(text))) {
+            references.get(originalPath).add(file);
+          }
         }
       }
     }

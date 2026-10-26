@@ -1360,3 +1360,40 @@ test('excluding structural membership cannot bypass the real tree readiness gate
   commitFixture(root, 'tree gate must still execute');
   assert.throws(() => validateParity({ root, readiness: true }), /scanner input|Command failed/u);
 });
+
+test('reference prefilters preserve metacharacter, Unicode, composed, and relative-only consumers', () => {
+  const root = fixture();
+  const source = { originalPath: 'docs/a[0]+🪐.md', legacyPath: 'docs/_legacy-source/a[0]+🪐.md' };
+  write(root, source.legacyPath, 'Frozen source.\n');
+  write(root, 'config/direct-one.txt', source.originalPath);
+  write(root, 'config/direct-two.txt', source.legacyPath);
+  write(root, 'config/array.txt', '["docs", "a[0]+🪐.md"].join("/")');
+  write(root, 'config/path.txt', 'path.posix.join("docs", "_legacy-source", "a[0]+🪐.md")');
+  // The existing conservative matcher accepts either quote at each boundary;
+  // a prefilter must not silently impose JavaScript parsing or matched quotes.
+  write(root, 'config/mixed-quotes.txt', '[\'docs", "a[0]+🪐.md"].join("/")');
+  write(root, 'docs/nested/relative.md', '[Old](../a[0]+🪐.md)');
+  write(root, 'docs/nested/relative.html', '<a href="../a[0]+🪐.md">Old</a>');
+  write(root, 'config/lookalike.txt', 'docs/aX0Z🪐Xmd');
+  const revision = commitFixture(root, 'reference prefilter consumers');
+  const result = buildActiveDependencyReview(root, source, revision, '1'.repeat(64));
+  assert.deepEqual(result.scanner.matches, [
+    'config/array.txt', 'config/direct-one.txt', 'config/direct-two.txt',
+    'config/mixed-quotes.txt', 'config/path.txt',
+    'docs/nested/relative.html', 'docs/nested/relative.md',
+  ]);
+  assert.equal(result.verdict, 'PENDING');
+});
+
+test('files rejected by reference prefilters remain in the complete freshness binding', () => {
+  const root = fixture();
+  const decision = load(root, decisionPath);
+  write(root, 'config/unrelated.txt', 'No matching literal, composed prefix, or link.\n');
+  const revision = commitFixture(root, 'unrelated scanner input');
+  const before = buildActiveDependencyReview(root, decision.source, revision, decision.contentRoot);
+  assert.deepEqual(before.scanner.matches, []);
+  assert(before.scanner.scannedFileCount > 0);
+  write(root, 'config/unrelated.txt', 'Changed without any reference markers.\n');
+  assert.throws(() => buildActiveDependencyReview(root, decision.source, revision, decision.contentRoot),
+    /active-dependency scanner input changed after reviewedRevision/u);
+});

@@ -1,0 +1,41 @@
+{
+  "scope": "Documentation reference-index necessary-literal performance only, not product runtime or Source/deletion acceptance.",
+  "baselineRevision": "135735873dbf576cccb9ebb9bb1430c174154bfa",
+  "candidateModuleSha256": "ca45008caacc73732fff05f15595b673d52dc8ab6d58bac88bef56de1dd74a15",
+  "actualIndependentVerdict": {
+    "findings": [],
+    "overall_correctness": "patch is correct",
+    "overall_explanation": "REFERENCE_PREFILTER_SEMANTICS_PRESERVED=PASS. The literal and composed-path prefilters are necessary conditions for the prior matching operations, preserve stateless matching, and do not bypass link resolution or freshness binding.",
+    "overall_confidence": 0.98
+  },
+  "actualIndependentTarget": "52cb2e5708c7857668dd7f8f0fb55e2128e27f6f",
+  "completeDifferential": {
+    "frozenCorpusRevision": "a383c4f5287cca980ddacd59e1c34354e73fa47b",
+    "sources": 249,
+    "scannedFiles": 5513,
+    "allReferencesAndOrderEqual": true,
+    "allInputPathsAndOrderEqual": true,
+    "twoWholePendingNativeRecordsEqual": true,
+    "measurements": [
+      {
+        "label": "original",
+        "moduleSha256": "768385f7161fff247f4f626d43de4fe349d1fae64b09a36c0bd9a1adaaaca694",
+        "elapsedMs": 315355.01118800003
+      },
+      {
+        "label": "required-literal-prefilter",
+        "moduleSha256": "ca45008caacc73732fff05f15595b673d52dc8ab6d58bac88bef56de1dd74a15",
+        "elapsedMs": 8468.947798000008
+      }
+    ]
+  },
+  "actualSafetyTests": {
+    "completeParitySuitePassed": 138,
+    "failed": 0,
+    "skipped": 0,
+    "newFocusedRegressions": 2
+  },
+  "unchangedCriteria": "All text bytes still read and bound; only impossible literal/composed matching work skipped. Original relative Markdown/HTML resolution, scope/metadata rules, exact hashes/freshness, PENDING manual assessment, scanner version and limits unchanged.",
+  "remainingObligationAtThisReceipt": "Original currentSource two-source field/native validation and independent binding review before final publication. No new gate/requirement or wholeparity/runtime/human/schema/deletion approval.",
+  "detailedEvidenceOutsideRepository": "operations/pr13/evidence/a91311-reference-performance-20261026"
+}
