@@ -133,6 +133,7 @@ for image in "$@"; do
   if "$trivy_executable" image \
     --cache-dir "$database_cache" \
     --db-repository "${TRIVY_DB_REPOSITORY:-ghcr.io/aquasecurity/trivy-db:2}" \
+    --java-db-repository "${TRIVY_JAVA_DB_REPOSITORY:-ghcr.io/aquasecurity/trivy-java-db:1}" \
     --scanners vuln \
     --severity HIGH,CRITICAL \
     --exit-code 1 \
