@@ -76,10 +76,18 @@ export async function reconcileNamespaceAccess(config, api) {
         catch (error) { if (error.status !== 404) throw error; }
         if (!existing) await api('POST', collection, desired);
         else {
-          // Never take over an unrelated object, or attempt to change immutable roleRef.
-          if (existing.metadata?.labels?.['ops.kubeclaw.io/namespace-access'] !== 'true' ||
-              !Object.entries(desired.roleRef).every(([key, value]) => existing.roleRef?.[key] === value)) throw new Error('NAMESPACE_ACCESS_BINDING_COLLISION');
-          if (existing.subjects?.length !== 1 || !Object.entries(desired.subjects[0]).every(([key, value]) => existing.subjects[0]?.[key] === value) || existing.subjects[0]?.apiGroup) {
+          // Helm also creates reader bindings in explicitly configured namespaces.
+          // An exact existing grant satisfies access without transferring ownership.
+          // Only bindings carrying our ownership label may ever be repaired.
+          const roleMatches = Object.entries(desired.roleRef).every(([key, value]) => existing.roleRef?.[key] === value);
+          const subjectsMatch = existing.subjects?.length === 1 &&
+            Object.entries(desired.subjects[0]).every(([key, value]) => existing.subjects[0]?.[key] === value) && !existing.subjects[0]?.apiGroup;
+          if (!roleMatches) throw new Error('NAMESPACE_ACCESS_BINDING_COLLISION');
+          if (existing.metadata?.labels?.['ops.kubeclaw.io/namespace-access'] !== 'true') {
+            if (subjectsMatch) continue;
+            throw new Error('NAMESPACE_ACCESS_BINDING_COLLISION');
+          }
+          if (!subjectsMatch) {
             await api('PATCH', `${collection}/${role}`, { metadata: { resourceVersion: existing.metadata.resourceVersion }, subjects: desired.subjects });
           }
         }

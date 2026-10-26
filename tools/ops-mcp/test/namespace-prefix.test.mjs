@@ -91,3 +91,53 @@ test('a binding collision or API failure cannot prevent other test namespaces be
   assert.equal(created.length, 2);
   assert.ok(created.every(x => x.metadata.namespace === 'test-next'));
 });
+
+test('exact Helm-owned reader grants satisfy broad reconciliation without ownership changes', async () => {
+  const broad = { ...config, allNonSystemNamespaces: true };
+  const names = ['argocd', 'kubeclaw', 'kubeclaw-ops', 'spire-server', 'spire-system', 'tailscale', 'test-new'];
+  const writes = [];
+  const api = async (method, path, body) => {
+    if (path.startsWith('/api/v1/namespaces?')) return { items: names.map(name => ({ metadata: { name } })) };
+    if (method === 'GET' && !path.includes('test-new') && path.endsWith('/ops-reader')) return {
+      metadata: { annotations: { 'argocd.argoproj.io/tracking-id': 'codex-ops' } },
+      roleRef: { apiGroup: 'rbac.authorization.k8s.io', kind: 'ClusterRole', name: 'ops-reader' },
+      subjects: [{ kind: 'ServiceAccount', name: broad.serviceAccount, namespace: broad.namespace, apiGroup: '' }],
+    };
+    if (method === 'GET') { const error = new Error('not found'); error.status = 404; throw error; }
+    writes.push({ method, body }); return {};
+  };
+  await reconcileNamespaceAccess(broad, api);
+  assert.equal(writes.length, 8, 'six exec grants plus both grants for the new namespace');
+  assert.ok(writes.every(write => write.method === 'POST'));
+  assert.equal(writes.filter(write => write.body.metadata.name === 'ops-reader').length, 1);
+  assert.equal(writes.find(write => write.body.metadata.name === 'ops-reader').body.metadata.namespace, 'test-new');
+});
+
+test('unowned grants with different roles or subjects remain collisions and are never patched', async () => {
+  const matching = { metadata: {},
+    roleRef: { apiGroup: 'rbac.authorization.k8s.io', kind: 'ClusterRole', name: 'ops-reader' },
+    subjects: [{ kind: 'ServiceAccount', name: config.serviceAccount, namespace: config.namespace }],
+  };
+  for (const changed of [
+    { roleRef: { ...matching.roleRef, name: 'cluster-admin' } },
+    { roleRef: { ...matching.roleRef, kind: 'Role' } },
+    { roleRef: { ...matching.roleRef, apiGroup: 'other' } },
+    { subjects: [] }, { subjects: [...matching.subjects, ...matching.subjects] },
+    { subjects: [{ ...matching.subjects[0], name: 'other' }] },
+    { subjects: [{ ...matching.subjects[0], namespace: 'other' }] },
+    { subjects: [{ ...matching.subjects[0], kind: 'User' }] },
+    { subjects: [{ ...matching.subjects[0], apiGroup: 'rbac.authorization.k8s.io' }] },
+  ]) {
+    const api = async (method, path) => {
+      if (path.startsWith('/api/v1/namespaces?')) return { items: [{ metadata: { name: 'test' } }] };
+      assert.equal(method, 'GET', 'collisions must never cause writes');
+      if (path.endsWith('/ops-reader')) return { ...structuredClone(matching), ...changed };
+      return { ...structuredClone(matching), metadata: { labels: { 'ops.kubeclaw.io/namespace-access': 'true' } },
+        roleRef: { ...matching.roleRef, name: 'ops-exec' } };
+    };
+    await assert.rejects(reconcileNamespaceAccess(config, api), error => {
+      assert.deepEqual(error.failures, [{ namespace: 'test', role: 'ops-reader', error: 'NAMESPACE_ACCESS_BINDING_COLLISION' }]);
+      return true;
+    });
+  }
+});

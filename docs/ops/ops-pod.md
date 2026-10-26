@@ -548,6 +548,17 @@ host/Cilium outage solely to complete this initial acceptance.
 
 ## Observability and incident triage
 
+If the namespace-access pod fails readiness because `/tmp/ready` is missing,
+inspect that pod's logs: the file is written only after a successful reconciliation.
+`NAMESPACE_ACCESS_BINDING_COLLISION` means an existing binding did not pass the
+ownership or grant checks. Helm-created reader bindings can coexist with dynamic
+namespace reconciliation when their roleRef and sole MCP ServiceAccount subject
+match exactly. The reconciler leaves these externally owned grants untouched;
+it repairs subject drift only on bindings carrying its ownership label. Other
+roles or subjects remain collisions. Do not delete reader bindings or add ownership
+labels merely to silence readiness. The MCP's HTTP `/healthz` is a separate check;
+it can be healthy while a new namespace-access replica is unready.
+
 ```bash
 ./scripts/deploy-ops-pod.sh status
 "${k[@]}" logs "$pod" -c codex --tail=100
