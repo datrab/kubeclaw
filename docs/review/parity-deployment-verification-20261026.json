@@ -49,13 +49,8 @@
     "scope": "Real pinned kubeconform with toy schemas and fixture bound_deploy. Not actual KubeClaw renders, approved target schema, release, live cluster or fresh Reader acceptance."
   },
   "nativeAuthorOnly": true,
-  "correctedIndependentContentReferenceAndPreservation": "PENDING",
+  "correctedIndependentContentReferenceAndPreservation": "CONTENT and16original-scope preservation PASS. Original per-source active-dependency review/current native source-valid remain mandatory separate later stages, not certified by this frozen receipt.",
   "detailedEvidenceOutsideRepository": "operations/pr13/evidence/a91311-deployment-verification-20261026",
-  "acceptedPublishedCountsUnchanged": {
-    "gates": 65,
-    "requirements": 226,
-    "sourceValid": 1
-  },
   "originalFindingsDisposition": "SchemaP1 accepted and corrected; missing independent review is intentional content-stage pending, not deletion-readiness claim. Navigation-only mapped/current finding requires adjudication against unchanged original native claim rules before any content approval.",
   "correctedSourceRevision": "c60249b1d944c7a88ced6eb932ab763e3c4b2003",
   "currentNativeAuthorOnlyResult": {
@@ -88,5 +83,109 @@
       }
     }
   },
-  "strictCounterprobe": "Real pinned validator accepts toy duplicate keys without -strict and rejects them with -strict. Maintained negative case now checks duplicate keys;10tests/9cases passed again."
+  "strictCounterprobe": "Real pinned validator accepts toy duplicate keys without -strict and rejects them with -strict. Maintained negative case now checks duplicate keys;10tests/9cases passed again.",
+  "frozenReceiptScope": "Actual original7claim content +16original-scope preservation at Source1b456597 only. Not live status, current per-source reference approval, wholeA91311, deployment, participant or AP10 deletion acceptance.",
+  "contentOnlyReview": {
+    "source": {
+      "originalPath": "docs/deployment/deployment-verification.md",
+      "legacyPath": "docs/_legacy-source/deployment/deployment-verification.md",
+      "baselineRevision": "8da6157b77247dcbdf209ef12f491f0b92ca858a",
+      "gitObject": "9acd81a6b41bfbf883a9bf60e0b3e25776253743",
+      "extractionDigest": "d82febee5a0656d23cd63001880f9da04bdbe309a19b7f9724df84fca494082a",
+      "classification": "legacy-extraction-source"
+    },
+    "contentRoot": "7de6e5cc31d700cf8e89aed232c01f13e5a9c41d421cfabb4f111f71777d8523",
+    "authorSha256": "d05a021afea0dc0067686568c20559aa1fe6016fc18339d7379ca3a3e2966925",
+    "frozenSource": "1b45659746f6e306a15d7a34042abfc26dc81c5d",
+    "claims": 7,
+    "completeUnits": 7,
+    "contentOnlyVerdict": "PASS",
+    "parts": [
+      {
+        "part": "A",
+        "claimIndices": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "actualVerdict": {
+          "findings": [],
+          "overall_correctness": "patch is correct",
+          "overall_explanation": "DEPLOYMENT_SCHEMA_AND_CLAIMS_0_4=PASS: the original procedure’s render, strict schema-validation, image/config inspection, exact verification command, and regeneration claims are explicitly preserved with bounded source/test evidence and canonical mappings. The schema step fails closed for missing/incorrect validator inputs, empty renders, validation errors, and skipped resources.",
+          "overall_confidence": 0.92
+        },
+        "completeInputBytes": 409785,
+        "exactAuthorSha256": "d05a021afea0dc0067686568c20559aa1fe6016fc18339d7379ca3a3e2966925"
+      },
+      {
+        "part": "B",
+        "claimIndices": [
+          5,
+          6
+        ],
+        "actualVerdict": {
+          "findings": [],
+          "overall_correctness": "patch is correct",
+          "overall_explanation": "DEPLOYMENT_CLAIMS_5_6=PASS: semantic parity, current accuracy, target specificity, and disposition justification pass for the troubleshooting navigation and regeneration guidance. The mapped handbook route preserves the required source-derived regeneration/check workflow for chart or deployment input changes.",
+          "overall_confidence": 0.9
+        },
+        "completeInputBytes": 407588,
+        "exactAuthorSha256": "d05a021afea0dc0067686568c20559aa1fe6016fc18339d7379ca3a3e2966925"
+      }
+    ],
+    "noUncoveredClaimIndices": true,
+    "originalNegativeVerdictRetained": "original-content-verdict.json",
+    "limits": "Content-only original7claim review; official current dependency/reference registration/native source-valid, affected old scopes and coherent publication pending. No new gate/runtime/live/approved-schema/participant/deletion acceptance."
+  },
+  "originalScopePreservation": [
+    {
+      "family": "operator",
+      "count": 5,
+      "actualVerdict": {
+        "findings": [],
+        "overall_correctness": "patch is correct",
+        "overall_explanation": "SCHEMA_OPERATOR_ORIGINAL_SCOPES_PRESERVED=PASS. The five supplied operator scopes retain source accuracy, reader usability, and quality: the added schema-validation procedure fails closed for missing, invalid, empty, or skipped validation; preserves existing release, authority, and live-operation stops; and does not alter the other scoped source bodies. The generated-map change is limited to matching install-page metadata.",
+        "overall_confidence": 0.92
+      },
+      "source": "1b45659746f6e306a15d7a34042abfc26dc81c5d"
+    },
+    {
+      "family": "integration",
+      "count": 4,
+      "actualVerdict": {
+        "findings": [],
+        "overall_correctness": "patch is correct",
+        "overall_explanation": "SCHEMA_INTEGRATION_ORIGINAL_SCOPES_PRESERVED=PASS. The added unadopted proposal accurately scopes the four supplied original records: the bounded install-guide schema-validation addition fails closed and preserves their stated source, reader, quality, and limitation boundaries; the generated-map change is limited to that page metadata. No actionable defect is introduced by this proposal-only commit.",
+        "overall_confidence": 0.91
+      },
+      "source": "1b45659746f6e306a15d7a34042abfc26dc81c5d"
+    },
+    {
+      "family": "publication",
+      "count": 7,
+      "actualVerdict": {
+        "findings": [],
+        "overall_correctness": "patch is correct",
+        "overall_explanation": "SCHEMA_PUBLICATION_ORIGINAL_SCOPES_PRESERVED=PASS. The seven stated publication scopes retain their bounded SourceAccuracy, ReaderUsability, and Quality outcomes: the added schema-validation procedure is source-backed, fails closed for unavailable or invalid validation inputs and empty/skipped results, preserves existing stops and limits, and is accurately represented as fixture-level rather than live evidence. The single generated metadata-row update matches the changed page.",
+        "overall_confidence": 0.95
+      },
+      "source": "1b45659746f6e306a15d7a34042abfc26dc81c5d"
+    }
+  ],
+  "currentCoordinatorControls": {
+    "source": "1b45659746f6e306a15d7a34042abfc26dc81c5d",
+    "nativeReaderCommandsPassed": 6,
+    "boundedOfflineBrowserCasesPassed": 4,
+    "maintainedTestsPassed": 10,
+    "toyFixtureCases": 9,
+    "limit": "No actual KubeClaw render/approvedschema/live deployment, fresh persona or screenreader qualification."
+  },
+  "publishedBaselineAtReceipt": {
+    "revision": "47da6148545626e3c4e798a7e2e304d7f3345a32",
+    "gates": 65,
+    "requirements": 226,
+    "sourceValid": 1
+  }
 }
