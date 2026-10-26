@@ -46,7 +46,7 @@ test('an internal record under the reader root cannot silently enter or disappea
   assert.throws(() => publicationAssets(site), /no publication allowance: reference\/private-review.json/u);
 });
 
-for (const directory of ['extend/examples/minimal-stage', 'use/workflows/examples', 'use/workflows/wait-resume']) {
+for (const directory of ['extend/examples/minimal-stage', 'extend/examples/observer-lifecycle', 'use/workflows/examples', 'use/workflows/wait-resume']) {
   test(`unapproved artifacts inside ${directory} stop publication`, t => {
     const { site, write } = fixture(t);
     write('use/workflows/wait-resume/signal.template.json', '{}\n');
@@ -115,4 +115,31 @@ test('positive manifest cannot launder a registered Markdown symlink', t => {
   fs.writeFileSync(path.join(root, 'outside.md'), '# Outside\n');
   fs.symlinkSync(path.join(root, 'outside.md'), path.join(site, 'README.md'));
   assert.throws(() => publicationManifest(site, classification('README.md')), /must not be a symlink/u);
+});
+
+
+test('the complete maintained observer example publishes byte-exactly without adjacent private artifacts', t => {
+  const { root, site, write } = fixture(t);
+  const example = path.resolve(import.meta.dirname, '../../docs/site/extend/examples/observer-lifecycle');
+  const relativeFiles = fs.readdirSync(example, { recursive: true }).filter(name => fs.statSync(path.join(example, name)).isFile());
+  for (const relative of relativeFiles) {
+    write(`extend/examples/observer-lifecycle/${relative}`, fs.readFileSync(path.join(example, relative)));
+  }
+  const assets = publicationAssets(site);
+  assert.deepEqual(assets, relativeFiles.map(name => `extend/examples/observer-lifecycle/${name}`).sort());
+  const output = path.join(root, 'output');
+  copyPublicationAssets(site, output, assets);
+  for (const relative of assets) assert.deepEqual(fs.readFileSync(path.join(output, relative)), fs.readFileSync(path.join(site, relative)));
+  write('extend/examples/observer-lifecycle/private-review.json', '{"internal":true}\n');
+  assert.throws(() => publicationAssets(site), /no publication allowance: extend\/examples\/observer-lifecycle\/private-review.json/u);
+});
+
+test('an explicitly allowed observer entrypoint cannot launder an outside symlink', t => {
+  const { root, site } = fixture(t);
+  const outside = path.join(root, 'outside.mjs');
+  fs.writeFileSync(outside, 'export const internal = true;\n');
+  const target = path.join(site, 'extend/examples/observer-lifecycle/journey.mjs');
+  fs.mkdirSync(path.dirname(target), { recursive: true });
+  fs.symlinkSync(outside, target);
+  assert.throws(() => publicationAssets(site), /must not be a symlink/u);
 });
