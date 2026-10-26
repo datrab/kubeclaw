@@ -1,0 +1,28 @@
+{
+  "id": "example.observer-lifecycle",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [],
+  "observers": [
+    {
+      "id": "watch",
+      "module": "src/observer.js",
+      "export": "observe",
+      "subscriptions": [
+        "run.succeeded"
+      ],
+      "delivery": "at_least_once",
+      "ordering": "per_run",
+      "failurePolicy": {
+        "mode": "required",
+        "maxAttempts": 1,
+        "backoffMs": 0,
+        "timeoutMs": 5000
+      },
+      "requiredCapabilities": [],
+      "configSchema": "schemas/config.schema.json",
+      "checkpointSchema": "schemas/checkpoint.schema.json"
+    }
+  ],
+  "adapters": []
+}
