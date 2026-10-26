@@ -54,7 +54,12 @@ export function readScan(item, reportDir, exitCode) {
     }
     if (exitCode !== 0 && !(exitCode === 1 && entry.findings.length)) throw new Error(`scanner exit ${exitCode} is not a completed vulnerability scan`);
     entry.status = entry.findings.length ? 'vulnerable' : 'clean';
-  } catch (error) { entry.status = 'error'; entry.error = error.code === 'ENOENT' ? 'No JSON report produced; inspect scanner logs' : error.message; }
+  } catch (error) {
+    entry.status = 'error';
+    entry.error = error.code === 'ENOENT' ? 'No JSON report produced; inspect scanner logs' : error.message;
+    const diagnostics = path.join(reportDir, report.replace(/\.json$/u, '.stderr.log'));
+    if (fs.existsSync(diagnostics)) entry.error += `: ${fs.readFileSync(diagnostics, 'utf8').trim().slice(-2000)}`;
+  }
   return entry;
 }
 
